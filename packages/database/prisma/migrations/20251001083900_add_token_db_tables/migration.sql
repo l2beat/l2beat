@@ -14,19 +14,22 @@ CREATE TABLE "AbstractToken" (
 
 -- CreateTable
 CREATE TABLE "DeployedToken" (
-    "id" VARCHAR(255) NOT NULL,
+    "id" SERIAL NOT NULL,
+    "chain" VARCHAR(32) NOT NULL,
+    "address" VARCHAR(32) NOT NULL,
     "abstractTokenId" CHAR(6),
     "symbol" VARCHAR(255) NOT NULL,
     "decimals" INTEGER NOT NULL,
     "deploymentTimestamp" TIMESTAMP(6) NOT NULL,
+    "comment" TEXT,
 
     CONSTRAINT "DeployedToken_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "TokenConnection" (
-    "tokenFromId" VARCHAR(255) NOT NULL,
-    "tokenToId" VARCHAR(255) NOT NULL,
+    "tokenFromId" INTEGER NOT NULL,
+    "tokenToId" INTEGER NOT NULL,
     "type" VARCHAR(32) NOT NULL,
     "params" JSON,
     "comment" TEXT,
@@ -35,10 +38,13 @@ CREATE TABLE "TokenConnection" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "AbstractToken_coingeckoId_key" ON "AbstractToken"("coingeckoId");
+CREATE UNIQUE INDEX "AbstractToken_issuer_symbol_key" ON "AbstractToken"("issuer", "symbol");
 
 -- CreateIndex
 CREATE INDEX "DeployedToken_abstractTokenId_idx" ON "DeployedToken"("abstractTokenId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "DeployedToken_chain_address_key" ON "DeployedToken"("chain", "address");
 
 -- CreateIndex
 CREATE INDEX "TokenConnection_tokenFromId_idx" ON "TokenConnection"("tokenFromId");

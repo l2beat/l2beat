@@ -453,27 +453,31 @@ model AbstractToken {
   deployedTokens DeployedToken[]
 
   @@id([id])
-  @@unique([coingeckoId])
+  @@unique([issuer, symbol])
 }
 
 model DeployedToken {
-  id                  String   @db.VarChar(255)
+  id                  Int      @default(autoincrement())
+  chain               String   @db.VarChar(32)
+  address             String   @db.VarChar(32)
   abstractTokenId     String?  @db.Char(6)
   symbol              String   @db.VarChar(255)
   decimals            Int
   deploymentTimestamp DateTime @db.Timestamp(6)
-
+  comment             String?  @db.Text
+  
   abstractToken   AbstractToken?    @relation(fields: [abstractTokenId], references: [id], onDelete: Restrict)
   connectionsFrom TokenConnection[] @relation("TokenConnection_tokenFrom")
   connectionsTo   TokenConnection[] @relation("TokenConnection_tokenTo")
 
   @@id([id])
   @@index([abstractTokenId])
+  @@unique([chain, address])
 }
 
 model TokenConnection {
-  tokenFromId String  @db.VarChar(255)
-  tokenToId   String  @db.VarChar(255)
+  tokenFromId Int
+  tokenToId   Int
   type        String  @db.VarChar(32)
   params      Json?   @db.Json
   comment     String? @db.Text
