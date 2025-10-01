@@ -1,30 +1,25 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
-import { createLayerZeroGuid, decodePacket } from './layerzero-v2'
+import {
+  createLayerZeroGuid,
+  decodePacket,
+  LAYERZERO_NETWORKS,
+  parsePacketSent,
+} from './layerzero-v2'
 import {
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
-  defineNetworks,
   findChain,
   type LogToCapture,
   type MatchResult,
   Result,
 } from './types'
 
-const parsePacketSent = createEventParser(
-  'event PacketSent(bytes encodedPayload, bytes options, address sendLibrary)',
-)
-
-const parsePacketDelivered = createEventParser(
-  'event PacketDelivered((uint32 srcEid,bytes32 sender, uint64 nonce) origin, address receiver)',
-)
-
-const parseOFTSent = createEventParser(
+export const parseOFTSent = createEventParser(
   'event OFTSent(bytes32 indexed guid, uint32 dstEid, address indexed fromAddress, uint256 amountSentLD, uint256 amountReceivedLD)',
 )
-const parseOFTReceived = createEventParser(
+export const parseOFTReceived = createEventParser(
   'event OFTReceived(bytes32 indexed guid, uint32 srcEid, address indexed toAddress, uint256 amountReceivedLD)',
 )
 
@@ -40,33 +35,6 @@ export const PacketOFTDelivered = createBridgeEventType<{
   guid: string
   amountReceivedLD: number
 }>('layerzero-v2.PacketOFTDelivered')
-
-const LAYERZERO_NETWORKS = defineNetworks('layerzero', [
-  {
-    chainId: 1,
-    eid: 30101,
-    chain: 'ethereum',
-    address: EthereumAddress('0x1a44076050125825900e736c501f859c50fE728c'),
-  },
-  {
-    chainId: 42161,
-    eid: 30110,
-    chain: 'arbitrum',
-    address: EthereumAddress('0x1a44076050125825900e736c501f859c50fE728c'),
-  },
-  {
-    chainId: 8453,
-    eid: 30184,
-    chain: 'base',
-    address: EthereumAddress('0x1a44076050125825900e736c501f859c50fE728c'),
-  },
-  {
-    chainId: 10,
-    eid: 30111,
-    chain: 'optimism',
-    address: EthereumAddress('0x1a44076050125825900e736c501f859c50fE728c'),
-  },
-])
 
 export class LayerZeroV2OFTsPlugin implements BridgePlugin {
   name = 'layerzero-v2-ofts'
