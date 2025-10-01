@@ -40,7 +40,7 @@ export function getUpdateMonitorConfig(
   return {
     configReader,
     paths,
-    runOnStart: env.boolean('UPDATE_MONITOR_RUN_ON_START', isLocal),
+    runOnStart: env.boolean('UPDATE_MONITOR_RUN_ON_START', isLocal ?? false),
     updateDifferEnabled: flags.isEnabled('updateMonitor', 'updateDiffer'),
     discord: getDiscordConfig(env, isLocal),
     chains: enabledChains.map((chain) =>
