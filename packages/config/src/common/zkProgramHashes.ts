@@ -33,4 +33,4 @@ const zkProgramHashes: Record<
       - From \`crates/prover\` call \`make build-circuits\`. Note that the execution could take a while.
       `,
   },
-} as const
+}
