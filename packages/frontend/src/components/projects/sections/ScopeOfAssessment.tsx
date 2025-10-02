@@ -20,7 +20,6 @@ export function ScopeOfAssessment({
   return (
     <Collapsible
       className={cn('group rounded-lg border border-divider', className)}
-      defaultOpen
     >
       <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-3 font-bold md:px-6">
         Scope of assessment
