@@ -18,11 +18,17 @@ type ReplaceNulls<T> = {
 export type AsRecord<T> = Selectable<ReplaceNulls<T>>
 
 // AsUpdateable is the patch/SET shape for updates
-// It combines WithPrimaryKey (so that PK can't be undefined) with Updateable
-export type AsUpdate<T, K extends keyof Updateable<T>> = WithPrimaryKey<
-  Updateable<T>,
-  K
+// It combines WithPrimaryKey (so that PK can't be undefined) with Updateable and UndefinedToOptional
+export type AsUpdate<T, K extends keyof Updateable<T>> = UndefinedToOptional<
+  WithPrimaryKey<Updateable<T>, K>
 >
+
+// Allows not passing the fields which are defined as "X | undefined"
+type UndefinedToOptional<T> = {
+  [K in keyof T as undefined extends T[K] ? K : never]?: T[K]
+} & {
+  [K in keyof T as undefined extends T[K] ? never : K]: T[K]
+}
 
 export function toRecord<T extends object>(obj: T): ReplaceNulls<T> {
   return Object.fromEntries(

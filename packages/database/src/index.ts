@@ -32,7 +32,10 @@ export type {
   DataAvailabilityRecord,
   ProjectsSummedDataAvailabilityRecord,
 } from './repositories/DataAvailabilityRepository'
-export type { DeployedTokenRecord } from './repositories/DeployedTokenRepository'
+export type {
+  DeployedTokenRecord,
+  DeployedTokenUpdate,
+} from './repositories/DeployedTokenRepository'
 export type { DiscoveryCacheRecord } from './repositories/DiscoveryCacheRepository'
 export type { FlatSourcesRecord } from './repositories/FlatSourcesRepository'
 export type { IndexerConfigurationRecord } from './repositories/IndexerConfigurationRepository'

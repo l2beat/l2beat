@@ -1,85 +1,44 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import { assert } from '@l2beat/shared-pure'
 import { BaseRepository } from '../BaseRepository'
 import type { DeployedToken } from '../kysely/generated/types'
+import { type AsRecord, type AsUpdate, toRecord } from '../utils/typeUtils'
 
-export interface DeployedTokenRecord {
-  id: number
-  chain: string
-  address: string
-  abstractTokenId: string | undefined
-  symbol: string
-  decimals: number
-  deploymentTimestamp: UnixTime
-  comment: string | undefined
-}
-
-export function toRecord(row: Selectable<DeployedToken>): DeployedTokenRecord {
-  return {
-    id: row.id,
-    chain: row.chain,
-    address: row.address,
-    abstractTokenId: row.abstractTokenId ?? undefined,
-    symbol: row.symbol,
-    decimals: row.decimals,
-    deploymentTimestamp: UnixTime.fromDate(row.deploymentTimestamp),
-    comment: row.comment ?? undefined,
-  }
-}
-
-export function toRow(record: DeployedTokenRecord): Insertable<DeployedToken> {
-  return {
-    id: record.id,
-    chain: record.chain,
-    address: record.address,
-    abstractTokenId: record.abstractTokenId,
-    symbol: record.symbol,
-    decimals: record.decimals,
-    deploymentTimestamp: UnixTime.toDate(record.deploymentTimestamp),
-    comment: record.comment,
-  }
-}
+export type DeployedTokenRecord = AsRecord<DeployedToken>
+export type DeployedTokenUpdate = AsUpdate<DeployedToken, 'id'>
 
 export class DeployedTokenRepository extends BaseRepository {
-  async upsert(record: DeployedTokenRecord): Promise<void> {
-    await this.upsertMany([record])
+  async insert(record: DeployedTokenRecord): Promise<number> {
+    const row = await this.db
+      .insertInto('DeployedToken')
+      .values(record)
+      .returning('id')
+      .executeTakeFirst()
+
+    assert(row)
+    return row.id
   }
 
-  async upsertMany(records: DeployedTokenRecord[]): Promise<number> {
-    if (records.length === 0) return 0
+  async update(update: DeployedTokenUpdate): Promise<number> {
+    const result = await this.db
+      .updateTable('DeployedToken')
+      .set(update)
+      .where('id', '=', update.id)
+      .executeTakeFirst()
 
-    const rows = records.map(toRow)
-    await this.batch(rows, 1_000, async (batch) => {
-      await this.db
-        .insertInto('DeployedToken')
-        .values(batch)
-        .onConflict((oc) =>
-          oc.columns(['id']).doUpdateSet((eb) => ({
-            abstractTokenId: eb.ref('excluded.abstractTokenId'),
-            symbol: eb.ref('excluded.symbol'),
-            decimals: eb.ref('excluded.decimals'),
-            deploymentTimestamp: eb.ref('excluded.deploymentTimestamp'),
-          })),
-        )
-        .execute()
-    })
-
-    return records.length
+    return Number(result.numUpdatedRows)
   }
 
   async findById(id: number): Promise<DeployedTokenRecord | undefined> {
-    const row = await this.db
+    const result = await this.db
       .selectFrom('DeployedToken')
       .selectAll()
       .where('id', '=', id)
       .executeTakeFirst()
 
-    return row ? toRecord(row) : undefined
+    return result ? toRecord(result) : undefined
   }
 
   async getByIds(ids: number[]): Promise<DeployedTokenRecord[]> {
-    if (ids.length === 0) return []
-
     const rows = await this.db
       .selectFrom('DeployedToken')
       .selectAll()
@@ -89,15 +48,11 @@ export class DeployedTokenRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByAbstractTokenIds(
-    abstractTokenIds: string[],
-  ): Promise<DeployedTokenRecord[]> {
-    if (abstractTokenIds.length === 0) return []
-
+  async getByAbstractTokenId(id: string): Promise<DeployedTokenRecord[]> {
     const rows = await this.db
       .selectFrom('DeployedToken')
       .selectAll()
-      .where('abstractTokenId', 'in', abstractTokenIds)
+      .where('abstractTokenId', '=', id)
       .execute()
 
     return rows.map(toRecord)
@@ -109,8 +64,6 @@ export class DeployedTokenRepository extends BaseRepository {
   }
 
   async deleteByIds(ids: number[]): Promise<number> {
-    if (ids.length === 0) return 0
-
     const result = await this.db
       .deleteFrom('DeployedToken')
       .where('id', 'in', ids)
@@ -119,8 +72,8 @@ export class DeployedTokenRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
-  async deleteAll(): Promise<number> {
+  async deleteAll(): Promise<bigint> {
     const result = await this.db.deleteFrom('DeployedToken').executeTakeFirst()
-    return Number(result.numDeletedRows)
+    return result.numDeletedRows
   }
 }

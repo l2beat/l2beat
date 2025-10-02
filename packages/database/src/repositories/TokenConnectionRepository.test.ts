@@ -12,11 +12,9 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
   const deployedTokens = db.deployedToken
 
   beforeEach(async () => {
-    await deployedTokens.upsertMany([
-      deployedToken({ id: 1 }),
-      deployedToken({ id: 2 }),
-      deployedToken({ id: 3 }),
-    ])
+    await deployedTokens.insert(deployedToken({ id: 1 }))
+    await deployedTokens.insert(deployedToken({ id: 2 }))
+    await deployedTokens.insert(deployedToken({ id: 3 }))
   })
 
   afterEach(async () => {
@@ -297,7 +295,7 @@ function deployedToken(
     abstractTokenId: overrides.abstractTokenId,
     symbol: overrides.symbol ?? 'TOKEN',
     decimals: overrides.decimals ?? 18,
-    deploymentTimestamp: overrides.deploymentTimestamp ?? UnixTime(0),
+    deploymentTimestamp: overrides.deploymentTimestamp ?? UnixTime.toDate(0),
     comment: overrides.comment,
   }
 }

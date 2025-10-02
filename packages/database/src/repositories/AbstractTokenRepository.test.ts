@@ -33,7 +33,7 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
       expect(stored).toEqual(record)
     })
 
-    it('persists optional fields as undefined when not provided', async () => {
+    it('accepts optional fields', async () => {
       const record = abstractToken({ id: 'TK0002' })
 
       const id = await repository.insert(record)
@@ -41,6 +41,41 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
 
       const stored = await repository.findById(record.id)
       expect(stored).toEqual(record)
+    })
+  })
+
+  describe(AbstractTokenRepository.prototype.update.name, () => {
+    it('updates record and returns number of affected rows', async () => {
+      const record = abstractToken({
+        id: 'TK0001',
+        issuer: 'issuer',
+        symbol: 'ISTK',
+        category: 'stablecoin',
+        iconUrl: 'https://example.com/icon.png',
+        coingeckoId: 'coin-1',
+        coingeckoListingTimestamp: UnixTime.toDate(10),
+        comment: 'initial comment',
+      })
+      await repository.insert(record)
+
+      const updatedRows = await repository.update({
+        id: record.id,
+        issuer: 'updated issuer',
+        symbol: 'UPDT',
+        iconUrl: 'https://example.com/updated-icon.png',
+        comment: 'updated comment',
+      })
+
+      expect(updatedRows).toEqual(1)
+
+      const stored = await repository.findById(record.id)
+      expect(stored).toEqual({
+        ...record,
+        issuer: 'updated issuer',
+        symbol: 'UPDT',
+        iconUrl: 'https://example.com/updated-icon.png',
+        comment: 'updated comment',
+      })
     })
   })
 
