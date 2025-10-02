@@ -18,10 +18,12 @@ export function MainPage() {
     queryKey: ['abstractTokens'],
     queryFn: () => mockTokenService.getAbstractTokens(),
   })
-  const [selectedAbstractToken, setSelectedAbstractToken] =
-    useState<AbstractToken | null>(null)
-  const [selectedDeployedToken, setSelectedDeployedToken] =
-    useState<DeployedToken | null>(null)
+  const [selectedAbstractToken, setSelectedAbstractToken] = useState<
+    AbstractToken | undefined
+  >(undefined)
+  const [selectedDeployedToken, setSelectedDeployedToken] = useState<
+    DeployedToken | undefined
+  >(undefined)
 
   return (
     <AppLayout>
@@ -37,6 +39,9 @@ export function MainPage() {
                   <button
                     onClick={() => {
                       setSelectedAbstractToken(token)
+                      if (selectedDeployedToken?.abstractTokenId !== token.id) {
+                        setSelectedDeployedToken(undefined)
+                      }
                     }}
                     className={cn(
                       'flex w-full items-center gap-2 rounded-md p-2 text-left',
@@ -80,7 +85,7 @@ export function MainPage() {
             <CardHeader>
               <CardTitle>Abstract Token</CardTitle>
               <CardContent>
-                {selectedAbstractToken === null ? (
+                {selectedAbstractToken === undefined ? (
                   <div className="text-muted-foreground text-sm">
                     No abstract token selected
                   </div>
@@ -123,7 +128,7 @@ export function MainPage() {
             <CardHeader>
               <CardTitle>Deployed Token</CardTitle>
               <CardContent>
-                {selectedDeployedToken === null ? (
+                {selectedDeployedToken === undefined ? (
                   <div className="text-muted-foreground text-sm">
                     No deployed token selected
                   </div>
