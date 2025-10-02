@@ -32,7 +32,7 @@ const rollupModuleContract = discovery.getContract('Validium')
 
 export const silicon: ScalingProject = polygonCDKStack({
   addedAt: UnixTime(1725027256), // 2024-08-30T14:14:16Z
-  additionalBadges: [BADGES.DA.DAC],
+  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Nodeinfra],
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {

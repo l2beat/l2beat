@@ -294,6 +294,20 @@ export const DATA_POS: TableReadyValue = {
   sentiment: 'warning',
 }
 
+export function DATA_ESPRESSO(isUsingLightClient: boolean): TableReadyValue {
+  const additional = isUsingLightClient
+    ? ' Sequencer tx roots are checked against the HotShot light client bridge data roots, signed off by Espresso validators.'
+    : ' Sequencer tx roots are not checked against the HotShot light client bridge data roots onchain, but L2 nodes can verify data availability by running an Espresso node.'
+  return {
+    value: 'External',
+    description:
+      'Proof construction and state derivation fully rely on data that is posted on Espresso.' +
+      additional,
+    sentiment: isUsingLightClient ? 'warning' : 'bad',
+    orderHint: isUsingLightClient ? 0 : Number.NEGATIVE_INFINITY,
+  }
+}
+
 // bridges
 
 export const VALIDATED_BY_ETHEREUM: TableReadyValue = {
@@ -778,6 +792,7 @@ export const RISK_VIEW = {
   DATA_AVAIL,
   DATA_EIGENDA,
   DATA_POS,
+  DATA_ESPRESSO,
 
   // validatedBy
   VALIDATED_BY_ETHEREUM,
@@ -826,33 +841,35 @@ export const RISK_VIEW = {
   UNDER_REVIEW_RISK,
 }
 
-export function pickWorseRisk(
-  a: TableReadyValue,
-  b: TableReadyValue,
-): TableReadyValue {
-  const sentimentValue: Record<Sentiment, number> = {
-    good: 0,
-    neutral: 1,
-    warning: 2,
-    bad: 3,
-    UnderReview: 4,
-  }
+const SENTIMENT_VALUE: Record<Sentiment, number> = {
+  good: 0,
+  neutral: 1,
+  warning: 2,
+  bad: 3,
+  UnderReview: 4,
+}
 
-  const aVal = sentimentValue[a.sentiment ?? 'neutral']
-  const bVal = sentimentValue[b.sentiment ?? 'neutral']
+// This is a comparison function to be used in "sort"
+// -1 means `a` is *more* risky
+// 1 means `b` is *more* risky`
+export function compareRisk(a: TableReadyValue, b: TableReadyValue): -1 | 1 {
+  const aVal = SENTIMENT_VALUE[a.sentiment ?? 'neutral']
+  const bVal = SENTIMENT_VALUE[b.sentiment ?? 'neutral']
+  const RESULT_A = -1
+  const RESULT_B = 1
+
   if (aVal === bVal) {
     assert(
       a.orderHint !== undefined && b.orderHint !== undefined,
       'Unable to pick worse risk without a defining metric',
     )
-    return a.orderHint < b.orderHint ? a : b
+    return a.orderHint < b.orderHint ? RESULT_A : RESULT_B
   }
-  if (aVal > bVal) {
-    return a
-  }
-
-  return b
+  return aVal > bVal ? RESULT_A : RESULT_B
 }
+
+export const pickWorseRisk = (a: TableReadyValue, b: TableReadyValue) =>
+  compareRisk(a, b) === -1 ? a : b
 
 export function sumRisk(
   a: TableReadyValue,

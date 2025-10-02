@@ -217,6 +217,7 @@ function makeTechnologyContract(
   )
 
   return {
+    id: item.name,
     name: item.name,
     addresses,
     admins,

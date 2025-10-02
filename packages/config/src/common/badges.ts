@@ -723,6 +723,27 @@ export const badges = [
       value: 'Shared Bridge',
     },
   },
+  {
+    id: 'Espresso',
+    type: BadgeType.DA,
+    name: 'Espresso',
+    description: 'This project is posting its data to Espresso',
+    action: {
+      type: 'publicDaHighlight',
+      slug: 'espresso',
+    },
+  },
+  {
+    id: 'EspressoHotShotLightClient',
+    type: BadgeType.DA,
+    name: 'Espresso with HotShot Light Client',
+    description:
+      'This project utilizes Espresso and has HotShot Light Client enabled, facilitating the bridging of data availability attestations between Espresso and Ethereum.',
+    action: {
+      type: 'publicDaHighlight',
+      slug: 'espresso',
+    },
+  },
 ] as const satisfies Badge[]
 
 type AnyBadge = (typeof badges)[number]
