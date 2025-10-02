@@ -1,6 +1,26 @@
+import { assertUnreachable } from '~/utils/assertUnreachable'
 import type { AbstractToken, DeployedToken } from './types'
 
-export class MockTokenService {
+type Intent = AddAbstractTokenIntent
+
+interface AddAbstractTokenIntent {
+  type: 'AddAbstractTokenIntent'
+  abstractToken: AbstractToken
+}
+
+export type Command = AddAbstractTokenCommand
+
+interface AddAbstractTokenCommand {
+  type: 'AddAbstractTokenCommand'
+  abstractToken: AbstractToken
+}
+
+export interface Plan {
+  intent: Intent
+  commands: Command[]
+}
+
+class MockTokenService {
   abstractTokens: AbstractToken[] = [
     {
       id: 'btc',
@@ -25,7 +45,7 @@ export class MockTokenService {
       id: 'usdc',
       issuer: 'Circle',
       symbol: 'USDC',
-      category: 'stablecoins',
+      category: 'stablecoin',
       iconUrl:
         'https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png',
       coingeckoId: 'usd-coin',
@@ -106,6 +126,7 @@ export class MockTokenService {
   ]
 
   getAbstractTokens() {
+    console.log('getAbstractTokens', this.abstractTokens)
     return this.abstractTokens.map((token) => ({
       ...token,
       deployedTokens: this.deployedTokens.filter(
@@ -113,4 +134,46 @@ export class MockTokenService {
       ),
     }))
   }
+
+  plan(intent: Intent): Plan {
+    let commands: Command[]
+    switch (intent.type) {
+      case 'AddAbstractTokenIntent':
+        commands = [
+          {
+            type: 'AddAbstractTokenCommand',
+            abstractToken: intent.abstractToken,
+          },
+        ]
+        break
+      default:
+        assertUnreachable(intent.type)
+    }
+
+    return {
+      intent,
+      commands,
+    }
+  }
+
+  execute(plan: Plan) {
+    for (const command of plan.commands) {
+      this.executeCommand(command)
+    }
+    return {
+      outcome: 'success',
+    }
+  }
+  private executeCommand(command: Command) {
+    switch (command.type) {
+      case 'AddAbstractTokenCommand':
+        this.abstractTokens.push(command.abstractToken)
+        break
+
+      default:
+        assertUnreachable(command.type)
+    }
+  }
 }
+
+export const tokenService = new MockTokenService()

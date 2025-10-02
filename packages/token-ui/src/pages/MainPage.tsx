@@ -8,15 +8,14 @@ import {
   CardTitle,
 } from '~/components/core/Card'
 import { AppLayout } from '~/layouts/AppLayout'
-import { MockTokenService } from '~/mock/MockTokenService'
+import { tokenService } from '~/mock/MockTokenService'
 import type { AbstractToken, DeployedToken } from '~/mock/types'
 import { cn } from '~/utils/cn'
 
 export function MainPage() {
-  const mockTokenService = new MockTokenService()
   const { data: abstractTokens } = useQuery({
     queryKey: ['abstractTokens'],
-    queryFn: () => mockTokenService.getAbstractTokens(),
+    queryFn: () => tokenService.getAbstractTokens(),
   })
   const [selectedAbstractToken, setSelectedAbstractToken] = useState<
     AbstractToken | undefined
@@ -84,84 +83,84 @@ export function MainPage() {
           <Card>
             <CardHeader>
               <CardTitle>Abstract Token</CardTitle>
-              <CardContent>
-                {selectedAbstractToken === undefined ? (
-                  <div className="text-muted-foreground text-sm">
-                    No abstract token selected
-                  </div>
-                ) : (
-                  <div className="flex flex-col gap-2">
-                    <ItemWithLabel
-                      label="Symbol"
-                      value={selectedAbstractToken.symbol}
-                    />
-                    <ItemWithLabel
-                      label="Issuer"
-                      value={selectedAbstractToken.issuer}
-                    />
-                    <ItemWithLabel
-                      label="Category"
-                      value={selectedAbstractToken.category}
-                    />
-                    <ItemWithLabel
-                      label="Icon URL"
-                      value={selectedAbstractToken.iconUrl}
-                    />
-                    <ItemWithLabel
-                      label="Coingecko ID"
-                      value={selectedAbstractToken.coingeckoId}
-                    />
-                    <ItemWithLabel
-                      label="Coingecko Listing Timestamp"
-                      value={selectedAbstractToken.coingeckoListingTimestamp?.toISOString()}
-                    />
-                    <ItemWithLabel
-                      label="Comment"
-                      value={selectedAbstractToken.comment}
-                    />
-                  </div>
-                )}
-              </CardContent>
             </CardHeader>
+            <CardContent>
+              {selectedAbstractToken === undefined ? (
+                <div className="text-muted-foreground text-sm">
+                  No abstract token selected
+                </div>
+              ) : (
+                <div className="flex flex-col gap-2">
+                  <ItemWithLabel
+                    label="Symbol"
+                    value={selectedAbstractToken.symbol}
+                  />
+                  <ItemWithLabel
+                    label="Issuer"
+                    value={selectedAbstractToken.issuer}
+                  />
+                  <ItemWithLabel
+                    label="Category"
+                    value={selectedAbstractToken.category}
+                  />
+                  <ItemWithLabel
+                    label="Icon URL"
+                    value={selectedAbstractToken.iconUrl}
+                  />
+                  <ItemWithLabel
+                    label="Coingecko ID"
+                    value={selectedAbstractToken.coingeckoId}
+                  />
+                  <ItemWithLabel
+                    label="Coingecko Listing Timestamp"
+                    value={selectedAbstractToken.coingeckoListingTimestamp?.toISOString()}
+                  />
+                  <ItemWithLabel
+                    label="Comment"
+                    value={selectedAbstractToken.comment}
+                  />
+                </div>
+              )}
+            </CardContent>
           </Card>
           <Card>
             <CardHeader>
               <CardTitle>Deployed Token</CardTitle>
-              <CardContent>
-                {selectedDeployedToken === undefined ? (
-                  <div className="text-muted-foreground text-sm">
-                    No deployed token selected
-                  </div>
-                ) : (
-                  <div className="flex flex-col gap-2">
-                    <ItemWithLabel
-                      label="Symbol"
-                      value={selectedDeployedToken.symbol}
-                    />
-                    <ItemWithLabel
-                      label="Chain"
-                      value={selectedDeployedToken.chain}
-                    />
-                    <ItemWithLabel
-                      label="Address"
-                      value={selectedDeployedToken.address}
-                    />
-                    <ItemWithLabel
-                      label="Decimals"
-                      value={selectedDeployedToken.decimals.toString()}
-                    />
-                    <ItemWithLabel
-                      label="Deployment Timestamp"
-                      value={selectedDeployedToken.deploymentTimestamp.toISOString()}
-                    />
-                    <ItemWithLabel
-                      label="Comment"
-                      value={selectedDeployedToken.comment}
-                    />
-                  </div>
-                )}
-              </CardContent>
             </CardHeader>
+            <CardContent>
+              {selectedDeployedToken === undefined ? (
+                <div className="text-muted-foreground text-sm">
+                  No deployed token selected
+                </div>
+              ) : (
+                <div className="flex flex-col gap-2">
+                  <ItemWithLabel
+                    label="Symbol"
+                    value={selectedDeployedToken.symbol}
+                  />
+                  <ItemWithLabel
+                    label="Chain"
+                    value={selectedDeployedToken.chain}
+                  />
+                  <ItemWithLabel
+                    label="Address"
+                    value={selectedDeployedToken.address}
+                  />
+                  <ItemWithLabel
+                    label="Decimals"
+                    value={selectedDeployedToken.decimals.toString()}
+                  />
+                  <ItemWithLabel
+                    label="Deployment Timestamp"
+                    value={selectedDeployedToken.deploymentTimestamp.toISOString()}
+                  />
+                  <ItemWithLabel
+                    label="Comment"
+                    value={selectedDeployedToken.comment}
+                  />
+                </div>
+              )}
+            </CardContent>
           </Card>
         </div>
       </div>

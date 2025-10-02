@@ -2,7 +2,7 @@ export type AbstractToken = {
   id: string
   issuer?: string
   symbol: string
-  category: 'btc' | 'ether' | 'stablecoins' | 'other'
+  category: 'btc' | 'ether' | 'stablecoin' | 'other'
   iconUrl?: string
   coingeckoId?: string
   coingeckoListingTimestamp?: Date

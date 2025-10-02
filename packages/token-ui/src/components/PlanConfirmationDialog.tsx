@@ -1,0 +1,83 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { toast } from 'sonner'
+import { type Command, type Plan, tokenService } from '~/mock/MockTokenService'
+import { Button } from './core/Button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from './core/Dialog'
+import { Tooltip, TooltipContent, TooltipTrigger } from './core/Tooltip'
+
+export function PlanConfirmationDialog({
+  plan,
+  setPlan,
+}: {
+  plan: Plan | undefined
+  setPlan: (plan: Plan | undefined) => void
+}) {
+  const queryClient = useQueryClient()
+  const { mutate: executePlan } = useMutation({
+    mutationFn: async (plan: Plan) => tokenService.execute(plan),
+    onSuccess: () => {
+      toast.success('Plan executed successfully')
+      setPlan(undefined)
+      queryClient.invalidateQueries({ queryKey: ['abstractTokens'] })
+    },
+    onError: () => {
+      toast.error('Plan execution failed')
+    },
+  })
+
+  if (!plan) {
+    return null
+  }
+
+  return (
+    <Dialog open={true} onOpenChange={(open) => !open && setPlan(undefined)}>
+      <DialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
+        <DialogHeader>
+          <DialogTitle>Are you sure?</DialogTitle>
+          <DialogDescription>
+            This plan assumes the following actions will be taken:
+            <ul className="list-inside list-decimal pl-4">
+              {plan?.commands.map((command) => (
+                <CommandItem key={command.type} command={command} />
+              ))}
+            </ul>
+          </DialogDescription>
+          <DialogFooter>
+            <Button onClick={() => executePlan(plan)}>Confirm</Button>
+            <Button variant="outline" onClick={() => setPlan(undefined)}>
+              Cancel
+            </Button>
+          </DialogFooter>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+function CommandItem({ command }: { command: Command }) {
+  switch (command.type) {
+    case 'AddAbstractTokenCommand':
+      return (
+        <li>
+          <Tooltip>
+            <TooltipTrigger className="underline">
+              Abstract token
+            </TooltipTrigger>
+            <TooltipContent className="whitespace-pre">
+              {JSON.stringify(command.abstractToken, null, 2)}
+            </TooltipContent>
+          </Tooltip>{' '}
+          will be added
+        </li>
+      )
+    default:
+      return null
+  }
+}
