@@ -56,6 +56,14 @@ const PLASMA: DaProjectTableValue = {
     'Data is not posted to Ethereum but to a plasma chain. There is a guarantee that if data is unavailable you can still exit using latest available state root.',
 }
 
+const HOTSHOT_LIGHT_CLIENT: DaProjectTableValue = {
+  value: 'HotShot Light Client',
+  sentiment: 'warning',
+  description:
+    'The HotShot Light Client is used to attest to the data availability on Espresso.',
+  projectId: ProjectId('espresso'),
+}
+
 function DAC_MEMBERS({
   requiredSignatures,
   membersCount,
@@ -111,4 +119,5 @@ export const DA_BRIDGES = {
   STAKED_OPERATORS,
   SELF_ATTESTED_INTMAX,
   PLASMA,
+  HOTSHOT_LIGHT_CLIENT,
 }

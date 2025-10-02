@@ -1,6 +1,6 @@
 {
   "name": "ink",
-  "timestamp": 1755525900,
+  "timestamp": 1759250552,
   "configHash": "0x8b834afc2d7634f97b8230111eb489afe4c13855fc85ee36ede6aa3f10ac255e",
   "entries": [
     {
@@ -27,7 +27,7 @@
         "0x998654cb64c7fc216505bdb3322b20e7d7c95704005228ad1f878bc631c4af8d"
       ],
       "proxyType": "immutable",
-      "description": "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig",
+      "description": "used to remove members inactive for 3mo 8d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig",
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -41,7 +41,7 @@
         "$immutable": true,
         "fallbackOwner": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
         "livenessGuard": "eth:0x24424336F04440b1c28685a38303aC33C9D14a25",
-        "livenessInterval": "98d",
+        "livenessInterval": "3mo 8d",
         "minOwners": 8,
         "ownershipTransferredToFallback": false,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
@@ -142,7 +142,7 @@
         ],
         "$upgradeCount": 3,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 1021,
+        "gameCount": 1194,
         "gameImpls": [
           "eth:0x1a20c06a80260AA45adA0F9F59b334560eE3FEf1",
           "eth:0x46DDe051eb4561694DC1F0286eBe940d9E90fbe9",
@@ -315,7 +315,7 @@
         {
           "permission": "interact",
           "from": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
-          "description": "can remove members of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 98d.",
+          "description": "can remove members of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 3mo 8d.",
           "role": ".livenessGuard"
         }
       ],
@@ -841,7 +841,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 23168276
+          "prevBlockNum": 23476785
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1125,7 +1125,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292631340",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292632463",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1367,7 +1367,7 @@
         "initVersion": 2,
         "paused": false,
         "pauseExpiry": 7884000,
-        "pauseExpiryFmt": "91d 6h",
+        "pauseExpiryFmt": "3mo 1d",
         "proxyAdmin": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "version": "2.3.0"
@@ -1591,7 +1591,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 42,
+        "nonce": 44,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1848,12 +1848,12 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0x192135D4D4F6a7f7758e3154EA6886AD39830262",
+        "anchorGame": "eth:0x8cce61D5aeb3694bbC83f23cab43AE47D17F6536",
         "disputeGameFactory": "eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xefc3b11313b8e1f8c8fcb2d5014acd021e2aa87ab47b6e8cdc0414f086647415",
-          21405652
+          "0x398d3bd4b70784570e618cdd2565d3552dedeb43a732b2bad3de4e09ab55f512",
+          25144714
         ],
         "initVersion": 1,
         "paused": false,
@@ -1908,7 +1908,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "ink:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620921",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620974",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1961,7 +1961,7 @@
         "isEcotone": true,
         "isFjord": true,
         "isIsthmus": true,
-        "l1BaseFee": 990882891,
+        "l1BaseFee": 1234466624,
         "version": "1.4.0"
       },
       "implementationNames": {
@@ -2148,7 +2148,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 990882891,
+        "basefee": 1234466624,
         "baseFeeScalar": 4424,
         "batcherHash": "0x000000000000000000000000500d7ea63cf2e501dadaa5feec1fc19fe2aa72ac",
         "blobBaseFee": 1,
@@ -2160,15 +2160,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x39f106af2a78568bbf4e4a955cd18a894ddec3c9443bbda353f80955ec751a32",
+        "hash": "0x6da0d6c739262381a8ce94648aec61f5f1fa1612edce508d0dbf32cb7cc78276",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 23168416,
+        "number": 23477063,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 9,
-        "timestamp": 1755525827,
+        "sequenceNumber": 5,
+        "timestamp": 1759250483,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -4165,6 +4165,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig_pauseId": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
-  "usedBlockNumbers": { "ink": 22027489, "ethereum": 23168422 },
-  "permissionsConfigHash": "0xc187a211655f72961836c95749b908c33fdc8871e559317d4d7ad33f652f7f87"
+  "usedBlockNumbers": { "ink": 25752141, "ethereum": 23477068 },
+  "permissionsConfigHash": "0x052326d2a3d014ddddc4393ab45ff7f6dea39f5e7d24a59de8ed1f5970d4265d"
 }

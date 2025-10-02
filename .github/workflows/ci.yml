@@ -269,22 +269,7 @@ jobs:
       - name: Start mock server and test pages
         run: |
           cd packages/frontend 
-
-          pnpm build
-          
-          # Start the mock server in the background and redirect output to /dev/null
-          pnpm start:mock > /dev/null 2>&1 &
-          SERVER_PID=$!
-          
-          # Wait for server to start
-          sleep 3
-          
-          # Test all pages
           pnpm test-all-pages
-          
-          # Kill the server
-          echo "Stopping server..."
-          kill $SERVER_PID
 
   test-gha-timeouts:
     name: Test if all GH Action jobs have timeout defined

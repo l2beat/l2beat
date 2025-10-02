@@ -25,7 +25,6 @@ import { NotificationsRepository } from './repositories/NotificationsRepository'
 import { ProjectValueRepository } from './repositories/ProjectValueRepository'
 import { RealTimeAnomaliesRepository } from './repositories/RealTimeAnomaliesRepository'
 import { RealTimeLivenessRepository } from './repositories/RealTimeLivenessRepository'
-import { StakeRepository } from './repositories/StakeRepository'
 import { SyncMetadataRepository } from './repositories/SyncMetadataRepository'
 import { TokenMetadataRepository } from './repositories/TokenMetadataRepository'
 import { TokenValueRepository } from './repositories/TokenValueRepository'
@@ -59,7 +58,6 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
 
     // #region DA BEAT
     currentPrice: new CurrentPriceRepository(db),
-    stake: new StakeRepository(db),
     daBeatStats: new DaBeatStatsRepository(db),
     dataAvailability: new DataAvailabilityRepository(db),
     blobs: new BlobsRepository(db),

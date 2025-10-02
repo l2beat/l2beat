@@ -75,7 +75,7 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
   proofSystem: ProjectScalingProofSystem | undefined
   purposes: ProjectScalingPurpose[]
   stacks: ProjectScalingStack[] | undefined
-  dataAvailability: ProjectScalingDa | undefined
+  dataAvailability: ProjectScalingDa[] | undefined
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined
   tvs: {
     breakdown:
