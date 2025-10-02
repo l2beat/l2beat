@@ -4,12 +4,17 @@ import type {
   AbstractTokenRecord,
   AbstractTokenUpdate,
   DeployedTokenRecord,
+  DeployedTokenUpdate,
   TokenConnectionRecord,
   TokenDatabase,
 } from '@l2beat/database'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 
-type Intent = AddAbstractTokenIntent | UpdateAbstractTokenIntent
+type Intent =
+  | AddAbstractTokenIntent
+  | UpdateAbstractTokenIntent
+  | AddDeployedTokenIntent
+  | UpdateDeployedTokenIntent
 
 interface AddAbstractTokenIntent {
   type: 'AddAbstractTokenIntent'
@@ -21,7 +26,21 @@ interface UpdateAbstractTokenIntent {
   abstractTokenUpdate: AbstractTokenUpdate
 }
 
-type Command = AddAbstractTokenCommand | UpdateAbstractTokenCommand
+interface AddDeployedTokenIntent {
+  type: 'AddDeployedTokenIntent'
+  deployedToken: DeployedTokenRecord
+}
+
+interface UpdateDeployedTokenIntent {
+  type: 'UpdateDeployedTokenIntent'
+  deployedTokenUpdate: DeployedTokenUpdate
+}
+
+type Command =
+  | AddAbstractTokenCommand
+  | UpdateAbstractTokenCommand
+  | AddDeployedTokenCommand
+  | UpdateDeployedTokenCommand
 
 interface AddAbstractTokenCommand {
   type: 'AddAbstractTokenCommand'
@@ -32,6 +51,17 @@ interface UpdateAbstractTokenCommand {
   type: 'UpdateAbstractTokenCommand'
   before: AbstractTokenRecord
   update: AbstractTokenUpdate
+}
+
+interface AddDeployedTokenCommand {
+  type: 'AddDeployedTokenCommand'
+  deployedToken: DeployedTokenRecord
+}
+
+interface UpdateDeployedTokenCommand {
+  type: 'UpdateDeployedTokenCommand'
+  before: DeployedTokenRecord
+  update: DeployedTokenUpdate
 }
 
 interface Plan {
@@ -72,6 +102,17 @@ export class TokenService {
       case 'UpdateAbstractTokenIntent':
         commands = await this.planUpdateAbstractToken(intent)
         break
+      case 'AddDeployedTokenIntent':
+        commands = [
+          {
+            type: 'AddDeployedTokenCommand',
+            deployedToken: intent.deployedToken,
+          },
+        ]
+        break
+      case 'UpdateDeployedTokenIntent':
+        commands = await this.planUpdateDeployedToken(intent)
+        break
       default:
         assertUnreachable(intent)
     }
@@ -98,6 +139,26 @@ export class TokenService {
         type: 'UpdateAbstractTokenCommand',
         before,
         update: intent.abstractTokenUpdate,
+      },
+    ]
+  }
+
+  async planUpdateDeployedToken(
+    intent: UpdateDeployedTokenIntent,
+  ): Promise<Command[]> {
+    const before = await this.db.deployedToken.findById(
+      intent.deployedTokenUpdate.id,
+    )
+    if (before === undefined) {
+      throw new Error(
+        `DeployedToken ${intent.deployedTokenUpdate.id} doesn't exist`,
+      )
+    }
+    return [
+      {
+        type: 'UpdateDeployedTokenCommand',
+        before,
+        update: intent.deployedTokenUpdate,
       },
     ]
   }
@@ -140,6 +201,12 @@ export class TokenService {
         break
       case 'UpdateAbstractTokenCommand':
         await this.db.abstractToken.update(command.update)
+        break
+      case 'AddDeployedTokenCommand':
+        await this.db.deployedToken.insert(command.deployedToken)
+        break
+      case 'UpdateDeployedTokenCommand':
+        await this.db.deployedToken.update(command.update)
         break
       default:
         assertUnreachable(command)
