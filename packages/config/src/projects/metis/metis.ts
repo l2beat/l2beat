@@ -98,7 +98,7 @@ export const metis: ScalingProject = {
         fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
-        principle: true,
+        principle: false,
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
@@ -294,7 +294,7 @@ export const metis: ScalingProject = {
       ],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.ENQUEUE,
+      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       references: [
         {
           title: 'CanonicalTransactionChain - Etherscan source code',
@@ -313,7 +313,6 @@ export const metis: ScalingProject = {
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
       },
-      EXITS.FORCED_MESSAGING('forced-messages'),
     ],
     otherConsiderations: [
       {
