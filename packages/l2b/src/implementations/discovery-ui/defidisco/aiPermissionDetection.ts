@@ -21,13 +21,11 @@ For each write function, determine:
 
 IMPORTANT RULES:
 - Only include EXTERNAL functions that change state (exclude view/pure/internal functions)
-- For ownerDefinitions, provide:
-  - sourceField: The field name in the current contract that holds the address (e.g., "owner", "admin", "governance", "accessControl", if the contract itself implements the access control, OR the fieldname containing the address of the access control contract otherwise)
-  - dataPath: What data to extract from that address:
-    * Use "$self" if the address itself is the owner
-    * Use field names like "admin", "owner" for nested fields
-    * Use "signers[0]" for array access
-    * Use role names like "DEFAULT_ADMIN_ROLE" for AccessControl patterns
+- For ownerDefinitions, there are 4 main cases:
+  - the permission owner is a field in the current contract: provide sourceField = field name ("owner", "admin"), and dataPath = "$self"
+  - the permission owner is a role in the current contract: provide sourceField = "accessControl", dataPath = name of the role (eg. "PAUSER_ROLE", "DEFAULT_ADMIN_ROLE")
+  - the permission owner is a role in an external access control contract: provide sourceField = field containing the address of the access control contract, datapath = name of the role
+  - the permission owner is a field in an external contract: provide sourceField = field containing the address of the external contract, datapath= field name in that contract containing the permission owner.
 - Multiple ownerDefinitions can be provided for functions with multiple access control mechanisms
 
 Response MUST be valid JSON matching this schema:
