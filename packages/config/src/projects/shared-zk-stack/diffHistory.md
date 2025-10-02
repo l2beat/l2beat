@@ -1,3 +1,73 @@
+Generated with discovered.json: 0x82eff06f03c4622579a954b2b55b12ba0e1ad738
+
+# Diff at Thu, 02 Oct 2025 09:53:53 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b23cca5eaec9eb1fac489dca92defc845d56598a block: 1758619329
+- current timestamp: 1759398765
+
+## Description
+
+Queued two proposals to be executed: https://www.tally.xyz/gov/zksync/proposal/19993014537746296636853362219247192671631735482612670856590540039176244970638?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746 and https://www.tally.xyz/gov/zksync/proposal/3413588788305073197878658504162606756015331882899383310343250085297198101137?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746.
+
+Also changed config for ZkGovernor template: fixed proposalCreatedCount topic0 from 0xc149c905df4285aaa5aec8b4d3e8532039469e916660b4fc66767e151b8b26e8 to 0x7d84a6263ae0d98d3329bd7b46bb4e8d6f98cd35a7adb45c274c8b7fd5ebd5e0.
+
+## Watched changes
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        12
++        14
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        9
++        10
+      values.proposalQueuedCount:
+-        5
++        7
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758619329 (main branch discovery), not current.
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        0
++        12
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        0
++        9
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor (zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        0
++        1
+    }
+```
+
 Generated with discovered.json: 0x44295be5336c23a39201faab5676248067e0969f
 
 # Diff at Tue, 23 Sep 2025 09:24:22 GMT:
