@@ -120,6 +120,178 @@ describe(ProjectDiscovery.name, () => {
       )
     })
   })
+
+  describe(ProjectDiscovery.prototype.getEoaActors.name, () => {
+    it('should return empty arrays when no EOAs have permissions', () => {
+      const configReaderEmpty = mockObject<ConfigReader>({
+        readConfig: (projectName: string) => mockConfig(projectName),
+        readDiscovery: () => ({
+          ...discoveredJsonStub,
+          entries: discoveredJsonStub.entries.filter((e) => e.type !== 'EOA'),
+        }),
+      })
+      const discoveryEmpty = new ProjectDiscovery(
+        'EmptyProject',
+        configReaderEmpty,
+      )
+
+      const result = discoveryEmpty.getEoaActors()
+
+      expect(result).toEqual({
+        raw: [],
+        linkable: [],
+        grouped: [],
+      })
+    })
+
+    it('should handle single EOA with permissions', () => {
+      const configReaderSingle = mockObject<ConfigReader>({
+        readConfig: (projectName: string) => mockConfig(projectName),
+        readDiscovery: () => ({
+          ...discoveredJsonStub,
+          entries: [
+            ...discoveredJsonStub.entries.filter((e) => e.type !== 'EOA'),
+            {
+              type: 'Contract',
+              name: 'TestContract',
+              address: ChainSpecificAddress(
+                'eth:0x2222222222222222222222222222222222222222',
+              ),
+              category: { name: 'Test', priority: 1 },
+            },
+            {
+              type: 'EOA',
+              name: 'TestEOA',
+              address: ChainSpecificAddress(
+                'eth:0x1111111111111111111111111111111111111111',
+              ),
+              receivedPermissions: [
+                {
+                  permission: 'upgrade',
+                  from: ChainSpecificAddress(
+                    'eth:0x2222222222222222222222222222222222222222',
+                  ),
+                },
+              ],
+              category: { name: 'Test', priority: 1 },
+            },
+          ],
+        }),
+      })
+      const discoverySingle = new ProjectDiscovery(
+        'SingleProject',
+        configReaderSingle,
+      )
+
+      const result = discoverySingle.getEoaActors()
+
+      expect(result.raw).toHaveLength(1)
+      expect(result.linkable).toHaveLength(1)
+      expect(result.grouped).toHaveLength(1)
+      expect(result.linkable[0].name).toEqual('TestEOA')
+      expect(result.grouped[0].name).toEqual('TestEOA')
+    })
+
+    it('should group EOAs with same description but different chains', () => {
+      const configReaderMultiChain = mockObject<ConfigReader>({
+        readConfig: (projectName: string) => mockConfig(projectName),
+        readDiscovery: () => ({
+          ...discoveredJsonStub,
+          entries: [
+            ...discoveredJsonStub.entries.filter((e) => e.type !== 'EOA'),
+            {
+              type: 'Contract',
+              name: 'MultiSigContract',
+              address: ChainSpecificAddress(
+                'eth:0x3333333333333333333333333333333333333333',
+              ),
+              category: { name: 'Test', priority: 1 },
+            },
+            {
+              type: 'Contract',
+              name: 'MultiSigContract',
+              address: ChainSpecificAddress(
+                'arb1:0x3333333333333333333333333333333333333333',
+              ),
+              category: { name: 'Test', priority: 1 },
+            },
+            {
+              type: 'EOA',
+              name: 'MultiSigMember1',
+              address: ChainSpecificAddress(
+                'eth:0x1111111111111111111111111111111111111111',
+              ),
+              receivedPermissions: [
+                {
+                  permission: 'upgrade',
+                  from: ChainSpecificAddress(
+                    'eth:0x3333333333333333333333333333333333333333',
+                  ),
+                },
+              ],
+              category: { name: 'Test', priority: 1 },
+            },
+            {
+              type: 'EOA',
+              name: 'MultiSigMember2',
+              address: ChainSpecificAddress(
+                'arb1:0x2222222222222222222222222222222222222222',
+              ),
+              receivedPermissions: [
+                {
+                  permission: 'upgrade',
+                  from: ChainSpecificAddress(
+                    'arb1:0x3333333333333333333333333333333333333333',
+                  ),
+                },
+              ],
+              category: { name: 'Test', priority: 1 },
+            },
+            {
+              type: 'EOA',
+              name: 'MultiSigMember3',
+              address: ChainSpecificAddress(
+                'eth:0x4444444444444444444444444444444444444444',
+              ),
+              receivedPermissions: [
+                {
+                  permission: 'upgrade',
+                  from: ChainSpecificAddress(
+                    'eth:0x3333333333333333333333333333333333333333',
+                  ),
+                },
+              ],
+              category: { name: 'Test', priority: 1 },
+            },
+          ],
+        }),
+      })
+      const discoveryMultiChain = new ProjectDiscovery(
+        'MultiChainProject',
+        configReaderMultiChain,
+      )
+
+      const result = discoveryMultiChain.getEoaActors()
+
+      expect(result.raw).toHaveLength(3)
+      expect(result.linkable).toHaveLength(3)
+
+      // Should have 2 grouped actors: one for eth chain (2 EOAs), one for arb1 chain (1 EOA)
+      expect(result.grouped).toHaveLength(2)
+
+      const ethGroup = result.grouped.find((g) => g.chain === 'ethereum')
+      const arbGroup = result.grouped.find((g) => g.chain === 'arbitrum')
+
+      expect(ethGroup).not.toEqual(undefined)
+      expect(arbGroup).not.toEqual(undefined)
+      expect(ethGroup?.accounts ?? []).toHaveLength(2)
+      expect(arbGroup?.accounts ?? []).toHaveLength(1)
+      expect(ethGroup?.name).toEqual('MultiSigMember1 and MultiSigMember3')
+      expect(ethGroup?.id).toEqual('MultiSigMember1-and-MultiSigMember3')
+      expect(arbGroup?.name).toEqual('MultiSigMember2')
+      expect(arbGroup?.id).toEqual('MultiSigMember2')
+    })
+  })
 })
 
 function mockConfig(

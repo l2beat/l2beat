@@ -182,6 +182,12 @@ describe('getProjects', () => {
   describe('contracts', () => {
     for (const project of getProjects()) {
       describe(project.id, () => {
+        const permissions = Object.values(project.permissions ?? {})
+        const all = [
+          ...permissions.flatMap((p) => p.roles ?? []),
+          ...permissions.flatMap((p) => p.actors ?? []),
+        ]
+
         const contracts = project.contracts?.addresses ?? {}
         for (const [chain, perChain] of Object.entries(contracts)) {
           for (const [i, contract] of perChain.entries()) {
@@ -196,22 +202,17 @@ describe('getProjects', () => {
             })
 
             const upgradableBy = contract.upgradableBy
-            const permissions = Object.values(project.permissions ?? {})
-            const all = [
-              ...permissions.flatMap((p) => p.roles ?? []),
-              ...permissions.flatMap((p) => p.actors ?? []),
-            ]
-            const actors = all.map((x) => {
-              if (x.name === 'EOA') {
-                assert(x.accounts[0].type === 'EOA')
-                return x.accounts[0].address
-              }
-              return x.name
-            })
+            const actorIds = all.map((a) => a.id)
 
             if (upgradableBy) {
-              it(`contracts[${project.id}][${chain}][${i}].upgradableBy is valid`, () => {
-                expect(actors).toInclude(...upgradableBy.map((a) => a.name))
+              it(`contracts[${project.id}][${chain}][${contract.name ?? contract.address.toString()} (${i})].upgradableBy is valid \n ${actorIds} | \n${upgradableBy.map((a) => a.name)}`, () => {
+                const expectedToContain = upgradableBy.map(
+                  (a) => a.id ?? a.name,
+                )
+
+                for (const expected of expectedToContain) {
+                  expect(actorIds).toInclude(expected)
+                }
               })
             }
           }
