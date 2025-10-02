@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const gateLayer: ScalingProject = upcomingL2({
   id: 'gate-layer',
   capability: 'universal',
+  hasTestnet, true,
   addedAt: UnixTime(1754639625),
   display: {
     name: 'Gate Layer',
@@ -19,9 +20,6 @@ export const gateLayer: ScalingProject = upcomingL2({
       explorers: ['https://gatescan.org/gatelayer'],
       socialMedia: ['https://x.com/gatechain_io'],
     },
-  },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
   },
   proofSystem: {
     type: 'Optimistic',
