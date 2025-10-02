@@ -6,6 +6,7 @@ import {
   type EigenCommitment,
   EigenV1BlobInfo,
   EigenV2BlobInfo,
+  EigenV3BlobInfo,
 } from './eigen-types'
 
 export async function checkForEigenDA(
@@ -23,13 +24,23 @@ export async function checkForEigenDA(
     return false
   }
 
-  const v1Commitments = possibleCommitments.filter((c) => c.version === 'v1')
   const v2Commitments = possibleCommitments.filter((c) => c.version === 'v2')
+  const v3Commitments = possibleCommitments.filter((c) => c.version === 'v3')
+  const v1Commitments = possibleCommitments.filter((c) => c.version === 'v1')
 
-  const v1Verification = await verifyV1Commitments(provider, v1Commitments)
-  const v2Verification = verifyV2Commitments(v2Commitments)
+  if (verifyV3Commitments(v3Commitments)) {
+    return 'v3'
+  }
 
-  return v1Verification || v2Verification
+  if (verifyV2Commitments(v2Commitments)) {
+    return 'v2'
+  }
+
+  if (await verifyV1Commitments(provider, v1Commitments)) {
+    return 'v1'
+  }
+
+  return false
 }
 
 async function getConfirmedBatchHeaderHashes(
@@ -97,6 +108,13 @@ function extractCommitment(input: string): EigenCommitment | undefined {
         }
       }
 
+      if (commitmentVersionByte === EIGEN_DA_CONSTANTS.VERSION_BYTE_V3) {
+        return {
+          body: commitment.slice(2),
+          version: 'v3',
+        }
+      }
+
       // legacy
       return {
         body: commitment,
@@ -139,13 +157,22 @@ async function verifyV1Commitments(
 }
 
 function verifyV2Commitments(v2Commitments: EigenCommitment[]) {
-  return v2Commitments.every((input) => parseEigenV2(input.body) !== null)
+  return (
+    v2Commitments.length > 0 &&
+    v2Commitments.every((input) => parseEigenV2(input.body) !== null)
+  )
+}
+
+function verifyV3Commitments(v3Commitments: EigenCommitment[]) {
+  return (
+    v3Commitments.length > 0 &&
+    v3Commitments.every((input) => parseEigenV3(input.body) !== null)
+  )
 }
 
 function parseEigenV1(possibleCommitment: string): EigenV1BlobInfo | null {
   try {
     const rlp = RLP.decode('0x' + possibleCommitment)
-
     return EigenV1BlobInfo.parse(rlp)
   } catch {
     return null
@@ -155,8 +182,16 @@ function parseEigenV1(possibleCommitment: string): EigenV1BlobInfo | null {
 function parseEigenV2(possibleCommitment: string): EigenV2BlobInfo | null {
   try {
     const rlp = RLP.decode('0x' + possibleCommitment)
-
     return EigenV2BlobInfo.parse(rlp)
+  } catch {
+    return null
+  }
+}
+
+function parseEigenV3(possibleCommitment: string): EigenV3BlobInfo | null {
+  try {
+    const rlp = RLP.decode('0x' + possibleCommitment)
+    return EigenV3BlobInfo.parse(rlp)
   } catch {
     return null
   }
