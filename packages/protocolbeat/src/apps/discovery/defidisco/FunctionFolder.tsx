@@ -10,10 +10,10 @@ import { IconLockClosed } from './IconLockClosed'
 import { IconLockOpen } from './IconLockOpen'
 import { IconVoltage } from './IconVoltage'
 import { IconOpen } from './IconOpen'
-import { AddressDisplay } from '../panel-values/AddressDisplay'
 import type { OwnerDefinition } from '../../../api/types'
 import { useQuery } from '@tanstack/react-query'
 import { getProject } from '../../../api/api'
+import { usePanelStore } from '../store/panel-store'
 
 interface FunctionFolderProps {
   entry: ApiAbiEntry
@@ -166,6 +166,60 @@ export function FunctionFolder({
           throw new Error('Current contract not found')
         }
 
+        // Special case: accessControl means look for the role in the CURRENT contract
+        if (definition.sourceField === 'accessControl') {
+          // Get the full role data including admin and members
+          const accessControlField = currentContract.fields?.find((f: any) => f.name === 'accessControl')
+
+          if (!accessControlField || accessControlField.value?.type !== 'object') {
+            throw new Error('AccessControl field not found')
+          }
+
+          // Find the role in the object structure [[key, value], [key, value], ...]
+          let roleData: any = null
+          for (const [keyField, valueField] of accessControlField.value.values) {
+            if (keyField.type === 'string' && keyField.value === definition.dataPath) {
+              roleData = valueField
+              break
+            }
+          }
+
+          if (!roleData || roleData.type !== 'object') {
+            throw new Error(`Role ${definition.dataPath} not found`)
+          }
+
+          // Extract admin and members from the role object
+          let adminRole: string | null = null
+          const memberAddresses: string[] = []
+
+          for (const [propKey, propValue] of roleData.values) {
+            if (propKey.type === 'string' && propKey.value === 'adminRole') {
+              if (propValue.type === 'string') {
+                adminRole = propValue.value
+              }
+            }
+            if (propKey.type === 'string' && propKey.value === 'members') {
+              if (propValue.type === 'array') {
+                for (const member of propValue.values) {
+                  if (member.type === 'address') {
+                    memberAddresses.push((member as AddressFieldValue).address)
+                  }
+                }
+              }
+            }
+          }
+
+          return {
+            address: memberAddresses[0] || 'NO_MEMBERS',
+            source: definition,
+            isResolved: memberAddresses.length > 0,
+            roleData: {
+              adminRole,
+              members: memberAddresses
+            }
+          }
+        }
+
         // Step 2: Resolve source field to get source address
         const sourceField = currentContract.fields?.find(f => f.name === definition.sourceField)
         if (!sourceField || sourceField.value.type !== 'address') {
@@ -208,6 +262,16 @@ export function FunctionFolder({
 
   const ownersLoading = false
   const ownersError = null
+
+  // Helper to get contract name from address
+  const getContractName = (address: string): string => {
+    if (!projectData?.entries) return address
+
+    const contract = projectData.entries.flatMap(e => [...e.initialContracts, ...e.discoveredContracts])
+      .find(c => c.address === address)
+
+    return contract?.name || address.slice(0, 10) + '...'
+  }
 
   // Resolve delay value from projectData
   const resolvedDelay = React.useMemo(() => {
@@ -758,18 +822,66 @@ export function FunctionFolder({
                           </button>
                         </div>
 
-                        {/* Show full resolved address with AddressDisplay for additional context */}
+                        {/* Show resolved owners */}
                         {!ownersLoading && correspondingResolved && correspondingResolved.isResolved && (
                           <div className="ml-2 mt-1">
                             <div className="text-xs text-coffee-400 mb-1">Resolves to:</div>
-                            <AddressDisplay
-                              simplified
-                              value={{
-                                type: 'address',
-                                address: correspondingResolved.address,
-                                addressType: 'Unknown',
-                              }}
-                            />
+
+                            {/* AccessControl role - show admin and members */}
+                            {(correspondingResolved as any).roleData ? (
+                              <div className="space-y-1">
+                                {/* Admin Role */}
+                                {(correspondingResolved as any).roleData.adminRole && (
+                                  <div className="flex items-center gap-2 text-xs">
+                                    <span className="text-coffee-400">Admin:</span>
+                                    <span className="text-aux-purple">{(correspondingResolved as any).roleData.adminRole}</span>
+                                  </div>
+                                )}
+
+                                {/* Members */}
+                                {(correspondingResolved as any).roleData.members.length > 0 && (
+                                  <div>
+                                    <div className="text-coffee-400 text-xs mb-1">Members:</div>
+                                    {(correspondingResolved as any).roleData.members.map((memberAddr: string, idx: number) => (
+                                      <div key={idx} className="flex items-center gap-2 ml-2 mb-1">
+                                        <button
+                                          onClick={() => usePanelStore.getState().select(memberAddr)}
+                                          className="text-aux-cyan hover:text-aux-cyan-light text-xs"
+                                          title={`Select ${memberAddr}`}
+                                        >
+                                          {getContractName(memberAddr)}
+                                        </button>
+                                        <button
+                                          onClick={() => usePanelStore.getState().select(memberAddr)}
+                                          className="text-coffee-400 hover:text-coffee-300"
+                                          title="Select this contract"
+                                        >
+                                          <IconOpen />
+                                        </button>
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            ) : (
+                              /* Regular owner - show name with select button */
+                              <div className="flex items-center gap-2">
+                                <button
+                                  onClick={() => usePanelStore.getState().select(correspondingResolved.address)}
+                                  className="text-aux-cyan hover:text-aux-cyan-light text-xs"
+                                  title={`Select ${correspondingResolved.address}`}
+                                >
+                                  {getContractName(correspondingResolved.address)}
+                                </button>
+                                <button
+                                  onClick={() => usePanelStore.getState().select(correspondingResolved.address)}
+                                  className="text-coffee-400 hover:text-coffee-300"
+                                  title="Select this contract"
+                                >
+                                  <IconOpen />
+                                </button>
+                              </div>
+                            )}
                           </div>
                         )}
 

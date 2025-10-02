@@ -106,10 +106,6 @@ import {
   ZKsyncEraValidatorsHandler,
   ZKsyncEraValidatorsHandlerDefinition,
 } from './ZKsyncEraValidatorsHandler'
-import {
-  WriteFunctionPermissionHandler,
-  WriteFunctionPermissionDefinition,
-} from '../defidisco/WriteFunctionPermissionHandler'
 
 export type UserHandlerDefinition = v.infer<typeof UserHandlerDefinition>
 export const UserHandlerDefinition = v.union([
@@ -142,7 +138,6 @@ export const UserHandlerDefinition = v.union([
   ERC20DataDefinition,
   TradableDefinition,
   YieldFiMintersDefinition,
-  WriteFunctionPermissionDefinition,
   EventTraceHandlerDefinition,
 ])
 
@@ -210,8 +205,6 @@ export function getUserHandler(
       return new TradableHandler(field)
     case 'YieldFiMinters':
       return new YieldFiMintersHandler(field, definition, abi)
-    case 'writeFunctionPermission':
-      return new WriteFunctionPermissionHandler(field, definition, abi)
     case 'eventTrace':
       return new EventTraceHandler(field, definition, abi)
   }

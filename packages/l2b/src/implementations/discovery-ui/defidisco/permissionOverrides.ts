@@ -335,6 +335,8 @@ export function resolveOwnersFromDiscovered(
  * Resolves a single owner definition using the two-step approach:
  * 1. Find sourceField in current contract → get source address
  * 2. Navigate to source address and extract data at dataPath
+ *
+ * Special case: When sourceField is "accessControl", we look for roles in the CURRENT contract
  */
 function resolveOwnerDefinition(
   discovered: any,
@@ -346,12 +348,45 @@ function resolveOwnerDefinition(
     throw new Error('No entries found in discovered data')
   }
 
+  // Log all contract addresses to debug format issues
+  const contractAddresses = discovered.entries
+    .filter((e: any) => e.type === 'Contract')
+    .map((e: any) => e.address)
+
   const currentContract = discovered.entries.find((entry: any) =>
     entry.type === 'Contract' && entry.address === currentContractAddress
   )
 
   if (!currentContract) {
-    throw new Error(`Current contract ${currentContractAddress} not found in discovered data`)
+    throw new Error(`Current contract ${currentContractAddress} not found in discovered data. Available addresses: ${contractAddresses.slice(0, 5).join(', ')}...`)
+  }
+
+  // Special case: accessControl means look for the role in the CURRENT contract
+  if (definition.sourceField === 'accessControl') {
+    // Navigate dataPath directly in the current contract's accessControl field
+    if (!currentContract.values?.accessControl || typeof currentContract.values.accessControl !== 'object') {
+      const availableFields = Object.keys(currentContract.values || {}).join(', ')
+      throw new Error(`Contract ${currentContractAddress} does not have accessControl field. Available fields: ${availableFields}`)
+    }
+
+    const roleData = currentContract.values.accessControl[definition.dataPath]
+    if (!roleData) {
+      const availableRoles = Object.keys(currentContract.values.accessControl).join(', ')
+      throw new Error(`Role ${definition.dataPath} not found in accessControl. Available roles: ${availableRoles}`)
+    }
+
+    // Return all members (both from members array and adminRole if it exists)
+    const addresses: string[] = []
+
+    // Add members from the members array
+    if (roleData.members && Array.isArray(roleData.members)) {
+      addresses.push(...roleData.members.filter((m: any) => typeof m === 'string' && m.startsWith('eth:')))
+    }
+
+    // Note: adminRole is a string (role name), not an address, so we don't add it here
+    // The UI should display the entire role structure including adminRole
+
+    return addresses
   }
 
   // Step 2: Get source address from sourceField

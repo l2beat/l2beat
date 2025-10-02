@@ -1,6 +1,7 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
-import { getProject } from '../../../api/api'
+import { useState } from 'react'
+import { getProject, getPermissionOverrides, detectPermissionsWithAI } from '../../../api/api'
 import type { ApiAddressEntry, ApiProjectContract } from '../../../api/types'
 import { ActionNeededState } from '../../../components/ActionNeededState'
 import { AddressIcon } from '../../../components/AddressIcon'
@@ -55,12 +56,43 @@ function Display({
   blockNumber: number
 }) {
   const chain = selected.chain
+  const queryClient = useQueryClient()
+  const [aiDetectionStatus, setAiDetectionStatus] = useState<string>('')
 
   const { project } = useParams()
   if (!project) {
     throw new Error('Cannot use component outside of project page!')
   }
   const addresses = getAddressesToCopy(selected)
+
+  // Check if contract has existing permissions
+  const { data: permissionOverrides } = useQuery({
+    queryKey: ['permission-overrides', project],
+    queryFn: () => getPermissionOverrides(project),
+    enabled: !!project,
+  })
+
+  const hasExistingPermissions = permissionOverrides?.contracts?.[selected.address]?.functions?.length > 0
+
+  // AI detection mutation
+  const aiDetectionMutation = useMutation({
+    mutationFn: async () => {
+      setAiDetectionStatus('Detecting permissions with AI...')
+      return await detectPermissionsWithAI(project, selected.address)
+    },
+    onSuccess: (data) => {
+      setAiDetectionStatus(`✓ Detected ${data.detectedFunctions} functions`)
+      // Invalidate permission overrides to refresh the UI
+      queryClient.invalidateQueries({ queryKey: ['permission-overrides', project] })
+      // Clear status after 3 seconds
+      setTimeout(() => setAiDetectionStatus(''), 3000)
+    },
+    onError: (error: Error) => {
+      setAiDetectionStatus(`✗ Error: ${error.message}`)
+      // Clear status after 5 seconds
+      setTimeout(() => setAiDetectionStatus(''), 5000)
+    },
+  })
 
   const dialog = addresses && canAddShape(selected) && !IS_READONLY && (
     <TemplateDialog.Root
@@ -78,6 +110,29 @@ function Display({
     </TemplateDialog.Root>
   )
 
+  // AI Detection button - determine if it should be disabled and why
+  const getDisabledReason = (): string | null => {
+    if (IS_READONLY) return 'Server is in readonly mode'
+    if (selected.type === 'EOA') return 'Cannot detect permissions for EOA addresses'
+    if (selected.type === 'Unverified') return 'Contract source code not verified'
+    if (hasExistingPermissions) return 'Contract already has detected permissions'
+    return null
+  }
+
+  const disabledReason = getDisabledReason()
+  const isButtonDisabled = aiDetectionMutation.isPending || disabledReason !== null
+
+  const aiDetectionButton = (
+    <button
+      onClick={() => !isButtonDisabled && aiDetectionMutation.mutate()}
+      disabled={isButtonDisabled}
+      title={disabledReason || 'Click to detect permissions using AI'}
+      className="ml-2 bg-aux-purple px-3 py-1 font-medium text-sm text-white transition-all duration-300 hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      AI Permissions
+    </button>
+  )
+
   return (
     <>
       <div id={selected.address} className="mb-2 px-5 text-lg">
@@ -90,7 +145,13 @@ function Display({
             )}
           </div>
           {dialog}
+          {aiDetectionButton}
         </div>
+        {aiDetectionStatus && (
+          <div className="mt-2 text-xs text-aux-cyan">
+            {aiDetectionStatus}
+          </div>
+        )}
         <WithHeadline headline="Address">
           <AddressDisplay
             simplified

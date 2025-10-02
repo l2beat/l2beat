@@ -230,6 +230,7 @@ export interface PermissionOverride {
   contractAddress?: string
   functionName: string
   userClassification: 'permissioned' | 'non-permissioned'
+  aiClassification?: 'permissioned' | 'non-permissioned'  // NEW: AI-detected classification
   checked?: boolean
   score?: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk'
   reason?: string

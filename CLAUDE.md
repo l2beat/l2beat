@@ -63,11 +63,18 @@ git fetch upstream && git merge upstream/main
 
 ## DefidDisco Features
 
-### Function Permission Analysis ✅
-**Discovery Handler**: `WriteFunctionPermissionHandler` in `/defidisco/` folder
-- Analyzes write function permissions in source code
-- Handler config: `"handler": { "type": "functionPermission" }`
-- **Critical**: Run `pnpm run generate-schemas && pnpm build` after handler changes
+### AI-Based Permission Detection ✅
+**Manual Detection System**: AI-powered permission analysis with UI button
+- **File**: `/defidisco/aiPermissionDetection.ts` - OpenAI (GPT-4) and Claude (Sonnet 3.5) support
+- **UI**: "AI Permissions" button in `ValuesPanel.tsx` (once per contract, disabled if permissions exist)
+- **Config**: `.env` file with `AI_PROVIDER` (openai/claude) and `AI_API_KEY`
+- **Endpoint**: `POST /api/projects/:project/ai-detect-permissions/:address`
+- **Features**:
+  - Analyzes contract source code to identify permissioned functions
+  - Maps functions to correct addresses (proxy vs implementation via .p.sol naming)
+  - Validates against ABI to filter hallucinated functions
+  - Saves to `permission-overrides.json` with `aiClassification` field (not currently used in UI)
+- **Prompt Engineering**: Instructs AI to identify owners with `sourceField` (e.g., "owner", "accessControl") and `dataPath` (e.g., "$self", "DEFAULT_ADMIN_ROLE")
 
 ### Interactive Permission Management ✅
 **UI System**: Complete permission management in `/defidisco/ValuesPanelExtensions.tsx`
@@ -121,13 +128,17 @@ git fetch upstream && git merge upstream/main
   }
   ```
 - **Discovery**: Automatically detects roles from `RoleGranted`/`RoleRevoked` events
-- **Data Structure**: Roles stored in `values.accessControl` with `members` arrays
+- **Data Structure**: Roles stored in `values.accessControl` with `adminRole` and `members[]`
 - **Owner Tracking**:
   - Set `sourceField: "accessControl"` to reference current contract's roles
   - Set `dataPath` to role name (e.g., `"DEFAULT_ADMIN_ROLE"`)
   - Roles appear in dropdown when selecting owner definitions
 - **Cross-Contract**: Can reference AccessControl roles in external contracts via address fields
-- **Backend Resolution**: Supports both direct role names and full paths (`accessControl.ROLE.members`)
+- **Resolution**: Frontend-only resolution in `FunctionFolder.tsx` (no backend API)
+  - Special case: `sourceField === "accessControl"` resolves in current contract
+  - Extracts both `adminRole` and `members[]` from role data
+  - Shows contract names instead of addresses (clickable to select in UI)
+- **Display**: Shows "Admin: ROLE_NAME" and "Members: ContractName1, ContractName2..."
 
 ---
 
@@ -238,6 +249,7 @@ packages/
             "contractAddress": "eth:0x456...",
             "fieldName": "delay"
           },
+          "aiClassification": "permissioned",
           "timestamp": "2025-09-30T15:21:54.826Z"
         }
       ]
@@ -258,6 +270,10 @@ packages/
   - `{"sourceField": "governor", "dataPath": "PAUSER_ROLE"}` - Members of PAUSER_ROLE in governor contract
 - Multiple owner definitions supported via array
 - Use `ownerDefinitions !== undefined` pattern (not `??`) to handle explicit clearing
+- **Resolution**: Frontend-only in `FunctionFolder.tsx` (useMemo)
+  - Special case: `sourceField === "accessControl"` extracts both `adminRole` and `members[]`
+  - Shows contract names with click-to-select functionality
+- **Backend Resolution**: Only used in `generatePermissionsReport.ts` for report generation
 
 **Delay Field**:
 - Stores reference to numeric field (not the value itself)

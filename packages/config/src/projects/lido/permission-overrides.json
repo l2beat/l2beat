@@ -1,19 +1,373 @@
 {
   "version": "1.0",
-  "lastModified": "2025-10-01T21:28:53.658Z",
+  "lastModified": "2025-10-02T19:21:02.296Z",
   "contracts": {
+    "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": {
+      "functions": [
+        {
+          "functionName": "setOwner",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "getOwner",
+              "dataPath": "$self"
+            }
+          ],
+          "timestamp": "2025-10-02T01:09:04.750Z"
+        },
+        {
+          "functionName": "setPauseIntentValidityPeriodBlocks",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "getOwner",
+              "dataPath": "$self"
+            }
+          ],
+          "timestamp": "2025-10-02T01:09:04.755Z"
+        },
+        {
+          "functionName": "setMaxOperatorsPerUnvetting",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "getOwner",
+              "dataPath": "$self"
+            }
+          ],
+          "timestamp": "2025-10-02T01:09:04.758Z"
+        },
+        {
+          "functionName": "setGuardianQuorum",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "getOwner",
+              "dataPath": "$self"
+            }
+          ],
+          "timestamp": "2025-10-02T01:09:04.759Z"
+        },
+        {
+          "functionName": "addGuardian",
+          "userClassification": "permissioned",
+          "score": "unscored",
+          "ownerDefinitions": [
+            {
+              "sourceField": "getOwner",
+              "dataPath": "$self"
+            }
+          ],
+          "timestamp": "2025-10-02T01:16:20.279Z"
+        },
+        {
+          "functionName": "addGuardians",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "getOwner",
+              "dataPath": "$self"
+            }
+          ],
+          "timestamp": "2025-10-02T01:09:04.762Z"
+        },
+        {
+          "functionName": "removeGuardian",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "getOwner",
+              "dataPath": "$self"
+            }
+          ],
+          "timestamp": "2025-10-02T01:09:04.764Z"
+        },
+        {
+          "functionName": "pauseDeposits",
+          "userClassification": "non-permissioned",
+          "timestamp": "2025-10-02T01:09:04.766Z"
+        },
+        {
+          "functionName": "unpauseDeposits",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "getOwner",
+              "dataPath": "$self"
+            }
+          ],
+          "timestamp": "2025-10-02T01:09:04.767Z"
+        },
+        {
+          "functionName": "depositBufferedEther",
+          "userClassification": "non-permissioned",
+          "timestamp": "2025-10-02T01:09:04.769Z"
+        },
+        {
+          "functionName": "unvetSigningKeys",
+          "userClassification": "non-permissioned",
+          "timestamp": "2025-10-02T01:09:04.770Z"
+        }
+      ]
+    },
+    "eth:0x9f3b9198911054B122fDb865f8A5Ac516201c339": {
+      "functions": [
+        {
+          "functionName": "createPermission",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "CREATE_PERMISSIONS_ROLE",
+              "dataPath": "$self"
+            }
+          ],
+          "timestamp": "2025-10-02T13:35:26.261Z"
+        },
+        {
+          "functionName": "grantPermission",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "permissionManager",
+              "dataPath": "$self"
+            }
+          ],
+          "timestamp": "2025-10-02T13:35:26.262Z"
+        },
+        {
+          "functionName": "grantPermissionP",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "permissionManager",
+              "dataPath": "$self"
+            }
+          ],
+          "timestamp": "2025-10-02T13:35:26.267Z"
+        },
+        {
+          "functionName": "revokePermission",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "permissionManager",
+              "dataPath": "$self"
+            }
+          ],
+          "timestamp": "2025-10-02T13:35:26.267Z"
+        },
+        {
+          "functionName": "setPermissionManager",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "permissionManager",
+              "dataPath": "$self"
+            }
+          ],
+          "timestamp": "2025-10-02T13:35:26.268Z"
+        },
+        {
+          "functionName": "removePermissionManager",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "permissionManager",
+              "dataPath": "$self"
+            }
+          ],
+          "timestamp": "2025-10-02T13:35:26.269Z"
+        },
+        {
+          "functionName": "createBurnedPermission",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "CREATE_PERMISSIONS_ROLE",
+              "dataPath": "$self"
+            }
+          ],
+          "timestamp": "2025-10-02T13:35:26.269Z"
+        },
+        {
+          "functionName": "burnPermissionManager",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "permissionManager",
+              "dataPath": "$self"
+            }
+          ],
+          "timestamp": "2025-10-02T13:35:26.270Z"
+        }
+      ]
+    },
     "eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3": {
       "functions": [
         {
-          "functionName": "commitSharesToBurn",
-          "userClassification": "non-permissioned",
+          "functionName": "requestBurnMyStETHForCover",
+          "userClassification": "permissioned",
           "ownerDefinitions": [
             {
               "sourceField": "accessControl",
-              "dataPath": "DEFAULT_ADMIN_ROLE"
+              "dataPath": "REQUEST_BURN_MY_STETH_ROLE"
             }
           ],
-          "timestamp": "2025-10-01T21:28:53.658Z"
+          "timestamp": "2025-10-02T15:54:05.779Z"
+        },
+        {
+          "functionName": "requestBurnSharesForCover",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "REQUEST_BURN_SHARES_ROLE",
+              "dataPath": "$self"
+            }
+          ],
+          "timestamp": "2025-10-02T15:54:05.784Z"
+        },
+        {
+          "functionName": "requestBurnMyStETH",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "REQUEST_BURN_MY_STETH_ROLE",
+              "dataPath": "$self"
+            }
+          ],
+          "timestamp": "2025-10-02T15:54:05.785Z"
+        },
+        {
+          "functionName": "requestBurnShares",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "REQUEST_BURN_SHARES_ROLE",
+              "dataPath": "$self"
+            }
+          ],
+          "timestamp": "2025-10-02T15:54:05.785Z"
+        },
+        {
+          "functionName": "recoverExcessStETH",
+          "userClassification": "non-permissioned",
+          "timestamp": "2025-10-02T15:54:05.788Z"
+        },
+        {
+          "functionName": "recoverERC20",
+          "userClassification": "non-permissioned",
+          "timestamp": "2025-10-02T15:54:05.797Z"
+        },
+        {
+          "functionName": "recoverERC721",
+          "userClassification": "non-permissioned",
+          "timestamp": "2025-10-02T15:54:05.798Z"
+        },
+        {
+          "functionName": "commitSharesToBurn",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "STETH",
+              "dataPath": "$self"
+            }
+          ],
+          "timestamp": "2025-10-02T15:54:05.799Z"
+        }
+      ]
+    },
+    "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": {
+      "functions": [
+        {
+          "functionName": "transferToVault",
+          "userClassification": "non-permissioned",
+          "timestamp": "2025-10-02T19:19:15.299Z"
+        }
+      ]
+    },
+    "eth:0x3A93C17FC82CC33420d1809dDA9Fb715cc89dd37": {
+      "functions": [
+        {
+          "functionName": "execute",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "kernel",
+              "dataPath": "EXECUTE_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-02T19:19:15.306Z"
+        },
+        {
+          "functionName": "safeExecute",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "kernel",
+              "dataPath": "SAFE_EXECUTE_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-02T19:19:15.306Z"
+        },
+        {
+          "functionName": "addProtectedToken",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "kernel",
+              "dataPath": "ADD_PROTECTED_TOKEN_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-02T19:19:15.307Z"
+        },
+        {
+          "functionName": "removeProtectedToken",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "kernel",
+              "dataPath": "REMOVE_PROTECTED_TOKEN_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-02T19:19:15.308Z"
+        },
+        {
+          "functionName": "presignHash",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "kernel",
+              "dataPath": "ADD_PRESIGNED_HASH_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-02T19:19:15.309Z"
+        },
+        {
+          "functionName": "setDesignatedSigner",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "kernel",
+              "dataPath": "DESIGNATE_SIGNER_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-02T19:19:15.309Z"
+        },
+        {
+          "functionName": "forward",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "kernel",
+              "dataPath": "RUN_SCRIPT_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-02T19:19:15.311Z"
+        },
+        {
+          "functionName": "transfer",
+          "userClassification": "non-permissioned",
+          "timestamp": "2025-10-02T19:21:02.296Z"
         }
       ]
     }

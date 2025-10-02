@@ -676,22 +676,6 @@
                           {
                             "type": "object",
                             "properties": {
-                              "type": { "const": "writeFunctionPermission" },
-                              "ignoreRelative": { "type": "boolean" },
-                              "limits": {
-                                "type": "object",
-                                "properties": {
-                                  "maxWriteFunctions": { "type": "number" },
-                                  "maxSourceSize": { "type": "number" },
-                                  "maxSourceFiles": { "type": "number" }
-                                }
-                              }
-                            },
-                            "required": ["type"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
                               "type": { "const": "eventTrace" },
                               "event": { "type": "string" },
                               "function": { "type": "string" }

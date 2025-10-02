@@ -308,3 +308,22 @@ export async function updateContractTag(
   }
 }
 
+export async function detectPermissionsWithAI(
+  project: string,
+  address: string
+): Promise<{ success: boolean; detectedFunctions: number; functions: any[] }> {
+  const res = await fetch(`/api/projects/${project}/ai-detect-permissions/${address}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  if (!res.ok) {
+    const errorData = await res.json()
+    throw new Error(errorData.error || res.statusText)
+  }
+
+  return await res.json()
+}
+
