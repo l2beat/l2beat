@@ -11,6 +11,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '~/components/core/Accordion'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   Tooltip,
   TooltipContent,
@@ -63,12 +64,12 @@ export function StageSection({
   if (stageConfig.stage === 'UnderReview' || sectionProps.isUnderReview) {
     return (
       <ProjectSection {...sectionProps} isUnderReview>
-        <div className="mb-6 flex flex-wrap items-center gap-2 font-medium">
+        <div className="mb-6 flex flex-wrap items-center gap-2 font-bold text-label-value-16 md:px-6 md:text-label-value-18">
           <img
             src={icon}
             alt={name}
-            width={18}
-            height={18}
+            width={20}
+            height={20}
             className="-top-px relative inline-block size-[18px]"
           />
           <p>{name}&apos;s stage is currently</p>
@@ -91,16 +92,16 @@ export function StageSection({
         <Callout
           color="yellow"
           body={emergencyWarning}
-          icon={<EmergencyIcon className="size-5" />}
-          className="mb-4 p-4 font-medium leading-snug"
+          icon={<EmergencyIcon className="mt-0.5 size-5" />}
+          className="mb-2 p-4 font-medium leading-snug"
         />
       )}
-      <span className="mb-4 inline-block w-full rounded-lg bg-surface-secondary p-4 font-medium md:px-6">
+      <span className="mb-2 inline-block w-full rounded-lg bg-surface-secondary p-4 font-bold text-label-value-16 md:px-6 md:text-label-value-18">
         <img
           src={icon}
           alt={name}
-          width={18}
-          height={18}
+          width={20}
+          height={20}
           className="-top-0.5 relative mr-2 inline-block"
         />
         {name} is {notEvenAStage0 ? 'not even a' : 'a'}{' '}
@@ -115,7 +116,7 @@ export function StageSection({
       </span>
       {scopeOfAssessment && (
         <ScopeOfAssessment
-          className="mb-4"
+          className="mb-2"
           scopeOfAssessment={scopeOfAssessment}
         />
       )}
@@ -151,9 +152,11 @@ export function StageSection({
           color="yellow"
           className="mb-6"
           icon={warningBarIcon}
+          iconClassName="mt-1"
           text={stageConfig.message.text}
         />
       )}
+      <HorizontalSeparator className="my-4" />
       <Accordion type="multiple">
         {stageConfig.summary.map((stage) => {
           const requirementsForLabel =
