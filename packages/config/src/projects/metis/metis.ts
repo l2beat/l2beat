@@ -224,8 +224,8 @@ export const metis: ScalingProject = {
       ...RISK_VIEW.STATE_FP_INT(CHALLENGE_PERIOD_SECONDS),
       description:
         RISK_VIEW.STATE_FP_INT().description +
-        ' Anyone can submit challenges, however, only the Metis Security Council minority can delete disputed batches.',
-      sentiment: 'warning',
+        'Anyone can submit challenge requests. However, permissioned actors are needed to create the challenge and to delete successfully disputed state roots. Additionally, the current permissioned actors (GameCreator and Security Council minority) can collude and finalize malicious state roots.',
+      sentiment: 'bad',
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
