@@ -18,6 +18,14 @@
           "content": "Entropy Advisors, backed by the ArbitrumDAO, [launched DRIP](https://blog.arbitrum.io/introducing-drip-the-defi-renaissance-incentive-program-on-arbitrum/)—a four-season, $40M incentive program targeting real DeFi usage, not vanity metrics. Season One is now live and focuses on leveraged looping on lending platforms.\n\nBy borrowing ETH or stablecoins against eligible yield-bearing assets (like syrupUSDC or weETH), users earn ARB based on their time-weighted average borrow. No signup needed—just loop, borrow, and earn over 10 epochs until January 20, 2026.\n\nRewards are protocol-agnostic, with a phased rollout to optimize incentives based on market performance. Visit [arbitrumdrip.com](https://arbitrumdrip.com/) to get started."
         },
         {
+          "title": "Ethereal Mainnet to Launch Soon on Arbitrum",
+          "content": "Ethereal, the high-throughput perp DEX appchain, is [gearing up](https://x.com/etherealdex/status/1973176635735285776) to launch its Mainnet Alpha on Arbitrum on October 20th. The integration with Arbitrum offers Ethereal the benefits of Arbitrum’s scaling layer - lower latency, reduced gas costs, and secure settlement."
+        },
+        {
+          "title": "Capx AI Reports 100M Transaction",
+          "content": "Capx AI recently announced it has processed 100,000,000 transactions across over 450,000 wallets with $450M+ in restaked TVL, signaling strong momentum ahead of its mainnet launch. The project is built using Arbitrum Orbit / Nitro to deliver scalable, low-cost, Ethereum-grade security for AI agent applications."
+        },
+        {
           "title": "ArbOS 50 \"Dia\" Is Coming - Next Stop: Onchain Vote",
           "content": "Following a successful [temperature check](https://snapshot.box/#/s:arbitrumfoundation.eth/proposal/0x33754da4006d0ef38666ec5d5e85fd0966a891a594ab9dc21f23beedea2d330b/discussion) on Snapshot (Sept 4), the proposed upgrade to ArbOS 50 Dia is now headed toward an onchain vote. This Constitutional AIP aims to upgrade Arbitrum One and Nova ahead of Ethereum's Fusaka hard fork (expected in November 2025), adding compatibility and unlocking powerful new features.\n\nKey changes include:\n\n- Fusaka EIP support like EIP-2537 (BLS12-381 precompile), EIP-7951 (secp256r1), and EIP-7825 (gas limit caps)\n- A new Native Mint/Burn feature for Orbit chains (disabled on One/Nova)\n- Support for constraint-based gas metering (for future dynamic pricing)\n- RPC enhancements, new opcodes, ModExp security hardening, and more\n\nMost notably, the release also introduces a more flexible block gas model, allowing higher transaction packing efficiency without increasing overall gas throughput.\n\nThe on-chain vote is not live yet, but is expected soon. If passed, the upgrade will roll out post-audit and testing - potentially after Ethereum activates Fusaka.",
           "tags": ["governance"]
@@ -125,7 +133,7 @@
       "news": [
         {
           "title": "Cypher Capital and Polygon Labs Forge Institutional Bridge for POL Access",
-          "content": "Polygon Labs [has partnered](https://polygon.technology/blog/cypher-capital-and-polygon-labs-forge-institutional-bridge-for-pol-access) with Dubai-based Cypher Capital to expand institutional access to **POL**, Polygon’s upcoming ecosystem token. Cypher recently acquired a strategic POL position and will help channel capital into POL-based strategies to improve liquidity and access for asset managers in the Middle East.\n\nThe move supports Polygon’s broader push toward becoming the leading payments chain, with recent milestones including:\n\n- **$3.4B** stablecoin supply\n- **284M** transactions (Q2)\n- **$385B** in Q2 stablecoin volume\n- **9.4M** monthly active users\n\nThis partnership reinforces Polygon’s role in powering institutional-grade infrastructure for high-frequency, cross-border value transfer."
+          "content": "Polygon Labs [has partnered](https://polygon.technology/blog/cypher-capital-and-polygon-labs-forge-institutional-bridge-for-pol-access) with Dubai-based Cypher Capital to expand institutional access to **POL**, Polygon’s ecosystem token. Cypher recently acquired a strategic POL position and will help channel capital into POL-based strategies to improve liquidity and access for asset managers in the Middle East.\n\nThe move supports Polygon’s broader push toward becoming the leading payments chain, with recent milestones including:\n\n- **$3.4B** stablecoin supply\n- **284M** transactions (Q2)\n- **$385B** in Q2 stablecoin volume\n- **9.4M** monthly active users\n\nThis partnership reinforces Polygon’s role in powering institutional-grade infrastructure for high-frequency, cross-border value transfer."
         },
         {
           "title": "Rio Upgrade Live on Testnet: Polygon Continues to go GigaGas",
@@ -197,23 +205,35 @@
         },
         {
           "title": "Honeypot Bug Locks 20,042 CTSI in Fail-Stop Test",
-          "content": "A [bug triggered](https://x.com/cartesiproject/status/1970902442259685855) during testing caused the Cartesi Honeypot smart contract to enter a fail-stop state, permanently locking 20,042 CTSI (~$1,420). This event validated the Honeypot’s purpose as a real-world stress test of the fraud-proof system, reinforcing its importance for secure deployments."
+          "content": "A [bug triggered](https://x.com/cartesiproject/status/1970902442259685855) during testing caused the Cartesi Honeypot smart contract to enter a fail-stop state, permanently locking 20,042 CTSI (~$1,500). This event validated the Honeypot’s purpose as a real-world stress test of the fraud-proof system, reinforcing its importance for secure deployments."
+        },
+        {
+          "title": "Visualization Tool for Real-Time PRT Dispute Tracking",
+          "content": "Cartesi is developing a new visualization tool to track disputes in the PRT fraud-proof system. The tool allows developers and validators to monitor both past and ongoing disputes, understand how claims and counterclaims progress, and gain insight into the overall health of the system. Currently being [tested with synthetic data](https://dave-demo.cartesi.io/), it will make disputes easier to follow while also serving as a resource for education and debugging."
+        },
+        {
+          "title": "Cartesi Introduces Bond System to PRT Fraud-Proof Mechanism",
+          "content": "Cartesi’s PRT fraud-proof system advanced with the implementation of the new bond mechanism. Validators now post small bonds when making claims, which helps prevent spam and ensures only serious participants take part. Honest validators can recover their costs, while dishonest ones lose their bonds, which are fairly redistributed. This system keeps validation nearly free for good actors, mitigates delay attacks, and maintains the integrity of the fraud-proof process. Testing and development are progressing smoothly, with a release expected soon."
         },
         {
           "title": "New Research Challenges Non-Interactive ZK Fraud Proofs for Rollups",
-          "content": "Gabriel Coutinho de Paula and co-authors published an [in-depth analysis](https://ethresear.ch/t/best-of-both-worlds-a-measured-review-of-non-interactive-zk-fraud-proofs/) showing that Non-Interactive (NI) ZK Fraud Proofs, often described as the 'best of both worlds' for rollups, may actually combine the worst aspects. Their study finds NI proofs fail to remove the ~7-day withdrawal window of optimistic rollups while adding high capital costs from ZK-rollups. The research warns NI designs could be untenable under adversarial conditions, calling for more rigorous evaluation of rollup security models."
+          "content": "Cartesi’s Head of R&D, Gabriel Coutinho de Paula and co-authors published an [in-depth analysis](https://ethresear.ch/t/best-of-both-worlds-a-measured-review-of-non-interactive-zk-fraud-proofs/) showing that Non-Interactive (NI) ZK Fraud Proofs, often described as the 'best of both worlds' for rollups, may actually combine the worst aspects. Their study finds NI proofs fail to remove the ~7-day withdrawal window of optimistic rollups while adding high capital costs from ZK-rollups. The research warns NI designs could be untenable under adversarial conditions, calling for more rigorous evaluation of rollup security models."
+        },
+        {
+          "title": "Node and Rollups Updates",
+          "content": "The [Cartesi Rollups Node v2.0.0-alpha.8](https://github.com/cartesi/rollups-node/releases/tag/v2.0.0-alpha.8) rolled out, building on a [previous release](https://github.com/cartesi/rollups-node/releases/tag/v2.0.0-alpha.7) featuring improved configuration, a polished CLI, enhanced JSON-RPC support, and stability fixes for multi-step input execution. Development continued on a [prerelease of Rollups Contracts v3.0](https://github.com/cartesi/rollups-contracts/tree/next/3.0), which will deploy the smart contracts handling settlement, consensus, and data availability for Cartesi appchains. The [Cartesi CLI](https://github.com/cartesi/application-templates/tree/prerelease/sdk-12) received updates, including refreshed application templates in C++, Go, JavaScript, Lua, Python, Rust, and TypeScript, along with a brand-new Java template, making it easier for builders to scaffold projects and adopt the latest SDK patterns."
         },
         {
           "title": "Cartesi Revamps Developer Docs for Easier Onboarding",
           "content": "Cartesi has redesigned and expanded its [documentation](https://x.com/cartesiproject/status/1973010036785045946) to better support builders. The update introduces a streamlined developer journey, clearer guides, visuals for faster learning, a new Appchains page, a dedicated Fraud Proofs section, and an updated tabular design for easier navigation."
         },
         {
-          "title": "Merkle Trees in PRT Fraud Proofs Explained",
-          "content": "ChinonsoIdogwu shared [a detailed video](https://x.com/ChinonsoIdogwu/status/1970824742740574488) explaining how Cartesi’s fraud-proof system (PRT) uses Merkle trees. The hashing structure of Merkle trees helps quickly identify discrepancies during dispute resolution, enhancing the security and transparency of off-chain computation."
+          "title": "Technical Deep Dives and Developer Insights",
+          "content": "Cartesi’s Developer Advocates were active in sharing knowledge and insights with the community: [Henrique Marlon](https://x.com/henrimarlon_/status/1968303101850599736) explored the upcoming Multi-DApp Node support, detailing how a single node can manage multiple applications simultaneously, improving efficiency and flexibility for builders. [Chinonso Idogwu](https://x.com/ChinonsoIdogwu/status/1970824742740574488) published an in-depth video of the PRT Honeypot, exploring how Cartesi’s PRT fraud-proof system uses Merkle trees. The hashing structure of Merkle trees helps quickly identify discrepancies during dispute resolution, enhancing the security and transparency of off-chain computation. [Shaheen Ahmed](https://x.com/riseandshaheen/status/1971186359542087813) focused on practical DeFi use cases enabled by the Cartesi stack, showing how developers can leverage the appchains framework to build secure and customizable applications even with finality delays. "
         },
         {
-          "title": "DeFi Use Cases Explored on Cartesi Stack",
-          "content": "[Riseandshaheen](https://x.com/riseandshaheen/status/1971186359542087813) published an article highlighting DeFi applications that are made possible by Cartesi’s Linux-based execution environment. It emphasizes how Cartesi enables more complex, verifiable computation for advanced financial logic on-chain."
+          "title": "New Course at UFBA Explores Blockchain, Web3, and Cartesi Rollups",
+          "content": "A [new course](https://tomorrow.ufba.br/pt-br/curso-de-capacitacao-em-blockchain-web-3-e-cartesi-rollups) has been launched at the Federal University of Bahia (UFBA) in Brazil, exploring blockchain, Web3, and Cartesi Rollups. Students will learn the fundamentals of smart contracts, blockchain scalability and decentralized applications built with the Cartesi stack, gaining practical experience by developing and submitting a proof of concept as their final project."
         },
         {
           "title": "Gearing Up for European Blockchain Convention",
