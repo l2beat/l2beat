@@ -1,6 +1,7 @@
 import { HOMEPAGE_MILESTONES } from '../global/milestones'
 import type { ScalingProject } from '../internalTypes'
 import { abstract } from '../projects/abstract/abstract'
+import { adi } from '../projects/adi/adi'
 import { aevo } from '../projects/aevo/aevo'
 import { airas } from '../projects/airas/airas'
 import { alephzero } from '../projects/alephzero/alephzero'
@@ -234,6 +235,7 @@ export const layer2s: ScalingProject[] = [
   airas,
   alephzero,
   alienx,
+  adi,
   allo,
   ancient,
   apex,

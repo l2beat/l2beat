@@ -228,7 +228,12 @@ describe('discovery config.jsonc', () => {
       const discovery = configReader.readDiscovery(c.name)
       const color = colorize(c.color, discovery, templateService)
 
-      expect(compareLeftKeysInRight(color, discovery)).toBeTruthy()
+      const isColorizedCorrectly = compareLeftKeysInRight(color, discovery)
+
+      assert(
+        isColorizedCorrectly,
+        `${c.name} is not colorized correctly. Run "l2b colorize".`,
+      )
     }
   })
 

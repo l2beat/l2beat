@@ -72,7 +72,7 @@ export class MayanMctpFastPlugin implements BridgePlugin {
         srcAmount: messageSent.args.amount.toString(),
         dstEvent: messageReceived,
       }),
-      Result.Transfer('mayan-mctp-fast.Swap', {
+      Result.Transfer('mayan-mctp-fast.Transfer', {
         srcEvent: messageSent,
         srcTokenAddress: messageSent.args.tokenAddress,
         srcAmount: messageSent.args.amount.toString(),

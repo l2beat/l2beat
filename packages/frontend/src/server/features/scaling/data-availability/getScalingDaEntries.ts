@@ -90,15 +90,15 @@ export async function getScalingDaEntries() {
 
 export interface ScalingDaEntry extends CommonScalingEntry {
   proofSystem: ProjectScalingProofSystem | undefined
-  dataAvailability: ProjectScalingDa
+  dataAvailability: (ProjectScalingDa & {
+    daHref?: ScalingDaEntryHref
+  })[]
   stacks: ProjectScalingStack[] | undefined
   tvsOrder: number
-  risks: EntryRisks | undefined
-  daHref:
-    | {
-        summary: string
-        risk: string | undefined
-      }
+  risks:
+    | (EntryRisks & {
+        daHref?: ScalingDaEntryHref
+      })[]
     | undefined
 }
 
@@ -107,7 +107,7 @@ function getScalingDaEntry(
     'scalingInfo' | 'statuses' | 'scalingDa' | 'display',
     'customDa'
   >,
-  risks: EntryRisks | undefined,
+  risks: ScalingDaEntry['risks'] | undefined,
   daLayers: Project<'daLayer'>[],
   changes: ProjectChanges,
   tvs: number | undefined,
@@ -115,12 +115,14 @@ function getScalingDaEntry(
 ): ScalingDaEntry {
   return {
     ...getCommonScalingEntry({ project, changes }),
-    dataAvailability: project.scalingDa,
+    dataAvailability: project.scalingDa.map((da) => ({
+      ...da,
+      daHref: getDaHref(project, da, daLayers),
+    })),
     proofSystem: getProofSystemWithName(
       project.scalingInfo.proofSystem,
       zkCatalogProjects,
     ),
-    daHref: getDaHref(project, daLayers),
     stacks: project.scalingInfo.stacks,
     risks,
     tvsOrder: tvs ?? -1,
@@ -143,57 +145,81 @@ function getRisks(
     sevenDaysAgo: number
   },
   projectsEconomicSecurity: ProjectsEconomicSecurity,
-): EntryRisks | undefined {
+): ScalingDaEntry['risks'] | undefined {
+  const risks: ScalingDaEntry['risks'] = []
   if (project.customDa) {
-    return {
+    risks.push({
       daLayer: mapLayerRisksToRosetteValues(getDaLayerRisks(project.customDa)),
       daBridge: mapBridgeRisksToRosetteValues(project.customDa.risks),
-    }
+      daHref: getDaHref(
+        project,
+        {
+          layer: {
+            value: 'DAC',
+          },
+        } as ProjectScalingDa,
+        daLayers,
+      ),
+    })
   }
 
-  const daLayerProject = daLayers.find(
-    (daLayer) => daLayer.id === project.scalingDa.layer.projectId,
-  )
-  const daBridgeProject = daBridges.find(
-    (daBridge) => daBridge.id === project.scalingDa.bridge.projectId,
-  )
-  if (!daLayerProject) {
-    return undefined
-  }
-  const usedProjectIds = daBridgeProject
-    ? daBridgeProject.daBridge.usedIn.map((project) => project.id)
-    : daLayerProject.daLayer.usedWithoutBridgeIn.map((project) => project.id)
-  const tvs = getTvs(usedProjectIds).latest
-  const economicSecurity = projectsEconomicSecurity[daLayerProject.id]
+  risks.push(
+    ...project.scalingDa
+      .map((da) => {
+        const daLayerProject =
+          da === undefined
+            ? undefined
+            : daLayers.find((daLayer) => daLayer.id === da.layer.projectId)
 
-  return {
-    daLayer: mapLayerRisksToRosetteValues(
-      getDaLayerRisks(daLayerProject.daLayer, tvs, economicSecurity),
-    ),
-    daBridge: daBridgeProject
-      ? mapBridgeRisksToRosetteValues(daBridgeProject.daBridge.risks)
-      : mapBridgeRisksToRosetteValues({ isNoBridge: true }),
-  }
+        const daBridgeProject =
+          da === undefined
+            ? undefined
+            : daBridges.find((daBridge) => daBridge.id === da.bridge.projectId)
+
+        if (!daLayerProject) {
+          return undefined
+        }
+        const usedProjectIds = daBridgeProject
+          ? daBridgeProject.daBridge.usedIn.map((project) => project.id)
+          : daLayerProject.daLayer.usedWithoutBridgeIn.map(
+              (project) => project.id,
+            )
+
+        const tvs = getTvs(usedProjectIds).latest
+        const economicSecurity = projectsEconomicSecurity[daLayerProject.id]
+
+        return {
+          daLayer: mapLayerRisksToRosetteValues(
+            getDaLayerRisks(daLayerProject.daLayer, tvs, economicSecurity),
+          ),
+          daBridge: daBridgeProject
+            ? mapBridgeRisksToRosetteValues(daBridgeProject.daBridge.risks)
+            : mapBridgeRisksToRosetteValues({ isNoBridge: true }),
+          daHref: getDaHref(project, da, daLayers),
+        }
+      })
+      .filter((da) => da !== undefined),
+  )
+  return risks
 }
 
+interface ScalingDaEntryHref {
+  summary: string
+  risk: string | undefined
+}
 function getDaHref(
-  project: Project<
-    'scalingInfo' | 'statuses' | 'scalingDa' | 'display',
-    'customDa'
-  >,
+  project: Project,
+  scalingDa: ProjectScalingDa,
   daLayers: Project<'daLayer'>[],
-) {
-  if (project.customDa) {
+): ScalingDaEntryHref | undefined {
+  if (scalingDa.layer.value === 'DAC') {
     return {
       summary: `/data-availability/summary?tab=custom&highlight=${project.slug}`,
       risk: `/data-availability/risk?tab=custom&highlight=${project.slug}`,
     }
   }
 
-  const daLayer = daLayers.find(
-    (l) => l.id === project.scalingDa.layer.projectId,
-  )
-
+  const daLayer = daLayers.find((l) => l.id === scalingDa.layer.projectId)
   if (!daLayer) {
     return undefined
   }

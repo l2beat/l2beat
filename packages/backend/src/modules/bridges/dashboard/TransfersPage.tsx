@@ -3,6 +3,10 @@ import { EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { DataTablePage } from './DataTablePage'
+import {
+  type ProcessorsStatus,
+  ProcessorsStatusTable,
+} from './ProcessorsStatusTable'
 
 function TransfersTable(props: {
   transfers: BridgeTransferRecord[]
@@ -103,6 +107,7 @@ function TransfersTable(props: {
 function TransfersPageLayout(props: {
   transfers: BridgeTransferRecord[]
   getExplorerUrl: (chain: string) => string | undefined
+  status: ProcessorsStatus[]
 }) {
   const eventsTable = <TransfersTable {...props} />
 
@@ -119,6 +124,7 @@ function TransfersPageLayout(props: {
 
   return (
     <DataTablePage
+      showHome={true}
       tables={[
         {
           title: `Transfers: ${props.transfers[0]?.type ?? ''}`,
@@ -127,6 +133,7 @@ function TransfersPageLayout(props: {
           dataTableOptions: dataTableOptions,
         },
       ]}
+      footer={<ProcessorsStatusTable processors={props.status} />}
     />
   )
 }
@@ -134,6 +141,7 @@ function TransfersPageLayout(props: {
 export function renderTransfersPage(props: {
   transfers: BridgeTransferRecord[]
   getExplorerUrl: (chain: string) => string | undefined
+  status: ProcessorsStatus[]
 }) {
   return (
     '<!DOCTYPE html>' + renderToStaticMarkup(<TransfersPageLayout {...props} />)

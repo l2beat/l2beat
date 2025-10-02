@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Starkware Multibridge escrow. Withdrawals can be throttled to {{withdrawLimitPct}} of the locked funds per 24 hours for each token individually.",
+  "description": "Starkware Multibridge escrow. Withdrawals can be throttled to {{withdrawLimitPct}}% of the locked funds per 24 hours for each token individually.",
   "category": "bridge-external",
   "ignoreRelatives": [
     "l2TokenContract",

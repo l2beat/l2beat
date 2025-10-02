@@ -122,7 +122,7 @@ export async function match(
         try {
           result = await plugin.match?.(event, db)
         } catch (e) {
-          logger.error(e)
+          logger.error(e, { project: plugin.name })
         }
         if (!result) {
           continue
@@ -203,7 +203,10 @@ function toMessageRecord(message: BridgeMessage): BridgeMessageRecord {
   return {
     messageId: generateId('M'),
     type: message.type,
-    duration: Math.abs(message.dst.ctx.timestamp - message.src.ctx.timestamp),
+    duration: Math.max(
+      message.dst.ctx.timestamp - message.src.ctx.timestamp,
+      0,
+    ),
     timestamp: Math.max(message.src.ctx.timestamp, message.dst.ctx.timestamp),
 
     srcChain: message.src.ctx.chain,
@@ -226,8 +229,9 @@ function toTransferRecord(
   return {
     messageId: generateId('T'),
     type: transfer.type,
-    duration: Math.abs(
+    duration: Math.max(
       transfer.dst.event.ctx.timestamp - transfer.src.event.ctx.timestamp,
+      0,
     ),
     timestamp: Math.max(
       transfer.src.event.ctx.timestamp,

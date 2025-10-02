@@ -1,6 +1,6 @@
 {
   "name": "symbiosis",
-  "timestamp": 1741681871,
+  "timestamp": 1759406260,
   "configHash": "0x54f1224e55ad3dbf81063468af7ceb27bfcf42f9ed11b9afb8862a4100d030f7",
   "entries": [
     {
@@ -57,7 +57,7 @@
       }
     },
     {
-      "address": "eth:0x28e41c41f61cab69aA0b50668eB3c38ee76d0BA9",
+      "address": "eth:0x1ff01AEcfe949a948fc28058fC36945c44e6a9c8",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -134,7 +134,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "eth:0x28e41c41f61cab69aA0b50668eB3c38ee76d0BA9",
+          "eth:0x1ff01AEcfe949a948fc28058fC36945c44e6a9c8",
           "eth:0xDD335D90dE6e4ECE62C966FF07a000cF26e19C0e",
           "eth:0x74Bcc68B52E3De4C105CEE3eb1814fe496a60ab9",
           "eth:0x32e42EEE9586D685a40A26f8BAc4197cEA967b5F",
@@ -145,7 +145,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 57,
+        "nonce": 66,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -177,10 +177,10 @@
         ],
         "$upgradeCount": 1,
         "currentChainId": 1,
-        "mpc": "eth:0x4357fe57e016EBC0738F67d323bB552617FE5A7C",
-        "newMPC": "eth:0x4357fe57e016EBC0738F67d323bB552617FE5A7C",
-        "newMPCEffectiveTime": 1740379559,
-        "oldMPC": "eth:0xE2eC0D84eD285576a5e9ca60052Bb787bfADE9d7",
+        "mpc": "eth:0x169Ce9FE028d0Bcf6DaB3b7e04b78463b517AcBf",
+        "newMPC": "eth:0x169Ce9FE028d0Bcf6DaB3b7e04b78463b517AcBf",
+        "newMPCEffectiveTime": 1759320215,
+        "oldMPC": "eth:0x8F940aD8adeE5fc79Adb6d93F3BF01CA937Fb42D",
         "owner": "eth:0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
       },
       "implementationNames": {
@@ -255,7 +255,7 @@
         "metaRouter": "eth:0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F",
         "owner": "eth:0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a",
         "paused": false,
-        "requestCount": 49022,
+        "requestCount": 92246,
         "versionRecipient": "2.0.1",
         "wrapper": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
@@ -550,6 +550,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 22022451 },
-  "permissionsConfigHash": "0xedd2d075f8a1a9b383ffe65dc295375aac23f966fb6fb25004a0b6e48c7ab0a7"
+  "usedBlockNumbers": { "ethereum": 23489946 },
+  "permissionsConfigHash": "0x325afe6d8f82474439aa3a03eb23b4835a2bcc9309ffb68a0f48cec0b70a05cf"
 }

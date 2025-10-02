@@ -11,6 +11,7 @@ interface DataTablePageProps {
   showHome?: boolean
   tables: TableConfig[]
   globalDataTableOptions?: object
+  footer?: React.ReactNode
 }
 
 export function DataTablePage(props: DataTablePageProps) {
@@ -76,9 +77,9 @@ export function DataTablePage(props: DataTablePageProps) {
       </head>
       <body>
         {props.showHome && (
-          <a href="/bridges" className="home-button">
-            ← Back to Home
-          </a>
+          <div>
+            <a href="/bridges">← Back to Home</a>
+          </div>
         )}
 
         {tables.map(({ table, tableId, title }, index) => (
@@ -87,6 +88,8 @@ export function DataTablePage(props: DataTablePageProps) {
             <div key={tableId || index}>{table}</div>
           </>
         ))}
+
+        {props.footer}
 
         <script
           dangerouslySetInnerHTML={{

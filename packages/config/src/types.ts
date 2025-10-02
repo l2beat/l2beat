@@ -91,7 +91,7 @@ export interface BaseProject {
   scalingInfo?: ProjectScalingInfo
   scalingStage?: ProjectScalingStage
   scalingRisks?: ProjectScalingRisks
-  scalingDa?: ProjectScalingDa
+  scalingDa?: ProjectScalingDa[]
   scalingTechnology?: ProjectScalingTechnology
 
   // da data
@@ -353,7 +353,7 @@ export interface ProjectScalingInfo {
   raas: string | undefined
   infrastructure: string | undefined
   vm: string[]
-  daLayer: string | undefined
+  daLayer: string[] | undefined
   stage: ProjectStageName
   purposes: ProjectScalingPurpose[]
   scopeOfAssessment: ProjectScalingScopeOfAssessment | undefined
@@ -528,7 +528,7 @@ export interface ProjectScalingTechnology {
   warning?: string
   detailedDescription?: string
   architectureImage?: string
-  dataAvailability?: ProjectTechnologyChoice
+  dataAvailability?: ProjectTechnologyChoice[]
   operator?: ProjectTechnologyChoice
   sequencing?: ProjectTechnologyChoice
   sequencingImage?: string
@@ -556,6 +556,7 @@ export interface ProjectScalingStateValidation {
   description?: string
   categories: ProjectScalingStateValidationCategory[]
   proofVerification?: ProjectProofVerification
+  zkProgramHashes?: ProjectScalingStateValidationZkProgramHash[]
   isUnderReview?: boolean
 }
 
@@ -578,6 +579,15 @@ export interface ProjectScalingStateValidationCategory {
   risks?: ProjectRisk[]
   references?: ReferenceLink[]
   isIncomplete?: boolean
+}
+
+export interface ProjectScalingStateValidationZkProgramHash {
+  hash: string
+  proverSystemProject: ProjectId
+  description: string
+  programUrl: string
+  verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
+  verificationSteps?: string
 }
 // #endregion
 
@@ -1015,6 +1025,7 @@ export interface ProjectPermissions {
 }
 
 export interface ProjectPermission {
+  id: string
   /** List of the accounts */
   accounts: ProjectPermissionedAccount[]
   /** Name of this group */
@@ -1073,6 +1084,12 @@ export interface ProjectContract {
     /** Who can pause/unpause the contract */
     pausableBy: string[]
   }
+  /** List of past upgrades */
+  pastUpgrades?: {
+    timestamp: UnixTime
+    transactionHash: string
+    implementations: ChainSpecificAddress[]
+  }[]
   /** List of references */
   references?: ReferenceLink[]
   /** Indicates whether the generation of contained data was driven by discovery */
@@ -1087,6 +1104,8 @@ export interface ProjectContractUpgradeability {
 }
 
 export interface ProjectUpgradeableActor {
+  /** Id of the actor */
+  id?: string
   /** Actor from permissions that can upgrade */
   name: string
   /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */

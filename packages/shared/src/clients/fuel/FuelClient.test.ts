@@ -18,6 +18,7 @@ describe(FuelClient.name, () => {
       const mockFuelBlock: Block = {
         hash: '0xabcdef',
         number: 100,
+        logsBloom: 'UNSUPPORTED',
         timestamp: tai64ToUnix(mockTia64time),
         transactions: [
           {

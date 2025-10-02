@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x51af89ed152a88a00edc52489aca602a566ddfa3
+
+# Diff at Thu, 02 Oct 2025 07:11:07 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@b1cfb9bd1821e27488215e4364f565cfd7d54c2e block: 1759250536
+- current timestamp: 1759388936
+
+## Description
+
+Caldera multisig members decrease.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) {
+    +++ description: None
+      values.$members.9:
+-        "eth:0xbf853295743511e8DC5F03809d209C33fC136d24"
+      values.$members.10:
+-        "eth:0x15D5fF2dEc328a1cF3D64413caaBdcE29bff050A"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 9 (44%)"
+    }
+```
+
+Generated with discovered.json: 0x6a9be154d3012469976ad719d478e7c616193d9f
+
+# Diff at Tue, 30 Sep 2025 16:43:20 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c66a02d28b2467edd595f8a8468988549dd6d3cf block: 1758875904
+- current timestamp: 1759250536
+
+## Description
+
+Caldera multisig threshold increase.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A"
+      values.$members.1:
++        "eth:0xe5219fe14E2FD520Ff80be036790913053d1575d"
+      values.$members.2:
++        "eth:0xEC114946E7213d113c9B9481028271B5E9e09371"
+      values.multisigThreshold:
+-        "4 of 8 (50%)"
++        "4 of 11 (36%)"
+    }
+```
+
 Generated with discovered.json: 0x86a93a329ad452f8f59b0244a97be29efce9a982
 
 # Diff at Fri, 26 Sep 2025 08:39:27 GMT:

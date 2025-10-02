@@ -28,7 +28,7 @@
   "static/icons/animechain.png": "8184836a986f561d4e9824713d99907a",
   "static/icons/ankr.png": "cfc395e6e36d13aa288440a0c4cf2d97",
   "static/icons/anomaly.png": "d50352c73d578951e42daa0a5dc024b1",
-  "static/icons/apechain.png": "9e30220d133893e392b1609cb241d33d",
+  "static/icons/apechain.png": "c3c94f06f649bf2b4d2abedb50c59c45",
   "static/icons/apex.png": "eced1809154496838b08b634cd91e593",
   "static/icons/appchain.png": "61e980f68eab3d9daa628d971f11aa9d",
   "static/icons/aptos.png": "0c23739f1b6ead135bc8d89d551b7982",
@@ -1465,6 +1465,7 @@
   "static/icons/espressoprover.png": "b0336861f639aaf845e7c7cda35eb2dd",
   "static/meta-images/zk-catalog/projects/espressoprover/opengraph-image.png": "f33e3eb2f1cea6565abc3259ffe0f5bb",
   "static/meta-images/publications/governance-review-70.png": "51aaf9e645d7121b404bcbaa1c24e7f1",
+  "static/images/badges/Espresso.png": "0c2038b8d9842d3e0fb75bb017bd4d9b",
   "static/images/architecture/opsuccinct.png": "6038cb9f898dd2217d91f164f04b6650",
   "static/images/architecture/.png": "51e4ab4152e65794067da3df06023e08",
   "static/images/architecture/opstack-optimium-opfp-opsuccinct.png": "4ad1e7c85dfa17d6604ddd50eb325ad9",
@@ -1473,5 +1474,14 @@
   "static/images/badges/Nodeinfra.png": "64d5cc0f3b6a5920bd900d65ec013df2",
   "static/partners/cartesi/background.png": "70d22fa399de64650d7cb325706a17c9",
   "static/partners/cartesi/logo.png": "dd299c34f84fdbce7d1290b4036e96ef",
-  "static/icons/gate-layer.png": "c685676c628a32d4dc0050108f0c7719"
+  "static/icons/gate-layer.png": "c685676c628a32d4dc0050108f0c7719",
+  "static/meta-images/publications/governance-review-71.png": "fb9787223d1943e6761b5b63ba2d9a3f",
+  "static/icons/adi.png": "ce3fdf2dd6b0826bab3420f61e65abc4",
+  "static/meta-images/scaling/projects/lighter/opengraph-image.png": "f5b9d05fe294a44a115ba6e23c4bc74e",
+  "static/icons/lighter.png": "43593aa530dba321c64e65d4ec747953",
+  "static/meta-images/scaling/projects/adi/opengraph-image.png": "fd20b8ffcff45c97b596fc5359af6cb2",
+  "static/icons/nodeinfra.png": "e305a60262e5d6d45b1403f284e0d558",
+  "static/meta-images/publications/monthly-update-2025-09.png": "5d84ea9ea8eb53d50b87b9cef211e2be",
+  "static/images/monthly-updates/cartesi.png": "255d34d28d891f11e372cb46952162a1",
+  "static/images/badges/EspressoHotShotLightClient.png": "d462fc8a4216e612bdea05b40ee11ad8"
 }

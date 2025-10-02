@@ -17,7 +17,7 @@ async function getProjectsEconomicSecurityData(): Promise<ProjectsEconomicSecuri
   const db = getDb()
 
   const [stakes, currentPrices, projects] = await Promise.all([
-    db.stake.getAll(),
+    db.daBeatStats.getAll(),
     db.currentPrice.getAll(),
     ps.getProjects({
       select: ['daLayer'],
@@ -37,7 +37,7 @@ async function getProjectsEconomicSecurityData(): Promise<ProjectsEconomicSecuri
       return undefined
     }
 
-    const thresholdStake = stakesById[project.daLayer.economicSecurity.name]
+    const thresholdStake = stakesById[project.id]
 
     if (!thresholdStake) {
       return undefined
