@@ -16,8 +16,8 @@ describe(getStage.name, () => {
         },
         stage1: {
           principle: true,
-          usersHave7DaysToExit: false,
-          usersCanExitWithoutCooperation: false,
+          usersHave7DaysToExit: true,
+          usersCanExitWithoutCooperation: true,
           securityCouncilProperlySetUp: true,
         },
         stage2: {
