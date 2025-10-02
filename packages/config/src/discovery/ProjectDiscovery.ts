@@ -913,64 +913,67 @@ export class ProjectDiscovery {
         return this.getPermissionPriority(b) - this.getPermissionPriority(a)
       })
 
-    const eoaActorsBeforeGrouping: ProjectPermission[] = []
+    if (permissionedEoas.length === 0) {
+      return {
+        raw: [],
+        linkable: [],
+        grouped: [],
+      }
+    }
 
-    for (const eoa of permissionedEoas) {
+    const eoaPermissions = permissionedEoas.map((eoa) => {
       const description = this.describeContractOrEoa(eoa, false)
       const name = eoa.name ?? this.getEOAName(eoa.address)
-      const eoaActor = {
+      return {
         id: name,
         name: name,
         accounts: this.formatPermissionedAccounts([eoa.address]),
         chain: ChainSpecificAddress.longChain(eoa.address),
         description,
       }
+    })
 
-      eoaActorsBeforeGrouping.push(eoaActor)
-    }
-
-    const groupedEoas = groupBy(
-      eoaActorsBeforeGrouping,
+    const groupedByDescription = groupBy(
+      eoaPermissions,
       (eoa) => eoa.description,
     )
 
-    const createGroupedEoa = (eoas: ProjectPermission[]) =>
+    const createGroupId = (eoas: ProjectPermission[]) =>
       concatName(eoas.map((eoa) => eoa.name)).replaceAll(' ', '-')
 
-    const preparedEoas: ProjectPermission[] = []
-
-    for (const eoaToGroup of eoaActorsBeforeGrouping) {
-      const group = groupedEoas[eoaToGroup.description]
+    const linkableEoas: ProjectPermission[] = eoaPermissions.map((eoa) => {
+      const group = groupedByDescription[eoa.description]
 
       if (!group) {
-        preparedEoas.push(eoaToGroup)
+        return eoa
       }
 
-      preparedEoas.push({
-        ...eoaToGroup,
-        id: createGroupedEoa(group),
-      })
-    }
+      return {
+        ...eoa,
+        id: createGroupId(group),
+      }
+    })
 
-    const eoaGroupedAsActors: ProjectPermission[] = []
+    const groupedActors: ProjectPermission[] = []
 
-    for (const eoas of Object.values(groupedEoas)) {
+    for (const [description, eoas] of Object.entries(groupedByDescription)) {
       const byChain = groupBy(eoas, (eoa) => eoa.chain)
-      for (const [chain, eoas] of Object.entries(byChain)) {
-        eoaGroupedAsActors.push({
-          name: concatName(eoas.map((eoa) => eoa.name)),
-          id: createGroupedEoa(eoas),
-          accounts: eoas.map((eoa) => eoa.accounts).flat(),
+
+      for (const [chain, chainEoas] of Object.entries(byChain)) {
+        groupedActors.push({
+          id: createGroupId(chainEoas),
+          name: concatName(chainEoas.map((eoa) => eoa.name)),
+          accounts: chainEoas.flatMap((eoa) => eoa.accounts),
           chain: chain,
-          description: eoas[0].description,
+          description: description,
         })
       }
     }
 
     return {
       raw: permissionedEoas,
-      linkable: preparedEoas,
-      grouped: eoaGroupedAsActors,
+      linkable: linkableEoas,
+      grouped: groupedActors,
     }
   }
 
