@@ -287,7 +287,7 @@ describe(ProjectDiscovery.name, () => {
       expect(ethGroup?.accounts ?? []).toHaveLength(2)
       expect(arbGroup?.accounts ?? []).toHaveLength(1)
       expect(ethGroup?.name).toEqual('MultiSigMember1 and MultiSigMember3')
-      expect(ethGroup?.id).toEqual('MultiSigMember1-MultiSigMember3')
+      expect(ethGroup?.id).toEqual('MultiSigMember1-and-MultiSigMember3')
       expect(arbGroup?.name).toEqual('MultiSigMember2')
       expect(arbGroup?.id).toEqual('MultiSigMember2')
     })
