@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { chromium } from 'playwright'
+import { chromium, type Page } from 'playwright'
 import type { BridgeComparePlugin, BridgeExternalItem } from './types'
 
 export class AcrossComparePlugin implements BridgeComparePlugin {
@@ -9,7 +9,6 @@ export class AcrossComparePlugin implements BridgeComparePlugin {
   constructor(private logger: Logger) {}
 
   async getExternalItems(): Promise<BridgeExternalItem[]> {
-    // TODO: probably there will be a need to install chrome on backend build
     const browser = await chromium.launch()
     const context = await browser.newContext()
     const page = await context.newPage()
@@ -20,41 +19,69 @@ export class AcrossComparePlugin implements BridgeComparePlugin {
 
     await page.waitForSelector(
       'a[class*="hover:underline"][class*="cursor-pointer"]',
-      {
-        timeout: 10000,
-      },
+      { timeout: 10000 },
     )
 
     const divs = page.locator(
       'a[class*="hover:underline"][class*="uppercase"][class*="cursor-pointer"]',
     )
 
-    const urls = await divs.evaluateAll((links) =>
+    const urls = await divs.evaluateAll((links: HTMLAnchorElement[]) =>
       // @ts-ignore Try changing the 'lib' compiler option to include 'dom'.
       links.map((link) => link.href),
     )
 
-    const result: BridgeExternalItem[] = []
+    // Process in batches to avoid overwhelming the server
+    const batchSize = 5 // Adjust based on server capacity
+    const urlsToProcess = Math.min(urls.length, 50)
+    const results: BridgeExternalItem[] = []
 
-    for (let i = 0; i < 10; i++) {
-      await page.goto(urls[i])
+    for (let i = 0; i < urlsToProcess; i += batchSize) {
+      const batch = urls.slice(i, i + batchSize)
+
+      const batchResults = await Promise.all(
+        batch.map(async (url) => {
+          const newPage = await context.newPage()
+          try {
+            return await this.scrapePage(newPage, url)
+          } finally {
+            await newPage.close()
+          }
+        }),
+      )
+
+      results.push(...batchResults.filter((b) => b !== null))
+      this.logger.info(
+        `Processed batch ${Math.floor(i / batchSize) + 1}, found ${results.length} items so far`,
+      )
+    }
+
+    await browser.close()
+    return results
+  }
+
+  private async scrapePage(
+    page: Page,
+    url: string,
+  ): Promise<BridgeExternalItem | null> {
+    try {
+      await page.goto(url)
       await page.waitForLoadState('networkidle')
 
-      let srcTxHash = undefined
+      let srcTxHash: string | undefined
+      let dstTxHash: string | undefined
 
+      // Get source tx
       try {
         await page.waitForSelector('div:has-text("Source Tx")', {
           timeout: 5000,
         })
-
         const sourceContainer = page
           .locator('div.flex.gap-5xl.items-center')
           .filter({ hasText: 'Source Tx' })
-
         const sourceTx = await sourceContainer
           .locator('div.absolute.opacity-0.-z-10')
           .innerText()
-
         if (sourceTx.length === 66) {
           srcTxHash = sourceTx
         }
@@ -62,21 +89,17 @@ export class AcrossComparePlugin implements BridgeComparePlugin {
         this.logger.debug('Error during sourceTx scraping', e)
       }
 
-      let dstTxHash = undefined
-
+      // Get destination tx
       try {
         await page.waitForSelector('div:has-text("Destination Tx")', {
           timeout: 5000,
         })
-
         const destContainer = page
           .locator('div.flex.gap-5xl.items-center')
           .filter({ hasText: 'Destination Tx' })
-
         const destinationTx = await destContainer
           .locator('div.absolute.opacity-0.-z-10')
           .innerText()
-
         if (destinationTx.length === 66) {
           dstTxHash = destinationTx
         }
@@ -85,12 +108,12 @@ export class AcrossComparePlugin implements BridgeComparePlugin {
       }
 
       if (srcTxHash && dstTxHash) {
-        result.push({ srcTxHash, dstTxHash })
+        return { srcTxHash, dstTxHash }
       }
+      return null
+    } catch (error) {
+      this.logger.error(`Error scraping ${url}:`, error)
+      return null
     }
-
-    await browser.close()
-
-    return result
   }
 }
