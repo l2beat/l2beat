@@ -35,6 +35,9 @@ export class BridgeComparator {
   }
 
   async compare() {
+    this.logger.info('Running compare', {
+      plugins: this.plugins.map((p) => p.name),
+    })
     this.logger.info('Fetching items from external explorers...', {
       plugins: this.plugins.length,
     })

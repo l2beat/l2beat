@@ -18,6 +18,12 @@ const cmd = command({
       comparePlugins = comparePlugins.filter((c) =>
         configuredPlugins.includes(c.name),
       )
+      if (comparePlugins.length === 0) {
+        logger.error('No plugins found with given names', {
+          names: args.plugins.split(','),
+        })
+        return
+      }
     }
 
     const db = createDatabase({
