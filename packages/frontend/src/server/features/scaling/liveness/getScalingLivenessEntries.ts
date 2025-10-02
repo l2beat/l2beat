@@ -70,7 +70,7 @@ export interface ScalingLivenessEntry extends CommonScalingEntry {
   data: LivenessData
   explanation: string | undefined
   anomalies: LivenessAnomaly[]
-  dataAvailabilityMode: TableReadyValue | undefined
+  dataAvailabilityMode: TableReadyValue[] | undefined
   hasTrackedContractsChanged: boolean
   tvsOrder: number
 }
@@ -118,7 +118,7 @@ function getScalingLivenessEntry(
     data,
     explanation: project.livenessInfo?.explanation,
     anomalies: liveness.anomalies,
-    dataAvailabilityMode: project.scalingDa?.mode,
+    dataAvailabilityMode: project.scalingDa?.map((da) => da.mode),
     tvsOrder: tvs ?? -1,
     hasTrackedContractsChanged,
   }
