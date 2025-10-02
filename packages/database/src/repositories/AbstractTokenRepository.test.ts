@@ -22,7 +22,7 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
         category: 'stablecoin',
         iconUrl: 'https://example.com/icon.png',
         coingeckoId: 'coin-1',
-        coingeckoListingTimestamp: UnixTime(10),
+        coingeckoListingTimestamp: UnixTime.toDate(10),
         comment: 'some comment',
       })
 

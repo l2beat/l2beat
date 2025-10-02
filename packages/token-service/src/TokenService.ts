@@ -1,3 +1,4 @@
+import { isDeepStrictEqual } from 'node:util'
 import type { Logger } from '@l2beat/backend-tools'
 import type {
   AbstractTokenRecord,
@@ -7,7 +8,6 @@ import type {
   TokenDatabase,
 } from '@l2beat/database'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
-import { isDeepStrictEqual } from 'node:util'
 
 type Intent = AddAbstractTokenIntent | UpdateAbstractTokenIntent
 
