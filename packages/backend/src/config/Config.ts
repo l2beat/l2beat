@@ -183,7 +183,6 @@ export interface UpdateMonitorConfig {
   readonly disabledChains: string[]
   readonly discord: DiscordConfig | false
   readonly updateMessagesRetentionPeriodDays: number
-  readonly projects: string[]
 }
 
 export interface VerifiersConfig {
