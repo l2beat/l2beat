@@ -9,7 +9,6 @@ export function l2beatResolver<Input extends FieldValues, Context, Output>(
     raw?: boolean
   } = {},
 ): Resolver<Input, Context, Output | Input> {
-  console.log(schema, schemaOptions, resolverOptions)
   return (input) => {
     const result = schema.safeParse(input)
     if (!result.success) {

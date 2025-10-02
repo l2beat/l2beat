@@ -1,4 +1,3 @@
-import { standardSchemaResolver } from '@hookform/resolvers/standard-schema'
 import { v } from '@l2beat/validate'
 import { skipToken, useMutation, useQuery } from '@tanstack/react-query'
 import { RefreshCwIcon } from 'lucide-react'
@@ -30,6 +29,7 @@ import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { useRandomId } from '~/hooks/useRandomId'
 import { type Plan, tokenService } from '~/mock/MockTokenService'
 import type { AbstractToken } from '~/mock/types'
+import { l2beatResolver } from '~/utils/validationResolver'
 
 const categoryValues = ['btc', 'ether', 'stablecoin', 'other'] as const
 
@@ -46,7 +46,7 @@ const formSchema = v.object({
 export function NewAbstractTokenForm() {
   const { id, refresh } = useRandomId()
   const form = useForm<v.infer<typeof formSchema>>({
-    resolver: standardSchemaResolver(formSchema),
+    resolver: l2beatResolver(formSchema),
     defaultValues: {
       id,
     },
@@ -63,8 +63,8 @@ export function NewAbstractTokenForm() {
     retry: false,
   })
 
-  const { mutate: planAbstractToken } = useMutation({
-    mutationFn: async (token: AbstractToken) =>
+  const { mutate: planAbstractToken, isPending: isPlanPending } = useMutation({
+    mutationFn: (token: AbstractToken) =>
       tokenService.plan({
         type: 'AddAbstractTokenIntent',
         abstractToken: token,
@@ -112,151 +112,156 @@ export function NewAbstractTokenForm() {
     <>
       <PlanConfirmationDialog plan={plan} setPlan={setPlan} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="id"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>ID</FormLabel>
-                <div className="flex items-center gap-2">
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <fieldset disabled={isPlanPending} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="id"
+              disabled
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>ID</FormLabel>
+                  <div className="flex items-center gap-2">
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <Button type="button" onClick={refresh} className="size-9">
+                      <RefreshCwIcon />
+                    </Button>
+                  </div>
+                  <FormDescription>
+                    This is the ID of the token. It is randomly generated with
+                    refresh option.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="issuer"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Issuer</FormLabel>
                   <FormControl>
-                    <Input {...field} disabled />
+                    <Input {...field} placeholder="Circle" />
                   </FormControl>
-                  <Button type="button" onClick={refresh} className="size-9">
-                    <RefreshCwIcon />
-                  </Button>
-                </div>
-                <FormDescription>
-                  This is the ID of the token. It is randomly generated with
-                  refresh option.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name="issuer"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Issuer</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="Circle" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="coingeckoId"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  Coingecko ID{' '}
-                  {showCoingeckoLoading && <Spinner className="size-3.5" />}
-                </FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-
-                <FormDescription>
-                  This is the Coingecko ID of the token. You can find it on the
-                  token page on Coingecko.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="symbol"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Symbol</FormLabel>
-                <FormControl>
-                  <Input {...field} disabled={showCoingeckoLoading} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="iconUrl"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Icon URL</FormLabel>
-                <FormControl>
-                  <Input {...field} disabled={showCoingeckoLoading} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="coingeckoListingTimestamp"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Coingecko Listing Timestamp</FormLabel>
-                <FormControl>
-                  <Input type="date" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="category"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Category</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
+            <FormField
+              control={form.control}
+              name="coingeckoId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Coingecko ID{' '}
+                    {showCoingeckoLoading && <Spinner className="size-3.5" />}
+                  </FormLabel>
                   <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a category" />
-                    </SelectTrigger>
+                    <Input {...field} />
                   </FormControl>
-                  <SelectContent>
-                    {categoryValues.map((category) => (
-                      <SelectItem key={category} value={category}>
-                        {category}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
 
-          <FormField
-            control={form.control}
-            name="comment"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Comment</FormLabel>
-                <FormControl>
-                  <Textarea {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                  <FormDescription>
+                    This is the Coingecko ID of the token. You can find it on
+                    the token page on Coingecko.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <Button type="submit">Submit</Button>
+            <FormField
+              control={form.control}
+              name="symbol"
+              disabled={showCoingeckoLoading}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Symbol</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="iconUrl"
+              disabled={showCoingeckoLoading}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Icon URL</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="coingeckoListingTimestamp"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Coingecko Listing Timestamp</FormLabel>
+                  <FormControl>
+                    <Input type="date" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="category"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Category</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a category" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {categoryValues.map((category) => (
+                        <SelectItem key={category} value={category}>
+                          {category}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="comment"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Comment</FormLabel>
+                  <FormControl>
+                    <Textarea {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <Button type="submit">Submit</Button>
+          </fieldset>
         </form>
       </Form>
     </>

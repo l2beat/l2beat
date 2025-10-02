@@ -1,18 +1,28 @@
 import { assertUnreachable } from '~/utils/assertUnreachable'
 import type { AbstractToken, DeployedToken } from './types'
 
-type Intent = AddAbstractTokenIntent
+type Intent = AddAbstractTokenIntent | AddDeployedTokenIntent
 
 interface AddAbstractTokenIntent {
   type: 'AddAbstractTokenIntent'
   abstractToken: AbstractToken
 }
 
-export type Command = AddAbstractTokenCommand
+interface AddDeployedTokenIntent {
+  type: 'AddDeployedTokenIntent'
+  deployedToken: DeployedToken
+}
+
+export type Command = AddAbstractTokenCommand | AddDeployedTokenCommand
 
 interface AddAbstractTokenCommand {
   type: 'AddAbstractTokenCommand'
   abstractToken: AbstractToken
+}
+
+interface AddDeployedTokenCommand {
+  type: 'AddDeployedTokenCommand'
+  deployedToken: DeployedToken
 }
 
 export interface Plan {
@@ -64,7 +74,7 @@ class MockTokenService {
   ]
   deployedTokens: DeployedToken[] = [
     {
-      id: 1,
+      id: 'ethereum-0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
       chain: 'ethereum',
       address: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
       abstractTokenId: 'btc',
@@ -74,7 +84,7 @@ class MockTokenService {
       comment: 'Wrapped Bitcoin on Ethereum',
     },
     {
-      id: 2,
+      id: 'ethereum-0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
       chain: 'ethereum',
       address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
       abstractTokenId: 'usdc',
@@ -84,7 +94,7 @@ class MockTokenService {
       comment: 'USD Coin on Ethereum',
     },
     {
-      id: 3,
+      id: 'polygon-0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
       chain: 'polygon',
       address: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
       abstractTokenId: 'usdc',
@@ -94,7 +104,7 @@ class MockTokenService {
       comment: 'USD Coin on Polygon',
     },
     {
-      id: 4,
+      id: 'ethereum-0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
       chain: 'ethereum',
       address: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
       abstractTokenId: 'eth',
@@ -104,7 +114,7 @@ class MockTokenService {
       comment: 'Wrapped Ether on Ethereum',
     },
     {
-      id: 5,
+      id: 'polygon-0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
       chain: 'polygon',
       address: '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
       abstractTokenId: 'eth',
@@ -114,7 +124,7 @@ class MockTokenService {
       comment: 'Wrapped Ether on Polygon',
     },
     {
-      id: 6,
+      id: 'polygon-0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6',
       chain: 'polygon',
       address: '0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6',
       abstractTokenId: 'btc',
@@ -126,7 +136,6 @@ class MockTokenService {
   ]
 
   getAbstractTokens() {
-    console.log('getAbstractTokens', this.abstractTokens)
     return this.abstractTokens.map((token) => ({
       ...token,
       deployedTokens: this.deployedTokens.filter(
@@ -135,7 +144,41 @@ class MockTokenService {
     }))
   }
 
-  plan(intent: Intent): Plan {
+  getChains() {
+    return [
+      'ethereum',
+      'polygon',
+      'arbitrum',
+      'optimism',
+      'bsc',
+      'avalanche',
+      'celo',
+      'linea',
+      'base',
+      'polygonzkevm',
+      'gnosis',
+      'zksync2',
+      'sepolia',
+      'scroll',
+      'mantle',
+      'metis',
+      'bobanetwork',
+      'mode',
+      'zora',
+      'mantapacific',
+      'blast',
+      'kinto',
+      'katana',
+      'unichain',
+      'ink',
+      'everclear',
+      'zircuit',
+      'taiko',
+      'facet',
+    ]
+  }
+
+  plan(intent: Intent): Promise<Plan> {
     let commands: Command[]
     switch (intent.type) {
       case 'AddAbstractTokenIntent':
@@ -146,14 +189,27 @@ class MockTokenService {
           },
         ]
         break
+      case 'AddDeployedTokenIntent':
+        commands = [
+          {
+            type: 'AddDeployedTokenCommand',
+            deployedToken: intent.deployedToken,
+          },
+        ]
+        break
       default:
-        assertUnreachable(intent.type)
+        assertUnreachable(intent)
     }
 
-    return {
-      intent,
-      commands,
-    }
+    // Simulate network delay
+    return new Promise<Plan>((resolve) => {
+      setTimeout(() => {
+        resolve({
+          intent,
+          commands,
+        })
+      }, 1000)
+    })
   }
 
   execute(plan: Plan) {
@@ -169,9 +225,11 @@ class MockTokenService {
       case 'AddAbstractTokenCommand':
         this.abstractTokens.push(command.abstractToken)
         break
-
+      case 'AddDeployedTokenCommand':
+        this.deployedTokens.push(command.deployedToken)
+        break
       default:
-        assertUnreachable(command.type)
+        assertUnreachable(command)
     }
   }
 }
