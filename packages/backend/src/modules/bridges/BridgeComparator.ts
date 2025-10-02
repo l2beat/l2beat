@@ -39,7 +39,7 @@ export class BridgeComparator {
       plugins: this.plugins.map((p) => p.name),
     })
     this.logger.info('Fetching items from external explorers...', {
-      plugins: this.plugins.length,
+      plugins: this.plugins.map((p) => p.name),
     })
     const items = (
       await Promise.all(
@@ -62,7 +62,7 @@ export class BridgeComparator {
     await new Promise((resolve) => setTimeout(resolve, this.timeoutMs))
 
     this.logger.info('Comparing...', {
-      plugins: items.length,
+      plugins: items.map((i) => i.plugin.name),
     })
     for (const i of items) {
       const records =
@@ -87,11 +87,16 @@ export class BridgeComparator {
         }
       }
 
-      this.logger.info('Comparison finished', {
+      this.logger.info('Plugin compare finished', {
         plugin: i.plugin.name,
         items: i.items.length,
         records: records.length,
         missing,
+      })
+
+      this.logger.info('Compare finished', {
+        plugins: this.plugins.length,
+        items: items.length,
       })
     }
   }
