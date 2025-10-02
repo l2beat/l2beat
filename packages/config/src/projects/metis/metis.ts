@@ -26,7 +26,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 const discovery = new ProjectDiscovery('metis')
 
 const blobBatcher = discovery.getContractValue<string>(
-  'Lib_AddressManager',
+  'MVM_InboxSenderManager',
   'blobBatcher',
 )
 
@@ -111,6 +111,8 @@ export const metis: ScalingProject = {
     },
     {
       rollupNodeLink: 'https://github.com/MetisProtocol/mvm',
+      securityCouncilReference:
+        'https://docs.metis.io/andromeda/network/council',
     },
   ),
   chainConfig: {
@@ -222,13 +224,13 @@ export const metis: ScalingProject = {
       ...RISK_VIEW.STATE_FP_INT(CHALLENGE_PERIOD_SECONDS),
       description:
         RISK_VIEW.STATE_FP_INT().description +
-        ' Anyone can submit challenges, however, only the Metis Security Council minority can delete disputed batches.',
-      sentiment: 'warning',
+        'Anyone can submit challenge requests. However, permissioned actors are needed to create the challenge and to delete successfully disputed state roots. Additionally, the current permissioned actors (GameCreator and Security Council minority) can collude and finalize malicious state roots.',
+      sentiment: 'bad',
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
-    sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
-    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+    sequencerFailure: RISK_VIEW.SEQUENCER_CAN_SKIP('L1'),
+    proposerFailure: RISK_VIEW.PROPOSER_WHITELIST_SECURITY_COUNCIL('METIS'),
   },
   stateValidation: {
     categories: [
@@ -239,7 +241,7 @@ export const metis: ScalingProject = {
         references: [
           {
             title: 'StateCommitmentChain - Etherscan source code',
-            url: 'https://etherscan.io/address/0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1#code',
+            url: 'https://etherscan.io/address/0xA738573Ec0FD7959BfA60Aaa8a23Fe7BEC6c4Bd7#code',
           },
         ],
       },
@@ -290,7 +292,7 @@ export const metis: ScalingProject = {
       ],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.ENQUEUE,
+      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       references: [
         {
           title: 'CanonicalTransactionChain - Etherscan source code',
@@ -309,7 +311,6 @@ export const metis: ScalingProject = {
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
       },
-      EXITS.FORCED_MESSAGING('forced-messages'),
     ],
     otherConsiderations: [
       {

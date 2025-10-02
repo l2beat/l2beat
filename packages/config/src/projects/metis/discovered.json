@@ -1,7 +1,7 @@
 {
   "name": "metis",
-  "timestamp": 1757939071,
-  "configHash": "0x9a087e1418b82334a87c1778f3a3cf556d34eebdc6afc5ce0ee4c75d36de2dfc",
+  "timestamp": 1759252030,
+  "configHash": "0x0d256705d9cfb07daf092eebc4c2ac6a6f07a4ff7d319d0d3da4603959426345",
   "entries": [
     {
       "address": "eth:0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
@@ -44,7 +44,7 @@
         ],
         "$upgradeCount": 2,
         "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
-        "owner": "eth:0xDD6FFC7D9a4Fb420b637747edc6456340d12d377",
+        "owner": "eth:0x0000000000000000000000000000000000000000",
         "paused": false,
         "ResolvedDelegateProxy_addressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger"
@@ -95,8 +95,8 @@
         "owner": "eth:0xbf1752DE62d825aF0634F514226F881a449874b6",
         "proxiableUUID": "EXPECT_REVERT",
         "rewardPayer": "eth:0x62478E4eeb4070fE399866aB05e821AB97200947",
-        "totalLocked": "347018230480356454880455",
-        "totalRewardsLiquidated": "49078605958445478876180"
+        "totalLocked": "346616091959466990903911",
+        "totalRewardsLiquidated": "49920899468420478876180"
       },
       "implementationNames": {
         "eth:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48": "TransparentUpgradeableProxy",
@@ -124,10 +124,10 @@
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x00000000000000000000000000000000000068c804c3000143c7d9",
-        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000068c804c3000143c7d9",
-        "length": 32314,
-        "lengthByChainId": 32314,
+        "getGlobalMetadata": "0x00000000000000000000000000000000000068dc098f0001459405",
+        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000068dc098f0001459405",
+        "length": 32776,
+        "lengthByChainId": 32776,
         "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -486,6 +486,27 @@
       }
     },
     {
+      "name": "MVM_ProposerRegistry",
+      "address": "eth:0x5669d0C8C28B7E2c3d10eD246bEb042bDdd12E18",
+      "type": "Contract",
+      "template": "metis/MVM_ProposerRegistry",
+      "sourceHashes": [
+        "0xc58642aa4edb52c5ea78d99855c51ada1ea92e84164a38a359fb184b2cfe74be"
+      ],
+      "proxyType": "immutable",
+      "description": "The Proposer Registry contains the addresses of the current active proposers for the chain.",
+      "sinceTimestamp": 1758098255,
+      "sinceBlock": 23381652,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xAd07701EE9348d2B9e7De061883C10574c543279",
+        "proposer": "eth:0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040"
+      },
+      "implementationNames": {
+        "eth:0x5669d0C8C28B7E2c3d10eD246bEb042bDdd12E18": "MVM_ProposerRegistry"
+      }
+    },
+    {
       "name": "CanonicalTransactionChain",
       "address": "eth:0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9",
       "type": "Contract",
@@ -515,8 +536,8 @@
         "getLastBlockNumber": 19431495,
         "getLastTimestamp": 1710398153,
         "getNextQueueIndex": 36284,
-        "getNumPendingQueueElements": 4350,
-        "getQueueLength": 40634,
+        "getNumPendingQueueElements": 4399,
+        "getQueueLength": 40683,
         "getTotalBatches": 42647,
         "getTotalElements": 15214530,
         "l2GasDiscountDivisor": 32,
@@ -658,6 +679,34 @@
       "proxyType": "EOA"
     },
     {
+      "name": "MVM_InboxSenderManager",
+      "address": "eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0",
+      "type": "Contract",
+      "template": "metis/MVM_InboxSenderManager",
+      "sourceHashes": [
+        "0xefe49678ee34a110a1e4cec0ff81ea6685897ac9f9bd8bdef1e6d248d1298479",
+        "0xa8f518a9021354b3e0862b048e3cdaf5d91341dcedcabfa42a9fb04966c9a059"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Container contract for designated sequencer addresses.",
+      "sinceTimestamp": 1747125503,
+      "sinceBlock": 22473166,
+      "values": {
+        "$admin": "eth:0xbf1752DE62d825aF0634F514226F881a449874b6",
+        "$implementation": "eth:0x10ACFD506472F6Cb0602dF880172935cEE9AC7B0",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "blobBatcher": "eth:0xaE4d46bD9117Cb017C5185844699c51107cB28a9",
+        "blockNumbers": [],
+        "CONFIG_OWNER_KEY": "METIS_MANAGER",
+        "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d"
+      },
+      "implementationNames": {
+        "eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0": "L1ChugSplashProxy",
+        "eth:0x10ACFD506472F6Cb0602dF880172935cEE9AC7B0": "MVM_InboxSenderManager"
+      }
+    },
+    {
       "name": "ProxyAdmin",
       "address": "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
       "type": "Contract",
@@ -722,7 +771,6 @@
         "_1088_MVM_Sequencer_Wrapper": "eth:0xcDf02971871B7736874E20B8487c019D28090019",
         "$immutable": true,
         "1088_MVM_FraudVerifier": "eth:0xAd07701EE9348d2B9e7De061883C10574c543279",
-        "blobBatcher": "eth:0xaE4d46bD9117Cb017C5185844699c51107cB28a9",
         "BondManager": "eth:0x595801b85628ec6979C420988b8843A40F850528",
         "CanonicalTransactionChain": "eth:0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9",
         "ChainStorageContainer_CTC_queue": "eth:0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57",
@@ -732,9 +780,12 @@
         "L2CrossDomainMessenger": "eth:0x4200000000000000000000000000000000000007",
         "METIS_MANAGER": "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "MVM_DiscountOracle": "eth:0x7f6B0b7589febc40419a8646EFf9801b87397063",
+        "MVM_ProposerRegistry": "eth:0x5669d0C8C28B7E2c3d10eD246bEb042bDdd12E18",
+        "OVM_Sequencer": "eth:0x0000000000000000000000000000000000000000",
         "owner": "eth:0xbf1752DE62d825aF0634F514226F881a449874b6",
         "Proxy__MVM_CanonicalTransaction": "eth:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a",
         "Proxy__MVM_ChainManager": "eth:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0",
+        "Proxy__MVM_InboxSenderManager": "eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0",
         "Proxy__MVM_Verifier": "eth:0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb",
         "Proxy__OVM_L1StandardBridge": "eth:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
         "StateCommitmentChain": "eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6",
@@ -787,7 +838,7 @@
       "template": "metis/MVM_StateCommitmentChain",
       "sourceHashes": [
         "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd",
-        "0x0e8553402b55057406811a803b14c4778f42fcf02523b10e695ec073a98202a9"
+        "0xa42c85a235f67f88b193b516224025a8c54c8fc5a0204c0f7b4fc0202b70eed0"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.",
@@ -803,7 +854,7 @@
       "sinceBlock": 19438866,
       "values": {
         "$admin": "eth:0xbf1752DE62d825aF0634F514226F881a449874b6",
-        "$implementation": "eth:0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1",
+        "$implementation": "eth:0xA738573Ec0FD7959BfA60Aaa8a23Fe7BEC6c4Bd7",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "batches": "eth:0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
@@ -812,18 +863,19 @@
         "earliestDisputedBlockNumber": 0,
         "findEarliestDisputableBatch": [],
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1757938883,
-        "getLastSequencerTimestampByChainId": 1757938883,
-        "getTotalBatches": 32314,
-        "getTotalBatchesByChainId": 32314,
-        "getTotalElements": 21219289,
-        "getTotalElementsByChainId": 21219289,
+        "getLastSequencerTimestamp": 1759250831,
+        "getLastSequencerTimestampByChainId": 1759250831,
+        "getTotalBatches": 32776,
+        "getTotalBatchesByChainId": 32776,
+        "getTotalElements": 21337093,
+        "getTotalElementsByChainId": 21337093,
         "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
+        "MVM_PROPOSER_REGISTRY_NAME": "MVM_ProposerRegistry",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
       "implementationNames": {
         "eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6": "L1ChugSplashProxy",
-        "eth:0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1": "MVM_StateCommitmentChain"
+        "eth:0xA738573Ec0FD7959BfA60Aaa8a23Fe7BEC6c4Bd7": "MVM_StateCommitmentChain"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -925,7 +977,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
+          "from": "eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0",
           "role": ".blobBatcher"
         }
       ]
@@ -1007,6 +1059,11 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6",
           "role": "admin"
         },
@@ -1055,7 +1112,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 8 (75%)",
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1121,7 +1178,7 @@
         ],
         "$upgradeCount": 2,
         "BLOCK_REWARD": "12478422370000000",
-        "currentBatch": 155,
+        "currentBatch": 160,
         "escrow": "eth:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
         "exitDelayPeriod": 1814400,
         "mpcAddress": "eth:0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b",
@@ -1200,19 +1257,6 @@
       }
     },
     {
-      "address": "eth:0xDD6FFC7D9a4Fb420b637747edc6456340d12d377",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x081D1101855bD523bA69A9794e0217F0DB6323ff",
-          "description": "block (censor) specific L2->L1 messages (e.g. withdrawals), so that they cannot be relayed, pause the contract.",
-          "role": ".owner"
-        }
-      ]
-    },
-    {
       "address": "eth:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1227,6 +1271,11 @@
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0x5669d0C8C28B7E2c3d10eD246bEb042bDdd12E18",
+          "role": ".proposer"
+        },
         {
           "permission": "propose",
           "from": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
@@ -1285,7 +1334,32 @@
       "proxyType": "EOA"
     },
     {
+      "address": "metis-andromeda:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "metis-andromeda:0x13C74967aEC876013D8fBF81485DF780d6093527",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "OVM_L2ToL1MessagePasser",
+      "address": "metis-andromeda:0x4200000000000000000000000000000000000000",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x2e2a3f96f09d8222fa69b9acdac6fc4c3d8ce2698f2f8c1a4c24ec4d90022ced"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1637270379,
+      "sinceBlock": 0,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "metis-andromeda:0x4200000000000000000000000000000000000000": "OVM_L2ToL1MessagePasser"
+      }
+    },
+    {
+      "address": "metis-andromeda:0x4200000000000000000000000000000000000001",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1310,6 +1384,26 @@
       }
     },
     {
+      "name": "MVM_ChainConfig",
+      "address": "metis-andromeda:0x4200000000000000000000000000000000000005",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xe724c0f1c0975489612cc46038bbf247b90ddc1bbc584235bce637eb749a77ba"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1637270379,
+      "sinceBlock": 0,
+      "values": {
+        "$immutable": true,
+        "DAC_CHARTER": "0xc328fca2239fbcfe0eec38e141cddc7a71fe6e487de3a6bddcef274f84066a58",
+        "DAC_NAME": "0x78ac83bba2d574e65dfad8fd6e34b698a63267e9bc0596de47aace4b8da37a1d",
+        "getConfig": "0x"
+      },
+      "implementationNames": {
+        "metis-andromeda:0x4200000000000000000000000000000000000005": "MVM_ChainConfig"
+      }
+    },
+    {
       "name": "L2CrossDomainMessenger",
       "address": "metis-andromeda:0x4200000000000000000000000000000000000007",
       "type": "Contract",
@@ -1325,10 +1419,43 @@
       "values": {
         "$immutable": true,
         "l1CrossDomainMessenger": "metis-andromeda:0x081D1101855bD523bA69A9794e0217F0DB6323ff",
-        "messageNonce": 107960
+        "messageNonce": 107980
       },
       "implementationNames": {
         "metis-andromeda:0x4200000000000000000000000000000000000007": "L2CrossDomainMessenger"
+      }
+    },
+    {
+      "address": "metis-andromeda:0x4200000000000000000000000000000000000008",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "metis-andromeda:0x4200000000000000000000000000000000000009",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Ether Token",
+      "address": "metis-andromeda:0x420000000000000000000000000000000000000A",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xa5e752396ada54e4ef677a75158eedfcdd27ccd505175eff67f842949aa160d3"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1637270379,
+      "sinceBlock": 0,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "l1Token": "metis-andromeda:0x0000000000000000000000000000000000000000",
+        "l2Bridge": "metis-andromeda:0x4200000000000000000000000000000000000010",
+        "name": "Ether",
+        "symbol": "WETH",
+        "totalSupply": "4803274560845429809151"
+      },
+      "implementationNames": {
+        "metis-andromeda:0x420000000000000000000000000000000000000A": "OVM_ETH"
       }
     },
     {
@@ -1417,6 +1544,29 @@
       "address": "metis-andromeda:0xDD6FFC7D9a4Fb420b637747edc6456340d12d377",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "MVM_Coinbase",
+      "address": "metis-andromeda:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x1d32bbfe4b390c802bab23f78c1521754a9fffbd23468d5fec2787e332597d3e"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1637270379,
+      "sinceBlock": 0,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "l1Token": "metis-andromeda:0x0000000000000000000000000000000000000000",
+        "l2Bridge": "metis-andromeda:0x4200000000000000000000000000000000000010",
+        "name": "Metis Token",
+        "symbol": "Metis",
+        "totalSupply": "6915210796933756685181355"
+      },
+      "implementationNames": {
+        "metis-andromeda:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000": "MVM_Coinbase"
+      }
     },
     {
       "address": "metis-andromeda:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0",
@@ -1539,6 +1689,19 @@
       "function setByChainId(uint256 _chainId, uint256 _index, bytes32 _object)",
       "function setGlobalMetadata(bytes27 _globalMetadata)",
       "function setGlobalMetadataByChainId(uint256 _chainId, bytes27 _globalMetadata)"
+    ],
+    "eth:0x10ACFD506472F6Cb0602dF880172935cEE9AC7B0": [
+      "constructor(address _libAddressManager, tuple(uint8 senderType, address sender)[] _defaultInboxSenders)",
+      "event InboxSenderSet(uint256 indexed blockNumber, address indexed inboxSender, uint8 indexed inboxSenderType)",
+      "function CONFIG_OWNER_KEY() view returns (string)",
+      "function blockNumbers(uint256) view returns (uint256)",
+      "function defaultInboxSender(uint8) view returns (address)",
+      "function getInboxSender(uint256 blockNumber, uint8 inboxSenderType) view returns (address)",
+      "function inboxSenders(uint256, uint8) view returns (uint8 senderType, address sender)",
+      "function libAddressManager() view returns (address)",
+      "function overwriteLastInboxSenders(uint256 blockNumber, tuple(uint8 senderType, address sender)[] _inboxSenders)",
+      "function resolve(string _name) view returns (address)",
+      "function setInboxSenders(uint256 blockNumber, tuple(uint8 senderType, address sender)[] _inboxSenders)"
     ],
     "eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1731,6 +1894,17 @@
     "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21": [
       "constructor(address _singleton)"
     ],
+    "eth:0x5669d0C8C28B7E2c3d10eD246bEb042bDdd12E18": [
+      "constructor(address _owner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ProposerSet(uint256 indexed chainId, address indexed proposer)",
+      "function getProposer(uint256 _chainId) view returns (address)",
+      "function owner() view returns (address)",
+      "function proposers(uint256) view returns (address)",
+      "function renounceOwnership()",
+      "function setProposer(uint256 _chainId, address _proposer)",
+      "function transferOwnership(address newOwner)"
+    ],
     "eth:0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9": [
       "constructor(address _libAddressManager, uint256 _maxTransactionGasLimit, uint256 _l2GasDiscountDivisor, uint256 _enqueueGasCost)",
       "event BatchElementDeleted(address _sender, uint256 _chainId, uint256 _index, bytes27 _globalMetadata)",
@@ -1908,6 +2082,14 @@
       "function setWhitelistedXDomainSender(address _sender, bool _isWhitelisted)",
       "function xDomainWL(address) view returns (bool)"
     ],
+    "eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0": [
+      "constructor(address _owner)",
+      "function getImplementation() returns (address)",
+      "function getOwner() returns (address)",
+      "function setCode(bytes _code)",
+      "function setOwner(address _owner)",
+      "function setStorage(bytes32 _key, bytes32 _value)"
+    ],
     "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8": [
       "constructor(address initialOwner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -1928,46 +2110,6 @@
       "function renounceOwnership()",
       "function setAddress(string _name, address _address)",
       "function transferOwnership(address newOwner)"
-    ],
-    "eth:0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1": [
-      "constructor(address _libAddressManager, uint256 _fraudProofWindow, uint256 _sequencerPublishWindow)",
-      "error ClaimAlreadyResolved()",
-      "error NoFinalizedBatchFound()",
-      "error UnregisteredGame()",
-      "event BatchDisputedOnTimeout(uint256 indexed _chainId, uint256 _batchIndex, bytes32 _batchRoot)",
-      "event StateBatchAppended(uint256 _chainId, uint256 indexed _batchIndex, bytes32 _batchRoot, uint256 _batchSize, uint256 _prevTotalElements, bytes _extraData)",
-      "event StateBatchDeleted(uint256 _chainId, uint256 indexed _batchIndex, bytes32 _batchRoot)",
-      "function DEFAULT_CHAINID() view returns (uint256)",
-      "function DISPUTE_GAME_FACTORY_NAME() view returns (string)",
-      "function FRAUD_PROOF_WINDOW() view returns (uint256)",
-      "function SEQUENCER_PUBLISH_WINDOW() view returns (uint256)",
-      "function appendStateBatch(bytes32[] _batch, uint256 _shouldStartAtElement, bytes32 _lastBatchBlockHash, uint256 _lastBatchBlockNumber)",
-      "function appendStateBatchByChainId(uint256 _chainId, bytes32[] _batch, uint256 _shouldStartAtElement, string _proposer, bytes32 _lastBatchBlockHash, uint256 _lastBatchBlockNumber)",
-      "function batchLastL2BlockNumbers(bytes32) view returns (uint256)",
-      "function batchTimes(uint256, uint256) view returns (bytes16)",
-      "function batches() view returns (address)",
-      "function checkBatchBlock(uint256 _chainId, uint256 _batchIndex, uint256 _l2BlockNumber) view returns (bytes32)",
-      "function deleteStateBatch(tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader)",
-      "function deleteStateBatchByChainId(uint256 _chainId, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader)",
-      "function disputedBatches(bytes32) view returns (bool)",
-      "function earliestDisputedBlockNumber() view returns (uint256)",
-      "function findEarliestDisputableBatch(uint256 _chainId) view returns (tuple(bytes32 batchHeaderHash, uint256 lastL2BlockNumber) _lastFinalized, tuple(bytes32 batchHeaderHash, uint256 lastL2BlockNumber) _earliestDisputable)",
-      "function getLastSequencerTimestamp() view returns (uint256 _lastSequencerTimestamp)",
-      "function getLastSequencerTimestampByChainId(uint256 _chainId) view returns (uint256 _lastSequencerTimestamp)",
-      "function getTotalBatches() view returns (uint256 _totalBatches)",
-      "function getTotalBatchesByChainId(uint256 _chainId) view returns (uint256 _totalBatches)",
-      "function getTotalElements() view returns (uint256 _totalElements)",
-      "function getTotalElementsByChainId(uint256 _chainId) view returns (uint256 _totalElements)",
-      "function insideFraudProofWindow(tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader) view returns (bool _inside)",
-      "function insideFraudProofWindowByChainId(uint256, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader) view returns (bool _inside)",
-      "function isDisputedBatch(bytes32 stateHeaderHash) view returns (bool)",
-      "function libAddressManager() view returns (address)",
-      "function resolve(string _name) view returns (address)",
-      "function saveDisputedBatch(bytes32 stateHeaderHash, uint256 _blockNumber)",
-      "function saveDisputedBatchTimeout(uint256 _chainId, uint256 _l2BlockNumber, uint256 _batchIndex)",
-      "function setFraudProofWindow(uint256 window)",
-      "function verifyStateCommitment(bytes32 _element, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader, tuple(uint256 index, bytes32[] siblings) _proof) view returns (bool)",
-      "function verifyStateCommitmentByChainId(uint256 _chainId, bytes32 _element, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader, tuple(uint256 index, bytes32[] siblings) _proof) view returns (bool)"
     ],
     "eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e": [
       "constructor(address[] minters, uint256 maxSupply)",
@@ -2064,6 +2206,47 @@
       "function setCode(bytes _code)",
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
+    ],
+    "eth:0xA738573Ec0FD7959BfA60Aaa8a23Fe7BEC6c4Bd7": [
+      "constructor(address _libAddressManager, uint256 _fraudProofWindow, uint256 _sequencerPublishWindow)",
+      "error ClaimAlreadyResolved()",
+      "error NoFinalizedBatchFound()",
+      "error UnregisteredGame()",
+      "event BatchDisputedOnTimeout(uint256 indexed _chainId, uint256 _batchIndex, bytes32 _batchRoot)",
+      "event StateBatchAppended(uint256 _chainId, uint256 indexed _batchIndex, bytes32 _batchRoot, uint256 _batchSize, uint256 _prevTotalElements, bytes _extraData)",
+      "event StateBatchDeleted(uint256 _chainId, uint256 indexed _batchIndex, bytes32 _batchRoot)",
+      "function DEFAULT_CHAINID() view returns (uint256)",
+      "function DISPUTE_GAME_FACTORY_NAME() view returns (string)",
+      "function FRAUD_PROOF_WINDOW() view returns (uint256)",
+      "function MVM_PROPOSER_REGISTRY_NAME() view returns (string)",
+      "function SEQUENCER_PUBLISH_WINDOW() view returns (uint256)",
+      "function appendStateBatch(bytes32[] _batch, uint256 _shouldStartAtElement, bytes32 _lastBatchBlockHash, uint256 _lastBatchBlockNumber)",
+      "function appendStateBatchByChainId(uint256 _chainId, bytes32[] _batch, uint256 _shouldStartAtElement, string, bytes32 _lastBatchBlockHash, uint256 _lastBatchBlockNumber)",
+      "function batchLastL2BlockNumbers(bytes32) view returns (uint256)",
+      "function batchTimes(uint256, uint256) view returns (bytes16)",
+      "function batches() view returns (address)",
+      "function checkBatchBlock(uint256 _chainId, uint256 _batchIndex, uint256 _l2BlockNumber) view returns (bytes32)",
+      "function deleteStateBatch(tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader)",
+      "function deleteStateBatchByChainId(uint256 _chainId, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader)",
+      "function disputedBatches(bytes32) view returns (bool)",
+      "function earliestDisputedBlockNumber() view returns (uint256)",
+      "function findEarliestDisputableBatch(uint256 _chainId) view returns (tuple(bytes32 batchHeaderHash, uint256 lastL2BlockNumber) _lastFinalized, tuple(bytes32 batchHeaderHash, uint256 lastL2BlockNumber) _earliestDisputable)",
+      "function getLastSequencerTimestamp() view returns (uint256 _lastSequencerTimestamp)",
+      "function getLastSequencerTimestampByChainId(uint256 _chainId) view returns (uint256 _lastSequencerTimestamp)",
+      "function getTotalBatches() view returns (uint256 _totalBatches)",
+      "function getTotalBatchesByChainId(uint256 _chainId) view returns (uint256 _totalBatches)",
+      "function getTotalElements() view returns (uint256 _totalElements)",
+      "function getTotalElementsByChainId(uint256 _chainId) view returns (uint256 _totalElements)",
+      "function insideFraudProofWindow(tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader) view returns (bool _inside)",
+      "function insideFraudProofWindowByChainId(uint256, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader) view returns (bool _inside)",
+      "function isDisputedBatch(bytes32 stateHeaderHash) view returns (bool)",
+      "function libAddressManager() view returns (address)",
+      "function resolve(string _name) view returns (address)",
+      "function saveDisputedBatch(bytes32 stateHeaderHash, uint256 _blockNumber)",
+      "function saveDisputedBatchTimeout(uint256 _chainId, uint256 _l2BlockNumber, uint256 _batchIndex)",
+      "function setFraudProofWindow(uint256 window)",
+      "function verifyStateCommitment(bytes32 _element, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader, tuple(uint256 index, bytes32[] siblings) _proof) view returns (bool)",
+      "function verifyStateCommitmentByChainId(uint256 _chainId, bytes32 _element, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader, tuple(uint256 index, bytes32[] siblings) _proof) view returns (bool)"
     ],
     "eth:0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57": [
       "constructor(address _libAddressManager, string _owner)",
@@ -2261,6 +2444,11 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "metis-andromeda:0x4200000000000000000000000000000000000000": [
+      "function passMessageToL1(bytes _message)",
+      "function sentMessages(bytes32) view returns (bool)",
+      "event L2ToL1Message(uint256 _nonce, address _sender, bytes _data)"
+    ],
     "metis-andromeda:0x4200000000000000000000000000000000000002": [
       "event OwnerChanged(address oldOwner, address newOwner)",
       "event WhitelistDisabled(address oldOwner)",
@@ -2278,6 +2466,19 @@
       "function whitelist(address) view returns (bool)",
       "function xDomainWL(address) view returns (bool)"
     ],
+    "metis-andromeda:0x4200000000000000000000000000000000000005": [
+      "constructor()",
+      "event NewAccountConfig(address sender, address key, bytes value)",
+      "event NewChainConfig(address sender, bytes32 key, bytes value)",
+      "function DAC_CHARTER() view returns (bytes32)",
+      "function DAC_NAME() view returns (bytes32)",
+      "function account_config(address) view returns (bytes)",
+      "function config(bytes32) view returns (bytes)",
+      "function getConfig(bytes32 key) view returns (bytes)",
+      "function getConfig() view returns (bytes)",
+      "function setConfig(bytes32 key, bytes values)",
+      "function setConfig(bytes values)"
+    ],
     "metis-andromeda:0x4200000000000000000000000000000000000007": [
       "constructor(address _l1CrossDomainMessenger) payable",
       "function l1CrossDomainMessenger() view returns (address)",
@@ -2292,6 +2493,29 @@
       "event FailedRelayedMessage(bytes32 indexed msgHash)",
       "event RelayedMessage(bytes32 indexed msgHash)",
       "event SentMessage(address indexed target, address sender, bytes message, uint256 messageNonce, uint256 gasLimit, uint256 chainId)"
+    ],
+    "metis-andromeda:0x420000000000000000000000000000000000000A": [
+      "constructor() payable",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function burn(address _from, uint256 _amount)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function l1Token() view returns (address)",
+      "function l2Bridge() view returns (address)",
+      "function mint(address _to, uint256 _amount)",
+      "function name() view returns (string)",
+      "function supportsInterface(bytes4 _interfaceId) pure returns (bool)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address recipient, uint256 amount) returns (bool)",
+      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Burn(address indexed _account, uint256 _amount)",
+      "event Mint(address indexed _account, uint256 _amount)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)"
     ],
     "metis-andromeda:0x420000000000000000000000000000000000000F": [
       "constructor(address _owner) payable",
@@ -2350,6 +2574,29 @@
     "metis-andromeda:0x4200000000000000000000000000000000000012": [
       "function createStandardL2Token(address _l1Token, string _name, string _symbol)",
       "event StandardL2TokenCreated(address indexed _l1Token, address indexed _l2Token)"
+    ],
+    "metis-andromeda:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000": [
+      "constructor() payable",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function burn(address _from, uint256 _amount)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function l1Token() view returns (address)",
+      "function l2Bridge() view returns (address)",
+      "function mint(address _to, uint256 _amount)",
+      "function name() view returns (string)",
+      "function supportsInterface(bytes4 _interfaceId) pure returns (bool)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address recipient, uint256 amount) returns (bool)",
+      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Burn(address indexed _account, uint256 _amount)",
+      "event Mint(address indexed _account, uint256 _amount)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)"
     ]
   },
   "usedTemplates": {
@@ -2366,18 +2613,20 @@
     "metis/FaultProofLockingPool": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "metis/L1CrossDomainMessenger": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "metis/L1StandardBridge": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
-    "metis/Lib_AddressManager": "0xae0fd431f790543d8bd34d9d2582df895573185805077a414c1cb77ef97e54aa",
+    "metis/Lib_AddressManager": "0x54f153881f85aee7f617be39b14164ce8c64cc07b94a4d2c75e0089a4bec3e36",
     "metis/LockingInfo": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "metis/LockingPool": "0x62830e033d07ce22b140604342c80f9ee45e8e75f07f0be34e09bd2ff01454c0",
     "metis/MetisConfig": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "metis/METISToken": "0xe4c7c8a93327a313a78b8443c90b3cfe44501c5ddc41bab647f77de5ff00152f",
     "metis/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "metis/MVM_DiscountOracle": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
+    "metis/MVM_InboxSenderManager": "0x0eeec0583547e5dd7e69d3661803c72cf6064f8a0d002882064a56a9e08ad31e",
+    "metis/MVM_ProposerRegistry": "0xe1ffd265bd8338b3febfd389d682d407e4109970d138c349e86e6c131b918a57",
     "metis/MVM_StateCommitmentChain": "0x8496d4b5edbf854305227b9e0e5b8c845600e4bad4d3bd9aa391933a57a5e82e",
     "metis/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/Layer2/L2CrossDomainMessenger": "0xe22f4bc25e3233f9cbc95891feb31bb13e525003e5dac36ec019619b44a06b89",
     "opstack/Layer2/L2StandardBridge": "0xa3a1bc50117017a509d0dbef8f13b9b8e3bae9146504b23939e69814c6f31060"
   },
-  "usedBlockNumbers": { "ethereum": 23368459, "metis": 21221180 },
-  "permissionsConfigHash": "0x6a6b2139e5932988d11a4121971a167579dd918138f2e6a7dacce3c20c15842c"
+  "usedBlockNumbers": { "metis": 21339062, "ethereum": 23477191 },
+  "permissionsConfigHash": "0xe9dbaf23bc09033cf4f6e1ff53ba9c47d3cba348345f0472202e28783e85125c"
 }

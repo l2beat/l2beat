@@ -509,12 +509,20 @@ export const PROPOSER_WHITELIST_GOVERNANCE: TableReadyValue = {
   orderHint: Number.NEGATIVE_INFINITY,
 }
 
-export const PROPOSER_WHITELIST_SECURITY_COUNCIL: TableReadyValue = {
-  value: 'Security Council minority',
-  description:
-    'Only the whitelisted proposer can update state roots on L1, so in the event of failure the withdrawals are frozen. The Security Council minority can be alerted to enforce censorship resistance because they are a permissioned Operator.',
-  sentiment: 'warning',
-  orderHint: Number.NEGATIVE_INFINITY,
+export function PROPOSER_WHITELIST_SECURITY_COUNCIL(
+  config?: 'METIS',
+): TableReadyValue {
+  const description =
+    config === 'METIS'
+      ? 'Only the whitelisted proposer can update state roots on L1, so in the event of failure the withdrawals are frozen. The Security Council minority can be alerted to enforce censorship resistance because they own the proposer registry, controlling the active whitelisted proposer.'
+      : 'Only the whitelisted proposer can update state roots on L1, so in the event of failure the withdrawals are frozen. The Security Council minority can be alerted to enforce censorship resistance because they are a permissioned Operator.'
+
+  return {
+    value: 'Security Council minority',
+    description,
+    sentiment: 'warning',
+    orderHint: Number.NEGATIVE_INFINITY,
+  }
 }
 
 export const PROPOSER_USE_ESCAPE_HATCH_ZK: TableReadyValue = {
