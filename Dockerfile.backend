@@ -24,6 +24,7 @@ RUN npm i -g corepack@${COREPACK_VERSION} && corepack enable pnpm
 WORKDIR /src/
 COPY --from=pruner /src/out/json/ .
 RUN pnpm install
+RUN pnpm exec playwright install chromium
 COPY --from=pruner /src/.discovery.json .
 COPY --from=pruner /src/out/full/ ./
 RUN pnpm build:backend
@@ -44,6 +45,4 @@ RUN apt update && \
 COPY --from=builder /src/ .
 COPY --from=builder /dist/difft /usr/local/bin/difft
 COPY docker/.profile.d .profile.d
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
-RUN pnpm exec playwright install chromium
 CMD cd packages/backend && node -r source-map-support/register build/src/index.js
