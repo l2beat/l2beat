@@ -1,76 +1,70 @@
-import { assert, UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import { assert } from '@l2beat/shared-pure'
+import type { Selectable, Updateable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { AbstractToken } from '../kysely/generated/types'
 
-export interface AbstractTokenRecord {
-  id: string
-  issuer: string | undefined
-  symbol: string
-  category: string
-  iconUrl: string | undefined
-  coingeckoId: string | undefined
-  coingeckoListingTimestamp: UnixTime | undefined
-  comment: string | undefined
+// Drops optional/undefined from a given set of fields
+type WithPrimaryKey<T, K extends keyof T> = {
+  [P in K]-?: Exclude<T[P], undefined>
+} & {
+  [P in Exclude<keyof T, K>]: T[P]
 }
 
-export function toRecord(row: Selectable<AbstractToken>): AbstractTokenRecord {
-  return {
-    id: row.id,
-    issuer: row.issuer ?? undefined,
-    symbol: row.symbol,
-    category: row.category,
-    iconUrl: row.iconUrl ?? undefined,
-    coingeckoId: row.coingeckoId ?? undefined,
-    coingeckoListingTimestamp:
-      row.coingeckoListingTimestamp !== null
-        ? UnixTime.fromDate(row.coingeckoListingTimestamp)
-        : undefined,
-    comment: row.comment ?? undefined,
-  }
+type ReplaceNulls<T> = {
+  [K in keyof T]: null extends T[K] ? Exclude<T[K], null> | undefined : T[K]
 }
 
-export function toRow(record: AbstractTokenRecord): Insertable<AbstractToken> {
-  return {
-    id: record.id,
-    issuer: record.issuer,
-    symbol: record.symbol,
-    category: record.category,
-    iconUrl: record.iconUrl,
-    coingeckoId: record.coingeckoId,
-    coingeckoListingTimestamp:
-      record.coingeckoListingTimestamp !== undefined
-        ? UnixTime.toDate(record.coingeckoListingTimestamp)
-        : null,
-    comment: record.comment,
-  }
+// Combines Selectable with ReplaceNulls
+type AsRecord<T> = Selectable<ReplaceNulls<T>>
+
+// Combines WithPrimaryKey with Updateable
+type AsUpdateable<T, K extends keyof Updateable<T>> = WithPrimaryKey<
+  Updateable<T>,
+  K
+>
+
+export type AbstractTokenRecord = AsRecord<AbstractToken>
+export type AbstractTokenUpdate = AsUpdateable<AbstractToken, 'id'>
+
+function toRecord<T extends object>(obj: T): ReplaceNulls<T> {
+  return Object.fromEntries(
+    Object.entries(obj).map(([k, v]) => [k, v === null ? undefined : v]),
+  ) as ReplaceNulls<T>
 }
 
 export class AbstractTokenRepository extends BaseRepository {
   async insert(record: AbstractTokenRecord): Promise<string> {
-    const [row] = await this.db
+    const row = await this.db
       .insertInto('AbstractToken')
-      .values(toRow(record))
+      .values(record)
       .returning('id')
-      .execute()
+      .executeTakeFirst()
 
     assert(row)
-    return row?.id
+    return row.id
+  }
+
+  async update(id: string, update: AbstractTokenUpdate): Promise<bigint> {
+    const result = await this.db
+      .updateTable('AbstractToken')
+      .set(update)
+      .where('id', '=', update.id)
+      .executeTakeFirst()
+
+    return result.numUpdatedRows
   }
 
   async findById(id: string): Promise<AbstractTokenRecord | undefined> {
-    const row = await this.db
+    const result = await this.db
       .selectFrom('AbstractToken')
       .selectAll()
       .where('id', '=', id)
       .executeTakeFirst()
 
-    return row ? toRecord(row) : undefined
+    return result ? toRecord(result) : undefined
   }
 
   async getByIds(ids: string[]): Promise<AbstractTokenRecord[]> {
-    if (ids.length === 0) return []
-
     const rows = await this.db
       .selectFrom('AbstractToken')
       .selectAll()
@@ -85,19 +79,17 @@ export class AbstractTokenRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async deleteByIds(ids: string[]): Promise<number> {
-    if (ids.length === 0) return 0
-
+  async deleteByIds(ids: string[]): Promise<bigint> {
     const result = await this.db
       .deleteFrom('AbstractToken')
       .where('id', 'in', ids)
       .executeTakeFirst()
 
-    return Number(result.numDeletedRows)
+    return result.numDeletedRows
   }
 
-  async deleteAll(): Promise<number> {
+  async deleteAll(): Promise<bigint> {
     const result = await this.db.deleteFrom('AbstractToken').executeTakeFirst()
-    return Number(result.numDeletedRows)
+    return result.numDeletedRows
   }
 }

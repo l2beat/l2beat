@@ -1,12 +1,13 @@
-import { isDeepStrictEqual } from 'node:util'
 import type { Logger } from '@l2beat/backend-tools'
 import type {
   AbstractTokenRecord,
+  AbstractTokenUpdate,
   DeployedTokenRecord,
   TokenConnectionRecord,
   TokenDatabase,
 } from '@l2beat/database'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
+import { isDeepStrictEqual } from 'node:util'
 
 type Intent = AddAbstractTokenIntent | UpdateAbstractTokenIntent
 
@@ -17,7 +18,7 @@ interface AddAbstractTokenIntent {
 
 interface UpdateAbstractTokenIntent {
   type: 'UpdateAbstractTokenIntent'
-  abstractToken: AbstractTokenRecord
+  abstractTokenUpdate: AbstractTokenUpdate
 }
 
 type Command = AddAbstractTokenCommand | UpdateAbstractTokenCommand
@@ -30,7 +31,7 @@ interface AddAbstractTokenCommand {
 interface UpdateAbstractTokenCommand {
   type: 'UpdateAbstractTokenCommand'
   before: AbstractTokenRecord
-  after: AbstractTokenRecord
+  update: AbstractTokenUpdate
 }
 
 interface Plan {
@@ -84,15 +85,19 @@ export class TokenService {
   async planUpdateAbstractToken(
     intent: UpdateAbstractTokenIntent,
   ): Promise<Command[]> {
-    const before = await this.db.abstractToken.findById(intent.abstractToken.id)
+    const before = await this.db.abstractToken.findById(
+      intent.abstractTokenUpdate.id,
+    )
     if (before === undefined) {
-      throw new Error(`AbstractToken ${intent.abstractToken.id} doesn't exist`)
+      throw new Error(
+        `AbstractToken ${intent.abstractTokenUpdate.id} doesn't exist`,
+      )
     }
     return [
       {
         type: 'UpdateAbstractTokenCommand',
         before,
-        after: intent.abstractToken,
+        update: intent.abstractTokenUpdate,
       },
     ]
   }
@@ -135,7 +140,7 @@ export class TokenService {
         break
       case 'UpdateAbstractTokenCommand':
         // TODO: this should be an update
-        await this.db.abstractToken.insert(command.after)
+        await this.db.abstractToken.update(command.update)
         break
       default:
         assertUnreachable(command)

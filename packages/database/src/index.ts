@@ -5,7 +5,7 @@ export { compiledToSqlQuery } from './utils/compiledToSqlQuery'
 
 // Records
 
-export type { AbstractTokenRecord } from './repositories/AbstractTokenRepository'
+export type { AbstractTokenRecord, AbstractTokenUpdate } from './repositories/AbstractTokenRepository'
 export type { ActivityRecord } from './repositories/ActivityRepository'
 export type { AggregatedL2CostRecord } from './repositories/AggregatedL2CostRepository'
 export type { AggregatedLivenessRecord } from './repositories/AggregatedLivenessRepository'
