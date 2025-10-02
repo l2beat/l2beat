@@ -8,6 +8,10 @@ Generated with discovered.json: 0x1b18376d8b4d4f2de9dd7e54b7acddf3131bdafa
 
 ## Description
 
+THIS DISCO WAS ARCHIVED: Kinto [sweeped all assets from the canonical bridge](https://etherscan.io/tx/0x3221f37f97d57bc47be2e17fe2be020d7fafbb22876a2ccb454ad586dec70c09) and [some socket vaults](https://app.blocksec.com/explorer/tx/eth/0x8fd5333f84e754ab23b3f973bebb2a669a767ec7b281fe7cd6f98a96aecb7cec), which were transfered to different Multisigs / EOAs. CVR frontend is up.
+No rediscovery was possible because the Kinto rpc is already down.
+
+Older update:
 add new celestia nitro wasmmoduleroot
 
 ## Config/verification related changes
