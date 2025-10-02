@@ -99,8 +99,8 @@ export const metis: ScalingProject = {
       },
       stage1: {
         principle: false,
-        usersHave7DaysToExit: true,
-        usersCanExitWithoutCooperation: true,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: false,
         securityCouncilProperlySetUp: true,
       },
       stage2: {
