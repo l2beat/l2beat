@@ -30,10 +30,10 @@ export class AcrossComparePlugin implements BridgeComparePlugin {
       // @ts-ignore Try changing the 'lib' compiler option to include 'dom'.
       links.map((link) => link.href),
     )
+    const urlsToProcess = Math.min(urls.length, 50)
 
     // Process in batches to avoid overwhelming the server
     const batchSize = 5 // Adjust based on server capacity
-    const urlsToProcess = Math.min(urls.length, 50)
     const results: BridgeExternalItem[] = []
 
     for (let i = 0; i < urlsToProcess; i += batchSize) {
@@ -42,18 +42,13 @@ export class AcrossComparePlugin implements BridgeComparePlugin {
       const batchResults = await Promise.all(
         batch.map(async (url) => {
           const newPage = await context.newPage()
-          try {
-            return await this.scrapePage(newPage, url)
-          } finally {
-            await newPage.close()
-          }
+          const result = await this.scrapePage(newPage, url)
+          await newPage.close()
+          return result
         }),
       )
 
       results.push(...batchResults.filter((b) => b !== null))
-      this.logger.info(
-        `Processed batch ${Math.floor(i / batchSize) + 1}, found ${results.length} items so far`,
-      )
     }
 
     await browser.close()
@@ -112,7 +107,7 @@ export class AcrossComparePlugin implements BridgeComparePlugin {
       }
       return null
     } catch (error) {
-      this.logger.error(`Error scraping ${url}:`, error)
+      this.logger.debug(`Error during scraping ${url}`, error)
       return null
     }
   }
