@@ -5,7 +5,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="py-2">{children}</main>
+      <main className="min-h-screen w-full py-2 pr-2">{children}</main>
     </SidebarProvider>
   )
 }
