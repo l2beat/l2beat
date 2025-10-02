@@ -100,6 +100,7 @@ function StatusOfReviewSection({ projectData, contractTags, permissionOverrides 
   })
 
   // Count permissions from permission-overrides (contract-grouped structure)
+  // Note: Permissions can be stored under implementation addresses for proxy contracts
   let permissionedFunctions = 0
   let checkedFunctions = 0
 
@@ -227,6 +228,21 @@ function StatusOfReviewSection({ projectData, contractTags, permissionOverrides 
 }
 
 // Helper functions for contract data processing
+function resolveImplementationAddress(contractAddress: string, projectData: any): string {
+  // Try to find the contract entry in projectData
+  for (const entry of projectData.entries || []) {
+    if (entry.address === contractAddress) {
+      // If this is a proxy with an implementation, return the implementation address
+      if (entry.values?.$implementation) {
+        return entry.values.$implementation
+      }
+      break
+    }
+  }
+  // Return original address if no implementation found
+  return contractAddress
+}
+
 function buildContractsList(projectData: any): Array<{ address: string; name: string; source: string }> {
   if (!projectData?.entries) return []
 
@@ -255,41 +271,161 @@ function buildContractsList(projectData: any): Array<{ address: string; name: st
   return contracts
 }
 
-function calculateContractPermissions(contractAddress: string, permissionOverrides: any): { checked: number; total: number } {
-  if (!permissionOverrides?.contracts?.[contractAddress]) {
-    return { checked: 0, total: 0 }
-  }
-
-  const contractPermissions = permissionOverrides.contracts[contractAddress]
-  let checked = 0
-  let total = 0
-
-  contractPermissions.functions.forEach((func: any) => {
-    if (func.userClassification === 'permissioned') {
-      total++
-      if (func.checked === true) {
-        checked++
-      }
-    }
-  })
-
-  return { checked, total }
-}
-
 function getContractDisplayName(contract: { address: string; name: string }): string {
   const shortAddress = contract.address.replace('eth:', '').slice(0, 10)
   return `${contract.name} (${shortAddress}...)`
 }
 
+function findProxyForImplementation(implementationAddress: string, projectData: any): string | null {
+  // Find a proxy that uses this implementation address
+  for (const entry of projectData.entries || []) {
+    // Check initialContracts
+    for (const contract of entry.initialContracts || []) {
+      const implField = contract.fields?.find((f: any) => f.name === '$implementation')
+      if (implField?.value?.address === implementationAddress) {
+        return contract.address
+      }
+    }
+    // Check discoveredContracts
+    for (const contract of entry.discoveredContracts || []) {
+      const implField = contract.fields?.find((f: any) => f.name === '$implementation')
+      if (implField?.value?.address === implementationAddress) {
+        return contract.address
+      }
+    }
+  }
+  return null
+}
+
+function getImplementationAddress(proxyAddress: string, projectData: any): string | null {
+  // Find the implementation address for a given proxy address
+  for (const entry of projectData.entries || []) {
+    // Check initialContracts
+    for (const contract of entry.initialContracts || []) {
+      if (contract.address === proxyAddress) {
+        const implField = contract.fields?.find((f: any) => f.name === '$implementation')
+        return implField?.value?.address || null
+      }
+    }
+    // Check discoveredContracts
+    for (const contract of entry.discoveredContracts || []) {
+      if (contract.address === proxyAddress) {
+        const implField = contract.fields?.find((f: any) => f.name === '$implementation')
+        return implField?.value?.address || null
+      }
+    }
+  }
+  return null
+}
+
+function buildContractsMap(projectData: any): Map<string, { address: string; name: string }> {
+  // Build a map of address -> contract info for O(1) lookups
+  const map = new Map<string, { address: string; name: string }>()
+  const allContracts = buildContractsList(projectData)
+
+  allContracts.forEach(contract => {
+    map.set(contract.address, { address: contract.address, name: contract.name })
+  })
+
+  return map
+}
+
 function ContractsWithPermissionsTable({ projectData, permissionOverrides }: { projectData: any, permissionOverrides: any }) {
   const selectGlobal = usePanelStore((state) => state.select)
 
-  // Get all contracts and filter to only those with permissions
-  const allContracts = buildContractsList(projectData)
-  const contractsWithPermissions = allContracts.filter(contract => {
-    const permissions = calculateContractPermissions(contract.address, permissionOverrides)
-    return permissions.total > 0
-  })
+  // Build list of contracts with permissions
+  // Permissions can be stored under proxy addresses, implementation addresses, or both
+  const contractsMap = new Map<string, { address: string; name: string; permissions: { checked: number; total: number } }>()
+
+  if (permissionOverrides.contracts) {
+    // Build contract name lookup map
+    const contractInfoMap = buildContractsMap(projectData)
+
+    // First pass: Build a map of implementation -> proxy relationships
+    const implToProxy = new Map<string, string>()
+    Object.keys(permissionOverrides.contracts).forEach((addr) => {
+      const implAddr = getImplementationAddress(addr, projectData)
+      if (implAddr && permissionOverrides.contracts[implAddr]) {
+        implToProxy.set(implAddr, addr)
+      }
+    })
+
+    // Second pass: Process each address and merge permissions
+    const processed = new Set<string>()
+
+    Object.keys(permissionOverrides.contracts).forEach((permissionAddress) => {
+      if (processed.has(permissionAddress)) return
+
+      // Calculate permissions for this address
+      const calcPerms = (addr: string) => {
+        let checked = 0
+        let total = 0
+        const perms = permissionOverrides.contracts[addr]
+        if (perms) {
+          perms.functions.forEach((func: any) => {
+            if (func.userClassification === 'permissioned') {
+              total++
+              if (func.checked === true) {
+                checked++
+              }
+            }
+          })
+        }
+        return { checked, total }
+      }
+
+      // Check if this address is an implementation with a proxy
+      const proxyAddr = implToProxy.get(permissionAddress)
+
+      if (proxyAddr) {
+        // This is an implementation - merge with proxy
+        const implPerms = calcPerms(permissionAddress)
+        const proxyPerms = calcPerms(proxyAddr)
+
+        if (implPerms.total === 0 && proxyPerms.total === 0) return
+
+        processed.add(permissionAddress)
+        processed.add(proxyAddr)
+
+        // Use proxy's name and address
+        const contractInfo = contractInfoMap.get(proxyAddr) || { address: proxyAddr, name: 'Unknown Contract' }
+        contractsMap.set(proxyAddr, {
+          address: proxyAddr,
+          name: contractInfo.name,
+          permissions: {
+            checked: implPerms.checked + proxyPerms.checked,
+            total: implPerms.total + proxyPerms.total
+          }
+        })
+      } else {
+        // This is either a proxy or standalone contract
+        const perms = calcPerms(permissionAddress)
+        if (perms.total === 0) return
+
+        // Check if it's a proxy with an implementation
+        const implAddr = getImplementationAddress(permissionAddress, projectData)
+        if (implAddr && permissionOverrides.contracts[implAddr]) {
+          // Already handled in the implementation case above
+          return
+        }
+
+        processed.add(permissionAddress)
+
+        // For implementation-only contracts (no proxy), try to show proxy name if it exists
+        const proxyForImpl = findProxyForImplementation(permissionAddress, projectData)
+        const displayAddress = proxyForImpl || permissionAddress
+        const contractInfo = contractInfoMap.get(displayAddress) || { address: displayAddress, name: 'Unknown Contract' }
+
+        contractsMap.set(displayAddress, {
+          address: displayAddress,
+          name: contractInfo.name,
+          permissions: perms
+        })
+      }
+    })
+  }
+
+  const contractsWithPermissions = Array.from(contractsMap.values())
 
   if (contractsWithPermissions.length === 0) {
     return null
@@ -303,8 +439,7 @@ function ContractsWithPermissionsTable({ projectData, permissionOverrides }: { p
     <div className="mt-1">
       <div className="text-xs">
         {contractsWithPermissions.map((contract) => {
-          const permissions = calculateContractPermissions(contract.address, permissionOverrides)
-          const isIncomplete = permissions.checked < permissions.total
+          const isIncomplete = contract.permissions.checked < contract.permissions.total
 
           return (
             <div
@@ -320,7 +455,7 @@ function ContractsWithPermissionsTable({ projectData, permissionOverrides }: { p
               <span
                 style={{ color: isIncomplete ? '#f87171' : 'white' }}
               >
-                ({permissions.checked}/{permissions.total})
+                ({contract.permissions.checked}/{contract.permissions.total})
               </span>
             </div>
           )
