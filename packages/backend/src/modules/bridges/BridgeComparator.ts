@@ -59,7 +59,7 @@ export class BridgeComparator {
     await new Promise((resolve) => setTimeout(resolve, this.timeoutMs))
 
     this.logger.info('Comparing...', {
-      items: items.length,
+      plugins: items.length,
     })
     for (const i of items) {
       const records =

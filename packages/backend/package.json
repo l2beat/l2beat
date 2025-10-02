@@ -63,6 +63,7 @@
     "koa-etag": "^4.0.0",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.7",
+    "playwright": "^1.55.1",
     "prom-client": "^14.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

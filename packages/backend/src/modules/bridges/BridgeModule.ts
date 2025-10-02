@@ -47,7 +47,7 @@ export function createBridgeModule({
 
   const bridgeRouter = createBridgeRouter(db, config.bridges, processors)
 
-  const comparePlugins = createBridgeComparePlugins()
+  const comparePlugins = createBridgeComparePlugins(logger)
 
   const bridgeComparator = new BridgeComparator(db, comparePlugins, logger)
 
