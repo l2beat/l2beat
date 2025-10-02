@@ -1,6 +1,6 @@
 {
   "name": "form",
-  "timestamp": 1759250536,
+  "timestamp": 1759388936,
   "configHash": "0x544ec749300122d984556d7fe73eb0068160f28812c6e74f0ff3bc95419e707d",
   "entries": [
     {
@@ -33,11 +33,6 @@
         "eth:0x15c249E46A2F924C2dB3A1560CF86729bAD1f07B": "AddressManager"
       },
       "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "address": "eth:0x15D5fF2dEc328a1cF3D64413caaBdcE29bff050A",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Caldera Multisig 3",
@@ -163,16 +158,14 @@
           "eth:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675",
           "eth:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b",
           "eth:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",
-          "eth:0x356000Cec4fC967f8FC372381D983426760A0391",
-          "eth:0xbf853295743511e8DC5F03809d209C33fC136d24",
-          "eth:0x15D5fF2dEc328a1cF3D64413caaBdcE29bff050A"
+          "eth:0x356000Cec4fC967f8FC372381D983426760A0391"
         ],
         "$threshold": 4,
         "domainSeparator": "0xd91194ba8cca06b67a77df9ba8745b666c7af26af03b914ede155b940b307d6b",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 32,
+        "multisigThreshold": "4 of 9 (44%)",
+        "nonce": 34,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -228,10 +221,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 12913200,
-        "latestOutputIndex": 7173,
-        "nextBlockNumber": 12915000,
-        "nextOutputIndex": 7174,
+        "latestBlockNumber": 12983400,
+        "latestOutputIndex": 7212,
+        "nextBlockNumber": 12985200,
+        "nextOutputIndex": 7213,
         "proposer": "eth:0x8D882B43220A190779c2dF25901f9E089dd4fa7D",
         "PROPOSER": "eth:0x8D882B43220A190779c2dF25901f9E089dd4fa7D",
         "startingBlockNumber": 0,
@@ -631,11 +624,6 @@
       "implementationNames": {
         "eth:0xb7e0a0507cAfD755B3527Aa1F8b7449222A79Cf8": "ProxyAdmin"
       }
-    },
-    {
-      "address": "eth:0xbf853295743511e8DC5F03809d209C33fC136d24",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0xc4548687682246e5B6ee8f914635c9f47836eDFe",
@@ -1147,6 +1135,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23477067 },
-  "permissionsConfigHash": "0x543ed307ecf3b4b67f10fa34d241e3a502a1d40b764fda32eea4e02db6d5463c"
+  "usedBlockNumbers": { "ethereum": 23488515 },
+  "permissionsConfigHash": "0x0578b74e31e8a4d8b8812675a5a1878965130c19e6c7dd07f64a33d27e068c13"
 }

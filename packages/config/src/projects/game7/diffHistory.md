@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x8b9edac93f39e9d014dca6b3b6614ae8c9eae4a4
+
+# Diff at Thu, 02 Oct 2025 07:18:13 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@b1cfb9bd1821e27488215e4364f565cfd7d54c2e block: 1759157094
+- current timestamp: 1759389311
+
+## Description
+
+New executor role assigned to a Safe.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.1:
++        "arb1:0xfe7C286480C7ff638319f8Aa1A97D224d82A55C6"
+      values.executors.1:
++        "arb1:0xfe7C286480C7ff638319f8Aa1A97D224d82A55C6"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (arb1:0xfe7C286480C7ff638319f8Aa1A97D224d82A55C6)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../game7/.flat/SafeL2/GnosisSafeProxy.p.sol       |   35 +
+ .../src/projects/game7/.flat/SafeL2/SafeL2.sol     | 1152 ++++++++++++++++++++
+ 2 files changed, 1187 insertions(+)
+```
+
 Generated with discovered.json: 0x8c609918fa823a7dfa02c238078633878c11ce0c
 
 # Diff at Mon, 29 Sep 2025 14:46:26 GMT:
