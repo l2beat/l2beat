@@ -11,6 +11,19 @@
           "description": "can update the program being verified"
         }
       ]
+    },
+    "trustedImages": {
+      "description": "Image IDs (i.e. program digest) of Risc0 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "imageId",
+        "add": { "event": "ImageTrusted", "where": ["=", "#trusted", true] },
+        "remove": {
+          "event": "ImageTrusted",
+          "where": ["=", "#trusted", false]
+        }
+      }
     }
   }
 }

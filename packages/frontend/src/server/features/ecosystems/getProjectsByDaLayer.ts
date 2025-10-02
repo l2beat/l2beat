@@ -7,11 +7,15 @@ export function getProjectsByDaLayer(
 ): ProjectsByDaLayer {
   const projectsByDaLayer = ecosystemProjects.reduce((acc, curr) => {
     const daLayer = curr.scalingInfo.daLayer
-    if (!daLayer) return acc
-    if (!acc[daLayer]) {
-      acc[daLayer] = 0
-    }
-    acc[daLayer] += 1
+
+    if (daLayer === undefined) return acc
+
+    daLayer.forEach((da) => {
+      if (!acc[da]) {
+        acc[da] = 0
+      }
+      acc[da] += 1
+    })
     return acc
   }, {} as ProjectsByDaLayer)
 

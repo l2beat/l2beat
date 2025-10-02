@@ -1,0 +1,225 @@
+{
+  "title": "Monthly Updates - September 2025",
+  "startDate": "2025-09-01",
+  "endDate": "2025-09-30",
+  "publishedOn": "2025-10-01",
+  "description": "Discover the key highlights from September, from protocol upgrades to ecosystem growth and more",
+  "updates": [
+    {
+      "type": "ecosystem",
+      "ecosystemId": "arbitrum-orbit",
+      "news": [
+        {
+          "title": "Arbitrum Bridge Goes Embedded & Onramp-Ready",
+          "content": "The Arbitrum Bridge [has been upgraded](https://blog.arbitrum.io/arbitrum-bridge-embed/) with seamless in-app embedding and fiat onramping. Builders can now integrate a customizable bridge widget using a simple `<iframe>`, enabling users to transfer assets from *any chain*—or even buy crypto via MoonPay—without leaving the app.\n\nPowered by top-tier routing infra (Li.Fi, LayerZero, Across, and more), the new bridge offers optimized cross-chain transfers with full control over source/destination chains, tokens, and routes. Projects like Camelot and ApeChain are already using it to streamline onboarding and liquidity flows."
+        },
+        {
+          "title": "Introducing DRIP: The DeFi Renaissance Incentive Program on Arbitrum",
+          "content": "Entropy Advisors, backed by the ArbitrumDAO, [launched DRIP](https://blog.arbitrum.io/introducing-drip-the-defi-renaissance-incentive-program-on-arbitrum/)—a four-season, $40M incentive program targeting real DeFi usage, not vanity metrics. Season One is now live and focuses on leveraged looping on lending platforms.\n\nBy borrowing ETH or stablecoins against eligible yield-bearing assets (like syrupUSDC or weETH), users earn ARB based on their time-weighted average borrow. No signup needed—just loop, borrow, and earn over 10 epochs until January 20, 2026.\n\nRewards are protocol-agnostic, with a phased rollout to optimize incentives based on market performance. Visit [arbitrumdrip.com](https://arbitrumdrip.com/) to get started."
+        },
+        {
+          "title": "ArbOS 50 \"Dia\" Is Coming - Next Stop: Onchain Vote",
+          "content": "Following a successful [temperature check](https://snapshot.box/#/s:arbitrumfoundation.eth/proposal/0x33754da4006d0ef38666ec5d5e85fd0966a891a594ab9dc21f23beedea2d330b/discussion) on Snapshot (Sept 4), the proposed upgrade to ArbOS 50 Dia is now headed toward an onchain vote. This Constitutional AIP aims to upgrade Arbitrum One and Nova ahead of Ethereum's Fusaka hard fork (expected in November 2025), adding compatibility and unlocking powerful new features.\n\nKey changes include:\n\n- Fusaka EIP support like EIP-2537 (BLS12-381 precompile), EIP-7951 (secp256r1), and EIP-7825 (gas limit caps)\n- A new Native Mint/Burn feature for Orbit chains (disabled on One/Nova)\n- Support for constraint-based gas metering (for future dynamic pricing)\n- RPC enhancements, new opcodes, ModExp security hardening, and more\n\nMost notably, the release also introduces a more flexible block gas model, allowing higher transaction packing efficiency without increasing overall gas throughput.\n\nThe on-chain vote is not live yet, but is expected soon. If passed, the upgrade will roll out post-audit and testing - potentially after Ethereum activates Fusaka.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Security Council Election Process Improvements",
+          "content": "On September 11, ArbitrumDAO [approved key improvements](https://snapshot.box/#/s:arbitrumfoundation.eth/proposal/0xb41324ddcc115d08149b192e0b8ae4cfad0ef39cecb5663ea63d8a460d2cb3cc) to the Security Council election process. However, not all proposed changes received equal community support.\n\nSnapshot Outcome Highlights:\n\n- Approved by the DAO:\n    - Extend cohort terms from 1 year to 2 years, reducing election frequency.\n    - Allow Security Council members to rotate their keys during their term.\n    - Lower the qualification threshold from 0.2% to 0.1% of votable ARB.\n- Under Further Review:\n    - Less support for allowing key rotation during the election cycle.\n    - Less support for letting reapplying members skip the nomination phase.\n\nThe Arbitrum Foundation announced plans to host additional governance calls to discuss these debated points before the formal Tally on-chain vote is proposed.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Arbitrum Security Council Elections: Nominee Selection Now Live",
+          "content": "The [September 2025 Security Council election](https://www.tally.xyz/gov/arbitrum/council/security-council/election/4/round-1) is progressing — we’ve now entered the Nominee Selection phase, which will run until September 29 at 12:00 UTC. Following the Contender Submission phase, which closed with 19 candidates applying to serve on the 12-member Security Council, it’s now time for delegates to nominate their preferred contenders on Tally. To progress to the final Member Election phase, each nominee must receive at least 0.2% (~9.4M ARB) of votable tokens. Delegates are encouraged to support as many qualified candidates as they see fit — every nomination counts in shaping the Council that safeguards Arbitrum during emergencies and critical upgrades. Once nominations close, the qualified candidates will undergo a compliance check by the Arbitrum Foundation. After that, the process will move into the Member Election phase — the final round of voting to elect six new members to the Council.",
+          "tags": ["governance"]
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "the-elastic-network",
+      "news": [
+        {
+          "title": "SANDchain Joins Elastic Network to Power $250B Creator Economy",
+          "content": "SANDchain, a blockchain built with ZKsync’s ZK Stack, [has been announced](https://x.com/zksync/status/1973018372532212000) as part of the Elastic Network to bring scalability, low fees, and trustless infrastructure to the global creator economy. Positioned as the financial backbone for creators, fans, and brands, it will use $SAND as its universal currency and introduce loyalty points, creator tokens, and programmable financing vaults. Launch partners include The Sandbox, Animoca Brands, and ZKsync, with its debut at TOKEN2049 Singapore on October 1 and testnet release on October 14."
+        },
+        {
+          "title": "ZKsync Co-Leads Grvt’s $19M Series A to Advance Privacy-First Onchain Finance",
+          "content": "Grvt [has secured](https://x.com/zksync/status/1973018372532212000) $19M in a Series A round co-led by ZKsync, Further Ventures, EigenCloud, and 500 Global. Grvt aims to address fragmentation and vulnerabilities in DeFi with privacy-by-default systems, stablecoin-enabled products, and structured yield strategies, positioning itself as a global blueprint for secure and scalable financial markets."
+        },
+        {
+          "title": "Adding a ZKsync OS CTM",
+          "content": "ZIP‑13, the [proposal](https://forum.zknation.io/t/zip-13-adding-a-zksync-os-ctm/776) by Matter Labs to add a ZKsync OS–based ChainTypeManager (CTM) into the Bridgehub, is now live and under vote (via[ Tally](https://www.tally.xyz/gov/zksync/proposal/22471812359223094779541460804735287481991027375586193607912523407322605938475?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f)). This upgrade is a stepping stone toward enabling full EVM equivalence, cheaper proofs, and modular chain architecture via the new Airbender prover * The CTM will initially operate under a temporary multisig to allow fast fixes during rollout, with plans to hand governance over later. * Existing ZKsync chains won’t be disrupted—there are no breaking changes. * For security isolation, ZKsync OS chains will not connect to the ZKsync Gateway initially. * Mechanisms are in place to ensure that new chains cannot withdraw more than their deposits via the shared bridge. If passed, ZIP‑13 unlocks early mainnet feedback for ZKsync OS, while preserving safety for current chains.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "V29 Upgrade: Interop Messaging & Fast Finality",
+          "content": "ZIP-12 is live for [voting on Tally](https://www.tally.xyz/gov/zksync/proposal/40562439712311128665286075271414168289029475306445402072499591795343687723101?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f), proposing the V29 upgrade to the ZKsync protocol — a pivotal step forward in unlocking cross-chain interoperability and fast finality for ZK Chains.\n\nIf passed, this upgrade will:\n\n- Enable native Interop Messaging between ZK Chains via the ZK Gateway, using Merkle proofs and shared root structures.\n- Introduce Fast Finality, allowing early confirmation of transaction execution on L1 — crucial for exchanges and real-time apps.\n- Deliver foundational code refactors to support modular settlement and better upgradeability (via `ChainAssetHandler`, upgradable `ValidatorTimelock`, etc.).\n\nSecurity is tightly controlled: pre-commitments can only be reverted by the Security Council, and all components passed audit by OpenZeppelin (May–June 2025).",
+          "tags": ["governance"]
+        },
+        {
+          "title": "ZKsync Prividium Prize",
+          "content": "TPP-9 is currently[ under vote on Tally](https://www.tally.xyz/gov/zksync/proposal/3413588788305073197878658504162606756015331882899383310343250085297198101137?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746), proposing a strategic incentive mechanism to accelerate the adoption of ZKsync Prividium Chains — privacy-preserving, enterprise-grade blockchains. The proposal, authored by the ZKsync Foundation, introduces a 100M ZK token prize pool to reward the first 10 production-ready Prividium Chains with 10M ZK each. Key features include: * **Strict eligibility**: KYB verification, mainnet launch by Dec 2026, and real-world traction (e.g. ≥500K KYC users or $100M+ in tokenized TVS). * **Controlled disbursement**: Each prize is rate-limited (1M ZK/month) via individual capped minters. Unused tokens remain unminted. * **Strategic alignment**: Incentivizes institutional deployments of privacy-enabled chains with on-chain governance, KYC/AML, and Ethereum finality. * **Testbed for future funding**: Prividium also serves as a pilot for conditional incentive models like milestone-driven rewards or performance-indexed grants. This is the first program of its kind to embed governance-aligned token incentives into ZKsync’s institutional roadmap.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "ZKsync Prividium Roadshow",
+          "content": "TPP-10[ proposes](https://www.tally.xyz/gov/zksync/proposal/15539336001504922041482045464843306651217071205321499428543388348391561812720?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746) allocating 25M ZK (~$1.25M) to fund the Prividium Roadshow, a targeted outreach campaign designed to strengthen Prividium’s category leadership among institutional players. The initiative focuses on two main tracks: * **Tier-1 Conference Sponsorships** (15M ZK): Sponsoring and securing speaking slots at top Ethereum and institutional finance events to raise visibility. * **Institutional Network Activations** (10M ZK): Hosting curated, invite-only briefings, workshops, and regulator engagements to build high-quality deployment leads. Led by the ZKsync Foundation, the program aims to convert institutional awareness into adoption by positioning ZKsync Prividium as the go-to blockchain solution for privacy, compliance, and interoperability. Speakers include Alex Gluchowski and senior Matter Labs leaders. Funds will be disbursed from the **T**oken Governor Timelock to a Foundation-controlled multisig, with public reporting and oversight by the Token Assembly. Confirmed events include Blockchain Rio, Ethereum NYC, SmartCon, and Devconnect Argentina.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "ZKnomics Token Staking Pilot Proposed",
+          "content": "A new [draft proposal](https://forum.zknation.io/t/tpp-draft-zknomics-token-staking/766) introduces a 6-month ZK token staking pilot distributing up to 37.5M ZK (~$1.9M USD) in rewards across two seasons. Built on Tally’s Staker contract and aligned with the ZKnomics vision, the initiative incentivizes governance participation while laying the groundwork for future decentralized sequencing.\n\nKey elements include:\n\n- Two capped minters: 10M ZK for Season 1, 25M ZK for Season 2\n- Up to 10% annualized reward rate, based on staking caps\n- Eligibility: ZK holders delegating to active delegates who voted in 2 of the last 5 proposals\n- Non-custodial staking, no lock-up, voting power remains delegated\n- Governance-aligned incentives to grow active voting power from ~1B to ~2B ZK\n\nThis staking pilot also serves as infrastructure groundwork for ZKsync’s upcoming decentralized sequencer, contributing to long-term protocol sustainability and governance participation.",
+          "tags": ["governance"]
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "superchain",
+      "news": [
+        {
+          "title": "Maintenance Upgrade 16a: System Tweaks & Interop Code Rollback",
+          "content": "Maintenance Upgrade 16a [has been optimistically approved](https://vote.optimism.io/proposals/32872683835969469583703720873380428072981331285364097246290907925181946140808), serving as a minor patch to replace Upgrade 16. It temporarily removes the unactivated interop withdrawal-proving code, following partner feedback, while keeping the broader interop infrastructure intact for future use. It also introduces new system-level feature toggles via the `SystemConfig` contract, enabling more flexible upgrades across OP Chains."
+        },
+        {
+          "title": "Optimism Deploys Flashblocks on OP Mainnet for 250ms Preconfirmations",
+          "content": "Optimism [has integrated Flashblocks](https://x.com/Optimism/status/1972740279934546291), developed by Flashbots, into OP Mainnet to cut effective block times from 2 seconds to 250ms. Flashblocks stream sub-blocks every 250ms, giving apps and users near-instant preconfirmations while maintaining Ethereum-level finality. This upgrade delivers a smoother UX across DeFi, gaming, and social apps, with measured improvements including a 94% reduction in pending transaction backlog and complete elimination of user-visible reorgs. The system has been hardened with leader-aware forwarding, reorg filtering, and NVMe-backed infrastructure, and will soon be expanded across the Superchain."
+        },
+        {
+          "title": "Ronin Migrates to OP Stack, Joining Optimism’s Superchain",
+          "content": "Ronin has voted to [adopt Optimism’s OP Stack](https://x.com/Ronin_Network/status/1965220031320793442), marking its return to Ethereum and entry into the Superchain ecosystem. This integration will deliver 15x faster transactions, Ethereum-level security, and expanded treasury support with $5–$7M in milestone-based grants from the Optimism Foundation, Eigen Labs, and Boundless Foundation. Builders on Ronin will gain access to the 850M $OP Retro Fund and Superchain collaboration opportunities, while users and creators remain seamlessly connected with $RON continuing as the native gas token."
+        },
+        {
+          "title": "Silent Data Joins the Superchain as the First Privacy-Focused OP Chain",
+          "content": "Silent Data, a Layer 2 network developed by Applied Blockchain, [has officially joined](https://www.silentdata.com/blog/silent-data-becomes-first-privacy-focused-layer-2-to-join-ethereums-superchain-io9hy) the Superchain—marking a pivotal moment as the first privacy-focused chain built on the OP Stack.\n\nDesigned for enterprise use, Silent Data introduces “programmable privacy,” enabling organizations to run blockchain applications without exposing sensitive information—all while maintaining scalability and composability. Already, major firms like Shell, Tokeny, Archax, and CRYOPDP (DHL Health Logistics) are testing real-world use cases across energy, finance, and healthcare."
+        },
+        {
+          "title": "Upbit Launches Giwa L2 on Testnet, Built on the OP Stack",
+          "content": "South Korea’s largest exchange, Upbit, [has officially](https://coinmarketcap.com/academy/article/upbit-launches-giwa-ethereum-l2-chain-on-testnet-platform) entered the Superchain arena with the launch of Giwa, a new Ethereum Layer 2 chain built using the OP Stack. Unveiled at the Upbit D Conference 2025, Giwa is now live on testnet and already processing over 4 million blocks, signaling heavy early testing.\n\nAiming for 1-second block times and Ethereum settlement, Giwa is designed to bring real-time transaction speed while preserving mainnet security. Its name—*Giwa*—is inspired by traditional Korean roof tiles, symbolizing strong, accessible infrastructure for global Web3 adoption."
+        },
+        {
+          "title": "Cycle 41 Kicks Off Season 8 of Optimism Grants",
+          "content": "The Optimism Grants Council[ has shared results](https://gov.optimism.io/t/cycle-41-grants-council-report/10281?utm_source=chatgpt.com) from Cycle 41, the first review cycle under Season 8. It was a period of adjustment and experimentation, both for applicants and reviewers, with several backend and process upgrades deployed to improve the grants system. Out of 19 growth applications, only one was approved: 40acres.finance, which received 200,000 OP. One proposal was declined (Intraverse), and 17 others remain in review, awaiting applicant responses. Despite nearly 3M OP requested, just a fraction was allocated, leaving ~6.09M OP available from the original 6.29M OP budget. The Council took a cautious approach to approvals, aiming to attract more enterprise-aligned projects. Highlights include: * AI filtering to score applications based on Superchain alignment, OP distribution, and governance intents. * A continuous review system where all submissions were considered regardless of timing. * Migration to the Karma GAP platform, powering[ opgrants.io](http://opgrants.io) and upcoming milestone tracking tools. As Season 8 continues, the groundwork is set for smarter incentives and broader participation. Applicants are encouraged to refine and resubmit—more OP is still up for grabs.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Season 8 Audit Grants Begin with Cycle 41 Results",
+          "content": "Cycle 41 marked the launch of the [first audit-focused round](https://gov.optimism.io/t/cycle-41-results-season-8-audit-grants/10285?utm_source=chatgpt.com) under Optimism’s Season 8 Grant Program. Of the 12 submitted applications, only two were approved:\n\n- **FinDEX** (90,300 OP)\n- **SuperDCA** (33,000 OP)\n\nTwo others — Arcadia Finance and Swaps.io — were put on hold for later consideration, while the remaining eight were declined due to misalignment, high cost, or insufficient co-funding.\n\nDespite nearly 657K OP requested, only 123.3K OP was approved, leaving over 458K OP in the audit budget. The cautious start reflects the Council’s focus on cost realism, impact potential, and Superchain alignment.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Governance Fund Mission Request: Open-source Monitoring & Alerting SDK",
+          "content": "The Optimism Collective is [funding the development](https://gov.optimism.io/t/governance-fund-mission-request-open-source-monitoring-alerting/10293?utm_source=chatgpt.com) of an open-source SDK for onchain monitoring and alerting, with up to 114,000 OP in grants. The tool will let users set custom protocol checks and receive alerts via Slack, Telegram, or PagerDuty. It will ship with Uniswap and Aave rulesets, plus a dashboard UI for setup and history tracking. Applications close October 10, and the final results will be posted on October 17.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Governance Fund Mission Request: Cross-Chain Key Management for Safe",
+          "content": "Optimism is [offering up](https://gov.optimism.io/t/governance-fund-mission-request-cross-chain-key-management-for-safe/10294) to 42,000 OP to fund a Safe module that enables cross-chain key management across the Superchain. The goal is to reduce the operational burden of updating signers on multisigs deployed across multiple chains. The module would sync updates from a root owner to all connected chains, streamlining signer changes with security and efficiency in mind. Applications close October 10, and the final results will be posted on October 17.",
+          "tags": ["governance"]
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "agglayer",
+      "news": [
+        {
+          "title": "Cypher Capital and Polygon Labs Forge Institutional Bridge for POL Access",
+          "content": "Polygon Labs [has partnered](https://polygon.technology/blog/cypher-capital-and-polygon-labs-forge-institutional-bridge-for-pol-access) with Dubai-based Cypher Capital to expand institutional access to **POL**, Polygon’s upcoming ecosystem token. Cypher recently acquired a strategic POL position and will help channel capital into POL-based strategies to improve liquidity and access for asset managers in the Middle East.\n\nThe move supports Polygon’s broader push toward becoming the leading payments chain, with recent milestones including:\n\n- **$3.4B** stablecoin supply\n- **284M** transactions (Q2)\n- **$385B** in Q2 stablecoin volume\n- **9.4M** monthly active users\n\nThis partnership reinforces Polygon’s role in powering institutional-grade infrastructure for high-frequency, cross-border value transfer."
+        },
+        {
+          "title": "Rio Upgrade Live on Testnet: Polygon Continues to go GigaGas",
+          "content": "Polygon’s [Rio upgrade is now live](https://polygon.technology/blog/rio-upgrade-live-on-testnet-polygon-continues-to-go-gigagas) on the Amoy testnet, with a mainnet rollout planned for October. This major upgrade pushes forward the GigaGas roadmap, redesigning the validator set for efficiency and enabling stateless block verification—cutting costs, removing reorgs, and paving the way to 5,000 TPS.\n\nKey upgrades include:\n\n- Validator-Elected Block Producers (PIP-64)\n- New economic model for fair fee distribution (PIP-65)\n- Stateless verification to lower node costs (PIP-72)\n\nRio strengthens decentralization while making the network faster, fairer, and more scalable—preparing Polygon to become the universal rails for payments and RWAs."
+        },
+        {
+          "title": "Forknet Mainnet Is Live, Bringing Native Crosschain Orderbook Trading to Agglayer",
+          "content": "Forknet, a new L2 built with the CDK OP Stack and connected to Polygon’s Agglayer, [is now live](https://x.com/Agglayer/status/1971223957090267370)—introducing the first native crosschain orderbook for spot and perps.\n\n- Unified Liquidity: Forknet aggregates liquidity from all Agglayer-connected chains, enabling tighter spreads and deeper books.\n- Seamless UX: Crosschain trades feel like single-chain swaps—no bridges or manual hops needed.\n- Vault Bridge Integration: User deposits in ETH, USDC, USDT, and USDS earn native protocol yield.\n- Built for Builders: Full EVM compatibility, OP Stack familiarity, and easy API integrations.\n\nForknet is powered by NeurochainAI and backed by a 500K+ user ecosystem, delivering a fast, low-cost DeFi experience with serious interop. With Reactor Trade as the frontend, Forknet is positioned to become a core trading venue across the Agglayer ecosystem."
+        },
+        {
+          "title": "Philippines Explores Putting National Budget on Polygon",
+          "content": "Polygon Labs is [collaborating](https://x.com/0xPolygon/status/1972632543230067048) with BayaniChain and the Philippine Department of Information and Communications Technology (DICT) to explore how the country can bring its national budget on-chain.\n\nIn a recent discussion, Polygon’s Marc Boiron sat down with BayaniChain to highlight how blockchain can enhance transparency and accountability in government systems. By leveraging Polygon’s infrastructure, the initiative could modernize how public funds are managed—making the Philippines a pioneer in institutional blockchain adoption."
+        }
+      ]
+    },
+    {
+      "type": "data-availability",
+      "daLayerId": "eigenda",
+      "news": [
+        {
+          "title": "EigenDA V2: Core Architecture",
+          "content": "EigenDA V2 is [now live](https://blog.eigencloud.xyz/eigenda-v2-core-architecture/), delivering **100 MB/s throughput** and **10x faster confirmations**, making it the most performant decentralized data availability layer to date. It separates control and data planes for better scalability and uses erasure coding to ensure data redundancy with minimal storage requirements. Blobs are confirmed in ~10 seconds without relying on L1 posts, dramatically reducing latency while maintaining security. With a design built for horizontal scale, EigenDA is laying the foundation for gigabyte-scale DA — ideal for high-performance rollups and verifiable applications."
+        },
+        {
+          "title": "Unlocking Verifiable Reputation with OpenRank and EigenCloud",
+          "content": "OpenRank, powered by EigenCloud, [introduces](https://blog.eigencloud.xyz/unlocking-verifiable-reputation-with-openrank-and-eigencloud/) verifiable reputation infrastructure — making scores transparent, challengeable, and cryptoeconomically enforced.\n\n- OpenRank runs reputation algorithms (e.g., for airdrops, social feeds, token discovery) with cryptographic proofs.\n- EigenCloud ensures honest computing with restaked security, slashing dishonest operators.\n- Use cases already live include Farcaster feeds, wallet token recs, and apps like Cura, a Reddit-style app with auditable contributor rewards.\n\nFrom Sybil-resistant airdrops to explainable social feeds, OpenRank and EigenCloud bring transparency and trust to crypto reputation."
+        },
+        {
+          "title": "Devkit Quickstart Guide: Launch AVSs in Hours, Not Weeks",
+          "content": "EigenLabs released a [Devkit Quickstart Guide](https://blog.eigencloud.xyz/devkit-quickstart-testnet-guide/) to help developers rapidly deploy Actively Validated Services (AVSs) on Sepolia and Base Sepolia testnets.\n\nDevkit streamlines the entire AVS lifecycle—from local devnet testing to live testnet deployment—cutting setup time from weeks to hours. The guide walks through the essential steps: creating a project, writing operator logic, deploying to testnet, registering operators, and verifying tasks on Base.\n\nWhether you’re building oracles, co-processors, or other AVSs, this guide is your entry point into the EigenLayer ecosystem."
+        },
+        {
+          "title": "EigenCloud Partners with Google to Power Business & Consumer Trust in AI Payments",
+          "content": "EigenCloud [has partnered](https://blog.eigencloud.xyz/eigencloud-partners-with-google/) with Google to bring cryptographic trust to the emerging world of AI-to-AI (A2A) payments. As billions of autonomous agents begin transacting on our behalf, programmable trust becomes essential. This collaboration ensures those agents act reliably, verifiably, and within human-defined parameters.\n\nUsing EigenCloud’s verifiability layer and Google’s Agent Payments Protocol (AP2), the system enables:\n\n- Verifiable AI agent actions\n- Cross-chain payment coordination\n- Restaked economic guarantees\n\nThe integration marks a major milestone in building a trusted, interoperable AI-driven economy, where verification is cryptographic, and agentic payments are frictionless."
+        }
+      ]
+    },
+    {
+      "name": "Nethermind",
+      "type": "upcoming-project",
+      "projectId": "nethermind",
+      "news": [
+        {
+          "title": "Road to ZK Implementation: Nethermind Client’s Path to Proofs",
+          "content": "Nethermind [has published](https://www.nethermind.io/blog/road-to-zk-implementation-nethermind-clients-path-to-proofs) a new article outlining its roadmap to becoming a ZK-ready execution client. The post details recent progress including execution witness capture, stateless block replay, and compilation to RISC-V64—all foundational steps toward enabling zero-knowledge proofs directly from the Nethermind client. Integration with Zisk is in progress, with RISC0 and SP1 support planned next. The effort is part of a broader move to bring cryptographic proof generation to Ethereum infrastructure without compromising on performance or reliability."
+        },
+        {
+          "title": "Nethermind v1.33.1: Lighter, Faster, and Real-Time UI",
+          "content": "Nethermind [has released version 1.33.1](https://www.nethermind.io/blog/nethermind-client-v1-33-smaller-faster-and-real-time-ui), making node operations more accessible and efficient. This update introduces the first native Nethermind UI, allowing operators to monitor block activity, logs, and sync status in real time — without the need for custom dashboards or public RPC exposure.\n\nOther major updates include experimental history pruning to help manage disk growth, improved OP Stack compatibility, and significant performance optimizations across EVM execution, RPC, and RocksDB. The client also adds support for several new EIPs in preparation for upcoming forks."
+        },
+        {
+          "title": "Nethermind and Matter Labs Prove ZKsync Verifier",
+          "content": "Nethermind’s Formal Verification team [has completed](https://www.nethermind.io/blog/we-verified-the-verifier-a-first-for-zero-knowledge-proof-systems) the first-ever formal proof of honesty for a live on-chain zk-verifier, working in collaboration with Matter Labs. Using EasyCrypt, they verified that ZKsync’s Yul-based verifier behaves exactly as intended, marking a milestone for formal methods in the ZK space. The effort highlights the critical role of secure verifiers in rollups and sets a precedent for future verification of zero-knowledge infrastructure."
+        },
+        {
+          "title": "Nethermind Audits Lido’s ZK Accounting Oracle Built on SP1",
+          "content": "Nethermind Security [conducted](https://www.nethermind.io/blog/zk-audit-of-lidos-accounting-zk-oracle-built-on-sp1) a full audit of Lido’s new zero-knowledge accounting oracle, introduced via LIP 23. Built on the SP1 zkVM, the oracle enables cryptographic validation of validator balance changes on-chain—particularly during negative rebases.\n\nThe audit uncovered two critical issues: potential manipulation via invalid validator indices and inconsistent state validation checks. Both were swiftly resolved by Lido. This verification logic ensures accurate state transitions and strengthens Lido’s move toward ZK-based trustless infrastructure."
+        }
+      ]
+    },
+    {
+      "name": "Cartesi",
+      "type": "upcoming-project",
+      "projectId": "cartesi",
+      "news": [
+        {
+          "title": "Cartesi Joins L2BEAT’s Supporter Tier",
+          "content": "Cartesi joined [L2BEAT](https://x.com/l2beat/status/1971556291353977213)’s Supporter Tier, recognizing L2BEAT’s contribution to rollup transparency and aligning with industry leaders pushing the boundaries of Layer 2 security and visibility."
+        },
+        {
+          "title": "Honeypot Bug Locks 20,042 CTSI in Fail-Stop Test",
+          "content": "A [bug triggered](https://x.com/cartesiproject/status/1970902442259685855) during testing caused the Cartesi Honeypot smart contract to enter a fail-stop state, permanently locking 20,042 CTSI (~$1,420). This event validated the Honeypot’s purpose as a real-world stress test of the fraud-proof system, reinforcing its importance for secure deployments."
+        },
+        {
+          "title": "New Research Challenges Non-Interactive ZK Fraud Proofs for Rollups",
+          "content": "Gabriel Coutinho de Paula and co-authors published an [in-depth analysis](https://ethresear.ch/t/best-of-both-worlds-a-measured-review-of-non-interactive-zk-fraud-proofs/) showing that Non-Interactive (NI) ZK Fraud Proofs, often described as the 'best of both worlds' for rollups, may actually combine the worst aspects. Their study finds NI proofs fail to remove the ~7-day withdrawal window of optimistic rollups while adding high capital costs from ZK-rollups. The research warns NI designs could be untenable under adversarial conditions, calling for more rigorous evaluation of rollup security models."
+        },
+        {
+          "title": "Cartesi Revamps Developer Docs for Easier Onboarding",
+          "content": "Cartesi has redesigned and expanded its [documentation](https://x.com/cartesiproject/status/1973010036785045946) to better support builders. The update introduces a streamlined developer journey, clearer guides, visuals for faster learning, a new Appchains page, a dedicated Fraud Proofs section, and an updated tabular design for easier navigation."
+        },
+        {
+          "title": "Merkle Trees in PRT Fraud Proofs Explained",
+          "content": "ChinonsoIdogwu shared [a detailed video](https://x.com/ChinonsoIdogwu/status/1970824742740574488) explaining how Cartesi’s fraud-proof system (PRT) uses Merkle trees. The hashing structure of Merkle trees helps quickly identify discrepancies during dispute resolution, enhancing the security and transparency of off-chain computation."
+        },
+        {
+          "title": "DeFi Use Cases Explored on Cartesi Stack",
+          "content": "[Riseandshaheen](https://x.com/riseandshaheen/status/1971186359542087813) published an article highlighting DeFi applications that are made possible by Cartesi’s Linux-based execution environment. It emphasizes how Cartesi enables more complex, verifiable computation for advanced financial logic on-chain."
+        },
+        {
+          "title": "Gearing Up for European Blockchain Convention",
+          "content": "Cartesi is preparing for [European Blockchain Convention](https://x.com/cartesiproject/status/1970473294542578024) in Barcelona this October. The team is expected to be on the ground, engaging with builders and showcasing Cartesi’s infrastructure."
+        }
+      ]
+    }
+  ]
+}
