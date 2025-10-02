@@ -113,8 +113,6 @@ export const metis: ScalingProject = {
       rollupNodeLink: 'https://github.com/MetisProtocol/mvm',
       securityCouncilReference:
         'https://docs.metis.io/andromeda/network/council',
-      stage1PrincipleDescription:
-        'While Metis is considered Stage 1, the Security Council minority is employed to enforce censorship resistance in case the permissioned operator fails to include transactions. The process through which a censored user can contact the Security Council is not defined and currently unclear.',
     },
   ),
   chainConfig: {
