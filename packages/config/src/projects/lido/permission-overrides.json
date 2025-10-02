@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "lastModified": "2025-10-01T21:28:53.658Z",
+  "contracts": {
+    "eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3": {
+      "functions": [
+        {
+          "functionName": "commitSharesToBurn",
+          "userClassification": "non-permissioned",
+          "ownerDefinitions": [
+            {
+              "sourceField": "accessControl",
+              "dataPath": "DEFAULT_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-01T21:28:53.658Z"
+        }
+      ]
+    }
+  }
+}
