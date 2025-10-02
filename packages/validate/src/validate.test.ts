@@ -330,4 +330,13 @@ describe('validate', () => {
       expect(y).toEqual([])
     })
   })
+
+  describe('describe', () => {
+    it('should add description', () => {
+      const Foo = v.object({ x: v.number() })
+      expect(Foo.description).toEqual(undefined)
+      Foo.describe('Bar')
+      expect(Foo.description).toEqual('Bar')
+    })
+  })
 })

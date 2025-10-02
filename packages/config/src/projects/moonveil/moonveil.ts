@@ -15,6 +15,8 @@ export const moonveil: ScalingProject = upcomingL2({
     links: {
       websites: ['https://moonveil.gg/'],
       bridges: ['https://moonveil.gg/AstrArk/'],
+      documentation: ['https://moonveil.gitbook.io/whitepaper'],
+      explorers: ['https://blockscout.testnet.moonveil.gg'],
       repositories: ['https://github.com/SwellNetwork'],
       socialMedia: [
         'https://x.com/Moonveil_Studio',

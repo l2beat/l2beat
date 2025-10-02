@@ -47,7 +47,6 @@ export type {
   RealTimeAnomalyStatus,
 } from './repositories/RealTimeAnomaliesRepository'
 export type { RealTimeLivenessRecord } from './repositories/RealTimeLivenessRepository'
-export type { StakeRecord } from './repositories/StakeRepository'
 export type {
   SyncMetadataFeature,
   SyncMetadataRecord,

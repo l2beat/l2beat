@@ -93,6 +93,7 @@ export const scalingSummaryColumns = [
       },
       meta: {
         align: 'right',
+        cellClassName: 'pl-3',
         tooltip:
           'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7D ago.',
       },
@@ -132,7 +133,7 @@ export const scalingSummaryValidiumAndOptimiumsColumns = [
   columnHelper.display({
     header: 'DA Layer',
     cell: (ctx) => {
-      const latestValue = ctx.row.original.dataAvailability
+      const latestValue = ctx.row.original.dataAvailability?.[0]
       if (!latestValue) {
         return <NoDataBadge />
       }
@@ -148,6 +149,24 @@ export const scalingSummaryValidiumAndOptimiumsColumns = [
           href={`/scaling/data-availability?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
         />
       )
+    },
+    meta: {
+      cellClassName: 'pl-3',
+      additionalRows: (ctx) => {
+        return (
+          ctx.row.original.dataAvailability?.slice(1).map((da) => (
+            <TableValueCell
+              key={da.layer.value}
+              value={{
+                ...da.layer,
+                secondLine:
+                  da.bridge.value === 'None' ? 'No bridge' : da.bridge.value,
+              }}
+              href={`/scaling/data-availability?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+            />
+          )) ?? []
+        )
+      },
     },
   }),
   ...scalingSummaryColumns.slice(6),

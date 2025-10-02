@@ -1,6 +1,7 @@
 import { getChainShortName } from '@l2beat/discovery'
 import { ChainSpecificAddress, ProjectId } from '@l2beat/shared-pure'
 import type { Bridge, ScalingProject } from '../internalTypes'
+import { asArray } from '../templates/utils'
 import type { BaseProject, ProjectPermissions } from '../types'
 
 function getUnverifiedContracts(
@@ -29,8 +30,9 @@ function getUnverifiedDaLayerContracts(
   project: ScalingProject,
   daBridges: BaseProject[],
 ): ChainSpecificAddress[] {
-  const bridge = daBridges.find(
-    (p) => p.id === project.dataAvailability?.bridge.projectId,
+  const das = asArray(project.dataAvailability)
+  const bridge = daBridges.find((p) =>
+    das.some((da) => p.id === da.bridge.projectId),
   )
   if (!bridge) {
     return []
