@@ -44,7 +44,7 @@ export class AbstractTokenRepository extends BaseRepository {
     return row.id
   }
 
-  async update(id: string, update: AbstractTokenUpdate): Promise<bigint> {
+  async update(update: AbstractTokenUpdate): Promise<bigint> {
     const result = await this.db
       .updateTable('AbstractToken')
       .set(update)

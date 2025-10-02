@@ -139,7 +139,6 @@ export class TokenService {
         await this.db.abstractToken.insert(command.abstractToken)
         break
       case 'UpdateAbstractTokenCommand':
-        // TODO: this should be an update
         await this.db.abstractToken.update(command.update)
         break
       default:
