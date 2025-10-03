@@ -37,7 +37,9 @@ export class BridgeComparator {
     this.running = true
     try {
       await this.fetchExternalItems()
-      await this.compare()
+      const missing = await this.compare()
+      this.running = false
+      return missing
     } catch (e) {
       this.logger.error(e)
     }
@@ -80,8 +82,9 @@ export class BridgeComparator {
       plugins: Array.from(Object.keys(this.pluginData)),
     })
 
+    const missingItems = []
+
     for (const [plugin, { items, type }] of Object.entries(this.pluginData)) {
-      if (items.length === 0) return
       if (items.length === 0) continue
 
       const records =
@@ -105,7 +108,11 @@ export class BridgeComparator {
             continue
           }
           missing++
-          this.logger.warn('Missing item detected', { plugin, item })
+          missingItems.push({ plugin, item })
+          this.logger.warn('Missing item detected', {
+            plugin: plugin,
+            item: item,
+          })
         }
       }
 
@@ -124,5 +131,8 @@ export class BridgeComparator {
     }
 
     this.logger.info('Compare finished')
+
+    // used for testing only
+    return missingItems
   }
 }

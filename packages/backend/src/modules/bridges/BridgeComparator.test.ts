@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import { Hash256 } from '@l2beat/shared-pure'
+import { assert, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { BridgeComparator } from './BridgeComparator'
 
@@ -108,13 +108,22 @@ describe(BridgeComparator.name, () => {
 
       const comparator = new BridgeComparator(db, plugins, logger)
 
-      await comparator.runCompare()
-      await comparator.runCompare()
+      const missing1 = await comparator.runCompare()
+      const missing2 = await comparator.runCompare()
 
       expect(plugins[0].getExternalItems).toHaveBeenCalledTimes(2)
       expect(plugins[1].getExternalItems).toHaveBeenCalledTimes(2)
       expect(bridgeMessage.getExistingItems).toHaveBeenCalledTimes(2)
       expect(bridgeTransfer.getExistingItems).toHaveBeenCalledTimes(1)
+
+      assert(missing1 && missing2)
+      expect(missing1.length).toEqual(0)
+      expect(missing2).toEqual([
+        {
+          plugin: 'plugin1',
+          item: { ...unknown[0], isLatest: false },
+        },
+      ])
 
       expect(logger.warn).toHaveBeenOnlyCalledWith('Missing item detected', {
         plugin: 'plugin1',
