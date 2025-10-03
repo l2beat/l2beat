@@ -35,7 +35,12 @@ const cmd = command({
       keepAlive: false,
     })
 
-    const bridgeComparator = new BridgeComparator(db, comparePlugins, logger)
+    const bridgeComparator = new BridgeComparator(
+      db,
+      comparePlugins,
+      logger,
+      {},
+    )
 
     await bridgeComparator.compare()
     await db.close()

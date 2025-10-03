@@ -24,7 +24,7 @@ export function createBridgeModule({
   const bridgeStore = new BridgeStore(db)
 
   const processors = []
-  if (config.bridges.capture) {
+  if (config.bridges.capture.enabled) {
     for (const chain of config.bridges.capture.chains) {
       const processor = new BridgeBlockProcessor(
         chain,
@@ -49,7 +49,10 @@ export function createBridgeModule({
 
   const comparePlugins = createBridgeComparePlugins()
 
-  const bridgeComparator = new BridgeComparator(db, comparePlugins, logger)
+  const bridgeComparator = new BridgeComparator(db, comparePlugins, logger, {
+    intervalMs: config.bridges.compare.intervalMs,
+    timeoutMs: config.bridges.compare.timeoutMs,
+  })
 
   const bridgeCleaner = new BridgeCleaner(bridgeStore, db, logger)
 
@@ -60,7 +63,7 @@ export function createBridgeModule({
       await bridgeStore.start()
       bridgeMatcher.start()
     }
-    if (config.bridges && config.bridges.compare) {
+    if (config.bridges && config.bridges.compare.enabled) {
       bridgeComparator.start()
     }
     if (config.bridges && config.bridges.cleaner) {

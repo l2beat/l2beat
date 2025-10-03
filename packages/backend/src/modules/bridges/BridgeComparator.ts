@@ -2,18 +2,26 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { BridgeComparePlugin } from './compare/types'
 
+interface BridgeCompareConfig {
+  intervalMs?: number
+  timeoutMs?: number
+}
+
 export class BridgeComparator {
   private running = false
+  private readonly config: Required<BridgeCompareConfig>
 
   constructor(
     private db: Database,
     private plugins: BridgeComparePlugin[],
     private logger: Logger,
-    private intervalMs = 10 * 60_000,
-    // Timeout between getting external items and check, needed for backend to index latest events
-    private timeoutMs = 10_000,
+    options: BridgeCompareConfig = {},
   ) {
     this.logger = logger.for(this)
+    this.config = {
+      intervalMs: options.intervalMs ?? 10 * 60_000,
+      timeoutMs: options.timeoutMs ?? 10_000,
+    }
   }
 
   start() {
@@ -29,7 +37,10 @@ export class BridgeComparator {
       }
       this.running = false
     }
-    setInterval(runCompare, this.intervalMs)
+    setInterval(runCompare, this.config.intervalMs)
+    this.logger.info('Compare schedulded', {
+      intervalMs: this.config.intervalMs,
+    })
     runCompare()
     this.logger.info('Started')
   }
@@ -57,9 +68,9 @@ export class BridgeComparator {
       )
     ).filter((x) => x != null)
 
-    this.logger.info('Setting timeout...', { timeout: this.timeoutMs })
+    this.logger.info('Setting timeout...', { timeout: this.config.timeoutMs })
     // This timeout is needed to make sure our backend indexes latest events
-    await new Promise((resolve) => setTimeout(resolve, this.timeoutMs))
+    await new Promise((resolve) => setTimeout(resolve, this.config.timeoutMs))
 
     this.logger.info('Comparing...', {
       plugins: items.map((i) => i.plugin.name),

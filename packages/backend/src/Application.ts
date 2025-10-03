@@ -5,7 +5,6 @@ import { ApiServer } from './api/ApiServer'
 import type { Config } from './config'
 import { initActivityModule } from './modules/activity/ActivityModule'
 import { createAnomaliesModule } from './modules/anomalies/AnomaliesModule'
-import { createBlockSyncModule } from './modules/block-sync/BlockSyncModule'
 import { createBridgeModule } from './modules/bridges/BridgeModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { initDataAvailabilityModule } from './modules/data-availability/DataAvailabilityModule'
@@ -68,7 +67,7 @@ export class Application {
       createEcosystemsModule(deps),
       createAnomaliesModule(deps),
       createBridgeModule(deps),
-      createBlockSyncModule(deps),
+      // createBlockSyncModule(deps),
     ]
 
     const apiServer = new ApiServer(
