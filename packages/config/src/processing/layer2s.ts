@@ -140,6 +140,7 @@ import { polygonpos2 } from '../projects/polygonpos2/polygonpos2'
 import { polygonzkevm } from '../projects/polygonzkevm/polygonzkevm'
 import { polynomial } from '../projects/polynomial/polynomial'
 import { powerloom } from '../projects/powerloom/powerloom'
+import { primechain } from '../projects/primechain/primechain'
 import { prom } from '../projects/prom/prom'
 import { publicgoodsnetwork } from '../projects/publicgoodsnetwork/publicgoodsnetwork'
 import { puffer } from '../projects/puffer/puffer'
@@ -235,6 +236,7 @@ export const layer2s: ScalingProject[] = [
   automata,
   aztecconnect,
   aztec,
+  primechain,
   aztecV2,
   base,
   blast,
