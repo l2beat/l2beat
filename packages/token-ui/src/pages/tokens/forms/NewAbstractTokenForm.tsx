@@ -30,18 +30,19 @@ import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { useRandomId } from '~/hooks/useRandomId'
 import { type Plan, tokenService } from '~/mock/MockTokenService'
 import type { AbstractToken } from '~/mock/types'
+import { minLengthCheck, urlCheck } from '~/utils/checks'
 import { validateResolver } from '~/utils/validationResolver'
 
 const categoryValues = ['btc', 'ether', 'stablecoin', 'other'] as const
 
 const formSchema = v.object({
   id: v.string(),
-  issuer: v.string().optional(),
-  symbol: v.string(),
+  issuer: v.string().check(minLengthCheck(1)).optional(),
+  symbol: v.string().check(minLengthCheck(1)),
   category: v.enum(categoryValues),
-  coingeckoId: v.string().optional(),
+  coingeckoId: v.string().check(minLengthCheck(1)).optional(),
   coingeckoListingTimestamp: v.string().optional(),
-  iconUrl: v.string().optional(),
+  iconUrl: v.string().check(urlCheck).optional(),
   comment: v.string().optional(),
 })
 
@@ -89,7 +90,10 @@ export function NewAbstractTokenForm() {
       form.setValue('iconUrl', '')
     }
     if (coin === null) {
-      form.setError('coingeckoId', { message: 'Coin not found' })
+      form.setError('coingeckoId', {
+        message: 'Coin not found',
+        type: 'validate',
+      })
     }
   }, [
     coin,

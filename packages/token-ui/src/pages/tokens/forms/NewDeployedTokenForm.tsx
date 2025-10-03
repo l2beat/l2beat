@@ -24,17 +24,23 @@ import { Textarea } from '~/components/core/TextArea'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { type Plan, tokenService } from '~/mock/MockTokenService'
 import type { DeployedToken } from '~/mock/types'
+import {
+  ethereumAddressCheck,
+  minLengthCheck,
+  minNumberCheck,
+} from '~/utils/checks'
 import { validateResolver } from '~/utils/validationResolver'
 
 const formSchema = v.object({
   chain: v.string(),
-  address: v.string(),
-  decimals: v.number(),
-  symbol: v.string(),
+  address: v.string().check(ethereumAddressCheck),
+  decimals: v.number().check(minNumberCheck(1)),
+  symbol: v.string().check(minLengthCheck(1)),
   abstractTokenId: v.string().optional(),
   deploymentTimestamp: v.string(),
   comment: v.string().optional(),
 })
+
 export function NewDeployedTokenForm() {
   const form = useForm<v.infer<typeof formSchema>>({
     resolver: validateResolver(formSchema),
@@ -69,7 +75,7 @@ export function NewDeployedTokenForm() {
     useQuery({
       queryKey: ['deployedTokenExists', chain, address],
       queryFn:
-        chain && address
+        chain && address && ethereumAddressCheck(address) === true
           ? () => tokenService.checkIfDeployedTokenExists(address, chain)
           : skipToken,
     })

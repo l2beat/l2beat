@@ -6,6 +6,7 @@ export function ButtonWithSpinner({
   isLoading,
   children,
   className,
+  disabled,
   ...props
 }: { isLoading: boolean; spinnerClassName?: string } & React.ComponentProps<
   typeof Button
@@ -13,7 +14,7 @@ export function ButtonWithSpinner({
   return (
     <Button
       className={cn(className, 'relative')}
-      disabled={isLoading}
+      disabled={isLoading || disabled}
       {...props}
     >
       <span className={cn(isLoading && 'opacity-0')}>{children}</span>
