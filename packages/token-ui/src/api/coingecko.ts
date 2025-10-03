@@ -2,7 +2,6 @@ import { v } from '@l2beat/validate'
 import { getUrlWithParams } from '~/utils/getUrlWithParams'
 
 const CoinSchema = v.object({
-  symbol: v.string(),
   image: v.object({
     large: v.string(),
   }),

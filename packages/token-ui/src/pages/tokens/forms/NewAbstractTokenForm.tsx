@@ -9,7 +9,6 @@ import { Button } from '~/components/core/Button'
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -82,11 +81,9 @@ export function NewAbstractTokenForm() {
     if (!coingeckoId) return
     if (coin) {
       form.clearErrors('coingeckoId')
-      form.setValue('symbol', coin.symbol)
       form.setValue('iconUrl', coin.image.large)
     }
     if (!coin) {
-      form.setValue('symbol', '')
       form.setValue('iconUrl', '')
     }
     if (coin === null) {
@@ -131,43 +128,60 @@ export function NewAbstractTokenForm() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <fieldset disabled={isPlanPending} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="id"
-              disabled
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>ID</FormLabel>
-                  <div className="flex items-center gap-2">
+            <div className="grid grid-cols-[minmax(0,_1fr)_20px_minmax(0,_1fr)_20px_minmax(0,_1fr)] gap-2">
+              <FormField
+                control={form.control}
+                name="id"
+                disabled
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>ID</FormLabel>
+                    <div className="flex items-center gap-2">
+                      <FormControl>
+                        <Input {...field} className="font-mono" />
+                      </FormControl>
+                      <Button
+                        type="button"
+                        onClick={refresh}
+                        className="size-9"
+                      >
+                        <RefreshCwIcon />
+                      </Button>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <p className="mb-1.5 self-end text-center font-bold">:</p>
+
+              <FormField
+                control={form.control}
+                name="issuer"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Issuer</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="unknown" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <p className="mb-1.5 self-end text-center font-bold">.</p>
+              <FormField
+                control={form.control}
+                name="symbol"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Symbol</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
-                    <Button type="button" onClick={refresh} className="size-9">
-                      <RefreshCwIcon />
-                    </Button>
-                  </div>
-                  <FormDescription>
-                    This is the ID of the token. It is randomly generated with
-                    refresh option.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="issuer"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Issuer</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="Circle" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
             <FormField
               control={form.control}
@@ -183,25 +197,6 @@ export function NewAbstractTokenForm() {
                     <Input {...field} />
                   </FormControl>
 
-                  <FormDescription>
-                    This is the Coingecko ID of the token. You can find it on
-                    the token page on Coingecko.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="symbol"
-              disabled={showCoingeckoLoading}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Symbol</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

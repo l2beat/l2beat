@@ -6,8 +6,9 @@ function generateId(length = 12): string {
     .map(() => Math.random().toString(36).slice(2))
     .join('')
     .slice(0, length)
+    .toUpperCase()
 }
-export function useRandomId(initialLength = 12) {
+export function useRandomId(initialLength = 6) {
   const [id, setId] = useState(() => generateId(initialLength))
 
   const refresh = useCallback(() => {

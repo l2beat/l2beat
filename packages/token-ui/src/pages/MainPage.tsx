@@ -127,6 +127,10 @@ export function MainPage() {
               ) : (
                 <div className="flex flex-col gap-2">
                   <ItemWithLabel
+                    label="ID"
+                    value={selectedAbstractToken.symbol}
+                  />
+                  <ItemWithLabel
                     label="Symbol"
                     value={selectedAbstractToken.symbol}
                   />

@@ -219,7 +219,7 @@ export function NewDeployedTokenForm() {
                     <SelectContent>
                       {abstractTokens?.map((token) => (
                         <SelectItem key={token.id} value={token.id}>
-                          {token.id}
+                          {token.id}:{token.issuer ?? 'unknown'}:{token.symbol}
                         </SelectItem>
                       ))}
                     </SelectContent>

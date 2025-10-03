@@ -12,7 +12,7 @@ import { NewDeployedTokenForm } from './forms/NewDeployedTokenForm'
 export function AddTokensPage() {
   return (
     <AppLayout>
-      <Tabs defaultValue="abstract-token" className="mx-auto max-w-2xl">
+      <Tabs defaultValue="abstract-token" className="mx-auto max-w-3xl">
         <TabsList>
           <TabsTrigger value="abstract-token">Abstract Token</TabsTrigger>
           <TabsTrigger value="deployed-token">Deployed Token</TabsTrigger>
