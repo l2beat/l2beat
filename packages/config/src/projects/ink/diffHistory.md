@@ -1,6 +1,6 @@
 Generated with discovered.json: 0x42087b54f9b1f4df052eefee9114435087a6eba4
 
-# Diff at Fri, 03 Oct 2025 14:23:24 GMT:
+# Diff at Fri, 03 Oct 2025 14:23:11 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@2a86d862e7686075acdb5f1c005d9ab095b4d598 block: 1759482605
@@ -8,7 +8,37 @@ Generated with discovered.json: 0x42087b54f9b1f4df052eefee9114435087a6eba4
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+This is upgrade 16a (https://gov.optimism.io/t/maintenance-upgrade-proposal-u16a/10288)
+
+OptimismPortal2 - removed unused superchain withdrawal code, ETH lockbox feature moved out to its own contract.
+https://disco.l2beat.com/diff/eth:0xEFEd7F38BB9BE74bBa583a1A5B7D0fe7C9D5787a/eth:0x381E729FF983FA4BCEd820e7b922d79bF653B999
+
+SystemConfig - setFeature function to activate/deactivate features (at the moment used for ETHLockbox feature)
+https://disco.l2beat.com/diff/eth:0xFaA660bf783CBAa55e1B7F3475C20Db74a53b9Fa/eth:0x2bFE4A5Bd5A41e9d848d843ebCDFa15954e9A557
+
+L1ERC721Bridge - minor changes 
+https://disco.l2beat.com/diff/eth:0x25d6CeDEB277Ad7ebEe71226eD7877768E0B7A2F/eth:0x7f1d12fB2911EB095278085f721e644C1f675696
+
+L1CrossDomainMessenger - minor changes
+https://disco.l2beat.com/diff/eth:0xD26bB3aaAa4cB5638A8581A4c4b1d937D8E05c54/eth:0x22D12E0FAebD62d429514A65EBAe32dd316c12D6
+
+L1StandardBridge - minor changes 
+https://disco.l2beat.com/diff/eth:0x44AfB7722AF276A601D524F429016A18B6923df0/eth:0xe32B192fb1DcA88fCB1C56B3ACb429e32238aDCb
+
+FaultDisputeGame (via DisputeGameFactory gameImpls[0]) - no code changes, constructor variables (e.g, delayed weth, vm)
+https://disco.l2beat.com/diff/eth:0x1a20c06a80260AA45adA0F9F59b334560eE3FEf1/eth:0x5F5BEa598Fdf8DF30d56808E8b793da8FC7f3028
+
+PermissionedDisputeGame (via DisputeGameFactory gameImpls[1]) - no code changes, constructor variables (e.g, delayed weth, vm)
+https://disco.l2beat.com/diff/eth:0x46DDe051eb4561694DC1F0286eBe940d9E90fbe9/eth:0x5562D33B68fa20572FC58fA36aB19CCFeDD6eE8f
+
+MIPS → MIPS64 - added function for pseudorandomness generation
+https://disco.l2beat.com/diff/eth:0xA1B54D89e305bcd322Ba0C9C094093173C0d6b3a/eth:0x07BABE08EE4D07dBA236530183B24055535A7011
+
+DelayedWETH (replacement 1) - same code, same admin, only diff is totalSupply
+https://disco.l2beat.com/diff/eth:0x3F7b07A5D638024a37A776FA228fE90b317aF6dE/eth:0x6Cbd14DA021e39A7895Ae151Ac72eCc9023e87F6
+
+DelayedWETH (replacement 2) - same code, same admin only diff is totalSupply
+https://disco.l2beat.com/diff/eth:0xD5d9Eb5B1edce381C9f3377264e05c31f3036F32/eth:0x71CC5E57cE659e8E2cc78F86b14BDDCb626691Fd
 
 ## Config/verification related changes
 
