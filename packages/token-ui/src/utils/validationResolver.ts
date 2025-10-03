@@ -1,7 +1,7 @@
 import type { Result, Validator } from '@l2beat/validate'
 import type { FieldErrors, FieldValues, Resolver } from 'react-hook-form'
 
-export function l2beatResolver<Input extends FieldValues, Context, Output>(
+export function validateResolver<Input extends FieldValues, Context, Output>(
   schema: Validator<Input>,
   schemaOptions?: object,
   resolverOptions: {

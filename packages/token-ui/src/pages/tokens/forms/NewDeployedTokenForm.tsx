@@ -1,4 +1,3 @@
-import { standardSchemaResolver } from '@hookform/resolvers/standard-schema'
 import { v } from '@l2beat/validate'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
@@ -24,6 +23,7 @@ import { Textarea } from '~/components/core/TextArea'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { type Plan, tokenService } from '~/mock/MockTokenService'
 import type { DeployedToken } from '~/mock/types'
+import { validateResolver } from '~/utils/validationResolver'
 
 const formSchema = v.object({
   chain: v.string(),
@@ -36,7 +36,7 @@ const formSchema = v.object({
 })
 export function NewDeployedTokenForm() {
   const form = useForm<v.infer<typeof formSchema>>({
-    resolver: standardSchemaResolver(formSchema),
+    resolver: validateResolver(formSchema),
   })
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
 

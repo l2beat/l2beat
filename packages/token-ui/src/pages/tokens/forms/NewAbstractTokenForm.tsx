@@ -30,7 +30,7 @@ import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { useRandomId } from '~/hooks/useRandomId'
 import { type Plan, tokenService } from '~/mock/MockTokenService'
 import type { AbstractToken } from '~/mock/types'
-import { l2beatResolver } from '~/utils/validationResolver'
+import { validateResolver } from '~/utils/validationResolver'
 
 const categoryValues = ['btc', 'ether', 'stablecoin', 'other'] as const
 
@@ -47,7 +47,7 @@ const formSchema = v.object({
 export function NewAbstractTokenForm() {
   const { id, refresh } = useRandomId()
   const form = useForm<v.infer<typeof formSchema>>({
-    resolver: l2beatResolver(formSchema),
+    resolver: validateResolver(formSchema),
     defaultValues: {
       id,
     },
