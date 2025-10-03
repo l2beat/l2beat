@@ -924,9 +924,6 @@ importers:
 
   packages/token-ui:
     dependencies:
-      '@hookform/resolvers':
-        specifier: ^5.2.2
-        version: 5.2.2(react-hook-form@7.63.0(react@19.0.0))
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -1964,11 +1961,6 @@ packages:
   '@google-cloud/promisify@4.0.0':
     resolution: {integrity: sha512-Orxzlfb9c67A15cq2JQEyVc7wEsmFBmHjZWZYQMUyJ1qivXyMwdyNOs9odi79hze+2zqdTtu1E19IM/FtqZ10g==}
     engines: {node: '>=14'}
-
-  '@hookform/resolvers@5.2.2':
-    resolution: {integrity: sha512-A/IxlMLShx3KjV/HeTcTfaMxdwy690+L/ZADoeaTltLx+CVuzkeVIPuybK3jrRfw7YZnmdKsVVHAlEPIAEUNlA==}
-    peerDependencies:
-      react-hook-form: ^7.55.0
 
   '@img/sharp-darwin-arm64@0.33.5':
     resolution: {integrity: sha512-UT4p+iz/2H4twwAoLCqfA9UH5pI6DggwKEGuaPy7nCVQ8ZsiY5PIcrRvD1DzuY3qYL07NtIQcWnBSY/heikIFQ==}
@@ -3388,9 +3380,6 @@ packages:
 
   '@sinonjs/fake-timers@11.3.1':
     resolution: {integrity: sha512-EVJO7nW5M/F5Tur0Rf2z/QoMo+1Ia963RiMtapiQrEWvY0iBUvADo8Beegwjpnle5BHkyHuoxSTW3jF43H1XRA==}
-
-  '@standard-schema/utils@0.3.0':
-    resolution: {integrity: sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==}
 
   '@substrate/connect-extension-protocol@2.2.0':
     resolution: {integrity: sha512-8b5bN/jo6qD4vcnoWr3T+Nn2u1XLRkJTsEt8b9iGvPPZ1cFcPCVQVpn3lP3U3WqbuSLiVkh0CjX5TW+aCUAi3g==}
@@ -8681,11 +8670,6 @@ snapshots:
 
   '@google-cloud/promisify@4.0.0': {}
 
-  '@hookform/resolvers@5.2.2(react-hook-form@7.63.0(react@19.0.0))':
-    dependencies:
-      '@standard-schema/utils': 0.3.0
-      react-hook-form: 7.63.0(react@19.0.0)
-
   '@img/sharp-darwin-arm64@0.33.5':
     optionalDependencies:
       '@img/sharp-libvips-darwin-arm64': 1.0.4
@@ -10219,8 +10203,6 @@ snapshots:
   '@sinonjs/fake-timers@11.3.1':
     dependencies:
       '@sinonjs/commons': 3.0.1
-
-  '@standard-schema/utils@0.3.0': {}
 
   '@substrate/connect-extension-protocol@2.2.0':
     optional: true
