@@ -2,11 +2,10 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL3 } from '../../templates/upcoming'
 
-export const primechain: ScalingProject = upcomingL3({
+export const primechain: ScalingProject = upcomingL2({ //might actually be an L4? adding as L2 for now as B3 as host is not supported
   id: 'primechain',
   capability: 'universal',
   addedAt: UnixTime(1755155703),
-  hostChain: ProjectId('b3'),
   display: {
     name: 'Prime Chain',
     slug: 'primechain',
