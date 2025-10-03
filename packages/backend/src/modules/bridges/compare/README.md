@@ -18,3 +18,7 @@ pnpm bridges:compare
 ```bash
 pnpm bridges:compare across,stargate
 ```
+4. The script will
+- fetch data to compare from external providers
+- wait 10s for our backend to index latest data
+- run comparison between staging/production DB and external data
