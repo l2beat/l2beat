@@ -8,7 +8,37 @@ Generated with discovered.json: 0xb9c824307464009085f0dcf7dae66c37874c5798
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+This is upgrade 16a (https://gov.optimism.io/t/maintenance-upgrade-proposal-u16a/10288)
+
+OptimismPortal2 - removed unused superchain withdrawal code, ETH lockbox feature moved out to its own contract.
+https://disco.l2beat.com/diff/eth:0xEFEd7F38BB9BE74bBa583a1A5B7D0fe7C9D5787a/eth:0x381E729FF983FA4BCEd820e7b922d79bF653B999
+
+SystemConfig - setFeature function to activate/deactivate features (currently used for the ETHLockbox feature).
+https://disco.l2beat.com/diff/eth:0xFaA660bf783CBAa55e1B7F3475C20Db74a53b9Fa/eth:0x2bFE4A5Bd5A41e9d848d843ebCDFa15954e9A557
+
+L1ERC721Bridge - minor changes.
+https://disco.l2beat.com/diff/eth:0x25d6CeDEB277Ad7ebEe71226eD7877768E0B7A2F/eth:0x7f1d12fB2911EB095278085f721e644C1f675696
+
+L1CrossDomainMessenger - minor changes.
+https://disco.l2beat.com/diff/eth:0xD26bB3aaAa4cB5638A8581A4c4b1d937D8E05c54/eth:0x22D12E0FAebD62d429514A65EBAe32dd316c12D6
+
+L1StandardBridge - minor changes.
+https://disco.l2beat.com/diff/eth:0x44AfB7722AF276A601D524F429016A18B6923df0/eth:0xe32B192fb1DcA88fCB1C56B3ACb429e32238aDCb
+
+FaultDisputeGame (via DisputeGameFactory gameImpls[0]) - no code changes; constructor variables updated (e.g., DelayedWETH, VM).
+https://disco.l2beat.com/diff/eth:0x4F0f6B7877A174A4fd41DF80dB80DeF8883bc772/eth:0x42891199E6abD6A346E26B7d187EF5657FDfF603
+
+PermissionedDisputeGame (via DisputeGameFactory gameImpls[1]) - no code changes; constructor variables updated (e.g., DelayedWETH, VM).
+https://disco.l2beat.com/diff/eth:0xC56EF9c3F3e9fD6713055b4577AC4AF8303E63e1/eth:0x5581F65C63B8CCbBe4A06626C336531160E2D8B5
+
+MIPS → MIPS64 - added function for pseudorandomness generation.
+https://disco.l2beat.com/diff/eth:0xA1B54D89e305bcd322Ba0C9C094093173C0d6b3a/eth:0x07BABE08EE4D07dBA236530183B24055535A7011
+
+DelayedWETH (replacement 1) - same code, same admin; only diff is totalSupply.
+https://disco.l2beat.com/diff/eth:0xa0157F0730Dea8d1a5c358Dc1d340a05D8796C23/eth:0x0bdbEc6bd35571F97f96f3ed21822a4f2e071A3c
+
+DelayedWETH (replacement 2) - same code, same admin; only diff is totalSupply.
+https://disco.l2beat.com/diff/eth:0xBcEA39a1F75D7AC8004982efBA85F92A693386CB/eth:0xe62B0279f6A466C5E1676f3ea955086300Bcd0Ac
 
 ## Watched changes
 
