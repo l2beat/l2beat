@@ -11,12 +11,12 @@ export const gateLayer: ScalingProject = upcomingL2({
     name: 'Gate Layer',
     slug: 'gate-layer',
     description:
-      'Gate Layer is an OP Stack L2, built to deliver exchange-grade throughput and ultra-low fees for EVM-compatible Web3 apps',
+      'Gate Layer is an OP Stack L2, built to deliver exchange-grade throughput and ultra-low fees for EVM-compatible Web3 apps.',
     purposes: ['Universal'],
     stacks: ['OP Stack'],
     links: {
-      websites: ['https://www.gate.com/'],
-      documentation: ['https://www.gatechain.io/docs/GateLayer/introduction'],
+      websites: ['https://gate.com/'],
+      documentation: ['https://gatechain.io/docs/GateLayer/introduction'],
       explorers: ['https://gatescan.org/gatelayer'],
       socialMedia: ['https://x.com/gatechain_io'],
     },
