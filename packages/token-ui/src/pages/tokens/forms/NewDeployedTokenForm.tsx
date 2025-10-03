@@ -1,7 +1,7 @@
 import { v } from '@l2beat/validate'
 import { skipToken, useMutation, useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { type UseFormReturn, useForm } from 'react-hook-form'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import {
   Form,
@@ -83,12 +83,7 @@ export function NewDeployedTokenForm() {
   useEffect(() => {
     if (deployedTokenExistsLoading) return
     if (deployedTokenExists) {
-      form.setError('address', {
-        message: 'Deployed token with given address and chain already exists',
-      })
-      form.setError('chain', {
-        message: 'Deployed token with given address and chain already exists',
-      })
+      setDeployedTokenExistsError(form)
     } else {
       form.clearErrors('address')
       form.clearErrors('chain')
@@ -96,6 +91,11 @@ export function NewDeployedTokenForm() {
   }, [deployedTokenExists, deployedTokenExistsLoading, form])
 
   function onSubmit(values: v.infer<typeof formSchema>) {
+    if (deployedTokenExists) {
+      setDeployedTokenExistsError(form)
+      return
+    }
+
     planDeployedToken({
       ...values,
       id: `${values.chain}-${values.address}`,
@@ -269,4 +269,17 @@ export function NewDeployedTokenForm() {
       </Form>
     </>
   )
+}
+
+function setDeployedTokenExistsError(
+  form: UseFormReturn<v.infer<typeof formSchema>>,
+) {
+  form.setError('address', {
+    type: 'custom',
+    message: 'Deployed token with given address and chain already exists',
+  })
+  form.setError('chain', {
+    type: 'custom',
+    message: 'Deployed token with given address and chain already exists',
+  })
 }
