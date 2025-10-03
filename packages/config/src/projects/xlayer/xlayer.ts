@@ -38,6 +38,8 @@ export const xlayer: ScalingProject = {
       ],
       explorers: ['https://okx.com/explorer/xlayer'],
       socialMedia: ['https://twitter.com/XLayerOfficial'],
+      bridges: ['http://web3.okx.com/xlayer/bridge'],
+      repositories: ['https://github.com/okx/xlayer-erigon'],
     },
     purposes: ['Universal'],
     stacks: ['Agglayer CDK'],
