@@ -262,6 +262,37 @@ function DACHALLENGES_OFF_CHAIN(
   }
 }
 
+function ESPRESSO_OFF_CHAIN(
+  isUsingLightClient: boolean,
+): ProjectTechnologyChoice {
+  const additionalDescription = isUsingLightClient
+    ? ' The Espresso HotShot Light Client contract is used to verify attestations from the Espresso validator set that the data is indeed available.'
+    : ' Since the HotShot Light Client contract is not used, availability of the data is not verified against Espresso validators, meaning that the Sequencer can single-handedly publish unavailable roots.'
+  return {
+    name: 'Data is posted to Espresso',
+    description:
+      'Transactions roots are posted onchain and the full data is posted on Espresso. ' +
+      additionalDescription,
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: 'the sequencer posts an unavailable transaction root.',
+        isCritical: true,
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'the data is not available on the external provider.',
+        isCritical: true,
+      },
+    ],
+    references: [
+      {
+        title: 'Espresso Light Client',
+        url: 'https://docs.espressosys.com/network/learn/the-espresso-network/internal-functionality/light-client',
+      },
+    ],
+  }
+}
 export const TECHNOLOGY_DATA_AVAILABILITY = {
   ON_CHAIN_CALLDATA,
   ON_CHAIN_BLOB_OR_CALLDATA,
@@ -276,4 +307,5 @@ export const TECHNOLOGY_DATA_AVAILABILITY = {
   AVAIL_OFF_CHAIN,
   EIGENDA_OFF_CHAIN,
   DACHALLENGES_OFF_CHAIN,
+  ESPRESSO_OFF_CHAIN,
 }

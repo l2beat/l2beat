@@ -80,7 +80,10 @@ export function getCommonScalingEntry({
         id: 'hostChain',
         value: project.scalingInfo.hostChain.name,
       },
-      { id: 'daLayer', value: project.scalingInfo.daLayer ?? 'Unknown' },
+      ...(project.scalingInfo.daLayer ?? ['Unknown']).map((daLayer) => ({
+        id: 'daLayer' as const,
+        value: daLayer,
+      })),
       {
         id: 'raas',
         value: project.scalingInfo.raas ?? 'No RaaS',

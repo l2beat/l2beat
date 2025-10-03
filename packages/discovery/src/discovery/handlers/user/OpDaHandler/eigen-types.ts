@@ -13,10 +13,11 @@ export const EIGEN_DA_CONSTANTS = {
   ),
   VERSION_BYTE_V1: '00',
   VERSION_BYTE_V2: '01',
+  VERSION_BYTE_V3: '02',
 } as const
 
 export type EigenCommitment = {
-  version: 'v1' | 'v2'
+  version: 'v1' | 'v2' | 'v3'
   body: string
 }
 
@@ -123,6 +124,14 @@ export type EigenV2BlobInfo = v.infer<typeof EigenV2BlobInfo>
 export const EigenV2BlobInfo = v.tuple([
   blobInclusionInfo, // [0]
   batchHeader, // [1]
+  nonSignerStakesAndSig, // [2]
+  v.string(), // [3] signedQuorumNumbers
+])
+
+export type EigenV3BlobInfo = v.infer<typeof EigenV3BlobInfo>
+export const EigenV3BlobInfo = v.tuple([
+  batchHeader, // [0]
+  blobInclusionInfo, // [1]
   nonSignerStakesAndSig, // [2]
   v.string(), // [3] signedQuorumNumbers
 ])

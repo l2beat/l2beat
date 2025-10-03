@@ -124,6 +124,8 @@ describe(UpdateMonitor.name, () => {
           ...mockProject,
           entries: COMMITTED,
         }),
+
+        readAllDiscoveredProjects: () => [PROJECT_A],
         readConfig: mockFn().returns(mockConfig(PROJECT_A)),
       })
 
@@ -149,7 +151,6 @@ describe(UpdateMonitor.name, () => {
         mockObject<Clock>(),
         discoveryOutputCache,
         Logger.SILENT,
-        [PROJECT_A],
         false,
       )
 
@@ -203,7 +204,6 @@ describe(UpdateMonitor.name, () => {
         mockObject<Clock>(),
         discoveryOutputCache,
         Logger.SILENT,
-        [],
         false,
       )
 
@@ -253,7 +253,6 @@ describe(UpdateMonitor.name, () => {
         mockObject<Clock>(),
         discoveryOutputCache,
         Logger.SILENT,
-        [],
         false,
       )
 
@@ -308,7 +307,6 @@ describe(UpdateMonitor.name, () => {
         mockObject<Clock>(),
         discoveryOutputCache,
         Logger.SILENT,
-        [],
         false,
       )
 
@@ -363,7 +361,6 @@ describe(UpdateMonitor.name, () => {
         mockObject<Clock>(),
         discoveryOutputCache,
         Logger.SILENT,
-        [],
         false,
       )
 
@@ -406,6 +403,7 @@ describe(UpdateMonitor.name, () => {
         },
 
         readConfig: (name: string) => mockConfig(name),
+        readAllDiscoveredProjects: () => [PROJECT_A, PROJECT_B],
       })
       const updateDiffRepository = mockObject<Database['updateDiff']>({
         deleteAll: async () => 0,
@@ -424,7 +422,6 @@ describe(UpdateMonitor.name, () => {
         mockObject<Clock>(),
         discoveryOutputCache,
         Logger.SILENT,
-        [PROJECT_A, PROJECT_B],
         false,
       )
 
@@ -459,6 +456,7 @@ describe(UpdateMonitor.name, () => {
         }),
 
         readConfig: (name: string) => mockConfig(name),
+        readAllDiscoveredProjects: () => [PROJECT_A],
       })
       const updateDiffRepository = mockObject<Database['updateDiff']>({
         deleteAll: async () => 0,
@@ -477,7 +475,6 @@ describe(UpdateMonitor.name, () => {
         mockObject<Clock>(),
         discoveryOutputCache,
         Logger.SILENT,
-        [PROJECT_A],
         false,
       )
 
@@ -512,6 +509,7 @@ describe(UpdateMonitor.name, () => {
         }),
 
         readConfig: (name: string) => mockConfig(name),
+        readAllDiscoveredProjects: () => [PROJECT_A],
       })
       const updateDiffRepository = mockObject<Database['updateDiff']>({
         deleteAll: async () => 0,
@@ -530,7 +528,6 @@ describe(UpdateMonitor.name, () => {
         mockObject<Clock>(),
         discoveryOutputCache,
         Logger.SILENT,
-        [PROJECT_A],
         false,
       )
 

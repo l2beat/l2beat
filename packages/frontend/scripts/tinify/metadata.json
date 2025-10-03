@@ -395,7 +395,7 @@
   "static/images/architecture/linea.png": "7cdd792198dd41c959bdb0b1d8de7863",
   "static/images/architecture/loopring.png": "72b55764cd29bcdecd5b42214508231c",
   "static/images/architecture/mantle.png": "94f25149f92ede912dc03a3505012af5",
-  "static/images/architecture/metis.png": "0faf0633c2372200d5e1f548fe24b304",
+  "static/images/architecture/metis.png": "a883bc132c02a870a3ce408400e53f66",
   "static/images/architecture/morph.png": "3325c88c8850cedbfd1c2150ad3fd56d",
   "static/images/architecture/near.png": "6a02b6ef345ce62f36f9310b189f7d57",
   "static/images/architecture/omni.png": "49e4bb5ccb181440c22b848cf8db0062",
@@ -1465,6 +1465,7 @@
   "static/icons/espressoprover.png": "b0336861f639aaf845e7c7cda35eb2dd",
   "static/meta-images/zk-catalog/projects/espressoprover/opengraph-image.png": "f33e3eb2f1cea6565abc3259ffe0f5bb",
   "static/meta-images/publications/governance-review-70.png": "51aaf9e645d7121b404bcbaa1c24e7f1",
+  "static/images/badges/Espresso.png": "0c2038b8d9842d3e0fb75bb017bd4d9b",
   "static/images/architecture/opsuccinct.png": "6038cb9f898dd2217d91f164f04b6650",
   "static/images/architecture/.png": "51e4ab4152e65794067da3df06023e08",
   "static/images/architecture/opstack-optimium-opfp-opsuccinct.png": "4ad1e7c85dfa17d6604ddd50eb325ad9",
@@ -1480,5 +1481,6 @@
   "static/meta-images/scaling/projects/adi/opengraph-image.png": "fd20b8ffcff45c97b596fc5359af6cb2",
   "static/icons/nodeinfra.png": "e305a60262e5d6d45b1403f284e0d558",
   "static/meta-images/publications/monthly-update-2025-09.png": "5d84ea9ea8eb53d50b87b9cef211e2be",
-  "static/images/monthly-updates/cartesi.png": "255d34d28d891f11e372cb46952162a1"
+  "static/images/monthly-updates/cartesi.png": "255d34d28d891f11e372cb46952162a1",
+  "static/images/badges/EspressoHotShotLightClient.png": "d462fc8a4216e612bdea05b40ee11ad8"
 }

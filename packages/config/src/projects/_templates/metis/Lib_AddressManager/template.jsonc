@@ -146,6 +146,13 @@
         }
       ]
     },
+    "MVM_ProposerRegistry": {
+      "handler": {
+        "type": "call",
+        "method": "getAddress",
+        "args": ["MVM_ProposerRegistry"]
+      }
+    },
     "FaultProofLockingPool": {
       "handler": {
         "type": "call",
@@ -153,18 +160,32 @@
         "args": ["FaultProofLockingPool"]
       }
     },
-    // specified on L2 node (https://github.com/MetisProtocol/mvm/blob/e816c6c461a8e91db3a9ccaa33d2d0f6a60633d5/go/op-program/chainconfig/rollupcfg.go#L85)
-    "blobBatcher": {
+    "OVM_Sequencer": {
       "handler": {
-        "type": "hardcoded",
-        "value": "0xae4d46bd9117cb017c5185844699c51107cb28a9"
-      },
-      "permissions": [
-        {
-          "type": "sequence"
-        }
-      ]
+        "type": "call",
+        "method": "getAddress",
+        "args": ["OVM_Sequencer"]
+      }
     },
+    "Proxy__MVM_InboxSenderManager": {
+      "handler": {
+        "type": "call",
+        "method": "getAddress",
+        "args": ["Proxy__MVM_InboxSenderManager"]
+      }
+    },
+    // specified on L2 node (https://github.com/MetisProtocol/mvm/blob/e816c6c461a8e91db3a9ccaa33d2d0f6a60633d5/go/op-program/chainconfig/rollupcfg.go#L85)
+    // "blobBatcher": {
+    //   "handler": {
+    //     "type": "hardcoded",
+    //     "value": "0xae4d46bd9117cb017c5185844699c51107cb28a9"
+    //   },
+    //   "permissions": [
+    //     {
+    //       "type": "sequence"
+    //     }
+    //   ]
+    // },
     "inboxAddress": {
       "handler": {
         "type": "hardcoded",

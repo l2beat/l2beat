@@ -18,6 +18,7 @@ import type {
   ProjectScalingRiskView,
   ScalingProject,
 } from '../internalTypes'
+import { asArray, emptyArrayToUndefined } from '../templates/utils'
 import {
   type BaseProject,
   type ProjectCostsInfo,
@@ -102,7 +103,9 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
       raas: getRaas(p.badges),
       infrastructure: getInfrastructure(p.badges),
       vm: getVM(p.badges),
-      daLayer: p.dataAvailability?.layer.value ?? undefined,
+      daLayer: emptyArrayToUndefined(
+        asArray(p.dataAvailability).map((d) => d.layer.value),
+      ),
       stage: getStage(p.stage),
       purposes: p.display.purposes,
       scopeOfAssessment: p.scopeOfAssessment,
@@ -120,12 +123,15 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
           ? getProcessedRiskView(p.stackedRiskView)
           : undefined,
     },
-    scalingDa: p.dataAvailability,
+    scalingDa: emptyArrayToUndefined(asArray(p.dataAvailability)),
     scalingTechnology: {
       warning: p.display.warning,
       detailedDescription: p.display.detailedDescription,
       architectureImage: p.display.architectureImage,
       ...p.technology,
+      dataAvailability: emptyArrayToUndefined(
+        asArray(p.technology?.dataAvailability),
+      ),
       sequencingImage: p.display.sequencingImage,
       stateDerivation: p.stateDerivation,
       stateValidation: p.stateValidation,
@@ -167,22 +173,36 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
 function getType(p: ScalingProject): ProjectScalingCategory | undefined {
   if (p.reasonsForBeingOther && p.reasonsForBeingOther.length > 0)
     return 'Other'
-  if (p.dataAvailability?.bridge.value === 'Plasma') return 'Plasma'
 
-  if (p.isUpcoming || !p.proofSystem || !p.dataAvailability) return undefined
+  const typesPerDA = new Set(
+    asArray(p.dataAvailability).map((da) => {
+      // If there's a bridge in DA
+      if (da.bridge.value === 'Plasma') return 'Plasma'
 
-  const isEthereumBridge =
-    p.dataAvailability?.bridge.value === 'Enshrined' ||
-    p.dataAvailability.bridge.value === 'Self-attested' // Intmax case
-  const proofType = p.proofSystem?.type
+      if (p.isUpcoming || !p.proofSystem || !p.dataAvailability)
+        return undefined
 
-  if (proofType === 'Optimistic') {
-    return isEthereumBridge ? 'Optimistic Rollup' : 'Optimium'
+      const isEthereumBridge =
+        da.bridge.value === 'Enshrined' || da.bridge.value === 'Self-attested' // Intmax case
+      const proofType = p.proofSystem?.type
+
+      // If there's
+      if (proofType === 'Optimistic') {
+        return isEthereumBridge ? 'Optimistic Rollup' : 'Optimium'
+      }
+
+      if (proofType === 'Validity') {
+        return isEthereumBridge ? 'ZK Rollup' : 'Validium'
+      }
+    }),
+  )
+
+  if (typesPerDA.size > 1) {
+    throw new Error(
+      `Multiple DAs assigned to project ${p.id} lead to different scaling types. Update the logic to support this case.`,
+    )
   }
-
-  if (proofType === 'Validity') {
-    return isEthereumBridge ? 'ZK Rollup' : 'Validium'
-  }
+  return Array.from(typesPerDA)[0]
 }
 
 function getProcessedRiskView(
