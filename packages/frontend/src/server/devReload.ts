@@ -1,11 +1,11 @@
+import type { Logger } from '@l2beat/backend-tools'
 import { createServer } from 'http'
 import { WebSocketServer } from 'ws'
-import { getLogger } from './utils/logger'
 
 const PORT = 9999
 
-export function setupDevReload() {
-  const logger = getLogger().for('DevReload')
+export function setupDevReload(logger: Logger) {
+  logger = logger.for('DevReload')
   const server = createServer()
   new WebSocketServer({ server })
 
