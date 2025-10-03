@@ -6,7 +6,7 @@ export class AcrossComparePlugin implements BridgeComparePlugin {
 
   async getExternalItems(): Promise<BridgeExternalItem[]> {
     const response = await fetch(
-      'https://explorer.range.org/transactions?l=1000&sn=eth,base,arb1,oeth&dn=arb1,base,oeth,eth&b=across',
+      'https://explorer.range.org/transactions?l=100&sn=eth,base,arb1,oeth&dn=arb1,base,oeth,eth&b=across',
     )
     const htmlContent = await response.text()
 
