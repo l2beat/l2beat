@@ -17,6 +17,7 @@ import {
   ProjectsUsedIn,
   type UsedInProjectWithIcon,
 } from '~/components/ProjectsUsedIn'
+import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { ChevronIcon } from '~/icons/Chevron'
 import { GithubIcon } from '~/icons/products/Github'
 import { CountWithAttesters } from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
@@ -39,8 +40,14 @@ export function ZkProgramHash({
 }: {
   zkProgramHash: StateValidationZkProgramHashData
 }) {
+  const breakpoint = useBreakpoint()
+  const isMobile = breakpoint === 'xs' || breakpoint === 'sm'
+
   return (
-    <Collapsible className="group rounded-lg border border-divider">
+    <Collapsible
+      className="group rounded-lg border border-divider"
+      open={!zkProgramHash.verificationSteps && !isMobile ? false : undefined}
+    >
       <CollapsibleTrigger asChild>
         <div className="flex w-full items-center justify-between gap-6 px-6 py-4 hover:cursor-pointer">
           <div className="flex w-full flex-col gap-2">
@@ -84,7 +91,7 @@ export function ZkProgramHash({
                 )}
                 {!zkProgramHash.programUrl && (
                   <span className="font-medium text-label-value-12 text-secondary">
-                    Github code unknown
+                    Code unknown
                   </span>
                 )}
               </div>
@@ -107,14 +114,25 @@ export function ZkProgramHash({
               </div>
             </div>
           </div>
-          <ChevronIcon className="group-data-[state=open]:-rotate-180 size-4 transition-transform duration-300" />
+          <ChevronIcon
+            className={cn(
+              'group-data-[state=open]:-rotate-180 size-4 transition-transform duration-300',
+              !zkProgramHash.verificationSteps && !isMobile && 'hidden',
+            )}
+          />
         </div>
       </CollapsibleTrigger>
       <CollapsibleContent className="px-6">
         <div className="pb-6">
           <HorizontalSeparator className="mb-4" />
+          <div className="flex items-center gap-1 md:hidden">
+            <span className="font-medium text-label-value-12 text-secondary">
+              Used in
+            </span>
+            <ProjectsUsedIn usedIn={zkProgramHash.usedIn} />
+          </div>
           {zkProgramHash.verificationSteps && (
-            <div className="space-y-3">
+            <div className="mt-2 space-y-3">
               <div className="font-bold text-label-value-16">
                 Verification steps
               </div>
