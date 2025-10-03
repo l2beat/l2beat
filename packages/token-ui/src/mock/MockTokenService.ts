@@ -42,6 +42,26 @@ class MockTokenService {
     return simulateNetworkDelay(result)
   }
 
+  getMainPageTokens() {
+    const result = abstractTokens.map((token) => ({
+      ...token,
+      deployedTokens: deployedTokens.filter(
+        (t) => t.abstractTokenId === token.id,
+      ),
+    }))
+
+    const abstractTokenIds = result.map((t) => t.id)
+    const deployedWithoutAbstractTokens = deployedTokens.filter(
+      (t) =>
+        !t.abstractTokenId || !abstractTokenIds.includes(t.abstractTokenId),
+    )
+
+    return simulateNetworkDelay({
+      abstractTokens: result,
+      deployedWithoutAbstractTokens,
+    })
+  }
+
   getChains() {
     return simulateNetworkDelay(chains)
   }

@@ -134,4 +134,22 @@ export const deployedTokens: DeployedToken[] = [
     deploymentTimestamp: new Date('2020-05-31'),
     comment: 'Wrapped Bitcoin on Polygon',
   },
+  {
+    id: 'base-0x4200000000000000000000000000000000000006',
+    chain: 'base',
+    address: '0x4200000000000000000000000000000000000006',
+    symbol: 'DAI',
+    decimals: 8,
+    deploymentTimestamp: new Date('2020-05-31'),
+    comment: 'DAI on Base',
+  },
+  {
+    id: 'starknet-0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6',
+    chain: 'starknet',
+    address: '0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6',
+    abstractTokenId: 'unmatched',
+    symbol: 'STRK',
+    decimals: 8,
+    deploymentTimestamp: new Date('2020-05-31'),
+  },
 ]
