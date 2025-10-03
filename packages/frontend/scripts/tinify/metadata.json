@@ -1476,6 +1476,7 @@
   "static/images/badges/Nodeinfra.png": "64d5cc0f3b6a5920bd900d65ec013df2",
   "static/partners/cartesi/background.png": "70d22fa399de64650d7cb325706a17c9",
   "static/partners/cartesi/logo.png": "dd299c34f84fdbce7d1290b4036e96ef",
+  "static/icons/gate-layer.png": "c685676c628a32d4dc0050108f0c7719",
   "static/meta-images/publications/governance-review-71.png": "fb9787223d1943e6761b5b63ba2d9a3f",
   "static/icons/adi.png": "ce3fdf2dd6b0826bab3420f61e65abc4",
   "static/meta-images/scaling/projects/lighter/opengraph-image.png": "f5b9d05fe294a44a115ba6e23c4bc74e",
@@ -1484,5 +1485,6 @@
   "static/icons/nodeinfra.png": "e305a60262e5d6d45b1403f284e0d558",
   "static/meta-images/publications/monthly-update-2025-09.png": "5d84ea9ea8eb53d50b87b9cef211e2be",
   "static/images/monthly-updates/cartesi.png": "255d34d28d891f11e372cb46952162a1",
-  "static/images/badges/EspressoHotShotLightClient.png": "d462fc8a4216e612bdea05b40ee11ad8"
+  "static/images/badges/EspressoHotShotLightClient.png": "d462fc8a4216e612bdea05b40ee11ad8",
+  "static/meta-images/scaling/projects/gate-layer/opengraph-image.png": "88b59637488f33560ee827346e894118"
 }
