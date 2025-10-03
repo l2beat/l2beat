@@ -161,6 +161,7 @@
     {
       "type": "data-availability",
       "daLayerId": "eigenda",
+      "name": "EigenLayer",
       "news": [
         {
           "title": "EigenDA V2: Core Architecture",

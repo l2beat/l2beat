@@ -93,6 +93,7 @@
     {
       "type": "data-availability",
       "daLayerId": "eigenda",
+      "name": "EigenLayer",
       "news": [
         {
           "title": "Redistribution is Live on the Mainnet ",

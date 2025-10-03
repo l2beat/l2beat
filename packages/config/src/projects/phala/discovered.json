@@ -1,6 +1,6 @@
 {
   "name": "phala",
-  "timestamp": 1758309851,
+  "timestamp": 1759480929,
   "configHash": "0xdee90206fb1a4e0defa057bed68392c3486ee4a3f27da037a5cf98113b8a9ca7",
   "sharedModules": ["shared-sp1"],
   "entries": [
@@ -357,7 +357,7 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 21,
+        "gameCount": 48,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x06B59a1A5314DEF287Cc8E5F371929d46DAc9690",
@@ -548,7 +548,6 @@
         "$members": [
           "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
-          "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
@@ -562,8 +561,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 171,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 172,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -573,11 +572,6 @@
     },
     {
       "address": "eth:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -922,11 +916,11 @@
         "GENESIS_CONFIG_NAME": "0xae8304f40f7123e0c87b97f8a600e94ff3a3a25be588fc66b8a3717c8959ce77",
         "initializerVersion": 3,
         "l2BlockTime": 10,
-        "lastProposalTimestamp": 1758300503,
-        "latestBlockNumber": 2390880,
-        "latestOutputIndex": 549,
-        "nextBlockNumber": 2390890,
-        "nextOutputIndex": 550,
+        "lastProposalTimestamp": 1759470635,
+        "latestBlockNumber": 2507520,
+        "latestOutputIndex": 576,
+        "nextBlockNumber": 2507530,
+        "nextOutputIndex": 577,
         "optimisticMode": false,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "proposer": "eth:0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",
@@ -2058,6 +2052,6 @@
     "succinct/OPSuccinct/OPSuccinctDisputeGame": "0x405a65bfa65673c1ee3d040cdeb0ac4bd18c8b092ad1271c30f4781759b27c1b",
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle_phala": "0x4342677410b67fb7bc701eb3f57360f9f6a8eaac289a8b2fd9b756b172358ef1"
   },
-  "usedBlockNumbers": { "ethereum": 23399190 },
-  "permissionsConfigHash": "0xd7ca72548b2e4b0e4ec5da46ef139362826df647fa3964932c4fffc7f1f290bb"
+  "usedBlockNumbers": { "ethereum": 23496128 },
+  "permissionsConfigHash": "0xd010270d252a558d163469dadc3869223942121598b0db908bf9ee23f310111d"
 }
