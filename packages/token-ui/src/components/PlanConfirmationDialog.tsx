@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { type Command, type Plan, tokenService } from '~/mock/MockTokenService'
 import { assertUnreachable } from '~/utils/assertUnreachable'
+import { ButtonWithSpinner } from './ButtonWithSpinner'
 import { Button } from './core/Button'
 import {
   Dialog,
@@ -24,8 +25,7 @@ export function PlanConfirmationDialog({
   onSuccess?: () => void
 }) {
   const queryClient = useQueryClient()
-
-  const { mutate: executePlan } = useMutation({
+  const { mutate: executePlan, isPending } = useMutation({
     mutationFn: async (plan: Plan) => tokenService.execute(plan),
     onSuccess: () => {
       onSuccess?.()
@@ -90,7 +90,12 @@ export function PlanConfirmationDialog({
             </div>
           </DialogDescription>
           <DialogFooter>
-            <Button onClick={() => executePlan(plan)}>Confirm</Button>
+            <ButtonWithSpinner
+              onClick={() => executePlan(plan)}
+              isLoading={isPending}
+            >
+              Confirm
+            </ButtonWithSpinner>
             <Button variant="outline" onClick={() => setPlan(undefined)}>
               Cancel
             </Button>

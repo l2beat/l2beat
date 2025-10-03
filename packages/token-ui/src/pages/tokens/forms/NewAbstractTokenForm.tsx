@@ -4,6 +4,7 @@ import { RefreshCwIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { coingecko } from '~/api/coingecko'
+import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import { Button } from '~/components/core/Button'
 import {
   Form,
@@ -263,8 +264,13 @@ export function NewAbstractTokenForm() {
                 </FormItem>
               )}
             />
-
-            <Button type="submit">Submit</Button>
+            <ButtonWithSpinner
+              isLoading={isPlanPending}
+              className="w-full"
+              type="submit"
+            >
+              Submit
+            </ButtonWithSpinner>
           </fieldset>
         </form>
       </Form>

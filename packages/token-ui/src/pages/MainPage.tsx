@@ -13,10 +13,12 @@ import type { AbstractToken, DeployedToken } from '~/mock/types'
 import { cn } from '~/utils/cn'
 
 export function MainPage() {
-  const { data: abstractTokens } = useQuery({
-    queryKey: ['abstractTokens'],
-    queryFn: () => tokenService.getAbstractTokens(),
-  })
+  const { data: abstractTokens, isLoading: isAbstractTokensLoading } = useQuery(
+    {
+      queryKey: ['abstractTokens'],
+      queryFn: () => tokenService.getAbstractTokens(),
+    },
+  )
   const [selectedAbstractToken, setSelectedAbstractToken] = useState<
     AbstractToken | undefined
   >(undefined)
@@ -33,49 +35,57 @@ export function MainPage() {
           </CardHeader>
           <CardContent>
             <div className="flex flex-col gap-2">
-              {abstractTokens?.map((token) => (
-                <div key={token.id}>
-                  <button
-                    onClick={() => {
-                      setSelectedAbstractToken(token)
-                      if (selectedDeployedToken?.abstractTokenId !== token.id) {
-                        setSelectedDeployedToken(undefined)
-                      }
-                    }}
-                    className={cn(
-                      'flex w-full items-center gap-2 rounded-md p-2 text-left',
-                      selectedAbstractToken?.id === token.id && 'bg-muted',
-                    )}
-                  >
-                    <img
-                      src={token.iconUrl ?? '/images/token-placeholder.png'}
-                      alt={token.symbol}
-                      width={24}
-                      height={24}
-                      className="rounded-full"
-                    />
-                    {token.symbol}
-                  </button>
-                  <div className="mt-1 ml-6 flex flex-col items-start gap-1">
-                    {token.deployedTokens.map((deployedToken) => (
-                      <button
-                        key={deployedToken.id}
-                        className={cn(
-                          'w-full rounded-md p-2 text-left text-muted-foreground text-sm',
-                          selectedDeployedToken?.id === deployedToken.id &&
-                            'bg-muted',
-                        )}
-                        onClick={() => {
-                          setSelectedAbstractToken(token)
-                          setSelectedDeployedToken(deployedToken)
-                        }}
-                      >
-                        {deployedToken.symbol} ({deployedToken.chain})
-                      </button>
-                    ))}
+              {isAbstractTokensLoading ? (
+                <span className="text-muted-foreground text-sm">
+                  Loading...
+                </span>
+              ) : (
+                abstractTokens?.map((token) => (
+                  <div key={token.id}>
+                    <button
+                      onClick={() => {
+                        setSelectedAbstractToken(token)
+                        if (
+                          selectedDeployedToken?.abstractTokenId !== token.id
+                        ) {
+                          setSelectedDeployedToken(undefined)
+                        }
+                      }}
+                      className={cn(
+                        'flex w-full items-center gap-2 rounded-md p-2 text-left',
+                        selectedAbstractToken?.id === token.id && 'bg-muted',
+                      )}
+                    >
+                      <img
+                        src={token.iconUrl ?? '/images/token-placeholder.png'}
+                        alt={token.symbol}
+                        width={24}
+                        height={24}
+                        className="rounded-full"
+                      />
+                      {token.symbol}
+                    </button>
+                    <div className="mt-1 ml-6 flex flex-col items-start gap-1">
+                      {token.deployedTokens.map((deployedToken) => (
+                        <button
+                          key={deployedToken.id}
+                          className={cn(
+                            'w-full rounded-md p-2 text-left text-muted-foreground text-sm',
+                            selectedDeployedToken?.id === deployedToken.id &&
+                              'bg-muted',
+                          )}
+                          onClick={() => {
+                            setSelectedAbstractToken(token)
+                            setSelectedDeployedToken(deployedToken)
+                          }}
+                        >
+                          {deployedToken.symbol} ({deployedToken.chain})
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </CardContent>
         </Card>

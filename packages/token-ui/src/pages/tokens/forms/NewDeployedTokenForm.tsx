@@ -3,7 +3,7 @@ import { v } from '@l2beat/validate'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Button } from '~/components/core/Button'
+import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import {
   Form,
   FormControl,
@@ -211,7 +211,13 @@ export function NewDeployedTokenForm() {
               )}
             />
 
-            <Button type="submit">Submit</Button>
+            <ButtonWithSpinner
+              isLoading={isPlanPending}
+              className="w-full"
+              type="submit"
+            >
+              Submit
+            </ButtonWithSpinner>
           </fieldset>
         </form>
       </Form>
