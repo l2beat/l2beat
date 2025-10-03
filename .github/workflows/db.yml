@@ -16,7 +16,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20 # DB backup can take some time
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
