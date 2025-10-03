@@ -1,6 +1,6 @@
 import { v } from '@l2beat/validate'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
+import { skipToken, useMutation, useQuery } from '@tanstack/react-query'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import {
@@ -19,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/core/Select'
+import { Spinner } from '~/components/core/Spinner'
 import { Textarea } from '~/components/core/TextArea'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { type Plan, tokenService } from '~/mock/MockTokenService'
@@ -61,6 +62,33 @@ export function NewDeployedTokenForm() {
       queryFn: () => tokenService.getAbstractTokens(),
     })
 
+  const chain = form.watch('chain')
+  const address = form.watch('address')
+
+  const { data: deployedTokenExists, isLoading: deployedTokenExistsLoading } =
+    useQuery({
+      queryKey: ['deployedTokenExists', chain, address],
+      queryFn:
+        chain && address
+          ? () => tokenService.checkIfDeployedTokenExists(address, chain)
+          : skipToken,
+    })
+
+  useEffect(() => {
+    if (deployedTokenExistsLoading) return
+    if (deployedTokenExists) {
+      form.setError('address', {
+        message: 'Deployed token with given address and chain already exists',
+      })
+      form.setError('chain', {
+        message: 'Deployed token with given address and chain already exists',
+      })
+    } else {
+      form.clearErrors('address')
+      form.clearErrors('chain')
+    }
+  }, [deployedTokenExists, deployedTokenExistsLoading])
+
   function onSubmit(values: v.infer<typeof formSchema>) {
     planDeployedToken({
       ...values,
@@ -83,9 +111,15 @@ export function NewDeployedTokenForm() {
               control={form.control}
               name="chain"
               disabled={areChainsLoading}
+              success={deployedTokenExists === false}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Chain</FormLabel>
+                  <FormLabel>
+                    Chain{' '}
+                    {deployedTokenExistsLoading && (
+                      <Spinner className="size-3.5" />
+                    )}
+                  </FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -111,9 +145,15 @@ export function NewDeployedTokenForm() {
             <FormField
               control={form.control}
               name="address"
+              success={deployedTokenExists === false}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Address</FormLabel>
+                  <FormLabel>
+                    Address{' '}
+                    {deployedTokenExistsLoading && (
+                      <Spinner className="size-3.5" />
+                    )}
+                  </FormLabel>
                   <FormControl>
                     <Input {...field} placeholder="0xd33db33f" />
                   </FormControl>

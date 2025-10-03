@@ -22,6 +22,7 @@ type FormFieldContextValue<
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > = {
   name: TName
+  success: boolean
 }
 
 const FormFieldContext = React.createContext<FormFieldContextValue>(
@@ -33,9 +34,11 @@ const FormField = <
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
   ...props
-}: ControllerProps<TFieldValues, TName>) => {
+}: ControllerProps<TFieldValues, TName> & { success?: boolean }) => {
   return (
-    <FormFieldContext.Provider value={{ name: props.name }}>
+    <FormFieldContext.Provider
+      value={{ name: props.name, success: props.success ?? false }}
+    >
       <Controller {...props} />
     </FormFieldContext.Provider>
   )
@@ -57,6 +60,7 @@ const useFormField = () => {
   return {
     id,
     name: fieldContext.name,
+    success: fieldContext.success,
     formItemId: `${id}-form-item`,
     formDescriptionId: `${id}-form-item-description`,
     formMessageId: `${id}-form-item-message`,
@@ -90,13 +94,17 @@ function FormLabel({
   className,
   ...props
 }: React.ComponentProps<typeof Label>) {
-  const { error, formItemId } = useFormField()
+  const { error, success, formItemId } = useFormField()
 
   return (
     <Label
       data-slot="form-label"
       data-error={!!error}
-      className={cn('data-[error=true]:text-destructive', className)}
+      data-success={success}
+      className={cn(
+        'data-[error=true]:text-destructive data-[success=true]:text-green-500',
+        className,
+      )}
       htmlFor={formItemId}
       {...props}
     />
@@ -104,12 +112,14 @@ function FormLabel({
 }
 
 function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
-  const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
+  const { error, success, formItemId, formDescriptionId, formMessageId } =
+    useFormField()
 
   return (
     <Slot
       data-slot="form-control"
       id={formItemId}
+      data-success={success}
       aria-describedby={
         !error
           ? `${formDescriptionId}`

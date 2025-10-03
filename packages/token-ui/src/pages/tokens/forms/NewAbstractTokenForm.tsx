@@ -44,6 +44,7 @@ const formSchema = v.object({
   iconUrl: v.string().optional(),
   comment: v.string().optional(),
 })
+
 export function NewAbstractTokenForm() {
   const { id, refresh } = useRandomId()
   const form = useForm<v.infer<typeof formSchema>>({
@@ -160,6 +161,7 @@ export function NewAbstractTokenForm() {
             <FormField
               control={form.control}
               name="coingeckoId"
+              success={coin !== null && coin !== undefined}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>

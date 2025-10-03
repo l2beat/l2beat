@@ -66,6 +66,12 @@ class MockTokenService {
     return simulateNetworkDelay(chains)
   }
 
+  checkIfDeployedTokenExists(address: string, chain: string) {
+    return simulateNetworkDelay(
+      deployedTokens.some((t) => t.address === address && t.chain === chain),
+    )
+  }
+
   plan(intent: Intent): Promise<Plan> {
     let commands: Command[]
     switch (intent.type) {
