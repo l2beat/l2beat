@@ -7,7 +7,6 @@ describe('filterReferencedEntries', () => {
   const mockConfigHash = Hash256.random()
   const mockTimestamp = 1234567890
 
-  // Test addresses for consistent use across tests
   const ADDRESSES = {
     A: 'eth:0x1111111111111111111111111111111111111111',
     B: 'eth:0x2222222222222222222222222222222222222222',
@@ -19,12 +18,12 @@ describe('filterReferencedEntries', () => {
     H: 'eth:0x8888888888888888888888888888888888888888',
     I: 'eth:0x9999999999999999999999999999999999999999',
     J: 'eth:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-    // Cross-chain addresses
+
     ARB_A: 'arb1:0x1111111111111111111111111111111111111111',
     ARB_B: 'arb1:0x2222222222222222222222222222222222222222',
     OPT_A: 'oeth:0x3333333333333333333333333333333333333333',
+
     BASE_A: 'base:0x4444444444444444444444444444444444444444',
-    // Non-existent reference
     NONEXISTENT: 'eth:0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef',
   } as const
 
