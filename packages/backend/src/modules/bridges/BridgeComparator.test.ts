@@ -56,14 +56,12 @@ describe(BridgeComparator.name, () => {
 
   describe(BridgeComparator.prototype.runCompare.name, () => {
     it('fetches data and compares', async () => {
-      const items1 = [
+      const known = [
         { srcTxHash: Hash256.random(), dstTxHash: Hash256.random() },
         { srcTxHash: Hash256.random(), dstTxHash: Hash256.random() },
       ]
-      const items2 = [
+      const unknown = [
         { srcTxHash: Hash256.random(), dstTxHash: Hash256.random() },
-      ]
-      const items3 = [
         { srcTxHash: Hash256.random(), dstTxHash: Hash256.random() },
       ]
 
@@ -72,22 +70,26 @@ describe(BridgeComparator.name, () => {
           name: 'plugin1',
           type: 'message' as const,
           getExternalItems: mockFn()
-            .resolvesToOnce(items1)
-            .resolvesToOnce(items3),
+            // returns unknown in first run, which will get skipped
+            // in next run will be reported as missing
+            .resolvesToOnce([known[0], unknown[0]])
+            .resolvesToOnce([unknown[1]]),
         },
         {
           name: 'plugin2',
           type: 'transfer' as const,
-          getExternalItems: mockFn().resolvesToOnce(items2).resolvesToOnce([]),
+          getExternalItems: mockFn()
+            .resolvesToOnce([known[1]])
+            .resolvesToOnce([]),
         },
       ]
 
       const bridgeMessage = mockObject<Database['bridgeMessage']>({
-        getExistingItems: mockFn().resolvesTo([items1[0]]),
+        getExistingItems: mockFn().resolvesTo([known[0]]),
       })
 
       const bridgeTransfer = mockObject<Database['bridgeTransfer']>({
-        getExistingItems: mockFn().resolvesTo(items2),
+        getExistingItems: mockFn().resolvesTo([known[1]]),
       })
 
       const db = mockObject<Database>({
@@ -116,7 +118,7 @@ describe(BridgeComparator.name, () => {
       expect(logger.warn).toHaveBeenOnlyCalledWith('Missing item detected', {
         plugin: 'plugin1',
         item: {
-          ...items1[1],
+          ...unknown[0],
           isLatest: false,
         },
       })
