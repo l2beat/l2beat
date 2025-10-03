@@ -44,6 +44,5 @@ RUN apt update && \
 COPY --from=builder /src/ .
 COPY --from=builder /dist/difft /usr/local/bin/difft
 COPY docker/.profile.d .profile.d
-RUN npm install -g playwright && playwright install chromium
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 CMD cd packages/backend && node -r source-map-support/register build/src/index.js
