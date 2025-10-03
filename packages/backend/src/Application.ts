@@ -67,7 +67,7 @@ export class Application {
       createEcosystemsModule(deps),
       createAnomaliesModule(deps),
       createBridgeModule(deps),
-      // createBlockSyncModule(deps),
+      createBlockSyncModule(deps),
     ]
 
     const apiServer = new ApiServer(
