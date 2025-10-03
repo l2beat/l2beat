@@ -68,6 +68,7 @@ export function CountWithAttesters({
   count,
   attesters,
   type,
+  hideCount,
 }: {
   count: number | undefined
   attesters:
@@ -76,6 +77,7 @@ export function CountWithAttesters({
       })[]
     | undefined
   type: 'successful' | 'notVerified' | 'unsuccessful'
+  hideCount?: boolean
 }) {
   if (count === 0) return null
 
@@ -83,9 +85,11 @@ export function CountWithAttesters({
 
   return (
     <div className="flex items-center gap-1">
-      <span className="font-bold text-label-value-16 text-secondary leading-none">
-        {count}
-      </span>
+      {!hideCount && (
+        <span className="font-bold text-label-value-16 text-secondary leading-none">
+          {count}
+        </span>
+      )}
       <Tooltip>
         <TooltipTrigger>
           <Icon className="size-4" />

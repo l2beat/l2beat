@@ -585,7 +585,7 @@ export interface ProjectScalingStateValidationZkProgramHash {
   hash: string
   proverSystemProject: ProjectId
   description: string
-  programUrl: string
+  programUrl?: string
   verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
   verificationSteps?: string
 }
