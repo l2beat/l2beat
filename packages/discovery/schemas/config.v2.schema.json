@@ -93,7 +93,8 @@
                                 "member",
                                 "act",
                                 "interact",
-                                "upgrade"
+                                "upgrade",
+                                "validateLighter"
                               ]
                             },
                             "delay": {
