@@ -29,9 +29,10 @@ import {
   minLengthCheck,
   minNumberCheck,
 } from '~/utils/checks'
-import { validateResolver } from '~/utils/validationResolver'
+import type { InferFormSchema } from '~/utils/types'
+import { validateResolver } from '~/utils/validateResolver'
 
-const formSchema = v.object({
+const formSchema = {
   chain: v.string(),
   address: v.string().check(ethereumAddressCheck),
   decimals: v.number().check(minNumberCheck(1)),
@@ -39,10 +40,10 @@ const formSchema = v.object({
   abstractTokenId: v.string().optional(),
   deploymentTimestamp: v.string(),
   comment: v.string().optional(),
-})
+}
 
 export function NewDeployedTokenForm() {
-  const form = useForm<v.infer<typeof formSchema>>({
+  const form = useForm<InferFormSchema<typeof formSchema>>({
     resolver: validateResolver(formSchema),
   })
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
@@ -90,7 +91,7 @@ export function NewDeployedTokenForm() {
     }
   }, [deployedTokenExists, deployedTokenExistsLoading, form])
 
-  function onSubmit(values: v.infer<typeof formSchema>) {
+  function onSubmit(values: InferFormSchema<typeof formSchema>) {
     if (deployedTokenExists) {
       setDeployedTokenExistsError(form)
       return
@@ -113,7 +114,7 @@ export function NewDeployedTokenForm() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <fieldset disabled={isPlanPending} className="space-y-8">
-            <div className="flex gap-2">
+            <div className="grid grid-cols-3 items-start gap-2">
               <FormField
                 control={form.control}
                 name="chain"
@@ -132,7 +133,7 @@ export function NewDeployedTokenForm() {
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="w-full">
                           <SelectValue placeholder="Select a chain" />
                         </SelectTrigger>
                       </FormControl>
@@ -154,7 +155,7 @@ export function NewDeployedTokenForm() {
                 name="address"
                 success={deployedTokenExists === false}
                 render={({ field }) => (
-                  <FormItem className="w-full">
+                  <FormItem className="col-span-2">
                     <FormLabel>
                       Address{' '}
                       {deployedTokenExistsLoading && (
@@ -272,7 +273,7 @@ export function NewDeployedTokenForm() {
 }
 
 function setDeployedTokenExistsError(
-  form: UseFormReturn<v.infer<typeof formSchema>>,
+  form: UseFormReturn<InferFormSchema<typeof formSchema>>,
 ) {
   form.setError('address', {
     type: 'custom',

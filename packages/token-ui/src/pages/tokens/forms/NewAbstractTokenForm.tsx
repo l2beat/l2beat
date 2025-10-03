@@ -30,11 +30,12 @@ import { useRandomId } from '~/hooks/useRandomId'
 import { type Plan, tokenService } from '~/mock/MockTokenService'
 import type { AbstractToken } from '~/mock/types'
 import { minLengthCheck, urlCheck } from '~/utils/checks'
-import { validateResolver } from '~/utils/validationResolver'
+import type { InferFormSchema } from '~/utils/types'
+import { validateResolver } from '~/utils/validateResolver'
 
 const categoryValues = ['btc', 'ether', 'stablecoin', 'other'] as const
 
-const formSchema = v.object({
+const formSchema = {
   id: v.string(),
   issuer: v.string().check(minLengthCheck(1)).optional(),
   symbol: v.string().check(minLengthCheck(1)),
@@ -43,11 +44,11 @@ const formSchema = v.object({
   coingeckoListingTimestamp: v.string().optional(),
   iconUrl: v.string().check(urlCheck).optional(),
   comment: v.string().optional(),
-})
+}
 
 export function NewAbstractTokenForm() {
   const { id, refresh } = useRandomId()
-  const form = useForm<v.infer<typeof formSchema>>({
+  const form = useForm<InferFormSchema<typeof formSchema>>({
     resolver: validateResolver(formSchema),
     defaultValues: {
       id,
@@ -107,7 +108,7 @@ export function NewAbstractTokenForm() {
     }
   }, [id, form.setValue, form.getValues])
 
-  function onSubmit(values: v.infer<typeof formSchema>) {
+  function onSubmit(values: InferFormSchema<typeof formSchema>) {
     planAbstractToken({
       ...values,
       coingeckoListingTimestamp: values.coingeckoListingTimestamp
@@ -128,7 +129,7 @@ export function NewAbstractTokenForm() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <fieldset disabled={isPlanPending} className="space-y-8">
-            <div className="grid grid-cols-[minmax(0,_1fr)_20px_minmax(0,_1fr)_20px_minmax(0,_1fr)] gap-2">
+            <div className="grid grid-cols-[minmax(0,_1fr)_20px_minmax(0,_1fr)_20px_minmax(0,_1fr)] items-start gap-2">
               <FormField
                 control={form.control}
                 name="id"
@@ -152,7 +153,7 @@ export function NewAbstractTokenForm() {
                   </FormItem>
                 )}
               />
-              <p className="mb-1.5 self-end text-center font-bold">:</p>
+              <p className="mt-7 text-center font-bold">:</p>
 
               <FormField
                 control={form.control}
@@ -167,7 +168,7 @@ export function NewAbstractTokenForm() {
                   </FormItem>
                 )}
               />
-              <p className="mb-1.5 self-end text-center font-bold">.</p>
+              <p className="mt-7 text-center font-bold">.</p>
               <FormField
                 control={form.control}
                 name="symbol"
