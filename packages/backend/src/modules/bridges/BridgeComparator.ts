@@ -81,6 +81,8 @@ export class BridgeComparator {
     })
 
     for (const [plugin, { items, type }] of Object.entries(this.pluginData)) {
+      if (items.length === 0) return
+
       const records =
         type === 'message'
           ? await this.db.bridgeMessage.getExistingItems(items)
@@ -106,7 +108,10 @@ export class BridgeComparator {
         }
       }
 
-      this.pluginData[plugin].items = skipped
+      this.pluginData[plugin].items = skipped.map((s) => ({
+        ...s,
+        isLatest: false,
+      }))
 
       this.logger.info('Plugin compare finished', {
         plugin: plugin,

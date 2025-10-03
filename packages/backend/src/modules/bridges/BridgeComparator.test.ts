@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import { Hash256 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { mockDatabase } from '../../test/database'
 import { BridgeComparator } from './BridgeComparator'
 
 describe(BridgeComparator.name, () => {
@@ -41,7 +41,7 @@ describe(BridgeComparator.name, () => {
       ]
 
       const comparator = new BridgeComparator(
-        mockDatabase(),
+        mockObject<Database>(),
         plugins,
         Logger.SILENT,
       )
@@ -54,5 +54,72 @@ describe(BridgeComparator.name, () => {
     })
   })
 
-  describe(BridgeComparator.prototype.runCompare.name, () => {})
+  describe(BridgeComparator.prototype.runCompare.name, () => {
+    it('fetches data and compares', async () => {
+      const items1 = [
+        { srcTxHash: Hash256.random(), dstTxHash: Hash256.random() },
+        { srcTxHash: Hash256.random(), dstTxHash: Hash256.random() },
+      ]
+      const items2 = [
+        { srcTxHash: Hash256.random(), dstTxHash: Hash256.random() },
+      ]
+      const items3 = [
+        { srcTxHash: Hash256.random(), dstTxHash: Hash256.random() },
+      ]
+
+      const plugins = [
+        {
+          name: 'plugin1',
+          type: 'message' as const,
+          getExternalItems: mockFn()
+            .resolvesToOnce(items1)
+            .resolvesToOnce(items3),
+        },
+        {
+          name: 'plugin2',
+          type: 'transfer' as const,
+          getExternalItems: mockFn().resolvesToOnce(items2).resolvesToOnce([]),
+        },
+      ]
+
+      const bridgeMessage = mockObject<Database['bridgeMessage']>({
+        getExistingItems: mockFn().resolvesTo([items1[0]]),
+      })
+
+      const bridgeTransfer = mockObject<Database['bridgeTransfer']>({
+        getExistingItems: mockFn().resolvesTo(items2),
+      })
+
+      const db = mockObject<Database>({
+        bridgeMessage,
+        bridgeTransfer,
+      })
+
+      const logger = mockObject<Logger>({
+        info: mockFn().returns({}),
+        warn: mockFn().returns({}),
+        error: mockFn().returns({}),
+      })
+      //@ts-ignore
+      logger.for = () => logger
+
+      const comparator = new BridgeComparator(db, plugins, logger)
+
+      await comparator.runCompare()
+      await comparator.runCompare()
+
+      expect(plugins[0].getExternalItems).toHaveBeenCalledTimes(2)
+      expect(plugins[1].getExternalItems).toHaveBeenCalledTimes(2)
+      expect(bridgeMessage.getExistingItems).toHaveBeenCalledTimes(2)
+      expect(bridgeTransfer.getExistingItems).toHaveBeenCalledTimes(1)
+
+      expect(logger.warn).toHaveBeenOnlyCalledWith('Missing item detected', {
+        plugin: 'plugin1',
+        item: {
+          ...items1[1],
+          isLatest: false,
+        },
+      })
+    })
+  })
 })
