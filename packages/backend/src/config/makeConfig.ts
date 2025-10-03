@@ -167,7 +167,6 @@ export async function makeConfig(
       compare: {
         enabled: flags.isEnabled('bridges', 'compare'),
         intervalMs: env.optionalInteger(['BRIDGES_COMPARE_INTERVAL_MS']),
-        timeoutMs: env.optionalInteger(['BRIDGES_COMPARE_TIMEOUT_MS']),
       },
     },
     // Must be last

@@ -1,88 +1,95 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import type { BridgeComparePlugin } from './compare/types'
-
-interface BridgeCompareConfig {
-  intervalMs?: number
-  timeoutMs?: number
-}
+import type { BridgeComparePlugin, BridgeExternalItem } from './compare/types'
 
 export class BridgeComparator {
   private running = false
-  private readonly config: Required<BridgeCompareConfig>
+  private pluginData: Record<
+    string,
+    {
+      items: (BridgeExternalItem & { isLatest: boolean })[]
+      type: BridgeComparePlugin['type']
+    }
+  > = {}
 
   constructor(
     private db: Database,
     private plugins: BridgeComparePlugin[],
     private logger: Logger,
-    options: BridgeCompareConfig = {},
+    private intervalMs = 10 * 60_000,
   ) {
     this.logger = logger.for(this)
-    this.config = {
-      intervalMs: options.intervalMs ?? 10 * 60_000,
-      timeoutMs: options.timeoutMs ?? 10_000,
-    }
   }
 
   start() {
-    const runCompare = async () => {
-      if (this.running) {
-        return
-      }
-      this.running = true
-      try {
-        await this.compare()
-      } catch (e) {
-        this.logger.error(e)
-      }
-      this.running = false
-    }
-    setInterval(runCompare, this.config.intervalMs)
+    setInterval(this.runCompare, this.intervalMs)
     this.logger.info('Compare schedulded', {
-      intervalMs: this.config.intervalMs,
+      intervalMs: this.intervalMs,
     })
-    runCompare()
+    this.runCompare()
     this.logger.info('Started')
   }
 
-  async compare() {
-    this.logger.info('Running compare', {
-      plugins: this.plugins.map((p) => p.name),
-    })
+  async runCompare() {
+    if (this.running) {
+      return
+    }
+    this.running = true
+    try {
+      await this.fetchExternalItems()
+      await this.compare()
+    } catch (e) {
+      this.logger.error(e)
+    }
+    this.running = false
+  }
+
+  async fetchExternalItems() {
     this.logger.info('Fetching items from external explorers...', {
       plugins: this.plugins.map((p) => p.name),
     })
-    const items = (
-      await Promise.all(
-        this.plugins.map(async (plugin) => {
-          try {
-            return {
-              plugin,
-              items: await plugin.getExternalItems(),
+
+    await Promise.all(
+      this.plugins.map(async (plugin) => {
+        try {
+          const items = (await plugin.getExternalItems()).map((i) => ({
+            ...i,
+            isLatest: true,
+          }))
+
+          if (!this.pluginData[plugin.name]) {
+            this.pluginData[plugin.name] = {
+              type: plugin.type,
+              items: items,
             }
-          } catch (error) {
-            this.logger.warn(`Plugin for ${plugin.name} failed`, error)
-            return null
+          } else {
+            this.pluginData[plugin.name].items.push(...items)
           }
-        }),
-      )
-    ).filter((x) => x != null)
+        } catch (error) {
+          this.logger.warn(
+            `Fetching items for plugin ${plugin.name} failed`,
+            error,
+          )
+        }
+      }),
+    )
+  }
 
-    this.logger.info('Setting timeout...', { timeout: this.config.timeoutMs })
-    // This timeout is needed to make sure our backend indexes latest events
-    await new Promise((resolve) => setTimeout(resolve, this.config.timeoutMs))
-
+  async compare() {
     this.logger.info('Comparing...', {
-      plugins: items.map((i) => i.plugin.name),
+      plugins: Array.from(Object.keys(this.pluginData)),
     })
-    for (const i of items) {
-      const records =
-        i.plugin.type === 'message'
-          ? await this.db.bridgeMessage.getExistingItems(i.items)
-          : await this.db.bridgeTransfer.getExistingItems(i.items)
 
+    for (const [plugin, { items, type }] of Object.entries(this.pluginData)) {
+      const records =
+        type === 'message'
+          ? await this.db.bridgeMessage.getExistingItems(items)
+          : await this.db.bridgeTransfer.getExistingItems(items)
+
+      const skipped = []
       let missing = 0
-      for (const item of i.items) {
+
+      for (const item of items) {
         const record = records.find(
           (r) =>
             r.srcTxHash?.toLowerCase() === item.srcTxHash.toLowerCase() &&
@@ -90,24 +97,26 @@ export class BridgeComparator {
         )
 
         if (!record) {
+          if (item.isLatest) {
+            skipped.push(item)
+            continue
+          }
           missing++
-          this.logger.warn('Missing item detected', {
-            plugin: i.plugin.name,
-            item,
-          })
+          this.logger.warn('Missing item detected', { plugin, item })
         }
       }
 
+      this.pluginData[plugin].items = skipped
+
       this.logger.info('Plugin compare finished', {
-        plugin: i.plugin.name,
-        items: i.items.length,
+        plugin: plugin,
+        items: items.length,
         records: records.length,
         missing,
-      })
-
-      this.logger.info('Compare finished', {
-        plugins: items.map((i) => i.plugin.name),
+        skipped: skipped.length,
       })
     }
+
+    this.logger.info('Compare finished')
   }
 }

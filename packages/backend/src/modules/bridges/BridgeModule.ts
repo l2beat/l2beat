@@ -49,10 +49,12 @@ export function createBridgeModule({
 
   const comparePlugins = createBridgeComparePlugins()
 
-  const bridgeComparator = new BridgeComparator(db, comparePlugins, logger, {
-    intervalMs: config.bridges.compare.intervalMs,
-    timeoutMs: config.bridges.compare.timeoutMs,
-  })
+  const bridgeComparator = new BridgeComparator(
+    db,
+    comparePlugins,
+    logger,
+    config.bridges.compare.intervalMs,
+  )
 
   const bridgeCleaner = new BridgeCleaner(bridgeStore, db, logger)
 

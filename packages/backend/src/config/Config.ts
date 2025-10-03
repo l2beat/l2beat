@@ -216,7 +216,6 @@ export interface BridgesConfig {
   compare: {
     enabled: boolean
     intervalMs?: number
-    timeoutMs?: number
   }
 }
 
