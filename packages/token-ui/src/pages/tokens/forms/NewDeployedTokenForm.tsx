@@ -113,61 +113,62 @@ export function NewDeployedTokenForm() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <fieldset disabled={isPlanPending} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="chain"
-              disabled={areChainsLoading}
-              success={deployedTokenExists === false}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    Chain{' '}
-                    {deployedTokenExistsLoading && (
-                      <Spinner className="size-3.5" />
-                    )}
-                  </FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+            <div className="flex gap-2">
+              <FormField
+                control={form.control}
+                name="chain"
+                disabled={areChainsLoading}
+                success={deployedTokenExists === false}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Chain{' '}
+                      {deployedTokenExistsLoading && (
+                        <Spinner className="size-3.5" />
+                      )}
+                    </FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a chain" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {chains?.map((category) => (
+                          <SelectItem key={category} value={category}>
+                            {category}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="address"
+                success={deployedTokenExists === false}
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>
+                      Address{' '}
+                      {deployedTokenExistsLoading && (
+                        <Spinner className="size-3.5" />
+                      )}
+                    </FormLabel>
                     <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a chain" />
-                      </SelectTrigger>
+                      <Input {...field} placeholder="0xd33db33f" />
                     </FormControl>
-                    <SelectContent>
-                      {chains?.map((category) => (
-                        <SelectItem key={category} value={category}>
-                          {category}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="address"
-              success={deployedTokenExists === false}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    Address{' '}
-                    {deployedTokenExistsLoading && (
-                      <Spinner className="size-3.5" />
-                    )}
-                  </FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="0xd33db33f" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             <FormField
               control={form.control}
               name="decimals"
@@ -185,7 +186,6 @@ export function NewDeployedTokenForm() {
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="symbol"
