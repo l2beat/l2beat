@@ -93,26 +93,28 @@ export function StageSection({
           color="yellow"
           body={emergencyWarning}
           icon={<EmergencyIcon className="mt-0.5 size-5" />}
-          className="mb-2 p-4 font-medium leading-snug"
+          className="mb-2 p-3 font-medium text-paragraph-14 md:p-4 md:text-paragraph-16"
         />
       )}
-      <span className="mb-2 inline-block w-full rounded-lg bg-surface-secondary p-4 font-bold text-label-value-16 md:px-6 md:text-label-value-18">
+      <span className="mb-2 flex w-full items-center rounded-lg bg-surface-secondary p-4 font-bold text-label-value-16 md:px-6 md:text-label-value-18">
         <img
           src={icon}
           alt={name}
-          width={20}
-          height={20}
-          className="-top-0.5 relative mr-2 inline-block"
+          width={24}
+          height={24}
+          className="-top-0.5 relative mr-2 inline-block size-5 shrink-0 md:size-6"
         />
-        {name} is {notEvenAStage0 ? 'not even a' : 'a'}{' '}
-        <StageBadge
-          stage={stageConfig.stage}
-          className="-top-px relative inline-flex"
-          isAppchain={isAppchain}
-          appchainClassName="text-base md:text-lg inline"
-          inline
-        />
-        <span> {notEvenAStage0 ? 'project' : type}</span>.
+        <div className="inline-block w-full">
+          {name} is {notEvenAStage0 ? 'not even a' : 'a'}{' '}
+          <StageBadge
+            stage={stageConfig.stage}
+            className="-top-px relative inline-flex"
+            isAppchain={isAppchain}
+            appchainClassName="text-base md:text-lg inline"
+            inline
+          />
+          <span> {notEvenAStage0 ? 'project' : type}</span>.
+        </div>
       </span>
       {scopeOfAssessment && (
         <ScopeOfAssessment
@@ -121,7 +123,7 @@ export function StageSection({
         />
       )}
       {additionalConsiderations && (
-        <div className="space-y-4 p-4 text-base">
+        <div className="mb-2 space-y-4 font-normal text-paragraph-14 md:px-6 md:py-2 md:text-paragraph-16">
           {isAppchain && (
             <p>
               Rollup operators cannot compromise the system, but being{' '}
@@ -145,15 +147,15 @@ export function StageSection({
       {stageConfig.downgradePending && (
         <StageOneRequirementsChangeStageSectionNotice
           downgradePending={stageConfig.downgradePending}
+          className="mb-2"
         />
       )}
       {stageConfig.message && (
         <WarningBar
           color="yellow"
-          className="mb-6"
           icon={warningBarIcon}
-          iconClassName="mt-1"
           text={stageConfig.message.text}
+          className="font-medium text-paragraph-14 md:text-paragraph-16"
         />
       )}
       <HorizontalSeparator className="my-4" />
@@ -307,8 +309,10 @@ export function StageSection({
       <Callout
         color="blue"
         body="Please keep in mind that these stages do not reflect rollup security, this is an opinionated assessment of rollup maturity based on subjective criteria, created with a goal of incentivizing projects to push toward better decentralization. Each team may have taken different paths to achieve this goal."
-        icon={<InfoIcon className="size-4 md:size-5" variant="blue" />}
-        className="mt-6 p-4 font-normal text-paragraph-15 md:text-paragraph-16"
+        icon={
+          <InfoIcon className="size-4 max-md:mt-0.5 md:size-5" variant="blue" />
+        }
+        className="mt-6 p-4 font-medium text-paragraph-15 md:text-paragraph-16"
       />
     </ProjectSection>
   )
