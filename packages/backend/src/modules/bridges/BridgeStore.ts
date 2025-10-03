@@ -78,6 +78,7 @@ export class BridgeStore implements BridgeEventDb {
 
 function fromDbRecord(record: BridgeEventRecord): BridgeEvent {
   return {
+    plugin: record.plugin,
     eventId: record.eventId,
     type: record.type,
     expiresAt: record.expiresAt,
@@ -96,6 +97,7 @@ function fromDbRecord(record: BridgeEventRecord): BridgeEvent {
 
 function toDbRecord(event: BridgeEvent): BridgeEventRecord {
   return {
+    plugin: event.plugin,
     eventId: event.eventId,
     type: event.type,
     expiresAt: event.expiresAt,

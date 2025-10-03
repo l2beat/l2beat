@@ -4,6 +4,7 @@ import { BaseRepository } from '../BaseRepository'
 import type { BridgeEvent } from '../kysely/generated/types'
 
 export interface BridgeEventRecord {
+  plugin: string
   eventId: string
   type: string
   expiresAt: UnixTime
@@ -21,6 +22,7 @@ export interface BridgeEventRecord {
 
 export function toRecord(row: Selectable<BridgeEvent>): BridgeEventRecord {
   return {
+    plugin: row.plugin,
     eventId: row.eventId,
     type: row.type,
     expiresAt: UnixTime.fromDate(row.expiresAt),

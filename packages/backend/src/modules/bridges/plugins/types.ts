@@ -22,6 +22,7 @@ export interface BridgeEventContext {
 }
 
 export interface BridgeEvent<T = unknown> {
+  plugin: string
   eventId: string
   type: string
   expiresAt: UnixTime
@@ -30,6 +31,7 @@ export interface BridgeEvent<T = unknown> {
 }
 
 export interface BridgeMessage {
+  plugin: string
   kind: 'BridgeMessage'
   type: string
   src: BridgeEvent
@@ -45,6 +47,7 @@ export interface TransferSide {
 
 export interface BridgeTransfer {
   kind: 'BridgeTransfer'
+  plugin: string
   type: string
   events: BridgeEvent[]
   src: TransferSide
@@ -94,6 +97,7 @@ export function createBridgeEventType<T>(
     type,
     create(ctx: BridgeEventContext, payload: T): BridgeEvent<T> {
       return {
+        plugin: type.split('.')[0],
         eventId: generateId('evt'),
         type,
         expiresAt: ctx.timestamp + ttl,
@@ -202,6 +206,7 @@ function Message(
     )
   }
   return {
+    plugin: type.split('.')[0],
     kind: 'BridgeMessage',
     type,
     src: events[0],
@@ -233,6 +238,7 @@ function Transfer(
     )
   }
   return {
+    plugin: type.split('.')[0],
     kind: 'BridgeTransfer',
     type,
     events: [

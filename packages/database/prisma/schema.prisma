@@ -345,6 +345,7 @@ model SyncMetadata {
 }
 
 model BridgeEvent {
+  plugin      String   @default("") @db.VarChar(64)
   eventId     String   @db.VarChar(40)
   type        String   @db.VarChar(64)
   expiresAt   DateTime @db.Timestamp(6)
@@ -364,6 +365,7 @@ model BridgeEvent {
 }
 
 model BridgeMessage {
+  plugin      String    @default("") @db.VarChar(64)
   messageId   String    @db.VarChar(40)
   type        String    @db.VarChar(64)
   duration    Int?
@@ -384,6 +386,7 @@ model BridgeMessage {
 }
 
 model BridgeTransfer {
+  plugin      String    @default("") @db.VarChar(64)
   messageId   String    @db.VarChar(40)
   type        String    @db.VarChar(64)
   duration    Int?

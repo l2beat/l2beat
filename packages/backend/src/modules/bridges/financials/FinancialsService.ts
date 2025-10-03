@@ -49,6 +49,7 @@ export class FinancialsService {
     transfer: BridgeTransfer,
   ): Promise<BridgeTransferWithFinancials> {
     return {
+      plugin: transfer.plugin,
       kind: transfer.kind,
       type: transfer.type,
       events: transfer.events,

@@ -201,6 +201,7 @@ export async function match(
 
 function toMessageRecord(message: BridgeMessage): BridgeMessageRecord {
   return {
+    plugin: message.plugin,
     messageId: generateId('M'),
     type: message.type,
     duration: Math.max(
@@ -227,6 +228,7 @@ function toTransferRecord(
   transfer: BridgeTransferWithFinancials,
 ): BridgeTransferRecord {
   return {
+    plugin: transfer.plugin,
     messageId: generateId('T'),
     type: transfer.type,
     duration: Math.max(
