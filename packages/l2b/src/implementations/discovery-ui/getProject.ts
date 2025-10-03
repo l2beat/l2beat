@@ -4,6 +4,7 @@ import {
   type ContractConfig,
   type DiscoveryOutput,
   type EntryParameters,
+  filterReferencedEntries,
   get$Implementations,
   getShapeFromOutputEntry,
   makeEntryColorConfig,
@@ -48,14 +49,46 @@ function readProject(
 
   seen.add(key)
 
+  const projectsToRead: string[] = []
+  const outputs: ProjectData[] = []
+
   try {
     const discovery = configReader.readDiscovery(project)
+    const config = configReader.readConfig(project)
     const referencedProjects = getReferencedProjects(discovery)
+    const references = discovery.entries.filter(
+      (e) => e.targetProject && e.type === 'Reference',
+    )
 
-    return [
-      { config: configReader.readConfig(project), discovery },
-      ...referencedProjects.flatMap((p) => readProject(p, configReader, seen)),
-    ]
+    projectsToRead.push(...referencedProjects)
+
+    while (projectsToRead.length > 0) {
+      const referencedProject = projectsToRead.shift()
+
+      if (!referencedProject || seen.has(referencedProject)) {
+        continue
+      }
+
+      const matchingRefs = references.filter(
+        (r) => r.targetProject === referencedProject,
+      )
+
+      const referencedDiscovery = configReader.readDiscovery(referencedProject)
+
+      const filteredDiscoveryOutput = filterReferencedEntries(
+        matchingRefs,
+        referencedDiscovery,
+      )
+
+      projectsToRead.push(...getReferencedProjects(filteredDiscoveryOutput))
+      outputs.push({
+        config: configReader.readConfig(referencedProject),
+        discovery: filteredDiscoveryOutput,
+      })
+      seen.add(referencedProject)
+    }
+
+    return [{ config: config, discovery }, ...outputs]
   } catch {
     return []
   }
