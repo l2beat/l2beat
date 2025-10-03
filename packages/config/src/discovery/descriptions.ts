@@ -30,6 +30,7 @@ export const UltimatePermissionToPrefix: {
   hotValidatorHyperliquid: 'A Hot Validator',
   coldValidatorHyperliquid: 'A Cold Validator',
   acrossPropose: 'A Proposer',
+  validateLighter: 'A Validator',
 }
 
 export const RoleDescriptions: {
@@ -153,5 +154,10 @@ export const RoleDescriptions: {
     name: 'Proposer',
     description:
       'Can propose new root bundles (containing settlement info to refund relayers), which are validated optimistically by the UMA oracle.',
+  },
+  validateLighter: {
+    name: 'Validator',
+    description:
+      'Permissioned to call the functions to commit, prove or revert unproven L2 transaction batches on L1.',
   },
 }
