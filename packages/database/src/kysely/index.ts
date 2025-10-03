@@ -1,5 +1,6 @@
 import { AsyncLocalStorage } from 'node:async_hooks'
 import {
+  type IsolationLevel,
   Kysely,
   type Transaction as KyselyTransaction,
   type LogConfig,
@@ -34,12 +35,19 @@ export class DatabaseClient {
     return transaction ?? this.kysely
   }
 
-  transaction<T>(cb: () => Promise<T>): Promise<T> {
+  transaction<T>(
+    cb: () => Promise<T>,
+    isolationLevel?: IsolationLevel,
+  ): Promise<T> {
     if (this.db.isTransaction) {
       // TODO: consider checking for isolation levels in the future
       return cb()
     }
-    return this.kysely.transaction().execute((trx) => this.context.run(trx, cb))
+    const tx = this.kysely.transaction()
+    if (isolationLevel !== undefined) {
+      tx.setIsolationLevel(isolationLevel)
+    }
+    return tx.execute((trx) => this.context.run(trx, cb))
   }
 
   close() {

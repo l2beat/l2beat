@@ -922,6 +922,31 @@ importers:
         specifier: workspace:*
         version: link:../typescript-config
 
+  packages/token-service:
+    dependencies:
+      '@l2beat/backend-tools':
+        specifier: workspace:*
+        version: link:../backend-tools
+      '@l2beat/database':
+        specifier: workspace:*
+        version: link:../database
+      '@l2beat/shared-pure':
+        specifier: workspace:*
+        version: link:../shared-pure
+      '@l2beat/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+    devDependencies:
+      '@types/mocha':
+        specifier: ^10.0.6
+        version: 10.0.9
+      earl:
+        specifier: ^1.1.0
+        version: 1.3.0
+      mocha:
+        specifier: ^10.2.0
+        version: 10.7.3
+
   packages/token-ui:
     dependencies:
       '@l2beat/typescript-config':

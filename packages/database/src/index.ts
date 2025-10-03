@@ -1,9 +1,14 @@
 export { createDatabase, type Database } from './database'
 export { type Transaction } from './kysely'
+export { createTokenDatabase, type TokenDatabase } from './tokenDatabase'
 export { compiledToSqlQuery } from './utils/compiledToSqlQuery'
 
 // Records
 
+export type {
+  AbstractTokenRecord,
+  AbstractTokenUpdate,
+} from './repositories/AbstractTokenRepository'
 export type { ActivityRecord } from './repositories/ActivityRepository'
 export type { AggregatedL2CostRecord } from './repositories/AggregatedL2CostRepository'
 export type { AggregatedLivenessRecord } from './repositories/AggregatedLivenessRepository'
@@ -27,6 +32,10 @@ export type {
   DataAvailabilityRecord,
   ProjectsSummedDataAvailabilityRecord,
 } from './repositories/DataAvailabilityRepository'
+export type {
+  DeployedTokenRecord,
+  DeployedTokenUpdate,
+} from './repositories/DeployedTokenRepository'
 export type { DiscoveryCacheRecord } from './repositories/DiscoveryCacheRepository'
 export type { FlatSourcesRecord } from './repositories/FlatSourcesRepository'
 export type { IndexerConfigurationRecord } from './repositories/IndexerConfigurationRepository'
@@ -48,6 +57,7 @@ export type {
   SyncMetadataFeature,
   SyncMetadataRecord,
 } from './repositories/SyncMetadataRepository'
+export type { TokenConnectionRecord } from './repositories/TokenConnectionRepository'
 export type { TokenMetadataRecord } from './repositories/TokenMetadataRepository'
 export type { TokenValueRecord } from './repositories/TokenValueRepository'
 export type { TvsAmountRecord } from './repositories/TvsAmountRepository'

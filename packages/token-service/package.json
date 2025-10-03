@@ -1,0 +1,32 @@
+{
+  "name": "@l2beat/token-service",
+  "version": "0.1.0",
+  "private": true,
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "rm -rf build",
+    "build:dependencies": "cd ../.. && pnpm build:dependencies:token-service",
+    "watch:dependencies": "cd ../.. && pnpm watch:dependencies:token-service",
+    "format:fix": "biome format --write .",
+    "format": "biome format .",
+    "lint:fix": "biome check --formatter-enabled=false --write .",
+    "lint": "biome check --formatter-enabled=false .",
+    "test": "mocha",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@l2beat/backend-tools": "workspace:*",
+    "@l2beat/database": "workspace:*",
+    "@l2beat/shared-pure": "workspace:*",
+    "@l2beat/typescript-config": "workspace:*"
+  },
+  "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*",
+    "@types/mocha": "^10.0.6",
+    "earl": "^1.1.0",
+    "mocha": "^10.2.0"
+  }
+}
