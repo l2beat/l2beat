@@ -73,6 +73,7 @@ export function NewAbstractTokenForm() {
         abstractToken: token,
       }),
     onSuccess: (data) => {
+      console.log(data)
       setPlan(data)
     },
   })
@@ -109,6 +110,7 @@ export function NewAbstractTokenForm() {
   }, [id, form.setValue, form.getValues])
 
   function onSubmit(values: InferFormSchema<typeof formSchema>) {
+    console.log(values)
     planAbstractToken({
       ...values,
       coingeckoListingTimestamp: values.coingeckoListingTimestamp
@@ -133,13 +135,12 @@ export function NewAbstractTokenForm() {
               <FormField
                 control={form.control}
                 name="id"
-                disabled
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>ID</FormLabel>
                     <div className="flex items-center gap-2">
                       <FormControl>
-                        <Input {...field} className="font-mono" />
+                        <Input {...field} disabled className="font-mono" />
                       </FormControl>
                       <Button
                         type="button"
