@@ -23,7 +23,7 @@ export class BridgeComparator {
 
   start() {
     setInterval(this.runCompare, this.intervalMs)
-    this.logger.info('Compare schedulded', {
+    this.logger.info('Compare scheduled', {
       intervalMs: this.intervalMs,
     })
     this.runCompare()
