@@ -196,7 +196,7 @@ export function StageSection({
                   {missingForLabel.length === 0 ? (
                     <div className="flex flex-col gap-3 md:flex-row">
                       <div className="flex items-center gap-2 font-bold">
-                        <SatisfiedIcon className="size-4 shrink-0 fill-positive" />
+                        <SatisfiedIcon className="-mt-0.5 size-4 shrink-0 fill-positive" />
                         <span className="text-label-value-16 md:text-label-value-18">
                           {reqTextSatisfied(satisfiedForLabel.length)}
                         </span>
@@ -212,7 +212,7 @@ export function StageSection({
                     </div>
                   ) : (
                     <div className="flex items-center gap-2 font-bold">
-                      <MissingIcon className="size-4 shrink-0 fill-negative" />
+                      <MissingIcon className="-mt-0.5 size-4 shrink-0 fill-negative" />
                       <span className="text-label-value-16 md:text-label-value-18">
                         {reqTextMissing(missingForLabel.length)}
                       </span>
@@ -274,7 +274,7 @@ export function StageSection({
                   <ul className="space-y-1 md:space-y-2">
                     {satisfiedRequirements.map((req, i) => (
                       <li key={i} className="flex">
-                        <SatisfiedIcon className="relative top-0.5 size-4 shrink-0 fill-positive" />
+                        <SatisfiedIcon className="relative top-0.5 size-4 shrink-0 fill-positive md:top-[3px]" />
                         <Markdown className="ml-2 font-medium text-paragraph-14 md:text-paragraph-16">
                           {req.description}
                         </Markdown>
@@ -282,7 +282,7 @@ export function StageSection({
                     ))}
                     {underReviewRequirements.map((req, i) => (
                       <li key={i} className="flex">
-                        <UnderReviewIcon className="relative top-0.5 size-4 shrink-0" />
+                        <UnderReviewIcon className="relative top-0.5 size-4 shrink-0 md:top-[3px]" />
                         <Markdown className="ml-2 font-medium text-paragraph-14 md:text-paragraph-16">
                           {req.description}
                         </Markdown>
@@ -290,7 +290,7 @@ export function StageSection({
                     ))}
                     {missingRequirements.map((req, i) => (
                       <li key={i} className="flex">
-                        <MissingIcon className="relative top-0.5 size-4 shrink-0 fill-negative" />
+                        <MissingIcon className="relative top-0.5 size-4 shrink-0 fill-negative md:top-[3px]" />
                         <Markdown className="ml-2 font-medium text-paragraph-14 md:text-paragraph-16">
                           {req.description}
                         </Markdown>
