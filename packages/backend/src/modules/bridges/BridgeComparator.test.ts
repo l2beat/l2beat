@@ -73,6 +73,7 @@ describe(BridgeComparator.name, () => {
             // returns unknown in first run, which will get skipped
             // in next run will be reported as missing
             .resolvesToOnce([known[0], unknown[0]])
+            // this unknown will be only skipped because we run two times
             .resolvesToOnce([unknown[1]]),
         },
         {
