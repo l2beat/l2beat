@@ -95,8 +95,7 @@ export class BridgeComparator {
       })
 
       this.logger.info('Compare finished', {
-        plugins: this.plugins.length,
-        items: items.length,
+        plugins: items.map((i) => i.plugin.name),
       })
     }
   }

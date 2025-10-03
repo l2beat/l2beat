@@ -10,8 +10,8 @@ const cmd = command({
     plugins: positional({ type: optional(string), displayName: 'plugins' }),
   },
   handler: async (args) => {
-    const logger = Logger.DEBUG
-    let comparePlugins = createBridgeComparePlugins(logger)
+    const logger = Logger.INFO
+    let comparePlugins = createBridgeComparePlugins()
 
     if (args.plugins) {
       const configuredPlugins = args.plugins.split(',')
