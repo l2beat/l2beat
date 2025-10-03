@@ -87,7 +87,7 @@ export function NewDeployedTokenForm() {
       form.clearErrors('address')
       form.clearErrors('chain')
     }
-  }, [deployedTokenExists, deployedTokenExistsLoading])
+  }, [deployedTokenExists, deployedTokenExistsLoading, form])
 
   function onSubmit(values: v.infer<typeof formSchema>) {
     planDeployedToken({

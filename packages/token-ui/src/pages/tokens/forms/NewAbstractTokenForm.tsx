@@ -91,13 +91,20 @@ export function NewAbstractTokenForm() {
     if (coin === null) {
       form.setError('coingeckoId', { message: 'Coin not found' })
     }
-  }, [coin])
+  }, [
+    coin,
+    form.clearErrors,
+    form.setValue,
+    form.setError,
+    isLoading,
+    coingeckoId,
+  ])
 
   useEffect(() => {
     if (id !== form.getValues().id) {
       form.setValue('id', id)
     }
-  }, [id])
+  }, [id, form.setValue, form.getValues])
 
   function onSubmit(values: v.infer<typeof formSchema>) {
     planAbstractToken({
