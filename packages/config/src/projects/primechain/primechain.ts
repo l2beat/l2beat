@@ -6,7 +6,7 @@ export const primechain: ScalingProject = upcomingL3({
   id: 'primechain',
   capability: 'universal',
   addedAt: UnixTime(1755155703),
-  hostChain: ProjectId('arbitrum'),
+  hostChain: ProjectId('b3'),
   display: {
     name: 'Prime Chain',
     slug: 'primechain',
@@ -24,9 +24,6 @@ export const primechain: ScalingProject = upcomingL3({
         'https://x.com/EchelonFND',
       ],
     },
-  },
-  ecosystemInfo: {
-    id: ProjectId('arbitrum-orbit'),
   },
   proofSystem: {
     type: 'Optimistic',
