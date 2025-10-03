@@ -82,6 +82,7 @@ export class BridgeComparator {
 
     for (const [plugin, { items, type }] of Object.entries(this.pluginData)) {
       if (items.length === 0) return
+      if (items.length === 0) continue
 
       const records =
         type === 'message'
