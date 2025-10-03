@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x80a415720363347ec47fe7169a087f8ad6271a2b
+Generated with discovered.json: 0x5884fe1c8f8b40c0916ecfbe543edf1bad96e50d
 
-# Diff at Fri, 03 Oct 2025 08:40:51 GMT:
+# Diff at Fri, 03 Oct 2025 09:00:35 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@e647409961cd173771dcfcaeb808991c99e73911 block: 1757661344
-- current timestamp: 1759480765
+- current timestamp: 1759481968
 
 ## Description
 
@@ -20,21 +20,6 @@ Member removed from multisig.
       values.multisigThreshold:
 -        "4 of 11 (36%)"
 +        "4 of 10 (40%)"
-    }
-```
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1757661344 (main branch discovery), not current.
-
-```diff
-    contract SystemConfig (eth:0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca) {
-    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
-      values.opStackDA.isUsingEigenDA:
--        "v3"
-+        true
     }
 ```
 
