@@ -18,6 +18,7 @@ const fontSize = [
   'subtitle-12',
   'subtitle-11',
   'subtitle-10',
+  'label-value-24',
   'label-value-20',
   'label-value-18',
   'label-value-16',

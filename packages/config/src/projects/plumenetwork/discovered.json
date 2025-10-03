@@ -1,6 +1,6 @@
 {
   "name": "plumenetwork",
-  "timestamp": 1757943756,
+  "timestamp": 1759480939,
   "configHash": "0xe33cabedac4841297addb076ca3e45dbaf78009c728ad35d1895258840b283e3",
   "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
@@ -177,7 +177,7 @@
           "eth:0xf576102530749344D2f4C04D15C2B8609c7897ea"
         ],
         "allowedOutboxList": ["eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71"],
-        "delayedMessageCount": 1270,
+        "delayedMessageCount": 1372,
         "inboxHistory": [
           "eth:0x943fc691242291B74B105e8D19bd9E5DC2fcBa1D",
           "eth:0xf576102530749344D2f4C04D15C2B8609c7897ea"
@@ -187,8 +187,8 @@
         "outboxHistory": ["eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71"],
         "rollup": "eth:0x35c60Cc77b0A8bf6F938B11bd3E9D319a876c2aC",
         "sequencerInbox": "eth:0x85eC1b9138a8b9659A51e2b51bb0861901040b59",
-        "sequencerMessageCount": 16238,
-        "sequencerReportedSubMessageCount": 28217264
+        "sequencerMessageCount": 18778,
+        "sequencerReportedSubMessageCount": 31554700
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -260,13 +260,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 395,
+        "firstUnresolvedNode": 430,
         "inbox": "eth:0x943fc691242291B74B105e8D19bd9E5DC2fcBa1D",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 22739185,
-        "latestConfirmed": 394,
-        "latestNodeCreated": 405,
+        "latestConfirmed": 429,
+        "latestNodeCreated": 440,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71",
@@ -507,7 +507,6 @@
         "$members": [
           "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
-          "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
@@ -521,8 +520,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 166,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 172,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -547,11 +546,6 @@
           "role": ".batchPosters"
         }
       ]
-    },
-    {
-      "address": "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "OneStepProver0",
@@ -720,7 +714,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 16238,
+        "batchCount": 18778,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x17F187D978664C96ffD655996a45e085c403AD8b",
@@ -761,7 +755,7 @@
         "rollup": "eth:0x35c60Cc77b0A8bf6F938B11bd3E9D319a876c2aC",
         "sequencerVersion": "0x63",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1270,
+        "totalDelayedMessagesRead": 1372,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1957,6 +1951,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23368847 },
-  "permissionsConfigHash": "0x26d55ff2d9260ad715612f154b7f1badc8cb459b22186448178effbf6bea903e"
+  "usedBlockNumbers": { "ethereum": 23496129 },
+  "permissionsConfigHash": "0x4ab352e7abe29adbe76c593f42297ce62193131e85d11d5cb8fb94826e758d39"
 }

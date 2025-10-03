@@ -68,6 +68,11 @@ function getPastUpgradesStats(
     intervals.push(prevUpgrade.timestamp - currentUpgrade.timestamp)
   }
 
+  // we want to add the interval from the last upgrade to now
+  if (pastUpgrades.length > 1) {
+    intervals.push(UnixTime.now() - lastUpgrade.timestamp)
+  }
+
   return {
     count: pastUpgrades.length - 1,
     avgInterval: intervals.length > 0 ? mean(intervals) : null,

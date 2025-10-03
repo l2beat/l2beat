@@ -260,7 +260,7 @@ export const starknet: ScalingProject = {
     },
     exitWindow: RISK_VIEW.EXIT_WINDOW_STARKNET(minNonScDelay),
     sequencerFailure: RISK_VIEW.SEQUENCER_CAN_SKIP('L1'),
-    proposerFailure: RISK_VIEW.PROPOSER_WHITELIST_SECURITY_COUNCIL,
+    proposerFailure: RISK_VIEW.PROPOSER_WHITELIST_SECURITY_COUNCIL(),
   },
   stage: getStage(
     {

@@ -255,6 +255,8 @@
   --text-subtitle-10--line-height: 115%;
   --text-subtitle-10--font-weight: 600;
 
+  --text-label-value-24: 24px;
+  --text-label-value-24--line-height: 100%;
   --text-label-value-20: 20px;
   --text-label-value-20--line-height: 100%;
   --text-label-value-18: 18px;

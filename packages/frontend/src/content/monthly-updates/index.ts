@@ -22,6 +22,7 @@ export type EcosystemUpdate = v.infer<typeof ecosystemUpdate>
 const dataAvailabilityUpdate = v.object({
   type: v.literal('data-availability'),
   daLayerId: v.string(),
+  name: v.string().optional(),
   newProjectsIds: v.array(v.string()).optional(),
   news: v.array(news).check((v) => v.length > 0),
 })
