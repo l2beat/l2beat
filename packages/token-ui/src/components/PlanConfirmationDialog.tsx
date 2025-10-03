@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { type Command, type Plan, tokenService } from '~/mock/MockTokenService'
 import { assertUnreachable } from '~/utils/assertUnreachable'
@@ -16,17 +17,53 @@ import { Tooltip, TooltipContent, TooltipTrigger } from './core/Tooltip'
 export function PlanConfirmationDialog({
   plan,
   setPlan,
+  onSuccess,
 }: {
   plan: Plan | undefined
   setPlan: (plan: Plan | undefined) => void
+  onSuccess?: () => void
 }) {
   const queryClient = useQueryClient()
+
   const { mutate: executePlan } = useMutation({
     mutationFn: async (plan: Plan) => tokenService.execute(plan),
     onSuccess: () => {
-      toast.success('Plan executed successfully')
+      onSuccess?.()
+      if (!plan) return
+      switch (plan.intent.type) {
+        case 'AddAbstractTokenIntent':
+          toast.success(
+            <span>
+              Token added successfully.{' '}
+              <Link
+                to={`/tokens/${plan.intent.abstractToken.id}`}
+                className="underline"
+              >
+                View token
+              </Link>
+            </span>,
+          )
+          queryClient.invalidateQueries({ queryKey: ['abstractTokens'] })
+          break
+        case 'AddDeployedTokenIntent':
+          toast.success(
+            <span>
+              Token added successfully.{' '}
+              <Link
+                to={`/tokens/${plan.intent.deployedToken.id}`}
+                className="underline"
+              >
+                View token
+              </Link>
+            </span>,
+          )
+          queryClient.invalidateQueries({ queryKey: ['abstractTokens'] })
+          break
+        default:
+          assertUnreachable(plan.intent)
+      }
+
       setPlan(undefined)
-      queryClient.invalidateQueries({ queryKey: ['abstractTokens'] })
     },
     onError: () => {
       toast.error('Plan execution failed')

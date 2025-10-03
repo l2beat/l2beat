@@ -71,7 +71,11 @@ export function NewDeployedTokenForm() {
 
   return (
     <>
-      <PlanConfirmationDialog plan={plan} setPlan={setPlan} />
+      <PlanConfirmationDialog
+        plan={plan}
+        setPlan={setPlan}
+        onSuccess={form.reset}
+      />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <fieldset disabled={isPlanPending} className="space-y-8">
