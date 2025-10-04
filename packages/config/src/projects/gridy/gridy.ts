@@ -25,7 +25,7 @@ export const gridy: ScalingProject = underReviewL3({
       'Gridy is a lightning-fast onchain treasure hunt forged on a Layer 3 on SN Stack, turning every click into a dig site where diamonds and jackpot gems fire real-time autonomous transactions toward a massive USDC prize pool.',
     purposes: ['Gaming'],
     links: {
-      websites: ['https://gridy.karnot.xyz/'],
+      websites: ['https://karnot.xyz/'],
       socialMedia: ['https://twitter.com/karnotxyz'],
     },
   },
