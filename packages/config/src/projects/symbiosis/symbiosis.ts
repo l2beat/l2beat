@@ -28,6 +28,8 @@ export const symbiosis: Bridge = {
         'https://twitter.com/symbiosis_fi',
       ],
       documentation: ['https://docs.symbiosis.finance'],
+      bridges: ['https://app.symbiosis.finance/bridge'],
+      explorers: ['https://explorer.symbiosis.finance/transactions'],
     },
   },
   riskView: {
