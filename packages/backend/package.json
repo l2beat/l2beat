@@ -36,7 +36,8 @@
     "anomalies": "ts-node ./scripts/anomalies/anomalies.ts",
     "bridges:cli": "ts-node ./scripts/bridges/cli.ts",
     "bridges:cli-stats": "ts-node ./scripts/bridges/cli-stats.ts",
-    "bridges:example": "ts-node ./src/modules/bridges/examples/script.ts"
+    "bridges:example": "ts-node ./src/modules/bridges/examples/script.ts",
+    "bridges:compare": "ts-node ./src/modules/bridges/compare/script.ts"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.13.1",

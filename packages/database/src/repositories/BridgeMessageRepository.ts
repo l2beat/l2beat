@@ -133,6 +133,31 @@ export class BridgeMessageRepository extends BaseRepository {
     }))
   }
 
+  async getExistingItems(
+    items: {
+      srcTxHash: string
+      dstTxHash: string
+    }[],
+  ): Promise<BridgeMessageRecord[]> {
+    if (items.length === 0) return []
+
+    let query = this.db.selectFrom('BridgeMessage').selectAll()
+
+    query = query.where((eb) => {
+      const conditions = items.map((item) => {
+        return eb.and([
+          eb(eb.fn('lower', ['srcTxHash']), '=', item.srcTxHash.toLowerCase()),
+          eb(eb.fn('lower', ['dstTxHash']), '=', item.dstTxHash.toLowerCase()),
+        ])
+      })
+
+      return eb.or(conditions)
+    })
+
+    const rows = await query.execute()
+    return rows.map(toRecord)
+  }
+
   async getDetailedStats(): Promise<BridgeMessageDetailedStatsRecord[]> {
     const chainStats = await this.db
       .selectFrom('BridgeMessage')
