@@ -116,11 +116,25 @@ describe(BridgeComparator.name, () => {
       expect(bridgeMessage.getExistingItems).toHaveBeenCalledTimes(2)
       expect(bridgeTransfer.getExistingItems).toHaveBeenCalledTimes(1)
 
-      expect(logger.warn).toHaveBeenOnlyCalledWith('Missing item detected', {
+      expect(logger.warn).toHaveBeenNthCalledWith(1, 'Missing item skipped', {
+        plugin: 'plugin1',
+        item: {
+          ...unknown[0],
+          isLatest: true,
+        },
+      })
+      expect(logger.warn).toHaveBeenNthCalledWith(2, 'Missing item detected', {
         plugin: 'plugin1',
         item: {
           ...unknown[0],
           isLatest: false,
+        },
+      })
+      expect(logger.warn).toHaveBeenNthCalledWith(3, 'Missing item skipped', {
+        plugin: 'plugin1',
+        item: {
+          ...unknown[1],
+          isLatest: true,
         },
       })
     })

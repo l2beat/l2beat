@@ -102,6 +102,7 @@ export class BridgeComparator {
         if (!record) {
           if (item.isLatest) {
             skipped.push(item)
+            this.logger.warn('Missing item skipped', { plugin, item })
             continue
           }
           missing++
