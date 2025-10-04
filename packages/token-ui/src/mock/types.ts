@@ -2,7 +2,7 @@ export type AbstractToken = {
   id: string
   issuer?: string
   symbol: string
-  category: 'btc' | 'ether' | 'stablecoins' | 'other'
+  category: 'btc' | 'ether' | 'stablecoin' | 'other'
   iconUrl?: string
   coingeckoId?: string
   coingeckoListingTimestamp?: Date
@@ -10,7 +10,7 @@ export type AbstractToken = {
 }
 
 export type DeployedToken = {
-  id: number
+  id: string
   chain: string
   address: string
   abstractTokenId?: string
@@ -21,8 +21,8 @@ export type DeployedToken = {
 }
 
 export type TokenConnection = {
-  tokenFromId: number
-  tokenToId: number
+  tokenFromId: string
+  tokenToId: string
   type: string
   params?: Record<string, unknown>
   comment?: string
