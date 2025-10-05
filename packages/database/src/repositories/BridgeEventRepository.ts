@@ -41,6 +41,7 @@ export function toRecord(row: Selectable<BridgeEvent>): BridgeEventRecord {
 
 export function toRow(record: BridgeEventRecord): Insertable<BridgeEvent> {
   return {
+    plugin: record.plugin,
     eventId: record.eventId,
     type: record.type,
     expiresAt: UnixTime.toDate(record.expiresAt),
