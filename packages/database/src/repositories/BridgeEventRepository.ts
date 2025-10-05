@@ -50,7 +50,7 @@ export function toRow(record: BridgeEventRecord): Insertable<BridgeEvent> {
     blockNumber: record.blockNumber,
     blockHash: record.blockHash,
     txHash: record.txHash,
-    txTo: record.txTo ?? undefined,
+    txTo: record.txTo ?? null,
     logIndex: record.logIndex,
     matched: record.matched,
     unsupported: record.unsupported,
