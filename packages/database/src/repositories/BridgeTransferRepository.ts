@@ -79,6 +79,7 @@ export function toRow(
   record: BridgeTransferRecord,
 ): Insertable<BridgeTransfer> {
   return {
+    plugin: record.plugin,
     messageId: record.messageId,
     type: record.type,
     duration: record.duration,

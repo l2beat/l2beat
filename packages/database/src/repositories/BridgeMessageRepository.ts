@@ -43,6 +43,7 @@ export function toRecord(row: Selectable<BridgeMessage>): BridgeMessageRecord {
 
 export function toRow(record: BridgeMessageRecord): Insertable<BridgeMessage> {
   return {
+    plugin: record.plugin,
     messageId: record.messageId,
     type: record.type,
     duration: record.duration,
