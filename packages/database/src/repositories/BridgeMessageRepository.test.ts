@@ -1,7 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
-import { BridgeMessageRepository } from './BridgeMessageRepository'
+import {
+  type BridgeMessageRecord,
+  BridgeMessageRepository,
+} from './BridgeMessageRepository'
 
 describeDatabase(BridgeMessageRepository.name, (db) => {
   const repository = db.bridgeMessage
@@ -9,8 +12,8 @@ describeDatabase(BridgeMessageRepository.name, (db) => {
   describe(BridgeMessageRepository.prototype.insertMany.name, () => {
     it('adds new rows', async () => {
       const records = [
-        bridgeMessage('plugin1', 'msg1', 'type1', UnixTime(100)),
-        bridgeMessage('plugin2', 'msg2', 'type2', UnixTime(200)),
+        bridgeMessage('plugin1', 'msg1', 'type1', UnixTime(100), 'a', 'b', 1),
+        bridgeMessage('plugin2', 'msg2', 'type2', UnixTime(200), 'b', 'a', 2),
       ]
 
       const inserted = await repository.insertMany(records)
@@ -166,7 +169,7 @@ function bridgeMessage(
   srcChain?: string,
   dstChain?: string,
   duration?: number,
-) {
+): BridgeMessageRecord {
   return {
     plugin,
     messageId,
