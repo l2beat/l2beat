@@ -3,10 +3,7 @@
   "fields": {
     "additionalZkLighter": {
       "description": "from constructor arguments (handler does not work), upgradable by the admin.",
-      "handler": {
-        "type": "hardcoded",
-        "value": "eth:0x05555f726ebC8737dc4E7F65B8d15708cC2785aa"
-      }
+      "handler": { "type": "storage", "slot": 7, "returnType": "address" }
     }
   }
 }

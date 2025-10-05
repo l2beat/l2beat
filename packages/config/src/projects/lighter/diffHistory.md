@@ -1,8 +1,8 @@
-Generated with discovered.json: 0x6e55f86f2d1eb84c058cc6d87d9ab26d6e6acf16
+Generated with discovered.json: 0x63047547b97a8f54b7a1328f689a6cd8e177506e
 
-# Diff at Fri, 03 Oct 2025 06:05:50 GMT:
+# Diff at Sun, 05 Oct 2025 18:39:04 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- author: Luca Donno (<donnoh99@gmail.com>)
 - current timestamp: 1759468227
 
 ## Description
@@ -13,13 +13,13 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract AdditionalZkLighter (eth:0x05555f726ebC8737dc4E7F65B8d15708cC2785aa)
+    contract ZkLighter (eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract ZkLighter (eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7)
+    contract AdditionalZkLighter (eth:0x4194D3847a0239d59a87bC82C1870CBE1FA99db1)
     +++ description: None
 ```
 
