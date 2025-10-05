@@ -131,13 +131,13 @@ export async function match(
         matchedIds.add(event.eventId)
         for (const item of result) {
           if (item.kind === 'BridgeMessage') {
-            allMessages.push(item)
+            allMessages.push({ ...item, plugin: plugin.name })
             matchedIds.add(item.dst.eventId)
             matchedIds.add(item.src.eventId)
             stats.messages++
             stats.matchedEvents += 2
           } else if (item.kind === 'BridgeTransfer') {
-            allTransfers.push(item)
+            allTransfers.push({ ...item, plugin: plugin.name })
             stats.transfers++
             stats.matchedEvents += item.events.length
             for (const transferEvent of item.events) {

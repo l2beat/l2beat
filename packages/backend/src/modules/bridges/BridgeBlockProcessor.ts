@@ -33,7 +33,7 @@ export class BridgeBlockProcessor implements BlockProcessor {
         try {
           const event = await plugin.capture?.(logToDecode)
           if (event) {
-            events.push(event)
+            events.push({ ...event, plugin: plugin.name })
             pluginEventCounts[plugin.name] =
               (pluginEventCounts[plugin.name] || 0) + 1
             break
