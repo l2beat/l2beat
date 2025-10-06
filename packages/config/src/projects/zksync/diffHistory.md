@@ -1,3 +1,58 @@
+Generated with discovered.json: 0x1b850221cce242205e8f243efe8abff0f698b6d1
+
+# Diff at Mon, 06 Oct 2025 09:52:07 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@af10d4e90bc0f1be21a0242f8327fccf9a01f37a block: 1751371847
+- current timestamp: 1759744264
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract UpgradeGatekeeper (eth:0x38A43F4330f24fe920F943409709fc9A6084C939) {
+    +++ description: None
+      values.versionId:
+-        11
++        12
+    }
+```
+
+```diff
+    contract Verifier (eth:0x5290E9582B4FB706EaDf87BB1c129e897e04d06D) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xcf125cd39e9e7620aea95320666f3e3c19a3ae1da200337d94d11de29e8d97af"
++        "0xd2a07a5a9b9bf3e2f936b5530eabc67694e9fa89a92407b692f35c2a46175f39"
+      values.$implementation:
+-        "eth:0x6e95812C432F293b8045811F4B1758285EBDB206"
++        "eth:0x57B09100e6160503aBDEBC76012b6c358eA4e462"
+      implementationNames.eth:0x6e95812C432F293b8045811F4B1758285EBDB206:
+-        "Verifier"
+      implementationNames.eth:0x57B09100e6160503aBDEBC76012b6c358eA4e462:
++        "Verifier"
+    }
+```
+
+```diff
+    contract ZkSync Multisig (eth:0xE24f4870Ab85DE8E356C5fC56138587206c70d99) {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x890Da36c3dD697CbB88E616668BEDaFA369f3793"
++        "eth:0xC9474de11503D63D892cEDD12d6B93f6A25a9cbF"
+    }
+```
+
+## Source code changes
+
+```diff
+.../zksync/{.flat@1751371847 => .flat}/Verifier/Verifier.sol        | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+```
+
 Generated with discovered.json: 0x0c31b750bd6ecdbdbb7b0740525594da5b1cbe80
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
