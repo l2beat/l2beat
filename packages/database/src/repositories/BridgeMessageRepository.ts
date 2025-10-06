@@ -28,12 +28,12 @@ export function toRecord(row: Selectable<BridgeMessage>): BridgeMessageRecord {
     timestamp: UnixTime.fromDate(row.timestamp),
     srcTime: row.srcTime !== null ? UnixTime.fromDate(row.srcTime) : undefined,
     srcChain: row.srcChain ?? undefined,
-    srcTxHash: row.srcTxHash ?? undefined,
+    srcTxHash: row.srcTxHash?.toLowerCase() ?? undefined,
     srcLogIndex: row.srcLogIndex ?? undefined,
     srcEventId: row.srcEventId ?? undefined,
     dstTime: row.dstTime !== null ? UnixTime.fromDate(row.dstTime) : undefined,
     dstChain: row.dstChain ?? undefined,
-    dstTxHash: row.dstTxHash ?? undefined,
+    dstTxHash: row.dstTxHash?.toLowerCase() ?? undefined,
     dstLogIndex: row.dstLogIndex ?? undefined,
     dstEventId: row.dstEventId ?? undefined,
   }
@@ -134,27 +134,18 @@ export class BridgeMessageRepository extends BaseRepository {
   }
 
   async getExistingItems(
-    items: {
-      srcTxHash: string
-      dstTxHash: string
-    }[],
+    items: { srcTxHash: string; dstTxHash: string }[],
   ): Promise<BridgeMessageRecord[]> {
     if (items.length === 0) return []
 
-    let query = this.db.selectFrom('BridgeMessage').selectAll()
-
-    query = query.where((eb) => {
-      const conditions = items.map((item) => {
-        return eb.and([
-          eb(eb.fn('lower', ['srcTxHash']), '=', item.srcTxHash.toLowerCase()),
-          eb(eb.fn('lower', ['dstTxHash']), '=', item.dstTxHash.toLowerCase()),
-        ])
-      })
-
-      return eb.or(conditions)
-    })
-
-    const rows = await query.execute()
+    const srcHashes = items.map((x) => x.srcTxHash.toLowerCase())
+    const dstHashes = items.map((x) => x.dstTxHash.toLowerCase())
+    const rows = await this.db
+      .selectFrom('BridgeMessage')
+      .selectAll()
+      .where('srcTxHash', 'in', srcHashes)
+      .where('dstTxHash', 'in', dstHashes)
+      .execute()
     return rows.map(toRecord)
   }
 
