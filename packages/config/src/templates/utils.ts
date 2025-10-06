@@ -9,16 +9,15 @@ import type {
   ReferenceLink,
 } from '../types'
 
-export function mergeBadges(
-  inherentBadges: Badge[],
-  definedBadges: Badge[],
-): Badge[] {
-  const all = definedBadges.concat(inherentBadges)
-  const allowDuplicates = all.filter(
-    (b) => b.type === 'Other' || b.type === 'VM',
-  ) // do not dedup badges of type 'Other' and 'VM' (multiVM)
-  const rest = all.filter((b) => b.type !== 'Other' && b.type !== 'VM')
-  return unionBy<Badge>(rest, (b) => b.type).concat(allowDuplicates)
+export function mergeBadges(inherentBadges: Badge[], definedBadges: Badge[]) {
+  const allBadges = definedBadges.concat(inherentBadges)
+  const duplicatesAllowed = ['Other', 'VM', 'DA']
+
+  const [allowMultiple, deduplicateByType] = partition(allBadges, (badge) =>
+    duplicatesAllowed.includes(badge.type),
+  )
+
+  return unionBy(deduplicateByType, (badge) => badge.type).concat(allowMultiple)
 }
 
 export function mergePermissions(
@@ -89,4 +88,22 @@ export function asArray<T>(value: T | T[] | undefined): T[] {
 
 export function emptyArrayToUndefined<T>(arr: T[]): T[] | undefined {
   return arr.length === 0 ? undefined : arr
+}
+
+function partition<T>(
+  array: T[],
+  predicate: (value: T) => boolean,
+): [T[], T[]] {
+  const truthy: T[] = []
+  const falsy: T[] = []
+
+  for (const item of array) {
+    if (predicate(item)) {
+      truthy.push(item)
+    } else {
+      falsy.push(item)
+    }
+  }
+
+  return [truthy, falsy]
 }
