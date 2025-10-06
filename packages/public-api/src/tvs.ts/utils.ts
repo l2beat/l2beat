@@ -1,6 +1,6 @@
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import range from 'lodash/range'
-import { rangeToDays, type TvsRange, type TvsResolution } from './types'
+import type { TvsRange, TvsResolution } from './types'
 
 export function getTimestampedValuesRange(
   range: TvsRange,
@@ -24,35 +24,9 @@ export function getTimestampedValuesRange(
   return [adjustedFrom, to]
 }
 
-export function getBucketValuesRange(
-  range: TvsRange,
-  resolution: TvsResolution,
-  opts?: {
-    offset?: UnixTime
-  },
-): [UnixTime | null, UnixTime] {
-  const days = rangeToDays(range)
-  const offset = opts?.offset ?? 0
-
-  const end = UnixTime.toStartOf(UnixTime.now() + offset, 'hour')
-  const start =
-    days !== null
-      ? UnixTime.toStartOf(
-          end - days * UnixTime.DAY,
-          resolution === 'daily'
-            ? 'day'
-            : resolution === 'sixHourly'
-              ? 'six hours'
-              : 'hour',
-        )
-      : null
-
-  return [start, end]
-}
-
 export function generateTimestamps(
   [from, to]: [UnixTime, UnixTime],
-  resolution: 'hourly' | 'sixHourly' | 'daily',
+  resolution: TvsResolution,
 ) {
   const adjustedFrom = UnixTime.toEndOf(
     from,
@@ -82,7 +56,30 @@ export function generateTimestamps(
   return generated
 }
 
-function divider(resolution: 'hourly' | 'sixHourly' | 'daily') {
+export function rangeToResolution(range: TvsRange): TvsResolution {
+  const days = rangeToDays(range)
+  if (days && days <= 7) return 'hourly'
+  if (days && days < 180) return 'sixHourly'
+  return 'daily'
+}
+
+function rangeToDays(range: TvsRange) {
+  if (range === 'max') return null
+  const count = Number.parseInt(range.substring(0, range.length - 1))
+  const unit = range.substring(range.length - 1)
+
+  if (unit === 'd') {
+    return count
+  }
+
+  if (unit === 'y') {
+    return count * 365
+  }
+
+  throw new Error('Invalid range')
+}
+
+function divider(resolution: TvsResolution) {
   switch (resolution) {
     case 'hourly':
       return UnixTime.HOUR
@@ -93,4 +90,30 @@ function divider(resolution: 'hourly' | 'sixHourly' | 'daily') {
     default:
       assertUnreachable(resolution)
   }
+}
+
+function getBucketValuesRange(
+  range: TvsRange,
+  resolution: TvsResolution,
+  opts?: {
+    offset?: UnixTime
+  },
+): [UnixTime | null, UnixTime] {
+  const days = rangeToDays(range)
+  const offset = opts?.offset ?? 0
+
+  const end = UnixTime.toStartOf(UnixTime.now() + offset, 'hour')
+  const start =
+    days !== null
+      ? UnixTime.toStartOf(
+          end - days * UnixTime.DAY,
+          resolution === 'daily'
+            ? 'day'
+            : resolution === 'sixHourly'
+              ? 'six hours'
+              : 'hour',
+        )
+      : null
+
+  return [start, end]
 }
