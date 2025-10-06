@@ -390,6 +390,8 @@ export interface ReasonForBeingInOther {
   label: string
   shortDescription: string
   description: string
+  /** A few words explaining why we added this reason for being other. It is showed in `Why is the project listed in others?` section */
+  explanation?: string
 }
 
 export type ProjectScalingStack =
