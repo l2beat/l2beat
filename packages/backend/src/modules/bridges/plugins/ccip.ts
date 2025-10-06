@@ -155,7 +155,13 @@ export class CCIPPlugIn implements BridgePlugin {
 
       if (!ccipSendRequested) return
       if (delivery.args.state !== 2) return
-      return [Result.Message('ccip.Message', [ccipSendRequested, delivery])]
+      return [
+        Result.Message('ccip.Message', {
+          app: 'unknown', // TODO: match transfer
+          srcEvent: ccipSendRequested,
+          dstEvent: delivery,
+        }),
+      ]
     }
   }
 }

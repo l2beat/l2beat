@@ -163,11 +163,12 @@ export class AllbridgePlugIn implements BridgePlugin {
       }
 
       return [
-        Result.Message('allbridge.Message.allbridgeswap', [
-          messageSent,
-          messageReceived,
-        ]),
-        Result.Transfer('allbridge.Transfer', {
+        Result.Message('allbridge.Message', {
+          app: 'allbridgeswap',
+          srcEvent: messageSent,
+          dstEvent: messageReceived,
+        }),
+        Result.Transfer('allbridgeswap.Transfer', {
           srcEvent: tokensSent,
           srcAmount: tokensSent.args.amount.toString(),
           dstEvent: delivery,

@@ -101,6 +101,12 @@ export class MayanSwiftPlugin implements BridgePlugin {
     })
     if (!orderCreated) return
     return [
+      // NOTE: This is a synthetic message. The real thing goes through wormhole and solana and we can't see it
+      Result.Message('mayan-swift.Message', {
+        app: 'mayan-swift',
+        srcEvent: orderCreated,
+        dstEvent: orderFulfilled,
+      }),
       // TODO: implement properly. Handle optional wormhole core settlement event
       Result.Transfer('mayan-swift.Transfer', {
         srcEvent: orderCreated,
