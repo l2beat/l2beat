@@ -250,6 +250,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
   const hasNoProofs = templateVars.reasonsForBeingOther?.some(
     (e) => e.label === REASON_FOR_BEING_OTHER.NO_PROOFS.label,
   )
+  const daBadge = templateVars.additionalBadges?.find((b) => b.type === 'DA')
 
   return {
     type: 'layer2',
@@ -262,9 +263,9 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         BADGES.Stack.ZKStack,
         BADGES.Infra.ElasticChain,
         BADGES.VM.EVM,
-        BADGES.DA.EthereumBlobs,
+        daBadge ?? BADGES.DA.EthereumBlobs,
       ],
-      templateVars.additionalBadges ?? [],
+      templateVars.additionalBadges?.filter((b) => b.id !== daBadge?.id) ?? [],
     ),
     display: {
       purposes: templateVars.overridingPurposes ?? [
