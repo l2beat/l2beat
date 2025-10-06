@@ -46,11 +46,15 @@ const formSchema = {
   comment: v.string().optional(),
 }
 
-export function NewAbstractTokenForm() {
+export function NewAbstractTokenForm({
+  defaultValues,
+}: {
+  defaultValues?: v.infer<typeof formSchema>
+}) {
   const { id, refresh } = useRandomId()
   const form = useForm<InferFormSchema<typeof formSchema>>({
     resolver: validateResolver(formSchema),
-    defaultValues: {
+    defaultValues: defaultValues ?? {
       id,
     },
   })
@@ -73,7 +77,6 @@ export function NewAbstractTokenForm() {
         abstractToken: token,
       }),
     onSuccess: (data) => {
-      console.log(data)
       setPlan(data)
     },
   })

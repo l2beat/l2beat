@@ -64,6 +64,25 @@ class MockTokenService {
     })
   }
 
+  getToken(id: string) {
+    const abstractToken = abstractTokens.find((t) => t.id === id)
+    if (abstractToken) {
+      return {
+        type: 'abstract' as const,
+        token: abstractToken,
+      }
+    }
+    const deployedToken = deployedTokens.find((t) => t.id === id)
+    if (deployedToken) {
+      return {
+        type: 'deployed' as const,
+        token: deployedToken,
+      }
+    }
+
+    return null
+  }
+
   getChains() {
     return simulateNetworkDelay(chains)
   }

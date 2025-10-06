@@ -1,8 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Badge } from '~/components/core/Badge'
+import { Button } from '~/components/core/Button'
 import {
   Card,
+  CardAction,
   CardContent,
   CardHeader,
   CardTitle,
@@ -118,6 +121,15 @@ export function MainPage() {
           <Card>
             <CardHeader>
               <CardTitle>Abstract Token</CardTitle>
+              {selectedAbstractToken && (
+                <CardAction>
+                  <Button asChild variant="outline">
+                    <Link to={`/tokens/${selectedAbstractToken.id}`}>
+                      Go to Token page
+                    </Link>
+                  </Button>
+                </CardAction>
+              )}
             </CardHeader>
             <CardContent>
               {selectedAbstractToken === undefined ? (
@@ -162,6 +174,15 @@ export function MainPage() {
           <Card>
             <CardHeader>
               <CardTitle>Deployed Token</CardTitle>
+              {selectedDeployedToken && (
+                <CardAction>
+                  <Button asChild variant="outline">
+                    <Link to={`/tokens/${selectedDeployedToken.id}`}>
+                      Go to Token page
+                    </Link>
+                  </Button>
+                </CardAction>
+              )}
             </CardHeader>
             <CardContent>
               {selectedDeployedToken === undefined ? (
