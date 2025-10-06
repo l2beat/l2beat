@@ -27,7 +27,6 @@ export function MainPage() {
   const [selectedDeployedToken, setSelectedDeployedToken] = useState<
     DeployedToken | undefined
   >(undefined)
-  console.log(data)
   return (
     <AppLayout>
       <div className="grid h-full grid-cols-2 gap-4">

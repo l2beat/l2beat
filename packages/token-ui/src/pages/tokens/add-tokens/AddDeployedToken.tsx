@@ -1,10 +1,11 @@
 import { skipToken, useMutation, useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
-import { type UseFormReturn, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import {
   DeployedTokenForm,
   DeployedTokenSchema,
+  setDeployedTokenExistsError,
 } from '~/components/forms/DeployedTokenForm'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { type Plan, tokenService } from '~/mock/MockTokenService'
@@ -90,15 +91,4 @@ export function AddDeployedToken() {
       </DeployedTokenForm>
     </>
   )
-}
-
-function setDeployedTokenExistsError(form: UseFormReturn<DeployedTokenSchema>) {
-  form.setError('address', {
-    type: 'custom',
-    message: 'Deployed token with given address and chain already exists',
-  })
-  form.setError('chain', {
-    type: 'custom',
-    message: 'Deployed token with given address and chain already exists',
-  })
 }

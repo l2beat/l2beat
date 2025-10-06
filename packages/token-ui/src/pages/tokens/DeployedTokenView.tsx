@@ -1,6 +1,6 @@
-import { useMutation } from '@tanstack/react-query'
+import { skipToken, useMutation, useQuery } from '@tanstack/react-query'
 import { TrashIcon } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import {
@@ -12,10 +12,12 @@ import {
 import {
   DeployedTokenForm,
   DeployedTokenSchema,
+  setDeployedTokenExistsError,
 } from '~/components/forms/DeployedTokenForm'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { type Plan, tokenService } from '~/mock/MockTokenService'
 import type { DeployedToken } from '~/mock/types'
+import { ethereumAddressCheck } from '~/utils/checks'
 import { toYYYYMMDD } from '~/utils/toYYYYMMDD'
 import { validateResolver } from '~/utils/validateResolver'
 
@@ -29,23 +31,91 @@ export function DeployedTokenView({ token }: { token: DeployedToken }) {
       deploymentTimestamp: toYYYYMMDD(token.deploymentTimestamp),
     },
   })
-  const { mutate: planDeleteDeployedToken, isPending } = useMutation({
-    mutationFn: () =>
-      tokenService.plan({
-        type: 'DeleteDeployedTokenIntent',
-        deployedTokenId: token.id,
-      }),
-    onSuccess: (data) => {
-      setPlan(data)
-    },
-  })
+
+  const { mutate: planDeleteDeployedToken, isPending: isPlanDeletePending } =
+    useMutation({
+      mutationFn: () =>
+        tokenService.plan({
+          type: 'DeleteDeployedTokenIntent',
+          deployedTokenId: token.id,
+        }),
+      onSuccess: (data) => {
+        setPlan(data)
+      },
+    })
+
+  const { mutate: planUpdateDeployedToken, isPending: isPlanUpdatePending } =
+    useMutation({
+      mutationFn: (token: DeployedToken) =>
+        tokenService.plan({
+          type: 'UpdateDeployedTokenIntent',
+          deployedToken: token,
+        }),
+      onSuccess: (data) => {
+        setPlan(data)
+      },
+    })
+
+  function onSubmit(values: DeployedTokenSchema) {
+    if (deployedTokenExistsLoading) return
+    if (deployedTokenExists) {
+      setDeployedTokenExistsError(form)
+      return
+    }
+    planUpdateDeployedToken({
+      ...values,
+      deploymentTimestamp: new Date(values.deploymentTimestamp),
+    })
+  }
+
+  const isPending = isPlanDeletePending || isPlanUpdatePending
+
+  const chain = form.watch('chain')
+  const address = form.watch('address')
+  const { data: deployedTokenExists, isLoading: deployedTokenExistsLoading } =
+    useQuery({
+      queryKey: ['deployedTokenExists', chain, address],
+      queryFn:
+        chain &&
+        address &&
+        (address !== form.formState.defaultValues?.address ||
+          chain !== form.formState.defaultValues?.chain) &&
+        ethereumAddressCheck(address) === true
+          ? () => tokenService.checkIfDeployedTokenExists(address, chain)
+          : skipToken,
+    })
+
+  useEffect(() => {
+    if (deployedTokenExistsLoading) return
+    if (address === token.address && chain === token.chain) {
+      form.setValue('address', token.address)
+      form.setValue('chain', token.chain)
+      return
+    }
+    if (deployedTokenExists) {
+      setDeployedTokenExistsError(form)
+    } else {
+      form.clearErrors('address')
+      form.clearErrors('chain')
+    }
+  }, [
+    deployedTokenExists,
+    deployedTokenExistsLoading,
+    form,
+    address,
+    chain,
+    token.address,
+    token.chain,
+  ])
 
   return (
     <>
       <PlanConfirmationDialog
         plan={plan}
         setPlan={setPlan}
-        onSuccess={form.reset}
+        onSuccess={() => {
+          form.reset(form.getValues())
+        }}
       />
       <div className="mx-auto flex max-w-2xl gap-2">
         <Card className="w-full">
@@ -57,15 +127,15 @@ export function DeployedTokenView({ token }: { token: DeployedToken }) {
           <CardContent>
             <DeployedTokenForm
               form={form}
-              onSubmit={() => {}}
+              onSubmit={onSubmit}
               isFormDisabled={isPending}
               deployedTokenCheck={{
-                exists: undefined,
-                loading: false,
+                exists: deployedTokenExists,
+                loading: deployedTokenExistsLoading,
               }}
             >
               <ButtonWithSpinner
-                isLoading={false}
+                isLoading={isPending}
                 disabled={Object.keys(form.formState.dirtyFields).length === 0}
                 className="w-full"
                 type="submit"

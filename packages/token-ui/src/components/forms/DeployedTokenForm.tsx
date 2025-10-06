@@ -41,6 +41,7 @@ import type { InferFormSchema } from '~/utils/types'
 
 export type DeployedTokenSchema = InferFormSchema<typeof DeployedTokenSchema>
 export const DeployedTokenSchema = {
+  id: v.string(),
   chain: v.string(),
   address: v.string().check(ethereumAddressCheck),
   decimals: v.number().check(minNumberCheck(1)),
@@ -82,6 +83,18 @@ export function DeployedTokenForm({
         onSubmit={form.handleSubmit((values) => onSubmit(sanitize(values)))}
       >
         <fieldset disabled={isFormDisabled} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="id"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>ID</FormLabel>
+                <FormControl>
+                  <Input {...field} disabled className="font-mono" />
+                </FormControl>
+              </FormItem>
+            )}
+          />
           <div className="grid grid-cols-3 items-start gap-2">
             <FormField
               control={form.control}
@@ -129,7 +142,9 @@ export function DeployedTokenForm({
                                 value={chain}
                                 key={chain}
                                 onSelect={() => {
-                                  form.setValue('chain', chain)
+                                  form.setValue('chain', chain, {
+                                    shouldDirty: true,
+                                  })
                                 }}
                               >
                                 {chain}
@@ -255,6 +270,7 @@ export function DeployedTokenForm({
                                   form.setValue(
                                     'abstractTokenId',
                                     abstractToken.id,
+                                    { shouldDirty: true },
                                   )
                                 }}
                               >
@@ -317,4 +333,17 @@ export function DeployedTokenForm({
       </form>
     </Form>
   )
+}
+
+export function setDeployedTokenExistsError(
+  form: UseFormReturn<DeployedTokenSchema>,
+) {
+  form.setError('address', {
+    type: 'custom',
+    message: 'Deployed token with given address and chain already exists',
+  })
+  form.setError('chain', {
+    type: 'custom',
+    message: 'Deployed token with given address and chain already exists',
+  })
 }

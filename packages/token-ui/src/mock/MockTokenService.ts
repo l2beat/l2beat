@@ -195,6 +195,7 @@ class MockTokenService {
           (t) => t.id === intent.deployedToken.id,
         )
         assert(before, 'Deployed token not found')
+
         commands = [
           {
             type: 'UpdateDeployedTokenCommand',

@@ -32,8 +32,8 @@ export function PlanConfirmationDialog({
   const { mutate: executePlan, isPending } = useMutation({
     mutationFn: async (plan: Plan) => tokenService.execute(plan),
     onSuccess: () => {
-      onSuccess?.()
       if (!plan) return
+      onSuccess?.()
       switch (plan.intent.type) {
         case 'AddAbstractTokenIntent':
           toast.success(
@@ -66,20 +66,32 @@ export function PlanConfirmationDialog({
         case 'DeleteAbstractTokenIntent':
           toast.success('Abstract token deleted successfully')
           queryClient.invalidateQueries({ queryKey: ['abstractTokens'] })
+          queryClient.invalidateQueries({
+            queryKey: ['token', plan.intent.abstractTokenId],
+          })
           navigate('/')
           break
         case 'DeleteDeployedTokenIntent':
           toast.success('Deployed token deleted successfully')
           queryClient.invalidateQueries({ queryKey: ['abstractTokens'] })
+          queryClient.invalidateQueries({
+            queryKey: ['token', plan.intent.deployedTokenId],
+          })
           navigate('/')
           break
         case 'UpdateAbstractTokenIntent':
           toast.success('Abstract token updated successfully')
           queryClient.invalidateQueries({ queryKey: ['abstractTokens'] })
+          queryClient.invalidateQueries({
+            queryKey: ['token', plan.intent.abstractToken.id],
+          })
           break
         case 'UpdateDeployedTokenIntent':
           toast.success('Deployed token updated successfully')
           queryClient.invalidateQueries({ queryKey: ['abstractTokens'] })
+          queryClient.invalidateQueries({
+            queryKey: ['token', plan.intent.deployedToken.id],
+          })
           break
         default:
           assertUnreachable(plan.intent)
@@ -105,8 +117,8 @@ export function PlanConfirmationDialog({
             <div>
               This plan assumes the following actions will be taken:
               <ul className="list-inside list-decimal pl-4">
-                {plan?.commands.map((command) => (
-                  <CommandItem key={command.type} command={command} />
+                {plan?.commands.map((command, index) => (
+                  <CommandItem key={index} command={command} />
                 ))}
               </ul>
             </div>

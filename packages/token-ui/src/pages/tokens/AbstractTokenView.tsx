@@ -110,7 +110,10 @@ export function AbstractTokenView({ token }: { token: AbstractToken }) {
       <PlanConfirmationDialog
         plan={plan}
         setPlan={setPlan}
-        onSuccess={form.reset}
+        onSuccess={() => {
+          const values = form.getValues()
+          form.reset(values)
+        }}
       />
       <div className="mx-auto flex max-w-2xl gap-2">
         <Card>
