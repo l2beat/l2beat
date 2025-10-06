@@ -1,7 +1,7 @@
 import type { RouteObject } from 'react-router-dom'
 import { MainPage } from './pages/MainPage'
 import { NotFoundPage } from './pages/NotFoundPage'
-import { AddTokensPage } from './pages/tokens/AddTokensPage'
+import { AddTokensPage } from './pages/tokens/add-tokens/AddTokensPage'
 import { TokensPage } from './pages/tokens/TokensPage'
 
 export const routes: RouteObject[] = [

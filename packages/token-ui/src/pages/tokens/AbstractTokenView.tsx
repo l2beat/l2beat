@@ -1,0 +1,116 @@
+import { skipToken, useQuery } from '@tanstack/react-query'
+import { TrashIcon } from 'lucide-react'
+import { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import { coingecko } from '~/api/coingecko'
+import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
+import { Button } from '~/components/core/Button'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '~/components/core/Card'
+import {
+  AbstractTokenForm,
+  AbstractTokenSchema,
+} from '~/components/forms/AbstractTokenForm'
+import { useDebouncedValue } from '~/hooks/useDebouncedValue'
+import type { AbstractToken } from '~/mock/types'
+import { toYYYYMMDD } from '~/utils/toYYYYMMDD'
+import { validateResolver } from '~/utils/validateResolver'
+
+export function AbstractTokenView({ token }: { token: AbstractToken }) {
+  const form = useForm<AbstractTokenSchema>({
+    resolver: validateResolver(AbstractTokenSchema),
+    defaultValues: {
+      ...token,
+      coingeckoListingTimestamp: token.coingeckoListingTimestamp
+        ? toYYYYMMDD(token.coingeckoListingTimestamp)
+        : undefined,
+    },
+  })
+
+  const coingeckoId = form.watch('coingeckoId')
+  const debouncedCoingeckoId = useDebouncedValue(form.watch('coingeckoId'), 500)
+  const { data: coin, isLoading } = useQuery({
+    queryKey: ['coingecko', 'coin', debouncedCoingeckoId],
+    queryFn:
+      debouncedCoingeckoId && token.coingeckoId !== debouncedCoingeckoId
+        ? () => coingecko.getCoinById(debouncedCoingeckoId)
+        : skipToken,
+    retry: false,
+  })
+
+  const showCoingeckoLoading = isLoading || coingeckoId !== debouncedCoingeckoId
+
+  useEffect(() => {
+    if (isLoading) return
+    if (!debouncedCoingeckoId) return
+    if (token.coingeckoId === debouncedCoingeckoId) {
+      form.setValue('iconUrl', token.iconUrl ?? '')
+      return
+    }
+
+    if (coin) {
+      form.clearErrors('coingeckoId')
+      form.setValue('iconUrl', coin.image.large)
+    }
+    if (!coin) {
+      form.setValue('iconUrl', '')
+    }
+    if (coin === null) {
+      form.setError('coingeckoId', {
+        message: 'Coin not found',
+        type: 'validate',
+      })
+    }
+  }, [
+    coin,
+    form.clearErrors,
+    form.setValue,
+    form.setError,
+    isLoading,
+    debouncedCoingeckoId,
+    token.coingeckoId,
+    token.iconUrl,
+  ])
+
+  return (
+    <div className="mx-auto flex max-w-2xl gap-2">
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            Abstract Token
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <AbstractTokenForm
+            form={form}
+            onSubmit={() => {}}
+            isFormDisabled={false}
+            coingeckoFields={{
+              isLoading: showCoingeckoLoading,
+              success: !!coin,
+            }}
+          >
+            <ButtonWithSpinner
+              isLoading={false}
+              disabled={
+                Object.keys(form.formState.dirtyFields).length === 0 ||
+                showCoingeckoLoading
+              }
+              className="w-full"
+              type="submit"
+            >
+              Update
+            </ButtonWithSpinner>
+          </AbstractTokenForm>
+        </CardContent>
+      </Card>
+      <Button variant="destructive" className="mt-2">
+        <TrashIcon />
+      </Button>
+    </div>
+  )
+}
