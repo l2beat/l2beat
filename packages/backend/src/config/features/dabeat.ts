@@ -16,11 +16,6 @@ export async function getDaBeatConfig(
     .filter((x) => x !== undefined)
     .filter((x, i, a) => a.indexOf(x) === i) // unique
 
-  const types = projects
-    .map((x) => x.daLayer.economicSecurity?.name)
-    .filter((x) => x !== undefined)
-    .filter((x, i, a) => a.indexOf(x) === i) // unique
-
   const projectsForDaBeatStats = projects
     .filter((x) => x.daLayer.economicSecurity)
     .map((x) => x.id)
@@ -28,18 +23,6 @@ export async function getDaBeatConfig(
   return {
     projectsForDaBeatStats,
     coingeckoIds,
-    types,
-    quicknodeApiUrl: env.string([
-      'QUICKNODE_API_URL_FOR_DA_BEAT',
-      'QUICKNODE_API_URL',
-    ]),
-    quicknodeCallsPerMinute: env.integer(
-      [
-        'QUICKNODE_API_CALLS_PER_MINUTE_FOR_DA_BEAT',
-        'QUICKNODE_API_CALLS_PER_MINUTE',
-      ],
-      600,
-    ),
     celestiaApiUrl: env.string([
       'CELESTIA_API_URL_FOR_DA_BEAT',
       'CELESTIA_API_URL',

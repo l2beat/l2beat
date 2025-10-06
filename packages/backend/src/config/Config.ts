@@ -223,10 +223,6 @@ export interface DaBeatConfig {
   readonly projectsForDaBeatStats: ProjectId[]
   /** Coingecko ids of tokens for economic security */
   readonly coingeckoIds: string[]
-  /** Names of the economic security types */
-  readonly types: string[]
-  readonly quicknodeApiUrl: string
-  readonly quicknodeCallsPerMinute: number
   readonly celestiaApiUrl: string
   readonly celestiaCallsPerMinute: number
   readonly nearRpcUrl: string
