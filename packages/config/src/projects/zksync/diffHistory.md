@@ -1,16 +1,26 @@
-Generated with discovered.json: 0x1b850221cce242205e8f243efe8abff0f698b6d1
+Generated with discovered.json: 0x9a8fb769f5cf9b0fee62d9a6191c69db9d3703f6
 
-# Diff at Mon, 06 Oct 2025 09:52:07 GMT:
+# Diff at Mon, 06 Oct 2025 13:59:28 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - comparing to: main@af10d4e90bc0f1be21a0242f8327fccf9a01f37a block: 1751371847
-- current timestamp: 1759744264
+- current timestamp: 1759759105
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Updated Verifier (diff https://disco.l2beat.com/diff/eth:0x6e95812C432F293b8045811F4B1758285EBDB206/eth:0x57B09100e6160503aBDEBC76012b6c358eA4e462): changed verifier key tree root; two constants not used in verifier aligned with the values used in the rollup contract. See this tweet: https://x.com/zkSyncDevs/status/1968062194832249336.
+
+Also added a new validator and changed one multisig member.
 
 ## Watched changes
+
+```diff
+    contract Governance (eth:0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01) {
+    +++ description: None
+      values.validators.1:
++        "eth:0x0C6E6F8bb16846a0E9E866F3B9b8ec071f885Df5"
+    }
+```
 
 ```diff
     contract UpgradeGatekeeper (eth:0x38A43F4330f24fe920F943409709fc9A6084C939) {

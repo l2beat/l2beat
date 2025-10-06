@@ -1,6 +1,6 @@
 {
   "name": "zksync",
-  "timestamp": 1759744264,
+  "timestamp": 1759759105,
   "configHash": "0xaffa6238252a00c9bae2594462bdfbf4af0fbd9a8287642b89b3272a024e35e0",
   "entries": [
     {
@@ -46,6 +46,11 @@
     },
     {
       "address": "eth:0x050b37a12451F188c7bA53D48b8A1adE6D138E71",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x0C6E6F8bb16846a0E9E866F3B9b8ec071f885Df5",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -177,7 +182,10 @@
         "networkGovernor": "eth:0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
         "tokenGovernance": "eth:0x35cc31f63deef017c38d51B038891bAE7d614e86",
         "totalTokens": 184,
-        "validators": ["eth:0x01c3A1a6890A146aC187A019F9863B3Ab2BfF91e"]
+        "validators": [
+          "eth:0x01c3A1a6890A146aC187A019F9863B3Ab2BfF91e",
+          "eth:0x0C6E6F8bb16846a0E9E866F3B9b8ec071f885Df5"
+        ]
       },
       "implementationNames": {
         "eth:0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01": "Proxy",
@@ -505,7 +513,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
         "NAME": "Gnosis Safe",
-        "nonce": 123,
+        "nonce": 124,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -895,6 +903,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23517948 },
-  "permissionsConfigHash": "0xc2070cc56b80be4db4cc8ccfd0856e7d9db82b6e8205228b2d8f8c6a6f0860d9"
+  "usedBlockNumbers": { "ethereum": 23519177 },
+  "permissionsConfigHash": "0x914dcc6f9ca046db42a7fbcb5f2be329f2757b37f98b2c8fec6e0575a31fb63c"
 }
