@@ -39,15 +39,16 @@ export class DaBeatStatsProvider {
   async getEthereumStats(): Promise<DaBeatStats> {
     assert(this.beaconChainClient, 'Beacon chain client not found')
 
-    const { totalStake } = await this.beaconChainClient.getValidatorsInfo({
-      stateId: 'head',
-      status: ['active'],
-    })
+    const { totalStake, numberOfValidators } =
+      await this.beaconChainClient.getValidatorsInfo({
+        stateId: 'head',
+        status: ['active'],
+      })
 
     return {
       totalStake,
       thresholdStake: (totalStake * 200n) / 300n,
-      numberOfValidators: null,
+      numberOfValidators,
     }
   }
 
