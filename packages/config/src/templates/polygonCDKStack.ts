@@ -163,6 +163,10 @@ export function polygonCDKStack(
   const hasNoProofs = templateVars.reasonsForBeingOther?.some(
     (e) => e.label === REASON_FOR_BEING_OTHER.NO_PROOFS.label,
   )
+  const daBadge = templateVars.additionalBadges?.find((b) => b.type === 'DA')
+  const additionalBadges = templateVars.additionalBadges?.filter(
+    (b) => b.id !== daBadge?.id,
+  )
 
   return {
     type: 'layer2',
@@ -426,10 +430,10 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
       [
         BADGES.Stack.CDKErigon,
         BADGES.VM.EVM,
-        BADGES.DA.EthereumCalldata,
+        daBadge ?? BADGES.DA.EthereumCalldata,
         BADGES.Infra.Agglayer,
       ],
-      templateVars.additionalBadges ?? [],
+      additionalBadges ?? [],
     ),
     customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
