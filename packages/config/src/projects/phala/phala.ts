@@ -148,9 +148,12 @@ export const phala: ScalingProject = opStackL2({
         address: ChainSpecificAddress.address(
           discovery.getContract('OPSuccinctL2OutputOracle').address,
         ),
-        selector: '0x7a41a035', // non-optimistic mode (use this function instead of proposeL2Output for anomaly detection support)
+        selector: '0xa4ee9d7b', // non-optimistic mode
         functionSignature:
-          'function dgfProposeL2Output(bytes32 _configName, bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress)',
+          'function proposeL2Output(bytes32 _configName, bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress)',
+        topics: [
+          '0xa7aaf2512769da4e444e3de247be2564225c2e7a8f74cfe528e46e17d24868e2', // OutputProposed (for anomaly detection support)
+        ],
         sinceTimestamp: UnixTime(1757405447),
       },
     },
