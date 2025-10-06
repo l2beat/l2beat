@@ -85,16 +85,16 @@ export class BridgeComparator {
         .map((i) => ({ ...i.item })),
     )
 
-    const existing = new Set([
-      ...messages.map((m) => key(m)),
-      ...transfers.map((t) => key(t)),
-    ])
+    const existing = {
+      message: new Set(messages.map((m) => key(m))),
+      transfer: new Set(transfers.map((t) => key(t))),
+    }
 
     const skipped = []
     let missing = 0
 
     for (const { plugin, type, item } of this.items) {
-      if (!existing.has(key(item))) {
+      if (!existing[type].has(key(item))) {
         if (item.isLatest) {
           skipped.push({ plugin, type, item })
           this.logger.warn('Missing item skipped', { plugin, item })
@@ -106,8 +106,8 @@ export class BridgeComparator {
     }
 
     this.logger.info('Compare finished', {
-      items: this.items.length,
-      existing: existing.size,
+      externalItems: this.items.length,
+      databaseItems: existing.message.size + existing.transfer.size,
       missing,
       skipped: skipped.length,
     })
