@@ -148,6 +148,7 @@ function MessagesTable(props: {
           <th rowSpan={2}>Type</th>
           <th rowSpan={2}>Count</th>
           <th rowSpan={2}>Median Duration</th>
+          {props.type === 'messages' && <th rowSpan={2}>Known %</th>}
           {NETWORKS.map((n) => (
             <>
               <th colSpan={2}>
@@ -158,7 +159,6 @@ function MessagesTable(props: {
               </th>
             </>
           ))}
-          <th rowSpan={2}>Known %</th>
         </tr>
         <tr>
           {NETWORKS.map((_) => (
@@ -182,11 +182,16 @@ function MessagesTable(props: {
               <td data-order={t.medianDuration}>
                 {formatSeconds(t.medianDuration)}
               </td>
-              <td>
-                {t.count > 0
-                  ? ((t.knownAppCount / t.count) * 100).toFixed(1) + '%'
-                  : ''}
-              </td>
+              {props.type === 'messages' && (
+                <td>
+                  {t.count > 0
+                    ? (
+                        ((t as MessageStats).knownAppCount / t.count) *
+                        100
+                      ).toFixed(1) + '%'
+                    : ''}
+                </td>
+              )}
               {NETWORKS.map((n) => {
                 const srcDstCount = t.chains.find(
                   (tt) =>
@@ -303,16 +308,19 @@ function MainPageLayout(props: {
         <>
           <>
             <h3> Apps for message types </h3>
-            {props.messages.map((m) => (
-              <div key={m.type}>
-                <h4>{m.type}</h4>
-                <ul>
-                  {m.knownApps.map((app) => (
-                    <li key={app}>{app}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            {props.messages.map(
+              (m) =>
+                m.knownApps.length > 0 && (
+                  <div key={m.type}>
+                    <h4>{m.type}</h4>
+                    <ul>
+                      {m.knownApps.map((app) => (
+                        <li key={app}>{app}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ),
+            )}
           </>
           <ProcessorsStatusTable processors={props.status} />
         </>

@@ -134,7 +134,7 @@ export class BridgeMessageRepository extends BaseRepository {
               .when(
                 eb.and([
                   eb('app', '!=', ''),
-                  eb('app', '!=', 'undefined'),
+                  eb('app', '!=', 'unknown'),
                   eb('app', 'is not', null),
                 ]),
               )
@@ -144,7 +144,7 @@ export class BridgeMessageRepository extends BaseRepository {
           .as('knownAppCount'),
         sql<
           string[]
-        >`array_agg(distinct app) filter (where app != '' and app != 'undefined' and app is not null)`.as(
+        >`array_agg(distinct app) filter (where app != '' and app != 'unknown' and app is not null)`.as(
           'knownApps',
         ),
       ])
