@@ -36,6 +36,7 @@ import {
 } from '~/utils/checks'
 import { cn } from '~/utils/cn'
 import { getAbstractTokenDisplayId } from '~/utils/getAbstractTokenDisplayId'
+import { sanitize } from '~/utils/sanitize'
 import type { InferFormSchema } from '~/utils/types'
 
 export type DeployedTokenSchema = InferFormSchema<typeof DeployedTokenSchema>
@@ -77,7 +78,9 @@ export function DeployedTokenForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        onSubmit={form.handleSubmit((values) => onSubmit(sanitize(values)))}
+      >
         <fieldset disabled={isFormDisabled} className="space-y-8">
           <div className="grid grid-cols-3 items-start gap-2">
             <FormField

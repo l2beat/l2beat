@@ -47,16 +47,29 @@ export function AbstractTokenView({ token }: { token: AbstractToken }) {
 
   const showCoingeckoLoading = isLoading || coingeckoId !== debouncedCoingeckoId
 
-  const { mutate: planDeleteAbstractToken, isPending } = useMutation({
-    mutationFn: () =>
-      tokenService.plan({
-        type: 'DeleteAbstractTokenIntent',
-        abstractTokenId: token.id,
-      }),
-    onSuccess: (data) => {
-      setPlan(data)
-    },
-  })
+  const { mutate: planDeleteAbstractToken, isPending: isPlanDeletePending } =
+    useMutation({
+      mutationFn: () =>
+        tokenService.plan({
+          type: 'DeleteAbstractTokenIntent',
+          abstractTokenId: token.id,
+        }),
+      onSuccess: (data) => {
+        setPlan(data)
+      },
+    })
+
+  const { mutate: planUpdateAbstractToken, isPending: isPlanUpdatePending } =
+    useMutation({
+      mutationFn: (token: AbstractToken) =>
+        tokenService.plan({
+          type: 'UpdateAbstractTokenIntent',
+          abstractToken: token,
+        }),
+      onSuccess: (data) => {
+        setPlan(data)
+      },
+    })
 
   useEffect(() => {
     if (isLoading) return
@@ -90,6 +103,8 @@ export function AbstractTokenView({ token }: { token: AbstractToken }) {
     token.iconUrl,
   ])
 
+  const isPending = isPlanDeletePending || isPlanUpdatePending
+
   return (
     <>
       <PlanConfirmationDialog
@@ -107,7 +122,14 @@ export function AbstractTokenView({ token }: { token: AbstractToken }) {
           <CardContent>
             <AbstractTokenForm
               form={form}
-              onSubmit={() => {}}
+              onSubmit={(values) => {
+                planUpdateAbstractToken({
+                  ...values,
+                  coingeckoListingTimestamp: values.coingeckoListingTimestamp
+                    ? new Date(values.coingeckoListingTimestamp)
+                    : undefined,
+                })
+              }}
               isFormDisabled={isPending}
               coingeckoFields={{
                 isLoading: showCoingeckoLoading,

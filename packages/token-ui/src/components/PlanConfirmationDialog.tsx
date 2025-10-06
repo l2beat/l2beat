@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { type Command, type Plan, tokenService } from '~/mock/MockTokenService'
 import { assertUnreachable } from '~/utils/assertUnreachable'
+import { diff } from '~/utils/getDiff'
 import { ButtonWithSpinner } from './ButtonWithSpinner'
 import { Button } from './core/Button'
 import {
@@ -14,6 +15,7 @@ import {
   DialogTitle,
 } from './core/Dialog'
 import { Tooltip, TooltipContent, TooltipTrigger } from './core/Tooltip'
+import { Diff } from './Diff'
 
 export function PlanConfirmationDialog({
   plan,
@@ -68,8 +70,16 @@ export function PlanConfirmationDialog({
           break
         case 'DeleteDeployedTokenIntent':
           toast.success('Deployed token deleted successfully')
-          queryClient.invalidateQueries({ queryKey: ['deployedTokens'] })
+          queryClient.invalidateQueries({ queryKey: ['abstractTokens'] })
           navigate('/')
+          break
+        case 'UpdateAbstractTokenIntent':
+          toast.success('Abstract token updated successfully')
+          queryClient.invalidateQueries({ queryKey: ['abstractTokens'] })
+          break
+        case 'UpdateDeployedTokenIntent':
+          toast.success('Deployed token updated successfully')
+          queryClient.invalidateQueries({ queryKey: ['abstractTokens'] })
           break
         default:
           assertUnreachable(plan.intent)
@@ -174,6 +184,48 @@ function CommandItem({ command }: { command: Command }) {
             </TooltipContent>
           </Tooltip>{' '}
           will be deleted
+        </li>
+      )
+    case 'UpdateAbstractTokenCommand':
+      return (
+        <li>
+          <Tooltip>
+            <TooltipTrigger className="underline">
+              Abstract token
+            </TooltipTrigger>
+            <TooltipContent className="whitespace-pre">
+              {JSON.stringify(command.before, null, 2)}
+            </TooltipContent>
+          </Tooltip>{' '}
+          will be{' '}
+          <Tooltip>
+            <TooltipTrigger className="underline">updated</TooltipTrigger>
+            <TooltipContent className="p-0">
+              <Diff differences={diff(command.before, command.after)} />
+            </TooltipContent>
+          </Tooltip>
+        </li>
+      )
+    case 'UpdateDeployedTokenCommand':
+      // Would be nice to show the diff
+
+      return (
+        <li>
+          <Tooltip>
+            <TooltipTrigger className="underline">
+              Deployed token
+            </TooltipTrigger>
+            <TooltipContent className="whitespace-pre">
+              {JSON.stringify(command.before, null, 2)}
+            </TooltipContent>
+          </Tooltip>{' '}
+          will be{' '}
+          <Tooltip>
+            <TooltipTrigger className="underline">updated</TooltipTrigger>
+            <TooltipContent className="p-0">
+              <Diff differences={diff(command.before, command.after)} />
+            </TooltipContent>
+          </Tooltip>
         </li>
       )
     default:

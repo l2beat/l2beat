@@ -9,6 +9,8 @@ import type { AbstractToken, DeployedToken } from './types'
 type Intent =
   | AddAbstractTokenIntent
   | AddDeployedTokenIntent
+  | UpdateAbstractTokenIntent
+  | UpdateDeployedTokenIntent
   | DeleteAbstractTokenIntent
   | DeleteDeployedTokenIntent
 
@@ -19,6 +21,16 @@ interface AddAbstractTokenIntent {
 
 interface AddDeployedTokenIntent {
   type: 'AddDeployedTokenIntent'
+  deployedToken: DeployedToken
+}
+
+interface UpdateAbstractTokenIntent {
+  type: 'UpdateAbstractTokenIntent'
+  abstractToken: AbstractToken
+}
+
+interface UpdateDeployedTokenIntent {
+  type: 'UpdateDeployedTokenIntent'
   deployedToken: DeployedToken
 }
 
@@ -35,6 +47,8 @@ interface DeleteDeployedTokenIntent {
 export type Command =
   | AddAbstractTokenCommand
   | AddDeployedTokenCommand
+  | UpdateAbstractTokenCommand
+  | UpdateDeployedTokenCommand
   | DeleteAbstractTokenCommand
   | DeleteDeployedTokenCommand
 
@@ -46,6 +60,18 @@ interface AddAbstractTokenCommand {
 interface AddDeployedTokenCommand {
   type: 'AddDeployedTokenCommand'
   deployedToken: DeployedToken
+}
+
+interface UpdateAbstractTokenCommand {
+  type: 'UpdateAbstractTokenCommand'
+  before: AbstractToken
+  after: AbstractToken
+}
+
+interface UpdateDeployedTokenCommand {
+  type: 'UpdateDeployedTokenCommand'
+  before: DeployedToken
+  after: DeployedToken
 }
 
 interface DeleteAbstractTokenCommand {
@@ -148,16 +174,57 @@ class MockTokenService {
           },
         ]
         break
+
+      case 'UpdateAbstractTokenIntent': {
+        const before = this.abstractTokens.find(
+          (t) => t.id === intent.abstractToken.id,
+        )
+        assert(before, 'Abstract token not found')
+
+        commands = [
+          {
+            type: 'UpdateAbstractTokenCommand',
+            before: before,
+            after: intent.abstractToken,
+          },
+        ]
+        break
+      }
+      case 'UpdateDeployedTokenIntent': {
+        const before = this.deployedTokens.find(
+          (t) => t.id === intent.deployedToken.id,
+        )
+        assert(before, 'Deployed token not found')
+        commands = [
+          {
+            type: 'UpdateDeployedTokenCommand',
+            before: before,
+            after: intent.deployedToken,
+          },
+        ]
+        break
+      }
       case 'DeleteAbstractTokenIntent': {
         const abstractToken = this.abstractTokens.find(
           (t) => t.id === intent.abstractTokenId,
         )
         assert(abstractToken, 'Abstract token not found')
+        const deployedTokens = this.deployedTokens.filter(
+          (t) => t.abstractTokenId === intent.abstractTokenId,
+        )
         commands = [
           {
             type: 'DeleteAbstractTokenCommand',
             abstractToken,
           },
+          ...deployedTokens.map((t) => {
+            const { abstractTokenId: _, ...tokenWithoutAbstractTokenId } = t
+            return {
+              type: 'UpdateDeployedTokenCommand' as const,
+              before: t,
+              after: tokenWithoutAbstractTokenId,
+            }
+          }),
         ]
         break
       }
@@ -206,6 +273,16 @@ class MockTokenService {
       case 'DeleteDeployedTokenCommand':
         this.deployedTokens = this.deployedTokens.filter(
           (t) => t.id !== command.deployedToken.id,
+        )
+        break
+      case 'UpdateAbstractTokenCommand':
+        this.abstractTokens = this.abstractTokens.map((t) =>
+          t.id === command.before.id ? command.after : t,
+        )
+        break
+      case 'UpdateDeployedTokenCommand':
+        this.deployedTokens = this.deployedTokens.map((t) =>
+          t.id === command.before.id ? command.after : t,
         )
         break
       default:

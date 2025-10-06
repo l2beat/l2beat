@@ -138,30 +138,37 @@ export function MainPage() {
                 </div>
               ) : (
                 <div className="flex flex-col gap-2">
-                  <ItemWithLabel label="ID" value={selectedAbstractToken.id} />
-                  <ItemWithLabel
-                    label="Symbol"
-                    value={selectedAbstractToken.symbol}
-                  />
-                  <ItemWithLabel
-                    label="Issuer"
-                    value={selectedAbstractToken.issuer}
-                  />
-                  <ItemWithLabel
-                    label="Category"
-                    value={selectedAbstractToken.category}
-                  />
-                  <ItemWithLabel
-                    label="Icon URL"
-                    value={selectedAbstractToken.iconUrl}
-                  />
+                  <div className="grid grid-cols-3">
+                    <ItemWithLabel
+                      label="ID"
+                      value={selectedAbstractToken.id}
+                    />
+                    <ItemWithLabel
+                      label="Issuer"
+                      value={selectedAbstractToken.issuer}
+                    />
+                    <ItemWithLabel
+                      label="Symbol"
+                      value={selectedAbstractToken.symbol}
+                    />
+                  </div>
                   <ItemWithLabel
                     label="Coingecko ID"
                     value={selectedAbstractToken.coingeckoId}
                   />
+
+                  <ItemWithLabel
+                    label="Icon URL"
+                    value={selectedAbstractToken.iconUrl}
+                  />
+
                   <ItemWithLabel
                     label="Coingecko Listing Timestamp"
                     value={selectedAbstractToken.coingeckoListingTimestamp?.toISOString()}
+                  />
+                  <ItemWithLabel
+                    label="Category"
+                    value={selectedAbstractToken.category}
                   />
                   <ItemWithLabel
                     label="Comment"
@@ -191,17 +198,25 @@ export function MainPage() {
                 </div>
               ) : (
                 <div className="flex flex-col gap-2">
+                  <div className="grid grid-cols-3">
+                    <ItemWithLabel
+                      label="Chain"
+                      value={selectedDeployedToken.chain}
+                    />
+                    <ItemWithLabel
+                      className="col-span-2"
+                      label="Address"
+                      value={selectedDeployedToken.address}
+                    />
+                  </div>
                   <ItemWithLabel
                     label="Symbol"
                     value={selectedDeployedToken.symbol}
                   />
+
                   <ItemWithLabel
-                    label="Chain"
-                    value={selectedDeployedToken.chain}
-                  />
-                  <ItemWithLabel
-                    label="Address"
-                    value={selectedDeployedToken.address}
+                    label="Abstract Token ID"
+                    value={selectedDeployedToken.abstractTokenId}
                   />
                   <ItemWithLabel
                     label="Decimals"
@@ -228,12 +243,14 @@ export function MainPage() {
 function ItemWithLabel({
   label,
   value,
+  className,
 }: {
   label: string
   value: string | undefined
+  className?: string
 }) {
   return (
-    <div>
+    <div className={className}>
       <span className="font-medium text-muted-foreground text-sm">{label}</span>
       {value ? (
         <p>{value}</p>
