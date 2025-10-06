@@ -13,7 +13,6 @@ import {
   createBridgeEventType,
   createEventParser,
   defineNetworks,
-  findChain,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -120,28 +119,33 @@ export class CCIPPlugIn implements BridgePlugin {
   name = 'ccip'
 
   capture(input: LogToCapture) {
+    const network = CCIP_NETWORKS.find((x) => x.chain === input.ctx.chain)
+    if (!network) return
+
     const ccipSendRequested = parseCCIPSendRequested(input.log, null)
-    if (ccipSendRequested)
+    if (ccipSendRequested) {
+      const outboundLane = EthereumAddress(input.log.address)
       return CCIPSendRequested.create(input.ctx, {
         messageId: ccipSendRequested.message.messageId,
-        $dstChain: findChain(
-          CCIP_NETWORKS,
-          (x) => x.outboundLanes[input.ctx.chain],
-          EthereumAddress(input.log.address),
-        ),
+        $dstChain:
+          Object.entries(network.outboundLanes).find(
+            ([_, address]) => address === outboundLane,
+          )?.[0] ?? `Unknown_${outboundLane}`,
       })
+    }
 
     const executionStateChanged = parseExecutionStateChanged(input.log, null)
-    if (executionStateChanged)
+    if (executionStateChanged) {
+      const inboundLane = EthereumAddress(input.log.address)
       return ExecutionStateChanged.create(input.ctx, {
         messageId: executionStateChanged.messageId,
         state: executionStateChanged.state,
-        $srcChain: findChain(
-          CCIP_NETWORKS,
-          (x) => x.inboundLanes[input.ctx.chain],
-          EthereumAddress(input.log.address),
-        ),
+        $srcChain:
+          Object.entries(network.inboundLanes).find(
+            ([_, address]) => address === inboundLane,
+          )?.[0] ?? `Unknown_${inboundLane}`,
       })
+    }
   }
 
   // TODO: match transfer
