@@ -252,6 +252,8 @@
   "static/icons/popboss.png": "18e4a5a9a0399786cc3c8b4f1e526e0a",
   "static/icons/portal.png": "f60ad0744f08aa3de6d9b79a914b1210",
   "static/icons/powerloom.png": "f54fee9013f37db422dd9634cc396d75",
+  "static/meta-images/scaling/projects/primechain/opengraph-image.png": "bc4784b87349108df0b420c8a1981da2",
+  "static/icons/primechain.png": "efb96339ecd29da3cd9bfacb84db7e31",
   "static/icons/prom.png": "f351c0a79b19e708a6c225f3112b9aa5",
   "static/icons/publicgoodsnetwork.png": "1766bcb3f2e83f54c3bf000a843672f9",
   "static/icons/puffer.png": "a112db5e751ee0cc2c3e6e95106f9ad0",
@@ -395,7 +397,7 @@
   "static/images/architecture/linea.png": "7cdd792198dd41c959bdb0b1d8de7863",
   "static/images/architecture/loopring.png": "72b55764cd29bcdecd5b42214508231c",
   "static/images/architecture/mantle.png": "94f25149f92ede912dc03a3505012af5",
-  "static/images/architecture/metis.png": "0faf0633c2372200d5e1f548fe24b304",
+  "static/images/architecture/metis.png": "a883bc132c02a870a3ce408400e53f66",
   "static/images/architecture/morph.png": "3325c88c8850cedbfd1c2150ad3fd56d",
   "static/images/architecture/near.png": "6a02b6ef345ce62f36f9310b189f7d57",
   "static/images/architecture/omni.png": "49e4bb5ccb181440c22b848cf8db0062",
@@ -1474,6 +1476,7 @@
   "static/images/badges/Nodeinfra.png": "64d5cc0f3b6a5920bd900d65ec013df2",
   "static/partners/cartesi/background.png": "70d22fa399de64650d7cb325706a17c9",
   "static/partners/cartesi/logo.png": "dd299c34f84fdbce7d1290b4036e96ef",
+  "static/icons/gate-layer.png": "c685676c628a32d4dc0050108f0c7719",
   "static/meta-images/publications/governance-review-71.png": "fb9787223d1943e6761b5b63ba2d9a3f",
   "static/icons/adi.png": "ce3fdf2dd6b0826bab3420f61e65abc4",
   "static/meta-images/scaling/projects/lighter/opengraph-image.png": "f5b9d05fe294a44a115ba6e23c4bc74e",
@@ -1482,5 +1485,6 @@
   "static/icons/nodeinfra.png": "e305a60262e5d6d45b1403f284e0d558",
   "static/meta-images/publications/monthly-update-2025-09.png": "5d84ea9ea8eb53d50b87b9cef211e2be",
   "static/images/monthly-updates/cartesi.png": "255d34d28d891f11e372cb46952162a1",
-  "static/images/badges/EspressoHotShotLightClient.png": "d462fc8a4216e612bdea05b40ee11ad8"
+  "static/images/badges/EspressoHotShotLightClient.png": "d462fc8a4216e612bdea05b40ee11ad8",
+  "static/meta-images/scaling/projects/gate-layer/opengraph-image.png": "88b59637488f33560ee827346e894118"
 }

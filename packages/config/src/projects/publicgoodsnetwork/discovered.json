@@ -1,6 +1,6 @@
 {
   "name": "publicgoodsnetwork",
-  "timestamp": 1756214657,
+  "timestamp": 1759480970,
   "configHash": "0x4392f3ccbeef9a63f3508e51f350cae76b83b9b226acd7255c78b35b20f89124",
   "entries": [
     {
@@ -226,7 +226,6 @@
         "$members": [
           "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
-          "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
@@ -240,8 +239,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 159,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 172,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -251,11 +250,6 @@
     },
     {
       "address": "eth:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -961,6 +955,6 @@
     "opstack/OptimismPortal_PGN_withdraw": "0x679c99335c290bd13a96713a84fb56b973eb0939f0a19e98ad2ea7829a234742",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23225564 },
-  "permissionsConfigHash": "0x2515a6797dff52231f0798addd110756700798d5577cad5396689c31f99d8750"
+  "usedBlockNumbers": { "ethereum": 23496132 },
+  "permissionsConfigHash": "0x98b692e2d611fa12d728213d31596e36f6dc8cfb97159d5e4d5a58ab37732520"
 }

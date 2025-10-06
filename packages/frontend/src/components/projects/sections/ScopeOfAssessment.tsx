@@ -20,19 +20,20 @@ export function ScopeOfAssessment({
   return (
     <Collapsible
       className={cn('group rounded-lg border border-divider', className)}
-      defaultOpen
     >
       <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-3 font-bold md:px-6">
         Scope of assessment
-        <ChevronIcon className="group-data-[state=open]:-rotate-180 size-4 transition-transform duration-300" />
+        <ChevronIcon className="group-data-[state=open]:-rotate-180 size-4 fill-secondary transition-transform duration-300" />
       </CollapsibleTrigger>
-      <CollapsibleContent className="space-y-4 px-4 pb-6 md:px-6">
-        {scopeOfAssessment.inScope && (
-          <Section checked items={scopeOfAssessment.inScope} />
-        )}
-        {scopeOfAssessment.notInScope && (
-          <Section checked={false} items={scopeOfAssessment.notInScope} />
-        )}
+      <CollapsibleContent>
+        <div className="space-y-4 px-4 pb-6 md:px-6">
+          {scopeOfAssessment.inScope && (
+            <Section checked items={scopeOfAssessment.inScope} />
+          )}
+          {scopeOfAssessment.notInScope && (
+            <Section checked={false} items={scopeOfAssessment.notInScope} />
+          )}
+        </div>
       </CollapsibleContent>
     </Collapsible>
   )
