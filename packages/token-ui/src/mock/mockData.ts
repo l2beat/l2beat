@@ -1,3 +1,4 @@
+import tokens from './tokens.json'
 import type { AbstractToken, DeployedToken } from './types'
 
 export const chains: string[] = [
@@ -32,124 +33,60 @@ export const chains: string[] = [
   'facet',
 ]
 
-export const abstractTokens: AbstractToken[] = [
-  {
-    id: 'DF4O2N',
-    symbol: 'BTC',
-    category: 'btc',
-    iconUrl: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png',
-    coingeckoId: 'bitcoin',
-    coingeckoListingTimestamp: new Date('2013-04-28'),
-    comment: 'Bitcoin',
-  },
-  {
-    id: 'X2D7HO',
-    symbol: 'ETH',
-    category: 'ether',
-    iconUrl: 'https://assets.coingecko.com/coins/images/279/large/ethereum.png',
-    coingeckoId: 'ethereum',
-    coingeckoListingTimestamp: new Date('2015-08-07'),
-    comment: 'Ethereum',
-  },
-  {
-    id: 'T84IPG',
-    issuer: 'Circle',
-    symbol: 'USDC',
-    category: 'stablecoin',
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png',
-    coingeckoId: 'usd-coin',
-    coingeckoListingTimestamp: new Date('2018-10-08'),
-    comment: 'Some comment about USDC',
-  },
-  {
-    id: '10RKDA',
-    issuer: 'Pump.fun',
-    symbol: 'RANDOM',
-    category: 'other',
-    coingeckoId: 'random',
-    coingeckoListingTimestamp: new Date('2021-01-01'),
-    comment: 'Some comment about RANDOM',
-  },
-]
+function parseAbstractTokens(): AbstractToken[] {
+  return tokens.abstractTokens.map((token) => {
+    const [id, rest] = token.id.split(':')
+    const [issuer, symbol] = rest?.split('.') ?? []
 
-export const deployedTokens: DeployedToken[] = [
-  {
-    id: 'ethereum-0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
-    chain: 'ethereum',
-    address: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
-    abstractTokenId: 'DF4O2N',
-    symbol: 'WBTC',
-    decimals: 8,
-    deploymentTimestamp: new Date('2019-01-30'),
-    comment: 'Wrapped Bitcoin on Ethereum',
-  },
-  {
-    id: 'ethereum-0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
-    chain: 'ethereum',
-    address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
-    abstractTokenId: 'T84IPG',
-    symbol: 'USDC',
-    decimals: 6,
-    deploymentTimestamp: new Date('2018-09-26'),
-    comment: 'USD Coin on Ethereum',
-  },
-  {
-    id: 'polygon-0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
-    chain: 'polygon',
-    address: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
-    abstractTokenId: 'T84IPG',
-    symbol: 'USDC.e',
-    decimals: 6,
-    deploymentTimestamp: new Date('2020-05-31'),
-    comment: 'USD Coin on Polygon',
-  },
-  {
-    id: 'ethereum-0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
-    chain: 'ethereum',
-    address: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
-    abstractTokenId: 'X2D7HO',
-    symbol: 'WETH',
-    decimals: 18,
-    deploymentTimestamp: new Date('2017-12-12'),
-    comment: 'Wrapped Ether on Ethereum',
-  },
-  {
-    id: 'polygon-0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
-    chain: 'polygon',
-    address: '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
-    abstractTokenId: 'X2D7HO',
-    symbol: 'WETH',
-    decimals: 18,
-    deploymentTimestamp: new Date('2020-05-31'),
-    comment: 'Wrapped Ether on Polygon',
-  },
-  {
-    id: 'polygon-0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6',
-    chain: 'polygon',
-    address: '0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6',
-    abstractTokenId: 'DF4O2N',
-    symbol: 'WBTC',
-    decimals: 8,
-    deploymentTimestamp: new Date('2020-05-31'),
-    comment: 'Wrapped Bitcoin on Polygon',
-  },
-  {
-    id: 'base-0x4200000000000000000000000000000000000006',
-    chain: 'base',
-    address: '0x4200000000000000000000000000000000000006',
-    symbol: 'DAI',
-    decimals: 8,
-    deploymentTimestamp: new Date('2020-05-31'),
-    comment: 'DAI on Base',
-  },
-  {
-    id: 'starknet-0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6',
-    chain: 'starknet',
-    address: '0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6',
-    abstractTokenId: 'unmatched',
-    symbol: 'STRK',
-    decimals: 8,
-    deploymentTimestamp: new Date('2020-05-31'),
-  },
-]
+    if (!id || !symbol) {
+      throw new Error('Invalid abstract token')
+    }
+
+    return {
+      id,
+      issuer,
+      symbol,
+      category: token.category as AbstractToken['category'],
+      iconUrl: token.iconUrl,
+      coingeckoId: token.coingeckoId,
+      coingeckoListingTimestamp: new Date(
+        token.coingeckoListingTimestamp * 1000,
+      ),
+    }
+  })
+}
+
+export const abstractTokens: AbstractToken[] = parseAbstractTokens()
+
+function parseDeployedTokens(): DeployedToken[] {
+  return tokens.deployedTokens.map((token) => {
+    // ethereum+0x3506424F91fD33084466F402d5D97f05F8e3b4AF (CHZ 18)
+    const [chain, ...rest] = token.id.split('+')
+    // ethereum, 0x3506424F91fD33084466F402d5D97f05F8e3b4AF (CHZ 18)
+    const [address, symbol, decimals] =
+      rest.join('')?.replace('(', '').replace(')', '')?.split(' ') ?? []
+    if (!chain || !address || !symbol || !decimals) {
+      throw new Error('Invalid deployed token')
+    }
+
+    const abstractTokenId = tokens.abstractTokens
+      .find((abstractToken) => {
+        return abstractToken.deployedTokens.some(
+          (deployedTokenId) => deployedTokenId === token.id,
+        )
+      })
+      ?.id.split(':')[0]
+
+    return {
+      id: `${chain}-${address}`,
+      chain,
+      address,
+      abstractTokenId,
+      symbol,
+      decimals: Number(decimals),
+      deploymentTimestamp: new Date(token.deploymentTimestamp * 1000),
+    }
+  })
+}
+
+export const deployedTokens: DeployedToken[] = parseDeployedTokens()

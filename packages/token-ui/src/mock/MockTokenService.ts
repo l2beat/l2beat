@@ -50,6 +50,8 @@ class MockTokenService {
       ),
     }))
 
+    console.log(deployedTokens)
+
     const abstractTokenIds = result.map((t) => t.id)
     const deployedWithoutAbstractTokens = deployedTokens.filter(
       (t) =>

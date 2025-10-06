@@ -28,7 +28,7 @@ export function MainPage() {
   return (
     <AppLayout>
       <div className="grid h-full grid-cols-2 gap-4">
-        <Card>
+        <Card className="max-h-[calc(100vh-16px)] overflow-y-auto">
           <CardHeader>
             <CardTitle>Abstract Tokens</CardTitle>
           </CardHeader>
