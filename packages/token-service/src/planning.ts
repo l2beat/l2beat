@@ -5,6 +5,7 @@ import type {
   AddAbstractTokenIntent,
   AddDeployedTokenIntent,
   DeleteAllAbstractTokensIntent,
+  DeleteAllDeployedTokensIntent,
   Intent,
   UpdateAbstractTokenIntent,
   UpdateDeployedTokenIntent,
@@ -47,14 +48,17 @@ export async function generatePlan(
       case 'UpdateAbstractTokenIntent':
         commands = await planUpdateAbstractToken(db, intent)
         break
+      case 'DeleteAllAbstractTokensIntent':
+        commands = planDeleteAllAbstractTokens(intent)
+        break
       case 'AddDeployedTokenIntent':
         commands = await planAddDeployedToken(db, intent)
         break
       case 'UpdateDeployedTokenIntent':
         commands = await planUpdateDeployedToken(db, intent)
         break
-      case 'DeleteAllAbstractTokensIntent':
-        commands = planDeleteAllAbstractTokens(intent)
+      case 'DeleteAllDeployedTokensIntent':
+        commands = planDeleteAllDeployedTokens(intent)
         break
       default:
         assertUnreachable(intent)
@@ -137,9 +141,21 @@ async function planAddDeployedToken(
   db: TokenDatabase,
   intent: AddDeployedTokenIntent,
 ): Promise<Command[]> {
-  const existing = await db.deployedToken.findById(intent.record.id)
-  if (existing !== undefined) {
-    throw new PlanningError(`DeployedToken ${intent.record.id} already exist`)
+  const record = intent.record
+  if (record.id !== undefined) {
+    const existing = await db.deployedToken.findById(record.id)
+    if (existing !== undefined) {
+      throw new PlanningError(`DeployedToken ${record.id} already exist`)
+    }
+  }
+  const existingWithChainAddress = await db.deployedToken.findByChainAndAddress(
+    record.chain,
+    record.address,
+  )
+  if (existingWithChainAddress) {
+    throw new PlanningError(
+      `DeployedToken with chain ${record.chain} and address ${record.address} already exist`,
+    )
   }
   return [
     {
@@ -162,6 +178,16 @@ async function planUpdateDeployedToken(
       type: 'UpdateDeployedTokenCommand',
       before,
       update: intent.update,
+    },
+  ]
+}
+
+function planDeleteAllDeployedTokens(
+  intent: DeleteAllDeployedTokensIntent,
+): Command[] {
+  return [
+    {
+      type: 'DeleteAllDeployedTokensCommand',
     },
   ]
 }

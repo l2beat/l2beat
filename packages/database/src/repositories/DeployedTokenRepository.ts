@@ -1,13 +1,19 @@
 import { assert } from '@l2beat/shared-pure'
 import { BaseRepository } from '../BaseRepository'
 import type { DeployedToken } from '../kysely/generated/types'
-import { type AsRecord, type AsUpdate, toRecord } from '../utils/typeUtils'
+import {
+  type AsInsertable,
+  type AsSelectable,
+  type AsUpdate,
+  toRecord,
+} from '../utils/typeUtils'
 
-export type DeployedTokenRecord = AsRecord<DeployedToken>
+export type DeployedTokenInsertable = AsInsertable<DeployedToken>
+export type DeployedTokenSelectable = AsSelectable<DeployedToken>
 export type DeployedTokenUpdate = AsUpdate<DeployedToken, 'id'>
 
 export class DeployedTokenRepository extends BaseRepository {
-  async insert(record: DeployedTokenRecord): Promise<number> {
+  async insert(record: DeployedTokenInsertable): Promise<number> {
     const row = await this.db
       .insertInto('DeployedToken')
       .values(record)
@@ -28,7 +34,7 @@ export class DeployedTokenRepository extends BaseRepository {
     return Number(result.numUpdatedRows)
   }
 
-  async findById(id: number): Promise<DeployedTokenRecord | undefined> {
+  async findById(id: number): Promise<DeployedTokenSelectable | undefined> {
     const result = await this.db
       .selectFrom('DeployedToken')
       .selectAll()
@@ -38,7 +44,21 @@ export class DeployedTokenRepository extends BaseRepository {
     return result ? toRecord(result) : undefined
   }
 
-  async getByIds(ids: number[]): Promise<DeployedTokenRecord[]> {
+  async findByChainAndAddress(
+    chain: string,
+    address: string,
+  ): Promise<DeployedTokenSelectable | undefined> {
+    const result = await this.db
+      .selectFrom('DeployedToken')
+      .selectAll()
+      .where('chain', '=', chain)
+      .where('address', '=', address)
+      .executeTakeFirst()
+
+    return result ? toRecord(result) : undefined
+  }
+
+  async getByIds(ids: number[]): Promise<DeployedTokenInsertable[]> {
     const rows = await this.db
       .selectFrom('DeployedToken')
       .selectAll()
@@ -48,7 +68,7 @@ export class DeployedTokenRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByAbstractTokenId(id: string): Promise<DeployedTokenRecord[]> {
+  async getByAbstractTokenId(id: string): Promise<DeployedTokenInsertable[]> {
     const rows = await this.db
       .selectFrom('DeployedToken')
       .selectAll()
@@ -58,7 +78,7 @@ export class DeployedTokenRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getAll(): Promise<DeployedTokenRecord[]> {
+  async getAll(): Promise<DeployedTokenInsertable[]> {
     const rows = await this.db.selectFrom('DeployedToken').selectAll().execute()
     return rows.map(toRecord)
   }

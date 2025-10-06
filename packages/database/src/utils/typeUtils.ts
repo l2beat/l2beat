@@ -1,4 +1,4 @@
-import type { Selectable, Updateable } from 'kysely'
+import type { Insertable, Selectable, Updateable } from 'kysely'
 
 // Drops optional/undefined from a given set of fields
 type WithPrimaryKey<T, K extends keyof T> = {
@@ -13,9 +13,8 @@ type ReplaceNulls<T> = {
   [K in keyof T]: null extends T[K] ? Exclude<T[K], null> | undefined : T[K]
 }
 
-// AsRecord serves both as Selectable and Insertable
-// It combines Selectable with ReplaceNulls
-export type AsRecord<T> = UndefinedToOptional<Selectable<ReplaceNulls<T>>>
+export type AsInsertable<T> = UndefinedToOptional<Insertable<T>>
+export type AsSelectable<T> = UndefinedToOptional<Selectable<ReplaceNulls<T>>>
 
 // AsUpdateable is the patch/SET shape for updates
 // It combines WithPrimaryKey (so that PK can't be undefined) with Updateable and UndefinedToOptional

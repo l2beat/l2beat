@@ -1,13 +1,19 @@
 import { assert } from '@l2beat/shared-pure'
 import { BaseRepository } from '../BaseRepository'
 import type { AbstractToken } from '../kysely/generated/types'
-import { type AsRecord, type AsUpdate, toRecord } from '../utils/typeUtils'
+import {
+  type AsInsertable,
+  type AsSelectable,
+  type AsUpdate,
+  toRecord,
+} from '../utils/typeUtils'
 
-export type AbstractTokenRecord = AsRecord<AbstractToken>
+export type AbstractTokenInsertable = AsInsertable<AbstractToken>
+export type AbstractTokenSelectable = AsSelectable<AbstractToken>
 export type AbstractTokenUpdate = AsUpdate<AbstractToken, 'id'>
 
 export class AbstractTokenRepository extends BaseRepository {
-  async insert(record: AbstractTokenRecord): Promise<string> {
+  async insert(record: AbstractTokenInsertable): Promise<string> {
     const row = await this.db
       .insertInto('AbstractToken')
       .values(record)
@@ -28,7 +34,7 @@ export class AbstractTokenRepository extends BaseRepository {
     return Number(result.numUpdatedRows)
   }
 
-  async findById(id: string): Promise<AbstractTokenRecord | undefined> {
+  async findById(id: string): Promise<AbstractTokenSelectable | undefined> {
     const result = await this.db
       .selectFrom('AbstractToken')
       .selectAll()
@@ -41,7 +47,7 @@ export class AbstractTokenRepository extends BaseRepository {
   async findByIssuerAndSymbol(
     issuer: string,
     symbol: string,
-  ): Promise<AbstractTokenRecord | undefined> {
+  ): Promise<AbstractTokenSelectable | undefined> {
     const result = await this.db
       .selectFrom('AbstractToken')
       .selectAll()
@@ -52,7 +58,7 @@ export class AbstractTokenRepository extends BaseRepository {
     return result ? toRecord(result) : undefined
   }
 
-  async getByIds(ids: string[]): Promise<AbstractTokenRecord[]> {
+  async getByIds(ids: string[]): Promise<AbstractTokenInsertable[]> {
     const rows = await this.db
       .selectFrom('AbstractToken')
       .selectAll()
@@ -62,7 +68,7 @@ export class AbstractTokenRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getAll(): Promise<AbstractTokenRecord[]> {
+  async getAll(): Promise<AbstractTokenInsertable[]> {
     const rows = await this.db.selectFrom('AbstractToken').selectAll().execute()
     return rows.map(toRecord)
   }

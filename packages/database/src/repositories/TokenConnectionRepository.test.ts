@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeTokenDatabase } from '../test/tokenDatabase'
-import type { DeployedTokenRecord } from './DeployedTokenRepository'
+import type { DeployedTokenInsertable } from './DeployedTokenRepository'
 import {
   type TokenConnectionRecord,
   TokenConnectionRepository,
@@ -284,8 +284,8 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
 })
 
 function deployedToken(
-  overrides: Partial<DeployedTokenRecord> & { id: number },
-): DeployedTokenRecord {
+  overrides: Partial<DeployedTokenInsertable> & { id: number },
+): DeployedTokenInsertable {
   const idHex = overrides.id.toString(16).padStart(40, '0')
 
   return {

@@ -1,7 +1,7 @@
 import type {
-  AbstractTokenRecord,
+  AbstractTokenInsertable,
   AbstractTokenUpdate,
-  DeployedTokenRecord,
+  DeployedTokenInsertable,
   DeployedTokenUpdate,
 } from '@l2beat/database'
 
@@ -11,10 +11,11 @@ export type Intent =
   | DeleteAllAbstractTokensIntent
   | AddDeployedTokenIntent
   | UpdateDeployedTokenIntent
+  | DeleteAllDeployedTokensIntent
 
 export interface AddAbstractTokenIntent {
   type: 'AddAbstractTokenIntent'
-  record: AbstractTokenRecord
+  record: AbstractTokenInsertable
 }
 
 export interface UpdateAbstractTokenIntent {
@@ -28,10 +29,14 @@ export interface DeleteAllAbstractTokensIntent {
 
 export interface AddDeployedTokenIntent {
   type: 'AddDeployedTokenIntent'
-  record: DeployedTokenRecord
+  record: DeployedTokenInsertable
 }
 
 export interface UpdateDeployedTokenIntent {
   type: 'UpdateDeployedTokenIntent'
   update: DeployedTokenUpdate
+}
+
+export interface DeleteAllDeployedTokensIntent {
+  type: 'DeleteAllDeployedTokensIntent'
 }

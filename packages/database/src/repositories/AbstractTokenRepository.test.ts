@@ -2,8 +2,8 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeTokenDatabase } from '../test/tokenDatabase'
 import {
-  type AbstractTokenRecord,
   AbstractTokenRepository,
+  type AbstractTokenSelectable,
 } from './AbstractTokenRepository'
 
 describeTokenDatabase(AbstractTokenRepository.name, (db) => {
@@ -95,8 +95,8 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
 })
 
 function abstractToken(
-  overrides: Partial<AbstractTokenRecord> & { id: string },
-): AbstractTokenRecord {
+  overrides: Partial<AbstractTokenSelectable> & { id: string },
+): AbstractTokenSelectable {
   return {
     id: overrides.id,
     issuer: overrides.issuer,

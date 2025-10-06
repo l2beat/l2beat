@@ -82,6 +82,9 @@ async function executeCommand(db: TokenDatabase, command: Command) {
     case 'UpdateDeployedTokenCommand':
       await db.deployedToken.update(command.update)
       break
+    case 'DeleteAllDeployedTokensCommand':
+      await db.deployedToken.deleteAll()
+      break
     default:
       assertUnreachable(command)
   }

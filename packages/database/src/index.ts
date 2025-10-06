@@ -6,7 +6,7 @@ export { compiledToSqlQuery } from './utils/compiledToSqlQuery'
 // Records
 
 export type {
-  AbstractTokenRecord,
+  AbstractTokenInsertable,
   AbstractTokenUpdate,
 } from './repositories/AbstractTokenRepository'
 export type { ActivityRecord } from './repositories/ActivityRepository'
@@ -33,7 +33,7 @@ export type {
   ProjectsSummedDataAvailabilityRecord,
 } from './repositories/DataAvailabilityRepository'
 export type {
-  DeployedTokenRecord,
+  DeployedTokenInsertable,
   DeployedTokenUpdate,
 } from './repositories/DeployedTokenRepository'
 export type { DiscoveryCacheRecord } from './repositories/DiscoveryCacheRepository'

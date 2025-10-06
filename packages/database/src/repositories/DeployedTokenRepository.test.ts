@@ -1,10 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeTokenDatabase } from '../test/tokenDatabase'
-import type { AbstractTokenRecord } from './AbstractTokenRepository'
+import type { AbstractTokenInsertable } from './AbstractTokenRepository'
 import {
-  type DeployedTokenRecord,
   DeployedTokenRepository,
+  type DeployedTokenSelectable,
 } from './DeployedTokenRepository'
 
 describeTokenDatabase(DeployedTokenRepository.name, (db) => {
@@ -136,8 +136,8 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
 })
 
 function abstractToken(
-  overrides: Partial<AbstractTokenRecord> & { id: string },
-): AbstractTokenRecord {
+  overrides: Partial<AbstractTokenInsertable> & { id: string },
+): AbstractTokenInsertable {
   return {
     id: overrides.id,
     issuer: overrides.issuer,
@@ -151,8 +151,8 @@ function abstractToken(
 }
 
 function deployedToken(
-  overrides: Partial<DeployedTokenRecord> & { id: number },
-): DeployedTokenRecord {
+  overrides: Partial<DeployedTokenSelectable> & { id: number },
+): DeployedTokenSelectable {
   const idHex = overrides.id.toString(16).padStart(40, '0')
 
   return {
