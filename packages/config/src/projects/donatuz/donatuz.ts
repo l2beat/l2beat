@@ -13,11 +13,7 @@ export const donatuz: ScalingProject = opStackL3({
   hostChain: 'base',
   discovery,
   daProvider: EIGENDA_DA_PROVIDER,
-  additionalBadges: [
-    BADGES.L3ParentChain.Base,
-    BADGES.DA.EigenDA,
-    BADGES.RaaS.Conduit,
-  ],
+  additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Conduit],
   additionalPurposes: ['Social'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
