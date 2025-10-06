@@ -1,4 +1,4 @@
-import { ProjectService } from '@l2beat/config'
+import type { ProjectContract, ProjectService } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { OpenApi } from '../OpenApi'
@@ -13,9 +13,15 @@ const ProjectSchema = v
   })
   .describe('Project')
 
-const projectService = new ProjectService()
+const ContractSchema = v
+  .object({
+    name: v.string(),
+    contractAddress: v.string(),
+    chain: v.string(),
+  })
+  .describe('Contract')
 
-export function addProjectsRoutes(openapi: OpenApi) {
+export function addProjectsRoutes(openapi: OpenApi, ps: ProjectService) {
   openapi.get(
     '/projects',
     {
@@ -24,7 +30,7 @@ export function addProjectsRoutes(openapi: OpenApi) {
       result: v.array(ProjectSchema),
     },
     async (_, res) => {
-      const projects = await projectService.getProjects({
+      const projects = await ps.getProjects({
         optional: ['chainConfig'],
       })
       const response = projects.map((project) => ({
@@ -53,7 +59,7 @@ export function addProjectsRoutes(openapi: OpenApi) {
     async (req, res) => {
       const { projectId } = req.params
 
-      const project = await projectService.getProject({
+      const project = await ps.getProject({
         id: ProjectId(projectId),
         optional: ['chainConfig'],
       })
@@ -71,6 +77,50 @@ export function addProjectsRoutes(openapi: OpenApi) {
         name: project.name,
         chainId: project.chainConfig?.chainId,
       })
+    },
+  )
+
+  openapi.get(
+    '/project/:projectId/contracts',
+    {
+      summary: ' List of contracts associated with the project and the chains',
+      tags: ['projects'],
+      params: v.object({
+        projectId: v.string(),
+      }),
+      result: v.array(ContractSchema),
+      errors: {
+        404: GenericErrorResponse,
+      },
+    },
+    async (req, res) => {
+      const { projectId } = req.params
+
+      const project = await ps.getProject({
+        id: ProjectId(projectId),
+        optional: ['chainConfig', 'contracts'],
+      })
+
+      if (!project) {
+        res.status(404).json()
+        return
+      }
+
+      if (!project.contracts) {
+        res.json([])
+        return
+      }
+
+      const contracts = Object.entries(project.contracts.addresses).flatMap(
+        ([chain, contracts]) =>
+          contracts.map((contract: ProjectContract) => ({
+            name: contract.name,
+            contractAddress: contract.address,
+            chain: chain,
+          })),
+      )
+
+      res.json(contracts)
     },
   )
 }
