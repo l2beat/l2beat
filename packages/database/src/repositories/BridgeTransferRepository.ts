@@ -87,7 +87,7 @@ export function toRow(
     srcTime:
       record.srcTime !== undefined ? UnixTime.toDate(record.srcTime) : null,
     srcChain: record.srcChain,
-    srcTxHash: record.srcTxHash,
+    srcTxHash: record.srcTxHash?.toLowerCase(),
     srcLogIndex: record.srcLogIndex,
     srcEventId: record.srcEventId,
     srcTokenAddress: record.srcTokenAddress
@@ -103,7 +103,7 @@ export function toRow(
     dstTime:
       record.dstTime !== undefined ? UnixTime.toDate(record.dstTime) : null,
     dstChain: record.dstChain,
-    dstTxHash: record.dstTxHash,
+    dstTxHash: record.dstTxHash?.toLowerCase(),
     dstLogIndex: record.dstLogIndex,
     dstEventId: record.dstEventId,
     dstTokenAddress: record.dstTokenAddress
@@ -234,6 +234,22 @@ export class BridgeTransferRepository extends BaseRepository {
         inboundValueSum: Number(chain.inboundValueSum),
       }
     })
+  }
+
+  async getExistingItems(
+    items: { srcTxHash: string; dstTxHash: string }[],
+  ): Promise<BridgeTransferRecord[]> {
+    if (items.length === 0) return []
+
+    const srcHashes = items.map((x) => x.srcTxHash.toLowerCase())
+    const dstHashes = items.map((x) => x.dstTxHash.toLowerCase())
+    const rows = await this.db
+      .selectFrom('BridgeTransfer')
+      .selectAll()
+      .where('srcTxHash', 'in', srcHashes)
+      .where('dstTxHash', 'in', dstHashes)
+      .execute()
+    return rows.map(toRecord)
   }
 
   async deleteBefore(timestamp: UnixTime): Promise<number> {

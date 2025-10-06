@@ -72,7 +72,7 @@ export const sorare: ScalingProject = {
       documentation: ['https://docs.starkware.co/starkex/index.html'],
       repositories: ['https://github.com/starkware-libs/starkex-contracts'],
       socialMedia: [
-        'https://discord.gg/TSjtHaM',
+        'https://discord.com/invite/sorare',
         'https://reddit.com/r/Sorare/',
         'https://twitter.com/Sorare',
         'https://instagram.com/sorare_official/',

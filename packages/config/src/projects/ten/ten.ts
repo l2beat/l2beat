@@ -29,7 +29,7 @@ export const ten: ScalingProject = upcomingL2({
       ],
       socialMedia: [
         'https://twitter.com/tenprotocol',
-        'https://discord.gg/yQfmKeNzNd',
+        'https://discord.com/invite/tenprotocol',
         'https://t.me/tenprotocol',
         'https://medium.com/obscuro-labs',
       ],

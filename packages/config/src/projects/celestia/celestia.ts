@@ -164,7 +164,6 @@ export const celestia: BaseProject = {
       fraudDetection: DaFraudDetectionRisk.DasWithNoBlobsReconstruction(true),
     },
     economicSecurity: {
-      name: 'Celestia',
       token: {
         symbol: 'TIA',
         decimals: 6,

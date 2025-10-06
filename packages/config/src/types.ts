@@ -676,7 +676,6 @@ export interface DataAvailabilitySampling {
 }
 
 export interface DaEconomicSecurity {
-  name: string
   token: {
     symbol: string
     decimals: number

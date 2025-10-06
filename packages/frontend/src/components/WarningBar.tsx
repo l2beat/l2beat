@@ -17,6 +17,7 @@ interface WarningBarProps {
   isCritical?: boolean
   className?: string
   ignoreMarkdown?: boolean
+  iconClassName?: string
 }
 
 const iconVariants = cva('size-5', {
@@ -37,6 +38,7 @@ export function WarningBar({
   isCritical,
   className,
   ignoreMarkdown,
+  iconClassName,
 }: WarningBarProps) {
   const textElement = ignoreMarkdown ? (
     <>
@@ -58,7 +60,7 @@ export function WarningBar({
         <Callout
           className={cn('p-4', className)}
           color={color}
-          icon={<Icon className={iconVariants({ color })} />}
+          icon={<Icon className={cn(iconVariants({ color }), iconClassName)} />}
           body={
             <div className="flex items-center gap-1">
               {textElement}
@@ -74,7 +76,7 @@ export function WarningBar({
     <Callout
       className={cn('p-4', className)}
       color={color}
-      icon={<Icon className={iconVariants({ color })} />}
+      icon={<Icon className={cn(iconVariants({ color }), iconClassName)} />}
       body={textElement}
     />
   )

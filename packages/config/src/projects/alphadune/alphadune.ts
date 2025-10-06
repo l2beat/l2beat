@@ -19,6 +19,7 @@ export const alphadune: ScalingProject = upcomingL3({
       websites: ['https://alphadune.com/'],
       bridges: ['https://bridge.testnet.alphadune.com'],
       documentation: ['https://docs.alphadune.com/'],
+      explorers: ['https://alpha-dune-testnet.explorer.caldera.xyz/'],
       socialMedia: [
         'https://x.com/alphadune',
         'https://discord.com/invite/N8AnA662Mx',

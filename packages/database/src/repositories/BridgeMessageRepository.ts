@@ -30,12 +30,12 @@ export function toRecord(row: Selectable<BridgeMessage>): BridgeMessageRecord {
     timestamp: UnixTime.fromDate(row.timestamp),
     srcTime: row.srcTime !== null ? UnixTime.fromDate(row.srcTime) : undefined,
     srcChain: row.srcChain ?? undefined,
-    srcTxHash: row.srcTxHash ?? undefined,
+    srcTxHash: row.srcTxHash?.toLowerCase() ?? undefined,
     srcLogIndex: row.srcLogIndex ?? undefined,
     srcEventId: row.srcEventId ?? undefined,
     dstTime: row.dstTime !== null ? UnixTime.fromDate(row.dstTime) : undefined,
     dstChain: row.dstChain ?? undefined,
-    dstTxHash: row.dstTxHash ?? undefined,
+    dstTxHash: row.dstTxHash?.toLowerCase() ?? undefined,
     dstLogIndex: row.dstLogIndex ?? undefined,
     dstEventId: row.dstEventId ?? undefined,
   }
@@ -134,6 +134,22 @@ export class BridgeMessageRepository extends BaseRepository {
       count: Number(overall.count),
       medianDuration: Number(overall.medianDuration),
     }))
+  }
+
+  async getExistingItems(
+    items: { srcTxHash: string; dstTxHash: string }[],
+  ): Promise<BridgeMessageRecord[]> {
+    if (items.length === 0) return []
+
+    const srcHashes = items.map((x) => x.srcTxHash.toLowerCase())
+    const dstHashes = items.map((x) => x.dstTxHash.toLowerCase())
+    const rows = await this.db
+      .selectFrom('BridgeMessage')
+      .selectAll()
+      .where('srcTxHash', 'in', srcHashes)
+      .where('dstTxHash', 'in', dstHashes)
+      .execute()
+    return rows.map(toRecord)
   }
 
   async getDetailedStats(): Promise<BridgeMessageDetailedStatsRecord[]> {
