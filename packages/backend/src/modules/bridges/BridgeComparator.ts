@@ -73,22 +73,7 @@ export class BridgeComparator {
       items: this.items.length,
     })
 
-    const messages = await this.db.bridgeMessage.getExistingItems(
-      this.items
-        .filter((i) => i.type === 'message')
-        .map((i) => ({ ...i.item })),
-    )
-
-    const transfers = await this.db.bridgeTransfer.getExistingItems(
-      this.items
-        .filter((i) => i.type === 'transfer')
-        .map((i) => ({ ...i.item })),
-    )
-
-    const existing = {
-      message: new Set(messages.map((m) => key(m))),
-      transfer: new Set(transfers.map((t) => key(t))),
-    }
+    const existing = await this.getExistingItems()
 
     const skipped = []
     let missing = 0
@@ -116,6 +101,26 @@ export class BridgeComparator {
       ...s,
       item: { ...s.item, isLatest: false },
     }))
+  }
+
+  private async getExistingItems() {
+    const messages = await this.db.bridgeMessage.getExistingItems(
+      this.items
+        .filter((i) => i.type === 'message')
+        .map((i) => ({ ...i.item })),
+    )
+
+    const transfers = await this.db.bridgeTransfer.getExistingItems(
+      this.items
+        .filter((i) => i.type === 'transfer')
+        .map((i) => ({ ...i.item })),
+    )
+
+    const existing = {
+      message: new Set(messages.map((m) => key(m))),
+      transfer: new Set(transfers.map((t) => key(t))),
+    }
+    return existing
   }
 }
 
