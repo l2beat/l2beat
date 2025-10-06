@@ -2,7 +2,7 @@ import { isDeepStrictEqual } from 'node:util'
 import type { TokenDatabase } from '@l2beat/database'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import type { Command } from './commands'
-import { plan as generatePlan, type Plan } from './planning'
+import { generatePlan, type Plan } from './planning'
 
 type PlanExecutionResult = PlanExecutionSuccess | PlanExecutionError
 
@@ -15,7 +15,7 @@ interface PlanExecutionSuccess {
   outcome: 'success'
 }
 
-export function execute(
+export function executePlan(
   db: TokenDatabase,
   plan: Plan,
 ): Promise<PlanExecutionResult> {

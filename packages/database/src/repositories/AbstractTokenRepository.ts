@@ -38,6 +38,20 @@ export class AbstractTokenRepository extends BaseRepository {
     return result ? toRecord(result) : undefined
   }
 
+  async findByIssuerAndSymbol(
+    issuer: string,
+    symbol: string,
+  ): Promise<AbstractTokenRecord | undefined> {
+    const result = await this.db
+      .selectFrom('AbstractToken')
+      .selectAll()
+      .where('issuer', '=', issuer)
+      .where('symbol', '=', symbol)
+      .executeTakeFirst()
+
+    return result ? toRecord(result) : undefined
+  }
+
   async getByIds(ids: string[]): Promise<AbstractTokenRecord[]> {
     const rows = await this.db
       .selectFrom('AbstractToken')

@@ -15,7 +15,7 @@ type ReplaceNulls<T> = {
 
 // AsRecord serves both as Selectable and Insertable
 // It combines Selectable with ReplaceNulls
-export type AsRecord<T> = Selectable<ReplaceNulls<T>>
+export type AsRecord<T> = UndefinedToOptional<Selectable<ReplaceNulls<T>>>
 
 // AsUpdateable is the patch/SET shape for updates
 // It combines WithPrimaryKey (so that PK can't be undefined) with Updateable and UndefinedToOptional

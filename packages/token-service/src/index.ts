@@ -1,4 +1,4 @@
 export * from './commands'
-export { execute } from './execution'
+export { executePlan  } from './execution'
 export * from './intents'
-export { plan } from './planning'
+export { generatePlan } from './planning'
