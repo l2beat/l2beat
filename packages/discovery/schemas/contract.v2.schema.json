@@ -9,6 +9,7 @@
         "new Arbitrum proxy",
         "call implementation proxy",
         "zkSync Lite proxy",
+        "zkLighter proxy",
         "zkSpace proxy",
         "Eternal Storage proxy",
         "Polygon Extension proxy",
@@ -59,11 +60,11 @@
                     "hotValidatorHyperliquid",
                     "coldValidatorHyperliquid",
                     "acrossPropose",
+                    "validateLighter",
                     "member",
                     "act",
                     "interact",
-                    "upgrade",
-                    "validateLighter"
+                    "upgrade"
                   ]
                 },
                 "delay": {

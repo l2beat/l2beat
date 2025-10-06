@@ -1,7 +1,7 @@
 {
   "name": "lighter",
   "timestamp": 1759468227,
-  "configHash": "0x3c2f96f34d215e1de1ee9d12fc29f84c596f692bfb03b4e0c206f122418052de",
+  "configHash": "0xded62d9fb9417d0f2fa93d8edfcf83d25d3ed3105fa2538ddfb528de6140b566",
   "entries": [
     {
       "address": "eth:0x037C8e6aF4AEB15A597FC3C2a6F1B30B4b0Ae2B1",
@@ -36,23 +36,23 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ZkLighter",
+      "name": "Proxy",
       "address": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
       "type": "Contract",
       "template": "lighter/ZkLighter",
       "sourceHashes": [
         "0xc3b09aa3d8c5332715cea375895325cd01f6a04b61f1a1c885d73502955c6460",
-        "0x57c6bdead6ce19120668da73ffc876609fa70e0fe91f819e48b34c6e1e51ffd9"
+        "0xa9200f827141ae9be2188327085a679c20ed563bf9bb6e5e2fc895b99b2bd5b0"
       ],
-      "proxyType": "EIP1967 proxy",
+      "proxyType": "zkLighter proxy",
       "sinceTimestamp": 1737090335,
       "sinceBlock": 21642011,
       "values": {
         "$admin": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "$implementation": "eth:0x1D2624A65F8aaD1c4Bc406b4D2418ba577D218cb",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
-        "additionalZkLighter": "eth:0x4194D3847a0239d59a87bC82C1870CBE1FA99db1",
+        "$implementation": [
+          "eth:0x1D2624A65F8aaD1c4Bc406b4D2418ba577D218cb",
+          "eth:0x4194D3847a0239d59a87bC82C1870CBE1FA99db1"
+        ],
         "committedBatchesCount": 52482,
         "committedPriorityRequestCount": 430225,
         "desertMode": false,
@@ -91,65 +91,9 @@
         "verifiedBatchesCount": 52465,
         "verifiedPriorityRequestCount": 429843
       },
-      "fieldMeta": {
-        "additionalZkLighter": {
-          "description": "from constructor arguments (handler does not work), upgradable by the admin."
-        }
-      },
       "implementationNames": {
         "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7": "Proxy",
-        "eth:0x1D2624A65F8aaD1c4Bc406b4D2418ba577D218cb": "ZkLighter"
-      }
-    },
-    {
-      "name": "AdditionalZkLighter",
-      "address": "eth:0x4194D3847a0239d59a87bC82C1870CBE1FA99db1",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x3762a37750c1cf39f4d9ea1b7ca34e6ca429c1f6311009bdc4c61ffab870ffa1"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759343975,
-      "sinceBlock": 23484793,
-      "values": {
-        "$immutable": true,
-        "committedBatchesCount": 0,
-        "committedPriorityRequestCount": 0,
-        "desertMode": false,
-        "executedBatchesCount": 0,
-        "executedOnChainBatchesCount": 0,
-        "executedPriorityRequestCount": 0,
-        "insuranceFundOperator": "eth:0x0000000000000000000000000000000000000000",
-        "lastAccountIndex": 0,
-        "lastVerifiedEndBlockNumber": 0,
-        "lastVerifiedStateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "lastVerifiedValidiumRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "MAX_ACCOUNT_INDEX": 281474976710654,
-        "MAX_API_KEY_INDEX": 254,
-        "MAX_BATCH_DEPOSIT_LENGTH": 1000,
-        "MAX_DEPOSIT_AMOUNT": 1000000000000000,
-        "MAX_EXCHANGE_USDC_AMOUNT": "1152921504606846975",
-        "MAX_MARKET_INDEX": 254,
-        "MAX_MASTER_ACCOUNT_INDEX": 140737488355327,
-        "MAX_ORDER_BASE_AMOUNT": 281474976710655,
-        "MAX_ORDER_PRICE": 4294967295,
-        "MAX_ORDER_QUOTE_AMOUNT": 281474976710655,
-        "MAX_POOL_SHARES_TO_MINT_OR_BURN": "1152921504606846975",
-        "MIN_ORDER_BASE_AMOUNT": 1,
-        "MIN_ORDER_PRICE": 1,
-        "MIN_POOL_SHARES_TO_MINT_OR_BURN": 1,
-        "NIL_ACCOUNT_INDEX": 281474976710655,
-        "NIL_ORDER_BASE_AMOUNT": 0,
-        "openPriorityRequestCount": 0,
-        "pendingOnChainBatchesCount": 0,
-        "PRIORITY_EXPIRATION": 1555200,
-        "stateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "treasury": "eth:0x0000000000000000000000000000000000000000",
-        "validiumRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "verifiedBatchesCount": 0,
-        "verifiedPriorityRequestCount": 0
-      },
-      "implementationNames": {
+        "eth:0x1D2624A65F8aaD1c4Bc406b4D2418ba577D218cb": "ZkLighter",
         "eth:0x4194D3847a0239d59a87bC82C1870CBE1FA99db1": "AdditionalZkLighter"
       }
     },
@@ -829,9 +773,9 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "lighter/Governance": "0x4e9f04516598b2c63a839e9e92296b4c684dadcc7a872a6e7ba64e3413d7cdec",
     "lighter/UpgradeGatekeeper": "0x72341d695123479e7b06142a86f758d7b9488ac1cb776c7411630080ba1e9a59",
-    "lighter/ZkLighter": "0x1d4a21d740b7656aba8f13a99b1e9a925cb21edba11c67aea64f9cf5905eed8d",
+    "lighter/ZkLighter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23495073 },
-  "permissionsConfigHash": "0x6fa013e6156dcbde62c6676552df34f19628884b2276fdb21f8f2cd95e436b59"
+  "permissionsConfigHash": "0x7f4a64daf9950cb83953219e6dc6dd2ca80bd8549f7c9bfa20d4b1b28e5a2e80"
 }
