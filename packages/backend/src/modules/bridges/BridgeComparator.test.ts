@@ -114,7 +114,7 @@ describe(BridgeComparator.name, () => {
       expect(plugins[0].getExternalItems).toHaveBeenCalledTimes(2)
       expect(plugins[1].getExternalItems).toHaveBeenCalledTimes(2)
       expect(bridgeMessage.getExistingItems).toHaveBeenCalledTimes(2)
-      expect(bridgeTransfer.getExistingItems).toHaveBeenCalledTimes(1)
+      expect(bridgeTransfer.getExistingItems).toHaveBeenCalledTimes(2)
 
       expect(logger.warn).toHaveBeenNthCalledWith(1, 'Missing item skipped', {
         plugin: 'plugin1',

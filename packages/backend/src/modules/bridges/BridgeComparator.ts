@@ -114,7 +114,7 @@ export class BridgeComparator {
 
     this.items = skipped.map((s) => ({
       ...s,
-      isLatest: false,
+      item: { ...s.item, isLatest: false },
     }))
   }
 }
