@@ -4,6 +4,7 @@ import type { Command } from './commands'
 import type {
   AddAbstractTokenIntent,
   AddDeployedTokenIntent,
+  DeleteAllAbstractTokensIntent,
   Intent,
   UpdateAbstractTokenIntent,
   UpdateDeployedTokenIntent,
@@ -51,6 +52,9 @@ export async function generatePlan(
         break
       case 'UpdateDeployedTokenIntent':
         commands = await planUpdateDeployedToken(db, intent)
+        break
+      case 'DeleteAllAbstractTokensIntent':
+        commands = planDeleteAllAbstractTokens(intent)
         break
       default:
         assertUnreachable(intent)
@@ -115,6 +119,16 @@ async function planUpdateAbstractToken(
       type: 'UpdateAbstractTokenCommand',
       before,
       update: intent.update,
+    },
+  ]
+}
+
+function planDeleteAllAbstractTokens(
+  intent: DeleteAllAbstractTokensIntent,
+): Command[] {
+  return [
+    {
+      type: 'DeleteAllAbstractTokensCommand',
     },
   ]
 }

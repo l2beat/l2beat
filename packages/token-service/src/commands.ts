@@ -8,6 +8,7 @@ import type {
 export type Command =
   | AddAbstractTokenCommand
   | UpdateAbstractTokenCommand
+  | DeleteAllAbstractTokensCommand
   | AddDeployedTokenCommand
   | UpdateDeployedTokenCommand
 
@@ -20,6 +21,10 @@ export interface UpdateAbstractTokenCommand {
   type: 'UpdateAbstractTokenCommand'
   before: AbstractTokenRecord
   update: AbstractTokenUpdate
+}
+
+export interface DeleteAllAbstractTokensCommand {
+  type: 'DeleteAllAbstractTokensCommand'
 }
 
 export interface AddDeployedTokenCommand {

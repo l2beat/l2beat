@@ -73,6 +73,9 @@ async function executeCommand(db: TokenDatabase, command: Command) {
     case 'UpdateAbstractTokenCommand':
       await db.abstractToken.update(command.update)
       break
+    case 'DeleteAllAbstractTokensCommand':
+      await db.abstractToken.deleteAll()
+      break
     case 'AddDeployedTokenCommand':
       await db.deployedToken.insert(command.record)
       break

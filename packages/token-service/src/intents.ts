@@ -8,6 +8,7 @@ import type {
 export type Intent =
   | AddAbstractTokenIntent
   | UpdateAbstractTokenIntent
+  | DeleteAllAbstractTokensIntent
   | AddDeployedTokenIntent
   | UpdateDeployedTokenIntent
 
@@ -19,6 +20,10 @@ export interface AddAbstractTokenIntent {
 export interface UpdateAbstractTokenIntent {
   type: 'UpdateAbstractTokenIntent'
   update: AbstractTokenUpdate
+}
+
+export interface DeleteAllAbstractTokensIntent {
+  type: 'DeleteAllAbstractTokensIntent'
 }
 
 export interface AddDeployedTokenIntent {
