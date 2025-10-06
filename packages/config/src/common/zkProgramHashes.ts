@@ -122,9 +122,21 @@ const zkProgramHashes: Record<
     proverSystemProject: ProjectId('risc0'),
     verificationStatus: 'notVerified',
   },
+  '760308386675154762009993173725077399730170358078020153308029499928875469870':
+    {
+      title: 'Aggregation program for Stone prover',
+      proverSystemProject: ProjectId('stone'),
+      verificationStatus: 'notVerified',
+    },
   '793595346346724189681221050719974054861327641387231526786912662354259445535':
     {
       title: 'StarkNet OS',
+      proverSystemProject: ProjectId('stone'),
+      verificationStatus: 'notVerified',
+    },
+  '273279642033703284306509103355536170486431195329675679055627933497997642494':
+    {
+      title: 'Aggregation program for Stone prover',
       proverSystemProject: ProjectId('stone'),
       verificationStatus: 'notVerified',
     },

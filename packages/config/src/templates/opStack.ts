@@ -27,6 +27,7 @@ import { EXPLORER_URLS } from '../common/explorerUrls'
 import { formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
+import { ZK_PROGRAM_HASHES } from '../common/zkProgramHashes'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
 import type {
@@ -696,6 +697,10 @@ function getStateValidation(
         'KailuaGame',
         'MAX_CLOCK_DURATION',
       )
+      const kailuaProgramHash = templateVars.discovery.getContractValue<string>(
+        'KailuaTreasury',
+        'FPVM_IMAGE_ID',
+      )
       return {
         categories: [
           {
@@ -775,9 +780,23 @@ The Kailua state validation system is primarily optimistically resolved, so no v
             ],
           },
         ],
+        zkProgramHashes: [ZK_PROGRAM_HASHES(kailuaProgramHash)],
       }
     }
     case 'OpSuccinct': {
+      const opSuccinctProgramHashes = []
+      opSuccinctProgramHashes.push(
+        templateVars.discovery.getContractValue<string>(
+          'OPSuccinctL2OutputOracle',
+          'aggregationVkey',
+        ),
+      )
+      opSuccinctProgramHashes.push(
+        templateVars.discovery.getContractValue<string>(
+          'OPSuccinctL2OutputOracle',
+          'rangeVkeyCommitment',
+        ),
+      )
       return {
         categories: [
           {
@@ -814,6 +833,9 @@ The Kailua state validation system is primarily optimistically resolved, so no v
             ],
           },
         ],
+        zkProgramHashes: opSuccinctProgramHashes.map((el) =>
+          ZK_PROGRAM_HASHES(el),
+        ),
       }
     }
   }
