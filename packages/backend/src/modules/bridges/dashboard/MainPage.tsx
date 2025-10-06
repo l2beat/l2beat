@@ -158,6 +158,7 @@ function MessagesTable(props: {
               </th>
             </>
           ))}
+          <th rowSpan={2}>Known %</th>
         </tr>
         <tr>
           {NETWORKS.map((_) => (
@@ -180,6 +181,11 @@ function MessagesTable(props: {
               </td>
               <td data-order={t.medianDuration}>
                 {formatSeconds(t.medianDuration)}
+              </td>
+              <td>
+                {t.count > 0
+                  ? ((t.knownAppCount / t.count) * 100).toFixed(1) + '%'
+                  : ''}
               </td>
               {NETWORKS.map((n) => {
                 const srcDstCount = t.chains.find(
@@ -293,7 +299,24 @@ function MainPageLayout(props: {
           },
         },
       ]}
-      footer={<ProcessorsStatusTable processors={props.status} />}
+      footer={
+        <>
+          <>
+            <h3> Apps for message types </h3>
+            {props.messages.map((m) => (
+              <div key={m.type}>
+                <h4>{m.type}</h4>
+                <ul>
+                  {m.knownApps.map((app) => (
+                    <li key={app}>{app}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </>
+          <ProcessorsStatusTable processors={props.status} />
+        </>
+      }
     />
   )
 }
