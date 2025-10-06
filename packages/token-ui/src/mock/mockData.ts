@@ -1,37 +1,9 @@
 import tokens from './tokens.json'
 import type { AbstractToken, DeployedToken } from './types'
 
-export const chains: string[] = [
-  'ethereum',
-  'polygon',
-  'arbitrum',
-  'optimism',
-  'bsc',
-  'avalanche',
-  'celo',
-  'linea',
-  'base',
-  'polygonzkevm',
-  'gnosis',
-  'zksync2',
-  'sepolia',
-  'scroll',
-  'mantle',
-  'metis',
-  'bobanetwork',
-  'mode',
-  'zora',
-  'mantapacific',
-  'blast',
-  'kinto',
-  'katana',
-  'unichain',
-  'ink',
-  'everclear',
-  'zircuit',
-  'taiko',
-  'facet',
-]
+export const chains: string[] = parseDeployedTokens()
+  .map((token) => token.chain)
+  .filter((chain, index, self) => self.indexOf(chain) === index)
 
 function parseAbstractTokens(): AbstractToken[] {
   return tokens.abstractTokens.map((token) => {

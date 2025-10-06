@@ -1,8 +1,18 @@
 import { v } from '@l2beat/validate'
 import { skipToken, useMutation, useQuery } from '@tanstack/react-query'
+import { CheckIcon, ChevronsUpDownIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { type UseFormReturn, useForm } from 'react-hook-form'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
+import { Button } from '~/components/core/Button'
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '~/components/core/Command'
 import {
   Form,
   FormControl,
@@ -13,12 +23,10 @@ import {
 } from '~/components/core/Form'
 import { Input } from '~/components/core/Input'
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '~/components/core/Select'
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '~/components/core/Popover'
 import { Spinner } from '~/components/core/Spinner'
 import { Textarea } from '~/components/core/TextArea'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
@@ -29,6 +37,8 @@ import {
   minLengthCheck,
   minNumberCheck,
 } from '~/utils/checks'
+import { cn } from '~/utils/cn'
+import { getAbstractTokenDisplayId } from '~/utils/getAbstractTokenDisplayId'
 import type { InferFormSchema } from '~/utils/types'
 import { validateResolver } from '~/utils/validateResolver'
 
@@ -92,6 +102,7 @@ export function NewDeployedTokenForm() {
   }, [deployedTokenExists, deployedTokenExistsLoading, form])
 
   function onSubmit(values: InferFormSchema<typeof formSchema>) {
+    if (deployedTokenExistsLoading) return
     if (deployedTokenExists) {
       setDeployedTokenExistsError(form)
       return
@@ -128,23 +139,57 @@ export function NewDeployedTokenForm() {
                         <Spinner className="size-3.5" />
                       )}
                     </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select a chain" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {chains?.map((category) => (
-                          <SelectItem key={category} value={category}>
-                            {category}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant="outline"
+                            role="combobox"
+                            className={cn(
+                              'justify-between',
+                              !field.value && 'text-muted-foreground',
+                            )}
+                          >
+                            {field.value
+                              ? chains?.find((chain) => chain === field.value)
+                              : 'Select chain'}
+                            <ChevronsUpDownIcon className="opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[200px] p-0" align="start">
+                        <Command>
+                          <CommandInput
+                            placeholder="Search chain..."
+                            className="h-9"
+                          />
+                          <CommandList>
+                            <CommandEmpty>No chain found.</CommandEmpty>
+                            <CommandGroup>
+                              {chains?.map((chain) => (
+                                <CommandItem
+                                  value={chain}
+                                  key={chain}
+                                  onSelect={() => {
+                                    form.setValue('chain', chain)
+                                  }}
+                                >
+                                  {chain}
+                                  <CheckIcon
+                                    className={cn(
+                                      'ml-auto',
+                                      chain === field.value
+                                        ? 'opacity-100'
+                                        : 'opacity-0',
+                                    )}
+                                  />
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -208,23 +253,66 @@ export function NewDeployedTokenForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Abstract Token ID</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select an abstract token" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {abstractTokens?.map((token) => (
-                        <SelectItem key={token.id} value={token.id}>
-                          {token.id}:{token.issuer ?? 'unknown'}:{token.symbol}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            ' justify-between',
+                            !field.value && 'text-muted-foreground',
+                          )}
+                        >
+                          {field.value
+                            ? getAbstractTokenDisplayId(
+                                // biome-ignore lint/style/noNonNullAssertion: it's there
+                                abstractTokens?.find(
+                                  (abstractToken) =>
+                                    abstractToken.id === field.value,
+                                )!,
+                              )
+                            : 'Select abstract token'}
+                          <ChevronsUpDownIcon className="opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="p-0" align="start">
+                      <Command>
+                        <CommandInput
+                          placeholder="Search abstract token..."
+                          className="h-9"
+                        />
+                        <CommandList>
+                          <CommandEmpty>No abstract token found.</CommandEmpty>
+                          <CommandGroup>
+                            {abstractTokens?.map((abstractToken) => (
+                              <CommandItem
+                                value={abstractToken.id}
+                                key={abstractToken.id}
+                                onSelect={() => {
+                                  form.setValue(
+                                    'abstractTokenId',
+                                    abstractToken.id,
+                                  )
+                                }}
+                              >
+                                {getAbstractTokenDisplayId(abstractToken)}
+                                <CheckIcon
+                                  className={cn(
+                                    'ml-auto',
+                                    abstractToken.id === field.value
+                                      ? 'opacity-100'
+                                      : 'opacity-0',
+                                  )}
+                                />
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
                   <FormMessage />
                 </FormItem>
               )}
