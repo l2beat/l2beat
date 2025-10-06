@@ -1,10 +1,9 @@
-import { skipToken, useQuery } from '@tanstack/react-query'
+import { skipToken, useMutation, useQuery } from '@tanstack/react-query'
 import { TrashIcon } from 'lucide-react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { coingecko } from '~/api/coingecko'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
-import { Button } from '~/components/core/Button'
 import {
   Card,
   CardContent,
@@ -15,12 +14,16 @@ import {
   AbstractTokenForm,
   AbstractTokenSchema,
 } from '~/components/forms/AbstractTokenForm'
+import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
+import { type Plan, tokenService } from '~/mock/MockTokenService'
 import type { AbstractToken } from '~/mock/types'
 import { toYYYYMMDD } from '~/utils/toYYYYMMDD'
 import { validateResolver } from '~/utils/validateResolver'
 
 export function AbstractTokenView({ token }: { token: AbstractToken }) {
+  const [plan, setPlan] = useState<Plan | undefined>(undefined)
+
   const form = useForm<AbstractTokenSchema>({
     resolver: validateResolver(AbstractTokenSchema),
     defaultValues: {
@@ -43,6 +46,17 @@ export function AbstractTokenView({ token }: { token: AbstractToken }) {
   })
 
   const showCoingeckoLoading = isLoading || coingeckoId !== debouncedCoingeckoId
+
+  const { mutate: planDeleteAbstractToken, isPending } = useMutation({
+    mutationFn: () =>
+      tokenService.plan({
+        type: 'DeleteAbstractTokenIntent',
+        abstractTokenId: token.id,
+      }),
+    onSuccess: (data) => {
+      setPlan(data)
+    },
+  })
 
   useEffect(() => {
     if (isLoading) return
@@ -77,40 +91,54 @@ export function AbstractTokenView({ token }: { token: AbstractToken }) {
   ])
 
   return (
-    <div className="mx-auto flex max-w-2xl gap-2">
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            Abstract Token
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <AbstractTokenForm
-            form={form}
-            onSubmit={() => {}}
-            isFormDisabled={false}
-            coingeckoFields={{
-              isLoading: showCoingeckoLoading,
-              success: !!coin,
-            }}
-          >
-            <ButtonWithSpinner
-              isLoading={false}
-              disabled={
-                Object.keys(form.formState.dirtyFields).length === 0 ||
-                showCoingeckoLoading
-              }
-              className="w-full"
-              type="submit"
+    <>
+      <PlanConfirmationDialog
+        plan={plan}
+        setPlan={setPlan}
+        onSuccess={form.reset}
+      />
+      <div className="mx-auto flex max-w-2xl gap-2">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              Abstract Token
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <AbstractTokenForm
+              form={form}
+              onSubmit={() => {}}
+              isFormDisabled={isPending}
+              coingeckoFields={{
+                isLoading: showCoingeckoLoading,
+                success: !!coin,
+              }}
             >
-              Update
-            </ButtonWithSpinner>
-          </AbstractTokenForm>
-        </CardContent>
-      </Card>
-      <Button variant="destructive" className="mt-2">
-        <TrashIcon />
-      </Button>
-    </div>
+              <ButtonWithSpinner
+                isLoading={false}
+                disabled={
+                  Object.keys(form.formState.dirtyFields).length === 0 ||
+                  showCoingeckoLoading
+                }
+                className="w-full"
+                type="submit"
+              >
+                Update
+              </ButtonWithSpinner>
+            </AbstractTokenForm>
+          </CardContent>
+        </Card>
+        <ButtonWithSpinner
+          variant="destructive"
+          className="mt-2"
+          onClick={() => {
+            planDeleteAbstractToken()
+          }}
+          isLoading={isPending}
+        >
+          <TrashIcon />
+        </ButtonWithSpinner>
+      </div>
+    </>
   )
 }

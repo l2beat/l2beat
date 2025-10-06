@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { type Command, type Plan, tokenService } from '~/mock/MockTokenService'
 import { assertUnreachable } from '~/utils/assertUnreachable'
@@ -25,6 +25,8 @@ export function PlanConfirmationDialog({
   onSuccess?: () => void
 }) {
   const queryClient = useQueryClient()
+  const navigate = useNavigate()
+
   const { mutate: executePlan, isPending } = useMutation({
     mutationFn: async (plan: Plan) => tokenService.execute(plan),
     onSuccess: () => {
@@ -58,6 +60,16 @@ export function PlanConfirmationDialog({
             </span>,
           )
           queryClient.invalidateQueries({ queryKey: ['abstractTokens'] })
+          break
+        case 'DeleteAbstractTokenIntent':
+          toast.success('Abstract token deleted successfully')
+          queryClient.invalidateQueries({ queryKey: ['abstractTokens'] })
+          navigate('/')
+          break
+        case 'DeleteDeployedTokenIntent':
+          toast.success('Deployed token deleted successfully')
+          queryClient.invalidateQueries({ queryKey: ['deployedTokens'] })
+          navigate('/')
           break
         default:
           assertUnreachable(plan.intent)
@@ -134,6 +146,34 @@ function CommandItem({ command }: { command: Command }) {
             </TooltipContent>
           </Tooltip>{' '}
           will be added
+        </li>
+      )
+    case 'DeleteAbstractTokenCommand':
+      return (
+        <li>
+          <Tooltip>
+            <TooltipTrigger className="underline">
+              Abstract token
+            </TooltipTrigger>
+            <TooltipContent className="whitespace-pre">
+              {JSON.stringify(command.abstractToken, null, 2)}
+            </TooltipContent>
+          </Tooltip>{' '}
+          will be deleted
+        </li>
+      )
+    case 'DeleteDeployedTokenCommand':
+      return (
+        <li>
+          <Tooltip>
+            <TooltipTrigger className="underline">
+              Deployed token
+            </TooltipTrigger>
+            <TooltipContent className="whitespace-pre">
+              {JSON.stringify(command.deployedToken, null, 2)}
+            </TooltipContent>
+          </Tooltip>{' '}
+          will be deleted
         </li>
       )
     default:
