@@ -24,12 +24,12 @@ export class PlanningError extends Error {
 }
 
 interface PlanningResultSuccess {
-  type: 'success'
+  outcome: 'success'
   plan: Plan
 }
 
 interface PlanningResultError {
-  type: 'error'
+  outcome: 'error'
   error: string
 }
 
@@ -58,7 +58,7 @@ export async function generatePlan(
   } catch (error: unknown) {
     if (error instanceof PlanningError) {
       return {
-        type: 'error',
+        outcome: 'error',
         error: error.message,
       }
     }
@@ -66,7 +66,7 @@ export async function generatePlan(
   }
 
   return {
-    type: 'success',
+    outcome: 'success',
     plan: {
       intent,
       commands,

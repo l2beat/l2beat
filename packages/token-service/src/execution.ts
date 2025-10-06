@@ -2,6 +2,7 @@ import { isDeepStrictEqual } from 'node:util'
 import type { TokenDatabase } from '@l2beat/database'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import type { Command } from './commands'
+import type { Intent } from './intents'
 import { generatePlan, type Plan } from './planning'
 
 type PlanExecutionResult = PlanExecutionSuccess | PlanExecutionError
@@ -47,6 +48,21 @@ export function executePlan(
     // "serialzed" order)
     'serializable',
   )
+}
+
+export async function planAndExecute(
+  db: TokenDatabase,
+  intent: Intent,
+): Promise<void> {
+  await db.transaction(async () => {
+    const planningResult = await generatePlan(db, intent)
+    if (planningResult.outcome === 'error') {
+      throw new Error(`Error during planning: ${planningResult.error}`)
+    }
+    for (const command of planningResult.plan.commands) {
+      await executeCommand(db, command)
+    }
+  }, 'serializable')
 }
 
 async function executeCommand(db: TokenDatabase, command: Command) {
