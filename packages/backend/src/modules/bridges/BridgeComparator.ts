@@ -4,13 +4,11 @@ import type { BridgeComparePlugin, BridgeExternalItem } from './compare/types'
 
 export class BridgeComparator {
   private running = false
-  private pluginData: Record<
-    string,
-    {
-      items: (BridgeExternalItem & { isLatest: boolean })[]
-      type: BridgeComparePlugin['type']
-    }
-  > = {}
+  private items: {
+    plugin: string
+    type: BridgeComparePlugin['type']
+    item: BridgeExternalItem & { isLatest: boolean }
+  }[] = []
 
   constructor(
     private db: Database,
@@ -52,19 +50,13 @@ export class BridgeComparator {
     await Promise.all(
       this.plugins.map(async (plugin) => {
         try {
-          const items = (await plugin.getExternalItems()).map((i) => ({
-            ...i,
-            isLatest: true,
+          const pluginItems = (await plugin.getExternalItems()).map((i) => ({
+            plugin: plugin.name,
+            type: plugin.type,
+            item: { ...i, isLatest: true },
           }))
 
-          if (!this.pluginData[plugin.name]) {
-            this.pluginData[plugin.name] = {
-              type: plugin.type,
-              items: items,
-            }
-          } else {
-            this.pluginData[plugin.name].items.push(...items)
-          }
+          this.items.push(...pluginItems)
         } catch (error) {
           this.logger.warn(
             `Fetching items for plugin ${plugin.name} failed`,
@@ -77,53 +69,56 @@ export class BridgeComparator {
 
   async compare() {
     this.logger.info('Comparing...', {
-      plugins: Array.from(Object.keys(this.pluginData)),
+      plugins: Array.from(new Set(this.items.map((i) => i.plugin)).keys()),
+      items: this.items.length,
     })
 
-    for (const [plugin, { items, type }] of Object.entries(this.pluginData)) {
-      if (items.length === 0) return
-      if (items.length === 0) continue
+    const messages = await this.db.bridgeMessage.getExistingItems(
+      this.items
+        .filter((i) => i.type === 'message')
+        .map((i) => ({ ...i.item })),
+    )
 
-      const records =
-        type === 'message'
-          ? await this.db.bridgeMessage.getExistingItems(items)
-          : await this.db.bridgeTransfer.getExistingItems(items)
+    const transfers = await this.db.bridgeTransfer.getExistingItems(
+      this.items
+        .filter((i) => i.type === 'transfer')
+        .map((i) => ({ ...i.item })),
+    )
 
-      const skipped = []
-      let missing = 0
+    const existing = new Set([
+      ...messages.map((m) => key(m)),
+      ...transfers.map((t) => key(t)),
+    ])
 
-      for (const item of items) {
-        const record = records.find(
-          (r) =>
-            r.srcTxHash?.toLowerCase() === item.srcTxHash.toLowerCase() &&
-            r.dstTxHash?.toLowerCase() === item.dstTxHash.toLowerCase(),
-        )
+    const skipped = []
+    let missing = 0
 
-        if (!record) {
-          if (item.isLatest) {
-            skipped.push(item)
-            this.logger.warn('Missing item skipped', { plugin, item })
-            continue
-          }
-          missing++
-          this.logger.warn('Missing item detected', { plugin, item })
+    for (const { plugin, type, item } of this.items) {
+      if (!existing.has(key(item))) {
+        if (item.isLatest) {
+          skipped.push({ plugin, type, item })
+          this.logger.warn('Missing item skipped', { plugin, item })
+          continue
         }
+        missing++
+        this.logger.warn('Missing item detected', { plugin, item })
       }
-
-      this.pluginData[plugin].items = skipped.map((s) => ({
-        ...s,
-        isLatest: false,
-      }))
-
-      this.logger.info('Plugin compare finished', {
-        plugin: plugin,
-        items: items.length,
-        records: records.length,
-        missing,
-        skipped: skipped.length,
-      })
     }
 
-    this.logger.info('Compare finished')
+    this.logger.info('Compare finished', {
+      items: this.items.length,
+      existing: existing.size,
+      missing,
+      skipped: skipped.length,
+    })
+
+    this.items = skipped.map((s) => ({
+      ...s,
+      isLatest: false,
+    }))
   }
+}
+
+function key(x: { srcTxHash?: string; dstTxHash?: string }) {
+  return `${x.srcTxHash?.toLowerCase()}-${x.dstTxHash?.toLowerCase()}`
 }
