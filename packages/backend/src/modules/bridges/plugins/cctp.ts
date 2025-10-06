@@ -213,7 +213,13 @@ export class CCTPPlugin implements BridgePlugin {
         messageBody: messageReceived.args.messageBody,
       })
       if (!messageSent) return
-      return [Result.Message('cctp-v1.Message', [messageSent, messageReceived])]
+      return [
+        Result.Message('cctp-v1.Message', {
+          app: 'unknown',
+          srcEvent: messageSent,
+          dstEvent: messageReceived,
+        }),
+      ]
     }
 
     if (CCTPv2MessageReceived.checkType(messageReceived)) {
@@ -224,7 +230,11 @@ export class CCTPPlugin implements BridgePlugin {
       return [
         Result.Message(
           messageSent.args.fast ? 'cctp-v2.FastMessage' : 'cctp-v2.SlowMessage',
-          [messageSent, messageReceived],
+          {
+            app: 'unknown',
+            srcEvent: messageSent,
+            dstEvent: messageReceived,
+          },
         ),
       ]
     }

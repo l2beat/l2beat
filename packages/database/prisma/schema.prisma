@@ -366,6 +366,7 @@ model BridgeEvent {
 model BridgeMessage {
   messageId   String    @db.VarChar(40)
   type        String    @db.VarChar(64)
+  app         String    @default("") @db.VarChar(64)
   duration    Int?
   timestamp   DateTime  @db.Timestamp(6)
   srcTime     DateTime? @db.Timestamp(6)

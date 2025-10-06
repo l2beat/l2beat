@@ -14,6 +14,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatDelay } from '../../common/formatDelays'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getCommittee,
@@ -44,6 +45,11 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 )
 
 const { committeePermission, minSigners } = getCommittee(discovery)
+
+const myriaProgramHash = discovery.getContractValue<string>(
+  'GpsFactRegistryAdapter',
+  'programHash',
+)
 
 export const myria: ScalingProject = {
   type: 'layer2',
@@ -136,6 +142,7 @@ export const myria: ScalingProject = {
   },
   stateValidation: {
     categories: [STATE_VALIDATION.STARKEX_VALIDITY_PROOFS],
+    zkProgramHashes: [ZK_PROGRAM_HASHES(myriaProgramHash)],
   },
   technology: {
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKEX_OFF_CHAIN,

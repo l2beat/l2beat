@@ -64,16 +64,25 @@ export class MayanMctpPlugin implements BridgePlugin {
       })
       if (!logMessagePublished) return
       return [
-        Result.Message('cctp-v1.Message', [messageSent, messageReceived]),
-        Result.Message('wormhole.Message.mayan-mctp', [
-          logMessagePublished,
-          messageReceived,
-        ]),
+        Result.Message('cctp-v1.Message', {
+          app: 'mayan-mctp',
+          srcEvent: messageSent,
+          dstEvent: messageReceived,
+        }),
+        Result.Message('wormhole.Message', {
+          app: 'mayan-mctp',
+          srcEvent: logMessagePublished,
+          dstEvent: messageReceived,
+        }),
         // TODO: transfer, use event
       ]
     }
     return [
-      Result.Message('cctp-v1.Message', [messageSent, messageReceived]),
+      Result.Message('cctp-v1.Message', {
+        app: 'mayan-mctp',
+        srcEvent: messageSent,
+        dstEvent: messageReceived,
+      }),
       // TODO: transfer, use event
     ]
   }

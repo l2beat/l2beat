@@ -390,6 +390,8 @@ export interface ReasonForBeingInOther {
   label: string
   shortDescription: string
   description: string
+  /** A few words explaining why we added this reason for being other. It is showed in `Why is the project listed in others?` section */
+  explanation?: string
 }
 
 export type ProjectScalingStack =
@@ -584,8 +586,9 @@ export interface ProjectScalingStateValidationCategory {
 export interface ProjectScalingStateValidationZkProgramHash {
   hash: string
   proverSystemProject: ProjectId
-  description: string
-  programUrl: string
+  title: string
+  description?: string
+  programUrl?: string
   verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
   verificationSteps?: string
 }
@@ -676,7 +679,6 @@ export interface DataAvailabilitySampling {
 }
 
 export interface DaEconomicSecurity {
-  name: string
   token: {
     symbol: string
     decimals: number

@@ -179,6 +179,25 @@ describe('getProjects', () => {
     })
   })
 
+  describe('daLayer', () => {
+    const SUPPORTED_ECONOMIC_SECURITY_PROJECTS = [
+      'ethereum',
+      'celestia',
+      'avail',
+      'near-da',
+    ]
+
+    for (const project of projects) {
+      if (project.daLayer?.economicSecurity) {
+        it(`${project.id} economicSecurity is supported in BE code`, () => {
+          expect(
+            SUPPORTED_ECONOMIC_SECURITY_PROJECTS.includes(project.id),
+          ).toEqual(true)
+        })
+      }
+    }
+  })
+
   describe('contracts', () => {
     for (const project of getProjects()) {
       describe(project.id, () => {

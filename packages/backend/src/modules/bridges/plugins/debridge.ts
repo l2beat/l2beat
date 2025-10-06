@@ -146,10 +146,16 @@ export class DeBridgePlugin implements BridgePlugin {
       submissionId: claimed.args.submissionId,
     })
     if (!sent) return
+
+    const hasTransfer = BigInt(claimed.args.amount) > 0
     const results: MatchResult = [
-      Result.Message('debridge.Message', [sent, claimed]),
+      Result.Message('debridge.Message', {
+        app: hasTransfer ? 'debridge' : 'unknown',
+        srcEvent: sent,
+        dstEvent: claimed,
+      }),
     ]
-    if (BigInt(claimed.args.amount) > 0) {
+    if (hasTransfer) {
       results.push(
         Result.Transfer('debridge.Transfer', {
           srcEvent: sent,
