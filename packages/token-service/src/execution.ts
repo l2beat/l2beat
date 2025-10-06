@@ -5,7 +5,7 @@ import type { Command } from './commands'
 import type { Intent } from './intents'
 import { generatePlan, type Plan } from './planning'
 
-type PlanExecutionResult = PlanExecutionSuccess | PlanExecutionError
+export type PlanExecutionResult = PlanExecutionSuccess | PlanExecutionError
 
 interface PlanExecutionError {
   outcome: 'error'
@@ -22,8 +22,14 @@ export function executePlan(
 ): Promise<PlanExecutionResult> {
   return db.transaction(
     async (): Promise<PlanExecutionResult> => {
-      const regeneratedPlan = await generatePlan(db, plan.intent)
-      if (!isDeepStrictEqual(regeneratedPlan, plan)) {
+      const planRegeneration = await generatePlan(db, plan.intent)
+      if (planRegeneration.outcome === 'error') {
+        return {
+          outcome: 'error',
+          error: `Plan is no longer valid: ${planRegeneration.error}`,
+        }
+      }
+      if (!isDeepStrictEqual(planRegeneration.plan, plan)) {
         return {
           outcome: 'error',
           error:

@@ -16,6 +16,7 @@
     "lint": "biome check --formatter-enabled=false .",
     "test": "mocha",
     "typecheck": "tsc --noEmit",
+    "serve": "ts-node ./scripts/serve.ts",
     "import-generated": "ts-node ./scripts/import-generated.ts"
   },
   "dependencies": {
@@ -26,10 +27,12 @@
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
+    "@types/express": "^5.0.0",
     "@types/mocha": "^10.0.6",
+    "dotenv": "^17.2.3",
     "earl": "^1.1.0",
+    "express": "^5.1.0",
     "mocha": "^10.2.0",
-    "ts-node-dev": "^2.0.0",
-    "dotenv": "^17.2.3"
+    "ts-node-dev": "^2.0.0"
   }
 }
