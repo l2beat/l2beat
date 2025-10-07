@@ -488,3 +488,12 @@ model TokenConnection {
   @@index([tokenFromChain, tokenFromAddress])
   @@index([tokenToChain, tokenToAddress])
 }
+
+model InteropRecentPrices {
+  coingeckoId         String    @db.VarChar(64)
+  timestamp           DateTime  @db.Timestamp(6)
+  priceUsd            Float     @db.Real
+
+  @@id([coingeckoId, timestamp])
+  @@index([timestamp])
+}
