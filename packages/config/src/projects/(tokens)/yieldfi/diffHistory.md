@@ -1,9 +1,9 @@
 Generated with discovered.json: 0xbb4437c4fda5f58ac2d9c20a0d8b2d858f66fc2a
 
-# Diff at Tue, 07 Oct 2025 11:19:49 GMT:
+# Diff at Mon, 06 Oct 2025 15:28:03 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@4ae9c16b346d08f223ca3da791b7b0eae2f1c8df block: 1755603175
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e58bd9f0913161b35e2a2c65f233464591d4f28b block: 1755603175
 - current timestamp: 1759764158
 
 ## Description

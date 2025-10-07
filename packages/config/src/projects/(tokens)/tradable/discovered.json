@@ -5314,7 +5314,7 @@
       }
     },
     {
-      "name": "Private Credit Direct Deal0000023 1 Token",
+      "name": "Private Credit Direct Deal0000023 Token",
       "address": "zksync:0x5C8c39E167C604B036afd3FBB65426f9fe78Ce6d",
       "type": "Contract",
       "unverified": true,
@@ -16635,5 +16635,5 @@
     "tradable/DealRegistry": "0x80492a8b01b07c7eb3c5cebc3a4c692ef4abb2da9faf34b0d838d7d21d76e23f"
   },
   "usedBlockNumbers": { "zksync2": 64027305 },
-  "permissionsConfigHash": "0x64a7f88d71294e0217c31c15f54b158b104d588d3504e62ee90a6875be4472ef"
+  "permissionsConfigHash": "0x92d6b447e24bcfd75095c12ecc8d930b699b3888b983ffa284043c705e61be3e"
 }

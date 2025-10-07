@@ -1,9 +1,9 @@
 Generated with discovered.json: 0xa580ce65af310668ee81ae6cd4bc2e630f58603d
 
-# Diff at Tue, 07 Oct 2025 11:20:04 GMT:
+# Diff at Mon, 06 Oct 2025 15:12:19 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@4ae9c16b346d08f223ca3da791b7b0eae2f1c8df block: 1758803109
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e58bd9f0913161b35e2a2c65f233464591d4f28b block: 1758803109
 - current timestamp: 1759761526
 
 ## Description
@@ -491,6 +491,33 @@ Lido- v3 upgrades (support for L1-triggerable withdrwawals)
 +   Status: CREATED
     contract TriggerableWithdrawalsGateway (eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B)
     +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../AccountingOracle/AccountingOracle.sol          |  102 +-
+ .../CSAccounting/CSAccounting.sol                  | 2530 +++++++--------
+ .../CSEarlyAdoption.sol => /dev/null               |  299 --
+ .../src/projects/tokens/.flat/CSEjector.sol        | 1776 +++++++++++
+ .../.flat/CSExitPenalties/CSExitPenalties.sol      | 1830 +++++++++++
+ .../.flat/CSExitPenalties/OssifiableProxy.p.sol    |  619 ++++
+ .../CSFeeDistributor/CSFeeDistributor.sol          |  377 ++-
+ .../CSFeeOracle/CSFeeOracle.sol                    |  311 +-
+ .../CSModule/CSModule.sol                          | 3001 ++++++++++--------
+ .../CSParametersRegistry/CSParametersRegistry.sol  | 3348 ++++++++++++++++++++
+ .../CSParametersRegistry/OssifiableProxy.p.sol     |  619 ++++
+ .../projects/tokens/.flat/CSStrikes/CSStrikes.sol  | 1489 +++++++++
+ .../tokens/.flat/CSStrikes/OssifiableProxy.p.sol   |  619 ++++
+ .../LidoLocator/LidoLocator.sol                    |    6 +
+ .../NodeOperatorsRegistry.sol                      |  504 ++-
+ .../NodeOperatorsRegistry.sol                      |  504 ++-
+ .../StakingRouter/StakingRouter.sol                |  253 +-
+ .../tokens/.flat/TriggerableWithdrawalsGateway.sol | 1291 ++++++++
+ .../tokens/.flat/ValidatorExitDelayVerifier.sol    |  667 ++++
+ .../ValidatorsExitBusOracle.sol                    | 1121 +++++--
+ .../WithdrawalVault/WithdrawalVault.sol            |  146 +-
+ 21 files changed, 17155 insertions(+), 4257 deletions(-)
 ```
 
 Generated with discovered.json: 0x452b93407e604d63d147c7c6b2e6f1f89138f0d8

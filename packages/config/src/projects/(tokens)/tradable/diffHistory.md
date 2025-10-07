@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xdc807199b8273616744f84bae395057b8b2c7521
+Generated with discovered.json: 0xcef9f730bf5b7043add0b820d80d011a31827dc7
 
-# Diff at Tue, 07 Oct 2025 11:19:42 GMT:
+# Diff at Tue, 07 Oct 2025 14:35:51 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@4ae9c16b346d08f223ca3da791b7b0eae2f1c8df block: 1755162744
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8565ff097fc0a7fe0355555b648b1799518c8f35 block: 1755162744
 - current timestamp: 1755162744
 
 ## Description
@@ -71,11 +71,11 @@ discovery. Values are for block 1755162744 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Private Credit Direct Deal0000023 1 Token (zksync:0x5C8c39E167C604B036afd3FBB65426f9fe78Ce6d) {
+    contract Private Credit Direct Deal0000023 Token (zksync:0x5C8c39E167C604B036afd3FBB65426f9fe78Ce6d) {
     +++ description: None
       name:
 -        "Deal"
-+        "Private Credit Direct Deal0000023 1 Token"
++        "Private Credit Direct Deal0000023 Token"
     }
 ```
 
