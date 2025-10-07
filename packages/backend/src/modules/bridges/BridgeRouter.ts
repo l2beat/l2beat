@@ -171,6 +171,8 @@ async function getMessagesStats(db: Database) {
     type: overall.type,
     count: Number(overall.count),
     medianDuration: Number(overall.medianDuration),
+    knownAppCount: Number(overall.knownAppCount),
+    knownApps: overall.knownApps,
     chains: detailedStats
       .filter((chain) => chain.type === overall.type)
       .map((chain) => {

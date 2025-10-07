@@ -115,7 +115,11 @@ export class Usdt0Plugin implements BridgePlugin {
     if (!packetDelivered) return
 
     return [
-      Result.Message('layerzero-v2.Message', [packetSent, packetDelivered]),
+      Result.Message('layerzero-v2.Message', {
+        app: 'usdt0',
+        srcEvent: packetSent,
+        dstEvent: packetDelivered,
+      }),
       Result.Transfer('usdt0.Transfer', {
         srcEvent: oftSent,
         srcTokenAddress: oftSent.args.tokenAddress,
