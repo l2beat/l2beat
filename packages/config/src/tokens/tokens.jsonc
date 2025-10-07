@@ -5519,6 +5519,125 @@
   ],
   "zksync2": [
     {
+      "symbol": "PC0000097",
+      "address": "0x5abe0a2ead1357f70e73f5b60e227df64a54ddd5",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted" // reason: price
+    },
+    {
+      "symbol": "PC0000085",
+      "address": "0xfeafde23fb2364896c297c3fa6628f04601a035b",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted" // reason: price
+    },
+    {
+      "symbol": "PC0000019",
+      "address": "0x1f179a51ab46252f469733dfcbd9115090a91f03",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted" // reason: price
+    },
+    {
+      "symbol": "PC0000049",
+      "address": "0xe53dbcef6f700536a912c51caea4d0e2be2b1388",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted" // reason: price
+    },
+    {
+      "symbol": "PC0000061",
+      "address": "0x5895024c953bee18d5f026bfcf6259bb2d79e12d",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted" // reason: price
+    },
+    {
+      "symbol": "PC0000081",
+      "address": "0xa4b3dc5433ecabdd1498ca7f3f4d890b185c0b0a",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted" // reason: price
+    },
+    {
+      "symbol": "PC0000077",
+      "address": "0x18012cb9e1478ef458c8c996f99b8dceca60795c",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted" // reason: price
+    },
+    {
+      "symbol": "PC0000015",
+      "address": "0xd8916e15d351dc728414e99a4883c72010ee11f8",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted" // reason: price
+    },
+    {
+      "symbol": "PC0000023",
+      "address": "0xae0d8cad4ce522538ae34386c319c7ccd11fe428",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted" // reason: price
+    },
+    {
+      "symbol": "PC0000033",
+      "address": "0x6ff4fafd8d604614c704a5936d9146c0af19bd1e",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted" // reason: price
+    },
+    {
+      "symbol": "PC0000113",
+      "address": "0x5556fe72eb021f97d39ba704f3674f1731e1acc4",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted" // reason: price
+    },
+    {
+      "symbol": "PC0000101",
+      "address": "0x3d19625bb8e4b52ac4ca28ecec2b5e243ae2ee81",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted" // reason: price
+    },
+    {
+      "symbol": "PC0000089",
+      "address": "0xfb3fccdd38a96c3f769c62e578323f22c3bfcbec",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted" // reason: price
+    },
+    {
+      "symbol": "PC0000037",
+      "address": "0x83547ba6b1992f70ae7203de4e95bb74b37ca3ec",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted" // reason: price
+    },
+    {
+      "symbol": "PC0000027",
+      "address": "0xc629d9e3d1a4325dbfaff85d5a61da956cc5e32b",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted" // reason: price
+    },
+    {
+      "symbol": "PC0016245",
+      "address": "0xe3d53addadb3f87adc38b4192171aaf5a07a3738",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted" // reason: price
+    },
+    {
+      "symbol": "PC0000023",
+      "address": "0x5c8c39e167c604b036afd3fbb65426f9fe78ce6d",
+      "source": "native",
+      "supply": "circulatingSupply",
+      "category": "rwaRestricted" // reason: price
+    },
+    {
       "symbol": "PC0000031",
       "address": "0xAc4DE1E9A9e83524F24af77972Dd39D588De8164",
       "source": "native",
