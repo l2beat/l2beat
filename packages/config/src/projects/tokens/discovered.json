@@ -733,7 +733,7 @@
       }
     },
     {
-      "name": "USDC",
+      "name": "USD Coin Token",
       "address": "base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
       "type": "Contract",
       "template": "tokens/circle/USDC",
@@ -2276,7 +2276,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "wstETH_tokenContract",
+      "name": "Wrapped liquid staked Ether 2.0 Token",
       "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
       "type": "Contract",
       "template": "tokens/Lido/wstETH",
@@ -3341,7 +3341,7 @@
       ]
     },
     {
-      "name": "STRK_tokenContract",
+      "name": "StarkNet Token",
       "address": "eth:0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766",
       "type": "Contract",
       "template": "tokens/STRK",

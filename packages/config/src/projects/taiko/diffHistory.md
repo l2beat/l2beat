@@ -1,30 +1,3 @@
-Generated with discovered.json: 0xf6c2c066e6172e0bdad79c05449b3c7611c1eac0
-
-# Diff at Tue, 07 Oct 2025 10:27:33 GMT:
-
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@dcb97cb884a7068d73eb2e7cb88d82455decdb43 block: 1759239729
-- current timestamp: 1759239729
-
-## Description
-
-Discovery rerun on the same block number with only config-related changes.
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1759239729 (main branch discovery), not current.
-
-```diff
-    contract TaikoToken (eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) {
-    +++ description: ERC20 contract implementing the TAIKO token. It defines a list of addresses designated as non-voting.
-      name:
--        "Taiko Token"
-+        "TaikoToken"
-    }
-```
-
 Generated with discovered.json: 0xd05faca832046b1c1d0640225e033e34a4cccf9d
 
 # Diff at Tue, 30 Sep 2025 14:26:28 GMT:
