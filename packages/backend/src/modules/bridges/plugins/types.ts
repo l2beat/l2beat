@@ -33,6 +33,7 @@ export interface BridgeEvent<T = unknown> {
 export interface BridgeMessage {
   plugin: string
   kind: 'BridgeMessage'
+  app: string
   type: string
   src: BridgeEvent
   dst: BridgeEvent
@@ -206,8 +207,12 @@ export const Result = { Message, Transfer }
 
 function Message(
   type: string,
-  events: [src: BridgeEvent, dst: BridgeEvent],
-): Omit<BridgeMessage, 'plugin'> {
+  options: {
+    app: string
+    srcEvent: BridgeEvent
+    dstEvent: BridgeEvent
+  },
+): BridgeMessage {
   if (!/\w+\.\w+(\.\w+)?/.test(type)) {
     throw new Error(
       'BridgeMessage type must have the format: "protocol-name.MessageName" or "protocol-name.MessageName.app-name"',
@@ -216,8 +221,9 @@ function Message(
   return {
     kind: 'BridgeMessage',
     type,
-    src: events[0],
-    dst: events[1],
+    app: options.app,
+    src: options.srcEvent,
+    dst: options.dstEvent,
   }
 }
 

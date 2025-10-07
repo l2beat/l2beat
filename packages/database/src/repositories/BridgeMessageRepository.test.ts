@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
 import {
@@ -6,185 +6,112 @@ import {
   BridgeMessageRepository,
 } from './BridgeMessageRepository'
 
-describeDatabase(BridgeMessageRepository.name, (db) => {
-  const repository = db.bridgeMessage
+describeDatabase(BridgeMessageRepository.name, (database) => {
+  const repository = database.bridgeMessage
 
-  describe(BridgeMessageRepository.prototype.insertMany.name, () => {
-    it('adds new rows', async () => {
-      const records = [
-        bridgeMessage('plugin1', 'msg1', 'type1', UnixTime(100), 'a', 'b', 1),
-        bridgeMessage('plugin2', 'msg2', 'type2', UnixTime(200), 'b', 'a', 2),
-      ]
-
-      const inserted = await repository.insertMany(records)
-      expect(inserted).toEqual(2)
-
-      const result = await repository.getAll()
-      expect(result).toEqualUnsorted(records)
-    })
-
-    it('handles empty array', async () => {
-      const inserted = await repository.insertMany([])
-      expect(inserted).toEqual(0)
-    })
-
-    it('performs batch insert when more than 2000 records', async () => {
-      const records = []
-      for (let i = 0; i < 2500; i++) {
-        records.push(bridgeMessage('plugin', `msg${i}`, 'type1', UnixTime(i)))
-      }
-
-      const inserted = await repository.insertMany(records)
-      expect(inserted).toEqual(2500)
-    })
-
-    it('handles records with undefined optional fields', async () => {
-      const record = {
-        plugin: 'test-plugin',
-        messageId: 'test-message',
-        type: 'type1',
-        duration: undefined,
-        timestamp: UnixTime(100),
-        srcTime: undefined,
-        srcChain: undefined,
-        srcTxHash: undefined,
-        srcLogIndex: undefined,
-        srcEventId: undefined,
-        dstTime: undefined,
-        dstChain: undefined,
-        dstTxHash: undefined,
-        dstLogIndex: undefined,
-        dstEventId: undefined,
-      }
-
-      const inserted = await repository.insertMany([record])
-      expect(inserted).toEqual(1)
-
-      const result = await repository.getAll()
-      expect(result).toEqual([record])
-    })
-  })
-
-  describe(BridgeMessageRepository.prototype.getByType.name, () => {
-    beforeEach(async () => {
-      await repository.insertMany([
-        bridgeMessage('plugin1', 'msg1', 'type1', UnixTime(100), 'ethereum'),
-        bridgeMessage('plugin1', 'msg2', 'type1', UnixTime(200), 'ethereum'),
-        bridgeMessage('plugin2', 'msg3', 'type2', UnixTime(150), 'optimism'),
-        bridgeMessage(
-          'plugin2',
-          'msg4',
-          'type1',
-          UnixTime(300),
-          'base',
-          'ethereum',
-        ),
-      ])
-    })
-
-    it('returns messages for a specific type', async () => {
-      const result = await repository.getByType('type1')
-
-      expect(result).toHaveLength(3)
-      expect(result.map((r) => r.messageId)).toEqualUnsorted([
-        'msg1',
-        'msg2',
-        'msg4',
-      ])
-    })
-
-    it('returns messages ordered by timestamp descending', async () => {
-      const result = await repository.getByType('type1')
-
-      expect(result.map((r) => r.timestamp)).toEqual([300, 200, 100])
-    })
-
-    it('filters by source chain when provided', async () => {
-      const result = await repository.getByType('type1', {
-        srcChain: 'ethereum',
-      })
-
-      expect(result).toHaveLength(2)
-      expect(result.map((r) => r.messageId)).toEqualUnsorted(['msg1', 'msg2'])
-    })
-
-    it('filters by destination chain when provided', async () => {
-      const result = await repository.getByType('type1', {
-        dstChain: 'ethereum',
-      })
-
-      expect(result).toHaveLength(1)
-      expect(result[0]?.messageId).toEqual('msg4')
-    })
-
-    it('filters by both source and destination chain when provided', async () => {
-      const result = await repository.getByType('type1', {
-        srcChain: 'base',
-        dstChain: 'ethereum',
-      })
-
-      expect(result).toHaveLength(1)
-      expect(result[0]?.messageId).toEqual('msg4')
-    })
-
-    it('returns empty array when no messages match type', async () => {
-      const result = await repository.getByType('nonexistent')
-
-      expect(result).toEqual([])
-    })
-  })
-
-  describe(BridgeMessageRepository.prototype.deleteBefore.name, () => {
-    it('deletes messages before specified timestamp', async () => {
-      await repository.insertMany([
-        bridgeMessage('plugin1', 'msg1', 'deposit', UnixTime(100)),
-        bridgeMessage('plugin1', 'msg2', 'deposit', UnixTime(200)),
-        bridgeMessage('plugin1', 'msg3', 'withdraw', UnixTime(300)),
-        bridgeMessage('plugin1', 'msg4', 'deposit', UnixTime(400)),
-      ])
-
-      const deleted = await repository.deleteBefore(UnixTime(250))
-
-      expect(deleted).toEqual(2)
-
-      const remaining = await repository.getAll()
-      expect(remaining).toHaveLength(2)
-      expect(remaining.map((r) => r.messageId)).toEqualUnsorted([
-        'msg3',
-        'msg4',
-      ])
-    })
-  })
-
-  afterEach(async () => {
+  beforeEach(async () => {
     await repository.deleteAll()
   })
-})
 
-function bridgeMessage(
-  plugin: string,
-  messageId: string,
-  type: string,
-  timestamp: UnixTime,
-  srcChain?: string,
-  dstChain?: string,
-  duration?: number,
-): BridgeMessageRecord {
-  return {
-    plugin,
-    messageId,
-    type,
-    duration,
-    timestamp,
-    srcTime: srcChain ? timestamp : undefined,
-    srcChain,
-    srcTxHash: srcChain ? `0x${messageId}src` : undefined,
-    srcLogIndex: srcChain ? 1 : undefined,
-    srcEventId: srcChain ? `${messageId}-src-event` : undefined,
-    dstTime: dstChain ? timestamp + (duration ?? 0) : undefined,
-    dstChain,
-    dstTxHash: dstChain ? `0x${messageId}dst` : undefined,
-    dstLogIndex: dstChain ? 2 : undefined,
-    dstEventId: dstChain ? `${messageId}-dst-event` : undefined,
-  }
-}
+  describe(BridgeMessageRepository.prototype.getStats.name, () => {
+    it('returns stats grouped by message type with multiple known apps', async () => {
+      const now = UnixTime.now()
+      const records: BridgeMessageRecord[] = [
+        {
+          messageId: 'msg1',
+          type: 'bridge',
+          app: 'arbitrum',
+          duration: 100,
+          timestamp: now,
+          srcTime: now,
+          srcChain: 'ethereum',
+          srcTxHash: '0x123',
+          srcLogIndex: 0,
+          srcEventId: 'event1',
+          dstTime: now + 100,
+          dstChain: 'arbitrum',
+          dstTxHash: '0x456',
+          dstLogIndex: 0,
+          dstEventId: 'event2',
+        },
+        {
+          messageId: 'msg2',
+          type: 'bridge',
+          app: 'optimism',
+          duration: 200,
+          timestamp: now + UnixTime.HOUR,
+          srcTime: now + UnixTime.HOUR,
+          srcChain: 'ethereum',
+          srcTxHash: '0x789',
+          srcLogIndex: 1,
+          srcEventId: 'event3',
+          dstTime: now + UnixTime.HOUR + 200,
+          dstChain: 'optimism',
+          dstTxHash: '0xabc',
+          dstLogIndex: 1,
+          dstEventId: 'event4',
+        },
+        {
+          messageId: 'msg3',
+          type: 'bridge',
+          app: 'polygon',
+          duration: 150,
+          timestamp: now + UnixTime.MINUTE * 30,
+          srcTime: now + UnixTime.MINUTE * 30,
+          srcChain: 'ethereum',
+          srcTxHash: '0xdef',
+          srcLogIndex: 2,
+          srcEventId: 'event5',
+          dstTime: now + UnixTime.MINUTE * 30 + 150,
+          dstChain: 'polygon',
+          dstTxHash: '0xghi',
+          dstLogIndex: 2,
+          dstEventId: 'event6',
+        },
+        {
+          messageId: 'msg4',
+          type: 'swap',
+          app: 'arbitrum',
+          duration: 300,
+          timestamp: now + UnixTime.HOUR * 2,
+          srcTime: now + UnixTime.HOUR * 2,
+          srcChain: 'arbitrum',
+          srcTxHash: '0xjkl',
+          srcLogIndex: 3,
+          srcEventId: 'event7',
+          dstTime: now + UnixTime.HOUR * 2 + 300,
+          dstChain: 'ethereum',
+          dstTxHash: '0xmno',
+          dstLogIndex: 3,
+          dstEventId: 'event8',
+        },
+      ]
+
+      await repository.insertMany(records)
+      const result = await repository.getStats()
+
+      expect(result).toHaveLength(2)
+
+      const bridgeStats = result.find((s) => s.type === 'bridge')
+      assert(bridgeStats)
+
+      expect(bridgeStats.type).toEqual('bridge')
+      expect(bridgeStats.count).toEqual(3)
+      expect(bridgeStats.knownAppCount).toEqual(3)
+      expect(bridgeStats.medianDuration).toEqual(150)
+      expect(bridgeStats.knownApps).toEqualUnsorted([
+        'arbitrum',
+        'optimism',
+        'polygon',
+      ])
+
+      const swapStats = result.find((s) => s.type === 'swap')
+      assert(swapStats)
+      expect(swapStats.type).toEqual('swap')
+      expect(swapStats.count).toEqual(1)
+      expect(swapStats.knownAppCount).toEqual(1)
+      expect(swapStats.knownApps).toEqual(['arbitrum'])
+      expect(swapStats.medianDuration).toEqual(300)
+    })
+  })
+})

@@ -204,6 +204,7 @@ function toMessageRecord(message: BridgeMessage): BridgeMessageRecord {
     plugin: message.plugin,
     messageId: generateId('M'),
     type: message.type,
+    app: message.app,
     duration: Math.max(
       message.dst.ctx.timestamp - message.src.ctx.timestamp,
       0,

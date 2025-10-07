@@ -101,17 +101,17 @@ export const boojum: BaseProject = {
         ],
         verificationStatus: 'notVerified',
       },
-      {
-        hash: '0x941fd36f78a5ba753dbbe65b9123a43ae833405fafd03b5149b959eee766e03c',
-        proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
-        knownDeployments: [
-          {
-            address: '0x1F517f2bAb178AdD6e282297a4728bcc50E9F6CF',
-            chain: 'ethereum',
-          },
-        ],
-        verificationStatus: 'notVerified',
-      },
+      // {
+      //   hash: '0x941fd36f78a5ba753dbbe65b9123a43ae833405fafd03b5149b959eee766e03c',
+      //   proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
+      //   knownDeployments: [
+      //     {
+      //       address: '0x1F517f2bAb178AdD6e282297a4728bcc50E9F6CF',
+      //       chain: 'ethereum',
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      // },
       {
         hash: '0x64b347c642ea60114c98b3976124ea8a7e0bb778bd7e479aedc02f994486c8a1',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
@@ -138,17 +138,17 @@ export const boojum: BaseProject = {
         ],
         verificationStatus: 'notVerified',
       },
-      {
-        hash: '0xf688611ad4e0ef20184a89e7b593493dffcefe92071f85c1a0b94d4852c4f82f',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
-        knownDeployments: [
-          {
-            address: '0xAd36FFc4066855aeF3Bdf6BF03cA427bb084636e',
-            chain: 'ethereum',
-          },
-        ],
-        verificationStatus: 'notVerified',
-      },
+      // {
+      //   hash: '0xf688611ad4e0ef20184a89e7b593493dffcefe92071f85c1a0b94d4852c4f82f',
+      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
+      //   knownDeployments: [
+      //     {
+      //       address: '0xAd36FFc4066855aeF3Bdf6BF03cA427bb084636e',
+      //       chain: 'ethereum',
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      // },
       // {
       //   hash: '0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2',
       //   proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
