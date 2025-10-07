@@ -1,3 +1,44 @@
+Generated with discovered.json: 0x2e9a37a7cec6d16ca609263daafadf2786cd1011
+
+# Diff at Tue, 07 Oct 2025 09:55:25 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@5e88ba37ad7744f9d7831779a58849b5d00ec673 block: 1759252030
+- current timestamp: 1759830680
+
+## Description
+
+Ignore supply, gas price values.
+
+## Watched changes
+
+```diff
+    contract Ether Token (metis-andromeda:0x420000000000000000000000000000000000000A) {
+    +++ description: None
+      values.totalSupply:
+-        "4803274560845429809151"
++        "4803234538115429809151"
+    }
+```
+
+```diff
+    contract OVM_GasPriceOracle (metis-andromeda:0x420000000000000000000000000000000000000F) {
+    +++ description: None
+      values.gasPrice:
+-        3102269267
++        3575362724
+    }
+```
+
+```diff
+    contract MVM_Coinbase (metis-andromeda:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000) {
+    +++ description: None
+      values.totalSupply:
+-        "6915210796933756685181355"
++        "6916941051923016337946090"
+    }
+```
+
 Generated with discovered.json: 0x8664d4abd42fc7a9230e30f7d6bbbaa4ecb9fb78
 
 # Diff at Tue, 30 Sep 2025 17:10:58 GMT:

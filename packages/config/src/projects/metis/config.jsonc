@@ -75,6 +75,15 @@
         "getThreshold": { "severity": "HIGH", "type": "PERMISSION" }
       }
     },
+    "metis-andromeda:0x420000000000000000000000000000000000000A": {
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    "metis-andromeda:0x420000000000000000000000000000000000000F": {
+      "ignoreInWatchMode": ["gasPrice"]
+    },
+    "metis-andromeda:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000": {
+      "ignoreInWatchMode": ["totalSupply"]
+    },
     // Unused contracts
     "eth:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a": {
       "ignoreDiscovery": true
