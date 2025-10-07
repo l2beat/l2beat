@@ -105,10 +105,6 @@
       "address": "0x58b9cB810A68a7f3e1E4f8Cb45D1B9B3c79705E8"
     },
     {
-      "symbol": "DOG",
-      "address": "0xbaac2b4491727d78d2b78815144570b9f2fe8899"
-    },
-    {
       "symbol": "imgnAI",
       "address": "0xa735a3af76cc30791c61c10d585833829d36cbe0"
     },
@@ -121,16 +117,8 @@
       "address": "0x6e5970dbd6fc7eb1f29c6d2edf2bc4c36124c0c1"
     },
     {
-      "symbol": "WXM",
-      "address": "0xde654f497a563dd7a121c176a125dd2f11f13a83"
-    },
-    {
       "symbol": "RSC",
       "address": "0xd101dcc414f310268c37eeb4cd376ccfa507f571"
-    },
-    {
-      "symbol": "GHST",
-      "address": "0x3f382dbd960e3a9bbceae22651e88158d2791550"
     },
     {
       "symbol": "OM",
@@ -335,10 +323,6 @@
       "address": "0xa0d69e286b938e21cbf7e51d71f6a4c8918f482f"
     },
     {
-      "symbol": "TRADE",
-      "address": "0x6e5970dbd6fc7eb1f29c6d2edf2bc4c36124c0c1"
-    },
-    {
       "symbol": "WXM",
       "address": "0xde654f497A563dd7A121c176a125dD2F11F13a83"
     },
@@ -392,10 +376,6 @@
     {
       "symbol": "ONDO",
       "address": "0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3"
-    },
-    {
-      "symbol": "COW",
-      "address": "0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB"
     },
     {
       "symbol": "DODO",
@@ -506,11 +486,6 @@
       "symbol": "FBTC",
       "category": "btc",
       "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364"
-    },
-    {
-      "symbol": "LsETH",
-      "category": "ether",
-      "address": "0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549"
     },
     {
       "symbol": "weETHs",
@@ -1006,11 +981,6 @@
       "address": "0xFe0c30065B384F05761f15d0CC899D4F9F9Cc0eB"
     },
     {
-      "symbol": "EURA",
-      "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
-      "category": "stablecoin"
-    },
-    {
       "symbol": "EURT",
       "category": "stablecoin",
       "address": "0xC581b735A1688071A1746c968e0798D642EDE491"
@@ -1092,11 +1062,6 @@
     {
       "symbol": "GAINS",
       "address": "0x056C1D42Fb1326f57da7f19eBB7dDA4673f1FF55"
-    },
-    {
-      "symbol": "GALA",
-      "address": "0x15D4c048F83bd7e37d49eA4C83a07267Ec4203dA",
-      "coingeckoId": "gala"
     },
     {
       "symbol": "GAME",
@@ -3438,13 +3403,6 @@
       "supply": "zero"
     },
     {
-      "symbol": "wBTC",
-      "category": "btc",
-      "address": "0x68f180fcCe6836688e9084f035309E29Bf0A2095",
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
       "symbol": "ETH",
       "source": "canonical",
       "supply": "zero",
@@ -4162,12 +4120,6 @@
     {
       "symbol": "TN100X",
       "address": "0x5b5dee44552546ecea05edea01dcd7be7aa6144a",
-      "source": "native",
-      "supply": "circulatingSupply"
-    },
-    {
-      "symbol": "MIGGLES",
-      "address": "0xb1a03eda10342529bbf8eb700a06c60441fef25d",
       "source": "native",
       "supply": "circulatingSupply"
     },
@@ -5620,13 +5572,6 @@
     {
       "symbol": "PC0000015",
       "address": "0xd8916e15d351dc728414e99a4883c72010ee11f8",
-      "source": "native",
-      "supply": "totalSupply",
-      "category": "rwaRestricted" // reason: price
-    },
-    {
-      "symbol": "PC0000023",
-      "address": "0xae0d8cad4ce522538ae34386c319c7ccd11fe428",
       "source": "native",
       "supply": "totalSupply",
       "category": "rwaRestricted" // reason: price
