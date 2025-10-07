@@ -85,8 +85,8 @@ export const CELESTIA_DA_PROVIDER: DAProvider = {
 
 export const EIGENDA_DA_PROVIDER: DAProvider = {
   layer: DA_LAYERS.EIGEN_DA,
-  riskView: RISK_VIEW.DATA_EIGENDA(false),
-  technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(false),
+  riskView: RISK_VIEW.DATA_EIGENDA(false, 'v1'),
+  technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(false, 'v1'),
   bridge: DA_BRIDGES.NONE,
   badge: BADGES.DA.EigenDA,
 }
