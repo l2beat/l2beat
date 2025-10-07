@@ -175,6 +175,9 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
         coingeckoId: 'near',
       },
     },
+    validators: {
+      type: 'dynamic',
+    },
   },
   milestones: [
     {
