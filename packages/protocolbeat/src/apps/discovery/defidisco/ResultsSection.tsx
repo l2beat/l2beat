@@ -230,42 +230,18 @@ function calculateUpgradeabilityStats(
 }
 
 // Simplified owner resolution that works with the available data
-// In a full implementation, this would use the backend API
+// Note: This is a simplified version for the stats panel
+// The actual resolution happens in FunctionFolder.tsx
 function getOwnerAddressesFromDefinitions(
   ownerDefinitions: OwnerDefinition[],
   projectData: any
 ): string[] {
   const addresses: string[] = []
-
-  // For now, we'll extract addresses from field-type owner definitions
-  // by looking at the project data directly
-  ownerDefinitions.forEach(definition => {
-    if (definition.type === 'field' && definition.field) {
-      const { contractAddress, method } = definition.field
-
-      // Find the contract in project data
-      projectData.entries?.forEach((entry: any) => {
-        const allContracts = [...(entry.initialContracts || []), ...(entry.discoveredContracts || [])]
-        const contract = allContracts.find((c: any) => c.address === contractAddress)
-
-        if (contract && contract.fields) {
-          const field = contract.fields.find((f: any) => f.name === method)
-          if (field && field.value) {
-            // Extract address(es) from the field value
-            if (field.value.type === 'address') {
-              addresses.push(field.value.address)
-            } else if (field.value.type === 'array' && field.value.values) {
-              field.value.values.forEach((val: any) => {
-                if (val.type === 'address') {
-                  addresses.push(val.address)
-                }
-              })
-            }
-          }
-        }
-      })
-    }
-  })
+  // **TODO**
+  // With the new path-based format, we can't easily resolve without duplicating
+  // the complex resolution logic from FunctionFolder.tsx
+  // For now, just return empty array - the stats will show that owners are defined
+  // but won't try to resolve them in this simplified view
 
   return addresses
 }

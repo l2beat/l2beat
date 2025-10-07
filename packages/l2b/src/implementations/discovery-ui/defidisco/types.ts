@@ -216,12 +216,17 @@ export interface PermissionOverride {
   }
 }
 
-// Owner definition types - optimized two-step approach
-// Step 1: sourceField points to an address field in the current contract
-// Step 2: dataPath specifies which data to extract from the resolved source address
+// Owner definition types - unified path expression approach
+// Path format: <contractRef>.<valuePath>
+// - <contractRef>: $self (current contract), @fieldName (follow address field), or eth:0xAddress (absolute address)
+// - <valuePath>: JSONPath-like navigation in contract.values (e.g., owner, signers[0], accessControl.ADMIN.members)
+// Examples:
+//   "$self.owner" - owner field in current contract
+//   "@governor.accessControl.PAUSER_ROLE.members" - follow governor field, get role members
+//   "eth:0x123...acl.permissions[eth:0x456][ROLE].entities" - absolute address for complex structures
+//   "$self" - current contract itself is the owner (shorthand for no value path)
 export interface OwnerDefinition {
-  sourceField: string       // Field name in current contract (e.g., "governor", "admin")
-  dataPath: string          // Path to data in source contract (e.g., "admin", "signers[0]", "PAUSER_ROLE")
+  path: string              // Unified path expression
 }
 
 export interface ApiPermissionOverridesUpdateRequest {

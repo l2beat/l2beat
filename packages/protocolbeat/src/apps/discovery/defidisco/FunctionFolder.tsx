@@ -15,11 +15,16 @@ import { useQuery } from '@tanstack/react-query'
 import { getProject } from '../../../api/api'
 import { usePanelStore } from '../store/panel-store'
 
+// Extended type for local display with contractAddress
+interface PermissionOverrideWithContract extends PermissionOverride {
+  contractAddress: string
+}
+
 interface FunctionFolderProps {
   entry: ApiAbiEntry
   contractAddress: string
   functionName: string
-  overrides: PermissionOverride[]
+  overrides: PermissionOverrideWithContract[]
   onPermissionToggle: (contractAddress: string, functionName: string, currentClassification: 'permissioned' | 'non-permissioned') => void
   onCheckedToggle: (contractAddress: string, functionName: string, currentChecked: boolean) => void
   onScoreToggle: (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk') => void
@@ -29,89 +34,158 @@ interface FunctionFolderProps {
   onDelayUpdate: (contractAddress: string, functionName: string, delay?: { contractAddress: string; fieldName: string }) => void
 }
 
-// Helper function to navigate data path in UI (mirrors backend logic)
-function navigateDataPathInUI(contract: any, dataPath: string): string[] {
-  // Special case: $self means the source contract itself is the owner
-  if (dataPath === '$self') {
-    return [contract.address]
+// Helper function to find the contract that owns the given address
+// For proxy contracts, the address might be an implementation address in the abis array
+function findContractForAddress(contracts: any[], address: string): any | null {
+  // First try direct match
+  let contract = contracts.find(c => c.address === address)
+  if (contract) {
+    return contract
   }
 
-  // Check for accessControl path pattern: accessControl.ROLE_NAME.members
-  const accessControlMatch = dataPath.match(/^accessControl\.([^.]+)\.members$/)
-  if (accessControlMatch) {
-    const roleName = accessControlMatch[1]!
-    const accessControlField = contract.fields?.find((f: any) => f.name === 'accessControl')
+  // Not found directly - might be an implementation address
+  // Find the proxy that has this address in its abis array
+  contract = contracts.find(c =>
+    c.abis?.some((abi: any) => abi.address === address)
+  )
 
-    if (accessControlField?.value?.type === 'object') {
-      // Find the role in the object structure [[key, value], [key, value], ...]
-      for (const [keyField, valueField] of accessControlField.value.values) {
-        if (keyField.type === 'string' && keyField.value === roleName) {
-          // valueField should be an object with 'members' property
-          if (valueField.type === 'object') {
-            // Find 'members' in the role object
-            for (const [propKey, propValue] of valueField.values) {
-              if (propKey.type === 'string' && propKey.value === 'members') {
-                // propValue should be an array of addresses
-                if (propValue.type === 'array') {
-                  const addresses: string[] = []
-                  for (const member of propValue.values) {
-                    if (member.type === 'address') {
-                      addresses.push((member as AddressFieldValue).address)
-                    }
-                  }
-                  return addresses
-                }
-              }
-            }
-          }
-        }
+  return contract || null
+}
+
+// Helper function to navigate value path in UI (mirrors backend logic)
+function navigateValuePathInUI(contract: any, valuePath: string): string[] {
+  if (!contract.fields || contract.fields.length === 0) {
+    throw new Error('Contract has no fields')
+  }
+
+  // Convert fields array to values object for easier navigation
+  const values: any = {}
+  for (const field of contract.fields) {
+    values[field.name] = convertFieldValueToPlainValue(field.value)
+  }
+
+  // Parse and navigate the path
+  let currentValue: any = values
+  const segments = parseValuePathInUI(valuePath)
+
+  for (let i = 0; i < segments.length; i++) {
+    const segment = segments[i]!
+
+    if (segment.type === 'property') {
+      if (typeof currentValue !== 'object' || currentValue === null) {
+        throw new Error(`Cannot access property "${segment.value}" on non-object`)
       }
+      currentValue = currentValue[segment.value]
+      if (currentValue === undefined) {
+        throw new Error(`Property "${segment.value}" not found`)
+      }
+    } else if (segment.type === 'index') {
+      if (!Array.isArray(currentValue)) {
+        throw new Error(`Cannot index non-array`)
+      }
+      const index = segment.value as number
+      if (index >= currentValue.length) {
+        throw new Error(`Index ${index} out of bounds`)
+      }
+      currentValue = currentValue[index]
     }
-    throw new Error(`AccessControl role ${roleName} not found or has no members`)
   }
 
-  // Check for array access pattern: fieldName[index]
-  const arrayMatch = dataPath.match(/^(.+?)\[(\d+)\]$/)
+  // Extract addresses from final value
+  return extractAddressesInUI(currentValue, valuePath)
+}
 
-  if (arrayMatch) {
-    const [, fieldName, indexStr] = arrayMatch
-    const index = parseInt(indexStr!, 10)
-
-    const field = contract.fields?.find((f: any) => f.name === fieldName)
-    if (!field) throw new Error(`Field ${fieldName} not found`)
-
-    if (field.value.type !== 'array') {
-      throw new Error(`Field ${fieldName} is not an array`)
-    }
-
-    const arrayValue = field.value.values
-    if (index >= arrayValue.length) {
-      throw new Error(`Index ${index} out of bounds`)
-    }
-
-    const element = arrayValue[index]
-    if (element.type === 'address') {
-      return [element.address]
-    }
-
-    throw new Error(`Array element is not an address`)
+// Converts FieldValue to plain JS value for easier navigation
+function convertFieldValueToPlainValue(fieldValue: any): any {
+  if (!fieldValue || !fieldValue.type) {
+    return fieldValue
   }
 
-  // Simple field access
-  const field = contract.fields?.find((f: any) => f.name === dataPath)
-  if (!field) throw new Error(`Field ${dataPath} not found`)
+  switch (fieldValue.type) {
+    case 'address':
+      return fieldValue.address
+    case 'string':
+    case 'number':
+    case 'hex':
+      return fieldValue.value
+    case 'boolean':
+      return fieldValue.value
+    case 'array':
+      return fieldValue.values.map((v: any) => convertFieldValueToPlainValue(v))
+    case 'object':
+      // Object is stored as [[key, value], [key, value], ...]
+      const obj: any = {}
+      for (const [keyField, valueField] of fieldValue.values) {
+        const key = convertFieldValueToPlainValue(keyField)
+        const value = convertFieldValueToPlainValue(valueField)
+        obj[key] = value
+      }
+      return obj
+    default:
+      return fieldValue
+  }
+}
 
-  // Single address
-  if (field.value.type === 'address') {
-    return [field.value.address]
+// Parses value path into segments (same as backend)
+function parseValuePathInUI(path: string): Array<{ type: 'property' | 'index'; value: string | number }> {
+  const segments: Array<{ type: 'property' | 'index'; value: string | number }> = []
+  let current = ''
+  let i = 0
+
+  while (i < path.length) {
+    const char = path[i]!
+
+    if (char === '.') {
+      if (current) {
+        segments.push({ type: 'property', value: current })
+        current = ''
+      }
+      i++
+    } else if (char === '[') {
+      if (current) {
+        segments.push({ type: 'property', value: current })
+        current = ''
+      }
+
+      const closeIndex = path.indexOf(']', i)
+      if (closeIndex === -1) {
+        throw new Error(`Unclosed bracket in path: ${path}`)
+      }
+
+      const indexStr = path.substring(i + 1, closeIndex)
+      const index = parseInt(indexStr, 10)
+
+      if (isNaN(index)) {
+        segments.push({ type: 'property', value: indexStr })
+      } else {
+        segments.push({ type: 'index', value: index })
+      }
+
+      i = closeIndex + 1
+    } else {
+      current += char
+      i++
+    }
   }
 
-  // Array of addresses
-  if (field.value.type === 'array') {
+  if (current) {
+    segments.push({ type: 'property', value: current })
+  }
+
+  return segments
+}
+
+// Extracts addresses from value
+function extractAddressesInUI(value: any, path: string): string[] {
+  if (typeof value === 'string' && value.startsWith('eth:')) {
+    return [value]
+  }
+
+  if (Array.isArray(value)) {
     const addresses: string[] = []
-    for (const element of field.value.values) {
-      if (element.type === 'address') {
-        addresses.push(element.address)
+    for (const element of value) {
+      if (typeof element === 'string' && element.startsWith('eth:')) {
+        addresses.push(element)
       }
     }
     if (addresses.length > 0) {
@@ -119,7 +193,7 @@ function navigateDataPathInUI(contract: any, dataPath: string): string[] {
     }
   }
 
-  throw new Error(`Could not resolve ${dataPath} to address(es)`)
+  throw new Error(`Value at path "${path}" is not an address or array of addresses`)
 }
 
 export function FunctionFolder({
@@ -150,105 +224,28 @@ export function FunctionFolder({
     enabled: !!project,
   })
 
-  // Owner resolution using the new two-step approach
+  // Owner resolution using unified path expressions
   const resolvedOwners = React.useMemo(() => {
     if (!currentOverride?.ownerDefinitions || !projectData?.entries) {
       return []
     }
 
+    const allContracts = projectData.entries.flatMap(e => [...e.initialContracts, ...e.discoveredContracts])
+
     return currentOverride.ownerDefinitions.map(definition => {
       try {
-        // Step 1: Get current contract
-        const currentContract = projectData.entries.flatMap(e => [...e.initialContracts, ...e.discoveredContracts])
-          .find(c => c.address === contractAddress)
+        const addresses = resolvePathExpressionInUI(allContracts, contractAddress, definition.path)
 
-        if (!currentContract) {
-          throw new Error('Current contract not found')
+        if (addresses.length === 0) {
+          throw new Error('No addresses found')
         }
 
-        // Special case: accessControl means look for the role in the CURRENT contract
-        if (definition.sourceField === 'accessControl') {
-          // Get the full role data including admin and members
-          const accessControlField = currentContract.fields?.find((f: any) => f.name === 'accessControl')
-
-          if (!accessControlField || accessControlField.value?.type !== 'object') {
-            throw new Error('AccessControl field not found')
-          }
-
-          // Find the role in the object structure [[key, value], [key, value], ...]
-          let roleData: any = null
-          for (const [keyField, valueField] of accessControlField.value.values) {
-            if (keyField.type === 'string' && keyField.value === definition.dataPath) {
-              roleData = valueField
-              break
-            }
-          }
-
-          if (!roleData || roleData.type !== 'object') {
-            throw new Error(`Role ${definition.dataPath} not found`)
-          }
-
-          // Extract admin and members from the role object
-          let adminRole: string | null = null
-          const memberAddresses: string[] = []
-
-          for (const [propKey, propValue] of roleData.values) {
-            if (propKey.type === 'string' && propKey.value === 'adminRole') {
-              if (propValue.type === 'string') {
-                adminRole = propValue.value
-              }
-            }
-            if (propKey.type === 'string' && propKey.value === 'members') {
-              if (propValue.type === 'array') {
-                for (const member of propValue.values) {
-                  if (member.type === 'address') {
-                    memberAddresses.push((member as AddressFieldValue).address)
-                  }
-                }
-              }
-            }
-          }
-
-          return {
-            address: memberAddresses[0] || 'NO_MEMBERS',
-            source: definition,
-            isResolved: memberAddresses.length > 0,
-            roleData: {
-              adminRole,
-              members: memberAddresses
-            }
-          }
+        return {
+          address: addresses[0]!,
+          source: definition,
+          isResolved: true,
+          allAddresses: addresses // Keep all resolved addresses for display
         }
-
-        // Step 2: Resolve source field to get source address
-        const sourceField = currentContract.fields?.find(f => f.name === definition.sourceField)
-        if (!sourceField || sourceField.value.type !== 'address') {
-          throw new Error(`Source field ${definition.sourceField} not found or not an address`)
-        }
-
-        const sourceAddress = sourceField.value.address
-
-        // Step 3: Find source contract
-        const sourceContract = projectData.entries.flatMap(e => [...e.initialContracts, ...e.discoveredContracts])
-          .find(c => c.address === sourceAddress)
-
-        if (!sourceContract) {
-          throw new Error(`Source contract ${sourceAddress} not found`)
-        }
-
-        // Step 4: Navigate dataPath to get owner address(es)
-        const ownerAddresses = navigateDataPathInUI(sourceContract, definition.dataPath)
-
-        // Return first resolved address
-        if (ownerAddresses.length > 0) {
-          return {
-            address: ownerAddresses[0]!,
-            source: definition,
-            isResolved: true
-          }
-        }
-
-        throw new Error(`No addresses found at path ${definition.dataPath}`)
       } catch (error) {
         return {
           address: 'RESOLUTION_FAILED',
@@ -259,6 +256,63 @@ export function FunctionFolder({
       }
     })
   }, [currentOverride?.ownerDefinitions, projectData, contractAddress])
+
+  // Resolve path expression in UI
+  function resolvePathExpressionInUI(
+    allContracts: any[],
+    currentContractAddress: string,
+    pathExpression: string
+  ): string[] {
+    // Special case: just "$self" means current contract is the owner
+    if (pathExpression === '$self') {
+      return [currentContractAddress]
+    }
+
+    // Split on first dot to separate contract ref from value path
+    const firstDotIndex = pathExpression.indexOf('.')
+
+    if (firstDotIndex === -1) {
+      throw new Error(`Invalid path: must include contract reference and value path`)
+    }
+
+    const contractRef = pathExpression.substring(0, firstDotIndex)
+    const valuePath = pathExpression.substring(firstDotIndex + 1)
+
+    // Resolve contract reference
+    let targetContractAddress: string
+
+    if (contractRef === '$self') {
+      targetContractAddress = currentContractAddress
+    } else if (contractRef.startsWith('@')) {
+      const fieldName = contractRef.substring(1)
+      const currentContract = findContractForAddress(allContracts, currentContractAddress)
+
+      if (!currentContract) {
+        throw new Error('Current contract not found')
+      }
+
+      const field = currentContract.fields?.find((f: any) => f.name === fieldName)
+      if (!field || field.value.type !== 'address') {
+        throw new Error(`Field "${fieldName}" not found or is not an address`)
+      }
+
+      targetContractAddress = (field.value as any).address
+    } else if (contractRef.startsWith('eth:')) {
+      targetContractAddress = contractRef
+    } else {
+      throw new Error(`Invalid contract reference "${contractRef}"`)
+    }
+
+    // Find target contract
+    const targetContract = findContractForAddress(allContracts, targetContractAddress)
+
+    if (!targetContract) {
+      throw new Error(`Contract ${targetContractAddress} not found`)
+    }
+
+    // Navigate value path
+    return navigateValuePathInUI(targetContract, valuePath)
+  }
 
   const ownersLoading = false
   const ownersError = null
@@ -314,127 +368,9 @@ export function FunctionFolder({
     }
   }, [currentOverride?.delay, projectData])
 
-  // State for managing owner definitions (new two-step approach) - MUST BE BEFORE HOOKS THAT USE IT
+  // State for managing owner definitions (unified path approach)
   const [isAddingOwner, setIsAddingOwner] = useState(false)
-  const [newOwnerData, setNewOwnerData] = useState({
-    sourceField: '',        // Step 1: Field in current contract
-    dataPath: ''            // Step 2: Path in resolved source
-  })
-  const [resolvedSourceAddress, setResolvedSourceAddress] = useState<string | null>(null)
-
-  // Get source fields from CURRENT contract (Step 1)
-  const getSourceFields = React.useMemo(() => {
-    if (!projectData?.entries) return []
-
-    const currentContract = projectData.entries.flatMap(e => [...e.initialContracts, ...e.discoveredContracts])
-      .find(c => c.address === contractAddress)
-
-    if (!currentContract?.fields) return []
-
-    const sources: Array<{ name: string; address: string; description: string }> = []
-
-    // Add address-type fields
-    sources.push(...currentContract.fields
-      .filter(field => field.value.type === 'address')
-      .map(field => ({
-        name: field.name,
-        address: field.value.address,
-        description: field.description || ''
-      })))
-
-    // Add accessControl field if it exists (points to current contract itself)
-    const hasAccessControl = currentContract.fields.some(f => f.name === 'accessControl')
-    if (hasAccessControl) {
-      sources.push({
-        name: 'accessControl',
-        address: contractAddress, // Points to self
-        description: 'Access control roles in this contract'
-      })
-    }
-
-    return sources
-  }, [projectData, contractAddress])
-
-  // When source field changes, resolve the source address
-  React.useEffect(() => {
-    if (newOwnerData.sourceField && projectData?.entries) {
-      const currentContract = projectData.entries.flatMap(e => [...e.initialContracts, ...e.discoveredContracts])
-        .find(c => c.address === contractAddress)
-
-      // Special case: accessControl points to current contract itself
-      if (newOwnerData.sourceField === 'accessControl') {
-        setResolvedSourceAddress(contractAddress)
-        return
-      }
-
-      const sourceField = currentContract?.fields?.find(f => f.name === newOwnerData.sourceField)
-
-      if (sourceField?.value.type === 'address') {
-        setResolvedSourceAddress(sourceField.value.address)
-      } else {
-        setResolvedSourceAddress(null)
-      }
-    } else {
-      setResolvedSourceAddress(null)
-    }
-  }, [newOwnerData.sourceField, projectData, contractAddress])
-
-  // Get available data paths from resolved source contract (Step 2)
-  const getAvailableDataPaths = React.useMemo(() => {
-    if (!resolvedSourceAddress || !projectData?.entries) return []
-
-    const sourceContract = projectData.entries.flatMap(e => [...e.initialContracts, ...e.discoveredContracts])
-      .find(c => c.address === resolvedSourceAddress)
-
-    if (!sourceContract?.fields) return []
-
-    const dataPaths: Array<{ path: string; description: string; type: string }> = []
-
-    for (const field of sourceContract.fields) {
-      // AccessControl roles - check for fields named 'accessControl' with object type
-      if (field.name === 'accessControl' && field.value.type === 'object') {
-        // Parse accessControl roles from object structure
-        // Structure: [[key, value], [key, value], ...]
-        for (const tuple of field.value.values) {
-          const [keyField, valueField] = tuple
-          if (keyField.type === 'string') {
-            const roleName = keyField.value
-            dataPaths.push({
-              path: `${roleName}`,
-              description: `AccessControl role: ${roleName}`,
-              type: 'accessControl-role'
-            })
-          }
-        }
-      }
-
-      // Single address fields
-      if (field.value.type === 'address') {
-        dataPaths.push({
-          path: field.name,
-          description: field.description || `Address field: ${field.name}`,
-          type: 'address'
-        })
-      }
-
-      // Array of addresses
-      if (field.value.type === 'array') {
-        const arrayValue = field.value.values
-        for (let i = 0; i < Math.min(arrayValue.length, 10); i++) {
-          const element = arrayValue[i]
-          if (element?.type === 'address') {
-            dataPaths.push({
-              path: `${field.name}[${i}]`,
-              description: `${field.name}[${i}] → ${(element as AddressFieldValue).address.slice(0, 10)}...`,
-              type: 'array-element'
-            })
-          }
-        }
-      }
-    }
-
-    return dataPaths
-  }, [resolvedSourceAddress, projectData])
+  const [newOwnerPath, setNewOwnerPath] = useState('')
 
   // Get available contracts for delay selection
   const availableContracts = React.useMemo(() => {
@@ -582,8 +518,7 @@ export function FunctionFolder({
     const currentDefinitions = currentOverride?.ownerDefinitions || []
 
     const newDefinition: OwnerDefinition = {
-      sourceField: newOwnerData.sourceField,
-      dataPath: newOwnerData.dataPath
+      path: newOwnerPath
     }
 
     const updatedDefinitions = [...currentDefinitions, newDefinition]
@@ -591,11 +526,7 @@ export function FunctionFolder({
 
     // Reset form
     setIsAddingOwner(false)
-    setNewOwnerData({
-      sourceField: '',
-      dataPath: ''
-    })
-    setResolvedSourceAddress(null)
+    setNewOwnerPath('')
   }
 
   const handleRemoveOwnerDefinition = (index: number) => {
@@ -624,18 +555,20 @@ export function FunctionFolder({
   }
 
   const isAddFormValid = () => {
-    return newOwnerData.sourceField && newOwnerData.dataPath
+    return newOwnerPath.trim().length > 0
   }
 
   // Format owner definition with resolved value
-  const formatOwnerDefinition = (definition: OwnerDefinition, resolvedOwner?: { address: string; isResolved: boolean }) => {
-    // Format the dataPath in a user-friendly way
-    const dataPathDisplay = definition.dataPath === '$self' ? '(itself)' : definition.dataPath
-    let baseDescription = `${definition.sourceField} → ${dataPathDisplay}`
+  const formatOwnerDefinition = (definition: OwnerDefinition, resolvedOwner?: { address: string; isResolved: boolean; allAddresses?: string[] }) => {
+    let baseDescription = definition.path
 
     // Append resolved value if available
-    if (resolvedOwner?.isResolved && resolvedOwner.address && resolvedOwner.address !== 'RESOLUTION_FAILED') {
-      baseDescription += ` = ${resolvedOwner.address.slice(0, 10)}...`
+    if (resolvedOwner?.isResolved && resolvedOwner.allAddresses && resolvedOwner.allAddresses.length > 0) {
+      if (resolvedOwner.allAddresses.length === 1) {
+        baseDescription += ` → ${resolvedOwner.allAddresses[0]!.slice(0, 10)}...`
+      } else {
+        baseDescription += ` → ${resolvedOwner.allAddresses.length} addresses`
+      }
     }
 
     return baseDescription
@@ -827,61 +760,25 @@ export function FunctionFolder({
                           <div className="ml-2 mt-1">
                             <div className="text-xs text-coffee-400 mb-1">Resolves to:</div>
 
-                            {/* AccessControl role - show admin and members */}
-                            {(correspondingResolved as any).roleData ? (
-                              <div className="space-y-1">
-                                {/* Admin Role */}
-                                {(correspondingResolved as any).roleData.adminRole && (
-                                  <div className="flex items-center gap-2 text-xs">
-                                    <span className="text-coffee-400">Admin:</span>
-                                    <span className="text-aux-purple">{(correspondingResolved as any).roleData.adminRole}</span>
-                                  </div>
-                                )}
-
-                                {/* Members */}
-                                {(correspondingResolved as any).roleData.members.length > 0 && (
-                                  <div>
-                                    <div className="text-coffee-400 text-xs mb-1">Members:</div>
-                                    {(correspondingResolved as any).roleData.members.map((memberAddr: string, idx: number) => (
-                                      <div key={idx} className="flex items-center gap-2 ml-2 mb-1">
-                                        <button
-                                          onClick={() => usePanelStore.getState().select(memberAddr)}
-                                          className="text-aux-cyan hover:text-aux-cyan-light text-xs"
-                                          title={`Select ${memberAddr}`}
-                                        >
-                                          {getContractName(memberAddr)}
-                                        </button>
-                                        <button
-                                          onClick={() => usePanelStore.getState().select(memberAddr)}
-                                          className="text-coffee-400 hover:text-coffee-300"
-                                          title="Select this contract"
-                                        >
-                                          <IconOpen />
-                                        </button>
-                                      </div>
-                                    ))}
-                                  </div>
-                                )}
-                              </div>
-                            ) : (
-                              /* Regular owner - show name with select button */
-                              <div className="flex items-center gap-2">
+                            {/* Show all resolved addresses */}
+                            {(correspondingResolved as any).allAddresses?.map((addr: string, idx: number) => (
+                              <div key={idx} className="flex items-center gap-2 mb-1">
                                 <button
-                                  onClick={() => usePanelStore.getState().select(correspondingResolved.address)}
+                                  onClick={() => usePanelStore.getState().select(addr)}
                                   className="text-aux-cyan hover:text-aux-cyan-light text-xs"
-                                  title={`Select ${correspondingResolved.address}`}
+                                  title={`Select ${addr}`}
                                 >
-                                  {getContractName(correspondingResolved.address)}
+                                  {getContractName(addr)}
                                 </button>
                                 <button
-                                  onClick={() => usePanelStore.getState().select(correspondingResolved.address)}
+                                  onClick={() => usePanelStore.getState().select(addr)}
                                   className="text-coffee-400 hover:text-coffee-300"
                                   title="Select this contract"
                                 >
                                   <IconOpen />
                                 </button>
                               </div>
-                            )}
+                            ))}
                           </div>
                         )}
 
@@ -898,63 +795,32 @@ export function FunctionFolder({
               </div>
             )}
 
-            {/* Add new owner definition form - TWO-STEP APPROACH */}
+            {/* Add new owner definition form - UNIFIED PATH APPROACH */}
             {isAddingOwner && (
               <div className="bg-coffee-800 p-3 rounded">
                 <div className="text-xs text-coffee-400 mb-3">
-                  Step 1: Select source field from current contract → Step 2: Select data path from resolved source
+                  Enter a path expression to define permission owners
                 </div>
 
-                {/* Step 1: Source Field from Current Contract */}
                 <div className="mb-3">
                   <label className="block text-xs text-coffee-300 mb-1">
-                    Step 1: Source Field (from current contract)
+                    Path Expression
                   </label>
-                  <select
-                    value={newOwnerData.sourceField}
-                    onChange={(e) => setNewOwnerData(prev => ({ ...prev, sourceField: e.target.value, dataPath: '' }))}
-                    className="w-full px-2 py-1 text-xs bg-coffee-700 text-coffee-100 border border-coffee-600 rounded"
-                  >
-                    <option value="">Select a source field...</option>
-                    {getSourceFields.map((field) => (
-                      <option key={field.name} value={field.name}>
-                        {field.name} → {field.address.slice(0, 10)}... {field.description && `(${field.description})`}
-                      </option>
-                    ))}
-                  </select>
-                  {getSourceFields.length === 0 && (
-                    <div className="text-xs text-coffee-400 mt-1">
-                      No address fields found in current contract
-                    </div>
-                  )}
-                </div>
-
-                {/* Step 2: Data Path from Resolved Source */}
-                {resolvedSourceAddress && (
-                  <div className="mb-3">
-                    <label className="block text-xs text-coffee-300 mb-1">
-                      Step 2: Data Path (from {resolvedSourceAddress.slice(0, 10)}...)
-                    </label>
-                    <select
-                      value={newOwnerData.dataPath}
-                      onChange={(e) => setNewOwnerData(prev => ({ ...prev, dataPath: e.target.value }))}
-                      className="w-full px-2 py-1 text-xs bg-coffee-700 text-coffee-100 border border-coffee-600 rounded"
-                    >
-                      <option value="">Select a data path...</option>
-                      <option value="$self">None (source is the owner)</option>
-                      {getAvailableDataPaths.map((path) => (
-                        <option key={path.path} value={path.path}>
-                          {path.description}
-                        </option>
-                      ))}
-                    </select>
-                    <div className="text-xs text-coffee-400 mt-1">
-                      {getAvailableDataPaths.length === 0
-                        ? 'No additional address data found in source. Select "None" if source is the owner.'
-                        : 'Select "None" if the source address itself is the permission owner'}
-                    </div>
+                  <input
+                    type="text"
+                    value={newOwnerPath}
+                    onChange={(e) => setNewOwnerPath(e.target.value)}
+                    placeholder="e.g., $self.owner or @governor.signers[0]"
+                    className="w-full px-2 py-1 text-xs bg-coffee-700 text-coffee-100 border border-coffee-600 rounded font-mono"
+                  />
+                  <div className="text-xs text-coffee-400 mt-2 space-y-1">
+                    <div><strong>Examples:</strong></div>
+                    <div>• <code className="text-aux-cyan">$self.owner</code> - owner field in current contract</div>
+                    <div>• <code className="text-aux-cyan">@governor.signers[0]</code> - follow governor field, get first signer</div>
+                    <div>• <code className="text-aux-cyan">$self.accessControl.ADMIN_ROLE.members</code> - get role members</div>
+                    <div>• <code className="text-aux-cyan">$self</code> - current contract itself</div>
                   </div>
-                )}
+                </div>
 
                 <button
                   onClick={handleAddOwnerDefinition}

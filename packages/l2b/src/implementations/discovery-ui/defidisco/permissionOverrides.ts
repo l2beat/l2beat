@@ -274,9 +274,11 @@ function mergeContractPermissions(
 }
 
 /**
- * Resolves owner definitions using the new two-step approach:
- * 1. Find sourceField in current contract to get source address
- * 2. Navigate to source address and extract data at dataPath
+ * Resolves owner definitions using unified path expressions:
+ * Path format: <contractRef>.<valuePath>
+ * - $self: current contract
+ * - @fieldName: follow address field in current contract
+ * - eth:0xAddress: absolute contract address
  */
 export function resolveOwnersFromDiscovered(
   paths: DiscoveryPaths,
@@ -303,7 +305,7 @@ export function resolveOwnersFromDiscovered(
 
     for (const definition of ownerDefinitions) {
       try {
-        const addresses = resolveOwnerDefinition(discovered, contractAddress, definition)
+        const addresses = resolvePathExpression(discovered, contractAddress, definition.path)
         resolved.push(...addresses.map(address => ({
           address,
           source: definition,
@@ -332,81 +334,85 @@ export function resolveOwnersFromDiscovered(
 }
 
 /**
- * Resolves a single owner definition using the two-step approach:
- * 1. Find sourceField in current contract → get source address
- * 2. Navigate to source address and extract data at dataPath
- *
- * Special case: When sourceField is "accessControl", we look for roles in the CURRENT contract
+ * Resolves a path expression to owner addresses
+ * Path format: <contractRef>.<valuePath>
+ * Examples:
+ *   "$self.owner" → owner in current contract
+ *   "@governor.signers[0]" → follow governor field, get first signer
+ *   "eth:0x123.accessControl.ADMIN.members" → absolute address, get role members
  */
-function resolveOwnerDefinition(
+function resolvePathExpression(
   discovered: any,
   currentContractAddress: string,
-  definition: OwnerDefinition
+  pathExpression: string
 ): string[] {
-  // Step 1: Find current contract
   if (!discovered.entries || !Array.isArray(discovered.entries)) {
     throw new Error('No entries found in discovered data')
   }
 
-  // Log all contract addresses to debug format issues
-  const contractAddresses = discovered.entries
-    .filter((e: any) => e.type === 'Contract')
-    .map((e: any) => e.address)
+  // Parse path expression: <contractRef>.<valuePath>
+  // Special case: just "$self" means current contract is the owner
+  if (pathExpression === '$self') {
+    return [currentContractAddress]
+  }
 
-  const currentContract = discovered.entries.find((entry: any) =>
-    entry.type === 'Contract' && entry.address === currentContractAddress
+  // Split on first dot to separate contract ref from value path
+  const firstDotIndex = pathExpression.indexOf('.')
+
+  if (firstDotIndex === -1) {
+    throw new Error(`Invalid path expression "${pathExpression}": must include contract reference and value path`)
+  }
+
+  const contractRef = pathExpression.substring(0, firstDotIndex)
+  const valuePath = pathExpression.substring(firstDotIndex + 1)
+
+  // Resolve contract reference to actual contract address
+  let targetContractAddress: string
+
+  if (contractRef === '$self') {
+    // Current contract
+    targetContractAddress = currentContractAddress
+  } else if (contractRef.startsWith('@')) {
+    // Follow an address field in current contract
+    const fieldName = contractRef.substring(1) // Remove @ prefix
+    const currentContract = findContract(discovered, currentContractAddress)
+    targetContractAddress = getFieldValue(currentContract, fieldName)
+
+    if (!targetContractAddress || typeof targetContractAddress !== 'string' || !targetContractAddress.startsWith('eth:')) {
+      throw new Error(`Field "${fieldName}" not found or is not an address in current contract`)
+    }
+  } else if (contractRef.startsWith('eth:')) {
+    // Absolute contract address
+    targetContractAddress = contractRef
+  } else {
+    throw new Error(`Invalid contract reference "${contractRef}": must be $self, @fieldName, or eth:0xAddress`)
+  }
+
+  // Find target contract
+  const targetContract = findContract(discovered, targetContractAddress)
+
+  // Navigate value path in contract.values
+  return navigateValuePath(targetContract, valuePath)
+}
+
+/**
+ * Finds a contract in discovered data by address
+ */
+function findContract(discovered: any, contractAddress: string): any {
+  const contract = discovered.entries.find((entry: any) =>
+    entry.type === 'Contract' && entry.address === contractAddress
   )
 
-  if (!currentContract) {
-    throw new Error(`Current contract ${currentContractAddress} not found in discovered data. Available addresses: ${contractAddresses.slice(0, 5).join(', ')}...`)
+  if (!contract) {
+    const available = discovered.entries
+      .filter((e: any) => e.type === 'Contract')
+      .map((e: any) => e.address)
+      .slice(0, 5)
+      .join(', ')
+    throw new Error(`Contract ${contractAddress} not found. Available: ${available}...`)
   }
 
-  // Special case: accessControl means look for the role in the CURRENT contract
-  if (definition.sourceField === 'accessControl') {
-    // Navigate dataPath directly in the current contract's accessControl field
-    if (!currentContract.values?.accessControl || typeof currentContract.values.accessControl !== 'object') {
-      const availableFields = Object.keys(currentContract.values || {}).join(', ')
-      throw new Error(`Contract ${currentContractAddress} does not have accessControl field. Available fields: ${availableFields}`)
-    }
-
-    const roleData = currentContract.values.accessControl[definition.dataPath]
-    if (!roleData) {
-      const availableRoles = Object.keys(currentContract.values.accessControl).join(', ')
-      throw new Error(`Role ${definition.dataPath} not found in accessControl. Available roles: ${availableRoles}`)
-    }
-
-    // Return all members (both from members array and adminRole if it exists)
-    const addresses: string[] = []
-
-    // Add members from the members array
-    if (roleData.members && Array.isArray(roleData.members)) {
-      addresses.push(...roleData.members.filter((m: any) => typeof m === 'string' && m.startsWith('eth:')))
-    }
-
-    // Note: adminRole is a string (role name), not an address, so we don't add it here
-    // The UI should display the entire role structure including adminRole
-
-    return addresses
-  }
-
-  // Step 2: Get source address from sourceField
-  const sourceAddress = getFieldValue(currentContract, definition.sourceField)
-
-  if (!sourceAddress || typeof sourceAddress !== 'string') {
-    throw new Error(`Source field ${definition.sourceField} not found or not an address in contract ${currentContractAddress}`)
-  }
-
-  // Step 3: Find source contract
-  const sourceContract = discovered.entries.find((entry: any) =>
-    entry.type === 'Contract' && entry.address === sourceAddress
-  )
-
-  if (!sourceContract) {
-    throw new Error(`Source contract ${sourceAddress} not found in discovered data`)
-  }
-
-  // Step 4: Navigate dataPath to extract owner addresses
-  return navigateDataPath(sourceContract, definition.dataPath)
+  return contract
 }
 
 /**
@@ -437,78 +443,118 @@ function getFieldValue(contract: any, fieldName: string): any {
 }
 
 /**
- * Navigates a data path to extract addresses
- * Supports:
- * - Special case: "$self" - returns the contract address itself
- * - Simple fields: "admin"
- * - Array access: "signers[0]", "members[1]"
- * - AccessControl roles: "accessControl.DEFAULT_ADMIN_ROLE.members"
- * - AccessControl nested: "DEFAULT_ADMIN_ROLE" (when in accessControl context)
+ * Navigates a value path in contract.values to extract addresses
+ * Supports any structure with JSONPath-like navigation:
+ * - Simple fields: "owner"
+ * - Nested objects: "accessControl.DEFAULT_ADMIN_ROLE.members"
+ * - Array indices: "signers[0]"
+ * - Dynamic keys: "permissions[eth:0x123][0xROLE].entities"
+ * - Mixed: "governance.roles[ADMIN_ROLE][0]"
  */
-function navigateDataPath(contract: any, dataPath: string): string[] {
-  // Special case: $self means the source contract itself is the owner
-  if (dataPath === '$self') {
-    return [contract.address]
+function navigateValuePath(contract: any, valuePath: string): string[] {
+  if (!contract.values || typeof contract.values !== 'object') {
+    throw new Error('Contract has no values')
   }
 
-  // Check for accessControl path pattern: accessControl.ROLE_NAME.members
-  const accessControlMatch = dataPath.match(/^accessControl\.([^.]+)\.members$/)
-  if (accessControlMatch) {
-    const roleName = accessControlMatch[1]
-    if (contract.values?.accessControl && typeof contract.values.accessControl === 'object') {
-      const roleData = contract.values.accessControl[roleName!]
-      if (roleData?.members && Array.isArray(roleData.members)) {
-        return roleData.members.filter((m: any) => typeof m === 'string' && m.startsWith('eth:'))
+  // Parse and navigate the path
+  let currentValue: any = contract.values
+  const segments = parseValuePath(valuePath)
+
+  for (let i = 0; i < segments.length; i++) {
+    const segment = segments[i]!
+
+    if (segment.type === 'property') {
+      // Navigate object property
+      if (typeof currentValue !== 'object' || currentValue === null) {
+        throw new Error(`Cannot access property "${segment.value}" on non-object at path segment ${i}`)
       }
+      currentValue = currentValue[segment.value]
+      if (currentValue === undefined) {
+        const available = Object.keys(currentValue || {}).slice(0, 5).join(', ')
+        throw new Error(`Property "${segment.value}" not found. Available: ${available}`)
+      }
+    } else if (segment.type === 'index') {
+      // Navigate array index
+      if (!Array.isArray(currentValue)) {
+        throw new Error(`Cannot index non-array at path segment ${i}`)
+      }
+      const index = segment.value as number
+      if (index >= currentValue.length) {
+        throw new Error(`Index ${index} out of bounds (length: ${currentValue.length})`)
+      }
+      currentValue = currentValue[index]
     }
-    throw new Error(`AccessControl role ${roleName} not found or has no members`)
   }
 
-  // Check for direct role name (for backward compatibility when dataPath is just the role name)
-  // This checks if we're in an accessControl context
-  if (contract.values?.accessControl && typeof contract.values.accessControl === 'object') {
-    const roleData = contract.values.accessControl[dataPath]
-    if (roleData?.members && Array.isArray(roleData.members)) {
-      return roleData.members.filter((m: any) => typeof m === 'string' && m.startsWith('eth:'))
+  // Extract addresses from the final value
+  return extractAddresses(currentValue, valuePath)
+}
+
+/**
+ * Parses a value path into segments
+ * Examples:
+ *   "owner" → [{type: 'property', value: 'owner'}]
+ *   "signers[0]" → [{type: 'property', value: 'signers'}, {type: 'index', value: 0}]
+ *   "accessControl.ADMIN.members" → [{type: 'property', value: 'accessControl'}, {type: 'property', value: 'ADMIN'}, {type: 'property', value: 'members'}]
+ */
+function parseValuePath(path: string): Array<{ type: 'property' | 'index'; value: string | number }> {
+  const segments: Array<{ type: 'property' | 'index'; value: string | number }> = []
+  let current = ''
+  let i = 0
+
+  while (i < path.length) {
+    const char = path[i]!
+
+    if (char === '.') {
+      // Property separator
+      if (current) {
+        segments.push({ type: 'property', value: current })
+        current = ''
+      }
+      i++
+    } else if (char === '[') {
+      // Start of array index
+      if (current) {
+        segments.push({ type: 'property', value: current })
+        current = ''
+      }
+
+      // Find closing bracket
+      const closeIndex = path.indexOf(']', i)
+      if (closeIndex === -1) {
+        throw new Error(`Unclosed bracket in path: ${path}`)
+      }
+
+      const indexStr = path.substring(i + 1, closeIndex)
+      const index = parseInt(indexStr, 10)
+
+      if (isNaN(index)) {
+        // Not a numeric index, treat as property key (e.g., [eth:0x123] or [ROLE])
+        segments.push({ type: 'property', value: indexStr })
+      } else {
+        segments.push({ type: 'index', value: index })
+      }
+
+      i = closeIndex + 1
+    } else {
+      current += char
+      i++
     }
   }
 
-  // Check for array access pattern: fieldName[index]
-  const arrayMatch = dataPath.match(/^(.+?)\[(\d+)\]$/)
-
-  if (arrayMatch) {
-    const [, fieldName, indexStr] = arrayMatch
-    const index = parseInt(indexStr!, 10)
-
-    const arrayValue = getFieldValue(contract, fieldName!)
-
-    if (!Array.isArray(arrayValue)) {
-      throw new Error(`Field ${fieldName} is not an array`)
-    }
-
-    if (index >= arrayValue.length) {
-      throw new Error(`Index ${index} out of bounds for array ${fieldName} (length: ${arrayValue.length})`)
-    }
-
-    const element = arrayValue[index]
-
-    // Handle string addresses
-    if (typeof element === 'string' && element.startsWith('eth:')) {
-      return [element]
-    }
-
-    // Handle address objects
-    if (typeof element === 'object' && element.type === 'address') {
-      return [element.address]
-    }
-
-    throw new Error(`Array element at ${dataPath} is not an address`)
+  // Add final segment
+  if (current) {
+    segments.push({ type: 'property', value: current })
   }
 
-  // Simple field access
-  const value = getFieldValue(contract, dataPath)
+  return segments
+}
 
-  // Single address
+/**
+ * Extracts address strings from a value (can be string, array, or object)
+ */
+function extractAddresses(value: any, path: string): string[] {
+  // Single string address
   if (typeof value === 'string' && value.startsWith('eth:')) {
     return [value]
   }
@@ -519,17 +565,14 @@ function navigateDataPath(contract: any, dataPath: string): string[] {
     for (const element of value) {
       if (typeof element === 'string' && element.startsWith('eth:')) {
         addresses.push(element)
-      } else if (typeof element === 'object' && element.type === 'address') {
-        addresses.push(element.address)
       }
     }
-
     if (addresses.length > 0) {
       return addresses
     }
   }
 
-  throw new Error(`Could not resolve data path "${dataPath}" to address(es)`)
+  throw new Error(`Value at path "${path}" is not an address or array of addresses`)
 }
 
 /**

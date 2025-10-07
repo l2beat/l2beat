@@ -11,6 +11,11 @@ import { AddressDisplay } from '../panel-values/AddressDisplay'
 import { Folder } from '../panel-values/Folder'
 import { FunctionFolder } from './FunctionFolder'
 
+// Extended type for local display with contractAddress
+interface PermissionOverrideWithContract extends PermissionOverride {
+  contractAddress: string
+}
+
 // Helper function to find all function occurrences in source code
 function findAllFunctionOccurrences(sources: Array<{ name: string; code: string }>, functionName: string): Array<{ startOffset: number; length: number; sourceIndex: number }> {
   const occurrences: Array<{ startOffset: number; length: number; sourceIndex: number }> = []
@@ -46,7 +51,7 @@ function findAllFunctionOccurrences(sources: Array<{ name: string; code: string 
 export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
   const { project } = useParams()
   const queryClient = useQueryClient()
-  const [localOverrides, setLocalOverrides] = useState<PermissionOverride[]>([])
+  const [localOverrides, setLocalOverrides] = useState<PermissionOverrideWithContract[]>([])
 
   // Track current occurrence index for each function (key: "contractAddress:functionName")
   const [functionOccurrenceCounters, setFunctionOccurrenceCounters] = useState<Record<string, number>>({})
@@ -192,7 +197,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
     const currentOverride = contractOverrides.find(o => o.functionName === functionName)
 
     // Create optimistic update
-    const newOverride: PermissionOverride = {
+    const newOverride: PermissionOverrideWithContract = {
       contractAddress,
       functionName,
       userClassification: updates.userClassification ?? currentOverride?.userClassification ?? 'non-permissioned',
@@ -290,7 +295,7 @@ function PermissionsCode({
 }: {
   entries: ApiAbiEntry[]
   contractAddress: string
-  overrides: PermissionOverride[]
+  overrides: PermissionOverrideWithContract[]
   onPermissionToggle: (contractAddress: string, functionName: string, currentClassification: 'permissioned' | 'non-permissioned') => void
   onCheckedToggle: (contractAddress: string, functionName: string, currentChecked: boolean) => void
   onScoreToggle: (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk') => void
@@ -348,7 +353,7 @@ function WritePermissionsCodeEntries({
 }: {
   entries: ApiAbiEntry[]
   contractAddress: string
-  overrides: PermissionOverride[]
+  overrides: PermissionOverrideWithContract[]
   onPermissionToggle: (contractAddress: string, functionName: string, currentClassification: 'permissioned' | 'non-permissioned') => void
   onCheckedToggle: (contractAddress: string, functionName: string, currentChecked: boolean) => void
   onScoreToggle: (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk') => void

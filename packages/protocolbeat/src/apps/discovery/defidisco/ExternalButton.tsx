@@ -132,7 +132,7 @@ function AttributePicker({ onToggleExternal, onSetAttributes, hasExternalContrac
 
   // Get current attributes from first selected node
   const getCurrentAttributes = () => {
-    if (selectedNodes.length > 0) {
+    if (selectedNodes.length > 0 && selectedNodes[0]) {
       const normalizedAddr = selectedNodes[0].address.replace('eth:', '').toLowerCase()
       const tag = contractTags?.tags.find(tag => tag.contractAddress.toLowerCase() === normalizedAddr)
       return {

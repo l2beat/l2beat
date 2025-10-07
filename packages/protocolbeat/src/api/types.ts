@@ -1,5 +1,7 @@
 // This file is duplicated in protocolbeat and l2b!
 
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
+
 export type ApiProjectsResponse = ApiProjectEntry[]
 
 export interface ApiProjectEntry {
@@ -44,36 +46,6 @@ export interface ApiProjectChain {
   blockNumbers: Record<string, number>
 }
 
-export type ApiListTemplatesResponse = string[]
-
-export interface ApiTemplateFileResponse {
-  template: string
-  shapes?: string
-  criteria?: string
-}
-
-export interface ApiConfigFileResponse {
-  config: string
-}
-
-export type ApiCreateShapeResponse =
-  | {
-      success: true
-    }
-  | {
-      success: false
-      error: string
-    }
-
-export type ApiCreateConfigFileResponse =
-  | {
-      success: true
-    }
-  | {
-      success: false
-      error: string
-    }
-
 export type ApiAddressType =
   | 'EOA'
   | 'EOAPermissioned'
@@ -91,7 +63,7 @@ export interface ApiAddressEntry {
   roles: string[]
   type: ApiAddressType
   referencedBy: ApiAddressReference[]
-  address: string
+  address: ChainSpecificAddress
   chain: string
 }
 
@@ -227,7 +199,6 @@ export interface ContractPermissions {
 }
 
 export interface PermissionOverride {
-  contractAddress?: string
   functionName: string
   userClassification: 'permissioned' | 'non-permissioned'
   aiClassification?: 'permissioned' | 'non-permissioned'  // NEW: AI-detected classification
@@ -245,12 +216,17 @@ export interface PermissionOverride {
   }
 }
 
-// Owner definition types - optimized two-step approach
-// Step 1: sourceField points to an address field in the current contract
-// Step 2: dataPath specifies which data to extract from the resolved source address
+// Owner definition types - unified path expression approach
+// Path format: <contractRef>.<valuePath>
+// - <contractRef>: $self (current contract), @fieldName (follow address field), or eth:0xAddress (absolute address)
+// - <valuePath>: JSONPath-like navigation in contract.values (e.g., owner, signers[0], accessControl.ADMIN.members)
+// Examples:
+//   "$self.owner" - owner field in current contract
+//   "@governor.accessControl.PAUSER_ROLE.members" - follow governor field, get role members
+//   "eth:0x123...acl.permissions[eth:0x456][ROLE].entities" - absolute address for complex structures
+//   "$self" - current contract itself is the owner (shorthand for no value path)
 export interface OwnerDefinition {
-  sourceField: string       // Field name in current contract (e.g., "governor", "admin")
-  dataPath: string          // Path to data in source contract (e.g., "admin", "signers[0]", "PAUSER_ROLE")
+  path: string              // Unified path expression
 }
 
 export interface ApiPermissionOverridesUpdateRequest {
