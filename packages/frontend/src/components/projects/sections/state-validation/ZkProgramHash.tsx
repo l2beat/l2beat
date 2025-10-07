@@ -53,7 +53,7 @@ export function ZkProgramHash({
           <div className="flex w-full flex-col gap-2">
             <div className="flex items-center gap-2">
               <span className="font-bold text-label-value-16">
-                {zkProgramHash.description}
+                {zkProgramHash.title}
               </span>
               {zkProgramHash.zkCatalogProject && (
                 <ZkProjectTooltip zkProject={zkProgramHash.zkCatalogProject} />
