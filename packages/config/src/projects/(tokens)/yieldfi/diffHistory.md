@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xc023c5a65eaa7195f0534ed8059e443b2cc382af
+
+# Diff at Tue, 07 Oct 2025 10:27:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@dcb97cb884a7068d73eb2e7cb88d82455decdb43 block: 1755603175
+- current timestamp: 1755603175
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755603175 (main branch discovery), not current.
+
+```diff
+    contract USDC (eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48) {
+    +++ description: None
+      name:
+-        "USD Coin Token"
++        "USDC"
+    }
+```
+
 Generated with discovered.json: 0x08af2d0591e93d5f1dccf2f3f1a9bfc795beeee5
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

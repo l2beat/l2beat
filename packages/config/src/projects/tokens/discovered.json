@@ -3074,7 +3074,7 @@
       ]
     },
     {
-      "name": "StarkNet Token",
+      "name": "STRK_tokenContract",
       "address": "eth:0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766",
       "type": "Contract",
       "template": "tokens/STRK",
@@ -7244,5 +7244,5 @@
     "base": 36006881,
     "arbitrum": 382863068
   },
-  "permissionsConfigHash": "0xccba20fc605aec45635a047dff4d19b5554e1dc89c6aba3b19ef957f45237352"
+  "permissionsConfigHash": "0x6975edc9a7296f9b5bfd6a549e48bb05688d7ba2b4d01df27ddf226b73a5080b"
 }

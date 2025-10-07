@@ -674,7 +674,7 @@
       }
     },
     {
-      "name": "Taiko Token",
+      "name": "TaikoToken",
       "address": "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
       "type": "Contract",
       "template": "taiko/TaikoTokenPostPacaya",
@@ -6236,5 +6236,5 @@
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
   "usedBlockNumbers": { "ethereum": 23476170, "taiko": 2666243 },
-  "permissionsConfigHash": "0xa874cbc06f08e79346916c5254aae42b6e9da0ff5b3d432ac1f0869117a93f63"
+  "permissionsConfigHash": "0x58d899a1a502a33562debbde99146c36bf616b13b1b0672885e218df8e8fe6cb"
 }

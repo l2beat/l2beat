@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x58125aa13eda030ef2657379a2147a0e5112419a
+Generated with discovered.json: 0x356302dba7be6ac6c95a1f144a7fb14386b0c1a1
 
-# Diff at Tue, 07 Oct 2025 10:22:47 GMT:
+# Diff at Tue, 07 Oct 2025 10:27:33 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@dcb97cb884a7068d73eb2e7cb88d82455decdb43 block: 1758803109
@@ -31,6 +31,15 @@ discovery. Values are for block 1758803109 (main branch discovery), not current.
       name:
 -        "Wrapped liquid staked Ether 2.0 Token"
 +        "wstETH_tokenContract"
+    }
+```
+
+```diff
+    contract STRK_tokenContract (eth:0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766) {
+    +++ description: None
+      name:
+-        "StarkNet Token"
++        "STRK_tokenContract"
     }
 ```
 

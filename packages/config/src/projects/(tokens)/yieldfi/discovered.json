@@ -522,7 +522,7 @@
       ]
     },
     {
-      "name": "USD Coin Token",
+      "name": "USDC",
       "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
       "type": "Contract",
       "template": "tokens/circle/USDC",
@@ -1296,5 +1296,5 @@
     "yieldfi/yToken": "0x08ce13da8ac2fd499d89f7f136b2d7ab5405770d22b19834762e1aec6504fb8d"
   },
   "usedBlockNumbers": { "ethereum": 23174841 },
-  "permissionsConfigHash": "0x18458e2b07fa1858f4202f05bfa54acc492bdc77c6e46233e5a109e5388c120f"
+  "permissionsConfigHash": "0xc03091bb3a928792a72878aeafe465f479a74d52e0b3cdc9a6fc5680d01ff692"
 }
