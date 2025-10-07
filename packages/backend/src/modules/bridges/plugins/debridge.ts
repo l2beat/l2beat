@@ -4,6 +4,7 @@ and minted (or released if the native token is bridged) on the destination chain
 
 import { EthereumAddress } from '@l2beat/shared-pure'
 import {
+  Address32,
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
@@ -65,15 +66,15 @@ const parseClaimed = createEventParser(
 export const DEBRIDGE_TOKENS: {
   tokenId: `0x${string}`
   symbol: string
-  tokenAddresses: { [chain: string]: EthereumAddress }
+  tokenAddresses: { [chain: string]: Address32 }
 }[] = [
   {
     tokenId:
       '0x7a4f5988eb2e00ce51697c543e0163ef96f4ec0dfd6729d29b0a1dd88626f055',
     symbol: 'WETH',
     tokenAddresses: {
-      arbitrum: EthereumAddress('0xcAB86F6Fb6d1C2cBeeB97854A0C023446A075Fe3'), // deBridge WETH
-      ethereum: EthereumAddress('0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'),
+      arbitrum: Address32.from('0xcAB86F6Fb6d1C2cBeeB97854A0C023446A075Fe3'), // deBridge WETH
+      ethereum: Address32.from('0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'),
     },
   },
 ]
@@ -161,12 +162,12 @@ export class DeBridgePlugin implements BridgePlugin {
           srcEvent: sent,
           srcTokenAddress:
             DEBRIDGE_TOKENS.find((t) => t.tokenId === sent.args.debridgeId)
-              ?.tokenAddresses[sent.ctx.chain] ?? EthereumAddress.ZERO,
+              ?.tokenAddresses[sent.ctx.chain] ?? Address32.ZERO,
           srcAmount: claimed.args.amount,
           dstEvent: claimed,
           dstTokenAddress:
             DEBRIDGE_TOKENS.find((t) => t.tokenId === claimed.args.debridgeId)
-              ?.tokenAddresses[claimed.ctx.chain] ?? EthereumAddress.ZERO,
+              ?.tokenAddresses[claimed.ctx.chain] ?? Address32.ZERO,
           dstAmount: claimed.args.amount,
         }),
       )

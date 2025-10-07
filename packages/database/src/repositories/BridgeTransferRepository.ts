@@ -4,6 +4,7 @@ import { BaseRepository } from '../BaseRepository'
 import type { BridgeTransfer } from '../kysely/generated/types'
 
 export interface BridgeTransferRecord {
+  plugin: string
   messageId: string
   type: string
   duration: number | undefined
@@ -36,6 +37,7 @@ export function toRecord(
   row: Selectable<BridgeTransfer>,
 ): BridgeTransferRecord {
   return {
+    plugin: row.plugin,
     messageId: row.messageId,
     type: row.type,
     duration: row.duration ?? undefined,
@@ -77,6 +79,7 @@ export function toRow(
   record: BridgeTransferRecord,
 ): Insertable<BridgeTransfer> {
   return {
+    plugin: record.plugin,
     messageId: record.messageId,
     type: record.type,
     duration: record.duration,

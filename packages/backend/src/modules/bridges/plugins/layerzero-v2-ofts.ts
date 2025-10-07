@@ -1,4 +1,3 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
 import {
   createLayerZeroGuid,
   decodePacket,
@@ -9,6 +8,7 @@ import {
   parsePacketSent,
 } from './layerzero-v2'
 import {
+  Address32,
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
@@ -32,14 +32,14 @@ const OFTSentPacketSent = createBridgeEventType<{
   guid: string
   amountSentLD: number
   amountReceivedLD: number
-  tokenAddress: EthereumAddress
+  tokenAddress: Address32
 }>('layerzero-v2.PacketOFTSent')
 
 const OFTReceivedPacketDelivered = createBridgeEventType<{
   $srcChain: string
   guid: string
   amountReceivedLD: number
-  tokenAddress: EthereumAddress
+  tokenAddress: Address32
 }>('layerzero-v2.PacketOFTDelivered')
 
 export class LayerZeroV2OFTsPlugin implements BridgePlugin {
@@ -77,7 +77,7 @@ export class LayerZeroV2OFTsPlugin implements BridgePlugin {
               guid,
               amountSentLD: Number(oftSent.amountSentLD),
               amountReceivedLD: Number(oftSent.amountReceivedLD),
-              tokenAddress: EthereumAddress(input.log.address),
+              tokenAddress: Address32.from(input.log.address),
             })
           }
         }
@@ -109,7 +109,8 @@ export class LayerZeroV2OFTsPlugin implements BridgePlugin {
             $srcChain,
             guid,
             amountReceivedLD: Number(oftReceived.amountReceivedLD),
-            tokenAddress: EthereumAddress(input.log.address), // TODO: OFT log emitter is not always the token contract (needs effects)
+            // TODO: OFT log emitter is not always the token contract (needs effects)
+            tokenAddress: Address32.from(input.log.address),
           })
         }
       }
@@ -147,7 +148,8 @@ export class LayerZeroV2OFTsPlugin implements BridgePlugin {
         srcTokenAddress: oftSentPacketSent.args.tokenAddress,
         dstEvent: oftReceivedPacketDelivered,
         dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD.toString(),
-        dstTokenAddress: oftReceivedPacketDelivered.args.tokenAddress, // TODO: OFT log emitter is not always the token contract (needs effects)
+        // TODO: OFT log emitter is not always the token contract (needs effects)
+        dstTokenAddress: oftReceivedPacketDelivered.args.tokenAddress,
       }),
     ]
   }

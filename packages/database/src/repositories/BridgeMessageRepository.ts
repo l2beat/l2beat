@@ -4,6 +4,7 @@ import { BaseRepository } from '../BaseRepository'
 import type { BridgeMessage } from '../kysely/generated/types'
 
 export interface BridgeMessageRecord {
+  plugin: string
   messageId: string
   type: string
   app: string
@@ -23,6 +24,7 @@ export interface BridgeMessageRecord {
 
 export function toRecord(row: Selectable<BridgeMessage>): BridgeMessageRecord {
   return {
+    plugin: row.plugin,
     messageId: row.messageId,
     type: row.type,
     app: row.app,
@@ -43,6 +45,7 @@ export function toRecord(row: Selectable<BridgeMessage>): BridgeMessageRecord {
 
 export function toRow(record: BridgeMessageRecord): Insertable<BridgeMessage> {
   return {
+    plugin: record.plugin,
     messageId: record.messageId,
     type: record.type,
     app: record.app,

@@ -1,9 +1,14 @@
 export { createDatabase, type Database } from './database'
 export { type Transaction } from './kysely'
+export { createTokenDatabase, type TokenDatabase } from './tokenDatabase'
 export { compiledToSqlQuery } from './utils/compiledToSqlQuery'
 
 // Records
 
+export type {
+  AbstractTokenInsertable,
+  AbstractTokenUpdate,
+} from './repositories/AbstractTokenRepository'
 export type { ActivityRecord } from './repositories/ActivityRepository'
 export type { AggregatedL2CostRecord } from './repositories/AggregatedL2CostRepository'
 export type { AggregatedLivenessRecord } from './repositories/AggregatedLivenessRepository'
@@ -27,6 +32,11 @@ export type {
   DataAvailabilityRecord,
   ProjectsSummedDataAvailabilityRecord,
 } from './repositories/DataAvailabilityRepository'
+export type {
+  DeployedTokenInsertable,
+  DeployedTokenPrimaryKey,
+  DeployedTokenUpdate,
+} from './repositories/DeployedTokenRepository'
 export type { DiscoveryCacheRecord } from './repositories/DiscoveryCacheRepository'
 export type { FlatSourcesRecord } from './repositories/FlatSourcesRepository'
 export type { IndexerConfigurationRecord } from './repositories/IndexerConfigurationRepository'
