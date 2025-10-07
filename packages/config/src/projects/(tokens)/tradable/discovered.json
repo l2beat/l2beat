@@ -1945,7 +1945,7 @@
       }
     },
     {
-      "name": "USDC Token",
+      "name": "USDC",
       "address": "zksync:0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4",
       "type": "Contract",
       "template": "tokens/circle/USDC",

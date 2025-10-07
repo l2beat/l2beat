@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x58125aa13eda030ef2657379a2147a0e5112419a
+
+# Diff at Tue, 07 Oct 2025 10:22:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@dcb97cb884a7068d73eb2e7cb88d82455decdb43 block: 1758803109
+- current timestamp: 1758803109
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758803109 (main branch discovery), not current.
+
+```diff
+    contract USDC (base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913) {
+    +++ description: None
+      name:
+-        "USD Coin Token"
++        "USDC"
+    }
+```
+
+```diff
+    contract wstETH_tokenContract (eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0) {
+    +++ description: None
+      name:
+-        "Wrapped liquid staked Ether 2.0 Token"
++        "wstETH_tokenContract"
+    }
+```
+
 Generated with discovered.json: 0x452b93407e604d63d147c7c6b2e6f1f89138f0d8
 
 # Diff at Thu, 25 Sep 2025 12:26:38 GMT:
