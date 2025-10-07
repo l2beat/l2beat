@@ -1,7 +1,7 @@
 import { toJsonSchema as _toJsonSchema, v } from '@l2beat/validate'
 import type { ImpMeta, Validator } from '@l2beat/validate/dist/cjs/validate'
 import type { Application, Request, RequestHandler } from 'express'
-import { httpResponsesDescriptions } from './utils.ts/errorDescriptions'
+import { httpResponsesDescriptions } from './utils/errorDescriptions'
 
 // biome-ignore lint/suspicious/noExplicitAny: its fine
 interface OpenApiRouteOptions<P = any, O = any, Q = any, E = any> {

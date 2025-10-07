@@ -5,7 +5,7 @@ import swaggerUi from 'swagger-ui-express'
 import { getConfig } from './config'
 import { OpenApi } from './OpenApi'
 import { addProjectsRoutes } from './projects/routes'
-import { addTvsRoutes } from './tvs.ts/routes'
+import { addTvsRoutes } from './tvs/routes'
 
 function main() {
   const config = getConfig()
