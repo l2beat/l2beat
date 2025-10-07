@@ -218,7 +218,7 @@
       "symbol": "PAXG",
       "name": "Paxos Gold",
       "iconUrl": "https://assets.coingecko.com/coins/images/9519/large/paxgold.png?1696509604",
-      "category": "other",
+      "category": "rwaPublic",
       "source": "canonical",
       "isAssociated": false,
       "amount": {
@@ -260,6 +260,24 @@
       "amount": {
         "type": "totalSupply",
         "address": "0x17BFF452dae47e07CeA877Ff0E1aba17eB62b0aB",
+        "chain": "katana",
+        "decimals": 18,
+        "sinceTimestamp": 1746742811
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "katana-UNI",
+      "priceId": "uniswap",
+      "symbol": "UNI",
+      "name": "Uniswap",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12504/large/uni.jpg?1696512319",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x8B2cD634401fF42cFBdAfAbbb555F2A6C4889351",
         "chain": "katana",
         "decimals": 18,
         "sinceTimestamp": 1746742811

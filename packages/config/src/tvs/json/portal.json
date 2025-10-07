@@ -1856,7 +1856,7 @@
         "decimals": 18,
         "sinceTimestamp": 1631535967
       },
-      "category": "other",
+      "category": "rwaPublic",
       "source": "canonical",
       "isAssociated": false
     },
@@ -2825,7 +2825,7 @@
         "decimals": 6,
         "sinceTimestamp": 1635679310
       },
-      "category": "other",
+      "category": "rwaPublic",
       "source": "canonical",
       "isAssociated": false
     },

@@ -2993,7 +2993,7 @@
         "decimals": 5,
         "sinceTimestamp": 1729851160
       },
-      "category": "other",
+      "category": "rwaRestricted",
       "source": "native",
       "isAssociated": false
     },
@@ -6015,7 +6015,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "rwaPublic",
       "source": "canonical",
       "isAssociated": false
     },
@@ -9117,7 +9117,7 @@
         "decimals": 18,
         "sinceTimestamp": 1723057357
       },
-      "category": "other",
+      "category": "rwaPublic",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -9169,7 +9169,7 @@
         "decimals": 5,
         "sinceTimestamp": 1729851183
       },
-      "category": "other",
+      "category": "rwaRestricted",
       "source": "native",
       "isAssociated": false
     },
@@ -9382,7 +9382,7 @@
       "priceId": "wormhole",
       "symbol": "W",
       "name": "Wormhole Token",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/35087/large/womrhole_logo_full_color_rgb_2000px_72ppi_fb766ac85a.png?1708688954",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35087/large/W_Token_%283%29.png?1758122686",
       "amount": {
         "type": "totalSupply",
         "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
@@ -9869,7 +9869,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "rwaPublic",
       "source": "canonical",
       "isAssociated": false
     },

@@ -198,7 +198,7 @@
         "address": "0x57fD71a86522Dc06D6255537521886057c1772A3",
         "chain": "zksync2"
       },
-      "category": "other",
+      "category": "rwaRestricted",
       "source": "native",
       "isAssociated": false
     },
@@ -522,7 +522,7 @@
         "decimals": 2,
         "sinceTimestamp": 1737417600
       },
-      "category": "other",
+      "category": "rwaRestricted",
       "source": "native",
       "isAssociated": false
     },
@@ -1160,7 +1160,7 @@
         "address": "0xAc4DE1E9A9e83524F24af77972Dd39D588De8164",
         "chain": "zksync2"
       },
-      "category": "other",
+      "category": "rwaRestricted",
       "source": "native",
       "isAssociated": false
     },
@@ -1323,8 +1323,7 @@
         "address": "0xaBECe6D924E003816BCe65D9Bd20655303d0abc6",
         "chain": "zksync2",
         "decimals": 18,
-        "sinceTimestamp": 1739109131,
-        "untilTimestamp": 1756645200
+        "sinceTimestamp": 1739109131
       }
     },
     {

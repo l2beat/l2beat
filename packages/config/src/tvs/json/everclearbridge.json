@@ -307,8 +307,7 @@
         "chain": "optimism",
         "escrowAddress": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
         "decimals": 6,
-        "sinceTimestamp": 1726461429,
-        "untilTimestamp": 1756684800
+        "sinceTimestamp": 1726461429
       },
       "valueForSummary": {
         "type": "value",
@@ -316,8 +315,7 @@
           "type": "const",
           "value": "0",
           "decimals": 0,
-          "sinceTimestamp": 1726461429,
-          "untilTimestamp": 1756684800
+          "sinceTimestamp": 1726461429
         },
         "priceId": "bridged-usdt"
       },
