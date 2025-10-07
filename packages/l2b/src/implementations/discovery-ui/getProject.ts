@@ -1,11 +1,10 @@
 import {
   type ConfigReader,
-  type ConfigRegistry,
   type ContractConfig,
   type DiscoveryOutput,
   type EntryParameters,
-  filterReferencedEntries,
   get$Implementations,
+  getReferencedEntries,
   getShapeFromOutputEntry,
   makeEntryColorConfig,
   makeEntryStructureConfig,
@@ -29,83 +28,32 @@ import type {
   Field,
   FieldValue,
 } from './types'
-import { getReferencedProjects } from './utils'
-
-interface ProjectData {
-  config: ConfigRegistry
-  discovery: DiscoveryOutput
-}
-
-function readProject(
-  project: string,
-  configReader: ConfigReader,
-  seen = new Set<string>(),
-): ProjectData[] {
-  const key = project
-
-  if (seen.has(key)) {
-    return []
-  }
-
-  seen.add(key)
-
-  const projectsToRead: string[] = []
-  const outputs: ProjectData[] = []
-
-  try {
-    const discovery = configReader.readDiscovery(project)
-    const config = configReader.readConfig(project)
-    const referencedProjects = getReferencedProjects(discovery)
-    const references = discovery.entries.filter(
-      (e) => e.targetProject && e.type === 'Reference',
-    )
-
-    projectsToRead.push(...referencedProjects)
-
-    while (projectsToRead.length > 0) {
-      const referencedProject = projectsToRead.shift()
-
-      if (!referencedProject || seen.has(referencedProject)) {
-        continue
-      }
-
-      const matchingRefs = references.filter(
-        (r) => r.targetProject === referencedProject,
-      )
-
-      const referencedDiscovery = configReader.readDiscovery(referencedProject)
-
-      const filteredDiscoveryOutput = filterReferencedEntries(
-        matchingRefs,
-        referencedDiscovery,
-      )
-
-      projectsToRead.push(...getReferencedProjects(filteredDiscoveryOutput))
-      outputs.push({
-        config: configReader.readConfig(referencedProject),
-        discovery: filteredDiscoveryOutput,
-      })
-      seen.add(referencedProject)
-    }
-
-    return [{ config: config, discovery }, ...outputs]
-  } catch {
-    return []
-  }
-}
 
 export function getProject(
   configReader: ConfigReader,
   templateService: TemplateService,
   project: string,
 ): ApiProjectResponse {
-  const data = readProject(project, configReader)
+  const discoveries = configReader.readDiscoveryWithReferences(project)
+  const discovery = discoveries[0]
+  const data = discoveries.map((discovery) => ({
+    discovery,
+    config: configReader.readConfig(discovery.name),
+  }))
+
+  const referencedEntries = getReferencedEntries(
+    discovery.entries,
+    data
+      .flatMap((x) => x.discovery.entries)
+      .filter((e) => e.type !== 'Reference'),
+  ).map((x) => x.address)
 
   const response: ApiProjectResponse = { entries: [] }
   const meta = getMeta(data.map((x) => x.discovery))
   for (const { config, discovery } of data) {
     const contracts = discovery.entries
       .filter((e) => e.type === 'Contract')
+      .filter((e) => referencedEntries.includes(e.address))
       .map((entry) => {
         const contractConfig = makeEntryStructureConfig(
           config.structure,
@@ -148,6 +96,7 @@ export function getProject(
       ),
       eoas: discovery.entries
         .filter((e) => e.type === 'EOA')
+        .filter((e) => referencedEntries.includes(e.address))
         .filter(
           (x) =>
             ChainSpecificAddress.address(x.address) !== EthereumAddress.ZERO,
