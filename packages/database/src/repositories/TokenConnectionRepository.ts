@@ -1,56 +1,28 @@
-import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { TokenConnection } from '../kysely/generated/types'
+import {
+  type AsInsertable,
+  type AsSelectable,
+  type AsUpdate,
+  toRecord,
+} from '../utils/typeUtils'
 
-export interface TokenConnectionParams {
-  type: 'canonical' | 'wrapper'
-}
-
-export interface TokenConnectionRecord {
-  tokenFromId: number
-  tokenToId: number
-  type: string
-  params: TokenConnectionParams | undefined
-  comment: string | undefined
-}
-
-export function toRecord(
-  row: Selectable<TokenConnection>,
-): TokenConnectionRecord {
-  return {
-    tokenFromId: row.tokenFromId,
-    tokenToId: row.tokenToId,
-    type: row.type,
-    params:
-      row.params !== null
-        ? (row.params as unknown as TokenConnectionParams)
-        : undefined,
-    comment: row.comment ?? undefined,
-  }
-}
-
-export function toRow(
-  record: TokenConnectionRecord,
-): Insertable<TokenConnection> {
-  return {
-    tokenFromId: record.tokenFromId,
-    tokenToId: record.tokenToId,
-    type: record.type,
-    params: record.params ? JSON.stringify(record.params) : null,
-    comment: record.comment,
-  }
-}
+export type TokenConnectionInsertable = AsInsertable<TokenConnection>
+export type TokenConnectionSelectable = AsSelectable<TokenConnection>
+export type TokenConnectionUpdate = AsUpdate<
+  TokenConnection,
+  'tokenFromId' | 'tokenToId'
+>
 
 export class TokenConnectionRepository extends BaseRepository {
-  async upsert(record: TokenConnectionRecord): Promise<void> {
+  async upsert(record: TokenConnectionInsertable): Promise<void> {
     await this.upsertMany([record])
   }
 
-  async upsertMany(records: TokenConnectionRecord[]): Promise<number> {
+  async upsertMany(records: TokenConnectionInsertable[]): Promise<number> {
     if (records.length === 0) return 0
 
-    const rows = records.map(toRow)
-    await this.batch(rows, 1_000, async (batch) => {
+    await this.batch(records, 1_000, async (batch) => {
       await this.db
         .insertInto('TokenConnection')
         .values(batch)
@@ -68,7 +40,7 @@ export class TokenConnectionRepository extends BaseRepository {
     return records.length
   }
 
-  async getAll(): Promise<TokenConnectionRecord[]> {
+  async getAll(): Promise<TokenConnectionSelectable[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
       .selectAll()
@@ -78,8 +50,8 @@ export class TokenConnectionRepository extends BaseRepository {
   }
 
   async getConnectionsFromOrTo(
-    tokenId: number,
-  ): Promise<TokenConnectionRecord[]> {
+    tokenId: string,
+  ): Promise<TokenConnectionSelectable[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
       .selectAll()
@@ -91,7 +63,9 @@ export class TokenConnectionRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getConnectionsFrom(tokenId: number): Promise<TokenConnectionRecord[]> {
+  async getConnectionsFrom(
+    tokenId: string,
+  ): Promise<TokenConnectionSelectable[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
       .selectAll()
@@ -101,7 +75,9 @@ export class TokenConnectionRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getConnectionsTo(tokenId: number): Promise<TokenConnectionRecord[]> {
+  async getConnectionsTo(
+    tokenId: string,
+  ): Promise<TokenConnectionSelectable[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
       .selectAll()
@@ -112,9 +88,9 @@ export class TokenConnectionRepository extends BaseRepository {
   }
 
   async getFromTo(
-    tokenFromId: number,
-    tokenToId: number,
-  ): Promise<TokenConnectionRecord[]> {
+    tokenFromId: string,
+    tokenToId: string,
+  ): Promise<TokenConnectionSelectable[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
       .selectAll()
@@ -126,9 +102,9 @@ export class TokenConnectionRepository extends BaseRepository {
   }
 
   async getConnectionsBetween(
-    tokenA: number,
-    tokenB: number,
-  ): Promise<TokenConnectionRecord[]> {
+    tokenA: string,
+    tokenB: string,
+  ): Promise<TokenConnectionSelectable[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
       .selectAll()
@@ -150,8 +126,8 @@ export class TokenConnectionRepository extends BaseRepository {
   }
 
   async deleteConnectionsFromTo(
-    tokenFromId: number,
-    tokenToId: number,
+    tokenFromId: string,
+    tokenToId: string,
   ): Promise<number> {
     const result = await this.db
       .deleteFrom('TokenConnection')
@@ -162,7 +138,7 @@ export class TokenConnectionRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
-  async deleteByTokenIds(tokenIds: number[]): Promise<number> {
+  async deleteByTokenIds(tokenIds: string[]): Promise<number> {
     if (tokenIds.length === 0) return 0
 
     const result = await this.db

@@ -22,7 +22,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
       await abstractTokens.insert(abstractTokenRecord)
 
       const record = deployedToken({
-        id: 1,
+        id: 'DT000001',
         chain: 'arbitrum',
         address: '0x' + '1'.repeat(40),
         abstractTokenId: abstractTokenRecord.id,
@@ -40,7 +40,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
     })
 
     it('accepts optional fields', async () => {
-      const record = deployedToken({ id: 2 })
+      const record = deployedToken({ id: 'DT000002' })
 
       const id = await repository.insert(record)
       expect(id).toEqual(record.id)
@@ -58,7 +58,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
       await abstractTokens.insert(secondAbstractToken)
 
       const record = deployedToken({
-        id: 1,
+        id: 'DT000001',
         chain: 'ethereum',
         address: '0x' + '2'.repeat(40),
         abstractTokenId: firstAbstractToken.id,
@@ -101,16 +101,16 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
 
       const records = [
         deployedToken({
-          id: 1,
+          id: 'DT000001',
           abstractTokenId: 'TK0001',
           deploymentTimestamp: UnixTime.toDate(10),
         }),
         deployedToken({
-          id: 2,
+          id: 'DT000002',
           abstractTokenId: 'TK0002',
           deploymentTimestamp: UnixTime.toDate(20),
         }),
-        deployedToken({ id: 3, abstractTokenId: undefined }),
+        deployedToken({ id: 'DT000003', abstractTokenId: undefined }),
       ]
       await repository.insert(records[0]!)
       await repository.insert(records[1]!)
@@ -122,15 +122,15 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
 
   describe(DeployedTokenRepository.prototype.deleteByIds.name, () => {
     it('removes selected records', async () => {
-      await repository.insert(deployedToken({ id: 1 }))
-      await repository.insert(deployedToken({ id: 2 }))
-      await repository.insert(deployedToken({ id: 3 }))
+      await repository.insert(deployedToken({ id: 'DT000001' }))
+      await repository.insert(deployedToken({ id: 'DT000002' }))
+      await repository.insert(deployedToken({ id: 'DT000003' }))
 
-      const deleted = await repository.deleteByIds([1, 3])
+      const deleted = await repository.deleteByIds(['DT000001', 'DT000003'])
       expect(deleted).toEqual(2)
 
       const remaining = await repository.getAll()
-      expect(remaining).toEqual([deployedToken({ id: 2 })])
+      expect(remaining).toEqual([deployedToken({ id: 'DT000002' })])
     })
   })
 })
@@ -151,14 +151,12 @@ function abstractToken(
 }
 
 function deployedToken(
-  overrides: Partial<DeployedTokenSelectable> & { id: number },
+  overrides: Partial<DeployedTokenSelectable> & { id: string },
 ): DeployedTokenSelectable {
-  const idHex = overrides.id.toString(16).padStart(40, '0')
-
   return {
     id: overrides.id,
     chain: overrides.chain ?? 'ethereum',
-    address: overrides.address ?? `0x${idHex}`,
+    address: overrides.address ?? `0x${overrides.id}`,
     abstractTokenId: overrides.abstractTokenId,
     symbol: overrides.symbol ?? 'TOKEN',
     decimals: overrides.decimals ?? 18,

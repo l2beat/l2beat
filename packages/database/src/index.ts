@@ -57,7 +57,6 @@ export type {
   SyncMetadataFeature,
   SyncMetadataRecord,
 } from './repositories/SyncMetadataRepository'
-export type { TokenConnectionRecord } from './repositories/TokenConnectionRepository'
 export type { TokenMetadataRecord } from './repositories/TokenMetadataRepository'
 export type { TokenValueRecord } from './repositories/TokenValueRepository'
 export type { TvsAmountRecord } from './repositories/TvsAmountRepository'

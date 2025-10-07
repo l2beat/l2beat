@@ -58,7 +58,7 @@ export class AbstractTokenRepository extends BaseRepository {
     return result ? toRecord(result) : undefined
   }
 
-  async getByIds(ids: string[]): Promise<AbstractTokenInsertable[]> {
+  async getByIds(ids: string[]): Promise<AbstractTokenSelectable[]> {
     const rows = await this.db
       .selectFrom('AbstractToken')
       .selectAll()
@@ -68,7 +68,7 @@ export class AbstractTokenRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getAll(): Promise<AbstractTokenInsertable[]> {
+  async getAll(): Promise<AbstractTokenSelectable[]> {
     const rows = await this.db.selectFrom('AbstractToken').selectAll().execute()
     return rows.map(toRecord)
   }

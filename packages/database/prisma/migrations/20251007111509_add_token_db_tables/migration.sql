@@ -8,13 +8,14 @@ CREATE TABLE "AbstractToken" (
     "coingeckoId" VARCHAR(255),
     "coingeckoListingTimestamp" TIMESTAMP(6),
     "comment" TEXT,
+    "reviewed" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "AbstractToken_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "DeployedToken" (
-    "id" SERIAL NOT NULL,
+    "id" CHAR(8) NOT NULL,
     "chain" VARCHAR(32) NOT NULL,
     "address" VARCHAR(255) NOT NULL,
     "abstractTokenId" CHAR(6),
@@ -28,8 +29,8 @@ CREATE TABLE "DeployedToken" (
 
 -- CreateTable
 CREATE TABLE "TokenConnection" (
-    "tokenFromId" INTEGER NOT NULL,
-    "tokenToId" INTEGER NOT NULL,
+    "tokenFromId" CHAR(8) NOT NULL,
+    "tokenToId" CHAR(8) NOT NULL,
     "type" VARCHAR(32) NOT NULL,
     "params" JSON,
     "comment" TEXT,

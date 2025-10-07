@@ -443,6 +443,7 @@ model AbstractToken {
   coingeckoId               String?   @db.VarChar(255)
   coingeckoListingTimestamp DateTime? @db.Timestamp(6)
   comment                   String?   @db.Text
+  reviewed                  Boolean   @default(false)
 
   deployedTokens DeployedToken[]
 
@@ -451,7 +452,7 @@ model AbstractToken {
 }
 
 model DeployedToken {
-  id                  Int      @default(autoincrement())
+  id                  String   @db.Char(8) // don't use `@default(autoincrement())` - otherwise executing plan can fail due to re-planning getting different ids
   chain               String   @db.VarChar(32)
   address             String   @db.VarChar(255)
   abstractTokenId     String?  @db.Char(6)
@@ -470,8 +471,8 @@ model DeployedToken {
 }
 
 model TokenConnection {
-  tokenFromId Int
-  tokenToId   Int
+  tokenFromId String  @db.Char(8)
+  tokenToId   String  @db.Char(8)
   type        String  @db.VarChar(32)
   params      Json?   @db.Json
   comment     String? @db.Text

@@ -13,7 +13,7 @@ export type DeployedTokenSelectable = AsSelectable<DeployedToken>
 export type DeployedTokenUpdate = AsUpdate<DeployedToken, 'id'>
 
 export class DeployedTokenRepository extends BaseRepository {
-  async insert(record: DeployedTokenInsertable): Promise<number> {
+  async insert(record: DeployedTokenInsertable): Promise<string> {
     const row = await this.db
       .insertInto('DeployedToken')
       .values(record)
@@ -34,7 +34,7 @@ export class DeployedTokenRepository extends BaseRepository {
     return Number(result.numUpdatedRows)
   }
 
-  async findById(id: number): Promise<DeployedTokenSelectable | undefined> {
+  async findById(id: string): Promise<DeployedTokenSelectable | undefined> {
     const result = await this.db
       .selectFrom('DeployedToken')
       .selectAll()
@@ -58,7 +58,7 @@ export class DeployedTokenRepository extends BaseRepository {
     return result ? toRecord(result) : undefined
   }
 
-  async getByIds(ids: number[]): Promise<DeployedTokenInsertable[]> {
+  async getByIds(ids: string[]): Promise<DeployedTokenSelectable[]> {
     const rows = await this.db
       .selectFrom('DeployedToken')
       .selectAll()
@@ -68,7 +68,7 @@ export class DeployedTokenRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByAbstractTokenId(id: string): Promise<DeployedTokenInsertable[]> {
+  async getByAbstractTokenId(id: string): Promise<DeployedTokenSelectable[]> {
     const rows = await this.db
       .selectFrom('DeployedToken')
       .selectAll()
@@ -78,12 +78,12 @@ export class DeployedTokenRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getAll(): Promise<DeployedTokenInsertable[]> {
+  async getAll(): Promise<DeployedTokenSelectable[]> {
     const rows = await this.db.selectFrom('DeployedToken').selectAll().execute()
     return rows.map(toRecord)
   }
 
-  async deleteByIds(ids: number[]): Promise<number> {
+  async deleteByIds(ids: string[]): Promise<number> {
     const result = await this.db
       .deleteFrom('DeployedToken')
       .where('id', 'in', ids)

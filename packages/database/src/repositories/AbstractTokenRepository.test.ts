@@ -106,5 +106,6 @@ function abstractToken(
     coingeckoId: overrides.coingeckoId,
     coingeckoListingTimestamp: overrides.coingeckoListingTimestamp,
     comment: overrides.comment,
+    reviewed: false,
   }
 }
