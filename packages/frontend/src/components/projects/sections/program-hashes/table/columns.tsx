@@ -1,19 +1,10 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { CopyButton } from '~/components/CopyButton'
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '~/components/core/Dialog'
 import { CustomLink } from '~/components/link/CustomLink'
-import { Markdown } from '~/components/markdown/Markdown'
 import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
-import { CloseIcon } from '~/icons/Close'
 import { GithubIcon } from '~/icons/products/Github'
 import { CountWithAttesters } from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
+import { VerificationSteps } from './components/VerificationSteps'
 import { ZkProjectTooltip } from './components/ZkProjectTooltip'
 import type { ZkProgramHashRow } from './ZkProgramHashesTable'
 
@@ -33,15 +24,17 @@ export const zkProgramHashesColumns = [
       </div>
     ),
   }),
-  columnHelper.accessor('hash', {
+  columnHelper.display({
+    id: 'hash',
     header: 'Hash',
     cell: (ctx) => (
       <div className="flex items-baseline gap-1.5">
         <span className="font-medium text-label-value-15 text-secondary">
-          {ctx.getValue().slice(0, 6)}...{ctx.getValue().slice(-4)}
+          {ctx.row.original.hash.slice(0, 6)}...
+          {ctx.row.original.hash.slice(-4)}
         </span>
         <CopyButton
-          toCopy={ctx.getValue()}
+          toCopy={ctx.row.original.hash}
           iconClassName="size-3 fill-secondary"
         />
       </div>
@@ -83,26 +76,9 @@ export const zkProgramHashesColumns = [
           type={ctx.row.original.verificationStatus}
           hideCount
         />
-        {ctx.row.original.verificationSteps && (
-          <Dialog>
-            <DialogTrigger className="font-medium text-label-value-13 text-link underline">
-              Verification steps
-            </DialogTrigger>
-            <DialogContent className="md:max-w-[720px]">
-              <DialogHeader>
-                <div className="flex items-center justify-between">
-                  <DialogTitle>Verification steps</DialogTitle>
-                  <DialogClose>
-                    <CloseIcon className="size-4 fill-primary" />
-                  </DialogClose>
-                </div>
-              </DialogHeader>
-              <Markdown className="text-paragraph-15 md:text-paragraph-16">
-                {ctx.row.original.verificationSteps}
-              </Markdown>
-            </DialogContent>
-          </Dialog>
-        )}
+        <VerificationSteps
+          verificationSteps={ctx.row.original.verificationSteps}
+        />
       </div>
     ),
   }),
