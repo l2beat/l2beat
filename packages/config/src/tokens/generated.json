@@ -2385,20 +2385,6 @@
     {
       "name": "Gala",
       "coingeckoId": "gala",
-      "address": "0x15D4c048F83bd7e37d49eA4C83a07267Ec4203dA",
-      "symbol": "GALA",
-      "decimals": 8,
-      "deploymentTimestamp": 1599673371,
-      "coingeckoListingTimestamp": 1600214400,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/12493/large/GALA-COINGECKO.png?1696512310",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
-      "name": "Gala",
-      "coingeckoId": "gala",
       "address": "0xd1d2Eb1B1e90B638588728b4130137D262C87cae",
       "symbol": "GALA",
       "decimals": 8,
@@ -8307,20 +8293,6 @@
       "chainId": 324,
       "source": "native",
       "supply": "circulatingSupply"
-    },
-    {
-      "name": "Private Credit Direct Deal0000023",
-      "coingeckoId": "tradable-na-neobank-sstl",
-      "address": "0xAE0d8cad4cE522538AE34386c319C7ccD11FE428",
-      "symbol": "PC0000023",
-      "decimals": 6,
-      "deploymentTimestamp": 1731618949,
-      "coingeckoListingTimestamp": 1751500800,
-      "category": "rwaRestricted",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/66797/large/tradable.jpg?1750576441",
-      "chainId": 324,
-      "source": "native",
-      "supply": "totalSupply"
     },
     {
       "name": "Private Credit Direct Deal0000027",
