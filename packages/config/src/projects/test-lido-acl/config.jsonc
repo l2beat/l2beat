@@ -1,0 +1,40 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "test-lido-acl",
+  "chain": "ethereum",
+  "initialAddresses": [
+    "eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb"
+  ],
+  "overrides": {
+    "eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb": {
+      "fields": {
+        "permissions": {
+          "handler": {
+            "type": "lidoACL",
+            "ignoreRelatives": [
+              {
+                "app": "eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433",
+                "role": "0x75abc64490e17b40ea1e66691c3eb493647b24430b358bd87ec3e5127f1621ee"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xF0211b7660680B49De1A7E9f25C65660F0a13Fea": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433": {
+      "ignoreDiscovery": true
+    }
+  }
+}

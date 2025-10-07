@@ -1,112 +1,151 @@
 {
   "version": "1.0",
-  "lastModified": "2025-10-02T19:21:02.296Z",
+  "lastModified": "2025-10-07T18:46:07.984Z",
   "contracts": {
     "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": {
       "functions": [
         {
           "functionName": "setOwner",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets the owner of the contract. This role is dedicated to the DAO. The owner can add new guardians, change the quorum, and unpause the deposits.",
           "ownerDefinitions": [
             {
-              "sourceField": "getOwner",
-              "dataPath": "$self"
+              "path": "$self.getOwner"
             }
           ],
-          "timestamp": "2025-10-02T01:09:04.750Z"
+          "timestamp": "2025-10-06T14:44:26.723Z"
         },
         {
           "functionName": "setPauseIntentValidityPeriodBlocks",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "medium-risk",
+          "description": "Sets the window of validity of a pause intent. This is the reaction time allowed for guardians to pause deposits. When a guardian wants to pause deposits it specifies a block number, the pause is only applied if the current block number is within the validity period of the specified block. This is to avoid replay of pause messages.",
           "ownerDefinitions": [
             {
-              "sourceField": "getOwner",
-              "dataPath": "$self"
+              "path": "$self.getOwner"
             }
           ],
-          "timestamp": "2025-10-02T01:09:04.755Z"
+          "timestamp": "2025-10-06T15:05:15.917Z"
         },
         {
           "functionName": "setMaxOperatorsPerUnvetting",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Sets a limit on how many node operators can have their vetted signing keys unvetted in one transaction, as a safeguard against drastic changes.",
           "ownerDefinitions": [
             {
-              "sourceField": "getOwner",
-              "dataPath": "$self"
+              "path": "$self.getOwner"
             }
           ],
-          "timestamp": "2025-10-02T01:09:04.758Z"
+          "timestamp": "2025-10-06T15:05:10.563Z"
         },
         {
           "functionName": "setGuardianQuorum",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets the quorum value. This is the minimum number of guardians that need to take part in a deposit for it to be valid.",
           "ownerDefinitions": [
             {
-              "sourceField": "getOwner",
-              "dataPath": "$self"
+              "path": "$self.getOwner"
             }
           ],
-          "timestamp": "2025-10-02T01:09:04.759Z"
+          "timestamp": "2025-10-06T14:47:10.959Z"
         },
         {
           "functionName": "addGuardian",
           "userClassification": "permissioned",
-          "score": "unscored",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Adds a guardian and sets a new custom quorum value. Guardians co-sign deposits to reduce the risk of collusion with node operators.",
           "ownerDefinitions": [
             {
-              "sourceField": "getOwner",
-              "dataPath": "$self"
+              "path": "$self.getOwner"
             }
           ],
-          "timestamp": "2025-10-02T01:16:20.279Z"
+          "timestamp": "2025-10-07T16:31:11.386Z"
         },
         {
           "functionName": "addGuardians",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Adds multiple guardians and sets a new custom quorum value. Guardians co-sign deposits to reduce the risk of collusion with node operators.",
           "ownerDefinitions": [
             {
-              "sourceField": "getOwner",
-              "dataPath": "$self"
+              "path": "$self.getOwner"
             }
           ],
-          "timestamp": "2025-10-02T01:09:04.762Z"
+          "timestamp": "2025-10-06T14:32:19.568Z"
         },
         {
           "functionName": "removeGuardian",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Removes a guardian address and sets a new quorum value. There are no protections on the quorum, this could be set to zero (see setGuardianQuorum).",
           "ownerDefinitions": [
             {
-              "sourceField": "getOwner",
-              "dataPath": "$self"
+              "path": "$self.getOwner"
             }
           ],
-          "timestamp": "2025-10-02T01:09:04.764Z"
+          "timestamp": "2025-10-06T14:36:26.745Z"
         },
         {
           "functionName": "pauseDeposits",
-          "userClassification": "non-permissioned",
-          "timestamp": "2025-10-02T01:09:04.766Z"
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "medium-risk",
+          "description": "Pauses the deposits. Funds can no longer be deposited into new validators until deposits are unpaused. This can be called by any guardian when a frontrunning by a node operator is suspected and prevents the loss of user funds through deposits.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getGuardians"
+            }
+          ],
+          "timestamp": "2025-10-06T15:01:19.198Z"
         },
         {
           "functionName": "unpauseDeposits",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Unpauses the deposits without delay.",
           "ownerDefinitions": [
             {
-              "sourceField": "getOwner",
-              "dataPath": "$self"
+              "path": "$self.getOwner"
             }
           ],
-          "timestamp": "2025-10-02T01:09:04.767Z"
+          "timestamp": "2025-10-06T14:43:53.476Z"
         },
         {
           "functionName": "depositBufferedEther",
-          "userClassification": "non-permissioned",
-          "timestamp": "2025-10-02T01:09:04.769Z"
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Deposits ETH into a given validator using `Lido.deposit`. The message must include at least 4/6 signatures from guardians for it to be valid.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getGuardians"
+            }
+          ],
+          "timestamp": "2025-10-06T15:01:55.782Z"
         },
         {
           "functionName": "unvetSigningKeys",
-          "userClassification": "non-permissioned",
-          "timestamp": "2025-10-02T01:09:04.770Z"
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Unvets signing keys for the given node operators. This can be called by any guardian when a frontrunning by a node operator is suspectedand prevents the loss of user funds through deposits.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getGuardians"
+            }
+          ],
+          "timestamp": "2025-10-06T15:05:48.571Z"
         }
       ]
     },
@@ -117,8 +156,7 @@
           "userClassification": "permissioned",
           "ownerDefinitions": [
             {
-              "sourceField": "CREATE_PERMISSIONS_ROLE",
-              "dataPath": "$self"
+              "path": "$self.CREATE_PERMISSIONS_ROLE"
             }
           ],
           "timestamp": "2025-10-02T13:35:26.261Z"
@@ -126,21 +164,22 @@
         {
           "functionName": "grantPermission",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Grants a permissions\n",
           "ownerDefinitions": [
             {
-              "sourceField": "permissionManager",
-              "dataPath": "$self"
+              "path": "$self.permissionManager"
             }
           ],
-          "timestamp": "2025-10-02T13:35:26.262Z"
+          "timestamp": "2025-10-02T21:25:39.050Z"
         },
         {
           "functionName": "grantPermissionP",
           "userClassification": "permissioned",
           "ownerDefinitions": [
             {
-              "sourceField": "permissionManager",
-              "dataPath": "$self"
+              "path": "$self.permissionManager"
             }
           ],
           "timestamp": "2025-10-02T13:35:26.267Z"
@@ -150,8 +189,7 @@
           "userClassification": "permissioned",
           "ownerDefinitions": [
             {
-              "sourceField": "permissionManager",
-              "dataPath": "$self"
+              "path": "$self.permissionManager"
             }
           ],
           "timestamp": "2025-10-02T13:35:26.267Z"
@@ -161,8 +199,7 @@
           "userClassification": "permissioned",
           "ownerDefinitions": [
             {
-              "sourceField": "permissionManager",
-              "dataPath": "$self"
+              "path": "$self.permissionManager"
             }
           ],
           "timestamp": "2025-10-02T13:35:26.268Z"
@@ -172,8 +209,7 @@
           "userClassification": "permissioned",
           "ownerDefinitions": [
             {
-              "sourceField": "permissionManager",
-              "dataPath": "$self"
+              "path": "$self.permissionManager"
             }
           ],
           "timestamp": "2025-10-02T13:35:26.269Z"
@@ -183,19 +219,17 @@
           "userClassification": "permissioned",
           "ownerDefinitions": [
             {
-              "sourceField": "CREATE_PERMISSIONS_ROLE",
-              "dataPath": "$self"
+              "path": "$self.CREATE_PERMISSIONS_ROLE"
             }
           ],
-          "timestamp": "2025-10-02T13:35:26.269Z"
+          "timestamp": "2025-10-02T21:37:03.499Z"
         },
         {
           "functionName": "burnPermissionManager",
           "userClassification": "permissioned",
           "ownerDefinitions": [
             {
-              "sourceField": "permissionManager",
-              "dataPath": "$self"
+              "path": "$self.permissionManager"
             }
           ],
           "timestamp": "2025-10-02T13:35:26.270Z"
@@ -209,8 +243,7 @@
           "userClassification": "permissioned",
           "ownerDefinitions": [
             {
-              "sourceField": "accessControl",
-              "dataPath": "REQUEST_BURN_MY_STETH_ROLE"
+              "path": "$self.accessControl.REQUEST_BURN_MY_STETH_ROLE.members"
             }
           ],
           "timestamp": "2025-10-02T15:54:05.779Z"
@@ -220,8 +253,7 @@
           "userClassification": "permissioned",
           "ownerDefinitions": [
             {
-              "sourceField": "REQUEST_BURN_SHARES_ROLE",
-              "dataPath": "$self"
+              "path": "$self.REQUEST_BURN_SHARES_ROLE"
             }
           ],
           "timestamp": "2025-10-02T15:54:05.784Z"
@@ -231,8 +263,7 @@
           "userClassification": "permissioned",
           "ownerDefinitions": [
             {
-              "sourceField": "REQUEST_BURN_MY_STETH_ROLE",
-              "dataPath": "$self"
+              "path": "$self.REQUEST_BURN_MY_STETH_ROLE"
             }
           ],
           "timestamp": "2025-10-02T15:54:05.785Z"
@@ -242,8 +273,7 @@
           "userClassification": "permissioned",
           "ownerDefinitions": [
             {
-              "sourceField": "REQUEST_BURN_SHARES_ROLE",
-              "dataPath": "$self"
+              "path": "$self.REQUEST_BURN_SHARES_ROLE"
             }
           ],
           "timestamp": "2025-10-02T15:54:05.785Z"
@@ -268,8 +298,7 @@
           "userClassification": "permissioned",
           "ownerDefinitions": [
             {
-              "sourceField": "STETH",
-              "dataPath": "$self"
+              "path": "$self.STETH"
             }
           ],
           "timestamp": "2025-10-02T15:54:05.799Z"
@@ -290,21 +319,16 @@
         {
           "functionName": "execute",
           "userClassification": "permissioned",
-          "ownerDefinitions": [
-            {
-              "sourceField": "kernel",
-              "dataPath": "EXECUTE_ROLE"
-            }
-          ],
-          "timestamp": "2025-10-02T19:19:15.306Z"
+          "description": "Executes arbitrary function calls to any external contract with a given ETH value. This can perform any action that is allowed to the Agent in other Lido contracts, which includes critical ones.",
+          "ownerDefinitions": [],
+          "timestamp": "2025-10-07T18:46:07.984Z"
         },
         {
           "functionName": "safeExecute",
           "userClassification": "permissioned",
           "ownerDefinitions": [
             {
-              "sourceField": "kernel",
-              "dataPath": "SAFE_EXECUTE_ROLE"
+              "path": "@kernel.SAFE_EXECUTE_ROLE"
             }
           ],
           "timestamp": "2025-10-02T19:19:15.306Z"
@@ -314,8 +338,7 @@
           "userClassification": "permissioned",
           "ownerDefinitions": [
             {
-              "sourceField": "kernel",
-              "dataPath": "ADD_PROTECTED_TOKEN_ROLE"
+              "path": "@kernel.ADD_PROTECTED_TOKEN_ROLE"
             }
           ],
           "timestamp": "2025-10-02T19:19:15.307Z"
@@ -325,8 +348,7 @@
           "userClassification": "permissioned",
           "ownerDefinitions": [
             {
-              "sourceField": "kernel",
-              "dataPath": "REMOVE_PROTECTED_TOKEN_ROLE"
+              "path": "@kernel.REMOVE_PROTECTED_TOKEN_ROLE"
             }
           ],
           "timestamp": "2025-10-02T19:19:15.308Z"
@@ -336,8 +358,7 @@
           "userClassification": "permissioned",
           "ownerDefinitions": [
             {
-              "sourceField": "kernel",
-              "dataPath": "ADD_PRESIGNED_HASH_ROLE"
+              "path": "@kernel.ADD_PRESIGNED_HASH_ROLE"
             }
           ],
           "timestamp": "2025-10-02T19:19:15.309Z"
@@ -347,8 +368,7 @@
           "userClassification": "permissioned",
           "ownerDefinitions": [
             {
-              "sourceField": "kernel",
-              "dataPath": "DESIGNATE_SIGNER_ROLE"
+              "path": "@kernel.DESIGNATE_SIGNER_ROLE"
             }
           ],
           "timestamp": "2025-10-02T19:19:15.309Z"
@@ -358,8 +378,7 @@
           "userClassification": "permissioned",
           "ownerDefinitions": [
             {
-              "sourceField": "kernel",
-              "dataPath": "RUN_SCRIPT_ROLE"
+              "path": "@kernel.RUN_SCRIPT_ROLE"
             }
           ],
           "timestamp": "2025-10-02T19:19:15.311Z"
@@ -368,6 +387,273 @@
           "functionName": "transfer",
           "userClassification": "non-permissioned",
           "timestamp": "2025-10-02T19:21:02.296Z"
+        },
+        {
+          "functionName": "initialize",
+          "userClassification": "non-permissioned",
+          "checked": true,
+          "timestamp": "2025-10-06T15:06:24.675Z"
+        }
+      ]
+    },
+    "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F": {
+      "functions": [
+        {
+          "functionName": "proxy__upgradeTo",
+          "userClassification": "permissioned",
+          "timestamp": "2025-10-02T21:26:09.167Z"
+        }
+      ]
+    },
+    "eth:0x8daEa53b17a629918CDFAB785C5c74077c1D895B": {
+      "functions": [
+        {
+          "functionName": "addNodeOperatorStETH",
+          "userClassification": "permissioned",
+          "score": "medium-risk",
+          "timestamp": "2025-10-02T21:26:35.194Z"
+        }
+      ]
+    },
+    "eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB": {
+      "functions": [
+        {
+          "functionName": "proxy__upgradeTo",
+          "userClassification": "non-permissioned",
+          "timestamp": "2025-10-02T21:27:42.520Z"
+        }
+      ]
+    },
+    "eth:0x919ac5C6c62B6ef7B05cF05070080525a7B0381E": {
+      "functions": [
+        {
+          "functionName": "discardConsensusReport",
+          "userClassification": "non-permissioned",
+          "timestamp": "2025-10-02T21:27:52.408Z"
+        }
+      ]
+    },
+    "eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4": {
+      "functions": [
+        {
+          "functionName": "updateInitialEpoch",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-03T14:52:59.616Z"
+        },
+        {
+          "functionName": "setFrameConfig",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_FRAME_CONFIG_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-03T14:52:59.618Z"
+        },
+        {
+          "functionName": "setFastLaneLengthSlots",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_FAST_LANE_CONFIG_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-03T14:52:59.619Z"
+        },
+        {
+          "functionName": "addMember",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-07T16:37:24.518Z"
+        },
+        {
+          "functionName": "removeMember",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-03T14:52:59.621Z"
+        },
+        {
+          "functionName": "setQuorum",
+          "userClassification": "non-permissioned",
+          "timestamp": "2025-10-03T14:52:59.623Z"
+        },
+        {
+          "functionName": "disableConsensus",
+          "userClassification": "non-permissioned",
+          "timestamp": "2025-10-03T14:52:59.624Z"
+        },
+        {
+          "functionName": "setReportProcessor",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_REPORT_PROCESSOR_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-03T14:52:59.624Z"
+        },
+        {
+          "functionName": "submitReport",
+          "userClassification": "non-permissioned",
+          "timestamp": "2025-10-03T14:52:59.625Z"
+        }
+      ]
+    },
+    "eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a": {
+      "functions": [
+        {
+          "functionName": "updateInitialEpoch",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-03T14:58:41.696Z"
+        },
+        {
+          "functionName": "setFrameConfig",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_FRAME_CONFIG_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-03T14:58:41.701Z"
+        },
+        {
+          "functionName": "setFastLaneLengthSlots",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_FAST_LANE_CONFIG_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-03T14:58:41.702Z"
+        },
+        {
+          "functionName": "addMember",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-06T18:11:02.341Z"
+        },
+        {
+          "functionName": "removeMember",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-03T14:58:41.703Z"
+        },
+        {
+          "functionName": "setQuorum",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-03T14:58:41.704Z"
+        },
+        {
+          "functionName": "disableConsensus",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DISABLE_CONSENSUS_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-03T14:58:41.705Z"
+        },
+        {
+          "functionName": "setReportProcessor",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_REPORT_PROCESSOR_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-03T14:58:41.705Z"
+        },
+        {
+          "functionName": "submitReport",
+          "userClassification": "non-permissioned",
+          "timestamp": "2025-10-03T14:58:41.706Z"
+        }
+      ]
+    },
+    "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb": {
+      "functions": [
+        {
+          "functionName": "proxy__ossify",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Ossifies the proxy. This freezes the current implementation of the `LidoLocator` and effectively makes it non-upagreable by changing the proxy admin to the zero address.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-10-06T14:28:13.029Z"
+        },
+        {
+          "functionName": "proxy__changeAdmin",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Changes the proxy admin. The admin can update the entire implementation and logic of the `LidoLocator`.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-10-06T14:28:48.677Z"
+        },
+        {
+          "functionName": "proxy__upgradeTo",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Upgrades the implementation of the `LidoLocator`. This can change the entire logic of the contract including change ownership of funds locked in the contract, if any.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-10-06T14:29:10.017Z"
+        },
+        {
+          "functionName": "proxy__upgradeToAndCall",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Similar to _upgradeTo_, and then calls a function in the new contract.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-10-06T14:30:30.496Z"
         }
       ]
     }

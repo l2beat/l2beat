@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-10-01T19:10:13.425Z",
+  "lastModified": "2025-10-07T16:20:49.617Z",
   "contracts": {
     "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925": {
       "functions": [
@@ -137,8 +137,7 @@
           "score": "high-risk",
           "ownerDefinitions": [
             {
-              "sourceField": "$admin",
-              "dataPath": "$self"
+              "path": "$self.$admin"
             }
           ],
           "timestamp": "2025-10-01T19:09:44.175Z"
