@@ -438,16 +438,6 @@ model EcosystemToken {
   @@index([projectId])
 }
 
-model InteropRecentPrices {
-  coingeckoId         String    @db.VarChar(64)
-  timestamp           DateTime  @db.Timestamp(6)
-  priceUsd            Float     @db.Real
-
-  @@id([coingeckoId, timestamp])
-  @@index([timestamp])
-
-  }
-
 model AbstractToken {
   id                        String    @db.Char(6)
   issuer                    String?   @db.VarChar(255)
@@ -497,4 +487,13 @@ model TokenConnection {
   @@id([tokenFromChain, tokenFromAddress, tokenToChain, tokenToAddress, type])
   @@index([tokenFromChain, tokenFromAddress])
   @@index([tokenToChain, tokenToAddress])
+}
+
+model InteropRecentPrices {
+  coingeckoId         String    @db.VarChar(64)
+  timestamp           DateTime  @db.Timestamp(6)
+  priceUsd            Float     @db.Real
+
+  @@id([coingeckoId, timestamp])
+  @@index([timestamp])
 }
