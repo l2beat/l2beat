@@ -437,3 +437,12 @@ model EcosystemToken {
   @@id([projectId, coingeckoId, configurationId])
   @@index([projectId])
 }
+
+model InteropRecentPrices {
+  coingeckoId         String    @db.VarChar(64)
+  timestamp           DateTime  @db.Timestamp(6)
+  priceUsd            Float     @db.Real
+
+  @@id([coingeckoId, timestamp])
+  @@index([timestamp])
+}
