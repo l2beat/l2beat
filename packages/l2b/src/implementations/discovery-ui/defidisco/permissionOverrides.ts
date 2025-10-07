@@ -15,6 +15,8 @@ export interface ResolvedOwner {
   source: OwnerDefinition
   isResolved: boolean
   error?: string
+  // If the resolved value is an object/array with structure, preserve it
+  structuredValue?: any
 }
 
 // Interface for resolved delay information
@@ -305,12 +307,23 @@ export function resolveOwnersFromDiscovered(
 
     for (const definition of ownerDefinitions) {
       try {
-        const addresses = resolvePathExpression(discovered, contractAddress, definition.path)
-        resolved.push(...addresses.map(address => ({
-          address,
-          source: definition,
-          isResolved: true,
-        })))
+        const result = resolvePathExpression(discovered, contractAddress, definition.path)
+        // If there's only one address and no complex structure, create one resolved owner
+        if (result.addresses.length === 1 && typeof result.structuredValue === 'string') {
+          resolved.push({
+            address: result.addresses[0]!,
+            source: definition,
+            isResolved: true,
+          })
+        } else {
+          // Multiple addresses or complex structure - create entries with structured value
+          resolved.push(...result.addresses.map(address => ({
+            address,
+            source: definition,
+            isResolved: true,
+            structuredValue: result.structuredValue,
+          })))
+        }
       } catch (error) {
         resolved.push({
           address: 'RESOLUTION_FAILED',
@@ -334,18 +347,20 @@ export function resolveOwnersFromDiscovered(
 }
 
 /**
- * Resolves a path expression to owner addresses
+ * Resolves a path expression to owner data (addresses + structured value)
  * Path format: <contractRef>.<valuePath>
  * Examples:
  *   "$self.owner" → owner in current contract
  *   "@governor.signers[0]" → follow governor field, get first signer
  *   "eth:0x123.accessControl.ADMIN.members" → absolute address, get role members
+ *
+ * Returns: { addresses: string[], structuredValue: any }
  */
 function resolvePathExpression(
   discovered: any,
   currentContractAddress: string,
   pathExpression: string
-): string[] {
+): { addresses: string[], structuredValue: any } {
   if (!discovered.entries || !Array.isArray(discovered.entries)) {
     throw new Error('No entries found in discovered data')
   }
@@ -353,7 +368,10 @@ function resolvePathExpression(
   // Parse path expression: <contractRef>.<valuePath>
   // Special case: just "$self" means current contract is the owner
   if (pathExpression === '$self') {
-    return [currentContractAddress]
+    return {
+      addresses: [currentContractAddress],
+      structuredValue: currentContractAddress
+    }
   }
 
   // Split on first dot to separate contract ref from value path
@@ -443,15 +461,19 @@ function getFieldValue(contract: any, fieldName: string): any {
 }
 
 /**
- * Navigates a value path in contract.values to extract addresses
+ * Navigates a value path in contract.values and returns the resolved value
  * Supports any structure with JSONPath-like navigation:
  * - Simple fields: "owner"
  * - Nested objects: "accessControl.DEFAULT_ADMIN_ROLE.members"
  * - Array indices: "signers[0]"
  * - Dynamic keys: "permissions[eth:0x123][0xROLE].entities"
  * - Mixed: "governance.roles[ADMIN_ROLE][0]"
+ *
+ * Returns: { addresses: string[], structuredValue: any }
+ * - addresses: flat array of all addresses found (for backward compatibility)
+ * - structuredValue: the actual resolved value with its structure preserved
  */
-function navigateValuePath(contract: any, valuePath: string): string[] {
+function navigateValuePath(contract: any, valuePath: string): { addresses: string[], structuredValue: any } {
   if (!contract.values || typeof contract.values !== 'object') {
     throw new Error('Contract has no values')
   }
@@ -486,8 +508,14 @@ function navigateValuePath(contract: any, valuePath: string): string[] {
     }
   }
 
-  // Extract addresses from the final value
-  return extractAddresses(currentValue, valuePath)
+  // Validate that the value contains addresses and extract them
+  const addresses = extractAddresses(currentValue, valuePath)
+
+  // Return both the extracted addresses and the structured value
+  return {
+    addresses,
+    structuredValue: currentValue
+  }
 }
 
 /**
@@ -552,6 +580,7 @@ function parseValuePath(path: string): Array<{ type: 'property' | 'index'; value
 
 /**
  * Extracts address strings from a value (can be string, array, or object)
+ * Recursively extracts addresses from objects
  */
 function extractAddresses(value: any, path: string): string[] {
   // Single string address
@@ -559,12 +588,15 @@ function extractAddresses(value: any, path: string): string[] {
     return [value]
   }
 
-  // Array of addresses
+  // Array - recursively extract from elements
   if (Array.isArray(value)) {
     const addresses: string[] = []
     for (const element of value) {
       if (typeof element === 'string' && element.startsWith('eth:')) {
         addresses.push(element)
+      } else if (typeof element === 'object' && element !== null) {
+        // Recursively extract from object elements
+        addresses.push(...extractAddresses(element, path))
       }
     }
     if (addresses.length > 0) {
@@ -572,7 +604,24 @@ function extractAddresses(value: any, path: string): string[] {
     }
   }
 
-  throw new Error(`Value at path "${path}" is not an address or array of addresses`)
+  // Object - recursively extract addresses from all properties
+  if (typeof value === 'object' && value !== null) {
+    const addresses: string[] = []
+    for (const key in value) {
+      const prop = value[key]
+      if (typeof prop === 'string' && prop.startsWith('eth:')) {
+        addresses.push(prop)
+      } else if (typeof prop === 'object' && prop !== null) {
+        // Recursively extract from nested objects/arrays
+        addresses.push(...extractAddresses(prop, path))
+      }
+    }
+    if (addresses.length > 0) {
+      return addresses
+    }
+  }
+
+  throw new Error(`Value at path "${path}" does not contain any addresses`)
 }
 
 /**

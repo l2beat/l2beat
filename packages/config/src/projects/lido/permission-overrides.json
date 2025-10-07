@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-10-07T18:46:07.984Z",
+  "lastModified": "2025-10-07T19:14:19.890Z",
   "contracts": {
     "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": {
       "functions": [
@@ -480,10 +480,13 @@
           "userClassification": "permissioned",
           "ownerDefinitions": [
             {
-              "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE.members"
+              "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE"
+            },
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
             }
           ],
-          "timestamp": "2025-10-03T14:52:59.621Z"
+          "timestamp": "2025-10-07T19:14:19.889Z"
         },
         {
           "functionName": "setQuorum",
@@ -532,7 +535,7 @@
               "path": "$self.accessControl.MANAGE_FRAME_CONFIG_ROLE.members"
             }
           ],
-          "timestamp": "2025-10-03T14:58:41.701Z"
+          "timestamp": "2025-10-07T19:06:02.215Z"
         },
         {
           "functionName": "setFastLaneLengthSlots",

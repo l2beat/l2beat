@@ -129,16 +129,14 @@ git fetch upstream && git merge upstream/main
   ```
 - **Discovery**: Automatically detects roles from `RoleGranted`/`RoleRevoked` events
 - **Data Structure**: Roles stored in `values.accessControl` with `adminRole` and `members[]`
-- **Owner Tracking**:
-  - Set `sourceField: "accessControl"` to reference current contract's roles
-  - Set `dataPath` to role name (e.g., `"DEFAULT_ADMIN_ROLE"`)
-  - Roles appear in dropdown when selecting owner definitions
+- **Owner Tracking with Path Expressions**:
+  - `$self.accessControl.ROLE_NAME.members` - Only the members array
+  - `$self.accessControl.ROLE_NAME` - All addresses in the role (members + any address in adminRole field if it's an address)
+  - `@fieldName.accessControl.ROLE_NAME.members` - Members in another contract
+  - Example: `{ "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members" }`
 - **Cross-Contract**: Can reference AccessControl roles in external contracts via address fields
-- **Resolution**: Frontend-only resolution in `FunctionFolder.tsx` (no backend API)
-  - Special case: `sourceField === "accessControl"` resolves in current contract
-  - Extracts both `adminRole` and `members[]` from role data
-  - Shows contract names instead of addresses (clickable to select in UI)
-- **Display**: Shows "Admin: ROLE_NAME" and "Members: ContractName1, ContractName2..."
+- **Resolution**: Works like any other path - navigates the data structure and recursively extracts all addresses
+- **Display**: Shows all resolved addresses with click-to-select functionality
 
 ---
 
@@ -174,6 +172,13 @@ git fetch upstream && git merge upstream/main
 - ❌ Address format mismatches (contracts use `eth:0x...`, tags use `0x...`)
 - ❌ Using `??` instead of `!== undefined` for optional fields that can be explicitly cleared
 - ❌ Forgetting to rebuild both `protocolbeat` AND `l2b` after backend changes
+
+**Proxy/Implementation Pattern:**
+- Proxy contracts contain **both** proxy and implementation ABIs in their `contract.abis[]` array
+- When rendering ABIs, each address gets a separate section (implementation functions shown under implementation address)
+- Fields are stored on the **proxy contract**, not implementations
+- Use `findContractForAddress()` helper in `FunctionFolder.tsx` - automatically resolves implementation addresses to their parent proxy
+- Backend converts all `contract.values` to `contract.fields[]` array, so always use fields (no need for values fallback)
 
 ### File Structure
 ```
@@ -241,8 +246,7 @@ packages/
           "description": "Emergency pause function",
           "ownerDefinitions": [
             {
-              "sourceField": "$admin",
-              "dataPath": "$self"
+              "path": "$self.$admin"
             }
           ],
           "delay": {
@@ -259,21 +263,34 @@ packages/
 ```
 
 **Owner Definitions**:
-- Two-step approach for tracking function permissions
-- `sourceField`: Points to address field in current contract (e.g., `"$admin"`, `"governor"`) OR `"accessControl"` for roles
-- `dataPath`: Specifies data to extract from resolved source address
-  - Address fields: `"$self"`, `"signers[0]"`, field names
-  - AccessControl roles: Role name directly (e.g., `"DEFAULT_ADMIN_ROLE"`, `"PAUSER_ROLE"`)
-- Examples:
-  - `{"sourceField": "$admin", "dataPath": "$self"}` - Admin address itself
-  - `{"sourceField": "accessControl", "dataPath": "DEFAULT_ADMIN_ROLE"}` - Members of DEFAULT_ADMIN_ROLE in current contract
-  - `{"sourceField": "governor", "dataPath": "PAUSER_ROLE"}` - Members of PAUSER_ROLE in governor contract
+- **Unified Path Expression**: Single path string that navigates any data structure
+- **Path Format**: `<contractRef>.<valuePath>`
+  - `<contractRef>`: `$self` (current contract), `@fieldName` (follow address field), or `eth:0xAddress` (absolute)
+  - `<valuePath>`: JSONPath-like navigation in contract.values
+- **Path Syntax**:
+  - Object keys: `field.subfield`
+  - Array indices: `field[0]`
+  - Dynamic keys: `field[eth:0x123]` or `field[ROLE_HASH]`
+- **Examples**:
+  - `{ "path": "$self.owner" }` - owner field in current contract
+  - `{ "path": "$self.getOwner" }` - call getOwner() in current contract
+  - `{ "path": "@governor.signers[0]" }` - follow governor field, get first signer
+  - `{ "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members" }` - AccessControl role members only
+  - `{ "path": "$self.accessControl.DEFAULT_ADMIN_ROLE" }` - Entire role object structure preserved (shows admin + members)
+  - `{ "path": "@kernel.accessControl.PAUSER_ROLE.members" }` - Role in external contract
+  - `{ "path": "eth:0x123...acl.permissions[eth:0x456][ROLE].entities" }` - Complex ACL structure
+  - `{ "path": "$self" }` - current contract itself is the owner
+- **Structured Value Preservation**: When a path resolves to an object with properties (not just a simple address or array), the entire JSON object structure is preserved and displayed in the UI. This maintains important contextual information like distinguishing between role admins and members. Arrays are not considered structured values to avoid redundancy.
 - Multiple owner definitions supported via array
 - Use `ownerDefinitions !== undefined` pattern (not `??`) to handle explicit clearing
-- **Resolution**: Frontend-only in `FunctionFolder.tsx` (useMemo)
-  - Special case: `sourceField === "accessControl"` extracts both `adminRole` and `members[]`
+- **Resolution**: Both frontend (`FunctionFolder.tsx`) and backend (`generatePermissionsReport.ts`) use same logic
+  - Parses contract reference and value path separately
+  - Navigates any structure with recursive descent
+  - **Preserves JSON object structure**: If path resolves to an object (like a role with `{ adminRole, members }`), the entire object structure is preserved
+  - **Extracts addresses for listing**: While preserving the structure, also extracts all addresses recursively for address-based operations
+  - **Display**: UI shows the full JSON structure when present, plus clickable links to all contained addresses
+  - Works with any handler's data format (ACL, AccessControl, custom handlers)
   - Shows contract names with click-to-select functionality
-- **Backend Resolution**: Only used in `generatePermissionsReport.ts` for report generation
 
 **Delay Field**:
 - Stores reference to numeric field (not the value itself)
@@ -291,5 +308,9 @@ packages/
 2. Register component in `PANELS` and `READONLY_PANELS` in `ProjectPage.tsx`
 3. Create panel component in `/defidisco/` folder following existing patterns
 4. Import and register in `ProjectPage.tsx` with single line addition
+
+**Important Notes**:
+- **Permission Owner System**: Uses generalized path expressions that work with **any** handler's data structure (ACL, AccessControl, custom handlers, future handlers). No special cases or hardcoded logic needed.
+- **Migration**: All existing permission-overrides.json files have been migrated to the new unified path format (one-off migration, October 2025).
 
 **Future Development:** Follow the minimal integration principle to ensure easy upstream merges and maintainable code separation.

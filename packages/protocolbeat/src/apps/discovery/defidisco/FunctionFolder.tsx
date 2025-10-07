@@ -53,7 +53,8 @@ function findContractForAddress(contracts: any[], address: string): any | null {
 }
 
 // Helper function to navigate value path in UI (mirrors backend logic)
-function navigateValuePathInUI(contract: any, valuePath: string): string[] {
+// Returns: { addresses: string[], structuredValue: any }
+function navigateValuePathInUI(contract: any, valuePath: string): { addresses: string[], structuredValue: any } {
   if (!contract.fields || contract.fields.length === 0) {
     throw new Error('Contract has no fields')
   }
@@ -91,8 +92,14 @@ function navigateValuePathInUI(contract: any, valuePath: string): string[] {
     }
   }
 
-  // Extract addresses from final value
-  return extractAddressesInUI(currentValue, valuePath)
+  // Validate that the value contains addresses and extract them
+  const addresses = extractAddressesInUI(currentValue, valuePath)
+
+  // Return both the extracted addresses and the structured value
+  return {
+    addresses,
+    structuredValue: currentValue
+  }
 }
 
 // Converts FieldValue to plain JS value for easier navigation
@@ -175,17 +182,22 @@ function parseValuePathInUI(path: string): Array<{ type: 'property' | 'index'; v
   return segments
 }
 
-// Extracts addresses from value
+// Extracts addresses from value (recursively handles objects)
 function extractAddressesInUI(value: any, path: string): string[] {
+  // Single string address
   if (typeof value === 'string' && value.startsWith('eth:')) {
     return [value]
   }
 
+  // Array - recursively extract from elements
   if (Array.isArray(value)) {
     const addresses: string[] = []
     for (const element of value) {
       if (typeof element === 'string' && element.startsWith('eth:')) {
         addresses.push(element)
+      } else if (typeof element === 'object' && element !== null) {
+        // Recursively extract from object elements
+        addresses.push(...extractAddressesInUI(element, path))
       }
     }
     if (addresses.length > 0) {
@@ -193,7 +205,24 @@ function extractAddressesInUI(value: any, path: string): string[] {
     }
   }
 
-  throw new Error(`Value at path "${path}" is not an address or array of addresses`)
+  // Object - recursively extract addresses from all properties
+  if (typeof value === 'object' && value !== null) {
+    const addresses: string[] = []
+    for (const key in value) {
+      const prop = value[key]
+      if (typeof prop === 'string' && prop.startsWith('eth:')) {
+        addresses.push(prop)
+      } else if (typeof prop === 'object' && prop !== null) {
+        // Recursively extract from nested objects/arrays
+        addresses.push(...extractAddressesInUI(prop, path))
+      }
+    }
+    if (addresses.length > 0) {
+      return addresses
+    }
+  }
+
+  throw new Error(`Value at path "${path}" does not contain any addresses`)
 }
 
 export function FunctionFolder({
@@ -234,17 +263,18 @@ export function FunctionFolder({
 
     return currentOverride.ownerDefinitions.map(definition => {
       try {
-        const addresses = resolvePathExpressionInUI(allContracts, contractAddress, definition.path)
+        const result = resolvePathExpressionInUI(allContracts, contractAddress, definition.path)
 
-        if (addresses.length === 0) {
+        if (result.addresses.length === 0) {
           throw new Error('No addresses found')
         }
 
         return {
-          address: addresses[0]!,
+          address: result.addresses[0]!,
           source: definition,
           isResolved: true,
-          allAddresses: addresses // Keep all resolved addresses for display
+          allAddresses: result.addresses, // Keep all resolved addresses for display
+          structuredValue: result.structuredValue // Keep the structured value to preserve object structure
         }
       } catch (error) {
         return {
@@ -262,10 +292,13 @@ export function FunctionFolder({
     allContracts: any[],
     currentContractAddress: string,
     pathExpression: string
-  ): string[] {
+  ): { addresses: string[], structuredValue: any } {
     // Special case: just "$self" means current contract is the owner
     if (pathExpression === '$self') {
-      return [currentContractAddress]
+      return {
+        addresses: [currentContractAddress],
+        structuredValue: currentContractAddress
+      }
     }
 
     // Split on first dot to separate contract ref from value path
@@ -559,12 +592,20 @@ export function FunctionFolder({
   }
 
   // Format owner definition with resolved value
-  const formatOwnerDefinition = (definition: OwnerDefinition, resolvedOwner?: { address: string; isResolved: boolean; allAddresses?: string[] }) => {
+  const formatOwnerDefinition = (definition: OwnerDefinition, resolvedOwner?: { address: string; isResolved: boolean; allAddresses?: string[]; structuredValue?: any }) => {
     let baseDescription = definition.path
 
     // Append resolved value if available
     if (resolvedOwner?.isResolved && resolvedOwner.allAddresses && resolvedOwner.allAddresses.length > 0) {
-      if (resolvedOwner.allAddresses.length === 1) {
+      // Check if it's a structured value (object with properties, not array)
+      const isStructured = resolvedOwner.structuredValue &&
+                          typeof resolvedOwner.structuredValue === 'object' &&
+                          !Array.isArray(resolvedOwner.structuredValue) &&
+                          !resolvedOwner.structuredValue.startsWith?.('eth:')
+
+      if (isStructured) {
+        baseDescription += ` → [structured value]`
+      } else if (resolvedOwner.allAddresses.length === 1) {
         baseDescription += ` → ${resolvedOwner.allAddresses[0]!.slice(0, 10)}...`
       } else {
         baseDescription += ` → ${resolvedOwner.allAddresses.length} addresses`
@@ -758,27 +799,64 @@ export function FunctionFolder({
                         {/* Show resolved owners */}
                         {!ownersLoading && correspondingResolved && correspondingResolved.isResolved && (
                           <div className="ml-2 mt-1">
-                            <div className="text-xs text-coffee-400 mb-1">Resolves to:</div>
-
-                            {/* Show all resolved addresses */}
-                            {(correspondingResolved as any).allAddresses?.map((addr: string, idx: number) => (
-                              <div key={idx} className="flex items-center gap-2 mb-1">
-                                <button
-                                  onClick={() => usePanelStore.getState().select(addr)}
-                                  className="text-aux-cyan hover:text-aux-cyan-light text-xs"
-                                  title={`Select ${addr}`}
-                                >
-                                  {getContractName(addr)}
-                                </button>
-                                <button
-                                  onClick={() => usePanelStore.getState().select(addr)}
-                                  className="text-coffee-400 hover:text-coffee-300"
-                                  title="Select this contract"
-                                >
-                                  <IconOpen />
-                                </button>
-                              </div>
-                            ))}
+                            {/* Check if we have a structured value (object with properties, not array) */}
+                            {(correspondingResolved as any).structuredValue &&
+                             typeof (correspondingResolved as any).structuredValue === 'object' &&
+                             !Array.isArray((correspondingResolved as any).structuredValue) &&
+                             !(correspondingResolved as any).structuredValue.startsWith?.('eth:') ? (
+                              <>
+                                <div className="text-xs text-coffee-400 mb-1">Structured Value:</div>
+                                <div className="bg-coffee-700 p-2 rounded text-xs font-mono">
+                                  <pre className="text-coffee-200 overflow-x-auto">
+                                    {JSON.stringify((correspondingResolved as any).structuredValue, null, 2)}
+                                  </pre>
+                                </div>
+                                <div className="text-xs text-coffee-400 mt-2 mb-1">
+                                  Contains {(correspondingResolved as any).allAddresses?.length || 0} address(es):
+                                </div>
+                                {(correspondingResolved as any).allAddresses?.map((addr: string, idx: number) => (
+                                  <div key={idx} className="flex items-center gap-2 mb-1">
+                                    <button
+                                      onClick={() => usePanelStore.getState().select(addr)}
+                                      className="text-aux-cyan hover:text-aux-cyan-light text-xs"
+                                      title={`Select ${addr}`}
+                                    >
+                                      {getContractName(addr)}
+                                    </button>
+                                    <button
+                                      onClick={() => usePanelStore.getState().select(addr)}
+                                      className="text-coffee-400 hover:text-coffee-300"
+                                      title="Select this contract"
+                                    >
+                                      <IconOpen />
+                                    </button>
+                                  </div>
+                                ))}
+                              </>
+                            ) : (
+                              <>
+                                <div className="text-xs text-coffee-400 mb-1">Resolves to:</div>
+                                {/* Show all resolved addresses */}
+                                {(correspondingResolved as any).allAddresses?.map((addr: string, idx: number) => (
+                                  <div key={idx} className="flex items-center gap-2 mb-1">
+                                    <button
+                                      onClick={() => usePanelStore.getState().select(addr)}
+                                      className="text-aux-cyan hover:text-aux-cyan-light text-xs"
+                                      title={`Select ${addr}`}
+                                    >
+                                      {getContractName(addr)}
+                                    </button>
+                                    <button
+                                      onClick={() => usePanelStore.getState().select(addr)}
+                                      className="text-coffee-400 hover:text-coffee-300"
+                                      title="Select this contract"
+                                    >
+                                      <IconOpen />
+                                    </button>
+                                  </div>
+                                ))}
+                              </>
+                            )}
                           </div>
                         )}
 
