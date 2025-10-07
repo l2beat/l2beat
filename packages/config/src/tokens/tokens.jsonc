@@ -1,6 +1,16 @@
 {
   "ethereum": [
     {
+      "symbol": "USTB",
+      "address": "0x43415eB6ff9DB7E26A15b704e7A3eDCe97d31C4e",
+      "category": "rwaRestricted" // reason: whitelist
+    },
+    {
+      "symbol": "OUSG",
+      "address": "0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92",
+      "category": "rwaPublic"
+    },
+    {
       "symbol": "mRe7YIELD",
       "address": "0x87C9053C819bB28e0D73d33059E1b3DA80AFb0cf",
       "category": "rwaPublic"
@@ -2278,10 +2288,17 @@
   ],
   "arbitrum": [
     {
+      "symbol": "TBILL",
+      "address": "0xF84D28A8D28292842dD73D1c5F99476A80b6666A",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaRestricted" // reason: price
+    },
+    {
       "symbol": "BENJI",
       "address": "0xB9e4765BCE2609bC1949592059B17Ea72fEe6C6A",
       "source": "native",
-      "supply": "totalSupply", // minted by operators on each chain
+      "supply": "totalSupply",
       "category": "rwaRestricted" // reason: price
     },
     {
@@ -4564,6 +4581,13 @@
     }
   ],
   "mantle": [
+    {
+      "symbol": "USDY",
+      "address": "0x5be26527e817998a7206475496fde1e68957c5a6",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaPublic"
+    },
     {
       "symbol": "COOK",
       "address": "0x9F0C013016E8656bC256f948CD4B79ab25c7b94D",
@@ -7845,6 +7869,20 @@
     }
   ],
   "plumenetwork": [
+    {
+      "symbol": "USCC",
+      "address": "0x4c21b7577c8fe8b0b0669165ee7c8f67fa1454cf",
+      "category": "rwaRestricted", // reason: whitelist
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "USTB",
+      "address": "0xE4fA682f94610cCd170680cc3B045d77D9E528a8",
+      "category": "rwaRestricted", // reason: whitelist
+      "source": "native",
+      "supply": "totalSupply"
+    },
     {
       "symbol": "pUSD",
       "address": "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",

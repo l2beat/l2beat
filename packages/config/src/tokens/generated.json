@@ -3965,6 +3965,20 @@
       "supply": "zero"
     },
     {
+      "name": "Ondo Short-Term U.S. Government Bond Fund",
+      "coingeckoId": "ousg",
+      "address": "0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92",
+      "symbol": "OUSG",
+      "decimals": 18,
+      "deploymentTimestamp": 1671639383,
+      "coingeckoListingTimestamp": 1679443200,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29023/large/OUSG.png?1696527993",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Open Ecosystem Token",
       "coingeckoId": "open-ticketing-ecosystem",
       "address": "0xc28eb2250d1AE32c7E74CFb6d6b86afC9BEb6509",
@@ -5458,6 +5472,20 @@
       "coingeckoListingTimestamp": 1613952000,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/14040/large/SV-Logo-200x200.png?1706880312",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Superstate Short Duration US Government Securities Fund",
+      "coingeckoId": "superstate-short-duration-us-government-securities-fund-ustb",
+      "address": "0x43415eB6ff9DB7E26A15b704e7A3eDCe97d31C4e",
+      "symbol": "USTB",
+      "decimals": 6,
+      "deploymentTimestamp": 1701849095,
+      "coingeckoListingTimestamp": 1730419200,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35012/large/ustb.jpeg?1707102680",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -10370,6 +10398,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Ondo U.S. Dollar Yield",
+      "coingeckoId": "ondo-us-dollar-yield",
+      "address": "0x5bE26527e817998A7206475496fDE1E68957c5A6",
+      "symbol": "USDY",
+      "decimals": 18,
+      "deploymentTimestamp": 1698169754,
+      "coingeckoListingTimestamp": 1699401600,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31700/large/usdy_%281%29.png?1696530524",
+      "chainId": 5000,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Staked USDe",
       "coingeckoId": "ethena-staked-usde",
       "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
@@ -12955,6 +12997,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "OpenEden T-Bills",
+      "coingeckoId": "openeden-tbill",
+      "address": "0xF84D28A8D28292842dD73D1c5F99476A80b6666A",
+      "symbol": "TBILL",
+      "decimals": 6,
+      "deploymentTimestamp": 1707821187,
+      "coingeckoListingTimestamp": 1698105600,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30576/large/OE_Logo_200x200_Transparent.png?1696529441",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "PancakeSwap Token",
       "coingeckoId": "pancakeswap-token",
       "address": "0x1b896893dfc86bb67Cf57767298b9073D2c1bA2c",
@@ -15098,6 +15154,34 @@
           }
         ]
       }
+    },
+    {
+      "name": "Superstate Crypto Carry Fund",
+      "coingeckoId": "superstate-uscc",
+      "address": "0x4c21B7577C8FE8b0B0669165ee7C8f67fa1454Cf",
+      "symbol": "USCC",
+      "decimals": 6,
+      "deploymentTimestamp": 1743086925,
+      "coingeckoListingTimestamp": 1730419200,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39326/large/superstate.jpg?1721724143",
+      "chainId": 98866,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Superstate Short Duration US Government Securities Fund",
+      "coingeckoId": "superstate-short-duration-us-government-securities-fund-ustb",
+      "address": "0xE4fA682f94610cCd170680cc3B045d77D9E528a8",
+      "symbol": "USTB",
+      "decimals": 6,
+      "deploymentTimestamp": 1743009435,
+      "coingeckoListingTimestamp": 1730419200,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35012/large/ustb.jpeg?1707102680",
+      "chainId": 98866,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "MORE",
