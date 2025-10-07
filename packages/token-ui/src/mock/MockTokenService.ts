@@ -126,10 +126,18 @@ class MockTokenService {
 
   getToken(id: string) {
     const abstractToken = this.abstractTokens.find((t) => t.id === id)
-    if (abstractToken) {
+    const abstractTokenWithDeployedTokens = abstractToken
+      ? {
+          ...abstractToken,
+          deployedTokens: this.deployedTokens.filter(
+            (t) => t.abstractTokenId === abstractToken.id,
+          ),
+        }
+      : undefined
+    if (abstractTokenWithDeployedTokens) {
       return {
         type: 'abstract' as const,
-        token: abstractToken,
+        token: abstractTokenWithDeployedTokens,
       }
     }
     const deployedToken = this.deployedTokens.find((t) => t.id === id)

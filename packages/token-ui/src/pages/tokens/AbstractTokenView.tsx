@@ -1,9 +1,11 @@
 import { skipToken, useMutation, useQuery } from '@tanstack/react-query'
-import { TrashIcon } from 'lucide-react'
+import { ArrowRightIcon, TrashIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 import { coingecko } from '~/api/coingecko'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
+import { Button } from '~/components/core/Button'
 import {
   Card,
   CardContent,
@@ -17,11 +19,18 @@ import {
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { type Plan, tokenService } from '~/mock/MockTokenService'
-import type { AbstractToken } from '~/mock/types'
+import type {
+  AbstractToken,
+  AbstractTokenWithDeployedTokens,
+} from '~/mock/types'
 import { toYYYYMMDD } from '~/utils/toYYYYMMDD'
 import { validateResolver } from '~/utils/validateResolver'
 
-export function AbstractTokenView({ token }: { token: AbstractToken }) {
+export function AbstractTokenView({
+  token,
+}: {
+  token: AbstractTokenWithDeployedTokens
+}) {
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
 
   const form = useForm<AbstractTokenSchema>({
@@ -115,44 +124,68 @@ export function AbstractTokenView({ token }: { token: AbstractToken }) {
           form.reset(values)
         }}
       />
-      <div className="mx-auto flex max-w-2xl gap-2">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              Abstract Token
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <AbstractTokenForm
-              form={form}
-              onSubmit={(values) => {
-                planUpdateAbstractToken({
-                  ...values,
-                  coingeckoListingTimestamp: values.coingeckoListingTimestamp
-                    ? new Date(values.coingeckoListingTimestamp)
-                    : undefined,
-                })
-              }}
-              isFormDisabled={isPending}
-              coingeckoFields={{
-                isLoading: showCoingeckoLoading,
-                success: !!coin,
-              }}
-            >
-              <ButtonWithSpinner
-                isLoading={false}
-                disabled={
-                  Object.keys(form.formState.dirtyFields).length === 0 ||
-                  showCoingeckoLoading
-                }
-                className="w-full"
-                type="submit"
+      <div className="mx-auto flex max-w-3xl gap-2">
+        <div className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                Abstract Token
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <AbstractTokenForm
+                form={form}
+                onSubmit={(values) => {
+                  planUpdateAbstractToken({
+                    ...values,
+                    coingeckoListingTimestamp: values.coingeckoListingTimestamp
+                      ? new Date(values.coingeckoListingTimestamp)
+                      : undefined,
+                  })
+                }}
+                isFormDisabled={isPending}
+                coingeckoFields={{
+                  isLoading: showCoingeckoLoading,
+                  success: !!coin,
+                }}
               >
-                Update
-              </ButtonWithSpinner>
-            </AbstractTokenForm>
-          </CardContent>
-        </Card>
+                <ButtonWithSpinner
+                  isLoading={false}
+                  disabled={
+                    Object.keys(form.formState.dirtyFields).length === 0 ||
+                    showCoingeckoLoading
+                  }
+                  className="w-full"
+                  type="submit"
+                >
+                  Update
+                </ButtonWithSpinner>
+              </AbstractTokenForm>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                Deployed Tokens
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-1 p-0">
+              {token.deployedTokens.map((token) => (
+                <div
+                  key={token.id}
+                  className="flex items-center justify-between gap-2 px-6 odd:bg-muted"
+                >
+                  {token.chain}-{token.address} ({token.symbol})
+                  <Button asChild variant="outline">
+                    <Link to={`/tokens/${token.id}`}>
+                      <ArrowRightIcon />
+                    </Link>
+                  </Button>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+        </div>
         <ButtonWithSpinner
           variant="destructive"
           className="mt-2"
