@@ -7,6 +7,7 @@ import type {
 import {
   ConfigReader,
   getDiscoveryPaths,
+  getReferencedEntries,
   RolePermissionEntries,
 } from '@l2beat/discovery'
 import {
@@ -48,8 +49,10 @@ import {
 const paths = getDiscoveryPaths()
 
 export class ProjectDiscovery {
+  private readonly discovery: DiscoveryOutput
+  private readonly referencedDiscoveries: DiscoveryOutput[]
+  private readonly entrypoints: EntryParameters[]
   private readonly discoveries: DiscoveryOutput[]
-  private readonly projectAndDependentDiscoveries: DiscoveryOutput[]
   private eoaIDMap: Record<string, string> = {}
   private permissionRegistry: PermissionRegistry
 
@@ -57,51 +60,19 @@ export class ProjectDiscovery {
     public readonly projectName: string,
     public readonly configReader = new ConfigReader(paths.discovery),
   ) {
-    this.discoveries = []
-    let dependentDiscoveries = {}
-    try {
-      const projectDiscovery = configReader.readDiscovery(projectName)
-      this.discoveries.push(projectDiscovery)
-      dependentDiscoveries = projectDiscovery.dependentDiscoveries ?? {}
-    } catch {}
+    this.discovery = configReader.readDiscovery(projectName)
+    this.entrypoints = [...this.discovery.entries]
 
-    const alreadyAdded = new Set<string>(this.discoveries.map((x) => x.name))
-    for (const discovery of this.discoveries) {
-      const referencedProjects = discovery.entries
-        .map((e) => e.targetProject)
-        .filter(notUndefined)
-
-      // TODO: necessary until we remove .sharedModules completely
-      const allReferencedProjects = [
-        ...referencedProjects,
-        ...(discovery.sharedModules ?? []),
-      ]
-
-      for (const sharedModule of allReferencedProjects) {
-        const key = sharedModule
-        if (alreadyAdded.has(key)) continue
-
-        try {
-          this.discoveries.push(configReader.readDiscovery(sharedModule))
-        } catch {}
-        alreadyAdded.add(key)
-      }
-    }
-
-    this.projectAndDependentDiscoveries = [...this.discoveries]
-    this.projectAndDependentDiscoveries.push(
-      ...Object.keys(dependentDiscoveries).flatMap((dependentProjectName) => {
-        if (dependentProjectName === projectName) return []
-        return configReader.readDiscovery(dependentProjectName)
-      }),
-    )
+    this.referencedDiscoveries = configReader
+      .readDiscoveryWithReferences(projectName)
+      .filter((d) => d.name !== projectName)
+    this.discoveries = [this.discovery, ...this.referencedDiscoveries]
 
     // Removing Reference entries because otherwise we get duplicates
     // and incomplete data.
     // TODO: refactor this whole logic around depenent projects and
     // references to entrypoints to make it cleaner
     this.discoveries.forEach((d) => removeReferences(d))
-    this.projectAndDependentDiscoveries.forEach((d) => removeReferences(d))
 
     this.permissionRegistry = new PermissionsFromDiscovery(this)
   }
@@ -637,7 +608,7 @@ export class ProjectDiscovery {
   getEOAByAddress(
     address: string | ChainSpecificAddress,
   ): EntryParameters | undefined {
-    const eoas = this.projectAndDependentDiscoveries
+    const eoas = this.discoveries
       .flatMap((discovery) => discovery.entries)
       .filter((e) => e.type === 'EOA')
     return eoas.find(
@@ -649,20 +620,20 @@ export class ProjectDiscovery {
   getEntryByAddress(
     address: ChainSpecificAddress,
   ): EntryParameters | undefined {
-    return this.projectAndDependentDiscoveries
+    return this.discoveries
       .flatMap((discovery) => discovery.entries)
       .find((entry) => entry.address === address)
   }
 
   private getContractByName(name: string): EntryParameters[] {
-    const contracts = this.projectAndDependentDiscoveries.flatMap((discovery) =>
+    const contracts = this.discoveries.flatMap((discovery) =>
       discovery.entries.filter((e) => e.type === 'Contract'),
     )
     return contracts.filter((contract) => contract.name === name)
   }
 
   private getEOAByName(name: string): EntryParameters[] {
-    const eoas = this.projectAndDependentDiscoveries
+    const eoas = this.discoveries
       .flatMap((discovery) => discovery.entries)
       .filter((e) => e.type === 'EOA')
 
@@ -678,7 +649,7 @@ export class ProjectDiscovery {
   } {
     const result: { [chainSpecificAddress: string]: EntryParameters } = {}
     const discoveries = options?.includeDependentDiscoveries
-      ? this.projectAndDependentDiscoveries
+      ? this.discoveries
       : this.discoveries
     discoveries.forEach((discovery) => {
       discovery.entries.forEach((e) => {
@@ -700,7 +671,7 @@ export class ProjectDiscovery {
     includeDependentDiscoveries?: boolean
   }): EntryParameters[] {
     const discoveries = options?.includeDependentDiscoveries
-      ? this.projectAndDependentDiscoveries
+      ? this.discoveries
       : this.discoveries
     return discoveries
       .flatMap((discovery) => discovery.entries)
@@ -711,7 +682,7 @@ export class ProjectDiscovery {
     includeDependentDiscoveries?: boolean
   }): EntryParameters[] {
     const discoveries = options?.includeDependentDiscoveries
-      ? this.projectAndDependentDiscoveries
+      ? this.discoveries
       : this.discoveries
     return discoveries
       .flatMap((discovery) => discovery.entries)
@@ -1127,10 +1098,13 @@ export class ProjectDiscovery {
     chainsToIgnore: string[] = [],
   ): Record<string, ProjectContract[]> {
     const eoaActors = this.getEoaActors()
-    const contracts = this.discoveries
-      .flatMap((discovery) =>
-        discovery.entries.filter((e) => e.type === 'Contract'),
-      )
+    const referencedEntries = getReferencedEntries(
+      this.entrypoints,
+      this.discoveries.flatMap((discovery) => discovery.entries),
+      this.projectName === 'phala',
+    )
+    const contracts = referencedEntries
+      .filter((entry) => entry.type === 'Contract')
       .filter((contract) => contract.category?.priority !== -1)
       .sort((a, b) => {
         return (b.category?.priority ?? 0) - (a.category?.priority ?? 0)
