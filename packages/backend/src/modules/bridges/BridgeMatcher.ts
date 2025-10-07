@@ -11,7 +11,6 @@ import {
   type BridgeMessage,
   type BridgePlugin,
   type BridgeTransfer,
-  type BridgeTransferWithFinancials,
   generateId,
   type MatchResult,
 } from './plugins/types'
@@ -225,9 +224,7 @@ function toMessageRecord(message: BridgeMessage): BridgeMessageRecord {
   }
 }
 
-function toTransferRecord(
-  transfer: BridgeTransferWithFinancials,
-): BridgeTransferRecord {
+function toTransferRecord(transfer: BridgeTransfer): BridgeTransferRecord {
   return {
     plugin: transfer.plugin,
     messageId: generateId('T'),
@@ -249,10 +246,10 @@ function toTransferRecord(
 
     srcTokenAddress: transfer.src.tokenAddress,
     srcRawAmount: transfer.src.tokenAmount,
-    srcSymbol: transfer.src.financials?.symbol,
-    srcAmount: transfer.src.financials?.amount,
-    srcPrice: transfer.src.financials?.price,
-    srcValueUsd: transfer.src.financials?.valueUsd,
+    srcSymbol: undefined,
+    srcAmount: undefined,
+    srcPrice: undefined,
+    srcValueUsd: undefined,
 
     dstChain: transfer.dst.event.ctx.chain,
     dstTime: transfer.dst.event.ctx.timestamp,
@@ -262,9 +259,9 @@ function toTransferRecord(
 
     dstTokenAddress: transfer.dst.tokenAddress,
     dstRawAmount: transfer.dst.tokenAmount,
-    dstSymbol: transfer.dst.financials?.symbol,
-    dstAmount: transfer.dst.financials?.amount,
-    dstPrice: transfer.dst.financials?.price,
-    dstValueUsd: transfer.dst.financials?.valueUsd,
+    dstSymbol: undefined,
+    dstAmount: undefined,
+    dstPrice: undefined,
+    dstValueUsd: undefined,
   }
 }

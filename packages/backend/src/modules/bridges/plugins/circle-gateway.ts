@@ -3,9 +3,9 @@ Circle Gateway plugin
 Note - here the transfer of USDC is via burn/mint, but mint on DST happens before burn on SRC.
 */
 
-import { EthereumAddress } from '@l2beat/shared-pure'
 import { CCTP_NETWORKS } from './cctp'
 import {
+  Address32,
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
@@ -26,14 +26,14 @@ const parseGatewayBurned = createEventParser(
 )
 
 export const AttestationUsed = createBridgeEventType<{
-  token: EthereumAddress
+  token: Address32
   transferSpecHash: `0x${string}`
   $dstChain: string
   value: string
 }>('circle-gateway.AttestationUsed')
 
 export const GatewayBurned = createBridgeEventType<{
-  token: EthereumAddress
+  token: Address32
   transferSpecHash: `0x${string}`
   $srcChain: string
   value: string
@@ -46,7 +46,7 @@ export class CircleGatewayPlugIn implements BridgePlugin {
     const gatewayBurned = parseGatewayBurned(input.log, null)
     if (gatewayBurned)
       return GatewayBurned.create(input.ctx, {
-        token: EthereumAddress(gatewayBurned.token),
+        token: Address32.from(gatewayBurned.token),
         transferSpecHash: gatewayBurned.transferSpecHash,
         $srcChain: findChain(
           CCTP_NETWORKS,
@@ -59,7 +59,7 @@ export class CircleGatewayPlugIn implements BridgePlugin {
     const attestationUsed = parseAttestationUsed(input.log, null)
     if (attestationUsed)
       return AttestationUsed.create(input.ctx, {
-        token: EthereumAddress(attestationUsed.token),
+        token: Address32.from(attestationUsed.token),
         transferSpecHash: attestationUsed.transferSpecHash,
         $dstChain: findChain(
           CCTP_NETWORKS,

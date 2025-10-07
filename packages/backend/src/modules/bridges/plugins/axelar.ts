@@ -218,7 +218,8 @@ export class AxelarPlugin implements BridgePlugin {
         }),
         Result.Transfer('axelar-gateway.Transfer', {
           srcEvent: contractCallWithToken,
-          srcTokenSymbol: contractCallWithToken.args.symbol,
+          // TODO: mapping. See axelar-its
+          // symbol: contractCallWithToken.args.symbol,
           srcAmount: contractCallWithToken.args.amount.toString(),
           dstEvent: contractCallExecuted,
         }),
