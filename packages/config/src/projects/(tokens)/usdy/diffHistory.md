@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xa64ad01cae672ff84993c66cea02f35d55f7e0e6
+
+# Diff at Tue, 07 Oct 2025 07:38:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@dcb97cb884a7068d73eb2e7cb88d82455decdb43 block: 1752830574
+- current timestamp: 1752830574
+
+## Description
+
+move usdy to rwaPublic category.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752830574 (main branch discovery), not current.
+
+```diff
+    contract Ondo U.S. Dollar Yield Token (arb1:0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D) {
+    +++ description: None
+      values.$tokenData.category:
+-        "other"
++        "rwaPublic"
+    }
+```
+
 Generated with discovered.json: 0x75717763b8d30443eb945ea4cf79ce4491e9b4f3
 
 # Diff at Wed, 10 Sep 2025 16:42:57 GMT:

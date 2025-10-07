@@ -80,7 +80,7 @@
         "decimals": 5,
         "sinceTimestamp": 1732633074
       },
-      "category": "other",
+      "category": "rwaRestricted",
       "source": "external",
       "isAssociated": false
     },
@@ -362,7 +362,7 @@
         "decimals": 5,
         "sinceTimestamp": 1732632828
       },
-      "category": "other",
+      "category": "rwaRestricted",
       "source": "external",
       "isAssociated": false
     },
