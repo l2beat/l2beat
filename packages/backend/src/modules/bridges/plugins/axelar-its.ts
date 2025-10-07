@@ -4,9 +4,9 @@ This plugin handles all ITS tokens
 
 */
 
-import { EthereumAddress } from '@l2beat/shared-pure'
 import { AXELAR_NETWORKS, ContractCall, ContractCallApproved } from './axelar'
 import {
+  Address32,
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
@@ -30,15 +30,15 @@ ethereum: 0xbe0Ed4138121EcFC5c0E56B40517da27E6c5226B
 export const ITS_TOKENS: {
   tokenId: `0x${string}`
   symbol: string
-  tokenAddresses: { [chain: string]: EthereumAddress }
+  tokenAddresses: { [chain: string]: Address32 }
 }[] = [
   {
     tokenId:
       '0x88f7d4d3c179fc145b10300e6e4ee078f32ec3cd3bcb80ca98f2fa7a719f330b',
     symbol: 'ATH',
     tokenAddresses: {
-      arbitrum: EthereumAddress('0xc87B37a581ec3257B734886d9d3a581F5A9d056c'),
-      ethereum: EthereumAddress('0xbe0Ed4138121EcFC5c0E56B40517da27E6c5226B'),
+      arbitrum: Address32.from('0xc87B37a581ec3257B734886d9d3a581F5A9d056c'),
+      ethereum: Address32.from('0xbe0Ed4138121EcFC5c0E56B40517da27E6c5226B'),
     },
   },
 ]
@@ -54,7 +54,7 @@ const parseInterchainTransferReceived = createEventParser(
 export const InterchainTransfer = createBridgeEventType<{
   tokenId: `0x${string}`
   amount: number
-  tokenAddress: EthereumAddress
+  tokenAddress: Address32
   $dstChain: string
 }>('axelar-its.InterchainTransfer')
 
@@ -62,7 +62,7 @@ export const InterchainTransferReceived = createBridgeEventType<{
   commandId: `0x${string}`
   tokenId: `0x${string}`
   amount: number
-  tokenAddress: EthereumAddress
+  tokenAddress: Address32
   $srcChain: string
 }>('axelar-its.InterchainTransferReceived')
 
@@ -77,7 +77,7 @@ export class AxelarITSPlugin implements BridgePlugin {
         amount: Number(interchainTransfer.amount),
         tokenAddress:
           ITS_TOKENS.find((t) => t.tokenId === interchainTransfer.tokenId)
-            ?.tokenAddresses[input.ctx.chain] ?? EthereumAddress.ZERO,
+            ?.tokenAddresses[input.ctx.chain] ?? Address32.ZERO,
         $dstChain: findChain(
           AXELAR_NETWORKS,
           (x) => x.axelarChainName,
@@ -98,7 +98,7 @@ export class AxelarITSPlugin implements BridgePlugin {
         tokenAddress:
           ITS_TOKENS.find(
             (t) => t.tokenId === interchainTransferReceived.tokenId,
-          )?.tokenAddresses[input.ctx.chain] ?? EthereumAddress.ZERO,
+          )?.tokenAddresses[input.ctx.chain] ?? Address32.ZERO,
         $srcChain: findChain(
           AXELAR_NETWORKS,
           (x) => x.axelarChainName,
