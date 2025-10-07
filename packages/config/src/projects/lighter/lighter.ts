@@ -164,7 +164,7 @@ export const lighter: ScalingProject = {
     dataAvailability: {
       name: 'All data required for forced exits is published onchain',
       description:
-        'All the data needed to recover the latest accounts state (represented by the Account Tree) and construct the zk proof necessary for forced exits is published onchain in the form of blobs. Only data that leads ',
+        'All the data needed to recover the latest accounts state (represented by the Account Tree) and construct the zk proof necessary for forced exits is published onchain in the form of blobs. Only data that leads to state changes is posted.',
       risks: [],
       references: [],
     },
