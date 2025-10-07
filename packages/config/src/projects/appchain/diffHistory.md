@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xc6775cfa81760c17a8063e608737575bca3c3b15
+
+# Diff at Tue, 07 Oct 2025 09:46:09 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@5e88ba37ad7744f9d7831779a58849b5d00ec673 block: 1759388912
+- current timestamp: 1759830301
+
+## Description
+
+Two members removed from multisig.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675"
+      values.$members.7:
+-        "eth:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
+      values.multisigThreshold:
+-        "4 of 9 (44%)"
++        "4 of 7 (57%)"
+    }
+```
+
 Generated with discovered.json: 0xca2f5cd14b058741eb9945f283f2efa3ee7811eb
 
 # Diff at Thu, 02 Oct 2025 07:09:56 GMT:
