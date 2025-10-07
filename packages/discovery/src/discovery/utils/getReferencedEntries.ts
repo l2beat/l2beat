@@ -1,10 +1,6 @@
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { writeFileSync } from 'fs'
-import type {
-  ContractValue,
-  EntryParameters,
-  ReceivedPermission,
-} from '../output/types'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
+import type { EntryParameters } from '../output/types'
+import { toAddressArray } from './extractors'
 
 type ReferenceNode = {
   entry: EntryParameters
@@ -15,9 +11,9 @@ type ReferenceNode = {
 export function getReferencedEntries(
   references: EntryParameters[],
   entries: EntryParameters[],
-  debug?: boolean,
 ): EntryParameters[] {
   const nodes = new Map<ChainSpecificAddress, ReferenceNode>()
+  const referencedEntries = new Set<ChainSpecificAddress>()
 
   function addEntry(entry: EntryParameters) {
     if (nodes.has(entry.address)) {
@@ -34,32 +30,11 @@ export function getReferencedEntries(
   function getEntry(address: ChainSpecificAddress): ReferenceNode | null {
     const node = nodes.get(address)
 
-    if (
-      ChainSpecificAddress.ZERO(ChainSpecificAddress.longChain(address)) ===
-        address &&
-      !nodes.has(address)
-    ) {
-      nodes.set(address, {
-        entry: {
-          type: 'Reference',
-          address,
-          targetType: 'Reference',
-          targetProject: 'ZERO',
-        },
-        referencedBy: new Set(),
-        references: new Set(),
-      })
-
-      // biome-ignore lint/style/noNonNullAssertion: it's guaranteed to be set
-      return nodes.get(address)!
-    }
-
     return node ?? null
   }
 
   function addReference(from: ChainSpecificAddress, to: ChainSpecificAddress) {
     const fromEntry = getEntry(from)
-
     if (fromEntry) {
       fromEntry.references.add(to)
     }
@@ -75,59 +50,45 @@ export function getReferencedEntries(
   }
 
   for (const entry of entries) {
-    if (entry.values) {
-      const referencedAddresses = extractAddressesFromValues(entry.values)
-      const referencedAddressesFromPermissions =
-        extractAddressesFromPermissions(entry)
+    const referencedAddresses = extractAddressesFromValues(entry)
+    const referencedAddressesFromPermissions =
+      extractAddressesFromPermissions(entry)
 
-      for (const referencedAddress of referencedAddresses) {
-        addReference(entry.address, referencedAddress)
-      }
+    for (const referencedAddress of referencedAddresses) {
+      addReference(entry.address, referencedAddress)
+    }
 
-      for (const referencedAddress of referencedAddressesFromPermissions) {
-        addReference(entry.address, referencedAddress)
-      }
+    for (const referencedAddress of referencedAddressesFromPermissions) {
+      addReference(entry.address, referencedAddress)
     }
   }
 
-  const referencedEntries = new Set<ChainSpecificAddress>()
-
-  if (debug) {
-    writeFileSync(
-      'referencedEntries.json',
-      JSON.stringify(
-        Array.from(nodes.entries()).map(([, node]) => ({
-          name: node.entry.name,
-          address: node.entry.address,
-          referencedBy: Array.from(node.referencedBy),
-          references: Array.from(node.references),
-        })),
-        null,
-        2,
-      ),
-    )
-  }
-
-  function expandReferences(entry: EntryParameters) {
+  function collectReferences(entry: EntryParameters) {
     if (referencedEntries.has(entry.address)) {
       return
     }
+
     referencedEntries.add(entry.address)
-    const entryNode = getEntry(entry.address)
-    if (entryNode) {
-      for (const refAddress of entryNode.references) {
-        const refNode = getEntry(refAddress)
-        if (refNode) {
-          expandReferences(refNode.entry)
-        }
+    const node = getEntry(entry.address)
+
+    if (!node) {
+      return
+    }
+
+    for (const refAddress of node.references) {
+      const refNode = getEntry(refAddress)
+
+      if (refNode) {
+        collectReferences(refNode.entry)
       }
     }
   }
 
   for (const ref of references) {
-    const refNode = getEntry(ref.address)
-    if (refNode) {
-      expandReferences(refNode.entry)
+    const node = getEntry(ref.address)
+
+    if (node) {
+      collectReferences(node.entry)
     }
   }
 
@@ -137,38 +98,12 @@ export function getReferencedEntries(
 }
 
 function extractAddressesFromValues(
-  values: Record<string, ContractValue | undefined>,
+  entry: EntryParameters,
 ): ChainSpecificAddress[] {
   const addresses: ChainSpecificAddress[] = []
 
-  for (const value of Object.values(values)) {
-    if (value !== undefined) {
-      addresses.push(...extractAddressesFromValue(value))
-    }
-  }
-
-  return addresses
-}
-
-function extractAddressesFromValue(
-  value: ContractValue,
-): ChainSpecificAddress[] {
-  const addresses: ChainSpecificAddress[] = []
-
-  if (typeof value === 'string' && ChainSpecificAddress.check(value)) {
-    addresses.push(value)
-  }
-
-  if (Array.isArray(value)) {
-    for (const item of value) {
-      addresses.push(...extractAddressesFromValue(item))
-    }
-  } else if (typeof value === 'object' && value !== null) {
-    for (const objectValue of Object.values(value)) {
-      if (objectValue !== undefined) {
-        addresses.push(...extractAddressesFromValue(objectValue))
-      }
-    }
+  for (const value of Object.values(entry.values ?? {})) {
+    addresses.push(...toAddressArray(value))
   }
 
   return addresses
@@ -179,25 +114,18 @@ function extractAddressesFromPermissions(
 ): ChainSpecificAddress[] {
   const addresses: ChainSpecificAddress[] = []
 
-  if (entry.receivedPermissions) {
-    for (const permission of entry.receivedPermissions) {
-      addresses.push(...extractAddressesFromReceivedPermission(permission))
-    }
-  }
+  const permissions = [
+    ...(entry.receivedPermissions ?? []),
+    ...(entry.directlyReceivedPermissions ?? []),
+  ]
 
-  return addresses
-}
+  for (const permission of permissions) {
+    addresses.push(permission.from)
 
-function extractAddressesFromReceivedPermission(
-  permission: ReceivedPermission,
-): ChainSpecificAddress[] {
-  const addresses: ChainSpecificAddress[] = []
-
-  addresses.push(...extractAddressesFromValue(permission.from))
-
-  if (permission.via) {
-    for (const via of permission.via) {
-      addresses.push(...extractAddressesFromValue(via.address))
+    if (permission.via) {
+      for (const via of permission.via) {
+        addresses.push(via.address)
+      }
     }
   }
 

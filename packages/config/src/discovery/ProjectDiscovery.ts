@@ -1101,7 +1101,6 @@ export class ProjectDiscovery {
     const referencedEntries = getReferencedEntries(
       this.entrypoints,
       this.discoveries.flatMap((discovery) => discovery.entries),
-      this.projectName === 'phala',
     )
     const contracts = referencedEntries
       .filter((entry) => entry.type === 'Contract')
