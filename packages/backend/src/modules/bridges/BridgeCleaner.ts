@@ -41,11 +41,15 @@ export class BridgeCleaner {
     const expiredTransfers = await this.db.bridgeTransfer.deleteBefore(
       now - 1 * UnixTime.DAY,
     )
+    const expiredPrices = await this.db.interopRecentPrices.deleteBefore(
+      now - 7 * UnixTime.DAY,
+    )
 
     this.logger.info('Cleaning finished', {
       expiredEvents,
       expiredMessages,
       expiredTransfers,
+      expiredPrices,
     })
   }
 }

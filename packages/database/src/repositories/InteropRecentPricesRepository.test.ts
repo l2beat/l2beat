@@ -131,6 +131,43 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
     })
   })
 
+  describe(InteropRecentPricesRepository.prototype.deleteBefore.name, () => {
+    it('deletes records before timestamp and returns count', async () => {
+      const records = [
+        mock('bitcoin', UnixTime(100)),
+        mock('bitcoin', UnixTime(200)),
+        mock('bitcoin', UnixTime(300)),
+        mock('ethereum', UnixTime(150)),
+      ]
+
+      await repository.insertMany(records)
+
+      const deletedCount = await repository.deleteBefore(UnixTime(250))
+      expect(deletedCount).toEqual(3)
+
+      const remaining = await repository.getAll()
+      expect(remaining).toEqualUnsorted([saved('bitcoin', UnixTime(300), 1000)])
+    })
+
+    it('returns 0 when no records before timestamp', async () => {
+      await repository.insertMany([
+        mock('bitcoin', UnixTime(200)),
+        mock('bitcoin', UnixTime(300)),
+      ])
+
+      const deletedCount = await repository.deleteBefore(UnixTime(100))
+      expect(deletedCount).toEqual(0)
+
+      const remaining = await repository.getAll()
+      expect(remaining).toHaveLength(2)
+    })
+
+    it('returns 0 when no records exist', async () => {
+      const deletedCount = await repository.deleteBefore(UnixTime(100))
+      expect(deletedCount).toEqual(0)
+    })
+  })
+
   afterEach(async () => {
     await repository.deleteAll()
   })
