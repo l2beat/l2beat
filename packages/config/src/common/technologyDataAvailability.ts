@@ -56,6 +56,15 @@ const STARKNET_ON_CHAIN = (usesBlobs = false): ProjectTechnologyChoice => {
   }
 }
 
+const STATE_DIFFS_FOR_ESCAPE_HATCH_BLOBS: ProjectTechnologyChoice = {
+  name: 'All data required for forced exits is published on chain',
+  description:
+    'All the data needed to recover the latest accounts state and construct the zk proof necessary for forced exits is published onchain in the form of blobs.',
+  risks: [],
+  references: [],
+}
+
+
 const GENERIC_OFF_CHAIN: ProjectTechnologyChoice = {
   name: 'Data is not stored on chain',
   description:
@@ -293,10 +302,12 @@ function ESPRESSO_OFF_CHAIN(
     ],
   }
 }
+
 export const TECHNOLOGY_DATA_AVAILABILITY = {
   ON_CHAIN_CALLDATA,
   ON_CHAIN_BLOB_OR_CALLDATA,
   ON_CHAIN_CANONICAL,
+  STATE_DIFFS_FOR_ESCAPE_HATCH_BLOBS,
   STARKEX_ON_CHAIN,
   STARKNET_ON_CHAIN,
   GENERIC_OFF_CHAIN,

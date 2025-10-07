@@ -4,7 +4,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { DA_BRIDGES, DA_LAYERS, DA_MODES, RISK_VIEW } from '../../common'
+import { CONTRACTS, DA_BRIDGES, DA_LAYERS, DA_MODES, OPERATOR, RISK_VIEW, TECHNOLOGY, TECHNOLOGY_DATA_AVAILABILITY } from '../../common'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -151,5 +151,21 @@ export const lighter: ScalingProject = {
       delayWith30DExitWindow: false,
     },
   }),
+  technology: {
+    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STATE_DIFFS_FOR_ESCAPE_HATCH_BLOBS,
+    operator: {
+      ...OPERATOR.CENTRALIZED_OPERATOR,
+    },
+    
+  },
   discoveryInfo: getDiscoveryInfo([discovery]),
+  contracts: {
+    addresses: {
+      ...discovery.getDiscoveredContracts(),
+    },
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+  },
+  permissions: {
+    ...discovery.getDiscoveredPermissions(),
+  },
 }
