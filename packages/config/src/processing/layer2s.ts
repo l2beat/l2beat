@@ -220,7 +220,7 @@ import { zeronetwork } from '../projects/zeronetwork/zeronetwork'
 import { zircuit } from '../projects/zircuit/zircuit'
 import { zkcandy } from '../projects/zkcandy/zkcandy'
 import { zkfair } from '../projects/zkfair/zkfair'
-import { zklighter } from '../projects/zklighter/zklighter'
+import { lighter } from '../projects/lighter/lighter'
 import { zkspace } from '../projects/zkspace/zkspace'
 import { zkswap } from '../projects/zkswap/zkswap'
 import { zkswap2 } from '../projects/zkswap2/zkswap2'
@@ -325,6 +325,7 @@ export const layer2s: ScalingProject[] = [
   lens,
   liftchain,
   lightlink,
+  lighter,
   linea,
   lisk,
   litecoinvm,
@@ -449,7 +450,6 @@ export const layer2s: ScalingProject[] = [
   zircuit,
   zkcandy,
   zkfair,
-  zklighter,
   zkspace,
   zkswap,
   zkswap2,

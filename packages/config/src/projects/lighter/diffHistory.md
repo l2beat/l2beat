@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xd871977d095909441562a09e640aa2de987ef339
+Generated with discovered.json: 0xf71036352ad1dea17e1c822ec5a670f4f69394a9
 
-# Diff at Tue, 07 Oct 2025 09:37:51 GMT:
+# Diff at Tue, 07 Oct 2025 11:36:20 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current timestamp: 1759819909
+- current timestamp: 1759836913
 
 ## Description
 
@@ -13,7 +13,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract Proxy (eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7)
+    contract Lighter (eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7)
     +++ description: None
 ```
 
