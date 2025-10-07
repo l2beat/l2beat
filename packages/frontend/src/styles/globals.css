@@ -27,7 +27,9 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  overscroll-behavior-x: none;
+  /* Prevent horizontal overscroll on mobile to avoid unwanted scrolling when swiping on charts.
+     Not applied on desktop to preserve MacOS swipe-back gesture. */
+  @apply max-md:overscroll-x-none;
 
   --primary: #131215;
   --primary-invert: #fafafa;
