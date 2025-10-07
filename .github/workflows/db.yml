@@ -2,8 +2,8 @@ name: Migrate DB
 on:
   workflow_dispatch:
     inputs:
-      skip_db_dump:
-        description: Skip database dump if it was already performed to speed up the process
+      perform_db_dump:
+        description: Perform database dump before migration
         type: boolean
         default: false
         required: false
@@ -16,7 +16,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20 # DB backup can take some time
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -33,7 +33,7 @@ jobs:
           cache: 'pnpm'
       - run: pnpm install
       - name: Create DB snapshot for STAGING database
-        if: ${{ ! (github.event_name == 'workflow_dispatch' && inputs.skip_db_dump) }}
+        if: ${{ (github.event_name == 'workflow_dispatch' && inputs.perform_db_dump) }}
         run: |
           heroku pg:backups:capture -a ${{ secrets.HEROKU_BACKEND_DEV }}
         env:
@@ -46,7 +46,7 @@ jobs:
         env:
           PRISMA_DB_URL: ${{ secrets.STAGING_DATABASE_URL }}
       - name: Create DB snapshot for PRODUCTION database
-        if: ${{ ! (github.event_name == 'workflow_dispatch' && inputs.skip_db_dump) }}
+        if: ${{ (github.event_name == 'workflow_dispatch' && inputs.perform_db_dump) }}
         run: |
           heroku pg:backups:capture -a ${{ secrets.HEROKU_BACKEND_PROD }}
         env:
