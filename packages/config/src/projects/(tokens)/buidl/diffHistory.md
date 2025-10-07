@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xd99fa48c41251ed2db7902449c8a373164774d8a
+
+# Diff at Tue, 07 Oct 2025 14:20:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@54e99a512665a683d81613a40cfd038991be3f93 block: 1755163834
+- current timestamp: 1759846774
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755163834 (main branch discovery), not current.
+
+```diff
+    contract BlackRock USD Institutional Digital Liquidity Fund Token (arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872) {
+    +++ description: None
+      values.$tokenData.category:
+-        "other"
++        "rwaRestricted"
+    }
+```
+
 Generated with discovered.json: 0xa3a5a21eaf92862867ab40115b1c1fb41075179e
 
 # Diff at Wed, 10 Sep 2025 16:42:54 GMT:

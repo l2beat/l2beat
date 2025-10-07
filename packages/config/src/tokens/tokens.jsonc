@@ -2267,13 +2267,6 @@
       "category": "rwaRestricted" // reason: price
     },
     {
-      "symbol": "BUIDL",
-      "address": "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
-      "source": "native",
-      "supply": "totalSupply", // minted by operators on each chain
-      "category": "rwaRestricted" // reason: price
-    },
-    {
       "symbol": "cgETH.hashkey",
       "category": "ether",
       "address": "0x0Ce45dd53affbb011884EF1866E0738f58AB7969",

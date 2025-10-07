@@ -12183,20 +12183,6 @@
       }
     },
     {
-      "name": "BlackRock USD Institutional Digital Liquidity Fund",
-      "coingeckoId": "blackrock-usd-institutional-digital-liquidity-fund",
-      "address": "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
-      "symbol": "BUIDL",
-      "decimals": 6,
-      "deploymentTimestamp": 1730729689,
-      "coingeckoListingTimestamp": 1739318400,
-      "category": "rwaRestricted",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/36291/large/blackrock.png?1711013223",
-      "chainId": 42161,
-      "source": "native",
-      "supply": "totalSupply"
-    },
-    {
       "name": "Boop",
       "coingeckoId": "boop-2",
       "address": "0x13A7DeDb7169a17bE92B0E3C7C2315B46f4772B3",
