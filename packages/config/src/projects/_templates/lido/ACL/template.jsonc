@@ -1,1 +1,17 @@
-{ "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json" }
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": ["getEVMScriptRegistry", "getInitializationBlock"],
+  "fields": {
+    "permissions": {
+      "handler": {
+        "type": "lidoACL",
+        "ignoreRelatives": [
+            {
+            "app": "eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433",
+            "role": "0x75abc64490e17b40ea1e66691c3eb493647b24430b358bd87ec3e5127f1621ee"
+            }
+        ]
+      }
+    }
+  }
+}

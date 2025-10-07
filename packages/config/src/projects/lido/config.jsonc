@@ -6,14 +6,9 @@
     "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
     "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
     "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
-    "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD"
+    "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
+    "eth:0x2e59A20f205bB85a89C53f1936454680651E618e"
   ],
-  "defidisco": {
-    "scanPermissions": false,
-    "permissionLimits": {
-      "maxSourceFiles": 35
-    }
-  },
   "overrides": {
     "eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3": {
       "fields": {
@@ -21,6 +16,25 @@
           "handler": {"type": "accessControl"}
         }
       }
+    },
+    "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": {
+      "fields": {
+        "acl": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb"
+          }
+        }
+      }
+    },
+    "eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb": {
+      "ignoreRelatives": ["permissions"]
+    },
+    "eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5": {
+      "ignoreDiscovery": true
     }
   }
 }

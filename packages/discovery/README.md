@@ -505,6 +505,67 @@ Specify some names:
 }
 ```
 
+### Lido ACL handler
+
+This handler allows you to analyze Lido's ACL (Access Control List) contract, which manages permissions across multiple apps and roles in the Aragon-based Lido protocol.
+
+**Parameters:**
+
+- `type` - always the literal: `"lidoACL"`
+- `roleNames` - (optional) a record of bytes32 role hashes to predefined role names. The handler automatically detects roles from the ABI.
+- `ignoreRelative` - (optional) if set to `true`, all entities will not be considered relatives.
+- `ignoreRelatives` - (optional) an array of `{app, role}` objects specifying which permission's entities should not be discovered as relatives. This is useful for roles with many addresses (e.g., node operator lists).
+
+**Examples:**
+
+Basic usage:
+
+```json
+{
+  "type": "lidoACL"
+}
+```
+
+With manual role names:
+
+```json
+{
+  "type": "lidoACL",
+  "roleNames": {
+    "0xf5a08927c847d7a29dc35e105208dbde5ce951392105d712761cc5d17440e2ff": "CUSTOM_ROLE"
+  }
+}
+```
+
+Ignore specific permissions as relatives:
+
+```json
+{
+  "type": "lidoACL",
+  "ignoreRelatives": [
+    {
+      "app": "eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433",
+      "role": "0x75abc64490e17b40ea1e66691c3eb493647b24430b358bd87ec3e5127f1621ee"
+    }
+  ]
+}
+```
+
+**Output Structure:**
+
+The handler returns permissions grouped by `(app + role)`:
+
+```json
+{
+  "eth:0xApp_0xRoleHash": {
+    "app": "eth:0xApp",
+    "role": "ROLE_NAME",
+    "manager": "eth:0xManager",
+    "entities": ["eth:0xEntity1", "eth:0xEntity2"]
+  }
+}
+```
+
 ### Linea access control handler
 
 This handler allows you to analyze a Zodiac GnosisSafe module that exhibits an

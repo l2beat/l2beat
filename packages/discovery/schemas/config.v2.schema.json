@@ -681,6 +681,30 @@
                               "function": { "type": "string" }
                             },
                             "required": ["type", "event", "function"]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": { "const": "lidoACL" },
+                              "roleNames": {
+                                "type": "object",
+                                "propertyNames": { "type": "string" },
+                                "additionalProperties": { "type": "string" }
+                              },
+                              "ignoreRelative": { "type": "boolean" },
+                              "ignoreRelatives": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "app": { "type": "string" },
+                                    "role": { "type": "string" }
+                                  },
+                                  "required": ["app", "role"]
+                                }
+                              }
+                            },
+                            "required": ["type"]
                           }
                         ]
                       },

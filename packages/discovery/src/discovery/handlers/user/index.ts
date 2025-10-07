@@ -106,6 +106,10 @@ import {
   ZKsyncEraValidatorsHandler,
   ZKsyncEraValidatorsHandlerDefinition,
 } from './ZKsyncEraValidatorsHandler'
+import {
+  LidoACLHandler,
+  LidoACLHandlerDefinition,
+} from '../defidisco/LidoACLHandler'
 
 export type UserHandlerDefinition = v.infer<typeof UserHandlerDefinition>
 export const UserHandlerDefinition = v.union([
@@ -139,6 +143,7 @@ export const UserHandlerDefinition = v.union([
   TradableDefinition,
   YieldFiMintersDefinition,
   EventTraceHandlerDefinition,
+  LidoACLHandlerDefinition,
 ])
 
 export function getUserHandler(
@@ -207,5 +212,7 @@ export function getUserHandler(
       return new YieldFiMintersHandler(field, definition, abi)
     case 'eventTrace':
       return new EventTraceHandler(field, definition, abi)
+    case 'lidoACL':
+      return new LidoACLHandler(field, definition, abi)
   }
 }
