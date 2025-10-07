@@ -4,48 +4,48 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { OpenApi } from '../OpenApi'
 import { GenericErrorResponse } from '../types'
-import { getTvsData } from './getTvsData'
-import { TvsRangeSchema, TvsResultSchema } from './types'
+import { getActivityData } from './getActivityData'
+import { ActivityRangeSchema, ActivityResultSchema } from './types'
 
-export function addTvsRoutes(
+export function addActivityRoutes(
   openapi: OpenApi,
   ps: ProjectService,
   db: Database,
 ) {
   openapi.get(
-    '/tvs',
+    '/activity',
     {
-      summary: 'Total Value Secured with ability to control the time range',
-      tags: ['tvs'],
+      summary: 'Activity data with ability to control the time range.',
+      tags: ['activity'],
       query: v.object({
-        range: TvsRangeSchema.optional(),
+        range: ActivityRangeSchema.optional(),
       }),
-      result: TvsResultSchema,
+      result: ActivityResultSchema,
     },
     async (req, res) => {
       const { range } = req.query
 
-      const projectIds = await getTvsProjects(ps)
+      const projectIds = await getActivityProjects(ps)
 
-      const data = await getTvsData(db, range ?? '30d', projectIds)
+      const data = await getActivityData(db, range ?? '30d', projectIds)
 
       res.json(data)
     },
   )
 
   openapi.get(
-    '/tvs/:projectId',
+    '/activity/:projectId',
     {
       summary:
-        'Total Value Secured for a specific project with ability to control the time range.',
+        'Activity data for a specific project with ability to control the time range.',
       tags: ['tvs'],
       params: v.object({
         projectId: v.string(),
       }),
       query: v.object({
-        range: TvsRangeSchema.optional(),
+        range: ActivityRangeSchema.optional(),
       }),
-      result: TvsResultSchema,
+      result: ActivityResultSchema,
       errors: {
         404: GenericErrorResponse,
       },
@@ -56,7 +56,7 @@ export function addTvsRoutes(
 
       const project = await ps.getProject({
         id: ProjectId(projectId),
-        select: ['tvsConfig'],
+        select: ['activityConfig'],
       })
 
       if (!project) {
@@ -66,16 +66,17 @@ export function addTvsRoutes(
         return
       }
 
-      const data = await getTvsData(db, range ?? '30d', [project.id])
+      const data = await getActivityData(db, range ?? '30d', [project.id])
 
       res.json(data)
     },
   )
 }
 
-async function getTvsProjects(ps: ProjectService): Promise<ProjectId[]> {
+async function getActivityProjects(ps: ProjectService): Promise<ProjectId[]> {
   const projects = await ps.getProjects({
-    select: ['tvsConfig'],
+    select: ['activityConfig'],
+    where: ['isScaling'],
     whereNot: ['isUpcoming', 'archivedAt'],
   })
 

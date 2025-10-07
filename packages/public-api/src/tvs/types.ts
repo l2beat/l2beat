@@ -23,5 +23,3 @@ export const TvsResultSchema = v.array(TvsResultItemSchema)
 
 export const TvsRangeSchema = v.enum(['7d', '30d', '90d', '180d', '1y', 'max'])
 export type TvsRange = v.infer<typeof TvsRangeSchema>
-
-export type TvsResolution = 'hourly' | 'sixHourly' | 'daily'

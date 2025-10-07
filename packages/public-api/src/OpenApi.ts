@@ -39,7 +39,7 @@ type OpenApiResponse = {
   }
 }
 
-type Tags = 'projects' | 'tvs'
+type Tags = 'projects' | 'tvs' | 'activity'
 
 const BadRequestResponse = v
   .object({
