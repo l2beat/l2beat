@@ -102,7 +102,6 @@ export { generateEntrypoints } from './discovery/shared-modules/generateEntrypoi
 export { deduplicateAbi } from './discovery/source/deduplicateAbi'
 export { SourceCodeService } from './discovery/source/SourceCodeService'
 export { get$Implementations } from './discovery/utils/extractors'
-export { filterReferencedEntries } from './discovery/utils/filterReferencedEntries'
 export { getReferencedEntries } from './discovery/utils/getReferencedEntries'
 export { getContractField } from './discovery/utils/metaGetters'
 export { normalizeDiffPath } from './discovery/utils/normalizeDiffPath'
