@@ -22,7 +22,7 @@ export const xlayer: ScalingProject = {
   addedAt: UnixTime(1713983341), // 2024-04-24T18:29:01Z
   badges: [BADGES.DA.CustomDA, BADGES.Infra.Agglayer],
   reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.SMALL_DAC,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
     REASON_FOR_BEING_OTHER.NO_PROOFS,
   ],
   proofSystem: undefined,
