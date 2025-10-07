@@ -1,3 +1,96 @@
+Generated with discovered.json: 0x4762a8fb7f3f61c4047256a00966686b67169f0b
+
+# Diff at Mon, 06 Oct 2025 15:35:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e58bd9f0913161b35e2a2c65f233464591d4f28b block: 1759406341
+- current timestamp: 1759764743
+
+## Description
+
+some pools added.
+
+## Watched changes
+
+```diff
+    contract LockReleaseTokenPool (eth:0x20B79D39Bd44dEee4F89B1e9d0e3b945fde06491) {
+    +++ description: None
+      values.getSupportedChains.1:
+-        "6433500567565415381"
+      values.getSupportedChains.2:
+-        "15971525489660198786"
+      values.getSupportedChains.2:
++        "15971525489660198786"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (eth:0x3E8Ac93aBbD46e5BD4C3641D942f61ed6D858529) {
+    +++ description: None
+      values.getRebalancer:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x697f6b0658B9f146701379eb5394a4BAe627c8B9"
+      values.getSupportedChains.0:
++        "11344663589394136015"
+      values.getSupportedChains.1:
++        "15971525489660198786"
+    }
+```
+
+```diff
+    contract SourceTokenPool (eth:0x44e77d8C6Bb9999B036a6F084005E48928d18C74) {
+    +++ description: None
+      values.getRebalancer:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x7B39B6b869869134b18d1fFA97bfbE4FE7fc701B"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (eth:0x639f35C5E212D61Fe14Bd5CD8b66aAe4df11a50c) {
+    +++ description: None
+      values.getSupportedChains.3:
++        "9335212494177455608"
+    }
+```
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.263:
++        "eth:0xED61F61FeEA87C8dd89a94548cDA24Bd684BfbB7"
+      values.poolsMap.eth:0x5c98060ec53eF50Ab97FefEdd93Ff32efa07f5ce:
++        "eth:0xED61F61FeEA87C8dd89a94548cDA24Bd684BfbB7"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x697f6b0658B9f146701379eb5394a4BAe627c8B9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    EOA  (eth:0x7B39B6b869869134b18d1fFA97bfbE4FE7fc701B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xED61F61FeEA87C8dd89a94548cDA24Bd684BfbB7)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0xED61F61FeEA87C8dd89a94548cDA24Bd684BfbB7.sol | 1615 ++++++++++++++++++++
+ .../src/projects/transporter/.flat/Safe/Safe.sol   | 1088 +++++++++++++
+ .../transporter/.flat/Safe/SafeProxy.p.sol         |   37 +
+ 3 files changed, 2740 insertions(+)
+```
+
 Generated with discovered.json: 0xc18a73d4b1d5bd7d9b3dcedaa8f530bf2f1d4ff6
 
 # Diff at Thu, 02 Oct 2025 12:10:01 GMT:

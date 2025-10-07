@@ -11,7 +11,10 @@ describe(DaBeatStatsProvider.name, () => {
   describe(DaBeatStatsProvider.prototype.getStats.name, () => {
     it('routes to getEthereumStats for ethereum project', async () => {
       const mockBeaconChainClient = mockObject<BeaconChainClient>({
-        getValidatorsInfo: async () => ({ totalStake: 1000n }),
+        getValidatorsInfo: async () => ({
+          totalStake: 1000n,
+          numberOfValidators: 1,
+        }),
       })
 
       const provider = new DaBeatStatsProvider(
@@ -26,7 +29,7 @@ describe(DaBeatStatsProvider.name, () => {
       expect(result).toEqual({
         totalStake: 1000n,
         thresholdStake: 666n, // (1000n * 200n) / 300n = 666n
-        numberOfValidators: null,
+        numberOfValidators: 1,
       })
     })
 
@@ -51,7 +54,7 @@ describe(DaBeatStatsProvider.name, () => {
       expect(result).toEqual({
         totalStake: 800n,
         thresholdStake: 533n, // (800n * 200n) / 300n = 533n
-        numberOfValidators: null,
+        numberOfValidators: 2,
       })
     })
 
@@ -76,7 +79,7 @@ describe(DaBeatStatsProvider.name, () => {
       expect(result).toEqual({
         totalStake: 300000000n, // (100 + 200) * 10^6
         thresholdStake: 200000000n, // (300000000n * 200n) / 300n
-        numberOfValidators: null,
+        numberOfValidators: 2,
       })
     })
 
@@ -103,7 +106,7 @@ describe(DaBeatStatsProvider.name, () => {
       expect(result).toEqual({
         totalStake: 1000n,
         thresholdStake: 666n, // (1000n * 200n) / 300n = 666n
-        numberOfValidators: null,
+        numberOfValidators: 2,
       })
     })
 
@@ -126,6 +129,7 @@ describe(DaBeatStatsProvider.name, () => {
       const mockBeaconChainClient = mockObject<BeaconChainClient>({
         getValidatorsInfo: async () => ({
           totalStake: 32000000000000000000000n,
+          numberOfValidators: 2,
         }),
       })
 
@@ -141,7 +145,7 @@ describe(DaBeatStatsProvider.name, () => {
       expect(result).toEqual({
         totalStake: 32000000000000000000000n,
         thresholdStake: 21333333333333333333333n,
-        numberOfValidators: null,
+        numberOfValidators: 2,
       })
     })
 
@@ -185,7 +189,7 @@ describe(DaBeatStatsProvider.name, () => {
       expect(result).toEqual({
         totalStake: 2250000000000000000000000n,
         thresholdStake: 1500000000000000000000000n,
-        numberOfValidators: null,
+        numberOfValidators: 3,
       })
     })
 
@@ -210,7 +214,7 @@ describe(DaBeatStatsProvider.name, () => {
       expect(result).toEqual({
         totalStake: 0n,
         thresholdStake: 0n,
-        numberOfValidators: null,
+        numberOfValidators: 0,
       })
     })
 
@@ -250,7 +254,7 @@ describe(DaBeatStatsProvider.name, () => {
       expect(result).toEqual({
         totalStake: 3000000000n, // (1000 + 2000) * 10^6
         thresholdStake: 2000000000n,
-        numberOfValidators: null,
+        numberOfValidators: 2,
       })
     })
 
@@ -296,7 +300,7 @@ describe(DaBeatStatsProvider.name, () => {
       expect(result).toEqual({
         totalStake: 20000000000n, // (100 * 100 + 50 * 200) * 10^6
         thresholdStake: 13333333333n,
-        numberOfValidators: null,
+        numberOfValidators: 150,
       })
     })
 
@@ -354,7 +358,7 @@ describe(DaBeatStatsProvider.name, () => {
       expect(result).toEqual({
         totalStake: 3500000000000000000n,
         thresholdStake: 2333333333333333333n,
-        numberOfValidators: null,
+        numberOfValidators: 3,
       })
     })
 

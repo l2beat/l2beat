@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": [
+    "getAllowedExitDelay",
+    "getBadPerformancePenalty",
+    "getElRewardsStealingAdditionalFine",
+    "getExitDelayPenalty",
+    "getKeyRemovalCharge",
+    "getKeysLimit",
+    "getMaxWithdrawalRequestFee",
+    "getPerformanceLeewayData",
+    "getQueueConfig",
+    "getRewardShareData",
+    "getStrikesParams",
+    "getPerformanceCoefficients"
+  ]
+}

@@ -9,7 +9,8 @@
     "getRewardsDistribution",
     "getNodeOperatorIsActive",
     "getNodeOperatorSummary",
-    "getNonce"
+    "getNonce",
+    "exitDeadlineThreshold"
   ],
   "ignoreInWatchMode": [
     "getStakingModuleSummary",
