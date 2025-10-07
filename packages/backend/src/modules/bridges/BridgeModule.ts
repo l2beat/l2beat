@@ -1,9 +1,11 @@
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BridgeBlockProcessor } from './BridgeBlockProcessor'
 import { BridgeCleaner } from './BridgeCleaner'
+import { BridgeComparator } from './BridgeComparator'
 import { BridgeMatcher } from './BridgeMatcher'
 import { createBridgeRouter } from './BridgeRouter'
 import { BridgeStore } from './BridgeStore'
+import { createBridgeComparePlugins } from './compare'
 import { createBridgePlugins } from './plugins'
 
 export function createBridgeModule({
@@ -11,7 +13,6 @@ export function createBridgeModule({
   db,
   logger,
   blockProcessors,
-  providers,
 }: ModuleDependencies): ApplicationModule | undefined {
   if (!config.bridges) {
     logger.info('Bridges module disabled')
@@ -23,7 +24,7 @@ export function createBridgeModule({
   const bridgeStore = new BridgeStore(db)
 
   const processors = []
-  if (config.bridges.capture) {
+  if (config.bridges.capture.enabled) {
     for (const chain of config.bridges.capture.chains) {
       const processor = new BridgeBlockProcessor(
         chain,
@@ -46,6 +47,15 @@ export function createBridgeModule({
 
   const bridgeRouter = createBridgeRouter(db, config.bridges, processors)
 
+  const comparePlugins = createBridgeComparePlugins()
+
+  const bridgeComparator = new BridgeComparator(
+    db,
+    comparePlugins,
+    logger,
+    config.bridges.compare.intervalMs,
+  )
+
   const bridgeCleaner = new BridgeCleaner(bridgeStore, db, logger)
 
   const start = async () => {
@@ -54,6 +64,9 @@ export function createBridgeModule({
     if (config.bridges && config.bridges.matching) {
       await bridgeStore.start()
       bridgeMatcher.start()
+    }
+    if (config.bridges && config.bridges.compare.enabled) {
+      bridgeComparator.start()
     }
     if (config.bridges && config.bridges.cleaner) {
       bridgeCleaner.start()

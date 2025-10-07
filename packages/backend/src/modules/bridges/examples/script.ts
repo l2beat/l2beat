@@ -170,7 +170,7 @@ async function runExample(example: Example): Promise<RunResult> {
         })
 
         if (event) {
-          events.push(event)
+          events.push({ ...event, plugin: plugin.name })
           break
         }
       }

@@ -142,10 +142,11 @@ export class AxelarITSPlugin implements BridgePlugin {
       })
       if (!interchainTransfer) return
       return [
-        Result.Message('axelar.ContractCallMessage.its', [
-          contractCall,
-          contractCallApproved,
-        ]),
+        Result.Message('axelar.ContractCallMessage', {
+          app: 'axelar-its',
+          srcEvent: contractCall,
+          dstEvent: contractCallApproved,
+        }),
         Result.Transfer('axelar-its.Transfer', {
           srcEvent: interchainTransfer,
           srcAmount: interchainTransfer.args.amount.toString(),

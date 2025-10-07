@@ -27,7 +27,11 @@ export class StargateV2TaxiPlugin implements BridgePlugin {
     if (!packetDelivered) return
 
     return [
-      Result.Message('layerzero-v2.Message', [packetSent, packetDelivered]),
+      Result.Message('layerzero-v2.Message', {
+        app: 'stargate-v2-taxi',
+        srcEvent: packetSent,
+        dstEvent: packetDelivered,
+      }),
       Result.Transfer('stargate-v2-taxi.Transfer', {
         srcEvent: event,
         srcTokenAddress: event.args.tokenAddress,

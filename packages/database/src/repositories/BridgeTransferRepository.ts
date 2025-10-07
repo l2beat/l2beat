@@ -4,6 +4,7 @@ import { BaseRepository } from '../BaseRepository'
 import type { BridgeTransfer } from '../kysely/generated/types'
 
 export interface BridgeTransferRecord {
+  plugin: string
   messageId: string
   type: string
   duration: number | undefined
@@ -36,6 +37,7 @@ export function toRecord(
   row: Selectable<BridgeTransfer>,
 ): BridgeTransferRecord {
   return {
+    plugin: row.plugin,
     messageId: row.messageId,
     type: row.type,
     duration: row.duration ?? undefined,
@@ -77,6 +79,7 @@ export function toRow(
   record: BridgeTransferRecord,
 ): Insertable<BridgeTransfer> {
   return {
+    plugin: record.plugin,
     messageId: record.messageId,
     type: record.type,
     duration: record.duration,
@@ -84,7 +87,7 @@ export function toRow(
     srcTime:
       record.srcTime !== undefined ? UnixTime.toDate(record.srcTime) : null,
     srcChain: record.srcChain,
-    srcTxHash: record.srcTxHash,
+    srcTxHash: record.srcTxHash?.toLowerCase(),
     srcLogIndex: record.srcLogIndex,
     srcEventId: record.srcEventId,
     srcTokenAddress: record.srcTokenAddress
@@ -100,7 +103,7 @@ export function toRow(
     dstTime:
       record.dstTime !== undefined ? UnixTime.toDate(record.dstTime) : null,
     dstChain: record.dstChain,
-    dstTxHash: record.dstTxHash,
+    dstTxHash: record.dstTxHash?.toLowerCase(),
     dstLogIndex: record.dstLogIndex,
     dstEventId: record.dstEventId,
     dstTokenAddress: record.dstTokenAddress
@@ -231,6 +234,22 @@ export class BridgeTransferRepository extends BaseRepository {
         inboundValueSum: Number(chain.inboundValueSum),
       }
     })
+  }
+
+  async getExistingItems(
+    items: { srcTxHash: string; dstTxHash: string }[],
+  ): Promise<BridgeTransferRecord[]> {
+    if (items.length === 0) return []
+
+    const srcHashes = items.map((x) => x.srcTxHash.toLowerCase())
+    const dstHashes = items.map((x) => x.dstTxHash.toLowerCase())
+    const rows = await this.db
+      .selectFrom('BridgeTransfer')
+      .selectAll()
+      .where('srcTxHash', 'in', srcHashes)
+      .where('dstTxHash', 'in', dstHashes)
+      .execute()
+    return rows.map(toRecord)
   }
 
   async deleteBefore(timestamp: UnixTime): Promise<number> {

@@ -543,7 +543,6 @@ App-specific data can be reconstructed by app clients, which request and assembl
       fraudDetection: DaFraudDetectionRisk.DasWithNoBlobsReconstruction(true),
     },
     economicSecurity: {
-      name: 'Avail',
       token: {
         symbol: 'AVAIL',
         decimals: 18,

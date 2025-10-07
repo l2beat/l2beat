@@ -1357,6 +1357,7 @@
       ],
       "proxyType": "immutable",
       "description": "Contains logging and getter functions about staking.",
+      "ignoreInWatchMode": ["getAccountStateRoot"],
       "sinceTimestamp": 1593189612,
       "sinceBlock": 10342572,
       "values": {
@@ -1368,6 +1369,11 @@
         "isOwner": false,
         "owner": "eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "registry": "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71"
+      },
+      "fieldMeta": {
+        "getAccountStateRoot": {
+          "description": "Merkle root of a tree of validator balances."
+        }
       },
       "implementationNames": {
         "eth:0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B": "StakingInfo"
@@ -3119,7 +3125,7 @@
     "polygonposbridge/predicate": "0x15319e6e8947d37c32a6ecf4e3356cfe7300b2e28d7a48036dabb989f6d98ca7",
     "polygonposbridge/RootChain": "0x951f1afb2394ca6912e53ebaac34bb72e9a1c3b6e65eca9bdba31dfe0f8ff656",
     "polygonposbridge/RootChainManagerMigrator": "0x7dd7e5d6f70c722c75f13a43c5509f47a2bb3377499f1d927c44150bdb3d97c5",
-    "polygonposbridge/StakingInfo": "0x472b4e99f38353920f0adb960c096ef2b8db88cfed76d97db017fff0a6c925fa",
+    "polygonposbridge/StakingInfo": "0x829f5c8f53e24e460b0c9e3d62696df2e750bdef5977d52d9d9085c223fdb77b",
     "polygonposbridge/StakingNFT": "0xb548c6f269123f0c23a2463c83cf000cda1a984eeeeb354a9a2af803b5245488",
     "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd",
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
