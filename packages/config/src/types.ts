@@ -612,6 +612,8 @@ export interface ProjectDaLayer {
   finality?: number
   dataAvailabilitySampling?: DataAvailabilitySampling
   economicSecurity?: DaEconomicSecurity
+  /** Config for getting the number of validators. Type: `static` means the number is fixed. Type: `dynamic` means we need to fetch it (has to be implemented in BE). */
+  validators?: DaValidators
   sovereignProjectsTrackingConfig?: SovereignProjectDaTrackingConfig[]
 }
 
@@ -685,6 +687,15 @@ export interface DaEconomicSecurity {
     coingeckoId: string
   }
 }
+
+export type DaValidators =
+  | {
+      type: 'static'
+      count: number
+    }
+  | {
+      type: 'dynamic'
+    }
 
 export interface ProjectDaBridge {
   name: string

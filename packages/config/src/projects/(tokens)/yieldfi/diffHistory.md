@@ -1,14 +1,24 @@
-Generated with discovered.json: 0xc023c5a65eaa7195f0534ed8059e443b2cc382af
+Generated with discovered.json: 0xbb4437c4fda5f58ac2d9c20a0d8b2d858f66fc2a
 
-# Diff at Tue, 07 Oct 2025 10:27:36 GMT:
+# Diff at Mon, 06 Oct 2025 15:28:03 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@dcb97cb884a7068d73eb2e7cb88d82455decdb43 block: 1755603175
-- current timestamp: 1755603175
+- comparing to: main@e58bd9f0913161b35e2a2c65f233464591d4f28b block: 1755603175
+- current timestamp: 1759764158
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Some oracle data changed, cleaned up config, new permissioned address.
+
+## Watched changes
+
+```diff
+    contract Administrator (eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e) {
+    +++ description: None
+      values.accessControl.YIELD.members.0:
++        "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"
+    }
+```
 
 ## Config/verification related changes
 
@@ -17,11 +27,10 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1755603175 (main branch discovery), not current.
 
 ```diff
-    contract USDC (eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48) {
+    contract RequestReceipt (eth:0x933B4464beBE7136bC184637792c0EE514057660) {
     +++ description: None
-      name:
--        "USD Coin Token"
-+        "USDC"
+      values.tokenByIndex:
+-        [7,106,586,1213]
     }
 ```
 

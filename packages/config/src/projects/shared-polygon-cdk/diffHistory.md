@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x0b02c38d5d5dc34f339e8f809a9ca496e03e3f09
+
+# Diff at Mon, 06 Oct 2025 13:42:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e58bd9f0913161b35e2a2c65f233464591d4f28b block: 1758619032
+- current timestamp: 1759758020
+
+## Description
+
+Lumia switches to pessimistic consensus, moving to OTHERS for now (same programVKey as XLayer).
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.9:
++        7
+      values.rollupsDataV2.6.programVKey:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+      values.rollupsDataV2.6.rollupVerifierType:
+-        0
++        1
+      values.rollupsDataV2.6.rollupTypeID:
+-        7
++        11
+      values.rollupsDataV2.6.verifier:
+-        "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
++        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+    }
+```
+
 Generated with discovered.json: 0x7aa00babb57afc42173ba0d6fae39dcba90ef42f
 
 # Diff at Tue, 23 Sep 2025 09:18:55 GMT:

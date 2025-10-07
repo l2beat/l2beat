@@ -120,6 +120,9 @@ export const celestia: BaseProject = {
       layer: ProjectId('celestia'),
       bridge: undefined,
     }),
+    validators: {
+      type: 'dynamic',
+    },
     /*
       Node params sources:
       - unbondingPeriod, finality (time_iota_ms): https://celestiaorg.github.io/celestia-app/specs/params.html
