@@ -3601,6 +3601,20 @@
       "supply": "zero"
     },
     {
+      "name": "Midas Re7 Yield",
+      "coingeckoId": "midas-mre7yield",
+      "address": "0x87C9053C819bB28e0D73d33059E1b3DA80AFb0cf",
+      "symbol": "mRe7YIELD",
+      "decimals": 18,
+      "deploymentTimestamp": 1738827887,
+      "coingeckoListingTimestamp": 1741132800,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54660/large/mre7yield_logo.png?1740896178",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Moonflow",
       "coingeckoId": "moonflow",
       "address": "0x4a52Fa1a1115814c59C643F53f14199b8fb11cEa",
@@ -10838,6 +10852,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Franklin OnChain U.S. Government Money Fund",
+      "coingeckoId": "franklin-templeton-benji",
+      "address": "0x60CfC2b186a4CF647486e42c42B11cC6D571d1E4",
+      "symbol": "BENJI",
+      "decimals": 18,
+      "deploymentTimestamp": 1729278711,
+      "coingeckoListingTimestamp": 1750636800,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66409/large/Benji_Logo.png?1749371083",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "FRIEND",
       "coingeckoId": "friend-tech",
       "address": "0x0bD4887f7D41B35CD75DFF9FfeE2856106f86670",
@@ -12141,6 +12169,20 @@
       }
     },
     {
+      "name": "BlackRock USD Institutional Digital Liquidity Fund",
+      "coingeckoId": "blackrock-usd-institutional-digital-liquidity-fund",
+      "address": "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+      "symbol": "BUIDL",
+      "decimals": 6,
+      "deploymentTimestamp": 1730729689,
+      "coingeckoListingTimestamp": 1739318400,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36291/large/blackrock.png?1711013223",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Boop",
       "coingeckoId": "boop-2",
       "address": "0x13A7DeDb7169a17bE92B0E3C7C2315B46f4772B3",
@@ -12416,6 +12458,20 @@
       "chainId": 42161,
       "source": "canonical",
       "supply": "zero"
+    },
+    {
+      "name": "Franklin OnChain U.S. Government Money Fund",
+      "coingeckoId": "franklin-templeton-benji",
+      "address": "0xB9e4765BCE2609bC1949592059B17Ea72fEe6C6A",
+      "symbol": "BENJI",
+      "decimals": 18,
+      "deploymentTimestamp": 1699305515,
+      "coingeckoListingTimestamp": 1750636800,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66409/large/Benji_Logo.png?1749371083",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "Frax",

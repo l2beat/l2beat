@@ -1,6 +1,11 @@
 {
   "ethereum": [
     {
+      "symbol": "mRe7YIELD",
+      "address": "0x87C9053C819bB28e0D73d33059E1b3DA80AFb0cf",
+      "category": "rwaPublic"
+    },
+    {
       "symbol": "LINEA",
       "address": "0x1789e0043623282D5DCc7F213d703C6D8BAfBB04"
     },
@@ -2273,6 +2278,20 @@
   ],
   "arbitrum": [
     {
+      "symbol": "BENJI",
+      "address": "0xB9e4765BCE2609bC1949592059B17Ea72fEe6C6A",
+      "source": "native",
+      "supply": "totalSupply", // minted by operators on each chain
+      "category": "rwaRestricted" // reason: price
+    },
+    {
+      "symbol": "BUIDL",
+      "address": "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+      "source": "native",
+      "supply": "totalSupply", // minted by operators on each chain
+      "category": "rwaRestricted" // reason: price
+    },
+    {
       "symbol": "cgETH.hashkey",
       "category": "ether",
       "address": "0x0Ce45dd53affbb011884EF1866E0738f58AB7969",
@@ -3668,6 +3687,13 @@
     }
   ],
   "base": [
+    {
+      "symbol": "BENJI",
+      "address": "0x60CfC2b186a4CF647486e42c42B11cC6D571d1E4",
+      "source": "native",
+      "supply": "totalSupply", // minted by operators on each chain
+      "category": "rwaRestricted" // reason: price
+    },
     {
       "symbol": "cgETH.hashkey",
       "category": "ether",
