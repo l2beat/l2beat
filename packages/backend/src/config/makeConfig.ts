@@ -164,6 +164,10 @@ export async function makeConfig(
           return c?.explorerUrl
         },
       },
+      compare: {
+        enabled: flags.isEnabled('bridges', 'compare'),
+        intervalMs: env.optionalInteger(['BRIDGES_COMPARE_INTERVAL_MS']),
+      },
     },
     // Must be last
     flags: flags.getResolved(),

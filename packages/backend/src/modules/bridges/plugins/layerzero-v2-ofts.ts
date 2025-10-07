@@ -3,6 +3,8 @@ import {
   createLayerZeroGuid,
   decodePacket,
   LAYERZERO_NETWORKS,
+  PacketDelivered,
+  PacketSent,
   parsePacketDelivered,
   parsePacketSent,
 } from './layerzero-v2'
@@ -121,11 +123,24 @@ export class LayerZeroV2OFTsPlugin implements BridgePlugin {
   ): MatchResult | undefined {
     if (!OFTReceivedPacketDelivered.checkType(oftReceivedPacketDelivered))
       return
-    const oftSentPacketSent = db.find(OFTSentPacketSent, {
-      guid: oftReceivedPacketDelivered.args.guid,
-    })
+
+    const guid = oftReceivedPacketDelivered.args.guid
+
+    const oftSentPacketSent = db.find(OFTSentPacketSent, { guid })
     if (!oftSentPacketSent) return
+
+    const packetSent = db.find(PacketSent, { guid })
+    if (!packetSent) return
+
+    const packetDelivered = db.find(PacketDelivered, { guid })
+    if (!packetDelivered) return
+
     return [
+      Result.Message('layerzero-v2.Message', {
+        app: 'oftv2',
+        srcEvent: packetSent,
+        dstEvent: packetDelivered,
+      }),
       Result.Transfer('oftv2.Transfer', {
         srcEvent: oftSentPacketSent,
         srcAmount: oftSentPacketSent.args.amountSentLD.toString(),

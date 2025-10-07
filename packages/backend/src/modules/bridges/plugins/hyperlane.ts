@@ -85,7 +85,13 @@ export class HyperlanePlugIn implements BridgePlugin {
         return
       }
 
-      return [Result.Message('hyperlane.Message', [dispatch, delivery])]
+      return [
+        Result.Message('hyperlane.Message', {
+          app: 'unknown',
+          srcEvent: dispatch,
+          dstEvent: delivery,
+        }),
+      ]
     }
   }
 }

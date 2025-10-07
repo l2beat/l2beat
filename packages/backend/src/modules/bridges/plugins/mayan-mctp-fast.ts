@@ -64,9 +64,14 @@ export class MayanMctpFastPlugin implements BridgePlugin {
     return [
       Result.Message(
         messageSent.args.fast ? 'cctp-v2.FastMessage' : 'cctp-v2.SlowMessage',
-        [messageSent, messageReceived],
+        {
+          app: 'mayan-mctp-fast',
+          srcEvent: messageSent,
+          dstEvent: messageReceived,
+        },
       ),
-      Result.Transfer('cctp-v2.Transfer.mayan-mctp-fast', {
+      Result.Transfer('cctp-v2.Transfer', {
+        // TODO: maybe this also has app: mayan-mctp-fast ?
         srcEvent: messageSent,
         srcTokenAddress: messageSent.args.tokenAddress,
         srcAmount: messageSent.args.amount.toString(),

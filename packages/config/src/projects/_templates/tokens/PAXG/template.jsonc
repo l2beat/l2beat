@@ -1,5 +1,15 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreMethods": ["admin", "getFeeFor", "implementation"],
+  "ignoreMethods": [
+    "admin",
+    "getFeeFor",
+    "implementation",
+    "depositQueuePointers",
+    "exitDeadlineThreshold",
+    "getNodeOperatorManagementProperties",
+    "getNodeOperatorOwner",
+    "getNodeOperatorTotalDepositedKeys",
+    "getClaimableBondShares"
+  ],
   "ignoreInWatchMode": ["totalSupply"]
 }
