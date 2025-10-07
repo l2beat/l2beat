@@ -4,7 +4,10 @@
   "fields": {
     "networkGovernor": {
       "permissions": [
-        { "type": "interact", "description": "manage validators." }
+        {
+          "type": "interact",
+          "description": "manage validators, update the address that manages the insurance fund, and update the treasury address that collects fees from markets."
+        }
       ]
     },
     "validators": {
@@ -23,7 +26,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "can commit, verify and execute batches."
+          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches."
         }
       ]
     }

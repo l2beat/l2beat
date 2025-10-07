@@ -15,6 +15,14 @@
     },
     "stateRootUpgradeVerifier": {
       "handler": { "type": "storage", "slot": 494, "returnType": "address" }
+    },
+    "createdMarkets": {
+      "handler": {
+        "type": "event",
+        "select": "symbol",
+        "add": { "event": ["CreateMarket"] }
+      },
+      "edit": ["map", ["format", "Bytes32ToString"]]
     }
   }
 }
