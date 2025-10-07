@@ -3,6 +3,7 @@ import { expect } from 'earl'
 import { describeTokenDatabase } from '../test/tokenDatabase'
 import type { AbstractTokenInsertable } from './AbstractTokenRepository'
 import {
+  type DeployedTokenPrimaryKey,
   DeployedTokenRepository,
   type DeployedTokenSelectable,
 } from './DeployedTokenRepository'
@@ -17,12 +18,11 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
   })
 
   describe(DeployedTokenRepository.prototype.insert.name, () => {
-    it('inserts record and returns id', async () => {
+    it('inserts record', async () => {
       const abstractTokenRecord = abstractToken({ id: 'TK0001' })
       await abstractTokens.insert(abstractTokenRecord)
 
       const record = deployedToken({
-        id: 'DT000001',
         chain: 'arbitrum',
         address: '0x' + '1'.repeat(40),
         abstractTokenId: abstractTokenRecord.id,
@@ -32,20 +32,27 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
         comment: 'initial deployment',
       })
 
-      const id = await repository.insert(record)
-      expect(id).toEqual(record.id)
+      await repository.insert(record)
 
-      const stored = await repository.findById(record.id)
+      const stored = await repository.findByChainAndAddress(
+        record.chain,
+        record.address,
+      )
       expect(stored).toEqual(record)
     })
 
     it('accepts optional fields', async () => {
-      const record = deployedToken({ id: 'DT000002' })
+      const record = deployedToken({
+        chain: 'ethereum',
+        address: '0x' + '2'.repeat(40),
+      })
 
-      const id = await repository.insert(record)
-      expect(id).toEqual(record.id)
+      await repository.insert(record)
 
-      const stored = await repository.findById(record.id)
+      const stored = await repository.findByChainAndAddress(
+        record.chain,
+        record.address,
+      )
       expect(stored).toEqual(record)
     })
   })
@@ -58,7 +65,6 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
       await abstractTokens.insert(secondAbstractToken)
 
       const record = deployedToken({
-        id: 'DT000001',
         chain: 'ethereum',
         address: '0x' + '2'.repeat(40),
         abstractTokenId: firstAbstractToken.id,
@@ -70,8 +76,8 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
       await repository.insert(record)
 
       const updatedRows = await repository.update({
-        id: record.id,
-        address: '0x' + '3'.repeat(40),
+        chain: record.chain,
+        address: record.address,
         abstractTokenId: secondAbstractToken.id,
         symbol: 'UPDT',
         decimals: 8,
@@ -81,10 +87,12 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
 
       expect(updatedRows).toEqual(1)
 
-      const stored = await repository.findById(record.id)
+      const stored = await repository.findByChainAndAddress(
+        record.chain,
+        record.address,
+      )
       expect(stored).toEqual({
         ...record,
-        address: '0x' + '3'.repeat(40),
         abstractTokenId: secondAbstractToken.id,
         symbol: 'UPDT',
         decimals: 8,
@@ -101,16 +109,22 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
 
       const records = [
         deployedToken({
-          id: 'DT000001',
           abstractTokenId: 'TK0001',
+          chain: 'ethereum',
+          address: '0x' + '1'.repeat(40),
           deploymentTimestamp: UnixTime.toDate(10),
         }),
         deployedToken({
-          id: 'DT000002',
           abstractTokenId: 'TK0002',
+          chain: 'arbitrum',
+          address: '0x' + '2'.repeat(40),
           deploymentTimestamp: UnixTime.toDate(20),
         }),
-        deployedToken({ id: 'DT000003', abstractTokenId: undefined }),
+        deployedToken({
+          abstractTokenId: undefined,
+          chain: 'optimism',
+          address: '0x' + '3'.repeat(40),
+        }),
       ]
       await repository.insert(records[0]!)
       await repository.insert(records[1]!)
@@ -120,17 +134,33 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
     })
   })
 
-  describe(DeployedTokenRepository.prototype.deleteByIds.name, () => {
+  describe(DeployedTokenRepository.prototype.deleteByPrimaryKeys.name, () => {
     it('removes selected records', async () => {
-      await repository.insert(deployedToken({ id: 'DT000001' }))
-      await repository.insert(deployedToken({ id: 'DT000002' }))
-      await repository.insert(deployedToken({ id: 'DT000003' }))
+      const first = deployedToken({
+        chain: 'ethereum',
+        address: '0x' + '1'.repeat(40),
+      })
+      const second = deployedToken({
+        chain: 'arbitrum',
+        address: '0x' + '2'.repeat(40),
+      })
+      const third = deployedToken({
+        chain: 'optimism',
+        address: '0x' + '3'.repeat(40),
+      })
 
-      const deleted = await repository.deleteByIds(['DT000001', 'DT000003'])
+      await repository.insert(first)
+      await repository.insert(second)
+      await repository.insert(third)
+
+      const deleted = await repository.deleteByPrimaryKeys([
+        toPrimaryKey(first),
+        toPrimaryKey(third),
+      ])
       expect(deleted).toEqual(2)
 
       const remaining = await repository.getAll()
-      expect(remaining).toEqual([deployedToken({ id: 'DT000002' })])
+      expect(remaining).toEqual([second])
     })
   })
 })
@@ -151,16 +181,26 @@ function abstractToken(
 }
 
 function deployedToken(
-  overrides: Partial<DeployedTokenSelectable> & { id: string },
+  overrides: Partial<DeployedTokenSelectable> &
+    Partial<DeployedTokenPrimaryKey> &
+    Required<Pick<DeployedTokenPrimaryKey, 'chain' | 'address'>>,
 ): DeployedTokenSelectable {
   return {
-    id: overrides.id,
     chain: overrides.chain ?? 'ethereum',
-    address: overrides.address ?? `0x${overrides.id}`,
+    address: overrides.address,
     abstractTokenId: overrides.abstractTokenId,
     symbol: overrides.symbol ?? 'TOKEN',
     decimals: overrides.decimals ?? 18,
     deploymentTimestamp: overrides.deploymentTimestamp ?? UnixTime.toDate(0),
     comment: overrides.comment,
+  }
+}
+
+function toPrimaryKey(
+  record: DeployedTokenSelectable,
+): DeployedTokenPrimaryKey {
+  return {
+    chain: record.chain,
+    address: record.address,
   }
 }

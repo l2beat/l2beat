@@ -3,7 +3,7 @@ import { expect } from 'earl'
 import { describeTokenDatabase } from '../test/tokenDatabase'
 import type {
   DeployedTokenInsertable,
-  DeployedTokenUpdate,
+  DeployedTokenPrimaryKey,
 } from './DeployedTokenRepository'
 import {
   type TokenConnectionInsertable,
@@ -15,10 +15,23 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
   const repository = db.tokenConnection
   const deployedTokens = db.deployedToken
 
+  const tokenA: DeployedTokenPrimaryKey = {
+    chain: 'ethereum',
+    address: '0x' + '1'.repeat(40),
+  }
+  const tokenB: DeployedTokenPrimaryKey = {
+    chain: 'arbitrum',
+    address: '0x' + '2'.repeat(40),
+  }
+  const tokenC: DeployedTokenPrimaryKey = {
+    chain: 'optimism',
+    address: '0x' + '3'.repeat(40),
+  }
+
   beforeEach(async () => {
-    await deployedTokens.insert(deployedToken({ id: 'DT000001' }))
-    await deployedTokens.insert(deployedToken({ id: 'DT000002' }))
-    await deployedTokens.insert(deployedToken({ id: 'DT000003' }))
+    await deployedTokens.insert(deployedToken(tokenA))
+    await deployedTokens.insert(deployedToken(tokenB))
+    await deployedTokens.insert(deployedToken(tokenC))
   })
 
   afterEach(async () => {
@@ -30,13 +43,13 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
     it('inserts new records', async () => {
       const connections = [
         tokenConnection({
-          tokenFromId: 'DT000001',
-          tokenToId: 'DT000002',
+          tokenFrom: tokenA,
+          tokenTo: tokenB,
           type: 'canonical',
         }),
         tokenConnection({
-          tokenFromId: 'DT000002',
-          tokenToId: 'DT000003',
+          tokenFrom: tokenB,
+          tokenTo: tokenC,
           type: 'wrapper',
           params: { type: 'canonical' },
           comment: 'wrapped',
@@ -53,16 +66,16 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
     it('updates existing records when keys match', async () => {
       await repository.upsertMany([
         tokenConnection({
-          tokenFromId: 'DT000001',
-          tokenToId: 'DT000002',
+          tokenFrom: tokenA,
+          tokenTo: tokenB,
           type: 'canonical',
           comment: 'initial',
         }),
       ])
 
       const updated = tokenConnection({
-        tokenFromId: 'DT000001',
-        tokenToId: 'DT000002',
+        tokenFrom: tokenA,
+        tokenTo: tokenB,
         type: 'canonical',
         params: { type: 'canonical' },
         comment: 'updated comment',
@@ -70,7 +83,7 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
 
       await repository.upsert(updated)
 
-      const result = await repository.getFromTo('DT000001', 'DT000002')
+      const result = await repository.getFromTo(tokenA, tokenB)
       expect(result).toEqual([updated])
     })
   })
@@ -81,32 +94,32 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
       it('returns inbound and outbound connections', async () => {
         await repository.upsertMany([
           tokenConnection({
-            tokenFromId: 'DT000001',
-            tokenToId: 'DT000002',
+            tokenFrom: tokenA,
+            tokenTo: tokenB,
             type: 'canonical',
           }),
           tokenConnection({
-            tokenFromId: 'DT000003',
-            tokenToId: 'DT000001',
+            tokenFrom: tokenC,
+            tokenTo: tokenA,
             type: 'wrapper',
           }),
           tokenConnection({
-            tokenFromId: 'DT000002',
-            tokenToId: 'DT000003',
+            tokenFrom: tokenB,
+            tokenTo: tokenC,
             type: 'wrapper',
           }),
         ])
 
-        const result = await repository.getConnectionsFromOrTo('DT000001')
+        const result = await repository.getConnectionsFromOrTo(tokenA)
         expect(result).toEqualUnsorted([
           tokenConnection({
-            tokenFromId: 'DT000001',
-            tokenToId: 'DT000002',
+            tokenFrom: tokenA,
+            tokenTo: tokenB,
             type: 'canonical',
           }),
           tokenConnection({
-            tokenFromId: 'DT000003',
-            tokenToId: 'DT000001',
+            tokenFrom: tokenC,
+            tokenTo: tokenA,
             type: 'wrapper',
           }),
         ])
@@ -118,32 +131,32 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
     it('returns outbound connections', async () => {
       await repository.upsertMany([
         tokenConnection({
-          tokenFromId: 'DT000001',
-          tokenToId: 'DT000002',
+          tokenFrom: tokenA,
+          tokenTo: tokenB,
           type: 'canonical',
         }),
         tokenConnection({
-          tokenFromId: 'DT000001',
-          tokenToId: 'DT000003',
+          tokenFrom: tokenA,
+          tokenTo: tokenC,
           type: 'wrapper',
         }),
         tokenConnection({
-          tokenFromId: 'DT000002',
-          tokenToId: 'DT000001',
+          tokenFrom: tokenB,
+          tokenTo: tokenA,
           type: 'canonical',
         }),
       ])
 
-      const result = await repository.getConnectionsFrom('DT000001')
+      const result = await repository.getConnectionsFrom(tokenA)
       expect(result).toEqualUnsorted([
         tokenConnection({
-          tokenFromId: 'DT000001',
-          tokenToId: 'DT000002',
+          tokenFrom: tokenA,
+          tokenTo: tokenB,
           type: 'canonical',
         }),
         tokenConnection({
-          tokenFromId: 'DT000001',
-          tokenToId: 'DT000003',
+          tokenFrom: tokenA,
+          tokenTo: tokenC,
           type: 'wrapper',
         }),
       ])
@@ -154,22 +167,22 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
     it('returns inbound connections', async () => {
       await repository.upsertMany([
         tokenConnection({
-          tokenFromId: 'DT000001',
-          tokenToId: 'DT000002',
+          tokenFrom: tokenA,
+          tokenTo: tokenB,
           type: 'canonical',
         }),
         tokenConnection({
-          tokenFromId: 'DT000003',
-          tokenToId: 'DT000001',
+          tokenFrom: tokenC,
+          tokenTo: tokenA,
           type: 'wrapper',
         }),
       ])
 
-      const result = await repository.getConnectionsTo('DT000002')
+      const result = await repository.getConnectionsTo(tokenB)
       expect(result).toEqualUnsorted([
         tokenConnection({
-          tokenFromId: 'DT000001',
-          tokenToId: 'DT000002',
+          tokenFrom: tokenA,
+          tokenTo: tokenB,
           type: 'canonical',
         }),
       ])
@@ -182,35 +195,32 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
       it('returns connections in both directions', async () => {
         await repository.upsertMany([
           tokenConnection({
-            tokenFromId: 'DT000001',
-            tokenToId: 'DT000002',
+            tokenFrom: tokenA,
+            tokenTo: tokenB,
             type: 'canonical',
           }),
           tokenConnection({
-            tokenFromId: 'DT000002',
-            tokenToId: 'DT000001',
+            tokenFrom: tokenB,
+            tokenTo: tokenA,
             type: 'wrapper',
           }),
           tokenConnection({
-            tokenFromId: 'DT000002',
-            tokenToId: 'DT000003',
+            tokenFrom: tokenB,
+            tokenTo: tokenC,
             type: 'canonical',
           }),
         ])
 
-        const result = await repository.getConnectionsBetween(
-          'DT000001',
-          'DT000002',
-        )
+        const result = await repository.getConnectionsBetween(tokenA, tokenB)
         expect(result).toEqualUnsorted([
           tokenConnection({
-            tokenFromId: 'DT000001',
-            tokenToId: 'DT000002',
+            tokenFrom: tokenA,
+            tokenTo: tokenB,
             type: 'canonical',
           }),
           tokenConnection({
-            tokenFromId: 'DT000002',
-            tokenToId: 'DT000001',
+            tokenFrom: tokenB,
+            tokenTo: tokenA,
             type: 'wrapper',
           }),
         ])
@@ -218,34 +228,34 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
     },
   )
 
-  describe(TokenConnectionRepository.prototype.deleteByTokenIds.name, () => {
-    it('deletes connections touching provided token ids', async () => {
+  describe(TokenConnectionRepository.prototype.deleteByTokens.name, () => {
+    it('deletes connections touching provided tokens', async () => {
       await repository.upsertMany([
         tokenConnection({
-          tokenFromId: 'DT000001',
-          tokenToId: 'DT000002',
+          tokenFrom: tokenA,
+          tokenTo: tokenB,
           type: 'canonical',
         }),
         tokenConnection({
-          tokenFromId: 'DT000002',
-          tokenToId: 'DT000001',
+          tokenFrom: tokenB,
+          tokenTo: tokenA,
           type: 'canonical',
         }),
         tokenConnection({
-          tokenFromId: 'DT000002',
-          tokenToId: 'DT000003',
+          tokenFrom: tokenB,
+          tokenTo: tokenC,
           type: 'wrapper',
         }),
       ])
 
-      const deleted = await repository.deleteByTokenIds(['DT000001'])
+      const deleted = await repository.deleteByTokens([tokenA])
       expect(deleted).toEqual(2)
 
       const remaining = await repository.getAll()
       expect(remaining).toEqual([
         tokenConnection({
-          tokenFromId: 'DT000002',
-          tokenToId: 'DT000003',
+          tokenFrom: tokenB,
+          tokenTo: tokenC,
           type: 'wrapper',
         }),
       ])
@@ -258,33 +268,30 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
       it('removes all connections between tokens regardless of type', async () => {
         await repository.upsertMany([
           tokenConnection({
-            tokenFromId: 'DT000001',
-            tokenToId: 'DT000002',
+            tokenFrom: tokenA,
+            tokenTo: tokenB,
             type: 'canonical',
           }),
           tokenConnection({
-            tokenFromId: 'DT000001',
-            tokenToId: 'DT000002',
+            tokenFrom: tokenA,
+            tokenTo: tokenB,
             type: 'wrapper',
           }),
           tokenConnection({
-            tokenFromId: 'DT000002',
-            tokenToId: 'DT000003',
+            tokenFrom: tokenB,
+            tokenTo: tokenC,
             type: 'wrapper',
           }),
         ])
 
-        const deleted = await repository.deleteConnectionsFromTo(
-          'DT000001',
-          'DT000002',
-        )
+        const deleted = await repository.deleteConnectionsFromTo(tokenA, tokenB)
         expect(deleted).toEqual(2)
 
         const remaining = await repository.getAll()
         expect(remaining).toEqual([
           tokenConnection({
-            tokenFromId: 'DT000002',
-            tokenToId: 'DT000003',
+            tokenFrom: tokenB,
+            tokenTo: tokenC,
             type: 'wrapper',
           }),
         ])
@@ -294,12 +301,12 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
 })
 
 function deployedToken(
-  overrides: DeployedTokenUpdate,
+  key: DeployedTokenPrimaryKey,
+  overrides: Partial<DeployedTokenInsertable> = {},
 ): DeployedTokenInsertable {
   return {
-    id: overrides.id,
-    chain: overrides.chain ?? 'ethereum',
-    address: overrides.address ?? `0x${overrides.id}`,
+    chain: overrides.chain ?? key.chain,
+    address: overrides.address ?? key.address,
     abstractTokenId: overrides.abstractTokenId,
     symbol: overrides.symbol ?? 'TOKEN',
     decimals: overrides.decimals ?? 18,
@@ -308,14 +315,24 @@ function deployedToken(
   }
 }
 
+interface TokenConnectionInput {
+  tokenFrom: DeployedTokenPrimaryKey
+  tokenTo: DeployedTokenPrimaryKey
+  type: TokenConnectionInsertable['type']
+  params?: TokenConnectionInsertable['params']
+  comment?: string
+}
+
 function tokenConnection(
-  overrides: TokenConnectionInsertable,
+  input: TokenConnectionInput,
 ): TokenConnectionSelectable {
   return {
-    tokenFromId: overrides.tokenFromId,
-    tokenToId: overrides.tokenToId,
-    type: overrides.type,
-    params: overrides.params,
-    comment: overrides.comment ?? undefined,
+    tokenFromChain: input.tokenFrom.chain,
+    tokenFromAddress: input.tokenFrom.address,
+    tokenToChain: input.tokenTo.chain,
+    tokenToAddress: input.tokenTo.address,
+    type: input.type,
+    params: input.params,
+    comment: input.comment,
   }
 }

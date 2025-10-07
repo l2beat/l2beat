@@ -34,6 +34,7 @@ export type {
 } from './repositories/DataAvailabilityRepository'
 export type {
   DeployedTokenInsertable,
+  DeployedTokenPrimaryKey,
   DeployedTokenUpdate,
 } from './repositories/DeployedTokenRepository'
 export type { DiscoveryCacheRecord } from './repositories/DiscoveryCacheRepository'

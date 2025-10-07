@@ -452,7 +452,6 @@ model AbstractToken {
 }
 
 model DeployedToken {
-  id                  String   @db.Char(8) // don't use `@default(autoincrement())` - otherwise executing plan can fail due to re-planning getting different ids
   chain               String   @db.VarChar(32)
   address             String   @db.VarChar(255)
   abstractTokenId     String?  @db.Char(6)
@@ -465,22 +464,23 @@ model DeployedToken {
   connectionsFrom TokenConnection[] @relation("TokenConnection_tokenFrom")
   connectionsTo   TokenConnection[] @relation("TokenConnection_tokenTo")
 
-  @@id([id])
-  @@unique([chain, address])
+  @@id([chain, address])
   @@index([abstractTokenId])
 }
 
 model TokenConnection {
-  tokenFromId String  @db.Char(8)
-  tokenToId   String  @db.Char(8)
-  type        String  @db.VarChar(32)
-  params      Json?   @db.Json
-  comment     String? @db.Text
+  tokenFromChain   String  @db.VarChar(32)
+  tokenFromAddress String  @db.VarChar(255)
+  tokenToChain     String  @db.VarChar(32)
+  tokenToAddress   String  @db.VarChar(255)
+  type             String  @db.VarChar(32)
+  params           Json?   @db.Json
+  comment          String? @db.Text
 
-  tokenFrom DeployedToken @relation("TokenConnection_tokenFrom", fields: [tokenFromId], references: [id], onDelete: Restrict)
-  tokenTo   DeployedToken @relation("TokenConnection_tokenTo", fields: [tokenToId], references: [id], onDelete: Restrict)
+  tokenFrom DeployedToken @relation("TokenConnection_tokenFrom", fields: [tokenFromChain, tokenFromAddress], references: [chain, address], onDelete: Restrict)
+  tokenTo   DeployedToken @relation("TokenConnection_tokenTo", fields: [tokenToChain, tokenToAddress], references: [chain, address], onDelete: Restrict)
 
-  @@id([tokenFromId, tokenToId, type])
-  @@index([tokenFromId])
-  @@index([tokenToId])
+  @@id([tokenFromChain, tokenFromAddress, tokenToChain, tokenToAddress, type])
+  @@index([tokenFromChain, tokenFromAddress])
+  @@index([tokenToChain, tokenToAddress])
 }

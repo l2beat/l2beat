@@ -15,7 +15,6 @@ CREATE TABLE "AbstractToken" (
 
 -- CreateTable
 CREATE TABLE "DeployedToken" (
-    "id" CHAR(8) NOT NULL,
     "chain" VARCHAR(32) NOT NULL,
     "address" VARCHAR(255) NOT NULL,
     "abstractTokenId" CHAR(6),
@@ -24,18 +23,20 @@ CREATE TABLE "DeployedToken" (
     "deploymentTimestamp" TIMESTAMP(6) NOT NULL,
     "comment" TEXT,
 
-    CONSTRAINT "DeployedToken_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "DeployedToken_pkey" PRIMARY KEY ("chain","address")
 );
 
 -- CreateTable
 CREATE TABLE "TokenConnection" (
-    "tokenFromId" CHAR(8) NOT NULL,
-    "tokenToId" CHAR(8) NOT NULL,
+    "tokenFromChain" VARCHAR(32) NOT NULL,
+    "tokenFromAddress" VARCHAR(255) NOT NULL,
+    "tokenToChain" VARCHAR(32) NOT NULL,
+    "tokenToAddress" VARCHAR(255) NOT NULL,
     "type" VARCHAR(32) NOT NULL,
     "params" JSON,
     "comment" TEXT,
 
-    CONSTRAINT "TokenConnection_pkey" PRIMARY KEY ("tokenFromId","tokenToId","type")
+    CONSTRAINT "TokenConnection_pkey" PRIMARY KEY ("tokenFromChain","tokenFromAddress","tokenToChain","tokenToAddress","type")
 );
 
 -- CreateIndex
@@ -45,19 +46,16 @@ CREATE UNIQUE INDEX "AbstractToken_issuer_symbol_key" ON "AbstractToken"("issuer
 CREATE INDEX "DeployedToken_abstractTokenId_idx" ON "DeployedToken"("abstractTokenId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "DeployedToken_chain_address_key" ON "DeployedToken"("chain", "address");
+CREATE INDEX "TokenConnection_tokenFromChain_tokenFromAddress_idx" ON "TokenConnection"("tokenFromChain", "tokenFromAddress");
 
 -- CreateIndex
-CREATE INDEX "TokenConnection_tokenFromId_idx" ON "TokenConnection"("tokenFromId");
-
--- CreateIndex
-CREATE INDEX "TokenConnection_tokenToId_idx" ON "TokenConnection"("tokenToId");
+CREATE INDEX "TokenConnection_tokenToChain_tokenToAddress_idx" ON "TokenConnection"("tokenToChain", "tokenToAddress");
 
 -- AddForeignKey
 ALTER TABLE "DeployedToken" ADD CONSTRAINT "DeployedToken_abstractTokenId_fkey" FOREIGN KEY ("abstractTokenId") REFERENCES "AbstractToken"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "TokenConnection" ADD CONSTRAINT "TokenConnection_tokenFromId_fkey" FOREIGN KEY ("tokenFromId") REFERENCES "DeployedToken"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "TokenConnection" ADD CONSTRAINT "TokenConnection_tokenFromChain_tokenFromAddress_fkey" FOREIGN KEY ("tokenFromChain", "tokenFromAddress") REFERENCES "DeployedToken"("chain", "address") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "TokenConnection" ADD CONSTRAINT "TokenConnection_tokenToId_fkey" FOREIGN KEY ("tokenToId") REFERENCES "DeployedToken"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "TokenConnection" ADD CONSTRAINT "TokenConnection_tokenToChain_tokenToAddress_fkey" FOREIGN KEY ("tokenToChain", "tokenToAddress") REFERENCES "DeployedToken"("chain", "address") ON DELETE RESTRICT ON UPDATE CASCADE;
