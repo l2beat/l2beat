@@ -202,6 +202,11 @@ export class CoingeckoQueryService {
 
     return result
   }
+
+  async getAllCoingeckoIds() {
+    const coins = await this.coingeckoClient.getCoinList()
+    return coins.map((c) => c.id).filter((c) => c !== undefined)
+  }
 }
 
 export function pickClosestValues(
