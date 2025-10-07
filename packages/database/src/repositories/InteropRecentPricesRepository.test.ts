@@ -9,37 +9,11 @@ import {
 describeDatabase(InteropRecentPricesRepository.name, (database) => {
   const repository = database.interopRecentPrices
 
-  afterEach(async () => {
-    await repository.deleteAll()
-  })
-
-  describe(InteropRecentPricesRepository.prototype.getAll.name, () => {
-    it('returns all records', async () => {
-      const records = [
-        mock('bitcoin', UnixTime.fromDate(new Date('2023-01-01')), 30000),
-        mock('ethereum', UnixTime.fromDate(new Date('2023-01-01')), 2000),
-      ]
-
-      await repository.insertMany(records)
-
-      const result = await repository.getAll()
-      expect(result).toEqualUnsorted([
-        saved('bitcoin', UnixTime.fromDate(new Date('2023-01-01')), 30000),
-        saved('ethereum', UnixTime.fromDate(new Date('2023-01-01')), 2000),
-      ])
-    })
-
-    it('returns empty array when no records exist', async () => {
-      const result = await repository.getAll()
-      expect(result).toEqual([])
-    })
-  })
-
   describe(InteropRecentPricesRepository.prototype.insertMany.name, () => {
     it('inserts multiple records', async () => {
       const records = [
-        mock('bitcoin', UnixTime.fromDate(new Date('2023-01-01')), 30000),
-        mock('ethereum', UnixTime.fromDate(new Date('2023-01-01')), 2000),
+        mock('bitcoin', UnixTime(100)),
+        mock('ethereum', UnixTime(100)),
       ]
 
       const count = await repository.insertMany(records)
@@ -47,30 +21,15 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
       expect(count).toEqual(2)
       const result = await repository.getAll()
       expect(result).toEqualUnsorted([
-        saved('bitcoin', UnixTime.fromDate(new Date('2023-01-01')), 30000),
-        saved('ethereum', UnixTime.fromDate(new Date('2023-01-01')), 2000),
+        saved('bitcoin', UnixTime(100), 1000),
+        saved('ethereum', UnixTime(100), 1000),
       ])
-    })
-
-    it('returns 0 for empty array', async () => {
-      const count = await repository.insertMany([])
-      expect(count).toEqual(0)
     })
 
     it('performs batch insert when more than 10,000 records', async () => {
       const records = []
       for (let i = 0; i < 15000; i++) {
-        records.push(
-          mock(
-            `bitcoin-${i}`,
-            UnixTime.fromDate(
-              new Date(
-                `2023-01-01T${String(i % 24).padStart(2, '0')}:00:00.000Z`,
-              ),
-            ),
-            30000 + i,
-          ),
-        )
+        records.push(mock('bitcoin', UnixTime(i)))
       }
 
       const count = await repository.insertMany(records)
@@ -79,35 +38,108 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
       const result = await repository.getAll()
       expect(result).toHaveLength(15000)
     })
+
+    it('returns 0 for empty array', async () => {
+      const count = await repository.insertMany([])
+      expect(count).toEqual(0)
+    })
   })
 
-  describe(InteropRecentPricesRepository.prototype.deleteAll.name, () => {
-    it('deletes all records and returns count', async () => {
-      const records = [
-        mock('bitcoin', UnixTime.fromDate(new Date('2023-01-01')), 30000),
-        mock('ethereum', UnixTime.fromDate(new Date('2023-01-01')), 2000),
-      ]
+  describe(InteropRecentPricesRepository.prototype.hasAnyPrices.name, () => {
+    it('returns true when prices exist', async () => {
+      await repository.insertMany([mock('bitcoin', UnixTime(100))])
 
-      await repository.insertMany(records)
-
-      const deletedCount = await repository.deleteAll()
-      expect(deletedCount).toEqual(2)
-
-      const remaining = await repository.getAll()
-      expect(remaining).toEqual([])
+      const result = await repository.hasAnyPrices()
+      expect(result).toEqual(true)
     })
 
-    it('returns 0 when no records exist', async () => {
-      const deletedCount = await repository.deleteAll()
-      expect(deletedCount).toEqual(0)
+    it('returns false when no prices exist', async () => {
+      const result = await repository.hasAnyPrices()
+      expect(result).toEqual(false)
     })
+  })
+
+  describe(InteropRecentPricesRepository.prototype.getClosestPrice.name, () => {
+    it('returns closest price within 1 day, earlier than target', async () => {
+      const targetTime = UnixTime(1000)
+      await repository.insertMany([
+        mock('bitcoin', UnixTime(900), 30000),
+        mock('bitcoin', UnixTime(1200), 31000),
+      ])
+
+      const result = await repository.getClosestPrice('bitcoin', targetTime)
+      expect(result).toEqual(30000)
+    })
+
+    it('returns closest price within 1 day, later than target', async () => {
+      const targetTime = UnixTime(1000)
+      await repository.insertMany([
+        mock('bitcoin', UnixTime(800), 30000),
+        mock('bitcoin', UnixTime(1100), 31000),
+      ])
+
+      const result = await repository.getClosestPrice('bitcoin', targetTime)
+      expect(result).toEqual(31000)
+    })
+
+    it('returns exact price when timestamp matches exactly', async () => {
+      const targetTime = UnixTime(1000)
+      await repository.insertMany([
+        mock('bitcoin', targetTime, 30000),
+        mock('bitcoin', UnixTime(900)),
+      ])
+
+      const result = await repository.getClosestPrice('bitcoin', targetTime)
+      expect(result).toEqual(30000)
+    })
+
+    it('returns price at boundary of 1 day range, earlier than target', async () => {
+      const targetTime = UnixTime.DAY + 7
+      const oneDayBefore = targetTime - UnixTime.DAY
+      await repository.insertMany([mock('bitcoin', oneDayBefore)])
+
+      const result = await repository.getClosestPrice('bitcoin', targetTime)
+      expect(result).toEqual(1000)
+    })
+
+    it('returns price at boundary of 1 day range, later than target', async () => {
+      const targetTime = UnixTime.DAY + 7
+      const oneDayAfter = targetTime + UnixTime.DAY
+      await repository.insertMany([mock('bitcoin', oneDayAfter)])
+
+      const result = await repository.getClosestPrice('bitcoin', targetTime)
+      expect(result).toEqual(1000)
+    })
+
+    it('returns undefined when no prices within 1 day', async () => {
+      const targetTime = UnixTime(1000)
+      await repository.insertMany([
+        mock('bitcoin', targetTime + UnixTime.DAY + 1),
+        mock('bitcoin', targetTime - UnixTime.DAY - 1),
+      ])
+
+      const result = await repository.getClosestPrice('bitcoin', targetTime)
+      expect(result).toEqual(undefined)
+    })
+
+    it('returns undefined when coingeckoId does not exist', async () => {
+      const targetTime = UnixTime(1000)
+      await repository.insertMany([mock('ethereum', targetTime)])
+
+      const result = await repository.getClosestPrice('bitcoin', targetTime)
+      expect(result).toEqual(undefined)
+    })
+  })
+
+  afterEach(async () => {
+    await repository.deleteAll()
   })
 })
 
 function mock(
   coingeckoId: string,
   timestamp: UnixTime,
-  priceUsd: number,
+  priceUsd = 1000,
 ): InteropRecentPricesRecord {
   return { coingeckoId, timestamp, priceUsd }
 }
