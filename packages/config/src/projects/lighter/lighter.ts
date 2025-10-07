@@ -1,10 +1,19 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { CONTRACTS, DA_BRIDGES, DA_LAYERS, DA_MODES, OPERATOR, RISK_VIEW, TECHNOLOGY, TECHNOLOGY_DATA_AVAILABILITY } from '../../common'
+import {
+  CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
+  EXITS,
+  FRONTRUNNING_RISK,
+  RISK_VIEW,
+} from '../../common'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -152,11 +161,36 @@ export const lighter: ScalingProject = {
     },
   }),
   technology: {
-    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STATE_DIFFS_FOR_ESCAPE_HATCH_BLOBS,
-    operator: {
-      ...OPERATOR.CENTRALIZED_OPERATOR,
+    dataAvailability: {
+      name: 'All data required for forced exits is published onchain',
+      description:
+        'All the data needed to recover the latest accounts state (represented by the Account Tree) and construct the zk proof necessary for forced exits is published onchain in the form of blobs. Only data that leads ',
+      risks: [],
+      references: [],
     },
-    
+    operator: {
+      name: 'Centralized operators',
+      description:
+        'Only the centralized operators can submit batches and verify them with a ZK proof, i.e. advance the state of the protocol.',
+      risks: [FRONTRUNNING_RISK],
+      references: [],
+    },
+    forceTransactions: {
+      name: 'Users can force their transactions on L1',
+      description: `If the centralized operators fail to include user transactions, users can force them themselves through L1. The possible transaction types that users can force are: deposits, withdrawals, order creation, order cancellation, and burning of pool shares. If the operators do not process forced transactions within ${formatSeconds(priorityExpiration)}, the system can be frozen (desert mode) and users can exit using the latest settled state. All open positions are settled using the latest index price.`,
+      risks: [],
+      references: [],
+    },
+    exitMechanisms: [
+      EXITS.REGULAR_WITHDRAWAL('zk'),
+      {
+        name: 'Escape hatch through ZK proofs',
+        description:
+          'If the centralized operators fail to process forced transactions after the deadline, the system can be frozen (desert mode) and users can exit by reconstructing the latest settled state using the data available on L1 and providing a ZK proof of balance.',
+        risks: [],
+        references: [],
+      },
+    ],
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   contracts: {
