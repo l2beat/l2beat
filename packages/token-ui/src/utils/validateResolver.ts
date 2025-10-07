@@ -42,7 +42,6 @@ function getErrors(
 
   if (schema.meta.type === 'object') {
     for (const key in schema.meta.schema) {
-      console.log(key)
       const keySchema = schema.meta.schema[key]
       assert(keySchema, 'Key schema is required')
       assert(!isArray(input), 'Input must be an object')
