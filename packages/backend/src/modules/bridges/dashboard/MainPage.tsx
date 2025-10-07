@@ -281,7 +281,6 @@ function MainPageLayout(props: {
           table: eventsTable,
           tableId: 'eventsTable',
           dataTableOptions: {
-            pageLength: 10,
             order: [[0, 'asc']],
           },
         },
@@ -290,7 +289,6 @@ function MainPageLayout(props: {
           table: messagesTable,
           tableId: 'messagesTable',
           dataTableOptions: {
-            pageLength: 10,
             order: [[0, 'asc']],
           },
         },
@@ -299,7 +297,6 @@ function MainPageLayout(props: {
           table: transfersTable,
           tableId: 'transfersTable',
           dataTableOptions: {
-            pageLength: 10,
             order: [[0, 'asc']],
           },
         },
