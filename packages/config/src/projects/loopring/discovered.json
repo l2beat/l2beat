@@ -1,0 +1,1009 @@
+{
+  "name": "loopring",
+  "timestamp": 1755157592,
+  "configHash": "0x204c6756882b9b5bb00cd3b9ece985a45255e35461d07d2db3fcbd34eaa5fd77",
+  "entries": [
+    {
+      "name": "ExchangeV3",
+      "address": "eth:0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x09274cec6469e731822a31ef5a200ae33fc319aca366cf599f707b6359f97613",
+        "0x7e59ed579f658f2c8c645a1794f79626a3d8578e8700d19bbd866122f9dd9b8e"
+      ],
+      "proxyType": "ZeppelinOS proxy",
+      "ignoreInWatchMode": [
+        "getBlockHeight",
+        "getMerkleRoot",
+        "getProtocolFeeValues",
+        "getNumAvailableForcedSlots",
+        "getConstants"
+      ],
+      "sinceTimestamp": 1603950102,
+      "sinceBlock": 11149814,
+      "values": {
+        "$admin": "eth:0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
+        "$immutable": false,
+        "$implementation": "eth:0x26d8Ba776a067C5928841985bCe342f75BAE7E82",
+        "$pastUpgrades": [
+          [
+            "2020-10-29T11:12:20.000Z",
+            "0xed8a952216607c164559f01d5f90066a7de65fdcc72146e71956865685a8eeab",
+            ["eth:0xa01d4d1FE18A34902Ac2e4045a5e8f553dDe9685"]
+          ],
+          [
+            "2020-12-14T06:16:14.000Z",
+            "0xcfbaf71a511297fd7bc1452e5b274c056ba5a3ddf271b59012eff877dd4351b9",
+            ["eth:0x2fefbeF4d1445F523941c56349C2414cd5e9675d"]
+          ],
+          [
+            "2021-01-18T03:06:54.000Z",
+            "0xce34e9483ec139aa6628ed29279b80f163ba9094ce1a848cbe640e438ad2eb20",
+            ["eth:0x8c63D8E608fF702a92D5908730C91457b0447Ad7"]
+          ],
+          [
+            "2021-03-25T03:26:10.000Z",
+            "0x155d094b0d053837b4e252b69cb10c8157795274da1a9f4325519791c27bd294",
+            ["eth:0xCFba78aecfBcc0B4B748fA58c530D4675BB5D32F"]
+          ],
+          [
+            "2021-03-29T03:54:19.000Z",
+            "0xb54c93da349065cc82e2ef150f07319b2522709e8fe7acbcb5a5edfdcf46f2d6",
+            ["eth:0x4fb117dcd6D09abF1a99B502d488A99F5a17e7eC"]
+          ],
+          [
+            "2021-09-01T04:24:19.000Z",
+            "0x2ccbfd61faf2015457ec43fab0324dca7d75091aba7423fe2990307bbfe32e22",
+            ["eth:0x3c294fCF74129d649325F8995afC2f9CfaFAB9dA"]
+          ],
+          [
+            "2021-12-14T02:21:21.000Z",
+            "0x0fa3763c4bd69cf9e77636b37b5b12c29f3b260d8e822ebe215b14c4602a716d",
+            ["eth:0x26d8Ba776a067C5928841985bCe342f75BAE7E82"]
+          ]
+        ],
+        "$upgradeCount": 7,
+        "domainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
+        "getAgentRegistry": "eth:0x39B9bf169a7e225ba037C443A40460c77438ea14",
+        "getAmmFeeBips": 20,
+        "getBlockHeight": 64780,
+        "getConstants": {
+          "SNARK_SCALAR_FIELD": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+          "MAX_OPEN_FORCED_REQUESTS": 4096,
+          "MAX_AGE_FORCED_REQUEST_UNTIL_WITHDRAW_MODE": 1296000,
+          "TIMESTAMP_HALF_WINDOW_SIZE_IN_SECONDS": 604800,
+          "MAX_NUM_ACCOUNTS": 4294967296,
+          "MAX_NUM_TOKENS": 65536,
+          "MIN_AGE_PROTOCOL_FEES_UNTIL_UPDATED": 604800,
+          "MIN_TIME_IN_SHUTDOWN": 2592000,
+          "TX_DATA_AVAILABILITY_SIZE": 68,
+          "MAX_AGE_DEPOSIT_UNTIL_WITHDRAWABLE_UPPERBOUND": 1296000
+        },
+        "getDepositContract": "eth:0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
+        "getDomainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
+        "getExchangeStake": 0,
+        "getMaxAgeDepositUntilWithdrawable": 1296000,
+        "getMerkleRoot": "0x2f70d0b72221988369398f043d07b67d0f75cae54fd1675e9028177596474a9c",
+        "getNumAvailableForcedSlots": 4096,
+        "getProtocolFeeValues": {
+          "syncedAt": 1754997443,
+          "takerFeeBips": 0,
+          "makerFeeBips": 0,
+          "previousTakerFeeBips": 0,
+          "previousMakerFeeBips": 0
+        },
+        "implementation": "eth:0x26d8Ba776a067C5928841985bCe342f75BAE7E82",
+        "isInWithdrawalMode": false,
+        "isShutdown": false,
+        "loopringV3": "eth:0xe56D6ccab6551932C0356E4e8d5dAF0630920C71",
+        "owner": "eth:0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "proxyOwner": "eth:0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
+        "shutdownTriggered": [],
+        "version": "3.6.0"
+      },
+      "implementationNames": {
+        "eth:0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4": "OwnedUpgradabilityProxy",
+        "eth:0x26d8Ba776a067C5928841985bCe342f75BAE7E82": "ExchangeV3"
+      }
+    },
+    {
+      "address": "eth:0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "LoopringIOExchangeOwner",
+      "address": "eth:0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x854356c3464284cf48c4c2a41fbf7ed907ee1d2c43c5458f8600e8a002947277"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1616396742,
+      "sinceBlock": 12087157,
+      "values": {
+        "$immutable": true,
+        "blockSubmitters": [
+          "eth:0x2b263f55Bf2125159Ce8Ec2Bb575C649f822ab46",
+          "eth:0x4774d954D20DB98492B0487BC9F91dc401dBA3aE",
+          "eth:0x53dD53dAf8F112BcA64332eA97398EfbC8a0E234",
+          "eth:0x212e75BF264C4FB3133fA5ef6f47A34367020A1A",
+          "eth:0x238b649E62a0C383b54060b1625516b489183843",
+          "eth:0x3243Ed9fdCDE2345890DDEAf6b083CA4cF0F68f2",
+          "eth:0xbfCc986cA6E6729c1D191cC0179ef060b87a7C42",
+          "eth:0xA921aF7e4dd279e1325399E4E3Bf13d0E57f48Fc",
+          "eth:0xeadb3d065f8d15cc05e92594523516aD36d1c834",
+          "eth:0xB1a6BF349c947A540a5fe6f1e89992ACDad836AB",
+          "eth:0xeDEE915Ae45Cc4B2FDd1Ce12a2f70dCa0B2AD9e5",
+          "eth:0xE6b0cf8ed864F9bfEBa1b03bac785B5aC82cf095",
+          "eth:0x487e8Be2BaD383b5B62fC5fb46005A8Fac10E341"
+        ],
+        "open": false,
+        "owner": "eth:0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "target": "eth:0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4"
+      },
+      "implementationNames": {
+        "eth:0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512": "LoopringIOExchangeOwner"
+      }
+    },
+    {
+      "address": "eth:0x1F28F10176F89F4E9985873B84d14e75751BB3D1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x212e75BF264C4FB3133fA5ef6f47A34367020A1A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x238b649E62a0C383b54060b1625516b489183843",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x2b263f55Bf2125159Ce8Ec2Bb575C649f822ab46",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x2Fc617E933a52713247CE25730f6695920B3befe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x3243Ed9fdCDE2345890DDEAf6b083CA4cF0F68f2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "AgentRegistry",
+      "address": "eth:0x39B9bf169a7e225ba037C443A40460c77438ea14",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xf3a59d4207b07dcef7f7b28021c025bdf4aed5f887d551dd04964981d8fb14a6"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1603946693,
+      "sinceBlock": 11149547,
+      "values": {
+        "$immutable": true,
+        "agents": [
+          "eth:0x18920d6E6Fb7EbE057a4DD9260D6D95845c95036",
+          "eth:0xA573C5d473702286f0AC84592EDA49aD799EBAA1",
+          "eth:0x6D537764355bc23d4eADba7829048Dac8215a73c",
+          "eth:0x605872a5A459E778959B8a49dc3A56a8c9197983",
+          "eth:0xf6cd964E6345E8f01e548063De13d0DE7d8c59De",
+          "eth:0x9b7a20ae12a3f2a3d4cF9eA2d4a8518c104cc5f2",
+          "eth:0x6FF8A397F7A04B41c58c00AB8e70ACa7cbc0adBa",
+          "eth:0x1230F7e06c3fA96f4259F7BaD79e6afF321B8133",
+          "eth:0x2ed5d3Fff0EB1451c381DDECE244E9b796db7b8a",
+          "eth:0xd85f594481D3DEE61FD38464dD54CF3ccE6906b6",
+          "eth:0xF8e4aBF498235fA8fdE2f6A04c21db7877957C47",
+          "eth:0x70c8E0AedB5933Da09C9392A17389e4D6d79D638",
+          "eth:0x8EFAD07720D331a49f5db2cC83946F7DC8FC6B42",
+          "eth:0xD9D681C1ddD462ca222E90Bbe14A35273C318A09",
+          "eth:0xE6CC0d45C4E4F81be340F4D176e6Ce0D63Ad5743",
+          "eth:0x746EEB6bdd9139A4d605C2c410911F37BEa9093b",
+          "eth:0xa9D46DEdEff7dFe8fF3628F4D276a0e1C5007b81",
+          "eth:0x502B5525e1508C51Af46719D13E5238b83A404e5",
+          "eth:0x9795f527d0Fad45F41dE27bef71F0eeD47f5256C",
+          "eth:0x1D28b287B5E19b12Ac2B3618405C57AD882A4D74",
+          "eth:0x1F78CD24Ccf73fDd5095d0339DD6eF72E30669aC",
+          "eth:0xF88de0CCD1E84898b4EA62c421009996bFb6156e",
+          "eth:0x93bB5B402F04D3053F2c3800F6A4AF54788c16d0",
+          "eth:0xec3Cc6Cf0252565b56FC7AC396017Df5b9B78a31",
+          "eth:0x0089081950B4eBBF362689519C1d54827e99d727",
+          "eth:0x8Cf6C5e7ec123583e1529d8afAeAA3D25Da2fD3D",
+          "eth:0x583208883277896435B9821a64806d708dE17Df2",
+          "eth:0x85f2e9474d208A11ac18Ed2a4E434c4Bfc6ddBDe",
+          "eth:0x0aA4d2Dd35418d63af13eA906ce3A088deC8D786",
+          "eth:0x567C1ad6d736755ABCB3DF8Ef794b09bB7701e66",
+          "eth:0x1B04A25a0A7F93cfB0c4278Ca4f7Ca2483a1e94e",
+          "eth:0x22844C482b0626aC09B5689b4D8E81fE6710F5f4",
+          "eth:0x4e585BaD734F0c6Af04a3Afb359FdB69435Fe74b",
+          "eth:0x9C601377fd95410Be46cfc1A786686874c6E7702",
+          "eth:0x8E89790635dBfFDCc0642055CB21abE63edc484c",
+          "eth:0x9387e06961988726Dd0732b6930Be1C0A5343901",
+          "eth:0x73b7bC4463263194Eb9B570948FDA12244a5FFa8",
+          "eth:0x43EcA2F58d8C371C5073fc382784A3a483005D6B",
+          "eth:0x8303f865a2A221c920e9fcbF2e84703991f16251",
+          "eth:0x37B6AAD464e8916Dc8231ae5F8aeE15Dd244C1B1",
+          "eth:0xba64cDf65aeA36Ff4a58dCF288f1a62923555795",
+          "eth:0x33Df027650cD2729e0b132FC0BFF4788725cc0FA",
+          "eth:0x2EAB3234ea1e4c9571c2e011F435c7316EcecdB9",
+          "eth:0xaCed28432cd60D7D34799DE0D745871e5F10f961",
+          "eth:0x636A3141D48402d06a907AA14F023e8F5B5d634f",
+          "eth:0x1F94eaaA413c11Bea645eE65108b5673304753bD",
+          "eth:0xF11702d591303D790C7B372e53fde348B82037DE",
+          "eth:0x78a58558Ca76Cf66b6C4d72231cF6529ed5bef29",
+          "eth:0xA762D8422237Bd26B4F882C5D0744726eb2a86B0",
+          "eth:0xfb64C2d72E1CaA0286899be8e4f88266C4d8Ab9f",
+          "eth:0xE8eA36f850Db564408E4165a92bCCB4e6e5f5e20",
+          "eth:0xA738DE0f4b1f52cC8410D6E49Ab6ED1ca3Fe1420",
+          "eth:0x24e4cf9B1723e5A5401841d931a301AEDEcd96Ef",
+          "eth:0x145f20A0C129D592da261E42947A70be3B22db07",
+          "eth:0x41E3B439a4798f2F466D28Be7bEDC0743847DbE4",
+          "eth:0xa2AcF6B0304A808147ee3b10601e452c3f1bfde7",
+          "eth:0xA0059ad8e06c57458116AbC5E5C0bdB86c4FB4b2",
+          "eth:0x8f5a6e6D18F8E3FDFfc27fE7FE5804c2378F8310",
+          "eth:0xA2F4A88553Ba746A468c21D3990FE9c503E0B19a",
+          "eth:0x69a8bdEE1af2138C58B1261373B37071850689C0",
+          "eth:0xeE6a9d6Cb11a9796f767540f435f90F11a9B1414",
+          "eth:0x8a6bA9D448Ad54579BEd1f42F587D134BF7F8582",
+          "eth:0x8a986607603D606b1Ac5Fdcca089764671C725E1",
+          "eth:0xf85f030865359D1843701F4f1B08c38913c3D57F",
+          "eth:0x7AB580E6Af77bD13f090619ee1f7e7C2a645afb1",
+          "eth:0xfE88c469E27861907D05a0E97f81d84c789A1cdA",
+          "eth:0x447356B190c7dafbE0452C8d041725ABf1E1d41f",
+          "eth:0x8f871AC37FA7F575E9b8c285B38f0bf99D3C087F",
+          "eth:0x5F6a9960318903d4205ddA6ba45796bC969461B8",
+          "eth:0xBBCA4790398C4CE916937dB3c6b7E9a9dA6502e8",
+          "eth:0x093137CFD844b64FeBeb5371D85Cf83fF4F92Bbf",
+          "eth:0xFa6680779DC9168600bCDcaFf28b41C8fa568D98",
+          "eth:0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
+          "eth:0x1AD74cF7CaF443f77BD89860EF39F4ca16fbE810",
+          "eth:0xe6F1C20D06B2f541e4308d752D0D58c6df07191D",
+          "eth:0x7aF6e5dD61c93277B406FfcaDAd6e6089b27075b",
+          "eth:0x759c0d0CE4191Db16EF5BCe6ED0A05dE9e99a9f5",
+          "eth:0x994F94C853D691f5C775e5131Fc4a110ABEed4A8",
+          "eth:0xE7E807631F3e807ae20d0e23919dB8789680104B",
+          "eth:0x7CD7871181D91Af440DD4552BAE70B8eBE9fBa73",
+          "eth:0x9a94A815F56d00F52BbaD46Edc6d12d879df2635",
+          "eth:0xFD997e572F03f3Ff4f117aaCCAAb9b45bFB6E01C",
+          "eth:0x5f24c3A2c9841c023d6646402fD449665b64626b",
+          "eth:0x9775449efDf24B7Eb5391E7D3758E184595E4C69",
+          "eth:0x4f23cA1CC6253dc1Ba69a07A892d68f3b777C407",
+          "eth:0x5c159d164b8fD7f0599c625988Dc2db68dF14842",
+          "eth:0x8572B8A876F47d70128C73bfcA049cE00Eb77563",
+          "eth:0xBBb360538b07b59BA2Ca1c9f847C8bC760b8f0D7",
+          "eth:0x34841262432975E36755AB797cb523Dd7248861A",
+          "eth:0xc8f242B2aC6069EBdc876BA0Ef42EfBf03C5Ba4B",
+          "eth:0xB27B1FD0D4a7D91d07C19f9A33D3A4711a453D7C",
+          "eth:0x76d8EA32C511A87ee4bfF5f00e758DD362aDf3d0",
+          "eth:0x6BF0060fBcf271A2Ed828E77076543076d5edbA1",
+          "eth:0x554Be7B23FDE679049e52F195448Db28B624534E",
+          "eth:0xa41e49fDcd0555484f70899d95593d2e1A0fCBbB",
+          "eth:0x83DF13e357C731ec92D13cbf8F5bF4765a8e1205",
+          "eth:0x4fACF65A157678E62F84389DD248D99f828403D6",
+          "eth:0xC3630669CB660f9405Df0D0037f52b78c49772Ab",
+          "eth:0x7b854D37E502771b1647F5917efCF065ce1C0677",
+          "eth:0x52ea1971C05B0169c02a0bBeC05Fe8b5E3A24470",
+          "eth:0x66fAD4Ab701eE8C6F9eBef93b634a3E7401aa276",
+          "eth:0x18a1A6F47Fd92185b91edc322d1954349aD0b652",
+          "eth:0x4a7e38476b05F40B16E5ae1C761302B1A7d5afc5",
+          "eth:0x83c11cbfbED2971032d3a1eD2f34d4Fb43FE181F",
+          "eth:0xC6bC133562B470A61394f9a2fF7FE8082Da698a4",
+          "eth:0x3EC139B45558D1db73b889f887624Ef117D28e3b",
+          "eth:0x1cb97A1fDcBc60F112B5a58896906BDb870BC438",
+          "eth:0xA186e201225E468218d53F3f9B42012022D425F3",
+          "eth:0xd0406913f2F58D1696eb9c3677E6713DD528f8CD",
+          "eth:0x194dB39E4c99f6C8dD81B4647465f7599f3c215A",
+          "eth:0xC50138E6B5c85622E4B8aB9003Eb0bD35Dcf6f78",
+          "eth:0xB8108988406dB7C4035BcFEf2bd924A9810ae7e6",
+          "eth:0x5359f0fD5ef2A6F0205436cC19EEC1D6Fc521b5C",
+          "eth:0xbDC384dB410E56F4877A086F5b68DeBD673a7c48",
+          "eth:0xBeC0c576EF02cB6341725607AB5D941e32B44437",
+          "eth:0x8195be4E48d3a2F80692fe1dBA9b23b8050fB1f9",
+          "eth:0xF75B89d214512C42C474bb0Ee5D865e953C28109",
+          "eth:0x4Cd8d47048B03294820A32Ebf58cBC6A76F7F529",
+          "eth:0x2fAc662748F876CA1d3A1b59eF5Be45C128EcfE5",
+          "eth:0x0Bcd579513410c4169d13b674ab58D009a329683",
+          "eth:0x0818e9a3A42EeDE47cd1482461B594f32CCBe2D5",
+          "eth:0x06Ac0eFB3E358528Ecd1E7336342c822678DAE4d",
+          "eth:0x97dB7F2758eC94757ba163e3052236b73DBF6c9A",
+          "eth:0xD4df78bbD50C564702F0C96C8C7de536154DB07d",
+          "eth:0x17bAa21Bec595da6A9d88A4b4FfdD1d336186c48",
+          "eth:0xa060931b7d91C991224C2D91827ABC4DE057324F",
+          "eth:0x69B198eDE31636Cbf8839C08625855EDad7AcEB9",
+          "eth:0x03388900bF7B87E539E5aFb274C3f59BBeBab567",
+          "eth:0xb6F12FfF6C114778640245c2E7A0B03de4B0f315",
+          "eth:0x779aFAf4D8F4e3E6e3aDCB465B7Fa7CfdD4B8a3a",
+          "eth:0xa371Ceca6E5Ff08da04AAe28Bcf3E414f96B2Db8",
+          "eth:0x997f5F09E45a845A9980C8F32dBE9b0824c7D0c0",
+          "eth:0xD5aA13A2b5246BEE262215ccEbb6413b5E71bAA8",
+          "eth:0x4fC4d2f0a5D5E7Baa7A0a456ea3BA924f7229672",
+          "eth:0x3CF377789eF85DEe82c90d131327Fb40694D2AD0",
+          "eth:0x427f20E2eD64F2B5E92a0DD467Ae49989e013e52",
+          "eth:0x1945e350291C9c7DFe9B7cEe428cA815DF31Fec2",
+          "eth:0xB42bBCd12c14F4b2efc1C84bb971F62A943db7d5"
+        ],
+        "owner": "eth:0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x39B9bf169a7e225ba037C443A40460c77438ea14": "AgentRegistry"
+      }
+    },
+    {
+      "address": "eth:0x4374D3d032B3c96785094ec9f384f07077792768",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x4774d954D20DB98492B0487BC9F91dc401dBA3aE",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x487e8Be2BaD383b5B62fC5fb46005A8Fac10E341",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ProtocolFeeVault",
+      "address": "eth:0x4b89f8996892d137c3dE1312d1dD4E4F4fFcA171",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x1fccaeadbe094a36ba3c786c5a1a767db2b6f5a5a5c29354d11af915f72d3174"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1583852946,
+      "sinceBlock": 9644449,
+      "values": {
+        "$immutable": true,
+        "DAO_PERDENTAGE": 20,
+        "daoAddress": "eth:0xe6FcAA61d9354dBb2320d9DcAFA9C1486Cf93907",
+        "getProtocolFeeStats": {
+          "accumulatedFees": "4355094991122463357585188",
+          "accumulatedBurn": "435509499112246335758520",
+          "accumulatedDAOFund": "871018998224492671517037",
+          "accumulatedReward": "3048566493785724350309631",
+          "remainingFees": 0,
+          "remainingBurn": 0,
+          "remainingDAOFund": 0,
+          "remainingReward": 0
+        },
+        "lrcAddress": "eth:0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
+        "owner": "eth:0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "REWARD_PERCENTAGE": 70,
+        "tokenSellerAddress": "eth:0x0000000000000000000000000000000000000000",
+        "userStakingPoolAddress": "eth:0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b"
+      },
+      "implementationNames": {
+        "eth:0x4b89f8996892d137c3dE1312d1dD4E4F4fFcA171": "ProtocolFeeVault"
+      }
+    },
+    {
+      "name": "ForcedWithdrawalAgent",
+      "address": "eth:0x52ea1971C05B0169c02a0bBeC05Fe8b5E3A24470",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xa8b1d474b6c7b4007833dea307178402243d15952eb22c992be9b107651cbc2f"
+      ],
+      "proxyType": "immutable",
+      "description": "Auxiliary contract able to force withdrawals from L1 on behalf of users.",
+      "sinceTimestamp": 1615357743,
+      "sinceBlock": 12009173,
+      "values": {
+        "$immutable": true,
+        "managers": [
+          "eth:0x88f8Dbd3dC44c6E2e368258D3eee8EB9A07aF191",
+          "eth:0x4374D3d032B3c96785094ec9f384f07077792768",
+          "eth:0xDB5C4078eC50Ad4Cdc47F4597a377528B1d7bcdB",
+          "eth:0x2Fc617E933a52713247CE25730f6695920B3befe",
+          "eth:0x59F3163ab39B8B90DAF57508bC1fAECB2F2cD374"
+        ],
+        "numManagers": 5,
+        "owner": "eth:0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x52ea1971C05B0169c02a0bBeC05Fe8b5E3A24470": "ForcedWithdrawalAgent"
+      }
+    },
+    {
+      "address": "eth:0x53dD53dAf8F112BcA64332eA97398EfbC8a0E234",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x576aBC47E0Dbe79c1c950190173faE9A13f8AB98",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x59F3163ab39B8B90DAF57508bC1fAECB2F2cD374",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "BlockVerifier",
+      "address": "eth:0x6150343E0F43A17519c0327c41eDd9eBE88D01ef",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x96312ffe5cf6781390d5f01454bb7545a2fc23abcb9e660842c19382a140f812"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1603946469,
+      "sinceBlock": 11149533,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x6150343E0F43A17519c0327c41eDd9eBE88D01ef": "BlockVerifier"
+      }
+    },
+    {
+      "name": "DefaultDepositContract",
+      "address": "eth:0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x39433073646a8004de25a709c09d4ccff1dd95a2a125f6065c8cc6cb44c6c7b9"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1603949642,
+      "sinceBlock": 11149779,
+      "values": {
+        "$immutable": true,
+        "exchange": "eth:0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4",
+        "owner": "eth:0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x674bdf20A0F284D710BC40872100128e2d66Bd3f": "DefaultDepositContract"
+      }
+    },
+    {
+      "address": "eth:0x88f8Dbd3dC44c6E2e368258D3eee8EB9A07aF191",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xA921aF7e4dd279e1325399E4E3Bf13d0E57f48Fc",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xB1a6BF349c947A540a5fe6f1e89992ACDad836AB",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "LoopringCoin V2 Token",
+      "address": "eth:0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x4ffbbfe62c887a44eead8dc5c421a3021e88d97eafe47ba5e4ac69fee9b0421a"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1554948637,
+      "sinceBlock": 7544036,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "name": "LoopringCoin V2",
+        "symbol": "LRC",
+        "totalBurned": "21202657081400454651658000",
+        "totalSupply": "1373873397442457437622945100"
+      },
+      "implementationNames": {
+        "eth:0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD": "LRC_v2"
+      }
+    },
+    {
+      "address": "eth:0xbfCc986cA6E6729c1D191cC0179ef060b87a7C42",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xDB5C4078eC50Ad4Cdc47F4597a377528B1d7bcdB",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "LoopringMultisig",
+      "address": "eth:0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4",
+          "role": "admin"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1606289169,
+      "sinceBlock": 11326208,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438",
+          "eth:0x576aBC47E0Dbe79c1c950190173faE9A13f8AB98",
+          "eth:0x1F28F10176F89F4E9985873B84d14e75751BB3D1"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xf45dfd6bdfe82ca616c58cff61bef38014e7194f65f8d7ba32eb9022170c8d1d",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 232,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97": "Proxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "name": "LoopringV3",
+      "address": "eth:0xe56D6ccab6551932C0356E4e8d5dAF0630920C71",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xf4fab34f6089e2323fbf6d585fe758509ffff5bfc8f1152a393b5a170cf28929"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1603955371,
+      "sinceBlock": 11150215,
+      "values": {
+        "$immutable": true,
+        "blockVerifierAddress": "eth:0x6150343E0F43A17519c0327c41eDd9eBE88D01ef",
+        "forcedWithdrawalFee": "20000000000000000",
+        "getProtocolFeeValues": { "takerFeeBips": 0, "makerFeeBips": 0 },
+        "lrcAddress": "eth:0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
+        "owner": "eth:0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "protocolFeeVault": "eth:0x4b89f8996892d137c3dE1312d1dD4E4F4fFcA171",
+        "protocolMakerFeeBips": 0,
+        "protocolTakerFeeBips": 0,
+        "tokenRegistrationFeeLRCBase": 0,
+        "tokenRegistrationFeeLRCDelta": 0,
+        "totalStake": 0
+      },
+      "implementationNames": {
+        "eth:0xe56D6ccab6551932C0356E4e8d5dAF0630920C71": "LoopringV3"
+      }
+    },
+    {
+      "address": "eth:0xE6b0cf8ed864F9bfEBa1b03bac785B5aC82cf095",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xe6FcAA61d9354dBb2320d9DcAFA9C1486Cf93907",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xeadb3d065f8d15cc05e92594523516aD36d1c834",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "FastWithdrawalAgent",
+      "address": "eth:0xec3Cc6Cf0252565b56FC7AC396017Df5b9B78a31",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x404f9c5448f8dc0d3026c67724fad6dadb0ce98afcb11ac23be4f3159db1e40a"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1603946697,
+      "sinceBlock": 11149548,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xec3Cc6Cf0252565b56FC7AC396017Df5b9B78a31": "FastWithdrawalAgent"
+      }
+    },
+    {
+      "address": "eth:0xeDEE915Ae45Cc4B2FDd1Ce12a2f70dCa0B2AD9e5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "UserStakingPool",
+      "address": "eth:0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x99d65209b6a37a5338021e870cb30cc131cd3d701c0b30fa072bbe3615d2c71f"
+      ],
+      "proxyType": "immutable",
+      "ignoreInWatchMode": ["total", "getTotalStaking", "numAddresses"],
+      "sinceTimestamp": 1574241665,
+      "sinceBlock": 8967548,
+      "values": {
+        "$immutable": true,
+        "getTotalStaking": "479473040632219091170868",
+        "lrcAddress": "eth:0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
+        "MIN_CLAIM_DELAY": 7776000,
+        "MIN_WITHDRAW_DELAY": 7776000,
+        "numAddresses": 961,
+        "owner": "eth:0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "protocolFeeVaultAddress": "eth:0x0000000000000000000000000000000000000000",
+        "total": {
+          "balance": "479473040632219091170868",
+          "depositedAt": 0,
+          "claimedAt": 1615983279
+        }
+      },
+      "implementationNames": {
+        "eth:0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b": "UserStakingPool"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4": [
+      "constructor()",
+      "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function implementation() view returns (address impl)",
+      "function proxyOwner() view returns (address owner)",
+      "function transferProxyOwnership(address newOwner)",
+      "function upgradeTo(address implementation)",
+      "function upgradeToAndCall(address implementation, bytes data) payable"
+    ],
+    "eth:0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512": [
+      "constructor(address _exchange)",
+      "event Drained(address to, address token, uint256 amount)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PermissionUpdate(address indexed user, bytes4 indexed selector, bool allowed)",
+      "event SubmitBlocksAccessOpened(bool open)",
+      "function canDrain(address drainer, address) view returns (bool)",
+      "function claimOwnership()",
+      "function drain(address to, address token) returns (uint256 amount)",
+      "function grantAccess(address user, bytes4 selector, bool granted)",
+      "function hasAccessTo(address user, bytes4 selector) view returns (bool)",
+      "function isValidSignature(bytes32 signHash, bytes signature) view returns (bytes4)",
+      "function open() view returns (bool)",
+      "function openAccessToSubmitBlocks(bool _open)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function permissions(address, bytes4) view returns (bool)",
+      "function renounceOwnership()",
+      "function submitBlocksWithCallbacks(bool isDataCompressed, bytes data, tuple(tuple(uint16 blockIdx, tuple(uint16 txIdx, uint16 numTxs, uint16 receiverIdx, bytes data)[] txCallbacks)[] blockCallbacks, address[] receivers) config)",
+      "function target() view returns (address)",
+      "function transact(bytes data) payable",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0x26d8Ba776a067C5928841985bCe342f75BAE7E82": [
+      "constructor()",
+      "event BlockSubmitted(uint256 indexed blockIdx, bytes32 merkleRoot, bytes32 publicDataHash)",
+      "event DepositRequested(address from, address to, address token, uint16 tokenId, uint96 amount)",
+      "event ExchangeCloned(address exchangeAddress, address owner, bytes32 genesisMerkleRoot)",
+      "event ForcedWithdrawalRequested(address owner, uint16 tokenID, uint32 accountID)",
+      "event NFTDepositRequested(address from, address to, uint8 nftType, address token, uint256 nftID, uint96 amount)",
+      "event NftWithdrawalCompleted(uint8 category, address from, address to, uint16 tokenID, address token, uint256 nftID, uint256 amount)",
+      "event NftWithdrawalFailed(uint8 category, address from, address to, uint16 tokenID, address token, uint256 nftID, uint256 amount)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ProtocolFeesUpdated(uint8 takerFeeBips, uint8 makerFeeBips, uint8 previousTakerFeeBips, uint8 previousMakerFeeBips)",
+      "event Shutdown(uint256 timestamp)",
+      "event TokenRegistered(address token, uint16 tokenId)",
+      "event TransactionApproved(address owner, bytes32 transactionHash)",
+      "event WithdrawalCompleted(uint8 category, address from, address to, address token, uint256 amount)",
+      "event WithdrawalFailed(uint8 category, address from, address to, address token, uint256 amount)",
+      "event WithdrawalModeActivated(uint256 timestamp)",
+      "function approveTransaction(address owner, bytes32 transactionHash)",
+      "function approveTransactions(address[] owners, bytes32[] transactionHashes)",
+      "function burnExchangeStake()",
+      "function claimOwnership()",
+      "function deposit(address from, address to, address tokenAddress, uint96 amount, bytes extraData) payable",
+      "function depositNFT(address from, address to, uint8 nftType, address tokenAddress, uint256 nftID, uint96 amount, bytes extraData)",
+      "function domainSeparator() view returns (bytes32)",
+      "function forceWithdraw(address owner, address token, uint32 accountID) payable",
+      "function forceWithdrawByTokenID(address owner, uint16 tokenID, uint32 accountID) payable",
+      "function getAgentRegistry() view returns (address)",
+      "function getAmmFeeBips() view returns (uint8)",
+      "function getAmountWithdrawable(address owner, address token) view returns (uint256)",
+      "function getAmountWithdrawableNFT(address owner, address token, uint8 nftType, uint256 nftID, address minter) view returns (uint256)",
+      "function getBlockHeight() view returns (uint256)",
+      "function getBlockInfo(uint256 blockIdx) view returns (tuple(uint32 timestamp, bytes28 blockDataHash))",
+      "function getConstants() pure returns (tuple(uint256 SNARK_SCALAR_FIELD, uint256 MAX_OPEN_FORCED_REQUESTS, uint256 MAX_AGE_FORCED_REQUEST_UNTIL_WITHDRAW_MODE, uint256 TIMESTAMP_HALF_WINDOW_SIZE_IN_SECONDS, uint256 MAX_NUM_ACCOUNTS, uint256 MAX_NUM_TOKENS, uint256 MIN_AGE_PROTOCOL_FEES_UNTIL_UPDATED, uint256 MIN_TIME_IN_SHUTDOWN, uint256 TX_DATA_AVAILABILITY_SIZE, uint256 MAX_AGE_DEPOSIT_UNTIL_WITHDRAWABLE_UPPERBOUND))",
+      "function getDepositContract() view returns (address)",
+      "function getDomainSeparator() view returns (bytes32)",
+      "function getExchangeStake() view returns (uint256)",
+      "function getMaxAgeDepositUntilWithdrawable() view returns (uint32)",
+      "function getMerkleRoot() view returns (bytes32)",
+      "function getNumAvailableForcedSlots() view returns (uint256)",
+      "function getPendingDepositAmount(address owner, address tokenAddress) view returns (uint96)",
+      "function getPendingNFTDepositAmount(address owner, address token, uint8 nftType, uint256 nftID) view returns (uint96)",
+      "function getProtocolFeeLastWithdrawnTime(address tokenAddress) view returns (uint256)",
+      "function getProtocolFeeValues() view returns (uint32 syncedAt, uint8 takerFeeBips, uint8 makerFeeBips, uint8 previousTakerFeeBips, uint8 previousMakerFeeBips)",
+      "function getTokenAddress(uint16 tokenID) view returns (address)",
+      "function getTokenID(address tokenAddress) view returns (uint16)",
+      "function getWithdrawalRecipient(address from, address to, address token, uint96 amount, uint32 storageID) view returns (address)",
+      "function initialize(address _loopring, address _owner, bytes32 _genesisMerkleRoot)",
+      "function isForcedWithdrawalPending(uint32 accountID, address token) view returns (bool)",
+      "function isInWithdrawalMode() view returns (bool)",
+      "function isShutdown() view returns (bool)",
+      "function isTransactionApproved(address owner, bytes32 transactionHash) view returns (bool)",
+      "function isUserOrAgent(address owner) view returns (bool)",
+      "function isWithdrawnInWithdrawalMode(uint32 accountID, address token) view returns (bool)",
+      "function notifyForcedRequestTooOld(uint32 accountID, uint16 tokenID)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function onchainTransferFrom(address from, address to, address token, uint256 amount)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function refreshBlockVerifier()",
+      "function registerToken(address tokenAddress) returns (uint16)",
+      "function renounceOwnership()",
+      "function setAgentRegistry(address _agentRegistry)",
+      "function setAllowOnchainTransferFrom(bool value)",
+      "function setAmmFeeBips(uint8 _feeBips)",
+      "function setDepositContract(address _depositContract)",
+      "function setMaxAgeDepositUntilWithdrawable(uint32 newValue) returns (uint32)",
+      "function setWithdrawalRecipient(address from, address to, address token, uint96 amount, uint32 storageID, address newRecipient)",
+      "function shutdown() returns (bool success)",
+      "function submitBlocks(tuple(uint8 blockType, uint16 blockSize, uint8 blockVersion, bytes data, uint256[8] proof, bool storeBlockInfoOnchain, bytes auxiliaryData, bytes offchainData)[] blocks)",
+      "function transferOwnership(address newOwner)",
+      "function version() pure returns (string)",
+      "function withdrawExchangeFees(address token, address recipient)",
+      "function withdrawExchangeStake(address recipient) returns (uint256)",
+      "function withdrawFromApprovedWithdrawals(address[] owners, address[] tokens)",
+      "function withdrawFromApprovedWithdrawalsNFT(address[] owners, address[] minters, uint8[] nftTypes, address[] tokens, uint256[] nftIDs)",
+      "function withdrawFromDepositRequest(address owner, address token)",
+      "function withdrawFromMerkleTree(tuple(tuple(uint32 accountID, address owner, uint256 pubKeyX, uint256 pubKeyY, uint32 nonce, uint256 feeBipsAMM) accountLeaf, tuple(uint16 tokenID, uint96 balance, uint256 weightAMM, uint256 storageRoot) balanceLeaf, tuple(address minter, uint8 nftType, address token, uint256 nftID, uint8 creatorFeeBips) nft, uint256[48] accountMerkleProof, uint256[24] balanceMerkleProof) merkleProof)",
+      "function withdrawFromNFTDepositRequest(address owner, address token, uint8 nftType, uint256 nftID)",
+      "function withdrawProtocolFees(address token) payable"
+    ],
+    "eth:0x39B9bf169a7e225ba037C443A40460c77438ea14": [
+      "constructor()",
+      "event AgentRegistered(address indexed user, address indexed agent, bool registered)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event TrustUniversalAgents(address indexed user, bool trust)",
+      "function claimOwnership()",
+      "function isAgent(address[] users, address agent) view returns (bool)",
+      "function isAgent(address user, address agent) view returns (bool)",
+      "function isUniversalAgent(address agent) view returns (bool)",
+      "function isUserAgent(address user, address agent) view returns (bool)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function registerUniversalAgent(address agent, bool toRegister)",
+      "function registerUserAgent(address agent, bool toRegister)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0x4b89f8996892d137c3dE1312d1dD4E4F4fFcA171": [
+      "constructor(address _lrcAddress)",
+      "event DAOFunded(uint256 amountDAO, uint256 amountBurn)",
+      "event LRCClaimed(uint256 amount)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event SettingsUpdated(uint256 time)",
+      "event TokenSold(address token, uint256 amount)",
+      "function DAO_PERDENTAGE() view returns (uint256)",
+      "function REWARD_PERCENTAGE() view returns (uint256)",
+      "function claimOwnership()",
+      "function claimStakingReward(uint256 amount)",
+      "function daoAddress() view returns (address)",
+      "function fundDAO()",
+      "function getProtocolFeeStats() view returns (uint256 accumulatedFees, uint256 accumulatedBurn, uint256 accumulatedDAOFund, uint256 accumulatedReward, uint256 remainingFees, uint256 remainingBurn, uint256 remainingDAOFund, uint256 remainingReward)",
+      "function lrcAddress() view returns (address)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function sellTokenForLRC(address token, uint256 amount)",
+      "function tokenSellerAddress() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function updateSettings(address _userStakingPoolAddress, address _tokenSellerAddress, address _daoAddress)",
+      "function userStakingPoolAddress() view returns (address)"
+    ],
+    "eth:0x52ea1971C05B0169c02a0bBeC05Fe8b5E3A24470": [
+      "event Drained(address to, address token, uint256 amount)",
+      "event ManagerAdded(address indexed manager)",
+      "event ManagerRemoved(address indexed manager)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function addManager(address manager)",
+      "function canDrain(address, address) view returns (bool)",
+      "function claimOwnership()",
+      "function doForcedWithdrawalFor(address exchangeAddress, address owner, address token, uint32 accountID) payable",
+      "function drain(address to, address token) returns (uint256 amount)",
+      "function isManager(address addr) view returns (bool)",
+      "function managers() view returns (address[])",
+      "function numManagers() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function removeManager(address manager)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0x6150343E0F43A17519c0327c41eDd9eBE88D01ef": [
+      "constructor()",
+      "event CircuitDisabled(uint8 indexed blockType, uint16 blockSize, uint8 blockVersion)",
+      "event CircuitRegistered(uint8 indexed blockType, uint16 blockSize, uint8 blockVersion)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function circuits(uint8, uint16, uint8) view returns (bool registered, bool enabled)",
+      "function claimOwnership()",
+      "function disableCircuit(uint8 blockType, uint16 blockSize, uint8 blockVersion)",
+      "function getVerificationKey(uint8 blockType, uint16 blockSize, uint8 blockVersion) view returns (uint256[18])",
+      "function isCircuitEnabled(uint8 blockType, uint16 blockSize, uint8 blockVersion) view returns (bool)",
+      "function isCircuitRegistered(uint8 blockType, uint16 blockSize, uint8 blockVersion) view returns (bool)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function registerCircuit(uint8 blockType, uint16 blockSize, uint8 blockVersion, uint256[18] vk)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function verifyProofs(uint8 blockType, uint16 blockSize, uint8 blockVersion, uint256[] publicInputs, uint256[] proofs) view returns (bool)"
+    ],
+    "eth:0x674bdf20A0F284D710BC40872100128e2d66Bd3f": [
+      "event CheckBalance(address indexed token, bool checkBalance)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function claimOwnership()",
+      "function deposit(address from, address token, uint96 amount, bytes) payable returns (uint96 amountReceived)",
+      "function exchange() view returns (address)",
+      "function initialize(address _exchange)",
+      "function isETH(address addr) pure returns (bool)",
+      "function isTokenSupported(address) pure returns (bool)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function setCheckBalance(address token, bool checkBalance)",
+      "function transfer(address from, address to, address token, uint256 amount) payable",
+      "function transferOwnership(address newOwner)",
+      "function withdraw(address, address to, address token, uint256 amount, bytes) payable"
+    ],
+    "eth:0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD": [
+      "function name() view returns (string)",
+      "function approve(address _spender, uint256 _value) returns (bool)",
+      "function totalSupply() view returns (uint256)",
+      "function transferFrom(address _from, address _to, uint256 _value) returns (bool)",
+      "function decimals() view returns (uint8)",
+      "function burn(uint256 _value) returns (bool)",
+      "function decreaseApproval(address _spender, uint256 _subtractedValue) returns (bool)",
+      "function balanceOf(address _owner) view returns (uint256)",
+      "function burnFrom(address _owner, uint256 _value) returns (bool)",
+      "function batchTransfer(address[] accounts, uint256[] amounts) returns (bool)",
+      "function symbol() view returns (string)",
+      "function transfer(address _to, uint256 _value) returns (bool)",
+      "function increaseApproval(address _spender, uint256 _addedValue) returns (bool)",
+      "function totalBurned() view returns (uint256)",
+      "function allowance(address _owner, address _spender) view returns (uint256)",
+      "constructor()",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Burn(address indexed burner, uint256 value)"
+    ],
+    "eth:0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97": [
+      "constructor(address _masterCopy)"
+    ],
+    "eth:0xe56D6ccab6551932C0356E4e8d5dAF0630920C71": [
+      "constructor(address _lrcAddress, address _protocolFeeVault, address _blockVerifierAddress)",
+      "event ExchangeStakeBurned(address exchangeAddr, uint256 amount)",
+      "event ExchangeStakeDeposited(address exchangeAddr, uint256 amount)",
+      "event ExchangeStakeWithdrawn(address exchangeAddr, uint256 amount)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event SettingsUpdated(uint256 time)",
+      "function blockVerifierAddress() view returns (address)",
+      "function burnExchangeStake(uint256 amount) returns (uint256 burnedLRC)",
+      "function claimOwnership()",
+      "function depositExchangeStake(address exchangeAddr, uint256 amountLRC) returns (uint256 stakedLRC)",
+      "function forcedWithdrawalFee() view returns (uint256)",
+      "function getExchangeStake(address exchangeAddr) view returns (uint256)",
+      "function getProtocolFeeValues() view returns (uint8 takerFeeBips, uint8 makerFeeBips)",
+      "function lrcAddress() view returns (address)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function protocolFeeVault() view returns (address)",
+      "function protocolMakerFeeBips() view returns (uint8)",
+      "function protocolTakerFeeBips() view returns (uint8)",
+      "function renounceOwnership()",
+      "function tokenRegistrationFeeLRCBase() view returns (uint256)",
+      "function tokenRegistrationFeeLRCDelta() view returns (uint256)",
+      "function totalStake() view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function updateProtocolFeeSettings(uint8 _protocolTakerFeeBips, uint8 _protocolMakerFeeBips)",
+      "function updateSettings(address _protocolFeeVault, address _blockVerifierAddress, uint256 _forcedWithdrawalFee)",
+      "function withdrawExchangeStake(address recipient, uint256 requestedAmount) returns (uint256 amountLRC)"
+    ],
+    "eth:0xec3Cc6Cf0252565b56FC7AC396017Df5b9B78a31": [
+      "event Processed(address exchange, address from, address to, address token, uint96 amount, address provider, bool success)",
+      "function executeFastWithdrawals(tuple(address exchange, address from, address to, address token, uint96 amount, uint32 storageID)[] withdrawals) payable"
+    ],
+    "eth:0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b": [
+      "function getUserStaking(address user) view returns (uint256 withdrawalWaitTime, uint256 rewardWaitTime, uint256 balance, uint256 pendingReward)",
+      "function total() view returns (uint256 balance, uint64 depositedAt, uint64 claimedAt)",
+      "function withdraw(uint256 amount)",
+      "function numAddresses() view returns (uint256)",
+      "function lrcAddress() view returns (address)",
+      "function claim() returns (uint256 claimedAmount)",
+      "function claimOwnership()",
+      "function getTotalStaking() view returns (uint256)",
+      "function MIN_CLAIM_DELAY() view returns (uint256)",
+      "function renounceOwnership()",
+      "function setProtocolFeeVault(address _protocolFeeVaultAddress)",
+      "function owner() view returns (address)",
+      "function stake(uint256 amount)",
+      "function MIN_WITHDRAW_DELAY() view returns (uint256)",
+      "function protocolFeeVaultAddress() view returns (address)",
+      "function stakings(address) view returns (uint256 balance, uint64 depositedAt, uint64 claimedAt)",
+      "function pendingOwner() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "constructor(address _lrcAddress)",
+      "event ProtocolFeeVaultChanged(address feeVaultAddress)",
+      "event LRCStaked(address indexed user, uint256 amount)",
+      "event LRCWithdrawn(address indexed user, uint256 amount)",
+      "event LRCRewarded(address indexed user, uint256 amount)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)"
+    ]
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+  },
+  "usedBlockNumbers": { "ethereum": 23137892 },
+  "permissionsConfigHash": "0x09fee062ecfd00ad91a765961375bcda61f42e97480b984fb2b850942550b2f9"
+}

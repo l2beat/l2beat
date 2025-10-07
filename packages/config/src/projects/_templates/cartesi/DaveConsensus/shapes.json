@@ -1,8 +1,7 @@
 {
   "DaveConsensus": {
     "hash": "0xb13283139a2042d5619daf0269b24aaddc9650e7851dcce40e24ebf4bf13632c",
-    "address": "0x6CE590b9F0697327f18c601DF6f0baE4a0801B68",
-    "chain": "ethereum",
+    "address": "eth:0x6CE590b9F0697327f18c601DF6f0baE4a0801B68",
     "blockNumber": 22709685
   }
 }

@@ -1,0 +1,76 @@
+{
+  "name": "gravity",
+  "timestamp": 1681716227,
+  "configHash": "0x6fca13650abf162a52891a9bc9e290beab91d521180d43194de4dfed0656707f",
+  "entries": [
+    {
+      "name": "Gravity",
+      "address": "eth:0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x73614d88ab67bc498a05ec1978414a688122d352f1d0cb7d58e2e2bb2cce483b"
+      ],
+      "proxyType": "immutable",
+      "ignoreInWatchMode": [
+        "state_gravityId",
+        "state_lastEventNonce",
+        "state_lastValsetCheckpoint",
+        "state_lastValsetNonce"
+      ],
+      "sinceTimestamp": 1639416372,
+      "sinceBlock": 13798211,
+      "values": {
+        "$immutable": true,
+        "state_gravityId": "0x677261766974792d6272696467652d6d61696e6e657400000000000000000000",
+        "state_lastEventNonce": 39098,
+        "state_lastValsetCheckpoint": "0x1c0c3fcf1daf0414ee98c705c0b3678017a37d39c2511b3175c71da08b811433",
+        "state_lastValsetNonce": 1022
+      },
+      "implementationNames": {
+        "eth:0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906": "Gravity"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906": [
+      "constructor(bytes32 _gravityId, address[] _validators, uint256[] _powers)",
+      "error BatchTimedOut()",
+      "error IncorrectCheckpoint()",
+      "error InsufficientPower(uint256 cumulativePower, uint256 powerThreshold)",
+      "error InvalidBatchNonce(uint256 newNonce, uint256 currentNonce)",
+      "error InvalidLogicCallFees()",
+      "error InvalidLogicCallNonce(uint256 newNonce, uint256 currentNonce)",
+      "error InvalidLogicCallTransfers()",
+      "error InvalidSendToCosmos()",
+      "error InvalidSignature()",
+      "error InvalidValsetNonce(uint256 newNonce, uint256 currentNonce)",
+      "error LogicCallTimedOut()",
+      "error MalformedBatch()",
+      "error MalformedCurrentValidatorSet()",
+      "error MalformedNewValidatorSet()",
+      "event ERC20DeployedEvent(string _cosmosDenom, address indexed _tokenContract, string _name, string _symbol, uint8 _decimals, uint256 _eventNonce)",
+      "event LogicCallEvent(bytes32 _invalidationId, uint256 _invalidationNonce, bytes _returnData, uint256 _eventNonce)",
+      "event SendToCosmosEvent(address indexed _tokenContract, address indexed _sender, string _destination, uint256 _amount, uint256 _eventNonce)",
+      "event TransactionBatchExecutedEvent(uint256 indexed _batchNonce, address indexed _token, uint256 _eventNonce)",
+      "event ValsetUpdatedEvent(uint256 indexed _newValsetNonce, uint256 _eventNonce, uint256 _rewardAmount, address _rewardToken, address[] _validators, uint256[] _powers)",
+      "function deployERC20(string _cosmosDenom, string _name, string _symbol, uint8 _decimals)",
+      "function lastBatchNonce(address _erc20Address) view returns (uint256)",
+      "function lastLogicCallNonce(bytes32 _invalidation_id) view returns (uint256)",
+      "function sendToCosmos(address _tokenContract, string _destination, uint256 _amount)",
+      "function state_gravityId() view returns (bytes32)",
+      "function state_invalidationMapping(bytes32) view returns (uint256)",
+      "function state_lastBatchNonces(address) view returns (uint256)",
+      "function state_lastEventNonce() view returns (uint256)",
+      "function state_lastValsetCheckpoint() view returns (bytes32)",
+      "function state_lastValsetNonce() view returns (uint256)",
+      "function submitBatch(tuple(address[] validators, uint256[] powers, uint256 valsetNonce, uint256 rewardAmount, address rewardToken) _currentValset, tuple(uint8 v, bytes32 r, bytes32 s)[] _sigs, uint256[] _amounts, address[] _destinations, uint256[] _fees, uint256 _batchNonce, address _tokenContract, uint256 _batchTimeout)",
+      "function submitLogicCall(tuple(address[] validators, uint256[] powers, uint256 valsetNonce, uint256 rewardAmount, address rewardToken) _currentValset, tuple(uint8 v, bytes32 r, bytes32 s)[] _sigs, tuple(uint256[] transferAmounts, address[] transferTokenContracts, uint256[] feeAmounts, address[] feeTokenContracts, address logicContractAddress, bytes payload, uint256 timeOut, bytes32 invalidationId, uint256 invalidationNonce) _args)",
+      "function testCheckValidatorSignatures(tuple(address[] validators, uint256[] powers, uint256 valsetNonce, uint256 rewardAmount, address rewardToken) _currentValset, tuple(uint8 v, bytes32 r, bytes32 s)[] _sigs, bytes32 _theHash, uint256 _powerThreshold) pure",
+      "function testMakeCheckpoint(tuple(address[] validators, uint256[] powers, uint256 valsetNonce, uint256 rewardAmount, address rewardToken) _valsetArgs, bytes32 _gravityId) pure",
+      "function updateValset(tuple(address[] validators, uint256[] powers, uint256 valsetNonce, uint256 rewardAmount, address rewardToken) _newValset, tuple(address[] validators, uint256[] powers, uint256 valsetNonce, uint256 rewardAmount, address rewardToken) _currentValset, tuple(uint8 v, bytes32 r, bytes32 s)[] _sigs)"
+    ]
+  },
+  "usedTemplates": {},
+  "usedBlockNumbers": { "ethereum": 17065004 },
+  "permissionsConfigHash": "0x5f0f71cd31ab20466a77fe8a0eb44c8a951d7514180420d4a5b1fe5e400bb895"
+}

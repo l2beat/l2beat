@@ -1,8 +1,13 @@
 {
   "NodeOperatorsRegistry": {
     "hash": "0x3cbd0a87fa76b571f664c2e9d40dc8c24a1b88642270b2ebf0247128c866a937",
-    "address": "0x1770044a38402e3CfCa2Fcfa0C84a093c9B42135",
-    "chain": "ethereum",
+    "address": "eth:0x1770044a38402e3CfCa2Fcfa0C84a093c9B42135",
     "blockNumber": 22188285
+  },
+  "NodeOperatorsRegistry_v4": {
+    "hash": "0x7e3615bebdb8e2033c00916316355965e076187f136311105c57e4ab8eed8911",
+    "address": "eth:0x6828b023e737f96B168aCd0b5c6351971a4F81aE",
+    "chain": "ethereum",
+    "blockNumber": 23519375
   }
 }

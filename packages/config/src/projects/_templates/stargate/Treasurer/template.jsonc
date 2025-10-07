@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Permissions proxy allowing addresses to act through it.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the admin address and withdraw treasury fees from the contract."
+        }
+      ]
+    },
+    "admin": { "permissions": [{ "type": "act" }] } // not a full act but currently inherits all permissions
+  }
+}

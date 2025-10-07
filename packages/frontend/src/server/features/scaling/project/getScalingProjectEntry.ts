@@ -47,7 +47,7 @@ import { getLiveness } from '../liveness/getLiveness'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { getTokensForProject } from '../tvs/tokens/getTokensForProject'
 import { getAssociatedTokenWarning } from '../tvs/utils/getAssociatedTokenWarning'
-import { getScalingDaSolution } from './getScalingDaSolution'
+import { getScalingDaSolutions } from './getScalingDaSolutions'
 import type { ScalingRosette } from './getScalingRosetteValues'
 import { getScalingRosette } from './getScalingRosetteValues'
 
@@ -147,7 +147,7 @@ export async function getScalingProjectEntry(
   >,
   helpers: SsrHelpers,
 ): Promise<ProjectScalingEntry> {
-  const daSolution = await getScalingDaSolution(project)
+  const daSolutions = await getScalingDaSolutions(project)
   const [
     projectsChangeReport,
     activityProjectStats,
@@ -159,6 +159,7 @@ export async function getScalingProjectEntry(
     activitySection,
     costsSection,
     dataPostedSection,
+    stateValidationSection,
   ] = await Promise.all([
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
@@ -169,9 +170,8 @@ export async function getScalingProjectEntry(
     getScalingTvsSection(helpers, project),
     getActivitySection(helpers, project),
     getCostsSection(helpers, project),
-    project.scalingInfo.layer === 'layer2'
-      ? await getDataPostedSection(helpers, project, daSolution)
-      : undefined,
+    getDataPostedSection(helpers, project, daSolutions),
+    getStateValidationSection(project),
   ])
 
   const projectLiveness = liveness[project.id]
@@ -239,6 +239,14 @@ export async function getScalingProjectEntry(
 
   const changes = projectsChangeReport.getChanges(project.id)
 
+  const dataAvailabilitySection = getDataAvailabilitySection(
+    project,
+    daSolutions,
+  )
+  const withdrawalsSection = getWithdrawalsSection(project)
+  const sequencingSection = getSequencingSection(project)
+  const operatorSection = getOperatorSection(project)
+
   const common = {
     type: project.scalingInfo.layer,
     name: project.name,
@@ -252,15 +260,19 @@ export async function getScalingProjectEntry(
     archivedAt: project.archivedAt,
     isUpcoming: !!project.isUpcoming,
     isAppchain: project.scalingInfo.capability === 'appchain',
-    colors: env.CLIENT_SIDE_PARTNERS
-      ? {
-          project: project.colors,
-          ecosystem: project.ecosystemColors,
-        }
-      : undefined,
+    colors: {
+      project: project.colors,
+      ecosystem: project.ecosystemColors,
+    },
     header,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
-    rosette: getScalingRosette(project),
+    rosette: getScalingRosette(project, {
+      hasStateValidationSection: !!stateValidationSection,
+      hasDataAvailabilitySection: !!dataAvailabilitySection,
+      hasWithdrawalsSection: !!withdrawalsSection,
+      hasSequencingSection: !!sequencingSection,
+      hasOperatorsSection: !!operatorSection,
+    }),
     hostChainName: project.scalingInfo.hostChain.name,
     stageConfig:
       project.scalingInfo.type === 'Other'
@@ -501,10 +513,6 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const dataAvailabilitySection = getDataAvailabilitySection(
-    project,
-    daSolution,
-  )
   if (dataAvailabilitySection) {
     sections.push({
       type: dataAvailabilitySection.type,
@@ -530,7 +538,6 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const stateValidationSection = await getStateValidationSection(project)
   if (stateValidationSection) {
     sections.push({
       type: 'StateValidationSection',
@@ -542,7 +549,22 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const operatorSection = getOperatorSection(project)
+  if (project.scalingTechnology.upgradesAndGovernance) {
+    sections.push({
+      type: 'MarkdownSection',
+      props: {
+        id: 'upgrades-and-governance',
+        title: 'Upgrades & Governance',
+        content: project.scalingTechnology.upgradesAndGovernance,
+        diagram: getDiagramParams(
+          'upgrades-and-governance',
+          project.scalingTechnology.upgradesAndGovernanceImage ?? project.slug,
+        ),
+        isUnderReview: !!project.statuses.reviewStatus,
+      },
+    })
+  }
+
   if (operatorSection) {
     sections.push({
       type: 'TechnologyChoicesSection',
@@ -555,7 +577,6 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const sequencingSection = getSequencingSection(project)
   if (sequencingSection) {
     sections.push({
       type: 'SequencingSection',
@@ -567,7 +588,6 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const withdrawalsSection = getWithdrawalsSection(project)
   if (withdrawalsSection) {
     sections.push({
       type: 'TechnologyChoicesSection',
@@ -588,21 +608,6 @@ export async function getScalingProjectEntry(
         id: 'other-considerations',
         title: 'Other considerations',
         ...otherConsiderationsSection,
-      },
-    })
-  }
-  if (project.scalingTechnology.upgradesAndGovernance) {
-    sections.push({
-      type: 'MarkdownSection',
-      props: {
-        id: 'upgrades-and-governance',
-        title: 'Upgrades & Governance',
-        content: project.scalingTechnology.upgradesAndGovernance,
-        diagram: getDiagramParams(
-          'upgrades-and-governance',
-          project.scalingTechnology.upgradesAndGovernanceImage ?? project.slug,
-        ),
-        isUnderReview: !!project.statuses.reviewStatus,
       },
     })
   }

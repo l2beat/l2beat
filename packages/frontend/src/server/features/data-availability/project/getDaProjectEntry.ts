@@ -3,7 +3,6 @@ import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
-import { env } from '~/env'
 import {
   getEthereumDaProjectSections,
   getRegularDaProjectSections,
@@ -16,6 +15,7 @@ import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
+import { getLiveness } from '../../scaling/liveness/getLiveness'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 import { getProjectIcon } from '../../utils/getProjectIcon'
 import { getDaLayerRisks } from '../utils/getDaLayerRisks'
@@ -66,6 +66,7 @@ export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
     durationStorage: number | undefined
     maxThroughputPerSecond: number | undefined
     usedIn: UsedInProjectWithIcon[]
+    ongoingAnomaly?: 'single' | 'multiple'
   }
   sections: ProjectDetailsSection[]
   discoUiHref?: string
@@ -100,7 +101,14 @@ export async function getDaProjectEntry(
   const bridges = (
     await ps.getProjects({
       select: ['daBridge', 'display', 'statuses'],
-      optional: ['permissions', 'contracts', 'discoveryInfo'],
+      optional: [
+        'permissions',
+        'contracts',
+        'discoveryInfo',
+        'trackedTxsConfig',
+        'livenessConfig',
+        'archivedAt',
+      ],
     })
   ).filter((x) => x.daBridge.daLayer === layer.id)
 
@@ -117,12 +125,19 @@ export async function getDaProjectEntry(
     bridges.flatMap((x) => x.daBridge.usedIn),
   )
 
-  const [economicSecurity, tvsPerProject, projectsChangeReport] =
+  const [economicSecurity, tvsPerProject, projectsChangeReport, liveness] =
     await Promise.all([
-      getDaProjectEconomicSecurity(layer.daLayer.economicSecurity),
+      getDaProjectEconomicSecurity(layer.id, layer.daLayer.economicSecurity),
       getDaProjectsTvs(allUsedIn.map((x) => x.id)),
       getProjectsChangeReport(),
+      selected ? getLiveness() : undefined,
     ])
+
+  const projectLiveness =
+    selected && liveness ? liveness[selected.id] : undefined
+  const ongoingAnomalies = projectLiveness?.anomalies.filter(
+    (a) => a.end === undefined,
+  )
 
   const layerTvs = tvsPerProject.reduce((acc, value) => acc + value.tvs, 0)
 
@@ -136,7 +151,7 @@ export async function getDaProjectEntry(
   )
 
   const sections = await getRegularDaProjectSections({
-    layer: layer,
+    layer,
     bridge: selected,
     isVerified: true,
     projectsChangeReport,
@@ -159,7 +174,7 @@ export async function getDaProjectEntry(
     isUnderReview: !!layer.statuses.reviewStatus,
     isUpcoming: layer.isUpcoming ?? false,
     archivedAt: layer.archivedAt,
-    colors: env.CLIENT_SIDE_PARTNERS ? layer.colors : undefined,
+    colors: layer.colors,
     selectedBridge: {
       name: selected?.daBridge.name ?? 'No DA Bridge',
       slug: selected?.slug ?? 'no-bridge',
@@ -183,7 +198,7 @@ export async function getDaProjectEntry(
         .map((x) => ({
           ...x,
           icon: getProjectIcon(x.slug),
-          href: `/scaling/projects/${x.slug}`,
+          url: `/scaling/projects/${x.slug}`,
         })),
     })),
     header: {
@@ -197,15 +212,24 @@ export async function getDaProjectEntry(
       economicSecurity,
       durationStorage: layer.daLayer.pruningWindow,
       maxThroughputPerSecond: latestThroughput
-        ? latestThroughput.size / latestThroughput.frequency
+        ? latestThroughput.size === 'NO_CAP'
+          ? undefined
+          : latestThroughput.size / latestThroughput.frequency
         : undefined,
       usedIn: allUsedIn
         .sort((a, b) => getSumFor([b.id]).latest - getSumFor([a.id]).latest)
         .map((x) => ({
           ...x,
           icon: getProjectIcon(x.slug),
-          href: `/scaling/projects/${x.slug}`,
+          url: `/scaling/projects/${x.slug}`,
         })),
+      ongoingAnomaly: ongoingAnomalies
+        ? ongoingAnomalies.length === 0
+          ? undefined
+          : ongoingAnomalies.length === 1
+            ? 'single'
+            : 'multiple'
+        : undefined,
     },
     sections,
     projectVariants: bridges.map((bridge) => ({
@@ -228,7 +252,7 @@ export async function getDaProjectEntry(
       usedIn: layer.daLayer.usedWithoutBridgeIn.map((x) => ({
         ...x,
         icon: getProjectIcon(x.slug),
-        href: `/scaling/projects/${x.slug}`,
+        url: `/scaling/projects/${x.slug}`,
       })),
     })
     result.projectVariants?.unshift({
@@ -256,7 +280,7 @@ export async function getEthereumDaProjectEntry(
   )
 
   const [economicSecurity, tvsPerProject, sections] = await Promise.all([
-    getDaProjectEconomicSecurity(layer.daLayer.economicSecurity),
+    getDaProjectEconomicSecurity(layer.id, layer.daLayer.economicSecurity),
     getDaProjectsTvs(bridge.daBridge.usedIn.map((x) => x.id)),
     getEthereumDaProjectSections({
       layer,
@@ -277,7 +301,7 @@ export async function getEthereumDaProjectEntry(
     .map((x) => ({
       ...x,
       icon: getProjectIcon(x.slug),
-      href: `/scaling/projects/${x.slug}`,
+      url: `/scaling/projects/${x.slug}`,
     }))
 
   const latestThroughput = layer.daLayer.throughput
@@ -302,7 +326,9 @@ export async function getEthereumDaProjectEntry(
       economicSecurity: economicSecurity,
       durationStorage: layer.daLayer.pruningWindow ?? 0,
       maxThroughputPerSecond: latestThroughput
-        ? latestThroughput.size / latestThroughput.frequency
+        ? latestThroughput.size === 'NO_CAP'
+          ? undefined
+          : latestThroughput.size / latestThroughput.frequency
         : undefined,
       usedIn: usedInByTvsDesc,
       bridgeName: bridge.daBridge.name,

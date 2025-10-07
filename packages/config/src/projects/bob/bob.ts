@@ -8,6 +8,10 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('bob')
 
 export const bob: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: true,
+  },
   addedAt: UnixTime(1714521600), // 2024-05-01T00:00:00Z
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit, BADGES.Stack.OPKailua],
@@ -68,6 +72,7 @@ export const bob: ScalingProject = opStackL2({
     type: 'Optimistic',
     name: 'OP Kailua',
     zkCatalogId: ProjectId('risc0'),
+    challengeProtocol: 'Single-step',
   },
   chainConfig: {
     name: 'bob',
@@ -76,7 +81,7 @@ export const bob: ScalingProject = opStackL2({
     explorerUrl: 'https://explorer.gobob.xyz',
     sinceTimestamp: UnixTime(1712861989),
     apis: [
-      { type: 'rpc', url: 'https://rpc.gobob.xyz/', callsPerMinute: 1500 },
+      { type: 'rpc', url: 'https://rpc.gobob.xyz/', callsPerMinute: 300 },
       { type: 'blockscout', url: 'https://explorer.gobob.xyz/api' },
     ],
   },

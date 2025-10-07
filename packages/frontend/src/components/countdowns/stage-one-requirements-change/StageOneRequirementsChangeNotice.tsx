@@ -8,6 +8,7 @@ import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { CloseIcon } from '~/icons/Close'
 import { MissingIcon } from '~/icons/Missing'
 import { StopwatchIcon } from '~/icons/Stopwatch'
+import { cn } from '~/utils/cn'
 import { CountdownSection } from '../CountdownSection'
 
 export function StageOneRequirementsChangeNotice({
@@ -50,12 +51,14 @@ export function StageOneRequirementsChangeNotice({
 export function StageOneRequirementsChangeStageSectionNotice({
   downgradePending,
   stage1PrincipleDescription,
+  className,
 }: {
   downgradePending: NonNullable<StageConfigured['downgradePending']>
   stage1PrincipleDescription?: string
+  className?: string
 }) {
   return (
-    <div className="flex gap-2 rounded-lg bg-brand/20 p-4">
+    <div className={cn('flex gap-2 rounded-lg bg-brand/20 p-4', className)}>
       <StopwatchIcon className="mt-0.5 size-5 shrink-0" />
       <div>
         <p className="font-bold text-lg">New requirements coming soon</p>

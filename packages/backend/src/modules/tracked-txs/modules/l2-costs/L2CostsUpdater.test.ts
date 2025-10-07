@@ -36,7 +36,7 @@ describe(L2CostsUpdater.name, () => {
         }),
       ]
 
-      updater.transform = mockFn().resolvesTo(mockRecord)
+      updater.transform = mockFn().returns(mockRecord)
 
       await updater.update(transactions)
 
@@ -54,7 +54,7 @@ describe(L2CostsUpdater.name, () => {
 
       const transactions = getMockTrackedTxResults()
 
-      const result = await updater.transform(transactions)
+      const result = updater.transform(transactions)
 
       const expected: L2CostRecord[] = [
         {

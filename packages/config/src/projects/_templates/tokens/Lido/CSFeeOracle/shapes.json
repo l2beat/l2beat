@@ -1,8 +1,13 @@
 {
   "CSFeeOracle": {
     "hash": "0xeac43c3fd7eae13460161196e3255017b4296896629f70133974d9e26bd2b742",
-    "address": "0x919ac5C6c62B6ef7B05cF05070080525a7B0381E",
-    "chain": "ethereum",
+    "address": "eth:0x919ac5C6c62B6ef7B05cF05070080525a7B0381E",
     "blockNumber": 22587696
+  },
+  "CSFeeOracle_v2": {
+    "hash": "0xe9044668de5a790902b6bfed112ac2d764965db11a13b730c985ceff09edff4d",
+    "address": "eth:0xe0B234f99E413E27D9Bc31aBba9A49A3e570Da97",
+    "chain": "ethereum",
+    "blockNumber": 23519375
   }
 }

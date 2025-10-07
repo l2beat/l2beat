@@ -1,8 +1,7 @@
 {
   "MToken.sol": {
     "hash": "0xd0f9d9680beb2766f32df8f35302771cde6d0ccb5c3e7f32fdacd13bf5c58203",
-    "address": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
-    "chain": "ethereum",
+    "address": "eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
     "blockNumber": 22517630
   }
 }

@@ -1,8 +1,13 @@
 {
   "ValidatorsExitBusOracle": {
     "hash": "0xba2e8ff1fb232454e73ee740f5c151763047d29a9c660b33be8926930334a768",
-    "address": "0xA89Ea51FddE660f67d1850e03C9c9862d33Bc42c",
-    "chain": "ethereum",
+    "address": "eth:0xA89Ea51FddE660f67d1850e03C9c9862d33Bc42c",
     "blockNumber": 22188285
+  },
+  "ValidatorsExitBusOracle_v2": {
+    "hash": "0xe4c526720601a291e152819a6b6a28a60b7aa74dfc163dcdda0848713449d95d",
+    "address": "eth:0x905A211eD6830Cfc95643f0bE2ff64E7f3bf9b94",
+    "chain": "ethereum",
+    "blockNumber": 23519375
   }
 }

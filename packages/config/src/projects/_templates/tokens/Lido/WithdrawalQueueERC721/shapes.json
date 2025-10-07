@@ -1,8 +1,7 @@
 {
   "WithdrawalQueueERC721": {
     "hash": "0x700596a656c09529255fe261db91a5a98b3795dc7aac6bd680e1b9d5ad5f2f5f",
-    "address": "0xE42C659Dc09109566720EA8b2De186c2Be7D94D9",
-    "chain": "ethereum",
+    "address": "eth:0xE42C659Dc09109566720EA8b2De186c2Be7D94D9",
     "blockNumber": 22188285
   }
 }

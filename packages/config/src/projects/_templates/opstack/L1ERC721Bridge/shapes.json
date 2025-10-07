@@ -1,104 +1,93 @@
 {
   "L1ERC721Bridge_l3": {
     "hash": "0x213ec4c2cba8ee3e5261dea43660185830da2ba624da6cd1bcd3c342732b576e",
-    "address": "0xd2227e78ee343a0d6166B4Bd5a18Ebb286c8Cc05",
-    "chain": "base",
+    "address": "base:0xd2227e78ee343a0d6166B4Bd5a18Ebb286c8Cc05",
     "blockNumber": 28446407
   },
   "L1ERC721Bridge_v1_0_0": {
     "hash": "0x4a2ad213ff7b5da7d065bc134bb2392837364747089248e4083d17a39ea87fd7",
-    "address": "0xbB1cDB5Cc35B1c9801DA8772aCBcDbd323A912D9",
-    "chain": "ethereum",
+    "address": "eth:0xbB1cDB5Cc35B1c9801DA8772aCBcDbd323A912D9",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v1_1_2": {
     "hash": "0x95c690f70db8f82a05347087d704333c180048757ff015d74a5b186c1b6b24ab",
-    "address": "0x132b3456300332d488f946B818eB9512931eBCAa",
-    "chain": "ethereum",
+    "address": "eth:0x132b3456300332d488f946B818eB9512931eBCAa",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v1_4_0": {
     "hash": "0xf43d12b96b6c43853b7001daea5e33f38797c6847d565052a0edb0b191a665da",
-    "address": "0xc4550911Df26E604aA560dee6a9b66D0CA933482",
-    "chain": "ethereum",
+    "address": "eth:0xc4550911Df26E604aA560dee6a9b66D0CA933482",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v1_4_1": {
     "hash": "0x17f0c97db13062aa8299e78c5d1a68b5152ce948b2fe10e5283857bd6a15ce4f",
-    "address": "0x3B01aDF2f199144233A536b08244d63e5eb691B8",
-    "chain": "ethereum",
+    "address": "eth:0x3B01aDF2f199144233A536b08244d63e5eb691B8",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v2_0_0": {
     "hash": "0xd94510e3fe5d022d391bd48ca1c159a4ac4457403b9326aaaba5bda5d5d4b59e",
-    "address": "0xf3EF9B6eE32366A625d84910c53eB20024043A70",
-    "chain": "ethereum",
+    "address": "eth:0xf3EF9B6eE32366A625d84910c53eB20024043A70",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v2_1_0": {
     "hash": "0x482ec6e91304ac39a3fb4505634427bddfddee23b8e93a4f7f995ca5083ae3c3",
-    "address": "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d",
-    "chain": "ethereum",
+    "address": "eth:0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v2_1_0_zircuit": {
     "hash": "0x7328459427570e205526a415613989750227c38d95138613a718c573132fdd17",
-    "address": "0x3B21dC86c412aC34fF4c679497b274509D73cDcC",
-    "chain": "ethereum",
+    "address": "eth:0x3B21dC86c412aC34fF4c679497b274509D73cDcC",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v2_1_1_beta1": {
     "hash": "0x56b8df1d0d704ad119f31879a8c1446528dbdc9130c3442ae76a2991ca1df17a",
-    "address": "0x24574dbF51a36b8ffaAf07B3B44eC0a261731fB2",
-    "chain": "ethereum",
+    "address": "eth:0x24574dbF51a36b8ffaAf07B3B44eC0a261731fB2",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v2_1_1_beta2": {
     "hash": "0xdc83f703bfd2d743ec97217a3d438d11b984d0107c4b0299116689bc6c38f17c",
-    "address": "0xcD8f943e7d506cD92dE582Ac5065dE718E568580",
-    "chain": "ethereum",
+    "address": "eth:0xcD8f943e7d506cD92dE582Ac5065dE718E568580",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v2_1_1_beta2_soon": {
     "hash": "0x24cb1546f4d13c900c36748855b85910c515856750676e6d425b2cd42204ff9f",
-    "address": "0x5ef275bed4d7d3eD69BAc22a0dEf8947f8cA1b4B",
-    "chain": "ethereum",
+    "address": "eth:0x5ef275bed4d7d3eD69BAc22a0dEf8947f8cA1b4B",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v2_2_0_beta1_celo": {
     "hash": "0x8d03a6303efd76759aaa7d52a65a151d851750f2f816678bf97961d413d4b9c0",
-    "address": "0xad5D111e961A5E451C8172034115bcc0551b6551",
-    "chain": "ethereum",
+    "address": "eth:0xad5D111e961A5E451C8172034115bcc0551b6551",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v2_3_1": {
     "hash": "0x9de28f19e0d1200bf0afda5ab90c9d2dffa44a775e71cfe9232ee1808338996c",
-    "address": "0x276d3730f219f7ec22274f7263180b8452B46d47",
-    "chain": "ethereum",
+    "address": "eth:0x276d3730f219f7ec22274f7263180b8452B46d47",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v2_2_0_zircuit": {
     "hash": "0x937e394859daaa4d66de4cbe3e6770d80adf639ecc5d3394774676870cda8d62",
-    "address": "0xDF129ECFc63Af454F62b69d03C0f0E21e69bcDAb",
-    "chain": "ethereum",
+    "address": "eth:0xDF129ECFc63Af454F62b69d03C0f0E21e69bcDAb",
     "blockNumber": 22336762
   },
   "L1ERC721Bridge_v2_4_0": {
     "hash": "0x28669b49da3effd51f0f9424ca9cdd455c5b9327c09a40c65fc06f114a6eb837",
-    "address": "0x7aE1d3BD877a4C5CA257404ce26BE93A02C98013",
-    "chain": "ethereum",
+    "address": "eth:0x7aE1d3BD877a4C5CA257404ce26BE93A02C98013",
     "blockNumber": 22346130
   },
   "L1ERC721Bridge_v2.2.0_beta1": {
     "hash": "0xe599cf570ef24a19dd222aad5c0dfd249ecd9ed9a4b33d054028512ba4b2baf3",
-    "address": "0x7eecF36F384732F229D494E072a48fF294861fC2",
-    "chain": "ethereum",
+    "address": "eth:0x7eecF36F384732F229D494E072a48fF294861fC2",
     "blockNumber": 22395854
   },
   "L1ERC721Bridge_v2_7_0": {
     "hash": "0x8ec2646e7ca57c49fef7769f200a751b7199526d590c9c43e6c7b134f43de630",
-    "address": "0x25d6CeDEB277Ad7ebEe71226eD7877768E0B7A2F",
-    "chain": "ethereum",
+    "address": "eth:0x25d6CeDEB277Ad7ebEe71226eD7877768E0B7A2F",
     "blockNumber": 22995199
+  },
+  "L1ERC721Bridge_v2_8_0": {
+    "hash": "0xab560cdc633c64552a47cd693ebc9aaab91fe80bec99e9e89b9d13d89a994c22",
+    "address": "eth:0x7f1d12fB2911EB095278085f721e644C1f675696",
+    "chain": "ethereum",
+    "blockNumber": 23496267
   }
 }

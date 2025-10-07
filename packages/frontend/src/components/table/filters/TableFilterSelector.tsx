@@ -211,7 +211,7 @@ function Content({ entries }: { entries: FilterableEntry[] }) {
                 <CommandItem
                   className="font-medium"
                   key={`${id}-${value}`}
-                  value={`${value}`}
+                  value={`${id}-${value}`}
                   onSelect={() => {
                     const isSelected = state[id]?.values.includes(value)
 

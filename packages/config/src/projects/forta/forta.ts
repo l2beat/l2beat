@@ -22,6 +22,7 @@ export const forta: ScalingProject = underReviewL3({
       ],
       documentation: ['https://docs.forta.network/'],
       explorers: ['https://explorer.forta.org/'],
+      repositories: ['https://github.com/forta-network'],
       socialMedia: ['https://x.com/FortaNetwork'],
     },
   },
@@ -39,7 +40,7 @@ export const forta: ScalingProject = underReviewL3({
       {
         type: 'rpc',
         url: 'https://rpc-forta-chain-8gj1qndmfc.t.conduit.xyz/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

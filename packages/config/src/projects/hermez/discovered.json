@@ -1,0 +1,674 @@
+{
+  "name": "hermez",
+  "timestamp": 1738736459,
+  "configHash": "0x26e88bedfeceb6a05b03555b812bec62a3f7d64149c67b8a835b8290f2141d58",
+  "entries": [
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x228d39e9354fb4359c868bd34cc144e1f4449270e99b6b6c29077f7cdc43b6ac"
+      ],
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xA68D85dF56E733A06443306A095646317B5Fa633",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1616482354,
+      "sinceBlock": 12093588,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3"
+      },
+      "implementationNames": {
+        "eth:0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "HermezAuctionProtocol",
+      "address": "eth:0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xdb3bef89a228d50af48f4cf15733111b6aafeed38fb487368076047f0272b282",
+        "0x476ed86f075a8dece66465dd7b3861cbdafe66b401883c61cb0a73d9b01dde22"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1616482443,
+      "sinceBlock": 12093592,
+      "values": {
+        "$admin": "eth:0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3",
+        "$implementation": "eth:0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "BLOCKS_PER_SLOT": 40,
+        "bootCoordinatorURL": "https://api.hermez.io",
+        "genesisBlock": 12094000,
+        "getAllocationRatio": [4000, 4000, 2000],
+        "getBootCoordinator": "eth:0xc3867Da55e14b722Ab2A8E9fa4e39F51F5e03dE5",
+        "getClosedAuctionSlots": 2,
+        "getDonationAddress": "eth:0x0000000000000000000000000000000000000000",
+        "getOpenAuctionSlots": 4320,
+        "getOutbidding": 1000,
+        "getSlotDeadline": 40,
+        "governanceAddress": "eth:0xf1B3b124842555782F98bE08d1357ABb8013F11c",
+        "hermezRollup": "eth:0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "INITIAL_MINIMAL_BIDDING": "1000000000000000000000000",
+        "tokenHEZ": "eth:0xEEF9f339514298C6A857EfCfC1A762aF84438dEE"
+      },
+      "implementationNames": {
+        "eth:0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2": "AdminUpgradeabilityProxy",
+        "eth:0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6": "HermezAuctionProtocol"
+      }
+    },
+    {
+      "address": "eth:0x1DBA1131000664b884A1Ba238464159892252D3a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Verifier2048",
+      "address": "eth:0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xf51a7f57b93c2b8b3a62b0b15a896614822a2eeedc4b52a8758d8b0028b5f18c"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1620206720,
+      "sinceBlock": 12373414,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342": "Verifier2048"
+      }
+    },
+    {
+      "address": "eth:0x2d3C8Ad3E6eE92D2e278B42db0FD7Aa99424bB92",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "WithdrawalDelayer",
+      "address": "eth:0x392361427Ef5e17b69cFDd1294F31ab555c86124",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xeb5db1557fd4c8a14866a14626b87afcfdfc2738ea4efdb0ea9c87ec09240233"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1616482522,
+      "sinceBlock": 12093599,
+      "values": {
+        "$immutable": true,
+        "getEmergencyCouncil": "eth:0xe1bbC673E537053c3536310851C6554BcfcF11Cd",
+        "getEmergencyModeStartingTime": 0,
+        "getHermezGovernanceAddress": "eth:0xf1B3b124842555782F98bE08d1357ABb8013F11c",
+        "getWithdrawalDelay": 3600,
+        "hermezRollupAddress": "eth:0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "isEmergencyMode": false,
+        "MAX_EMERGENCY_MODE_TIME": 15724800,
+        "MAX_WITHDRAWAL_DELAY": 1209600,
+        "pendingEmergencyCouncil": "eth:0x0000000000000000000000000000000000000000",
+        "pendingGovernance": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x392361427Ef5e17b69cFDd1294F31ab555c86124": "WithdrawalDelayer"
+      }
+    },
+    {
+      "address": "eth:0x3Ac6Cb2CcFd8c8aAe3BA31D7ED44C20d241B16A4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Verifier400",
+      "address": "eth:0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x2d871d2a619c09cbe52344e2d3ce4cf8c55ae1a347abd9ea45a4bda5a7381b46"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1620206715,
+      "sinceBlock": 12373413,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2": "Verifier400"
+      }
+    },
+    {
+      "name": "VerifierWithdraw",
+      "address": "eth:0x4464A1E499cf5443541da6728871af1D5C4920ca",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x1470a04ef17f2a5136c4d367b0e3f4cba6f020f03a73a27eaae5f22e65aa44a7"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1620206929,
+      "sinceBlock": 12373429,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x4464A1E499cf5443541da6728871af1D5C4920ca": "VerifierWithdraw"
+      }
+    },
+    {
+      "name": "Hermez2",
+      "address": "eth:0x6D85D79D69b7e190E671C16e8611997152bD3e95",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xe05e5b424accc7b17ae5ca45336522f973eef578dd74429d02aed898b86a59f2"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1620209529,
+      "sinceBlock": 12373616,
+      "values": {
+        "$immutable": true,
+        "ABSOLUTE_MAX_L1L2BATCHTIMEOUT": 240,
+        "ACCOUNT_CREATION_HASH": "0xff946cf82975b1a2b6e6d28c9a76a4b8d7a1fd0592b785cb92771933310f9ee7",
+        "AUTHORISE_TYPEHASH": "0xafd642c6a37a2e6887dc4ad5142f84197828a904e53d3204ecb1100329231eaa",
+        "DOMAIN_SEPARATOR": "0x028b969e29cd6f532eaf390ce8afa3efbe0de9173c3398e22f8c3e088cbca2b4",
+        "EIP712DOMAIN_HASH": "0x8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f",
+        "feeAddToken": 0,
+        "forgeL1L2BatchTimeout": 0,
+        "getChainId": 1,
+        "HERMEZ_NETWORK_HASH": "0xbe287413178bfeddef8d9753ad4be825ae998706a6dabff23978b59dccaea0ad",
+        "hermezAuctionContract": "eth:0x0000000000000000000000000000000000000000",
+        "hermezGovernanceAddress": "eth:0x0000000000000000000000000000000000000000",
+        "lastForgedBatch": 0,
+        "lastIdx": 0,
+        "lastL1L2Batch": 0,
+        "NAME_HASH": "0xbe287413178bfeddef8d9753ad4be825ae998706a6dabff23978b59dccaea0ad",
+        "nBuckets": 0,
+        "nextL1FillingQueue": 0,
+        "nextL1ToForgeQueue": 0,
+        "registerTokensCount": 0,
+        "rollupVerifiers": [],
+        "rollupVerifiersLength": 0,
+        "tokenHEZ": "eth:0x0000000000000000000000000000000000000000",
+        "tokenList": [],
+        "VERSION_HASH": "0xc89efdaa54c0f20c7adf612882df0950f5a951637e0307cdcb4c672f298b8bc6",
+        "withdrawalDelay": 0,
+        "withdrawDelayerContract": "eth:0x0000000000000000000000000000000000000000",
+        "withdrawVerifier": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x6D85D79D69b7e190E671C16e8611997152bD3e95": "Hermez"
+      }
+    },
+    {
+      "address": "eth:0x839395e20bbB182fa440d08F850E6c7A8f6F0780",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "HermezAuctionProtocol2",
+      "address": "eth:0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x476ed86f075a8dece66465dd7b3861cbdafe66b401883c61cb0a73d9b01dde22"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1616482312,
+      "sinceBlock": 12093585,
+      "values": {
+        "$immutable": true,
+        "BLOCKS_PER_SLOT": 40,
+        "bootCoordinatorURL": "",
+        "genesisBlock": 0,
+        "getAllocationRatio": [0, 0, 0],
+        "getBootCoordinator": "eth:0x0000000000000000000000000000000000000000",
+        "getClosedAuctionSlots": 0,
+        "getDonationAddress": "eth:0x0000000000000000000000000000000000000000",
+        "getOpenAuctionSlots": 0,
+        "getOutbidding": 0,
+        "getSlotDeadline": 0,
+        "governanceAddress": "eth:0x0000000000000000000000000000000000000000",
+        "hermezRollup": "eth:0x0000000000000000000000000000000000000000",
+        "INITIAL_MINIMAL_BIDDING": "1000000000000000000000000",
+        "tokenHEZ": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6": "HermezAuctionProtocol"
+      }
+    },
+    {
+      "name": "Hermez",
+      "address": "eth:0xA68D85dF56E733A06443306A095646317B5Fa633",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xdb3bef89a228d50af48f4cf15733111b6aafeed38fb487368076047f0272b282",
+        "0xe05e5b424accc7b17ae5ca45336522f973eef578dd74429d02aed898b86a59f2"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1616482490,
+      "sinceBlock": 12093596,
+      "values": {
+        "$admin": "eth:0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3",
+        "$implementation": "eth:0x6D85D79D69b7e190E671C16e8611997152bD3e95",
+        "$pastUpgrades": [
+          [
+            "2021-05-13T08:02:37.000Z",
+            "0x57ad65625027cd8324566421b6b838c4eccbc76dcad9c837d76beb841d5dc70c",
+            ["eth:0x6D85D79D69b7e190E671C16e8611997152bD3e95"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "ABSOLUTE_MAX_L1L2BATCHTIMEOUT": 240,
+        "ACCOUNT_CREATION_HASH": "0xff946cf82975b1a2b6e6d28c9a76a4b8d7a1fd0592b785cb92771933310f9ee7",
+        "AUTHORISE_TYPEHASH": "0xafd642c6a37a2e6887dc4ad5142f84197828a904e53d3204ecb1100329231eaa",
+        "DOMAIN_SEPARATOR": "0x82d8130c6c42a28bcba51b01f9e58a01bcbad2d8c3f51f5a58bf21069ab04d2f",
+        "EIP712DOMAIN_HASH": "0x8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f",
+        "feeAddToken": "200000000000000000000000000",
+        "forgeL1L2BatchTimeout": 16,
+        "getChainId": 1,
+        "HERMEZ_NETWORK_HASH": "0xbe287413178bfeddef8d9753ad4be825ae998706a6dabff23978b59dccaea0ad",
+        "hermezAuctionContract": "eth:0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2",
+        "hermezGovernanceAddress": "eth:0xf1B3b124842555782F98bE08d1357ABb8013F11c",
+        "lastForgedBatch": 7631,
+        "lastIdx": 12816,
+        "lastL1L2Batch": 17039009,
+        "NAME_HASH": "0xbe287413178bfeddef8d9753ad4be825ae998706a6dabff23978b59dccaea0ad",
+        "nBuckets": 5,
+        "nextL1FillingQueue": 7627,
+        "nextL1ToForgeQueue": 7626,
+        "registerTokensCount": 33,
+        "rollupVerifiers": [
+          ["eth:0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2", 400, 32],
+          ["eth:0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342", 2048, 32]
+        ],
+        "rollupVerifiersLength": 2,
+        "tokenHEZ": "eth:0xEEF9f339514298C6A857EfCfC1A762aF84438dEE",
+        "VERSION_HASH": "0xc89efdaa54c0f20c7adf612882df0950f5a951637e0307cdcb4c672f298b8bc6",
+        "withdrawalDelay": 259200,
+        "withdrawDelayerContract": "eth:0x392361427Ef5e17b69cFDd1294F31ab555c86124",
+        "withdrawVerifier": "eth:0x4464A1E499cf5443541da6728871af1D5C4920ca"
+      },
+      "implementationNames": {
+        "eth:0xA68D85dF56E733A06443306A095646317B5Fa633": "AdminUpgradeabilityProxy",
+        "eth:0x6D85D79D69b7e190E671C16e8611997152bD3e95": "Hermez"
+      }
+    },
+    {
+      "address": "eth:0xc3867Da55e14b722Ab2A8E9fa4e39F51F5e03dE5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "eth:0xe1bbC673E537053c3536310851C6554BcfcF11Cd",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
+        "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1616309707,
+      "sinceBlock": 12080648,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
+        "$members": [
+          "eth:0x1DBA1131000664b884A1Ba238464159892252D3a",
+          "eth:0x839395e20bbB182fa440d08F850E6c7A8f6F0780",
+          "eth:0xEA479628a2236865dcc01c0F9DF7d5955Ac602e4",
+          "eth:0x2d3C8Ad3E6eE92D2e278B42db0FD7Aa99424bB92",
+          "eth:0x3Ac6Cb2CcFd8c8aAe3BA31D7ED44C20d241B16A4"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0xa8d350af38a90d0f1848de5f721e6c5da3772e7ba783935a096c423702921edf",
+        "getModules": [],
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
+        "NAME": "Gnosis Safe",
+        "nonce": 1,
+        "VERSION": "1.1.1"
+      },
+      "implementationNames": {
+        "eth:0xe1bbC673E537053c3536310851C6554BcfcF11Cd": "Proxy",
+        "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": "GnosisSafe"
+      }
+    },
+    {
+      "address": "eth:0xEA479628a2236865dcc01c0F9DF7d5955Ac602e4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "HermezGovernance",
+      "address": "eth:0xf1B3b124842555782F98bE08d1357ABb8013F11c",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x3bedb01d2286bb466957d9f521a78ce6f362ce7e6dc31764db9db2a96bf4203d"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1616404339,
+      "sinceBlock": 12087709,
+      "values": {
+        "$immutable": true,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0xf1B3b124842555782F98bE08d1357ABb8013F11c": "HermezGovernance"
+      }
+    },
+    {
+      "name": "Timelock",
+      "address": "eth:0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x4b401c52fd30ceef4f84c7f5910ab91f15b73d9292a0cccb6fc59ab6a7cc8a1a"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1616404572,
+      "sinceBlock": 12087731,
+      "values": {
+        "$immutable": true,
+        "admin": "eth:0xf1B3b124842555782F98bE08d1357ABb8013F11c",
+        "delay": 604800,
+        "GRACE_PERIOD": 1209600,
+        "MAXIMUM_DELAY": 2592000,
+        "MINIMUM_DELAY": 172800,
+        "pendingAdmin": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3": "Timelock"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2": [
+      "constructor(address _logic, address _admin, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342": [
+      "function verifyProof(uint256[2] a, uint256[2][2] b, uint256[2] c, uint256[1] input) view returns (bool r)"
+    ],
+    "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedMasterCopy(address masterCopy)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function NAME() view returns (string)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeMasterCopy(address _masterCopy)",
+      "function changeThreshold(uint256 _threshold)",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getMessageHash(bytes message) view returns (bytes32)",
+      "function getModules() view returns (address[])",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isOwner(address owner) view returns (bool)",
+      "function isValidSignature(bytes _data, bytes _signature) returns (bytes4)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signMessage(bytes _data)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0x392361427Ef5e17b69cFDd1294F31ab555c86124": [
+      "constructor(uint64 _initialWithdrawalDelay, address _initialHermezRollup, address _initialHermezGovernanceAddress, address _initialEmergencyCouncil)",
+      "event Deposit(address indexed owner, address indexed token, uint192 amount, uint64 depositTimestamp)",
+      "event EmergencyModeEnabled()",
+      "event EscapeHatchWithdrawal(address indexed who, address indexed to, address indexed token, uint256 amount)",
+      "event InitializeWithdrawalDelayerEvent(uint64 initialWithdrawalDelay, address initialHermezGovernanceAddress, address initialEmergencyCouncil)",
+      "event NewEmergencyCouncil(address newEmergencyCouncil)",
+      "event NewHermezGovernanceAddress(address newHermezGovernanceAddress)",
+      "event NewWithdrawalDelay(uint64 withdrawalDelay)",
+      "event Withdraw(address indexed token, address indexed owner, uint192 amount)",
+      "function MAX_EMERGENCY_MODE_TIME() view returns (uint64)",
+      "function MAX_WITHDRAWAL_DELAY() view returns (uint64)",
+      "function changeWithdrawalDelay(uint64 _newWithdrawalDelay)",
+      "function claimEmergencyCouncil()",
+      "function claimGovernance()",
+      "function deposit(address _owner, address _token, uint192 _amount) payable",
+      "function depositInfo(address _owner, address _token) view returns (uint192, uint64)",
+      "function deposits(bytes32) view returns (uint192 amount, uint64 depositTimestamp)",
+      "function enableEmergencyMode()",
+      "function escapeHatchWithdrawal(address _to, address _token, uint256 _amount)",
+      "function getEmergencyCouncil() view returns (address)",
+      "function getEmergencyModeStartingTime() view returns (uint64)",
+      "function getHermezGovernanceAddress() view returns (address)",
+      "function getWithdrawalDelay() view returns (uint64)",
+      "function hermezRollupAddress() view returns (address)",
+      "function isEmergencyMode() view returns (bool)",
+      "function pendingEmergencyCouncil() view returns (address)",
+      "function pendingGovernance() view returns (address)",
+      "function transferEmergencyCouncil(address newEmergencyCouncil)",
+      "function transferGovernance(address newGovernance)",
+      "function withdrawal(address _owner, address _token)"
+    ],
+    "eth:0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2": [
+      "function verifyProof(uint256[2] a, uint256[2][2] b, uint256[2] c, uint256[1] input) view returns (bool r)"
+    ],
+    "eth:0x4464A1E499cf5443541da6728871af1D5C4920ca": [
+      "function verifyProof(uint256[2] a, uint256[2][2] b, uint256[2] c, uint256[1] input) view returns (bool r)"
+    ],
+    "eth:0x6D85D79D69b7e190E671C16e8611997152bD3e95": [
+      "event AddToken(address indexed tokenAddress, uint32 tokenID)",
+      "event ForgeBatch(uint32 indexed batchNum, uint16 l1UserTxsLen)",
+      "event InitializeHermezEvent(uint8 forgeL1L2BatchTimeout, uint256 feeAddToken, uint64 withdrawalDelay)",
+      "event L1UserTxEvent(uint32 indexed queueIndex, uint8 indexed position, bytes l1UserTx)",
+      "event SafeMode()",
+      "event UpdateBucketWithdraw(uint8 indexed numBucket, uint256 indexed blockStamp, uint256 withdrawals)",
+      "event UpdateBucketsParameters(uint256[] arrayBuckets)",
+      "event UpdateFeeAddToken(uint256 newFeeAddToken)",
+      "event UpdateForgeL1L2BatchTimeout(uint8 newForgeL1L2BatchTimeout)",
+      "event UpdateTokenExchange(address[] addressArray, uint64[] valueArray)",
+      "event UpdateWithdrawalDelay(uint64 newWithdrawalDelay)",
+      "event WithdrawEvent(uint48 indexed idx, uint32 indexed numExitRoot, bool indexed instantWithdraw)",
+      "event hermezV2()",
+      "function ABSOLUTE_MAX_L1L2BATCHTIMEOUT() view returns (uint8)",
+      "function ACCOUNT_CREATION_HASH() view returns (bytes32)",
+      "function AUTHORISE_TYPEHASH() view returns (bytes32)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32 domainSeparator)",
+      "function EIP712DOMAIN_HASH() view returns (bytes32)",
+      "function HERMEZ_NETWORK_HASH() view returns (bytes32)",
+      "function NAME_HASH() view returns (bytes32)",
+      "function VERSION_HASH() view returns (bytes32)",
+      "function addL1Transaction(uint256 babyPubKey, uint48 fromIdx, uint40 loadAmountF, uint40 amountF, uint32 tokenID, uint48 toIdx, bytes permit) payable",
+      "function addToken(address tokenAddress, bytes permit)",
+      "function buckets(int256) view returns (uint256)",
+      "function exitNullifierMap(uint32, uint48) view returns (bool)",
+      "function exitRootsMap(uint32) view returns (uint256)",
+      "function feeAddToken() view returns (uint256)",
+      "function forgeBatch(uint48 newLastIdx, uint256 newStRoot, uint256 newExitRoot, bytes encodedL1CoordinatorTx, bytes l1L2TxsData, bytes feeIdxCoordinator, uint8 verifierIdx, bool l1Batch, uint256[2] proofA, uint256[2][2] proofB, uint256[2] proofC)",
+      "function forgeL1L2BatchTimeout() view returns (uint8)",
+      "function getChainId() pure returns (uint256 chainId)",
+      "function hermezAuctionContract() view returns (address)",
+      "function hermezGovernanceAddress() view returns (address)",
+      "function initializeHermez(address[] _verifiers, uint256[] _verifiersParams, address _withdrawVerifier, address _hermezAuctionContract, address _tokenHEZ, uint8 _forgeL1L2BatchTimeout, uint256 _feeAddToken, address _poseidon2Elements, address _poseidon3Elements, address _poseidon4Elements, address _hermezGovernanceAddress, uint64 _withdrawalDelay, address _withdrawDelayerContract)",
+      "function instantWithdrawalViewer(address tokenAddress, uint192 amount) view returns (bool)",
+      "function l1L2TxsDataHashMap(uint32) view returns (bytes32)",
+      "function lastForgedBatch() view returns (uint32)",
+      "function lastIdx() view returns (uint48)",
+      "function lastL1L2Batch() view returns (uint64)",
+      "function mapL1TxQueue(uint32) view returns (bytes)",
+      "function nBuckets() view returns (uint256)",
+      "function nextL1FillingQueue() view returns (uint32)",
+      "function nextL1ToForgeQueue() view returns (uint32)",
+      "function packBucket(uint256 ceilUSD, uint256 blockStamp, uint256 withdrawals, uint256 rateBlocks, uint256 rateWithdrawals, uint256 maxWithdrawals) pure returns (uint256 ret)",
+      "function registerTokensCount() view returns (uint256)",
+      "function rollupVerifiers(uint256) view returns (address verifierInterface, uint256 maxTx, uint256 nLevels)",
+      "function rollupVerifiersLength() view returns (uint256)",
+      "function safeMode()",
+      "function stateRootMap(uint32) view returns (uint256)",
+      "function tokenExchange(address) view returns (uint64)",
+      "function tokenHEZ() view returns (address)",
+      "function tokenList(uint256) view returns (address)",
+      "function tokenMap(address) view returns (uint256)",
+      "function unpackBucket(uint256 bucket) pure returns (uint256 ceilUSD, uint256 blockStamp, uint256 withdrawals, uint256 rateBlocks, uint256 rateWithdrawals, uint256 maxWithdrawals)",
+      "function updateBucketsParameters(uint256[] newBuckets)",
+      "function updateFeeAddToken(uint256 newFeeAddToken)",
+      "function updateForgeL1L2BatchTimeout(uint8 newForgeL1L2BatchTimeout)",
+      "function updateTokenExchange(address[] addressArray, uint64[] valueArray)",
+      "function updateVerifiers()",
+      "function updateWithdrawalDelay(uint64 newWithdrawalDelay)",
+      "function withdrawCircuit(uint256[2] proofA, uint256[2][2] proofB, uint256[2] proofC, uint32 tokenID, uint192 amount, uint32 numExitRoot, uint48 idx, bool instantWithdraw)",
+      "function withdrawDelayerContract() view returns (address)",
+      "function withdrawMerkleProof(uint32 tokenID, uint192 amount, uint256 babyPubKey, uint32 numExitRoot, uint256[] siblings, uint48 idx, bool instantWithdraw)",
+      "function withdrawVerifier() view returns (address)",
+      "function withdrawalDelay() view returns (uint64)"
+    ],
+    "eth:0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6": [
+      "event HEZClaimed(address indexed owner, uint128 amount)",
+      "event InitializeHermezAuctionProtocolEvent(address donationAddress, address bootCoordinatorAddress, string bootCoordinatorURL, uint16 outbidding, uint8 slotDeadline, uint16 closedAuctionSlots, uint16 openAuctionSlots, uint16[3] allocationRatio)",
+      "event NewAllocationRatio(uint16[3] newAllocationRatio)",
+      "event NewBid(uint128 indexed slot, uint128 bidAmount, address indexed bidder)",
+      "event NewBootCoordinator(address indexed newBootCoordinator, string newBootCoordinatorURL)",
+      "event NewClosedAuctionSlots(uint16 newClosedAuctionSlots)",
+      "event NewDefaultSlotSetBid(uint128 slotSet, uint128 newInitialMinBid)",
+      "event NewDonationAddress(address indexed newDonationAddress)",
+      "event NewForge(address indexed forger, uint128 indexed slotToForge)",
+      "event NewForgeAllocated(address indexed bidder, address indexed forger, uint128 indexed slotToForge, uint128 burnAmount, uint128 donationAmount, uint128 governanceAmount)",
+      "event NewOpenAuctionSlots(uint16 newOpenAuctionSlots)",
+      "event NewOutbidding(uint16 newOutbidding)",
+      "event NewSlotDeadline(uint8 newSlotDeadline)",
+      "event SetCoordinator(address indexed bidder, address indexed forger, string coordinatorURL)",
+      "function BLOCKS_PER_SLOT() view returns (uint8)",
+      "function INITIAL_MINIMAL_BIDDING() view returns (uint128)",
+      "function bootCoordinatorURL() view returns (string)",
+      "function canForge(address forger, uint256 blockNumber) view returns (bool)",
+      "function changeDefaultSlotSetBid(uint128 slotSet, uint128 newInitialMinBid)",
+      "function claimHEZ()",
+      "function claimPendingHEZ(uint128 slot)",
+      "function coordinators(address) view returns (address forger, string coordinatorURL)",
+      "function forge(address forger)",
+      "function genesisBlock() view returns (uint128)",
+      "function getAllocationRatio() view returns (uint16[3])",
+      "function getBootCoordinator() view returns (address)",
+      "function getClaimableHEZ(address bidder) view returns (uint128)",
+      "function getClosedAuctionSlots() view returns (uint16)",
+      "function getCurrentSlotNumber() view returns (uint128)",
+      "function getDefaultSlotSetBid(uint8 slotSet) view returns (uint128)",
+      "function getDonationAddress() view returns (address)",
+      "function getMinBidBySlot(uint128 slot) view returns (uint128)",
+      "function getOpenAuctionSlots() view returns (uint16)",
+      "function getOutbidding() view returns (uint16)",
+      "function getSlotDeadline() view returns (uint8)",
+      "function getSlotNumber(uint128 blockNumber) view returns (uint128)",
+      "function getSlotSet(uint128 slot) view returns (uint128)",
+      "function governanceAddress() view returns (address)",
+      "function hermezAuctionProtocolInitializer(address token, uint128 genesis, address hermezRollupAddress, address _governanceAddress, address donationAddress, address bootCoordinatorAddress, string _bootCoordinatorURL)",
+      "function hermezRollup() view returns (address)",
+      "function pendingBalances(address) view returns (uint128)",
+      "function processBid(uint128 amount, uint128 slot, uint128 bidAmount, bytes permit)",
+      "function processMultiBid(uint128 amount, uint128 startingSlot, uint128 endingSlot, bool[6] slotSets, uint128 maxBid, uint128 minBid, bytes permit)",
+      "function setAllocationRatio(uint16[3] newAllocationRatio)",
+      "function setBootCoordinator(address newBootCoordinator, string newBootCoordinatorURL)",
+      "function setClosedAuctionSlots(uint16 newClosedAuctionSlots)",
+      "function setCoordinator(address forger, string coordinatorURL)",
+      "function setDonationAddress(address newDonationAddress)",
+      "function setOpenAuctionSlots(uint16 newOpenAuctionSlots)",
+      "function setOutbidding(uint16 newOutbidding)",
+      "function setSlotDeadline(uint8 newDeadline)",
+      "function slots(uint128) view returns (address bidder, bool fulfilled, bool forgerCommitment, uint128 bidAmount, uint128 closedMinBid)",
+      "function tokenHEZ() view returns (address)"
+    ],
+    "eth:0xA68D85dF56E733A06443306A095646317B5Fa633": [
+      "constructor(address _logic, address _admin, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0xe1bbC673E537053c3536310851C6554BcfcF11Cd": [
+      "constructor(address _masterCopy)"
+    ],
+    "eth:0xf1B3b124842555782F98bE08d1357ABb8013F11c": [
+      "constructor(address communityCouncil)",
+      "event ExecFail(bytes returnData)",
+      "event ExecOk(bytes returnData)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function decentralize(bytes32 role)",
+      "function execute(address destination, uint256 value, bytes data)",
+      "function forbidden(bytes32) view returns (bool)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)"
+    ],
+    "eth:0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3": [
+      "constructor(address admin_, uint256 delay_)",
+      "event CancelTransaction(bytes32 indexed txHash, address indexed target, uint256 value, string signature, bytes data, uint256 eta)",
+      "event ExecuteTransaction(bytes32 indexed txHash, address indexed target, uint256 value, string signature, bytes data, uint256 eta)",
+      "event NewAdmin(address indexed newAdmin)",
+      "event NewDelay(uint256 indexed newDelay)",
+      "event NewPendingAdmin(address indexed newPendingAdmin)",
+      "event QueueTransaction(bytes32 indexed txHash, address indexed target, uint256 value, string signature, bytes data, uint256 eta)",
+      "function GRACE_PERIOD() view returns (uint256)",
+      "function MAXIMUM_DELAY() view returns (uint256)",
+      "function MINIMUM_DELAY() view returns (uint256)",
+      "function acceptAdmin()",
+      "function admin() view returns (address)",
+      "function cancelTransaction(address target, uint256 value, string signature, bytes data, uint256 eta)",
+      "function delay() view returns (uint256)",
+      "function executeTransaction(address target, uint256 value, string signature, bytes data, uint256 eta) returns (bytes)",
+      "function pendingAdmin() view returns (address)",
+      "function queueTransaction(address target, uint256 value, string signature, bytes data, uint256 eta) returns (bytes32)",
+      "function queuedTransactions(bytes32) view returns (bool)",
+      "function setDelay(uint256 delay_)",
+      "function setPendingAdmin(address pendingAdmin_)"
+    ]
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+  },
+  "usedBlockNumbers": { "ethereum": 21778467 },
+  "permissionsConfigHash": "0x61e48a613dd50299f57b955c6be6b33644854bb063115c37418fd49874b31b24"
+}

@@ -3,6 +3,7 @@
   "name": "kinto",
   "import": ["../globalConfig.jsonc"],
   "maxAddresses": 200,
+  "archived": true,
   "initialAddresses": [
     "eth:0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
     "eth:0x0f1b7bd7762662B23486320AA91F30312184f70C",

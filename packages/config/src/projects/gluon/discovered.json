@@ -1,0 +1,702 @@
+{
+  "name": "gluon",
+  "timestamp": 1737625319,
+  "configHash": "0x328d17732e26dfd12b2c81c5009db82f186328543e9a573c461ba00a46ab471c",
+  "entries": [
+    {
+      "name": "SpotData",
+      "address": "eth:0x0d283D685F0A741C463846176e4c8EFF90D3F9EC",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x60956e4310b2c0f9e257be22fc2a90fd8fb33c31afde71e079637abfc2003cca"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1573695223,
+      "sinceBlock": 8929713,
+      "values": {
+        "$immutable": true,
+        "currentGblockNumber": 46358,
+        "currentLogic": "eth:0x2D627FF93d32f5FEBb04d68409A889895B4aef2D",
+        "gluon": "eth:0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
+        "id": 2,
+        "nonce": 797,
+        "submissionBlock": 19622320
+      },
+      "implementationNames": {
+        "eth:0x0d283D685F0A741C463846176e4c8EFF90D3F9EC": "SpotData"
+      }
+    },
+    {
+      "name": "RegistryData",
+      "address": "eth:0x0fC25C7931679B838209c484d49Df0Cb9E633C41",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xaace81ba02c18429f1f3bbdb0f3ed454c5a1e5b71c806bcafd468ccb0d895f0a"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1573694818,
+      "sinceBlock": 8929683,
+      "values": {
+        "$immutable": true,
+        "currentLogic": "eth:0x385827aC8d1AC7B2960D4aBc303c843D9f87Bb0C",
+        "gluon": "eth:0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
+        "id": 0
+      },
+      "implementationNames": {
+        "eth:0x0fC25C7931679B838209c484d49Df0Cb9E633C41": "RegistryData"
+      }
+    },
+    {
+      "name": "SpotLogic",
+      "address": "eth:0x2D627FF93d32f5FEBb04d68409A889895B4aef2D",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xd2bd180f3e9f88c9860dc063c2c7980436adacaeca7a3598a05d26dacdb8ff76"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1609784209,
+      "sinceBlock": 11589589,
+      "values": {
+        "$immutable": true,
+        "abandonPoint": 40320,
+        "canSubmit": true,
+        "confirmationDelay": 5,
+        "currentGblockNumber": 46358,
+        "currentLogic": "eth:0x2D627FF93d32f5FEBb04d68409A889895B4aef2D",
+        "data": "eth:0x0d283D685F0A741C463846176e4c8EFF90D3F9EC",
+        "exitCounts": 0,
+        "extensions": ["eth:0xDA88EfA53c85Afa30564bb651A2E76b99a232082"],
+        "getExtensions": ["eth:0xDA88EfA53c85Afa30564bb651A2E76b99a232082"],
+        "gluon": "eth:0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
+        "hasBeenAbandoned": true,
+        "id": 2,
+        "isOn": false,
+        "name": "17348474894813825882129073499594235812633677095075933050106463134462708016762",
+        "operator": "eth:0x5CcAAAE7Bea14E8e04FB0FC7ED16DF49d5678Eb8",
+        "state": 0,
+        "submissionInterval": 36,
+        "upgradeOperator": "eth:0x0000000000000000000000000000000000000000",
+        "visibilityDelay": 1
+      },
+      "implementationNames": {
+        "eth:0x2D627FF93d32f5FEBb04d68409A889895B4aef2D": "SpotLogic"
+      }
+    },
+    {
+      "name": "RegistryLogic",
+      "address": "eth:0x385827aC8d1AC7B2960D4aBc303c843D9f87Bb0C",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x4684cbe7c244176dec5da5457624b1032bfa285743f6efcb53d6e1bd6d08f84c"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1573694866,
+      "sinceBlock": 8929689,
+      "values": {
+        "$immutable": true,
+        "currentLogic": "eth:0x385827aC8d1AC7B2960D4aBc303c843D9f87Bb0C",
+        "data": "eth:0x0fC25C7931679B838209c484d49Df0Cb9E633C41",
+        "gluon": "eth:0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
+        "id": 0,
+        "isOn": true,
+        "old": "eth:0x7B70aCD346892736f9f6c7F4f196B07400a50Da0",
+        "state": 1,
+        "upgradeOperator": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x385827aC8d1AC7B2960D4aBc303c843D9f87Bb0C": "RegistryLogic"
+      }
+    },
+    {
+      "address": "eth:0x4D2130d9D20428Dc249a1e938A0bcEA4b5B9ac1A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "DerivativesData",
+      "address": "eth:0x563052914Fd973a2305763269A106a7B0B6D50Cc",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x6a6c3e88d7035a123ae7218c83a0c2ae43ea59031938a1d2f84b5f10b0971799"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1598562243,
+      "sinceBlock": 10744938,
+      "values": {
+        "$immutable": true,
+        "currentGblockNumber": 3272,
+        "currentLogic": "eth:0xDfBFe895e07e5115773Cb9631CB2148114589caC",
+        "gluon": "eth:0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
+        "id": 3,
+        "name": "30095686778059018690877517746118158831983634621945428419321611611857758462194",
+        "nonce": 529,
+        "submissionBlock": 19643823
+      },
+      "implementationNames": {
+        "eth:0x563052914Fd973a2305763269A106a7B0B6D50Cc": "DerivativesData"
+      }
+    },
+    {
+      "address": "eth:0x5CcAAAE7Bea14E8e04FB0FC7ED16DF49d5678Eb8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Gluon",
+      "address": "eth:0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbeaf3aa965abd0080866e6b7678d9fcd01b57afbcb108dde7cec28201e9bf73b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1573694037,
+      "sinceBlock": 8929632,
+      "values": {
+        "$immutable": true,
+        "getOwners": [
+          "eth:0x4D2130d9D20428Dc249a1e938A0bcEA4b5B9ac1A",
+          "eth:0xaC01F01f51F0bdd012C1838Bd5ceF330E6c7FFCa"
+        ],
+        "owners": [
+          "eth:0x4D2130d9D20428Dc249a1e938A0bcEA4b5B9ac1A",
+          "eth:0xaC01F01f51F0bdd012C1838Bd5ceF330E6c7FFCa"
+        ],
+        "totalAppsCount": 4,
+        "version": "1.1.0"
+      },
+      "implementationNames": {
+        "eth:0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB": "Gluon"
+      }
+    },
+    {
+      "name": "ApiKeyRegistry",
+      "address": "eth:0x7B70aCD346892736f9f6c7F4f196B07400a50Da0",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xe8ca5c8a73c3851118ee0c57955bbcb56f68bb600dec6bb2cfe1f45c3ad6983d"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1550106622,
+      "sinceBlock": 7217381,
+      "values": {
+        "$immutable": true,
+        "getOwners": [
+          "eth:0x4D2130d9D20428Dc249a1e938A0bcEA4b5B9ac1A",
+          "eth:0xaC01F01f51F0bdd012C1838Bd5ceF330E6c7FFCa"
+        ],
+        "isOn": true,
+        "version": "0.41.0"
+      },
+      "implementationNames": {
+        "eth:0x7B70aCD346892736f9f6c7F4f196B07400a50Da0": "ApiKeyRegistry"
+      }
+    },
+    {
+      "name": "StakeLogic",
+      "address": "eth:0x84e34fD82FC368F1a072075114AdC4b552a7a1F4",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xf3c0d8b3babd0cfa68d014bdf409a030133c362c1bef63195ca06e11afcd38bd"
+      ],
+      "proxyType": "immutable",
+      "ignoreInWatchMode": ["currentIntervalIndex", "getToBeDistributed"],
+      "sinceTimestamp": 1612360715,
+      "sinceBlock": 11783715,
+      "values": {
+        "$immutable": true,
+        "activationInterval": 11520,
+        "currentIntervalIndex": 25,
+        "currentLogic": "eth:0x84e34fD82FC368F1a072075114AdC4b552a7a1F4",
+        "data": "eth:0xaB3AC436D66CBEeDc734ed2c1562c3a213c9bc77",
+        "extensions": ["eth:0xDA88EfA53c85Afa30564bb651A2E76b99a232082"],
+        "getExtensions": ["eth:0xDA88EfA53c85Afa30564bb651A2E76b99a232082"],
+        "getToBeDistributed": [0, "1345948284963741724516", 2727341811],
+        "getTokens": [
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
+        ],
+        "gluon": "eth:0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
+        "governanceToken": "eth:0xBbff34E47E559ef680067a6B1c980639EEb64D24",
+        "id": 1,
+        "intervalSize": 172800,
+        "isOn": true,
+        "name": "242081396065570819141608129364921780154322842473686362595258672082816653923",
+        "quorumPercentage": 50,
+        "state": 1,
+        "tokens": [
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
+        ],
+        "upgradeOperator": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x84e34fD82FC368F1a072075114AdC4b552a7a1F4": "StakeLogic"
+      }
+    },
+    {
+      "name": "StakeData",
+      "address": "eth:0xaB3AC436D66CBEeDc734ed2c1562c3a213c9bc77",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x50df386c3dc507e245b90c20b9969b4fc26c4d36624723856d758d5f51347048"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1573695152,
+      "sinceBlock": 8929704,
+      "values": {
+        "$immutable": true,
+        "currentLogic": "eth:0x84e34fD82FC368F1a072075114AdC4b552a7a1F4",
+        "gluon": "eth:0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
+        "id": 1
+      },
+      "implementationNames": {
+        "eth:0xaB3AC436D66CBEeDc734ed2c1562c3a213c9bc77": "StakeData"
+      }
+    },
+    {
+      "address": "eth:0xaC01F01f51F0bdd012C1838Bd5ceF330E6c7FFCa",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "LegacyTokensExtension",
+      "address": "eth:0xDA88EfA53c85Afa30564bb651A2E76b99a232082",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x7842af2456839eaca09b5cc4cff3de4a54887bce623c2c1edf75642a996f048f"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1604952423,
+      "sinceBlock": 11225379,
+      "values": {
+        "$immutable": true,
+        "getOwners": [
+          "eth:0x4D2130d9D20428Dc249a1e938A0bcEA4b5B9ac1A",
+          "eth:0xaC01F01f51F0bdd012C1838Bd5ceF330E6c7FFCa"
+        ],
+        "getTokens": ["eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"],
+        "gluon": "eth:0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
+        "owners": [
+          "eth:0x4D2130d9D20428Dc249a1e938A0bcEA4b5B9ac1A",
+          "eth:0xaC01F01f51F0bdd012C1838Bd5ceF330E6c7FFCa"
+        ],
+        "tokens": ["eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"],
+        "version": "2.0.2"
+      },
+      "implementationNames": {
+        "eth:0xDA88EfA53c85Afa30564bb651A2E76b99a232082": "LegacyTokensExtension"
+      }
+    },
+    {
+      "address": "eth:0xdB2E992E3026C16b95299457a3F62636Bd67bf50",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "DerivativesLogic",
+      "address": "eth:0xDfBFe895e07e5115773Cb9631CB2148114589caC",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x55d07767faeba9ec203367433b6cce8b8e03e7881cd40bc3112740eb6efcab7b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1604952429,
+      "sinceBlock": 11225380,
+      "values": {
+        "$immutable": true,
+        "abandonPoint": 40320,
+        "canSubmit": true,
+        "confirmationDelay": 5,
+        "currentLogic": "eth:0xDfBFe895e07e5115773Cb9631CB2148114589caC",
+        "data": "eth:0x563052914Fd973a2305763269A106a7B0B6D50Cc",
+        "exitCounts": 0,
+        "extensions": ["eth:0xDA88EfA53c85Afa30564bb651A2E76b99a232082"],
+        "getExtensions": ["eth:0xDA88EfA53c85Afa30564bb651A2E76b99a232082"],
+        "getSubChains": [],
+        "gluon": "eth:0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
+        "hasBeenAbandoned": true,
+        "id": 3,
+        "isOn": false,
+        "name": "66123409299732210049441372196138309932984984378806555469286224562595162623009",
+        "nullInstrument": 0,
+        "operator": "eth:0xdB2E992E3026C16b95299457a3F62636Bd67bf50",
+        "state": 0,
+        "subChains": [],
+        "submissionInterval": 36,
+        "upgradeOperator": "eth:0x0000000000000000000000000000000000000000",
+        "visibilityDelay": 1
+      },
+      "implementationNames": {
+        "eth:0xDfBFe895e07e5115773Cb9631CB2148114589caC": "DerivativesLogic"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x0d283D685F0A741C463846176e4c8EFF90D3F9EC": [
+      "constructor(uint32 id, address gluon)",
+      "function balancesRoot(uint32 gblockNumber) view returns (bytes32)",
+      "function currentGblockNumber() view returns (uint32)",
+      "function currentLogic() view returns (address)",
+      "function deleteDeposit(bytes32 hash)",
+      "function deleteExitClaim(bytes32 hash)",
+      "function deposit(bytes32 hash)",
+      "function deposits(bytes32) view returns (bool)",
+      "function depositsRoot(uint32 gblockNumber) view returns (bytes32)",
+      "function exitClaims(bytes32) view returns (uint256)",
+      "function exited(address, address) view returns (bool)",
+      "function gblocksByNumber(uint32) view returns (bytes32 withdrawalsRoot, bytes32 depositsRoot, bytes32 balancesRoot)",
+      "function gluon() view returns (address)",
+      "function hasExited(address account, address asset) view returns (bool)",
+      "function hasWithdrawn(bytes32 hash) view returns (bool)",
+      "function id() view returns (uint32)",
+      "function isConfirmedGblock(uint32 gblockNumber) view returns (bool)",
+      "function markExitClaim(bytes32 hash, uint256 confirmationThreshold)",
+      "function markExited(address account, address asset)",
+      "function markWithdrawn(bytes32 hash)",
+      "function nextNonce() returns (uint32)",
+      "function nonce() view returns (uint32)",
+      "function submissionBlock() view returns (uint256)",
+      "function submit(uint32 gblockNumber, bytes32 withdrawalsRoot, bytes32 depositsRoot, bytes32 balancesRoot, uint256 submissionInterval)",
+      "function updateSubmissionBlock(uint256 submissionBlock_)",
+      "function withdrawalsRoot(uint32 gblockNumber) view returns (bytes32)",
+      "function withdrawn(bytes32) view returns (bool)"
+    ],
+    "eth:0x0fC25C7931679B838209c484d49Df0Cb9E633C41": [
+      "constructor(address gluon)",
+      "function accounts(address) view returns (address)",
+      "function addKey(address apiKey, address account)",
+      "function currentLogic() view returns (address)",
+      "function gluon() view returns (address)",
+      "function id() view returns (uint32)"
+    ],
+    "eth:0x2D627FF93d32f5FEBb04d68409A889895B4aef2D": [
+      "constructor(uint32 id_, address gluon_, address data_, address operator_, uint256 submissionInterval_, uint256 abandonPoint_, address[] extensions_)",
+      "event DepositReclaimed(address indexed account, address indexed asset, uint256 quantity, uint32 nonce)",
+      "event Deposited(address indexed account, address indexed asset, uint256 quantity, uint32 nonce, uint32 designatedGblock)",
+      "event ExitClaimed(bytes32 hash, address indexed account, address indexed asset, uint256 confirmationThreshold)",
+      "event Exited(address indexed account, address indexed asset, uint256 quantity)",
+      "event ExtensionAdded(address indexed extension)",
+      "event ExtensionRemoved(address indexed extension)",
+      "event Off()",
+      "event Retired()",
+      "event Submitted(uint32 gblockNumber, bytes32 withdrawalsRoot, bytes32 depositsRoot, bytes32 balancesRoot)",
+      "event Withdrawn(bytes32 hash, address indexed account, address indexed asset, uint256 quantity)",
+      "function abandon()",
+      "function abandonPoint() view returns (uint256)",
+      "function addExtension(address extension)",
+      "function canExit(bytes32 hash, uint32 gblock) view returns (bool)",
+      "function canSubmit() view returns (bool)",
+      "function checkProof(bytes proof, bytes32 root, bytes32 leaf) pure returns (bool)",
+      "function checkProofOrdered(bytes proof, bytes32 root, bytes32 leaf, uint256 index) pure returns (bool)",
+      "function confirmationDelay() view returns (uint8)",
+      "function credit(address account, address asset, uint256 quantity)",
+      "function currentGblockNumber() view returns (uint32)",
+      "function currentLogic() view returns (address)",
+      "function data() view returns (address)",
+      "function debit(address account, bytes parameters) returns (address asset, uint256 quantity)",
+      "function encodePackedDeposit(uint32 ledgerId, address account, address asset, uint256 quantity, uint32 nonce, uint32 designatedGblock) pure returns (bytes)",
+      "function encodedDepositOnHaltParameters(address account, address asset, uint256 quantity, uint32 nonce, uint32 designatedGblock) view returns (bytes)",
+      "function exitCounts() view returns (uint32)",
+      "function extensions(uint256) view returns (address)",
+      "function getExtensions() view returns (address[])",
+      "function gluon() view returns (address)",
+      "function hasBeenAbandoned() view returns (bool)",
+      "function hasExited(address account, address asset) view returns (bool)",
+      "function id() view returns (uint32)",
+      "function isExtension(address) view returns (bool)",
+      "function isOn() view returns (bool)",
+      "function name() view returns (uint256)",
+      "function operator() view returns (address)",
+      "function proveInConfirmedBalances(bytes proof, bytes32 entryHash) view returns (bool)",
+      "function proveInConfirmedWithdrawals(bytes proof, uint32 gblockNumber, bytes32 entryHash) view returns (bool)",
+      "function recover(bytes32 hash, bytes signature) pure returns (address)",
+      "function setUpgradeOperator(address upgradeOperator_)",
+      "function state() view returns (uint8)",
+      "function submissionInterval() view returns (uint256)",
+      "function submit(uint32 gblockNumber, bytes32 withdrawalsRoot, bytes32 depositsRoot, bytes32 balancesRoot)",
+      "function switchOff()",
+      "function upgrade()",
+      "function upgradeOperator() view returns (address)",
+      "function verifyIncluded(bytes proof, bytes32 root, bytes32 leaf) pure returns (bool)",
+      "function verifyIncludedAtIndex(bytes proof, bytes32 root, bytes32 leaf, uint256 index) pure returns (bool)",
+      "function visibilityDelay() view returns (uint8)"
+    ],
+    "eth:0x385827aC8d1AC7B2960D4aBc303c843D9f87Bb0C": [
+      "constructor(address gluon, address old_, address data_)",
+      "event Off()",
+      "event Registered(address apiKey, address indexed account)",
+      "event Retired()",
+      "function credit(address, address, uint256)",
+      "function currentLogic() view returns (address)",
+      "function data() view returns (address)",
+      "function debit(address, bytes) returns (address, uint256)",
+      "function gluon() view returns (address)",
+      "function id() view returns (uint32)",
+      "function isOn() view returns (bool)",
+      "function old() view returns (address)",
+      "function register(address apiKey)",
+      "function setUpgradeOperator(address upgradeOperator_)",
+      "function state() view returns (uint8)",
+      "function switchOff()",
+      "function translate(address apiKey) view returns (address)",
+      "function upgrade()",
+      "function upgradeOperator() view returns (address)"
+    ],
+    "eth:0x563052914Fd973a2305763269A106a7B0B6D50Cc": [
+      "constructor(uint32 id, address gluon)",
+      "function balancesRoot(uint32 gblockNumber) view returns (bytes32)",
+      "function currentGblockNumber() view returns (uint32)",
+      "function currentLogic() view returns (address)",
+      "function deleteDeposit(bytes32 hash)",
+      "function deleteExitClaim(bytes32 hash)",
+      "function deposit(bytes32 hash)",
+      "function deposits(bytes32) view returns (bool)",
+      "function depositsRoot(uint32 gblockNumber) view returns (bytes32)",
+      "function exitClaims(bytes32) view returns (uint256)",
+      "function exited(address, address) view returns (bool)",
+      "function gblocksByNumber(uint32) view returns (bytes32 withdrawalsRoot, bytes32 depositsRoot, bytes32 balancesRoot)",
+      "function gluon() view returns (address)",
+      "function hasExited(address account, address asset) view returns (bool)",
+      "function hasWithdrawn(bytes32 hash) view returns (bool)",
+      "function id() view returns (uint32)",
+      "function isConfirmedGblock(uint32 gblockNumber) view returns (bool)",
+      "function markExitClaim(bytes32 hash, uint256 confirmationThreshold)",
+      "function markExited(address account, address asset)",
+      "function markWithdrawn(bytes32 hash)",
+      "function name() view returns (uint256)",
+      "function nextNonce() returns (uint32)",
+      "function nonce() view returns (uint32)",
+      "function submissionBlock() view returns (uint256)",
+      "function submit(uint32 gblockNumber, bytes32 withdrawalsRoot, bytes32 depositsRoot, bytes32 balancesRoot, uint256 submissionInterval)",
+      "function updateSubmissionBlock(uint256 submissionBlock_)",
+      "function withdrawalsRoot(uint32 gblockNumber) view returns (bytes32)",
+      "function withdrawn(bytes32) view returns (bool)"
+    ],
+    "eth:0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB": [
+      "constructor(address[] owners, string version)",
+      "event Activated(uint32 indexed appId, uint8 version, address logic)",
+      "event AppOwnerAdded(uint32 appId, address appOwner)",
+      "event AppOwnerRemoved(uint32 appId, address appOwner)",
+      "event AppProvisioned(uint32 indexed appId, uint8 version, address logic)",
+      "event AppRegistered(uint32 appId)",
+      "event OwnerAdded(address indexed owner)",
+      "event OwnerRemoved(address indexed owner)",
+      "event ProposalAdded(uint32 indexed appId, uint8 version, address logic, uint256 activationBlock)",
+      "event ProposalRemoved(uint32 indexed appId, uint8 version, address logic)",
+      "function activate(uint32 appId)",
+      "function addAppOwners(uint32 appId, address[] toBeAdded)",
+      "function addOwner(address owner)",
+      "function addProposal(uint32 appId, address logic)",
+      "function app(uint32 appId) view returns (address current, address proposal, uint256 activationBlock)",
+      "function appOwners(uint32, uint256) view returns (address)",
+      "function approve(uint32 appId)",
+      "function apps(uint32) view returns (address proposal, uint256 activationBlock)",
+      "function current(uint32 appId) view returns (address)",
+      "function depositEther(uint32 appId) payable",
+      "function depositToken(uint32 appId, address token, uint256 quantity)",
+      "function disapprove(uint32 appId)",
+      "function getAppOwners(uint32 appId) view returns (address[])",
+      "function getBalance(uint32 appId, address asset) view returns (uint256)",
+      "function getOwners() view returns (address[])",
+      "function history(uint32 appId) view returns (address[])",
+      "function isAnyLogic(uint32 appId, address logic) view returns (bool)",
+      "function isAppOwner(uint32 appId, address appOwner) view returns (bool)",
+      "function isOwner(address) view returns (bool)",
+      "function owners(uint256) view returns (address)",
+      "function proposals(address) view returns (bool)",
+      "function provisionApp(uint32 appId, address logic)",
+      "function registerApp(uint32 appId, address[] appOwners_)",
+      "function removeAppOwners(uint32 appId, address[] toBeRemoved)",
+      "function removeOwner(address owner)",
+      "function removeProposal(uint32 appId)",
+      "function totalAppsCount() view returns (uint32)",
+      "function transfer(uint32 from, uint32 to, bytes parameters)",
+      "function version() view returns (string)",
+      "function withdraw(uint32 appId, bytes parameters)"
+    ],
+    "eth:0x7B70aCD346892736f9f6c7F4f196B07400a50Da0": [
+      "function switchOff()",
+      "function removeOwner(address owner)",
+      "function isOn() view returns (bool)",
+      "function isOwner(address) view returns (bool)",
+      "function register(address apiKey)",
+      "function version() view returns (string)",
+      "function registerWithUserAgreement(address apiKey, bytes32 userAgreement)",
+      "function contains(address apiKey) view returns (bool)",
+      "function accounts(address) view returns (address)",
+      "function addOwner(address owner)",
+      "function userAgreements(address) view returns (bytes32)",
+      "function getOwners() view returns (address[])",
+      "function translate(address apiKey) view returns (address)",
+      "function switchOn()",
+      "constructor(address[] _owners, string _version)",
+      "event Registered(address apiKey, address indexed account, bytes32 userAgreement)",
+      "event OwnerAdded(address indexed owner)",
+      "event OwnerRemoved(address indexed owner)",
+      "event On()",
+      "event Off()"
+    ],
+    "eth:0x84e34fD82FC368F1a072075114AdC4b552a7a1F4": [
+      "constructor(address gluon_, address data_, address governanceToken_, address[] tokens_, address apiKey_, uint256 intervalSize_, uint256 quorumPercentage_, uint256 activationInterval_, address[] extensions_)",
+      "event NewInterval(uint256 start, uint256 end, uint256 intervalIndex)",
+      "event Off()",
+      "event Redeemed(address indexed user, uint256 quantity, uint256 start, uint256 end, uint256 intervalIndex)",
+      "event Restaked(address indexed user, uint256 quantity, uint256 start, uint256 end, uint256 intervalIndex)",
+      "event Retired()",
+      "event Reward(address indexed user, address asset, uint256 reward, uint256 start, uint256 end, uint256 intervalIndex)",
+      "event Staked(address indexed user, uint256 quantity, uint256 start, uint256 end, uint256 intervalIndex)",
+      "event Voted(uint32 indexed appId, address indexed proposal, uint256 approvals, uint256 disapprovals, address account)",
+      "event VotingConcluded(uint32 indexed appId, address indexed proposal, uint256 approvals, uint256 disapprovals, bool result)",
+      "function activationInterval() view returns (uint256)",
+      "function addExtention(address extension)",
+      "function addToken(address token)",
+      "function calculateIntervalReward(uint256 start, uint256 end, uint256 index) view returns (uint256)",
+      "function credit(address account, address asset, uint256 quantity)",
+      "function currentIntervalIndex() view returns (uint256)",
+      "function currentLogic() view returns (address)",
+      "function data() view returns (address)",
+      "function debit(address account, bytes parameters) returns (address asset, uint256 quantity)",
+      "function deleteVoteTally(address proposal)",
+      "function ensureInterval()",
+      "function extensions(uint256) view returns (address)",
+      "function getExtensions() view returns (address[])",
+      "function getInterval(uint256 intervalIndex) view returns (uint256 worth, uint256[] rewards, uint256 start, uint256 end)",
+      "function getToBeDistributed() view returns (uint256[])",
+      "function getTokens() view returns (address[])",
+      "function gluon() view returns (address)",
+      "function governanceToken() view returns (address)",
+      "function id() view returns (uint32)",
+      "function init(uint256 intervalId)",
+      "function intervalSize() view returns (uint256)",
+      "function intervals(uint256) view returns (uint256 worth, uint256 start, uint256 end)",
+      "function isOn() view returns (bool)",
+      "function name() view returns (uint256)",
+      "function quorumPercentage() view returns (uint256)",
+      "function redeem(address account, uint256 quantity) returns (uint256, uint256, uint256)",
+      "function registerApiKey(address apiKey)",
+      "function setIntervalSize(uint256 intervalSize_)",
+      "function setUpgradeOperator(address upgradeOperator_)",
+      "function stakeLocation(address account) view returns (address)",
+      "function stakes(address) view returns (uint256 intervalIndex, uint256 quantity, uint256 worth)",
+      "function state() view returns (uint8)",
+      "function switchOff()",
+      "function toBeDistributed(uint256) view returns (uint256)",
+      "function tokens(uint256) view returns (address)",
+      "function transferToLatestStakeAfterRetire()",
+      "function upgrade()",
+      "function upgradeOperator() view returns (address)",
+      "function voteAppUpgrade(uint32 appId, bool side)",
+      "function withdrawFromApp(uint32 appId, bytes withdrawData)",
+      "function withdrawFromExtension(uint32 appId, bytes withdrawData, uint256 index)"
+    ],
+    "eth:0xaB3AC436D66CBEeDc734ed2c1562c3a213c9bc77": [
+      "constructor(address gluon)",
+      "function accountLocation(address) view returns (address)",
+      "function accountToProposals(address, uint256) view returns (address)",
+      "function accountToSides(address, uint256) view returns (bool)",
+      "function balance(address) view returns (uint256)",
+      "function currentLogic() view returns (address)",
+      "function deleteVoteTally(address proposal)",
+      "function getAllProposals(address account) view returns (address[] proposals, bool[] sides)",
+      "function getVoteIndex(address account, address proposal) view returns (uint256)",
+      "function getVoteTally(address proposal) view returns (uint256 approvals, uint256 disapprovals)",
+      "function gluon() view returns (address)",
+      "function id() view returns (uint32)",
+      "function removeResolvedProposals(address account)",
+      "function updateAccountLocation(address account, address logic)",
+      "function updateBalance(address account, uint256 quantity)",
+      "function updateVotes(address proposal, bool side, uint256 quantity, bool increased) returns (uint256 approvals, uint256 disapprovals)",
+      "function voteAppUpgrade(address proposal, address account, bool side, uint256 quantity) returns (uint256, uint256)",
+      "function voteTally(address, bool) view returns (uint256)"
+    ],
+    "eth:0xDA88EfA53c85Afa30564bb651A2E76b99a232082": [
+      "constructor(address _gluon, address[] tokens_, address[] owners, string version)",
+      "event OwnerAdded(address indexed owner)",
+      "event OwnerRemoved(address indexed owner)",
+      "event TokenAdded(address indexed token)",
+      "event TokenRemoved(address indexed token)",
+      "function addOwner(address owner)",
+      "function addToken(address token)",
+      "function balances(uint32, address) view returns (uint256)",
+      "function current(uint32 appId) view returns (address)",
+      "function depositEther(uint32 appId) payable",
+      "function depositToken(uint32 appId, address token, uint256 quantity)",
+      "function getBalance(uint32 appId, address token) view returns (uint256)",
+      "function getOwners() view returns (address[])",
+      "function getTokens() view returns (address[])",
+      "function gluon() view returns (address)",
+      "function isOwner(address) view returns (bool)",
+      "function isTokenAllowed(address) view returns (bool)",
+      "function owners(uint256) view returns (address)",
+      "function removeOwner(address owner)",
+      "function removeToken(address token)",
+      "function tokenBalances(address) view returns (uint256)",
+      "function tokens(uint256) view returns (address)",
+      "function transfer(uint32 from, uint32 to, bytes parameters)",
+      "function version() view returns (string)",
+      "function withdraw(uint32 appId, bytes parameters)"
+    ],
+    "eth:0xDfBFe895e07e5115773Cb9631CB2148114589caC": [
+      "constructor(uint32 id, address gluon, address data_, address operator_, uint256 submissionInterval_, uint256 abandonPoint_, address[] extensions)",
+      "event DepositReclaimed(address indexed account, address indexed asset, uint256 quantity, uint32 nonce)",
+      "event Deposited(address indexed account, address indexed asset, uint256 quantity, uint32 nonce, uint32 designatedGblock)",
+      "event ExitClaimed(bytes32 hash, address indexed account, address indexed asset, uint256 confirmationThreshold)",
+      "event Exited(address indexed account, address indexed asset, uint256 quantity)",
+      "event ExtensionAdded(address indexed extension)",
+      "event ExtensionRemoved(address indexed extension)",
+      "event Off()",
+      "event Retired()",
+      "event SubChainAdded(address indexed subChain)",
+      "event Submitted(uint32 gblockNumber, bytes32 withdrawalsRoot, bytes32 depositsRoot, bytes32 balancesRoot)",
+      "event Withdrawn(bytes32 hash, address indexed account, address indexed asset, uint256 quantity)",
+      "function abandon()",
+      "function abandonPoint() view returns (uint256)",
+      "function addExtension(address extension)",
+      "function addSubChain()",
+      "function canExit(bytes32 hash, uint32 gblock) view returns (bool)",
+      "function canSubmit() view returns (bool)",
+      "function checkProof(bytes proof, bytes32 root, bytes32 leaf) pure returns (bool)",
+      "function checkProofOrdered(bytes proof, bytes32 root, bytes32 leaf, uint256 index) pure returns (bool)",
+      "function confirmationDelay() view returns (uint8)",
+      "function credit(address account, address asset, uint256 quantity)",
+      "function currentLogic() view returns (address)",
+      "function data() view returns (address)",
+      "function debit(address account, bytes parameters) returns (address asset, uint256 quantity)",
+      "function encodePackedDeposit(uint32 ledgerId, address account, address asset, uint256 quantity, uint32 nonce, uint32 designatedGblock) pure returns (bytes)",
+      "function encodedDepositOnHaltParameters(address account, address asset, uint256 quantity, uint32 nonce, uint32 designatedGblock) view returns (bytes)",
+      "function exitCounts() view returns (uint32)",
+      "function extensions(uint256) view returns (address)",
+      "function getExtensions() view returns (address[])",
+      "function getSubChains() view returns (address[])",
+      "function gluon() view returns (address)",
+      "function hasBeenAbandoned() view returns (bool)",
+      "function hasExited(address account, address asset) view returns (bool)",
+      "function id() view returns (uint32)",
+      "function isExtension(address) view returns (bool)",
+      "function isOn() view returns (bool)",
+      "function isSubChain(address) view returns (bool)",
+      "function name() view returns (uint256)",
+      "function nullInstrument() view returns (uint32)",
+      "function operator() view returns (address)",
+      "function proveInConfirmedBalances(bytes proof, bytes32 entryHash) view returns (bool)",
+      "function proveInConfirmedWithdrawals(bytes proof, uint32 gblockNumber, bytes32 entryHash) view returns (bool)",
+      "function recover(bytes32 hash, bytes signature) pure returns (address)",
+      "function setUpgradeOperator(address upgradeOperator_)",
+      "function state() view returns (uint8)",
+      "function subChains(uint256) view returns (address)",
+      "function submissionInterval() view returns (uint256)",
+      "function submit(uint32 gblockNumber, bytes32 withdrawalsRoot, bytes32 depositsRoot, bytes32 balancesRoot)",
+      "function switchOff()",
+      "function upgrade()",
+      "function upgradeOperator() view returns (address)",
+      "function verifyIncluded(bytes proof, bytes32 root, bytes32 leaf) pure returns (bool)",
+      "function verifyIncludedAtIndex(bytes proof, bytes32 root, bytes32 leaf, uint256 index) pure returns (bool)",
+      "function visibilityDelay() view returns (uint8)"
+    ]
+  },
+  "usedTemplates": {},
+  "usedBlockNumbers": { "ethereum": 21686363 },
+  "permissionsConfigHash": "0x54e009699bc683f838619d10a8c9de53e9e6bc24424a4883e68258b97730a053"
+}

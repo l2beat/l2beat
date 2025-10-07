@@ -5,9 +5,13 @@ import { Footer } from '~/components/Footer'
 import { MobileTopNavbar } from '~/components/nav/mobile/MobileTopNavbar'
 import { NavSidebar } from '~/components/nav/sidebar/NavSidebar'
 import type { NavGroup } from '~/components/nav/types'
+import { TopBanner } from '~/components/TopBanner'
+import { useWhatsNewContext } from '~/components/whats-new/WhatsNewContext'
+import { WhatsNewWidgetCloseable } from '~/components/whats-new/WhatsNewWidgetCloseable'
 import { externalLinks } from '~/consts/externalLinks'
 import { PARTNERS_ORDER } from '~/consts/partnersOrder'
 import { env } from '~/env'
+import { useIsMobile } from '~/hooks/useIsMobile'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
@@ -18,15 +22,17 @@ import { createOrderedSort } from '~/utils/sort'
 
 const LOGO_LINK = '/scaling/summary'
 
-import { TopBanner } from '~/components/TopBanner'
+export interface SideNavLayoutProps {
+  children: React.ReactNode
+  childrenWrapperClassName?: string
+}
 
 export function SideNavLayout({
   children,
   childrenWrapperClassName,
-}: {
-  children: React.ReactNode
-  childrenWrapperClassName?: string
-}) {
+}: SideNavLayoutProps) {
+  const whatsNew = useWhatsNewContext()
+  const isMobile = useIsMobile()
   const topChildren = (
     <TopBanner className="lg:rounded-b-xl 2xl:rounded-br-none" />
   )
@@ -34,11 +40,16 @@ export function SideNavLayout({
     <SidebarProvider>
       <div className="relative flex flex-col lg:flex-row">
         <div className="block lg:hidden">{topChildren}</div>
-        <MobileTopNavbar groups={groups} logoLink={LOGO_LINK} />
+        <MobileTopNavbar
+          groups={groups}
+          logoLink={LOGO_LINK}
+          sideLinks={sideLinks}
+        />
         <NavSidebar
           logoLink={LOGO_LINK}
           groups={groups}
           sideLinks={sideLinks}
+          whatsNew={whatsNew}
         />
         <div
           className={cn(
@@ -49,6 +60,9 @@ export function SideNavLayout({
           <div className="hidden lg:mr-3 lg:block 2xl:mr-0">{topChildren}</div>
           <div className="mx-auto min-h-screen max-w-(--breakpoint-lg) md:px-6 lg:pl-0">
             {children}
+            {whatsNew && isMobile && (
+              <WhatsNewWidgetCloseable whatsNew={whatsNew} />
+            )}
           </div>
           <Footer
             className="md:px-12 md:pt-8 lg:pr-9 lg:pl-6"
@@ -154,6 +168,11 @@ const groups = compact<NavGroup>([
         shortTitle: 'Throughput',
         href: '/data-availability/throughput',
       },
+      {
+        title: 'Liveness',
+        shortTitle: 'Liveness',
+        href: '/data-availability/liveness',
+      },
     ],
     secondaryLinks: [
       {
@@ -171,7 +190,7 @@ const groups = compact<NavGroup>([
       <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
     ),
   },
-  env.CLIENT_SIDE_PARTNERS && {
+  {
     type: 'multiple',
     title: 'Ecosystems',
     match: 'ecosystems',
@@ -206,7 +225,11 @@ const groups = compact<NavGroup>([
   },
 ])
 
-const sideLinks = [
+const sideLinks = compact([
+  {
+    title: 'Publications',
+    href: '/publications',
+  },
   {
     title: 'About Us',
     href: '/about-us',
@@ -240,4 +263,4 @@ const sideLinks = [
     title: 'FAQ',
     href: '/faq',
   },
-]
+])

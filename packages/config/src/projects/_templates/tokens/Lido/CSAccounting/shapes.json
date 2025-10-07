@@ -1,8 +1,13 @@
 {
   "CSAccounting": {
     "hash": "0xc45cf7de845f22be0dadd18370faa3a228bdaa579f0c450f4459acbef0c91c05",
-    "address": "0x71FCD2a6F38B644641B0F46c345Ea03Daabf2758",
-    "chain": "ethereum",
+    "address": "eth:0x71FCD2a6F38B644641B0F46c345Ea03Daabf2758",
     "blockNumber": 22188285
+  },
+  "CSAccounting_v2": {
+    "hash": "0xa3793b129329502d6009f7a85359b308a4c6469ce911caf16b24083bdc712519",
+    "address": "eth:0x6f09d2426c7405C5546413e6059F884D2D03f449",
+    "chain": "ethereum",
+    "blockNumber": 23519375
   }
 }

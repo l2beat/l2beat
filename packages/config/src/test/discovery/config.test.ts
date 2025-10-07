@@ -1,7 +1,6 @@
 import {
   ConfigReader,
   colorize,
-  combineStructureAndColor,
   DiscoveryRegistry,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
@@ -46,7 +45,7 @@ describe('discovery config.jsonc', () => {
 
   const configs = configReader
     .readAllDiscoveredProjects()
-    .flatMap(({ project }) => configReader.readConfig(project))
+    .flatMap((project) => configReader.readConfig(project))
 
   const projectIds = layer2s
     .map((p) => p.id.toString())
@@ -78,12 +77,9 @@ describe('discovery config.jsonc', () => {
     const notEqual = []
 
     for (const c of configs) {
-      const chains = configReader.readAllDiscoveredChainsForProject(c.name)
-      for (const chain of chains) {
-        const discovery = configReader.readDiscovery(c.name, chain)
-        if (discovery.name !== c.name) {
-          notEqual.push(c.name)
-        }
+      const discovery = configReader.readDiscovery(c.name)
+      if (discovery.name !== c.name) {
+        notEqual.push(c.name)
       }
     }
 
@@ -99,20 +95,17 @@ describe('discovery config.jsonc', () => {
     const notSorted: string[] = []
 
     for (const c of configs ?? []) {
-      const chains = configReader.readAllDiscoveredChainsForProject(c.name)
-      for (const chain of chains) {
-        const discovery = configReader.readDiscovery(c.name, chain)
+      const discovery = configReader.readDiscovery(c.name)
 
-        if (
-          !isDeepStrictEqual(
-            discovery.entries,
-            discovery.entries
-              .slice()
-              .sort((a, b) => a.address.localeCompare(b.address.toString())),
-          )
-        ) {
-          notSorted.push(c.name)
-        }
+      if (
+        !isDeepStrictEqual(
+          discovery.entries,
+          discovery.entries
+            .slice()
+            .sort((a, b) => a.address.localeCompare(b.address.toString())),
+        )
+      ) {
+        notSorted.push(c.name)
       }
     }
 
@@ -124,30 +117,24 @@ describe('discovery config.jsonc', () => {
 
   it('committed discovery config hash, template hashes and shapeFilesHash are up to date', () => {
     for (const c of configs) {
-      const chains = configReader.readAllDiscoveredChainsForProject(c.name)
-      for (const chain of chains) {
-        const discovery = configReader.readDiscovery(c.name, chain)
-        const reason = templateService.discoveryNeedsRefresh(discovery, c)
+      const discovery = configReader.readDiscovery(c.name)
+      const reason = templateService.discoveryNeedsRefresh(discovery, c)
 
-        assert(
-          reason === undefined,
-          `${chain}/${c.name} project is outdated: ${reason}.\n Run "l2b refresh-discovery"`,
-        )
-      }
+      assert(
+        reason === undefined,
+        `${c.name} project is outdated: ${reason}.\n Run "l2b refresh-discovery"`,
+      )
     }
   })
 
   it('discovery.json does not include errors', () => {
     for (const c of configs) {
-      const chains = configReader.readAllDiscoveredChainsForProject(c.name)
-      for (const chain of chains) {
-        const discovery = configReader.readDiscovery(c.name, chain)
+      const discovery = configReader.readDiscovery(c.name)
 
-        assert(
-          discovery.entries.every((c) => c.errors === undefined),
-          `${c.name} discovery.json includes errors. Run "l2b discover ${c.name}".`,
-        )
-      }
+      assert(
+        discovery.entries.every((c) => c.errors === undefined),
+        `${c.name} discovery.json includes errors. Run "l2b discover ${c.name}".`,
+      )
     }
   })
 
@@ -156,61 +143,49 @@ describe('discovery config.jsonc', () => {
     // do not remove it unless you know what you are doing
     describe('every override correspond to existing contract', () => {
       for (const c of configs ?? []) {
-        const chains = configReader.readAllDiscoveredChainsForProject(c.name)
-        for (const chain of chains) {
-          for (const key of Object.keys(c.structure.overrides ?? {})) {
-            it(`${c.name} on ${chain} with the override ${key}`, () => {
-              expect(() =>
-                makeEntryStructureConfig(
-                  c.structure,
-                  ChainSpecificAddress(key),
-                ),
-              ).not.toThrow()
-            })
-          }
+        for (const key of Object.keys(c.structure.overrides ?? {})) {
+          it(`${c.name} with the override ${key}`, () => {
+            expect(() =>
+              makeEntryStructureConfig(c.structure, ChainSpecificAddress(key)),
+            ).not.toThrow()
+          })
         }
       }
     })
 
     describe('all shared modules exist', () => {
       for (const c of configs ?? []) {
-        const chains = configReader.readAllDiscoveredChainsForProject(c.name)
-        for (const chain of chains) {
-          it(`${c.name} on ${chain}`, () => {
-            for (const sharedModule of c.structure.sharedModules) {
-              assert(
-                configs?.flat()?.some((x) => x.name === sharedModule),
-                `Shared module ${sharedModule} does not exist (${c.name})`,
-              )
-            }
-          })
-        }
+        it(c.name, () => {
+          for (const sharedModule of c.structure.sharedModules) {
+            assert(
+              configs?.flat()?.some((x) => x.name === sharedModule),
+              `Shared module ${sharedModule} does not exist (${c.name})`,
+            )
+          }
+        })
       }
     })
 
     // inversion logic depends on this
     describe('all accessControl fields keys are accessControl', () => {
       for (const c of configs ?? []) {
-        const chains = configReader.readAllDiscoveredChainsForProject(c.name)
-        for (const chain of chains) {
-          const discovery = configReader.readDiscovery(c.name, chain)
-          it(`${c.name}:${chain}`, () => {
-            for (const entry of discovery.entries) {
-              const fields = makeEntryStructureConfig(
-                c.structure,
-                entry.address,
-              ).fields
-              for (const [key, value] of Object.entries(fields)) {
-                if (
-                  value.handler?.type === 'accessControl' &&
-                  value.handler.pickRoleMembers === undefined
-                ) {
-                  expect(key).toEqual('accessControl')
-                }
+        const discovery = configReader.readDiscovery(c.name)
+        it(c.name, () => {
+          for (const entry of discovery.entries) {
+            const fields = makeEntryStructureConfig(
+              c.structure,
+              entry.address,
+            ).fields
+            for (const [key, value] of Object.entries(fields)) {
+              if (
+                value.handler?.type === 'accessControl' &&
+                value.handler.pickRoleMembers === undefined
+              ) {
+                expect(key).toEqual('accessControl')
               }
             }
-          })
-        }
+          }
+        })
       }
     })
   })
@@ -233,89 +208,88 @@ describe('discovery config.jsonc', () => {
 
   it('discovered.json hash matches the one stored in diffHistory.md', () => {
     for (const c of configs ?? []) {
-      const chains = configReader.readAllDiscoveredChainsForProject(c.name)
-      for (const chain of chains) {
-        const currentHash = configReader.readDiscoveryHash(c.name, chain)
-        const savedHash = configReader.readDiffHistoryHash(c.name, chain)
-        assert(
-          savedHash !== undefined,
-          `The diffHistory.md of ${chain}:${c.name} has to contain a hash of the discovered.json. Perhaps you generated the discovered.json without generating the diffHistory.md?`,
-        )
-        assert(
-          currentHash === savedHash,
-          `The hash for ${chain}:${
-            c.name
-          } of your local discovered.json (${currentHash.toString()}) does not match the hash stored in the diffHistory.md (${savedHash.toString()}). Perhaps you generated the discovered.json without generating the diffHistory.md?`,
-        )
-      }
+      const currentHash = configReader.readDiscoveryHash(c.name)
+      const savedHash = configReader.readDiffHistoryHash(c.name)
+      assert(
+        savedHash !== undefined,
+        `The diffHistory.md of ${c.name} has to contain a hash of the discovered.json. Perhaps you generated the discovered.json without generating the diffHistory.md?`,
+      )
+      assert(
+        currentHash === savedHash,
+        `The hash for ${
+          c.name
+        } of your local discovered.json (${currentHash.toString()}) does not match the hash stored in the diffHistory.md (${savedHash.toString()}). Perhaps you generated the discovered.json without generating the diffHistory.md?`,
+      )
     }
   })
 
   it('is colorized correctly', () => {
     for (const c of configs ?? []) {
-      const chains = configReader.readAllDiscoveredChainsForProject(c.name)
-      for (const chain of chains) {
-        const discovery = configReader.readDiscovery(c.name, chain)
-        const color = colorize(c.color, discovery, templateService)
+      const discovery = configReader.readDiscovery(c.name)
+      const color = colorize(c.color, discovery, templateService)
 
-        const colorized = combineStructureAndColor(discovery, color)
-        const changed = JSON.stringify(discovery) !== JSON.stringify(colorized)
-        assert(
-          !changed,
-          `${c.name} is not colorized correctly. Run l2b colorize.`,
-        )
-      }
+      const isColorizedCorrectly = compareLeftKeysInRight(color, discovery)
+
+      assert(
+        isColorizedCorrectly,
+        `${c.name} is not colorized correctly. Run "l2b colorize".`,
+      )
     }
   })
 
   it('model-permissions is up to date', () => {
     for (const c of configs) {
-      const chains = configReader.readAllDiscoveredChainsForProject(c.name)
-      for (const chain of chains) {
-        const dependencies = getDependenciesToDiscoverForProject(
-          c.name,
-          configReader,
-        )
-        const discoveries = new DiscoveryRegistry()
-        for (const dependency of dependencies) {
-          const discovery = configReader.readDiscovery(
-            dependency.project,
-            dependency.chain,
-          )
-          discoveries.set(dependency.project, dependency.chain, discovery)
-        }
-        const clingoInput = generateClingoForDiscoveries(
-          discoveries,
-          configReader,
-          templateService,
-        )
-        const hash = generatePermissionConfigHash(clingoInput)
-        assert(
-          hash ===
-            discoveries.get(c.name, chain)?.discoveryOutput
-              .permissionsConfigHash,
-          [
-            '',
-            `Permissions model of "${c.name}" is not up to date.`,
-            `Run \`l2b model-permissions ${c.name}\`.`,
-            'or to refresh all projects: \`l2b model-permissions all\`.',
-            '',
-          ].join('\n\n'),
-        )
+      const discoveries = new DiscoveryRegistry()
+      const dependencies = getDependenciesToDiscoverForProject(
+        c.name,
+        configReader,
+      )
+      for (const dependency of dependencies) {
+        const discovery = configReader.readDiscovery(dependency)
+        discoveries.set(dependency, discovery)
       }
+      const clingoInput = generateClingoForDiscoveries(
+        discoveries,
+        configReader,
+        templateService,
+      )
+      const hash = generatePermissionConfigHash(clingoInput)
+      assert(
+        hash === discoveries.get(c.name)?.discoveryOutput.permissionsConfigHash,
+        [
+          '',
+          `Permissions model of "${c.name}" is not up to date.`,
+          `Run \`l2b model-permissions ${c.name}\`.`,
+          'or to refresh all projects: \`l2b model-permissions all\`.',
+          '',
+        ].join('\n\n'),
+      )
     }
   }).timeout(10000)
-
-  describe('every chain in a project has the same timestamp', () => {
-    const projects = configReader.readAllDiscoveredProjects()
-    for (const { project, chains } of projects) {
-      it(`${project}`, () => {
-        const timestamps = chains.map(
-          (c) => configReader.readDiscovery(project, c).timestamp,
-        )
-
-        expect(timestamps.every((t) => t === timestamps[0])).toEqual(true)
-      })
-    }
-  })
 })
+
+function compareLeftKeysInRight(
+  left: Record<string, any>,
+  right: Record<string, any>,
+): boolean {
+  const keys = Object.keys(left)
+
+  if (keys.length === 0) return true
+
+  return keys.every((key) => {
+    const val1 = left[key]
+    const val2 = right[key]
+
+    // Deep comparison for objects
+    if (
+      typeof val1 === 'object' &&
+      typeof val2 === 'object' &&
+      val1 !== null &&
+      val2 !== null
+    ) {
+      return compareLeftKeysInRight(val1, val2)
+    }
+
+    return isDeepStrictEqual(val1, val2)
+  })
+}

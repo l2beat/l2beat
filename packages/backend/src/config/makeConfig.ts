@@ -7,6 +7,7 @@ import { FeatureFlags } from './FeatureFlags'
 import { getActivityConfig } from './features/activity'
 import { getDaTrackingConfig } from './features/da'
 import { getDaBeatConfig } from './features/dabeat'
+import { getEcosystemsConfig } from './features/ecosystemToken'
 import { getTrackedTxsConfig } from './features/trackedTxs'
 import { getTvsConfig } from './features/tvs'
 import { getUpdateMonitorConfig } from './features/updateMonitor'
@@ -57,7 +58,6 @@ export async function makeConfig(
               ? { rejectUnauthorized: false }
               : undefined,
           },
-          freshStart: env.boolean('FRESH_START', false),
           enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
           connectionPoolSize: {
             // defaults used by knex
@@ -67,7 +67,6 @@ export async function makeConfig(
           isReadonly,
         }
       : {
-          freshStart: false,
           enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
           connection: {
             connectionString: env.string('DATABASE_URL'),
@@ -111,6 +110,7 @@ export async function makeConfig(
     trackedTxsConfig:
       flags.isEnabled('tracked-txs') &&
       (await getTrackedTxsConfig(ps, env, flags)),
+
     activity:
       flags.isEnabled('activity') && (await getActivityConfig(ps, env, flags)),
     verifiers: flags.isEnabled('verifiers') && (await getVerifiersConfig(ps)),
@@ -125,6 +125,8 @@ export async function makeConfig(
     flatSourceModuleEnabled: flags.isEnabled('flatSourcesModule'),
     chains: chains.map((x) => ({ name: x.name, chainId: x.chainId })),
     daBeat: flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, env)),
+    ecosystems:
+      flags.isEnabled('ecosystems') && (await getEcosystemsConfig(ps)),
     chainConfig: await getChainConfig(ps, env),
     beaconApi: {
       url: env.optionalString(['ETHEREUM_BEACON_API_URL']),
@@ -135,15 +137,37 @@ export async function makeConfig(
       timeout: env.integer(['ETHEREUM_BEACON_API_TIMEOUT'], 10000),
     },
     da: flags.isEnabled('da') && (await getDaTrackingConfig(ps, env)),
-    shared: flags.isEnabled('shared') && {
-      ethereumWsUrl: env.string(['ETHEREUM_WS_URL']),
+    blockSync: {
+      ethereumWsUrl: env.optionalString(['ETHEREUM_WS_URL']),
     },
-    discord: {
+    anomalies: flags.isEnabled('anomalies') && {
       anomaliesWebhookUrl: env.optionalString('ANOMALIES_DISCORD_WEBHOOK_URL'),
       anomaliesMinDuration: env.integer(
         'ANOMALIES_MIN_DURATION',
         60 * 60, // 1 hour
       ),
+    },
+    bridges: flags.isEnabled('bridges') && {
+      capture: {
+        enabled: flags.isEnabled('bridges', 'capture'),
+        chains: ['ethereum', 'arbitrum', 'base', 'optimism'].filter((c) =>
+          flags.isEnabled('bridges', 'capture', c),
+        ),
+      },
+      matching: flags.isEnabled('bridges', 'matching'),
+      cleaner: flags.isEnabled('bridges', 'cleaner'),
+      dashboard: {
+        enabled: flags.isEnabled('bridges', 'dashboard'),
+        getExplorerUrl: (chain: string) => {
+          const c = chains.find((cc) => cc.name === chain)
+
+          return c?.explorerUrl
+        },
+      },
+      compare: {
+        enabled: flags.isEnabled('bridges', 'compare'),
+        intervalMs: env.optionalInteger(['BRIDGES_COMPARE_INTERVAL_MS']),
+      },
     },
     // Must be last
     flags: flags.getResolved(),

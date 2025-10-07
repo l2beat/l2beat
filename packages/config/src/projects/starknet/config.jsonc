@@ -18,9 +18,15 @@
     "eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
     "eth:0x023A2aAc5d0fa69E3243994672822BA43E34E5C9",
     "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-    "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
+    "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+    "eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10", // SolvBTC bridge
+    "eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e" // LBTC bridge
   ],
   "names": {
+    "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb": "MultiBridge",
+    "eth:0x0c5aE94f8939182F2D06097025324D1E537d5B60": "StarkgateManager",
+    "eth:0x1268cc171c54F2000402DfF20E93E60DF4c96812": "StarkgateRegistry",
+    // bridges
     "eth:0x0437465dfb5B79726e35F08559B0cBea55bb585C": "DAIBridge",
     "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4": "WBTCBridge",
     "eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816": "USDCBridge",
@@ -37,11 +43,26 @@
     "eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5": "LUSDBridge",
     "eth:0x023A2aAc5d0fa69E3243994672822BA43E34E5C9": "LORDSBridge",
     "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4": "STRKBridge",
-    "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb": "MultiBridge",
-    "eth:0x0c5aE94f8939182F2D06097025324D1E537d5B60": "StarkgateManager",
-    "eth:0x1268cc171c54F2000402DfF20E93E60DF4c96812": "StarkgateRegistry"
+    "eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10": "SolvBTCBridge",
+    "eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e": "LBTCBridge"
   },
   "overrides": {
+    "eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10": {
+      "ignoreRelatives": [
+        "l2TokenContract",
+        "bridgedToken",
+        "maxTotalTokenBalance",
+        "manager" // added because it is unverified (prevent warning)
+      ]
+    },
+    "eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e": {
+      "ignoreRelatives": [
+        "l2TokenContract",
+        "bridgedToken",
+        "maxTotalTokenBalance",
+        "manager" // added because it is unverified (prevent warning)
+      ]
+    },
     "eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361": {
       "references": [
         {
@@ -53,6 +74,5 @@
     "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": {
       "ignoreDiscovery": true
     }
-  },
-  "sharedModules": ["shared-sharp-verifier"]
+  }
 }

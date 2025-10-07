@@ -1,8 +1,13 @@
 {
   "StakingRouter": {
     "hash": "0x503f0f420b9a496d2931807c8c9c7b3bae8e03c9d66fd0c046c0cee08657b365",
-    "address": "0x89eDa99C0551d4320b56F82DDE8dF2f8D2eF81aA",
-    "chain": "ethereum",
+    "address": "eth:0x89eDa99C0551d4320b56F82DDE8dF2f8D2eF81aA",
     "blockNumber": 22188285
+  },
+  "StakingRouter_v2": {
+    "hash": "0xfff62cfc156b3379b99f876fed184d721dcaa8f2c185eb5267d7f0609085e688",
+    "address": "eth:0x226f9265CBC37231882b7409658C18bB7738173A",
+    "chain": "ethereum",
+    "blockNumber": 23519375
   }
 }

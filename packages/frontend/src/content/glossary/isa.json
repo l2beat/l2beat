@@ -1,0 +1,5 @@
+{
+  "term": "ISA",
+  "definition": "Instruction Set Architecture of a virutal machine describes its computational model, including the available instructions, registers, data types, etc.",
+  "isSpicy": false
+}

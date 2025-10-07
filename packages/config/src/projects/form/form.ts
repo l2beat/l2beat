@@ -50,7 +50,7 @@ export const form: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.form.network/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

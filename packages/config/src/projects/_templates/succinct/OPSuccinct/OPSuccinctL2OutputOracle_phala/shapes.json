@@ -1,0 +1,17 @@
+{
+  "OPSuccinctL2OutputOracle": {
+    "hash": "0x709a766c251331fb7c079ad2f2bd400a1e94ef7a1cbb118dc889fd93d8233165",
+    "address": "eth:0xE41997Df2A412ed5B56ac9f3997A72B6BeE9d888",
+    "blockNumber": 22188285
+  },
+  "OPSuccinctL2OutputOracle_v2_0_0": {
+    "hash": "0x0cbf9fd4f1cadeb8c5634791b6829ce6dd91e6f46e87df410020715870a92006",
+    "address": "eth:0xd010fBdBd77a3314bCED75E1AE8E7aDD42c9d580",
+    "blockNumber": 22437743
+  },
+  "OPSuccinctL2OutputOracle_v3_0_0": {
+    "hash": "0xecedba02a756d9629e7a936daf3ea36ff700edceaecbd3976608c9220c3679c5",
+    "address": "eth:0x9d843e5b627759e8aB2Db5B95cCA1e5BB91F1174",
+    "blockNumber": 23333743
+  }
+}

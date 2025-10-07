@@ -62,6 +62,12 @@ const TEE_BRIDGE: DaProjectTableValue = {
   description:
     'The TEE Bridge is used to attest to the data availability on the DA layer by using a program running in a Trusted Execution Environment (TEE).',
   projectId: ProjectId('tee-bridge'),
+const HOTSHOT_LIGHT_CLIENT: DaProjectTableValue = {
+  value: 'HotShot Light Client',
+  sentiment: 'warning',
+  description:
+    'The HotShot Light Client is used to attest to the data availability on Espresso.',
+  projectId: ProjectId('espresso'),
 }
 
 function DAC_MEMBERS({
@@ -120,4 +126,5 @@ export const DA_BRIDGES = {
   SELF_ATTESTED_INTMAX,
   PLASMA,
   TEE_BRIDGE,
+  HOTSHOT_LIGHT_CLIENT,
 }

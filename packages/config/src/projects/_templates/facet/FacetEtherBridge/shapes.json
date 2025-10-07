@@ -1,8 +1,7 @@
 {
   "FacetEtherBridgeV6": {
     "hash": "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e",
-    "address": "0x68c56f4D88846A4Cdce966d92D92a0636baf40FE",
-    "chain": "ethereum",
+    "address": "eth:0x68c56f4D88846A4Cdce966d92D92a0636baf40FE",
     "blockNumber": 22367347
   }
 }

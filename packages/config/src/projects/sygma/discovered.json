@@ -1,0 +1,466 @@
+{
+  "name": "sygma",
+  "timestamp": 1711624295,
+  "configHash": "0x3e62cc2840cb42faaf9b8e0897436b33dfaa7430593c228472dddc23e0e85da5",
+  "entries": [
+    {
+      "address": "eth:0x0c1db86328E6CFCD4f530401131Dc9a26DefA12a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x197C57440A30cB28103ab27CB1b0dC86E5907ADA",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "FeeHandlerRouter",
+      "address": "eth:0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x57d2aa380d47a54717ec0de4d2ce6f34d5618f91a876226f60828e03036c07bb"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1701074999,
+      "sinceBlock": 18661897,
+      "values": {
+        "_bridgeAddress": "eth:0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089",
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53"]
+          }
+        },
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF": "FeeHandlerRouter"
+      }
+    },
+    {
+      "name": "Permissionless Generic Handler",
+      "address": "eth:0x31282123E7bcd947e2c1Bc364d564839574fAdCD",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x6cbae46385d34a7539ed992fd427d294cf815bc599a5b8814ba0272276864f21"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1697118143,
+      "sinceBlock": 18334705,
+      "values": {
+        "_bridgeAddress": "eth:0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089",
+        "$immutable": true,
+        "MAX_FEE": 1000000
+      },
+      "implementationNames": {
+        "eth:0x31282123E7bcd947e2c1Bc364d564839574fAdCD": "PermissionlessGenericHandler"
+      }
+    },
+    {
+      "name": "Bridge",
+      "address": "eth:0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x70d800f2dae04f7c3240cdf754404e86a486cea0a8591eec762e903d2eec5c77"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1686658607,
+      "sinceBlock": 17471016,
+      "values": {
+        "_accessControl": "eth:0xf433EfDf1Fb438F9d79D1E71dF2c2bdeAc95e28E",
+        "_domainID": 1,
+        "_feeHandler": "eth:0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF",
+        "_MPCAddress": "eth:0x6731987e651675aF87442Ed2F1719EDF937B51d7",
+        "$immutable": true,
+        "handler1": "eth:0xC832588193cd5ED2185daDA4A531e0B26eC5B830",
+        "handler2": "eth:0x31282123E7bcd947e2c1Bc364d564839574fAdCD",
+        "paused": false
+      },
+      "implementationNames": {
+        "eth:0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089": "Bridge"
+      }
+    },
+    {
+      "address": "eth:0x5a288b42dC222190D8cF5014A330c978ee42A5df",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x6731987e651675aF87442Ed2F1719EDF937B51d7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x695bd50CB07ffBd4098b272CE8b52B3c256ca049",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x86a73a594f74C76a6eB8F9E728d992D03252f60f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "BasicFeeHandler",
+      "address": "eth:0x9f9778DA7c1D0AbE148314d6C1EA6E0A93C151C7",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x057a9fc15bc757cf2e6b63ad07391d1629be177ca6f4c1af91bc407b7a7ef4c9"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1701075143,
+      "sinceBlock": 18661909,
+      "values": {
+        "_bridgeAddress": "eth:0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089",
+        "_feeHandlerRouterAddress": "eth:0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF",
+        "$immutable": true,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x9f9778DA7c1D0AbE148314d6C1EA6E0A93C151C7": "BasicFeeHandler"
+      }
+    },
+    {
+      "address": "eth:0xa399460Ce767b06297457178D2F9F8f144017E77",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xacc0268a75280192897a78C706C9FBA2d2b851C4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Community Multisig",
+      "address": "eth:0xc4d8b2F5501C765dE0C5E12550118F397B197D05",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1680813119,
+      "sinceBlock": 16991929,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0x0c1db86328E6CFCD4f530401131Dc9a26DefA12a",
+          "eth:0xd85b34B2Fe1eC7815B6dF659372382A8FA229677",
+          "eth:0xa399460Ce767b06297457178D2F9F8f144017E77",
+          "eth:0xe845B1d31CaA16Bf6c6Bf5E97a28D086bd46FD49",
+          "eth:0xC6458dedf35231F524ED9d7E0DF77A60b9E08676",
+          "eth:0x86a73a594f74C76a6eB8F9E728d992D03252f60f"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0xc5ef62da8fa57e68638ae614d9898bce59fbef8acf03bfa5c2e4759716981ada",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
+        "nonce": 9,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0xc4d8b2F5501C765dE0C5E12550118F397B197D05": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "eth:0xC6458dedf35231F524ED9d7E0DF77A60b9E08676",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ERC20 Bridge Handler",
+      "address": "eth:0xC832588193cd5ED2185daDA4A531e0B26eC5B830",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x6f164184a36f7f6b52d39867d75472915b53a643e2fca4319619d7f76706905e"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1686658619,
+      "sinceBlock": 17471017,
+      "values": {
+        "_bridgeAddress": "eth:0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089",
+        "$immutable": true,
+        "defaultDecimals": 18
+      },
+      "implementationNames": {
+        "eth:0xC832588193cd5ED2185daDA4A531e0B26eC5B830": "ERC20Handler"
+      }
+    },
+    {
+      "address": "eth:0xd85b34B2Fe1eC7815B6dF659372382A8FA229677",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Admin Multisig",
+      "address": "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1686579155,
+      "sinceBlock": 17464490,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xacc0268a75280192897a78C706C9FBA2d2b851C4",
+          "eth:0x5a288b42dC222190D8cF5014A330c978ee42A5df",
+          "eth:0xe845B1d31CaA16Bf6c6Bf5E97a28D086bd46FD49",
+          "eth:0x197C57440A30cB28103ab27CB1b0dC86E5907ADA",
+          "eth:0x86a73a594f74C76a6eB8F9E728d992D03252f60f"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x2093ad87aee89f2fba108781963df2f9a6358b2e675a80bdf56368e539d66ab6",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 11,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "eth:0xe845B1d31CaA16Bf6c6Bf5E97a28D086bd46FD49",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "AccessControlSegregator",
+      "address": "eth:0xf433EfDf1Fb438F9d79D1E71dF2c2bdeAc95e28E",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xffa23c6121a2e1d41ad45b0ea97f759dbbc6b73bc7e8d810590d9cb36b3dfb2b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1686658583,
+      "sinceBlock": 17471014,
+      "values": {
+        "$immutable": true,
+        "GRANT_ACCESS_SIG": "0xa973ec93",
+        "role_changeAccessControl": "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
+        "role_changeFeeHandler": "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
+        "role_endKeyGen": "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
+        "role_grantAccess": "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
+        "role_pauseTransfers": "eth:0x695bd50CB07ffBd4098b272CE8b52B3c256ca049",
+        "role_refreshKey": "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
+        "role_retry": "eth:0x695bd50CB07ffBd4098b272CE8b52B3c256ca049",
+        "role_setBurnable": "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
+        "role_setDepositNonce": "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
+        "role_setForwarder": "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
+        "role_setResource": "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
+        "role_startKeyGen": "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
+        "role_unpauseTransfers": "eth:0x695bd50CB07ffBd4098b272CE8b52B3c256ca049",
+        "role_Withdraw": "eth:0xc4d8b2F5501C765dE0C5E12550118F397B197D05"
+      },
+      "implementationNames": {
+        "eth:0xf433EfDf1Fb438F9d79D1E71dF2c2bdeAc95e28E": "AccessControlSegregator"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF": [
+      "constructor(address bridgeAddress)",
+      "error IncorrectFeeSupplied(uint256)",
+      "event FeeCollected(address sender, uint8 fromDomainID, uint8 destinationDomainID, bytes32 resourceID, uint256 fee, address tokenAddress)",
+      "event FeeDistributed(address tokenAddress, address recipient, uint256 amount)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event WhitelistChanged(address whitelistAddress, bool isWhitelisted)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function _bridgeAddress() view returns (address)",
+      "function _domainResourceIDToFeeHandlerAddress(uint8, bytes32) view returns (address)",
+      "function _whitelist(address) view returns (bool)",
+      "function adminSetResourceHandler(uint8 destinationDomainID, bytes32 resourceID, address handlerAddress)",
+      "function adminSetWhitelist(address whitelistAddress, bool isWhitelisted)",
+      "function calculateFee(address sender, uint8 fromDomainID, uint8 destinationDomainID, bytes32 resourceID, bytes depositData, bytes feeData) view returns (uint256 fee, address tokenAddress)",
+      "function collectFee(address sender, uint8 fromDomainID, uint8 destinationDomainID, bytes32 resourceID, bytes depositData, bytes feeData) payable",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function getRoleMemberIndex(bytes32 role, address account) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)"
+    ],
+    "eth:0x31282123E7bcd947e2c1Bc364d564839574fAdCD": [
+      "constructor(address bridgeAddress)",
+      "function MAX_FEE() view returns (uint256)",
+      "function _bridgeAddress() view returns (address)",
+      "function deposit(bytes32 resourceID, address depositor, bytes data) view returns (bytes)",
+      "function executeProposal(bytes32 resourceID, bytes data) returns (bytes)",
+      "function setResource(bytes32 resourceID, address contractAddress, bytes args)"
+    ],
+    "eth:0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089": [
+      "constructor(uint8 domainID, address accessControl)",
+      "error AccessNotAllowed(address sender, bytes4 funcSig)",
+      "error DepositToCurrentDomain()",
+      "error EmptyProposalsArray()",
+      "error InvalidProposalSigner()",
+      "error MPCAddressAlreadySet()",
+      "error MPCAddressIsNotUpdatable()",
+      "error MPCAddressNotSet()",
+      "error MPCAddressZeroAddress()",
+      "error NonceDecrementsNotAllowed()",
+      "error ResourceIDNotMappedToHandler()",
+      "event AccessControlChanged(address newAccessControl)",
+      "event Deposit(uint8 destinationDomainID, bytes32 resourceID, uint64 depositNonce, address indexed user, bytes data, bytes handlerResponse)",
+      "event EndKeygen()",
+      "event FailedHandlerExecution(bytes lowLevelData, uint8 originDomainID, uint64 depositNonce)",
+      "event FeeHandlerChanged(address newFeeHandler)",
+      "event KeyRefresh(string hash)",
+      "event Paused(address account)",
+      "event ProposalExecution(uint8 originDomainID, uint64 depositNonce, bytes32 dataHash, bytes handlerResponse)",
+      "event Retry(string txHash)",
+      "event StartKeygen()",
+      "event Unpaused(address account)",
+      "function _MPCAddress() view returns (address)",
+      "function _accessControl() view returns (address)",
+      "function _depositCounts(uint8) view returns (uint64)",
+      "function _domainID() view returns (uint8)",
+      "function _feeHandler() view returns (address)",
+      "function _resourceIDToHandlerAddress(bytes32) view returns (address)",
+      "function adminChangeAccessControl(address newAccessControl)",
+      "function adminChangeFeeHandler(address newFeeHandler)",
+      "function adminPauseTransfers()",
+      "function adminSetBurnable(address handlerAddress, address tokenAddress)",
+      "function adminSetDepositNonce(uint8 domainID, uint64 nonce)",
+      "function adminSetForwarder(address forwarder, bool valid)",
+      "function adminSetResource(address handlerAddress, bytes32 resourceID, address contractAddress, bytes args)",
+      "function adminUnpauseTransfers()",
+      "function adminWithdraw(address handlerAddress, bytes data)",
+      "function deposit(uint8 destinationDomainID, bytes32 resourceID, bytes depositData, bytes feeData) payable returns (uint64 depositNonce, bytes handlerResponse)",
+      "function endKeygen(address MPCAddress)",
+      "function executeProposal(tuple(uint8 originDomainID, uint64 depositNonce, bytes32 resourceID, bytes data) proposal, bytes signature)",
+      "function executeProposals(tuple(uint8 originDomainID, uint64 depositNonce, bytes32 resourceID, bytes data)[] proposals, bytes signature)",
+      "function isProposalExecuted(uint8 domainID, uint256 depositNonce) view returns (bool)",
+      "function isValidForwarder(address) view returns (bool)",
+      "function paused() view returns (bool)",
+      "function refreshKey(string hash)",
+      "function retry(string txHash)",
+      "function startKeygen()",
+      "function usedNonces(uint8, uint256) view returns (uint256)",
+      "function verify(tuple(uint8 originDomainID, uint64 depositNonce, bytes32 resourceID, bytes data)[] proposals, bytes signature) view returns (bool)"
+    ],
+    "eth:0x9f9778DA7c1D0AbE148314d6C1EA6E0A93C151C7": [
+      "constructor(address bridgeAddress, address feeHandlerRouterAddress)",
+      "error IncorrectFeeSupplied(uint256)",
+      "event FeeChanged(uint256 newFee)",
+      "event FeeCollected(address sender, uint8 fromDomainID, uint8 destinationDomainID, bytes32 resourceID, uint256 fee, address tokenAddress)",
+      "event FeeDistributed(address tokenAddress, address recipient, uint256 amount)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function _bridgeAddress() view returns (address)",
+      "function _domainResourceIDToFee(uint8, bytes32) view returns (uint256)",
+      "function _feeHandlerRouterAddress() view returns (address)",
+      "function calculateFee(address sender, uint8 fromDomainID, uint8 destinationDomainID, bytes32 resourceID, bytes depositData, bytes feeData) view returns (uint256, address)",
+      "function changeFee(uint8 destinationDomainID, bytes32 resourceID, uint256 newFee)",
+      "function collectFee(address sender, uint8 fromDomainID, uint8 destinationDomainID, bytes32 resourceID, bytes depositData, bytes feeData) payable",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function getRoleMemberIndex(bytes32 role, address account) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function renounceAdmin(address newAdmin)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function transferFee(address[] addrs, uint256[] amounts)"
+    ],
+    "eth:0xc4d8b2F5501C765dE0C5E12550118F397B197D05": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xC832588193cd5ED2185daDA4A531e0B26eC5B830": [
+      "constructor(address bridgeAddress)",
+      "error ContractAddressNotWhitelisted(address contractAddress)",
+      "function _bridgeAddress() view returns (address)",
+      "function _resourceIDToTokenContractAddress(bytes32) view returns (address)",
+      "function _tokenContractAddressToTokenProperties(address) view returns (bytes32 resourceID, bool isWhitelisted, bool isBurnable, tuple(bool isSet, uint8 externalDecimals) decimals)",
+      "function defaultDecimals() view returns (uint8)",
+      "function deposit(bytes32 resourceID, address depositor, bytes data) returns (bytes)",
+      "function executeProposal(bytes32 resourceID, bytes data) returns (bytes)",
+      "function setBurnable(address contractAddress)",
+      "function setResource(bytes32 resourceID, address contractAddress, bytes args)",
+      "function withdraw(bytes data)"
+    ],
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xf433EfDf1Fb438F9d79D1E71dF2c2bdeAc95e28E": [
+      "constructor(bytes4[] functions, address[] accounts)",
+      "function GRANT_ACCESS_SIG() view returns (bytes4)",
+      "function functionAccess(bytes4) view returns (address)",
+      "function grantAccess(bytes4 sig, address account)",
+      "function hasAccess(bytes4 sig, address account) view returns (bool)"
+    ]
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+  },
+  "usedBlockNumbers": { "ethereum": 19532229 },
+  "permissionsConfigHash": "0x46bc4b9bcdd94b9623043b6c96bd388e29e73a51902df6dc82357804baf5e882"
+}

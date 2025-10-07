@@ -1,7 +1,7 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getCollection } from '~/content/getCollection'
 import { getGovernanceEventEntries } from '~/pages/governance/utils/getGovernanceEventEntries'
-import { getGovernancePublicationEntry } from '~/pages/governance/utils/getGovernancePublicationEntry'
+import { getGovernancePublicationEntry } from '~/pages/publications/governance/utils/getGovernancePublicationEntry'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -12,7 +12,7 @@ export async function getGovernanceData(
   url: string,
 ): Promise<RenderData> {
   const appLayoutProps = await getAppLayoutProps()
-  const publications = getCollection('publications')
+  const publications = getCollection('governance-publications')
     .sort((a, b) => b.data.publishedOn.getTime() - a.data.publishedOn.getTime())
     .slice(0, 4)
   const publicationEntries = publications.map(getGovernancePublicationEntry)

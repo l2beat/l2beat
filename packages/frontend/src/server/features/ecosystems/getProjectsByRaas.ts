@@ -22,7 +22,7 @@ export function getProjectsByRaas(ecosystemProjects: Project<'scalingInfo'>[]) {
       slug: curr.slug.toString(),
       icon: getProjectIcon(curr.slug),
       name: curr.name,
-      href: `/scaling/projects/${curr.slug}`,
+      url: `/scaling/projects/${curr.slug}`,
     })
     return acc
   }, {} as ProjectByRaas)

@@ -20,9 +20,9 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { formatExecutionDelay } from '../../common/formatDelays'
 import { PROOFS } from '../../common/proofSystems'
 import { getStage } from '../../common/stages/getStage'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getSHARPVerifierUpgradeDelay } from '../../discovery/starkware'
 import type { ScalingProject } from '../../internalTypes'
@@ -59,6 +59,8 @@ const ESCROW_LORDS_ADDRESS = 'eth:0x023A2aAc5d0fa69E3243994672822BA43E34E5C9'
 const ESCROW_STRK_ADDRESS = 'eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4'
 const ESCROW_MULTIBRIDGE_ADDRESS =
   'eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb'
+const ESCROW_SOLVBTC_ADDRESS = 'eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10'
+const ESCROW_LBTC_ADDRESS = 'eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e'
 
 const escrowETHDelaySeconds = discovery.getContractValue<number>(
   ESCROW_ETH_ADDRESS,
@@ -179,6 +181,14 @@ const finalizationPeriod = 0
 const scThreshold = discovery.getMultisigStats('Starkware Security Council')
 const sharpMsThreshold = discovery.getMultisigStats('SHARP Multisig')
 
+const starknetProgramHashes = []
+starknetProgramHashes.push(
+  discovery.getContractValue<string>('Starknet', 'programHash'),
+)
+starknetProgramHashes.push(
+  discovery.getContractValue<string>('Starknet', 'aggregatorProgramHash'),
+)
+
 export const starknet: ScalingProject = {
   type: 'layer2',
   id: ProjectId('starknet'),
@@ -252,14 +262,14 @@ export const starknet: ScalingProject = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
-      secondLine: formatExecutionDelay(finalizationPeriod),
+      executionDelay: finalizationPeriod,
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
     },
     exitWindow: RISK_VIEW.EXIT_WINDOW_STARKNET(minNonScDelay),
     sequencerFailure: RISK_VIEW.SEQUENCER_CAN_SKIP('L1'),
-    proposerFailure: RISK_VIEW.PROPOSER_WHITELIST_SECURITY_COUNCIL,
+    proposerFailure: RISK_VIEW.PROPOSER_WHITELIST_SECURITY_COUNCIL(),
   },
   stage: getStage(
     {
@@ -387,6 +397,7 @@ export const starknet: ScalingProject = {
         },
       ],
     },
+    zkProgramHashes: starknetProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   contracts: {
@@ -402,12 +413,35 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
 `,
   milestones: [
     {
+      title: 'Starknet is down for several hours',
+      url: 'https://x.com/Starknet/status/1962740091937317247',
+      date: '2025-09-02T00:00:00.00Z',
+      description:
+        'Starknet experiences a reorg caused by a bug on the sequencing side.',
+      type: 'incident',
+    },
+    {
+      title: 'Grinta upgrade is deployed',
+      url: 'https://x.com/Starknet/status/1962457868277305357',
+      date: '2025-09-02T00:00:00.00Z',
+      description:
+        'Starknet activates the grinta upgrade with several improvements.',
+      type: 'general',
+    },
+    {
       title: 'Stage 1',
       url: 'https://x.com/Starknet/status/1922990242035814424',
       date: '2025-05-15T00:00:00.00Z',
       description:
         'Starknet is now Stage 1 by introducing a Security Council, upgrade delays and censorship resistance.',
       type: 'general',
+    },
+    {
+      title: 'Starknet 4h outage',
+      url: 'https://cointelegraph.com/news/starknet-details-bug-reorganization-blockss',
+      date: '2024-04-04T00:00:00Z',
+      description: 'A rounding error causes a 4-hour outage on Starknet.',
+      type: 'incident',
     },
     {
       title: 'Starknet starts using blobs',
@@ -549,6 +583,16 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         tokens: ['EKUBO', 'ZEND', 'NSTR'],
         description:
           'StarkGate bridge for EKUBO, ZEND, NSTR (and potentially other tokens listed via StarkgateManager).',
+      }),
+      discovery.getEscrowDetails({
+        address: ChainSpecificAddress(ESCROW_SOLVBTC_ADDRESS),
+        tokens: ['SolvBTC'],
+        description: 'StarkGate bridge for SolvBTC.',
+      }),
+      discovery.getEscrowDetails({
+        address: ChainSpecificAddress(ESCROW_LBTC_ADDRESS),
+        tokens: ['LBTC'],
+        description: 'StarkGate bridge for LBTC.',
       }),
     ],
     activityConfig: {
@@ -725,6 +769,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1742967335),
+          untilTimestamp: UnixTime(1756730495), // Sep-01-2025 02:41:35 PM UTC
           programHashes: [
             '2534935718742676028234156221136000178296467523045214874259117268197132196876', // Starknet OS
           ],
@@ -738,8 +783,22 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         ],
         query: {
           formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1756737695), // Sep-01-2025 02:41:35 PM UTC
+          programHashes: [
+            '793595346346724189681221050719974054861327641387231526786912662354259445535', // Starknet OS (since Starknet v0.14.0)
+          ],
+        },
+        _hackCostMultiplier: 0.17,
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1732747391),
-          untilTimestamp: UnixTime(1742836319), // 2025/03/24 17:11 UTC
+          untilTimestamp: UnixTime(1756737695), // 2025/03/24 17:11 UTC
           programHashes: [
             '15787695375210609250491147414005894154890873413229882671403677761527504080', // Aggregator (since Starknet v0.13.3)
           ],
@@ -754,8 +813,23 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1742836319),
+          untilTimestamp: UnixTime(1756737695), // Sep-01-2025 02:41:35 PM UTC
           programHashes: [
             '273279642033703284306509103355536170486431195329675679055627933497997642494', // Aggregator (since Starknet v0.13.4)
+          ],
+        },
+        _hackCostMultiplier: 0.17,
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1756737695), // Sep-01-2025 02:41:35 PM UTC
+          programHashes: [
+            '760308386675154762009993173725077399730170358078020153308029499928875469870', // Aggregator (since Starknet v0.14.0)
           ],
         },
         _hackCostMultiplier: 0.17,

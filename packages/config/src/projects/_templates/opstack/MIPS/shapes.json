@@ -1,38 +1,38 @@
 {
   "MIPS_v1_1_0": {
     "hash": "0x8144cb5736a5296d5afc2433b58a1fcb99f995c2836fd16aeca18eda86fb2f91",
-    "address": "0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4",
-    "chain": "ethereum",
+    "address": "eth:0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4",
     "blockNumber": 22188285
   },
   "MIPS_v1_1_1_beta3": {
     "hash": "0xb09d83cfb489ff7f6e5c0d0ca61324097190fd21243bf2a122da50b7c4a47413",
-    "address": "0x7447b25b91336127042CC6899B2C15668a1Ab8BA",
-    "chain": "ethereum",
+    "address": "eth:0x7447b25b91336127042CC6899B2C15668a1Ab8BA",
     "blockNumber": 22188285
   },
   "MIPS_v1_2_1": {
     "hash": "0xa2e4c062c9c44866846c9caf76340a103baaf77ec936f0e8fd29e5de6bdeb779",
-    "address": "0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C",
-    "chain": "ethereum",
+    "address": "eth:0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C",
     "blockNumber": 22188285
   },
   "MIPS_v1_3_0": {
     "hash": "0x65fba25d8e4f3948f7d63aff835445e0f93ba92b8aa4e4f1bdfe6851a5d9476c",
-    "address": "0xaA59A0777648BC75cd10364083e878c1cCd6112a",
-    "chain": "ethereum",
+    "address": "eth:0xaA59A0777648BC75cd10364083e878c1cCd6112a",
     "blockNumber": 22188285
   },
   "MIPS64": {
     "hash": "0x115725ab57eeed11f754138c0ec5f9bfba41e494b2336c2cd4745778eb26f776",
-    "address": "0xF027F4A985560fb13324e943edf55ad6F1d15Dc1",
-    "chain": "ethereum",
+    "address": "eth:0xF027F4A985560fb13324e943edf55ad6F1d15Dc1",
     "blockNumber": 22346130
   },
   "MIPS64_v1_2_0": {
     "hash": "0x4cb0db3ab622eb010a64351dfd58c389cab9241c930e73b450bfd321193837eb",
-    "address": "0xA1B54D89e305bcd322Ba0C9C094093173C0d6b3a",
-    "chain": "ethereum",
+    "address": "eth:0xA1B54D89e305bcd322Ba0C9C094093173C0d6b3a",
     "blockNumber": 22995199
+  },
+  "MIPS64_v1_8_0": {
+    "hash": "0x4bde2f6a5214eb2f1bd8caaeb2a6700260f66f1ae8f389a13763187c11634d03",
+    "address": "eth:0x07BABE08EE4D07dBA236530183B24055535A7011",
+    "chain": "ethereum",
+    "blockNumber": 23496267
   }
 }

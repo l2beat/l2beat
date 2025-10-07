@@ -1,14 +1,12 @@
 {
   "DeputyGuardianModulev1_0_1": {
     "hash": "0xa461f73f68673cc277f554dc5888d74dc47e1f756d93f9c3f2813f801fb1c269",
-    "address": "0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8",
-    "chain": "ethereum",
+    "address": "eth:0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8",
     "blockNumber": 22188285
   },
   "DeputyGuardianModulev2_0_0": {
     "hash": "0x9624d67fb3738cf1ce1e1f48e2cf433e9373345386943d12f1d751d6b8475cd6",
-    "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
-    "chain": "ethereum",
+    "address": "eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
     "blockNumber": 22188285
   }
 }

@@ -1,0 +1,781 @@
+{
+  "name": "paradex",
+  "timestamp": 1758110896,
+  "configHash": "0x2355d6070866b102d6b6c0802b0020e6778c73885f386d3138203ca53924e2b0",
+  "entries": [
+    {
+      "name": "Paradex Multisig",
+      "address": "eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "governStarknet",
+          "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "role": ".$admin"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1704291371,
+      "sinceBlock": 18927365,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0x64F4396bb0669C72858Cc50C779b48EB25F45770",
+          "eth:0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
+          "eth:0x804d60CB1ade94511f7915A2062948685Ca8C81f",
+          "eth:0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6",
+          "eth:0x59232aC80E6d403b6381393e52f4665ECA328558"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x9bbbe1c3f31b5879894b5efd7e825b6185426f8e8859a7ad70d4d0c32cdde81b",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 5 (40%)",
+        "nonce": 13,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "eth:0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "SHARPVerifierCallProxy",
+      "address": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "shared-sharp-verifier"
+    },
+    {
+      "address": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-sharp-verifier"
+    },
+    {
+      "address": "eth:0x64F4396bb0669C72858Cc50C779b48EB25F45770",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x661B48092a5af3F8d5B551D66f5B3F639deD3155",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x721e0A5e09A6e0Bf9641193a4D82901607837Df9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x804d60CB1ade94511f7915A2062948685Ca8C81f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x94d5dc7c96Eb6176783787669571970C7ba43e01",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "operateStarknet",
+          "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "role": ".operators"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xdaA9c7160E33d7c5C7D292f452c074Ec60f5C199",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "USDC Bridge",
+      "address": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+      "type": "Contract",
+      "template": "starknet/StarknetERC20Bridge",
+      "sourceHashes": [
+        "0x81a134f478bcc2b72c5f77df62e5b52cd55cefd6329f8e306ac6d28f31d467c2",
+        "0xbe08cd77d92ae2b4d333c5d2850e16d06e16d98de2a8435e0a49dc35ad73b915"
+      ],
+      "proxyType": "StarkWare proxy",
+      "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.",
+      "sinceTimestamp": 1692341159,
+      "sinceBlock": 17939980,
+      "values": {
+        "$admin": "eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0",
+        "$immutable": false,
+        "$implementation": "eth:0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77",
+        "$pastUpgrades": [
+          [
+            "2023-08-18T06:47:11.000Z",
+            "0x25fbb19a94fb450c7254e45b992272c2d6dd6b24692e34e87052621e4df3cfed",
+            ["eth:0x6Fd62239f3A441d1898683C5a84ce3681bB42C16"]
+          ],
+          [
+            "2024-05-28T11:01:11.000Z",
+            "0x015d716fec0e72b13c6ec480a008653d2402eb0e216c3b1adcb87d13582c6a7a",
+            ["eth:0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"]
+          ],
+          [
+            "2024-06-15T09:52:23.000Z",
+            "0x7288e6bd014f04b9aa916599a60854eb8de2106cb95030762a2372751de95922",
+            ["eth:0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"]
+          ],
+          [
+            "2025-05-16T18:05:23.000Z",
+            "0x6df9f1b6e2fe53f2ea980ff4908aca6e43dc77e17cfdb869c67e4879c49eabf2",
+            ["eth:0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"]
+          ]
+        ],
+        "$upgradeCount": 4,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"]
+          },
+          "APP_GOVERNOR": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": ["eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"]
+          },
+          "APP_ROLE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"]
+          },
+          "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "TOKEN_ADMIN": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": ["eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"]
+          },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"]
+          },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"]
+          },
+          "SECURITY_AGENT": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"]
+          }
+        },
+        "bridgedToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "depositorAddress": "eth:0x0000000000000000000000000000000000000000",
+        "depositStatus": "active",
+        "estimateDepositFeeWei": 100000000000000,
+        "estimateEnrollmentFeeWei": 500000000000000,
+        "getUpgradeActivationDelay": 0,
+        "govAdminAC": ["eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"],
+        "identify": "StarkWare_StarknetERC20Bridge_2.0_4",
+        "implementation": "eth:0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77",
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "l2TokenContract": "eth:0x311d3706Ce8A7d337Bcb67Cd53b0ED7b019C6353",
+        "manager": "eth:0x0000000000000000000000000000000000000000",
+        "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalBalance": 175000000000000,
+        "messagingContract": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
+        "PROXY_VERSION": "3.0.1",
+        "secAdminAC": ["eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"],
+        "secAgentAC": ["eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"],
+        "StarkWareProxy_upgradeDelay": 0,
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitStatus": "inactive",
+        "withdrawLimitPct": 0
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
+        },
+        "withdrawalLimitStatus": {
+          "severity": "HIGH",
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+        },
+        "maxTotalBalance": {
+          "description": "The maximum total balance that can be locked in the bridge."
+        },
+        "depositStatus": {
+          "severity": "HIGH",
+          "description": "Token status managed by the Manager. Only affects deposits."
+        },
+        "withdrawLimitPct": {
+          "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
+        },
+        "accessControl": {
+          "severity": "HIGH",
+          "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
+        },
+        "govAdminAC": {
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+        }
+      },
+      "implementationNames": {
+        "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3": "Proxy",
+        "eth:0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77": "StarknetERC20Bridge"
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0": "unknown",
+            "1": "pending",
+            "2": "active",
+            "3": "deactivated"
+          }
+        }
+      ],
+      "category": { "name": "External Bridges", "priority": 1 }
+    },
+    {
+      "name": "Paradex",
+      "address": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+      "type": "Contract",
+      "template": "starknet/Starknet",
+      "sourceHashes": [
+        "0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3",
+        "0x8074e96abc7cacf654908c0111c69027cf599f3b67332f3680c5de768a2d6dfe"
+      ],
+      "proxyType": "StarkWare proxy",
+      "description": "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
+      "ignoreInWatchMode": [
+        "l1ToL2MessageNonce",
+        "stateBlockNumber",
+        "stateBlockHash",
+        "stateRoot"
+      ],
+      "sinceTimestamp": 1689850631,
+      "sinceBlock": 17733931,
+      "values": {
+        "$admin": "eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
+        "$immutable": false,
+        "$implementation": "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04",
+        "$pastUpgrades": [
+          [
+            "2023-07-20T11:05:35.000Z",
+            "0x7862f09db4097dc43ad1972ca9ee11eaf64a1fbfdb21fe6f84ad6b68d4b9fa56",
+            ["eth:0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08"]
+          ],
+          [
+            "2024-03-13T16:21:59.000Z",
+            "0x7292984e71d89bd82d8555a1060cf741e9090f33874c6bc3b87db6d1352784d0",
+            ["eth:0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"]
+          ],
+          [
+            "2024-09-08T16:05:35.000Z",
+            "0xe78b11cbf1332af60b8da9b2eaf51ec52cdc5bdc7cc0a89af3c2fbb0936c14d8",
+            ["eth:0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"]
+          ],
+          [
+            "2025-04-07T20:04:59.000Z",
+            "0x63d55b2c0cfa3b1866e99b66c6632e5474e177ce0e3b5d5b68ed8b801d76cc53",
+            ["eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04"]
+          ]
+        ],
+        "$upgradeCount": 4,
+        "aggregatorHashMapped": "Starknet Aggregator (since v0.13.4)",
+        "aggregatorProgramHash": "273279642033703284306509103355536170486431195329675679055627933497997642494",
+        "configHash": "2741190170141984203224468507008497105532196084369172236871397222510074358631",
+        "feeCollector": "eth:0x0000000000000000000000000000000000000000",
+        "getMaxL1MsgFee": "1000000000000000000",
+        "getUpgradeActivationDelay": 0,
+        "governedFinalized": 0,
+        "identify": "StarkWare_Starknet_2025_10",
+        "implementation": "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04",
+        "isFinalized": false,
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "l1ToL2MessageNonce": 14518,
+        "MAX_UPGRADE_DELAY": 15552000,
+        "messageCancellationDelay": 432000,
+        "operators": ["eth:0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
+        "programHash": "2534935718742676028234156221136000178296467523045214874259117268197132196876",
+        "programHashHistory": [
+          "3258367057337572248818716706664617507069572185152472699066582725377748079373",
+          "54878256403880350656938046611252303365750679698042371543935159963667935317",
+          "2479841346739966073527450029179698923866252973805981504232089731754042431018",
+          "109586309220455887239200613090920758778188956576212125550190099009305121410",
+          "3383082961563516565935611087683915026448707331436034043529592588079494402084",
+          "853638403225561750106379562222782223909906501242604214771127703946595519856"
+        ],
+        "programHashMapped": "2534935718742676028234156221136000178296467523045214874259117268197132196876",
+        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
+        "PROXY_VERSION": "3.0.2",
+        "StarkWareProxy_upgradeDelay": 0,
+        "stateBlockHash": "944867323996414037353703935744699865121254370407817445675310761451249475315",
+        "stateBlockNumber": 906437,
+        "stateRoot": "2065146848183465666352624602170198085194904033545202455251730433449453643492",
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "verifier": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Permissioned to upgrade the proxy implementation and access `onlyGovernance` restricted calls."
+        },
+        "isFinalized": {
+          "severity": "HIGH",
+          "description": "Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."
+        },
+        "programHash": {
+          "severity": "HIGH",
+          "description": "The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.",
+          "type": "CODE_CHANGE"
+        }
+      },
+      "implementationNames": {
+        "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640": "Proxy",
+        "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04": "Starknet"
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "793595346346724189681221050719974054861327641387231526786912662354259445535": "StarkNet OS (since v0.14.0)",
+            "760308386675154762009993173725077399730170358078020153308029499928875469870": "Starknet Aggregator (since v0.14.0)",
+            "273279642033703284306509103355536170486431195329675679055627933497997642494": "Starknet Aggregator (since v0.13.4)",
+            "2231644845387633655859130162745748394456578773184260372693322394988769337368": "StarkNet OS (since v0.13.4)",
+            "15787695375210609250491147414005894154890873413229882671403677761527504080": "Starknet Aggregator (since v0.13.3)",
+            "2397984267054479079853548842566103781972463965746662494980785692480538410509": "StarkNet OS (since v0.13.3)",
+            "853638403225561750106379562222782223909906501242604214771127703946595519856": "StarkNet OS (Paradex)",
+            "3383082961563516565935611087683915026448707331436034043529592588079494402084": "StarkNet OS (old Paradex, old StarkNet)",
+            "3485280386001712778192330279103973322645241679001461923469191557000342180556": "StarkEx Spot v3.0 (ImutableX, Layer2FinanceZK)",
+            "770346231394331402493200980986217737662224545740427952627288191358999988146": "ApeX-USDT",
+            "3174901404014912024702042974619036870715605532092680335571201877913899936957": "StarkEx Spot v4.0 (RhinoFi, Sorare)",
+            "16830627573509542901909952446321116535677491650708854009406762893086223513": "StarkEx Spot v4.5 (Brine, Canvasconnect, Myria, ReddioEX)",
+            "2530337539466159944237001094809327283009177793361359619481044346150483328860": "ApeX-USDC 20250130",
+            "3114724292040200590153042023978438629733352741898912919152162079752811928849": "StarkEx Perp v2.0 ApeX-USDC",
+            "217719352201300445998518619904782191262194843262573339166404641663770051805": "StarkNet (old)",
+            "3003515909324298587247571665454372831319437787162989623104387385306791861180": "StarkNet (old)",
+            "1161178844461337253856226043908368523817098764221830529880464854589141231910": "StarkNet Aggregator (old)",
+            "1921772108187713503530008849184725638117898887391063185252422808224349294626": "StarkNet (old)",
+            "3258367057337572248818716706664617507069572185152472699066582725377748079373": "StarkNet (old)",
+            "407700941260678649793204927710478760533239334662847444187959202896452163393": "StarkNet (old)",
+            "1865367024509426979036104162713508294334262484507712987283009063059134893433": "StarkNet (old)",
+            "54878256403880350656938046611252303365750679698042371543935159963667935317": "StarkNet (old)",
+            "2479841346739966073527450029179698923866252973805981504232089731754042431018": "StarkNet (old)",
+            "109586309220455887239200613090920758778188956576212125550190099009305121410": "StarkNet (old)"
+          }
+        }
+      ],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0xfF206f46453A9dd8e1664532788f4987c15B937d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Paradex Multisig 2",
+      "address": "eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "role": ".$admin"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1743136259,
+      "sinceBlock": 22143036,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0x721e0A5e09A6e0Bf9641193a4D82901607837Df9",
+          "eth:0xdaA9c7160E33d7c5C7D292f452c074Ec60f5C199",
+          "eth:0xfF206f46453A9dd8e1664532788f4987c15B937d",
+          "eth:0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512",
+          "eth:0x94d5dc7c96Eb6176783787669571970C7ba43e01",
+          "eth:0x661B48092a5af3F8d5B551D66f5B3F639deD3155"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x79153287c895edf58c6e5294023273405c02b4865dae9e64742d80f476d9b88d",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 31,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04": [
+      "event AggregatorProgramHashChanged(address indexed changedBy, uint256 oldAggregatorProgramHash, uint256 newAggregatorProgramHash)",
+      "event ConfigHashChanged(address indexed changedBy, uint256 oldConfigHash, uint256 newConfigHash)",
+      "event ConsumedMessageToL1(uint256 indexed fromAddress, address indexed toAddress, uint256[] payload)",
+      "event ConsumedMessageToL2(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce)",
+      "event Finalized()",
+      "event LogMessageToL1(uint256 indexed fromAddress, address indexed toAddress, uint256[] payload)",
+      "event LogMessageToL2(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce, uint256 fee)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogOperatorAdded(address operator)",
+      "event LogOperatorRemoved(address operator)",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "event LogStateTransitionFact(bytes32 stateTransitionFact)",
+      "event LogStateUpdate(uint256 globalRoot, int256 blockNumber, uint256 blockHash)",
+      "event MessageToL2Canceled(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce)",
+      "event MessageToL2CancellationStarted(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce)",
+      "event ProgramHashChanged(address indexed changedBy, uint256 oldProgramHash, uint256 newProgramHash)",
+      "function aggregatorProgramHash() view returns (uint256)",
+      "function cancelL1ToL2Message(uint256 toAddress, uint256 selector, uint256[] payload, uint256 nonce) returns (bytes32)",
+      "function configHash() view returns (uint256)",
+      "function consumeMessageFromL2(uint256 fromAddress, uint256[] payload) returns (bytes32)",
+      "function feeCollector() view returns (address)",
+      "function finalize()",
+      "function getMaxL1MsgFee() pure returns (uint256)",
+      "function identify() pure returns (string)",
+      "function initialize(bytes data)",
+      "function isFinalized() view returns (bool)",
+      "function isFrozen() view returns (bool)",
+      "function isOperator(address user) view returns (bool)",
+      "function l1ToL2MessageCancellations(bytes32 msgHash) view returns (uint256)",
+      "function l1ToL2MessageNonce() view returns (uint256)",
+      "function l1ToL2Messages(bytes32 msgHash) view returns (uint256)",
+      "function l1ToL2MsgHash(address fromAddress, uint256 toAddress, uint256 selector, uint256[] payload, uint256 nonce) pure returns (bytes32)",
+      "function l2ToL1Messages(bytes32 msgHash) view returns (uint256)",
+      "function l2ToL1MsgHash(uint256 fromAddress, address toAddress, uint256[] payload) pure returns (bytes32)",
+      "function messageCancellationDelay() view returns (uint256)",
+      "function programHash() view returns (uint256)",
+      "function registerOperator(address newOperator)",
+      "function safeAddImplementation(address newImplementation, bytes data)",
+      "function sendMessageToL2(uint256 toAddress, uint256 selector, uint256[] payload) payable returns (bytes32, uint256)",
+      "function setAggregatorProgramHash(uint256 newAggregatorProgramHash)",
+      "function setConfigHash(uint256 newConfigHash)",
+      "function setFeeCollectionAddress(address collector)",
+      "function setMessageCancellationDelay(uint256 delayInSeconds)",
+      "function setProgramHash(uint256 newProgramHash)",
+      "function starknetAcceptGovernance()",
+      "function starknetCancelNomination()",
+      "function starknetIsGovernor(address user) view returns (bool)",
+      "function starknetNominateNewGovernor(address newGovernor)",
+      "function starknetRemoveGovernor(address governorForRemoval)",
+      "function startL1ToL2MessageCancellation(uint256 toAddress, uint256 selector, uint256[] payload, uint256 nonce) returns (bytes32)",
+      "function stateBlockHash() view returns (uint256)",
+      "function stateBlockNumber() view returns (int256)",
+      "function stateRoot() view returns (uint256)",
+      "function unregisterOperator(address removedOperator)",
+      "function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)",
+      "function updateStateKzgDA(uint256[] programOutput, bytes[] kzgProofs)"
+    ],
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77": [
+      "event Deposit(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce, uint256 fee)",
+      "event DepositCancelRequest(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event DepositReclaimed(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event DepositWithMessage(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce, uint256 fee)",
+      "event DepositWithMessageCancelRequest(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce)",
+      "event DepositWithMessageReclaimed(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce)",
+      "event LogDeposit(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce, uint256 fee)",
+      "event LogDepositCancelRequest(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event LogDepositReclaimed(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SetL2TokenBridge(uint256 value)",
+      "event SetMaxTotalBalance(address indexed token, uint256 value)",
+      "event TokenDeactivated(address token)",
+      "event TokenEnrollmentInitiated(address token, bytes32 deploymentMsgHash)",
+      "event Withdrawal(address indexed recipient, address indexed token, uint256 amount)",
+      "event WithdrawalLimitDisabled(address indexed sender, address indexed token)",
+      "event WithdrawalLimitEnabled(address indexed sender, address indexed token)",
+      "function assignLegacyProxyGovernor(address account)",
+      "function checkDeploymentStatus(address token)",
+      "function deactivate(address token)",
+      "function deposit(address token, uint256 amount, uint256 l2Recipient) payable",
+      "function deposit(uint256 amount, uint256 l2Recipient) payable",
+      "function depositCancelRequest(address token, uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function depositReclaim(address token, uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function depositWithMessage(address token, uint256 amount, uint256 l2Recipient, uint256[] message) payable",
+      "function depositWithMessageCancelRequest(address token, uint256 amount, uint256 l2Recipient, uint256[] message, uint256 nonce)",
+      "function depositWithMessageReclaim(address token, uint256 amount, uint256 l2Recipient, uint256[] message, uint256 nonce)",
+      "function disableWithdrawalLimit(address token)",
+      "function enableWithdrawalLimit(address token)",
+      "function enrollToken(address) payable",
+      "function estimateDepositFeeWei() pure returns (uint256)",
+      "function estimateEnrollmentFeeWei() pure returns (uint256)",
+      "function getMaxTotalBalance(address token) view returns (uint256)",
+      "function getRemainingIntradayAllowance(address token) view returns (uint256)",
+      "function getStatus(address token) view returns (uint8)",
+      "function identify() pure returns (string)",
+      "function initialize(bytes data)",
+      "function isAppGovernor(address account) view returns (bool)",
+      "function isAppRoleAdmin(address account) view returns (bool)",
+      "function isFrozen() view returns (bool)",
+      "function isGovernanceAdmin(address account) view returns (bool)",
+      "function isOperator(address account) view returns (bool)",
+      "function isSecurityAdmin(address account) view returns (bool)",
+      "function isSecurityAgent(address account) view returns (bool)",
+      "function isServicingToken(address token) view returns (bool)",
+      "function isTokenAdmin(address account) view returns (bool)",
+      "function isUpgradeGovernor(address account) view returns (bool)",
+      "function legacyDepositCancelRequest(uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function legacyDepositReclaim(uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function maxDeposit() pure returns (uint256)",
+      "function maxTotalBalance() view returns (uint256)",
+      "function registerAppGovernor(address account)",
+      "function registerAppRoleAdmin(address account)",
+      "function registerGovernanceAdmin(address account)",
+      "function registerOperator(address account)",
+      "function registerSecurityAdmin(address account)",
+      "function registerSecurityAgent(address account)",
+      "function registerTokenAdmin(address account)",
+      "function registerUpgradeGovernor(address account)",
+      "function removeLegacyProxyGovernor(address account)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeAppGovernor(address account)",
+      "function revokeAppRoleAdmin(address account)",
+      "function revokeGovernanceAdmin(address account)",
+      "function revokeOperator(address account)",
+      "function revokeSecurityAdmin(address account)",
+      "function revokeSecurityAgent(address account)",
+      "function revokeTokenAdmin(address account)",
+      "function revokeUpgradeGovernor(address account)",
+      "function setL2TokenBridge(uint256 l2TokenBridge_)",
+      "function setMaxTotalBalance(address token, uint256 maxTotalBalance_)",
+      "function withdraw(uint256 amount, address recipient)",
+      "function withdraw(uint256 amount)",
+      "function withdraw(address token, uint256 amount, address recipient)",
+      "function withdraw(address token, uint256 amount)"
+    ],
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "function PROXY_GOVERNANCE_TAG() view returns (string)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function proxyAcceptGovernance()",
+      "function proxyCancelNomination()",
+      "function proxyIsGovernor(address user) view returns (bool)",
+      "function proxyNominateNewGovernor(address newGovernor)",
+      "function proxyRemoveGovernor(address governorForRemoval)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "function MAX_UPGRADE_DELAY() view returns (uint256)",
+      "function PROXY_GOVERNANCE_TAG() view returns (string)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function proxyAcceptGovernance()",
+      "function proxyCancelNomination()",
+      "function proxyIsGovernor(address user) view returns (bool)",
+      "function proxyNominateNewGovernor(address newGovernor)",
+      "function proxyRemoveGovernor(address governorForRemoval)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0": [
+      "constructor(address _singleton)"
+    ]
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "starknet/Starknet": "0x94ec7824dea8f420d9b02624ccb3fee6ea169600cf6665c49d0c82cbc2651cc3",
+    "starknet/StarknetERC20Bridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6"
+  },
+  "usedBlockNumbers": { "ethereum": 23382702 },
+  "permissionsConfigHash": "0xe48bc150113b314e4e3aa01199ed7afb61cfcb6600d4efe05130f061e5d78db2"
+}

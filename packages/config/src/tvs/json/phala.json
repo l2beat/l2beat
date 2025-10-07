@@ -17,17 +17,17 @@
             "type": "balanceOfEscrow",
             "address": "native",
             "chain": "ethereum",
-            "escrowAddress": "0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521",
+            "escrowAddress": "0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A",
             "decimals": 18,
-            "sinceTimestamp": 1734388655
+            "sinceTimestamp": 1734387299
           },
           {
             "type": "balanceOfEscrow",
             "address": "native",
             "chain": "ethereum",
-            "escrowAddress": "0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A",
+            "escrowAddress": "0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521",
             "decimals": 18,
-            "sinceTimestamp": 1734388655
+            "sinceTimestamp": 1734387299
           }
         ]
       },
@@ -48,7 +48,7 @@
         "chain": "ethereum",
         "escrowAddress": "0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521",
         "decimals": 18,
-        "sinceTimestamp": 1734388655
+        "sinceTimestamp": 1734387299
       },
       "category": "other",
       "source": "canonical",

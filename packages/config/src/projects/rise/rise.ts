@@ -16,10 +16,12 @@ export const rise: ScalingProject = upcomingL2({
     stacks: ['OP Stack'],
     links: {
       websites: ['https://riselabs.xyz/'],
+      bridges: ['https://bridge-ui.testnet.riselabs.xyz'],
       documentation: ['https://docs.riselabs.xyz/'],
       repositories: ['https://github.com/risechain'],
+      explorers: ['https://explorer.testnet.riselabs.xyz'],
       socialMedia: [
-        'https://discord.com/invite/4yWVabz63y',
+        'https://discord.com/invite/risechain',
         'https://medium.com/@rise_chain',
         'https://x.com/rise_chain',
       ],

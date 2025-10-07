@@ -1,8 +1,7 @@
 {
   "Morpho": {
     "hash": "0x1d120eccc3dc1c34b44ae7f18a2b7639cb5a5a412646ab5a53dfc894b01f60c8",
-    "address": "0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
-    "chain": "ethereum",
+    "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
     "blockNumber": 22794595
   }
 }

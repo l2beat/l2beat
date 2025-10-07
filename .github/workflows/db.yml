@@ -1,6 +1,12 @@
 name: Migrate DB
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      perform_db_dump:
+        description: Perform database dump before migration
+        type: boolean
+        default: false
+        required: false
   push:
     paths:
       - packages/database/prisma/migrations/**
@@ -10,9 +16,12 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 20 # DB backup can take some time
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+      - name: Install heroku CLI
+        run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
@@ -23,15 +32,38 @@ jobs:
           node-version: 22
           cache: 'pnpm'
       - run: pnpm install
+      - name: Create DB snapshot for STAGING database
+        if: ${{ (github.event_name == 'workflow_dispatch' && inputs.perform_db_dump) }}
+        run: |
+          heroku pg:backups:capture -a ${{ secrets.HEROKU_BACKEND_DEV }}
+        env:
+          HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
+          HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
       - name: Apply migrations to STAGING
         run: |
           cd packages/database
           pnpm prisma migrate deploy
         env:
           PRISMA_DB_URL: ${{ secrets.STAGING_DATABASE_URL }}
+      - name: Create DB snapshot for PRODUCTION database
+        if: ${{ (github.event_name == 'workflow_dispatch' && inputs.perform_db_dump) }}
+        run: |
+          heroku pg:backups:capture -a ${{ secrets.HEROKU_BACKEND_PROD }}
+        env:
+          HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
+          HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
       - name: Apply migrations to PRODUCTION
         run: |
           cd packages/database
           pnpm prisma migrate deploy
         env:
           PRISMA_DB_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
+      - name: Notify discord in case of failures
+        if: ${{ failure() }}
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_NOTIFICATION_WEBHOOK }}
+        run: |
+          curl -sS \
+            -H "Content-Type: application/json" \
+            -d "{\"content\": \"DB Migration workflow failure at $GITHUB_REF_NAME! Defails: https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID\"}" \
+            "${DISCORD_WEBHOOK_URL}"

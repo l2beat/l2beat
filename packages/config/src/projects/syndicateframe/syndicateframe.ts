@@ -31,7 +31,7 @@ export const syndicateframe: ScalingProject = opStackL3({
         'https://frame.syndicate.io/',
       ],
       documentation: [
-        'https://docs.syndicate.io/docs/get-started/introduction',
+        'https://docs.syndicate.io/docs/core/get-started/introduction',
       ],
       explorers: ['https://explorer-frame.syndicate.io/'],
       repositories: [
@@ -50,7 +50,7 @@ export const syndicateframe: ScalingProject = opStackL3({
       {
         type: 'rpc',
         url: 'https://rpc-frame.syndicate.io',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

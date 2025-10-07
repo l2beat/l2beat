@@ -1,8 +1,13 @@
 {
   "AccountingOracle": {
     "hash": "0x8eb8fe1367a0eb2d485632fc86c4e0eea79ee0a2dd3f72a2982a622b3c62f1ba",
-    "address": "0x0e65898527E77210fB0133D00dd4C0E86Dc29bC7",
-    "chain": "ethereum",
+    "address": "eth:0x0e65898527E77210fB0133D00dd4C0E86Dc29bC7",
     "blockNumber": 22188285
+  },
+  "AccountingOracle_v2": {
+    "hash": "0x90b97d1cb45e9893fa400657a6d60368adbd83c194db38ea948219e3cab9fb7b",
+    "address": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
+    "chain": "ethereum",
+    "blockNumber": 23519375
   }
 }

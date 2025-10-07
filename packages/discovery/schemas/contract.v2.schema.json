@@ -586,6 +586,24 @@
                 "type": "object",
                 "properties": { "type": { "const": "tradable" } },
                 "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "YieldFiMinters" },
+                  "permissionlessMinting": { "type": "boolean" },
+                  "mintingWithPermit": { "type": "boolean" }
+                },
+                "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "eventTrace" },
+                  "event": { "type": "string" },
+                  "function": { "type": "string" }
+                },
+                "required": ["type", "event", "function"]
               }
             ]
           },

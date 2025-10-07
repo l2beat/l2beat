@@ -17,10 +17,23 @@ export function GlossaryTooltipWrapper({
 }: GlossaryTooltipWrapperProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const rootsRef = useRef<Root[]>([])
+  const replacedLinksRef = useRef<
+    {
+      wrapper: HTMLElement
+      original: HTMLAnchorElement
+    }[]
+  >([])
 
   const cleanupRoots = () => {
-    rootsRef.current.forEach((root) => root.unmount())
+    // Restore original links first to keep DOM consistent between rerenders
+    replacedLinksRef.current.forEach(({ wrapper, original }) => {
+      if (wrapper.parentNode) {
+        wrapper.replaceWith(original)
+      }
+    })
+
     rootsRef.current = []
+    replacedLinksRef.current = []
   }
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: we want to re-run this effect when the children change
@@ -44,6 +57,9 @@ export function GlossaryTooltipWrapper({
 
       // Replace the link with our wrapper
       link.parentNode?.insertBefore(wrapper, link)
+      // Keep a clone of the original link so we can restore it during cleanup
+      const original = link.cloneNode(true) as HTMLAnchorElement
+      replacedLinksRef.current.push({ wrapper, original })
 
       const root = createRoot(wrapper)
       rootsRef.current.push(root)

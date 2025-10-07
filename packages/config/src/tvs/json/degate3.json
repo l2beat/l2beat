@@ -1523,7 +1523,7 @@
       "priceId": "polygon-ecosystem-token",
       "symbol": "POL",
       "name": "Polygon Ecosystem Token",
-      "iconUrl": "https://assets.coingecko.com/coins/images/32440/large/polygon.png?1698233684",
+      "iconUrl": "/images/custom-tokens/polygon-ecosystem-token.png",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",

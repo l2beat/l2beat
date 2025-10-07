@@ -37,7 +37,7 @@ export const karak: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.karak.network/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

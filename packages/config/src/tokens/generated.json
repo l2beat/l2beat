@@ -1676,7 +1676,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1614116357,
       "coingeckoListingTimestamp": 1615248000,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/14287/large/dola.png?1696513984",
       "chainId": 1,
       "source": "canonical",
@@ -1734,6 +1734,20 @@
       "coingeckoListingTimestamp": 1605657600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/13145/large/exrd_logo.png?1696512931",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "eDLLR",
+      "coingeckoId": "sovryn-dollar",
+      "address": "0xbdBb63F938c8961AF31eaD3deBa5C96e6A323DD1",
+      "symbol": "eDLLR",
+      "decimals": 18,
+      "deploymentTimestamp": 1709738891,
+      "coingeckoListingTimestamp": 1689120000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30947/large/sovryn_dllr.jpg?1696529786",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -1997,7 +2011,7 @@
       "decimals": 6,
       "deploymentTimestamp": 1652995438,
       "coingeckoListingTimestamp": 1656547200,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/26045/large/euro.png?1696525125",
       "chainId": 1,
       "source": "canonical",
@@ -2011,7 +2025,7 @@
       "decimals": 6,
       "deploymentTimestamp": 1602176748,
       "coingeckoListingTimestamp": 1627516800,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/17385/large/Tether_new.png?1696516934",
       "chainId": 1,
       "source": "canonical",
@@ -3076,7 +3090,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1697642351,
       "coingeckoListingTimestamp": 1708387200,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/35383/large/sfrax-logo.png?1739780377",
       "chainId": 1,
       "source": "canonical",
@@ -3120,6 +3134,20 @@
       "coingeckoListingTimestamp": 1713916800,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/35357/large/lightlink-ticker-200.png?1708362303",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Linea",
+      "coingeckoId": "linea",
+      "address": "0x1789e0043623282D5DCc7F213d703C6D8BAfBB04",
+      "symbol": "LINEA",
+      "decimals": 18,
+      "deploymentTimestamp": 1753892339,
+      "coingeckoListingTimestamp": 1757548800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68507/large/linea-logo.jpeg?1756025484",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -3342,7 +3370,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1621978961,
       "coingeckoListingTimestamp": 1625097600,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/16786/large/mimlogopng.png?1696516358",
       "chainId": 1,
       "source": "canonical",
@@ -3568,20 +3596,6 @@
       "coingeckoListingTimestamp": 1621296000,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/15595/large/Metis_Black_Bg.png?1702968192",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
-      "name": "Mog Coin",
-      "coingeckoId": "mog-coin",
-      "address": "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
-      "symbol": "Mog",
-      "decimals": 18,
-      "deploymentTimestamp": 1689822407,
-      "coingeckoListingTimestamp": 1689897600,
-      "category": "other",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/31059/large/MOG_LOGO_200x200.png?1696529893",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -4379,7 +4393,7 @@
       "deploymentTimestamp": 1698224783,
       "coingeckoListingTimestamp": 1698192000,
       "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/32440/large/polygon.png?1698233684",
+      "iconUrl": "/images/custom-tokens/polygon-ecosystem-token.png",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -5575,6 +5589,20 @@
       "supply": "zero"
     },
     {
+      "name": "T3rn",
+      "coingeckoId": "t3rn",
+      "address": "0x0d292b4a8FCfeD626dC73242cec1Da0503B891fd",
+      "symbol": "TRN",
+      "decimals": 9,
+      "deploymentTimestamp": 1725419315,
+      "coingeckoListingTimestamp": 1752796800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30009/large/Twitter_LOGO.png?1696528933",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Taiko Token",
       "coingeckoId": "taiko",
       "address": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
@@ -6598,6 +6626,50 @@
       "supply": "zero"
     },
     {
+      "name": "cgETH Hashkey Cloud",
+      "coingeckoId": "cgeth-hashkey-cloud",
+      "address": "0x0Ce45dd53affbb011884EF1866E0738f58AB7969",
+      "symbol": "cgETH.hashkey",
+      "decimals": 18,
+      "deploymentTimestamp": 1738687009,
+      "coingeckoListingTimestamp": 1738454400,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54162/large/Cgeth_Hashkey.png?1738482570",
+      "chainId": 10,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "name": "clBTC",
+      "coingeckoId": "clbtc",
+      "address": "0x1792865D493FE4DFdD504010D3c0f6da11E8046D",
+      "symbol": "clBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1738687863,
+      "coingeckoListingTimestamp": 1738454400,
+      "category": "btc",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54164/large/clBTC.png?1738482999",
+      "chainId": 10,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
       "name": "Dai Stablecoin",
       "coingeckoId": "dai",
       "address": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
@@ -6850,7 +6922,7 @@
       "deploymentTimestamp": 1650979836,
       "coingeckoListingTimestamp": 1653955200,
       "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/25244/large/Optimism.png?1696524385",
+      "iconUrl": "/images/custom-tokens/optimism.png",
       "chainId": 10,
       "source": "native",
       "supply": "circulatingSupply"
@@ -6935,7 +7007,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1699755595,
       "coingeckoListingTimestamp": 1708387200,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/35383/large/sfrax.png?1708445569",
       "chainId": 10,
       "source": "external",
@@ -7116,7 +7188,7 @@
       "decimals": 6,
       "deploymentTimestamp": 1636665399,
       "coingeckoListingTimestamp": 1693958400,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/31580/large/USDC-icon.png?1696530397",
       "chainId": 10,
       "source": "canonical",
@@ -7243,6 +7315,28 @@
       "chainId": 10,
       "source": "canonical",
       "supply": "zero"
+    },
+    {
+      "name": "HYPE",
+      "coingeckoId": "hyperliquid",
+      "address": "0x15D0e0c55a3E7eE67152aD7E89acf164253Ff68d",
+      "symbol": "HYPE",
+      "decimals": 18,
+      "deploymentTimestamp": 1754494758,
+      "coingeckoListingTimestamp": 1732838400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50882/large/hyperliquid.jpg?1729431300",
+      "chainId": 130,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
     },
     {
       "name": "KelpDao Restaked ETH",
@@ -7429,6 +7523,50 @@
       "category": "ether",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
       "chainId": 130,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wrapped SOL",
+      "coingeckoId": "solana",
+      "address": "0xbdE8A5331E8Ac4831cf8ea9e42e229219EafaB97",
+      "symbol": "SOL",
+      "decimals": 9,
+      "deploymentTimestamp": 1754451932,
+      "coingeckoListingTimestamp": 1586563200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/4128/large/solana.png?1718769756",
+      "chainId": 130,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole Token Bridge",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USDT0",
+      "coingeckoId": "usdt0",
+      "address": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+      "symbol": "USDT0",
+      "decimals": 6,
+      "deploymentTimestamp": 1599512847,
+      "coingeckoListingTimestamp": 1737590400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
+      "chainId": 137,
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
@@ -8337,7 +8475,7 @@
     },
     {
       "name": "Bridged USDC (world-chain-mainnet)",
-      "coingeckoId": "bridged-usdc-world-chain",
+      "coingeckoId": "usd-coin",
       "address": "0x79A02482A880bCE3F13e09Da970dC34db4CD24d1",
       "symbol": "USDC",
       "decimals": 6,
@@ -8515,7 +8653,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1699756632,
       "coingeckoListingTimestamp": 1708387200,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/35383/large/sfrax.png?1708445569",
       "chainId": 1101,
       "source": "external",
@@ -9124,7 +9262,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1750861045,
       "coingeckoListingTimestamp": 1736553600,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/51880/large/USR_LOGO.png?1732098841",
       "chainId": 1868,
       "source": "external",
@@ -9570,7 +9708,7 @@
       "decimals": 6,
       "deploymentTimestamp": 1734639568,
       "coingeckoListingTimestamp": 1573689600,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "chainId": 2741,
       "source": "external",
@@ -9642,7 +9780,7 @@
       "decimals": 6,
       "deploymentTimestamp": 1734648290,
       "coingeckoListingTimestamp": 1573689600,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "chainId": 2741,
       "source": "external",
@@ -10286,6 +10424,34 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "cgETH Hashkey Cloud",
+      "coingeckoId": "cgeth-hashkey-cloud",
+      "address": "0xf587B7116879a529353Cc71eE959cD69FD5CAE48",
+      "symbol": "cgETH.hashkey",
+      "decimals": 18,
+      "deploymentTimestamp": 1738263005,
+      "coingeckoListingTimestamp": 1738454400,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54162/large/Cgeth_Hashkey.png?1738482570",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "clBTC",
+      "coingeckoId": "clbtc",
+      "address": "0x8d2757EA27AaBf172DA4CCa4e5474c76016e3dC5",
+      "symbol": "clBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1737200929,
+      "coingeckoListingTimestamp": 1738454400,
+      "category": "btc",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54164/large/clBTC.png?1738482999",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Coinbase Wrapped BTC",
       "coingeckoId": "coinbase-wrapped-btc",
       "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
@@ -10362,6 +10528,28 @@
       "chainId": 8453,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "ENA",
+      "coingeckoId": "ethena",
+      "address": "0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
+      "symbol": "ENA",
+      "decimals": 18,
+      "deploymentTimestamp": 1718327185,
+      "coingeckoListingTimestamp": 1712016000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36530/large/ethena.png?1711701436",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
     },
     {
       "name": "Ether",
@@ -11158,6 +11346,28 @@
       }
     },
     {
+      "name": "Wrapped BTC",
+      "coingeckoId": "layerzero-bridged-wbtc-base",
+      "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+      "symbol": "WBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1726747351,
+      "coingeckoListingTimestamp": 1750723200,
+      "category": "btc",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66849/large/btc.png?1750793694",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Wrapped eETH",
       "coingeckoId": "wrapped-eeth",
       "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
@@ -11735,6 +11945,28 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "cgETH Hashkey Cloud",
+      "coingeckoId": "cgeth-hashkey-cloud",
+      "address": "0x0Ce45dd53affbb011884EF1866E0738f58AB7969",
+      "symbol": "cgETH.hashkey",
+      "decimals": 18,
+      "deploymentTimestamp": 1738686713,
+      "coingeckoListingTimestamp": 1738454400,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54162/large/Cgeth_Hashkey.png?1738482570",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
       "name": "ChainLink Token",
       "coingeckoId": "chainlink",
       "address": "0xf97f4df75117a78c1A5a0DBb814Af92458539FB4",
@@ -11765,6 +11997,28 @@
         "bridges": [
           {
             "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "name": "clBTC",
+      "coingeckoId": "clbtc",
+      "address": "0x1792865D493FE4DFdD504010D3c0f6da11E8046D",
+      "symbol": "clBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1738687729,
+      "coingeckoListingTimestamp": 1738454400,
+      "category": "btc",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54164/large/clBTC.png?1738482999",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
             "slug": "portal"
           }
         ]
@@ -12624,7 +12878,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1699754685,
       "coingeckoListingTimestamp": 1708387200,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/35383/large/sfrax.png?1708445569",
       "chainId": 42161,
       "source": "external",
@@ -12796,6 +13050,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "TRN",
+      "coingeckoId": "t3rn",
+      "address": "0x1114982539A2Bfb84e8B9e4e320bbC04532a9e44",
+      "symbol": "TRN",
+      "decimals": 18,
+      "deploymentTimestamp": 1744237477,
+      "coingeckoListingTimestamp": 1752796800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30009/large/Twitter_LOGO.png?1696528933",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Umami",
@@ -13047,7 +13315,7 @@
       "decimals": 6,
       "deploymentTimestamp": 1739985583,
       "coingeckoListingTimestamp": 1743552000,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/55070/large/wm.jpg?1743589588",
       "chainId": 42161,
       "source": "native",
@@ -14119,6 +14387,49 @@
       }
     },
     {
+      "name": "OpenUSDT",
+      "coingeckoId": "openusdt",
+      "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "symbol": "oUSDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1748343047,
+      "coingeckoListingTimestamp": 1741824000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54815/large/ousdt.jpg?1741848258",
+      "chainId": 60808,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
+      "name": "pumpBTC",
+      "coingeckoId": "pumpbtc",
+      "address": "0x1fCca65fb6Ae3b2758b9b2B394CB227eAE404e1E",
+      "symbol": "pumpBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1725753313,
+      "coingeckoListingTimestamp": 1721174400,
+      "category": "btc",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39232/large/200pxPumpBTCLogo.png?1721227861",
+      "chainId": 60808,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech (Express/Tunnel) and native minting"
+          }
+        ]
+      }
+    },
+    {
       "name": "Solv BTC",
       "coingeckoId": "solv-btc",
       "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
@@ -14180,6 +14491,28 @@
           {
             "name": "CCIP (via bedrock.technology)",
             "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wrapped BTC",
+      "coingeckoId": "wrapped-bitcoin",
+      "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+      "symbol": "WBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1748987995,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "btc",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "chainId": 60808,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
           }
         ]
       }
@@ -14414,7 +14747,7 @@
       "decimals": 6,
       "deploymentTimestamp": 1718324677,
       "coingeckoListingTimestamp": 1573689600,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "chainId": 94524,
       "source": "external",
@@ -14436,7 +14769,7 @@
       "decimals": 6,
       "deploymentTimestamp": 1743091242,
       "coingeckoListingTimestamp": 1749427200,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/66243/large/USDC_Token.png?1748919033",
       "chainId": 98866,
       "source": "external",
@@ -14809,7 +15142,7 @@
     },
     {
       "name": "AUSD",
-      "coingeckoId": "agora-ausd-katana",
+      "coingeckoId": "agora-dollar",
       "address": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
       "symbol": "AUSD",
       "decimals": 6,

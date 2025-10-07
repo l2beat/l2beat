@@ -8,7 +8,12 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '~/components/core/Tabs'
 import {
   NotReviewedInfo,
   OthersInfo,
@@ -85,13 +90,10 @@ export function ScalingTvsTabs(props: Props) {
                 milestones={props.milestones}
               />
               <HorizontalSeparator className="mt-4 mb-3" />
-              <BreakdownTypeRadioGroup
-                breakdownType={breakdownType}
-                setBreakdownType={setBreakdownType}
-              />
-              <ScalingTvsTable
+              <BreakdownTypeTabs
                 entries={entries.rollups}
                 breakdownType={breakdownType}
+                setBreakdownType={setBreakdownType}
               />
             </DirectoryTabsContent>
           </TableSortingProvider>
@@ -107,13 +109,10 @@ export function ScalingTvsTabs(props: Props) {
                 milestones={props.milestones}
               />
               <HorizontalSeparator className="mt-4 mb-3" />
-              <BreakdownTypeRadioGroup
-                breakdownType={breakdownType}
-                setBreakdownType={setBreakdownType}
-              />
-              <ScalingTvsTable
+              <BreakdownTypeTabs
                 entries={entries.validiumsAndOptimiums}
                 breakdownType={breakdownType}
+                setBreakdownType={setBreakdownType}
               />
             </DirectoryTabsContent>
           </TableSortingProvider>
@@ -126,26 +125,21 @@ export function ScalingTvsTabs(props: Props) {
                 milestones={props.milestones}
               />
               <HorizontalSeparator className="mt-4 mb-3" />
-              <BreakdownTypeRadioGroup
-                breakdownType={breakdownType}
-                setBreakdownType={setBreakdownType}
-              />
-              <ScalingTvsTable
+              <BreakdownTypeTabs
                 entries={entries.others}
                 breakdownType={breakdownType}
+                setBreakdownType={setBreakdownType}
               />
             </DirectoryTabsContent>
           </TableSortingProvider>
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="notReviewed" className="pt-4 sm:pt-3">
               <NotReviewedInfo />
-              <BreakdownTypeRadioGroup
-                breakdownType={breakdownType}
-                setBreakdownType={setBreakdownType}
-              />
-              <ScalingTvsTable
+              <BreakdownTypeTabs
                 entries={entries.notReviewed}
                 breakdownType={breakdownType}
+                setBreakdownType={setBreakdownType}
+                ignoreUnderReviewIcon
               />
             </DirectoryTabsContent>
           </TableSortingProvider>
@@ -155,28 +149,43 @@ export function ScalingTvsTabs(props: Props) {
   )
 }
 
-function BreakdownTypeRadioGroup({
+function BreakdownTypeTabs({
+  entries,
   breakdownType,
   setBreakdownType,
+  ignoreUnderReviewIcon,
 }: {
+  entries: ScalingTvsEntry[]
   breakdownType: 'bridgeType' | 'assetCategory'
   setBreakdownType: (value: 'bridgeType' | 'assetCategory') => void
+  ignoreUnderReviewIcon?: boolean
 }) {
   return (
-    <RadioGroup
+    <Tabs
       name="breakdownType"
       value={breakdownType}
       onValueChange={(value) =>
         setBreakdownType(value as 'bridgeType' | 'assetCategory')
       }
-      className="mb-2 h-10 w-full p-1.5"
     >
-      <RadioGroupItem value="bridgeType" className="w-full">
-        By bridge type
-      </RadioGroupItem>
-      <RadioGroupItem value="assetCategory" className="w-full">
-        By asset category
-      </RadioGroupItem>
-    </RadioGroup>
+      <TabsList>
+        <TabsTrigger value="bridgeType">By bridge type</TabsTrigger>
+        <TabsTrigger value="assetCategory">By asset category</TabsTrigger>
+      </TabsList>
+      <TabsContent value="bridgeType">
+        <ScalingTvsTable
+          entries={entries}
+          breakdownType={breakdownType}
+          ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+        />
+      </TabsContent>
+      <TabsContent value="assetCategory">
+        <ScalingTvsTable
+          entries={entries}
+          breakdownType={breakdownType}
+          ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+        />
+      </TabsContent>
+    </Tabs>
   )
 }

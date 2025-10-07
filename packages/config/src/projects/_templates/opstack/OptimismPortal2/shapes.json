@@ -1,38 +1,38 @@
 {
   "OptimismPortal2_v3_10_0": {
     "hash": "0x41be46bdb67af1b7af90e1bd70a1fcd31a3352282beb83b846a5189675c37ac1",
-    "address": "0xe2F826324b2faf99E513D16D266c3F80aE87832B",
-    "chain": "ethereum",
+    "address": "eth:0xe2F826324b2faf99E513D16D266c3F80aE87832B",
     "blockNumber": 22188285
   },
   "OptimismPortal2_v3_11_0_beta4": {
     "hash": "0x3b29e71f052c1c7a44bd31c31b4d7069b8b474d6706371250921740d001de5a8",
-    "address": "0x18A7868ECe35A45aC9138108E5b6e021aD1038d1",
-    "chain": "ethereum",
+    "address": "eth:0x18A7868ECe35A45aC9138108E5b6e021aD1038d1",
     "blockNumber": 22188285
   },
   "OptimismPortal2_v3_11_0_beta6": {
     "hash": "0x3428a8cdf5cc8628eb5234317ac9c44a21c8171ebfea260dfae5ad3c629b9e3b",
-    "address": "0x3Da872782f9fB696fD72Af2ec9313a56bDA6f06d",
-    "chain": "ethereum",
+    "address": "eth:0x3Da872782f9fB696fD72Af2ec9313a56bDA6f06d",
     "blockNumber": 22188285
   },
   "OptimismPortal2_v3_13_0": {
     "hash": "0x67ee16b5b6c32cdcc862bea390e45017908e6945cfaa01d3ef75dc9de7c9d946",
-    "address": "0x2D7e764a0D9919e16983a46595CfA81fc34fa7Cd",
-    "chain": "ethereum",
+    "address": "eth:0x2D7e764a0D9919e16983a46595CfA81fc34fa7Cd",
     "blockNumber": 22188285
   },
   "OptimismPortal2_v3_14_0": {
     "hash": "0xc483ef9e0a5ec2a0450732e743b3784de0cd3876b8fadfce14c0805a0846d26b",
-    "address": "0xB443Da3e07052204A02d630a8933dAc05a0d6fB4",
-    "chain": "ethereum",
+    "address": "eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4",
     "blockNumber": 22346130
   },
   "OptimismPortal2_v3_14_0_celo": {
     "hash": "0x61779e0cf81852e74f9420c1500237e5c588b39f95b03369daca20d2e624b741",
-    "address": "0x215A5fF85308A72A772F09B520dA71D3520e9aC7",
-    "chain": "ethereum",
+    "address": "eth:0x215A5fF85308A72A772F09B520dA71D3520e9aC7",
     "blockNumber": 22882513
+  },
+  "OptimismPortal2_v5_0_0": {
+    "hash": "0x8ca0818fc584e81a5cead0efc1c32f3273182323dcbd08a60779d55cb0aa90c9",
+    "address": "eth:0x381E729FF983FA4BCEd820e7b922d79bF653B999",
+    "chain": "ethereum",
+    "blockNumber": 23496267
   }
 }

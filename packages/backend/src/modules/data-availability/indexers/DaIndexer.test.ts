@@ -79,15 +79,21 @@ describe(DaIndexer.name, () => {
       const previousRecords = [record('project', 100, 100_000)]
       const generatedRecords = [record('project', 100, 400_000)]
 
-      const { indexer, repository, daService, daProvider, blobService } =
-        mockIndexer({
-          configurations,
-          blobs,
-          previousRecords,
-          generatedRecords,
-          batchSize: 50,
-          useBlobService: true,
-        })
+      const {
+        indexer,
+        repository,
+        daService,
+        daProvider,
+        blobService,
+        syncMetadataRepository,
+      } = mockIndexer({
+        configurations,
+        blobs,
+        previousRecords,
+        generatedRecords,
+        batchSize: 50,
+        useBlobService: true,
+      })
 
       const updateCallback = await indexer.multiUpdate(
         100,
@@ -110,6 +116,16 @@ describe(DaIndexer.name, () => {
       )
 
       expect(repository.upsertMany).toHaveBeenOnlyCalledWith(generatedRecords)
+
+      expect(syncMetadataRepository.updateSyncedUntil).toHaveBeenOnlyCalledWith(
+        'dataAvailability',
+        configurations.map((c) => c.projectId),
+        UnixTime.toEndOf(
+          generatedRecords[generatedRecords.length - 1].timestamp,
+          'hour',
+        ),
+        150,
+      )
 
       expect(safeHeight).toEqual(150)
     })
@@ -214,8 +230,16 @@ function mockIndexer($: {
     getForDaLayerInTimeRange: mockFn().resolvesTo($.previousRecords ?? []),
   })
 
+  const syncMetadataRepository = mockObject<Database['syncMetadata']>({
+    updateSyncedUntil: mockFn().resolvesTo(undefined),
+  })
+
   const daService = mockObject<DaService>({
-    generateRecords: mockFn().returns($.generatedRecords ?? []),
+    generateRecords: mockFn().returns({
+      records: $.generatedRecords ?? [],
+      latestTimestamp:
+        $.generatedRecords?.[$.generatedRecords.length - 1]?.timestamp ?? 0,
+    }),
   })
 
   const daProvider = mockObject<DaProvider>({
@@ -244,11 +268,19 @@ function mockIndexer($: {
     indexerService: $.indexerService ?? mockObject<IndexerService>(),
     db: mockDatabase({
       dataAvailability: repository,
+      syncMetadata: syncMetadataRepository,
     }),
     blobService,
   })
 
-  return { repository, indexer, daService, daProvider, blobService }
+  return {
+    repository,
+    syncMetadataRepository,
+    indexer,
+    daService,
+    daProvider,
+    blobService,
+  }
 }
 
 function config(project: string, inbox?: string): BlockDaIndexedConfig {

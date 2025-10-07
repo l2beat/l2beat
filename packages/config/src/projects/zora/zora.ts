@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -9,6 +9,10 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('zora')
 
 export const zora: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: true,
+  },
   addedAt: UnixTime(1687459278), // 2023-06-22T18:41:18Z
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
@@ -21,11 +25,9 @@ export const zora: ScalingProject = opStackL2({
       'Zora is a fast, cost-efficient, and scalable Layer 2 built to help bring media onchain, powered by the OP Stack.',
     links: {
       websites: ['https://zora.energy/', 'https://zora.co/'],
-      documentation: ['https://docs.zora.co/docs/zora-network/intro'],
-      explorers: [
-        'https://explorer.zora.energy/',
-        'https://zora.superscan.network',
-      ],
+      bridges: ['https://bridge.zora.energy/'],
+      documentation: ['https://docs.zora.co'],
+      explorers: ['https://explorer.zora.energy/', 'https://zorascan.xyz'],
       repositories: ['https://github.com/ourzora/optimism'],
       socialMedia: [
         'https://twitter.com/zora',
@@ -53,7 +55,7 @@ export const zora: ScalingProject = opStackL2({
     ],
     coingeckoPlatform: 'zora',
     apis: [
-      { type: 'rpc', url: 'https://rpc.zora.energy', callsPerMinute: 1500 },
+      { type: 'rpc', url: 'https://rpc.zora.energy', callsPerMinute: 300 },
       { type: 'blockscout', url: 'https://explorer.zora.energy/api' },
     ],
   },

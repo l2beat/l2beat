@@ -4,6 +4,85 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "everclearbridge-cbBTC",
+      "priceId": "coinbase-wrapped-btc",
+      "symbol": "cbBTC",
+      "name": "Coinbase Wrapped BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+            "chain": "ethereum",
+            "escrowAddress": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
+            "decimals": 8,
+            "sinceTimestamp": 1726462859
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+            "chain": "arbitrum",
+            "escrowAddress": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
+            "decimals": 8,
+            "sinceTimestamp": 1731094732
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+            "chain": "base",
+            "escrowAddress": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
+            "decimals": 8,
+            "sinceTimestamp": 1726461945
+          }
+        ]
+      },
+      "category": "btc",
+      "source": "canonical",
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "coinbase-wrapped-btc",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+              "chain": "ethereum",
+              "escrowAddress": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
+              "decimals": 8,
+              "sinceTimestamp": 1726462859
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1731094732
+            },
+            "priceId": "coinbase-wrapped-btc"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1726461945
+            },
+            "priceId": "coinbase-wrapped-btc"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "everclearbridge-pufETH",
       "priceId": "pufeth",
       "symbol": "pufETH",
@@ -228,7 +307,8 @@
         "chain": "optimism",
         "escrowAddress": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
         "decimals": 6,
-        "sinceTimestamp": 1726461429
+        "sinceTimestamp": 1726461429,
+        "untilTimestamp": 1756684800
       },
       "valueForSummary": {
         "type": "value",
@@ -236,7 +316,8 @@
           "type": "const",
           "value": "0",
           "decimals": 0,
-          "sinceTimestamp": 1726461429
+          "sinceTimestamp": 1726461429,
+          "untilTimestamp": 1756684800
         },
         "priceId": "bridged-usdt"
       },
@@ -257,8 +338,7 @@
         "chain": "linea",
         "escrowAddress": "0xc24dC29774fD2c1c0c5FA31325Bb9cbC11D8b751",
         "decimals": 6,
-        "sinceTimestamp": 1737656378,
-        "untilTimestamp": 1754470800
+        "sinceTimestamp": 1737656378
       },
       "valueForSummary": {
         "type": "value",
@@ -266,8 +346,7 @@
           "type": "const",
           "value": "0",
           "decimals": 0,
-          "sinceTimestamp": 1737656378,
-          "untilTimestamp": 1754470800
+          "sinceTimestamp": 1737656378
         },
         "priceId": "bridged-tether-linea"
       },

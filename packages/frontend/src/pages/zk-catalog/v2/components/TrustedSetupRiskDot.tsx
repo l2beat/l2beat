@@ -10,6 +10,7 @@ const riskDotVariants = cva('rounded-full', {
     size: {
       sm: 'size-5',
       md: 'size-6',
+      lg: 'size-8',
     },
   },
   defaultVariants: {

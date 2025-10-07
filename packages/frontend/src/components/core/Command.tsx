@@ -41,7 +41,10 @@ const CommandDialog = ({
       <DialogTitle className="sr-only">{title}</DialogTitle>
       <DialogDescription className="sr-only">{description}</DialogDescription>
       <DialogContent
-        className="overflow-hidden p-0 max-md:border-none"
+        className={cn(
+          'overflow-hidden p-0 max-md:border-none md:top-1/4 md:max-w-lg',
+          !fullScreenMobile && 'max-md:top-1/3',
+        )}
         onEscapeKeyDown={onEscapeKeyDown}
         fullScreenMobile={fullScreenMobile}
       >

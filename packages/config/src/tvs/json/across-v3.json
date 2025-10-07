@@ -1242,7 +1242,7 @@
         },
         "priceId": "bridged-usd-coin-optimism"
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },
@@ -1579,7 +1579,7 @@
     },
     {
       "mode": "auto",
-      "id": "across-v3-WBTC",
+      "id": "across-v3-WBTC-1",
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",

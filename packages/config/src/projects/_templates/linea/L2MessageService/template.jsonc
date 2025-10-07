@@ -1,0 +1,32 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": ["l1RollingHashes"],
+  "ignoreInWatchMode": [
+    "currentPeriodAmountInWei",
+    "currentPeriodEnd",
+    "lastAnchoredL1MessageNumber",
+    "nextMessageNumber"
+  ],
+  "fields": {
+    "accessControl": { "handler": { "type": "accessControl" } },
+    "l1l2MessageSetter": {
+      "copy": "accessControl",
+      "edit": ["get", "L1_L2_MESSAGE_SETTER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Can anchor L1 data on the L2. A check is supposed to be added to the proof system on L1 so that it is not possible to settle if the anchor is not correct. The function is permissioned because otherwise anyone can cause a liveness failure by posting an invalid anchor."
+        }
+      ]
+    },
+    "sender": {
+      "description": "Value used to identify the crosschain caller during a crosschain call. It defaults to a inaccessible address outside of calls."
+    },
+    "limitInWei": {
+      "description": "The cap on the total amount of ether that can leave the contract via L1 -> L2 message claims per period given by periodInSeconds."
+    },
+    "periodInSeconds": {
+      "description": "The duration of the rate limit window over which the withdrawal amounts are accumulated."
+    }
+  }
+}

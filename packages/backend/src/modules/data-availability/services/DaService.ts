@@ -10,7 +10,7 @@ import type {
   DaBlob,
   EthereumBlob,
 } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { BlockDaIndexedConfig } from '../../../config/Config'
 
 export class DaService {
@@ -18,7 +18,7 @@ export class DaService {
     blobs: DaBlob[],
     previousRecords: DataAvailabilityRecord[],
     configurations: BlockDaIndexedConfig[],
-  ): DataAvailabilityRecord[] {
+  ): { records: DataAvailabilityRecord[]; latestTimestamp: number } {
     const updatedRecords = [...previousRecords]
 
     const addOrMerge = (record: DataAvailabilityRecord) => {
@@ -41,7 +41,13 @@ export class DaService {
       records.forEach((r) => addOrMerge(r))
     }
 
-    return updatedRecords
+    const lastBlob = blobs.at(-1)
+    assert(lastBlob, 'No blobs provided')
+
+    return {
+      records: updatedRecords,
+      latestTimestamp: lastBlob.blockTimestamp,
+    }
   }
 
   private createRecordsFromBlob(

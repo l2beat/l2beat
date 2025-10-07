@@ -63,7 +63,7 @@ export const soon: ScalingProject = opStackL2({
       {
         type: 'svm-rpc',
         url: 'https://rpc.mainnet.soo.network/rpc',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

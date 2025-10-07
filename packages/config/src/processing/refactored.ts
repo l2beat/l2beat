@@ -6,6 +6,7 @@ import { bsc } from '../projects/bsc/bsc'
 import { celestia } from '../projects/celestia/celestia'
 import { eigenda } from '../projects/eigenda/eigenda'
 import { espresso } from '../projects/espresso/espresso'
+import { espressoprover } from '../projects/espressoprover/espressoprover'
 import { ethereum } from '../projects/ethereum/ethereum'
 import { gateway } from '../projects/gateway/gateway'
 import { gnosis } from '../projects/gnosis/gnosis'
@@ -28,7 +29,6 @@ import { teeBridge } from '../projects/tee-bridge/tee-bridge'
 import { vector } from '../projects/vector/vector'
 import { worldcoinsemaphore } from '../projects/worldcoinsemaphore/worldcoinsemaphore'
 import { worldcoinsmtb } from '../projects/worldcoinsmtb/worldcoinsmtb'
-import { zircuitprover } from '../projects/zircuitprover/zircuitprover'
 import { zkprover } from '../projects/zkprover/zkprover'
 import { zksyncprover } from '../projects/zksyncprover/zksyncprover'
 import type { BaseProject } from '../types'
@@ -51,12 +51,12 @@ export const refactored: BaseProject[] = [
   stone,
   lineaprover,
   openvmprover,
-  zircuitprover,
   risc0,
   loopringprover,
   zksyncprover,
   intmaxprover,
   aztecv1prover,
+  espressoprover,
   // da-beat
   ethereum,
   avail,

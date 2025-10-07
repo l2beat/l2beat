@@ -45,7 +45,7 @@ export const appchain: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.appchain.xyz/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

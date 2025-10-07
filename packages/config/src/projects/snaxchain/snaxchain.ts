@@ -11,6 +11,7 @@ const genesisTimestamp = UnixTime(1723562231)
 export const snaxchain: ScalingProject = opStackL2({
   capability: 'universal',
   addedAt: UnixTime(1740099913),
+  archivedAt: UnixTime(1759137268),
   additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
@@ -18,6 +19,8 @@ export const snaxchain: ScalingProject = opStackL2({
     slug: 'snaxchain',
     description:
       "SNAXchain, developed by Synthetix, is a Rollup built on the OP Stack. It aims to enhance Synthetix V3's decentralized governance and streamline operations.",
+    headerWarning:
+      'The chain was sunset. [Read more](https://x.com/cartesiproject/status/1970902442259685855)',
     stacks: ['OP Stack'],
     links: {
       websites: ['https://governance.synthetix.io/'],
@@ -35,7 +38,7 @@ export const snaxchain: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://mainnet.snaxchain.io',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

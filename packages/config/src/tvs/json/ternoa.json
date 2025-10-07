@@ -77,6 +77,24 @@
     },
     {
       "mode": "auto",
+      "id": "ternoa-ENA",
+      "priceId": "ethena",
+      "symbol": "ENA",
+      "name": "ENA",
+      "iconUrl": "https://assets.coingecko.com/coins/images/36530/large/ethena.png?1711701436",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x7a213bfCb354A110964aF0d475165A1F2930c0b7",
+        "chain": "ternoa",
+        "decimals": 18,
+        "sinceTimestamp": 1735650935
+      }
+    },
+    {
+      "mode": "auto",
       "id": "ternoa-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",
@@ -113,6 +131,24 @@
     },
     {
       "mode": "auto",
+      "id": "ternoa-MORPHO",
+      "priceId": "morpho",
+      "symbol": "MORPHO",
+      "name": "Morpho Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29837/large/Morpho-token-icon.png?1726771230",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x61733989180f5340BC94357294eF09C7CD3f5653",
+        "chain": "ternoa",
+        "decimals": 18,
+        "sinceTimestamp": 1735650935
+      }
+    },
+    {
+      "mode": "auto",
       "id": "ternoa-OKB",
       "priceId": "okb",
       "symbol": "OKB",
@@ -135,7 +171,7 @@
       "priceId": "polygon-ecosystem-token",
       "symbol": "POL",
       "name": "Polygon Ecosystem Token",
-      "iconUrl": "https://assets.coingecko.com/coins/images/32440/large/polygon.png?1698233684",
+      "iconUrl": "/images/custom-tokens/polygon-ecosystem-token.png",
       "category": "other",
       "source": "canonical",
       "isAssociated": false,

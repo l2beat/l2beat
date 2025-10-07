@@ -1,0 +1,834 @@
+{
+  "name": "facet",
+  "timestamp": 1756809496,
+  "configHash": "0x1859a3fd3ad0daab20de5bf1b22cdc9fb80162ba203f643c348cd0f68563d04a",
+  "entries": [
+    {
+      "name": "Inbox",
+      "address": "eth:0x00000000000000000000000000000000000FacE7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "FastExternalBridge",
+      "address": "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C",
+      "type": "Contract",
+      "template": "facet/FacetEtherBridge",
+      "sourceHashes": [
+        "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e",
+        "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "A Facet implementation of the ETH Bridge. This bridge is also called \"fast bridge\" as it uses a permissioned EOA as operator for faster withdrawal processing.",
+      "sinceTimestamp": 1734701579,
+      "sinceBlock": 21444055,
+      "values": {
+        "$admin": "eth:0x0000000000000000000000000000000000000000",
+        "$implementation": "eth:0x68c56f4D88846A4Cdce966d92D92a0636baf40FE",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "Facet Ether Bridge",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        }
+      },
+      "implementationNames": {
+        "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": "FacetEtherBridgeV6",
+        "eth:0x68c56f4D88846A4Cdce966d92D92a0636baf40FE": "FacetEtherBridgeV6"
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
+    },
+    {
+      "address": "eth:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "sinceTimestamp": 1748550023,
+      "sinceBlock": 22590744,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
+        "VERSION": "v5.0.0"
+      },
+      "implementationNames": {
+        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
+      }
+    },
+    {
+      "name": "FacetSafeModule",
+      "address": "eth:0x3235AdE33cF7013f5b5A51089390396e931e6BCF",
+      "type": "Contract",
+      "template": "facet/FacetSafeModule",
+      "sourceHashes": [
+        "0xe72f875e22302b6f4ba7cf79658f0038ab2f434e188a6a5cf5db5dc59475f168"
+      ],
+      "proxyType": "immutable",
+      "description": "Module that allows the Safe to send Facet transactions.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
+          "role": ".GnosisSafe_modules"
+        }
+      ],
+      "sinceTimestamp": 1733593847,
+      "sinceBlock": 21352215,
+      "values": {
+        "$immutable": true,
+        "facetProxyAddress": "eth:0xC9F2d55C56Ef9fE4262c4d5b48d8032241AF4d25"
+      },
+      "implementationNames": {
+        "eth:0x3235AdE33cF7013f5b5A51089390396e931e6BCF": "FacetSafeModule"
+      }
+    },
+    {
+      "name": "L1Bridge",
+      "address": "eth:0x4E2eBa30a786c0643699b92234d74a71e958C08E",
+      "type": "Contract",
+      "template": "facet/L1ETHBridge",
+      "sourceHashes": [
+        "0x2428a7345462c1359eba9d5cf1d2749c05cb9419787b7e2914c411bb0c244867"
+      ],
+      "proxyType": "immutable",
+      "description": "L1Bridge is an ETH bridge built on top of Rollup contract. It is the selected canonical bridge for this risk analysis. It used to bridge ETH from L1 to L2. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.",
+      "ignoreInWatchMode": ["depositNonce"],
+      "sinceTimestamp": 1754512679,
+      "sinceBlock": 23084460,
+      "values": {
+        "$immutable": true,
+        "depositNonce": 4,
+        "l2Bridge": "eth:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4",
+        "owner": "eth:0x0000000000000000000000000000000000000000",
+        "paused": false,
+        "rollup": "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4",
+        "withdrawalDelay": 0
+      },
+      "implementationNames": {
+        "eth:0x4E2eBa30a786c0643699b92234d74a71e958C08E": "L1Bridge"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0x3a6132d983fd1e502fe3b75fbf74f0debc0d183b404d144b5220d8d5b3645582"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "sinceTimestamp": 1748550083,
+      "sinceBlock": 22590749,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913",
+        "VERSION": "v5.0.0"
+      },
+      "implementationNames": {
+        "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5": "SP1Verifier"
+      }
+    },
+    {
+      "address": "eth:0x615452db5467849689E98a8C5C242A96cF768a94",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4",
+          "role": ".whitelistedProposers"
+        }
+      ]
+    },
+    {
+      "name": "Rollup",
+      "address": "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4",
+      "type": "Contract",
+      "template": "facet/Rollup",
+      "sourceHashes": [
+        "0xd5ecfadcad80a6370fcf20fd9285959bf3452352c79ba06748998ea55cad3732"
+      ],
+      "proxyType": "immutable",
+      "description": "Rollup contract for Facet. This is the core contract that manages the state of the rollup and its proof system.",
+      "ignoreInWatchMode": [
+        "getProposalsLength",
+        "anchorL2BlockNumber",
+        "anchorProposalId",
+        "anchorRoot"
+      ],
+      "sinceTimestamp": 1754512643,
+      "sinceBlock": 23084457,
+      "values": {
+        "$immutable": true,
+        "AGG_VKEY": "0x0083a8b50160475a7a5911c03dfdee30f6c8a83112a71c5c1125cfb96148b8c2",
+        "anchorL2BlockNumber": 1861660,
+        "anchorProposalId": 78,
+        "anchorRoot": "0x297a39995ea6f5ec43d796869a98ea222fdaef75a0baf14c2ca5d9d88722dff5",
+        "canonicalProposalFor": [],
+        "canonicalProposalIdFor": [],
+        "CHALLENGER_BOND": "10000000000000000000",
+        "computeL2Timestamp": [],
+        "FALLBACK_TIMEOUT_SECS": 1209600,
+        "getProposalsLength": 113,
+        "isInFallbackWindow": [],
+        "L2_BLOCK_TIME": 12,
+        "L2_START_TIMESTAMP": 1754499659,
+        "l2BlockAge": [],
+        "MAX_CHALLENGE_SECS": 604800,
+        "MAX_PROVE_SECS": 604800,
+        "owner": "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
+        "PROPOSAL_INTERVAL": 1800,
+        "PROPOSER_BOND": 5000000000000000,
+        "RANGE_VKEY_COMMITMENT": "0x43f01f7522e77ddc0bea30de6cb8075608a0d0c906660e4f5f430a1e5e170829",
+        "renouncedOwner": "eth:0xdeaddeaddeaddeaddeaddeaddeaddeaddead0001",
+        "ROLLUP_CONFIG_HASH": "0x9554c3fe04d8bd05d2dff01471781e1d9fbbdcfa58bda686ad883fe5451fd97c",
+        "sequencerInbox": "eth:0x00000000000000000000000000000000000face7",
+        "VERIFIER": "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66",
+        "version": "1.0.0",
+        "whitelistedProposers": [
+          "eth:0x615452db5467849689E98a8C5C242A96cF768a94"
+        ]
+      },
+      "implementationNames": {
+        "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4": "Rollup"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "SP1VerifierGateway",
+      "address": "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66",
+      "type": "Contract",
+      "template": "succinct/SP1VerifierGateway",
+      "sourceHashes": [
+        "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
+      ],
+      "proxyType": "immutable",
+      "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
+      "sinceTimestamp": 1751301179,
+      "sinceBlock": 22818451,
+      "values": {
+        "$immutable": true,
+        "activeVerifiers": [
+          {
+            "selector": "0xd4e8ecd2",
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+          },
+          {
+            "selector": "0xa4594c59",
+            "verifier": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5"
+          }
+        ],
+        "allVerifiers": [
+          {
+            "selector": "0xd4e8ecd2",
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+          },
+          {
+            "selector": "0xa4594c59",
+            "verifier": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5"
+          }
+        ],
+        "owner": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "activeVerifiers": {
+          "description": "Verifiers that are routed to by their selector and not frozen."
+        },
+        "allVerifiers": {
+          "description": "All verifiers that were ever routed to by this gateway."
+        }
+      },
+      "implementationNames": {
+        "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66": "SP1VerifierGateway"
+      }
+    },
+    {
+      "address": "eth:0x75deB70b12689e9CaeF4b316eDD04F213Af06127",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x77610267a344Eb39955c20908978830f61e2373C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "L1ETHLockbox",
+      "address": "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909",
+      "type": "Contract",
+      "template": "opstack/L1StandardBridge_facet",
+      "sourceHashes": [
+        "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
+        "0x9060db4f3f7bf996f9a1db86c049a15d8a68dff34b2e9bdd31e9e53ba3e79c8f"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw.",
+      "sinceTimestamp": 1733855519,
+      "sinceBlock": 21373913,
+      "values": {
+        "$admin": "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C",
+        "$implementation": "eth:0x77764Bdf2B52C4B2635A73927945541B65DF74E9",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "paused": false,
+        "version": "2.2.0"
+      },
+      "implementationNames": {
+        "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909": "L1ChugSplashProxy",
+        "eth:0x77764Bdf2B52C4B2635A73927945541B65DF74E9": "PausedL1StandardBridge"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "Facet Multisig",
+      "address": "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4",
+          "description": "can set the whitelisted proposers.",
+          "role": ".owner"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1701094787,
+      "sinceBlock": 18663532,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0x77610267a344Eb39955c20908978830f61e2373C",
+          "eth:0xD66Cb98865181a890ffee5654fAe1D6b4D1827a7",
+          "eth:0x75deB70b12689e9CaeF4b316eDD04F213Af06127"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x4a566a7839f4fa7ba86474f484e7e11b96ee4927109cfcfdddad250cd7a3fec3",
+        "getChainId": 1,
+        "GnosisSafe_modules": [
+          "eth:0x3235AdE33cF7013f5b5A51089390396e931e6BCF",
+          "eth:0xDB866fD9241cd32851Df760c1Ec536f3199B22cE"
+        ],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 315,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "name": "FacetSafeProxy",
+      "address": "eth:0xC9F2d55C56Ef9fE4262c4d5b48d8032241AF4d25",
+      "type": "Contract",
+      "template": "facet/FacetSafeProxy",
+      "sourceHashes": [
+        "0xeeb64378c57fe40198d92b6136616a0243788e51e4d363d57f38a4c6ad891ff8"
+      ],
+      "proxyType": "immutable",
+      "description": "Helper of the Safe Module that allows to send Facet transactions.",
+      "sinceTimestamp": 1733593775,
+      "sinceBlock": 21352209,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xC9F2d55C56Ef9fE4262c4d5b48d8032241AF4d25": "FacetSafeProxy"
+      }
+    },
+    {
+      "address": "eth:0xD66Cb98865181a890ffee5654fAe1D6b4D1827a7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "L2Bridge",
+      "address": "facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4",
+      "type": "Contract",
+      "template": "facet/L2ERC20Bridge",
+      "sourceHashes": [
+        "0x414ac7953be12604a6d533900a5bdffa100737e6f29bd553d88d5631817d37b5"
+      ],
+      "proxyType": "immutable",
+      "description": "L2Bridge is an ERC20 minter counterpart to an L1 bridge. This contract is used to mint new ERC20 tokens on the L2 once a token deposit is made on the L1. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1.",
+      "sinceTimestamp": 1754512691,
+      "sinceBlock": 1722346,
+      "values": {
+        "$immutable": true,
+        "aliasedL1Bridge": "facet:0x5F3fbA30A786C0643699b92234d74A71E958D19F",
+        "decimals": 18,
+        "l1Bridge": "facet:0x4E2eBa30a786c0643699b92234d74a71e958C08E",
+        "MESSAGE_PASSER": "facet:0x4200000000000000000000000000000000000016",
+        "name": "Bluebird WETH",
+        "symbol": "BBWETH",
+        "totalSupply": "52000000000000000"
+      },
+      "implementationNames": {
+        "facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4": "L2Bridge"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "L2ToL1MessagePasser",
+      "address": "facet:0x4200000000000000000000000000000000000016",
+      "type": "Contract",
+      "template": "facet/L2ToL1MessagePasser",
+      "sourceHashes": [
+        "0x6a90057e0a817ce81f9ed4b565f5efdbf1ebf76d5f59f3ce62f2994455e8199d",
+        "0x6b028499b0f22cef9cbca4b978fff42eab473a6826e795939827875790a562b2"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "L2ToL1MessagePasser is a contract that allows messages to be sent from the L2 to the L1, used to send withdrawal requests from the L2 to the L1.",
+      "sinceTimestamp": 1733844551,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "facet:0x4200000000000000000000000000000000000018",
+        "$implementation": "facet:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "MESSAGE_VERSION": 1,
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619932",
+        "version": "1.1.0"
+      },
+      "implementationNames": {
+        "facet:0x4200000000000000000000000000000000000016": "Proxy",
+        "facet:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": "L2ToL1MessagePasser"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "facet:0x4E2eBa30a786c0643699b92234d74a71e958C08E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "facet:0x5F3fbA30A786C0643699b92234d74A71E958D19F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
+  ],
+  "abis": {
+    "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": [
+      "constructor()",
+      "error FeatureDisabled()",
+      "error InvalidAmount()",
+      "error InvalidInitialization()",
+      "error NotFactory()",
+      "error NotInitializing()",
+      "error ZeroAdminAddress()",
+      "event Initialized(uint64 version)",
+      "function adminMarkComplete(address recipient, bytes32 withdrawalId)",
+      "function adminWithdraw(address recipient, uint256 amount)",
+      "function adminWithdrawFCT(address recipient, uint256 amount)",
+      "function bridgeAndCall(address recipient, address dumbContractToCall, bytes functionCalldata, uint64) payable",
+      "function deposit() payable",
+      "function donateETH() payable",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function getAdmin() view returns (address)",
+      "function getDumbContract() pure returns (address)",
+      "function getSigner() view returns (address)",
+      "function initialize()",
+      "function processedWithdraws(bytes32 withdrawalId) view returns (bool)",
+      "function setAdmin(address admin)",
+      "function withdraw(tuple(address recipient, uint256 amount, bytes32 withdrawalId, bytes32 blockHash, uint256 blockNumber, bytes signature) req)"
+    ],
+    "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "eth:0x3235AdE33cF7013f5b5A51089390396e931e6BCF": [
+      "function facetProxyAddress() view returns (address)",
+      "function sendFacetTransaction(bytes to, uint256 value, uint256 gasLimit, bytes data)"
+    ],
+    "eth:0x4E2eBa30a786c0643699b92234d74a71e958C08E": [
+      "constructor(address _rollup)",
+      "error ContentLengthMismatch()",
+      "error EmptyItem()",
+      "error InvalidDataRemainder()",
+      "error InvalidDepositAmount()",
+      "error InvalidDepositParameters()",
+      "error InvalidHeader()",
+      "error InvalidNonce()",
+      "error InvalidOutputRoot()",
+      "error InvalidWithdrawalProof()",
+      "error L2BridgeAlreadySet()",
+      "error L2BridgeNotSet()",
+      "error OnlyCanDepositWithoutTo()",
+      "error ProposalNotCanonical()",
+      "error RootBlacklisted()",
+      "error UnexpectedList()",
+      "error UnexpectedString()",
+      "error WithdrawalAlreadyFinalized()",
+      "error WithdrawalAlreadyProven()",
+      "error WithdrawalDelayNotMet()",
+      "error WithdrawalNotProven()",
+      "event DepositInitiated(uint256 indexed nonce, address indexed from, address indexed to, uint256 amount)",
+      "event DepositReplayed(uint256 indexed nonce, address indexed to, uint256 amount)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event RollupUpdated(address indexed oldRollup, address indexed newRollup)",
+      "event RootBlacklistStatusChanged(bytes32 indexed root, bool blacklisted)",
+      "event Unpaused(address account)",
+      "event WithdrawalDelayUpdated(uint256 oldDelay, uint256 newDelay)",
+      "event WithdrawalFinalized(address indexed to, uint256 amount, uint256 nonce)",
+      "event WithdrawalProven(address indexed rollup, address indexed to, uint256 amount, uint256 nonce, uint256 proposalId)",
+      "function depositHashes(uint256) view returns (bytes32)",
+      "function depositNonce() view returns (uint256)",
+      "function finalizeWithdrawal(address to, uint256 amount, uint256 nonce)",
+      "function finalized(bytes32) view returns (bool)",
+      "function initiateDeposit(address to) payable returns (uint256 nonce)",
+      "function l2Bridge() view returns (address)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function proveWithdrawal(address to, uint256 amount, uint256 nonce, uint256 proposalId, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) rootProof, bytes[] withdrawalProof)",
+      "function proven(bytes32, address) view returns (uint32 proposalId, uint32 provenAt)",
+      "function renounceOwnership()",
+      "function replayDeposit(tuple(uint256 nonce, address to, uint256 amount) deposit)",
+      "function rollup() view returns (address)",
+      "function rootBlacklisted(bytes32) view returns (bool)",
+      "function setL2Bridge(address _l2Bridge)",
+      "function setRollup(address _rollup)",
+      "function setRootBlacklisted(bytes32 root, bool blacklisted)",
+      "function setWithdrawalDelay(uint256 _withdrawalDelay)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function withdrawalDelay() view returns (uint256)"
+    ],
+    "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5": [
+      "error InvalidProof()",
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(uint256[8] proof, uint256[2] input) view",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[2] input) view",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4": [
+      "constructor(uint256 _challengeSecs, uint256 _proveSecs, uint256 _challengerBond, uint256 _proposerBond, uint256 _fallbackTimeout, uint256 _proposalInterval, bytes32 _startRoot, uint256 _startBlock, uint256 _l2StartTimestamp, uint256 _l2BlockTime, address _verifier, bytes32 _rollupHash, bytes32 _aggVkey, bytes32 _rangeCommit)",
+      "error AlreadyChallenged()",
+      "error AlreadyResolved()",
+      "error BadAuth()",
+      "error BadCadence()",
+      "error BlockAlreadyProven()",
+      "error GameNotOver()",
+      "error GameOver()",
+      "error IncorrectBondAmount()",
+      "error InvalidL2BlockNumber()",
+      "error InvalidParentGame()",
+      "error L1BlockHashNotAvailable()",
+      "error L1BlockHashNotCheckpointed()",
+      "error NoCanonicalProposal()",
+      "error NoCredit()",
+      "error ParentGameNotResolved()",
+      "error ProposingBackwards()",
+      "error ProposingFutureBlock()",
+      "error TransferFailed()",
+      "event AnchorUpdated(uint256 indexed proposalId, bytes32 root, uint256 l2BlockNumber)",
+      "event BlockProven(uint256 indexed l2BlockNumber, bytes32 root, address indexed prover)",
+      "event L1BlockHashCheckpointed(uint256 indexed l1BlockNumber, bytes32 blockHash)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ProposalChallenged(uint256 indexed proposalId, address indexed challenger)",
+      "event ProposalClosed(uint256 indexed proposalId)",
+      "event ProposalProven(uint256 indexed proposalId, address indexed prover)",
+      "event ProposalResolved(uint256 indexed proposalId, uint8 status)",
+      "event ProposalSubmitted(uint256 indexed proposalId, uint256 indexed parentId, address indexed proposer, bytes32 root, uint256 l2BlockNumber)",
+      "event ProposerPermissionUpdated(address indexed proposer, bool allowed)",
+      "function AGG_VKEY() view returns (bytes32)",
+      "function CHALLENGER_BOND() view returns (uint256)",
+      "function FALLBACK_TIMEOUT_SECS() view returns (uint256)",
+      "function L2_BLOCK_TIME() view returns (uint256)",
+      "function L2_START_TIMESTAMP() view returns (uint256)",
+      "function MAX_CHALLENGE_SECS() view returns (uint256)",
+      "function MAX_PROVE_SECS() view returns (uint256)",
+      "function PROPOSAL_INTERVAL() view returns (uint256)",
+      "function PROPOSER_BOND() view returns (uint256)",
+      "function RANGE_VKEY_COMMITMENT() view returns (bytes32)",
+      "function ROLLUP_CONFIG_HASH() view returns (bytes32)",
+      "function VERIFIER() view returns (address)",
+      "function anchorL2BlockNumber() view returns (uint256)",
+      "function anchorProposalId() view returns (uint256)",
+      "function anchorRoot() view returns (bytes32)",
+      "function canonicalProposalFor(uint256 l2BlockNumber) view returns (tuple(bytes32 rootClaim, address proposer, uint32 l2BlockNumber, uint32 parentIndex, uint32 deadline, uint32 resolvedAt, uint8 proposalStatus, uint8 resolutionStatus, address challenger, address prover))",
+      "function canonicalProposalIdFor(uint256 l2BlockNumber) view returns (uint256)",
+      "function challengeProposal(uint256 id) payable",
+      "function checkpointL1BlockHash(uint256 l1BlockNumber)",
+      "function claimCredit(address recipient)",
+      "function computeL2Timestamp(uint256 _l2BlockNumber) view returns (uint256)",
+      "function credit(address) view returns (uint256)",
+      "function gameOver(uint256 proposalId) view returns (bool)",
+      "function getAnchorRoot() view returns (bytes32, uint256)",
+      "function getProposal(uint256 id) view returns (tuple(bytes32 rootClaim, address proposer, uint32 l2BlockNumber, uint32 parentIndex, uint32 deadline, uint32 resolvedAt, uint8 proposalStatus, uint8 resolutionStatus, address challenger, address prover))",
+      "function getProposals(uint256[] ids) view returns (tuple(bytes32 rootClaim, address proposer, uint32 l2BlockNumber, uint32 parentIndex, uint32 deadline, uint32 resolvedAt, uint8 proposalStatus, uint8 resolutionStatus, address challenger, address prover)[] out)",
+      "function getProposalsLength() view returns (uint256)",
+      "function isInFallbackWindow(uint256 l2BlockNumber) view returns (bool)",
+      "function isResolvable(uint256 proposalId) view returns (bool)",
+      "function isWhitelistedProposer(address proposer) view returns (bool)",
+      "function l1BlockHashes(uint256) view returns (bytes32)",
+      "function l2BlockAge(uint256 l2BlockNumber) view returns (uint256)",
+      "function latestProposals(uint256 count) view returns (uint256[] ids)",
+      "function needsDefense(uint256 proposalId) view returns (bool)",
+      "function owner() view returns (address)",
+      "function proposalIsCanonical(uint256 proposalId) view returns (bool)",
+      "function proveBlock(uint256 l2BlockNumber, bytes32 root, uint256 l1BlockNumber, bytes proof)",
+      "function proveProposal(uint256 id, uint256 l1BlockNumber, bytes proof)",
+      "function renounceOwnership()",
+      "function resolveProposal(uint256 id)",
+      "function setProposer(address proposer, bool allowed)",
+      "function submitProposal(bytes32 root, uint256 l2BlockNumber, uint256 parentId) payable returns (uint256 proposalId)",
+      "function transferOwnership(address newOwner)",
+      "function version() view returns (string)",
+      "function whitelistedProposer(address) view returns (bool)"
+    ],
+    "eth:0x68c56f4D88846A4Cdce966d92D92a0636baf40FE": [
+      "constructor()",
+      "error FeatureDisabled()",
+      "error InvalidAmount()",
+      "error InvalidInitialization()",
+      "error NotFactory()",
+      "error NotInitializing()",
+      "error ZeroAdminAddress()",
+      "event Initialized(uint64 version)",
+      "function adminMarkComplete(address recipient, bytes32 withdrawalId)",
+      "function adminWithdraw(address recipient, uint256 amount)",
+      "function adminWithdrawFCT(address recipient, uint256 amount)",
+      "function bridgeAndCall(address recipient, address dumbContractToCall, bytes functionCalldata, uint64) payable",
+      "function deposit() payable",
+      "function donateETH() payable",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function getAdmin() view returns (address)",
+      "function getDumbContract() pure returns (address)",
+      "function getSigner() view returns (address)",
+      "function initialize()",
+      "function processedWithdraws(bytes32 withdrawalId) view returns (bool)",
+      "function setAdmin(address admin)",
+      "function withdraw(tuple(address recipient, uint256 amount, bytes32 withdrawalId, bytes32 blockHash, uint256 blockNumber, bytes signature) req)"
+    ],
+    "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error RouteAlreadyExists(address verifier)",
+      "error RouteIsFrozen(bytes4 selector)",
+      "error RouteNotFound(bytes4 selector)",
+      "error SelectorCannotBeZero()",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RouteAdded(bytes4 selector, address verifier)",
+      "event RouteFrozen(bytes4 selector, address verifier)",
+      "function addRoute(address verifier)",
+      "function freezeRoute(bytes4 selector)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function routes(bytes4) view returns (address verifier, bool frozen)",
+      "function transferOwnership(address newOwner)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "eth:0x77764Bdf2B52C4B2635A73927945541B65DF74E9": [
+      "constructor()",
+      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20DepositInitiated(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20WithdrawalFinalized(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHDepositInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHWithdrawalFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event Initialized(uint8 version)",
+      "event L1ERC20DepositAttempted(bytes32 indexed depositId, address indexed l1Token, address indexed l2Token, address from, address to, uint256 amount, bytes extraData)",
+      "function MESSENGER() view returns (address)",
+      "function OTHER_BRIDGE() view returns (address)",
+      "function admin() pure returns (address)",
+      "function adminWithdraw(address recipient, uint256 amount)",
+      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeETH(uint32 _minGasLimit, bytes _extraData) payable",
+      "function bridgeETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
+      "function bridgeETHToWETH(address _localWeth, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable",
+      "function bridgeETHToWETHTo(address _localWeth, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable",
+      "function depositERC20(address _l1Token, address _l2Token, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function depositERC20To(address _l1Token, address _l2Token, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function depositETH(uint32 _minGasLimit, bytes _extraData) payable",
+      "function depositETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
+      "function deposits(address, address) view returns (uint256)",
+      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeBridgeERC20Replayable(bytes32 _depositId, address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function finalizeERC20Withdrawal(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeETHWithdrawal(address _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function getDepositHash(bytes32 _depositId) view returns (bytes32)",
+      "function getFinalizedDeposit(bytes32 _depositId) view returns (bool)",
+      "function initialize(address _messenger, address _superchainConfig, address _systemConfig, address _otherBridge)",
+      "function l2TokenBridge() view returns (address)",
+      "function messenger() view returns (address)",
+      "function otherBridge() view returns (address)",
+      "function paused() view returns (bool)",
+      "function replayERC20Deposit(bytes32 _depositId, address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function superchainConfig() view returns (address)",
+      "function systemConfig() view returns (address)",
+      "function version() view returns (string)",
+      "function weth() view returns (address)"
+    ],
+    "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909": [
+      "constructor(address _owner)",
+      "function getImplementation() returns (address)",
+      "function getOwner() returns (address)",
+      "function setCode(bytes _code)",
+      "function setOwner(address _owner)",
+      "function setStorage(bytes32 _key, bytes32 _value)"
+    ],
+    "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xC9F2d55C56Ef9fE4262c4d5b48d8032241AF4d25": [
+      "constructor()",
+      "function sendFacetTransaction(bytes to, uint256 value, uint256 gasLimit, bytes data)"
+    ],
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4": [
+      "constructor(string name_, string symbol_, address _l1Bridge)",
+      "error DepositAlreadyFinalized()",
+      "error InvalidL1Bridge()",
+      "error InvalidWithdrawalAmount()",
+      "error UnauthorizedBridge()",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event DepositFinalized(uint256 indexed nonce, address indexed to, uint256 amount)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event WithdrawalInitiated(address indexed from, address indexed to, uint256 amount)",
+      "function MESSAGE_PASSER() view returns (address)",
+      "function aliasedL1Bridge() view returns (address)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function finalizeDeposit(tuple(uint256 nonce, address to, uint256 amount) deposit)",
+      "function finalizedDeposits(uint256) view returns (bool)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function initiateWithdrawal(address to, uint256 amount)",
+      "function l1Bridge() view returns (address)",
+      "function name() view returns (string)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)"
+    ],
+    "facet:0x4200000000000000000000000000000000000016": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "facet:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": [
+      "event MessagePassed(uint256 indexed nonce, address indexed sender, address indexed target, uint256 value, uint256 gasLimit, bytes data, bytes32 withdrawalHash)",
+      "event WithdrawerBalanceBurnt(uint256 indexed amount)",
+      "function MESSAGE_VERSION() view returns (uint16)",
+      "function burn()",
+      "function initiateWithdrawal(address _target, uint256 _gasLimit, bytes _data) payable",
+      "function messageNonce() view returns (uint256)",
+      "function sentMessages(bytes32) view returns (bool)",
+      "function version() view returns (string)"
+    ]
+  },
+  "usedTemplates": {
+    "facet/FacetEtherBridge": "0xe29f5262256de7e9ec78abe7c54cf5f6f24680b6d137c20633dbbb2d4f48b27f",
+    "facet/FacetSafeModule": "0x6f2371af8e7f8af4e383d97b7ac36a626827fbe25be6bd42613bed29ed5b9df2",
+    "facet/FacetSafeProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "facet/L1ETHBridge": "0xb80d346feab296ef138fe965341535880e9a50bdea2d06aa7d853b87313825d9",
+    "facet/L2ERC20Bridge": "0xdabbf407e0534e147b8f55fa8354ab880ad52bee712fe59838a8645c0d15fb24",
+    "facet/L2ToL1MessagePasser": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "facet/Rollup": "0x9ed8e373cd1b59d3d84cefce11ae7874152d8bc465fbe2de0480a127abf5b74b",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "opstack/L1StandardBridge_facet": "0xf0b0a009b2460a496a4ba02e53c0b6f71714bca771cc0e657e83da6cc9a3de22",
+    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
+  },
+  "usedBlockNumbers": { "ethereum": 23274872, "facet": 1913746 },
+  "permissionsConfigHash": "0x0fce2db250d4177647709f445b4f4e0d924a8700b3acd3798704c94903377789"
+}

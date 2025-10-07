@@ -96,7 +96,9 @@ function log(blockNumber: number): Log {
     address: `0x${blockNumber.toString(16)}`,
     topics: [],
     blockNumber,
+    blockHash: `0x${'0'.repeat(64)}`,
     transactionHash: '0xTxHash',
     data: `0x${blockNumber.toString(16)}`,
+    logIndex: 0,
   }
 }

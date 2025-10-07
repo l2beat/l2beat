@@ -2,6 +2,5 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "myria",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["eth:0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7"],
-  "sharedModules": ["shared-sharp-verifier"]
+  "initialAddresses": ["eth:0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7"]
 }

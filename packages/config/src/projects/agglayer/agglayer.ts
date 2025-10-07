@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { CoingeckoId, ProjectId } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import type { BaseProject } from '../../types'
 
@@ -24,24 +24,38 @@ export const agglayer: BaseProject = {
     badges: [BADGES.Stack.CDKErigon, BADGES.Infra.Agglayer],
   },
   colors: {
-    primary: '#6C00F6',
-    secondary: '#6C51F4',
+    primary: {
+      light: '#6C00F6',
+      dark: '#9655FF',
+    },
+    secondary: {
+      light: '#6C51F4',
+      dark: '#7046EB',
+    },
   },
   milestones: [
-    {
-      title: 'Agglayer CDK goes Multistack',
-      url: 'https://x.com/Agglayer/status/1920114795333759063',
-      date: '2025-05-07T00:00:00Z',
-      description:
-        'Agglayer CDK (formerly Polygon CDK) goes multistack to unify Web3: Introducing the CDK OP Stack configuration, with native Agglayer connection',
-      type: 'general',
-    },
     {
       title: 'Agglayer v0.3 goes live – Multichain support',
       url: 'https://x.com/Agglayer/status/1937204244559327391',
       date: '2025-06-23T00:00:00Z',
       description:
         'Agglayer v0.3 Is Live: Lays Groundwork for non-CDK Chains to Securely join Agglayer, starting with Polygon PoS',
+      type: 'general',
+    },
+    {
+      title: 'Agglayer Vault Bridge is available',
+      url: 'https://x.com/Agglayer/status/1920489030497489127',
+      date: '2025-05-08T00:00:00Z',
+      description:
+        'Vault Bridge leverages bridge deposits to provide chains a built-in revenue stream',
+      type: 'general',
+    },
+    {
+      title: 'Agglayer CDK goes Multistack',
+      url: 'https://x.com/Agglayer/status/1920114795333759063',
+      date: '2025-05-07T00:00:00Z',
+      description:
+        'Agglayer CDK (formerly Polygon CDK) goes multistack to unify Web3: Introducing the CDK OP Stack configuration, with native Agglayer connection',
       type: 'general',
     },
     {
@@ -121,8 +135,7 @@ export const agglayer: BaseProject = {
       mainText: 'Build an Agglayer chain',
     },
     token: {
-      tokenId: 'polygonzkevm-POL',
-      projectId: ProjectId('polygonzkevm'),
+      coingeckoId: CoingeckoId('polygon-ecosystem-token'),
       description:
         'The POL token is used for governance across the Polygon ecosystem, including Polygon PoS and Agglayer chains. It also secures the Polygon PoS network and functions as a gas token on the chain.',
     },

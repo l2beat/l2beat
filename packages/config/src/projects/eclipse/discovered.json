@@ -1,0 +1,1085 @@
+{
+  "name": "eclipse",
+  "timestamp": 1757342204,
+  "configHash": "0xe47d568bcaa67b71a6e1d52a37de032db67d3119c7a803ffd0b422b12e26f5a6",
+  "entries": [
+    {
+      "name": "GnosisSafe",
+      "address": "eth:0x0706Ffc1722D53a85ba90f32807880ccee968Fed",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1715256563,
+      "sinceBlock": 19832392,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0x45894CeBad0a1298D44aF2B528490693E58B322E",
+          "eth:0x825e868F5561352bC875E0C9D08d32e94F915E6b"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0x5ba0efd4c341d33a8649ec1f2cbf37987a1f2b2a3ba7d1fbfcaca214f3187660",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 2 (50%)",
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x0706Ffc1722D53a85ba90f32807880ccee968Fed": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "eth:0x1a84163249B2909f746C725F23D5ae2a66D7C4fE",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51",
+          "description": "authorize withdrawals to any address.",
+          "role": ".withdrawAuthorityAC"
+        }
+      ]
+    },
+    {
+      "name": "CanonicalBridgeV1",
+      "address": "eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11",
+      "type": "Contract",
+      "template": "eclipse/CanonicalBridge",
+      "sourceHashes": [
+        "0x39cf355665c54bebc4ab239f0a40e776f0f1f3ab01a77a95830c90f9517c48ca"
+      ],
+      "proxyType": "immutable",
+      "description": "Entry point to deposit and withdraw ETH. There is no canonical messaging system. Deposited funds are sent to a Treasury contract and withdrawals must be authorized by a permissioned actor.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+          "description": "withdraw ETH from the contract.",
+          "role": ".withdrawerAC"
+        }
+      ],
+      "sinceTimestamp": 1730778803,
+      "sinceBlock": 21118887,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
+          },
+          "PAUSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
+              "eth:0x681086b630BC3B5f0bf544FDc2A0FC41Cf8977D3"
+            ]
+          },
+          "STARTER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
+          },
+          "WITHDRAW_AUTHORITY_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
+          },
+          "CLAIM_AUTHORITY_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3"]
+          },
+          "WITHDRAW_CANCELLER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
+              "eth:0x681086b630BC3B5f0bf544FDc2A0FC41Cf8977D3"
+            ]
+          },
+          "FRAUD_WINDOW_SETTER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
+          }
+        },
+        "CLAIM_AUTHORITY_ROLE": "0x49d85f38d8d200e3ac71b7ada9a2786ccb6d016b3c28e43e8057f6bbae438adc",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"],
+        "FRAUD_WINDOW_SETTER_ROLE": "0xe68a6574a7e933010135bdcdb85f5b60aed1ee2a05b00c7c3b88734a75706cf0",
+        "fraudWindowDuration": 604800,
+        "getVersionComponents": { "major": 2, "minor": 0, "patch": 0 },
+        "MIN_DEPOSIT": 2000000000000000,
+        "paused": false,
+        "PAUSER_ROLE": "0x39935d86204acf3d77da26425d7a46606d2550568c6b1876f3a2e76c804c7626",
+        "pauserAC": [
+          "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
+          "eth:0x681086b630BC3B5f0bf544FDc2A0FC41Cf8977D3"
+        ],
+        "STARTER_ROLE": "0xac6a94bcd1ac2877eda181de9748e5972fc07f76d4864cecf836b3fca185e53c",
+        "TREASURY": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+        "WITHDRAW_AUTHORITY_ROLE": "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53",
+        "WITHDRAW_CANCELLER_ROLE": "0xb7a383a5ef6cc414a168844ee7da5cf32b44a10145b4d0cc573e1b7c231d3040",
+        "withdrawAuthorityAC": [
+          "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+        ]
+      },
+      "implementationNames": {
+        "eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11": "CanonicalBridge"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0x3392fd462d9710Fbf3A5703818b9920C119DC080",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x45894CeBad0a1298D44aF2B528490693E58B322E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Eclipse Multisig",
+      "address": "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11",
+          "description": "authorize withdrawals to any address.",
+          "role": ".withdrawAuthorityAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11",
+          "description": "grant / revoke all access control roles and thus access all permissioned functions in the contract.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11",
+          "description": "pause the contract for deposits and withdrawals.",
+          "role": ".pauserAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51",
+          "description": "authorize withdrawals to any address.",
+          "role": ".withdrawAuthorityAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51",
+          "description": "grant / revoke all access control roles and thus access all permissioned functions in the contract.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51",
+          "description": "pause the contract for deposits and withdrawals.",
+          "role": ".pauserAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3",
+          "description": "start an upgrade of the core contracts.",
+          "role": ".upgraderAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+          "description": "grant / revoke all access control roles and thus access all permissioned functions in the contract.",
+          "role": ".defaultAdminAC"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1722032243,
+      "sinceBlock": 20393653,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xBb534A6Bd0440727cb5883D037DEd7358059D547",
+          "eth:0x950815d0e585095B06111CD101440fb1E95AB2a5",
+          "eth:0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2",
+          "eth:0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x4fc4aca3db1cad217783537dbcbcb1d69e3377e64c4890ff913a3639c94b9386",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 4 (75%)",
+        "nonce": 27,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "eth:0x681086b630BC3B5f0bf544FDc2A0FC41Cf8977D3",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11",
+          "description": "pause the contract for deposits and withdrawals.",
+          "role": ".pauserAC"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Eclipse Multisig 2",
+      "address": "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51",
+          "description": "grant / revoke all access control roles and thus access all permissioned functions in the contract.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+          "description": "grant / revoke all access control roles and thus access all permissioned functions in the contract.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+          "description": "withdraw ETH from the contract, even when it is paused.",
+          "role": ".emergencyAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+          "description": "withdraw ETH from the contract.",
+          "role": ".withdrawerAC"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+          "role": ".upgraderAC"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1722018611,
+      "sinceBlock": 20392523,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xd0615B1D3F24f691153C076d45104eEd3eF8cDb5",
+          "eth:0x0706Ffc1722D53a85ba90f32807880ccee968Fed",
+          "eth:0xDecF20b9213f5d7f16196420377d37ef5f8F9686",
+          "eth:0xEe058D13A0c25a1ce2f68eb02dE4CE7E621982D9",
+          "eth:0x3392fd462d9710Fbf3A5703818b9920C119DC080"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0xe1fdfda67b202d80f38e8de79b720e0604176ff551ca60ce5476a8f0c3de9764",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 8,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "eth:0x825e868F5561352bC875E0C9D08d32e94F915E6b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "EtherBridge",
+      "address": "eth:0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1",
+      "type": "Contract",
+      "template": "eclipse/EtherBridge",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x6c9915deb3c1995718bd3919c08d1b3cd20ae7957820fa959345c6a6df1b2ab2"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "(Deprecated) Entrypoint for depositing assets. This contract calls the Mailbox contract for each deposit. In practice this path is not used for deposits.",
+      "sinceTimestamp": 1722141227,
+      "sinceBlock": 20402682,
+      "values": {
+        "$admin": "eth:0x0000000000000000000000000000000000000000",
+        "$implementation": "eth:0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9",
+        "$pastUpgrades": [
+          [
+            "2024-07-28T04:33:47.000Z",
+            "0x4eed278fc63245a4b2a57a1e1c6dd876c9f18857b515b55a82c2235746c68486",
+            ["eth:0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
+          }
+        },
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "ETHER_BRIDGE_ID": "0x0bcb6b0b9168c058e28754b0255038028ff8515b5755d989d746fdd8b8f11d7e",
+        "getVersionComponents": { "major": 1, "minor": 0, "patch": 0 },
+        "MIN_DEPOSIT": 2000000000000000,
+        "paused": true,
+        "proxiableUUID": "EXPECT_REVERT",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "eth:0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1": "ERC1967Proxy",
+        "eth:0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9": "EtherBridge"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CanonicalBridgeV2",
+      "address": "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51",
+      "type": "Contract",
+      "template": "eclipse/CanonicalBridge",
+      "sourceHashes": [
+        "0x3d55623cb35937b0b8f6a42b0dec9a7287f19e54ebca9af664a6215829b5df66"
+      ],
+      "proxyType": "immutable",
+      "description": "Entry point to deposit and withdraw ETH. There is no canonical messaging system. Deposited funds are sent to a Treasury contract and withdrawals must be authorized by a permissioned actor.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+          "description": "withdraw ETH from the contract.",
+          "role": ".withdrawerAC"
+        }
+      ],
+      "sinceTimestamp": 1751855051,
+      "sinceBlock": 22864313,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
+              "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+            ]
+          },
+          "PAUSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
+          },
+          "STARTER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
+          },
+          "WITHDRAW_AUTHORITY_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
+              "eth:0x1a84163249B2909f746C725F23D5ae2a66D7C4fE"
+            ]
+          },
+          "CLAIM_AUTHORITY_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
+          },
+          "WITHDRAW_CANCELLER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
+          },
+          "FRAUD_WINDOW_SETTER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
+          }
+        },
+        "CLAIM_AUTHORITY_ROLE": "0x49d85f38d8d200e3ac71b7ada9a2786ccb6d016b3c28e43e8057f6bbae438adc",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": [
+          "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
+          "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+        ],
+        "FRAUD_WINDOW_SETTER_ROLE": "0xe68a6574a7e933010135bdcdb85f5b60aed1ee2a05b00c7c3b88734a75706cf0",
+        "fraudWindowDuration": 604800,
+        "getVersionComponents": { "major": 2, "minor": 1, "patch": 0 },
+        "MIN_DEPOSIT": 2000000000000000,
+        "paused": false,
+        "PAUSER_ROLE": "0x39935d86204acf3d77da26425d7a46606d2550568c6b1876f3a2e76c804c7626",
+        "pauserAC": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"],
+        "STARTER_ROLE": "0xac6a94bcd1ac2877eda181de9748e5972fc07f76d4864cecf836b3fca185e53c",
+        "TREASURY": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+        "WITHDRAW_AUTHORITY_ROLE": "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53",
+        "WITHDRAW_CANCELLER_ROLE": "0xb7a383a5ef6cc414a168844ee7da5cf32b44a10145b4d0cc573e1b7c231d3040",
+        "withdrawAuthorityAC": [
+          "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
+          "eth:0x1a84163249B2909f746C725F23D5ae2a66D7C4fE"
+        ]
+      },
+      "implementationNames": {
+        "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51": "CanonicalBridgeV2"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0x950815d0e585095B06111CD101440fb1E95AB2a5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Mailbox",
+      "address": "eth:0xb23B2492f7A9631104A5877F7FFA00633660968d",
+      "type": "Contract",
+      "template": "eclipse/Mailbox",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0xba13db03312283ce922ecc440fda2277ee898ec150ba63de910c6241181199ab"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "(Deprecated) Mailbox contract for L1 -> L2 messaging. There is no canonical way to send messages back.",
+      "sinceTimestamp": 1722141467,
+      "sinceBlock": 20402702,
+      "values": {
+        "$admin": "eth:0x0000000000000000000000000000000000000000",
+        "$implementation": "eth:0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B",
+        "$pastUpgrades": [
+          [
+            "2024-07-28T04:37:47.000Z",
+            "0xd86c84f78d28d7df3ec285544aea3abab536407f88d5e01ca5b7cc1edd1b6c17",
+            ["eth:0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
+          },
+          "TRUSTED_RELAYER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
+          },
+          "MODULE_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1"]
+          }
+        },
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "getVersionComponents": { "major": 1, "minor": 0, "patch": 0 },
+        "MODULE_ROLE": "0x5098275140f5753db46c42f6e139939968848633a1298402189fdfdafa69b453",
+        "proxiableUUID": "EXPECT_REVERT",
+        "TRUSTED_RELAYER_ROLE": "0xe8a0628d2ba937241981f34311d9db59dd5cf223365e8b6132bca13fc7ae519c",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "eth:0xb23B2492f7A9631104A5877F7FFA00633660968d": "ERC1967Proxy",
+        "eth:0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B": "Mailbox"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "eth:0xBb534A6Bd0440727cb5883D037DEd7358059D547",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Upgrader0to1",
+      "address": "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3",
+      "type": "Contract",
+      "template": "eclipse/Upgrader0to1",
+      "sourceHashes": [
+        "0x599d3ce0d649d659cb428825fa26a5ae43f782ff2acc3b65fd5d633f4a34f360"
+      ],
+      "proxyType": "immutable",
+      "description": "This contract was used for an upgrade an still retains its permissions and permissioned actors.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+          "description": "withdraw ETH from the contract, even when it is paused.",
+          "role": ".emergencyAC"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+          "role": ".upgraderAC"
+        }
+      ],
+      "sinceTimestamp": 1730774639,
+      "sinceBlock": 21118543,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
+          },
+          "UPGRADER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
+          }
+        },
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "DEPOSITOR_ROLE": "0xd50fd8c1b5fa5213a5974932fcc33d2992a99225bc9319caf7cf652d0d2b9acf",
+        "EMERGENCY_ROLE": "0x9e97963c33348a1cae64c3216747be51682ee42f36d1ed282cb81018cdb30e3d",
+        "FRAUD_WINDOW_SETTER_ROLE": "0xe68a6574a7e933010135bdcdb85f5b60aed1ee2a05b00c7c3b88734a75706cf0",
+        "NULL_ADDRESS": "eth:0x0000000000000000000000000000000000000000",
+        "PAUSER_ROLE": "0x39935d86204acf3d77da26425d7a46606d2550568c6b1876f3a2e76c804c7626",
+        "STARTER_ROLE": "0xac6a94bcd1ac2877eda181de9748e5972fc07f76d4864cecf836b3fca185e53c",
+        "UPGRADER_ROLE": "0x0fb7166d9f681d2bd296a45a1a2e81365c392be30b6156d73b45df44e85cdb9f",
+        "upgraderAC": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"],
+        "WITHDRAW_AUTHORITY_ROLE": "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53",
+        "WITHDRAW_CANCELLER_ROLE": "0xb7a383a5ef6cc414a168844ee7da5cf32b44a10145b4d0cc573e1b7c231d3040"
+      },
+      "implementationNames": {
+        "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3": "Upgrader0to1"
+      }
+    },
+    {
+      "address": "eth:0xd0615B1D3F24f691153C076d45104eEd3eF8cDb5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Treasury",
+      "address": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+      "type": "Contract",
+      "template": "eclipse/Treasury",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x63d1cc40bc2613e87b2d6905ffda15f04f069e3bf72cb12a2979f95a0e7010b7"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Permissioned escrow for assets bridged to Eclipse. There is no canonical messaging and users need to trust the bridge operators to process deposits and authorize withdrawals.",
+      "sinceTimestamp": 1722140987,
+      "sinceBlock": 20402663,
+      "values": {
+        "$admin": "eth:0x0000000000000000000000000000000000000000",
+        "$implementation": "eth:0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978",
+        "$pastUpgrades": [
+          [
+            "2024-07-28T04:29:47.000Z",
+            "0xa34790c0635f1f739540bf7e2998085e6426d1f17cd58617e26be884f625a0dc",
+            ["eth:0xa8E15d2B1bf6B0Fd3Bc9Ead06323c0730b67f8d4"]
+          ],
+          [
+            "2024-11-05T03:53:23.000Z",
+            "0x15aecc2b0cac5c03221b0f7ade10e888ad4f944df4bdc19c1f3c40fc56d5ebbb",
+            ["eth:0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
+              "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+            ]
+          },
+          "PAUSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3",
+              "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
+              "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+            ]
+          },
+          "STARTER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3",
+              "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
+              "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+            ]
+          },
+          "UPGRADER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3",
+              "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+            ]
+          },
+          "EMERGENCY_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3",
+              "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+            ]
+          },
+          "DEPOSITOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
+              "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
+            ]
+          },
+          "WITHDRAW_AUTHORITY_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11",
+              "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
+              "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
+            ]
+          }
+        },
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": [
+          "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
+          "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+        ],
+        "DEPOSITOR_ROLE": "0xd50fd8c1b5fa5213a5974932fcc33d2992a99225bc9319caf7cf652d0d2b9acf",
+        "EMERGENCY_ROLE": "0x9e97963c33348a1cae64c3216747be51682ee42f36d1ed282cb81018cdb30e3d",
+        "emergencyAC": [
+          "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3",
+          "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+        ],
+        "getVersionComponents": { "major": 2, "minor": 0, "patch": 0 },
+        "paused": false,
+        "PAUSER_ROLE": "0x39935d86204acf3d77da26425d7a46606d2550568c6b1876f3a2e76c804c7626",
+        "proxiableUUID": "EXPECT_REVERT",
+        "STARTER_ROLE": "0xac6a94bcd1ac2877eda181de9748e5972fc07f76d4864cecf836b3fca185e53c",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "UPGRADER_ROLE": "0x0fb7166d9f681d2bd296a45a1a2e81365c392be30b6156d73b45df44e85cdb9f",
+        "upgraderAC": [
+          "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3",
+          "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+        ],
+        "WITHDRAW_AUTHORITY_ROLE": "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53",
+        "withdrawerAC": [
+          "eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11",
+          "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
+          "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
+        ]
+      },
+      "implementationNames": {
+        "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644": "ERC1967Proxy",
+        "eth:0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978": "Treasury"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0xDecF20b9213f5d7f16196420377d37ef5f8F9686",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xEe058D13A0c25a1ce2f68eb02dE4CE7E621982D9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
+  ],
+  "abis": {
+    "eth:0x0706Ffc1722D53a85ba90f32807880ccee968Fed": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11": [
+      "constructor(address owner, address treasuryAddress)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error CannotCancel()",
+      "error CanonicalBridgeTransactionRejected(uint64 withdrawId, string reason)",
+      "error DurationTooShort()",
+      "error EmptyBytes32()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error ReentrancyGuardReentrantCall()",
+      "error WithdrawFailed()",
+      "error WithdrawUnauthorized()",
+      "event Deployed(address indexed deployer, address owner, address treasuryAddress)",
+      "event Deposited(address indexed sender, bytes32 indexed recipient, uint256 amountWei, uint256 amountLamports)",
+      "event FraudWindowSet(address indexed sender, uint256 durationSeconds)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Unpaused(address account)",
+      "event WithdrawAuthorized(address indexed sender, tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message, bytes32 indexed messageHash, uint256 startTime)",
+      "event WithdrawCancelled(address indexed sender, bytes32 indexed messageHash)",
+      "event WithdrawClaimed(address indexed receiver, bytes32 indexed remoteSender, bytes32 indexed messageHash, tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message)",
+      "event WithdrawMessageDeleted(address authority, tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message)",
+      "event WithdrawMessageHashDeleted(address indexed authority, bytes32 indexed messageHash)",
+      "function CLAIM_AUTHORITY_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function FRAUD_WINDOW_SETTER_ROLE() view returns (bytes32)",
+      "function MIN_DEPOSIT() view returns (uint256)",
+      "function PAUSER_ROLE() view returns (bytes32)",
+      "function STARTER_ROLE() view returns (bytes32)",
+      "function TREASURY() view returns (address)",
+      "function WITHDRAW_AUTHORITY_ROLE() view returns (bytes32)",
+      "function WITHDRAW_CANCELLER_ROLE() view returns (bytes32)",
+      "function authorizeWithdraw(tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message)",
+      "function authorizeWithdraws(tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei)[] messages)",
+      "function claimWithdraw(tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message)",
+      "function deleteWithdrawMessage(tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message)",
+      "function deposit(bytes32 recipient, uint256 amountWei) payable",
+      "function fraudWindowDuration() view returns (uint256)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getVersionComponents() pure returns (tuple(uint8 major, uint8 minor, uint8 patch))",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setFraudWindowDuration(uint256 durationSeconds)",
+      "function startTime(bytes32 withdrawMessageHash) view returns (uint256 startTime)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unpause()",
+      "function withdrawMessageHash(tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message) pure returns (bytes32)",
+      "function withdrawMessageStatus(bytes32 messageHash) view returns (uint8)",
+      "function withdrawMessageStatus(tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message) view returns (uint8)",
+      "function withdrawMsgIdProcessed(uint64 withdrawMessageId) view returns (uint256 blockNumber)"
+    ],
+    "eth:0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9": [
+      "constructor()",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error ReentrancyGuardReentrantCall()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event Deposited(address indexed sender, bytes32 indexed recipient, uint256 amountWei)",
+      "event Initialized(uint64 version)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function ETHER_BRIDGE_ID() view returns (bytes32)",
+      "function MIN_DEPOSIT() view returns (uint256)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function deposit(bytes32 recipient, uint256 amountWei) payable",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getVersionComponents() pure returns (tuple(uint8 major, uint8 minor, uint8 patch))",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address owner_, address mailboxAddress_, address treasuryAddress_)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unpause()",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x4720342419C1D316B948690d12C86D5b485C64E0": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B": [
+      "constructor()",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error ReentrancyGuardReentrantCall()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event Initialized(uint64 version)",
+      "event MessageReceived(bytes from, bytes fromChainId, bytes message, bytes extraData)",
+      "event MessageSent(bytes to, bytes toChainId, bytes message, bytes extraData)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Upgraded(address indexed implementation)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function MODULE_ROLE() view returns (bytes32)",
+      "function TRUSTED_RELAYER_ROLE() view returns (bytes32)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function addModule(bytes32 moduleId, address module)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getVersionComponents() pure returns (tuple(uint8 major, uint8 minor, uint8 patch))",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(tuple(address initialOwner, address trustedRelayer, bytes32[] ids, address[] modules, string ethereumChainId, string eclipseChainId) params)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function receiveMessage(bytes eclipseChainId_, bytes sender_, bytes message_, bytes data_) payable returns (bool)",
+      "function removeModule(bytes32 moduleId, address module)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function sendMessage(bytes, bytes receiver_, bytes message_, bytes) payable returns (bool)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51": [
+      "constructor(address owner, address treasuryAddress, address canonicalBridgeV1)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error CannotCancel()",
+      "error CanonicalBridgeTransactionRejected(uint64 withdrawId, string reason)",
+      "error DurationTooShort()",
+      "error EmptyBytes32()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error ReentrancyGuardReentrantCall()",
+      "error WithdrawFailed()",
+      "error WithdrawUnauthorized()",
+      "event CanonicalBridgeV1(address indexed deployer, address canonicalBridgeV1)",
+      "event Deployed(address indexed deployer, address owner, address treasuryAddress)",
+      "event Deposited(address indexed sender, bytes32 indexed recipient, uint256 amountWei, uint256 amountLamports)",
+      "event FraudWindowSet(address indexed sender, uint256 durationSeconds)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Unpaused(address account)",
+      "event WithdrawAuthorized(address indexed sender, tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message, bytes32 indexed messageHash, uint256 startTime)",
+      "event WithdrawCancelled(address indexed sender, bytes32 indexed messageHash)",
+      "event WithdrawClaimed(address indexed receiver, bytes32 indexed remoteSender, bytes32 indexed messageHash, tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message)",
+      "event WithdrawMessageDeleted(address authority, tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message)",
+      "event WithdrawMessageHashDeleted(address indexed authority, bytes32 indexed messageHash)",
+      "function CLAIM_AUTHORITY_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function FRAUD_WINDOW_SETTER_ROLE() view returns (bytes32)",
+      "function MIN_DEPOSIT() view returns (uint256)",
+      "function PAUSER_ROLE() view returns (bytes32)",
+      "function STARTER_ROLE() view returns (bytes32)",
+      "function TREASURY() view returns (address)",
+      "function WITHDRAW_AUTHORITY_ROLE() view returns (bytes32)",
+      "function WITHDRAW_CANCELLER_ROLE() view returns (bytes32)",
+      "function authorizeWithdraw(tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message)",
+      "function authorizeWithdraws(tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei)[] messages)",
+      "function claimWithdraw(tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message)",
+      "function deleteWithdrawMessage(tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message)",
+      "function deposit(bytes32 recipient, uint256 amountWei) payable",
+      "function fraudWindowDuration() view returns (uint256)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getVersionComponents() pure returns (tuple(uint8 major, uint8 minor, uint8 patch))",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setFraudWindowDuration(uint256 durationSeconds)",
+      "function startTime(bytes32 withdrawMessageHash) view returns (uint256 startTime)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unpause()",
+      "function withdrawMessageHash(tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message) pure returns (bytes32)",
+      "function withdrawMessageStatus(bytes32 messageHash) view returns (uint8)",
+      "function withdrawMessageStatus(tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message) view returns (uint8)",
+      "function withdrawMsgIdProcessed(uint64 withdrawMessageId) view returns (uint256 blockNumber)"
+    ],
+    "eth:0xb23B2492f7A9631104A5877F7FFA00633660968d": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3": [
+      "constructor()",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error BridgeTreasuryConfigError(address actual, address expected)",
+      "error ExpectedRoleNotAssigned(address contract_, bytes32 role, address user)",
+      "error NotContract(address a)",
+      "error NullAddress()",
+      "error Unpaused(address proxy)",
+      "error UpgraderDoesNotOwnTreasury()",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event UpgradeComplete(address treasuryProxy, address newTreasuryImplementation, address treasuryAdmin, address bridgeAdmin, address trustedRelayer, address bridgeTroll, address oldEtherBridgeProxyAddress, address newCanonicalBridge)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function DEPOSITOR_ROLE() view returns (bytes32)",
+      "function EMERGENCY_ROLE() view returns (bytes32)",
+      "function FRAUD_WINDOW_SETTER_ROLE() view returns (bytes32)",
+      "function NULL_ADDRESS() view returns (address)",
+      "function PAUSER_ROLE() view returns (bytes32)",
+      "function STARTER_ROLE() view returns (bytes32)",
+      "function UPGRADER_ROLE() view returns (bytes32)",
+      "function WITHDRAW_AUTHORITY_ROLE() view returns (bytes32)",
+      "function WITHDRAW_CANCELLER_ROLE() view returns (bytes32)",
+      "function _isContract(address c) view returns (bool)",
+      "function checkPaused(address c) view",
+      "function checkTreasuryOwnership(address treasuryProxy) view",
+      "function executeUpgrade(tuple(address treasuryProxy, address newTreasuryImplementation, address treasuryAdmin, address bridgeAdmin, address trustedRelayer, address bridgeTroll, address oldEtherbridgeAddress) p) returns (address newCanonicalBridge)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+    ],
+    "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978": [
+      "constructor()",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error FailedInnerCall()",
+      "error InsufficientFunds()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error ReentrancyGuardReentrantCall()",
+      "error TreasuryTransferFailed()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error ZeroAddress()",
+      "event EmergencyTreasuryWithdraw(address indexed to, uint256 amountWei)",
+      "event Initialized(uint64 version)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event TreasuryDeposit(address indexed from, uint256 amountWei)",
+      "event TreasuryReinitialized(address admin, address oldOwner)",
+      "event TreasuryWithdraw(address authority, address indexed to, uint256 amountWei)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function DEPOSITOR_ROLE() view returns (bytes32)",
+      "function EMERGENCY_ROLE() view returns (bytes32)",
+      "function PAUSER_ROLE() view returns (bytes32)",
+      "function STARTER_ROLE() view returns (bytes32)",
+      "function UPGRADER_ROLE() view returns (bytes32)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function WITHDRAW_AUTHORITY_ROLE() view returns (bytes32)",
+      "function depositEth() payable",
+      "function emergencyWithdraw(uint256 amountWei)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getVersionComponents() pure returns (tuple(uint8 major, uint8 minor, uint8 patch))",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function reinitialize()",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unpause()",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function withdrawEth(address to, uint256 amountWei) returns (bool success)"
+    ]
+  },
+  "usedTemplates": {
+    "eclipse/CanonicalBridge": "0x3028ad5c23ba079d10065324a135b092e75a5ca419cdb7ac0587074e3053d640",
+    "eclipse/EtherBridge": "0x9e0ad9f10767611f57df498651c22d2f5668f4627bccc8e46d0f43a58a845525",
+    "eclipse/Mailbox": "0x9e0ad9f10767611f57df498651c22d2f5668f4627bccc8e46d0f43a58a845525",
+    "eclipse/Treasury": "0x08a8222e3c470e18a1546220ba08a53b24e40935a0cb002af4a516050794b89a",
+    "eclipse/Upgrader0to1": "0x62b4c472e65c2ae7518c7fb7fa8791913f6109336e1376e07f6b5a001a5f2e8b",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+  },
+  "usedBlockNumbers": { "ethereum": 23319013 },
+  "permissionsConfigHash": "0x37572f0021a1cefa92d5dc3c0d29302294e49269e66c0e1d3aa78c626c046a81"
+}

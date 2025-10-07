@@ -22,6 +22,7 @@ export { colorize } from './discovery/colorize/colorize'
 export { ConfigReader } from './discovery/config/ConfigReader'
 export { ConfigRegistry } from './discovery/config/ConfigRegistry'
 export type { DiscoveryConfig } from './discovery/config/ConfigSchema'
+export { ConfigWriter } from './discovery/config/ConfigWriter'
 export { makeEntryColorConfig } from './discovery/config/colorUtils'
 export {
   type DiscoveryPaths,
@@ -67,6 +68,7 @@ export {
 export { neuterErrors } from './discovery/output/errors'
 export { flattenDiscoveredSources } from './discovery/output/flattenDiscoveredSource'
 export { saveDiscoveredJson } from './discovery/output/saveDiscoveryResult'
+export { generateStructureHash } from './discovery/output/structureOutput'
 export {
   combineStructureAndColor,
   toDiscoveryOutput,

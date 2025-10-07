@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -8,6 +8,10 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('polynomial')
 
 export const polynomial: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: true,
+  },
   addedAt: UnixTime(1726570826), // 2024-09-17T11:00:26Z
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit, BADGES.Infra.Superchain],
@@ -23,10 +27,11 @@ export const polynomial: ScalingProject = opStackL2({
       websites: ['https://polynomial.fi/'],
       documentation: ['https://docs.polynomial.fi/'],
       explorers: ['https://polynomialscan.io/'],
+      bridges: ['https://polynomial.fi/en/mainnet/earn/bridge'],
       repositories: ['https://github.com/Polynomial-Protocol'],
       socialMedia: [
         'https://x.com/PolynomialFi',
-        'https://discord.gg/Mr9XKU5W',
+        'https://discord.com/invite/8WYEPDqyCR',
       ],
     },
   },
@@ -37,7 +42,7 @@ export const polynomial: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.polynomial.fi',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

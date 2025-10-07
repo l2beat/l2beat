@@ -1,5 +1,6 @@
 import {
   ConfigReader,
+  ConfigWriter,
   getDiscoveryPaths,
   TemplateService,
 } from '@l2beat/discovery'
@@ -8,6 +9,7 @@ import { v as z } from '@l2beat/validate'
 import express from 'express'
 import type { Server } from 'http'
 import path, { join } from 'path'
+import { attachConfigRouter } from './configs/router'
 import { DiffoveryController } from './diffovery/DiffoveryController'
 import { attachDiffoveryRouter } from './diffovery/router'
 import { executeTerminalCommand } from './executeTerminalCommand'
@@ -30,7 +32,7 @@ const safeStringSchema = z
 
 const ethereumAddressSchema = z.string().transform(ChainSpecificAddress)
 
-const projectParamsSchema = z.object({
+export const projectParamsSchema = z.object({
   project: safeStringSchema,
 })
 
@@ -47,7 +49,6 @@ const projectSearchTermParamsSchema = z.object({
 
 const discoverQuerySchema = z.object({
   project: safeStringSchema,
-  chain: safeStringSchema,
   devMode: z.enum(['true', 'false']).transform((val) => val === 'true'),
 })
 
@@ -55,6 +56,10 @@ const matchFlatQuerySchema = z.object({
   project: safeStringSchema,
   address: ethereumAddressSchema,
   against: z.enum(['templates', 'projects']),
+})
+
+const findMintersSchema = z.object({
+  address: ethereumAddressSchema,
 })
 
 export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
@@ -65,6 +70,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
 
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
+  const configWriter = new ConfigWriter(configReader, paths.discovery)
   const templateService = new TemplateService(paths.discovery)
   const diffoveryController = new DiffoveryController()
 
@@ -143,12 +149,28 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     })
   })
 
+  app.get('/api/config-files/:project', (req, res) => {
+    const query = projectParamsSchema.safeParse(req.params)
+
+    if (!query.success) {
+      res.status(400).json({ errors: query.message })
+      return
+    }
+
+    const config: string = configReader.readRawConfigAsText(query.data.project)
+
+    res.json({
+      config,
+    })
+  })
+
   app.use(express.static(STATIC_ROOT))
 
   attachDiffoveryRouter(app, diffoveryController)
 
   if (!readonly) {
     attachTemplateRouter(app, templateService)
+    attachConfigRouter(app, configReader, configWriter)
 
     app.get('/api/projects/:project/codeSearch', (req, res) => {
       const paramsValidation = projectSearchTermParamsSchema.safeParse({
@@ -212,6 +234,20 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     app.get('/api/terminal/download-all-shapes', (_req, res) => {
       executeTerminalCommand(
         `cd ${path.dirname(paths.discovery)}/../ && l2b download-all-shapes`,
+        res,
+      )
+    })
+
+    app.get('/api/terminal/find-minters', (req, res) => {
+      const queryValidation = findMintersSchema.safeParse(req.query)
+      if (!queryValidation.success) {
+        res.status(400).json({ errors: queryValidation.message })
+        return
+      }
+      const { address } = queryValidation.data
+
+      executeTerminalCommand(
+        `cd ${path.dirname(paths.discovery)}/../../backend && l2b minters ${address}`,
         res,
       )
     })

@@ -28,6 +28,7 @@ export async function getEcosystemProjectData(
         description: `Get an overview of the scaling projects in the ${ecosystem.name} ecosystem.`,
         openGraph: {
           url,
+          image: `/meta-images/ecosystems/${ecosystem.id}/opengraph-image.png`,
         },
       }),
     },

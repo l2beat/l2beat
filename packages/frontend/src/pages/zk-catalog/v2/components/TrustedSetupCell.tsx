@@ -1,73 +1,107 @@
-import type { TrustedSetup } from '@l2beat/config'
+import type { TrustedSetup, ZkCatalogTag } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
+import type { ComponentProps } from 'react'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
-import type { ZkCatalogEntry } from '~/server/features/zk-catalog/getZkCatalogEntries'
+import {
+  ProjectsUsedIn,
+  type UsedInProjectWithIcon,
+} from '~/components/ProjectsUsedIn'
 import { TechStackTag } from './TechStackTag'
 import { TrustedSetupRiskDot } from './TrustedSetupRiskDot'
 
 interface Props {
-  trustedSetup: ZkCatalogEntry['trustedSetups'][string]
+  trustedSetups: (TrustedSetup & {
+    proofSystem: ZkCatalogTag
+  })[]
+  projectsUsedIn?: UsedInProjectWithIcon[]
+  dotSize?: ComponentProps<typeof TrustedSetupRiskDot>['size']
 }
 
-export function TrustedSetupCell({ trustedSetup }: Props) {
-  const proofSystem = trustedSetup.trustedSetup[0]?.proofSystem
-  if (trustedSetup.trustedSetup.length === 0 || !proofSystem) return null
-  const worstRisk = pickWorstRisk(trustedSetup.trustedSetup)
+export function TrustedSetupCell({
+  trustedSetups,
+  projectsUsedIn,
+  dotSize,
+}: Props) {
+  const proofSystem = trustedSetups[0]?.proofSystem
+  if (trustedSetups.length === 0 || !proofSystem) return null
 
   return (
     <div className="flex flex-col items-start gap-2">
-      <Tooltip>
-        <TooltipTrigger className="flex items-center gap-2">
-          {worstRisk === 'N/A' ? (
-            <span className="text-2xl leading-none">🤩</span>
-          ) : (
-            <TrustedSetupRiskDot risk={worstRisk} size="md" />
-          )}
-          <TechStackTag tag={proofSystem} withoutTooltip />
-        </TooltipTrigger>
-        <TooltipContent>
-          <div className="mb-3 text-paragraph-14">
-            Trusted setups for{' '}
-            <TechStackTag
-              tag={proofSystem}
-              className="inline-block"
-              withoutTooltip
-            />
-          </div>
-          {trustedSetup.trustedSetup.map((trustedSetup, i) => {
-            return (
-              <div key={trustedSetup.id} className="flex gap-2">
-                {trustedSetup.risk === 'N/A' ? (
-                  <div className="mt-px text-lg leading-none">🤩</div>
-                ) : (
-                  <TrustedSetupRiskDot
-                    risk={trustedSetup.risk}
-                    size="sm"
-                    className="shrink-0"
-                  />
-                )}
-                <span className="text-xs leading-normal">
-                  {trustedSetup.shortDescription}
-                </span>
-              </div>
-            )
-          })}
-        </TooltipContent>
-      </Tooltip>
-      <div className="flex items-center gap-1.5">
-        <p className="font-medium text-label-value-12 text-secondary">
-          Used in
-        </p>
-        <ProjectsUsedIn
-          noL2ClassName="text-label-value-12 font-medium text-secondary"
-          usedIn={trustedSetup.projectsUsedIn}
-        />
-      </div>
+      <TrustedSetupCellTooltip
+        trustedSetups={trustedSetups}
+        dotSize={dotSize}
+      />
+      {projectsUsedIn && (
+        <div className="flex items-center gap-1.5">
+          <p className="font-medium text-label-value-12 text-secondary">
+            Used in
+          </p>
+          <ProjectsUsedIn
+            noL2ClassName="text-label-value-12 font-medium text-secondary"
+            usedIn={projectsUsedIn}
+          />
+        </div>
+      )}
     </div>
+  )
+}
+
+export function TrustedSetupCellTooltip({
+  trustedSetups,
+  dotSize,
+}: {
+  trustedSetups: (TrustedSetup & {
+    proofSystem: ZkCatalogTag
+  })[]
+  dotSize?: ComponentProps<typeof TrustedSetupRiskDot>['size']
+}) {
+  const proofSystem = trustedSetups[0]?.proofSystem
+  assert(proofSystem, 'proofSystem is required')
+  const worstRisk = pickWorstRisk(trustedSetups)
+
+  return (
+    <Tooltip>
+      <TooltipTrigger className="flex items-center gap-2">
+        {worstRisk === 'N/A' ? (
+          <span className="text-2xl leading-none">🤩</span>
+        ) : (
+          <TrustedSetupRiskDot risk={worstRisk} size={dotSize} />
+        )}
+        <TechStackTag tag={proofSystem} withoutTooltip />
+      </TooltipTrigger>
+      <TooltipContent>
+        <div className="mb-3 text-paragraph-14">
+          Trusted setups for{' '}
+          <TechStackTag
+            tag={proofSystem}
+            className="inline-block"
+            withoutTooltip
+          />
+        </div>
+        {trustedSetups.map((trustedSetup) => {
+          return (
+            <div key={trustedSetup.id} className="flex gap-2">
+              {trustedSetup.risk === 'N/A' ? (
+                <div className="mt-px text-lg leading-none">🤩</div>
+              ) : (
+                <TrustedSetupRiskDot
+                  risk={trustedSetup.risk}
+                  size="sm"
+                  className="shrink-0"
+                />
+              )}
+              <span className="text-xs leading-normal">
+                {trustedSetup.shortDescription}
+              </span>
+            </div>
+          )
+        })}
+      </TooltipContent>
+    </Tooltip>
   )
 }
 

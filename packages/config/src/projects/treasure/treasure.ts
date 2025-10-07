@@ -57,7 +57,7 @@ export const treasure: ScalingProject = zkStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.treasure.lol',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

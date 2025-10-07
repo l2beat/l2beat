@@ -20,7 +20,7 @@ import type { ProjectChanges } from '../../projects-change-report/getProjectsCha
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import type { ActivityLatestUopsData } from '../activity/getActivityLatestTps'
 import { getActivityLatestUops } from '../activity/getActivityLatestTps'
-import { getActivitySyncWarning } from '../activity/utils/isActivitySynced'
+import { getActivitySyncWarning } from '../activity/utils/syncStatus'
 import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
 import { getApprovedOngoingAnomalies } from '../liveness/getApprovedOngoingAnomalies'
@@ -75,7 +75,7 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
   proofSystem: ProjectScalingProofSystem | undefined
   purposes: ProjectScalingPurpose[]
   stacks: ProjectScalingStack[] | undefined
-  dataAvailability: ProjectScalingDa | undefined
+  dataAvailability: ProjectScalingDa[] | undefined
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined
   tvs: {
     breakdown:
@@ -122,9 +122,7 @@ export function getScalingSummaryEntry(
         })
       : undefined
   const associatedTokensExcludedWarnings = compact(project.tvsInfo?.warnings)
-  const activitySyncWarning = activity
-    ? getActivitySyncWarning(activity.syncedUntil)
-    : undefined
+  const activitySyncWarning = getActivitySyncWarning(activity?.syncState)
 
   return {
     ...getCommonScalingEntry({

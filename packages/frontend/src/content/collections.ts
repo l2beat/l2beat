@@ -1,15 +1,16 @@
 import { authorsCollection } from './authors'
 import { delegatedProjectsCollection } from './delegated-projects'
 import { eventsCollection } from './events'
+import { externalPublicationsCollection } from './external-publications'
 import { glossaryCollection } from './glossary'
+import { governancePublicationsCollection } from './governance-publications'
 import { monthlyUpdatesCollection } from './monthly-updates'
 import { pagesCollection } from './pages'
 import { partnersCollection } from './partners'
-import { publicationsCollection } from './publications'
 import { zkCatalogDescriptionsCollection } from './zk-catalog-descriptions'
 
 export const collections = {
-  publications: publicationsCollection,
+  'governance-publications': governancePublicationsCollection,
   'delegated-projects': delegatedProjectsCollection,
   events: eventsCollection,
   authors: authorsCollection,
@@ -18,4 +19,5 @@ export const collections = {
   pages: pagesCollection,
   partners: partnersCollection,
   'monthly-updates': monthlyUpdatesCollection,
+  'external-publications': externalPublicationsCollection,
 }

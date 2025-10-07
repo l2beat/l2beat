@@ -1,0 +1,350 @@
+{
+  "name": "beamer-bridge-v2",
+  "timestamp": 1711614839,
+  "configHash": "0xcacaffe009d728bfeacc2d5d541f50bf3811ec11e3b0fd83d9bb1b12c0bf7e9f",
+  "entries": [
+    {
+      "name": "EthereumL1Messenger",
+      "address": "eth:0x12B8489913E2afBCed131d52c345C380BBB65baf",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x53a70d11cd7796a36186bc6faf5761365984bd862be2a0a8e30f96d0510e40bc"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1680258323,
+      "sinceBlock": 16946577,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
+      },
+      "implementationNames": {
+        "eth:0x12B8489913E2afBCed131d52c345C380BBB65baf": "EthereumL1Messenger"
+      }
+    },
+    {
+      "name": "EthereumL2Messenger",
+      "address": "eth:0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x8ce69cb7eef1745342d1a5730155558e6a15cf3530e4d28816fb4d7c7301cea9"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1680258335,
+      "sinceBlock": 16946578,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70",
+        "resolver": "eth:0xCb60516819a28431233195A8b7E0227C288B61AD"
+      },
+      "implementationNames": {
+        "eth:0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da": "EthereumL2Messenger"
+      }
+    },
+    {
+      "address": "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "OptimismL1Messenger",
+      "address": "eth:0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x4b9b7280455da961659b45ac59c98334d9cef746991718d2ec48b8e9a90a69d3"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1680258563,
+      "sinceBlock": 16946597,
+      "values": {
+        "$immutable": true,
+        "nativeMessenger": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+        "owner": "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
+      },
+      "implementationNames": {
+        "eth:0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34": "OptimismL1Messenger"
+      }
+    },
+    {
+      "name": "ArbitrumL1Messenger",
+      "address": "eth:0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x95eb429107814a5f14a897acd61975d017790ae60ad9314ae5e35524a3ec1a5c"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1680258503,
+      "sinceBlock": 16946592,
+      "values": {
+        "$immutable": true,
+        "bridge": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
+        "inbox": "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
+        "owner": "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
+      },
+      "implementationNames": {
+        "eth:0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3": "ArbitrumL1Messenger"
+      }
+    },
+    {
+      "name": "EthereumRequestManager",
+      "address": "eth:0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xa82fa8fc1e5ff96f0cfb766de691af0d8f797facacd18dd6b472ac890c1f9ab9"
+      ],
+      "proxyType": "immutable",
+      "ignoreInWatchMode": ["chains", "currentNonce"],
+      "sinceTimestamp": 1680258347,
+      "sinceBlock": 16946579,
+      "values": {
+        "$immutable": true,
+        "chains": {
+          "1": {
+            "finalityPeriod": 1,
+            "transferCost": 7585098244874649,
+            "targetWeightPPM": 285180
+          },
+          "10": {
+            "finalityPeriod": 604800,
+            "transferCost": 232163216204169,
+            "targetWeightPPM": 483793
+          },
+          "1101": {
+            "finalityPeriod": 3600,
+            "transferCost": 1014461390000000,
+            "targetWeightPPM": 292426
+          },
+          "8453": {
+            "finalityPeriod": 604800,
+            "transferCost": 262966764014000,
+            "targetWeightPPM": 402806
+          },
+          "42161": {
+            "finalityPeriod": 691200,
+            "transferCost": 173566246000000,
+            "targetWeightPPM": 460481
+          }
+        },
+        "challengePeriodExtension": 86400,
+        "CLAIM_ID_WITHDRAWN_EXPIRED": "79228162514264337593543950335",
+        "claimPeriod": 86400,
+        "claimRequestExtension": 86400,
+        "claimStake": "10000000000000000",
+        "currentNonce": 273,
+        "lpFeePPM": 3000,
+        "MAX_VALIDITY_PERIOD": 172800,
+        "MIN_VALIDITY_PERIOD": 1800,
+        "minFeePPM": 100000,
+        "owner": "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70",
+        "paused": true,
+        "protocolFeePPM": 0
+      },
+      "implementationNames": {
+        "eth:0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50": "RequestManager"
+      }
+    },
+    {
+      "name": "Resolver",
+      "address": "eth:0xCb60516819a28431233195A8b7E0227C288B61AD",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x6f0996aaa83416e4ef529a91847760e8b44f88c827adfeb579723ed0b708cbf3"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1680258311,
+      "sinceBlock": 16946576,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
+      },
+      "implementationNames": {
+        "eth:0xCb60516819a28431233195A8b7E0227C288B61AD": "Resolver"
+      }
+    },
+    {
+      "name": "EthereumFillManager",
+      "address": "eth:0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xb8bd718248dbf8a521e10a055b52eb5ddcf6ddedf62a4259dbdf50574289ea5b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1680258395,
+      "sinceBlock": 16946583,
+      "values": {
+        "$immutable": true,
+        "l1Resolver": "eth:0xCb60516819a28431233195A8b7E0227C288B61AD",
+        "liquidityProviders": [
+          "eth:0xdC256EC77E97448d29D88118e55C82067150b768"
+        ],
+        "messenger": "eth:0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da",
+        "owner": "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
+      },
+      "implementationNames": {
+        "eth:0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29": "FillManager"
+      }
+    },
+    {
+      "address": "eth:0xdC256EC77E97448d29D88118e55C82067150b768",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
+  ],
+  "abis": {
+    "eth:0x12B8489913E2afBCed131d52c345C380BBB65baf": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function addCaller(uint256 callerChainId, address caller, address messenger)",
+      "function addCaller(address caller)",
+      "function callAllowed(address, address) pure returns (bool)",
+      "function callers(uint256 callerChainId, uint256) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function sendMessage(address target, bytes message)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da": [
+      "constructor(address resolver_)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function addCaller(uint256 callerChainId, address caller, address messenger)",
+      "function addCaller(address caller)",
+      "function callAllowed(address, address) pure returns (bool)",
+      "function callers(uint256 callerChainId, uint256) view returns (address)",
+      "function messageHashes(bytes32 messageHash) view returns (uint8)",
+      "function owner() view returns (address)",
+      "function relayMessage(bytes32 requestId, bytes32 fillId, uint256 sourceChainId, address filler)",
+      "function renounceOwnership()",
+      "function resolver() view returns (address)",
+      "function sendMessage(address, bytes message)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34": [
+      "constructor(address messenger_)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function addCaller(uint256 callerChainId, address caller, address messenger)",
+      "function addCaller(address caller)",
+      "function callAllowed(address caller, address courier) view returns (bool)",
+      "function callers(uint256 callerChainId, uint256) view returns (address)",
+      "function nativeMessenger() view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function sendMessage(address target, bytes message)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3": [
+      "constructor(address bridge_, address inbox_)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function addCaller(uint256 callerChainId, address caller, address messenger)",
+      "function addCaller(address caller)",
+      "function bridge() view returns (address)",
+      "function callAllowed(address caller, address courier) view returns (bool)",
+      "function callers(uint256 callerChainId, uint256) view returns (address)",
+      "function deposit() payable",
+      "function deposits(address depositor) view returns (uint256 deposit)",
+      "function inbox() view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function sendMessage(address target, bytes message)",
+      "function transferOwnership(address newOwner)",
+      "function withdraw()"
+    ],
+    "eth:0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50": [
+      "constructor(uint96 _claimStake, uint256 _claimRequestExtension, uint256 _claimPeriod, uint256 _challengePeriodExtension)",
+      "event ChainUpdated(uint256 indexed chainId, uint256 finalityPeriod, uint256 transferCost, uint256 targetWeightPPM)",
+      "event ClaimMade(bytes32 indexed requestId, uint96 claimId, address claimer, uint96 claimerStake, address lastChallenger, uint96 challengerStakeTotal, uint256 termination, bytes32 fillId)",
+      "event ClaimStakeWithdrawn(uint96 claimId, bytes32 indexed requestId, address stakeRecipient)",
+      "event DepositWithdrawn(bytes32 requestId, address receiver)",
+      "event FeesUpdated(uint32 minFeePPM, uint32 lpFeePPM, uint32 protocolFeePPM)",
+      "event FillInvalidatedResolved(bytes32 requestId, bytes32 fillId)",
+      "event LpAdded(address lp)",
+      "event LpRemoved(address lp)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event RequestCreated(bytes32 indexed requestId, uint256 targetChainId, address sourceTokenAddress, address targetTokenAddress, address indexed sourceAddress, address targetAddress, uint256 amount, uint96 nonce, uint32 validUntil, uint256 lpFee, uint256 protocolFee)",
+      "event RequestResolved(bytes32 requestId, address filler, bytes32 fillId)",
+      "event TokenUpdated(address indexed tokenAddress, uint256 transferLimit, uint256 ethInToken)",
+      "event Unpaused(address account)",
+      "function CLAIM_ID_WITHDRAWN_EXPIRED() view returns (uint96)",
+      "function MAX_VALIDITY_PERIOD() view returns (uint256)",
+      "function MIN_VALIDITY_PERIOD() view returns (uint256)",
+      "function addAllowedLp(address newLp)",
+      "function addCaller(uint256 callerChainId, address caller, address messenger)",
+      "function addCaller(address caller)",
+      "function allowedLps(address lp) view returns (bool allowed)",
+      "function callers(uint256 callerChainId, uint256) view returns (address)",
+      "function chains(uint256 chainId) view returns (uint256 finalityPeriod, uint256 transferCost, uint256 targetWeightPPM)",
+      "function challengeClaim(uint96 claimId) payable",
+      "function challengePeriodExtension() view returns (uint256)",
+      "function claimPeriod() view returns (uint256)",
+      "function claimRequest(address claimer, bytes32 requestId, bytes32 fillId) payable returns (uint96)",
+      "function claimRequest(bytes32 requestId, bytes32 fillId) payable returns (uint96)",
+      "function claimRequestExtension() view returns (uint256)",
+      "function claimStake() view returns (uint96)",
+      "function claims(uint96 claimId) view returns (bytes32 requestId, address claimer, uint96 claimerStake, address lastChallenger, uint96 challengerStakeTotal, uint256 withdrawnAmount, uint256 termination, bytes32 fillId)",
+      "function createRequest(uint256 targetChainId, address sourceTokenAddress, address targetTokenAddress, address targetAddress, uint256 amount, uint256 validityPeriod) returns (bytes32)",
+      "function currentNonce() view returns (uint96)",
+      "function invalidateFill(bytes32 requestId, bytes32 fillId, uint256 resolutionChainId)",
+      "function isInvalidFill(bytes32 requestId, bytes32 fillId) view returns (bool)",
+      "function isWithdrawn(bytes32 requestId) view returns (bool)",
+      "function lpFee(uint256 targetChainId, address tokenAddress, uint256 amount) view returns (uint256)",
+      "function lpFeePPM() view returns (uint32)",
+      "function minFeePPM() view returns (uint32)",
+      "function minLpFee(uint256 targetChainId, address tokenAddress) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function protocolFee(uint256 amount) view returns (uint256)",
+      "function protocolFeePPM() view returns (uint32)",
+      "function removeAllowedLp(address oldLp)",
+      "function renounceOwnership()",
+      "function requests(bytes32 requestId) view returns (address sender, address sourceTokenAddress, uint256 targetChainId, uint256 amount, uint32 validUntil, uint256 lpFee, uint256 protocolFee, uint32 activeClaims, uint96 withdrawClaimId, address filler, bytes32 fillId)",
+      "function resolveRequest(bytes32 requestId, bytes32 fillId, uint256 resolutionChainId, address filler)",
+      "function tokens(address tokenAddress) view returns (uint256 transferLimit, uint256 ethInToken, uint256 collectedProtocolFees)",
+      "function totalFee(uint256 targetChainId, address tokenAddress, uint256 amount) view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function transferableAmount(uint256 targetChainId, address tokenAddress, uint256 amount) view returns (uint256)",
+      "function unpause()",
+      "function updateChain(uint256 chainId, uint256 finalityPeriod, uint256 transferCost, uint256 targetWeightPPM)",
+      "function updateFees(uint32 _minFeePPM, uint32 _lpFeePPM, uint32 _protocolFeePPM)",
+      "function updateToken(address tokenAddress, uint256 transferLimit, uint256 ethInToken)",
+      "function withdraw(address participant, uint96 claimId) returns (address)",
+      "function withdraw(uint96 claimId) returns (address)",
+      "function withdrawExpiredRequest(bytes32 requestId)",
+      "function withdrawProtocolFees(address tokenAddress, address recipient)"
+    ],
+    "eth:0xCb60516819a28431233195A8b7E0227C288B61AD": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Resolution(uint256 sourceChainId, uint256 fillChainId, bytes32 requestId, address filler, bytes32 fillId)",
+      "function addCaller(uint256 callerChainId, address caller, address messenger)",
+      "function addCaller(address caller)",
+      "function addRequestManager(uint256 chainId, address requestManager, address messenger)",
+      "function callers(uint256 callerChainId, uint256) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function resolve(bytes32 requestId, bytes32 fillId, uint256 fillChainId, uint256 sourceChainId, address filler)",
+      "function sourceChainInfos(uint256 sourceChainId) view returns (address requestManager, address messenger)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29": [
+      "constructor(address _messenger)",
+      "event FillInvalidated(bytes32 indexed requestId, bytes32 indexed fillId)",
+      "event LpAdded(address lp)",
+      "event LpRemoved(address lp)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RequestFilled(bytes32 indexed requestId, bytes32 fillId, uint256 indexed sourceChainId, address indexed targetTokenAddress, address filler, uint256 amount)",
+      "function addAllowedLp(address newLp)",
+      "function allowedLps(address lp) view returns (bool allowed)",
+      "function fillRequest(uint256 sourceChainId, address targetTokenAddress, address targetReceiverAddress, uint256 amount, uint96 nonce) returns (bytes32)",
+      "function fills(bytes32 requestID) view returns (bytes32 fillId)",
+      "function invalidateFill(bytes32 requestId, bytes32 fillId, uint256 sourceChainId)",
+      "function l1Resolver() view returns (address)",
+      "function messenger() view returns (address)",
+      "function owner() view returns (address)",
+      "function removeAllowedLp(address oldLp)",
+      "function renounceOwnership()",
+      "function setResolver(address _l1Resolver)",
+      "function transferOwnership(address newOwner)"
+    ]
+  },
+  "usedTemplates": {},
+  "usedBlockNumbers": { "ethereum": 19531448 },
+  "permissionsConfigHash": "0x6723a8fad6a445100b211694b8bd07d2322544283fa287388a5ac9ff15534d5d"
+}

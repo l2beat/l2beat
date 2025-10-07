@@ -78,29 +78,32 @@ describe(DaService.name, () => {
         MOCK_ETHEREUM_CONFIGS,
       )
 
-      expect(result).toEqual([
-        {
-          configurationId: 'eth-1',
-          projectId: 'ethereum',
-          daLayer: 'ethereum',
-          timestamp: UnixTime.toStartOf(TIME, 'hour'),
-          totalSize: 1100n,
-        },
-        {
-          configurationId: 'eth-2',
-          projectId: 'project-ethereum-1',
-          daLayer: 'ethereum',
-          timestamp: UnixTime.toStartOf(TIME, 'hour'),
-          totalSize: 400n,
-        },
-        {
-          configurationId: 'eth-3',
-          projectId: 'project-ethereum-2',
-          daLayer: 'ethereum',
-          timestamp: UnixTime.toStartOf(TIME, 'hour'),
-          totalSize: 300n,
-        },
-      ])
+      expect(result).toEqual({
+        records: [
+          {
+            configurationId: 'eth-1',
+            projectId: 'ethereum',
+            daLayer: 'ethereum',
+            timestamp: UnixTime.toStartOf(TIME, 'hour'),
+            totalSize: 1100n,
+          },
+          {
+            configurationId: 'eth-2',
+            projectId: 'project-ethereum-1',
+            daLayer: 'ethereum',
+            timestamp: UnixTime.toStartOf(TIME, 'hour'),
+            totalSize: 400n,
+          },
+          {
+            configurationId: 'eth-3',
+            projectId: 'project-ethereum-2',
+            daLayer: 'ethereum',
+            timestamp: UnixTime.toStartOf(TIME, 'hour'),
+            totalSize: 300n,
+          },
+        ],
+        latestTimestamp: TIME,
+      })
     })
 
     it('should match celestia blobs', async () => {
@@ -134,22 +137,25 @@ describe(DaService.name, () => {
         MOCK_CELESTIA_CONFIGS,
       )
 
-      expect(result).toEqual([
-        {
-          configurationId: 'cel-1',
-          projectId: 'celestia',
-          daLayer: 'celestia',
-          timestamp: UnixTime.toStartOf(TIME, 'hour'),
-          totalSize: 300n,
-        },
-        {
-          configurationId: 'cel-2',
-          projectId: 'project-celestia-1',
-          daLayer: 'celestia',
-          timestamp: UnixTime.toStartOf(TIME, 'hour'),
-          totalSize: 100n,
-        },
-      ])
+      expect(result).toEqual({
+        records: [
+          {
+            configurationId: 'cel-1',
+            projectId: 'celestia',
+            daLayer: 'celestia',
+            timestamp: UnixTime.toStartOf(TIME, 'hour'),
+            totalSize: 300n,
+          },
+          {
+            configurationId: 'cel-2',
+            projectId: 'project-celestia-1',
+            daLayer: 'celestia',
+            timestamp: UnixTime.toStartOf(TIME, 'hour'),
+            totalSize: 100n,
+          },
+        ],
+        latestTimestamp: TIME,
+      })
     })
 
     it('should match avail blobs', async () => {
@@ -189,22 +195,25 @@ describe(DaService.name, () => {
         MOCK_AVAIL_CONFIGS,
       )
 
-      expect(result).toEqual([
-        {
-          configurationId: 'av-1',
-          projectId: 'avail',
-          daLayer: 'avail',
-          timestamp: UnixTime.toStartOf(TIME, 'hour'),
-          totalSize: 450n,
-        },
-        {
-          configurationId: 'av-2',
-          projectId: 'project-avail-1',
-          daLayer: 'avail',
-          timestamp: UnixTime.toStartOf(TIME, 'hour'),
-          totalSize: 250n,
-        },
-      ])
+      expect(result).toEqual({
+        records: [
+          {
+            configurationId: 'av-1',
+            projectId: 'avail',
+            daLayer: 'avail',
+            timestamp: UnixTime.toStartOf(TIME, 'hour'),
+            totalSize: 450n,
+          },
+          {
+            configurationId: 'av-2',
+            projectId: 'project-avail-1',
+            daLayer: 'avail',
+            timestamp: UnixTime.toStartOf(TIME, 'hour'),
+            totalSize: 250n,
+          },
+        ],
+        latestTimestamp: TIME,
+      })
     })
 
     it('should aggregate per hour and merge with existing records', async () => {
@@ -298,50 +307,53 @@ describe(DaService.name, () => {
         MOCK_ETHEREUM_CONFIGS,
       )
 
-      expect(result).toEqual([
-        {
-          configurationId: 'eth-1',
-          projectId: 'ethereum',
-          daLayer: 'ethereum',
-          timestamp: UnixTime.toStartOf(TIME, 'hour') - 1 * UnixTime.HOUR,
-          totalSize: 10300n, // 10 000 + 300
-        },
-        {
-          configurationId: 'eth-2',
-          projectId: 'project-ethereum-1',
-          daLayer: 'ethereum',
-          timestamp: UnixTime.toStartOf(TIME, 'hour') - 1 * UnixTime.HOUR,
-          totalSize: 1300n, // 1 000 + 300
-        },
-        {
-          configurationId: 'eth-1',
-          projectId: 'ethereum',
-          daLayer: 'ethereum',
-          timestamp: UnixTime.toStartOf(TIME, 'hour'),
-          totalSize: 10300n, // 10 000 + 100 + 200
-        },
-        {
-          configurationId: 'eth-2',
-          projectId: 'project-ethereum-1',
-          daLayer: 'ethereum',
-          timestamp: UnixTime.toStartOf(TIME, 'hour'),
-          totalSize: 1300n, // 1 000 + 100 + 200
-        },
-        {
-          configurationId: 'eth-1',
-          projectId: 'ethereum',
-          daLayer: 'ethereum',
-          timestamp: UnixTime.toStartOf(TIME, 'hour') + 1 * UnixTime.HOUR,
-          totalSize: 400n,
-        },
-        {
-          configurationId: 'eth-2',
-          projectId: 'project-ethereum-1',
-          daLayer: 'ethereum',
-          timestamp: UnixTime.toStartOf(TIME, 'hour') + 1 * UnixTime.HOUR,
-          totalSize: 400n,
-        },
-      ])
+      expect(result).toEqual({
+        records: [
+          {
+            configurationId: 'eth-1',
+            projectId: 'ethereum',
+            daLayer: 'ethereum',
+            timestamp: UnixTime.toStartOf(TIME, 'hour') - 1 * UnixTime.HOUR,
+            totalSize: 10300n, // 10 000 + 300
+          },
+          {
+            configurationId: 'eth-2',
+            projectId: 'project-ethereum-1',
+            daLayer: 'ethereum',
+            timestamp: UnixTime.toStartOf(TIME, 'hour') - 1 * UnixTime.HOUR,
+            totalSize: 1300n, // 1 000 + 300
+          },
+          {
+            configurationId: 'eth-1',
+            projectId: 'ethereum',
+            daLayer: 'ethereum',
+            timestamp: UnixTime.toStartOf(TIME, 'hour'),
+            totalSize: 10300n, // 10 000 + 100 + 200
+          },
+          {
+            configurationId: 'eth-2',
+            projectId: 'project-ethereum-1',
+            daLayer: 'ethereum',
+            timestamp: UnixTime.toStartOf(TIME, 'hour'),
+            totalSize: 1300n, // 1 000 + 100 + 200
+          },
+          {
+            configurationId: 'eth-1',
+            projectId: 'ethereum',
+            daLayer: 'ethereum',
+            timestamp: UnixTime.toStartOf(TIME, 'hour') + 1 * UnixTime.HOUR,
+            totalSize: 400n,
+          },
+          {
+            configurationId: 'eth-2',
+            projectId: 'project-ethereum-1',
+            daLayer: 'ethereum',
+            timestamp: UnixTime.toStartOf(TIME, 'hour') + 1 * UnixTime.HOUR,
+            totalSize: 400n,
+          },
+        ],
+        latestTimestamp: TIME + 1 * UnixTime.HOUR,
+      })
     })
   })
 })

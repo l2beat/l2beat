@@ -30,6 +30,7 @@ export const sxnetwork: ScalingProject = orbitStackL2({
         'https://bridge.gelato.network/bridge/sx-rollup',
       ],
       documentation: ['https://docs.sx.technology/'],
+      repositories: ['https://github.com/sx-network'],
       explorers: ['https://explorerl2.sx.technology/'],
       socialMedia: [
         'https://x.com/SX_Network',
@@ -49,7 +50,7 @@ export const sxnetwork: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.sx-rollup.gelato.digital',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
     gasTokens: ['SX'],

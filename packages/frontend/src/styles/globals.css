@@ -27,7 +27,9 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  overscroll-behavior-x: none;
+  /* Prevent horizontal overscroll on mobile to avoid unwanted scrolling when swiping on charts.
+     Not applied on desktop to preserve MacOS swipe-back gesture. */
+  @apply max-md:overscroll-x-none;
 
   --primary: #131215;
   --primary-invert: #fafafa;
@@ -255,6 +257,8 @@
   --text-subtitle-10--line-height: 115%;
   --text-subtitle-10--font-weight: 600;
 
+  --text-label-value-24: 24px;
+  --text-label-value-24--line-height: 100%;
   --text-label-value-20: 20px;
   --text-label-value-20--line-height: 100%;
   --text-label-value-18: 18px;
@@ -613,53 +617,120 @@
   scrollbar-gutter: stable;
 }
 
-@utility fade-out-to-left {
+@utility fade-out-to-left-* {
+  --fade-size: calc(var(--spacing, 0.25rem) * --value(integer));
+  --fade-size: --value([length]);
+
   -webkit-mask-image: linear-gradient(
     to left,
     transparent 0,
     black 0px,
-    black calc(100% - 30px),
+    black calc(100% - var(--fade-size)),
     transparent 100%
   );
   mask-image: linear-gradient(
     to left,
     transparent 0,
     black 0px,
-    black calc(100% - 30px),
+    black calc(100% - var(--fade-size)),
     transparent 100%
   );
 }
 
-@utility fade-out-to-right {
+@utility fade-out-to-right-* {
+  --fade-size: calc(var(--spacing, 0.25rem) * --value(integer));
+  --fade-size: --value([length]);
+
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0,
     black 0px,
-    black calc(100% - 30px),
+    black calc(100% - var(--fade-size)),
     transparent 100%
   );
   mask-image: linear-gradient(
     to right,
     transparent 0,
     black 0px,
-    black calc(100% - 30px),
+    black calc(100% - var(--fade-size)),
     transparent 100%
   );
 }
 
-@utility fade-out-horizontal {
+@utility fade-out-horizontal-* {
+  --fade-size: calc(var(--spacing, 0.25rem) * --value(integer));
+  --fade-size: --value([length]);
+
   -webkit-mask-image: linear-gradient(
     90deg,
     transparent,
-    black 30px calc(100% - 30px),
+    black var(--fade-size) calc(100% - var(--fade-size)),
     transparent
   ) !important;
   mask-image: linear-gradient(
     90deg,
     transparent,
-    black 30px calc(100% - 30px),
+    black var(--fade-size) calc(100% - var(--fade-size)),
     transparent
   ) !important;
+}
+
+@utility fade-out-vertical-* {
+  --fade-size: calc(var(--spacing, 0.25rem) * --value(integer));
+  --fade-size: --value([length]);
+
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    transparent,
+    black var(--fade-size) calc(100% - var(--fade-size)),
+    transparent
+  ) !important;
+  mask-image: linear-gradient(
+    180deg,
+    transparent,
+    black var(--fade-size) calc(100% - var(--fade-size)),
+    transparent
+  ) !important;
+}
+
+@utility fade-out-to-top-* {
+  --fade-size: calc(var(--spacing, 0.25rem) * --value(integer));
+  --fade-size: --value([length]);
+
+  -webkit-mask-image: linear-gradient(
+    to top,
+    transparent 0,
+    black 0px,
+    black calc(100% - var(--fade-size)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to top,
+    transparent 0,
+    black 0px,
+    black calc(100% - var(--fade-size)),
+    transparent 100%
+  );
+}
+
+@utility fade-out-to-bottom-* {
+  --fade-size: calc(var(--spacing, 0.25rem) * --value(integer));
+  --fade-size: --value([length]);
+
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    black 0px,
+    black calc(100% - var(--fade-size)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    black 0px,
+    black calc(100% - var(--fade-size)),
+    transparent 100%
+  );
 }
 
 @utility chart-fade-out-to-bottom {

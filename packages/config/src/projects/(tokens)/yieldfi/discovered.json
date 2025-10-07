@@ -1,0 +1,1323 @@
+{
+  "name": "yieldfi",
+  "timestamp": 1759764158,
+  "configHash": "0x809389ad9c7a1b439762d40afe798628477971b38a32826f9bbeaf99d1542f3f",
+  "entries": [
+    {
+      "name": "Manager",
+      "address": "eth:0x03ACc35286bAAE6D73d99a9f14Ef13752208C8dC",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762",
+        "0x84da8be39a916ec799c2d515f4c612a387cb3378d34916337722b367a019b8c6"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1745811503,
+      "sinceBlock": 22364925,
+      "values": {
+        "$admin": "eth:0x25249946D42a5fba2b6b1d191127BCaEc70bD103",
+        "$implementation": "eth:0x7b7E9dc2Ff8E48E311D727786Ed6Aa7B1Ce6bfA8",
+        "$pastUpgrades": [
+          [
+            "2025-04-28T03:38:23.000Z",
+            "0x7eda05ae57238ed4d098559c5a840949751b3e2d94b179b12876f49ce243e1e6",
+            ["eth:0x11Cd3530F58Cf5888dC9C33B07e6A85Be614e4E7"]
+          ],
+          [
+            "2025-06-07T05:54:47.000Z",
+            "0x1d6fc985fabe5061c1c514da21c3544e3108acf6f14a440c6b422193555d0839",
+            ["eth:0xf6801183c2b4AEb3eaC8129F96477D5fB162c202"]
+          ],
+          [
+            "2025-06-14T16:36:47.000Z",
+            "0xb3581362eb05d252eb484ce780f4a6f7dbe62469807e03735439acfcd5d7dd55",
+            ["eth:0x7b7E9dc2Ff8E48E311D727786Ed6Aa7B1Ce6bfA8"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "administrator": "eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e",
+        "receipt": "eth:0x933B4464beBE7136bC184637792c0EE514057660",
+        "treasury": "eth:0xd6656962FCe80D6E7664B44AeD1f6A178D6237D7"
+      },
+      "implementationNames": {
+        "eth:0x03ACc35286bAAE6D73d99a9f14Ef13752208C8dC": "TransparentUpgradeableProxy",
+        "eth:0x7b7E9dc2Ff8E48E311D727786Ed6Aa7B1Ce6bfA8": "Manager"
+      }
+    },
+    {
+      "name": "Administrator",
+      "address": "eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e",
+      "type": "Contract",
+      "template": "yieldfi/Administrator",
+      "sourceHashes": [
+        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762",
+        "0xfeef795150202675eb781deeb753733de1bb9769ae0762cbb3f5a354690ae5e7"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1745812331,
+      "sinceBlock": 22364994,
+      "values": {
+        "$admin": "eth:0xc79920D40206cc28f7B70E72d623Ff7fB83004C1",
+        "$implementation": "eth:0xcCAA27e3dB44e06BD9001958DE5b41301fD28002",
+        "$pastUpgrades": [
+          [
+            "2025-04-28T03:52:11.000Z",
+            "0xffe1f6a2a8375056b5e59d636f111b6eb8b995d80df41bfdd5f4a6728dacdb42",
+            ["eth:0xcCAA27e3dB44e06BD9001958DE5b41301fD28002"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "MANAGER": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
+          },
+          "MINTER_AND_REDEEMER": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
+          },
+          "REWARDER": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
+          },
+          "BRIDGE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
+          },
+          "COLLATERAL_MANAGER": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
+          },
+          "YIELD": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
+          },
+          "LOCKBOX": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
+          },
+          "ADMIN": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
+          }
+        },
+        "pendingTimeLockPeriod": 0,
+        "timeLockPeriod": 14400,
+        "timeLockUpdateEligibleAt": 0
+      },
+      "implementationNames": {
+        "eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e": "TransparentUpgradeableProxy",
+        "eth:0xcCAA27e3dB44e06BD9001958DE5b41301fD28002": "Administrator"
+      }
+    },
+    {
+      "name": "yUSD",
+      "address": "eth:0x19Ebd191f7A24ECE672ba13A302212b5eF7F35cb",
+      "type": "Contract",
+      "template": "yieldfi/yToken",
+      "sourceHashes": [
+        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762",
+        "0xc584cf0791972d811cbb10b6ed2caf5e040fbcdd5219bf8386cdf9654fa19585"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": [
+        "exchangeRate",
+        "exchangeRateScaled",
+        "getUnvestedAmount",
+        "lastDistributionTimestamp",
+        "totalAssets",
+        "totalSupply",
+        "totAssets",
+        "vestingAmount"
+      ],
+      "sinceTimestamp": 1745811527,
+      "sinceBlock": 22364927,
+      "values": {
+        "$admin": "eth:0xE26E1D2ae51dcB89E382CA7400b080e6632117B9",
+        "$implementation": "eth:0x5bf44d32260AeE6b807c490e92eF0481D15Ab493",
+        "$minters": {
+          "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"],
+          "permissionlessMinting": true
+        },
+        "$pastUpgrades": [
+          [
+            "2025-04-28T03:38:47.000Z",
+            "0x1037a556b13e8a5525f9df4ab34176398cdf7334c50da7de331097805699798c",
+            ["eth:0x28cDfc8C2b8Fc8388f26bAc1B0876802708B9F23"]
+          ],
+          [
+            "2025-06-07T05:57:11.000Z",
+            "0xdc5b70a238d1654590dc120577d09726d9d034e2291754aca7542293b2aa6afc",
+            ["eth:0x5bf44d32260AeE6b807c490e92eF0481D15Ab493"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "administrator": "eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e",
+        "asset": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "decimals": 18,
+        "exchangeRate": 1123461,
+        "exchangeRateScaled": "1123461000000000000",
+        "fee": 0,
+        "gasFee": 300000,
+        "getUnvestedAmount": 25288826455,
+        "lastDistributionTimestamp": 1759731155,
+        "manager": "eth:0x03ACc35286bAAE6D73d99a9f14Ef13752208C8dC",
+        "name": "YieldFi yUSD",
+        "symbol": "yUSD",
+        "totalAssets": 157429611348910,
+        "totalSupply": "140129201364283750695298602",
+        "totAssets": 157454900175365,
+        "vestingAmount": 40916752916,
+        "vestingPeriod": 86400,
+        "yield": "eth:0x392017161a9507F19644E8886A237C58809212B5"
+      },
+      "implementationNames": {
+        "eth:0x19Ebd191f7A24ECE672ba13A302212b5eF7F35cb": "TransparentUpgradeableProxy",
+        "eth:0x5bf44d32260AeE6b807c490e92eF0481D15Ab493": "YToken"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0x25249946D42a5fba2b6b1d191127BCaEc70bD103",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x03ACc35286bAAE6D73d99a9f14Ef13752208C8dC",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1745811503,
+      "sinceBlock": 22364925,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x8E31eFdA4453494a84Fa6168D53Eb1418c0b4aC4",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "eth:0x25249946D42a5fba2b6b1d191127BCaEc70bD103": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "vyUSD",
+      "address": "eth:0x2e3C5e514EEf46727DE1FE44618027A9b70D92FC",
+      "type": "Contract",
+      "template": "yieldfi/yToken",
+      "sourceHashes": [
+        "0x986346836d4dfb3ec6cb62cd668e6d746f8be0a370a352172dd7f7e0a7fe1320",
+        "0xe0d5f5bf90b1a9a74c7ac96f5bcbbf52030da73aa7927629913cc14c0d2a2264"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": [
+        "exchangeRate",
+        "exchangeRateScaled",
+        "getUnvestedAmount",
+        "lastDistributionTimestamp",
+        "totalAssets",
+        "totalSupply",
+        "totAssets",
+        "vestingAmount"
+      ],
+      "sinceTimestamp": 1749298559,
+      "sinceBlock": 22652648,
+      "values": {
+        "$admin": "eth:0x3C6ECDcdAc78B65BDD85985285C1A1d140A79a63",
+        "$implementation": "eth:0xb94758e90263b48D8f150FFc314b957e2475e247",
+        "$minters": {
+          "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"],
+          "permissionlessMinting": true
+        },
+        "$pastUpgrades": [
+          [
+            "2025-06-07T12:15:59.000Z",
+            "0x30eec5885072439a0bae60f9e4a239e5bb8ac2fa5a43fcadc8d1c1d296d31293",
+            ["eth:0x9927848002845B36138FB5dDE84b2bE753532986"]
+          ],
+          [
+            "2025-06-13T15:05:23.000Z",
+            "0x2af92f648b12321be525d4341d03dc246ed1878291bdcc2391334a43d38bd8c4",
+            ["eth:0xb94758e90263b48D8f150FFc314b957e2475e247"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "administrator": "eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e",
+        "asset": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "decimals": 18,
+        "exchangeRate": 1038155,
+        "exchangeRateScaled": "1038155000000000000",
+        "fee": 0,
+        "gasFee": 500000,
+        "getUnvestedAmount": 2747269549,
+        "guardrailMultiplier": 2,
+        "lastDistributionTimestamp": 1759731263,
+        "manager": "eth:0x03ACc35286bAAE6D73d99a9f14Ef13752208C8dC",
+        "name": "YieldFi vyUSD",
+        "symbol": "vyUSD",
+        "totalAssets": 13741173656490,
+        "totalSupply": "13236156009465443262758910",
+        "totAssets": 13743920926039,
+        "vestingAmount": 4436048611,
+        "vestingPeriod": 86400,
+        "yield": "eth:0x392017161a9507F19644E8886A237C58809212B5",
+        "yToken": "eth:0x19Ebd191f7A24ECE672ba13A302212b5eF7F35cb"
+      },
+      "implementationNames": {
+        "eth:0x2e3C5e514EEf46727DE1FE44618027A9b70D92FC": "TransparentUpgradeableProxy",
+        "eth:0xb94758e90263b48D8f150FFc314b957e2475e247": "vyToken"
+      }
+    },
+    {
+      "name": "Yield",
+      "address": "eth:0x392017161a9507F19644E8886A237C58809212B5",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762",
+        "0xd39f986b40a87be666a70c453f29c7d0f0d267c79bb9ffe83efaa218827874a6"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1745812439,
+      "sinceBlock": 22365003,
+      "values": {
+        "$admin": "eth:0x6569089dd56A140777014d27B6113d96f3544f71",
+        "$implementation": "eth:0x1d8414d741A4fb7757442a41E12bA447ed2ab6aa",
+        "$pastUpgrades": [
+          [
+            "2025-04-28T03:53:59.000Z",
+            "0xde9a3abd50f9783c4bf6a38f44af48158873b550e93c50cd27c2601af80bc36a",
+            ["eth:0x9d53DDd459c1656036dCa12F1E97AA0aA26Af1E2"]
+          ],
+          [
+            "2025-05-03T12:14:35.000Z",
+            "0x0710bf5a6c20df250172ff2bc9e7a1deff60c00d259fc4fed8c54533fd41d6fe",
+            ["eth:0x92E8A239f92be5D234c228283e112dE3743D1c67"]
+          ],
+          [
+            "2025-06-07T06:05:35.000Z",
+            "0x258513ae45e314e9abcd622d643cb845385d62b4bbdd7cc40e2c99f22d63c715",
+            ["eth:0xA850b723847152Be09CbDe1c6924Cf1554834b21"]
+          ],
+          [
+            "2025-07-02T14:21:59.000Z",
+            "0xd72c0f0c6c76c247031328e373ab5b8e781dfb06d7ee4df2daf0d80cb7b4f330",
+            ["eth:0x1d8414d741A4fb7757442a41E12bA447ed2ab6aa"]
+          ]
+        ],
+        "$upgradeCount": 4,
+        "administrator": "eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e",
+        "manager": "eth:0x03ACc35286bAAE6D73d99a9f14Ef13752208C8dC"
+      },
+      "implementationNames": {
+        "eth:0x392017161a9507F19644E8886A237C58809212B5": "TransparentUpgradeableProxy",
+        "eth:0x1d8414d741A4fb7757442a41E12bA447ed2ab6aa": "Yield"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0x3C6ECDcdAc78B65BDD85985285C1A1d140A79a63",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2e3C5e514EEf46727DE1FE44618027A9b70D92FC",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1749298559,
+      "sinceBlock": 22652648,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "eth:0x3C6ECDcdAc78B65BDD85985285C1A1d140A79a63": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0x6569089dd56A140777014d27B6113d96f3544f71",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x392017161a9507F19644E8886A237C58809212B5",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1745812439,
+      "sinceBlock": 22365003,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x8E31eFdA4453494a84Fa6168D53Eb1418c0b4aC4",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "eth:0x6569089dd56A140777014d27B6113d96f3544f71": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "YieldFiTimelockController",
+      "address": "eth:0x8E31eFdA4453494a84Fa6168D53Eb1418c0b4aC4",
+      "type": "Contract",
+      "template": "yieldfi/TimelockController",
+      "sourceHashes": [
+        "0x706812f226bec5d959f6b4977145ce734718d676eaee8707aa2bff14e59eba77"
+      ],
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x03ACc35286bAAE6D73d99a9f14Ef13752208C8dC",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x25249946D42a5fba2b6b1d191127BCaEc70bD103" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xc79920D40206cc28f7B70E72d623Ff7fB83004C1" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x19Ebd191f7A24ECE672ba13A302212b5eF7F35cb",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xE26E1D2ae51dcB89E382CA7400b080e6632117B9" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x392017161a9507F19644E8886A237C58809212B5",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x6569089dd56A140777014d27B6113d96f3544f71" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x933B4464beBE7136bC184637792c0EE514057660",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xCfD925b89D4ccfee2eC9287b362648854aCbBF03" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x25249946D42a5fba2b6b1d191127BCaEc70bD103",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x6569089dd56A140777014d27B6113d96f3544f71",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xc79920D40206cc28f7B70E72d623Ff7fB83004C1",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xCfD925b89D4ccfee2eC9287b362648854aCbBF03",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xE26E1D2ae51dcB89E382CA7400b080e6632117B9",
+          "role": ".owner"
+        }
+      ],
+      "sinceTimestamp": 1747415891,
+      "sinceBlock": 22497060,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x8E31eFdA4453494a84Fa6168D53Eb1418c0b4aC4"]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xA6E98a21eA3cBE891b8A24f7233443748C17b387"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xA6E98a21eA3cBE891b8A24f7233443748C17b387"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xA6E98a21eA3cBE891b8A24f7233443748C17b387"]
+          }
+        },
+        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "getMinDelay": 86400,
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
+      },
+      "implementationNames": {
+        "eth:0x8E31eFdA4453494a84Fa6168D53Eb1418c0b4aC4": "YieldFiTimelockController"
+      }
+    },
+    {
+      "name": "RequestReceipt",
+      "address": "eth:0x933B4464beBE7136bC184637792c0EE514057660",
+      "type": "Contract",
+      "template": "yieldfi/RequestReceipt",
+      "sourceHashes": [
+        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762",
+        "0x96fa98ebc2c01b61141dbd8871e1532a6ef100fce0a94d64e6a42ecf3ce69550"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["counter", "totalSupply"],
+      "sinceTimestamp": 1745812367,
+      "sinceBlock": 22364997,
+      "values": {
+        "$admin": "eth:0xCfD925b89D4ccfee2eC9287b362648854aCbBF03",
+        "$implementation": "eth:0x78F7540dAde1062d67c8597Ba7dAA455E4a813c4",
+        "$pastUpgrades": [
+          [
+            "2025-04-28T03:52:47.000Z",
+            "0x13c206e60ff9505c103a386731fb613d4c6f7c27345c2423647364eeb5f504b7",
+            ["eth:0x78F7540dAde1062d67c8597Ba7dAA455E4a813c4"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "administrator": "eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e",
+        "counter": 1819,
+        "getApproved": [],
+        "name": "YieldFi Order Receipt",
+        "ownerOf": [],
+        "symbol": "yOR",
+        "tokenURI": [],
+        "totalSupply": 5
+      },
+      "implementationNames": {
+        "eth:0x933B4464beBE7136bC184637792c0EE514057660": "TransparentUpgradeableProxy",
+        "eth:0x78F7540dAde1062d67c8597Ba7dAA455E4a813c4": "RequestReceipt"
+      }
+    },
+    {
+      "address": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2e3C5e514EEf46727DE1FE44618027A9b70D92FC",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x3C6ECDcdAc78B65BDD85985285C1A1d140A79a63" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x3C6ECDcdAc78B65BDD85985285C1A1d140A79a63",
+          "role": ".owner"
+        }
+      ]
+    },
+    {
+      "name": "USD Coin Token",
+      "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "type": "Contract",
+      "template": "tokens/circle/USDC",
+      "sourceHashes": [
+        "0x465649a27ea63e4d4455ae370e76fe43b1e2ddf2e6c7df12603093e0fb9e5145",
+        "0xacd76117eb21f736961ade180c25f63d796bc2e83f43b82ee3ff585bb34ce6ed"
+      ],
+      "proxyType": "ZeppelinOS proxy",
+      "ignoreInWatchMode": ["totalSupply"],
+      "sinceTimestamp": 1533324504,
+      "sinceBlock": 6082465,
+      "values": {
+        "$admin": "eth:0x807a96288A1A408dBC13DE2b1d087d10356395d2",
+        "$immutable": false,
+        "$implementation": "eth:0x43506849D7C04F9138D1A2050bbF3A0c054402dd",
+        "$pastUpgrades": [
+          [
+            "2020-08-27T15:32:54.000Z",
+            "0xe6f0f754398d89583da8e4229c5d7aaa00739a3ae334ecfc2839ac396b4836e3",
+            ["eth:0xB7277a6e95992041568D9391D09d0122023778A2"]
+          ],
+          [
+            "2021-04-26T19:14:51.000Z",
+            "0xe2e40640ffd5f76538cd23660cf56f00bfebd5fe925ebad6b8067c4cee18a2c3",
+            ["eth:0xa2327a938Febf5FEC13baCFb16Ae10EcBc4cbDCF"]
+          ],
+          [
+            "2024-01-08T17:16:35.000Z",
+            "0xae3ad89e569f27d47a8a02999a6d937c12aaa6bc50e66650e7cbd3244bde9951",
+            ["eth:0x43506849D7C04F9138D1A2050bbF3A0c054402dd"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "blacklister": "eth:0x0A06BE16275B95a7d2567fBdAE118b36C7DA78F9",
+        "CANCEL_AUTHORIZATION_TYPEHASH": "0x158b0a9edf7a828aad02f63cd515c68ef2f50ba807396f6d12842833a1597429",
+        "currency": "USD",
+        "decimals": 6,
+        "DOMAIN_SEPARATOR": "0x06c37168a7db5138defc7866392bb87a741f9b3d104deb5094588ce041cae335",
+        "masterMinter": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+        "minters": [
+          "eth:0x5B6122C109B78C6755486966148C1D70a50A47D7",
+          "eth:0x19a932fC5A8320939c3575302a8705147a7f27D8",
+          "eth:0x24BDd8771b08C2EA6FE0e898126e65BD49021BE3",
+          "eth:0x55FE002aefF02F77364de339a1292923A15844B8",
+          "eth:0x895F07957B863f4AB6086035a6990d8366Bc3266",
+          "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
+          "eth:0x8967a7cE20043F876e42F8aD696b06bb632f0ca7",
+          "eth:0x3005A4C0EFE7E66F3f60eF8704983247A5c6ca61",
+          "eth:0xE400d09e98a5806bF501E93ED8E7623B78b4646F",
+          "eth:0x2322E81DB282F22849c2Eb0b749C688Ea3611946",
+          "eth:0x2b52e60C844d7946b6d910D3296940dC889CC785",
+          "eth:0x911cb2323c6fB580e39F92a6f58D1cb019E940Cd",
+          "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
+          "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
+          "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE"
+        ],
+        "name": "USD Coin",
+        "owner": "eth:0xFcb19e6a322b27c06842A71e8c725399f049AE3a",
+        "paused": false,
+        "pauser": "eth:0x4914f61d25e5C567143774B76EdbF4D5109a8566",
+        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
+        "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
+        "rescuer": "eth:0x0000000000000000000000000000000000000000",
+        "symbol": "USDC",
+        "totalSupply": "48298304287992590",
+        "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
+        "version": "2"
+      },
+      "fieldMeta": {
+        "minters": {
+          "description": "All minters, ignoring their 'allowed amount'"
+        }
+      },
+      "implementationNames": {
+        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "FiatTokenProxy",
+        "eth:0x43506849D7C04F9138D1A2050bbF3A0c054402dd": "FiatTokenV2_2"
+      }
+    },
+    {
+      "address": "eth:0xA6E98a21eA3cBE891b8A24f7233443748C17b387",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0xc79920D40206cc28f7B70E72d623Ff7fB83004C1",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1745812331,
+      "sinceBlock": 22364994,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x8E31eFdA4453494a84Fa6168D53Eb1418c0b4aC4",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "eth:0xc79920D40206cc28f7B70E72d623Ff7fB83004C1": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0xCfD925b89D4ccfee2eC9287b362648854aCbBF03",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x933B4464beBE7136bC184637792c0EE514057660",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1745812367,
+      "sinceBlock": 22364997,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x8E31eFdA4453494a84Fa6168D53Eb1418c0b4aC4",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "eth:0xCfD925b89D4ccfee2eC9287b362648854aCbBF03": "ProxyAdmin"
+      }
+    },
+    {
+      "address": "eth:0xd6656962FCe80D6E7664B44AeD1f6A178D6237D7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0xE26E1D2ae51dcB89E382CA7400b080e6632117B9",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x19Ebd191f7A24ECE672ba13A302212b5eF7F35cb",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1745811527,
+      "sinceBlock": 22364927,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x8E31eFdA4453494a84Fa6168D53Eb1418c0b4aC4",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "eth:0xE26E1D2ae51dcB89E382CA7400b080e6632117B9": "ProxyAdmin"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x03ACc35286bAAE6D73d99a9f14Ef13752208C8dC": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x19Ebd191f7A24ECE672ba13A302212b5eF7F35cb": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x1d8414d741A4fb7757442a41E12bA447ed2ab6aa": [
+      "constructor()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error ReentrancyGuardReentrantCall()",
+      "event AdministratorSet(address indexed caller, address indexed newAdministrator)",
+      "event DistributeYield(address caller, address indexed asset, address indexed receiver, uint256 amount, bool profit)",
+      "event Initialized(uint64 version)",
+      "event ManagerSet(address indexed caller, address indexed manager)",
+      "event VaultTokenSet(address indexed caller, address indexed yToken, address indexed vaultToken)",
+      "function administrator() view returns (address)",
+      "function distributeYield(address yToken, uint256 amount, uint256 feeAmount, uint256 nonce, bool isProfit)",
+      "function epoch(address) view returns (uint256)",
+      "function getEpoch(address _receiver) view returns (uint256)",
+      "function init(address _admin)",
+      "function loss(address) view returns (uint256)",
+      "function manager() view returns (address)",
+      "function profit(address) view returns (uint256)",
+      "function setAdministrator(address _administrator)",
+      "function setManager(address _manager)",
+      "function setVaultToken(address yToken, address vaultToken)",
+      "function trxns(bytes32) view returns (bool)",
+      "function yTokenToVaultToken(address) view returns (address)"
+    ],
+    "eth:0x25249946D42a5fba2b6b1d191127BCaEc70bD103": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0x2e3C5e514EEf46727DE1FE44618027A9b70D92FC": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x392017161a9507F19644E8886A237C58809212B5": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x3C6ECDcdAc78B65BDD85985285C1A1d140A79a63": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0x43506849D7C04F9138D1A2050bbF3A0c054402dd": [
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event AuthorizationCanceled(address indexed authorizer, bytes32 indexed nonce)",
+      "event AuthorizationUsed(address indexed authorizer, bytes32 indexed nonce)",
+      "event Blacklisted(address indexed _account)",
+      "event BlacklisterChanged(address indexed newBlacklister)",
+      "event Burn(address indexed burner, uint256 amount)",
+      "event MasterMinterChanged(address indexed newMasterMinter)",
+      "event Mint(address indexed minter, address indexed to, uint256 amount)",
+      "event MinterConfigured(address indexed minter, uint256 minterAllowedAmount)",
+      "event MinterRemoved(address indexed oldMinter)",
+      "event OwnershipTransferred(address previousOwner, address newOwner)",
+      "event Pause()",
+      "event PauserChanged(address indexed newAddress)",
+      "event RescuerChanged(address indexed newRescuer)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event UnBlacklisted(address indexed _account)",
+      "event Unpause()",
+      "function CANCEL_AUTHORIZATION_TYPEHASH() view returns (bytes32)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function PERMIT_TYPEHASH() view returns (bytes32)",
+      "function RECEIVE_WITH_AUTHORIZATION_TYPEHASH() view returns (bytes32)",
+      "function TRANSFER_WITH_AUTHORIZATION_TYPEHASH() view returns (bytes32)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function authorizationState(address authorizer, bytes32 nonce) view returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function blacklist(address _account)",
+      "function blacklister() view returns (address)",
+      "function burn(uint256 _amount)",
+      "function cancelAuthorization(address authorizer, bytes32 nonce, uint8 v, bytes32 r, bytes32 s)",
+      "function cancelAuthorization(address authorizer, bytes32 nonce, bytes signature)",
+      "function configureMinter(address minter, uint256 minterAllowedAmount) returns (bool)",
+      "function currency() view returns (string)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 decrement) returns (bool)",
+      "function increaseAllowance(address spender, uint256 increment) returns (bool)",
+      "function initialize(string tokenName, string tokenSymbol, string tokenCurrency, uint8 tokenDecimals, address newMasterMinter, address newPauser, address newBlacklister, address newOwner)",
+      "function initializeV2(string newName)",
+      "function initializeV2_1(address lostAndFound)",
+      "function initializeV2_2(address[] accountsToBlacklist, string newSymbol)",
+      "function isBlacklisted(address _account) view returns (bool)",
+      "function isMinter(address account) view returns (bool)",
+      "function masterMinter() view returns (address)",
+      "function mint(address _to, uint256 _amount) returns (bool)",
+      "function minterAllowance(address minter) view returns (uint256)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pauser() view returns (address)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, bytes signature)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function receiveWithAuthorization(address from, address to, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, bytes signature)",
+      "function receiveWithAuthorization(address from, address to, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, uint8 v, bytes32 r, bytes32 s)",
+      "function removeMinter(address minter) returns (bool)",
+      "function rescueERC20(address tokenContract, address to, uint256 amount)",
+      "function rescuer() view returns (address)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function transferWithAuthorization(address from, address to, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, bytes signature)",
+      "function transferWithAuthorization(address from, address to, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, uint8 v, bytes32 r, bytes32 s)",
+      "function unBlacklist(address _account)",
+      "function unpause()",
+      "function updateBlacklister(address _newBlacklister)",
+      "function updateMasterMinter(address _newMasterMinter)",
+      "function updatePauser(address _newPauser)",
+      "function updateRescuer(address newRescuer)",
+      "function version() pure returns (string)"
+    ],
+    "eth:0x5bf44d32260AeE6b807c490e92eF0481D15Ab493": [
+      "constructor()",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "error ERC20InvalidApprover(address approver)",
+      "error ERC20InvalidReceiver(address receiver)",
+      "error ERC20InvalidSender(address sender)",
+      "error ERC20InvalidSpender(address spender)",
+      "error ERC4626ExceededMaxDeposit(address receiver, uint256 assets, uint256 max)",
+      "error ERC4626ExceededMaxMint(address receiver, uint256 shares, uint256 max)",
+      "error ERC4626ExceededMaxRedeem(address owner, uint256 shares, uint256 max)",
+      "error ERC4626ExceededMaxWithdraw(address owner, uint256 assets, uint256 max)",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "event AdministratorSet(address indexed caller, address indexed newAdministrator)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)",
+      "event FeeSet(address indexed caller, uint256 fee)",
+      "event GasFeeSet(address indexed caller, uint256 gasFee)",
+      "event Initialized(uint64 version)",
+      "event ManagerSet(address indexed caller, address indexed manager)",
+      "event Rescue(address indexed caller, address indexed token, address indexed to, uint256 amount)",
+      "event TotalAssetsUpdated(address indexed caller, uint256 amount, bool add)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event TransferRewards(address indexed caller, uint256 amount)",
+      "event VestingPeriodSet(address indexed caller, uint256 vestingPeriod)",
+      "event Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)",
+      "event YieldSet(address indexed caller, address indexed yield)",
+      "function administrator() view returns (address)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function asset() view returns (address)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function burnYToken(address from, uint256 shares)",
+      "function convertToAssets(uint256 shares) view returns (uint256)",
+      "function convertToShares(uint256 assets) view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function deposit(uint256 assets, address receiver) returns (uint256)",
+      "function exchangeRate() view returns (uint256)",
+      "function exchangeRateScaled() view returns (uint256)",
+      "function fee() view returns (uint256)",
+      "function gasFee() view returns (uint256)",
+      "function getUnvestedAmount() view returns (uint256)",
+      "function init(string _name, string _symbol, address _asset, address _yield, address _manager, address _administrator)",
+      "function lastDistributionTimestamp() view returns (uint256)",
+      "function manager() view returns (address)",
+      "function maxDeposit(address) view returns (uint256)",
+      "function maxMint(address) view returns (uint256)",
+      "function maxRedeem(address owner) view returns (uint256)",
+      "function maxWithdraw(address owner) view returns (uint256)",
+      "function mint(uint256 shares, address receiver) returns (uint256)",
+      "function mintYToken(address to, uint256 shares, bool)",
+      "function name() view returns (string)",
+      "function previewDeposit(uint256 assets) view returns (uint256)",
+      "function previewMint(uint256 shares) view returns (uint256)",
+      "function previewRedeem(uint256 shares) view returns (uint256)",
+      "function previewWithdraw(uint256 assets) view returns (uint256)",
+      "function redeem(uint256 shares, address receiver, address owner) returns (uint256)",
+      "function rescue(address _token, address _user, uint256 _amount)",
+      "function setAdministrator(address _administrator)",
+      "function setFee(uint256 _fee)",
+      "function setGasFee(uint256 _gasFee)",
+      "function setManager(address _manager)",
+      "function setVestingPeriod(uint256 _vestingPeriod)",
+      "function setYield(address _yield)",
+      "function symbol() view returns (string)",
+      "function totAssets() view returns (uint256)",
+      "function totalAssets() view returns (uint256)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function transferInRewards(uint256 amount, bool profit)",
+      "function updateTotalAssets(uint256 _amount, bool _add)",
+      "function vestingAmount() view returns (uint256)",
+      "function vestingPeriod() view returns (uint256)",
+      "function withdraw(uint256 assets, address receiver, address owner) returns (uint256)",
+      "function yield() view returns (address)"
+    ],
+    "eth:0x6569089dd56A140777014d27B6113d96f3544f71": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0x78F7540dAde1062d67c8597Ba7dAA455E4a813c4": [
+      "constructor()",
+      "error ERC721EnumerableForbiddenBatchMint()",
+      "error ERC721IncorrectOwner(address sender, uint256 tokenId, address owner)",
+      "error ERC721InsufficientApproval(address operator, uint256 tokenId)",
+      "error ERC721InvalidApprover(address approver)",
+      "error ERC721InvalidOperator(address operator)",
+      "error ERC721InvalidOwner(address owner)",
+      "error ERC721InvalidReceiver(address receiver)",
+      "error ERC721InvalidSender(address sender)",
+      "error ERC721NonexistentToken(uint256 tokenId)",
+      "error ERC721OutOfBoundsIndex(address owner, uint256 index)",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error ReentrancyGuardReentrantCall()",
+      "event AdministratorSet(address indexed caller, address indexed newAdministrator)",
+      "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
+      "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)",
+      "event Initialized(uint64 version)",
+      "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
+      "function administrator() view returns (address)",
+      "function approve(address to, uint256 tokenId)",
+      "function balanceOf(address owner) view returns (uint256)",
+      "function burn(uint256 _tokenId)",
+      "function counter() view returns (uint256)",
+      "function getApproved(uint256 tokenId) view returns (address)",
+      "function init(address _administrator)",
+      "function isApprovedForAll(address owner, address operator) view returns (bool)",
+      "function mint(address _to, tuple(bool orderType, address owner, address asset, address receiver, address yToken, uint256 amount, uint256 eligibleAt, uint256 exchangeRateInUnderlying, address callback, bytes callbackData, bytes32 referralCode) _order) returns (uint256)",
+      "function name() view returns (string)",
+      "function orders(uint256) view returns (bool orderType, address owner, address asset, address receiver, address yToken, uint256 amount, uint256 eligibleAt, uint256 exchangeRateInUnderlying, address callback, bytes callbackData, bytes32 referralCode)",
+      "function ownerOf(uint256 tokenId) view returns (address)",
+      "function readOrder(uint256 _tokenId) view returns (tuple(bool orderType, address owner, address asset, address receiver, address yToken, uint256 amount, uint256 eligibleAt, uint256 exchangeRateInUnderlying, address callback, bytes callbackData, bytes32 referralCode))",
+      "function safeTransferFrom(address from, address to, uint256 tokenId)",
+      "function safeTransferFrom(address from, address to, uint256 tokenId, bytes data)",
+      "function setAdministrator(address _administrator)",
+      "function setApprovalForAll(address operator, bool approved)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function tokenByIndex(uint256 index) view returns (uint256)",
+      "function tokenOfOwnerByIndex(address owner, uint256 index) view returns (uint256)",
+      "function tokenURI(uint256 tokenId) view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transferFrom(address from, address to, uint256 tokenId)"
+    ],
+    "eth:0x7b7E9dc2Ff8E48E311D727786Ed6Aa7B1Ce6bfA8": [
+      "constructor()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "event AdministratorSet(address indexed caller, address indexed newAdministrator)",
+      "event AssetAndShareManaged(address indexed caller, address indexed yToken, uint256 shares, uint256 assetAmount, bool updateAsset, bool isMint, bool isNewYToken)",
+      "event AssetStatus(bool indexed orderType, address indexed yToken, address indexed asset, bool status)",
+      "event CustodyWalletSet(address indexed caller, address indexed wallet, bool status)",
+      "event Deposit(address indexed caller, address indexed asset, uint256 amount, address indexed receiver, address yToken, uint256 shares, uint256 feeShare, uint256 gasFeeShare)",
+      "event Initialized(uint64 version)",
+      "event InstantRedeem(address caller, address indexed yToken, address indexed asset, address indexed receiver, uint256 amount)",
+      "event MaxRedeemCapSet(address indexed caller, address indexed yToken, uint256 maxRedeemCap)",
+      "event MinSharesInYTokenSet(address indexed caller, address indexed yToken, uint256 minShares)",
+      "event OrderRequest(address caller, address indexed yToken, address indexed asset, address indexed receiver, uint256 amount, bool orderType, uint256 exchangeRateInUnderlying, uint256 receiptId, bytes32 referralCode)",
+      "event ReceiptSet(address indexed caller, address indexed receipt)",
+      "event Rescue(address indexed caller, address indexed token, address indexed to, uint256 amount)",
+      "event TreasurySet(address indexed caller, address indexed treasury)",
+      "event Withdraw(address indexed caller, address indexed asset, uint256 amount, address indexed receiver, address yToken, uint256 shares, uint256 feeShare, uint256 gasFeeShare)",
+      "event YieldFeesTransferred(address indexed treasury, address indexed yToken, uint256 shares)",
+      "function administrator() view returns (address)",
+      "function custodyWallets(address) view returns (bool)",
+      "function deposit(address _yToken, address _asset, uint256 _amount, address _receiver, address _callback, bytes _callbackData, bytes32 _referralCode)",
+      "function depositAssets(address, address) view returns (bool)",
+      "function executeOrder(uint256 _receiptId, uint256 _amount, uint256 _fee, uint256 _gas)",
+      "function guardrailPercentageForAsset(address, address) view returns (uint256)",
+      "function init(address _administrator, address _treasury, address _receipt)",
+      "function manageAssetAndShares(address _to, tuple(address yToken, uint256 shares, uint256 assetAmount, bool updateAsset, bool isMint, bool isNewYToken) _order)",
+      "function maxRedeemCap(address) view returns (uint256)",
+      "function minSharesInYToken(address) view returns (uint256)",
+      "function receipt() view returns (address)",
+      "function redeem(address caller, address _yToken, address _asset, uint256 _shares, address _receiver, address _callback, bytes _callbackData)",
+      "function setAdministrator(address _administrator)",
+      "function setAsset(bool _orderType, address _yToken, address _asset, uint256 _guardrailPercentage, bool _status)",
+      "function setCustodyWallet(address _wallet, bool _status)",
+      "function setMaxRedeemCap(address _yToken, uint256 _maxRedeemCap)",
+      "function setMinSharesInYToken(address _yToken, uint256 _minShares)",
+      "function setReceipt(address _receipt)",
+      "function setTreasury(address _treasury)",
+      "function transferToCustodyWallet(address _token, address _receiver, uint256 _amount)",
+      "function treasury() view returns (address)",
+      "function withdrawAssets(address, address) view returns (bool)",
+      "function withdrawBondYield(address _yToken, address receiver, uint256 amount, address assetToken)"
+    ],
+    "eth:0x8E31eFdA4453494a84Fa6168D53Eb1418c0b4aC4": [
+      "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error FailedCall()",
+      "error TimelockInsufficientDelay(uint256 delay, uint256 minDelay)",
+      "error TimelockInvalidOperationLength(uint256 targets, uint256 payloads, uint256 values)",
+      "error TimelockUnauthorizedCaller(address caller)",
+      "error TimelockUnexecutedPredecessor(bytes32 predecessorId)",
+      "error TimelockUnexpectedOperationState(bytes32 operationId, bytes32 expectedStates)",
+      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
+      "event CallSalt(bytes32 indexed id, bytes32 salt)",
+      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
+      "event Cancelled(bytes32 indexed id)",
+      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function CANCELLER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function PROPOSER_ROLE() view returns (bytes32)",
+      "function cancel(bytes32 id)",
+      "function execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt) payable",
+      "function executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) payable",
+      "function getMinDelay() view returns (uint256)",
+      "function getOperationState(bytes32 id) view returns (uint8)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getTimestamp(bytes32 id) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function isOperation(bytes32 id) view returns (bool)",
+      "function isOperationDone(bytes32 id) view returns (bool)",
+      "function isOperationPending(bytes32 id) view returns (bool)",
+      "function isOperationReady(bytes32 id) view returns (bool)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateDelay(uint256 newDelay)"
+    ],
+    "eth:0x933B4464beBE7136bC184637792c0EE514057660": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": [
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function implementation() view returns (address)",
+      "function changeAdmin(address newAdmin)",
+      "function admin() view returns (address)",
+      "constructor(address _implementation)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address implementation)"
+    ],
+    "eth:0xb94758e90263b48D8f150FFc314b957e2475e247": [
+      "constructor()",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "error ERC20InvalidApprover(address approver)",
+      "error ERC20InvalidReceiver(address receiver)",
+      "error ERC20InvalidSender(address sender)",
+      "error ERC20InvalidSpender(address spender)",
+      "error ERC4626ExceededMaxDeposit(address receiver, uint256 assets, uint256 max)",
+      "error ERC4626ExceededMaxMint(address receiver, uint256 shares, uint256 max)",
+      "error ERC4626ExceededMaxRedeem(address owner, uint256 shares, uint256 max)",
+      "error ERC4626ExceededMaxWithdraw(address owner, uint256 assets, uint256 max)",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "event AdministratorSet(address indexed caller, address indexed newAdministrator)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)",
+      "event FeeSet(address indexed caller, uint256 fee)",
+      "event GasFeeSet(address indexed caller, uint256 gasFee)",
+      "event GuardrailMultiplierSet(uint256 guardrailMultiplier)",
+      "event Initialized(uint64 version)",
+      "event ManagerSet(address indexed caller, address indexed manager)",
+      "event PrincipalSent(address indexed token, uint256 amount, address indexed strategy)",
+      "event Rescue(address indexed caller, address indexed token, address indexed to, uint256 amount)",
+      "event StrategyAddressSet(address indexed strategy, bool status)",
+      "event TotalAssetsUpdated(address indexed caller, uint256 amount, bool add)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event TransferRewards(address indexed caller, uint256 amount)",
+      "event VestingPeriodSet(address indexed caller, uint256 vestingPeriod)",
+      "event Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)",
+      "event YTokenDeposit(address indexed sender, address indexed receiver, uint256 amountYToken, uint256 shares)",
+      "event YTokenSet(address indexed yToken)",
+      "event YieldSet(address indexed caller, address indexed yield)",
+      "function administrator() view returns (address)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function asset() view returns (address)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function burnYToken(address from, uint256 shares)",
+      "function convertToAssets(uint256 shares) view returns (uint256)",
+      "function convertToShares(uint256 assets) view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function deposit(uint256 assets, address receiver) returns (uint256)",
+      "function depositYToken(address to, uint256 amountYToken)",
+      "function exchangeRate() view returns (uint256)",
+      "function exchangeRateScaled() view returns (uint256)",
+      "function fee() view returns (uint256)",
+      "function gasFee() view returns (uint256)",
+      "function getUnvestedAmount() view returns (uint256)",
+      "function guardrailMultiplier() view returns (uint256)",
+      "function init(string _name, string _symbol, address _asset, address _yield, address _manager, address _administrator)",
+      "function lastDistributionTimestamp() view returns (uint256)",
+      "function manager() view returns (address)",
+      "function maxDeposit(address) view returns (uint256)",
+      "function maxMint(address) view returns (uint256)",
+      "function maxRedeem(address owner) view returns (uint256)",
+      "function maxWithdraw(address owner) view returns (uint256)",
+      "function mint(uint256 shares, address receiver) returns (uint256)",
+      "function mintYToken(address to, uint256 shares, bool isNewYToken)",
+      "function name() view returns (string)",
+      "function previewDeposit(uint256 assets) view returns (uint256)",
+      "function previewMint(uint256 shares) view returns (uint256)",
+      "function previewRedeem(uint256 shares) view returns (uint256)",
+      "function previewWithdraw(uint256 assets) view returns (uint256)",
+      "function redeem(uint256 shares, address receiver, address owner) returns (uint256)",
+      "function rescue(address _token, address _user, uint256 _amount)",
+      "function sendToStrategy(address token, uint256 amount, address strategy)",
+      "function setAdministrator(address _administrator)",
+      "function setFee(uint256 _fee)",
+      "function setGasFee(uint256 _gasFee)",
+      "function setGuardrailMultiplier(uint256 _guardrailMultiplier)",
+      "function setManager(address _manager)",
+      "function setStrategy(address _strategy, bool _status)",
+      "function setVestingPeriod(uint256 _vestingPeriod)",
+      "function setYTokenAndAllowance(address _yToken)",
+      "function setYield(address _yield)",
+      "function strategyAddress(address) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function totAssets() view returns (uint256)",
+      "function totalAssets() view returns (uint256)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function transferInRewards(uint256 amount, bool profit)",
+      "function updateTotalAssets(uint256 _amount, bool _add)",
+      "function vestingAmount() view returns (uint256)",
+      "function vestingPeriod() view returns (uint256)",
+      "function withdraw(uint256 assets, address receiver, address owner) returns (uint256)",
+      "function yToken() view returns (address)",
+      "function yield() view returns (address)"
+    ],
+    "eth:0xc79920D40206cc28f7B70E72d623Ff7fB83004C1": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0xcCAA27e3dB44e06BD9001958DE5b41301fD28002": [
+      "constructor()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "event AdminRoleGrantScheduled(address indexed account, uint256 eligibleAt)",
+      "event BlackListCleared(address indexed _sender, address indexed _user)",
+      "event BlackListed(address indexed _sender, address indexed _user)",
+      "event CancelAdminRole(address indexed caller, address indexed account)",
+      "event CancelTimeLockUpdate(address indexed caller)",
+      "event Initialized(uint64 version)",
+      "event Paused(address indexed _sender)",
+      "event Paused(address indexed _sender, address indexed _sc)",
+      "event RoleGranted(bytes32 indexed _role, address indexed _sender, address indexed _account)",
+      "event RoleRevoked(bytes32 indexed _role, address indexed _sender, address indexed _account)",
+      "event TimeLockPeriodUpdated(address indexed caller, uint256 oldPeriod, uint256 newPeriod)",
+      "event TimeLockUpdateScheduled(uint256 newPeriod, uint256 eligibleAt)",
+      "event Unpaused(address indexed _sender)",
+      "event Unpaused(address indexed _sender, address indexed _sc)",
+      "function blackListUsers(address[] _evilUsers)",
+      "function cancelAdminRole(address _account)",
+      "function cancelTimeLockUpdate()",
+      "function executeAdminRole(address _account)",
+      "function executeTimeLockUpdate()",
+      "function grantRoles(bytes32 _role, address[] _accounts)",
+      "function hasRole(bytes32 _role, address _account) view returns (bool)",
+      "function hasRoles(bytes32[] _role, address[] _accounts) view returns (bool[])",
+      "function init(address admin)",
+      "function isBlackListed(address _user) view returns (bool)",
+      "function isPaused(address _sc) view returns (bool)",
+      "function pause()",
+      "function pauseSC(address _sc)",
+      "function pendingAdmins(address) view returns (uint256)",
+      "function pendingTimeLockPeriod() view returns (uint256)",
+      "function removeBlackListUsers(address[] _clearedUsers)",
+      "function revokeRoles(bytes32 _role, address[] _accounts)",
+      "function scheduleAdminRole(address _account)",
+      "function scheduleTimeLockUpdate(uint256 _newPeriod)",
+      "function timeLockPeriod() view returns (uint256)",
+      "function timeLockUpdateEligibleAt() view returns (uint256)",
+      "function unpause()",
+      "function unpauseSC(address _sc)"
+    ],
+    "eth:0xCfD925b89D4ccfee2eC9287b362648854aCbBF03": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0xE26E1D2ae51dcB89E382CA7400b080e6632117B9": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ]
+  },
+  "usedTemplates": {
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97",
+    "yieldfi/Administrator": "0x184ff11c8b97ce97ac2f8aa96e856e0ec078249673eec39724a97216a45330fe",
+    "yieldfi/RequestReceipt": "0x2b452dade16b3d470cb213c0a2372aad358a2b782e0a1912c8768fe1e7e35fb7",
+    "yieldfi/TimelockController": "0xf4f6d4f9669222f80d580819b71d8b2c9b243710e3af70c08a33151ed9b74d67",
+    "yieldfi/yToken": "0x9b5cc48d825b194515dfb745175d1b88cfddd832dc92dc60a7ec999ac69ef274"
+  },
+  "usedBlockNumbers": { "ethereum": 23519593 },
+  "permissionsConfigHash": "0x18458e2b07fa1858f4202f05bfa54acc492bdc77c6e46233e5a109e5388c120f"
+}

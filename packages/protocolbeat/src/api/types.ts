@@ -6,7 +6,6 @@ export interface ApiProjectEntry {
   name: string
   addresses: string[]
   contractNames: string[]
-  chains: string[]
 }
 
 export interface ApiProjectResponse {
@@ -39,11 +38,10 @@ export interface ApiPreviewContract {
 
 export interface ApiProjectChain {
   project: string
-  chain: string
   initialContracts: ApiProjectContract[]
   discoveredContracts: ApiProjectContract[]
   eoas: ApiAddressEntry[]
-  blockNumber: number
+  blockNumbers: Record<string, number>
 }
 
 export type ApiListTemplatesResponse = string[]
@@ -54,7 +52,20 @@ export interface ApiTemplateFileResponse {
   criteria?: string
 }
 
+export interface ApiConfigFileResponse {
+  config: string
+}
+
 export type ApiCreateShapeResponse =
+  | {
+      success: true
+    }
+  | {
+      success: false
+      error: string
+    }
+
+export type ApiCreateConfigFileResponse =
   | {
       success: true
     }
@@ -81,6 +92,7 @@ export interface ApiAddressEntry {
   type: ApiAddressType
   referencedBy: ApiAddressReference[]
   address: string
+  chain: string
 }
 
 export interface ApiAddressReference extends AddressFieldValue {

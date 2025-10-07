@@ -18,6 +18,8 @@ import {
   getProjectsChangeReport,
   type ProjectsChangeReport,
 } from '../../projects-change-report/getProjectsChangeReport'
+import { getLiveness } from '../../scaling/liveness/getLiveness'
+import type { LivenessResponse } from '../../scaling/liveness/types'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 import { getProjectIcon } from '../../utils/getProjectIcon'
 import {
@@ -46,11 +48,12 @@ export async function getDaSummaryEntries(): Promise<
   ])
 
   const uniqueProjectsInUse = getDaUsers(layers, bridges, dacs)
-  const [economicSecurity, tvsPerProject, projectsChangeReport] =
+  const [economicSecurity, tvsPerProject, projectsChangeReport, liveness] =
     await Promise.all([
       getDaProjectsEconomicSecurity(),
       getDaProjectsTvs(uniqueProjectsInUse),
       getProjectsChangeReport(),
+      getLiveness(),
     ])
   const getTvs = pickTvsForProjects(tvsPerProject)
 
@@ -68,6 +71,7 @@ export async function getDaSummaryEntries(): Promise<
           economicSecurity[project.id],
           getTvs,
           projectsChangeReport,
+          liveness,
         ),
   )
   const dacEntries = dacs.map((dac) => getDacEntry(dac, getTvs))
@@ -117,9 +121,11 @@ function getDaSummaryEntry(
     sevenDaysAgo: number
   },
   projectsChangeReport: ProjectsChangeReport,
+  liveness: LivenessResponse,
 ): DaSummaryEntry {
-  const daBridges = bridges.map(
-    (b): DaBridgeSummaryEntry => ({
+  const daBridges = bridges.map((b): DaBridgeSummaryEntry => {
+    const bridgeLiveness = liveness[b.id]
+    return {
       name: b.daBridge.name,
       slug: b.slug,
       href: `/data-availability/projects/${layer.slug}/${b.slug}`,
@@ -134,6 +140,9 @@ function getDaSummaryEntry(
             : projectsChangeReport.getChanges(b.id).impactfulChange
               ? 'impactful-change'
               : undefined,
+        ongoingAnomaly: bridgeLiveness?.anomalies.some(
+          (a) => a.end === undefined,
+        ),
       },
       tvs: getTvs(b.daBridge.usedIn.map((project) => project.id)),
       risks: mapBridgeRisksToRosetteValues(b.daBridge.risks),
@@ -142,11 +151,11 @@ function getDaSummaryEntry(
         .map((project) => ({
           ...project,
           icon: getProjectIcon(project.slug),
-          href: `/scaling/projects/${project.slug}`,
+          url: `/scaling/projects/${project.slug}`,
         })),
       dacInfo: undefined,
-    }),
-  )
+    }
+  })
 
   if (layer.daLayer.usedWithoutBridgeIn.length > 0 || bridges.length === 0) {
     daBridges.unshift({
@@ -163,7 +172,7 @@ function getDaSummaryEntry(
         .map((project) => ({
           ...project,
           icon: getProjectIcon(project.slug),
-          href: `/scaling/projects/${project.slug}`,
+          url: `/scaling/projects/${project.slug}`,
         })),
       dacInfo: undefined,
     })
@@ -226,7 +235,7 @@ function getDacEntry(
     usedIn: usedIn.map((project) => ({
       ...project,
       icon: getProjectIcon(project.slug),
-      href: `/scaling/projects/${project.slug}`,
+      url: `/scaling/projects/${project.slug}`,
     })),
   }
 
@@ -279,7 +288,7 @@ function getEthereumEntry(
           .map((project) => ({
             ...project,
             icon: getProjectIcon(project.slug),
-            href: `/scaling/projects/${project.slug}`,
+            url: `/scaling/projects/${project.slug}`,
           })),
       },
     ],

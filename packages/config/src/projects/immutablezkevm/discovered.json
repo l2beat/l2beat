@@ -1,0 +1,604 @@
+{
+  "name": "immutablezkevm",
+  "timestamp": 1741355351,
+  "configHash": "0x471517403159206376db799d131b1290c355e58f93b25af47dbc978a3103214f",
+  "entries": [
+    {
+      "address": "eth:0x000000000000000000000000000000000000007B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x0000000000000000000000000000000000000Eee",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x0000000000000000000000000000000000000FfF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x296A19A4e87F5824DBE8DEd53415A4704538bB30",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x37AC4a9Bf184aa1130016525631f3Daec11f7b26",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x3d395f623D8954d71132F5caC10778CA275806e0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "AxelarGatewayProxyMultisig",
+      "address": "eth:0x4F4495243837681061C4743b74B3eEdf548D56A5",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xe65732e356e64373f949ce1e543c2af7a89f91a8e3e8337cf9b83a3cd6ae9082"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1640210870,
+      "sinceBlock": 13857570,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x4F4495243837681061C4743b74B3eEdf548D56A5": "AxelarGatewayProxyMultisig"
+      }
+    },
+    {
+      "name": "RootAxelarBridgeAdaptor",
+      "address": "eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0x3bbb1bbee722c566a76a1dbd006c8014bc97e10583a6ff7cc69a72725948746e"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1702962623,
+      "sinceBlock": 18817837,
+      "values": {
+        "$admin": "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
+        "$implementation": "eth:0xE2E91C1Ae2873720C3b975a8034e887A35323345",
+        "$pastUpgrades": [
+          [
+            "2023-12-19T05:10:23.000Z",
+            "0x39c068494cbb3daa564a918bda53218f86d781976e6a8235c1c89a03dc9ec182",
+            ["eth:0xE2E91C1Ae2873720C3b975a8034e887A35323345"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xD2C37fC6fD89563187f3679304975655e448D192"]
+          },
+          "0x77eacfcb6207f26b72edc4f15c48e5518843e7e98ccfd7e0d6c16f92ed1fef8d": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xD2C37fC6fD89563187f3679304975655e448D192"]
+          },
+          "0x2b5bda39c23731c6890b6a6f985ff1c326c66dc20aa14dc2e50fc5ec656ecc35": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xD2C37fC6fD89563187f3679304975655e448D192"]
+          },
+          "0x28a0840e09502c63ed1e83b95421995a3ea654657390bb15ac27b2b85aef53b2": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xD2C37fC6fD89563187f3679304975655e448D192"]
+          }
+        },
+        "BRIDGE_MANAGER_ROLE": "0x77eacfcb6207f26b72edc4f15c48e5518843e7e98ccfd7e0d6c16f92ed1fef8d",
+        "childBridgeAdaptor": "eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
+        "childChainId": "immutable",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "GAS_SERVICE_MANAGER_ROLE": "0x2b5bda39c23731c6890b6a6f985ff1c326c66dc20aa14dc2e50fc5ec656ecc35",
+        "gasService": "eth:0x2d5d7d31F671F86C782533cc367F14109a082712",
+        "gateway": "eth:0x4F4495243837681061C4743b74B3eEdf548D56A5",
+        "initializerAddress": "eth:0xdDA0d9448Ebe3eA43aFecE5Fa6401F5795c19333",
+        "rootBridge": "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
+        "TARGET_MANAGER_ROLE": "0x28a0840e09502c63ed1e83b95421995a3ea654657390bb15ac27b2b85aef53b2"
+      },
+      "implementationNames": {
+        "eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932": "TransparentUpgradeableProxy",
+        "eth:0xE2E91C1Ae2873720C3b975a8034e887A35323345": "RootAxelarBridgeAdaptor"
+      }
+    },
+    {
+      "address": "eth:0x52A6c53869Ce09a731CD772f245b97A4401d3348",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ChildERC20",
+      "address": "eth:0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x444c835c000c2401ad8e7d4d0a67fe0a11cf78d3eccdb105ed7c591296c4cf30"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1702962467,
+      "sinceBlock": 18817824,
+      "values": {
+        "$immutable": true,
+        "bridge": "eth:0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7",
+        "decimals": 18,
+        "name": "TEMPLATE",
+        "rootToken": "eth:0x000000000000000000000000000000000000007B",
+        "symbol": "TPT",
+        "totalSupply": 0
+      },
+      "implementationNames": {
+        "eth:0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1": "ChildERC20"
+      }
+    },
+    {
+      "address": "eth:0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xA28A84676E3Cec39e6F1D06CD0EEF6cAAa2F7f7b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Bridge",
+      "address": "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0xe3da0044c1cc2966f6a45573c47d38d8a1b647879b25570db9b2b8c6efe43e45"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["withdrawalQueueActivated"],
+      "sinceTimestamp": 1702962563,
+      "sinceBlock": 18817832,
+      "values": {
+        "$admin": "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
+        "$implementation": "eth:0x177EaFe0f1F3359375B1728dae0530a75C83E154",
+        "$pastUpgrades": [
+          [
+            "2023-12-19T05:09:23.000Z",
+            "0x2e14d2e7f495b17f93c4c839315cfedfd5ee28df540e6433ccc6abb0206b0775",
+            ["eth:0x177EaFe0f1F3359375B1728dae0530a75C83E154"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "ADAPTOR_MANAGER_ROLE": "0xa6d0b532cacea090bc411482cd491720e2eac14d48ce5d0402b8851e0bb2aec1",
+        "childERC20Bridge": "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
+        "childETHToken": "eth:0x52A6c53869Ce09a731CD772f245b97A4401d3348",
+        "childTokenTemplate": "eth:0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "DEPOSIT_SIG": "0x87a7811f4bfedea3d341ad165680ae306b01aaeacc205d227629cf157dd9f821",
+        "imxCumulativeDepositLimit": "100000000000000000000000000",
+        "initializerAddress": "eth:0xdDA0d9448Ebe3eA43aFecE5Fa6401F5795c19333",
+        "MAP_TOKEN_SIG": "0x2cef46a936bdc5b7e6e8c71aa04560c41cf7d88bb26901a7e7f4936ff02accad",
+        "NATIVE_ETH": "eth:0x0000000000000000000000000000000000000Eee",
+        "NATIVE_IMX": "eth:0x0000000000000000000000000000000000000FfF",
+        "paused": false,
+        "PAUSER_ROLE": "0x539440820030c4994db4e31b6b800deafd503688728f932addfe7a410515c14c",
+        "rootBridgeAdaptor": "eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
+        "rootIMXToken": "eth:0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF",
+        "rootWETHToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "UNLIMITED_DEPOSIT": 0,
+        "UNPAUSER_ROLE": "0x82b32d9ab5100db08aeb9a0e08b422d14851ec118736590462bf9c085a6e9448",
+        "VARIABLE_MANAGER_ROLE": "0x5b94a8cd68affa84315f488cc2e6e456f761d334859cae8a073ef8fe13fb0ee6",
+        "WITHDRAW_SIG": "0x7a8dc26796a1e50e6e190b70259f58f6a4edd5b22280ceecc82b687b8e982869",
+        "withdrawalDelay": 86400,
+        "withdrawalQueueActivated": false
+      },
+      "fieldMeta": {
+        "withdrawalDelay": {
+          "severity": "HIGH",
+          "description": "Delay in seconds of any withdrawals submitted after the withdrawal queue is activated.",
+          "type": "RISK_PARAMETER"
+        },
+        "withdrawalQueueActivated": {
+          "severity": "LOW",
+          "description": "If true, the withdrawal queue is activated and any withdrawals are delayed for a duration defined by withdrawalDelay. It can be manually activated or automatically triggered by the FlowRate mechanism.",
+          "type": "RISK_PARAMETER"
+        }
+      },
+      "implementationNames": {
+        "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6": "TransparentUpgradeableProxy",
+        "eth:0x177EaFe0f1F3359375B1728dae0530a75C83E154": "RootERC20BridgeFlowRate"
+      }
+    },
+    {
+      "name": "OwnerMultisig",
+      "address": "eth:0xD2C37fC6fD89563187f3679304975655e448D192",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
+          "role": ".owner"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1702945151,
+      "sinceBlock": 18816399,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0x37AC4a9Bf184aa1130016525631f3Daec11f7b26",
+          "eth:0x3d395f623D8954d71132F5caC10778CA275806e0",
+          "eth:0xdb6c271060571A96A62E3947E373395C89f765Ba",
+          "eth:0xA28A84676E3Cec39e6F1D06CD0EEF6cAAa2F7f7b",
+          "eth:0x296A19A4e87F5824DBE8DEd53415A4704538bB30",
+          "eth:0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0x6d4cd80fab6b5f67389fb83fe46f5b27c2fbd48c5c3b58b6979e365d12da62f8",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
+        "nonce": 34,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0xD2C37fC6fD89563187f3679304975655e448D192": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "eth:0xdb6c271060571A96A62E3947E373395C89f765Ba",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xdDA0d9448Ebe3eA43aFecE5Fa6401F5795c19333",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1702962527,
+      "sinceBlock": 18817829,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xD2C37fC6fD89563187f3679304975655e448D192"
+      },
+      "implementationNames": {
+        "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8": "ProxyAdmin"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x177EaFe0f1F3359375B1728dae0530a75C83E154": [
+      "constructor(address _initializerAddress)",
+      "error AlreadyMapped()",
+      "error BalanceInvariantCheckFailed(uint256 actualBalance, uint256 expectedBalance)",
+      "error CantMapETH()",
+      "error CantMapIMX()",
+      "error CantMapWETH()",
+      "error ImxDepositLimitExceeded()",
+      "error ImxDepositLimitTooLow()",
+      "error IndexOutsideWithdrawalQueue(uint256 lengthOfQueue, uint256 requestedIndex)",
+      "error InsufficientValue()",
+      "error InvalidCapacity()",
+      "error InvalidChildChain()",
+      "error InvalidData(string reason)",
+      "error InvalidRefillRate()",
+      "error InvalidToken()",
+      "error MixedTokens(address token, address actualToken)",
+      "error NoGas()",
+      "error NonWrappedNativeTransfer()",
+      "error NotBridgeAdaptor()",
+      "error NotMapped()",
+      "error ProvideAtLeastOneIndex()",
+      "error TokenIsZero(address receiver)",
+      "error TokenNotSupported()",
+      "error UnauthorizedInitializer()",
+      "error WithdrawalAlreadyProcessed(address receiver, uint256 index)",
+      "error WithdrawalRequestTooEarly(uint256 timeNow, uint256 currentWithdrawalTime)",
+      "error WrongInitializer()",
+      "error ZeroAddress()",
+      "error ZeroAmount()",
+      "event ActivatedWithdrawalQueue(address who)",
+      "event AutoActivatedWithdrawalQueue()",
+      "event ChildChainERC20Deposit(address indexed rootToken, address indexed childToken, address depositor, address indexed receiver, uint256 amount)",
+      "event DeactivatedWithdrawalQueue(address who)",
+      "event EnQueuedWithdrawal(address indexed token, address indexed withdrawer, address indexed receiver, uint256 amount, uint256 timestamp, uint256 index)",
+      "event IMXDeposit(address indexed rootToken, address depositor, address indexed receiver, uint256 amount)",
+      "event Initialized(uint8 version)",
+      "event L1TokenMapped(address indexed rootToken, address indexed childToken)",
+      "event NativeEthDeposit(address indexed rootToken, address indexed childToken, address depositor, address indexed receiver, uint256 amount)",
+      "event NewImxDepositLimit(uint256 oldImxDepositLimit, uint256 newImxDepositLimit)",
+      "event Paused(address account)",
+      "event ProcessedWithdrawal(address indexed token, address indexed withdrawer, address indexed receiver, uint256 amount, uint256 timestamp, uint256 index)",
+      "event QueuedWithdrawal(address indexed token, address indexed withdrawer, address indexed receiver, uint256 amount, bool delayWithdrawalLargeAmount, bool delayWithdrawalUnknownToken, bool withdrawalQueueActivated)",
+      "event RateControlThresholdSet(address indexed token, uint256 capacity, uint256 refillRate, uint256 largeTransferThreshold, uint256 previousCapacity, uint256 previousRefillRate, uint256 previousLargeTransferThreshold)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RootBridgeAdaptorUpdated(address oldRootBridgeAdaptor, address newRootBridgeAdaptor)",
+      "event RootChainERC20Withdraw(address indexed rootToken, address indexed childToken, address withdrawer, address indexed receiver, uint256 amount)",
+      "event RootChainETHWithdraw(address indexed rootToken, address indexed childToken, address withdrawer, address indexed receiver, uint256 amount)",
+      "event Unpaused(address account)",
+      "event WETHDeposit(address indexed rootToken, address indexed childToken, address depositor, address indexed receiver, uint256 amount)",
+      "event WithdrawalDelayUpdated(uint256 delay, uint256 previousDelay)",
+      "event WithdrawalForNonFlowRatedToken(address indexed token, uint256 amount)",
+      "function ADAPTOR_MANAGER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function DEPOSIT_SIG() view returns (bytes32)",
+      "function MAP_TOKEN_SIG() view returns (bytes32)",
+      "function NATIVE_ETH() view returns (address)",
+      "function NATIVE_IMX() view returns (address)",
+      "function PAUSER_ROLE() view returns (bytes32)",
+      "function UNLIMITED_DEPOSIT() view returns (uint256)",
+      "function UNPAUSER_ROLE() view returns (bytes32)",
+      "function VARIABLE_MANAGER_ROLE() view returns (bytes32)",
+      "function WITHDRAW_SIG() view returns (bytes32)",
+      "function activateWithdrawalQueue()",
+      "function childERC20Bridge() view returns (address)",
+      "function childETHToken() view returns (address)",
+      "function childTokenTemplate() view returns (address)",
+      "function deactivateWithdrawalQueue()",
+      "function deposit(address rootToken, uint256 amount) payable",
+      "function depositETH(uint256 amount) payable",
+      "function depositTo(address rootToken, address receiver, uint256 amount) payable",
+      "function depositToETH(address receiver, uint256 amount) payable",
+      "function finaliseQueuedWithdrawal(address receiver, uint256 index)",
+      "function finaliseQueuedWithdrawalsAggregated(address receiver, address token, uint256[] indices)",
+      "function findPendingWithdrawals(address receiver, address token, uint256 startIndex, uint256 stopIndex, uint256 maxFind) view returns (tuple(uint256 index, uint256 amount, uint256 timestamp)[] found)",
+      "function flowRateBuckets(address) view returns (uint256 capacity, uint256 depth, uint256 refillTime, uint256 refillRate)",
+      "function getPendingWithdrawals(address receiver, uint256[] indices) view returns (tuple(address withdrawer, address token, uint256 amount, uint256 timestamp)[] pending)",
+      "function getPendingWithdrawalsLength(address receiver) view returns (uint256 length)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantAdaptorManagerRole(address account)",
+      "function grantPauserRole(address account)",
+      "function grantRole(bytes32 role, address account)",
+      "function grantUnpauserRole(address account)",
+      "function grantVariableManagerRole(address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function imxCumulativeDepositLimit() view returns (uint256)",
+      "function initialize(tuple(address defaultAdmin, address pauser, address unpauser, address variableManager, address adaptorManager) newRoles, address newRootBridgeAdaptor, address newChildERC20Bridge, address newChildTokenTemplate, address newRootIMXToken, address newRootWETHToken, uint256 newImxCumulativeDepositLimit, address rateAdmin)",
+      "function initialize(tuple(address defaultAdmin, address pauser, address unpauser, address variableManager, address adaptorManager), address, address, address, address, address, uint256) pure",
+      "function initializerAddress() view returns (address)",
+      "function largeTransferThresholds(address) view returns (uint256)",
+      "function mapToken(address rootToken) payable returns (address)",
+      "function onMessageReceive(bytes data)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeAdaptorManagerRole(address account)",
+      "function revokePauserRole(address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function revokeUnpauserRole(address account)",
+      "function revokeVariableManagerRole(address account)",
+      "function rootBridgeAdaptor() view returns (address)",
+      "function rootIMXToken() view returns (address)",
+      "function rootTokenToChildToken(address) view returns (address)",
+      "function rootWETHToken() view returns (address)",
+      "function setRateControlThreshold(address token, uint256 capacity, uint256 refillRate, uint256 largeTransferThreshold)",
+      "function setWithdrawalDelay(uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unpause()",
+      "function updateImxCumulativeDepositLimit(uint256 newImxCumulativeDepositLimit)",
+      "function updateRootBridgeAdaptor(address newRootBridgeAdaptor)",
+      "function withdrawalDelay() view returns (uint256)",
+      "function withdrawalQueueActivated() view returns (bool)"
+    ],
+    "eth:0x4F4495243837681061C4743b74B3eEdf548D56A5": [
+      "constructor(bytes params)",
+      "function getAddress(bytes32 key) view returns (address)",
+      "function getBool(bytes32 key) view returns (bool)",
+      "function getBytes(bytes32 key) view returns (bytes)",
+      "function getInt(bytes32 key) view returns (int256)",
+      "function getString(bytes32 key) view returns (string)",
+      "function getUint(bytes32 key) view returns (uint256)",
+      "function setup(bytes params)"
+    ],
+    "eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1": [
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Initialized(uint8 version)",
+      "event MetaTransactionExecuted(address userAddress, address relayerAddress, bytes functionSignature)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function bridge() view returns (address)",
+      "function burn(address account, uint256 amount) returns (bool)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function executeMetaTransaction(address userAddress, bytes functionSignature, bytes32 sigR, bytes32 sigS, uint8 sigV) returns (bytes)",
+      "function getNonce(address user) view returns (uint256 nonce)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function initialize(address rootToken_, string name_, string symbol_, uint8 decimals_)",
+      "function invalidateNext(uint256 offset)",
+      "function mint(address account, uint256 amount) returns (bool)",
+      "function name() view returns (string)",
+      "function rootToken() view returns (address)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)"
+    ],
+    "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xD2C37fC6fD89563187f3679304975655e448D192": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0xE2E91C1Ae2873720C3b975a8034e887A35323345": [
+      "constructor(address _gateway, address _initializerAddress)",
+      "error CallerNotBridge()",
+      "error InvalidAddress()",
+      "error InvalidChildBridgeAdaptor()",
+      "error InvalidChildChain()",
+      "error InvalidSourceAddress()",
+      "error InvalidSourceChain()",
+      "error NoGas()",
+      "error NotApprovedByGateway()",
+      "error UnauthorizedInitializer()",
+      "error UnsupportedOperation()",
+      "error ZeroAddresses()",
+      "event AdaptorExecute(string sourceChain, string sourceAddress_, bytes payload_)",
+      "event AxelarMessageSent(string indexed childChain, string indexed childBridgeAdaptor, bytes indexed payload)",
+      "event ChildBridgeAdaptorUpdated(string oldChildBridgeAdaptor, string newChildBridgeAdaptor)",
+      "event ChildChainUpdated(string indexed oldChildChain, string indexed newChildChain)",
+      "event GasServiceUpdated(address indexed oldGasService, address indexed newGasService)",
+      "event Initialized(uint8 version)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RootBridgeUpdated(address indexed oldRootBridge, address indexed newRootBridge)",
+      "function BRIDGE_MANAGER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function GAS_SERVICE_MANAGER_ROLE() view returns (bytes32)",
+      "function TARGET_MANAGER_ROLE() view returns (bytes32)",
+      "function childBridgeAdaptor() view returns (string)",
+      "function childChainId() view returns (string)",
+      "function execute(bytes32 commandId, string sourceChain, string sourceAddress, bytes payload)",
+      "function executeWithToken(bytes32 commandId, string sourceChain, string sourceAddress, bytes payload, string tokenSymbol, uint256 amount)",
+      "function gasService() view returns (address)",
+      "function gateway() view returns (address)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantBridgeManagerRole(address account)",
+      "function grantGasServiceManagerRole(address account)",
+      "function grantRole(bytes32 role, address account)",
+      "function grantTargetManagerRole(address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(tuple(address defaultAdmin, address bridgeManager, address gasServiceManager, address targetManager) _adaptorRoles, address _rootBridge, string _childChainId, string _childBridgeAdaptor, address _gasService)",
+      "function initializerAddress() view returns (address)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeBridgeManagerRole(address account)",
+      "function revokeGasServiceManagerRole(address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function revokeTargetManagerRole(address account)",
+      "function rootBridge() view returns (address)",
+      "function sendMessage(bytes payload, address refundRecipient) payable",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateChildBridgeAdaptor(string newChildBridgeAdaptor)",
+      "function updateChildChain(string newChildChain)",
+      "function updateGasService(address newGasService)",
+      "function updateRootBridge(address newRootBridge)"
+    ]
+  },
+  "usedTemplates": {
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+  },
+  "usedBlockNumbers": { "ethereum": 21995404 },
+  "permissionsConfigHash": "0x59426f1f1c86ea3d0a6c40b140684d5636469729c539f42d3ec52050fa74960b"
+}

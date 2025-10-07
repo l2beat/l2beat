@@ -3,5 +3,7 @@ export interface Log {
   topics: string[]
   data: string
   blockNumber: number
+  blockHash: string
   transactionHash: string
+  logIndex: number
 }

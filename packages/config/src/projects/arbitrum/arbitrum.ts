@@ -4,6 +4,7 @@ import {
   formatSeconds,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { formatEther } from 'ethers/lib/utils'
 import {
   CONTRACTS,
   ESCROW,
@@ -182,7 +183,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://arb1.arbitrum.io/rpc',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       { type: 'etherscan', chainId },
       { type: 'blockscoutV2', url: 'https://arbitrum.blockscout.com/api/v2' },
@@ -195,6 +196,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
     l1TimelockDelay,
     treasuryTimelockDelay,
     l2TreasuryQuorumPercent,
+    challengeGracePeriodSeconds,
   ),
   nonTemplateContractRisks: [
     CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
@@ -281,10 +283,15 @@ export const arbitrum: ScalingProject = orbitStackL2({
       selfSequencingDelay,
       l1TimelockDelay,
     ),
-    stateValidation: RISK_VIEW.STATE_FP_INT(
-      challengeWindowSeconds,
-      challengeGracePeriodSeconds,
-    ),
+    stateValidation: {
+      ...RISK_VIEW.STATE_FP_INT(
+        challengeWindowSeconds,
+        challengeGracePeriodSeconds,
+      ),
+      initialBond: formatEther(
+        discovery.getContractValue<number>('RollupProxy', 'baseStake'),
+      ),
+    },
   },
   isNodeAvailable: true,
   nodeSourceLink: 'https://github.com/OffchainLabs/nitro/',
@@ -317,6 +324,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
   nonTemplateProofSystem: {
     type: 'Optimistic',
     name: 'BoLD',
+    challengeProtocol: 'Interactive',
   },
   stateDerivation: {
     nodeSoftware: `The rollup node (Arbitrum Nitro) consists of four parts. The base layer is the core Geth server (with minor modifications to add hooks) that emulates the execution of EVM contracts and maintains Ethereum's state and [a fork of wasmer](https://github.com/OffchainLabs/wasmer) that is used for native WASM execution. The middle layer, ArbOS, provides additional Layer 2 functionalities such as decompressing data batches, accounting for Layer 1 gas costs, and supporting cross-chain bridge functionalities. The top layer consists of node software, primarily from Geth, that handles client connections (i.e., regular RPC node). [View Code](https://github.com/OffchainLabs/nitro/)`,
@@ -332,6 +340,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
         l1TimelockDelay,
         challengeWindow * assumedBlockTime,
         l2TimelockDelay,
+        challengeGracePeriodSeconds,
       ),
     ],
   },

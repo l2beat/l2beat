@@ -2,6 +2,7 @@ import {
   ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
+  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
@@ -49,6 +50,10 @@ const daResolveWindow = formatSeconds(
 )
 
 export const automata: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: false,
+  },
   addedAt: UnixTime(1729359609), // 2024-10-19T17:40:09Z
   additionalBadges: [BADGES.RaaS.AltLayer],
   reasonsForBeingOther: [
@@ -84,7 +89,7 @@ export const automata: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.ata.network/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

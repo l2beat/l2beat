@@ -4,6 +4,7 @@ import {
   formatSeconds,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { formatEther } from 'ethers/lib/utils'
 import {
   DaEconomicSecurityRisk,
   DaRelayerFailureRisk,
@@ -36,6 +37,12 @@ const challengeWindow = discovery.getContractValue<number>(
   'confirmPeriodBlocks',
 )
 const challengeWindowSeconds = challengeWindow * assumedBlockTime
+const challengeGracePeriodSeconds =
+  discovery.getContractValue<number>(
+    'RollupProxy',
+    'challengeGracePeriodBlocks',
+  ) * assumedBlockTime
+
 const l1TimelockDelay = discovery.getContractValue<number>(
   'L1Timelock',
   'getMinDelay',
@@ -169,7 +176,7 @@ export const nova: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://nova.arbitrum.io/rpc',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       { type: 'etherscan', chainId },
     ],
@@ -177,6 +184,7 @@ export const nova: ScalingProject = orbitStackL2({
   nonTemplateProofSystem: {
     type: 'Optimistic',
     name: 'BoLD',
+    challengeProtocol: 'Interactive',
   },
   upgradesAndGovernance: getNitroGovernance(
     l2CoreQuorumPercent,
@@ -185,6 +193,7 @@ export const nova: ScalingProject = orbitStackL2({
     l1TimelockDelay,
     treasuryTimelockDelay,
     l2TreasuryQuorumPercent,
+    challengeGracePeriodSeconds,
   ),
   nonTemplateRiskView: {
     exitWindow: RISK_VIEW.EXIT_WINDOW_NITRO(
@@ -195,6 +204,15 @@ export const nova: ScalingProject = orbitStackL2({
       l1TimelockDelay,
       isPostBoLD,
     ),
+    stateValidation: {
+      ...RISK_VIEW.STATE_FP_INT(
+        challengeWindowSeconds,
+        challengeGracePeriodSeconds,
+      ),
+      initialBond: formatEther(
+        discovery.getContractValue<number>('RollupProxy', 'baseStake'),
+      ),
+    },
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
@@ -236,6 +254,7 @@ export const nova: ScalingProject = orbitStackL2({
         l1TimelockDelay,
         challengeWindow * assumedBlockTime,
         l2TimelockDelay,
+        challengeGracePeriodSeconds,
       ),
     ],
   },

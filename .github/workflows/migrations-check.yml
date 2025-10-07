@@ -1,0 +1,37 @@
+name: Enforce migration/code isolation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited, ready_for_review]
+
+jobs:
+  forbid-mixed-changes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Detect changes
+        uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            migrations:
+              - 'packages/database/prisma/migrations/**'
+            code:
+              - 'packages/!(database)/**/*.ts'
+              - 'packages/!(database)/*.ts'
+              - 'packages/!(database)/**/*.js'
+              - 'packages/!(database)/*.js'
+              - 'packages/!(database)/package.json'
+              - 'package.json'
+              - 'pnpm-*.yaml'
+
+      - name: Fail when both migrations and code have been updated
+        if: ${{ steps.changes.outputs.migrations == 'true' && steps.changes.outputs.code == 'true' }}
+        run: |
+          echo "::error:: This PR changes BOTH database migrations and code paths.
+          Please split into separate PRs (migrations-only and code-only)."
+          exit 1

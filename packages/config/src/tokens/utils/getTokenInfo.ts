@@ -117,14 +117,20 @@ async function getDecimals(
   )
 }
 
-function getImageUrl(
+async function getImageUrl(
   coingeckoClient: CoingeckoClient,
   logger: ScriptLogger,
   coingeckoId: CoingeckoId,
 ): Promise<string> {
   logger.fetching('image url')
 
-  return coingeckoClient.getImageUrl(coingeckoId)
+  switch (coingeckoId) {
+    case 'polygon-ecosystem-token':
+    case 'optimism':
+      return `/images/custom-tokens/${coingeckoId}.png`
+    default:
+      return await coingeckoClient.getImageUrl(coingeckoId)
+  }
 }
 
 async function getDeploymentTimestamp(

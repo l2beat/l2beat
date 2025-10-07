@@ -28,8 +28,14 @@ export const inevm: ScalingProject = orbitStackL3({
         'https://inevmbridge.com/',
       ],
       documentation: ['https://docs.inevm.com/'],
-      explorers: ['https://inevm.calderaexplorer.xyz/'],
-      socialMedia: ['https://x.com/injective'],
+      explorers: [
+        'https://inevm.calderaexplorer.xyz/',
+        'https://explorer.inevm.com/',
+      ],
+      socialMedia: [
+        'https://x.com/injective',
+        'https://discord.com/invite/injective',
+      ],
     },
   },
   nonTemplateEscrows: [
@@ -61,7 +67,7 @@ export const inevm: ScalingProject = orbitStackL3({
       {
         type: 'rpc',
         url: 'https://inevm.calderachain.xyz/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
     gasTokens: ['INJ'],

@@ -1,14 +1,17 @@
 {
   "L2StandardBridge_v1_11_1beta_1": {
     "hash": "0xa4f24c20d581e0bac8e94e683fdd07c596b2e534f9e822aaddf952658542972d",
-    "address": "0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010",
-    "chain": "ink",
+    "address": "ink:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010",
     "blockNumber": 10183769
   },
   "L2StandardBridge_v1_1_0": {
     "hash": "0xb1264cdbc9eb25c5d5f9542dc05d942009b4443379d97b246c66b11e2319215f",
-    "address": "0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010",
-    "chain": "optimism",
+    "address": "oeth:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010",
     "blockNumber": 134041720
+  },
+  "L2StandardBridge_metis": {
+    "hash": "0xec15e64d5345789159e9fb658ab69ff8946319ab8a657844e6e64be92a01f0d5",
+    "address": "metis-andromeda:0x4200000000000000000000000000000000000010",
+    "blockNumber": 21196848
   }
 }

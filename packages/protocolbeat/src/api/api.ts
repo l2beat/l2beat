@@ -1,7 +1,9 @@
-import { withoutUndefinedKeys } from '../common/withoutUndefinedKeys'
+import { withoutUndefinedKeys } from '../utils/withoutUndefinedKeys'
 import type {
   ApiCodeResponse,
   ApiCodeSearchResponse,
+  ApiConfigFileResponse,
+  ApiCreateConfigFileResponse,
   ApiCreateShapeResponse,
   ApiListTemplatesResponse,
   ApiPreviewResponse,
@@ -73,12 +75,10 @@ export async function getPreview(project: string): Promise<ApiPreviewResponse> {
 
 export function executeDiscover(
   project: string,
-  chain: string,
   devMode: boolean,
 ): EventSource {
   const params = new URLSearchParams({
     project,
-    chain,
     devMode: devMode.toString(),
   })
   return new EventSource(`/api/terminal/discover?${params}`)
@@ -128,6 +128,67 @@ export async function readTemplateFile(
   return data as ApiTemplateFileResponse
 }
 
+export async function readConfigFile(
+  project?: string,
+): Promise<ApiConfigFileResponse> {
+  if (!project) {
+    return { config: '' }
+  }
+
+  const res = await fetch(`/api/config-files/${project}`)
+
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+
+  return data as ApiConfigFileResponse
+}
+
+export async function createConfigFile(
+  project: string,
+  type: 'project' | 'token',
+  initialAddresses: string[],
+  overwrite: boolean,
+  maxDepth?: number,
+  maxAddresses?: number,
+) {
+  const res = await fetch('/api/config-files', {
+    method: 'POST',
+    body: JSON.stringify({
+      project,
+      type,
+      initialAddresses,
+      overwrite,
+      maxDepth,
+      maxAddresses,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  const data: ApiCreateConfigFileResponse = await res.json()
+
+  if (!data.success) {
+    throw new Error(data.error)
+  }
+}
+
+export async function updateConfigFile(project: string, content: string) {
+  const res = await fetch(`/api/config-files/${project}`, {
+    method: 'PUT',
+    body: JSON.stringify({ content }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+}
+
 export async function writeTemplateFile(templateId: string, content: string) {
   const res = await fetch('/api/template-files', {
     method: 'POST',
@@ -175,4 +236,11 @@ export async function getFlatSource(
   }
   const data = await res.json()
   return data as { name: string; sources: Record<string, string> }
+}
+
+export function executeFindMinters(address: string): EventSource {
+  const params = new URLSearchParams({
+    address,
+  })
+  return new EventSource(`/api/terminal/find-minters?${params}`)
 }

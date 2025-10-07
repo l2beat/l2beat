@@ -5,7 +5,7 @@ import {
   getChainShortName,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
-import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress, notUndefined } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import uniqBy from 'lodash/uniqBy'
 import type { Bridge, ScalingProject } from '../internalTypes'
@@ -31,7 +31,7 @@ describe('verification status', () => {
           return
         }
 
-        const discoveries = getDiscoveries(configReader, projectId, chain)
+        const discoveries = getDiscoveries(configReader, projectId)
         assert(
           discoveries.length > 0,
           `Failed to read discovery for ${projectId} on ${chain}, create a discovery entry for it. It is needed for ${unverified.toString()}`,
@@ -50,32 +50,35 @@ describe('verification status', () => {
 function getDiscoveries(
   configReader: ConfigReader,
   project: string,
-  chain: string,
 ): DiscoveryOutput[] {
   let discovery = undefined
   try {
-    discovery = configReader.readDiscovery(project, chain)
+    discovery = configReader.readDiscovery(project)
   } catch {}
   if (discovery === undefined) {
     return []
   }
 
   const result = [discovery]
-  const sharedModules = discovery.sharedModules ?? []
-  if (sharedModules.length > 0) {
-    for (const sharedModule of sharedModules) {
+  const referencedProjects = discovery.entries
+    .map((e) => e.targetProject)
+    .filter(notUndefined)
+  const allReferencedProjects = uniq([
+    ...referencedProjects,
+    ...(discovery.sharedModules ?? []), // TODO remove once entrypoints are used instead of sharedModules
+  ])
+  if (allReferencedProjects) {
+    for (const sharedModule of allReferencedProjects) {
       try {
-        result.push(configReader.readDiscovery(sharedModule, chain))
+        result.push(configReader.readDiscovery(sharedModule))
       } catch {}
     }
   }
 
+  // TODO: this should be removed and covered by entrypoints and references
   const dependentDiscoveries = discovery.dependentDiscoveries ?? {}
   for (const projectName of Object.keys(dependentDiscoveries)) {
-    const chains = configReader.readAllDiscoveredChainsForProject(projectName)
-    for (const chain of chains) {
-      result.push(configReader.readDiscovery(projectName, chain))
-    }
+    result.push(configReader.readDiscovery(projectName))
   }
   return result
 }

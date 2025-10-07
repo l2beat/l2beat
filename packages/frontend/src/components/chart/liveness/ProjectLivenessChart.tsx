@@ -12,6 +12,7 @@ import {
   rangeToResolution,
 } from '~/server/features/scaling/liveness/utils/chartRange'
 import { api } from '~/trpc/React'
+import { cn } from '~/utils/cn'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { getDefaultSubtype } from './getDefaultSubtype'
 import { LivenessChart } from './LivenessChart'
@@ -25,6 +26,7 @@ interface Props {
   milestones: Milestone[]
   defaultRange: LivenessChartTimeRange
   isArchived: boolean
+  hideSubtypeSwitch?: boolean
 }
 
 export function ProjectLivenessChart({
@@ -35,6 +37,7 @@ export function ProjectLivenessChart({
   milestones,
   isArchived,
   defaultRange,
+  hideSubtypeSwitch,
 }: Props) {
   const [timeRange, setTimeRange] =
     useState<LivenessChartTimeRange>(defaultRange)
@@ -55,7 +58,7 @@ export function ProjectLivenessChart({
     return chart?.data?.map(([timestamp, min, avg, max]) => {
       return {
         timestamp,
-        range: min === null && max === null ? null : ([min, max] as const),
+        range: min === null || max === null ? null : ([min, max] as const),
         avg,
       }
     })
@@ -76,14 +79,21 @@ export function ProjectLivenessChart({
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col gap-1">
+      <div
+        className={cn(
+          'flex flex-col gap-1',
+          hideSubtypeSwitch && 'flex-row justify-between',
+        )}
+      >
         <ProjectChartTimeRange range={chartRange} />
         <ChartControlsWrapper className="flex-wrap-reverse">
-          <LivenessChartSubtypeControls
-            subtype={subtype}
-            setSubtype={setSubtype}
-            configuredSubtypes={configuredSubtypes}
-          />
+          {!hideSubtypeSwitch && (
+            <LivenessChartSubtypeControls
+              subtype={subtype}
+              setSubtype={setSubtype}
+              configuredSubtypes={configuredSubtypes}
+            />
+          )}
           <LivenessChartTimeRangeControls
             timeRange={timeRange}
             setTimeRange={setTimeRange}

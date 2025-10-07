@@ -17,8 +17,8 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { formatExecutionDelay } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
@@ -35,6 +35,7 @@ const emergencyActivatedCount = discovery.getContractValue<number>(
   'PolygonRollupManager',
   'emergencyStateCount',
 )
+const katanaVKeys = getKatanaVKeys()
 
 export const katana: ScalingProject = {
   id: ProjectId('katana'),
@@ -46,7 +47,7 @@ export const katana: ScalingProject = {
     BADGES.DA.EthereumBlobs,
     BADGES.RaaS.Conduit,
     BADGES.Infra.Agglayer,
-    BADGES.Stack.OPStack,
+    BADGES.Stack.OPSuccinct,
   ],
   ecosystemInfo: {
     id: ProjectId('agglayer'),
@@ -65,7 +66,7 @@ export const katana: ScalingProject = {
         'https://app.katana.network/',
         'https://bridge.katana.network/',
       ],
-      explorers: ['https://explorer.katanarpc.com'],
+      explorers: ['https://katanascan.com'],
       repositories: ['https://github.com/agglayer'],
       documentation: [
         'https://docs.katana.network/',
@@ -156,17 +157,17 @@ export const katana: ScalingProject = {
     name: 'katana',
     chainId: 747474,
     coingeckoPlatform: 'katana',
-    explorerUrl: 'https://explorer.katanarpc.com',
+    explorerUrl: 'https://katanascan.com',
     sinceTimestamp: UnixTime(1746742811),
     apis: [
-      { type: 'rpc', url: 'https://rpc.katana.network', callsPerMinute: 1500 },
-      { type: 'blockscout', url: 'https://explorer.katanarpc.com/api' },
+      { type: 'rpc', url: 'https://rpc.katana.network', callsPerMinute: 300 },
+      { type: 'blockscout', url: 'https://katanascan.com/api' },
     ],
   },
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
-      secondLine: formatExecutionDelay(0), // state root is published together with the pessimistic proof
+      executionDelay: 0, // state root is published together with the pessimistic proof
     },
     dataAvailability: DATA_ON_CHAIN,
     exitWindow: {
@@ -267,6 +268,7 @@ export const katana: ScalingProject = {
         ],
       },
     ],
+    zkProgramHashes: katanaVKeys.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   technology: {
     dataAvailability: {
@@ -361,8 +363,48 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
       title: 'Katana Launch',
       url: 'https://x.com/katana/status/1939808602727813253',
       date: '2025-07-01T00:00:00Z',
-      description: 'Katana is live on Ethereum mainnet.',
+      description: 'Katana is live on mainnet, integrated with Agglayer.',
       type: 'general',
     },
   ],
+}
+
+function getKatanaVKeys(): string[] {
+  const vKeys: string[] = []
+  vKeys.push(
+    discovery.getContractValue<string>('AggchainFEP', 'aggregationVkey'),
+  )
+  vKeys.push(
+    discovery.getContractValue<string>('AggchainFEP', 'rangeVkeyCommitment'),
+  )
+
+  // If default gateway is used, aggchain program hashes are taken from AggLayerGateway
+  // Otherwise they are taken from AggchainFEP itself
+  type ProgramHashDict = Record<string, Record<string, string>[]>
+  const useDefaultGateway = discovery.getContractValue<boolean>(
+    'AggchainFEP',
+    'useDefaultGateway',
+  )
+  const aggchainVKeyDict = useDefaultGateway
+    ? discovery.getContractValue<ProgramHashDict>(
+        'AggLayerGateway',
+        'aggchainVKeys',
+      )
+    : discovery.getContractValue<ProgramHashDict>(
+        'AggchainFEP',
+        'ownedAggchainVKeys',
+      )
+  const pessimisticVKeyDict = discovery.getContractValue<ProgramHashDict>(
+    'AggLayerGateway',
+    'routes',
+  )
+
+  // Iterate over all selectors, each of the selectors could be used as it is set in calldata
+  const aggchainVKeys = Object.values(aggchainVKeyDict).flatMap((arr) =>
+    arr.map((el) => el['newVKey']),
+  )
+  const pessimisticVKeys = Object.values(pessimisticVKeyDict).flatMap((arr) =>
+    arr.map((el) => el['pessimisticVKey']),
+  )
+  return vKeys.concat(aggchainVKeys).concat(pessimisticVKeys)
 }

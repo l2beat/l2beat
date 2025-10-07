@@ -25,11 +25,11 @@ import type {
   ProjectLivenessInfo,
   ProjectPermissions,
   ProjectReviewStatus,
+  ProjectRiskView,
   ProjectScalingCapability,
   ProjectScalingDa,
   ProjectScalingProofSystem,
   ProjectScalingPurpose,
-  ProjectScalingRiskView,
   ProjectScalingScopeOfAssessment,
   ProjectScalingStack,
   ProjectScalingStage,
@@ -72,7 +72,7 @@ export interface ScalingProject {
   /** Ecosystem information */
   ecosystemInfo?: ProjectEcosystemInfo
   /** Data availability of scaling project */
-  dataAvailability: ProjectScalingDa | undefined
+  dataAvailability: ProjectScalingDa[] | ProjectScalingDa | undefined
   /** Details about the custom availability solution */
   customDa?: ProjectCustomDa
   /** Risk view values for this project */
@@ -163,7 +163,7 @@ export interface ProjectScalingDisplay {
 
 export interface ProjectScalingTechnology {
   /** What is the data availability choice for the project */
-  dataAvailability?: ProjectTechnologyChoice
+  dataAvailability?: ProjectTechnologyChoice | ProjectTechnologyChoice[]
   /** What are the details about project operator(s) */
   operator?: ProjectTechnologyChoice
   /** What are the details about project sequencing */
@@ -178,6 +178,10 @@ export interface ProjectScalingTechnology {
   otherConsiderations?: ProjectTechnologyChoice[]
   /** Is the technology section under review */
   isUnderReview?: boolean
+}
+
+export interface ProjectScalingRiskView extends ProjectRiskView {
+  stateValidation: Omit<ProjectRiskView['stateValidation'], 'secondLine'>
 }
 
 export interface Layer2TxConfig {

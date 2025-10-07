@@ -1,5 +1,6 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
+  CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
   REASON_FOR_BEING_OTHER,
@@ -8,38 +9,30 @@ import {
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { polygonCDKStack } from '../../templates/polygonCDKStack'
-import { PolygoncdkDAC } from '../../templates/polygoncdk-template'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('lumia')
 const bridge = discovery.getContract('PolygonSharedBridge')
 
-const membersCountDAC = discovery.getContractValue<number>(
-  'PolygonDataCommittee',
-  'getAmountOfMembers',
-)
-
-const requiredSignaturesDAC = discovery.getContractValue<number>(
-  'PolygonDataCommittee',
-  'requiredAmountOfSignatures',
-)
-
-const isForcedBatchDisallowed =
-  discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
-  '0x0000000000000000000000000000000000000000'
-
-const rollupModuleContract = discovery.getContract('Validium')
-
-export const lumia: ScalingProject = polygonCDKStack({
+export const lumia: ScalingProject = {
   addedAt: UnixTime(1718181773), // 2024-06-12T08:42:53Z
-  additionalBadges: [BADGES.DA.DAC],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
-  additionalPurposes: ['Restaking', 'RWA'],
+  badges: [BADGES.DA.CustomDA, BADGES.Infra.Agglayer],
+  type: 'layer2',
+  id: ProjectId('lumia'),
+  capability: 'universal',
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+  ],
   display: {
     name: 'Lumia Prism',
     slug: 'lumia',
     description:
-      'Lumia is a Validium built on the PolygonCDK stack focusing on real world assets, restaking and account abstraction.',
+      'Lumia is a sovereign Agglayer chain focusing on real world assets, restaking and account abstraction.',
     links: {
       websites: ['https://lumia.org/'],
       bridges: ['https://bridge.lumia.org/'],
@@ -54,41 +47,89 @@ export const lumia: ScalingProject = polygonCDKStack({
         'https://discord.gg/Lumia',
       ],
     },
+    purposes: ['Restaking', 'RWA', 'Universal'],
   },
-  discovery,
-  daProvider: {
-    layer: DA_LAYERS.DAC,
-    bridge: DA_BRIDGES.DAC_MEMBERS({
-      requiredSignatures: requiredSignaturesDAC,
-      membersCount: membersCountDAC,
-    }),
-    riskView: RISK_VIEW.DATA_EXTERNAL_DAC({
-      membersCount: membersCountDAC,
-      requiredSignatures: requiredSignaturesDAC,
-    }),
-    technology: {
-      name: 'Data is not stored on chain',
+  proofSystem: undefined,
+  riskView: {
+    stateValidation: {
+      ...RISK_VIEW.STATE_NONE,
       description:
-        'The transaction data is not recorded on the Ethereum main chain. Transaction data is stored off-chain and only the hashes are posted onchain by the Sequencer, after being signed by the DAC members.',
-      risks: [
-        {
-          category: 'Funds can be lost if',
-          text: 'the external data becomes unavailable.',
-          isCritical: true,
+        "Currently the system permits invalid state roots. 'Pessimistic' proofs only validate the bridge accounting.",
+    },
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
+    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(false),
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+  },
+  stage: {
+    stage: 'NotApplicable',
+  },
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
+  contracts: {
+    addresses: generateDiscoveryDrivenContracts([discovery]),
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+  },
+  discoveryInfo: getDiscoveryInfo([discovery]),
+  ecosystemInfo: {
+    id: ProjectId('agglayer'),
+  },
+  dataAvailability: {
+    layer: DA_LAYERS.NONE,
+    bridge: DA_BRIDGES.NONE,
+    mode: { value: 'None' },
+  },
+  technology: {
+    otherConsiderations: [
+      {
+        name: 'Shared bridge and Pessimistic Proofs',
+        description:
+          "Polygon Agglayer uses a shared bridge escrow for Rollups, Validiums and external chains that opt in to participate in interoperability. Each participating chain needs to provide zk proofs to access any assets in the shared bridge. In addition to the full execution proofs that are used for the state validation of Rollups and Validiums, accounting proofs over the bridges state (Polygon calls them 'Pessimistic Proofs') are used by external chains ('cdk-sovereign' and aggchains). Using the SP1 zkVM by Succinct, projects without a full proof system on Ethereum or custom proof systems are able to share the bridge with the zkEVM Agglayer projects.",
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'the accounting proof system for the bridge (pessimistic proofs, SP1) is implemented incorrectly.',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'the operator manipulates the L2 state, which is not validated on Ethereum.',
+            isCritical: true,
+          },
+        ],
+        references: [
+          {
+            title: 'Pessimistic Proof - Polygon Knowledge Layer',
+            url: 'https://docs.polygon.technology/learn/agglayer/pessimistic_proof',
+          },
+          {
+            title:
+              'Etherscan: PolygonRollupManager.sol - verifyPessimisticTrustedAggregator() function',
+            url: 'https://etherscan.io/address/0x42B9fF0644741e3353162678596e7D6aA6a13240#code#F1#L1280',
+          },
+        ],
+      },
+    ],
+  },
+  config: {
+    associatedTokens: ['LUMIA'],
+    escrows: [
+      discovery.getEscrowDetails({
+        address: bridge.address,
+        tokens: '*',
+        sharedEscrow: {
+          type: 'AggLayer',
+          nativeAsset: 'etherWrapped',
+          wethAddress: EthereumAddress(
+            '0x5A77f1443D16ee5761d310e38b62f77f726bC71c',
+          ),
+          tokensToAssignFromL1: ['LUMIA'],
         },
-      ],
-      references: [
-        {
-          title:
-            'PolygonValidiumEtrog.sol - Etherscan source code, sequenceBatchesValidium function',
-          url: 'https://etherscan.io/address/0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F#code#F1#L91',
-        },
-      ],
+      }),
+    ],
+    activityConfig: {
+      type: 'block',
+      startBlock: 1,
     },
   },
-  rollupModuleContract,
-  rollupVerifierContract: discovery.getContract('Verifier'),
-  isForcedBatchDisallowed,
   chainConfig: {
     name: 'lumia',
     chainId: 994873017,
@@ -99,49 +140,19 @@ export const lumia: ScalingProject = polygonCDKStack({
       {
         type: 'rpc',
         url: 'https://mainnet-rpc.lumia.org',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },
-  associatedTokens: ['LUMIA'],
-  nonTemplateEscrows: [
-    discovery.getEscrowDetails({
-      address: bridge.address,
-      tokens: '*',
-      sharedEscrow: {
-        type: 'AggLayer',
-        nativeAsset: 'etherWrapped',
-        wethAddress: EthereumAddress(
-          '0x5A77f1443D16ee5761d310e38b62f77f726bC71c',
-        ),
-        tokensToAssignFromL1: ['LUMIA'],
-      },
-    }),
-  ],
-  // project-specific sequencer txs (can be listed when we are able to split the shared agglayer trackedTxs):
-  // nonTemplateTrackedTxs: [
-  //   {
-  //     uses: [
-  //       { type: 'liveness', subtype: 'batchSubmissions' },
-  //       { type: 'l2costs', subtype: 'batchSubmissions' },
-  //     ],
-  //     query: {
-  //       formula: 'functionCall',
-  //       address: rollupModuleContract.address,
-  //       selector: '0xb910e0f9',
-  //       functionSignature:
-  //         'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)',
-  //       sinceTimestamp: UnixTime(1741176767),
-  //     },
-  //   },
-  // ],
-  customDa: PolygoncdkDAC({
-    dac: {
-      requiredMembers: requiredSignaturesDAC,
-      membersCount: membersCountDAC,
-    },
-  }),
   milestones: [
+    {
+      title: 'Migration to Pessimistic Proofs',
+      url: 'https://etherscan.io/tx/0x4a9633f61bf7eacf4cfffefccc1e8a561fdaacfbed6470573463e28304b3906d#eventlog',
+      date: '2025-10-02',
+      description:
+        'Lumia stops validating the full L2 state and moves to bridge accounting proofs.',
+      type: 'general',
+    },
     {
       title: 'Lumia Mainnet Launch',
       url: 'https://x.com/BuildOnLumia/status/1895133948096676276',
@@ -150,4 +161,4 @@ export const lumia: ScalingProject = polygonCDKStack({
       type: 'general',
     },
   ],
-})
+}

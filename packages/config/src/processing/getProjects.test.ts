@@ -7,6 +7,7 @@ import {
 import { assert, EthereumAddress, type ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { existsSync } from 'fs'
+import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { checkRisk } from '../test/helpers'
 import type { BaseProject } from '../types'
@@ -147,11 +148,17 @@ describe('getProjects', () => {
           !project.archivedAt &&
           // It makes no sense to list them on the DA-BEAT
           project.dataAvailability &&
-          project.dataAvailability.layer.value !== 'None' &&
-          project.dataAvailability.bridge.projectId &&
-          daBridges
-            .map((x) => x.id)
-            .includes(project.dataAvailability.bridge.projectId) &&
+          asArray(project.dataAvailability).some(
+            (da) => da.layer.value !== 'None',
+          ) &&
+          asArray(project.dataAvailability).some(
+            (da) => da.bridge.projectId !== undefined,
+          ) &&
+          asArray(project.dataAvailability).every((da) => {
+            const bridgeProjId = da.bridge.projectId
+            if (bridgeProjId === undefined) return true
+            daBridges.map((x) => x.id).includes(bridgeProjId)
+          }) &&
           // Will be listed on the DA-BEAT automatically
           !project.customDa,
       )
@@ -172,9 +179,51 @@ describe('getProjects', () => {
     })
   })
 
+  describe('daLayer', () => {
+    const SUPPORTED_ECONOMIC_SECURITY_PROJECTS = [
+      'ethereum',
+      'celestia',
+      'avail',
+      'near-da',
+    ]
+
+    for (const project of projects) {
+      if (project.daLayer?.economicSecurity) {
+        it(`${project.id} economicSecurity is supported in BE code`, () => {
+          expect(
+            SUPPORTED_ECONOMIC_SECURITY_PROJECTS.includes(project.id),
+          ).toEqual(true)
+        })
+      }
+    }
+
+    const SUPPORTED_DYNAMIC_VALIDATORS_PROJECTS = [
+      'ethereum',
+      'celestia',
+      'avail',
+      'near-da',
+    ]
+
+    for (const project of projects) {
+      if (project.daLayer?.validators?.type === 'dynamic') {
+        it(`${project.id} dynamic type validators is supported in BE code`, () => {
+          expect(
+            SUPPORTED_DYNAMIC_VALIDATORS_PROJECTS.includes(project.id),
+          ).toEqual(true)
+        })
+      }
+    }
+  })
+
   describe('contracts', () => {
     for (const project of getProjects()) {
       describe(project.id, () => {
+        const permissions = Object.values(project.permissions ?? {})
+        const all = [
+          ...permissions.flatMap((p) => p.roles ?? []),
+          ...permissions.flatMap((p) => p.actors ?? []),
+        ]
+
         const contracts = project.contracts?.addresses ?? {}
         for (const [chain, perChain] of Object.entries(contracts)) {
           for (const [i, contract] of perChain.entries()) {
@@ -189,22 +238,17 @@ describe('getProjects', () => {
             })
 
             const upgradableBy = contract.upgradableBy
-            const permissions = Object.values(project.permissions ?? {})
-            const all = [
-              ...permissions.flatMap((p) => p.roles ?? []),
-              ...permissions.flatMap((p) => p.actors ?? []),
-            ]
-            const actors = all.map((x) => {
-              if (x.name === 'EOA') {
-                assert(x.accounts[0].type === 'EOA')
-                return x.accounts[0].address
-              }
-              return x.name
-            })
+            const actorIds = all.map((a) => a.id)
 
             if (upgradableBy) {
-              it(`contracts[${project.id}][${chain}][${i}].upgradableBy is valid`, () => {
-                expect(actors).toInclude(...upgradableBy.map((a) => a.name))
+              it(`contracts[${project.id}][${chain}][${contract.name ?? contract.address.toString()} (${i})].upgradableBy is valid \n ${actorIds} | \n${upgradableBy.map((a) => a.name)}`, () => {
+                const expectedToContain = upgradableBy.map(
+                  (a) => a.id ?? a.name,
+                )
+
+                for (const expected of expectedToContain) {
+                  expect(actorIds).toInclude(expected)
+                }
               })
             }
           }
@@ -219,7 +263,14 @@ describe('getProjects', () => {
 
   describe('chain config', () => {
     const chains = projects
-      .map((x) => x.chainConfig)
+      .map((x) =>
+        x.chainConfig
+          ? {
+              projectId: x.id,
+              ...x.chainConfig,
+            }
+          : undefined,
+      )
       .filter((x) => x !== undefined)
 
     it('every name is lowercase a-z0-9 <20 characters', () => {
@@ -233,6 +284,17 @@ describe('getProjects', () => {
       for (const chain of chains) {
         expect(encountered.has(chain.name)).toEqual(false)
         encountered.add(chain.name)
+      }
+    })
+
+    it('every name is equal to projectId', () => {
+      // in many places chain name and project id are used interchangeably so we need them to be the same
+      // do not add new projects here!
+      const KNOWN_EXCEPTIONS = ['polygonpos', 'g7']
+
+      for (const chain of chains) {
+        if (KNOWN_EXCEPTIONS.includes(chain.name)) continue
+        expect(chain.name).toEqual(chain.projectId)
       }
     })
 
@@ -482,6 +544,21 @@ describe('getProjects', () => {
               }
             })
           }
+        }
+      }
+    })
+
+    describe('every project has no multiple daLayers configured for tracking (not supported on FE)', () => {
+      for (const project of projects) {
+        if (project.daTrackingConfig) {
+          const usedDaLayers = new Set<ProjectId>()
+          it(project.id, () => {
+            assert(project.daTrackingConfig) // type issue
+            for (const config of project.daTrackingConfig) {
+              usedDaLayers.add(config.daLayer)
+            }
+            expect(usedDaLayers.size).toEqual(1)
+          })
         }
       }
     })

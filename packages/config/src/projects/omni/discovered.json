@@ -1,0 +1,3085 @@
+{
+  "name": "omni",
+  "timestamp": 1757940700,
+  "configHash": "0x0e86268072526b598199bcdfb204e1852dde00cc2eeef038e0a10ee6ee783d90",
+  "entries": [
+    {
+      "name": "Giveth EOA 2",
+      "address": "eth:0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x10DD75875a2a8a284529Ae7223B1aCE410d606bd",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Safe EOA 1",
+      "address": "eth:0x1312E98995bbCc30fc63Db3cef807e20CDd33dca",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Safe EOA 2",
+      "address": "eth:0x258667E543C913264388B33328337257aF208a8f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Yaru",
+      "address": "eth:0x30f64a297cc66a873FB603d1e89D5891962C25ba",
+      "type": "Contract",
+      "template": "gnosisbridge/Yaru",
+      "sourceHashes": [
+        "0x08b3a970ed97adf129059abd1030e73ebd6904533643bd35cfce0459bf3a0641"
+      ],
+      "proxyType": "immutable",
+      "description": "Contract handling inbound messages for the Hashi protocol.",
+      "sinceTimestamp": 1726020995,
+      "sinceBlock": 20724328,
+      "values": {
+        "$immutable": true,
+        "HASHI": "eth:0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615",
+        "SOURCE_CHAIN_ID": 100,
+        "YAHO": "eth:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8"
+      },
+      "implementationNames": {
+        "eth:0x30f64a297cc66a873FB603d1e89D5891962C25ba": "Yaru"
+      }
+    },
+    {
+      "address": "eth:0x329c54289Ff5D6B7b7daE13592C6B1EDA1543eD4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Gateway EOA 2",
+      "address": "eth:0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Gnosis Bridge Multisig",
+      "address": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
+          "description": "change all critical configurations like fees, yield farming for escrowed funds, limits, validating contract references.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
+          "description": "change external validation logic refered to by this contract (e.g. Hashi).",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x88ad09518695c6c3712AC10a214bE5109a655671",
+          "description": "change all critical configurations like yield farming for escrowed funds and limits.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "description": "change the threshold and manage signers.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "description": "change the threshold and manage signers.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x88ad09518695c6c3712AC10a214bE5109a655671",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "role": "admin"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1600956399,
+      "sinceBlock": 10925774,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
+          "eth:0xb8173f558f75EE263013fd6294177bf75279a21e",
+          "eth:0xDdf2d07267EAF2cE3E13ee4319bE1F34D55ed992",
+          "eth:0xf59E447E97bC03c2B0C5719e2E551F0B15b724e5",
+          "eth:0xA07888742c18d7e658132AE0148fF205fFF46481",
+          "eth:0x329c54289Ff5D6B7b7daE13592C6B1EDA1543eD4",
+          "eth:0xcF9ebF877688Ed88a7479A6e63457Fd78D4275cE",
+          "eth:0x5b10cE4DDD27F57d4D432D409A5321219cbA7893",
+          "eth:0xc44caeb7F0724A156806664d2361fD6f32a2d2C8",
+          "eth:0x839395e20bbB182fa440d08F850E6c7A8f6F0780",
+          "eth:0xB646B8b5Fe6cBc7770578B7679208337ef747ae4",
+          "eth:0x10DD75875a2a8a284529Ae7223B1aCE410d606bd",
+          "eth:0x80BA18503a1Fa16Ea22F3ef1Af23e2994EaC1d97",
+          "eth:0xb2a33ae0E07fD2ca8DBdE9545F6ce0b3234dc4e8",
+          "eth:0x57B11cC8F93f2cfeC4c1C5B95213f17cAD81332B",
+          "eth:0x544cE64C3Fc6Da72CEB2456CC4cF19E7c7972eFA"
+        ],
+        "$threshold": 8,
+        "domainSeparator": "0x877c70937e5670b3f50eb943a4e9d65fbd9bc8ce060659a7dc0543885a0ca59e",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "8 of 16 (50%)",
+        "nonce": 86,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": "Proxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "name": "Protofire EOA 2",
+      "address": "eth:0x459A3bd49F1ff109bc90b76125533699AaAAf9A6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "DaiForeignBridge",
+      "address": "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x781decea1d7b5174464b57449f32ada83d1c1b7e12bdfa47eb9d00a41a36c839",
+        "0x07db9068db8cb815b37ab00e7a0098b6200657a2c4126fc4c87af49468891d99"
+      ],
+      "proxyType": "Eternal Storage proxy",
+      "description": "Token bridge implementation and escrow for DAI-related tokens. Escrowed Dai can be invested in the Spark protocol for sDai.",
+      "ignoreInWatchMode": ["maxAvailablePerTx", "nonce"],
+      "sinceTimestamp": 1539028166,
+      "sinceBlock": 6478422,
+      "values": {
+        "$admin": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "$implementation": "eth:0xb54042F5bA4B048fEa54aaE70abbbe41AC716299",
+        "$pastUpgrades": [
+          [
+            "2018-10-08T19:50:23.000Z",
+            "0x01d8eeea7ea146970fb4fbe8991d6118f8f41a779b06c69041d32362575f1eda",
+            ["eth:0x710d6eC2b0948dEf1f423Ec77B51b6a55847D2C5"]
+          ],
+          [
+            "2018-12-19T12:49:42.000Z",
+            "0x29fdf4418b3ab5b5380e7ad0259278b1bbab18e121438c9c9d69ac6091f44a00",
+            ["eth:0x0D3726e5a9f37234D6B55216fC971D30F150a60F"]
+          ],
+          [
+            "2019-12-25T13:53:49.000Z",
+            "0x003ae91dc06c549cc28cdf47294abeb545577e119b98f6b6e631940a744a3356",
+            ["eth:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59"]
+          ],
+          [
+            "2020-03-31T11:16:05.000Z",
+            "0x9f50cee64b4e729b7bd61630ed174ea3c7e47e3db1403d9828a9736b2ad7ce79",
+            ["eth:0xd40355B17643Bc26554c9A9BBC95b5CAbd92C2CD"]
+          ],
+          [
+            "2020-04-16T15:59:27.000Z",
+            "0xd0c3c92c94e05bc71256055ce8c4c993e047f04e04f3283a04e4cb077b71f6c6",
+            ["eth:0x83c2E0E3B5328E599a3cBa95d97090fA7d0FDE8b"]
+          ],
+          [
+            "2020-05-12T14:05:38.000Z",
+            "0x0f8ee640cb733e48ef1011554cb36945492f8cd40b5111417d1f54f30633f986",
+            ["eth:0x7E7669bdff02F2eE75b68B91FB81c2B38F9228C2"]
+          ],
+          [
+            "2021-10-06T18:49:32.000Z",
+            "0xb4afa1efcf12ba7907458062704efcc5658af3da5d36a4b4d4035af431d9df19",
+            ["eth:0xEeE4f8dB4410beBD74A76cB711D096c5E66d0473"]
+          ],
+          [
+            "2023-09-20T07:33:35.000Z",
+            "0x291d48fdfd430165b2b7f62c3ae806ea28ab34b4dc8a2e4d7d01693f19b780c9",
+            ["eth:0x166124b75c798Cedf1B43655E9B5284eBd5203DB"]
+          ],
+          [
+            "2025-04-15T09:12:11.000Z",
+            "0xc4db8a77365d4870af65f44232ca728e5e0fd583cde3ba83ba81cac3d77ff89d",
+            ["eth:0xb54042F5bA4B048fEa54aaE70abbbe41AC716299"]
+          ]
+        ],
+        "$upgradeCount": 9,
+        "dailyLimit": "10000000000000000000000000",
+        "daiToken": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "decimalShift": 0,
+        "deployedAtBlock": 6478428,
+        "erc20token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "executionDailyLimit": "15000000000000000000000000",
+        "executionMaxPerTx": "10000000000000000000000000",
+        "gasPrice": 100000000000,
+        "getBridgeInterfacesVersion": { "major": 6, "minor": 1, "patch": 0 },
+        "getBridgeMode": "0x18762d46",
+        "getTrustedForwarder": "eth:0x0000000000000000000000000000000000000000",
+        "HASHI_IS_ENABLED": true,
+        "HASHI_IS_MANDATORY": false,
+        "hashiManager": "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
+        "implementation": "eth:0xb54042F5bA4B048fEa54aaE70abbbe41AC716299",
+        "isInitialized": true,
+        "maxAvailablePerTx": "9168265062173658475806309",
+        "maxPerTx": "9999999000000000000000000",
+        "minPerTx": 5000000000000000,
+        "nonce": 2141,
+        "owner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "proxyOwner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "requiredBlockConfirmations": 20,
+        "requiredSignatures": 4,
+        "sDaiToken": "eth:0x83F20F44975D03b1b09e64809B757c47f942BEeA",
+        "upgradeabilityOwner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "validatorContract": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+        "version": 9,
+        "versionRecipient": "1.0.1"
+      },
+      "implementationNames": {
+        "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016": "EternalStorageProxy",
+        "eth:0xb54042F5bA4B048fEa54aaE70abbbe41AC716299": "XDaiForeignBridge"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Hashi Multisig",
+      "address": "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9",
+          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
+          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
+          "role": "admin"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1686042107,
+      "sinceBlock": 17420395,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xd722EC6853e6EbAaf8664602A37855FAe872E482",
+          "eth:0xD1aA7F557af9cC5Ba4Daf87D923d712fdAf1D709",
+          "eth:0x52F05Eff62fC36c83d840D9684daCAD3be43D8bf"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xaee10730379a3d6df2303789b1843342698bd85d618cdf13a5f75b84e16d88eb",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 23,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "name": "ForeignAMB",
+      "address": "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
+        "0xd9dd29f51753144909a424e20a1281bc15263ea2de2f5f028666b183b00d5fc3"
+      ],
+      "proxyType": "Eternal Storage proxy",
+      "description": "Arbitrary Message Bridge validated by the BridgeValidators. Can be used for token bridges or any other cross-chain messaging.",
+      "sinceTimestamp": 1579258532,
+      "sinceBlock": 9298324,
+      "values": {
+        "$admin": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "$implementation": "eth:0x098f51bdfb5D6d319DD4FDf06b64773d25bD1316",
+        "$pastUpgrades": [
+          [
+            "2020-01-17T10:56:41.000Z",
+            "0x16056cbaad7fb4412c05b045351e3c9f62215cd6ffc867a59ac1db8f7a5092cf",
+            ["eth:0xe804Fe5Fb14B02aba636f37Fb6E1c7a08b2f4B16"]
+          ],
+          [
+            "2020-07-06T21:51:30.000Z",
+            "0x4401dfe716f0d2cfa06849f179b07cc7783caaea862dc10839a331aa7ad10ab3",
+            ["eth:0x2946f6D458F8Cf8723A1d9e95043831D3937461e"]
+          ],
+          [
+            "2020-08-02T22:22:52.000Z",
+            "0xd0b4d072c9581c7cbbb900287a915e644d0d9c2f3fc8d19cf6ab1424037388b4",
+            ["eth:0x54c6dFBB807BE694841A0F1B84CbC49D8FC98ed7"]
+          ],
+          [
+            "2020-12-06T21:52:03.000Z",
+            "0x0508a2fb3129be470493478041780a59632d56a5fb131ec1c11b23702a904d7e",
+            ["eth:0x872796bf7Fe754754d2BEE2c66D7de9B04a5C943"]
+          ],
+          [
+            "2021-10-04T11:04:06.000Z",
+            "0x41b432a66ed945c9d33c0e77de7e9523bb216e421b27b8f3e4e8dbef34b4f5cd",
+            ["eth:0x82B67a43b69914E611710C62e629dAbB2f7AC6AB"]
+          ],
+          [
+            "2024-09-23T08:55:47.000Z",
+            "0x3ef23ae6e10cbe0bf6b08df489a829047fa8d1376f2aa2f079cdce9a9342d086",
+            ["eth:0x098f51bdfb5D6d319DD4FDf06b64773d25bD1316"]
+          ]
+        ],
+        "$upgradeCount": 6,
+        "allowReentrantRequests": false,
+        "decimalShift": 0,
+        "deployedAtBlock": 9298331,
+        "destinationChainId": 100,
+        "gasPrice": 10000000000,
+        "getBridgeInterfacesVersion": { "major": 6, "minor": 2, "patch": 0 },
+        "getBridgeMode": "0x2544fbb9",
+        "HASHI_IS_ENABLED": true,
+        "HASHI_IS_MANDATORY": false,
+        "hashiManager": "eth:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9",
+        "implementation": "eth:0x098f51bdfb5D6d319DD4FDf06b64773d25bD1316",
+        "isInitialized": true,
+        "maxGasPerTx": 4000000,
+        "messageId": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "messageSender": "eth:0x0000000000000000000000000000000000000000",
+        "messageSourceChainId": 0,
+        "owner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "requiredBlockConfirmations": 175,
+        "requiredSignatures": 4,
+        "sourceChainId": 1,
+        "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "upgradeabilityOwner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "validatorContract": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+        "version": 6
+      },
+      "implementationNames": {
+        "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e": "EternalStorageProxy",
+        "eth:0x098f51bdfb5D6d319DD4FDf06b64773d25bD1316": "ForeignAMB"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Protofire EOA 1",
+      "address": "eth:0x4D1c96B9A49C4469A0b720a22b74b034EDdFe051",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x52F05Eff62fC36c83d840D9684daCAD3be43D8bf",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x544cE64C3Fc6Da72CEB2456CC4cF19E7c7972eFA",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x57B11cC8F93f2cfeC4c1C5B95213f17cAD81332B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "CoW Protocol EOA 1",
+      "address": "eth:0x587C0d02B40822f15f05301d87c16f6a08AaDDde",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x5b10cE4DDD27F57d4D432D409A5321219cbA7893",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "CoW Protocol EOA 2",
+      "address": "eth:0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x67E5855Aa4D5786c086b7FC6B4203a5Ea50E93F8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "TokenFactory",
+      "address": "eth:0x71d5ba4e37de72415F685490B684538Aae8f0424",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xc3fc18a2178145d16d7d8d6b50d97b6d7a405421b3fae66cdeb31fb52f4e7eed"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1634280699,
+      "sinceBlock": 13421129,
+      "values": {
+        "$immutable": true,
+        "getModuleInterfacesVersion": { "major": 1, "minor": 0, "patch": 0 },
+        "owner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "tokenImage": "eth:0x7c24d0061b484B267F286aa2DCe891220Db254b3"
+      },
+      "implementationNames": {
+        "eth:0x71d5ba4e37de72415F685490B684538Aae8f0424": "TokenFactory"
+      }
+    },
+    {
+      "name": "LayerZeroAdapter",
+      "address": "eth:0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xfe0e5c810459ca8daab7faf04bce3cf62afcbce5c1feb22e05e5b989136d1b32"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1727855615,
+      "sinceBlock": 20876445,
+      "values": {
+        "$immutable": true,
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "LAYER_ZERO_ENDPOINT": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
+        "owner": "eth:0x67E5855Aa4D5786c086b7FC6B4203a5Ea50E93F8",
+        "PROVIDER": "layer-zero"
+      },
+      "implementationNames": {
+        "eth:0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418": "LayerZeroAdapter"
+      }
+    },
+    {
+      "name": "PermittableToken",
+      "address": "eth:0x7c24d0061b484B267F286aa2DCe891220Db254b3",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x064c46a3015079f17e93b171ff684cda28a0ecdbd55ecec09c4ddf50e0a5c312"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1634280299,
+      "sinceBlock": 13421099,
+      "values": {
+        "$immutable": true,
+        "bridgeContract": "eth:0x0000000000000000000000000000000000000000",
+        "decimals": 0,
+        "DOMAIN_SEPARATOR": "0xcaa93cb1b6b7dc5661966ae0c34c78b2bb3aea8cc828a3690fdf9dec64932930",
+        "getTokenInterfacesVersion": { "major": 2, "minor": 5, "patch": 0 },
+        "mintingFinished": false,
+        "name": "",
+        "owner": "eth:0xBF3d6f830CE263CAE987193982192Cd990442B53",
+        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
+        "PERMIT_TYPEHASH_LEGACY": "0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb",
+        "symbol": "",
+        "totalSupply": 0,
+        "version": "1"
+      },
+      "implementationNames": {
+        "eth:0x7c24d0061b484B267F286aa2DCe891220Db254b3": "PermittableToken"
+      }
+    },
+    {
+      "address": "eth:0x80BA18503a1Fa16Ea22F3ef1Af23e2994EaC1d97",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x839395e20bbB182fa440d08F850E6c7A8f6F0780",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ForeignOmnibridge",
+      "address": "eth:0x88ad09518695c6c3712AC10a214bE5109a655671",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
+        "0xb84afd7276ac99834f5104f7c4f890572ffc31fadd9629aabd82017025e7ada2"
+      ],
+      "proxyType": "Eternal Storage proxy",
+      "description": "Token bridge implementation and escrow for ERC-20 tokens.",
+      "sinceTimestamp": 1596501090,
+      "sinceBlock": 10590093,
+      "values": {
+        "$admin": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "$implementation": "eth:0x8eB3b7D8498a6716904577b2579e1c313d48E347",
+        "$pastUpgrades": [
+          [
+            "2020-08-04T00:31:58.000Z",
+            "0xb389acafc31832156fe9bca8d22b47ef91396dd7661d4c318b6de25bc11b4694",
+            ["eth:0x280f04a988513610584057Bf3fDE1f56f4d22CA9"]
+          ],
+          [
+            "2020-08-22T21:44:00.000Z",
+            "0x11417a1a4415db5eca2fadc6b2b5d0df882c7d731a1e7252ce10d98e0cfe6d9d",
+            ["eth:0x4B86181abcAeFc008B561E27C0aee64Bb5eB8dBe"]
+          ],
+          [
+            "2020-08-27T21:37:25.000Z",
+            "0xc54efc1f3d91454efd7957372f2fa4421f545b9a9e56eb4240000496b7a52177",
+            ["eth:0x5275e7264AB0Bb75D970E7442De0Aadd0C0b85ae"]
+          ],
+          [
+            "2020-12-06T21:53:07.000Z",
+            "0xf8b984ed23d53276bcf228d3f114d5e2d982887d5d5941f900e066003eeeb361",
+            ["eth:0xB0a18F960221c6D56871c29e5dD7b838E79c2E94"]
+          ],
+          [
+            "2021-03-15T12:56:56.000Z",
+            "0x50ec5688352357ed3c2ad7f4913dbc005a04e44528ccc7101a4457d58610947d",
+            ["eth:0x7bFF37bda2318125C6B895d4f2B50Bcd9E0cC40e"]
+          ],
+          [
+            "2021-10-15T18:59:03.000Z",
+            "0x0fa2767b8bd06816aef104d1a04362f06aba8c814e1444c08838db0973ace594",
+            ["eth:0x8eB3b7D8498a6716904577b2579e1c313d48E347"]
+          ]
+        ],
+        "$upgradeCount": 6,
+        "bridgeContract": "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
+        "getBridgeInterfacesVersion": { "major": 3, "minor": 3, "patch": 1 },
+        "getBridgeMode": "0xb1516c26",
+        "implementation": "eth:0x8eB3b7D8498a6716904577b2579e1c313d48E347",
+        "isInitialized": true,
+        "mediatorContractOnOtherSide": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+        "owner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "requestGasLimit": 2000000,
+        "tokenFactory": "eth:0x71d5ba4e37de72415F685490B684538Aae8f0424",
+        "upgradeabilityOwner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "version": 6
+      },
+      "implementationNames": {
+        "eth:0x88ad09518695c6c3712AC10a214bE5109a655671": "EternalStorageProxy",
+        "eth:0x8eB3b7D8498a6716904577b2579e1c313d48E347": "ForeignOmnibridge"
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "gno" } }
+      ],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Gateway EOA 1",
+      "address": "eth:0x90776017057b84bc47D7e7383b65C463C80a6cdd",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "HashiManager_Omni",
+      "address": "eth:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9",
+      "type": "Contract",
+      "template": "gnosisbridge/HashiManager",
+      "sourceHashes": [
+        "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
+        "0x824f58e3acf3f9403dc26549af4869336347109f24d07d82aa11897bed907b17"
+      ],
+      "proxyType": "Eternal Storage proxy",
+      "description": "A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.",
+      "sinceTimestamp": 1726023347,
+      "sinceBlock": 20724523,
+      "values": {
+        "$admin": "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
+        "$implementation": "eth:0x159B36Ed5BA327fd269Fb93c75918257DCfe686d",
+        "$pastUpgrades": [
+          [
+            "2024-09-11T02:56:11.000Z",
+            "0x69c009512506e9271ad25755cb5b08957bfdae68032d37fb696ce69c89c70bc0",
+            ["eth:0x159B36Ed5BA327fd269Fb93c75918257DCfe686d"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "adapters": ["gno:0x9C63010F056E4692A44A510F2F5E8A44B94960Bf"],
+        "AdaptersFromStorage": "eth:0x0000000000000000000000000000000000000000",
+        "deployedAtBlock": 0,
+        "expectedAdaptersHash": "0x6b603f4a7f51661e39122b2cc2745ffbc56eca92e59f655d365cd5170d930c0a",
+        "expectedThreshold": 1,
+        "implementation": "eth:0x159B36Ed5BA327fd269Fb93c75918257DCfe686d",
+        "isInitialized": true,
+        "owner": "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
+        "reporters": ["gno:0x0000000000000000000000000000000000000000"],
+        "targetAddress": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
+        "targetChainId": 100,
+        "threshold": 1,
+        "upgradeabilityOwner": "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
+        "version": 1,
+        "yaho": "eth:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8",
+        "yaru": "eth:0x30f64a297cc66a873FB603d1e89D5891962C25ba"
+      },
+      "fieldMeta": {
+        "HASHI_IS_MANDATORY": {
+          "severity": "HIGH",
+          "description": "If true, Hashi validation is mandatory"
+        },
+        "targetAddress": {
+          "severity": "HIGH",
+          "description": "Address of the target contract on GnosisChain"
+        },
+        "adapters": {
+          "severity": "HIGH",
+          "description": "Array of the adapters on GnosisChain"
+        },
+        "reporters": {
+          "severity": "HIGH",
+          "description": "Array of the reports on GnosisChain"
+        },
+        "threshold": {
+          "severity": "HIGH",
+          "description": "Threshold of the adapters on GnosisChain"
+        }
+      },
+      "implementationNames": {
+        "eth:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9": "EternalStorageProxy",
+        "eth:0x159B36Ed5BA327fd269Fb93c75918257DCfe686d": "HashiManager"
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "gno" } }]
+    },
+    {
+      "name": "Gnosis DAO EOA 1",
+      "address": "eth:0x97630E2aE609D4104aBdA91F3066C556403182dd",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "HashiManager_DAI",
+      "address": "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
+      "type": "Contract",
+      "template": "gnosisbridge/HashiManager",
+      "sourceHashes": [
+        "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
+        "0x824f58e3acf3f9403dc26549af4869336347109f24d07d82aa11897bed907b17"
+      ],
+      "proxyType": "Eternal Storage proxy",
+      "description": "A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.",
+      "sinceTimestamp": 1738140599,
+      "sinceBlock": 21729100,
+      "values": {
+        "$admin": "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
+        "$implementation": "eth:0x716623daF27f2aFA8D6051A4Eda08E12107a2c83",
+        "$pastUpgrades": [
+          [
+            "2025-01-29T08:50:23.000Z",
+            "0xa689d7b7870d7f1e36c27d9a26d2315b38c27be19e985a7038b4fa1e706807aa",
+            ["eth:0x716623daF27f2aFA8D6051A4Eda08E12107a2c83"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "adapters": ["gno:0x9C63010F056E4692A44A510F2F5E8A44B94960Bf"],
+        "AdaptersFromStorage": "eth:0x0000000000000000000000000000000000000000",
+        "deployedAtBlock": 0,
+        "expectedAdaptersHash": "0x6b603f4a7f51661e39122b2cc2745ffbc56eca92e59f655d365cd5170d930c0a",
+        "expectedThreshold": 1,
+        "implementation": "eth:0x716623daF27f2aFA8D6051A4Eda08E12107a2c83",
+        "isInitialized": true,
+        "owner": "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
+        "reporters": ["gno:0x0000000000000000000000000000000000000000"],
+        "targetAddress": "gno:0x7301CFA0e1756B71869E93d4e4Dca5c7d0eb0AA6",
+        "targetChainId": 100,
+        "threshold": 1,
+        "upgradeabilityOwner": "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
+        "version": 1,
+        "yaho": "eth:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8",
+        "yaru": "eth:0x30f64a297cc66a873FB603d1e89D5891962C25ba"
+      },
+      "fieldMeta": {
+        "HASHI_IS_MANDATORY": {
+          "severity": "HIGH",
+          "description": "If true, Hashi validation is mandatory"
+        },
+        "targetAddress": {
+          "severity": "HIGH",
+          "description": "Address of the target contract on GnosisChain"
+        },
+        "adapters": {
+          "severity": "HIGH",
+          "description": "Array of the adapters on GnosisChain"
+        },
+        "reporters": {
+          "severity": "HIGH",
+          "description": "Array of the reports on GnosisChain"
+        },
+        "threshold": {
+          "severity": "HIGH",
+          "description": "Threshold of the adapters on GnosisChain"
+        }
+      },
+      "implementationNames": {
+        "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD": "EternalStorageProxy",
+        "eth:0x716623daF27f2aFA8D6051A4Eda08E12107a2c83": "HashiManager"
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "gno" } }]
+    },
+    {
+      "address": "eth:0xA07888742c18d7e658132AE0148fF205fFF46481",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Hashi",
+      "address": "eth:0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x43d4a4b8ebf5f34d224efe2343c5abc3fc5042025c06fb8dd82efc9257fbaa92"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1720770791,
+      "sinceBlock": 20289052,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615": "Hashi"
+      }
+    },
+    {
+      "address": "eth:0xb2a33ae0E07fD2ca8DBdE9545F6ce0b3234dc4e8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xB646B8b5Fe6cBc7770578B7679208337ef747ae4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xb8173f558f75EE263013fd6294177bf75279a21e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Yaho",
+      "address": "eth:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8",
+      "type": "Contract",
+      "template": "gnosisbridge/Yaho",
+      "sourceHashes": [
+        "0x0a159de58bdd599af48d18d484a70a71f1038064d066e7e489b877721b866bcb"
+      ],
+      "proxyType": "immutable",
+      "description": "Contract handling outbound messages for the Hashi protocol.",
+      "sinceTimestamp": 1720772543,
+      "sinceBlock": 20289197,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8": "Yaho"
+      }
+    },
+    {
+      "name": "Gnosis DAO EOA 2",
+      "address": "eth:0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xBF3d6f830CE263CAE987193982192Cd990442B53",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Giveth EOA 1",
+      "address": "eth:0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xc44caeb7F0724A156806664d2361fD6f32a2d2C8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xcF9ebF877688Ed88a7479A6e63457Fd78D4275cE",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xD1aA7F557af9cC5Ba4Daf87D923d712fdAf1D709",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xd722EC6853e6EbAaf8664602A37855FAe872E482",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xDdf2d07267EAF2cE3E13ee4319bE1F34D55ed992",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "BridgeValidators_DAI",
+      "address": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+      "type": "Contract",
+      "template": "gnosisbridge/BridgeValidators",
+      "sourceHashes": [
+        "0x781decea1d7b5174464b57449f32ada83d1c1b7e12bdfa47eb9d00a41a36c839",
+        "0x7123b263360e368977fbfb7da550817b9a4807849090a69d6415b0b1bb33b398"
+      ],
+      "proxyType": "Eternal Storage proxy",
+      "description": "Custom Multisignature contract for Validators.",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge3",
+          "from": "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
+          "role": ".validatorContract"
+        }
+      ],
+      "sinceTimestamp": 1539028018,
+      "sinceBlock": 6478411,
+      "values": {
+        "$admin": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "$implementation": "eth:0x6943A218d58135793F1FE619414eD476C37ad65a",
+        "$members": [
+          "eth:0x90776017057b84bc47D7e7383b65C463C80a6cdd",
+          "eth:0xfA98B60E02A61B6590f073cAD56e68326652d094",
+          "eth:0x97630E2aE609D4104aBdA91F3066C556403182dd",
+          "eth:0x587C0d02B40822f15f05301d87c16f6a08AaDDde",
+          "eth:0x1312E98995bbCc30fc63Db3cef807e20CDd33dca",
+          "eth:0x4D1c96B9A49C4469A0b720a22b74b034EDdFe051",
+          "eth:0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506"
+        ],
+        "$pastUpgrades": [
+          [
+            "2018-10-08T19:48:08.000Z",
+            "0x6dbedab00bc4840c459ba44c856c3aa1e7be5acd0c4a4602620a457979e7c4ee",
+            ["eth:0xd760E016226836cC02E329aDDBB6821945Dd5100"]
+          ],
+          [
+            "2019-12-25T13:53:35.000Z",
+            "0x721841ce7ca52a0a5ed23f1f4093fdd1dac4e538bcace263f0b59008885d2f34",
+            ["eth:0x6943A218d58135793F1FE619414eD476C37ad65a"]
+          ]
+        ],
+        "$threshold": 4,
+        "$upgradeCount": 2,
+        "deployedAtBlock": 6478417,
+        "F_ADDR": "eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
+        "getBridgeValidatorsInterfacesVersion": {
+          "major": 2,
+          "minor": 3,
+          "patch": 0
+        },
+        "implementation": "eth:0x6943A218d58135793F1FE619414eD476C37ad65a",
+        "isInitialized": true,
+        "owner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "proxyOwner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "upgradeabilityOwner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "validatorCount": 7,
+        "version": 2
+      },
+      "fieldMeta": {
+        "$members": {
+          "description": "Array of the signers in the validator multisig"
+        }
+      },
+      "implementationNames": {
+        "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E": "EternalStorageProxy",
+        "eth:0x6943A218d58135793F1FE619414eD476C37ad65a": "BridgeValidators"
+      }
+    },
+    {
+      "name": "BridgeValidators_Omni",
+      "address": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+      "type": "Contract",
+      "template": "gnosisbridge/BridgeValidators",
+      "sourceHashes": [
+        "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
+        "0x0ff53e04cc715e56805825c7eb45af72110792ad606dbfd4a97db98dfb75e6f7"
+      ],
+      "proxyType": "Eternal Storage proxy",
+      "description": "Custom multisignature contract for Validator addresses.",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge3",
+          "from": "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
+          "role": ".validatorContract"
+        }
+      ],
+      "sinceTimestamp": 1579258396,
+      "sinceBlock": 9298314,
+      "values": {
+        "$admin": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "$implementation": "eth:0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218",
+        "$members": [
+          "eth:0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6",
+          "eth:0xfA98B60E02A61B6590f073cAD56e68326652d094",
+          "eth:0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe",
+          "eth:0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0",
+          "eth:0x258667E543C913264388B33328337257aF208a8f",
+          "eth:0x459A3bd49F1ff109bc90b76125533699AaAAf9A6",
+          "eth:0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d"
+        ],
+        "$pastUpgrades": [
+          [
+            "2020-01-17T10:54:27.000Z",
+            "0x78da167ac224bb9190c7cddd1d294be2bce23d1120a4e20de50641f2c60f7870",
+            ["eth:0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218"]
+          ]
+        ],
+        "$threshold": 4,
+        "$upgradeCount": 1,
+        "deployedAtBlock": 9298321,
+        "F_ADDR": "eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
+        "getBridgeValidatorsInterfacesVersion": {
+          "major": 2,
+          "minor": 3,
+          "patch": 0
+        },
+        "implementation": "eth:0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218",
+        "isInitialized": true,
+        "owner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "upgradeabilityOwner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "validatorCount": 7,
+        "version": 1
+      },
+      "fieldMeta": {
+        "$members": {
+          "description": "Array of the signers in the validator multisig"
+        }
+      },
+      "implementationNames": {
+        "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064": "EternalStorageProxy",
+        "eth:0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218": "BridgeValidators"
+      }
+    },
+    {
+      "address": "eth:0xf59E447E97bC03c2B0C5719e2E551F0B15b724e5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Karpatkey EOA",
+      "address": "eth:0xfA98B60E02A61B6590f073cAD56e68326652d094",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0x06DAeB1A97972B9A12e171ed1FC86b392Fa3f89A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0x0DA0C3e52C977Ed3cBc641fF02DD271c3ED55aFe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Giveth EOA 2",
+      "address": "gno:0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0x10DD75875a2a8a284529Ae7223B1aCE410d606bd",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Yaru",
+      "address": "gno:0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5",
+      "type": "Contract",
+      "template": "gnosisbridge/Yaru",
+      "sourceHashes": [
+        "0x08b3a970ed97adf129059abd1030e73ebd6904533643bd35cfce0459bf3a0641"
+      ],
+      "proxyType": "immutable",
+      "description": "Contract handling inbound messages for the Hashi protocol.",
+      "sinceTimestamp": 1726019595,
+      "sinceBlock": 35938697,
+      "values": {
+        "$immutable": true,
+        "HASHI": "gno:0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615",
+        "SOURCE_CHAIN_ID": 1,
+        "YAHO": "gno:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8"
+      },
+      "implementationNames": {
+        "gno:0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5": "Yaru"
+      }
+    },
+    {
+      "name": "PermittableToken",
+      "address": "gno:0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x064c46a3015079f17e93b171ff684cda28a0ecdbd55ecec09c4ddf50e0a5c312"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1634244030,
+      "sinceBlock": 18573208,
+      "values": {
+        "$immutable": true,
+        "bridgeContract": "gno:0x0000000000000000000000000000000000000000",
+        "decimals": 0,
+        "DOMAIN_SEPARATOR": "0x75d2243c5f16e74af316608b1c54f2c34da1e0ff0e551af68c80e7c57328d85e",
+        "getTokenInterfacesVersion": { "major": 2, "minor": 5, "patch": 0 },
+        "mintingFinished": false,
+        "name": "''",
+        "owner": "gno:0xBF3d6f830CE263CAE987193982192Cd990442B53",
+        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
+        "PERMIT_TYPEHASH_LEGACY": "0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb",
+        "symbol": "''",
+        "totalSupply": 0,
+        "version": "1"
+      },
+      "implementationNames": {
+        "gno:0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4": "PermittableToken"
+      }
+    },
+    {
+      "address": "gno:0x1B0C638616Ed79dB430Edbf549ad9512FF4a8ed1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Safe EOA 2",
+      "address": "gno:0x258667E543C913264388B33328337257aF208a8f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0x329c54289Ff5D6B7b7daE13592C6B1EDA1543eD4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Gateway EOA 2",
+      "address": "gno:0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Protofire EOA 2",
+      "address": "gno:0x459A3bd49F1ff109bc90b76125533699AaAAf9A6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0x4701f5F0b1aE73d018F91C38808c3058925cA526",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0x4f34c5F8e9F07a409a59dbbb8e80Ab6D5f43bd72",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "gno:0x507A7777E6DbF4680951E63fB3753a20F2c37706",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1686655675,
+      "sinceBlock": 28432566,
+      "values": {
+        "$immutable": false,
+        "$implementation": "gno:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "gno:0xa3a3456BC0c8ce4e0a0415B619803ee96509Ce30",
+          "gno:0x06DAeB1A97972B9A12e171ed1FC86b392Fa3f89A",
+          "gno:0x4701f5F0b1aE73d018F91C38808c3058925cA526"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0xdf613c63710289bc68ec3e3ba55a8c8621d33ab1b157f44966e94d6f6972c124",
+        "getChainId": 100,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 3 (33%)",
+        "nonce": 590,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "gno:0x507A7777E6DbF4680951E63fB3753a20F2c37706": "GnosisSafeProxy",
+        "gno:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "gno:0x52F05Eff62fC36c83d840D9684daCAD3be43D8bf",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0x544cE64C3Fc6Da72CEB2456CC4cF19E7c7972eFA",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0x57B11cC8F93f2cfeC4c1C5B95213f17cAD81332B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0x5b10cE4DDD27F57d4D432D409A5321219cbA7893",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "OmnibridgeFeeManager",
+      "address": "gno:0x5dbC897aEf6B18394D845A922BF107FA98E3AC55",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xdcb8211bc83ab560c19e3bc532a958bc0582fa7a02d0c53df72f3cf293f598d5"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1634245065,
+      "sinceBlock": 18573414,
+      "values": {
+        "$immutable": true,
+        "FOREIGN_TO_HOME_FEE": "0x03be2b2875cb41e0e77355e802a16769bb8dfcf825061cde185c73bf94f12625",
+        "getModuleInterfacesVersion": { "major": 1, "minor": 0, "patch": 0 },
+        "HOME_TO_FOREIGN_FEE": "0x741ede137d0537e88e0ea0ff25b1f22d837903dbbee8980b4a06e8523247ee26",
+        "mediator": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+        "owner": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "rewardAddressCount": 1,
+        "rewardAddressList": ["gno:0x77bcb57ba7037e39063f1567ce734452bbD7a5F0"]
+      },
+      "implementationNames": {
+        "gno:0x5dbC897aEf6B18394D845A922BF107FA98E3AC55": "OmnibridgeFeeManager"
+      }
+    },
+    {
+      "address": "gno:0x5eD64f02588C8B75582f2f8eFd7A5521e3F897CC",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0x65E5017A384B2774374812DC766fC4E026BB23e5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "CoW Protocol EOA 2",
+      "address": "gno:0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "SelectorTokenGasLimitManager",
+      "address": "gno:0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x40a5e7e16f2ed78de499e7ab33bb60f2d3e668b003b8253c8ed3659066c6bee2"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1634246385,
+      "sinceBlock": 18573677,
+      "values": {
+        "$immutable": true,
+        "bridge": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
+        "getModuleInterfacesVersion": { "major": 1, "minor": 0, "patch": 0 },
+        "owner": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "requestGasLimit": 600000
+      },
+      "implementationNames": {
+        "gno:0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED": "SelectorTokenGasLimitManager"
+      }
+    },
+    {
+      "name": "EternalStorageProxy",
+      "address": "gno:0x7301CFA0e1756B71869E93d4e4Dca5c7d0eb0AA6",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x781decea1d7b5174464b57449f32ada83d1c1b7e12bdfa47eb9d00a41a36c839"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1539027985,
+      "sinceBlock": 761,
+      "values": {
+        "$immutable": true,
+        "implementation": "gno:0xB740472C650fe949931B9df0cB253B48c80c82dE",
+        "proxyOwner": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "upgradeabilityOwner": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "version": 6
+      },
+      "implementationNames": {
+        "gno:0x7301CFA0e1756B71869E93d4e4Dca5c7d0eb0AA6": "EternalStorageProxy"
+      }
+    },
+    {
+      "name": "HashiManager_Gnosis",
+      "address": "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E",
+      "type": "Contract",
+      "template": "gnosisbridge/HashiManager",
+      "sourceHashes": [
+        "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
+        "0x824f58e3acf3f9403dc26549af4869336347109f24d07d82aa11897bed907b17"
+      ],
+      "proxyType": "Eternal Storage proxy",
+      "description": "A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.",
+      "sinceTimestamp": 1726022850,
+      "sinceBlock": 35939330,
+      "values": {
+        "$admin": "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623",
+        "$implementation": "gno:0x694bEeB84f912d0951e88cFCf76900B7C728B5B5",
+        "$pastUpgrades": [
+          [
+            "2024-09-11T02:47:45.000Z",
+            "0x86bf12c48667d3eaa924dad76a841a1452cf62d9632a205dd782d080e1a6d4f1",
+            ["gno:0x694bEeB84f912d0951e88cFCf76900B7C728B5B5"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "adapters": ["eth:0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418"],
+        "AdaptersFromStorage": "gno:0x0000000000000000000000000000000000000000",
+        "deployedAtBlock": 0,
+        "expectedAdaptersHash": "0xc3952ca09544b604f7d61555626b0438b4e81891017c42d0f32125fbaca634e9",
+        "expectedThreshold": 1,
+        "implementation": "gno:0x694bEeB84f912d0951e88cFCf76900B7C728B5B5",
+        "isInitialized": true,
+        "owner": "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623",
+        "reporters": ["eth:0xA3Bc83D557E3f2dDfF4D44966A96397760159D8B"],
+        "targetAddress": "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
+        "targetChainId": 1,
+        "threshold": 1,
+        "upgradeabilityOwner": "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623",
+        "version": 1,
+        "yaho": "gno:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8",
+        "yaru": "gno:0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5"
+      },
+      "fieldMeta": {
+        "HASHI_IS_MANDATORY": {
+          "severity": "HIGH",
+          "description": "If true, Hashi validation is mandatory"
+        },
+        "targetAddress": {
+          "severity": "HIGH",
+          "description": "Address of the target contract on Ethereum"
+        },
+        "adapters": {
+          "severity": "HIGH",
+          "description": "Array of the adapters on Ethereum"
+        },
+        "reporters": {
+          "severity": "HIGH",
+          "description": "Array of the reporters on Ethereum"
+        },
+        "threshold": {
+          "severity": "HIGH",
+          "description": "Threshold of the adapters on Ethereum"
+        }
+      },
+      "implementationNames": {
+        "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E": "EternalStorageProxy",
+        "gno:0x694bEeB84f912d0951e88cFCf76900B7C728B5B5": "HashiManager"
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
+    },
+    {
+      "name": "HomeAMB",
+      "address": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
+        "0x42c489ed63dc75d73bab6e89bc470b7c805b0c16cbbc0e9287cc824cc88b0b79"
+      ],
+      "proxyType": "Eternal Storage proxy",
+      "sinceTimestamp": 1579258310,
+      "sinceBlock": 7904954,
+      "values": {
+        "$admin": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "$implementation": "gno:0xA033535983d1aBcc2648af730EDCb198909903D7",
+        "$pastUpgrades": [
+          [
+            "2020-01-17T10:53:00.000Z",
+            "0xd12ac776c7303973af73061833e271da8e066e9f80be33412f7c7298d2e1c837",
+            ["gno:0xD4075FB57fCf038bFc702c915Ef9592534bED5c1"]
+          ],
+          [
+            "2020-07-06T22:01:00.000Z",
+            "0xee2e9f17748b3f27853f7e5c6774f13cf52678d38d4d5439a4696f56e968f89c",
+            ["gno:0xF6a1Ad94d29679388e533B63bfE1Fd6f1680D23B"]
+          ],
+          [
+            "2020-08-02T22:06:55.000Z",
+            "0x2b39c1b50ca81c4556c28308ecdebba032eefc06c6f743f00dd91343664ee9d3",
+            ["gno:0xa436C43f7dC31674dc415DB056bc69f0Cb947887"]
+          ],
+          [
+            "2020-12-06T22:09:15.000Z",
+            "0xd73045c660d6c2c18d1b6a0f39bc0129b8637de01d8f025513a2458b2bdc6e8d",
+            ["gno:0x4bD34173E4b4169a807DcCf3b19AdEC5DaA6c39E"]
+          ],
+          [
+            "2021-10-04T11:09:25.000Z",
+            "0xb271c045465adc1ed59c6cbbe9e95a18fdbb20967e7bd4a373d14005bdfaa982",
+            ["gno:0x525127C1F5670cc102B26905DcCF8245C05c164f"]
+          ],
+          [
+            "2024-09-23T09:02:20.000Z",
+            "0x581c9bca33fea976e95f7bedfff0d10345fd4c7e856dccece26733f22e6bf9e9",
+            ["gno:0xA033535983d1aBcc2648af730EDCb198909903D7"]
+          ]
+        ],
+        "$upgradeCount": 6,
+        "allowReentrantRequests": false,
+        "decimalShift": 0,
+        "deployedAtBlock": 7904969,
+        "destinationChainId": 1,
+        "gasPrice": 0,
+        "getBridgeInterfacesVersion": { "major": 6, "minor": 2, "patch": 0 },
+        "getBridgeMode": "0x2544fbb9",
+        "HASHI_IS_ENABLED": true,
+        "HASHI_IS_MANDATORY": false,
+        "hashiManager": "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E",
+        "implementation": "gno:0xA033535983d1aBcc2648af730EDCb198909903D7",
+        "isInitialized": true,
+        "maxGasPerTx": 2000000,
+        "messageId": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "messageSender": "gno:0x0000000000000000000000000000000000000000",
+        "messageSourceChainId": 0,
+        "owner": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "requiredBlockConfirmations": 100,
+        "requiredSignatures": 4,
+        "sourceChainId": 100,
+        "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "upgradeabilityOwner": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "validatorContract": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+        "version": 6
+      },
+      "implementationNames": {
+        "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59": "EternalStorageProxy",
+        "gno:0xA033535983d1aBcc2648af730EDCb198909903D7": "HomeAMB"
+      }
+    },
+    {
+      "name": "GnosisSafeL2",
+      "address": "gno:0x77bcb57ba7037e39063f1567ce734452bbD7a5F0",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1651741965,
+      "sinceBlock": 21984719,
+      "values": {
+        "$immutable": false,
+        "$implementation": "gno:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$members": [
+          "gno:0x1B0C638616Ed79dB430Edbf549ad9512FF4a8ed1",
+          "gno:0x507A7777E6DbF4680951E63fB3753a20F2c37706",
+          "gno:0x5eD64f02588C8B75582f2f8eFd7A5521e3F897CC",
+          "gno:0xa3a3456BC0c8ce4e0a0415B619803ee96509Ce30",
+          "gno:0x0DA0C3e52C977Ed3cBc641fF02DD271c3ED55aFe",
+          "gno:0x65E5017A384B2774374812DC766fC4E026BB23e5",
+          "gno:0x8fd960F1B9D68BAD2B97bD232FB75CC1f186B064",
+          "gno:0xA1cf7F847eCD82459ce05a218EaA38a9D92E7b6b",
+          "gno:0xD68f1A882f3F9ffddaBd4D30c4F8Dfca1f9e51Ba",
+          "gno:0xE4Df0cdC9eF7e388eA906226010bBD1B9A6fFeD9",
+          "gno:0xFcf00B0fEdBc8f2F35a3B8d4B858d5805f2Bb05D",
+          "gno:0xe9eB7DA58f6B5CE5b0a6cFD778A2fa726203AAD5"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0xe9d8755bcaa93e2e65b2f4c443dbab1d20f6c0f357b1ca5b3437ae3bbdb4b788",
+        "getChainId": 100,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 12 (25%)",
+        "nonce": 5,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "gno:0x77bcb57ba7037e39063f1567ce734452bbD7a5F0": "GnosisSafeProxy",
+        "gno:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
+      }
+    },
+    {
+      "name": "GnosisSafeL2",
+      "address": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x9b0ecd140aaf0aae0a7462b8544de7cf8757a2fc51620bb127d5d164ce3cfb9e",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "description": "change the threshold and manage signers.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+          "role": "admin"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1603125660,
+      "sinceBlock": 12596066,
+      "values": {
+        "$immutable": false,
+        "$implementation": "gno:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$members": [
+          "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623",
+          "gno:0xb8173f558f75EE263013fd6294177bf75279a21e",
+          "gno:0xDdf2d07267EAF2cE3E13ee4319bE1F34D55ed992",
+          "gno:0xf59E447E97bC03c2B0C5719e2E551F0B15b724e5",
+          "gno:0xA07888742c18d7e658132AE0148fF205fFF46481",
+          "gno:0x329c54289Ff5D6B7b7daE13592C6B1EDA1543eD4",
+          "gno:0xcF9ebF877688Ed88a7479A6e63457Fd78D4275cE",
+          "gno:0x5b10cE4DDD27F57d4D432D409A5321219cbA7893",
+          "gno:0x544cE64C3Fc6Da72CEB2456CC4cF19E7c7972eFA",
+          "gno:0x10DD75875a2a8a284529Ae7223B1aCE410d606bd",
+          "gno:0xc44caeb7F0724A156806664d2361fD6f32a2d2C8",
+          "gno:0xB646B8b5Fe6cBc7770578B7679208337ef747ae4",
+          "gno:0x57B11cC8F93f2cfeC4c1C5B95213f17cAD81332B",
+          "gno:0x839395e20bbB182fa440d08F850E6c7A8f6F0780",
+          "gno:0x80BA18503a1Fa16Ea22F3ef1Af23e2994EaC1d97",
+          "gno:0xb2a33ae0E07fD2ca8DBdE9545F6ce0b3234dc4e8"
+        ],
+        "$threshold": 8,
+        "domainSeparator": "0xfe3c15ed7497cbca15382f630829643e688d9270dc0fa9c8cbb8f4c2bc61f6db",
+        "getChainId": 100,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "8 of 16 (50%)",
+        "nonce": 93,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd": "GnosisSafeProxy",
+        "gno:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
+      }
+    },
+    {
+      "name": "SP1Helios",
+      "address": "gno:0x7CE84Eea8Fbe3cD9Afb40475E7257837E18745C8",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbcc3e1366cdd306c4d5f8f021839ca1efb8e72bc209b5b25eaf8d1485bb60565"
+      ],
+      "proxyType": "immutable",
+      "ignoreInWatchMode": ["getCurrentEpoch", "head"],
+      "sinceTimestamp": 1748854670,
+      "sinceBlock": 40374651,
+      "values": {
+        "$immutable": true,
+        "GENESIS_TIME": 1606824023,
+        "GENESIS_VALIDATORS_ROOT": "0x4b363db94e286120d76eb905340fdd4e54bfe9f06bf33ff6cf5ad27f511bfe95",
+        "getCurrentEpoch": 386469,
+        "guardian": "gno:0x4f34c5F8e9F07a409a59dbbb8e80Ab6D5f43bd72",
+        "head": 12367008,
+        "heliosProgramVkey": "0x00cd47e188eeeab95c3c666088b928ff8243f8dd8d6e94f49795013bcd6231f0",
+        "SECONDS_PER_SLOT": 12,
+        "SLOTS_PER_EPOCH": 32,
+        "SLOTS_PER_PERIOD": 8192,
+        "SOURCE_CHAIN_ID": 1,
+        "verifier": "gno:0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd",
+        "version": "v1.1.0"
+      },
+      "implementationNames": {
+        "gno:0x7CE84Eea8Fbe3cD9Afb40475E7257837E18745C8": "SP1Helios"
+      }
+    },
+    {
+      "address": "gno:0x80BA18503a1Fa16Ea22F3ef1Af23e2994EaC1d97",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0x839395e20bbB182fa440d08F850E6c7A8f6F0780",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0x88ad09518695c6c3712AC10a214bE5109a655671",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0x8fd960F1B9D68BAD2B97bD232FB75CC1f186B064",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "SP1HeliosAdapter",
+      "address": "gno:0x9C63010F056E4692A44A510F2F5E8A44B94960Bf",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x2cd195f97f037ce704ea4e143bdfa9e5fa791b350bcca9c8f248e4256fb9d829"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1748856160,
+      "sinceBlock": 40374946,
+      "values": {
+        "$immutable": true,
+        "PROVIDER": "sp1-helios",
+        "SOURCE_CHAIN_ID": 1,
+        "SOURCE_YAHO": "gno:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8",
+        "SP1_HELIOS_ADDRESS": "gno:0x7CE84Eea8Fbe3cD9Afb40475E7257837E18745C8"
+      },
+      "implementationNames": {
+        "gno:0x9C63010F056E4692A44A510F2F5E8A44B94960Bf": "SP1HeliosAdapter"
+      }
+    },
+    {
+      "address": "gno:0xA07888742c18d7e658132AE0148fF205fFF46481",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0xA1cf7F847eCD82459ce05a218EaA38a9D92E7b6b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "BridgeValidators_Gnosis",
+      "address": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+      "type": "Contract",
+      "template": "gnosisbridge/BridgeValidators",
+      "sourceHashes": [
+        "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
+        "0x0ff53e04cc715e56805825c7eb45af72110792ad606dbfd4a97db98dfb75e6f7"
+      ],
+      "proxyType": "Eternal Storage proxy",
+      "description": "Custom multisignature contract for Validator addresses.",
+      "sinceTimestamp": 1579258260,
+      "sinceBlock": 7904944,
+      "values": {
+        "$admin": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "$implementation": "gno:0xb056BFEdc397D427697a75E3ff115a0954de4791",
+        "$members": [
+          "gno:0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6",
+          "gno:0xfA98B60E02A61B6590f073cAD56e68326652d094",
+          "gno:0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe",
+          "gno:0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0",
+          "gno:0x258667E543C913264388B33328337257aF208a8f",
+          "gno:0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d",
+          "gno:0x459A3bd49F1ff109bc90b76125533699AaAAf9A6"
+        ],
+        "$pastUpgrades": [
+          [
+            "2020-01-17T10:51:35.000Z",
+            "0xeeb40dee282dfd8f0f09caa8b4d3a3b2ff56197dbd956fc1caf09d39c9d8429b",
+            ["gno:0xb056BFEdc397D427697a75E3ff115a0954de4791"]
+          ],
+          [
+            "2021-02-03T00:47:15.000Z",
+            "0x0760b05b5c88d57d4b009786dbe3fd922fa308433bc836e34597913d417cece3",
+            ["gno:0x574b4D060420d75866567d0E52cE98C4eb146639"]
+          ],
+          [
+            "2021-02-03T00:53:05.000Z",
+            "0x8eb855c544137c714c34b6f58dcaf9daae067287345dcea039dc748019661ec8",
+            ["gno:0xb056BFEdc397D427697a75E3ff115a0954de4791"]
+          ]
+        ],
+        "$threshold": 4,
+        "$upgradeCount": 3,
+        "deployedAtBlock": 7904952,
+        "F_ADDR": "gno:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
+        "getBridgeValidatorsInterfacesVersion": {
+          "major": 2,
+          "minor": 3,
+          "patch": 0
+        },
+        "implementation": "gno:0xb056BFEdc397D427697a75E3ff115a0954de4791",
+        "isInitialized": true,
+        "owner": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "upgradeabilityOwner": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "validatorCount": 7,
+        "version": 6
+      },
+      "fieldMeta": {
+        "$members": {
+          "description": "Array of the signers in the validator multisig"
+        }
+      },
+      "implementationNames": {
+        "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008": "EternalStorageProxy",
+        "gno:0xb056BFEdc397D427697a75E3ff115a0954de4791": "BridgeValidators"
+      }
+    },
+    {
+      "address": "gno:0xa3a3456BC0c8ce4e0a0415B619803ee96509Ce30",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "gno:0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0x3a6132d983fd1e502fe3b75fbf74f0debc0d183b404d144b5220d8d5b3645582"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "sinceTimestamp": 1748854505,
+      "sinceBlock": 40374619,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913",
+        "VERSION": "v5.0.0"
+      },
+      "implementationNames": {
+        "gno:0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd": "SP1Verifier"
+      }
+    },
+    {
+      "name": "Hashi",
+      "address": "gno:0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x43d4a4b8ebf5f34d224efe2343c5abc3fc5042025c06fb8dd82efc9257fbaa92"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1720614180,
+      "sinceBlock": 34894600,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "gno:0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615": "Hashi"
+      }
+    },
+    {
+      "address": "gno:0xb2a33ae0E07fD2ca8DBdE9545F6ce0b3234dc4e8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0xB646B8b5Fe6cBc7770578B7679208337ef747ae4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0xb8173f558f75EE263013fd6294177bf75279a21e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Yaho",
+      "address": "gno:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8",
+      "type": "Contract",
+      "template": "gnosisbridge/Yaho",
+      "sourceHashes": [
+        "0x0a159de58bdd599af48d18d484a70a71f1038064d066e7e489b877721b866bcb"
+      ],
+      "proxyType": "immutable",
+      "description": "Contract handling outbound messages for the Hashi protocol.",
+      "sinceTimestamp": 1720614455,
+      "sinceBlock": 34894655,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "gno:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8": "Yaho"
+      }
+    },
+    {
+      "name": "Gnosis DAO EOA 2",
+      "address": "gno:0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0xBF3d6f830CE263CAE987193982192Cd990442B53",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0xc44caeb7F0724A156806664d2361fD6f32a2d2C8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0xcF9ebF877688Ed88a7479A6e63457Fd78D4275cE",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0xD1aA7F557af9cC5Ba4Daf87D923d712fdAf1D709",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "MultiTokenForwardingRulesManager",
+      "address": "gno:0xd4D8c07097F9b87EcC4C1a838C4b71DBebcd2286",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x7f6c0a3df8db7d08785d2a343cc1b3c8584ec7c60e54c2cf81d7bc9898d441d5"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1634246015,
+      "sinceBlock": 18573603,
+      "values": {
+        "$immutable": true,
+        "getModuleInterfacesVersion": { "major": 1, "minor": 0, "patch": 0 },
+        "owner": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd"
+      },
+      "implementationNames": {
+        "gno:0xd4D8c07097F9b87EcC4C1a838C4b71DBebcd2286": "MultiTokenForwardingRulesManager"
+      }
+    },
+    {
+      "address": "gno:0xD68f1A882f3F9ffddaBd4D30c4F8Dfca1f9e51Ba",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0xd722EC6853e6EbAaf8664602A37855FAe872E482",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0xDdf2d07267EAF2cE3E13ee4319bE1F34D55ed992",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0xE4Df0cdC9eF7e388eA906226010bBD1B9A6fFeD9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0xe9eB7DA58f6B5CE5b0a6cFD778A2fa726203AAD5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "TokenFactory",
+      "address": "gno:0xEAAE83ac10f975a6456f4C4E48c45Ea2d8e1b5d2",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xc3fc18a2178145d16d7d8d6b50d97b6d7a405421b3fae66cdeb31fb52f4e7eed"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1634244420,
+      "sinceBlock": 18573286,
+      "values": {
+        "$immutable": true,
+        "getModuleInterfacesVersion": { "major": 1, "minor": 0, "patch": 0 },
+        "owner": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "tokenImage": "gno:0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4"
+      },
+      "implementationNames": {
+        "gno:0xEAAE83ac10f975a6456f4C4E48c45Ea2d8e1b5d2": "TokenFactory"
+      }
+    },
+    {
+      "name": "GnosisSafeL2",
+      "address": "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E",
+          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E",
+          "role": "admin"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1686041905,
+      "sinceBlock": 28315765,
+      "values": {
+        "$immutable": false,
+        "$implementation": "gno:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$members": [
+          "gno:0xd722EC6853e6EbAaf8664602A37855FAe872E482",
+          "gno:0xD1aA7F557af9cC5Ba4Daf87D923d712fdAf1D709",
+          "gno:0x52F05Eff62fC36c83d840D9684daCAD3be43D8bf"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xca9cfc29989db8ca8dd522e89b1cab66873972af454eb0abb504bba1540b47f9",
+        "getChainId": 100,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 27,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623": "GnosisSafeProxy",
+        "gno:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
+      }
+    },
+    {
+      "address": "gno:0xf59E447E97bC03c2B0C5719e2E551F0B15b724e5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "HomeOmnibridge",
+      "address": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
+        "0x054fd17b3f8e15a00d9fd1d8e96c3b2769ae32765e5babae32ca4fd2deae564b"
+      ],
+      "proxyType": "Eternal Storage proxy",
+      "ignoreInWatchMode": ["getCurrentDay"],
+      "sinceTimestamp": 1596501010,
+      "sinceBlock": 11300566,
+      "values": {
+        "$admin": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "$implementation": "gno:0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92",
+        "$pastUpgrades": [
+          [
+            "2020-08-04T00:30:55.000Z",
+            "0x287a396848e8c4d96873999dbca59aaeb8c9550110ef487670879d08e1bb0c5a",
+            ["gno:0xcEb06eCea3F588Cb60e39BD4DB7869013C6f65a5"]
+          ],
+          [
+            "2020-08-22T22:09:10.000Z",
+            "0xbf5aad84a9e42e20bbb7dcbe07bc905112307c3f5ab47b4fa6f5957032226356",
+            ["gno:0x3068E52FfD384689F815D7bAF81fc34f649919d4"]
+          ],
+          [
+            "2020-12-06T22:11:05.000Z",
+            "0xe01549ba626337cc9a2b327acde465f2969d4bf5a54f201ba067e299c9926d49",
+            ["gno:0x7aa0062b833714A1c345966A21D93D13264Ef92D"]
+          ],
+          [
+            "2020-12-11T13:24:00.000Z",
+            "0xd169a2b716ace4a3b261823ebad4b52ebb621189294dd62df6df9c9418d56253",
+            ["gno:0x0FCdADb9E445D88D200e9Fd79a2F3f49eEfcc15E"]
+          ],
+          [
+            "2021-02-03T01:06:30.000Z",
+            "0x45cf70ff0700446b66f7fb071d080e3cc91b56e2b265740fa3945ce6b56374c6",
+            ["gno:0x574b4D060420d75866567d0E52cE98C4eb146639"]
+          ],
+          [
+            "2021-02-04T22:31:30.000Z",
+            "0x84939fcb6af541b6db5b77018047dbf120bb5bdecf43ac2a26a76f67084db6e7",
+            ["gno:0x5CbE9bb92fd026691C694A8F3acAc76B9Fa1CC18"]
+          ],
+          [
+            "2021-03-15T14:03:10.000Z",
+            "0x78941e51d725344759812aaaa6c6e027ae44cac59eeca718ce0bfdf98c2ac90d",
+            ["gno:0xe17738Aa9FDD50ad50644cFD563964A530c64715"]
+          ],
+          [
+            "2021-10-15T19:02:01.000Z",
+            "0x490609cf911ff3de84d50c9b75a1bd8f3f375d4c3ead65cda3e0dc0b28a2828c",
+            ["gno:0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92"]
+          ]
+        ],
+        "$upgradeCount": 8,
+        "bridgeContract": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
+        "feeManager": "gno:0x5dbC897aEf6B18394D845A922BF107FA98E3AC55",
+        "forwardingRulesManager": "gno:0xd4D8c07097F9b87EcC4C1a838C4b71DBebcd2286",
+        "gasLimitManager": "gno:0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED",
+        "getBridgeInterfacesVersion": { "major": 3, "minor": 3, "patch": 1 },
+        "getBridgeMode": "0xb1516c26",
+        "getCurrentDay": 20346,
+        "implementation": "gno:0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92",
+        "isInitialized": true,
+        "mediatorContractOnOtherSide": "gno:0x88ad09518695c6c3712AC10a214bE5109a655671",
+        "owner": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "tokenFactory": "gno:0xEAAE83ac10f975a6456f4C4E48c45Ea2d8e1b5d2",
+        "upgradeabilityOwner": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "version": 8
+      },
+      "implementationNames": {
+        "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d": "EternalStorageProxy",
+        "gno:0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92": "HomeOmnibridge"
+      }
+    },
+    {
+      "name": "Karpatkey EOA",
+      "address": "gno:0xfA98B60E02A61B6590f073cAD56e68326652d094",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0xFcf00B0fEdBc8f2F35a3B8d4B858d5805f2Bb05D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
+  ],
+  "abis": {
+    "eth:0x098f51bdfb5D6d319DD4FDf06b64773d25bD1316": [
+      "function transactionHash() view returns (bytes32)",
+      "function sourceChainId() view returns (uint256)",
+      "function HASHI_IS_MANDATORY() view returns (bool)",
+      "function relayedMessages(bytes32 _txHash) view returns (bool)",
+      "function safeExecuteSignaturesWithAutoGasLimit(bytes _data, bytes _signatures)",
+      "function initialize(uint256 _sourceChainId, uint256 _destinationChainId, address _validatorContract, uint256 _maxGasPerTx, uint256 _gasPrice, uint256 _requiredBlockConfirmations, address _owner) returns (bool)",
+      "function isInitialized() view returns (bool)",
+      "function requiredBlockConfirmations() view returns (uint256)",
+      "function executeSignatures(bytes _data, bytes _signatures)",
+      "function failedMessageReceiver(bytes32 _messageId) view returns (address)",
+      "function getBridgeMode() pure returns (bytes4 _data)",
+      "function setChainIds(uint256 _sourceChainId, uint256 _destinationChainId)",
+      "function failedMessageSender(bytes32 _messageId) view returns (address)",
+      "function allowReentrantRequests() view returns (bool)",
+      "function messageId() view returns (bytes32 id)",
+      "function claimTokens(address _token, address _to)",
+      "function resendDataWithHashi(bytes data)",
+      "function setMaxGasPerTx(uint256 _maxGasPerTx)",
+      "function hashiManager() view returns (address)",
+      "function HASHI_IS_ENABLED() view returns (bool)",
+      "function requiredSignatures() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function isApprovedByHashi(bytes32 hashMsg) view returns (bool)",
+      "function validatorContract() view returns (address)",
+      "function deployedAtBlock() view returns (uint256)",
+      "function getBridgeInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function messageSourceChainId() view returns (uint256 id)",
+      "function setRequiredBlockConfirmations(uint256 _blockConfirmations)",
+      "function destinationChainId() view returns (uint256)",
+      "function setHashiManager(address _hashiManager)",
+      "function setGasPrice(uint256 _gasPrice)",
+      "function setAllowReentrantRequests(bool _enable)",
+      "function messageCallStatus(bytes32 _messageId) view returns (bool)",
+      "function onMessage(uint256, uint256 chainId, address sender, uint256 threshold, address[] adapters, bytes data) returns (bytes)",
+      "function messageSender() view returns (address sender)",
+      "function decimalShift() view returns (int256)",
+      "function requireToPassMessage(address _contract, bytes _data, uint256 _gas) returns (bytes32)",
+      "function failedMessageDataHash(bytes32 _messageId) view returns (bytes32)",
+      "function maxGasPerTx() view returns (uint256)",
+      "function safeExecuteSignaturesWithGasLimit(bytes _data, bytes _signatures, uint32 _gas)",
+      "function safeExecuteSignatures(bytes _data, bytes _signatures)",
+      "function transferOwnership(address newOwner)",
+      "function gasPrice() view returns (uint256)",
+      "event UserRequestForAffirmation(bytes32 indexed messageId, bytes encodedData)",
+      "event RelayedMessage(address indexed sender, address indexed executor, bytes32 indexed messageId, bool status)",
+      "event GasPriceChanged(uint256 gasPrice)",
+      "event RequiredBlockConfirmationChanged(uint256 requiredBlockConfirmations)",
+      "event OwnershipTransferred(address previousOwner, address newOwner)"
+    ],
+    "eth:0x159B36Ed5BA327fd269Fb93c75918257DCfe686d": [
+      "function setExpectedThreshold(uint256 expectedThreshold_)",
+      "function setYaho(address yaho_)",
+      "function targetChainId() view returns (uint256)",
+      "function setReportersAdaptersAndThreshold(address[] reporters, address[] adapters, uint256 threshold)",
+      "function expectedThreshold() view returns (uint256)",
+      "function isInitialized() view returns (bool)",
+      "function threshold() view returns (uint256)",
+      "function targetAddress() view returns (address)",
+      "function adapters() view returns (address[])",
+      "function yaru() view returns (address)",
+      "function owner() view returns (address)",
+      "function deployedAtBlock() view returns (uint256)",
+      "function initialize(address _owner) returns (bool)",
+      "function setTargetChainId(uint256 targetChainId_)",
+      "function setYaru(address yaru_)",
+      "function setExpectedAdaptersHash(address[] adapters_)",
+      "function yaho() view returns (address)",
+      "function reporters() view returns (address[])",
+      "function expectedAdaptersHash() view returns (bytes32)",
+      "function transferOwnership(address newOwner)",
+      "function setTargetAddress(address targetAddress_)",
+      "event OwnershipTransferred(address previousOwner, address newOwner)"
+    ],
+    "eth:0x30f64a297cc66a873FB603d1e89D5891962C25ba": [
+      "constructor(address hashi, address yaho_, uint256 sourceChainId)",
+      "error CallFailed()",
+      "error InvalidToChainId(uint256 chainId, uint256 expectedChainId)",
+      "error MessageIdAlreadyExecuted(uint256 messageId)",
+      "error ThresholdNotMet()",
+      "event MessageExecuted(uint256 indexed messageId, tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters) message)",
+      "function HASHI() view returns (address)",
+      "function SOURCE_CHAIN_ID() view returns (uint256)",
+      "function YAHO() view returns (address)",
+      "function calculateMessageHash(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters) message) pure returns (bytes32)",
+      "function calculateMessageId(uint256 sourceChainId, address dispatcherAddress, bytes32 messageHash) pure returns (uint256)",
+      "function executeMessages(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters)[] messages) returns (bytes[])",
+      "function executed(uint256) view returns (bool)"
+    ],
+    "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": [
+      "constructor(address _masterCopy)"
+    ],
+    "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016": [
+      "function proxyOwner() view returns (address)",
+      "function upgradeTo(uint256 version, address implementation)",
+      "function version() view returns (uint256)",
+      "function implementation() view returns (address)",
+      "function upgradeabilityOwner() view returns (address)",
+      "function upgradeToAndCall(uint256 version, address implementation, bytes data) payable",
+      "function transferProxyOwnership(address newOwner)",
+      "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
+      "event Upgraded(uint256 version, address indexed implementation)"
+    ],
+    "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e": [
+      "function upgradeTo(uint256 version, address implementation)",
+      "function version() view returns (uint256)",
+      "function implementation() view returns (address)",
+      "function upgradeabilityOwner() view returns (address)",
+      "function upgradeToAndCall(uint256 version, address implementation, bytes data) payable",
+      "function transferProxyOwnership(address newOwner)",
+      "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
+      "event Upgraded(uint256 version, address indexed implementation)"
+    ],
+    "eth:0x6943A218d58135793F1FE619414eD476C37ad65a": [
+      "function validatorCount() view returns (uint256)",
+      "function getBridgeValidatorsInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function isInitialized() view returns (bool)",
+      "function removeValidator(address _validator)",
+      "function addValidator(address _validator)",
+      "function initialize(uint256 _requiredSignatures, address[] _initialValidators, address _owner) returns (bool)",
+      "function validatorList() view returns (address[])",
+      "function setRequiredSignatures(uint256 _requiredSignatures)",
+      "function requiredSignatures() view returns (uint256)",
+      "function getNextValidator(address _address) view returns (address)",
+      "function owner() view returns (address)",
+      "function isValidatorDuty(address _validator) view returns (bool)",
+      "function deployedAtBlock() view returns (uint256)",
+      "function upgradeToV230()",
+      "function F_ADDR() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function isValidator(address _validator) view returns (bool)",
+      "event ValidatorAdded(address indexed validator)",
+      "event ValidatorRemoved(address indexed validator)",
+      "event RequiredSignaturesChanged(uint256 requiredSignatures)",
+      "event OwnershipTransferred(address previousOwner, address newOwner)"
+    ],
+    "eth:0x716623daF27f2aFA8D6051A4Eda08E12107a2c83": [
+      "function setExpectedThreshold(uint256 expectedThreshold_)",
+      "function setYaho(address yaho_)",
+      "function targetChainId() view returns (uint256)",
+      "function setReportersAdaptersAndThreshold(address[] reporters, address[] adapters, uint256 threshold)",
+      "function expectedThreshold() view returns (uint256)",
+      "function isInitialized() view returns (bool)",
+      "function threshold() view returns (uint256)",
+      "function targetAddress() view returns (address)",
+      "function adapters() view returns (address[])",
+      "function yaru() view returns (address)",
+      "function owner() view returns (address)",
+      "function deployedAtBlock() view returns (uint256)",
+      "function initialize(address _owner) returns (bool)",
+      "function setTargetChainId(uint256 targetChainId_)",
+      "function setYaru(address yaru_)",
+      "function setExpectedAdaptersHash(address[] adapters_)",
+      "function yaho() view returns (address)",
+      "function reporters() view returns (address[])",
+      "function expectedAdaptersHash() view returns (bytes32)",
+      "function transferOwnership(address newOwner)",
+      "function setTargetAddress(address targetAddress_)",
+      "event OwnershipTransferred(address previousOwner, address newOwner)"
+    ],
+    "eth:0x71d5ba4e37de72415F685490B684538Aae8f0424": [
+      "constructor(address _owner, address _tokenImage)",
+      "function deploy(string _name, string _symbol, uint8 _decimals, uint256 _chainId) returns (address)",
+      "function getModuleInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function owner() view returns (address)",
+      "function setTokenImage(address _tokenImage)",
+      "function tokenImage() view returns (address)",
+      "function transferOwnership(address _newOwner)"
+    ],
+    "eth:0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418": [
+      "constructor(address lzEndpoint, address delegate)",
+      "error ConflictingBlockHeader(uint256 blockNumber, bytes32 blockHash, bytes32 storedBlockHash)",
+      "error InvalidBlockHeaderRLP()",
+      "error InvalidDelegate()",
+      "error InvalidEndpointCall()",
+      "error NoPeer(uint32 eid)",
+      "error OnlyPeer(uint32 eid, bytes32 sender)",
+      "error UnauthorizedLayerZeroReceive()",
+      "event HashStored(uint256 indexed id, bytes32 indexed hash)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PeerSet(uint32 eid, bytes32 peer)",
+      "event ReporterSet(uint256 indexed chainId, uint32 indexed endpointId, address indexed reporter)",
+      "function LAYER_ZERO_ENDPOINT() view returns (address)",
+      "function PROVIDER() view returns (string)",
+      "function allowInitializePath(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin) view returns (bool)",
+      "function chainIds(uint32) view returns (uint256)",
+      "function enabledReporters(uint32) view returns (address)",
+      "function endpoint() view returns (address)",
+      "function getHash(uint256 domain, uint256 id) view returns (bytes32)",
+      "function lzReceive(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, bytes32, bytes _message, address, bytes) payable",
+      "function nextNonce(uint32, bytes32) pure returns (uint64 nonce)",
+      "function oAppVersion() pure returns (uint64 senderVersion, uint64 receiverVersion)",
+      "function owner() view returns (address)",
+      "function peers(uint32 eid) view returns (bytes32 peer)",
+      "function proveAncestralBlockHashes(uint256 chainId, bytes[] blockHeaders)",
+      "function renounceOwnership()",
+      "function setDelegate(address _delegate)",
+      "function setPeer(uint32 _eid, bytes32 _peer)",
+      "function setReporterByChain(uint256 chainId, uint32 endpointId, address reporter)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0x7c24d0061b484B267F286aa2DCe891220Db254b3": [
+      "function mintingFinished() view returns (bool)",
+      "function name() view returns (string)",
+      "function approve(address _to, uint256 _value) returns (bool result)",
+      "function setBridgeContract(address _bridgeContract)",
+      "function totalSupply() view returns (uint256)",
+      "function transferFrom(address _sender, address _recipient, uint256 _amount) returns (bool)",
+      "function PERMIT_TYPEHASH() view returns (bytes32)",
+      "function decimals() view returns (uint8)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function increaseAllowance(address _to, uint256 _addedValue) returns (bool result)",
+      "function transferAndCall(address _to, uint256 _value, bytes _data) returns (bool)",
+      "function mint(address _to, uint256 _amount) returns (bool)",
+      "function burn(uint256 _value)",
+      "function version() view returns (string)",
+      "function decreaseApproval(address _spender, uint256 _subtractedValue) returns (bool)",
+      "function claimTokens(address _token, address _to)",
+      "function balanceOf(address _owner) view returns (uint256)",
+      "function renounceOwnership()",
+      "function isBridge(address _address) view returns (bool)",
+      "function finishMinting() returns (bool)",
+      "function nonces(address) view returns (uint256)",
+      "function getTokenInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function owner() view returns (address)",
+      "function permit(address _holder, address _spender, uint256 _nonce, uint256 _expiry, bool _allowed, uint8 _v, bytes32 _r, bytes32 _s)",
+      "function symbol() view returns (string)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function transfer(address _to, uint256 _value) returns (bool)",
+      "function push(address _to, uint256 _amount)",
+      "function move(address _from, address _to, uint256 _amount)",
+      "function PERMIT_TYPEHASH_LEGACY() view returns (bytes32)",
+      "function bridgeContract() view returns (address)",
+      "function permit(address _holder, address _spender, uint256 _value, uint256 _deadline, uint8 _v, bytes32 _r, bytes32 _s)",
+      "function increaseApproval(address _spender, uint256 _addedValue) returns (bool)",
+      "function allowance(address _owner, address _spender) view returns (uint256)",
+      "function pull(address _from, uint256 _amount)",
+      "function transferOwnership(address _newOwner)",
+      "function expirations(address, address) view returns (uint256)",
+      "constructor(string _name, string _symbol, uint8 _decimals, uint256 _chainId)",
+      "event Mint(address indexed to, uint256 amount)",
+      "event MintFinished()",
+      "event OwnershipRenounced(address indexed previousOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Burn(address indexed burner, uint256 value)",
+      "event Transfer(address indexed from, address indexed to, uint256 value, bytes data)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)"
+    ],
+    "eth:0x88ad09518695c6c3712AC10a214bE5109a655671": [
+      "function upgradeTo(uint256 version, address implementation)",
+      "function version() view returns (uint256)",
+      "function implementation() view returns (address)",
+      "function upgradeabilityOwner() view returns (address)",
+      "function upgradeToAndCall(uint256 version, address implementation, bytes data) payable",
+      "function transferProxyOwnership(address newOwner)",
+      "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
+      "event Upgraded(uint256 version, address indexed implementation)"
+    ],
+    "eth:0x8eB3b7D8498a6716904577b2579e1c313d48E347": [
+      "constructor(string _suffix)",
+      "event DailyLimitChanged(address indexed token, uint256 newLimit)",
+      "event ExecutionDailyLimitChanged(address indexed token, uint256 newLimit)",
+      "event FailedMessageFixed(bytes32 indexed messageId, address token, address recipient, uint256 value)",
+      "event NewTokenRegistered(address indexed nativeToken, address indexed bridgedToken)",
+      "event OwnershipTransferred(address previousOwner, address newOwner)",
+      "event TokensBridged(address indexed token, address indexed recipient, uint256 value, bytes32 indexed messageId)",
+      "event TokensBridgingInitiated(address indexed token, address indexed sender, uint256 value, bytes32 indexed messageId)",
+      "function bridgeContract() view returns (address)",
+      "function bridgedTokenAddress(address _nativeToken) view returns (address)",
+      "function claimTokens(address _token, address _to)",
+      "function claimTokensFromTokenContract(address _bridgedToken, address _token, address _to)",
+      "function dailyLimit(address _token) view returns (uint256)",
+      "function deployAndHandleBridgedTokens(address _token, string _name, string _symbol, uint8 _decimals, address _recipient, uint256 _value)",
+      "function deployAndHandleBridgedTokensAndCall(address _token, string _name, string _symbol, uint8 _decimals, address _recipient, uint256 _value, bytes _data)",
+      "function disableInterest(address _token)",
+      "function executionDailyLimit(address _token) view returns (uint256)",
+      "function executionMaxPerTx(address _token) view returns (uint256)",
+      "function fixFailedMessage(bytes32 _messageId)",
+      "function fixMediatorBalance(address _token, address _receiver)",
+      "function getBridgeInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function getBridgeMode() pure returns (bytes4 _data)",
+      "function getCurrentDay() view returns (uint256)",
+      "function handleBridgedTokens(address _token, address _recipient, uint256 _value)",
+      "function handleBridgedTokensAndCall(address _token, address _recipient, uint256 _value, bytes _data)",
+      "function handleNativeTokens(address _token, address _recipient, uint256 _value)",
+      "function handleNativeTokensAndCall(address _token, address _recipient, uint256 _value, bytes _data)",
+      "function initialize(address _bridgeContract, address _mediatorContract, uint256[3] _dailyLimitMaxPerTxMinPerTxArray, uint256[2] _executionDailyLimitExecutionMaxPerTxArray, uint256 _requestGasLimit, address _owner, address _tokenFactory) returns (bool)",
+      "function initializeInterest(address _token, address _impl, uint256 _minCashThreshold)",
+      "function interestImplementation(address _token) view returns (address)",
+      "function invest(address _token)",
+      "function isBridgedTokenDeployAcknowledged(address _token) view returns (bool)",
+      "function isInitialized() view returns (bool)",
+      "function isRegisteredAsNativeToken(address _token) view returns (bool)",
+      "function isTokenRegistered(address _token) view returns (bool)",
+      "function maxAvailablePerTx(address _token) view returns (uint256)",
+      "function maxPerTx(address _token) view returns (uint256)",
+      "function mediatorBalance(address _token) view returns (uint256)",
+      "function mediatorContractOnOtherSide() view returns (address)",
+      "function messageFixed(bytes32 _messageId) view returns (bool)",
+      "function migrateTo_3_3_0(address _tokenFactory, address _interestImplementation)",
+      "function minCashThreshold(address _token) view returns (uint256)",
+      "function minPerTx(address _token) view returns (uint256)",
+      "function nativeTokenAddress(address _bridgedToken) view returns (address)",
+      "function onTokenTransfer(address _from, uint256 _value, bytes _data) returns (bool)",
+      "function owner() view returns (address)",
+      "function relayTokens(address token, uint256 _value)",
+      "function relayTokens(address token, address _receiver, uint256 _value)",
+      "function relayTokensAndCall(address token, address _receiver, uint256 _value, bytes _data)",
+      "function requestFailedMessageFix(bytes32 _messageId)",
+      "function requestGasLimit() view returns (uint256)",
+      "function setBridgeContract(address _bridgeContract)",
+      "function setCustomTokenAddressPair(address _nativeToken, address _bridgedToken)",
+      "function setDailyLimit(address _token, uint256 _dailyLimit)",
+      "function setExecutionDailyLimit(address _token, uint256 _dailyLimit)",
+      "function setExecutionMaxPerTx(address _token, uint256 _maxPerTx)",
+      "function setMaxPerTx(address _token, uint256 _maxPerTx)",
+      "function setMediatorContractOnOtherSide(address _mediatorContract)",
+      "function setMinCashThreshold(address _token, uint256 _minCashThreshold)",
+      "function setMinPerTx(address _token, uint256 _minPerTx)",
+      "function setRequestGasLimit(uint256 _gasLimit)",
+      "function setTokenFactory(address _tokenFactory)",
+      "function tokenFactory() view returns (address)",
+      "function totalExecutedPerDay(address _token, uint256 _day) view returns (uint256)",
+      "function totalSpentPerDay(address _token, uint256 _day) view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function withinExecutionLimit(address _token, uint256 _amount) view returns (bool)",
+      "function withinLimit(address _token, uint256 _amount) view returns (bool)"
+    ],
+    "eth:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9": [
+      "function upgradeTo(uint256 version, address implementation)",
+      "function version() view returns (uint256)",
+      "function implementation() view returns (address)",
+      "function upgradeabilityOwner() view returns (address)",
+      "function upgradeToAndCall(uint256 version, address implementation, bytes data) payable",
+      "function transferProxyOwnership(address newOwner)",
+      "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
+      "event Upgraded(uint256 version, address indexed implementation)"
+    ],
+    "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD": [
+      "function upgradeTo(uint256 version, address implementation)",
+      "function version() view returns (uint256)",
+      "function implementation() view returns (address)",
+      "function upgradeabilityOwner() view returns (address)",
+      "function upgradeToAndCall(uint256 version, address implementation, bytes data) payable",
+      "function transferProxyOwnership(address newOwner)",
+      "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
+      "event Upgraded(uint256 version, address indexed implementation)"
+    ],
+    "eth:0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615": [
+      "error AdaptersDisagree(address adapterOne, address adapterTwo)",
+      "error HashNotAvailableInAdapter(address adapter)",
+      "error InvalidThreshold(uint256 threshold, uint256 maxThreshold)",
+      "error NoAdaptersGiven()",
+      "function checkHashWithThresholdFromAdapters(uint256 domain, uint256 id, uint256 threshold, address[] adapters) view returns (bool)",
+      "function getHash(uint256 domain, uint256 id, address[] adapters) view returns (bytes32 hash)",
+      "function getHashFromAdapter(uint256 domain, uint256 id, address adapter) view returns (bytes32)",
+      "function getHashesFromAdapters(uint256 domain, uint256 id, address[] adapters) view returns (bytes32[])"
+    ],
+    "eth:0xb54042F5bA4B048fEa54aaE70abbbe41AC716299": [
+      "function relayTokens(address _receiver, uint256 _amount)",
+      "function invest(address _token)",
+      "function refillBridge()",
+      "function payInterest(address _token, uint256 _amount)",
+      "function erc20token() view returns (address)",
+      "function HASHI_IS_MANDATORY() view returns (bool)",
+      "function executeSignaturesGSN(bytes message, bytes signatures, uint256 maxTokensFee)",
+      "function relayedMessages(bytes32 _nonce) view returns (bool)",
+      "function totalSpentPerDay(uint256 _day) view returns (uint256)",
+      "function sDaiToken() pure returns (address)",
+      "function isInitialized() view returns (bool)",
+      "function setExecutionDailyLimit(uint256 _dailyLimit)",
+      "function getCurrentDay() view returns (uint256)",
+      "function requiredBlockConfirmations() view returns (uint256)",
+      "function executeSignatures(bytes message, bytes signatures)",
+      "function getBridgeMode() pure returns (bytes4 _data)",
+      "function executionDailyLimit() view returns (uint256)",
+      "function minInterestPaid(address _token) view returns (uint256)",
+      "function versionRecipient() view returns (string)",
+      "function totalExecutedPerDay(uint256 _day) view returns (uint256)",
+      "function minCashThreshold(address _token) view returns (uint256)",
+      "function isTrustedForwarder(address forwarder) view returns (bool)",
+      "function dailyLimit() view returns (uint256)",
+      "function claimTokens(address _token, address _to)",
+      "function initialize(address _validatorContract, address _erc20token, uint256 _requiredBlockConfirmations, uint256 _gasPrice, uint256[3] _dailyLimitMaxPerTxMinPerTxArray, uint256[2] _homeDailyLimitHomeMaxPerTxArray, address _owner, int256 _decimalShift, address _bridgeOnOtherSide) returns (bool)",
+      "function investDai()",
+      "function resendDataWithHashi(bytes data)",
+      "function hashiManager() view returns (address)",
+      "function setPayMaster(address _paymaster)",
+      "function withinExecutionLimit(uint256 _amount) view returns (bool)",
+      "function executionMaxPerTx() view returns (uint256)",
+      "function HASHI_IS_ENABLED() view returns (bool)",
+      "function requiredSignatures() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function isApprovedByHashi(bytes32 hashMsg) view returns (bool)",
+      "function setInterestReceiver(address _token, address _receiver)",
+      "function maxAvailablePerTx() view returns (uint256)",
+      "function validatorContract() view returns (address)",
+      "function deployedAtBlock() view returns (uint256)",
+      "function getBridgeInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function setMinPerTx(uint256 _minPerTx)",
+      "function setMinInterestPaid(address _token, uint256 _minInterestPaid)",
+      "function setMinCashThreshold(address _token, uint256 _minCashThreshold)",
+      "function interestReceiver(address _token) view returns (address)",
+      "function setRequiredBlockConfirmations(uint256 _blockConfirmations)",
+      "function nonce() view returns (uint256)",
+      "function setDailyLimit(uint256 _dailyLimit)",
+      "function previewWithdraw(address _token, uint256 _amount) view returns (uint256)",
+      "function daiToken() pure returns (address)",
+      "function setHashiManager(address _hashiManager)",
+      "function setGasPrice(uint256 _gasPrice)",
+      "function recoverLegacyTransfer(address _to)",
+      "function setMaxPerTx(uint256 _maxPerTx)",
+      "function interestAmount(address _token) view returns (uint256)",
+      "function initializeInterest(address _token, uint256 _minCashThreshold, uint256 _minInterestPaid, address _interestReceiver)",
+      "function getTrustedForwarder() view returns (address)",
+      "function investedAmount(address _token) view returns (uint256)",
+      "function isInterestEnabled(address _token) view returns (bool)",
+      "function onMessage(uint256, uint256 chainId, address sender, uint256 threshold, address[] adapters, bytes data) returns (bytes)",
+      "function setTrustedForwarder(address _trustedForwarder)",
+      "function decimalShift() view returns (int256)",
+      "function minPerTx() view returns (uint256)",
+      "function withinLimit(uint256 _amount) view returns (bool)",
+      "function setExecutionMaxPerTx(uint256 _maxPerTx)",
+      "function transferOwnership(address newOwner)",
+      "function disableInterest(address _token)",
+      "function maxPerTx() view returns (uint256)",
+      "function gasPrice() view returns (uint256)",
+      "event PaidInterest(address indexed token, address to, uint256 value)",
+      "event RelayedMessage(address recipient, uint256 value, bytes32 transactionHash)",
+      "event UserRequestForAffirmation(address recipient, uint256 value, bytes32 nonce)",
+      "event DailyLimitChanged(uint256 newLimit)",
+      "event ExecutionDailyLimitChanged(uint256 newLimit)",
+      "event GasPriceChanged(uint256 gasPrice)",
+      "event RequiredBlockConfirmationChanged(uint256 requiredBlockConfirmations)",
+      "event OwnershipTransferred(address previousOwner, address newOwner)"
+    ],
+    "eth:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8": [
+      "error InvalidMessage(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters) message)",
+      "error InvalidThreshold(uint256 threshold, uint256 maxThreshold)",
+      "error MessageHashNotFound(uint256 messageId)",
+      "error NoAdaptersGiven()",
+      "error NoMessageIdsGiven()",
+      "error NoMessagesGiven()",
+      "error NoReportersGiven()",
+      "error UnequalArrayLengths(uint256 arrayOne, uint256 arrayTwo)",
+      "event MessageDispatched(uint256 indexed messageId, tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters) message)",
+      "function calculateMessageHash(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters) message) pure returns (bytes32)",
+      "function calculateMessageId(uint256 sourceChainId, address dispatcherAddress, bytes32 messageHash) pure returns (uint256)",
+      "function currentNonce() view returns (uint256)",
+      "function dispatchMessage(uint256 targetChainId, uint256 threshold, address receiver, bytes data, address[] reporters, address[] adapters) returns (uint256)",
+      "function dispatchMessageToAdapters(uint256 targetChainId, uint256 threshold, address receiver, bytes data, address[] reporters, address[] adapters) payable returns (uint256, bytes32[])",
+      "function dispatchMessagesToAdapters(uint256 targetChainId, uint256[] thresholds, address[] receivers, bytes[] data, address[] reporters, address[] adapters) payable returns (uint256[], bytes32[])",
+      "function getPendingMessageHash(uint256 messageId) view returns (bytes32)",
+      "function relayMessagesToAdapters(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters)[] messages) payable returns (bytes32[])"
+    ],
+    "eth:0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218": [
+      "function validatorCount() view returns (uint256)",
+      "function getBridgeValidatorsInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function isInitialized() view returns (bool)",
+      "function removeValidator(address _validator)",
+      "function addValidator(address _validator)",
+      "function initialize(uint256 _requiredSignatures, address[] _initialValidators, address _owner) returns (bool)",
+      "function validatorList() view returns (address[])",
+      "function setRequiredSignatures(uint256 _requiredSignatures)",
+      "function requiredSignatures() view returns (uint256)",
+      "function getNextValidator(address _address) view returns (address)",
+      "function owner() view returns (address)",
+      "function isValidatorDuty(address _validator) view returns (bool)",
+      "function deployedAtBlock() view returns (uint256)",
+      "function F_ADDR() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function isValidator(address _validator) view returns (bool)",
+      "event ValidatorAdded(address indexed validator)",
+      "event ValidatorRemoved(address indexed validator)",
+      "event RequiredSignaturesChanged(uint256 requiredSignatures)",
+      "event OwnershipTransferred(address previousOwner, address newOwner)"
+    ],
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E": [
+      "function proxyOwner() view returns (address)",
+      "function upgradeTo(uint256 version, address implementation)",
+      "function version() view returns (uint256)",
+      "function implementation() view returns (address)",
+      "function upgradeabilityOwner() view returns (address)",
+      "function upgradeToAndCall(uint256 version, address implementation, bytes data) payable",
+      "function transferProxyOwnership(address newOwner)",
+      "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
+      "event Upgraded(uint256 version, address indexed implementation)"
+    ],
+    "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064": [
+      "function upgradeTo(uint256 version, address implementation)",
+      "function version() view returns (uint256)",
+      "function implementation() view returns (address)",
+      "function upgradeabilityOwner() view returns (address)",
+      "function upgradeToAndCall(uint256 version, address implementation, bytes data) payable",
+      "function transferProxyOwnership(address newOwner)",
+      "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
+      "event Upgraded(uint256 version, address indexed implementation)"
+    ],
+    "gno:0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5": [
+      "constructor(address hashi, address yaho_, uint256 sourceChainId)",
+      "error CallFailed()",
+      "error InvalidToChainId(uint256 chainId, uint256 expectedChainId)",
+      "error MessageIdAlreadyExecuted(uint256 messageId)",
+      "error ThresholdNotMet()",
+      "event MessageExecuted(uint256 indexed messageId, tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters) message)",
+      "function HASHI() view returns (address)",
+      "function SOURCE_CHAIN_ID() view returns (uint256)",
+      "function YAHO() view returns (address)",
+      "function calculateMessageHash(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters) message) pure returns (bytes32)",
+      "function calculateMessageId(uint256 sourceChainId, address dispatcherAddress, bytes32 messageHash) pure returns (uint256)",
+      "function executeMessages(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters)[] messages) returns (bytes[])",
+      "function executed(uint256) view returns (bool)"
+    ],
+    "gno:0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4": [
+      "function mintingFinished() view returns (bool)",
+      "function name() view returns (string)",
+      "function approve(address _to, uint256 _value) returns (bool result)",
+      "function setBridgeContract(address _bridgeContract)",
+      "function totalSupply() view returns (uint256)",
+      "function transferFrom(address _sender, address _recipient, uint256 _amount) returns (bool)",
+      "function PERMIT_TYPEHASH() view returns (bytes32)",
+      "function decimals() view returns (uint8)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function increaseAllowance(address _to, uint256 _addedValue) returns (bool result)",
+      "function transferAndCall(address _to, uint256 _value, bytes _data) returns (bool)",
+      "function mint(address _to, uint256 _amount) returns (bool)",
+      "function burn(uint256 _value)",
+      "function version() view returns (string)",
+      "function decreaseApproval(address _spender, uint256 _subtractedValue) returns (bool)",
+      "function claimTokens(address _token, address _to)",
+      "function balanceOf(address _owner) view returns (uint256)",
+      "function renounceOwnership()",
+      "function isBridge(address _address) view returns (bool)",
+      "function finishMinting() returns (bool)",
+      "function nonces(address) view returns (uint256)",
+      "function getTokenInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function owner() view returns (address)",
+      "function permit(address _holder, address _spender, uint256 _nonce, uint256 _expiry, bool _allowed, uint8 _v, bytes32 _r, bytes32 _s)",
+      "function symbol() view returns (string)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function transfer(address _to, uint256 _value) returns (bool)",
+      "function push(address _to, uint256 _amount)",
+      "function move(address _from, address _to, uint256 _amount)",
+      "function PERMIT_TYPEHASH_LEGACY() view returns (bytes32)",
+      "function bridgeContract() view returns (address)",
+      "function permit(address _holder, address _spender, uint256 _value, uint256 _deadline, uint8 _v, bytes32 _r, bytes32 _s)",
+      "function increaseApproval(address _spender, uint256 _addedValue) returns (bool)",
+      "function allowance(address _owner, address _spender) view returns (uint256)",
+      "function pull(address _from, uint256 _amount)",
+      "function transferOwnership(address _newOwner)",
+      "function expirations(address, address) view returns (uint256)",
+      "constructor(string _name, string _symbol, uint8 _decimals, uint256 _chainId)",
+      "event Mint(address indexed to, uint256 amount)",
+      "event MintFinished()",
+      "event OwnershipRenounced(address indexed previousOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Burn(address indexed burner, uint256 value)",
+      "event Transfer(address indexed from, address indexed to, uint256 value, bytes data)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)"
+    ],
+    "gno:0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92": [
+      "constructor(string _suffix)",
+      "event DailyLimitChanged(address indexed token, uint256 newLimit)",
+      "event ExecutionDailyLimitChanged(address indexed token, uint256 newLimit)",
+      "event FailedMessageFixed(bytes32 indexed messageId, address token, address recipient, uint256 value)",
+      "event FeeDistributed(uint256 fee, address indexed token, bytes32 indexed messageId)",
+      "event FeeDistributionFailed(address indexed token, uint256 fee)",
+      "event NewTokenRegistered(address indexed nativeToken, address indexed bridgedToken)",
+      "event OwnershipTransferred(address previousOwner, address newOwner)",
+      "event TokensBridged(address indexed token, address indexed recipient, uint256 value, bytes32 indexed messageId)",
+      "event TokensBridgingInitiated(address indexed token, address indexed sender, uint256 value, bytes32 indexed messageId)",
+      "function bridgeContract() view returns (address)",
+      "function bridgedTokenAddress(address _nativeToken) view returns (address)",
+      "function claimTokens(address _token, address _to)",
+      "function claimTokensFromTokenContract(address _bridgedToken, address _token, address _to)",
+      "function dailyLimit(address _token) view returns (uint256)",
+      "function deployAndHandleBridgedTokens(address _token, string _name, string _symbol, uint8 _decimals, address _recipient, uint256 _value)",
+      "function deployAndHandleBridgedTokensAndCall(address _token, string _name, string _symbol, uint8 _decimals, address _recipient, uint256 _value, bytes _data)",
+      "function executionDailyLimit(address _token) view returns (uint256)",
+      "function executionMaxPerTx(address _token) view returns (uint256)",
+      "function feeManager() view returns (address)",
+      "function fixFailedMessage(bytes32 _messageId)",
+      "function fixMediatorBalance(address _token, address _receiver)",
+      "function foreignTokenAddress(address _homeToken) view returns (address)",
+      "function forwardingRulesManager() view returns (address)",
+      "function gasLimitManager() view returns (address)",
+      "function getBridgeInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function getBridgeMode() pure returns (bytes4 _data)",
+      "function getCurrentDay() view returns (uint256)",
+      "function handleBridgedTokens(address _token, address _recipient, uint256 _value)",
+      "function handleBridgedTokensAndCall(address _token, address _recipient, uint256 _value, bytes _data)",
+      "function handleNativeTokens(address _token, address _recipient, uint256 _value)",
+      "function handleNativeTokensAndCall(address _token, address _recipient, uint256 _value, bytes _data)",
+      "function homeTokenAddress(address _foreignToken) view returns (address)",
+      "function initialize(address _bridgeContract, address _mediatorContract, uint256[3] _dailyLimitMaxPerTxMinPerTxArray, uint256[2] _executionDailyLimitExecutionMaxPerTxArray, address _gasLimitManager, address _owner, address _tokenFactory, address _feeManager, address _forwardingRulesManager) returns (bool)",
+      "function isBridgedTokenDeployAcknowledged(address _token) view returns (bool)",
+      "function isInitialized() view returns (bool)",
+      "function isRegisteredAsNativeToken(address _token) view returns (bool)",
+      "function isTokenRegistered(address _token) view returns (bool)",
+      "function maxAvailablePerTx(address _token) view returns (uint256)",
+      "function maxPerTx(address _token) view returns (uint256)",
+      "function mediatorBalance(address _token) view returns (uint256)",
+      "function mediatorContractOnOtherSide() view returns (address)",
+      "function messageFixed(bytes32 _messageId) view returns (bool)",
+      "function migrateTo_3_3_0(address _tokenFactory, address _forwardingRulesManager, address _gasLimitManager, address _feeManager)",
+      "function minPerTx(address _token) view returns (uint256)",
+      "function nativeTokenAddress(address _bridgedToken) view returns (address)",
+      "function onTokenTransfer(address _from, uint256 _value, bytes _data) returns (bool)",
+      "function owner() view returns (address)",
+      "function relayTokens(address token, uint256 _value)",
+      "function relayTokens(address token, address _receiver, uint256 _value)",
+      "function relayTokensAndCall(address token, address _receiver, uint256 _value, bytes _data)",
+      "function requestFailedMessageFix(bytes32 _messageId)",
+      "function setBridgeContract(address _bridgeContract)",
+      "function setCustomTokenAddressPair(address _nativeToken, address _bridgedToken)",
+      "function setDailyLimit(address _token, uint256 _dailyLimit)",
+      "function setExecutionDailyLimit(address _token, uint256 _dailyLimit)",
+      "function setExecutionMaxPerTx(address _token, uint256 _maxPerTx)",
+      "function setFeeManager(address _feeManager)",
+      "function setForwardingRulesManager(address _manager)",
+      "function setGasLimitManager(address _manager)",
+      "function setMaxPerTx(address _token, uint256 _maxPerTx)",
+      "function setMediatorContractOnOtherSide(address _mediatorContract)",
+      "function setMinPerTx(address _token, uint256 _minPerTx)",
+      "function setTokenFactory(address _tokenFactory)",
+      "function tokenFactory() view returns (address)",
+      "function totalExecutedPerDay(address _token, uint256 _day) view returns (uint256)",
+      "function totalSpentPerDay(address _token, uint256 _day) view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function withinExecutionLimit(address _token, uint256 _amount) view returns (bool)",
+      "function withinLimit(address _token, uint256 _amount) view returns (bool)"
+    ],
+    "gno:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "gno:0x507A7777E6DbF4680951E63fB3753a20F2c37706": [
+      "constructor(address _singleton)"
+    ],
+    "gno:0x5dbC897aEf6B18394D845A922BF107FA98E3AC55": [
+      "constructor(address _mediator, address _owner, address[] _rewardAddresses, uint256[2] _fees)",
+      "event FeeUpdated(bytes32 feeType, address indexed token, uint256 fee)",
+      "function FOREIGN_TO_HOME_FEE() view returns (bytes32)",
+      "function HOME_TO_FOREIGN_FEE() view returns (bytes32)",
+      "function addRewardAddress(address _addr)",
+      "function calculateFee(bytes32 _feeType, address _token, uint256 _value) view returns (uint256)",
+      "function distributeFee(address _token)",
+      "function getFee(bytes32 _feeType, address _token) view returns (uint256)",
+      "function getModuleInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function isRewardAddress(address _addr) view returns (bool)",
+      "function mediator() view returns (address)",
+      "function owner() view returns (address)",
+      "function removeRewardAddress(address _addr)",
+      "function rewardAddressCount() view returns (uint256)",
+      "function rewardAddressList() view returns (address[])",
+      "function setFee(bytes32 _feeType, address _token, uint256 _fee)",
+      "function transferOwnership(address _newOwner)"
+    ],
+    "gno:0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED": [
+      "constructor(address _bridge, address _owner, uint256 _gasLimit)",
+      "function bridge() view returns (address)",
+      "function getModuleInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function owner() view returns (address)",
+      "function requestGasLimit(bytes4 _selector, address _token) view returns (uint256)",
+      "function requestGasLimit() view returns (uint256)",
+      "function requestGasLimit(bytes4 _selector) view returns (uint256)",
+      "function requestGasLimit(bytes _data) view returns (uint256)",
+      "function setBridgedTokenRequestGasLimits(address _token, uint256[] _gasLimits)",
+      "function setCommonRequestGasLimits(uint256[] _gasLimits)",
+      "function setNativeTokenRequestGasLimits(address _token, uint256[] _gasLimits)",
+      "function setRequestGasLimit(bytes4 _selector, uint256 _gasLimit)",
+      "function setRequestGasLimit(bytes4 _selector, address _token, uint256 _gasLimit)",
+      "function setRequestGasLimit(uint256 _gasLimit)",
+      "function transferOwnership(address _newOwner)"
+    ],
+    "gno:0x694bEeB84f912d0951e88cFCf76900B7C728B5B5": [
+      "function setExpectedThreshold(uint256 expectedThreshold_)",
+      "function setYaho(address yaho_)",
+      "function targetChainId() view returns (uint256)",
+      "function setReportersAdaptersAndThreshold(address[] reporters, address[] adapters, uint256 threshold)",
+      "function expectedThreshold() view returns (uint256)",
+      "function isInitialized() view returns (bool)",
+      "function threshold() view returns (uint256)",
+      "function targetAddress() view returns (address)",
+      "function adapters() view returns (address[])",
+      "function yaru() view returns (address)",
+      "function owner() view returns (address)",
+      "function deployedAtBlock() view returns (uint256)",
+      "function initialize(address _owner) returns (bool)",
+      "function setTargetChainId(uint256 targetChainId_)",
+      "function setYaru(address yaru_)",
+      "function setExpectedAdaptersHash(address[] adapters_)",
+      "function yaho() view returns (address)",
+      "function reporters() view returns (address[])",
+      "function expectedAdaptersHash() view returns (bytes32)",
+      "function transferOwnership(address newOwner)",
+      "function setTargetAddress(address targetAddress_)",
+      "event OwnershipTransferred(address previousOwner, address newOwner)"
+    ],
+    "gno:0x7301CFA0e1756B71869E93d4e4Dca5c7d0eb0AA6": [
+      "function proxyOwner() view returns (address)",
+      "function upgradeTo(uint256 version, address implementation)",
+      "function version() view returns (uint256)",
+      "function implementation() view returns (address)",
+      "function upgradeabilityOwner() view returns (address)",
+      "function upgradeToAndCall(uint256 version, address implementation, bytes data) payable",
+      "function transferProxyOwnership(address newOwner)",
+      "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
+      "event Upgraded(uint256 version, address indexed implementation)"
+    ],
+    "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E": [
+      "function upgradeTo(uint256 version, address implementation)",
+      "function version() view returns (uint256)",
+      "function implementation() view returns (address)",
+      "function upgradeabilityOwner() view returns (address)",
+      "function upgradeToAndCall(uint256 version, address implementation, bytes data) payable",
+      "function transferProxyOwnership(address newOwner)",
+      "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
+      "event Upgraded(uint256 version, address indexed implementation)"
+    ],
+    "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59": [
+      "function upgradeTo(uint256 version, address implementation)",
+      "function version() view returns (uint256)",
+      "function implementation() view returns (address)",
+      "function upgradeabilityOwner() view returns (address)",
+      "function upgradeToAndCall(uint256 version, address implementation, bytes data) payable",
+      "function transferProxyOwnership(address newOwner)",
+      "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
+      "event Upgraded(uint256 version, address indexed implementation)"
+    ],
+    "gno:0x77bcb57ba7037e39063f1567ce734452bbD7a5F0": [
+      "constructor(address _singleton)"
+    ],
+    "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd": [
+      "constructor(address _masterCopy)"
+    ],
+    "gno:0x7CE84Eea8Fbe3cD9Afb40475E7257837E18745C8": [
+      "constructor(tuple(bytes32 executionStateRoot, uint256 genesisTime, bytes32 genesisValidatorsRoot, address guardian, uint256 head, bytes32 header, bytes32 heliosProgramVkey, uint256 secondsPerSlot, uint256 slotsPerEpoch, uint256 slotsPerPeriod, uint256 sourceChainId, bytes32 syncCommitteeHash, address verifier) params)",
+      "error HeaderRootAlreadySet(uint256 slot)",
+      "error NextSyncCommitteeMismatch(bytes32 given, bytes32 expected)",
+      "error NonCheckpointSlot(uint256 slot)",
+      "error PrevHeadMismatch(uint256 given, uint256 expected)",
+      "error PrevHeaderMismatch(bytes32 given, bytes32 expected)",
+      "error SlotBehindHead(uint256 slot)",
+      "error StateRootAlreadySet(uint256 slot)",
+      "error SyncCommitteeAlreadySet(uint256 period)",
+      "error SyncCommitteeNotSet(uint256 period)",
+      "error SyncCommitteeStartMismatch(bytes32 given, bytes32 expected)",
+      "event HeadUpdate(uint256 indexed slot, bytes32 indexed root)",
+      "event SyncCommitteeUpdate(uint256 indexed period, bytes32 indexed root)",
+      "function GENESIS_TIME() view returns (uint256)",
+      "function GENESIS_VALIDATORS_ROOT() view returns (bytes32)",
+      "function SECONDS_PER_SLOT() view returns (uint256)",
+      "function SLOTS_PER_EPOCH() view returns (uint256)",
+      "function SLOTS_PER_PERIOD() view returns (uint256)",
+      "function SOURCE_CHAIN_ID() view returns (uint256)",
+      "function executionStateRoots(uint256) view returns (bytes32)",
+      "function getCurrentEpoch() view returns (uint256)",
+      "function getSyncCommitteePeriod(uint256 slot) view returns (uint256)",
+      "function guardian() view returns (address)",
+      "function head() view returns (uint256)",
+      "function headers(uint256) view returns (bytes32)",
+      "function heliosProgramVkey() view returns (bytes32)",
+      "function syncCommittees(uint256) view returns (bytes32)",
+      "function update(bytes proof, bytes publicValues)",
+      "function updateHeliosProgramVkey(bytes32 newVkey)",
+      "function verifier() view returns (address)",
+      "function version() view returns (string)"
+    ],
+    "gno:0x9C63010F056E4692A44A510F2F5E8A44B94960Bf": [
+      "constructor(address sp1HeliosAddress, uint256 sourceChainId, address sourceYaho)",
+      "error ConflictingBlockHeader(uint256 blockNumber, bytes32 blockHash, bytes32 storedBlockHash)",
+      "error ErrorParseReceipt()",
+      "error HeaderNotAvailable()",
+      "error InvalidBlockHashProof()",
+      "error InvalidBlockHeaderRLP()",
+      "error InvalidBlockNumberProof()",
+      "error InvalidEventSignature()",
+      "error InvalidEventSource()",
+      "error InvalidReceiptsRoot()",
+      "error UnsupportedTxType()",
+      "event HashStored(uint256 indexed id, bytes32 indexed hash)",
+      "function PROVIDER() view returns (string)",
+      "function SOURCE_CHAIN_ID() view returns (uint256)",
+      "function SOURCE_YAHO() view returns (address)",
+      "function SP1_HELIOS_ADDRESS() view returns (address)",
+      "function getHash(uint256 domain, uint256 id) view returns (bytes32)",
+      "function proveAncestralBlockHashes(uint256 chainId, bytes[] blockHeaders)",
+      "function storeBlockHeader(uint256 slot, uint256 blockNumber, bytes32[] blockNumberProof, bytes32 blockHash, bytes32[] blockHashProof)",
+      "function verifyAndStoreDispatchedMessage(uint64 headerSlot, uint64 txSlot, bytes32[] receiptsRootProof, bytes32 receiptsRoot, bytes[] receiptProof, bytes txIndexRLPEncoded, uint256 logIndex)"
+    ],
+    "gno:0xA033535983d1aBcc2648af730EDCb198909903D7": [
+      "function transactionHash() view returns (bytes32)",
+      "function numMessagesSigned(bytes32 _message) view returns (uint256)",
+      "function confirmInformation(bytes32 _messageId, bool _status, bytes _result)",
+      "function sourceChainId() view returns (uint256)",
+      "function signature(bytes32 _hash, uint256 _index) view returns (bytes)",
+      "function HASHI_IS_MANDATORY() view returns (bool)",
+      "function initialize(uint256 _sourceChainId, uint256 _destinationChainId, address _validatorContract, uint256 _maxGasPerTx, uint256 _gasPrice, uint256 _requiredBlockConfirmations, address _owner) returns (bool)",
+      "function isInitialized() view returns (bool)",
+      "function requiredBlockConfirmations() view returns (uint256)",
+      "function failedMessageReceiver(bytes32 _messageId) view returns (address)",
+      "function getBridgeMode() pure returns (bytes4 _data)",
+      "function setChainIds(uint256 _sourceChainId, uint256 _destinationChainId)",
+      "function message(bytes32 _hash) view returns (bytes)",
+      "function failedMessageSender(bytes32 _messageId) view returns (address)",
+      "function allowReentrantRequests() view returns (bool)",
+      "function requireToGetInformation(bytes32 _requestSelector, bytes _data) returns (bytes32)",
+      "function submitSignature(bytes signature, bytes message)",
+      "function messageId() view returns (bytes32 id)",
+      "function claimTokens(address _token, address _to)",
+      "function numAffirmationsSigned(bytes32 _hash) view returns (uint256)",
+      "function affirmationsSigned(bytes32 _hash) view returns (bool)",
+      "function resendDataWithHashi(bytes data)",
+      "function setMaxGasPerTx(uint256 _maxGasPerTx)",
+      "function hashiManager() view returns (address)",
+      "function HASHI_IS_ENABLED() view returns (bool)",
+      "function requiredSignatures() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function isApprovedByHashi(bytes32 hashMsg) view returns (bool)",
+      "function messagesSigned(bytes32 _message) view returns (bool)",
+      "function requireToConfirmMessage(address _contract, bytes _data, uint256 _gas) returns (bytes32)",
+      "function validatorContract() view returns (address)",
+      "function deployedAtBlock() view returns (uint256)",
+      "function getBridgeInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function messageSourceChainId() view returns (uint256 id)",
+      "function setRequiredBlockConfirmations(uint256 _blockConfirmations)",
+      "function destinationChainId() view returns (uint256)",
+      "function setHashiManager(address _hashiManager)",
+      "function setGasPrice(uint256 _gasPrice)",
+      "function setAllowReentrantRequests(bool _enable)",
+      "function enableAsyncRequestSelector(bytes32 _requestSelector, bool _enable)",
+      "function messageCallStatus(bytes32 _messageId) view returns (bool)",
+      "function onMessage(uint256, uint256 chainId, address sender, uint256 threshold, address[] adapters, bytes data) returns (bytes)",
+      "function messageSender() view returns (address sender)",
+      "function decimalShift() view returns (int256)",
+      "function requireToPassMessage(address _contract, bytes _data, uint256 _gas) returns (bytes32)",
+      "function failedMessageDataHash(bytes32 _messageId) view returns (bytes32)",
+      "function maxGasPerTx() view returns (uint256)",
+      "function executeAffirmation(bytes message)",
+      "function transferOwnership(address newOwner)",
+      "function isAsyncRequestSelectorEnabled(bytes32 _requestSelector) view returns (bool)",
+      "function gasPrice() view returns (uint256)",
+      "function isAlreadyProcessed(uint256 _number) pure returns (bool)",
+      "event UserRequestForSignature(bytes32 indexed messageId, bytes encodedData)",
+      "event AffirmationCompleted(address indexed sender, address indexed executor, bytes32 indexed messageId, bool status)",
+      "event UserRequestForInformation(bytes32 indexed messageId, bytes32 indexed requestSelector, address indexed sender, bytes data)",
+      "event SignedForInformation(address indexed signer, bytes32 indexed messageId)",
+      "event InformationRetrieved(bytes32 indexed messageId, bool status, bool callbackStatus)",
+      "event EnabledAsyncRequestSelector(bytes32 indexed requestSelector, bool enable)",
+      "event SignedForUserRequest(address indexed signer, bytes32 messageHash)",
+      "event SignedForAffirmation(address indexed signer, bytes32 messageHash)",
+      "event CollectedSignatures(address authorityResponsibleForRelay, bytes32 messageHash, uint256 NumberOfCollectedSignatures)",
+      "event GasPriceChanged(uint256 gasPrice)",
+      "event RequiredBlockConfirmationChanged(uint256 requiredBlockConfirmations)",
+      "event OwnershipTransferred(address previousOwner, address newOwner)"
+    ],
+    "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008": [
+      "function upgradeTo(uint256 version, address implementation)",
+      "function version() view returns (uint256)",
+      "function implementation() view returns (address)",
+      "function upgradeabilityOwner() view returns (address)",
+      "function upgradeToAndCall(uint256 version, address implementation, bytes data) payable",
+      "function transferProxyOwnership(address newOwner)",
+      "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
+      "event Upgraded(uint256 version, address indexed implementation)"
+    ],
+    "gno:0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd": [
+      "error InvalidProof()",
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(uint256[8] proof, uint256[2] input) view",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[2] input) view",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "gno:0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615": [
+      "error AdaptersDisagree(address adapterOne, address adapterTwo)",
+      "error HashNotAvailableInAdapter(address adapter)",
+      "error InvalidThreshold(uint256 threshold, uint256 maxThreshold)",
+      "error NoAdaptersGiven()",
+      "function checkHashWithThresholdFromAdapters(uint256 domain, uint256 id, uint256 threshold, address[] adapters) view returns (bool)",
+      "function getHash(uint256 domain, uint256 id, address[] adapters) view returns (bytes32 hash)",
+      "function getHashFromAdapter(uint256 domain, uint256 id, address adapter) view returns (bytes32)",
+      "function getHashesFromAdapters(uint256 domain, uint256 id, address[] adapters) view returns (bytes32[])"
+    ],
+    "gno:0xb056BFEdc397D427697a75E3ff115a0954de4791": [
+      "function validatorCount() view returns (uint256)",
+      "function getBridgeValidatorsInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function isInitialized() view returns (bool)",
+      "function removeValidator(address _validator)",
+      "function addValidator(address _validator)",
+      "function initialize(uint256 _requiredSignatures, address[] _initialValidators, address _owner) returns (bool)",
+      "function validatorList() view returns (address[])",
+      "function setRequiredSignatures(uint256 _requiredSignatures)",
+      "function requiredSignatures() view returns (uint256)",
+      "function getNextValidator(address _address) view returns (address)",
+      "function owner() view returns (address)",
+      "function isValidatorDuty(address _validator) view returns (bool)",
+      "function deployedAtBlock() view returns (uint256)",
+      "function F_ADDR() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function isValidator(address _validator) view returns (bool)",
+      "event ValidatorAdded(address indexed validator)",
+      "event ValidatorRemoved(address indexed validator)",
+      "event RequiredSignaturesChanged(uint256 requiredSignatures)",
+      "event OwnershipTransferred(address previousOwner, address newOwner)"
+    ],
+    "gno:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8": [
+      "error InvalidMessage(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters) message)",
+      "error InvalidThreshold(uint256 threshold, uint256 maxThreshold)",
+      "error MessageHashNotFound(uint256 messageId)",
+      "error NoAdaptersGiven()",
+      "error NoMessageIdsGiven()",
+      "error NoMessagesGiven()",
+      "error NoReportersGiven()",
+      "error UnequalArrayLengths(uint256 arrayOne, uint256 arrayTwo)",
+      "event MessageDispatched(uint256 indexed messageId, tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters) message)",
+      "function calculateMessageHash(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters) message) pure returns (bytes32)",
+      "function calculateMessageId(uint256 sourceChainId, address dispatcherAddress, bytes32 messageHash) pure returns (uint256)",
+      "function currentNonce() view returns (uint256)",
+      "function dispatchMessage(uint256 targetChainId, uint256 threshold, address receiver, bytes data, address[] reporters, address[] adapters) returns (uint256)",
+      "function dispatchMessageToAdapters(uint256 targetChainId, uint256 threshold, address receiver, bytes data, address[] reporters, address[] adapters) payable returns (uint256, bytes32[])",
+      "function dispatchMessagesToAdapters(uint256 targetChainId, uint256[] thresholds, address[] receivers, bytes[] data, address[] reporters, address[] adapters) payable returns (uint256[], bytes32[])",
+      "function getPendingMessageHash(uint256 messageId) view returns (bytes32)",
+      "function relayMessagesToAdapters(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters)[] messages) payable returns (bytes32[])"
+    ],
+    "gno:0xd4D8c07097F9b87EcC4C1a838C4b71DBebcd2286": [
+      "constructor(address _owner)",
+      "event ForwardingRuleUpdated(address token, address sender, address receiver, int256 lane)",
+      "function destinationLane(address _token, address _sender, address _receiver) view returns (int256)",
+      "function forwardingRule(address, address, address) view returns (int256)",
+      "function getModuleInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function owner() view returns (address)",
+      "function setReceiverExceptionForTokenForwardingRule(address _token, address _receiver, bool _enable)",
+      "function setReceiverForwardingRule(address _receiver, bool _enable)",
+      "function setSenderExceptionForTokenForwardingRule(address _token, address _sender, bool _enable)",
+      "function setSenderForwardingRule(address _sender, bool _enable)",
+      "function setTokenForwardingRule(address _token, bool _enable)",
+      "function transferOwnership(address _newOwner)"
+    ],
+    "gno:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "gno:0xEAAE83ac10f975a6456f4C4E48c45Ea2d8e1b5d2": [
+      "constructor(address _owner, address _tokenImage)",
+      "function deploy(string _name, string _symbol, uint8 _decimals, uint256 _chainId) returns (address)",
+      "function getModuleInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function owner() view returns (address)",
+      "function setTokenImage(address _tokenImage)",
+      "function tokenImage() view returns (address)",
+      "function transferOwnership(address _newOwner)"
+    ],
+    "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623": [
+      "constructor(address _singleton)"
+    ],
+    "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d": [
+      "function upgradeTo(uint256 version, address implementation)",
+      "function version() view returns (uint256)",
+      "function implementation() view returns (address)",
+      "function upgradeabilityOwner() view returns (address)",
+      "function upgradeToAndCall(uint256 version, address implementation, bytes data) payable",
+      "function transferProxyOwnership(address newOwner)",
+      "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
+      "event Upgraded(uint256 version, address indexed implementation)"
+    ]
+  },
+  "usedTemplates": {
+    "gnosisbridge/BridgeValidators": "0x2078291b872b03be29e501894a76cdf4bbeb226ee9793e794d55e47477829019",
+    "gnosisbridge/HashiManager": "0xa1138883de6a552d21b8e9078c9213aabe3c975dffc34d54f61c0f3c437ab1ff",
+    "gnosisbridge/Yaho": "0x76b2288ec00b5d9e742b851e9d05ebce417b241ace06d8810e3cf8fc347c40b4",
+    "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+  },
+  "usedBlockNumbers": { "gnosis": 42135396, "ethereum": 23368594 },
+  "permissionsConfigHash": "0xdd14a223281ad3007f536bad13ce1c6e2547595fe29cce02186ba8e2b58df53b"
+}

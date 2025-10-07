@@ -5,17 +5,15 @@ import {
   adjustTableValue,
   sortTableValues,
 } from '~/components/table/sorting/sortTableValues'
-import type { CommonProjectColumnsOptions } from '~/components/table/utils/common-project-columns/CommonProjectColumns'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
 import type { ScalingRiskEntry } from '~/server/features/scaling/risks/getScalingRiskEntries'
 
 const columnHelper = createColumnHelper<ScalingRiskEntry>()
 
-export const getScalingRiskColumns = (opts?: CommonProjectColumnsOptions) => [
+export const scalingRiskColumns = [
   ...getScalingCommonProjectColumns(
     columnHelper,
     (row) => `/scaling/projects/${row.slug}#risk-analysis`,
-    opts,
   ),
   columnHelper.accessor((e) => adjustTableValue(e.risks.stateValidation), {
     header: 'State\nValidation',

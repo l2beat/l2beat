@@ -20,7 +20,7 @@ export const ten: ScalingProject = upcomingL2({
         'https://ten.xyz/litepaper',
         'https://whitepaper.ten.xyz',
       ],
-      explorers: ['https://testnet.tenscan.io'],
+      explorers: ['https://tenscan.io'],
       repositories: [
         'https://github.com/ten-protocol',
         'https://github.com/ten-protocol/go-ten',
@@ -29,7 +29,7 @@ export const ten: ScalingProject = upcomingL2({
       ],
       socialMedia: [
         'https://twitter.com/tenprotocol',
-        'https://discord.gg/yQfmKeNzNd',
+        'https://discord.com/invite/tenprotocol',
         'https://t.me/tenprotocol',
         'https://medium.com/obscuro-labs',
       ],

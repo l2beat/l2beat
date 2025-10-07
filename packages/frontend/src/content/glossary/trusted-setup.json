@@ -1,5 +1,5 @@
 {
-  "term": "Trusted setup (ceremony)",
-  "definition": "Generation of a piece of data that must then be used for some cryptographic protocol to run. Generating this data requires some secret information. The \"trust\" comes from the fact that a person generates a secret, uses it to generate the data, and then publishes the data and forgets the secret. Once the data is generated, and the secrets are forgotten, no further participation from the creators of the ceremony is required.\nThere are two types of trusted setup: (i) trusted setup per circuit where it is generated from scratch for each circuit, (ii) trusted universal (updatable) setup where it can be used for as many circuits as we want.",
+  "term": "Trusted setup",
+  "definition": "Generation of a piece of data that must then be used for some cryptographic protocol to run. Generating this data requires some secret information. The \"trust\" comes from the fact the secret must be destroyed after the ceremony, otherwise cryptographic properties of the protocol could be broken. Once the data is generated, and the secrets are forgotten, no further participation from the creators of the ceremony is required.\nThere are two types of trusted setups for SNARKs: (i) trusted setup per circuit where it is generated from scratch for each circuit, (ii) trusted universal setup per proving system where it can be used for several circuits.",
   "isSpicy": false
 }

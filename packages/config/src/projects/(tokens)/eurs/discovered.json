@@ -1,0 +1,86 @@
+{
+  "name": "eurs",
+  "timestamp": 1752830495,
+  "configHash": "0x24b4829de2ace1496e5d03890165710149416d362b2f916cbfbbde04dcc39655",
+  "entries": [
+    {
+      "name": "STASIS EURS Token",
+      "address": "eth:0xdB25f211AB05b1c97D595516F45794528a807ad8",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xf79815a7227d23a793e9e15c9e6f5dcdac105c2c8025ec498f9e54f4bb9ee2f2"
+      ],
+      "proxyType": "immutable",
+      "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
+      "sinceTimestamp": 1529686012,
+      "sinceBlock": 5835251,
+      "values": {
+        "$immutable": true,
+        "$tokenData": {
+          "name": "STASIS EURS Token",
+          "coingeckoId": "stasis-eurs",
+          "address": "eth:0xdB25f211AB05b1c97D595516F45794528a807ad8",
+          "symbol": "EURS",
+          "decimals": 2,
+          "deploymentTimestamp": 1529686012,
+          "coingeckoListingTimestamp": 1573689600,
+          "category": "stablecoin",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/5164/large/EURS_300x300.png?1696505680",
+          "chainId": 1,
+          "supply": "zero",
+          "source": "canonical"
+        },
+        "decimals": 2,
+        "getFeeParameters": {
+          "_fixedFee": 0,
+          "_minVariableFee": 0,
+          "_maxVariableFee": 0,
+          "_variableFeeNumnerator": 0
+        },
+        "name": "STASIS EURS Token",
+        "symbol": "EURS",
+        "totalSupply": 12412594000
+      },
+      "implementationNames": {
+        "eth:0xdB25f211AB05b1c97D595516F45794528a807ad8": "EURSToken"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0xdB25f211AB05b1c97D595516F45794528a807ad8": [
+      "function freezeTransfers() payable",
+      "function name() view returns (string)",
+      "function approve(address _spender, uint256 _value) payable returns (bool success)",
+      "function setOwner(address _newOwner)",
+      "function totalSupply() view returns (uint256)",
+      "function transferFrom(address _from, address _to, uint256 _value) payable returns (bool)",
+      "function decimals() view returns (uint8)",
+      "function unfreezeTransfers() payable",
+      "function getFeeParameters() view returns (uint256 _fixedFee, uint256 _minVariableFee, uint256 _maxVariableFee, uint256 _variableFeeNumnerator)",
+      "function burnTokens(uint256 _value) payable returns (bool)",
+      "function balanceOf(address _owner) view returns (uint256 balance)",
+      "function nonce(address _owner) view returns (uint256)",
+      "function createTokens(uint256 _value) payable returns (bool)",
+      "function symbol() view returns (string)",
+      "function calculateFee(uint256 _amount) view returns (uint256 _fee)",
+      "function flags(address _address) view returns (uint256)",
+      "function setFeeCollector(address _newFeeCollector) payable",
+      "function transfer(address _to, uint256 _value) payable returns (bool)",
+      "function setFlags(address _address, uint256 _flags) payable",
+      "function delegatedTransfer(address _to, uint256 _value, uint256 _fee, uint256 _nonce, uint8 _v, bytes32 _r, bytes32 _s) payable returns (bool)",
+      "function setDelegate(address _delegate)",
+      "function setFeeParameters(uint256 _fixedFee, uint256 _minVariableFee, uint256 _maxVariableFee, uint256 _variableFeeNumerator) payable",
+      "function allowance(address _owner, address _spender) view returns (uint256 remaining)",
+      "constructor(address _feeCollector)",
+      "event Freeze()",
+      "event Unfreeze()",
+      "event FeeChange(uint256 fixedFee, uint256 minVariableFee, uint256 maxVariableFee, uint256 variableFeeNumerator)",
+      "event Delegation(address delegate)",
+      "event Transfer(address indexed _from, address indexed _to, uint256 _value)",
+      "event Approval(address indexed _owner, address indexed _spender, uint256 _value)"
+    ]
+  },
+  "usedTemplates": {},
+  "usedBlockNumbers": { "ethereum": 22945155 },
+  "permissionsConfigHash": "0xd0945dc661337d675366ac98d880c7805fa71320906389175164c0915ad7a0b6"
+}

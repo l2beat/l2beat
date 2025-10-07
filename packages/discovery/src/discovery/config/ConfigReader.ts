@@ -1,10 +1,8 @@
 import {
   assert,
-  ChainSpecificAddress,
   formatAsciiBorder,
   Hash160,
   type json,
-  unique,
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { createHash } from 'crypto'
@@ -73,47 +71,44 @@ export class ConfigReader {
     return rawConfig
   }
 
-  readDiscovery(name: string, chain: string): DiscoveryOutput {
+  readRawConfigAsText(name: string): string {
+    const basePath = this.resolveProjectPath(name)
+    return readFileSync(path.join(basePath, 'config.jsonc'), 'utf-8')
+  }
+
+  readDiscovery(name: string): DiscoveryOutput {
     const projectPath = this.resolveProjectPath(name)
     assert(
       fileExistsCaseSensitive(projectPath),
       'Project not found, check if case matches',
     )
-    const chainPath = path.join(projectPath, chain)
-    assert(
-      fileExistsCaseSensitive(chainPath),
-      'Chain not found in project, check if case matches',
-    )
 
     const contents = readFileSync(
-      path.join(chainPath, 'discovered.json'),
+      path.join(projectPath, 'discovered.json'),
       'utf-8',
     )
 
-    const meta = JSON.parse(contents) as unknown as DiscoveryOutput
-    assert(meta.chain === chain, 'Chain mismatch in discovered.json')
-    return meta
+    return JSON.parse(contents) as unknown as DiscoveryOutput
   }
 
-  readDiscoveryHash(projectName: string, chain: string): Hash160 {
-    const curDiscovery = this.readDiscovery(projectName, chain)
+  readDiscoveryHash(projectName: string): Hash160 {
+    const curDiscovery = this.readDiscovery(projectName)
     const hasher = createHash('sha1')
     hasher.update(JSON.stringify(curDiscovery))
     return Hash160(`0x${hasher.digest('hex')}`)
   }
 
-  // NOTE(radomski): This returns all projects and chains on which they are
-  // configured that have a config.jsonc file. They might not yet have a
-  // discovered.json file. Most of the time you want to use
-  // readAllDiscoveredProjects()
-  readAllConfiguredProjects(): { project: string; chains: string[] }[] {
-    const result = this.enumerateProjectDirectories()
-      .map((projectPath) => {
-        const projectName = path.basename(projectPath)
+  readAllConfiguredProjects(options: { skipGroup?: string } = {}): string[] {
+    return this.enumerateProjectDirectories()
+      .filter(
+        (path) =>
+          !options.skipGroup || !path.includes(`(${options.skipGroup})`),
+      ) // quick fix to hide tokens in DiscoUI
+      .filter((projectPath) => {
         const configPath = path.join(projectPath, 'config.jsonc')
 
         if (!existsSync(configPath)) {
-          return { project: projectName, chains: [] as string[] }
+          return false
         }
 
         const config = readJsonc(configPath)
@@ -123,111 +118,48 @@ export class ConfigReader {
           Array.isArray(config.initialAddresses) &&
           config.initialAddresses.every((x) => typeof x === 'string')
         ) {
-          const addresses = config.initialAddresses.map((a) =>
-            ChainSpecificAddress(a),
-          )
-          const chains = addresses.map((a) =>
-            ChainSpecificAddress.longChain(a).toString(),
-          )
-          const uniqueChains = unique(chains)
-          return { project: projectName, chains: uniqueChains }
+          return true
         }
 
-        return { project: projectName, chains: [] as string[] }
+        return false
       })
-      .filter((x) => x.chains.length > 0)
-    const asDiscovered = this.readAllDiscoveredProjects()
-
-    for (const entry of asDiscovered) {
-      const found = result.find((x) => x.project === entry.project)
-      if (found === undefined) {
-        result.push(entry)
-      } else {
-        for (const chain of entry.chains) {
-          if (!found.chains.includes(chain)) {
-            found.chains.push(chain)
-          }
-        }
-      }
-    }
-
-    return result
+      .map((projectPath) => {
+        return path.basename(projectPath)
+      })
   }
 
   // NOTE(radomski): Generates a list of projects that _have_ a
   // discovered.json. Most of the time this is what you want to use. We assume
   // that projects that have a discovered.json are also configured.
-  readAllDiscoveredProjects(
-    options: { skipGroup?: string } = {},
-  ): { project: string; chains: string[] }[] {
+  readAllDiscoveredProjects(options: { skipGroup?: string } = {}): string[] {
     return this.enumerateProjectDirectories()
       .filter(
         (path) =>
           !options.skipGroup || !path.includes(`(${options.skipGroup})`),
       ) // quick fix to hide tokens in DiscoUI
-      .map((projectPath) => {
-        const projectName = path.basename(projectPath)
-        const chains = readdirSync(projectPath, { withFileTypes: true })
-          .filter((x) => x.isDirectory())
-          .map((x) => x.name)
-          .filter((chain) =>
-            existsSync(path.join(projectPath, chain, 'discovered.json')),
-          )
-        return { project: projectName, chains }
+      .filter((projectPath) => {
+        const discoveredPath = path.join(projectPath, 'discovered.json')
+
+        if (!existsSync(discoveredPath)) {
+          return false
+        }
+
+        return true
       })
-      .filter((x) => x.chains.length > 0)
+      .map((projectPath) => {
+        return path.basename(projectPath)
+      })
   }
 
-  readAllDiscoveredConfigsForChain(chain: string): ConfigRegistry[] {
-    const result: ConfigRegistry[] = []
-    const projects = this.readAllDiscoveredProjects()
-      .filter((p) => p.chains.includes(chain))
-      .map((x) => x.project)
-
-    for (const project of projects) {
-      const contents = this.readConfig(project)
-      result.push(contents)
-    }
-
-    return result
-  }
-
-  readAllDiscoveredChainsForProject(name: string) {
-    let projectPath: string
-    try {
-      projectPath = this.resolveProjectPath(name)
-    } catch {
-      return []
-    }
-
-    if (!existsSync(path.join(projectPath, 'config.jsonc'))) {
-      return []
-    }
-
-    const chains = readdirSync(projectPath, { withFileTypes: true })
-      .filter((x) => x.isDirectory())
-      .map((x) => x.name)
-      .filter((chain) =>
-        existsSync(path.join(projectPath, chain, 'discovered.json')),
-      )
-
-    return chains
-  }
-
-  readDiffHistoryHash(name: string, chain: string): Hash160 | undefined {
+  readDiffHistoryHash(name: string): Hash160 | undefined {
     const projectPath = this.resolveProjectPath(name)
     assert(
       fileExistsCaseSensitive(projectPath),
       'Project not found, check if case matches',
     )
-    const chainPath = path.join(projectPath, chain)
-    assert(
-      fileExistsCaseSensitive(chainPath),
-      'Chain not found in project, check if case matches',
-    )
 
     const content = readFileSync(
-      path.join(chainPath, 'diffHistory.md'),
+      path.join(projectPath, 'diffHistory.md'),
       'utf-8',
     )
     const hashLine = content.split('\n')[0]
@@ -239,10 +171,6 @@ export class ConfigReader {
 
   getProjectPath(project: string): string {
     return this.resolveProjectPath(project)
-  }
-
-  getProjectChainPath(project: string, chain: string): string {
-    return path.join(this.getProjectPath(project), chain)
   }
 
   resolveImports(
@@ -343,6 +271,19 @@ export class ConfigReader {
     }
 
     return result
+  }
+
+  projectConfigExists(project: string): boolean {
+    try {
+      this.resolveProjectPath(project)
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  getConfigPath(project: string): string {
+    return path.join(this.resolveProjectPath(project), 'config.jsonc')
   }
 
   /**

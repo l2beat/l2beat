@@ -1,0 +1,472 @@
+{
+  "name": "hyphen",
+  "timestamp": 1718953583,
+  "configHash": "0x650279f6a55ef8849545132c38ef74c4327725313b7cec3f977c7991f4518b42",
+  "entries": [
+    {
+      "address": "eth:0x129443cA2a9Dec2020808a2868b38dDA457eaCC7",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2A5c2568b10A0E826BfA892Cf21BA7218310180b",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x13a4cC0750296bB72Eb0006febec306551A4f472" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x13a4cC0750296bB72Eb0006febec306551A4f472" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xebaB24F13de55789eC1F3fFe99A285754e15F7b9",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x13a4cC0750296bB72Eb0006febec306551A4f472" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x13a4cC0750296bB72Eb0006febec306551A4f472",
+          "role": ".owner"
+        }
+      ]
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0x13a4cC0750296bB72Eb0006febec306551A4f472",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2A5c2568b10A0E826BfA892Cf21BA7218310180b",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xebaB24F13de55789eC1F3fFe99A285754e15F7b9",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1647128852,
+      "sinceBlock": 14375007,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x129443cA2a9Dec2020808a2868b38dDA457eaCC7"
+      },
+      "implementationNames": {
+        "eth:0x13a4cC0750296bB72Eb0006febec306551A4f472": "ProxyAdmin"
+      }
+    },
+    {
+      "address": "eth:0x1439eDA7f9A911b9120E9A0DAfb60eAE317F7685",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "LiquidityPool",
+      "address": "eth:0x2A5c2568b10A0E826BfA892Cf21BA7218310180b",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0x2704718af75269b1336700ebb7c17f20b7c71a8cfda9618bf04f5c3b6c1ed995"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1647128990,
+      "sinceBlock": 14375018,
+      "values": {
+        "$admin": "eth:0x13a4cC0750296bB72Eb0006febec306551A4f472",
+        "$implementation": "eth:0x4906b8E690EB1E09Fec924422452d1105D59d042",
+        "$pastUpgrades": [
+          [
+            "2022-03-12T23:49:50.000Z",
+            "0x245f83993782e4e19ca2da7bae1d84a6d660385f09b073e0a938da5248664e42",
+            ["eth:0x279ac60785A2FCb85550EB243B9A42A543171Cc7"]
+          ],
+          [
+            "2022-03-16T22:52:30.000Z",
+            "0x89435cc86efe3739441ec79e390332495c8b945afccd961cf74bd3558973d150",
+            ["eth:0xD0eE149a4Ceec165C456C1E2D4372318e4Df82bd"]
+          ],
+          [
+            "2022-05-12T18:33:22.000Z",
+            "0xf51208b5beea659d588ce2679994091b37da05092451520582e5ad0100665ff0",
+            ["eth:0x6C0CbaC5337Cf577452e99A18320fc5656Bd61E7"]
+          ],
+          [
+            "2022-07-26T15:35:56.000Z",
+            "0xc69f859e020b3fd7be7cf68a8312619f7d8a2eae2a973fbd58d77c9440cae71a",
+            ["eth:0x256415A1f9468E5405abdAfD9B76c4f24451d7E7"]
+          ],
+          [
+            "2023-12-30T09:50:47.000Z",
+            "0x81220b4a19598c78d9baafde8f385fe5b8f30bf37eb2d1f5a3bbb3396ae65f1c",
+            ["eth:0x4906b8E690EB1E09Fec924422452d1105D59d042"]
+          ]
+        ],
+        "$upgradeCount": 5,
+        "baseGas": 21000,
+        "getExecutorManager": "eth:0xbd761D917fB77381B4398Bda89C7F0d9A2BD1399",
+        "liquidityProviders": "eth:0xebaB24F13de55789eC1F3fFe99A285754e15F7b9",
+        "owner": "eth:0xD76b82204BE75Ab9610B04CF27c4F4a34291D5E6",
+        "paused": false,
+        "tokenManager": "eth:0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168"
+      },
+      "implementationNames": {
+        "eth:0x2A5c2568b10A0E826BfA892Cf21BA7218310180b": "TransparentUpgradeableProxy",
+        "eth:0x4906b8E690EB1E09Fec924422452d1105D59d042": "LiquidityPool"
+      }
+    },
+    {
+      "address": "eth:0x4Fb5dF81b644e3Bd5Ad0BA07DCE2B67559C764E0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x600Be30999eB256F2BEf451b69950f7dC84aC6b1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ExecutorManager",
+      "address": "eth:0xbd761D917fB77381B4398Bda89C7F0d9A2BD1399",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x892e396c29b5c992295525eefa7f4625709df8fd34d319dcc638eb61bacef0d6"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1647128800,
+      "sinceBlock": 14375002,
+      "values": {
+        "$immutable": true,
+        "getAllExecutors": [
+          "eth:0xEEFD474e80B6CAEA43F212D964409c473684E3fe",
+          "eth:0x1439eDA7f9A911b9120E9A0DAfb60eAE317F7685",
+          "eth:0x4Fb5dF81b644e3Bd5Ad0BA07DCE2B67559C764E0",
+          "eth:0x600Be30999eB256F2BEf451b69950f7dC84aC6b1"
+        ],
+        "owner": "eth:0xD76b82204BE75Ab9610B04CF27c4F4a34291D5E6"
+      },
+      "implementationNames": {
+        "eth:0xbd761D917fB77381B4398Bda89C7F0d9A2BD1399": "ExecutorManager"
+      }
+    },
+    {
+      "address": "eth:0xD76b82204BE75Ab9610B04CF27c4F4a34291D5E6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "TokenManager",
+      "address": "eth:0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0xb4b188b21027295cc23be58bdfb8244712968fff71cb2dd2af67a5b10df99202"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1652360689,
+      "sinceBlock": 14761234,
+      "values": {
+        "$admin": "eth:0x13a4cC0750296bB72Eb0006febec306551A4f472",
+        "$implementation": "eth:0x79E559AC5b499A5676e28f0074e29763F6c2A27e",
+        "$pastUpgrades": [
+          [
+            "2022-05-12T13:04:49.000Z",
+            "0xeacd5eca940d53ffa4087fc97ed30e39b2dc0e5aa37985515a442d6a9df80d54",
+            ["eth:0x79E559AC5b499A5676e28f0074e29763F6c2A27e"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "owner": "eth:0xD76b82204BE75Ab9610B04CF27c4F4a34291D5E6",
+        "paused": false
+      },
+      "implementationNames": {
+        "eth:0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168": "TransparentUpgradeableProxy",
+        "eth:0x79E559AC5b499A5676e28f0074e29763F6c2A27e": "TokenManager"
+      }
+    },
+    {
+      "name": "LiquidityProviders",
+      "address": "eth:0xebaB24F13de55789eC1F3fFe99A285754e15F7b9",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0xbf180146f00753d63babbadf58b1dd574f2f626ca5e0f02e65e2ab5a4975fbe5"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1647128942,
+      "sinceBlock": 14375014,
+      "values": {
+        "$admin": "eth:0x13a4cC0750296bB72Eb0006febec306551A4f472",
+        "$implementation": "eth:0x38391eA26F9EeE3ab81DE3C7eE9e168da5149103",
+        "$pastUpgrades": [
+          [
+            "2022-03-12T23:49:02.000Z",
+            "0x9167ef6bb6cd9922c1a3b2689077289f38d602f778e03d68eb87146dd1ad3063",
+            ["eth:0x6cc7E949807c0945afcb2be0C92F42191b31dFD7"]
+          ],
+          [
+            "2022-05-12T18:25:42.000Z",
+            "0xae1eb9c87a71fdec0cfbe39300f075392a09014d1056f620ca2551e4f491b77b",
+            ["eth:0x52a592fFE0377b351c8FD99189e5333ec362d66A"]
+          ],
+          [
+            "2023-12-30T09:47:23.000Z",
+            "0x35b76ffae4b8e3bbc0ec3ff36d75a854060576ce53d6cea3997b1d3f902465fa",
+            ["eth:0x38391eA26F9EeE3ab81DE3C7eE9e168da5149103"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "BASE_DIVISOR": "1000000000000000000",
+        "owner": "eth:0xD76b82204BE75Ab9610B04CF27c4F4a34291D5E6",
+        "paused": false
+      },
+      "implementationNames": {
+        "eth:0xebaB24F13de55789eC1F3fFe99A285754e15F7b9": "TransparentUpgradeableProxy",
+        "eth:0x38391eA26F9EeE3ab81DE3C7eE9e168da5149103": "LiquidityProviders"
+      }
+    },
+    {
+      "address": "eth:0xEEFD474e80B6CAEA43F212D964409c473684E3fe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
+  ],
+  "abis": {
+    "eth:0x13a4cC0750296bB72Eb0006febec306551A4f472": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0x2A5c2568b10A0E826BfA892Cf21BA7218310180b": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x38391eA26F9EeE3ab81DE3C7eE9e168da5149103": [
+      "event CurrentLiquidityChanged(address indexed token, uint256 indexed newValue)",
+      "event EthReceived(address indexed sender, uint256 value)",
+      "event FeeAdded(address indexed tokenAddress, uint256 indexed fee)",
+      "event FeeClaimed(address indexed tokenAddress, uint256 indexed fee, address indexed lp, uint256 sharesBurnt)",
+      "event LiquidityAdded(address indexed tokenAddress, uint256 indexed amount, address indexed lp)",
+      "event LiquidityRemoved(address indexed tokenAddress, uint256 indexed amount, address indexed lp)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event PauserChanged(address indexed previousPauser, address indexed newPauser)",
+      "event TrustedForwarderChanged(address indexed _tf)",
+      "event Unpaused(address account)",
+      "function BASE_DIVISOR() view returns (uint256)",
+      "function addLPFee(address _token, uint256 _amount)",
+      "function addNativeLiquidity() payable",
+      "function addTokenLiquidity(address _token, uint256 _amount)",
+      "function changePauser(address newPauser)",
+      "function claimFee(uint256 _nftId)",
+      "function currentLiquidity(address) view returns (uint256)",
+      "function decreaseCurrentLiquidity(address tokenAddress, uint256 amount)",
+      "function getCurrentLiquidity(address tokenAddress) view returns (uint256)",
+      "function getFeeAccumulatedOnNft(uint256 _nftId) view returns (uint256)",
+      "function getSuppliedLiquidity(uint256 _nftId) view returns (uint256)",
+      "function getSuppliedLiquidityByToken(address tokenAddress) view returns (uint256)",
+      "function getTokenPriceInLPShares(address _baseToken) view returns (uint256)",
+      "function getTotalLPFeeByToken(address tokenAddress) view returns (uint256)",
+      "function getTotalReserveByToken(address tokenAddress) view returns (uint256)",
+      "function increaseCurrentLiquidity(address tokenAddress, uint256 amount)",
+      "function increaseNativeLiquidity(uint256 _nftId) payable",
+      "function increaseTokenLiquidity(uint256 _nftId, uint256 _amount)",
+      "function initialize(address _trustedForwarder, address _lpToken, address _tokenManager, address _pauser)",
+      "function isPauser(address pauser) view returns (bool)",
+      "function isTrustedForwarder(address forwarder) view returns (bool)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function removeLiquidity(uint256 _nftId, uint256 _amount)",
+      "function renounceOwnership()",
+      "function renouncePauser()",
+      "function setCurrentLiquidity(address tokenAddress, uint256 amount)",
+      "function setLiquidityPool(address _liquidityPool)",
+      "function setLpToken(address _lpToken)",
+      "function setTokenManager(address _tokenManager)",
+      "function setTrustedForwarder(address _tf)",
+      "function setWhiteListPeriodManager(address _whiteListPeriodManager)",
+      "function sharesToTokenAmount(uint256 _shares, address _tokenAddress) view returns (uint256)",
+      "function totalLPFees(address) view returns (uint256)",
+      "function totalLiquidity(address) view returns (uint256)",
+      "function totalReserve(address) view returns (uint256)",
+      "function totalSharesMinted(address) view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()"
+    ],
+    "eth:0x4906b8E690EB1E09Fec924422452d1105D59d042": [
+      "event AssetSent(address indexed asset, uint256 indexed amount, uint256 indexed transferredAmount, address target, bytes depositHash, uint256 fromChainId, uint256 lpFee, uint256 transferFee, uint256 gasFee)",
+      "event BaseGasUpdated(uint256 indexed baseGas)",
+      "event Deposit(address indexed from, address indexed tokenAddress, address indexed receiver, uint256 toChainId, uint256 amount, uint256 reward, string tag)",
+      "event DepositAndSwap(address indexed from, address indexed tokenAddress, address indexed receiver, uint256 toChainId, uint256 amount, uint256 reward, string tag, tuple(address tokenAddress, uint256 percentage, uint256 amount, uint8 operation, bytes path)[] swapRequests)",
+      "event EthReceived(address, uint256)",
+      "event GasFeeCalculated(uint256 indexed gasUsed, uint256 indexed gasPrice, uint256 indexed nativeTokenPriceInTransferredToken, uint256 tokenGasBaseFee, uint256 gasFeeInTransferredToken)",
+      "event GasFeeWithdraw(address indexed tokenAddress, address indexed owner, uint256 indexed amount)",
+      "event LiquidityProvidersChanged(address indexed liquidityProvidersAddress)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event PauserChanged(address indexed previousPauser, address indexed newPauser)",
+      "event Received(address indexed from, uint256 indexed amount)",
+      "event SwapAdaptorChanged(string indexed name, address indexed liquidityProvidersAddress)",
+      "event TokenManagerChanged(address indexed tokenManagerAddress)",
+      "event TrustedForwarderChanged(address indexed _tf)",
+      "event Unpaused(address account)",
+      "function baseGas() view returns (uint256)",
+      "function changePauser(address newPauser)",
+      "function checkHashStatus(address tokenAddress, uint256 amount, address receiver, bytes depositHash) view returns (bytes32 hashSendTransaction, bool status)",
+      "function depositAndSwapErc20(address tokenAddress, address receiver, uint256 toChainId, uint256 amount, string tag, tuple(address tokenAddress, uint256 percentage, uint256 amount, uint8 operation, bytes path)[] swapRequest)",
+      "function depositErc20(uint256 toChainId, address tokenAddress, address receiver, uint256 amount, string tag)",
+      "function depositNative(address receiver, uint256 toChainId, string tag) payable",
+      "function depositNativeAndSwap(address receiver, uint256 toChainId, string tag, tuple(address tokenAddress, uint256 percentage, uint256 amount, uint8 operation, bytes path)[] swapRequest) payable",
+      "function gasFeeAccumulated(address, address) view returns (uint256)",
+      "function gasFeeAccumulatedByToken(address) view returns (uint256)",
+      "function getCurrentLiquidity(address tokenAddress) view returns (uint256 currentLiquidity)",
+      "function getExecutorManager() view returns (address)",
+      "function getRewardAmount(uint256 amount, address tokenAddress) view returns (uint256 rewardAmount)",
+      "function getTransferFee(address tokenAddress, uint256 amount) view returns (uint256)",
+      "function incentivePool(address) view returns (uint256)",
+      "function initialize(address _executorManagerAddress, address _pauser, address _trustedForwarder, address _tokenManager, address _liquidityProviders)",
+      "function isPauser(address pauser) view returns (bool)",
+      "function isTrustedForwarder(address forwarder) view returns (bool)",
+      "function liquidityProviders() view returns (address)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function permitAndDepositErc20(address tokenAddress, address receiver, uint256 amount, uint256 toChainId, tuple(uint256 nonce, uint256 expiry, bool allowed, uint8 v, bytes32 r, bytes32 s) permitOptions, string tag)",
+      "function permitEIP2612AndDepositErc20(address tokenAddress, address receiver, uint256 amount, uint256 toChainId, tuple(uint256 nonce, uint256 expiry, bool allowed, uint8 v, bytes32 r, bytes32 s) permitOptions, string tag)",
+      "function processedHash(bytes32) view returns (bool)",
+      "function renounceOwnership()",
+      "function renouncePauser()",
+      "function sendFundsToUser(address tokenAddress, uint256 amount, address receiver, bytes depositHash, uint256 tokenGasPrice, uint256 fromChainId)",
+      "function sendFundsToUserV2(address tokenAddress, uint256 amount, address receiver, bytes depositHash, uint256 nativeTokenPriceInTransferredToken, uint256 fromChainId, uint256 tokenGasBaseFee)",
+      "function setBaseGas(uint128 gas)",
+      "function setCurrentLiquidity(address tokenAddress)",
+      "function setExecutorManager(address _executorManagerAddress)",
+      "function setLiquidityProviders(address _liquidityProviders)",
+      "function setSwapAdaptor(string name, address _swapAdaptor)",
+      "function setTokenManager(address _tokenManager)",
+      "function setTrustedForwarder(address trustedForwarder)",
+      "function swapAdaptorMap(string) view returns (address)",
+      "function swapAndSendFundsToUser(address tokenAddress, uint256 amount, address receiver, bytes depositHash, uint256 nativeTokenPriceInTransferredToken, uint256 tokenGasBaseFee, uint256 fromChainId, uint256 swapGasOverhead, tuple(address tokenAddress, uint256 percentage, uint256 amount, uint8 operation, bytes path)[] swapRequests, string swapAdaptor)",
+      "function tokenManager() view returns (address)",
+      "function transfer(address _tokenAddress, address receiver, uint256 _tokenAmount)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function withdrawErc20GasFee(address tokenAddress)",
+      "function withdrawNativeGasFee()"
+    ],
+    "eth:0x79E559AC5b499A5676e28f0074e29763F6c2A27e": [
+      "event ExcessStateTransferFeePercChanged(address indexed tokenAddress, uint256 indexed fee)",
+      "event FeeChanged(address indexed tokenAddress, uint256 indexed equilibriumFee, uint256 indexed maxFee)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event PauserChanged(address indexed previousPauser, address indexed newPauser)",
+      "event TrustedForwarderChanged(address indexed _tf)",
+      "event Unpaused(address account)",
+      "function addSupportedToken(address tokenAddress, uint256 minCapLimit, uint256 maxCapLimit, uint256 equilibriumFee, uint256 maxFee, uint256 transferOverhead)",
+      "function changeExcessStateFee(address _tokenAddress, uint256 _excessStateFeePer)",
+      "function changeFee(address tokenAddress, uint256 _equilibriumFee, uint256 _maxFee)",
+      "function changePauser(address newPauser)",
+      "function depositConfig(uint256, address) view returns (uint256 min, uint256 max)",
+      "function excessStateTransferFeePerc(address) view returns (uint256)",
+      "function getDepositConfig(uint256 toChainId, address tokenAddress) view returns (tuple(uint256 min, uint256 max))",
+      "function getEquilibriumFee(address tokenAddress) view returns (uint256)",
+      "function getMaxFee(address tokenAddress) view returns (uint256)",
+      "function getTokensInfo(address tokenAddress) view returns (tuple(uint256 transferOverhead, bool supportedToken, uint256 equilibriumFee, uint256 maxFee, tuple(uint256 min, uint256 max) tokenConfig))",
+      "function getTransferConfig(address tokenAddress) view returns (tuple(uint256 min, uint256 max))",
+      "function initialize(address trustedForwarder, address pauser)",
+      "function isPauser(address pauser) view returns (bool)",
+      "function isTrustedForwarder(address forwarder) view returns (bool)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function removeSupportedToken(address tokenAddress)",
+      "function renounceOwnership()",
+      "function renouncePauser()",
+      "function setDepositConfig(uint256[] toChainId, address[] tokenAddresses, tuple(uint256 min, uint256 max)[] tokenConfig)",
+      "function setTokenTransferOverhead(address tokenAddress, uint256 gasOverhead)",
+      "function setTrustedForwarder(address _tf)",
+      "function tokensInfo(address) view returns (uint256 transferOverhead, bool supportedToken, uint256 equilibriumFee, uint256 maxFee, tuple(uint256 min, uint256 max) tokenConfig)",
+      "function transferConfig(address) view returns (uint256 min, uint256 max)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function updateTokenCap(address tokenAddress, uint256 minCapLimit, uint256 maxCapLimit)"
+    ],
+    "eth:0xbd761D917fB77381B4398Bda89C7F0d9A2BD1399": [
+      "event ExecutorAdded(address executor, address owner)",
+      "event ExecutorRemoved(address executor, address owner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function addExecutor(address executorAddress)",
+      "function addExecutors(address[] executorArray)",
+      "function getAllExecutors() view returns (address[])",
+      "function getExecutorStatus(address executor) view returns (bool status)",
+      "function owner() view returns (address)",
+      "function removeExecutor(address executorAddress)",
+      "function removeExecutors(address[] executorArray)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0xebaB24F13de55789eC1F3fFe99A285754e15F7b9": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ]
+  },
+  "usedTemplates": {
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
+  },
+  "usedBlockNumbers": { "ethereum": 20138492 },
+  "permissionsConfigHash": "0x469cafb6e46857f60bbeefa7ed2b8e5e7c4922721f930ac204f8d87e8370b11a"
+}

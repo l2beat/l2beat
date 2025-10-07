@@ -1,0 +1,490 @@
+{
+  "name": "zkswap",
+  "timestamp": 1751872967,
+  "configHash": "0x8b27f6e9814b8367540e6b07ea13fc0df8b891447ee93727eecec6fec1ee1806",
+  "entries": [
+    {
+      "name": "Governance",
+      "address": "eth:0x02ecef526f806f06357659fFD14834fe82Ef4B04",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6",
+        "0xdefeaa4f5c4b5e82fe2f743a1c06665f15c301ff4d76a526669ac3fb869d5869"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1613135194,
+      "sinceBlock": 11841962,
+      "values": {
+        "$admin": "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "$implementation": "eth:0x9d3fdf9b4782753d12f6262bf22B6322608962b8",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "getMaster": "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "getTarget": "eth:0x9d3fdf9b4782753d12f6262bf22B6322608962b8",
+        "networkGovernor": "eth:0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037",
+        "totalTokens": 39,
+        "validators": ["eth:0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3"]
+      },
+      "implementationNames": {
+        "eth:0x02ecef526f806f06357659fFD14834fe82Ef4B04": "Proxy",
+        "eth:0x9d3fdf9b4782753d12f6262bf22B6322608962b8": "Governance"
+      }
+    },
+    {
+      "address": "eth:0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Verifier",
+      "address": "eth:0x27C229937745d697d28FC7853d1bFEA7331Edf56",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1613135194,
+      "sinceBlock": 11841962,
+      "values": {
+        "$admin": "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "$implementation": "eth:0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "getMaster": "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "getTarget": "eth:0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F"
+      },
+      "implementationNames": {
+        "eth:0x27C229937745d697d28FC7853d1bFEA7331Edf56": "Proxy",
+        "eth:0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F": ""
+      }
+    },
+    {
+      "name": "ZkSyncCommitBlock",
+      "address": "eth:0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x423fde4a6b6351d8f7f10a2e073dedc2c2250adb57d53e7cb226a30202e62863"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1613135141,
+      "sinceBlock": 11841959,
+      "values": {
+        "$immutable": true,
+        "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+        "exodusMode": false,
+        "firstPendingWithdrawalIndex": 0,
+        "firstPriorityRequestId": 0,
+        "numberOfPendingWithdrawals": 0,
+        "totalBlocksCommitted": 0,
+        "totalBlocksVerified": 0,
+        "totalCommittedPriorityRequests": 0,
+        "totalOpenPriorityRequests": 0,
+        "totalPairTokens": 0,
+        "upgradePreparationActivationTime": 0,
+        "upgradePreparationActive": false,
+        "zkSyncCommitBlockAddress": "eth:0x0000000000000000000000000000000000000000",
+        "zkSyncExitAddress": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157": "ZkSyncCommitBlock"
+      }
+    },
+    {
+      "name": "PairManager",
+      "address": "eth:0x661121AE41edE3f6FECDed922c59acC19A3ea9B3",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1613135194,
+      "sinceBlock": 11841962,
+      "values": {
+        "$admin": "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "$implementation": "eth:0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "getMaster": "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "getTarget": "eth:0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8"
+      },
+      "implementationNames": {
+        "eth:0x661121AE41edE3f6FECDed922c59acC19A3ea9B3": "Proxy",
+        "eth:0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8": ""
+      }
+    },
+    {
+      "name": "UpgradeGatekeeper",
+      "address": "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x1359a771e28c9c71730920ab6bee9509009c60908022ff865419a483f74f702b"
+      ],
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x02ecef526f806f06357659fFD14834fe82Ef4B04",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x27C229937745d697d28FC7853d1bFEA7331Edf56",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x661121AE41edE3f6FECDed922c59acC19A3ea9B3",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x961369d347EF7A6896BDD39cBE2B89e3911f521f",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1613135194,
+      "sinceBlock": 11841962,
+      "values": {
+        "$immutable": true,
+        "getMaster": "eth:0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037",
+        "mainContract": "eth:0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad",
+        "managedContracts": [
+          "eth:0x02ecef526f806f06357659fFD14834fe82Ef4B04",
+          "eth:0x661121AE41edE3f6FECDed922c59acC19A3ea9B3",
+          "eth:0x27C229937745d697d28FC7853d1bFEA7331Edf56",
+          "eth:0x961369d347EF7A6896BDD39cBE2B89e3911f521f",
+          "eth:0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad"
+        ],
+        "noticePeriodFinishTimestamp": 0,
+        "upgradeStatus": 0,
+        "versionId": 0
+      },
+      "implementationNames": {
+        "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB": "UpgradeGatekeeper"
+      }
+    },
+    {
+      "address": "eth:0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ZkSyncExit",
+      "address": "eth:0x8A1DBf1C32A4f5AfBD70D778F25FBEed7Cc881e5",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1613135171,
+      "sinceBlock": 11841961,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x8A1DBf1C32A4f5AfBD70D778F25FBEed7Cc881e5": ""
+      }
+    },
+    {
+      "name": "ZkSync",
+      "address": "eth:0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6",
+        "0x86daad8532338dd22b2ad525c7955746dab5c88fca7bbd2e1a7fc07f47b2c5e3"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": [
+        "firstPendingWithdrawalIndex",
+        "numberOfPendingWithdrawals",
+        "totalBlocksCommitted",
+        "totalBlocksVerified",
+        "firstPriorityRequestId"
+      ],
+      "sinceTimestamp": 1613135194,
+      "sinceBlock": 11841962,
+      "values": {
+        "$admin": "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "$implementation": "eth:0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+        "exodusMode": false,
+        "firstPendingWithdrawalIndex": 37174,
+        "firstPriorityRequestId": 22930,
+        "getMaster": "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "getTarget": "eth:0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f",
+        "governance": "eth:0x02ecef526f806f06357659fFD14834fe82Ef4B04",
+        "numberOfPendingWithdrawals": 6,
+        "pairManager": "eth:0x661121AE41edE3f6FECDed922c59acC19A3ea9B3",
+        "totalBlocksCommitted": 130744,
+        "totalBlocksVerified": 130744,
+        "totalCommittedPriorityRequests": 0,
+        "totalOpenPriorityRequests": 2,
+        "totalPairTokens": 108,
+        "upgradePreparationActivationTime": 0,
+        "upgradePreparationActive": false,
+        "verifier": "eth:0x27C229937745d697d28FC7853d1bFEA7331Edf56",
+        "verifierExit": "eth:0x961369d347EF7A6896BDD39cBE2B89e3911f521f",
+        "zkSyncCommitBlockAddress": "eth:0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157",
+        "zkSyncExitAddress": "eth:0x8A1DBf1C32A4f5AfBD70D778F25FBEed7Cc881e5"
+      },
+      "implementationNames": {
+        "eth:0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad": "Proxy",
+        "eth:0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f": "ZkSync"
+      }
+    },
+    {
+      "name": "VerifierExit",
+      "address": "eth:0x961369d347EF7A6896BDD39cBE2B89e3911f521f",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1613135194,
+      "sinceBlock": 11841962,
+      "values": {
+        "$admin": "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "$implementation": "eth:0xd12F4D8329584F36aEd67f807F42D9a02bEb9534",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "getMaster": "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "getTarget": "eth:0xd12F4D8329584F36aEd67f807F42D9a02bEb9534"
+      },
+      "implementationNames": {
+        "eth:0x961369d347EF7A6896BDD39cBE2B89e3911f521f": "Proxy",
+        "eth:0xd12F4D8329584F36aEd67f807F42D9a02bEb9534": ""
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x02ecef526f806f06357659fFD14834fe82Ef4B04": [
+      "constructor(address target, bytes targetInitializationParameters)",
+      "function getMaster() view returns (address master)",
+      "function getNoticePeriod() returns (uint256)",
+      "function getTarget() view returns (address target)",
+      "function initialize(bytes) pure",
+      "function isReadyForUpgrade() returns (bool)",
+      "function transferMastership(address _newMaster)",
+      "function upgrade(bytes) pure",
+      "function upgradeCanceled()",
+      "function upgradeFinishes()",
+      "function upgradeNoticePeriodStarted()",
+      "function upgradePreparationStarted()",
+      "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
+    ],
+    "eth:0x27C229937745d697d28FC7853d1bFEA7331Edf56": [
+      "constructor(address target, bytes targetInitializationParameters)",
+      "function getMaster() view returns (address master)",
+      "function getNoticePeriod() returns (uint256)",
+      "function getTarget() view returns (address target)",
+      "function initialize(bytes) pure",
+      "function isReadyForUpgrade() returns (bool)",
+      "function transferMastership(address _newMaster)",
+      "function upgrade(bytes) pure",
+      "function upgradeCanceled()",
+      "function upgradeFinishes()",
+      "function upgradeNoticePeriodStarted()",
+      "function upgradePreparationStarted()",
+      "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
+    ],
+    "eth:0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157": [
+      "event BlockCommit(uint32 indexed blockNumber)",
+      "event BlockVerification(uint32 indexed blockNumber)",
+      "event BlocksRevert(uint32 indexed totalBlocksVerified, uint32 indexed totalBlocksCommitted)",
+      "event CreatePairCommit(uint32 indexed zkSyncBlockId, uint32 indexed accountId, uint16 tokenAId, uint16 tokenBId, uint16 indexed tokenPairId, address pair)",
+      "event DepositCommit(uint32 indexed zkSyncBlockId, uint32 indexed accountId, address owner, uint16 indexed tokenId, uint128 amount)",
+      "event ExodusMode()",
+      "event FactAuth(address indexed sender, uint32 nonce, bytes fact)",
+      "event FullExitCommit(uint32 indexed zkSyncBlockId, uint32 indexed accountId, address owner, uint16 indexed tokenId, uint128 amount)",
+      "event MultiblockVerification(uint32 indexed blockNumberFrom, uint32 indexed blockNumberTo)",
+      "event NewPriorityRequest(address sender, uint64 serialId, uint8 opType, bytes pubData, uint256 expirationBlock)",
+      "event NewToken(address indexed token, uint16 indexed tokenId)",
+      "event OnchainCreatePair(uint16 indexed tokenAId, uint16 indexed tokenBId, uint16 indexed pairId, address pair)",
+      "event OnchainDeposit(address indexed sender, uint16 indexed tokenId, uint128 amount, address indexed owner)",
+      "event OnchainWithdrawal(address indexed owner, uint16 indexed tokenId, uint128 amount)",
+      "event PendingWithdrawalsAdd(uint32 queueStartIndex, uint32 queueEndIndex)",
+      "event PendingWithdrawalsComplete(uint32 queueStartIndex, uint32 queueEndIndex)",
+      "function EMPTY_STRING_KECCAK() view returns (bytes32)",
+      "function authFacts(address, uint32) view returns (bytes32)",
+      "function balancesToWithdraw(bytes22) view returns (uint128 balanceToWithdraw, uint8 gasReserveValue)",
+      "function blocks(uint32) view returns (uint32 committedAtBlock, uint64 priorityOperations, uint32 chunks, bytes32 withdrawalsDataHash, bytes32 commitment, bytes32 stateRoot)",
+      "function commitBlock(uint32 _blockNumber, uint32 _feeAccount, bytes32[] _newBlockInfo, bytes _publicData, bytes _ethWitness, uint32[] _ethWitnessSizes)",
+      "function commitMultiBlock(uint32[] _blockInfo, bytes32[] _newRootAndCommitment, bytes[] _publicDatas, uint32[] _ethWitnessSizes)",
+      "function exited(uint32, uint16) view returns (bool)",
+      "function exodusMode() view returns (bool)",
+      "function firstPendingWithdrawalIndex() view returns (uint32)",
+      "function firstPriorityRequestId() view returns (uint64)",
+      "function getBalanceToWithdraw(address _address, uint16 _tokenId) view returns (uint128)",
+      "function numberOfPendingWithdrawals() view returns (uint32)",
+      "function pendingWithdrawals(uint32) view returns (address to, uint16 tokenId)",
+      "function priorityRequests(uint64) view returns (uint8 opType, bytes pubData, uint256 expirationBlock)",
+      "function revertBlocks(uint32 _maxBlocksToRevert)",
+      "function setAuthPubkeyHash(bytes _pubkey_hash, uint32 _nonce)",
+      "function swap_exited(uint32, uint32) view returns (bool)",
+      "function tokenAddresses(uint16) view returns (address)",
+      "function tokenIds(address) view returns (uint16)",
+      "function totalBlocksCommitted() view returns (uint32)",
+      "function totalBlocksVerified() view returns (uint32)",
+      "function totalCommittedPriorityRequests() view returns (uint64)",
+      "function totalOpenPriorityRequests() view returns (uint64)",
+      "function totalPairTokens() view returns (uint16)",
+      "function triggerExodusIfNeeded() returns (bool)",
+      "function upgradePreparationActivationTime() view returns (uint256)",
+      "function upgradePreparationActive() view returns (bool)",
+      "function validatePairTokenAddress(address _tokenAddr) view returns (uint16)",
+      "function verifyBlock(uint32 _blockNumber, uint256[] _proof, bytes _withdrawalsData)",
+      "function verifyBlocks(uint32 _blockNumberFrom, uint32 _blockNumberTo, uint256[] _recursiveInput, uint256[] _proof, uint256[] _subProofLimbs, bytes[] _withdrawalsData)",
+      "function zkSyncCommitBlockAddress() view returns (address)",
+      "function zkSyncExitAddress() view returns (address)"
+    ],
+    "eth:0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f": [
+      "event BlockCommit(uint32 indexed blockNumber)",
+      "event BlockVerification(uint32 indexed blockNumber)",
+      "event BlocksRevert(uint32 indexed totalBlocksVerified, uint32 indexed totalBlocksCommitted)",
+      "event CreatePairCommit(uint32 indexed zkSyncBlockId, uint32 indexed accountId, uint16 tokenAId, uint16 tokenBId, uint16 indexed tokenPairId, address pair)",
+      "event DepositCommit(uint32 indexed zkSyncBlockId, uint32 indexed accountId, address owner, uint16 indexed tokenId, uint128 amount)",
+      "event ExodusMode()",
+      "event FactAuth(address indexed sender, uint32 nonce, bytes fact)",
+      "event FullExitCommit(uint32 indexed zkSyncBlockId, uint32 indexed accountId, address owner, uint16 indexed tokenId, uint128 amount)",
+      "event MultiblockVerification(uint32 indexed blockNumberFrom, uint32 indexed blockNumberTo)",
+      "event NewPriorityRequest(address sender, uint64 serialId, uint8 opType, bytes pubData, uint256 expirationBlock)",
+      "event NewToken(address indexed token, uint16 indexed tokenId)",
+      "event OnchainCreatePair(uint16 indexed tokenAId, uint16 indexed tokenBId, uint16 indexed pairId, address pair)",
+      "event OnchainDeposit(address indexed sender, uint16 indexed tokenId, uint128 amount, address indexed owner)",
+      "event OnchainWithdrawal(address indexed owner, uint16 indexed tokenId, uint128 amount)",
+      "event PendingWithdrawalsAdd(uint32 queueStartIndex, uint32 queueEndIndex)",
+      "event PendingWithdrawalsComplete(uint32 queueStartIndex, uint32 queueEndIndex)",
+      "function EMPTY_STRING_KECCAK() view returns (bytes32)",
+      "function authFacts(address, uint32) view returns (bytes32)",
+      "function balancesToWithdraw(bytes22) view returns (uint128 balanceToWithdraw, uint8 gasReserveValue)",
+      "function blocks(uint32) view returns (uint32 committedAtBlock, uint64 priorityOperations, uint32 chunks, bytes32 withdrawalsDataHash, bytes32 commitment, bytes32 stateRoot)",
+      "function cancelOutstandingDepositsForExodusMode(uint64 _n)",
+      "function completeWithdrawals(uint32 _n)",
+      "function createETHPair(address _tokenERC20)",
+      "function createPair(address _tokenA, address _tokenB)",
+      "function depositERC20(address _token, uint104 _amount, address _franklinAddr)",
+      "function depositETH(address _franklinAddr) payable",
+      "function exited(uint32, uint16) view returns (bool)",
+      "function exodusMode() view returns (bool)",
+      "function firstPendingWithdrawalIndex() view returns (uint32)",
+      "function firstPriorityRequestId() view returns (uint64)",
+      "function fullExit(uint32 _accountId, address _token)",
+      "function getBalanceToWithdraw(address _address, uint16 _tokenId) view returns (uint128)",
+      "function getNoticePeriod() returns (uint256)",
+      "function initialize(bytes initializationParameters)",
+      "function isReadyForUpgrade() returns (bool)",
+      "function numberOfPendingWithdrawals() view returns (uint32)",
+      "function pendingWithdrawals(uint32) view returns (address to, uint16 tokenId)",
+      "function priorityRequests(uint64) view returns (uint8 opType, bytes pubData, uint256 expirationBlock)",
+      "function setGenesisRootAndAddresses(bytes32 _genesisRoot, address _zkSyncCommitBlockAddress, address _zkSyncExitAddress)",
+      "function swap_exited(uint32, uint32) view returns (bool)",
+      "function tokenAddresses(uint16) view returns (address)",
+      "function tokenIds(address) view returns (uint16)",
+      "function totalBlocksCommitted() view returns (uint32)",
+      "function totalBlocksVerified() view returns (uint32)",
+      "function totalCommittedPriorityRequests() view returns (uint64)",
+      "function totalOpenPriorityRequests() view returns (uint64)",
+      "function totalPairTokens() view returns (uint16)",
+      "function upgrade(bytes upgradeParameters)",
+      "function upgradeCanceled()",
+      "function upgradeFinishes()",
+      "function upgradeNoticePeriodStarted()",
+      "function upgradePreparationActivationTime() view returns (uint256)",
+      "function upgradePreparationActive() view returns (bool)",
+      "function upgradePreparationStarted()",
+      "function validatePairTokenAddress(address _tokenAddr) view returns (uint16)",
+      "function withdrawERC20(address _token, uint128 _amount)",
+      "function withdrawERC20Guarded(address _token, address _to, uint128 _amount, uint128 _maxAmount) returns (uint128 withdrawnAmount)",
+      "function withdrawETH(uint128 _amount)",
+      "function zkSyncCommitBlockAddress() view returns (address)",
+      "function zkSyncExitAddress() view returns (address)"
+    ],
+    "eth:0x661121AE41edE3f6FECDed922c59acC19A3ea9B3": [
+      "constructor(address target, bytes targetInitializationParameters)",
+      "function getMaster() view returns (address master)",
+      "function getNoticePeriod() returns (uint256)",
+      "function getTarget() view returns (address target)",
+      "function initialize(bytes) pure",
+      "function isReadyForUpgrade() returns (bool)",
+      "function transferMastership(address _newMaster)",
+      "function upgrade(bytes) pure",
+      "function upgradeCanceled()",
+      "function upgradeFinishes()",
+      "function upgradeNoticePeriodStarted()",
+      "function upgradePreparationStarted()",
+      "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
+    ],
+    "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB": [
+      "constructor(address _mainContract)",
+      "event NewUpgradable(uint256 indexed versionId, address indexed upgradeable)",
+      "event NoticePeriodStart(uint256 indexed versionId, address[] newTargets, uint256 noticePeriod)",
+      "event PreparationStart(uint256 indexed versionId)",
+      "event UpgradeCancel(uint256 indexed versionId)",
+      "event UpgradeComplete(uint256 indexed versionId, address[] newTargets)",
+      "function addUpgradeable(address addr)",
+      "function cancelUpgrade()",
+      "function finishUpgrade(bytes[] targetsUpgradeParameters)",
+      "function getMaster() view returns (address master)",
+      "function mainContract() view returns (address)",
+      "function managedContracts(uint256) view returns (address)",
+      "function nextTargets(uint256) view returns (address)",
+      "function noticePeriodFinishTimestamp() view returns (uint256)",
+      "function startPreparation() returns (bool)",
+      "function startUpgrade(address[] newTargets)",
+      "function transferMastership(address _newMaster)",
+      "function upgradeStatus() view returns (uint8)",
+      "function versionId() view returns (uint256)"
+    ],
+    "eth:0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad": [
+      "constructor(address target, bytes targetInitializationParameters)",
+      "function getMaster() view returns (address master)",
+      "function getNoticePeriod() returns (uint256)",
+      "function getTarget() view returns (address target)",
+      "function initialize(bytes) pure",
+      "function isReadyForUpgrade() returns (bool)",
+      "function transferMastership(address _newMaster)",
+      "function upgrade(bytes) pure",
+      "function upgradeCanceled()",
+      "function upgradeFinishes()",
+      "function upgradeNoticePeriodStarted()",
+      "function upgradePreparationStarted()",
+      "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
+    ],
+    "eth:0x961369d347EF7A6896BDD39cBE2B89e3911f521f": [
+      "constructor(address target, bytes targetInitializationParameters)",
+      "function getMaster() view returns (address master)",
+      "function getNoticePeriod() returns (uint256)",
+      "function getTarget() view returns (address target)",
+      "function initialize(bytes) pure",
+      "function isReadyForUpgrade() returns (bool)",
+      "function transferMastership(address _newMaster)",
+      "function upgrade(bytes) pure",
+      "function upgradeCanceled()",
+      "function upgradeFinishes()",
+      "function upgradeNoticePeriodStarted()",
+      "function upgradePreparationStarted()",
+      "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
+    ],
+    "eth:0x9d3fdf9b4782753d12f6262bf22B6322608962b8": [
+      "constructor()",
+      "event NewGovernor(address newGovernor)",
+      "event NewToken(address indexed token, uint16 indexed tokenId)",
+      "event ValidatorStatusUpdate(address indexed validatorAddress, bool isActive)",
+      "function addToken(address _token)",
+      "function changeGovernor(address _newGovernor)",
+      "function getTokenAddress(uint16 _tokenId) view returns (address)",
+      "function initialize(bytes initializationParameters)",
+      "function isValidTokenId(uint16 _tokenId) view returns (bool)",
+      "function networkGovernor() view returns (address)",
+      "function requireActiveValidator(address _address) view",
+      "function requireGovernor(address _address) view",
+      "function setValidator(address _validator, bool _active)",
+      "function tokenAddresses(uint16) view returns (address)",
+      "function tokenIds(address) view returns (uint16)",
+      "function totalTokens() view returns (uint16)",
+      "function upgrade(bytes upgradeParameters)",
+      "function validateTokenAddress(address _tokenAddr) view returns (uint16)",
+      "function validators(address) view returns (bool)"
+    ]
+  },
+  "usedTemplates": {},
+  "usedBlockNumbers": { "ethereum": 22865800 },
+  "permissionsConfigHash": "0x616d6a39aa7fee1f83459e31c8d98a8060971fd356d0ef44575777396baeb8d7"
+}

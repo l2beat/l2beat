@@ -1,0 +1,6 @@
+{
+  "term": "Algebraic intermediate representation",
+  "match": ["AIR"],
+  "definition": "Algebraic intermediate representation (AIR) is a type of arithmetization commonly used in zkVMs. It represents a trace of zkVM state transitions with low degree polynomial constraints that enforce the correct relation between previous and current states of the computation. Several variations of AIR are used in practice, with slight differences among them.",
+  "isSpicy": false
+}

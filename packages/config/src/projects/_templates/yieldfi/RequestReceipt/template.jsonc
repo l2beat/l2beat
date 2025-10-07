@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": ["orders", "readOrder", "tokenByIndex"],
+  "ignoreInWatchMode": ["counter", "totalSupply"]
+}

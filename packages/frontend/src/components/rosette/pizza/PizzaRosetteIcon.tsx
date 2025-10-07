@@ -6,12 +6,14 @@ import { cn } from '~/utils/cn'
 import { sentimentToFillColor } from '~/utils/sentiment'
 import { useRosetteTooltipContext } from '../RosetteTooltipContext'
 import type { RosetteValue } from '../types'
+import { PizzaElementLink } from './PizzaElementLink'
 
 interface Props {
   values: RosetteValue[]
   isUnderReview?: boolean
   className?: string
   background?: 'header' | 'surface' | false
+  disableSectionLinking?: boolean
 }
 
 export function PizzaRosetteIcon({
@@ -19,6 +21,7 @@ export function PizzaRosetteIcon({
   className,
   isUnderReview,
   background = 'header',
+  disableSectionLinking,
 }: Props) {
   const context = useRosetteTooltipContext()
   const svgRef = useRef(null)
@@ -76,65 +79,100 @@ export function PizzaRosetteIcon({
           />
         )}
         <g clipPath="url(#inner-clip)">
-          <path
-            d="M80.1197 98.1908C82.7076 97.3794 85.3357 99.3241 85.3164 102.036L84.8545 166.765C84.8377 169.125 82.8003 170.931 80.4746 170.529C72.5287 169.154 55.2512 165.197 41.8799 155.303C27.3325 144.539 19.099 129.668 15.8256 122.729C14.8485 120.658 15.9867 118.3 18.1718 117.615L80.1197 98.1908Z"
-            className={cn(
-              'transition-opacity',
-              sentimentToFillColor(first.sentiment ?? 'neutral'),
-              isUnderReview && sentimentToFillColor('UnderReview'),
-              selectedRisk && selectedRisk.name !== first.name && 'opacity-20',
-            )}
-            onMouseEnter={() => selectRisk(first)}
-            onTouchStart={() => selectRisk(first)}
-          />
+          <PizzaElementLink
+            elementValue={first}
+            disableSectionLinking={disableSectionLinking}
+          >
+            <path
+              d="M80.1197 98.1908C82.7076 97.3794 85.3357 99.3241 85.3164 102.036L84.8545 166.765C84.8377 169.125 82.8003 170.931 80.4746 170.529C72.5287 169.154 55.2512 165.197 41.8799 155.303C27.3325 144.539 19.099 129.668 15.8256 122.729C14.8485 120.658 15.9867 118.3 18.1718 117.615L80.1197 98.1908Z"
+              className={cn(
+                'transition-opacity',
+                sentimentToFillColor(first.sentiment ?? 'neutral'),
+                isUnderReview && sentimentToFillColor('UnderReview'),
+                selectedRisk &&
+                  selectedRisk.name !== first.name &&
+                  'opacity-20',
+              )}
+              onMouseEnter={() => selectRisk(first)}
+              onTouchStart={() => selectRisk(first)}
+            />
+          </PizzaElementLink>
 
-          <path
-            d="M79.6957 83.0363C81.2478 85.2605 80.1834 88.3517 77.591 89.1488L15.1534 108.347C12.8974 109.04 10.5622 107.639 10.2458 105.3C9.15861 97.2612 7.71374 79.4261 13.1797 63.5516C19.1266 46.2807 30.9507 33.8483 36.6192 28.6114C38.3013 27.0574 40.8936 27.4331 42.2042 29.3111L79.6957 83.0363Z"
-            className={cn(
-              'transition-opacity',
-              sentimentToFillColor(second.sentiment ?? 'neutral'),
-              isUnderReview && sentimentToFillColor('UnderReview'),
-              selectedRisk && selectedRisk.name !== second.name && 'opacity-20',
-            )}
-            onMouseEnter={() => selectRisk(second)}
-            onTouchStart={() => selectRisk(second)}
-          />
+          <PizzaElementLink
+            elementValue={second}
+            disableSectionLinking={disableSectionLinking}
+          >
+            <path
+              d="M79.6957 83.0363C81.2478 85.2605 80.1834 88.3517 77.591 89.1488L15.1534 108.347C12.8974 109.04 10.5622 107.639 10.2458 105.3C9.15861 97.2612 7.71374 79.4261 13.1797 63.5516C19.1266 46.2807 30.9507 33.8483 36.6192 28.6114C38.3013 27.0574 40.8936 27.4331 42.2042 29.3111L79.6957 83.0363Z"
+              className={cn(
+                'transition-opacity',
+                sentimentToFillColor(second.sentiment ?? 'neutral'),
+                isUnderReview && sentimentToFillColor('UnderReview'),
+                selectedRisk &&
+                  selectedRisk.name !== second.name &&
+                  'opacity-20',
+              )}
+              onMouseEnter={() => selectRisk(second)}
+              onTouchStart={() => selectRisk(second)}
+            />
+          </PizzaElementLink>
 
-          <path
-            d="M93.3478 76.656C91.7501 78.8477 88.4808 78.8477 86.8831 76.656L48.7521 24.3486C47.3618 22.4413 47.9253 19.7777 50.0343 18.7178C57.2394 15.0966 73.4815 8.00005 90.1154 8.00005C108.212 8.00005 123.676 15.0564 130.435 18.6869C132.452 19.7706 132.94 22.3436 131.591 24.1941L93.3478 76.656Z"
-            className={cn(
-              'transition-opacity',
-              sentimentToFillColor(third.sentiment ?? 'neutral'),
-              isUnderReview && sentimentToFillColor('UnderReview'),
-              selectedRisk && selectedRisk.name !== third.name && 'opacity-20',
-            )}
-            onMouseEnter={() => selectRisk(third)}
-            onTouchStart={() => selectRisk(third)}
-          />
+          <PizzaElementLink
+            elementValue={third}
+            disableSectionLinking={disableSectionLinking}
+          >
+            <path
+              d="M93.3478 76.656C91.7501 78.8477 88.4808 78.8477 86.8831 76.656L48.7521 24.3486C47.3618 22.4413 47.9253 19.7777 50.0343 18.7178C57.2394 15.0966 73.4815 8.00005 90.1154 8.00005C108.212 8.00005 123.676 15.0564 130.435 18.6869C132.452 19.7706 132.94 22.3436 131.591 24.1941L93.3478 76.656Z"
+              className={cn(
+                'transition-opacity',
+                sentimentToFillColor(third.sentiment ?? 'neutral'),
+                isUnderReview && sentimentToFillColor('UnderReview'),
+                selectedRisk &&
+                  selectedRisk.name !== third.name &&
+                  'opacity-20',
+              )}
+              onMouseEnter={() => selectRisk(third)}
+              onTouchStart={() => selectRisk(third)}
+            />
+          </PizzaElementLink>
 
-          <path
-            d="M102.815 89.0557C100.252 88.1686 99.2962 85.0421 100.925 82.8735L139.798 31.1155C141.216 29.2282 143.928 28.9884 145.558 30.6953C151.128 36.5269 162.663 49.9844 167.526 65.8915C172.817 83.1978 170.59 100.049 169.094 107.574C168.648 109.82 166.33 111.039 164.166 110.29L102.815 89.0557Z"
-            className={cn(
-              'transition-opacity',
-              sentimentToFillColor(fourth.sentiment ?? 'neutral'),
-              isUnderReview && sentimentToFillColor('UnderReview'),
-              selectedRisk && selectedRisk.name !== fourth.name && 'opacity-20',
-            )}
-            onMouseEnter={() => selectRisk(fourth)}
-            onTouchStart={() => selectRisk(fourth)}
-          />
+          <PizzaElementLink
+            elementValue={fourth}
+            disableSectionLinking={disableSectionLinking}
+          >
+            <path
+              d="M102.815 89.0557C100.252 88.1686 99.2962 85.0421 100.925 82.8735L139.798 31.1155C141.216 29.2282 143.928 28.9884 145.558 30.6953C151.128 36.5269 162.663 49.9844 167.526 65.8915C172.817 83.1978 170.59 100.049 169.094 107.574C168.648 109.82 166.33 111.039 164.166 110.29L102.815 89.0557Z"
+              className={cn(
+                'transition-opacity',
+                sentimentToFillColor(fourth.sentiment ?? 'neutral'),
+                isUnderReview && sentimentToFillColor('UnderReview'),
+                selectedRisk &&
+                  selectedRisk.name !== fourth.name &&
+                  'opacity-20',
+              )}
+              onMouseEnter={() => selectRisk(fourth)}
+              onTouchStart={() => selectRisk(fourth)}
+            />
+          </PizzaElementLink>
 
-          <path
-            d="M95.8885 101.938C95.9165 99.2258 98.5781 97.3273 101.151 98.1838L162.57 118.625C164.809 119.371 165.897 121.866 164.796 123.954C161.033 131.086 151.931 146.295 138.389 155.955C123.656 166.464 106.969 169.699 99.3581 170.668C97.0864 170.957 95.195 169.146 95.2186 166.856L95.8885 101.938Z"
-            className={cn(
-              'transition-opacity',
-              sentimentToFillColor(fifth.sentiment ?? 'neutral'),
-              isUnderReview && sentimentToFillColor('UnderReview'),
-              selectedRisk && selectedRisk.name !== fifth.name && 'opacity-20',
-            )}
-            onMouseEnter={() => selectRisk(fifth)}
-            onTouchStart={() => selectRisk(fifth)}
-          />
+          <PizzaElementLink
+            elementValue={fifth}
+            disableSectionLinking={disableSectionLinking}
+          >
+            <path
+              d="M95.8885 101.938C95.9165 99.2258 98.5781 97.3273 101.151 98.1838L162.57 118.625C164.809 119.371 165.897 121.866 164.796 123.954C161.033 131.086 151.931 146.295 138.389 155.955C123.656 166.464 106.969 169.699 99.3581 170.668C97.0864 170.957 95.195 169.146 95.2186 166.856L95.8885 101.938Z"
+              className={cn(
+                'transition-opacity',
+                sentimentToFillColor(fifth.sentiment ?? 'neutral'),
+                isUnderReview && sentimentToFillColor('UnderReview'),
+                selectedRisk &&
+                  selectedRisk.name !== fifth.name &&
+                  'opacity-20',
+              )}
+              onMouseEnter={() => selectRisk(fifth)}
+              onTouchStart={() => selectRisk(fifth)}
+            />
+          </PizzaElementLink>
 
           {isUnderReview ? (
             <>

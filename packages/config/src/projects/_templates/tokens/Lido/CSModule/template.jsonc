@@ -5,7 +5,12 @@
     "getNodeOperatorIsActive",
     "getNodeOperatorNonWithdrawnKeys",
     "getNodeOperatorSummary",
-    "getNonce"
+    "getNonce",
+    "depositQueuePointers",
+    "exitDeadlineThreshold",
+    "getNodeOperatorManagementProperties",
+    "getNodeOperatorOwner",
+    "getNodeOperatorTotalDepositedKeys"
   ],
   "ignoreInWatchMode": [
     "getActiveNodeOperatorsCount",

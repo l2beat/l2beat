@@ -1,25 +1,25 @@
-import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { diffDiscovery } from './diffDiscovery'
 import type { EntryParameters } from './types'
 
 describe(diffDiscovery.name, () => {
-  const ADDRESS_A = EthereumAddress.random()
-  const ADDRESS_B = EthereumAddress.random()
-  const ADDRESS_C = EthereumAddress.random()
-  const ADDRESS_D = EthereumAddress.random()
-  const ADDRESS_E = EthereumAddress.random()
+  const ADDRESS_A = ChainSpecificAddress.random()
+  const ADDRESS_B = ChainSpecificAddress.random()
+  const ADDRESS_C = ChainSpecificAddress.random()
+  const ADDRESS_D = ChainSpecificAddress.random()
+  const ADDRESS_E = ChainSpecificAddress.random()
 
-  const ADMIN = EthereumAddress.random()
-  const IMPLEMENTATION = EthereumAddress.random()
+  const ADMIN = ChainSpecificAddress.random()
+  const IMPLEMENTATION = ChainSpecificAddress.random()
   it('finds changes, deleted and created contracts', () => {
     const committed: EntryParameters[] = [
       //finds changes
       {
         type: 'Contract',
         name: 'A',
-        address: ChainSpecificAddress.from('eth', ADDRESS_A),
+        address: ADDRESS_A,
         proxyType: 'EIP1967 proxy',
         ignoreInWatchMode: ['B'],
         values: {
@@ -34,7 +34,7 @@ describe(diffDiscovery.name, () => {
       {
         type: 'Contract',
         name: 'B',
-        address: ChainSpecificAddress.from('eth', ADDRESS_B),
+        address: ADDRESS_B,
         proxyType: 'EIP1967 proxy',
         values: {
           $admin: ADMIN.toString(),
@@ -45,7 +45,7 @@ describe(diffDiscovery.name, () => {
       {
         type: 'Contract',
         name: 'D',
-        address: ChainSpecificAddress.from('eth', ADDRESS_D),
+        address: ADDRESS_D,
         proxyType: 'EIP1967 proxy',
         values: {
           $admin: ADMIN.toString(),
@@ -55,7 +55,7 @@ describe(diffDiscovery.name, () => {
       {
         type: 'Contract',
         name: 'E',
-        address: ChainSpecificAddress.from('eth', ADDRESS_E),
+        address: ADDRESS_E,
         unverified: true,
         proxyType: 'EIP1967 proxy',
         values: {
@@ -68,7 +68,7 @@ describe(diffDiscovery.name, () => {
       {
         type: 'Contract',
         name: 'A',
-        address: ChainSpecificAddress.from('eth', ADDRESS_A),
+        address: ADDRESS_A,
         proxyType: 'EIP1967 proxy',
         ignoreInWatchMode: ['B'],
         values: {
@@ -82,7 +82,7 @@ describe(diffDiscovery.name, () => {
       {
         type: 'Contract',
         name: 'C',
-        address: ChainSpecificAddress.from('eth', ADDRESS_C),
+        address: ADDRESS_C,
         proxyType: 'EIP1967 proxy',
         values: {
           $admin: ADMIN.toString(),
@@ -92,7 +92,7 @@ describe(diffDiscovery.name, () => {
       {
         type: 'Contract',
         name: 'D',
-        address: ChainSpecificAddress.from('eth', ADDRESS_D),
+        address: ADDRESS_D,
         proxyType: 'EIP1967 proxy',
         values: {
           $admin: ADMIN.toString(),
@@ -102,7 +102,7 @@ describe(diffDiscovery.name, () => {
       {
         type: 'Contract',
         name: 'E',
-        address: ChainSpecificAddress.from('eth', ADDRESS_E),
+        address: ADDRESS_E,
         unverified: true,
         proxyType: 'EIP1967 proxy',
         values: {
@@ -153,7 +153,7 @@ describe(diffDiscovery.name, () => {
       {
         type: 'Contract',
         name: 'A',
-        address: ChainSpecificAddress.from('eth', ADDRESS_A),
+        address: ADDRESS_A,
         proxyType: 'EIP1967 proxy',
         ignoreInWatchMode: ['B'],
         description: 'hello world',
@@ -181,7 +181,7 @@ describe(diffDiscovery.name, () => {
       {
         type: 'Contract',
         name: 'A',
-        address: ChainSpecificAddress.from('eth', ADDRESS_A),
+        address: ADDRESS_A,
         proxyType: 'EIP1967 proxy',
         ignoreInWatchMode: ['B'],
         description: 'hello world',
@@ -207,7 +207,7 @@ describe(diffDiscovery.name, () => {
       {
         type: 'Contract',
         name: 'A',
-        address: ChainSpecificAddress.from('eth', ADDRESS_A),
+        address: ADDRESS_A,
         proxyType: 'EIP1967 proxy',
         ignoreInWatchMode: ['B'],
         description: 'hello world',
@@ -218,7 +218,7 @@ describe(diffDiscovery.name, () => {
       {
         type: 'Contract',
         name: 'A',
-        address: ChainSpecificAddress.from('eth', ADDRESS_A),
+        address: ADDRESS_A,
         proxyType: 'EIP1967 proxy',
         ignoreInWatchMode: ['B'],
         description: 'hello sailor',

@@ -10,6 +10,7 @@ async function main() {
     daLayerProjects,
     daBridgeProjects,
     zkCatalogProjects,
+    zkCatalogV1Projects,
   ] = await Promise.all([
     ps.getProjects({
       where: ['isScaling'],
@@ -26,11 +27,15 @@ async function main() {
       select: ['daBridge'],
     }),
     ps.getProjects({
+      where: ['zkCatalogInfo'],
+    }),
+    ps.getProjects({
       where: ['isZkCatalog'],
       whereNot: ['archivedAt'],
     }),
   ])
-  const publications = getCollection('publications')
+  const governancePublications = getCollection('governance-publications')
+  const monthlyUpdates = getCollection('monthly-updates')
 
   const pages = compact([
     '/scaling/summary',
@@ -67,13 +72,16 @@ async function main() {
       ].filter(Boolean)
     }),
     '/zk-catalog',
-    '/zk-catalog/v1',
     ...zkCatalogProjects.map((p) => `/zk-catalog/${p.slug}`),
+    '/zk-catalog/v1',
+    ...zkCatalogV1Projects.map((p) => `/zk-catalog/v1/${p.slug}`),
     '/about-us',
     '/donate',
     '/governance',
-    '/governance/publications',
-    ...publications.map((p) => `/governance/publications/${p.id}`),
+    '/publications',
+    ...[...governancePublications, ...monthlyUpdates].map(
+      (p) => `/publications/${p.id}`,
+    ),
     '/terms-of-service',
     '/glossary',
     '/faq',

@@ -18,7 +18,9 @@ export const soonbase: ScalingProject = underReviewL2({
     links: {
       websites: ['https://soo.network/'],
       bridges: ['https://bridge.soo.network/home?chain=2'],
+      documentation: ['https://docs.soo.network/introduction/what-is-soon'],
       explorers: ['https://explorer.soonbase.soo.network'],
+      repositories: ['https://github.com/soonlabs'],
       socialMedia: [
         'https://x.com/soon_svm',
         'https://discord.gg/soon-svm',
@@ -34,7 +36,7 @@ export const soonbase: ScalingProject = underReviewL2({
       {
         type: 'svm-rpc',
         url: 'https://rpc.soonbase.soo.network/rpc',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

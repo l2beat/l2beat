@@ -1,0 +1,177 @@
+{
+  "name": "honeypot",
+  "timestamp": 1725019175,
+  "configHash": "0x01184c754ce59f8fb4275e500caa360d725ed2ee312c26bd0a4ba5c058197529",
+  "entries": [
+    {
+      "name": "Honeypot",
+      "address": "eth:0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x4ea587588e6035764e827917418aee9c41a353454a7a13fe807ca56724350d47"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1694553335,
+      "sinceBlock": 18122866,
+      "values": {
+        "$immutable": true,
+        "getConsensus": "eth:0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f",
+        "getTemplateHash": "0x64523866b6437fd593d8c0c65f88f59717f2eefa81422cc4921214423c819bf2",
+        "owner": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366": "CartesiDApp"
+      }
+    },
+    {
+      "name": "History",
+      "address": "eth:0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x10336484f22cf6f3d30e974fe43a4aa644807bee582c7ee3c03b116024554eaa"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1694457347,
+      "sinceBlock": 18114934,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f"
+      },
+      "implementationNames": {
+        "eth:0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9": "History"
+      }
+    },
+    {
+      "name": "InputBox",
+      "address": "eth:0x59b22D57D4f067708AB0c00552767405926dc768",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x3bfaa3fe125375dfb9181df0c144cda2b17aa368e57292e88d6258c4aafe51ed"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1690464923,
+      "sinceBlock": 17784733,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x59b22D57D4f067708AB0c00552767405926dc768": "InputBox"
+      }
+    },
+    {
+      "address": "eth:0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ERC20Portal",
+      "address": "eth:0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x0cb29769a693a89712c9c05a29f52a6e610ed38585db5d66f1fc56118e39493d"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1690464947,
+      "sinceBlock": 17784735,
+      "values": {
+        "$immutable": true,
+        "getInputBox": "eth:0x59b22D57D4f067708AB0c00552767405926dc768"
+      },
+      "implementationNames": {
+        "eth:0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB": "ERC20Portal"
+      }
+    },
+    {
+      "name": "Authority",
+      "address": "eth:0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xe4cf627ec9b7ed3b6b18711555d50a7002525d34e84a6242a2b1bd41aedb2f11"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1694456915,
+      "sinceBlock": 18114898,
+      "values": {
+        "$immutable": true,
+        "getHistory": "eth:0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9",
+        "owner": "eth:0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861"
+      },
+      "implementationNames": {
+        "eth:0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f": "Authority"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366": [
+      "constructor(address _consensus, address _owner, bytes32 _templateHash)",
+      "error EtherTransferFailed()",
+      "error IncorrectEpochHash()",
+      "error IncorrectOutputHashesRootHash()",
+      "error IncorrectOutputsEpochRootHash()",
+      "error InputIndexOutOfClaimBounds()",
+      "error OnlyDApp()",
+      "error VoucherReexecutionNotAllowed()",
+      "event NewConsensus(address newConsensus)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event VoucherExecuted(uint256 voucherId)",
+      "function executeVoucher(address _destination, bytes _payload, tuple(tuple(uint64 inputIndexWithinEpoch, uint64 outputIndexWithinInput, bytes32 outputHashesRootHash, bytes32 vouchersEpochRootHash, bytes32 noticesEpochRootHash, bytes32 machineStateHash, bytes32[] outputHashInOutputHashesSiblings, bytes32[] outputHashesInEpochSiblings) validity, bytes context) _proof) returns (bool)",
+      "function getConsensus() view returns (address)",
+      "function getTemplateHash() view returns (bytes32)",
+      "function migrateToConsensus(address _newConsensus)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function validateNotice(bytes _notice, tuple(tuple(uint64 inputIndexWithinEpoch, uint64 outputIndexWithinInput, bytes32 outputHashesRootHash, bytes32 vouchersEpochRootHash, bytes32 noticesEpochRootHash, bytes32 machineStateHash, bytes32[] outputHashInOutputHashesSiblings, bytes32[] outputHashesInEpochSiblings) validity, bytes context) _proof) view returns (bool)",
+      "function wasVoucherExecuted(uint256 _inputIndex, uint256 _outputIndexWithinInput) view returns (bool)",
+      "function withdrawEther(address _receiver, uint256 _value)"
+    ],
+    "eth:0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9": [
+      "constructor(address _owner)",
+      "error InvalidClaimIndex()",
+      "error InvalidInputIndices()",
+      "error UnclaimedInputs()",
+      "event NewClaimToHistory(address indexed dapp, tuple(bytes32 epochHash, uint128 firstIndex, uint128 lastIndex) claim)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function getClaim(address _dapp, bytes _proofContext) view returns (bytes32, uint256, uint256)",
+      "function migrateToConsensus(address _consensus)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function submitClaim(bytes _claimData)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0x59b22D57D4f067708AB0c00552767405926dc768": [
+      "error InputSizeExceedsLimit()",
+      "event InputAdded(address indexed dapp, uint256 indexed inputIndex, address sender, bytes input)",
+      "function addInput(address _dapp, bytes _input) returns (bytes32)",
+      "function getInputHash(address _dapp, uint256 _index) view returns (bytes32)",
+      "function getNumberOfInputs(address _dapp) view returns (uint256)"
+    ],
+    "eth:0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB": [
+      "constructor(address _inputBox)",
+      "function depositERC20Tokens(address _token, address _dapp, uint256 _amount, bytes _execLayerData)",
+      "function getInputBox() view returns (address)"
+    ],
+    "eth:0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f": [
+      "constructor(address _owner)",
+      "error AuthorityWithdrawalFailed()",
+      "event ApplicationJoined(address application)",
+      "event NewHistory(address history)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function getClaim(address _dapp, bytes _proofContext) view returns (bytes32, uint256, uint256)",
+      "function getHistory() view returns (address)",
+      "function join()",
+      "function migrateHistoryToConsensus(address _consensus)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function setHistory(address _history)",
+      "function submitClaim(bytes _claimData)",
+      "function transferOwnership(address newOwner)",
+      "function withdrawERC20Tokens(address _token, address _recipient, uint256 _amount)"
+    ]
+  },
+  "usedTemplates": {},
+  "usedBlockNumbers": { "ethereum": 20641250 },
+  "permissionsConfigHash": "0x1d6d89492649898cf90bdb3845ac69c7934e6af50be7d0fe3b715cfb5da42489"
+}

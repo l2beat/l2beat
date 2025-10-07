@@ -1,74 +1,67 @@
 {
   "MantleTokenProxyAdmin": {
     "hash": "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f",
-    "address": "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d",
-    "chain": "ethereum",
+    "address": "eth:0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d",
     "blockNumber": 22188285
   },
   "ProxyAdmin": {
     "hash": "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512",
-    "address": "0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019",
-    "chain": "ethereum",
+    "address": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019",
     "blockNumber": 22188285
   },
   "ProxyAdmin_Blast": {
     "hash": "0xb6eaecb36b3255721e6a4b99c79ab661b8c1691f6d6e630956458b67ae012104",
-    "address": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
-    "chain": "ethereum",
+    "address": "eth:0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
     "blockNumber": 22188285
   },
   "ProxyAdmin_arbitrum": {
     "hash": "0x579c6df39480618101e39d5b997df14c347d7f8a880df6cf0e1ae526771a0444",
-    "address": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
-    "chain": "ethereum",
+    "address": "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
     "blockNumber": 22188285
   },
   "ProxyAdmin_fraxtal": {
     "hash": "0x1d29007e3a6ea19186d632b4d79251aa21baae9b59fbc0b4c88ff3958b5c2730",
-    "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-    "chain": "ethereum",
+    "address": "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
     "blockNumber": 22188285
   },
   "ProxyAdmin_galxegravity": {
     "hash": "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490",
-    "address": "0x80622fe04c5e1c3fbb3A9c62996dB27B53E9F77b",
-    "chain": "ethereum",
+    "address": "eth:0x80622fe04c5e1c3fbb3A9c62996dB27B53E9F77b",
     "blockNumber": 22188285
   },
   "ProxyAdmin_kroma": {
     "hash": "0x82e048446e41433c990a710c946cb691f4cde26f99023a0afcfda2d22e1f30d0",
-    "address": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
-    "chain": "ethereum",
+    "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
     "blockNumber": 22188285
   },
   "ProxyAdmin_mantle": {
     "hash": "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218",
-    "address": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678",
-    "chain": "ethereum",
+    "address": "eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678",
     "blockNumber": 22188285
   },
   "ProxyAdmin_zircuit": {
     "hash": "0x9097b28161923c9e2353a796f1580ecf8bf3415bae9a69f49102bdf7a1b94da8",
-    "address": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
-    "chain": "ethereum",
+    "address": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
     "blockNumber": 22188285
   },
   "ProxyAdmin_zkstack": {
     "hash": "0x04a556db1ea1a651e1174247090ad4c7105b455feab1a9672d5c4cd113b9ff0b",
-    "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
-    "chain": "ethereum",
+    "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
     "blockNumber": 22188285
   },
   "ProxyAdmin_zkstack_puh": {
     "hash": "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074",
-    "address": "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e",
-    "chain": "ethereum",
+    "address": "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e",
     "blockNumber": 22188285
   },
   "StrategiesProxyAdmin_edgeless": {
     "hash": "0x1c9416031605fbda74b5da95a290e00995eaed2f6f6ba85ff2681131efe940a0",
-    "address": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b",
-    "chain": "ethereum",
+    "address": "eth:0x8E339115b295DeD49880eA62C1F06d1dbec3496b",
     "blockNumber": 22188285
+  },
+  "ProxyAdmin_Linea": {
+    "hash": "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9",
+    "address": "linea:0xcB04d0AD0D3ceA5aEc1B480957Ddb20CA47EA30c",
+    "blockNumber": 22535105
   }
 }

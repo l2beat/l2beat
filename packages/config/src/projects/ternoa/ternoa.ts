@@ -32,7 +32,7 @@ const rollupModuleContract = discovery.getContract('Validium')
 
 export const ternoa: ScalingProject = polygonCDKStack({
   addedAt: UnixTime(1727455020), // 2024-09-27T17:09:00Z
-  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gateway],
+  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Zeeve],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   additionalPurposes: ['Payments'],
   display: {
@@ -101,7 +101,7 @@ export const ternoa: ScalingProject = polygonCDKStack({
         type: 'rpc',
         // successfully tested at 5k/min
         url: 'https://rpc-mainnet.zkevm.ternoa.network',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

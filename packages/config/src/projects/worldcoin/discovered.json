@@ -1,0 +1,1771 @@
+{
+  "name": "worldcoin",
+  "timestamp": 1757661532,
+  "configHash": "0x959a2146afde416007eddd03cf24fbe78986be5e89080be8c1b4a8e38c13d9a1",
+  "entries": [
+    {
+      "name": "GnosisSafe",
+      "address": "eth:0x0897316DFE7141DB1E182551c3e8077cf5dd9695",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1689539603,
+      "sinceBlock": 17708254,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": ["eth:0x541f3cc5772a64f2ba0a47e83236CcE2F089b188"],
+        "$threshold": 1,
+        "domainSeparator": "0xb675ba56ce231517629fa99360575086e844ce66d988f01b114862feaeb64742",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 99,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x0897316DFE7141DB1E182551c3e8077cf5dd9695": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "eth:0x140C0227Cbe493A56868DDF4ea582E92ef3e9744",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1687284827,
+      "sinceBlock": 17522617,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": ["eth:0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04"],
+        "$threshold": 1,
+        "domainSeparator": "0x1a63f0a7842b687ebe0112a3094586113497ecb5356496d07a378cfa9728c3c4",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 52,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x140C0227Cbe493A56868DDF4ea582E92ef3e9744": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "eth:0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "DeleteIdentitiesVerifierLookupTable",
+      "address": "eth:0x39CcB3b670651a14da8b3835f42924f49C2C5986",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x39eb56f7878719eefdfb5cc208bbd36b80989adf0ba642e7d2359973d08c8934"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1705017083,
+      "sinceBlock": 18987060,
+      "values": {
+        "$immutable": true,
+        "additionalBatchSizes": [],
+        "additionalVerifiers": [],
+        "getVerifierFor": [],
+        "initialVerifiers": [
+          "eth:0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1",
+          "eth:0x43B68ccBa7FC726540768fD1537c3179283140ed"
+        ],
+        "owner": "eth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x39CcB3b670651a14da8b3835f42924f49C2C5986": "VerifierLookupTable"
+      }
+    },
+    {
+      "address": "eth:0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "RegisterIdentitiesVerifierLookupTable",
+      "address": "eth:0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x39eb56f7878719eefdfb5cc208bbd36b80989adf0ba642e7d2359973d08c8934"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1688036519,
+      "sinceBlock": 17584527,
+      "values": {
+        "$immutable": true,
+        "additionalBatchSizes": [600, 1200],
+        "additionalVerifiers": [
+          "eth:0xFC1c26E964F791f81a33F49D91f79456891AA1c1",
+          "eth:0xE44c83b9e1971A24EC698829297A0C4026B0CeF9"
+        ],
+        "getVerifierFor": [],
+        "initialVerifiers": [
+          null,
+          "eth:0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258"
+        ],
+        "owner": "eth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49": "VerifierLookupTable"
+      }
+    },
+    {
+      "name": "DeleteVerifierSize100",
+      "address": "eth:0x43B68ccBa7FC726540768fD1537c3179283140ed",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xc2565a490312be5d6a5b12bcb700c6fa795caab49384ab6d23343096134df95f"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1705017431,
+      "sinceBlock": 18987089,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x43B68ccBa7FC726540768fD1537c3179283140ed": "Verifier"
+      }
+    },
+    {
+      "address": "eth:0x541f3cc5772a64f2ba0a47e83236CcE2F089b188",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "eth:0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1687278863,
+      "sinceBlock": 17522125,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xB6d1621B770A088C16bfec22bAd00F77D874d011",
+          "eth:0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x720111f1979d5254ad3ed9703990202cb97e5facfd38275c9fa390c248e5d90b",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 2 (100%)",
+        "nonce": 121,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "eth:0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x79b998ded1f4503CE3A0A76993c72a65449f4590",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "RegisterVerifierSize100",
+      "address": "eth:0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x7c8adbb6efe5b3350d779e102d5ae78fd639c4f8ceefafea77344463d5d8cc94"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1704776987,
+      "sinceBlock": 18967237,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258": "Verifier"
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "eth:0xb67ac19693fB89880Ca5873f6a890E865b259c26",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1689524711,
+      "sinceBlock": 17707022,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0x79b998ded1f4503CE3A0A76993c72a65449f4590",
+          "eth:0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0xa9298aed07def04ae5ed595b19679f58c1916e712de20b4b7cc2582574af8e29",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 2 (50%)",
+        "nonce": 58,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0xb67ac19693fB89880Ca5873f6a890E865b259c26": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "eth:0xB6d1621B770A088C16bfec22bAd00F77D874d011",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "eth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xf7134CE138832c1456F2a91D64621eE90c2bddEa",
+          "role": "admin"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1687279487,
+      "sinceBlock": 17522177,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0x0897316DFE7141DB1E182551c3e8077cf5dd9695",
+          "eth:0xb67ac19693fB89880Ca5873f6a890E865b259c26",
+          "eth:0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c",
+          "eth:0x140C0227Cbe493A56868DDF4ea582E92ef3e9744",
+          "eth:0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0xce9ce7c9364f5e5f2250654b75d97f836c46669ced1751a36a6a977404411f50",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 5 (80%)",
+        "nonce": 86,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "name": "DeleteVerifierSize10",
+      "address": "eth:0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x82f68854d52503cd6c6f6ff3c97b47515d8e5b65abc2950508e18059dff0692f"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1705017371,
+      "sinceBlock": 18987084,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1": "Verifier"
+      }
+    },
+    {
+      "name": "SemaphoreVerifier",
+      "address": "eth:0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xb9149eadedcff671edd3913162a49203e7f35036cb983413e363562d5974f4b3"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1688036723,
+      "sinceBlock": 17584544,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5": "SemaphoreVerifier"
+      }
+    },
+    {
+      "address": "eth:0xE2DA046340e00264C4F0443243a0565007AE08AC",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "RegisterVerifierSize1200",
+      "address": "eth:0xE44c83b9e1971A24EC698829297A0C4026B0CeF9",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbd34cc0d432d6d6834f925e6553abb9510b448b0eb25d2e40263813ad71f6f86"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1704777119,
+      "sinceBlock": 18967248,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xE44c83b9e1971A24EC698829297A0C4026B0CeF9": "Verifier"
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "eth:0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1687284071,
+      "sinceBlock": 17522557,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": ["eth:0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be"],
+        "$threshold": 1,
+        "domainSeparator": "0x98e256868d7234686fe51735688f4df9962565d7112cbb7788564a5125133a2c",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 20,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "name": "WorldIdIdentityManager2",
+      "address": "eth:0xf7134CE138832c1456F2a91D64621eE90c2bddEa",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x3821412640509152c25bca5507532d7472607cede582ce50994edf3261f0ea9c",
+        "0xcac9e734a4cccc40bec37b5168f307cca5054c69434c136f131ee1ee0a6a555d"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.",
+      "ignoreInWatchMode": ["latestRoot"],
+      "sinceTimestamp": 1688671151,
+      "sinceBlock": 17636832,
+      "values": {
+        "$admin": "eth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
+        "$implementation": "eth:0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd",
+        "$pastUpgrades": [
+          [
+            "2023-07-06T19:19:11.000Z",
+            "0x0af02107fe8622db5d846e8d391b550adba8fd06dd3382b7296f5168b6308be3",
+            ["eth:0xa3cD15EBed6075E33a54483C59818bC43D57c556"]
+          ],
+          [
+            "2023-08-18T17:12:23.000Z",
+            "0xaa68dea1046df37d3b0f21db95cfaa44fc4e1d01dcc523379270251989283dcb",
+            ["eth:0x2Ad412A1dF96434Eed0779D2dB4A8694a06132f8"]
+          ],
+          [
+            "2024-01-12T00:00:23.000Z",
+            "0xda23d7a260d4bee338a99c4c9c1cd82f329f2ac151286487c66681ea4a0ae5e6",
+            ["eth:0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "getDeleteIdentitiesVerifierLookupTableAddress": "eth:0x39CcB3b670651a14da8b3835f42924f49C2C5986",
+        "getRegisterIdentitiesVerifierLookupTableAddress": "eth:0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49",
+        "getRootHistoryExpiry": 604800,
+        "getSemaphoreVerifierAddress": "eth:0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5",
+        "getTreeDepth": 30,
+        "identityOperator": "eth:0xE2DA046340e00264C4F0443243a0565007AE08AC",
+        "latestRoot": "12229536642787043629715916659530641455929635595208081884920539141161589825526",
+        "NO_SUCH_ROOT": {
+          "root": 0,
+          "supersededTimestamp": 0,
+          "isValid": false
+        },
+        "owner": "eth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "identityOperator": {
+          "description": "Can call functions (manage identities) in the WorldIdIdentityManager2 implementation"
+        }
+      },
+      "implementationNames": {
+        "eth:0xf7134CE138832c1456F2a91D64621eE90c2bddEa": "WorldIDIdentityManager",
+        "eth:0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd": "WorldIDIdentityManagerImplV2"
+      }
+    },
+    {
+      "name": "RegisterVerifierSize600",
+      "address": "eth:0xFC1c26E964F791f81a33F49D91f79456891AA1c1",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xca7e21152b6ce21c64fdb15e8d8e9ac03809d3f499f232454a62e8060acbc3b9"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1704777071,
+      "sinceBlock": 18967244,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xFC1c26E964F791f81a33F49D91f79456891AA1c1": "Verifier"
+      }
+    },
+    {
+      "address": "oeth:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "oeth:0x0897316DFE7141DB1E182551c3e8077cf5dd9695",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1689934515,
+      "sinceBlock": 107167869,
+      "values": {
+        "$immutable": false,
+        "$implementation": "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": ["oeth:0x541f3cc5772a64f2ba0a47e83236CcE2F089b188"],
+        "$threshold": 1,
+        "domainSeparator": "0xa2f716d7bd0b067b68661f036680f2cf608946de8de8f11a60a1b527aafd1968",
+        "getChainId": 10,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 17,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "oeth:0x0897316DFE7141DB1E182551c3e8077cf5dd9695": "GnosisSafeProxy",
+        "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "oeth:0x140C0227Cbe493A56868DDF4ea582E92ef3e9744",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1689934259,
+      "sinceBlock": 107167741,
+      "values": {
+        "$immutable": false,
+        "$implementation": "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": ["oeth:0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04"],
+        "$threshold": 1,
+        "domainSeparator": "0x832c16ac4f3ee6ac309a20ab9922505a1c6d16a573c5c2dfb7606d39ed58d396",
+        "getChainId": 10,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "oeth:0x140C0227Cbe493A56868DDF4ea582E92ef3e9744": "GnosisSafeProxy",
+        "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "oeth:0x163f8C2467924be0ae7B5347228CABF260318753",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "oeth:0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "SemaphoreVerifier",
+      "address": "oeth:0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x84c58f013e225f23f2b87640ea9cda83b40b4ba02f9cc37633a373399e4ffc39"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721036137,
+      "sinceBlock": 122718680,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "oeth:0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c": "SemaphoreVerifier"
+      }
+    },
+    {
+      "address": "oeth:0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "SemaphoreVerifier",
+      "address": "oeth:0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xb9149eadedcff671edd3913162a49203e7f35036cb983413e363562d5974f4b3"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1695411619,
+      "sinceBlock": 109906421,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "oeth:0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF": "SemaphoreVerifier"
+      }
+    },
+    {
+      "name": "OpWorldID_Zero",
+      "address": "oeth:0x42FF98C4E85212a5D31358ACbFe76a621b50fC02",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x72bde70cebd2ab71bea5390a3c0bc9625c3785a0e8538082fa12bb3dc181f91c"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1689065805,
+      "sinceBlock": 106733514,
+      "values": {
+        "$immutable": true,
+        "getTreeDepth": 30,
+        "isLocal": false,
+        "latestRoot": "16412537888131705117576507501476154387116854019668596975685798118923752115572",
+        "owner": "oeth:0x86D26Ed31556EA7694BD0cC4e674D7526f70511a",
+        "rootHistoryExpiry": 604800,
+        "verifier": "oeth:0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB"
+      },
+      "implementationNames": {
+        "oeth:0x42FF98C4E85212a5D31358ACbFe76a621b50fC02": "OpWorldID"
+      }
+    },
+    {
+      "address": "oeth:0x541f3cc5772a64f2ba0a47e83236CcE2F089b188",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "oeth:0x57c72EB3f74e3A1c95656253214A018818818ec3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "WorldIDRouterV1",
+      "address": "oeth:0x57f928158C3EE7CDad1e4D8642503c4D0201f611",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xc4a6b3d493a5ef409bf23161e078448125746e1228ebcacd82067fe083c89418",
+        "0xbedda975c09c8d028b34ff1f9240b13e31113a1f831d29e98d903e147c5fdf44"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1689068111,
+      "sinceBlock": 106734667,
+      "values": {
+        "$admin": "oeth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
+        "$implementation": "oeth:0x11cA3127182f7583EfC416a8771BD4d11Fae4334",
+        "$pastUpgrades": [
+          [
+            "2023-07-11T09:35:11.000Z",
+            "0x42cd1a8bfd59bc87d042fbd377ea60f8374d66260c1fbbd4155f9de2a95d2435",
+            ["oeth:0x11cA3127182f7583EfC416a8771BD4d11Fae4334"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "groupCount": 2,
+        "owner": "oeth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
+        "pendingOwner": "oeth:0x0000000000000000000000000000000000000000",
+        "routeFor": [
+          "oeth:0x42FF98C4E85212a5D31358ACbFe76a621b50fC02",
+          "oeth:0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d"
+        ]
+      },
+      "implementationNames": {
+        "oeth:0x57f928158C3EE7CDad1e4D8642503c4D0201f611": "WorldIDRouter",
+        "oeth:0x11cA3127182f7583EfC416a8771BD4d11Fae4334": "WorldIDRouterImplV1"
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "oeth:0x59a0f98345f54bAB245A043488ECE7FCecD7B596",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1689792029,
+      "sinceBlock": 107096626,
+      "values": {
+        "$immutable": false,
+        "$implementation": "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": ["oeth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"],
+        "$threshold": 1,
+        "domainSeparator": "0x752a86786bf2c37c394030984a65a59987a9839750a6334b334fd61a528d2198",
+        "getChainId": 10,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 14,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "oeth:0x59a0f98345f54bAB245A043488ECE7FCecD7B596": "GnosisSafeProxy",
+        "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "name": "SemaphoreVerifier",
+      "address": "oeth:0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xb9149eadedcff671edd3913162a49203e7f35036cb983413e363562d5974f4b3"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1689065805,
+      "sinceBlock": 106733514,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "oeth:0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB": "SemaphoreVerifier"
+      }
+    },
+    {
+      "address": "oeth:0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "oeth:0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1689791251,
+      "sinceBlock": 107096237,
+      "values": {
+        "$immutable": false,
+        "$implementation": "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "oeth:0xB6d1621B770A088C16bfec22bAd00F77D874d011",
+          "oeth:0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x51f23f41e88333c1acf3bac3fbc83649c7a2b0316954794dfa6b3b9d924c52a2",
+        "getChainId": 10,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 2 (100%)",
+        "nonce": 33,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "oeth:0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6": "GnosisSafeProxy",
+        "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "name": "WLDGrant",
+      "address": "oeth:0x6d8C0fc9C86a0506E9FC8B4D104A8F0a7EeC0674",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x7572e98d419aaac0254e8a40e14d4957b4eab4c899cc4c6a45a5017520faee58"
+      ],
+      "proxyType": "immutable",
+      "ignoreInWatchMode": ["getCurrentId"],
+      "sinceTimestamp": 1722153659,
+      "sinceBlock": 123277441,
+      "values": { "$immutable": true, "calculateId": [], "getCurrentId": 68 },
+      "implementationNames": {
+        "oeth:0x6d8C0fc9C86a0506E9FC8B4D104A8F0a7EeC0674": "WLDGrant"
+      }
+    },
+    {
+      "address": "oeth:0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "oeth:0x70E755E15Ac5C6f8B2612F318a5CeDE11D77bEde",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "oeth:0x79b998ded1f4503CE3A0A76993c72a65449f4590",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "RecurringGrantDrop",
+      "address": "oeth:0x7B46fFbC976db2F94C3B3CDD9EbBe4ab50E3d77d",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xccc2e81b4a40bed984ee0f48b74a4d292a5644906628aa7d04258a97b84d1c90"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1698621911,
+      "sinceBlock": 111511567,
+      "values": {
+        "$immutable": true,
+        "grant": "oeth:0x6d8C0fc9C86a0506E9FC8B4D104A8F0a7EeC0674",
+        "groupId": 1,
+        "holder": "oeth:0x7f26A7572E8B877654eeDcBc4E573657619FA3CE",
+        "owner": "oeth:0x59a0f98345f54bAB245A043488ECE7FCecD7B596",
+        "pendingOwner": "oeth:0x0000000000000000000000000000000000000000",
+        "token": "oeth:0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1",
+        "worldIdRouter": "oeth:0x57f928158C3EE7CDad1e4D8642503c4D0201f611"
+      },
+      "implementationNames": {
+        "oeth:0x7B46fFbC976db2F94C3B3CDD9EbBe4ab50E3d77d": "RecurringGrantDrop"
+      }
+    },
+    {
+      "name": "GnosisSafeL2",
+      "address": "oeth:0x7f26A7572E8B877654eeDcBc4E573657619FA3CE",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1689845985,
+      "sinceBlock": 107123604,
+      "values": {
+        "$immutable": false,
+        "$implementation": "oeth:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+        "$members": [
+          "oeth:0x57c72EB3f74e3A1c95656253214A018818818ec3",
+          "oeth:0x59a0f98345f54bAB245A043488ECE7FCecD7B596",
+          "oeth:0xF85733e96Fa7791C5188C4B9740f0ff7d7bd2C09"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xc8d2f0297cbe70f973d18ea8052322a1da0d0f780465161481d7352693578b4d",
+        "getChainId": 10,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 21,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "oeth:0x7f26A7572E8B877654eeDcBc4E573657619FA3CE": "GnosisSafeProxy",
+        "oeth:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": "GnosisSafeL2"
+      }
+    },
+    {
+      "name": "WorldIDIdentityManagerV2",
+      "address": "oeth:0x86D26Ed31556EA7694BD0cC4e674D7526f70511a",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x3821412640509152c25bca5507532d7472607cede582ce50994edf3261f0ea9c",
+        "0xcac9e734a4cccc40bec37b5168f307cca5054c69434c136f131ee1ee0a6a555d"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["latestRoot"],
+      "sinceTimestamp": 1721036137,
+      "sinceBlock": 122718680,
+      "values": {
+        "$admin": "oeth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
+        "$implementation": "oeth:0xa3d93B74214B80760288091675688E1EaD7838F2",
+        "$pastUpgrades": [
+          [
+            "2024-07-15T09:35:37.000Z",
+            "0x67a0ce45a1336042396506ef28ac0390e6318dc1f262debe73e96f106e7e6a29",
+            ["oeth:0x5198DD63b9cA3DcA4FD6f62f615e6989CA74F49B"]
+          ],
+          [
+            "2024-07-15T09:35:37.000Z",
+            "0xb87e2e2aaea8870d4c7e920d1b266787af8495f7d51a3a984e6cda232629618a",
+            ["oeth:0xa3d93B74214B80760288091675688E1EaD7838F2"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "getDeleteIdentitiesVerifierLookupTableAddress": "oeth:0xfEab49fEEfefCB4b39dF640B66e7AcaC9B392A86",
+        "getRegisterIdentitiesVerifierLookupTableAddress": "oeth:0xA8710B3ba329fc7B80a49F7C82E889D1340C99fb",
+        "getRootHistoryExpiry": 3600,
+        "getSemaphoreVerifierAddress": "oeth:0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c",
+        "getTreeDepth": 30,
+        "identityOperator": "oeth:0x997c96386A7D0A491170742346570eb8E8A4E96E",
+        "latestRoot": "12288050922895207407279920155798897051447935430829628481638158416096445574946",
+        "NO_SUCH_ROOT": {
+          "root": 0,
+          "supersededTimestamp": 0,
+          "isValid": false
+        },
+        "owner": "oeth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
+        "pendingOwner": "oeth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "oeth:0x86D26Ed31556EA7694BD0cC4e674D7526f70511a": "WorldIDIdentityManager",
+        "oeth:0xa3d93B74214B80760288091675688E1EaD7838F2": "WorldIDIdentityManagerImplV2"
+      }
+    },
+    {
+      "address": "oeth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x86D26Ed31556EA7694BD0cC4e674D7526f70511a",
+          "role": "admin"
+        }
+      ]
+    },
+    {
+      "address": "oeth:0x997c96386A7D0A491170742346570eb8E8A4E96E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Verifier",
+      "address": "oeth:0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xaf7a518594f31dbc23c534719916ed50d7548b82bd675415a1a697555b68f471"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1730982513,
+      "sinceBlock": 127691868,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "oeth:0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F": "Verifier"
+      }
+    },
+    {
+      "name": "VerifierLookupTable",
+      "address": "oeth:0xA8710B3ba329fc7B80a49F7C82E889D1340C99fb",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x39eb56f7878719eefdfb5cc208bbd36b80989adf0ba642e7d2359973d08c8934"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721036135,
+      "sinceBlock": 122718679,
+      "values": {
+        "$immutable": true,
+        "getVerifierFor": [],
+        "owner": "oeth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
+        "pendingOwner": "oeth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "oeth:0xA8710B3ba329fc7B80a49F7C82E889D1340C99fb": "VerifierLookupTable"
+      }
+    },
+    {
+      "name": "OpWorldID_One",
+      "address": "oeth:0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xf3dd037dddfc31db7402a4f10bf7c4e6ef8a682fceaf2a57fc131f05c8f4dc47"
+      ],
+      "proxyType": "immutable",
+      "description": "A contract that manages the root history of the Semaphore identity merkle tree on Optimism.",
+      "sinceTimestamp": 1695411619,
+      "sinceBlock": 109906421,
+      "values": {
+        "$immutable": true,
+        "getTreeDepth": 30,
+        "isLocal": false,
+        "owner": "oeth:0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F",
+        "rootHistoryExpiry": 604800,
+        "verifier": "oeth:0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF"
+      },
+      "implementationNames": {
+        "oeth:0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d": "OpWorldID"
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "oeth:0xb67ac19693fB89880Ca5873f6a890E865b259c26",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1689934447,
+      "sinceBlock": 107167835,
+      "values": {
+        "$immutable": false,
+        "$implementation": "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "oeth:0x79b998ded1f4503CE3A0A76993c72a65449f4590",
+          "oeth:0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x7d8b20e74f1da0a4e509ae4e4a0eaf8b81c5cc8c5de5da0d858acc817a873b4f",
+        "getChainId": 10,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 2 (100%)",
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "oeth:0xb67ac19693fB89880Ca5873f6a890E865b259c26": "GnosisSafeProxy",
+        "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "oeth:0xB6d1621B770A088C16bfec22bAd00F77D874d011",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "oeth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x57f928158C3EE7CDad1e4D8642503c4D0201f611",
+          "role": "admin"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1689791675,
+      "sinceBlock": 107096449,
+      "values": {
+        "$immutable": false,
+        "$implementation": "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "oeth:0x0897316DFE7141DB1E182551c3e8077cf5dd9695",
+          "oeth:0xb67ac19693fB89880Ca5873f6a890E865b259c26",
+          "oeth:0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c",
+          "oeth:0x140C0227Cbe493A56868DDF4ea582E92ef3e9744",
+          "oeth:0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A",
+          "oeth:0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x162f5f254095df21390ae4b4ee599988a85ae84da0a3868e22a38708c2b86f63",
+        "getChainId": 10,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 6 (33%)",
+        "nonce": 28,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "oeth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77": "GnosisSafeProxy",
+        "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "name": "WLD token",
+      "address": "oeth:0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xd6334e346e2c0970559b615252d84f9d22a0d674a54f14db1dbc30a9db50c2f3"
+      ],
+      "proxyType": "immutable",
+      "ignoreInWatchMode": ["totalSupply"],
+      "sinceTimestamp": 1689774709,
+      "sinceBlock": 107087966,
+      "values": {
+        "$immutable": true,
+        "bridge": "oeth:0x4200000000000000000000000000000000000010",
+        "BRIDGE": "oeth:0x4200000000000000000000000000000000000010",
+        "decimals": 18,
+        "l1Token": "oeth:0x163f8C2467924be0ae7B5347228CABF260318753",
+        "l2Bridge": "oeth:0x4200000000000000000000000000000000000010",
+        "name": "Worldcoin",
+        "REMOTE_TOKEN": "oeth:0x163f8C2467924be0ae7B5347228CABF260318753",
+        "remoteToken": "oeth:0x163f8C2467924be0ae7B5347228CABF260318753",
+        "symbol": "WLD",
+        "totalSupply": "309386912720255130357758006",
+        "version": "1.0.0"
+      },
+      "implementationNames": {
+        "oeth:0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1": "OptimismMintableERC20"
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "oeth:0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1689934359,
+      "sinceBlock": 107167791,
+      "values": {
+        "$immutable": false,
+        "$implementation": "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": ["oeth:0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be"],
+        "$threshold": 1,
+        "domainSeparator": "0xa86ca73771ed3e854989de28a65f8d6be3255680e0fcbd23460686347f2bca86",
+        "getChainId": 10,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "oeth:0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c": "GnosisSafeProxy",
+        "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "oeth:0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1689934137,
+      "sinceBlock": 107167680,
+      "values": {
+        "$immutable": false,
+        "$implementation": "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": ["oeth:0x70E755E15Ac5C6f8B2612F318a5CeDE11D77bEde"],
+        "$threshold": 1,
+        "domainSeparator": "0x52dd96bc4ca81f75e83604e9377a4f95b772eb71a59948d7ea7b1a37a644de2f",
+        "getChainId": 10,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "oeth:0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A": "GnosisSafeProxy",
+        "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "oeth:0xF85733e96Fa7791C5188C4B9740f0ff7d7bd2C09",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "VerifierLookupTable",
+      "address": "oeth:0xfEab49fEEfefCB4b39dF640B66e7AcaC9B392A86",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x39eb56f7878719eefdfb5cc208bbd36b80989adf0ba642e7d2359973d08c8934"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721036135,
+      "sinceBlock": 122718679,
+      "values": {
+        "$immutable": true,
+        "getVerifierFor": [],
+        "owner": "oeth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
+        "pendingOwner": "oeth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "oeth:0xfEab49fEEfefCB4b39dF640B66e7AcaC9B392A86": "VerifierLookupTable"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x0897316DFE7141DB1E182551c3e8077cf5dd9695": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x140C0227Cbe493A56868DDF4ea582E92ef3e9744": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x39CcB3b670651a14da8b3835f42924f49C2C5986": [
+      "constructor()",
+      "error CannotRenounceOwnership()",
+      "error NoSuchVerifier()",
+      "error VerifierExists()",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event VerifierAdded(uint256 indexed batchSize, address indexed verifierAddress)",
+      "event VerifierDisabled(uint256 indexed batchSize)",
+      "event VerifierUpdated(uint256 indexed batchSize, address indexed oldVerifierAddress, address indexed newVerifierAddress)",
+      "function acceptOwnership()",
+      "function addVerifier(uint256 batchSize, address verifier)",
+      "function disableVerifier(uint256 batchSize) returns (address oldVerifier)",
+      "function getVerifierFor(uint256 batchSize) view returns (address verifier)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership() view",
+      "function transferOwnership(address newOwner)",
+      "function updateVerifier(uint256 batchSize, address verifier) returns (address oldVerifier)"
+    ],
+    "eth:0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49": [
+      "constructor()",
+      "error CannotRenounceOwnership()",
+      "error NoSuchVerifier()",
+      "error VerifierExists()",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event VerifierAdded(uint256 indexed batchSize, address indexed verifierAddress)",
+      "event VerifierDisabled(uint256 indexed batchSize)",
+      "event VerifierUpdated(uint256 indexed batchSize, address indexed oldVerifierAddress, address indexed newVerifierAddress)",
+      "function acceptOwnership()",
+      "function addVerifier(uint256 batchSize, address verifier)",
+      "function disableVerifier(uint256 batchSize) returns (address oldVerifier)",
+      "function getVerifierFor(uint256 batchSize) view returns (address verifier)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership() view",
+      "function transferOwnership(address newOwner)",
+      "function updateVerifier(uint256 batchSize, address verifier) returns (address oldVerifier)"
+    ],
+    "eth:0x43B68ccBa7FC726540768fD1537c3179283140ed": [
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[1] input) view",
+      "function verifyProof(uint256[8] proof, uint256[1] input) view"
+    ],
+    "eth:0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd": [
+      "error CannotRenounceOwnership()",
+      "error ExpiredRoot()",
+      "error ImplementationNotInitialized()",
+      "error InvalidCommitment(uint256 index)",
+      "error InvalidDeletionIndices()",
+      "error InvalidStateBridgeAddress()",
+      "error InvalidVerifier()",
+      "error InvalidVerifierLUT()",
+      "error MismatchedInputLengths()",
+      "error NonExistentRoot()",
+      "error NotLatestRoot(uint256 providedRoot, uint256 latestRoot)",
+      "error ProofValidationFailure()",
+      "error StateBridgeAlreadyDisabled()",
+      "error StateBridgeAlreadyEnabled()",
+      "error Unauthorized(address user)",
+      "error UnreducedElement(uint8 elementType, uint256 element)",
+      "error UnsupportedTreeDepth(uint8 depth)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event DependencyUpdated(uint8 indexed kind, address indexed oldAddress, address indexed newAddress)",
+      "event IdentityOperatorChanged(address indexed oldOperator, address indexed newOperator)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RootHistoryExpirySet(uint256 indexed oldExpiryTime, uint256 indexed newExpiryTime)",
+      "event StateBridgeStateChange(bool indexed isEnabled)",
+      "event TreeChanged(uint256 indexed preRoot, uint8 indexed kind, uint256 indexed postRoot)",
+      "event Upgraded(address indexed implementation)",
+      "event WorldIDIdentityManagerImplInitialized(uint8 _treeDepth, uint256 initialRoot)",
+      "event WorldIDIdentityManagerImplV2Initialized()",
+      "function NO_SUCH_ROOT() pure returns (tuple(uint256 root, uint128 supersededTimestamp, bool isValid) rootInfo)",
+      "function acceptOwnership()",
+      "function calculateIdentityDeletionInputHash(bytes packedDeletionIndices, uint256 preRoot, uint256 postRoot, uint32 batchSize) view returns (bytes32 hash)",
+      "function calculateIdentityRegistrationInputHash(uint32 startIndex, uint256 preRoot, uint256 postRoot, uint256[] identityCommitments) view returns (bytes32 hash)",
+      "function deleteIdentities(uint256[8] deletionProof, bytes packedDeletionIndices, uint256 preRoot, uint256 postRoot)",
+      "function getDeleteIdentitiesVerifierLookupTableAddress() view returns (address)",
+      "function getRegisterIdentitiesVerifierLookupTableAddress() view returns (address)",
+      "function getRootHistoryExpiry() view returns (uint256)",
+      "function getSemaphoreVerifierAddress() view returns (address)",
+      "function getTreeDepth() view returns (uint8)",
+      "function identityOperator() view returns (address)",
+      "function initialize(uint8 _treeDepth, uint256 initialRoot, address _batchInsertionVerifiers, address _batchUpdateVerifiers, address _semaphoreVerifier)",
+      "function initializeV2(address _batchDeletionVerifiers)",
+      "function latestRoot() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function queryRoot(uint256 root) view returns (tuple(uint256 root, uint128 supersededTimestamp, bool isValid))",
+      "function registerIdentities(uint256[8] insertionProof, uint256 preRoot, uint32 startIndex, uint256[] identityCommitments, uint256 postRoot)",
+      "function renounceOwnership() view",
+      "function requireValidRoot(uint256 root) view",
+      "function setDeleteIdentitiesVerifierLookupTable(address newTable)",
+      "function setIdentityOperator(address newIdentityOperator) returns (address)",
+      "function setRegisterIdentitiesVerifierLookupTable(address newTable)",
+      "function setRootHistoryExpiry(uint256 newExpiryTime)",
+      "function setSemaphoreVerifier(address newVerifier)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function verifyProof(uint256 root, uint256 signalHash, uint256 nullifierHash, uint256 externalNullifierHash, uint256[8] proof) view"
+    ],
+    "eth:0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258": [
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[1] input) view",
+      "function verifyProof(uint256[8] proof, uint256[1] input) view"
+    ],
+    "eth:0xb67ac19693fB89880Ca5873f6a890E865b259c26": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1": [
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[1] input) view",
+      "function verifyProof(uint256[8] proof, uint256[1] input) view"
+    ],
+    "eth:0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5": [
+      "function verifyProof(uint256 merkleTreeRoot, uint256 nullifierHash, uint256 signal, uint256 externalNullifier, uint256[8] proof, uint256 merkleTreeDepth) view"
+    ],
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0xE44c83b9e1971A24EC698829297A0C4026B0CeF9": [
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[1] input) view",
+      "function verifyProof(uint256[8] proof, uint256[1] input) view"
+    ],
+    "eth:0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xf7134CE138832c1456F2a91D64621eE90c2bddEa": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xFC1c26E964F791f81a33F49D91f79456891AA1c1": [
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[1] input) view",
+      "function verifyProof(uint256[8] proof, uint256[1] input) view"
+    ],
+    "oeth:0x0897316DFE7141DB1E182551c3e8077cf5dd9695": [
+      "constructor(address _singleton)"
+    ],
+    "oeth:0x11cA3127182f7583EfC416a8771BD4d11Fae4334": [
+      "constructor()",
+      "error CannotRenounceOwnership()",
+      "error ExpiredRoot()",
+      "error GroupIsDisabled()",
+      "error ImplementationNotInitialized()",
+      "error NoSuchGroup(uint256 groupId)",
+      "error NonExistentRoot()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event GroupAdded(uint256 indexed groupId, address indexed identityManager)",
+      "event GroupDisabled(uint256 indexed groupId)",
+      "event GroupIdentityManagerRouterImplInitialized(address initialGroupIdentityManager)",
+      "event GroupUpdated(uint256 indexed groupId, address indexed oldIdentityManager, address indexed newIdentityManager)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function acceptOwnership()",
+      "function addGroup(address groupIdentityManager)",
+      "function disableGroup(uint256 groupId) returns (address oldTarget)",
+      "function groupCount() view returns (uint256 count)",
+      "function initialize(address initialGroupIdentityManager)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership() view",
+      "function routeFor(uint256 groupNumber) view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function updateGroup(uint256 groupId, address newTargetAddress) returns (address oldTarget)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function verifyProof(uint256 root, uint256 groupId, uint256 signalHash, uint256 nullifierHash, uint256 externalNullifierHash, uint256[8] proof)"
+    ],
+    "oeth:0x140C0227Cbe493A56868DDF4ea582E92ef3e9744": [
+      "constructor(address _singleton)"
+    ],
+    "oeth:0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c": [
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[4] input) view",
+      "function verifyProof(uint256[8] proof, uint256[4] input) view"
+    ],
+    "oeth:0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF": [
+      "function verifyProof(uint256 merkleTreeRoot, uint256 nullifierHash, uint256 signal, uint256 externalNullifier, uint256[8] proof, uint256 merkleTreeDepth) view"
+    ],
+    "oeth:0x42FF98C4E85212a5D31358ACbFe76a621b50fC02": [
+      "constructor(uint8 _treeDepth)",
+      "error CannotOverwriteRoot()",
+      "error ExpiredRoot()",
+      "error NoRootsSeen()",
+      "error NonExistentRoot()",
+      "error UnsupportedTreeDepth(uint8 depth)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner, bool isLocal)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RootAdded(uint256 root, uint128 supersedeTimestamp)",
+      "event RootHistoryExpirySet(uint256 newExpiry)",
+      "function getTreeDepth() view returns (uint8)",
+      "function isLocal() view returns (bool)",
+      "function latestRoot() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function receiveRoot(uint256 newRoot, uint128 supersedeTimestamp)",
+      "function renounceOwnership()",
+      "function rootHistory(uint256) view returns (uint128)",
+      "function rootHistoryExpiry() view returns (uint256)",
+      "function setRootHistoryExpiry(uint256 expiryTime)",
+      "function transferOwnership(address _owner, bool _isLocal)",
+      "function transferOwnership(address newOwner)",
+      "function verifyProof(uint256 root, uint256 signalHash, uint256 nullifierHash, uint256 externalNullifierHash, uint256[8] proof) view"
+    ],
+    "oeth:0x57f928158C3EE7CDad1e4D8642503c4D0201f611": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "oeth:0x59a0f98345f54bAB245A043488ECE7FCecD7B596": [
+      "constructor(address _singleton)"
+    ],
+    "oeth:0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB": [
+      "function verifyProof(uint256 merkleTreeRoot, uint256 nullifierHash, uint256 signal, uint256 externalNullifier, uint256[8] proof, uint256 merkleTreeDepth) view"
+    ],
+    "oeth:0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6": [
+      "constructor(address _singleton)"
+    ],
+    "oeth:0x6d8C0fc9C86a0506E9FC8B4D104A8F0a7EeC0674": [
+      "error InvalidConfiguration()",
+      "error InvalidGrant()",
+      "function calculateId(uint256 timestamp) pure returns (uint256)",
+      "function checkReservationValidity(uint256 timestamp) view",
+      "function checkValidity(uint256 grantId) view",
+      "function getAmount(uint256 grantId) pure returns (uint256)",
+      "function getCurrentId() view returns (uint256)"
+    ],
+    "oeth:0x7B46fFbC976db2F94C3B3CDD9EbBe4ab50E3d77d": [
+      "constructor(address _worldIdRouter, uint256 _groupId, address _token, address _holder, address _grant)",
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error CannotRenounceOwnership()",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error FailedInnerCall()",
+      "error InvalidConfiguration()",
+      "error InvalidNullifier()",
+      "error InvalidReceiver()",
+      "error InvalidReservationSigner()",
+      "error InvalidTimestamp()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SafeERC20FailedOperation(address token)",
+      "error UnauthorizedSigner()",
+      "event AllowedReservationSignerAdded(address signer)",
+      "event AllowedReservationSignerRemoved(address signer)",
+      "event GrantClaimed(uint256 grantId, address receiver)",
+      "event GrantUpdated(address grant)",
+      "event GroupIdUpdated(uint256 groupId)",
+      "event HolderUpdated(address holder)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RecurringGrantDropInitialized(address _worldIdRouter, uint256 _groupId, address _token, address _holder, address _grant)",
+      "event TokenUpdated(address token)",
+      "event WorldIdRouterUpdated(address worldIdRouter)",
+      "function acceptOwnership()",
+      "function addAllowedReservationSigner(address _signer)",
+      "function checkClaim(uint256 grantId, address receiver, uint256 root, uint256 nullifierHash, uint256[8] proof)",
+      "function checkClaimReserved(uint256 timestamp, address receiver, uint256 root, uint256 nullifierHash, uint256[8] proof, bytes signature)",
+      "function claim(uint256 grantId, address receiver, uint256 root, uint256 nullifierHash, uint256[8] proof)",
+      "function claimReserved(uint256 timestamp, address receiver, uint256 root, uint256 nullifierHash, uint256[8] proof, bytes signature)",
+      "function grant() view returns (address)",
+      "function groupId() view returns (uint256)",
+      "function holder() view returns (address)",
+      "function nullifierHashes(uint256) view returns (bool)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function removeAllowedReservationSigner(address _signer)",
+      "function renounceOwnership() view",
+      "function setGrant(address _grant)",
+      "function setGroupId(uint256 _groupId)",
+      "function setHolder(address _holder)",
+      "function setToken(address _token)",
+      "function setWorldIdRouter(address _worldIdRouter)",
+      "function token() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function worldIdRouter() view returns (address)"
+    ],
+    "oeth:0x7f26A7572E8B877654eeDcBc4E573657619FA3CE": [
+      "constructor(address _singleton)"
+    ],
+    "oeth:0x86D26Ed31556EA7694BD0cC4e674D7526f70511a": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "oeth:0xa3d93B74214B80760288091675688E1EaD7838F2": [
+      "error CannotRenounceOwnership()",
+      "error ExpiredRoot()",
+      "error ImplementationNotInitialized()",
+      "error InvalidCommitment(uint256 index)",
+      "error InvalidDeletionIndices()",
+      "error InvalidStateBridgeAddress()",
+      "error InvalidVerifier()",
+      "error InvalidVerifierLUT()",
+      "error MismatchedInputLengths()",
+      "error NonExistentRoot()",
+      "error NotLatestRoot(uint256 providedRoot, uint256 latestRoot)",
+      "error ProofValidationFailure()",
+      "error StateBridgeAlreadyDisabled()",
+      "error StateBridgeAlreadyEnabled()",
+      "error Unauthorized(address user)",
+      "error UnreducedElement(uint8 elementType, uint256 element)",
+      "error UnsupportedTreeDepth(uint8 depth)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event DependencyUpdated(uint8 indexed kind, address indexed oldAddress, address indexed newAddress)",
+      "event IdentityOperatorChanged(address indexed oldOperator, address indexed newOperator)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RootHistoryExpirySet(uint256 indexed oldExpiryTime, uint256 indexed newExpiryTime)",
+      "event StateBridgeStateChange(bool indexed isEnabled)",
+      "event TreeChanged(uint256 indexed preRoot, uint8 indexed kind, uint256 indexed postRoot)",
+      "event Upgraded(address indexed implementation)",
+      "event WorldIDIdentityManagerImplInitialized(uint8 _treeDepth, uint256 initialRoot)",
+      "event WorldIDIdentityManagerImplV2Initialized()",
+      "function NO_SUCH_ROOT() pure returns (tuple(uint256 root, uint128 supersededTimestamp, bool isValid) rootInfo)",
+      "function acceptOwnership()",
+      "function calculateIdentityDeletionInputHash(bytes packedDeletionIndices, uint256 preRoot, uint256 postRoot, uint32 batchSize) view returns (bytes32 hash)",
+      "function calculateIdentityRegistrationInputHash(uint32 startIndex, uint256 preRoot, uint256 postRoot, uint256[] identityCommitments) view returns (bytes32 hash)",
+      "function deleteIdentities(uint256[8] deletionProof, bytes packedDeletionIndices, uint256 preRoot, uint256 postRoot)",
+      "function getDeleteIdentitiesVerifierLookupTableAddress() view returns (address)",
+      "function getRegisterIdentitiesVerifierLookupTableAddress() view returns (address)",
+      "function getRootHistoryExpiry() view returns (uint256)",
+      "function getSemaphoreVerifierAddress() view returns (address)",
+      "function getTreeDepth() view returns (uint8)",
+      "function identityOperator() view returns (address)",
+      "function initialize(uint8 _treeDepth, uint256 initialRoot, address _batchInsertionVerifiers, address _batchUpdateVerifiers, address _semaphoreVerifier)",
+      "function initializeV2(address _batchDeletionVerifiers)",
+      "function latestRoot() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function queryRoot(uint256 root) view returns (tuple(uint256 root, uint128 supersededTimestamp, bool isValid))",
+      "function registerIdentities(uint256[8] insertionProof, uint256 preRoot, uint32 startIndex, uint256[] identityCommitments, uint256 postRoot)",
+      "function renounceOwnership() view",
+      "function requireValidRoot(uint256 root) view",
+      "function setDeleteIdentitiesVerifierLookupTable(address newTable)",
+      "function setIdentityOperator(address newIdentityOperator) returns (address)",
+      "function setRegisterIdentitiesVerifierLookupTable(address newTable)",
+      "function setRootHistoryExpiry(uint256 newExpiryTime)",
+      "function setSemaphoreVerifier(address newVerifier)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function verifyProof(uint256 root, uint256 signalHash, uint256 nullifierHash, uint256 externalNullifierHash, uint256[8] proof) view"
+    ],
+    "oeth:0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F": [
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[1] input) view",
+      "function verifyProof(uint256[8] proof, uint256[1] input) view"
+    ],
+    "oeth:0xA8710B3ba329fc7B80a49F7C82E889D1340C99fb": [
+      "constructor()",
+      "error CannotRenounceOwnership()",
+      "error NoSuchVerifier()",
+      "error VerifierExists()",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event VerifierAdded(uint256 indexed batchSize, address indexed verifierAddress)",
+      "event VerifierDisabled(uint256 indexed batchSize)",
+      "event VerifierUpdated(uint256 indexed batchSize, address indexed oldVerifierAddress, address indexed newVerifierAddress)",
+      "function acceptOwnership()",
+      "function addVerifier(uint256 batchSize, address verifier)",
+      "function disableVerifier(uint256 batchSize) returns (address oldVerifier)",
+      "function getVerifierFor(uint256 batchSize) view returns (address verifier)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership() view",
+      "function transferOwnership(address newOwner)",
+      "function updateVerifier(uint256 batchSize, address verifier) returns (address oldVerifier)"
+    ],
+    "oeth:0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d": [
+      "constructor(uint8 _treeDepth)",
+      "error CannotOverwriteRoot()",
+      "error ExpiredRoot()",
+      "error NoRootsSeen()",
+      "error NonExistentRoot()",
+      "error UnsupportedTreeDepth(uint8 depth)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner, bool isLocal)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RootAdded(uint256 root, uint128 timestamp)",
+      "event RootHistoryExpirySet(uint256 newExpiry)",
+      "function getTreeDepth() view returns (uint8)",
+      "function isLocal() view returns (bool)",
+      "function latestRoot() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function receiveRoot(uint256 newRoot)",
+      "function renounceOwnership()",
+      "function rootHistory(uint256) view returns (uint128)",
+      "function rootHistoryExpiry() view returns (uint256)",
+      "function setRootHistoryExpiry(uint256 expiryTime)",
+      "function transferOwnership(address _owner, bool _isLocal)",
+      "function transferOwnership(address newOwner)",
+      "function verifyProof(uint256 root, uint256 signalHash, uint256 nullifierHash, uint256 externalNullifierHash, uint256[8] proof) view"
+    ],
+    "oeth:0xb67ac19693fB89880Ca5873f6a890E865b259c26": [
+      "constructor(address _singleton)"
+    ],
+    "oeth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77": [
+      "constructor(address _singleton)"
+    ],
+    "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "oeth:0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1": [
+      "constructor(address _bridge, address _remoteToken, string _name, string _symbol)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Burn(address indexed account, uint256 amount)",
+      "event Mint(address indexed account, uint256 amount)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function BRIDGE() view returns (address)",
+      "function REMOTE_TOKEN() view returns (address)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function bridge() view returns (address)",
+      "function burn(address _from, uint256 _amount)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function l1Token() view returns (address)",
+      "function l2Bridge() view returns (address)",
+      "function mint(address _to, uint256 _amount)",
+      "function name() view returns (string)",
+      "function remoteToken() view returns (address)",
+      "function supportsInterface(bytes4 _interfaceId) pure returns (bool)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
+      "function version() view returns (string)"
+    ],
+    "oeth:0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c": [
+      "constructor(address _singleton)"
+    ],
+    "oeth:0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A": [
+      "constructor(address _singleton)"
+    ],
+    "oeth:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "oeth:0xfEab49fEEfefCB4b39dF640B66e7AcaC9B392A86": [
+      "constructor()",
+      "error CannotRenounceOwnership()",
+      "error NoSuchVerifier()",
+      "error VerifierExists()",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event VerifierAdded(uint256 indexed batchSize, address indexed verifierAddress)",
+      "event VerifierDisabled(uint256 indexed batchSize)",
+      "event VerifierUpdated(uint256 indexed batchSize, address indexed oldVerifierAddress, address indexed newVerifierAddress)",
+      "function acceptOwnership()",
+      "function addVerifier(uint256 batchSize, address verifier)",
+      "function disableVerifier(uint256 batchSize) returns (address oldVerifier)",
+      "function getVerifierFor(uint256 batchSize) view returns (address verifier)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership() view",
+      "function transferOwnership(address newOwner)",
+      "function updateVerifier(uint256 batchSize, address verifier) returns (address oldVerifier)"
+    ]
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+  },
+  "usedBlockNumbers": { "optimism": 141031377, "ethereum": 23345439 },
+  "permissionsConfigHash": "0x65d23ab8366ecc75855efe8f0d98cb0fe7bb5e76af655d612a546a0c79c3a197"
+}

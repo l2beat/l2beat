@@ -17,10 +17,10 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
-import { formatExecutionDelay } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { getStage } from '../../common/stages/getStage'
 import { STATE_VALIDATION } from '../../common/stateValidation'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
@@ -60,6 +60,14 @@ const escrowUSDCMaxTotalBalanceString = formatMaxTotalBalanceString(
   6,
 )
 
+const paradexProgramHashes = []
+paradexProgramHashes.push(
+  discovery.getContractValue<string>('Paradex', 'programHash'),
+)
+paradexProgramHashes.push(
+  discovery.getContractValue<string>('Paradex', 'aggregatorProgramHash'),
+)
+
 export const paradex: ScalingProject = {
   type: 'layer2',
   id: ProjectId('paradex'),
@@ -83,6 +91,7 @@ export const paradex: ScalingProject = {
       bridges: ['https://app.paradex.trade', 'https://paradex.trade/stats'],
       documentation: ['https://docs.paradex.trade/'],
       repositories: ['https://github.com/tradeparadex'],
+      explorers: ['https://voyager.prod.paradex.trade'],
       socialMedia: [
         'https://twitter.com/tradeparadex',
         'https://discord.com/invite/paradex',
@@ -289,7 +298,7 @@ export const paradex: ScalingProject = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
-      secondLine: formatExecutionDelay(finalizationPeriod),
+      executionDelay: finalizationPeriod,
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
     exitWindow: RISK_VIEW.EXIT_WINDOW(minDelay, 0),
@@ -334,6 +343,7 @@ export const paradex: ScalingProject = {
   },
   stateValidation: {
     categories: [STATE_VALIDATION.VALIDITY_PROOFS],
+    zkProgramHashes: paradexProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   technology: {
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_ON_CHAIN(true),

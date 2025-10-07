@@ -26,7 +26,11 @@ export class InMemoryCache implements ICache {
   }
 
   async get<T>(options: Options, fallback: () => Promise<T>): Promise<T> {
-    if (env.DEPLOYMENT_ENV !== 'production' || env.DISABLE_CACHE) {
+    if (
+      (env.DEPLOYMENT_ENV !== 'production' &&
+        env.DEPLOYMENT_ENV !== 'staging') ||
+      env.DISABLE_CACHE
+    ) {
       return fallback()
     }
 
@@ -94,9 +98,8 @@ export class InMemoryCache implements ICache {
         result,
         timestamp: UnixTime.now(),
       })
-    } catch (error) {
+    } catch {
       // If revalidation fails, we keep the stale data
-      console.error('Background revalidation failed:', error)
     }
   }
 
