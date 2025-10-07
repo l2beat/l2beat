@@ -26,7 +26,7 @@ export class PriceProvider {
     return result
   }
 
-  async getAllCoingeckoIds(): Promise<string[]> {
+  async getAllCoingeckoIds(): Promise<CoingeckoId[]> {
     return await this.client.getAllCoingeckoIds()
   }
 
