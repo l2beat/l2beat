@@ -212,7 +212,7 @@ function Message(
     srcEvent: BridgeEvent
     dstEvent: BridgeEvent
   },
-): BridgeMessage {
+): Omit<BridgeMessage, 'plugin'> {
   if (!/\w+\.\w+(\.\w+)?/.test(type)) {
     throw new Error(
       'BridgeMessage type must have the format: "protocol-name.MessageName" or "protocol-name.MessageName.app-name"',
