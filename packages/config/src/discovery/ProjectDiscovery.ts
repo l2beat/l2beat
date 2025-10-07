@@ -50,8 +50,6 @@ const paths = getDiscoveryPaths()
 
 export class ProjectDiscovery {
   private readonly discovery: DiscoveryOutput
-  private readonly referencedDiscoveries: DiscoveryOutput[]
-  private readonly entrypoints: EntryParameters[]
   private readonly discoveries: DiscoveryOutput[]
   private eoaIDMap: Record<string, string> = {}
   private permissionRegistry: PermissionRegistry
@@ -60,13 +58,8 @@ export class ProjectDiscovery {
     public readonly projectName: string,
     public readonly configReader = new ConfigReader(paths.discovery),
   ) {
-    this.discovery = configReader.readDiscovery(projectName)
-    this.entrypoints = [...this.discovery.entries]
-
-    this.referencedDiscoveries = configReader
-      .readDiscoveryWithReferences(projectName)
-      .filter((d) => d.name !== projectName)
-    this.discoveries = [this.discovery, ...this.referencedDiscoveries]
+    this.discoveries = configReader.readDiscoveryWithReferences(projectName)
+    this.discovery = this.discoveries[0] // always the base discovery
 
     // Removing Reference entries because otherwise we get duplicates
     // and incomplete data.
@@ -1099,7 +1092,7 @@ export class ProjectDiscovery {
   ): Record<string, ProjectContract[]> {
     const eoaActors = this.getEoaActors()
     const referencedEntries = getReferencedEntries(
-      this.entrypoints,
+      this.discovery?.entries ?? [],
       this.discoveries.flatMap((discovery) => discovery.entries),
     )
     const contracts = referencedEntries
