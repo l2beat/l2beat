@@ -1,9 +1,9 @@
 import { assert, ProjectId } from '@l2beat/shared-pure'
-import type { ProjectScalingStateValidationZkProgramHash } from '../types'
+import type { ProjectScalingContractsZkProgramHash } from '../types'
 
 export function ZK_PROGRAM_HASHES(
-  hash: ProjectScalingStateValidationZkProgramHash['hash'],
-): ProjectScalingStateValidationZkProgramHash {
+  hash: ProjectScalingContractsZkProgramHash['hash'],
+): ProjectScalingContractsZkProgramHash {
   const programHashData = zkProgramHashes[hash]
   assert(
     programHashData,
@@ -17,8 +17,8 @@ export function ZK_PROGRAM_HASHES(
 }
 
 const zkProgramHashes: Record<
-  ProjectScalingStateValidationZkProgramHash['hash'],
-  Omit<ProjectScalingStateValidationZkProgramHash, 'hash'>
+  ProjectScalingContractsZkProgramHash['hash'],
+  Omit<ProjectScalingContractsZkProgramHash, 'hash'>
 > = {
   '0x003991487ea72a40a1caa7c234612c0da52fc4ccc748a07f6ebd35466654772e': {
     programUrl: 'https://github.com/l2beat/l2beat',

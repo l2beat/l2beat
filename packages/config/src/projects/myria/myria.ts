@@ -142,7 +142,6 @@ export const myria: ScalingProject = {
   },
   stateValidation: {
     categories: [STATE_VALIDATION.STARKEX_VALIDITY_PROOFS],
-    zkProgramHashes: [ZK_PROGRAM_HASHES(myriaProgramHash)],
   },
   technology: {
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
@@ -157,6 +156,7 @@ export const myria: ScalingProject = {
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
+    zkProgramHashes: [ZK_PROGRAM_HASHES(myriaProgramHash)],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [
