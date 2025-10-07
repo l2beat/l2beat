@@ -1,5 +1,6 @@
 import type { Project, ProjectRisk } from '@l2beat/config'
 import isArray from 'lodash/isArray'
+import uniqBy from 'lodash/uniqBy'
 import type { RiskSummarySectionProps } from '../../../components/projects/sections/RiskSummarySection'
 import type { ProjectSectionProps } from '../../../components/projects/sections/types'
 import { groupRisks } from './groupRisks'
@@ -54,8 +55,10 @@ export function getScalingRiskSummarySection(
     risks.push({ ...risk, referencedId: 'state-validation' })
   }
 
+  const uniqRisks = uniqBy(risks, (r) => `${r.category}-${r.text}`)
+
   return {
-    riskGroups: groupRisks(risks),
+    riskGroups: groupRisks(uniqRisks),
     warning: project.scalingTechnology.warning,
     isVerified,
     redWarning: undefined,

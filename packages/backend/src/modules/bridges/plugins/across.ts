@@ -153,9 +153,13 @@ export class AcrossPlugin implements BridgePlugin {
 
     return [
       // TODO: Should there be a message at all?
-      Result.Message('across.Message', [fundsDeposited, filledRelay]),
+      Result.Message('across.Message', {
+        app: 'across',
+        srcEvent: fundsDeposited,
+        dstEvent: filledRelay,
+      }),
       // TODO: What about the final settlement?
-      Result.Transfer('across.Swap', {
+      Result.Transfer('across.Transfer', {
         srcEvent: fundsDeposited,
         srcTokenAddress: fundsDeposited.args.tokenAddress,
         srcAmount: fundsDeposited.args.amount,

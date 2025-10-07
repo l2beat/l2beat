@@ -143,7 +143,12 @@ export class DeBridgeDlnPlugin implements BridgePlugin {
     if (!orderCreated) return
 
     return [
-      Result.Transfer('debridge-dln.Swap', {
+      Result.Message('debridge-dln.Message', {
+        app: 'debridge-dln',
+        srcEvent: orderCreated,
+        dstEvent: orderFilled,
+      }),
+      Result.Transfer('debridge-dln.Transfer', {
         srcEvent: orderCreated,
         srcTokenAddress: orderCreated.args.fromToken,
         srcAmount: orderCreated.args.fromAmount,

@@ -20,6 +20,7 @@ export class DaBeatStatsProvider {
     private readonly availWsClient: AvailWsClient | undefined,
   ) {}
 
+  // every change should be reflected in getProjects.test.ts (daLayer)
   async getStats(projectId: string): Promise<DaBeatStats> {
     switch (projectId) {
       case 'ethereum':

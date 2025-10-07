@@ -38,16 +38,15 @@ export function createBridgePlugins(): BridgePlugin[] {
     new MayanMctpPlugin(), // should be run before CCTP
     new MayanMctpFastPlugin(), // should be run before CCTP
     new CCTPPlugin(),
-    new StargatePlugin(),
-    new StargateV2BusPlugin(), // should be run before LayerZeroV2
-    new StargateV2TaxiPlugin(), // should be run before LayerZeroV2
+    new StargatePlugin(), // should be run before stargate bus/taxi, ofts
+    new StargateV2BusPlugin(), // should be run before LayerZeroV2, ofts
+    new StargateV2TaxiPlugin(), // should be run before LayerZeroV2, ofts
     new LayerZeroV2OFTsPlugin(), // should be run before LayerZeroV2
     new LayerZeroV1Plugin(),
     new LayerZeroV2Plugin(),
     new WormholeTokenBridgePlugin(), // should be run before Wormhole
     new WormholeRelayerPlugin(), // should be run before Wormhole
     new WormholePlugin(),
-    new StargatePlugin(),
     new AllbridgePlugIn(),
     new AxelarITSPlugin(), // should be run before Axelar
     new AxelarPlugin(),

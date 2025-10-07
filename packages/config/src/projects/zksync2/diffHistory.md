@@ -1,3 +1,34 @@
+Generated with discovered.json: 0xf9f77c75b0f86fdfd7c6d210a0c160830df4f8fd
+
+# Diff at Mon, 06 Oct 2025 13:33:08 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@af10d4e90bc0f1be21a0242f8327fccf9a01f37a block: 1754308257
+- current timestamp: 1759757522
+
+## Description
+
+Rotated zkStack validator on Gateway.
+
+## Watched changes
+
+```diff
+    EOA  (gateway:0x30066439887C0a509Cb38E45c9262E6924a29BbD) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"validateZkStack","from":"gateway:0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa","role":".validatorsVTL"}
+    }
+```
+
+```diff
+    contract ZKsyncValidatorTimelock (gateway:0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
+      values.validatorsVTL.1:
+-        "gateway:0x30066439887C0a509Cb38E45c9262E6924a29BbD"
++        "gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"
+    }
+```
+
 Generated with discovered.json: 0xa243bfb8148f49107c3bb6d07602d52ced772019
 
 # Diff at Wed, 03 Sep 2025 15:52:21 GMT:

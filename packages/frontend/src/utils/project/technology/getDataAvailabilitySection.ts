@@ -8,7 +8,7 @@ import {
   mapLayerRisksToRosetteValues,
 } from '~/pages/data-availability/utils/MapRisksToRosetteValues'
 import { getDaLayerRisks } from '~/server/features/data-availability/utils/getDaLayerRisks'
-import type { DaSolution } from '~/server/features/scaling/project/getScalingDaSolution'
+import type { DaSolution } from '~/server/features/scaling/project/getScalingDaSolutions'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { getDiagramParams } from '../getDiagramParams'
 import { toTechnologyRisk } from '../risk-summary/toTechnologyRisk'
@@ -31,18 +31,21 @@ type DataAvailabilitySection =
 
 export function getDataAvailabilitySection(
   project: Project<'statuses', 'customDa' | 'scalingTechnology' | 'scalingDa'>,
-  daSolution?: DaSolution,
+  daSolutions?: DaSolution[],
 ): DataAvailabilitySection | undefined {
   if (project.customDa) {
     return getCustomDaSection(project)
   }
-  if (project.scalingTechnology?.dataAvailability) {
+  if (
+    project.scalingTechnology?.dataAvailability &&
+    project.scalingTechnology?.dataAvailability?.length > 0
+  ) {
     return getPublicDaSection(
       {
         ...project,
         scalingTechnology: project.scalingTechnology,
       },
-      daSolution,
+      daSolutions,
     )
   }
   if (project.scalingTechnology?.isUnderReview)
@@ -105,31 +108,29 @@ function getCustomDaSection(
 
 function getPublicDaSection(
   project: Project<'statuses' | 'scalingTechnology', 'scalingDa'>,
-  daSolution?: DaSolution,
+  daSolutions?: DaSolution[],
 ): Extract<DataAvailabilitySection, { type: 'TechnologyChoicesSection' }> {
-  assert(
-    project.scalingTechnology?.dataAvailability,
-    'dataAvailability is required',
-  )
+  const dataAvailability = project.scalingTechnology.dataAvailability
 
-  const props = getTechnologyChoicesSectionProps(project, [
-    makeTechnologyChoice(
-      'data-availability',
-      project.scalingTechnology.dataAvailability,
-      {
-        relatedProjectBanner: daSolution
+  assert(dataAvailability, 'dataAvailability is required')
+
+  const props = getTechnologyChoicesSectionProps(
+    project,
+    dataAvailability.map((da, index) =>
+      makeTechnologyChoice('data-availability', da, {
+        relatedProjectBanner: daSolutions?.[index]
           ? {
               text: 'Learn more about the DA layer here:',
               project: {
-                name: daSolution.layerName,
-                icon: getProjectIcon(daSolution.layerSlug),
+                name: daSolutions[index].layerName,
+                icon: getProjectIcon(daSolutions[index].layerSlug),
               },
-              href: `/data-availability/projects/${daSolution.layerSlug}/${daSolution.bridgeSlug}`,
+              href: `/data-availability/projects/${daSolutions[index].layerSlug}/${daSolutions[index].bridgeSlug}`,
             }
           : undefined,
-      },
+      }),
     ),
-  ])
+  )
   return {
     type: 'TechnologyChoicesSection',
     props,

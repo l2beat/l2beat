@@ -21,7 +21,7 @@ export const rise: ScalingProject = upcomingL2({
       repositories: ['https://github.com/risechain'],
       explorers: ['https://explorer.testnet.riselabs.xyz'],
       socialMedia: [
-        'https://discord.com/invite/4yWVabz63y',
+        'https://discord.com/invite/risechain',
         'https://medium.com/@rise_chain',
         'https://x.com/rise_chain',
       ],

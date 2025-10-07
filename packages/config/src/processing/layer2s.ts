@@ -1,6 +1,7 @@
 import { HOMEPAGE_MILESTONES } from '../global/milestones'
 import type { ScalingProject } from '../internalTypes'
 import { abstract } from '../projects/abstract/abstract'
+import { adi } from '../projects/adi/adi'
 import { aevo } from '../projects/aevo/aevo'
 import { airas } from '../projects/airas/airas'
 import { alephzero } from '../projects/alephzero/alephzero'
@@ -61,6 +62,7 @@ import { fuse } from '../projects/fuse/fuse'
 import { galxegravity } from '../projects/galxegravity/galxegravity'
 import { gameswift } from '../projects/gameswift/gameswift'
 import { gasp } from '../projects/gasp/gasp'
+import { gateLayer } from '../projects/gate-layer/gate-layer'
 import { genlayer } from '../projects/genlayer/genlayer'
 import { giwa } from '../projects/giwa/giwa'
 import { gluon } from '../projects/gluon/gluon'
@@ -145,6 +147,7 @@ import { polygonmiden } from '../projects/polygonmiden/polygonmiden'
 import { polygonzkevm } from '../projects/polygonzkevm/polygonzkevm'
 import { polynomial } from '../projects/polynomial/polynomial'
 import { powerloom } from '../projects/powerloom/powerloom'
+import { primechain } from '../projects/primechain/primechain'
 import { prom } from '../projects/prom/prom'
 import { publicgoodsnetwork } from '../projects/publicgoodsnetwork/publicgoodsnetwork'
 import { puffer } from '../projects/puffer/puffer'
@@ -233,6 +236,7 @@ export const layer2s: ScalingProject[] = [
   airas,
   alephzero,
   alienx,
+  adi,
   allo,
   ancient,
   apex,
@@ -244,6 +248,7 @@ export const layer2s: ScalingProject[] = [
   automata,
   aztecconnect,
   aztec,
+  primechain,
   aztecV2,
   base,
   blast,
@@ -382,6 +387,7 @@ export const layer2s: ScalingProject[] = [
   real,
   reddioex,
   roninNetwork,
+  gateLayer,
   reddiozkvm,
   redstone,
   reya,

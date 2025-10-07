@@ -18,6 +18,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
@@ -34,6 +35,7 @@ const emergencyActivatedCount = discovery.getContractValue<number>(
   'PolygonRollupManager',
   'emergencyStateCount',
 )
+const katanaVKeys = getKatanaVKeys()
 
 export const katana: ScalingProject = {
   id: ProjectId('katana'),
@@ -266,28 +268,7 @@ export const katana: ScalingProject = {
         ],
       },
     ],
-    zkProgramHashes: [
-      {
-        hash: '0x003991487ea72a40a1caa7c234612c0da52fc4ccc748a07f6ebd35466654772e',
-        programUrl: 'https://github.com/l2beat/l2beat',
-        description:
-          'Aggregation program for OP Succinct: aggregates batch STF proofs',
-        proverSystemProject: ProjectId('sp1'),
-        verificationStatus: 'successful',
-        verificationSteps: `
-      - Check out [sp1 repo](https://github.com/succinctlabs/sp1) at commit \`76c28bf986ba102127788ce081c21fa09cf93b18\`.
-      - Set an environment variable by calling \`export SP1_ALLOW_DEPRECATED_HOOKS=true\`. It is needed for the correct execution of circuit building.
-      - Make sure that you have [go lang installed](https://go.dev/doc/install).
-      - From \`crates/prover\` call \`make build-circuits\`. Note that the execution could take a while.
-      `,
-      },
-      {
-        hash: '0x00eff0b6998df46ec38866305618089ae3dc74e513e767662e1909694F49cc30',
-        description: 'Pessimistic program for Agglayer',
-        proverSystemProject: ProjectId('sp1'),
-        verificationStatus: 'notVerified',
-      },
-    ],
+    zkProgramHashes: katanaVKeys.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   technology: {
     dataAvailability: {
@@ -386,4 +367,44 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
       type: 'general',
     },
   ],
+}
+
+function getKatanaVKeys(): string[] {
+  const vKeys: string[] = []
+  vKeys.push(
+    discovery.getContractValue<string>('AggchainFEP', 'aggregationVkey'),
+  )
+  vKeys.push(
+    discovery.getContractValue<string>('AggchainFEP', 'rangeVkeyCommitment'),
+  )
+
+  // If default gateway is used, aggchain program hashes are taken from AggLayerGateway
+  // Otherwise they are taken from AggchainFEP itself
+  type ProgramHashDict = Record<string, Record<string, string>[]>
+  const useDefaultGateway = discovery.getContractValue<boolean>(
+    'AggchainFEP',
+    'useDefaultGateway',
+  )
+  const aggchainVKeyDict = useDefaultGateway
+    ? discovery.getContractValue<ProgramHashDict>(
+        'AggLayerGateway',
+        'aggchainVKeys',
+      )
+    : discovery.getContractValue<ProgramHashDict>(
+        'AggchainFEP',
+        'ownedAggchainVKeys',
+      )
+  const pessimisticVKeyDict = discovery.getContractValue<ProgramHashDict>(
+    'AggLayerGateway',
+    'routes',
+  )
+
+  // Iterate over all selectors, each of the selectors could be used as it is set in calldata
+  const aggchainVKeys = Object.values(aggchainVKeyDict).flatMap((arr) =>
+    arr.map((el) => el['newVKey']),
+  )
+  const pessimisticVKeys = Object.values(pessimisticVKeyDict).flatMap((arr) =>
+    arr.map((el) => el['pessimisticVKey']),
+  )
+  return vKeys.concat(aggchainVKeys).concat(pessimisticVKeys)
 }

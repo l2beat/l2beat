@@ -134,7 +134,12 @@ export class SquidCoralPlugin implements BridgePlugin {
     if (!orderCreated) return
 
     return [
-      Result.Transfer('squid-coral.Swap', {
+      Result.Message('squid-coral.Message', {
+        app: 'squid-coral',
+        srcEvent: orderCreated,
+        dstEvent: orderFilled,
+      }),
+      Result.Transfer('squid-coral.Transfer', {
         srcEvent: orderCreated,
         srcTokenAddress: orderCreated.args.fromToken,
         srcAmount: orderCreated.args.fromAmount,

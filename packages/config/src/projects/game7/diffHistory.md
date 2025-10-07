@@ -1,3 +1,89 @@
+Generated with discovered.json: 0xd2ffa95b8fed6964f9c8d9891d9ce069cdef0a02
+
+# Diff at Fri, 03 Oct 2025 08:47:18 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@e647409961cd173771dcfcaeb808991c99e73911 block: 1759389311
+- current timestamp: 1759481125
+
+## Description
+
+Member removed from multisig.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      values.$members.2:
+-        "arb1:0x50930d652266EF4127FA3A1906B7Cb9951076628"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 10 (40%)"
+    }
+```
+
+Generated with discovered.json: 0x8b9edac93f39e9d014dca6b3b6614ae8c9eae4a4
+
+# Diff at Thu, 02 Oct 2025 07:18:13 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@b1cfb9bd1821e27488215e4364f565cfd7d54c2e block: 1759157094
+- current timestamp: 1759389311
+
+## Description
+
+New executor role assigned to a Safe.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.1:
++        "arb1:0xfe7C286480C7ff638319f8Aa1A97D224d82A55C6"
+      values.executors.1:
++        "arb1:0xfe7C286480C7ff638319f8Aa1A97D224d82A55C6"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (arb1:0xfe7C286480C7ff638319f8Aa1A97D224d82A55C6)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../game7/.flat/SafeL2/GnosisSafeProxy.p.sol       |   35 +
+ .../src/projects/game7/.flat/SafeL2/SafeL2.sol     | 1152 ++++++++++++++++++++
+ 2 files changed, 1187 insertions(+)
+```
+
+Generated with discovered.json: 0x8c609918fa823a7dfa02c238078633878c11ce0c
+
+# Diff at Mon, 29 Sep 2025 14:46:26 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c66a02d28b2467edd595f8a8468988549dd6d3cf block: 1756452867
+- current timestamp: 1759157094
+
+## Description
+
+Already archived project, no more active stakers and thus tx batches.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.stakerCount:
+-        1
++        0
+    }
+```
+
 Generated with discovered.json: 0x42ddb44fdc19627c91fc60557c9dfb3a45bc88c8
 
 # Diff at Fri, 26 Sep 2025 12:45:33 GMT:

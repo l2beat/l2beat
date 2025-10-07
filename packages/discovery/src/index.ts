@@ -68,6 +68,7 @@ export {
 export { neuterErrors } from './discovery/output/errors'
 export { flattenDiscoveredSources } from './discovery/output/flattenDiscoveredSource'
 export { saveDiscoveredJson } from './discovery/output/saveDiscoveryResult'
+export { generateStructureHash } from './discovery/output/structureOutput'
 export {
   combineStructureAndColor,
   toDiscoveryOutput,

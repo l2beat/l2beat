@@ -22,6 +22,7 @@ import {
 import { BADGES } from '../../common/badges'
 import { PROOFS } from '../../common/proofSystems'
 import { getStage } from '../../common/stages/getStage'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getSHARPVerifierUpgradeDelay } from '../../discovery/starkware'
 import type { ScalingProject } from '../../internalTypes'
@@ -58,6 +59,8 @@ const ESCROW_LORDS_ADDRESS = 'eth:0x023A2aAc5d0fa69E3243994672822BA43E34E5C9'
 const ESCROW_STRK_ADDRESS = 'eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4'
 const ESCROW_MULTIBRIDGE_ADDRESS =
   'eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb'
+const ESCROW_SOLVBTC_ADDRESS = 'eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10'
+const ESCROW_LBTC_ADDRESS = 'eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e'
 
 const escrowETHDelaySeconds = discovery.getContractValue<number>(
   ESCROW_ETH_ADDRESS,
@@ -178,6 +181,14 @@ const finalizationPeriod = 0
 const scThreshold = discovery.getMultisigStats('Starkware Security Council')
 const sharpMsThreshold = discovery.getMultisigStats('SHARP Multisig')
 
+const starknetProgramHashes = []
+starknetProgramHashes.push(
+  discovery.getContractValue<string>('Starknet', 'programHash'),
+)
+starknetProgramHashes.push(
+  discovery.getContractValue<string>('Starknet', 'aggregatorProgramHash'),
+)
+
 export const starknet: ScalingProject = {
   type: 'layer2',
   id: ProjectId('starknet'),
@@ -258,7 +269,7 @@ export const starknet: ScalingProject = {
     },
     exitWindow: RISK_VIEW.EXIT_WINDOW_STARKNET(minNonScDelay),
     sequencerFailure: RISK_VIEW.SEQUENCER_CAN_SKIP('L1'),
-    proposerFailure: RISK_VIEW.PROPOSER_WHITELIST_SECURITY_COUNCIL,
+    proposerFailure: RISK_VIEW.PROPOSER_WHITELIST_SECURITY_COUNCIL(),
   },
   stage: getStage(
     {
@@ -386,6 +397,7 @@ export const starknet: ScalingProject = {
         },
       ],
     },
+    zkProgramHashes: starknetProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   contracts: {
@@ -571,6 +583,16 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         tokens: ['EKUBO', 'ZEND', 'NSTR'],
         description:
           'StarkGate bridge for EKUBO, ZEND, NSTR (and potentially other tokens listed via StarkgateManager).',
+      }),
+      discovery.getEscrowDetails({
+        address: ChainSpecificAddress(ESCROW_SOLVBTC_ADDRESS),
+        tokens: ['SolvBTC'],
+        description: 'StarkGate bridge for SolvBTC.',
+      }),
+      discovery.getEscrowDetails({
+        address: ChainSpecificAddress(ESCROW_LBTC_ADDRESS),
+        tokens: ['LBTC'],
+        description: 'StarkGate bridge for LBTC.',
       }),
     ],
     activityConfig: {

@@ -123,5 +123,11 @@
     "hash": "0xd5047c4d0e194d60832d6fcddd0cfba77cc45a190d31800813ba676c19a7e751",
     "address": "eth:0x597959A313643Ed15d45dfbCC422321E72A84515",
     "blockNumber": 23174078
+  },
+  "L1CrossDomainMessenger_v2_10_0": {
+    "hash": "0x12cf78bcfa479caaee8133c0f935dcdcc333cdc116805f6b81bd80f6ba52128c",
+    "address": "eth:0x22D12E0FAebD62d429514A65EBAe32dd316c12D6",
+    "chain": "ethereum",
+    "blockNumber": 23496267
   }
 }
