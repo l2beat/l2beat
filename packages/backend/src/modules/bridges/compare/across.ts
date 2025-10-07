@@ -1,3 +1,4 @@
+import { HttpClient } from '@l2beat/shared'
 import type { BridgeComparePlugin, BridgeExternalItem } from './types'
 
 export class AcrossComparePlugin implements BridgeComparePlugin {
@@ -5,8 +6,10 @@ export class AcrossComparePlugin implements BridgeComparePlugin {
   type = 'transfer' as const
 
   async getExternalItems(): Promise<BridgeExternalItem[]> {
-    const response = await fetch(
+    const http = new HttpClient()
+    const response = await http.fetchRaw(
       'https://explorer.range.org/transactions?l=100&sn=eth,base,arb1,oeth&dn=arb1,base,oeth,eth&b=across',
+      { timeout: 10_000 },
     )
     const htmlContent = await response.text()
 

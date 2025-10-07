@@ -4,6 +4,7 @@ import { BaseRepository } from '../BaseRepository'
 import type { BridgeEvent } from '../kysely/generated/types'
 
 export interface BridgeEventRecord {
+  plugin: string
   eventId: string
   type: string
   expiresAt: UnixTime
@@ -21,6 +22,7 @@ export interface BridgeEventRecord {
 
 export function toRecord(row: Selectable<BridgeEvent>): BridgeEventRecord {
   return {
+    plugin: row.plugin,
     eventId: row.eventId,
     type: row.type,
     expiresAt: UnixTime.fromDate(row.expiresAt),
@@ -29,7 +31,7 @@ export function toRecord(row: Selectable<BridgeEvent>): BridgeEventRecord {
     blockNumber: row.blockNumber,
     blockHash: row.blockHash,
     txHash: row.txHash,
-    txTo: row.txTo as EthereumAddress | undefined,
+    txTo: (row.txTo ?? undefined) as EthereumAddress | undefined,
     logIndex: row.logIndex,
     matched: row.matched,
     unsupported: row.unsupported,
@@ -39,6 +41,7 @@ export function toRecord(row: Selectable<BridgeEvent>): BridgeEventRecord {
 
 export function toRow(record: BridgeEventRecord): Insertable<BridgeEvent> {
   return {
+    plugin: record.plugin,
     eventId: record.eventId,
     type: record.type,
     expiresAt: UnixTime.toDate(record.expiresAt),

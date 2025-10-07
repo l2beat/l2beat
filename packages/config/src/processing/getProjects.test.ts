@@ -196,6 +196,23 @@ describe('getProjects', () => {
         })
       }
     }
+
+    const SUPPORTED_DYNAMIC_VALIDATORS_PROJECTS = [
+      'ethereum',
+      'celestia',
+      'avail',
+      'near-da',
+    ]
+
+    for (const project of projects) {
+      if (project.daLayer?.validators?.type === 'dynamic') {
+        it(`${project.id} dynamic type validators is supported in BE code`, () => {
+          expect(
+            SUPPORTED_DYNAMIC_VALIDATORS_PROJECTS.includes(project.id),
+          ).toEqual(true)
+        })
+      }
+    }
   })
 
   describe('contracts', () => {

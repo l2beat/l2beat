@@ -1,3 +1,49 @@
+Generated with discovered.json: 0xa46f5ead34d5cded127fa0301547b5bef2b66fbd
+
+# Diff at Mon, 06 Oct 2025 15:32:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e58bd9f0913161b35e2a2c65f233464591d4f28b block: 1753693907
+- current timestamp: 1759764256
+
+## Description
+
+Vaults added, config cleaned.
+
+## Watched changes
+
+```diff
+    contract Renzo Restaked LST  Token (eth:0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811) {
+    +++ description: None
+      values.farmCount:
+-        0
++        1
+      values.farmIdAt.0:
++        0
+      values.farmIds.0:
++        0
+      values.subvaultAt.1:
++        [0,"eth:0x388b844870761ad3D6643C3754d00bB50F2A25f5","eth:0xC2886FbAa5fe0713aC68441B20C2f2d8665b6598"]
+      values.subvaultsCount:
+-        1
++        2
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753693907 (main branch discovery), not current.
+
+```diff
+    contract Renzo Restaked LST  Token (eth:0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811) {
+    +++ description: None
+      template:
++        "tokens/RenzoRestakedLST"
+    }
+```
+
 Generated with discovered.json: 0x9694052d21169c1c20e390eaeabf0c12c218b5b2
 
 # Diff at Wed, 10 Sep 2025 16:42:55 GMT:

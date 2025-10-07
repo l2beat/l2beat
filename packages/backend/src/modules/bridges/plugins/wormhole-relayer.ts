@@ -60,10 +60,11 @@ export class WormholeRelayerPlugin implements BridgePlugin {
       }
 
       return [
-        Result.Message('wormhole.Message.wormhole-relayer', [
-          logMessagePublished,
-          delivery,
-        ]),
+        Result.Message('wormhole.Message', {
+          app: 'wormhole-relayer', // NOTE: This isn't a real app, it's a mechanism for apps to use
+          srcEvent: logMessagePublished,
+          dstEvent: delivery,
+        }),
       ]
     }
   }

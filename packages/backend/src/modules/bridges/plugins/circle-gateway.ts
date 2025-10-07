@@ -84,10 +84,11 @@ export class CircleGatewayPlugIn implements BridgePlugin {
       }
 
       return [
-        Result.Message('circle-gateway.Message', [
-          attestationUsed,
-          gatewayBurned,
-        ]),
+        Result.Message('circle-gateway.Message', {
+          app: 'circle-gateway',
+          srcEvent: attestationUsed,
+          dstEvent: gatewayBurned,
+        }),
         Result.Transfer('circle-gateway.Transfer', {
           // NOTE: TRANSFER has an opposite direction than MESSAGE
           srcEvent: gatewayBurned,

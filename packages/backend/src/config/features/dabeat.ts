@@ -1,5 +1,6 @@
 import type { Env } from '@l2beat/backend-tools'
 import type { ProjectService } from '@l2beat/config'
+import uniq from 'lodash/uniq'
 import type { DaBeatConfig } from '../Config'
 
 export async function getDaBeatConfig(
@@ -16,9 +17,15 @@ export async function getDaBeatConfig(
     .filter((x) => x !== undefined)
     .filter((x, i, a) => a.indexOf(x) === i) // unique
 
-  const projectsForDaBeatStats = projects
-    .filter((x) => x.daLayer.economicSecurity)
-    .map((x) => x.id)
+  const projectsForDaBeatStats = uniq(
+    projects
+      .filter(
+        (x) =>
+          x.daLayer.economicSecurity ||
+          x.daLayer.validators?.type === 'dynamic',
+      )
+      .map((x) => x.id),
+  )
 
   return {
     projectsForDaBeatStats,

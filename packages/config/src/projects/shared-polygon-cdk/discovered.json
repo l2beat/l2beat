@@ -1,6 +1,6 @@
 {
   "name": "shared-polygon-cdk",
-  "timestamp": 1758619032,
+  "timestamp": 1759758020,
   "configHash": "0x398fa437a677823692bb44ea735473f748f77c4dc61677f75c6db8dac8ceb159",
   "entries": [
     {
@@ -366,7 +366,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 12 (42%)",
-        "nonce": 88,
+        "nonce": 89,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -414,7 +414,7 @@
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
         "getProxiedTokensManager": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-        "getRoot": "0xf43b0dddec7f3a7fefa414e6ffb3e77a5765c17b35f3525ac0428ddea226eace",
+        "getRoot": "0x351b27ce800b2af949f816cd6f9475bd82bda180c6df8e0bf2fb0bd6282fdc60",
         "getWrappedTokenBridgeImplementation": "eth:0xc5240E74839794D512e77bD9b3702c4B6D5b0F0d",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
@@ -650,12 +650,12 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0xbb82d7f613ebfbe3ad5fcb5652c306aff048531027e319cff507f815ffffaaff",
+        "getRollupExitRoot": "0x69acfa2a9b711e167a3bc4a46e7a747144a7aa5355d129401054c049e07cca1a",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1758618647,
+        "lastAggregationTimestamp": 1759757111,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
-        "pessimisticProofSenders": [14, 17, 18, 19, 20, 3, 21, 22, 23],
+        "pessimisticProofSenders": [14, 17, 18, 19, 20, 3, 21, 22, 23, 7],
         "pol": "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "ROLLUP_MANAGER_VERSION": "al-v0.3.1",
         "rollupCount": 23,
@@ -717,11 +717,11 @@
           {
             "rollupContract": "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B",
             "chainID": 994873017,
-            "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
             "forkID": 12,
-            "rollupTypeID": 7,
-            "rollupVerifierType": 0,
-            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+            "rollupTypeID": 11,
+            "rollupVerifierType": 1,
+            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
           },
           {
             "rollupContract": "eth:0x78253E2E6120164bd826668A4C96Db20f78A94c9",
@@ -967,8 +967,8 @@
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           }
         ],
-        "totalSequencedBatches": 813437,
-        "totalVerifiedBatches": 812948,
+        "totalSequencedBatches": 819153,
+        "totalVerifiedBatches": 818668,
         "trustedAggregatorAC": [
           "eth:0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
           "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
@@ -1048,9 +1048,9 @@
         ],
         "$upgradeCount": 4,
         "bridgeAddress": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 71381,
+        "depositCount": 73307,
         "GER_VERSION": "al-v0.3.0",
-        "getRoot": "0x2a19eceec505e7e08e0e5a28a2fd296959f208b715537de5ea228797bb8bb965",
+        "getRoot": "0x04ff4541b0019d3593ffaedc328201e4dce31c3bd84d142876c943d483e5a24f",
         "rollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "implementationNames": {
@@ -2218,6 +2218,6 @@
     "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23424779 },
+  "usedBlockNumbers": { "ethereum": 23519086 },
   "permissionsConfigHash": "0xd18e3cb59729a51f2eda4291afc54ac6559021862018826e4e39e3326a643691"
 }

@@ -11,6 +11,7 @@ import {
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
 } from '../../common'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
@@ -76,6 +77,14 @@ const portal = discovery.getContract('OptimismPortal')
 const l2OutputOracle = discovery.getContract('L2OutputOracle')
 const explorerUrl = 'https://explorer.zircuit.com'
 
+const zircuitProgramHashes = []
+zircuitProgramHashes.push(
+  discovery.getContractValue<string>('L2OutputOracle', 'aggregationVkey'),
+)
+zircuitProgramHashes.push(
+  discovery.getContractValue<string>('L2OutputOracle', 'rangeVkeyCommitment'),
+)
+
 const genesisTimestamp = UnixTime(1719936217)
 
 export const zircuit: ScalingProject = opStackL2({
@@ -108,6 +117,7 @@ export const zircuit: ScalingProject = opStackL2({
   isNodeAvailable: 'UnderReview',
   stateValidation: {
     categories: [ZIRCUIT_STATE_VALIDATION],
+    zkProgramHashes: zircuitProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   activityConfig: {
     // zircuit does not have a system transaction in every block but in every 5th/6th, so we do not subtract those and overcount

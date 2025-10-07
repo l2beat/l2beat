@@ -14,6 +14,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatDelay } from '../../common/formatDelays'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getCommittee,
@@ -44,6 +45,11 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 )
 
 const { committeePermission, minSigners } = getCommittee(discovery)
+
+const tanxProgramHash = discovery.getContractValue<string>(
+  'GpsFactRegistryAdapter',
+  'programHash',
+)
 
 export const brine: ScalingProject = {
   type: 'layer2',
@@ -133,6 +139,7 @@ export const brine: ScalingProject = {
   },
   stateValidation: {
     categories: [STATE_VALIDATION.STARKEX_VALIDITY_PROOFS],
+    zkProgramHashes: [ZK_PROGRAM_HASHES(tanxProgramHash)],
   },
   technology: {
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKEX_OFF_CHAIN,

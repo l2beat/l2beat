@@ -88,14 +88,17 @@ export class BeaconChainClient extends ClientCore {
     ])
 
     let effectiveBalance = 0n
+    let numberOfValidators = 0
 
     for await (const { value } of pipeline) {
       // gwei to wei
       effectiveBalance += BigInt(value) * 10n ** 9n
+      numberOfValidators++
     }
 
     return {
       totalStake: effectiveBalance,
+      numberOfValidators,
     }
   }
 

@@ -4,8 +4,10 @@ import { BaseRepository } from '../BaseRepository'
 import type { BridgeMessage } from '../kysely/generated/types'
 
 export interface BridgeMessageRecord {
+  plugin: string
   messageId: string
   type: string
+  app: string
   duration: number | undefined
   timestamp: UnixTime
   srcTime: UnixTime | undefined
@@ -22,8 +24,10 @@ export interface BridgeMessageRecord {
 
 export function toRecord(row: Selectable<BridgeMessage>): BridgeMessageRecord {
   return {
+    plugin: row.plugin,
     messageId: row.messageId,
     type: row.type,
+    app: row.app,
     duration: row.duration ?? undefined,
     timestamp: UnixTime.fromDate(row.timestamp),
     srcTime: row.srcTime !== null ? UnixTime.fromDate(row.srcTime) : undefined,
@@ -41,8 +45,10 @@ export function toRecord(row: Selectable<BridgeMessage>): BridgeMessageRecord {
 
 export function toRow(record: BridgeMessageRecord): Insertable<BridgeMessage> {
   return {
+    plugin: record.plugin,
     messageId: record.messageId,
     type: record.type,
+    app: record.app,
     duration: record.duration,
     timestamp: UnixTime.toDate(record.timestamp),
     srcTime:
@@ -63,6 +69,8 @@ export function toRow(record: BridgeMessageRecord): Insertable<BridgeMessage> {
 export interface BridgeMessageStatsRecord {
   type: string
   count: number
+  knownAppCount: number
+  knownApps: string[]
   medianDuration: number
 }
 
@@ -122,6 +130,26 @@ export class BridgeMessageRepository extends BaseRepository {
         sql<number>`percentile_cont(0.5) within group (order by duration)`.as(
           'medianDuration',
         ),
+        eb.fn
+          .count(
+            eb
+              .case()
+              .when(
+                eb.and([
+                  eb('app', '!=', ''),
+                  eb('app', '!=', 'unknown'),
+                  eb('app', 'is not', null),
+                ]),
+              )
+              .then(1)
+              .end(),
+          )
+          .as('knownAppCount'),
+        sql<
+          string[]
+        >`array_agg(distinct app) filter (where app != '' and app != 'unknown' and app is not null)`.as(
+          'knownApps',
+        ),
       ])
       .groupBy('type')
       .execute()
@@ -129,6 +157,8 @@ export class BridgeMessageRepository extends BaseRepository {
     return overallStats.map((overall) => ({
       type: overall.type,
       count: Number(overall.count),
+      knownAppCount: Number(overall.knownAppCount),
+      knownApps: overall.knownApps ?? [],
       medianDuration: Number(overall.medianDuration),
     }))
   }
