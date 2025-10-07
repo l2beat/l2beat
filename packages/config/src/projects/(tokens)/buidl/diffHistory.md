@@ -8,7 +8,7 @@ Generated with discovered.json: 0xd99fa48c41251ed2db7902449c8a373164774d8a
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+BUIDL is now considered a restricted rwa.
 
 ## Config/verification related changes
 
