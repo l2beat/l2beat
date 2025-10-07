@@ -112,7 +112,6 @@ function TransfersPageLayout(props: {
   const eventsTable = <TransfersTable {...props} />
 
   const dataTableOptions = {
-    pageLength: 25,
     order: [[0, 'desc']], // Sort by timestamp descending
     columnDefs: [
       {
