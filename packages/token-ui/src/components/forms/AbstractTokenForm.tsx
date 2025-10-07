@@ -23,12 +23,11 @@ import { Spinner } from '~/components/core/Spinner'
 import { Textarea } from '~/components/core/TextArea'
 import { minLengthCheck, urlCheck } from '~/utils/checks'
 import { sanitize } from '~/utils/sanitize'
-import type { InferFormSchema } from '~/utils/types'
 
 const categoryValues = ['btc', 'ether', 'stablecoin', 'other'] as const
 
-export type AbstractTokenSchema = InferFormSchema<typeof AbstractTokenSchema>
-export const AbstractTokenSchema = {
+export type AbstractTokenSchema = v.infer<typeof AbstractTokenSchema>
+export const AbstractTokenSchema = v.object({
   id: v.string(),
   issuer: v.string().check(minLengthCheck(1)).optional(),
   symbol: v.string().check(minLengthCheck(1)),
@@ -45,7 +44,7 @@ export const AbstractTokenSchema = {
     })
     .optional(),
   comment: v.string().optional(),
-}
+})
 
 export function AbstractTokenForm({
   form,

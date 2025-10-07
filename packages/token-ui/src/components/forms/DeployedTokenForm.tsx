@@ -37,10 +37,9 @@ import {
 import { cn } from '~/utils/cn'
 import { getAbstractTokenDisplayId } from '~/utils/getAbstractTokenDisplayId'
 import { sanitize } from '~/utils/sanitize'
-import type { InferFormSchema } from '~/utils/types'
 
-export type DeployedTokenSchema = InferFormSchema<typeof DeployedTokenSchema>
-export const DeployedTokenSchema = {
+export type DeployedTokenSchema = v.infer<typeof DeployedTokenSchema>
+export const DeployedTokenSchema = v.object({
   id: v.string(),
   chain: v.string(),
   address: v.string().check(ethereumAddressCheck),
@@ -49,7 +48,7 @@ export const DeployedTokenSchema = {
   abstractTokenId: v.string().optional(),
   deploymentTimestamp: v.string(),
   comment: v.string().optional(),
-}
+})
 
 export function DeployedTokenForm({
   form,
