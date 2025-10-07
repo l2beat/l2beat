@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x6f9ba0ab84c084ca12fcde474716e18e54bfddc5
+
+# Diff at Mon, 06 Oct 2025 15:21:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e58bd9f0913161b35e2a2c65f233464591d4f28b block: 1758802197
+- current timestamp: 1759763659
+
+## Description
+
+AccountStateRoot change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758802197 (main branch discovery), not current.
+
+```diff
+    contract StakingInfo (eth:0x539964b3d225194717fb896D26c8b3E635b8A1aE) {
+    +++ description: Contains logging and getter functions about staking.
+      fieldMeta:
++        {"getAccountStateRoot":{"description":"Merkle root of a tree of validator balances."}}
+    }
+```
+
 Generated with discovered.json: 0xa1d125af6e4cf4ade4902c1381c65681e339fa12
 
 # Diff at Thu, 25 Sep 2025 12:24:27 GMT:
