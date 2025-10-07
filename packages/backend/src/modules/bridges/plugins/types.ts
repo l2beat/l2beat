@@ -22,6 +22,7 @@ export interface BridgeEventContext {
 }
 
 export interface BridgeEvent<T = unknown> {
+  plugin: string
   eventId: string
   type: string
   expiresAt: UnixTime
@@ -30,6 +31,7 @@ export interface BridgeEvent<T = unknown> {
 }
 
 export interface BridgeMessage {
+  plugin: string
   kind: 'BridgeMessage'
   app: string
   type: string
@@ -46,6 +48,7 @@ export interface TransferSide {
 
 export interface BridgeTransfer {
   kind: 'BridgeTransfer'
+  plugin: string
   type: string
   events: BridgeEvent[]
   src: TransferSide
@@ -72,7 +75,7 @@ export function generateId(type: string) {
 
 export interface BridgeEventType<T> {
   type: string
-  create(ctx: BridgeEventContext, payload: T): BridgeEvent<T>
+  create(ctx: BridgeEventContext, payload: T): Omit<BridgeEvent<T>, 'plugin'>
   checkType(action: BridgeEvent): action is BridgeEvent<T>
 }
 
@@ -93,7 +96,10 @@ export function createBridgeEventType<T>(
 
   return {
     type,
-    create(ctx: BridgeEventContext, payload: T): BridgeEvent<T> {
+    create(
+      ctx: BridgeEventContext,
+      payload: T,
+    ): Omit<BridgeEvent<T>, 'plugin'> {
       return {
         eventId: generateId('evt'),
         type,
@@ -115,7 +121,10 @@ export interface LogToCapture {
   ctx: BridgeEventContext
 }
 
-export type MatchResult = (BridgeMessage | BridgeTransfer)[]
+export type MatchResult = (
+  | Omit<BridgeMessage, 'plugin'>
+  | Omit<BridgeTransfer, 'plugin'>
+)[]
 
 export type BridgeEventQuery<T> = Partial<T> & {
   ctx?: Partial<BridgeEventContext>
@@ -138,7 +147,10 @@ export interface BridgePlugin {
   name: string
   capture?: (
     input: LogToCapture,
-  ) => BridgeEvent | undefined | Promise<BridgeEvent | undefined>
+  ) =>
+    | Omit<BridgeEvent, 'plugin'>
+    | undefined
+    | Promise<Omit<BridgeEvent, 'plugin'> | undefined>
   matchTypes?: BridgeEventType<unknown>[]
   match?: (
     event: BridgeEvent,
@@ -200,7 +212,7 @@ function Message(
     srcEvent: BridgeEvent
     dstEvent: BridgeEvent
   },
-): BridgeMessage {
+): Omit<BridgeMessage, 'plugin'> {
   if (!/\w+\.\w+(\.\w+)?/.test(type)) {
     throw new Error(
       'BridgeMessage type must have the format: "protocol-name.MessageName" or "protocol-name.MessageName.app-name"',
@@ -232,7 +244,7 @@ export interface BridgeTransferOptions {
 function Transfer(
   type: string,
   options: BridgeTransferOptions,
-): BridgeTransfer {
+): Omit<BridgeTransfer, 'plugin'> {
   if (!/\w+\.\w+(\.\w+)?/.test(type)) {
     throw new Error(
       'BridgeTransfer type must have the format: "app-name.Transfer" or "app-name.Transfer.app-name"',
