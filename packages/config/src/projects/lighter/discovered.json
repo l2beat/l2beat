@@ -1,6 +1,6 @@
 {
   "name": "lighter",
-  "timestamp": 1759836913,
+  "timestamp": 1759848649,
   "configHash": "0xded62d9fb9417d0f2fa93d8edfcf83d25d3ed3105fa2538ddfb528de6140b566",
   "entries": [
     {
@@ -55,8 +55,8 @@
           "eth:0x4194D3847a0239d59a87bC82C1870CBE1FA99db1"
         ],
         "additionalZkLighter": "eth:0x4194D3847a0239d59a87bC82C1870CBE1FA99db1",
-        "committedBatchesCount": 54278,
-        "committedPriorityRequestCount": 471440,
+        "committedBatchesCount": 54329,
+        "committedPriorityRequestCount": 472445,
         "createdMarkets": [
           "USELESS",
           "TIA",
@@ -86,17 +86,17 @@
         ],
         "desertMode": false,
         "desertVerifier": "eth:0x59406a5DcE71a4f631F9cd5D41996a19D6fDF184",
-        "executedBatchesCount": 54264,
-        "executedOnChainBatchesCount": 28706,
-        "executedPriorityRequestCount": 471246,
+        "executedBatchesCount": 54314,
+        "executedOnChainBatchesCount": 28744,
+        "executedPriorityRequestCount": 472123,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
         "getTarget": "eth:0x1D2624A65F8aaD1c4Bc406b4D2418ba577D218cb",
         "governance": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
         "insuranceFundOperator": "eth:0x3629C998Fe1045A86c423AcaacCB9cBF7c792011",
-        "lastAccountIndex": 218685,
-        "lastVerifiedEndBlockNumber": 59275808,
-        "lastVerifiedStateRoot": "0x001cfc201a2e7d4c097e8d883119acfeb505c18871cb263d9eef4124db0f38d8",
-        "lastVerifiedValidiumRoot": "0x3d315ec713f0aec5888a5c6e96c64789c2a2c501da7e55ef1471fefa23336468",
+        "lastAccountIndex": 219138,
+        "lastVerifiedEndBlockNumber": 59354208,
+        "lastVerifiedStateRoot": "0x55992125a881890678b2e88afa735700b3aa70728ddf43a7720b4bbd43a9928e",
+        "lastVerifiedValidiumRoot": "0x646cda9d2a6ab1756690c60e890712f76a8cdf8f8e05f2ceccb76272ac898e48",
         "MAX_ACCOUNT_INDEX": 281474976710654,
         "MAX_API_KEY_INDEX": 254,
         "MAX_BATCH_DEPOSIT_LENGTH": 1000,
@@ -113,15 +113,15 @@
         "MIN_POOL_SHARES_TO_MINT_OR_BURN": 1,
         "NIL_ACCOUNT_INDEX": 281474976710655,
         "NIL_ORDER_BASE_AMOUNT": 0,
-        "openPriorityRequestCount": 480,
-        "pendingOnChainBatchesCount": 10,
+        "openPriorityRequestCount": 922,
+        "pendingOnChainBatchesCount": 14,
         "PRIORITY_EXPIRATION": 1555200,
-        "stateRoot": "0xb7876fd65e3d0b0b77339d9ebce2c3774f3c27cebfbcb27575913d420543489d",
+        "stateRoot": "0x55992125a881890678b2e88afa735700b3aa70728ddf43a7720b4bbd43a9928e",
         "stateRootUpgradeVerifier": "eth:0x0000000000000000000000000000000000000000",
         "treasury": "eth:0x44A5F41Fb364e52878193A8Ba375A1B17906D8E4",
-        "validiumRoot": "0x049c061781761da2b55c2cd31bcd8eae44a00b9a2166fe9f7a058c9df40d69bf",
-        "verifiedBatchesCount": 54265,
-        "verifiedPriorityRequestCount": 471254,
+        "validiumRoot": "0x646cda9d2a6ab1756690c60e890712f76a8cdf8f8e05f2ceccb76272ac898e48",
+        "verifiedBatchesCount": 54314,
+        "verifiedPriorityRequestCount": 472123,
         "verifier": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA"
       },
       "implementationNames": {
@@ -170,34 +170,9 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "upgrade",
-          "from": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
+          "permission": "interact",
           "from": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+          "description": "can reduce the upgrade delay to zero seconds.",
           "role": ".securityCouncilAddress"
         }
       ],
@@ -825,6 +800,6 @@
     "lighter/ZkLighter": "0x1f3c50ddda3ae792e9d0955c1532084bd5930fc7e95ee90581b1c1510744581d",
     "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23525614 },
-  "permissionsConfigHash": "0x5d9fbcbfaae7271ed2e4721a0e552ec16e6a17af21262bb23e6000bcd6f2c5e3"
+  "usedBlockNumbers": { "ethereum": 23526587 },
+  "permissionsConfigHash": "0xca44d91198cd3d3b15514ce43febf77893ee90d40457b81aa281d397129b292c"
 }

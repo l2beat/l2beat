@@ -2,7 +2,14 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is {{approvedUpgradeNoticePeriodFmt}} and can be entirely skipped by {{securityCouncilAddress}}.",
   "fields": {
-    "securityCouncilAddress": { "permissions": [{ "type": "act" }] },
+    "securityCouncilAddress": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can reduce the upgrade delay to zero seconds."
+        }
+      ]
+    },
     "getMaster": {
       "permissions": [
         { "type": "act", "delay": "{{approvedUpgradeNoticePeriod}}" }
