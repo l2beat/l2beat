@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xa647fa76a0f189d4022941cba9e2c2a37d2e7f48
+Generated with discovered.json: 0x68dc72b5230cf828f2ac2e09b6311069e875fef6
 
-# Diff at Mon, 06 Oct 2025 17:25:44 GMT:
+# Diff at Mon, 06 Oct 2025 11:13:29 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- current timestamp: 1759468227
+- author: Luca Donno (<donnoh99@gmail.com>)
+- current timestamp: 1759749034
 
 ## Description
 
@@ -14,6 +14,12 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract Proxy (eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x59406a5DcE71a4f631F9cd5D41996a19D6fDF184)
     +++ description: None
 ```
 

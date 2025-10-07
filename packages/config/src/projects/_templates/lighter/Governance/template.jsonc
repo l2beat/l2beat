@@ -20,7 +20,12 @@
           "where": ["!=", "#isActive", true]
         }
       },
-      "permissions": [{ "type": "validateLighter" }]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can commit, verify and execute batches."
+        }
+      ]
     }
   }
 }

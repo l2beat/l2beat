@@ -1,1 +1,20 @@
-{ "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json" }
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
+    "verifier": {
+      "handler": { "type": "storage", "slot": 4, "returnType": "address" }
+    },
+    "desertVerifier": {
+      "handler": { "type": "storage", "slot": 5, "returnType": "address" }
+    },
+    "governance": {
+      "handler": { "type": "storage", "slot": 6, "returnType": "address" }
+    },
+    "additionalZkLighter": {
+      "handler": { "type": "storage", "slot": 7, "returnType": "address" }
+    },
+    "stateRootUpgradeVerifier": {
+      "handler": { "type": "storage", "slot": 494, "returnType": "address" }
+    }
+  }
+}
