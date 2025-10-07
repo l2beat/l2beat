@@ -75,7 +75,7 @@ async function importTransformed(db: TokenDatabase) {
       deployedToAbstract[deployedId] = record.id
     }
 
-    console.log(`Adding ${record.id}:${record.issuer}:${record.symbol}...`)
+    console.log(`Adding ${record.id}:${record.issuer}:${record.symbol}`)
     await planAndExecute(db, {
       type: 'AddAbstractTokenIntent',
       record,
@@ -84,7 +84,7 @@ async function importTransformed(db: TokenDatabase) {
 
   for (const entry of transformed.deployedTokens) {
     const record = toDeployedToken(entry, deployedToAbstract)
-    console.log(`Adding ${record.chain}:${record.address}...`)
+    console.log(`Adding ${record.chain}+${record.address}`)
     await planAndExecute(db, {
       type: 'AddDeployedTokenIntent',
       record,

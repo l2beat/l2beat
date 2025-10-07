@@ -142,19 +142,13 @@ async function planAddDeployedToken(
   intent: AddDeployedTokenIntent,
 ): Promise<Command[]> {
   const record = intent.record
-  if (record.id !== undefined) {
-    const existing = await db.deployedToken.findById(record.id)
-    if (existing !== undefined) {
-      throw new PlanningError(`DeployedToken ${record.id} already exist`)
-    }
-  }
-  const existingWithChainAddress = await db.deployedToken.findByChainAndAddress(
+  const existing = await db.deployedToken.findByChainAndAddress(
     record.chain,
     record.address,
   )
-  if (existingWithChainAddress) {
+  if (existing !== undefined) {
     throw new PlanningError(
-      `DeployedToken with chain ${record.chain} and address ${record.address} already exist`,
+      `DeployedToken ${record.chain}+${record.address} already exist`,
     )
   }
   return [
@@ -169,9 +163,15 @@ async function planUpdateDeployedToken(
   db: TokenDatabase,
   intent: UpdateDeployedTokenIntent,
 ): Promise<Command[]> {
-  const before = await db.deployedToken.findById(intent.update.id)
+  const update = intent.update
+  const before = await db.deployedToken.findByChainAndAddress(
+    update.chain,
+    update.address,
+  )
   if (before === undefined) {
-    throw new PlanningError(`DeployedToken ${intent.update.id} doesn't exist`)
+    throw new PlanningError(
+      `DeployedToken ${update.chain}+${update.address} doesn't exist`,
+    )
   }
   return [
     {
