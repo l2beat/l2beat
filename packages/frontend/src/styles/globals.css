@@ -27,8 +27,6 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  overscroll-behavior-x: none;
-
   --primary: #131215;
   --primary-invert: #fafafa;
   --secondary: #5f6470;
