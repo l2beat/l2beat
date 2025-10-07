@@ -1,6 +1,8 @@
 import type { Project } from '@l2beat/config'
-import type { StateValidationZkProgramHashData } from '~/components/projects/sections/contracts/ZkProgramHash'
-import type { ProgramHashesSectionProps } from '~/components/projects/sections/ProgramHashesSection'
+import type {
+  ProgramHashesSectionProps,
+  StateValidationZkProgramHashData,
+} from '~/components/projects/sections/program-hashes/ProgramHashesSection'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import type { ProjectSectionProps } from '../../components/projects/sections/types'
 

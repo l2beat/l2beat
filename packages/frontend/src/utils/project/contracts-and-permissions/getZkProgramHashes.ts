@@ -2,7 +2,7 @@ import type {
   Project,
   ProjectScalingContractsZkProgramHash,
 } from '@l2beat/config'
-import type { StateValidationZkProgramHashData } from '~/components/projects/sections/contracts/ZkProgramHash'
+import type { StateValidationZkProgramHashData } from '~/components/projects/sections/program-hashes/ProgramHashesSection'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 
 export function getZkProgramHashes(
