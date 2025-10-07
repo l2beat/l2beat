@@ -1183,7 +1183,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-PC0000023-1",
+      "id": "zksync2-PC0000023",
       "priceId": "tradable-singapore-fintech-ssl-2",
       "symbol": "PC0000023",
       "name": "Private Credit Direct Deal0000023",
@@ -1195,24 +1195,6 @@
         "sinceTimestamp": 1751500800,
         "address": "0x5C8c39E167C604B036afd3FBB65426f9fe78Ce6d",
         "chain": "zksync2"
-      },
-      "category": "rwaRestricted",
-      "source": "native",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "zksync2-PC0000023-2",
-      "priceId": "tradable-na-neobank-sstl",
-      "symbol": "PC0000023",
-      "name": "Private Credit Direct Deal0000023",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/66797/large/tradable.jpg?1750576441",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xAE0d8cad4cE522538AE34386c319C7ccD11FE428",
-        "chain": "zksync2",
-        "decimals": 6,
-        "sinceTimestamp": 1751500800
       },
       "category": "rwaRestricted",
       "source": "native",

@@ -104,6 +104,24 @@
     },
     {
       "mode": "auto",
+      "id": "plumenetwork-USCC",
+      "priceId": "superstate-uscc",
+      "symbol": "USCC",
+      "name": "Superstate Crypto Carry Fund",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39326/large/superstate.jpg?1721724143",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x4c21B7577C8FE8b0B0669165ee7C8f67fa1454Cf",
+        "chain": "plumenetwork",
+        "decimals": 6,
+        "sinceTimestamp": 1743086925
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "plumenetwork-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",
@@ -146,6 +164,24 @@
           }
         ]
       }
+    },
+    {
+      "mode": "auto",
+      "id": "plumenetwork-USTB-1",
+      "priceId": "superstate-short-duration-us-government-securities-fund-ustb",
+      "symbol": "USTB",
+      "name": "Superstate Short Duration US Government Securities Fund",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35012/large/ustb.jpeg?1707102680",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xE4fA682f94610cCd170680cc3B045d77D9E528a8",
+        "chain": "plumenetwork",
+        "decimals": 6,
+        "sinceTimestamp": 1743009435
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
     },
     {
       "mode": "auto",

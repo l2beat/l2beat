@@ -269,6 +269,24 @@
     },
     {
       "mode": "auto",
+      "id": "base-BENJI",
+      "priceId": "franklin-templeton-benji",
+      "symbol": "BENJI",
+      "name": "Franklin OnChain U.S. Government Money Fund",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66409/large/Benji_Logo.png?1749371083",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x60CfC2b186a4CF647486e42c42B11cC6D571d1E4",
+        "chain": "base",
+        "decimals": 18,
+        "sinceTimestamp": 1750636800
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-BICO",
       "priceId": "biconomy",
       "symbol": "BICO",
