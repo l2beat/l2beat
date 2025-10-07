@@ -1,8 +1,8 @@
-import { ProjectSection } from './ProjectSection'
 import {
   type StateValidationZkProgramHashData,
   ZkProgramHash,
-} from './state-validation/ZkProgramHash'
+} from './contracts/ZkProgramHash'
+import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
 
 export interface ProgramHashesSectionProps extends ProjectSectionProps {

@@ -1,4 +1,4 @@
-import type { ProjectScalingStateValidationZkProgramHash } from '@l2beat/config'
+import type { ProjectScalingContractsZkProgramHash } from '@l2beat/config'
 import { CopyButton } from '~/components/CopyButton'
 import {
   Collapsible,
@@ -24,7 +24,7 @@ import { CountWithAttesters } from '~/pages/zk-catalog/v2/components/VerifiedCou
 import { cn } from '~/utils/cn'
 
 export type StateValidationZkProgramHashData = Omit<
-  ProjectScalingStateValidationZkProgramHash,
+  ProjectScalingContractsZkProgramHash,
   'proverSystemProject'
 > & {
   zkCatalogProject?: {

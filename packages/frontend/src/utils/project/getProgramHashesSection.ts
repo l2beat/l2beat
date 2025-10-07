@@ -1,18 +1,17 @@
 import type { Project } from '@l2beat/config'
+import type { StateValidationZkProgramHashData } from '~/components/projects/sections/contracts/ZkProgramHash'
 import type { ProgramHashesSectionProps } from '~/components/projects/sections/ProgramHashesSection'
-import type { StateValidationZkProgramHashData } from '~/components/projects/sections/state-validation/ZkProgramHash'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import type { ProjectSectionProps } from '../../components/projects/sections/types'
 
 export function getProgramHashesSection(
   project: Project<'zkCatalogInfo'>,
-  allProjects: Project<'scalingTechnology'>[],
+  allProjects: Project<'contracts'>[],
 ): Omit<ProgramHashesSectionProps, keyof ProjectSectionProps> | undefined {
   const result: Map<string, StateValidationZkProgramHashData> = new Map()
 
   for (const scalingProject of allProjects) {
-    const programHashes =
-      scalingProject.scalingTechnology.stateValidation?.zkProgramHashes
+    const programHashes = scalingProject.contracts.zkProgramHashes
     if (!programHashes) continue
 
     for (const zkProgramHash of programHashes) {

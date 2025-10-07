@@ -13,6 +13,10 @@ import type { TechnologyRisk } from '../RiskList'
 import { RiskList } from '../RiskList'
 import type { ProjectSectionId } from '../types'
 import { ContractsUpdated } from './ContractsUpdated'
+import {
+  type StateValidationZkProgramHashData,
+  ZkProgramHash,
+} from './ZkProgramHash'
 
 export interface ContractsSectionProps {
   id: ProjectSectionId
@@ -25,6 +29,7 @@ export interface ContractsSectionProps {
   diagram?: DiagramParams
   isUnderReview?: boolean
   discoUiHref?: string
+  zkProgramHashes?: StateValidationZkProgramHashData[]
 }
 
 export function ContractsSection(props: ContractsSectionProps) {
@@ -125,6 +130,22 @@ export function ContractsSection(props: ContractsSectionProps) {
           </p>
           <RiskList risks={props.risks} />
         </>
+      )}
+      {props.zkProgramHashes && (
+        <div className="mt-4 space-y-4 md:mt-6">
+          <div className="flex items-baseline gap-3">
+            <h3 className="whitespace-pre text-heading-20">Program Hashes</h3>
+            <div className="w-full border-divider border-b-2" />
+          </div>
+          <div className="space-y-2">
+            {props.zkProgramHashes.map((zkProgramHash) => (
+              <ZkProgramHash
+                key={zkProgramHash.hash}
+                zkProgramHash={zkProgramHash}
+              />
+            ))}
+          </div>
+        </div>
       )}
     </ProjectSection>
   )

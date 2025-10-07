@@ -50,16 +50,17 @@ export async function getZkCatalogProjectEntry(
     'archivedAt' | 'milestones'
   >,
 ): Promise<ProjectZkCatalogEntry> {
-  const [allProjects, scalingProjects, tvs, contractUtils] = await Promise.all([
-    ps.getProjects({
-      optional: ['daBridge', 'isBridge', 'isScaling', 'isDaLayer'],
-    }),
-    ps.getProjects({
-      select: ['scalingTechnology'],
-    }),
-    get7dTvsBreakdown({ type: 'layer2' }),
-    getContractUtils(),
-  ])
+  const [allProjects, allProjectsWithContracts, tvs, contractUtils] =
+    await Promise.all([
+      ps.getProjects({
+        optional: ['daBridge', 'isBridge', 'isScaling', 'isDaLayer'],
+      }),
+      ps.getProjects({
+        select: ['contracts'],
+      }),
+      get7dTvsBreakdown({ type: 'layer2' }),
+      getContractUtils(),
+    ])
 
   const trustedSetupsByProofSystem = getTrustedSetupsWithVerifiersAndAttesters(
     project,
@@ -153,7 +154,7 @@ export async function getZkCatalogProjectEntry(
 
   const programHashesSection = await getProgramHashesSection(
     project,
-    scalingProjects,
+    allProjectsWithContracts,
   )
   if (programHashesSection) {
     sections.push({

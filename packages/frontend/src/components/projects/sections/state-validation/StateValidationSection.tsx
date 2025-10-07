@@ -10,23 +10,17 @@ import { Markdown } from '../../../markdown/Markdown'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 import { Category } from './Category'
-import {
-  type StateValidationZkProgramHashData,
-  ZkProgramHash,
-} from './ZkProgramHash'
 
 export interface StateValidationSectionProps extends ProjectSectionProps {
   diagram: DiagramParams | undefined
   stateValidation: ProjectScalingStateValidation
   zkCatalogBanner?: ProjectDetailsRelatedProjectBannerProps
-  zkProgramHashes?: StateValidationZkProgramHashData[]
 }
 
 export function StateValidationSection({
   diagram,
   stateValidation,
   zkCatalogBanner,
-  zkProgramHashes,
   ...sectionProps
 }: StateValidationSectionProps) {
   return (
@@ -57,16 +51,6 @@ export function StateValidationSection({
           className="mt-4 md:mt-6"
           {...zkCatalogBanner}
         />
-      )}
-      {zkProgramHashes && (
-        <div className="mt-4 space-y-2 md:mt-6">
-          {zkProgramHashes.map((zkProgramHash) => (
-            <ZkProgramHash
-              key={zkProgramHash.hash}
-              zkProgramHash={zkProgramHash}
-            />
-          ))}
-        </div>
       )}
     </ProjectSection>
   )
