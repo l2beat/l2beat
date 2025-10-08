@@ -49,7 +49,7 @@ import {
 const paths = getDiscoveryPaths()
 
 export class ProjectDiscovery {
-  private readonly discovery: DiscoveryOutput
+  private readonly discovery?: DiscoveryOutput
   private readonly discoveries: DiscoveryOutput[]
   private eoaIDMap: Record<string, string> = {}
   private permissionRegistry: PermissionRegistry
@@ -58,8 +58,13 @@ export class ProjectDiscovery {
     public readonly projectName: string,
     public readonly configReader = new ConfigReader(paths.discovery),
   ) {
-    this.discoveries = configReader.readDiscoveryWithReferences(projectName)
-    this.discovery = this.discoveries[0] // always the base discovery
+    try {
+      this.discoveries = configReader.readDiscoveryWithReferences(projectName)
+      this.discovery = this.discoveries[0] // always the base discovery
+    } catch {
+      this.discoveries = []
+      this.discovery = undefined
+    }
 
     // Removing Reference entries because otherwise we get duplicates
     // and incomplete data.
