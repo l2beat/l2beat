@@ -11,20 +11,15 @@ export function validateResolver<Input extends FieldValues, Context, Output>(
 
     const errors = getErrors(schema, input)
 
-    if (Object.keys(errors).length > 0) {
-      const errs = errors.reduce(
-        (acc, err) => {
-          acc[err.key] = {
-            type: 'validation' as const,
-            message: err.message,
-          }
-          return acc
-        },
-        {} as Record<string, { type: 'validation'; message: string }>,
-      )
+    if (errors.length > 0) {
       return {
         values: {},
-        errors: errs as FieldErrors<Input>,
+        errors: Object.fromEntries(
+          errors.map((err) => [
+            err.key,
+            { type: 'validation' as const, message: err.message },
+          ]),
+        ) as FieldErrors<Input>,
       }
     }
 
