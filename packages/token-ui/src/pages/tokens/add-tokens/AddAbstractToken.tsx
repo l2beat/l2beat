@@ -78,6 +78,14 @@ export function AddAbstractToken({
   ])
 
   function onSubmit(values: AbstractTokenSchema) {
+    if (isLoading) return
+    if (coin === null) {
+      form.setError('coingeckoId', {
+        message: 'Coin not found',
+        type: 'validate',
+      })
+      return
+    }
     planAbstractToken({
       ...values,
       coingeckoListingTimestamp: values.coingeckoListingTimestamp
