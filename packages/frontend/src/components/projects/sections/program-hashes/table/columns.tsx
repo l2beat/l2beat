@@ -4,8 +4,8 @@ import { CustomLink } from '~/components/link/CustomLink'
 import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { GithubIcon } from '~/icons/products/Github'
 import { CountWithAttesters } from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
+import { ProgramHashNameCell } from './components/ProgramHashNameCell'
 import { VerificationSteps } from './components/VerificationSteps'
-import { ZkProjectTooltip } from './components/ZkProjectTooltip'
 import type { ZkProgramHashRow } from './ZkProgramHashesTable'
 
 const columnHelper = createColumnHelper<ZkProgramHashRow>()
@@ -13,23 +13,14 @@ const columnHelper = createColumnHelper<ZkProgramHashRow>()
 export const zkProgramHashesColumns = [
   columnHelper.accessor('title', {
     header: 'Name',
-    cell: (ctx) => (
-      <div className="flex items-center gap-1">
-        <div className="min-w-0 max-w-60 overflow-hidden text-ellipsis whitespace-nowrap font-bold text-label-value-14 leading-normal">
-          {ctx.getValue()}
-        </div>
-        {ctx.row.original.zkCatalogProject && (
-          <ZkProjectTooltip zkProject={ctx.row.original.zkCatalogProject} />
-        )}
-      </div>
-    ),
+    cell: (ctx) => <ProgramHashNameCell {...ctx.row.original} />,
   }),
   columnHelper.display({
     id: 'hash',
     header: 'Hash',
     cell: (ctx) => (
       <div className="flex items-baseline gap-1.5">
-        <span className="font-medium text-label-value-15 text-secondary">
+        <span className="font-medium text-label-value-14 text-secondary md:text-label-value-15">
           {ctx.row.original.hash.slice(0, 6)}...
           {ctx.row.original.hash.slice(-4)}
         </span>
