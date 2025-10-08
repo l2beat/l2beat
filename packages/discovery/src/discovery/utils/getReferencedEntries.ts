@@ -4,7 +4,6 @@ import { toAddressArray } from './extractors'
 
 type ReferenceNode = {
   entry: EntryParameters
-  referencedBy: Set<ChainSpecificAddress>
   references: Set<ChainSpecificAddress>
 }
 
@@ -22,7 +21,6 @@ export function getReferencedEntries(
 
     nodes.set(entry.address, {
       entry,
-      referencedBy: new Set(),
       references: new Set(),
     })
   }
@@ -37,11 +35,6 @@ export function getReferencedEntries(
     const fromEntry = getEntry(from)
     if (fromEntry) {
       fromEntry.references.add(to)
-    }
-
-    const toEntry = getEntry(to)
-    if (toEntry) {
-      toEntry.referencedBy.add(from)
     }
   }
 
