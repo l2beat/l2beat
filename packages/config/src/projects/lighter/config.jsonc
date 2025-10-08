@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "lighter",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7"],
+  "overrides": {
+    "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7": {
+      "proxyType": "zkLighter proxy"
+    }
+  },
+  "names": {
+    "eth:0x59406a5DcE71a4f631F9cd5D41996a19D6fDF184": "DesertVerifier"
+  }
+}
