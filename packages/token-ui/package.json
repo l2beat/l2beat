@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:dependencies": "cd ../.. && pnpm build:dependencies:token-ui",
     "preview": "vite preview",
     "format": "biome format .",
     "format:fix": "biome format --write .",
