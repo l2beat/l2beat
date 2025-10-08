@@ -36,7 +36,7 @@ const challengePeriod = discovery.getContractValue<number>(
 
 // Fuel uses EigenDA but doesn't have discovery configuration for version
 // Using v1 as default
-const eigenDACertVersion = 'v1'
+const eigenDACertVersion = 'v2'
 
 export const fuel: ScalingProject = {
   id: ProjectId('fuel'),
