@@ -13,7 +13,8 @@ export interface BridgeEventRecord {
   blockNumber: number
   blockHash: string
   txHash: string
-  value: string
+  // TODO: remove undefined
+  value?: string
   txTo: string | undefined
   logIndex: number
   matched: boolean
