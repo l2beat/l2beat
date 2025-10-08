@@ -69,12 +69,14 @@ export const teeBridge: BaseProject = {
       
       **Remote Attestation**: The bridge relies on Intel's Attestation Service (IAS) to verify that TEE nodes are running legitimate software on genuine hardware with up-to-date security patches. This creates a dependency on Intel's centralized infrastructure.
       
-      **TCB Recovery**: When new TEE vulnerabilities are discovered (such as AepicLeak), the system must implement Trusted Computing Base (TCB) recovery procedures to block compromised nodes from joining the network before Intel updates their attestation requirements. Research has shown that many applications fail to take appropriate action after TCB recovery announcements, often not implementing necessary security updates or node blocking mechanisms in a timely manner.
+      **TCB Recovery**: When new TEE vulnerabilities are discovered (such as AepicLeak or the WireTap attack), the system must implement Trusted Computing Base (TCB) recovery procedures to block compromised nodes from joining the network before Intel updates their attestation requirements. Research has shown that many applications fail to take appropriate action after TCB recovery announcements, often not implementing necessary security updates or node blocking mechanisms in a timely manner.
+
+      **Physical Hardware Attacks**: Recent research has demonstrated that SGX attestation keys can be extracted through physical DRAM bus interposition attacks using relatively inexpensive equipment (under $1000). The WireTap attack shows how attackers can build devices to physically inspect memory traffic and exploit deterministic encryption in Intel's Total Memory Encryption to recover SGX secret attestation keys. This allows attackers to forge SGX attestation quotes.
       
       **Key Management**: The bridge uses on-chain key registration and verification rather than relying solely on TEE sealing mechanisms. TEE attestation keys are registered on-chain through verifier contracts that track valid MRENCLAVE hashes, MRSIGNER values, and authorized signers. This provides transparency and governance control over which TEE configurations are trusted, eliminating the "developer key backdoor" risk present in systems that rely purely on MRSIGNER-based sealing. However, initial key registration still requires Intel's remote attestation to verify TEE authenticity.
 
 
-      **Governance and TCB Recovery**: TEE-based bridges face unique governance challenges around TEE configuration management and vulnerability response. The on-chain verifier contracts allow governance to manage valid MRENCLAVE hashes and authorized signers, providing transparency and control over trusted TEE configurations. However, compromised TEE keys can sign false availability attestations during the time window before governance can detect and revoke them. When new TEE vulnerabilities are discovered, governance must coordinate extremely rapid responses to revoke compromised configurations before they can be exploited to attest to unavailable data. 
+      **Governance and TCB Recovery**: TEE-based bridges face unique governance challenges around TEE configuration management and vulnerability response. The on-chain verifier contracts allow governance to manage valid MRENCLAVE hashes and authorized signers, providing transparency and control over trusted TEE configurations. However, compromised TEE keys can sign false availability attestations during the time window before governance can detect and revoke them. When new TEE vulnerabilities are discovered, governance must coordinate extremely rapid responses to revoke compromised configurations before they can be exploited to attest to unavailable data.
 
       ## Implementation Details
 
@@ -102,11 +104,15 @@ export const teeBridge: BaseProject = {
             'Secret Network v1.18 Upgrade: Due Process vs Bricking Risk Discussion',
           url: 'https://forum.scrt.network/t/secret-network-v-1-18-upgrade-proposal/7720',
         },
+        {
+          title: 'WireTap: Breaking Server SGX via DRAM Bus Interposition',
+          url: 'https://wiretap.fail/',
+        },
       ],
       risks: [
         {
           category: 'Funds can be lost if',
-          text: 'the TEE hardware is compromised, if there are vulnerabilities in the trusted execution environment, or if compromised TEE keys are used to sign false availability attestations before governance can revoke them from the on-chain verifier contracts.',
+          text: 'the TEE hardware is compromised through physical attacks, if there are vulnerabilities in the trusted execution environment, or if compromised TEE keys are used to sign false availability attestations before governance can revoke them from the on-chain verifier contracts.',
         },
         {
           category: 'Funds can be frozen if',
