@@ -13,6 +13,8 @@ export interface BridgeEventRecord {
   blockNumber: number
   blockHash: string
   txHash: string
+  // TODO: remove undefined
+  value?: string
   txTo: string | undefined
   logIndex: number
   matched: boolean
@@ -31,6 +33,7 @@ export function toRecord(row: Selectable<BridgeEvent>): BridgeEventRecord {
     blockNumber: row.blockNumber,
     blockHash: row.blockHash,
     txHash: row.txHash,
+    value: row.value,
     txTo: row.txTo ?? undefined,
     logIndex: row.logIndex,
     matched: row.matched,
@@ -50,6 +53,7 @@ export function toRow(record: BridgeEventRecord): Insertable<BridgeEvent> {
     blockNumber: record.blockNumber,
     blockHash: record.blockHash.toLowerCase(),
     txHash: record.txHash.toLowerCase(),
+    value: record.value,
     txTo: record.txTo ?? null,
     logIndex: record.logIndex,
     matched: record.matched,
