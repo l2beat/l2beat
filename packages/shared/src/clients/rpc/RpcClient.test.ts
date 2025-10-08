@@ -892,6 +892,7 @@ const mockRawTx = (to: string | undefined) => ({
 
 const mockTx = (to: string | undefined) => ({
   hash: '0x1',
+  value: '0x111111111',
   from: '0xf',
   to,
   data: '0x1',
