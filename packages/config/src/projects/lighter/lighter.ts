@@ -44,7 +44,6 @@ export const lighter: ScalingProject = {
     description:
       'Lighter is an application-specific zk rollup on a mission to revolutionize trading by building provably fair, secure, and scalable infrastructure for finance.',
     purposes: ['Universal', 'Exchange'],
-    stacks: ['ZK Stack'],
     links: {
       websites: ['https://lighter.xyz', 'https://app.lighter.xyz/'],
       explorers: [
