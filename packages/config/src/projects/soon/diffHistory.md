@@ -8,7 +8,7 @@ Generated with discovered.json: 0x823a1e9b9d74f25fee76ebf3aa824d8ebb79876e
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+EigenDA handler should return certificate versioning (v1,v2,v3) so that descriptions and risks are accurate.
 
 ## Config/verification related changes
 
