@@ -1,30 +1,60 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "The main rollup contract. It processes L2 batches, manages USDC deposits and withdrawals, allows users to submit censorship-resistnant L2 transactions and controls desert mode (recovery mode). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.",
+  "description": "The main rollup contract. It processes L2 batches, manages USDC deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.",
   "displayName": "Lighter",
   "fields": {
     "verifier": {
-      "handler": { "type": "storage", "slot": 4, "returnType": "address" }
+      "handler": {
+        "type": "storage",
+        "slot": 4,
+        "returnType": "address"
+      }
     },
     "desertVerifier": {
-      "handler": { "type": "storage", "slot": 5, "returnType": "address" }
+      "handler": {
+        "type": "storage",
+        "slot": 5,
+        "returnType": "address"
+      }
     },
     "governance": {
-      "handler": { "type": "storage", "slot": 6, "returnType": "address" }
+      "handler": {
+        "type": "storage",
+        "slot": 6,
+        "returnType": "address"
+      }
     },
     "additionalZkLighter": {
-      "handler": { "type": "storage", "slot": 7, "returnType": "address" }
+      "handler": {
+        "type": "storage",
+        "slot": 7,
+        "returnType": "address"
+      }
     },
     "stateRootUpgradeVerifier": {
-      "handler": { "type": "storage", "slot": 494, "returnType": "address" }
+      "handler": {
+        "type": "storage",
+        "slot": 494,
+        "returnType": "address"
+      }
     },
     "createdMarkets": {
       "handler": {
         "type": "event",
         "select": "symbol",
-        "add": { "event": ["CreateMarket"] }
+        "add": {
+          "event": [
+            "CreateMarket"
+          ]
+        }
       },
-      "edit": ["map", ["format", "Bytes32ToString"]]
+      "edit": [
+        "map",
+        [
+          "format",
+          "Bytes32ToString"
+        ]
+      ]
     }
   }
 }

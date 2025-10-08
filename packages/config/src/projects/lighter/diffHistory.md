@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x3964bf96338b0d03319a82c9e7d4ae77e0766d3a
+Generated with discovered.json: 0x598eaf5f3b133c1e44be4b23ebcdc2442d69ad57
 
-# Diff at Wed, 08 Oct 2025 13:30:28 GMT:
+# Diff at Wed, 08 Oct 2025 14:18:25 GMT:
 
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- current timestamp: 1759911325
+- author: Luca Donno (<donnoh99@gmail.com>)
+- current timestamp: 1759933041
 
 ## Description
 
@@ -14,7 +14,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract Lighter (eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7)
-    +++ description: The main rollup contract. It processes L2 batches, manages USDC deposits and withdrawals, allows users to submit censorship-resistnant L2 transactions and controls desert mode (recovery mode). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.
+    +++ description: The main rollup contract. It processes L2 batches, manages USDC deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.
 ```
 
 ```diff

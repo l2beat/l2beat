@@ -1,6 +1,6 @@
 {
   "name": "lighter",
-  "timestamp": 1759911325,
+  "timestamp": 1759933041,
   "configHash": "0xded62d9fb9417d0f2fa93d8edfcf83d25d3ed3105fa2538ddfb528de6140b566",
   "entries": [
     {
@@ -46,7 +46,7 @@
         "0xa9200f827141ae9be2188327085a679c20ed563bf9bb6e5e2fc895b99b2bd5b0"
       ],
       "proxyType": "zkLighter proxy",
-      "description": "The main rollup contract. It processes L2 batches, manages USDC deposits and withdrawals, allows users to submit censorship-resistnant L2 transactions and controls desert mode (recovery mode). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.",
+      "description": "The main rollup contract. It processes L2 batches, manages USDC deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.",
       "sinceTimestamp": 1737090335,
       "sinceBlock": 21642011,
       "values": {
@@ -56,8 +56,8 @@
           "eth:0x4194D3847a0239d59a87bC82C1870CBE1FA99db1"
         ],
         "additionalZkLighter": "eth:0x4194D3847a0239d59a87bC82C1870CBE1FA99db1",
-        "committedBatchesCount": 54614,
-        "committedPriorityRequestCount": 476906,
+        "committedBatchesCount": 54691,
+        "committedPriorityRequestCount": 478485,
         "createdMarkets": [
           "USELESS",
           "TIA",
@@ -83,21 +83,22 @@
           "FF",
           "2Z",
           "EDEN",
-          "ZEC"
+          "ZEC",
+          "MON"
         ],
         "desertMode": false,
         "desertVerifier": "eth:0x59406a5DcE71a4f631F9cd5D41996a19D6fDF184",
-        "executedBatchesCount": 54597,
-        "executedOnChainBatchesCount": 29001,
-        "executedPriorityRequestCount": 476633,
+        "executedBatchesCount": 54643,
+        "executedOnChainBatchesCount": 29043,
+        "executedPriorityRequestCount": 477436,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
         "getTarget": "eth:0x1D2624A65F8aaD1c4Bc406b4D2418ba577D218cb",
         "governance": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
         "insuranceFundOperator": "eth:0x3629C998Fe1045A86c423AcaacCB9cBF7c792011",
-        "lastAccountIndex": 220517,
-        "lastVerifiedEndBlockNumber": 59806746,
-        "lastVerifiedStateRoot": "0xf884a8534b6343ea1b9f1e73607e41e36c45190a9b9ce442d5885476b5256c66",
-        "lastVerifiedValidiumRoot": "0xfb5ef51acfc481d90b3b842af45a9d0b39ebfdbd5c83ae5b047b32b5ebc9b919",
+        "lastAccountIndex": 221589,
+        "lastVerifiedEndBlockNumber": 59880346,
+        "lastVerifiedStateRoot": "0x512551555e6f37f467d9c5d44c1d139a7d533e76c2a094c0d23bffea4270f54c",
+        "lastVerifiedValidiumRoot": "0xbf9e063354000932aa5cd15468312826b6866ea9396f5a5d1b5d7b34063718b7",
         "MAX_ACCOUNT_INDEX": 281474976710654,
         "MAX_API_KEY_INDEX": 254,
         "MAX_BATCH_DEPOSIT_LENGTH": 1000,
@@ -114,15 +115,15 @@
         "MIN_POOL_SHARES_TO_MINT_OR_BURN": 1,
         "NIL_ACCOUNT_INDEX": 281474976710655,
         "NIL_ORDER_BASE_AMOUNT": 0,
-        "openPriorityRequestCount": 597,
-        "pendingOnChainBatchesCount": 16,
+        "openPriorityRequestCount": 1944,
+        "pendingOnChainBatchesCount": 44,
         "PRIORITY_EXPIRATION": 1555200,
-        "stateRoot": "0xf884a8534b6343ea1b9f1e73607e41e36c45190a9b9ce442d5885476b5256c66",
+        "stateRoot": "0x512551555e6f37f467d9c5d44c1d139a7d533e76c2a094c0d23bffea4270f54c",
         "stateRootUpgradeVerifier": "eth:0x0000000000000000000000000000000000000000",
         "treasury": "eth:0x44A5F41Fb364e52878193A8Ba375A1B17906D8E4",
-        "validiumRoot": "0xfb5ef51acfc481d90b3b842af45a9d0b39ebfdbd5c83ae5b047b32b5ebc9b919",
-        "verifiedBatchesCount": 54597,
-        "verifiedPriorityRequestCount": 476633,
+        "validiumRoot": "0xbf9e063354000932aa5cd15468312826b6866ea9396f5a5d1b5d7b34063718b7",
+        "verifiedBatchesCount": 54643,
+        "verifiedPriorityRequestCount": 477436,
         "verifier": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA"
       },
       "implementationNames": {
@@ -803,6 +804,6 @@
     "lighter/ZkLighter": "0x1f3c50ddda3ae792e9d0955c1532084bd5930fc7e95ee90581b1c1510744581d",
     "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23531779 },
+  "usedBlockNumbers": { "ethereum": 23533569 },
   "permissionsConfigHash": "0x1a24146fa507c5ecabb362d4e81e0f2de708dfb817e39a54c1bdad18160c3f5c"
 }
