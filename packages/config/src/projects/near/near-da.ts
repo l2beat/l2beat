@@ -169,12 +169,14 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
     },
     economicSecurity: {
-      name: 'Near',
       token: {
         symbol: 'NEAR',
         decimals: 24,
         coingeckoId: 'near',
       },
+    },
+    validators: {
+      type: 'dynamic',
     },
   },
   milestones: [

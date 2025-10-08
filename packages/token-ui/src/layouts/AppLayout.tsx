@@ -1,11 +1,20 @@
 import { AppSidebar } from '~/components/AppSidebar'
-import { SidebarProvider } from '~/components/core/Sidebar'
+import { SidebarInset } from '~/components/core/Sidebar'
+import { cn } from '~/utils/cn'
 
-export function AppLayout({ children }: { children: React.ReactNode }) {
+export function AppLayout({
+  children,
+  className,
+}: {
+  children: React.ReactNode
+  className?: string
+}) {
   return (
-    <SidebarProvider>
+    <>
       <AppSidebar />
-      <main className="min-h-screen w-full py-2 pr-2">{children}</main>
-    </SidebarProvider>
+      <SidebarInset className={cn('py-2 pr-2', className)}>
+        {children}
+      </SidebarInset>
+    </>
   )
 }

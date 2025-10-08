@@ -179,6 +179,42 @@ describe('getProjects', () => {
     })
   })
 
+  describe('daLayer', () => {
+    const SUPPORTED_ECONOMIC_SECURITY_PROJECTS = [
+      'ethereum',
+      'celestia',
+      'avail',
+      'near-da',
+    ]
+
+    for (const project of projects) {
+      if (project.daLayer?.economicSecurity) {
+        it(`${project.id} economicSecurity is supported in BE code`, () => {
+          expect(
+            SUPPORTED_ECONOMIC_SECURITY_PROJECTS.includes(project.id),
+          ).toEqual(true)
+        })
+      }
+    }
+
+    const SUPPORTED_DYNAMIC_VALIDATORS_PROJECTS = [
+      'ethereum',
+      'celestia',
+      'avail',
+      'near-da',
+    ]
+
+    for (const project of projects) {
+      if (project.daLayer?.validators?.type === 'dynamic') {
+        it(`${project.id} dynamic type validators is supported in BE code`, () => {
+          expect(
+            SUPPORTED_DYNAMIC_VALIDATORS_PROJECTS.includes(project.id),
+          ).toEqual(true)
+        })
+      }
+    }
+  })
+
   describe('contracts', () => {
     for (const project of getProjects()) {
       describe(project.id, () => {

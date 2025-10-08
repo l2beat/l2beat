@@ -37,6 +37,8 @@ export const mantle: ScalingProject = opStackL2({
       ],
     },
   },
+  nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'FBTC'],
+  nonTemplateOptimismPortalEscrowTokens: ['MNT'],
   chainConfig: {
     name: 'mantle',
     chainId: 5000,
@@ -68,23 +70,6 @@ export const mantle: ScalingProject = opStackL2({
     type: 'Validity',
     zkCatalogId: ProjectId('sp1'),
   },
-  nonTemplateEscrows: [
-    discovery.getEscrowDetails({
-      address: ChainSpecificAddress(
-        'eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb',
-      ),
-      sinceTimestamp: UnixTime(1688314886),
-      tokens: '*',
-      excludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'FBTC'],
-    }),
-    discovery.getEscrowDetails({
-      address: ChainSpecificAddress(
-        'eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012',
-      ),
-      sinceTimestamp: UnixTime(1688314886),
-      tokens: ['ETH'],
-    }),
-  ],
   nonTemplateTrackedTxs: [
     {
       uses: [

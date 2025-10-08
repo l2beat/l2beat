@@ -1,4 +1,5 @@
-import { HomeIcon } from 'lucide-react'
+import { CirclePlusIcon, HomeIcon } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 import {
   Sidebar,
@@ -6,10 +7,12 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from '~/components/core/Sidebar'
+import { SidebarSearch } from './SidebarSearch'
 
 // Menu items.
 const items = [
@@ -18,23 +21,33 @@ const items = [
     url: '/',
     icon: HomeIcon,
   },
+  {
+    title: 'Add',
+    url: '/tokens/new',
+    icon: CirclePlusIcon,
+  },
 ]
 
 export function AppSidebar() {
   return (
     <Sidebar variant="floating" collapsible="icon">
+      <SidebarHeader>
+        <SidebarGroupLabel className="font-bold text-black text-xs">
+          Token UI
+        </SidebarGroupLabel>
+        <SidebarSearch />
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Token UI</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <Link to={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

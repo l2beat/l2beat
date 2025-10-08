@@ -1,3 +1,48 @@
+Generated with discovered.json: 0xb1223811c0458c0113ca44d28d27e0531791d19b
+
+# Diff at Tue, 07 Oct 2025 14:28:34 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@8565ff097fc0a7fe0355555b648b1799518c8f35 block: 1759744123
+- current timestamp: 1759847246
+
+## Description
+
+Queued and executed ZIP-12 and ZIP-13 proposals.
+
+## Watched changes
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        11
++        13
+    }
+```
+
+Generated with discovered.json: 0x0a40d07f265768926a7ac4028f190e00d8154cbc
+
+# Diff at Mon, 06 Oct 2025 09:49:49 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@af10d4e90bc0f1be21a0242f8327fccf9a01f37a block: 1759398765
+- current timestamp: 1759744123
+
+## Description
+
+New minter for ZK token according to https://www.tally.xyz/gov/zksync/proposal/3413588788305073197878658504162606756015331882899383310343250085297198101137?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746.
+
+## Watched changes
+
+```diff
+    contract ZkToken (zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+      values.accessControl.MINTER_ROLE.members.14:
++        "zksync:0xF13374240dCf45783e510537d98dE1C6Ca522238"
+    }
+```
+
 Generated with discovered.json: 0x82eff06f03c4622579a954b2b55b12ba0e1ad738
 
 # Diff at Thu, 02 Oct 2025 09:53:53 GMT:

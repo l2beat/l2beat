@@ -3,7 +3,7 @@ import { assert } from '@l2beat/shared-pure'
 import { createBridgePlugins } from '.'
 import { definedNetworks } from './types'
 
-describe('Plugins', async () => {
+describe('Interop Plugins', async () => {
   const chainNames = new Set<string>()
   const plugins = createBridgePlugins()
 
@@ -12,6 +12,20 @@ describe('Plugins', async () => {
     const projects = await ps.getProjects({ select: ['chainConfig'] })
     for (const p of projects) {
       chainNames.add(p.chainConfig.name)
+    }
+  })
+
+  describe('every plugin name is unique', () => {
+    const kwnon = new Set<string>()
+
+    for (const plugin of plugins) {
+      it(plugin.name, () => {
+        assert(
+          !kwnon.has(plugin.name),
+          `Plugin name "${plugin.name}" is not unique.`,
+        )
+        kwnon.add(plugin.name)
+      })
     }
   })
 

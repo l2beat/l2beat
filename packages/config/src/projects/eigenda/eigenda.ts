@@ -207,6 +207,10 @@ export const eigenda: BaseProject = {
       layer: ProjectId('eigenda'),
       bridge: undefined,
     }),
+    validators: {
+      type: 'static',
+      count: totalNumberOfRegisteredOperators,
+    },
     risks: {
       economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('EIGEN'),
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,

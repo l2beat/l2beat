@@ -33,13 +33,19 @@ export class BridgeBlockProcessor implements BlockProcessor {
         try {
           const event = await plugin.capture?.(logToDecode)
           if (event) {
-            events.push(event)
+            events.push({ ...event, plugin: plugin.name })
             pluginEventCounts[plugin.name] =
               (pluginEventCounts[plugin.name] || 0) + 1
             break
           }
         } catch (e) {
-          this.logger.error(e, { project: plugin.name })
+          this.logger.error('Capture failed', e, {
+            plugin: plugin.name,
+            blockNumber: block.number,
+            tx: logToDecode.ctx.txHash,
+            logIndex: logToDecode.ctx.logIndex,
+            topic: logToDecode.log.topics[0],
+          })
         }
       }
     }
@@ -48,8 +54,9 @@ export class BridgeBlockProcessor implements BlockProcessor {
     this.lastProcessed = block
 
     for (const [plugin, count] of Object.entries(pluginEventCounts)) {
-      this.logger.info('Plugin processed', {
+      this.logger.info('Events captured', {
         plugin,
+        blockNumber: block.number,
         events: count,
       })
     }

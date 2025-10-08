@@ -14,6 +14,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -55,6 +56,7 @@ export const metis: ScalingProject = {
   capability: 'universal',
   addedAt: UnixTime(1637945259), // 2021-11-26T16:47:39Z
   badges: [BADGES.VM.EVM, BADGES.Fork.OVM, BADGES.DA.EthereumBlobs],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Metis Andromeda',
     shortName: 'Metis',
@@ -229,7 +231,12 @@ export const metis: ScalingProject = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
-    sequencerFailure: RISK_VIEW.SEQUENCER_CAN_SKIP('L1'),
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
+      description:
+        RISK_VIEW.SEQUENCER_NO_MECHANISM().description +
+        ' The single address acting as a sequencer on L1 is not trustlessly linkable to the claim of multiple decentralized sequencers being used.',
+    },
     proposerFailure: RISK_VIEW.PROPOSER_WHITELIST_SECURITY_COUNCIL('METIS'),
   },
   stateValidation: {
@@ -237,7 +244,7 @@ export const metis: ScalingProject = {
       {
         title: 'State root proposals',
         description:
-          'Dispute game contracts for state validation are deployed but not used to propose state roots as in standard OP Stack chains. Instead, proposers submit state roots through the appendStateBatch function in the `StateCommitmentChain` contract. A state root gets confirmed if the challenge period has passed and the state batch is not disputed.',
+          'Dispute game contracts for state validation are deployed but not used to propose state roots as in standard OP Stack chains. Instead, the permissioned proposer submits state roots through the appendStateBatch function in the `StateCommitmentChain` contract. A state root gets confirmed if the challenge period has passed and the state batch is not disputed.',
         references: [
           {
             title: 'StateCommitmentChain - Etherscan source code',
@@ -247,13 +254,18 @@ export const metis: ScalingProject = {
       },
       {
         title: 'Challenges',
-        description: `Games are created on demand by the permissioned GameCreator should a dispute arise. Users can signal the need for a dispute through the dispute() function of the \`DisputeGameFactory\`. If a game is not created by the \`GameCreator\` within the dispute timeout period of ${formatSeconds(
+        description: `Games can only be created on demand by the permissioned GameCreator should a dispute be requested. Users can signal the need for a dispute through the dispute() function of the \`DisputeGameFactory\`. If a game is not created by the \`GameCreator\` within the dispute timeout period of ${formatSeconds(
           DISPUTE_TIMEOUT_PERIOD,
-        )}, anyone can call \`disputeTimeout()\`. This function calls \`saveDisputedBatchTimeout()\` on the \`StateCommitmentChain\`, which marks the batch as disputed. This blocks L2->L1 messaging and withdrawals for the disputed batch and any subsequent batches until the dispute is deleted. Should a game be created and resolved, disputed state batches can be marked as such in the \`StateCommitmentChain\`. Then, these flagged batches can be deleted (within the fraud proof window). Batches can only be deleted from the MVM_Fraud_Verifier contract address, which currently corresponds to the \`Metis Security Council\` minority.`,
+        )}, anyone can call \`disputeTimeout()\`. This function calls \`saveDisputedBatchTimeout()\` on the \`StateCommitmentChain\`, which marks the batch as disputed. This blocks L2->L1 messaging and withdrawals for the disputed batch and any subsequent batches until the dispute is deleted. Should a game be created and resolved, disputed state batches can be marked as such in the \`StateCommitmentChain\`. Then, these flagged batches can be deleted (within the fraud proof window). Batches can only be deleted by the MVM_Fraud_Verifier contract address, which currently corresponds to the \`Metis Security Council\` minority.`,
         risks: [
           {
             category: 'Funds can be frozen if',
             text: 'an invalid state root is successfully disputed but it is not deleted by the permissioned MVM_Fraud_Verifier (Metis Security Council minority).',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'the GameCreator colludes with the StateDeleter to block Challenges in the proof system.',
+            isCritical: true,
           },
         ],
         references: [

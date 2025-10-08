@@ -51,6 +51,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { solidityKeccak256 } from 'ethers/lib/utils'
 import { BinaryReader } from '../BinaryReader'
 import {
+  Address32,
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
@@ -102,7 +103,7 @@ export const CCTPv2MessageSent = createBridgeEventType<{
   app?: string
   hookData?: string
   amount?: string
-  tokenAddress?: EthereumAddress
+  tokenAddress?: Address32
   messageHash: string
   $dstChain: string
 }>('cctp-v2.MessageSent')
@@ -155,9 +156,9 @@ export class CCTPPlugin implements BridgePlugin {
           app: burnMessage ? 'TokenMessengerV2' : undefined,
           hookData: burnMessage?.hookData,
           amount: burnMessage?.amount.toString(),
-          tokenAddress: EthereumAddress(
-            '0x' + burnMessage?.burnToken?.slice(-40),
-          ),
+          tokenAddress: burnMessage
+            ? Address32.from(burnMessage.burnToken)
+            : Address32.ZERO,
           messageHash: hashBurnMessage(message.messageBody),
         })
       }
@@ -213,7 +214,13 @@ export class CCTPPlugin implements BridgePlugin {
         messageBody: messageReceived.args.messageBody,
       })
       if (!messageSent) return
-      return [Result.Message('cctp-v1.Message', [messageSent, messageReceived])]
+      return [
+        Result.Message('cctp-v1.Message', {
+          app: 'unknown',
+          srcEvent: messageSent,
+          dstEvent: messageReceived,
+        }),
+      ]
     }
 
     if (CCTPv2MessageReceived.checkType(messageReceived)) {
@@ -224,7 +231,11 @@ export class CCTPPlugin implements BridgePlugin {
       return [
         Result.Message(
           messageSent.args.fast ? 'cctp-v2.FastMessage' : 'cctp-v2.SlowMessage',
-          [messageSent, messageReceived],
+          {
+            app: 'unknown',
+            srcEvent: messageSent,
+            dstEvent: messageReceived,
+          },
         ),
       ]
     }

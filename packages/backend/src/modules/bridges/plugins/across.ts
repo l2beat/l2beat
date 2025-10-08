@@ -1,6 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { BinaryReader } from '../BinaryReader'
 import {
+  Address32,
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
@@ -21,7 +21,7 @@ export const AcrossFundsDeposited = createBridgeEventType<{
   originChainId: number
   destinationChainId: number
   depositId: number
-  tokenAddress: EthereumAddress
+  tokenAddress: Address32
   amount: string
 }>('across.FundsDeposited')
 
@@ -36,7 +36,7 @@ export const AcrossFilledRelay = createBridgeEventType<{
   $srcChain: string
   originChainId: number
   depositId: number
-  tokenAddress: EthereumAddress
+  tokenAddress: Address32
   amount: string
 }>('across.FilledRelay')
 
@@ -101,9 +101,7 @@ export class AcrossPlugin implements BridgePlugin {
         originChainId: network.chainId,
         destinationChainId: Number(fundsDeposited.destinationChainId),
         depositId: Number(fundsDeposited.depositId),
-        tokenAddress: EthereumAddress(
-          new BinaryReader(fundsDeposited.inputToken).readAddress(),
-        ),
+        tokenAddress: Address32.from(fundsDeposited.inputToken),
         amount: fundsDeposited.inputAmount.toString(),
       })
     }
@@ -118,9 +116,7 @@ export class AcrossPlugin implements BridgePlugin {
         ),
         originChainId: Number(filledRelay.originChainId),
         depositId: Number(filledRelay.depositId),
-        tokenAddress: EthereumAddress(
-          new BinaryReader(filledRelay.outputToken).readAddress(),
-        ),
+        tokenAddress: Address32.from(filledRelay.outputToken),
         amount: filledRelay.outputAmount.toString(),
       })
     }
@@ -135,7 +131,7 @@ export class AcrossPlugin implements BridgePlugin {
         ),
         originChainId: Number(filledV3Relay.originChainId),
         depositId: Number(filledV3Relay.depositId),
-        tokenAddress: EthereumAddress(filledV3Relay.outputToken),
+        tokenAddress: Address32.from(filledV3Relay.outputToken),
         amount: filledV3Relay.outputAmount.toString(),
       })
     }
@@ -153,7 +149,11 @@ export class AcrossPlugin implements BridgePlugin {
 
     return [
       // TODO: Should there be a message at all?
-      Result.Message('across.Message', [fundsDeposited, filledRelay]),
+      Result.Message('across.Message', {
+        app: 'across',
+        srcEvent: fundsDeposited,
+        dstEvent: filledRelay,
+      }),
       // TODO: What about the final settlement?
       Result.Transfer('across.Transfer', {
         srcEvent: fundsDeposited,

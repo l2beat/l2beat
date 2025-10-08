@@ -191,10 +191,11 @@ export class AxelarPlugin implements BridgePlugin {
       })
       if (!contractCall) return
       return [
-        Result.Message('axelar.ContractCallMessage', [
-          contractCall,
-          contractCallApproved,
-        ]),
+        Result.Message('axelar.ContractCallMessage', {
+          app: 'unknown',
+          srcEvent: contractCall,
+          dstEvent: contractCallApproved,
+        }),
       ]
     }
 
@@ -210,13 +211,15 @@ export class AxelarPlugin implements BridgePlugin {
       })
       if (!contractCallExecuted) return
       return [
-        Result.Message('axelar.ContractCallWithTokenMessage', [
-          contractCallWithToken,
-          contractCallApproved,
-        ]),
+        Result.Message('axelar.ContractCallWithTokenMessage', {
+          app: 'axelar-gateway',
+          srcEvent: contractCallWithToken,
+          dstEvent: contractCallApproved,
+        }),
         Result.Transfer('axelar-gateway.Transfer', {
           srcEvent: contractCallWithToken,
-          srcTokenSymbol: contractCallWithToken.args.symbol,
+          // TODO: mapping. See axelar-its
+          // symbol: contractCallWithToken.args.symbol,
           srcAmount: contractCallWithToken.args.amount.toString(),
           dstEvent: contractCallExecuted,
         }),

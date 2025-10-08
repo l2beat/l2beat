@@ -252,6 +252,8 @@
   "static/icons/popboss.png": "18e4a5a9a0399786cc3c8b4f1e526e0a",
   "static/icons/portal.png": "f60ad0744f08aa3de6d9b79a914b1210",
   "static/icons/powerloom.png": "f54fee9013f37db422dd9634cc396d75",
+  "static/meta-images/scaling/projects/primechain/opengraph-image.png": "bc4784b87349108df0b420c8a1981da2",
+  "static/icons/primechain.png": "efb96339ecd29da3cd9bfacb84db7e31",
   "static/icons/prom.png": "f351c0a79b19e708a6c225f3112b9aa5",
   "static/icons/publicgoodsnetwork.png": "1766bcb3f2e83f54c3bf000a843672f9",
   "static/icons/puffer.png": "a112db5e751ee0cc2c3e6e95106f9ad0",
@@ -1474,6 +1476,7 @@
   "static/images/badges/Nodeinfra.png": "64d5cc0f3b6a5920bd900d65ec013df2",
   "static/partners/cartesi/background.png": "70d22fa399de64650d7cb325706a17c9",
   "static/partners/cartesi/logo.png": "dd299c34f84fdbce7d1290b4036e96ef",
+  "static/icons/gate-layer.png": "c685676c628a32d4dc0050108f0c7719",
   "static/meta-images/publications/governance-review-71.png": "fb9787223d1943e6761b5b63ba2d9a3f",
   "static/icons/adi.png": "ce3fdf2dd6b0826bab3420f61e65abc4",
   "static/meta-images/scaling/projects/lighter/opengraph-image.png": "f5b9d05fe294a44a115ba6e23c4bc74e",
@@ -1483,5 +1486,7 @@
   "static/meta-images/publications/monthly-update-2025-09.png": "5d84ea9ea8eb53d50b87b9cef211e2be",
   "static/images/monthly-updates/cartesi.png": "255d34d28d891f11e372cb46952162a1",
   "static/images/badges/EspressoHotShotLightClient.png": "d462fc8a4216e612bdea05b40ee11ad8",
-  "static/images/architecture/lighter.png": "deacba696ce3ceb936dde54c611f71b7"
+  "static/images/architecture/lighter.png": "deacba696ce3ceb936dde54c611f71b7",
+  "static/meta-images/scaling/projects/gate-layer/opengraph-image.png": "88b59637488f33560ee827346e894118",
+  "static/meta-images/publications/governance-review-72.png": "485faf85ece1e4c2cd9bd71bf428f462"
 }
