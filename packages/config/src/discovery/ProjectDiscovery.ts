@@ -599,7 +599,7 @@ export class ProjectDiscovery {
   getContractByAddress(
     address: ChainSpecificAddress,
   ): EntryParameters | undefined {
-    const contracts = this.getContracts({ includeDependentDiscoveries: true })
+    const contracts = this.getContracts()
     return contracts.find((contract) => contract.address === address)
   }
 
@@ -642,14 +642,12 @@ export class ProjectDiscovery {
     return this.discoveries.flatMap((discovery) => discovery.entries)
   }
 
-  getPrefixedContracts(options?: { includeDependentDiscoveries?: boolean }): {
+  getPrefixedContracts(): {
     [chainSpecificAddress: string]: EntryParameters
   } {
     const result: { [chainSpecificAddress: string]: EntryParameters } = {}
-    const discoveries = options?.includeDependentDiscoveries
-      ? this.discoveries
-      : this.discoveries
-    discoveries.forEach((discovery) => {
+
+    this.discoveries.forEach((discovery) => {
       discovery.entries.forEach((e) => {
         if (e.type === 'Contract') {
           const chainSpecificAddress = e.address
@@ -665,24 +663,14 @@ export class ProjectDiscovery {
     return result
   }
 
-  getContracts(options?: {
-    includeDependentDiscoveries?: boolean
-  }): EntryParameters[] {
-    const discoveries = options?.includeDependentDiscoveries
-      ? this.discoveries
-      : this.discoveries
-    return discoveries
+  getContracts(): EntryParameters[] {
+    return this.discoveries
       .flatMap((discovery) => discovery.entries)
       .filter((e) => e.type === 'Contract')
   }
 
-  getEoas(options?: {
-    includeDependentDiscoveries?: boolean
-  }): EntryParameters[] {
-    const discoveries = options?.includeDependentDiscoveries
-      ? this.discoveries
-      : this.discoveries
-    return discoveries
+  getEoas(): EntryParameters[] {
+    return this.discoveries
       .flatMap((discovery) => discovery.entries)
       .filter((e) => e.type === 'EOA')
   }
