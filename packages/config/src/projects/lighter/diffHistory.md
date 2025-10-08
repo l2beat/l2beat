@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xfcbc05b6d040af9675aad7a3e0d16f356608b5f6
+Generated with discovered.json: 0xb1450426ce69a9d707623e61c7e6f4e509eca952
 
-# Diff at Tue, 07 Oct 2025 14:51:55 GMT:
+# Diff at Wed, 08 Oct 2025 08:16:32 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current timestamp: 1759848649
+- current timestamp: 1759911325
 
 ## Description
 
@@ -19,7 +19,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (eth:0x59406a5DcE71a4f631F9cd5D41996a19D6fDF184)
+    contract DesertVerifier (eth:0x59406a5DcE71a4f631F9cd5D41996a19D6fDF184)
     +++ description: None
 ```
 

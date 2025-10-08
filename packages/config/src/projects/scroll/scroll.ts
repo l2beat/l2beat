@@ -444,6 +444,25 @@ export const scroll: ScalingProject = {
         ],
       },
     ],
+    otherConsiderations: [
+      {
+        name: 'External oracles used for index prices',
+        description:
+          'Lighter uses a combination of combination of oracles to determine index prices, with Stork as the primary source. Signatures are not checked in the contracts but inside the ZK circuits.',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'the oracle prices are manipulated.',
+          },
+        ],
+        references: [
+          {
+            title: 'Lighter docs - Fair Price Marking',
+            url: 'https://docs.lighter.xyz/perpetual-futures/fair-price-marking',
+          },
+        ],
+      },
+    ],
   },
   stateDerivation: {
     nodeSoftware:
