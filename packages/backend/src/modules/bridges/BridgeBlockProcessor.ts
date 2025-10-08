@@ -1,13 +1,14 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { type Block, EthereumAddress, type Log } from '@l2beat/shared-pure'
+import type { Block, Log } from '@l2beat/shared-pure'
 import type { Log as ViemLog } from 'viem'
 import type { BlockProcessor } from '../types'
 import type { BridgeStore } from './BridgeStore'
-import type {
-  BridgeEvent,
-  BridgeEventContext,
-  BridgePlugin,
-  LogToCapture,
+import {
+  Address32,
+  type BridgeEvent,
+  type BridgeEventContext,
+  type BridgePlugin,
+  type LogToCapture,
 } from './plugins/types'
 
 export class BridgeBlockProcessor implements BlockProcessor {
@@ -84,7 +85,7 @@ function getLogsToDecode(chain: string, block: Block, logs: Log[]) {
         blockNumber: block.number,
         // biome-ignore lint/style/noNonNullAssertion: We just checked
         txHash: tx.hash!,
-        txTo: tx.to !== undefined ? EthereumAddress(tx.to) : undefined,
+        txTo: tx.to !== undefined ? Address32.from(tx.to) : undefined,
       }),
     )
 

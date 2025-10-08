@@ -65,12 +65,17 @@ export class BridgeMatcher {
           unsupported: result.unsupportedIds,
         })
       }
-      await this.db.bridgeMessage.insertMany(
+      const messages = await this.db.bridgeMessage.insertMany(
         result.messages.map(toMessageRecord),
       )
-      await this.db.bridgeTransfer.insertMany(
+      const transfers = await this.db.bridgeTransfer.insertMany(
         result.transfers.map(toTransferRecord),
       )
+
+      this.logger.info('Matching results saved', {
+        messages,
+        transfers,
+      })
     })
   }
 }
