@@ -16,7 +16,7 @@ export const TvsResultItemSchema = v
       other: v.number(),
     }),
   })
-  .describe('Tvs')
+  .describe('TvsChartDataPoint')
 
 export type TvsResultItem = v.infer<typeof TvsResultItemSchema>
 export const TvsResultSchema = v.array(TvsResultItemSchema)

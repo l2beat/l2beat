@@ -38,7 +38,7 @@ export function addActivityRoutes(
     {
       summary:
         'Activity data for a specific project with ability to control the time range.',
-      tags: ['tvs'],
+      tags: ['activity'],
       params: v.object({
         projectId: v.string(),
       }),

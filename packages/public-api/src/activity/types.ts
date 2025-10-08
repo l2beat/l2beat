@@ -6,7 +6,7 @@ export const ActivityResultItemSchema = v
     txCount: v.number(),
     uopsCount: v.number(),
   })
-  .describe('Activity')
+  .describe('ActivityChartDataPoint')
 
 export type ActivityResultItem = v.infer<typeof ActivityResultItemSchema>
 
