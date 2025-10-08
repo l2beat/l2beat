@@ -39,11 +39,13 @@ export const lighter: ScalingProject = {
   addedAt: UnixTime(1711551933), // 2024-03-27T15:05:33Z
   badges: [BADGES.VM.AppChain, BADGES.DA.EthereumBlobs],
   display: {
+    warning:
+      'Oct 8 2025: at the moment of writing, the circuits source code is not publicly available and therefore it is not possible to fully verify the business logic of the protocol. The team communicated to us that they plan to release them in the next 1-2 weeks.',
     name: 'Lighter',
     slug: 'lighter',
     description:
       'Lighter is an application-specific zk rollup on a mission to revolutionize trading by building provably fair, secure, and scalable infrastructure for finance.',
-    purposes: ['Universal', 'Exchange'],
+    purposes: ['Exchange'],
     links: {
       websites: ['https://lighter.xyz', 'https://app.lighter.xyz/'],
       explorers: [
