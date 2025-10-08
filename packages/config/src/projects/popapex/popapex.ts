@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('popapex')
 
 export const popapex: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1709164800), // 2024-02-29T00:00:00Z
+  archivedAt: UnixTime(1759835040),
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
   hostChain: 'arbitrum',

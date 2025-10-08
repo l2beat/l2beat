@@ -421,7 +421,7 @@ export function SEQUENCER_FORCE_VIA_L1(delay?: number): TableReadyValue {
     delay !== undefined ? ' for more than ' + formatSeconds(delay) : ''
   return {
     value: 'Force via L1',
-    description: `Users can force the sequencer to include a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for ${delayString}, users can use the exit hatch to withdraw their funds.`,
+    description: `Users can force the sequencer to include a transaction by submitting a request through L1. If the sequencer censors or is down for ${delayString}, users can use the exit hatch to withdraw their funds.`,
     sentiment: 'good',
     orderHint: delay,
   }

@@ -1,7 +1,7 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
 import { BinaryReader } from '../BinaryReader'
 import { CCTPv2MessageReceived, CCTPv2MessageSent } from './cctp'
 import {
+  Address32,
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
@@ -82,9 +82,7 @@ export class MayanMctpFastPlugin implements BridgePlugin {
         srcTokenAddress: messageSent.args.tokenAddress,
         srcAmount: messageSent.args.amount.toString(),
         dstEvent: orderFulfilled,
-        dstTokenAddress: EthereumAddress(
-          `0x${orderPayload.tokenOut.slice(-40)}`,
-        ),
+        dstTokenAddress: Address32.from(orderPayload.tokenOut),
         dstAmount: orderFulfilled.args.amount.toString(),
       }),
     ]

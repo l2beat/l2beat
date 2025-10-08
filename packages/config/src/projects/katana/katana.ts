@@ -268,7 +268,6 @@ export const katana: ScalingProject = {
         ],
       },
     ],
-    zkProgramHashes: katanaVKeys.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   technology: {
     dataAvailability: {
@@ -356,6 +355,7 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
         text: 'the contracts or their dependencies (e.g. AggLayerGateway) receive a malicious code upgrade. There is no delay on upgrades.',
       },
     ],
+    zkProgramHashes: katanaVKeys.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   milestones: [
