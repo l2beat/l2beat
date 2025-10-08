@@ -36,7 +36,21 @@ export const lighterprover: BaseProject = {
       ],
       finalWrap: [ZK_CATALOG_TAGS.Plonk.Gnark, ZK_CATALOG_TAGS.curve.BN254],
     },
-    proofSystemInfo: '',
+    proofSystemInfo: `
+    ## Description
+
+Lighter prover is a zk proving system for Lighter L2 based on [Plonky2](https://github.com/0xPolygonZero/plonky2/tree/main) circuits. It verifies the logic for regular state transition of Lighter L2, as well as state transitions in the “desert mode” when L2 is shut down and users exit, using different sets of circuits. The circuits are proven with a STARK which is wrapped into a Plonk SNARK before settling onchain.
+
+## Proof system
+
+[Plonky2](https://github.com/0xPolygonZero/plonky2) implements a circuit aritmetization based on TurboPlonk over Goldilocks field, but it replaces KZG polynomial commitment scheme with a FRI-based polynomial testing scheme. In this way proving Plonky2 circuits requires no trusted setup, i.e. it is a STARK. 
+
+However Lighter wraps these STARK in a [gnark](https://github.com/Consensys/gnark) implementation of Plonk over BN254 curve, which requires a trusted setup (see [below](#trusted-setups) for more details).
+
+### Circuits
+
+The proof system operates on Lighter STF circuits, desert mode circuits and state root upgrade verifier circuits. The Lighter team has not published any of these circuits yet.
+`,
     trustedSetups: [
       {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
