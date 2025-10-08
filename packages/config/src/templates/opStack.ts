@@ -83,12 +83,24 @@ export const CELESTIA_DA_PROVIDER: DAProvider = {
   badge: BADGES.DA.Celestia,
 }
 
-export const EIGENDA_DA_PROVIDER: DAProvider = {
-  layer: DA_LAYERS.EIGEN_DA,
-  riskView: RISK_VIEW.DATA_EIGENDA(false, 'v1'),
-  technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(false, 'v1'),
-  bridge: DA_BRIDGES.NONE,
-  badge: BADGES.DA.EigenDA,
+export function EIGENDA_DA_PROVIDER(
+  templateVars: OpStackConfigCommon,
+): DAProvider {
+  const opStackDA = templateVars.discovery.getContractValue<{
+    isUsingEigenDA: string | boolean
+  }>('SystemConfig', 'opStackDA')
+
+  const eigenDAConfig = opStackDA.isUsingEigenDA
+  const isUsingDACertVerifier = eigenDAConfig !== false
+  const eigenDACertVersion = typeof eigenDAConfig === 'string' ? eigenDAConfig : 'v1'
+
+  return {
+    layer: DA_LAYERS.EIGEN_DA,
+    riskView: RISK_VIEW.DATA_EIGENDA(isUsingDACertVerifier, eigenDACertVersion),
+    technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(isUsingDACertVerifier, eigenDACertVersion),
+    bridge: DA_BRIDGES.NONE,
+    badge: BADGES.DA.EigenDA,
+  }
 }
 
 export const PRIVATE_DA_PROVIDER: DAProvider = {
@@ -132,7 +144,7 @@ interface OpStackConfigCommon {
   stateValidationImage?: string
   archivedAt?: UnixTime
   addedAt: UnixTime
-  daProvider?: DAProvider
+  daProvider?: DAProvider | ((templateVars: OpStackConfigCommon) => DAProvider)
   customDa?: ProjectCustomDa
   discovery: ProjectDiscovery
   additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
@@ -1411,9 +1423,13 @@ function getDAProvider(
     templateVars.discovery.getContractValue<{
       isUsingCelestia: boolean
     }>('SystemConfig', 'opStackDA').isUsingCelestia
-  const daProvider =
-    templateVars.daProvider ??
-    (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+  
+  let daProvider: DAProvider | undefined
+  if (typeof templateVars.daProvider === 'function') {
+    daProvider = templateVars.daProvider(templateVars)
+  } else {
+    daProvider = templateVars.daProvider ?? (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+  }
 
   if (daProvider === undefined) {
     assert(
