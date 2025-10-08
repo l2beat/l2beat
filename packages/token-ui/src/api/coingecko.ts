@@ -1,6 +1,7 @@
 import { v } from '@l2beat/validate'
 import { getUrlWithParams } from '~/utils/getUrlWithParams'
 
+export type Coin = v.infer<typeof CoinSchema>
 const CoinSchema = v.object({
   image: v.object({
     large: v.string(),

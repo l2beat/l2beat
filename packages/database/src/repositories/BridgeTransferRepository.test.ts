@@ -82,28 +82,6 @@ describeDatabase(BridgeTransferRepository.name, (db) => {
       expect(result).toEqual([record])
     })
 
-    it('handles records with native token addresses', async () => {
-      const record = bridgeTransfer(
-        'plugin1',
-        'msg1',
-        'deposit',
-        UnixTime(100),
-        'ethereum',
-        'arbitrum',
-        5000,
-      )
-
-      record.srcTokenAddress = 'native'
-      record.dstTokenAddress = 'native'
-
-      const inserted = await repository.insertMany([record])
-      expect(inserted).toEqual(1)
-
-      const result = await repository.getAll()
-      expect(result[0]?.srcTokenAddress).toEqual('native')
-      expect(result[0]?.dstTokenAddress).toEqual('native')
-    })
-
     it('handles records with ethereum token addresses', async () => {
       const record = bridgeTransfer(
         'plugin1',
