@@ -34,7 +34,7 @@ const upgradeDelay = discovery.getContractValue<number>(
 export const lighter: ScalingProject = {
   id: ProjectId('lighter'),
   type: 'layer2',
-  capability: 'universal',
+  capability: 'appchain',
   addedAt: UnixTime(1711551933), // 2024-03-27T15:05:33Z
   display: {
     name: 'Lighter',
