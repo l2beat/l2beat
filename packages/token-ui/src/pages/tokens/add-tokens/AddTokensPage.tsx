@@ -1,3 +1,4 @@
+import { useSearchParams } from 'react-router-dom'
 import { Card, CardContent } from '~/components/core/Card'
 import {
   Tabs,
@@ -10,15 +11,24 @@ import { AddAbstractToken } from './AddAbstractToken'
 import { AddDeployedToken } from './AddDeployedToken'
 
 export function AddTokensPage() {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const tab = searchParams.get('tab') ?? 'abstract'
+
   return (
     <AppLayout>
-      <Tabs defaultValue="abstract-token" className="mx-auto max-w-3xl">
+      <Tabs
+        defaultValue={tab}
+        className="mx-auto w-full max-w-3xl"
+        onValueChange={(value) => {
+          setSearchParams({ tab: value })
+        }}
+      >
         <TabsList>
-          <TabsTrigger value="abstract-token">Abstract Token</TabsTrigger>
-          <TabsTrigger value="deployed-token">Deployed Token</TabsTrigger>
+          <TabsTrigger value="abstract">Abstract Token</TabsTrigger>
+          <TabsTrigger value="deployed">Deployed Token</TabsTrigger>
         </TabsList>
         <TabsContent
-          value="abstract-token"
+          value="abstract"
           forceMount
           className="data-[state=inactive]:hidden"
         >
@@ -29,7 +39,7 @@ export function AddTokensPage() {
           </Card>
         </TabsContent>
         <TabsContent
-          value="deployed-token"
+          value="deployed"
           forceMount
           className="data-[state=inactive]:hidden"
         >
