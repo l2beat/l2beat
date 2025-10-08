@@ -6,8 +6,8 @@ import {
   TabsTrigger,
 } from '~/components/core/Tabs'
 import { AppLayout } from '~/layouts/AppLayout'
-import { NewAbstractTokenForm } from './forms/NewAbstractTokenForm'
-import { NewDeployedTokenForm } from './forms/NewDeployedTokenForm'
+import { AddAbstractToken } from './AddAbstractToken'
+import { AddDeployedToken } from './AddDeployedToken'
 
 export function AddTokensPage() {
   return (
@@ -24,7 +24,7 @@ export function AddTokensPage() {
         >
           <Card>
             <CardContent>
-              <NewAbstractTokenForm />
+              <AddAbstractToken />
             </CardContent>
           </Card>
         </TabsContent>
@@ -35,7 +35,7 @@ export function AddTokensPage() {
         >
           <Card>
             <CardContent>
-              <NewDeployedTokenForm />
+              <AddDeployedToken />
             </CardContent>
           </Card>
         </TabsContent>
