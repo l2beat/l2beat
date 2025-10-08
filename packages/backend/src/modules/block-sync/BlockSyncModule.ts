@@ -20,6 +20,11 @@ export function createBlockSyncModule({
     return
   }
 
+  if (!config.blockSync) {
+    logger.info('BlockSync module disabled')
+    return
+  }
+
   const env = getEnv()
   logger = logger.tag({ feature: 'blockSync', module: 'blockSync' })
 

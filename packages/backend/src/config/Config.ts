@@ -50,7 +50,7 @@ export interface Config {
     readonly timeout: number
   }
   readonly da: DataAvailabilityTrackingConfig | false
-  readonly blockSync: BlockSyncModuleConfig
+  readonly blockSync: BlockSyncModuleConfig | false
   readonly anomalies: AnomaliesConfig | false
   readonly bridges: BridgesConfig | false
 
