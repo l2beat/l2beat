@@ -296,5 +296,6 @@ export interface DataAvailabilityTrackingConfig {
 }
 
 export interface BlockSyncModuleConfig {
+  delayFromTipInSeconds: number
   ethereumWsUrl?: string
 }
