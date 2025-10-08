@@ -62,6 +62,8 @@ const TEE_BRIDGE: DaProjectTableValue = {
   description:
     'The TEE Bridge is used to attest to the data availability on the DA layer by using a program running in a Trusted Execution Environment (TEE).',
   projectId: ProjectId('tee-bridge'),
+}
+
 const HOTSHOT_LIGHT_CLIENT: DaProjectTableValue = {
   value: 'HotShot Light Client',
   sentiment: 'warning',
