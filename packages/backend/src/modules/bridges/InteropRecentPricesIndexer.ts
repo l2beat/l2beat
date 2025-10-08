@@ -1,87 +1,64 @@
+import type { Database } from '@l2beat/database'
 import type { InteropRecentPricesRecord } from '@l2beat/database/dist/repositories/InteropRecentPricesRepository'
 import type { PriceProvider } from '@l2beat/shared'
-import {
-  type Configuration,
-  type RemovalConfiguration,
-  UnixTime,
-} from '@l2beat/shared-pure'
-import { Indexer } from '@l2beat/uif'
+import { UnixTime } from '@l2beat/shared-pure'
 import { INDEXER_NAMES } from '../../tools/uif/indexerIdentity'
-import { ManagedMultiIndexer } from '../../tools/uif/multi/ManagedMultiIndexer'
-import type { ManagedMultiIndexerOptions } from '../../tools/uif/multi/types'
+import {
+  ManagedChildIndexer,
+  type ManagedChildIndexerOptions,
+} from '../../tools/uif/ManagedChildIndexer'
 
-export interface Dependencies
-  extends Omit<ManagedMultiIndexerOptions<{ version: number }>, 'name'> {
+export interface Dependencies extends Omit<ManagedChildIndexerOptions, 'name'> {
+  db: Database
   priceProvider: PriceProvider
 }
 
-export class TvsPriceIndexer extends ManagedMultiIndexer<{ version: number }> {
+export class InteropRecentPricesIndexer extends ManagedChildIndexer {
   constructor(private readonly $: Dependencies) {
-    super({
-      ...$,
-      name: INDEXER_NAMES.INTEROP_RECENT_PRICES,
-      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-    })
+    super({ ...$, name: INDEXER_NAMES.INTEROP_RECENT_PRICES })
   }
 
-  override async multiUpdate(
-    from: number,
-    to: number,
-    _: Configuration<{ version: number }>[],
-  ) {
-    const target = UnixTime.toStartOf(to, 'hour')
-    if (target > to) {
-      return () => {
-        this.logger.info('Update skipped, no full hour in range', {
-          from,
-          to,
-          target,
-        })
+  override async update(from: number, to: number): Promise<number> {
+    const timestamp = this.findTimestamp(from, to)
 
-        return Promise.resolve(to)
-      }
+    if (timestamp === undefined) {
+      this.logger.info('Update skipped, no full hour in range', {
+        from,
+        to,
+      })
+      return Promise.resolve(to)
     }
 
     const coingeckoIds = await this.$.priceProvider.getAllCoingeckoIds()
+    this.logger.info('Fetched coingecko ids', { ids: coingeckoIds.length })
 
     const prices = await this.$.priceProvider.getLatestPrices(coingeckoIds)
+    this.logger.info('Fetched prices', { prices: prices.size })
 
     const records: InteropRecentPricesRecord[] = []
     for (const [coingeckoId, priceUsd] of prices.entries()) {
-      records.push({ coingeckoId, priceUsd, timestamp: target })
+      records.push({ coingeckoId, priceUsd, timestamp: timestamp })
     }
 
-    return async () => {
-      await this.$.db.interopRecentPrices.insertMany(records)
+    await this.$.db.interopRecentPrices.insertMany(records)
+    this.logger.info('Saved prices into DB', {
+      target: timestamp,
+      records: records.length,
+    })
 
-      this.logger.info('Saved prices into DB', {
-        from,
-        to,
-        target,
-        records: records.length,
-      })
-
-      return target
-    }
+    return timestamp
   }
 
-  override async removeData(configurations: RemovalConfiguration[]) {
-    for (const configuration of configurations) {
-      const deletedRecords =
-        await this.$.db.interopRecentPrices.deleteByConfigInTimeRange(
-          configuration.id,
-          UnixTime(configuration.from),
-          UnixTime(configuration.to),
-        )
+  findTimestamp(from: number, to: number) {
+    const target = UnixTime.toStartOf(to, 'hour')
 
-      if (deletedRecords > 0) {
-        this.logger.info('Deleted records for configuration', {
-          from: configuration.from,
-          to: configuration.to,
-          id: configuration.id,
-          deletedRecords,
-        })
-      }
+    if (target < from || target > to) {
+      return undefined
     }
+    return target
+  }
+
+  override async invalidate(targetHeight: number): Promise<number> {
+    return await this.$.db.interopRecentPrices.deleteAfter(targetHeight)
   }
 }

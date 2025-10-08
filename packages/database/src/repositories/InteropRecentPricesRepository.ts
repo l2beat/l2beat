@@ -89,6 +89,14 @@ export class InteropRecentPricesRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
+  async deleteAfter(timestamp: UnixTime): Promise<number> {
+    const result = await this.db
+      .deleteFrom('InteropRecentPrices')
+      .where('timestamp', '>', UnixTime.toDate(timestamp))
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
   async deleteAll(): Promise<number> {
     const result = await this.db
       .deleteFrom('InteropRecentPrices')

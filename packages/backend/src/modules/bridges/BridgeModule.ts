@@ -1,3 +1,5 @@
+import { HourlyIndexer } from '../../tools/HourlyIndexer'
+import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BridgeBlockProcessor } from './BridgeBlockProcessor'
 import { BridgeCleaner } from './BridgeCleaner'
@@ -6,6 +8,7 @@ import { BridgeMatcher } from './BridgeMatcher'
 import { createBridgeRouter } from './BridgeRouter'
 import { BridgeStore } from './BridgeStore'
 import { createBridgeComparePlugins } from './compare'
+import { InteropRecentPricesIndexer } from './InteropRecentPricesIndexer'
 import { createBridgePlugins } from './plugins'
 
 export function createBridgeModule({
@@ -13,6 +16,8 @@ export function createBridgeModule({
   db,
   logger,
   blockProcessors,
+  clock,
+  providers,
 }: ModuleDependencies): ApplicationModule | undefined {
   if (!config.bridges) {
     logger.info('Bridges module disabled')
@@ -58,6 +63,16 @@ export function createBridgeModule({
 
   const bridgeCleaner = new BridgeCleaner(bridgeStore, db, logger)
 
+  const hourlyIndexer = new HourlyIndexer(logger, clock)
+  const recentPricesIndexer = new InteropRecentPricesIndexer({
+    db,
+    priceProvider: providers.price,
+    logger,
+    parents: [hourlyIndexer],
+    minHeight: 1,
+    indexerService: new IndexerService(db),
+  })
+
   const start = async () => {
     logger = logger.for('BridgeModule')
     logger.info('Starting')
@@ -70,6 +85,10 @@ export function createBridgeModule({
     }
     if (config.bridges && config.bridges.cleaner) {
       bridgeCleaner.start()
+    }
+    if (config.bridges && config.bridges.financials.prices) {
+      await hourlyIndexer.start()
+      await recentPricesIndexer.start()
     }
     logger.info('Started', {
       plugins: plugins.length,

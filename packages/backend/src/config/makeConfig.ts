@@ -168,6 +168,9 @@ export async function makeConfig(
         enabled: flags.isEnabled('bridges', 'compare'),
         intervalMs: env.optionalInteger(['BRIDGES_COMPARE_INTERVAL_MS']),
       },
+      financials: {
+        prices: flags.isEnabled('bridges', 'financials', 'prices'),
+      },
     },
     // Must be last
     flags: flags.getResolved(),

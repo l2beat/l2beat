@@ -217,6 +217,9 @@ export interface BridgesConfig {
     enabled: boolean
     intervalMs?: number
   }
+  financials: {
+    prices: boolean
+  }
 }
 
 export interface DaBeatConfig {
