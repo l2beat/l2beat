@@ -1,8 +1,10 @@
+import compact from 'lodash/compact'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
 import type { ProjectSummaryStatProps } from '~/components/projects/ProjectSummaryStat'
 import type { EthereumDaProjectPageEntry } from '~/server/features/data-availability/project/getDaProjectEntry'
+import { formatNumber } from '~/utils/number-format/formatNumber'
 import { DaProjectStats, getCommonDaProjectStats } from './DaProjectStats'
 import { InfoCallout } from './InfoCallout'
 
@@ -11,7 +13,7 @@ interface Props {
 }
 
 export function EthereumDaProjectSummary({ project }: Props) {
-  const stats: (ProjectSummaryStatProps & { key: string })[] = [
+  const stats: (ProjectSummaryStatProps & { key: string })[] = compact([
     ...getCommonDaProjectStats(project),
     {
       key: 'da-bridge',
@@ -29,7 +31,12 @@ export function EthereumDaProjectSummary({ project }: Props) {
         />
       ),
     },
-  ]
+    project.header.numberOfValidators && {
+      key: 'validators',
+      title: 'Secured by',
+      value: `${formatNumber(project.header.numberOfValidators)} validators`,
+    },
+  ])
 
   return (
     <section

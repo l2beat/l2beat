@@ -1,3 +1,4 @@
+import compact from 'lodash/compact'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import type { ProjectSummaryStatProps } from '~/components/projects/ProjectSummaryStat'
@@ -13,7 +14,7 @@ interface Props {
 
 export function RegularDaProjectSummary({ project }: Props) {
   const hasMultipleBridges = project.bridges.length > 1
-  const stats: (ProjectSummaryStatProps & { key: string })[] = [
+  const stats: (ProjectSummaryStatProps & { key: string })[] = compact([
     ...getCommonDaProjectStats(project),
     {
       key: 'used-by',
@@ -26,7 +27,15 @@ export function RegularDaProjectSummary({ project }: Props) {
         />
       ),
     },
-  ]
+    project.header.numberOfValidators && {
+      key: 'validators',
+      title: 'Secured by',
+      value:
+        project.type === 'Public Blockchain'
+          ? `${project.header.numberOfValidators} validators`
+          : `${project.header.numberOfValidators} operators`,
+    },
+  ])
 
   return (
     <section
