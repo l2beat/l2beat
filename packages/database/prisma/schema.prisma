@@ -354,6 +354,7 @@ model BridgeEvent {
   blockNumber Int
   blockHash   String   @db.VarChar(66)
   txHash      String   @db.VarChar(66)
+  value       String   @default("") @db.VarChar(66)
   txTo        String?  @db.VarChar(66)
   matched     Boolean
   unsupported Boolean  @default(false)
