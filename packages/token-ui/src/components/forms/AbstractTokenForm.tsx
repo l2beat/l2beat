@@ -61,6 +61,7 @@ export function AbstractTokenForm({
   coingeckoFields: {
     isLoading: boolean
     success: boolean
+    isListingTimestampLoading: boolean
   }
   children: React.ReactNode
 }) {
@@ -189,7 +190,12 @@ export function AbstractTokenForm({
             name="coingeckoListingTimestamp"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Coingecko Listing Timestamp</FormLabel>
+                <FormLabel>
+                  Coingecko Listing Timestamp{' '}
+                  {coingeckoFields.isListingTimestampLoading && (
+                    <Spinner className="size-3.5" />
+                  )}
+                </FormLabel>
                 <FormControl>
                   <Input type="date" {...field} />
                 </FormControl>
