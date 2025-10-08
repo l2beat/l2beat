@@ -160,7 +160,12 @@ describe(PriceProvider.name, () => {
 
   describe(PriceProvider.prototype.getAllCoingeckoIds.name, () => {
     it('delegates to CoingeckoQueryService', async () => {
-      const expectedResult = ['bitcoin', 'ethereum', 'tether', 'binancecoin']
+      const expectedResult = [
+        'bitcoin',
+        'ethereum',
+        'tether',
+        'binancecoin',
+      ].map(CoingeckoId)
 
       const coingeckoQueryService = mockObject<CoingeckoQueryService>({
         getAllCoingeckoIds: mockFn().resolvesToOnce(expectedResult),
