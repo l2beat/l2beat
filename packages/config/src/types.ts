@@ -584,7 +584,7 @@ export interface ProjectScalingStateValidationCategory {
 
 export interface ProjectScalingContractsZkProgramHash {
   hash: string
-  proverSystemProject: ProjectId
+  proverSystemProject?: ProjectId
   title: string
   description?: string
   programUrl?: string

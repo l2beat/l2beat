@@ -17,7 +17,7 @@ export function getZkProgramHashes(
       const zkCatalogProject = zkCatalogProjects.find(
         (x) => x.id === zkHash.proverSystemProject,
       )
-      if (!zkCatalogProject) return undefined
+
       const usedIn = allProjects?.filter((project) =>
         project.contracts.zkProgramHashes?.some(
           (ph) => ph.hash === zkHash.hash,
@@ -26,11 +26,13 @@ export function getZkProgramHashes(
 
       return {
         ...zkHash,
-        zkCatalogProject: {
-          name: zkCatalogProject.name,
-          href: `/zk-catalog/${zkCatalogProject.slug}`,
-          icon: getProjectIcon(zkCatalogProject.slug),
-        },
+        zkCatalogProject: zkCatalogProject
+          ? {
+              name: zkCatalogProject.name,
+              href: `/zk-catalog/${zkCatalogProject.slug}`,
+              icon: getProjectIcon(zkCatalogProject.slug),
+            }
+          : undefined,
         usedIn: usedIn.map((project) => ({
           ...project,
           icon: getProjectIcon(project.slug),
