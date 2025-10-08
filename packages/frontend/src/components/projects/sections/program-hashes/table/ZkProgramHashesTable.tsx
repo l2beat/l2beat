@@ -17,6 +17,9 @@ export function ZkProgramHashesTable({ entries }: Props) {
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
+    initialState: {
+      sorting: [],
+    },
   })
 
   return <BasicTable table={table} />
