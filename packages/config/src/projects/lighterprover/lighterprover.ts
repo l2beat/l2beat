@@ -58,19 +58,19 @@ The proof system operates on Lighter STF circuits, desert mode circuits and stat
       },
     ],
     verifierHashes: [
-        {
-            hash: '0x1653e6bc18d8da44afcae150e9c675f46e41a727c2867289b00cbe1afaed0316',
-            proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
-            knownDeployments: [
-                {
-                    address: '0x9a3Cc15b31Aec100d0C49B16cC401eaEf5A0A500',
-                    chain: 'ethereum',
-                },
-            ],
-            verificationStatus: 'notVerified',
-            description:
-            'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',  
-        }
-    ]
+      {
+        hash: '0x1653e6bc18d8da44afcae150e9c675f46e41a727c2867289b00cbe1afaed0316',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+        knownDeployments: [
+          {
+            address: '0x9a3Cc15b31Aec100d0C49B16cC401eaEf5A0A500',
+            chain: 'ethereum',
+          },
+        ],
+        verificationStatus: 'notVerified',
+        description:
+          'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
+      },
+    ],
   },
 }
