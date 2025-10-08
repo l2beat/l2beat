@@ -32,7 +32,9 @@ export class InteropRecentPricesIndexer extends ManagedChildIndexer {
     const coingeckoIds = await this.$.priceProvider.getAllCoingeckoIds()
     this.logger.info('Fetched coingecko ids', { ids: coingeckoIds.length })
 
-    const prices = await this.$.priceProvider.getLatestPrices(coingeckoIds)
+    const prices = await this.$.priceProvider.getLatestPrices(
+      coingeckoIds.filter((c) => c.length <= 64), // there are random tokens with long names
+    )
     this.logger.info('Fetched prices', { prices: prices.size })
 
     const records: InteropRecentPricesRecord[] = []
