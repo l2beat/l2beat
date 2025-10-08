@@ -42,6 +42,7 @@ export const EVMTransaction = z
   })
   .transform((tx) => ({
     hash: tx.hash,
+    value: tx.value,
     from: tx.from,
     to: tx.to,
     data: tx.input,

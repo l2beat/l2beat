@@ -110,6 +110,7 @@ function toDbRecord(event: BridgeEvent): BridgeEventRecord {
     logIndex: event.ctx.logIndex,
     timestamp: event.ctx.timestamp,
     txHash: event.ctx.txHash,
+    value: event.ctx.value,
     txTo: event.ctx.txTo,
     matched: false,
     unsupported: false,
