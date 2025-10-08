@@ -19,14 +19,14 @@ export class InteropRecentPricesIndexer extends ManagedChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    const timestamp = this.findTimestamp(from, to)
+    const fullHourInRange = this.findFullHourInRange(from, to)
 
-    if (timestamp === undefined) {
+    if (fullHourInRange === undefined) {
       this.logger.info('Update skipped, no full hour in range', {
         from,
         to,
       })
-      return Promise.resolve(to)
+      return to
     }
 
     const coingeckoIds = await this.$.priceProvider.getAllCoingeckoIds()
@@ -39,24 +39,25 @@ export class InteropRecentPricesIndexer extends ManagedChildIndexer {
 
     const records: InteropRecentPricesRecord[] = []
     for (const [coingeckoId, priceUsd] of prices.entries()) {
-      records.push({ coingeckoId, priceUsd, timestamp: timestamp })
+      records.push({ coingeckoId, priceUsd, timestamp: fullHourInRange })
     }
 
     await this.$.db.interopRecentPrices.insertMany(records)
     this.logger.info('Saved prices into DB', {
-      target: timestamp,
+      target: fullHourInRange,
       records: records.length,
     })
 
-    return timestamp
+    return to
   }
 
-  findTimestamp(from: number, to: number) {
+  findFullHourInRange(from: number, to: number) {
     const target = UnixTime.toStartOf(to, 'hour')
 
-    if (target < from || target > to) {
+    if (target < from) {
       return undefined
     }
+
     return target
   }
 
