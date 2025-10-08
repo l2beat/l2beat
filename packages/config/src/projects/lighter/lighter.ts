@@ -227,4 +227,14 @@ export const lighter: ScalingProject = {
   permissions: {
     ...discovery.getDiscoveredPermissions(),
   },
+  milestones: [
+    {
+      title: 'Lighter launches public mainnet',
+      url: 'https://x.com/Lighter_xyz/status/1973508660061180363',
+      date: '2025-10-02T00:00:00Z',
+      description:
+        'Lighter launches public mainnet after 8 months of private beta.',
+      type: 'general',
+    },
+  ],
 }
