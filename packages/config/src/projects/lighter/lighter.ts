@@ -200,7 +200,7 @@ export const lighter: ScalingProject = {
       {
         name: 'External oracles used for index prices',
         description:
-          'Lighter uses a combination of combination of oracles to determine index prices, with Stork as the primary source. Signatures are not checked in the contracts but inside the ZK circuits.',
+          'Lighter uses a combination of oracles to determine index prices, with Stork as the primary source. Signatures are not checked in the contracts but inside the ZK circuits.',
         risks: [
           {
             category: 'Funds can be lost if',
