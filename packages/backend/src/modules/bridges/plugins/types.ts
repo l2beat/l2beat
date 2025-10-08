@@ -35,7 +35,7 @@ export interface BridgeEventContext {
   blockNumber: number
   blockHash: string
   txHash: string
-  txTo?: EthereumAddress
+  txTo?: Address32
   logIndex: number
 }
 

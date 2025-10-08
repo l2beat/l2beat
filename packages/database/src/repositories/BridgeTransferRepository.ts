@@ -1,4 +1,4 @@
-import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { BridgeTransfer } from '../kysely/generated/types'
@@ -47,11 +47,7 @@ export function toRecord(
     srcTxHash: row.srcTxHash ?? undefined,
     srcLogIndex: row.srcLogIndex ?? undefined,
     srcEventId: row.srcEventId ?? undefined,
-    srcTokenAddress: row.srcTokenAddress
-      ? row.srcTokenAddress === 'native'
-        ? 'native'
-        : EthereumAddress(row.srcTokenAddress)
-      : undefined,
+    srcTokenAddress: row.srcTokenAddress ?? 'native',
     srcRawAmount: row.srcRawAmount ?? undefined,
     srcSymbol: row.srcSymbol ?? undefined,
     srcAmount: row.srcAmount ?? undefined,
@@ -62,11 +58,7 @@ export function toRecord(
     dstTxHash: row.dstTxHash ?? undefined,
     dstLogIndex: row.dstLogIndex ?? undefined,
     dstEventId: row.dstEventId ?? undefined,
-    dstTokenAddress: row.dstTokenAddress
-      ? row.dstTokenAddress === 'native'
-        ? 'native'
-        : EthereumAddress(row.dstTokenAddress)
-      : undefined,
+    dstTokenAddress: row.dstTokenAddress ?? 'native',
     dstRawAmount: row.dstRawAmount ?? undefined,
     dstSymbol: row.dstSymbol ?? undefined,
     dstAmount: row.dstAmount ?? undefined,
@@ -90,11 +82,7 @@ export function toRow(
     srcTxHash: record.srcTxHash?.toLowerCase(),
     srcLogIndex: record.srcLogIndex,
     srcEventId: record.srcEventId,
-    srcTokenAddress: record.srcTokenAddress
-      ? record.srcTokenAddress === 'native'
-        ? 'native'
-        : EthereumAddress(record.srcTokenAddress)
-      : undefined,
+    srcTokenAddress: record.srcTokenAddress,
     srcRawAmount: record.srcRawAmount,
     srcSymbol: record.srcSymbol,
     srcAmount: record.srcAmount,
@@ -106,11 +94,7 @@ export function toRow(
     dstTxHash: record.dstTxHash?.toLowerCase(),
     dstLogIndex: record.dstLogIndex,
     dstEventId: record.dstEventId,
-    dstTokenAddress: record.dstTokenAddress
-      ? record.dstTokenAddress === 'native'
-        ? 'native'
-        : EthereumAddress(record.dstTokenAddress)
-      : undefined,
+    dstTokenAddress: record.dstTokenAddress,
     dstRawAmount: record.dstRawAmount,
     dstSymbol: record.dstSymbol,
     dstAmount: record.dstAmount,
