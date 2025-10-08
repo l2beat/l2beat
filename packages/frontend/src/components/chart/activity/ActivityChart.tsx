@@ -220,7 +220,9 @@ export function ActivityCustomTooltip({
           })}
         </div>
 
-        <span className="mt-3 text-heading-16">Operations count</span>
+        <span className="mt-3 text-heading-16">
+          {metric === 'uops' ? 'Operations' : 'Transactions'} count
+        </span>
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {

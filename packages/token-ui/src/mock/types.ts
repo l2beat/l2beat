@@ -9,6 +9,10 @@ export type AbstractToken = {
   comment?: string
 }
 
+export type AbstractTokenWithDeployedTokens = AbstractToken & {
+  deployedTokens: DeployedToken[]
+}
+
 export type DeployedToken = {
   id: string
   chain: string

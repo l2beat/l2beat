@@ -975,6 +975,9 @@ importers:
       cmdk:
         specifier: 1.0.0
         version: 1.0.0(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      fuzzysort:
+        specifier: 3.1.0
+        version: 3.1.0
       lucide-react:
         specifier: ^0.544.0
         version: 0.544.0(react@19.0.0)

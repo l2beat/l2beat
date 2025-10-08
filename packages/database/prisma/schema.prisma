@@ -354,7 +354,8 @@ model BridgeEvent {
   blockNumber Int
   blockHash   String   @db.VarChar(66)
   txHash      String   @db.VarChar(66)
-  txTo        String?  @db.VarChar(42)
+  value       String   @default("") @db.VarChar(66)
+  txTo        String?  @db.VarChar(66)
   matched     Boolean
   unsupported Boolean  @default(false)
   logIndex    Int
@@ -398,7 +399,7 @@ model BridgeTransfer {
   srcLogIndex Int?
   srcEventId  String?   @db.VarChar(40)
 
-  srcTokenAddress String?  @db.VarChar(42)
+  srcTokenAddress String?  @db.VarChar(66)
   srcRawAmount    Decimal? @db.Decimal(80, 0)
   srcSymbol       String?  @db.VarChar(10)
   srcAmount       Float?   @db.Real
@@ -411,7 +412,7 @@ model BridgeTransfer {
   dstLogIndex Int?
   dstEventId  String?   @db.VarChar(40)
 
-  dstTokenAddress String?  @db.VarChar(42)
+  dstTokenAddress String?  @db.VarChar(66)
   dstRawAmount    Decimal? @db.Decimal(80, 0)
   dstSymbol       String?  @db.VarChar(10)
   dstAmount       Float?   @db.Real
