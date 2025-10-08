@@ -196,6 +196,25 @@ export const lighter: ScalingProject = {
         references: [],
       },
     ],
+    otherConsiderations: [
+      {
+        name: 'External oracles used for index prices',
+        description:
+          'Lighter uses a combination of combination of oracles to determine index prices, with Stork as the primary source. Signatures are not checked in the contracts but inside the ZK circuits.',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'the oracle prices are manipulated.',
+          },
+        ],
+        references: [
+          {
+            title: 'Lighter docs - Fair Price Marking',
+            url: 'https://docs.lighter.xyz/perpetual-futures/fair-price-marking',
+          },
+        ],
+      },
+    ],
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   upgradesAndGovernance: `Regular upgrades are initiated by the "network governor" and executed with a ${formatSeconds(upgradeDelay)} delay. The "security council" is allowed to reduce the upgrade delay to zero in case of an emergency. The security council does not currently satify the Stage 1 requirements. The network governor also retains the ability to add or remove validators.`,
