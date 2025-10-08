@@ -1,3 +1,83 @@
+Generated with discovered.json: 0xf2259c3e2e01292785d86a8bf01bcf552e408ed0
+
+# Diff at Tue, 07 Oct 2025 20:39:03 GMT:
+
+- author: emduc (<emilien@defiscan.info>)
+- comparing to: main@14b55a40a9ff24c3a4b5a14df15500addfbf7d30 block: 1759786119
+- current timestamp: 1759786119
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759786119 (main branch discovery), not current.
+
+```diff
+    contract ACL (eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb) {
+    +++ description: None
+      values.permissions.eth:0xf73a1260d222f447210581DDf212D915c09a3249.0xf5a08927c847d7a29dc35e105208dbde5ce951392105d712761cc5d17440e2ff:
+-        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]}
+      values.permissions.eth:0xf73a1260d222f447210581DDf212D915c09a3249.0x154c00819833dac601ee5ddded6fda79d9d8b506b911b3dbd54cdb95fe6c3686:
+-        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]}
+      values.permissions.eth:0xf73a1260d222f447210581DDf212D915c09a3249.0x95ffc68daedf1eb334cfcd22ee24a5eeb5a8e58aa40679f2ad247a84140f8d6e:
+-        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]}
+      values.permissions.eth:0xf73a1260d222f447210581DDf212D915c09a3249.ASSIGN_ROLE:
++        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]}
+      values.permissions.eth:0xf73a1260d222f447210581DDf212D915c09a3249.MINT_ROLE:
++        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]}
+      values.permissions.eth:0xf73a1260d222f447210581DDf212D915c09a3249.REVOKE_VESTINGS_ROLE:
++        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]}
+      values.permissions.eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c.0xcebf517aa4440d1d125e0355aae64401211d0848a23c02cc5d29a14822580ba4:
+-        {"manager":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","entities":["eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"]}
+      values.permissions.eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c.0xb421f7ad7646747f3051c50c0b8e2377839296cd4973e27f63821d73e390338f:
+-        {"manager":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","entities":["eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"]}
+      values.permissions.eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c.0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c:
+-        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86"]}
+      values.permissions.eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c.EXECUTE_ROLE:
++        {"manager":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","entities":["eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"]}
+      values.permissions.eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c.RUN_SCRIPT_ROLE:
++        {"manager":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","entities":["eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"]}
+      values.permissions.eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c.TRANSFER_ROLE:
++        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86"]}
+      values.permissions.eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86.0x563165d3eae48bcb0a092543ca070d989169c98357e9a1b324ec5da44bab75fd:
+-        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]}
+      values.permissions.eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86.0x30597dd103acfaef0649675953d9cb22faadab7e9d9ed57acc1c429d04b80777:
+-        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]}
+      values.permissions.eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86.0x5de467a460382d13defdc02aacddc9c7d6605d6d4e0b8bd2f70732cae8ea17bc:
+-        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0x2e59A20f205bB85a89C53f1936454680651E618e","eth:0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977"]}
+      values.permissions.eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86.0xd35e458bacdd5343c2f050f574554b2f417a8ea38d6a9a65ce2225dbe8bb9a9d:
+-        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]}
+      values.permissions.eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86.0xd79730e82bfef7d2f9639b9d10bf37ebb662b22ae2211502a00bdf7b2cc3a23a:
+-        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]}
+      values.permissions.eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86.EXECUTE_PAYMENTS_ROLE:
++        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]}
+      values.permissions.eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86.MANAGE_PAYMENTS_ROLE:
++        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]}
+      values.permissions.eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86.CREATE_PAYMENTS_ROLE:
++        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0x2e59A20f205bB85a89C53f1936454680651E618e","eth:0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977"]}
+      values.permissions.eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86.CHANGE_PERIOD_ROLE:
++        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]}
+      values.permissions.eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86.CHANGE_BUDGETS_ROLE:
++        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]}
+      values.permissions.eth:0x2e59A20f205bB85a89C53f1936454680651E618e.0xad15e7261800b4bb73f1b69d3864565ffb1fd00cb93cf14fe48da8f1f2149f39:
+-        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]}
+      values.permissions.eth:0x2e59A20f205bB85a89C53f1936454680651E618e.0xda3972983e62bdf826c4b807c4c9c2b8a941e1f83dfa76d53d6aeac11e1be650:
+-        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]}
+      values.permissions.eth:0x2e59A20f205bB85a89C53f1936454680651E618e.0xe7dcd7275292e064d090fbc5f3bd7995be23b502c1fed5cd94cfddbbdcd32bbc:
+-        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0xf73a1260d222f447210581DDf212D915c09a3249"]}
+      values.permissions.eth:0x2e59A20f205bB85a89C53f1936454680651E618e.MODIFY_QUORUM_ROLE:
++        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]}
+      values.permissions.eth:0x2e59A20f205bB85a89C53f1936454680651E618e.MODIFY_SUPPORT_ROLE:
++        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]}
+      values.permissions.eth:0x2e59A20f205bB85a89C53f1936454680651E618e.CREATE_VOTES_ROLE:
++        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":["eth:0xf73a1260d222f447210581DDf212D915c09a3249"]}
+    }
+```
+
 Generated with discovered.json: 0x2c0d8c00e4b4da06dbcf79fab0290eaaae826dfc
 
 # Diff at Mon, 06 Oct 2025 21:53:14 GMT:

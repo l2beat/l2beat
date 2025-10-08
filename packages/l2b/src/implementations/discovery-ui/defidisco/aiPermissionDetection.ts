@@ -17,16 +17,23 @@ const AI_DETECTION_PROMPT = `You are a smart contract security analyzer. Analyze
 
 For each write function, determine:
 1. Whether it is PERMISSIONED (has access control like onlyOwner, onlyAdmin, onlyRole, etc.) or NON-PERMISSIONED (anyone can call it)
-2. If permissioned, identify the owner/admin address fields that control access
+2. If permissioned, identify the owner/admin addresses using PATH EXPRESSIONS
 
-IMPORTANT RULES:
+IMPORTANT RULES FOR PATHS:
 - Only include EXTERNAL functions that change state (exclude view/pure/internal functions)
-- For ownerDefinitions, there are 4 main cases:
-  - the permission owner is a field in the current contract: provide sourceField = field name ("owner", "admin"), and dataPath = "$self"
-  - the permission owner is a role in the current contract: provide sourceField = "accessControl", dataPath = name of the role (eg. "PAUSER_ROLE", "DEFAULT_ADMIN_ROLE")
-  - the permission owner is a role in an external access control contract: provide sourceField = field containing the address of the access control contract, datapath = name of the role
-  - the permission owner is a field in an external contract: provide sourceField = field containing the address of the external contract, datapath= field name in that contract containing the permission owner.
+- Owner definitions use a unified PATH format: "<contractRef>.<valuePath>"
+  - <contractRef>: $self (current contract), @fieldName (follow address field)
+  - <valuePath>: JSONPath-like navigation (e.g., owner, accessControl.ROLE_NAME.members)
+  - Add ".members" when referencing AccessControl role members specifically
 - Multiple ownerDefinitions can be provided for functions with multiple access control mechanisms
+
+PATH EXAMPLES:
+- Simple owner field: "$self.owner"
+- Admin field: "$self.admin"
+- Role-based (OpenZeppelin AccessControl): "$self.accessControl.MINTER_ROLE.members"
+- Following address field to external contract: "@governanceToken.owner"
+- Array element: "$self.signers[0]"
+- Current contract is owner: "$self"
 
 Response MUST be valid JSON matching this schema:
 {
@@ -37,8 +44,7 @@ Response MUST be valid JSON matching this schema:
       "sourceFile": "string (the exact filename where this function is defined)",
       "ownerDefinitions": [
         {
-          "sourceField": "string",
-          "dataPath": "string"
+          "path": "string (unified path expression)"
         }
       ]
     }
@@ -46,31 +52,42 @@ Response MUST be valid JSON matching this schema:
 }
 
 Examples:
-1. Function with onlyOwner modifier in source file MyContract.p.sol:
+1. Function with onlyOwner modifier in MyContract.p.sol:
    {
      "functionName": "pause",
      "aiClassification": "permissioned",
      "sourceFile": "MyContract.p.sol",
-     "ownerDefinitions": [{"sourceField": "owner", "dataPath": "$self"}]
+     "ownerDefinitions": [{"path": "$self.owner"}]
    }
 
-2. Function with AccessControl in the SAME contract implementing access control (MyContract.sol):
+2. Function with AccessControl role in the same contract (MyContract.sol):
    {
      "functionName": "mint",
      "aiClassification": "permissioned",
      "sourceFile": "MyContract.sol",
-     "ownerDefinitions": [{"sourceField": "accessControl", "dataPath": "MINTER_ROLE"}]
+     "ownerDefinitions": [{"path": "$self.accessControl.MINTER_ROLE"}]
    }
 
 3. Function with AccessControl using an external access control contract:
    {
-     "functionName": "mint",
+     "functionName": "upgrade",
      "aiClassification": "permissioned",
      "sourceFile": "MyContract.sol",
-     "ownerDefinitions": [{"sourceField": "ACLContract", "dataPath": "DEFAULT_ADMIN_ROLE"}]
+     "ownerDefinitions": [{"path": "@aclContract.accessControl.DEFAULT_ADMIN_ROLE"}]
    }
 
-4. Unprotected function in MyContract.sol:
+4. Function accessible by admin role OR specific governor:
+   {
+     "functionName": "setParameter",
+     "aiClassification": "permissioned",
+     "sourceFile": "MyContract.sol",
+     "ownerDefinitions": [
+       {"path": "$self.accessControl.DEFAULT_ADMIN_ROLE"},
+       {"path": "@governor.owner"}
+     ]
+   }
+
+5. Unprotected function:
    {
      "functionName": "deposit",
      "aiClassification": "non-permissioned",
@@ -191,8 +208,8 @@ function parseAiResponse(responseText: string): AiDetectionResult {
           throw new Error(`ownerDefinitions must be an array for ${func.functionName}`)
         }
         for (const def of func.ownerDefinitions) {
-          if (!def.sourceField || !def.dataPath) {
-            throw new Error(`Invalid ownerDefinition for ${func.functionName}`)
+          if (!def.path || typeof def.path !== 'string') {
+            throw new Error(`Invalid ownerDefinition for ${func.functionName}: missing or invalid path`)
           }
         }
       }

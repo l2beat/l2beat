@@ -1284,68 +1284,68 @@
             }
           },
           "eth:0xf73a1260d222f447210581DDf212D915c09a3249": {
-            "0xf5a08927c847d7a29dc35e105208dbde5ce951392105d712761cc5d17440e2ff": {
+            "ASSIGN_ROLE": {
               "manager": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
               "entities": ["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]
             },
-            "0x154c00819833dac601ee5ddded6fda79d9d8b506b911b3dbd54cdb95fe6c3686": {
+            "MINT_ROLE": {
               "manager": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
               "entities": ["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]
             },
-            "0x95ffc68daedf1eb334cfcd22ee24a5eeb5a8e58aa40679f2ad247a84140f8d6e": {
+            "REVOKE_VESTINGS_ROLE": {
               "manager": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
               "entities": ["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]
             }
           },
           "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": {
-            "0xcebf517aa4440d1d125e0355aae64401211d0848a23c02cc5d29a14822580ba4": {
+            "EXECUTE_ROLE": {
               "manager": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
               "entities": ["eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"]
             },
-            "0xb421f7ad7646747f3051c50c0b8e2377839296cd4973e27f63821d73e390338f": {
+            "RUN_SCRIPT_ROLE": {
               "manager": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
               "entities": ["eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"]
             },
-            "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c": {
+            "TRANSFER_ROLE": {
               "manager": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
               "entities": ["eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86"]
             }
           },
           "eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86": {
-            "0x563165d3eae48bcb0a092543ca070d989169c98357e9a1b324ec5da44bab75fd": {
+            "EXECUTE_PAYMENTS_ROLE": {
               "manager": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
               "entities": ["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]
             },
-            "0x30597dd103acfaef0649675953d9cb22faadab7e9d9ed57acc1c429d04b80777": {
+            "MANAGE_PAYMENTS_ROLE": {
               "manager": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
               "entities": ["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]
             },
-            "0x5de467a460382d13defdc02aacddc9c7d6605d6d4e0b8bd2f70732cae8ea17bc": {
+            "CREATE_PAYMENTS_ROLE": {
               "manager": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
               "entities": [
                 "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
                 "eth:0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977"
               ]
             },
-            "0xd35e458bacdd5343c2f050f574554b2f417a8ea38d6a9a65ce2225dbe8bb9a9d": {
+            "CHANGE_PERIOD_ROLE": {
               "manager": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
               "entities": ["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]
             },
-            "0xd79730e82bfef7d2f9639b9d10bf37ebb662b22ae2211502a00bdf7b2cc3a23a": {
+            "CHANGE_BUDGETS_ROLE": {
               "manager": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
               "entities": ["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]
             }
           },
           "eth:0x2e59A20f205bB85a89C53f1936454680651E618e": {
-            "0xad15e7261800b4bb73f1b69d3864565ffb1fd00cb93cf14fe48da8f1f2149f39": {
+            "MODIFY_QUORUM_ROLE": {
               "manager": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
               "entities": ["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]
             },
-            "0xda3972983e62bdf826c4b807c4c9c2b8a941e1f83dfa76d53d6aeac11e1be650": {
+            "MODIFY_SUPPORT_ROLE": {
               "manager": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
               "entities": ["eth:0x2e59A20f205bB85a89C53f1936454680651E618e"]
             },
-            "0xe7dcd7275292e064d090fbc5f3bd7995be23b502c1fed5cd94cfddbbdcd32bbc": {
+            "CREATE_VOTES_ROLE": {
               "manager": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
               "entities": ["eth:0xf73a1260d222f447210581DDf212D915c09a3249"]
             }
@@ -6068,7 +6068,7 @@
   },
   "usedTemplates": {
     "global/DepositContract": "0xfc77f1d7412b523d27d6db22532ffaa54e0026a15c868272f2f454514cab5df5",
-    "lido/ACL": "0x81c9e22492744b66bb77473ae36ac5d4e17b560ff671c120973a1b9a44d57ebd",
+    "lido/ACL": "0xfa8534df69be8b9f2462c84781a8187bf5ab378c47b5a4d3646fb6c2a8c8efca",
     "tokens/Lido/Burner": "0xf6c8cf6cb60ea799f5de86286c9080914905458749bb49c535b87e53b5a0247d",
     "tokens/Lido/DepositSecurityModule": "0x99ae4ecad8b09875ad720b21d7a45c1e420639eb19bb5cb3311f71c2c9e872c8",
     "tokens/Lido/EVMScriptRegistry": "0x1aa84beab6ea9134fd6d07ba52f9382adc5aa46e9c4b38cb3ed5200978909460",

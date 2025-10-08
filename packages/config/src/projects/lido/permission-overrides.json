@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-10-07T19:14:19.890Z",
+  "lastModified": "2025-10-08T00:44:01.670Z",
   "contracts": {
     "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": {
       "functions": [
@@ -154,85 +154,358 @@
         {
           "functionName": "createPermission",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Creates a new permission and specifies its permission manager and the role ID.\t",
           "ownerDefinitions": [
             {
               "path": "$self.CREATE_PERMISSIONS_ROLE"
             }
           ],
-          "timestamp": "2025-10-02T13:35:26.261Z"
+          "timestamp": "2025-10-07T21:23:36.668Z"
         },
         {
           "functionName": "grantPermission",
           "userClassification": "permissioned",
           "checked": true,
           "score": "high-risk",
-          "description": "Grants a permissions\n",
+          "description": "Grants a permission (a role) to an entity. The entity can then perform all the actions associated with the role. Optionally the manager can specify parameters associated with the permission that could grant additional permisisons specifically for those parameters.\t",
           "ownerDefinitions": [
             {
-              "path": "$self.permissionManager"
+              "path": "$self.permissions[eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb].CREATE_PERMISSIONS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xf73a1260d222f447210581DDf212D915c09a3249].ASSIGN_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xf73a1260d222f447210581DDf212D915c09a3249].MINT_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xf73a1260d222f447210581DDf212D915c09a3249].REVOKE_VESTINGS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].EXECUTE_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].RUN_SCRIPT_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].TRANSFER_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].EXECUTE_PAYMENTS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].MANAGE_PAYMENTS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].CREATE_PAYMENTS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].CHANGE_PERIOD_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].CHANGE_BUDGETS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].MODIFY_QUORUM_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].MODIFY_SUPPORT_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].CREATE_VOTES_ROLE.manager"
             }
           ],
-          "timestamp": "2025-10-02T21:25:39.050Z"
+          "timestamp": "2025-10-07T21:13:38.281Z"
         },
         {
           "functionName": "grantPermissionP",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Grants a permission with parameters. Similar to grantPermission but allows specifying additional parameters that restrict or extend the permission.",
           "ownerDefinitions": [
             {
-              "path": "$self.permissionManager"
+              "path": "$self.permissions[eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb].CREATE_PERMISSIONS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xf73a1260d222f447210581DDf212D915c09a3249].ASSIGN_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xf73a1260d222f447210581DDf212D915c09a3249].MINT_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xf73a1260d222f447210581DDf212D915c09a3249].REVOKE_VESTINGS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].EXECUTE_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].RUN_SCRIPT_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].TRANSFER_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].EXECUTE_PAYMENTS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].MANAGE_PAYMENTS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].CREATE_PAYMENTS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].CHANGE_PERIOD_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].CHANGE_BUDGETS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].MODIFY_QUORUM_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].MODIFY_SUPPORT_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].CREATE_VOTES_ROLE.manager"
             }
           ],
-          "timestamp": "2025-10-02T13:35:26.267Z"
+          "timestamp": "2025-10-07T21:13:46.752Z"
         },
         {
           "functionName": "revokePermission",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Revokes a permission from an entity.\t",
           "ownerDefinitions": [
             {
-              "path": "$self.permissionManager"
+              "path": "$self.permissions[eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb].CREATE_PERMISSIONS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xf73a1260d222f447210581DDf212D915c09a3249].ASSIGN_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xf73a1260d222f447210581DDf212D915c09a3249].MINT_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xf73a1260d222f447210581DDf212D915c09a3249].REVOKE_VESTINGS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].EXECUTE_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].RUN_SCRIPT_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].TRANSFER_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].EXECUTE_PAYMENTS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].MANAGE_PAYMENTS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].CREATE_PAYMENTS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].CHANGE_PERIOD_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].CHANGE_BUDGETS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].MODIFY_QUORUM_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].MODIFY_SUPPORT_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].CREATE_VOTES_ROLE.manager"
             }
           ],
-          "timestamp": "2025-10-02T13:35:26.267Z"
+          "timestamp": "2025-10-07T21:22:33.913Z"
         },
         {
           "functionName": "setPermissionManager",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets a permission (role)'s manager. The manager can grant and revoke the permissions for that role ID.\t",
           "ownerDefinitions": [
             {
-              "path": "$self.permissionManager"
+              "path": "$self.permissions[eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb].CREATE_PERMISSIONS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xf73a1260d222f447210581DDf212D915c09a3249].ASSIGN_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xf73a1260d222f447210581DDf212D915c09a3249].MINT_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xf73a1260d222f447210581DDf212D915c09a3249].REVOKE_VESTINGS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].EXECUTE_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].RUN_SCRIPT_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].TRANSFER_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].EXECUTE_PAYMENTS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].MANAGE_PAYMENTS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].CREATE_PAYMENTS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].CHANGE_PERIOD_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].CHANGE_BUDGETS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].MODIFY_QUORUM_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].MODIFY_SUPPORT_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].CREATE_VOTES_ROLE.manager"
             }
           ],
-          "timestamp": "2025-10-02T13:35:26.268Z"
+          "timestamp": "2025-10-07T21:23:22.058Z"
         },
         {
           "functionName": "removePermissionManager",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Removes the permission manager for a role and sets it to the zero address. This role can no longer be granted or revoked, but a new manager can still be named using the createPermission function.\t",
           "ownerDefinitions": [
             {
-              "path": "$self.permissionManager"
+              "path": "$self.permissions[eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb].CREATE_PERMISSIONS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xf73a1260d222f447210581DDf212D915c09a3249].ASSIGN_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xf73a1260d222f447210581DDf212D915c09a3249].MINT_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xf73a1260d222f447210581DDf212D915c09a3249].REVOKE_VESTINGS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].EXECUTE_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].RUN_SCRIPT_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].TRANSFER_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].EXECUTE_PAYMENTS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].MANAGE_PAYMENTS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].CREATE_PAYMENTS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].CHANGE_PERIOD_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].CHANGE_BUDGETS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].MODIFY_QUORUM_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].MODIFY_SUPPORT_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].CREATE_VOTES_ROLE.manager"
             }
           ],
-          "timestamp": "2025-10-02T13:35:26.269Z"
+          "timestamp": "2025-10-07T21:22:59.241Z"
         },
         {
           "functionName": "createBurnedPermission",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Permanently locks a permission so it can never be modified. This variant is called when the manager of the role was already the zero address.\t",
           "ownerDefinitions": [
             {
-              "path": "$self.CREATE_PERMISSIONS_ROLE"
+              "path": "$self.permissions[0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb].CREATE_PERMISSIONS_ROLE"
             }
           ],
-          "timestamp": "2025-10-02T21:37:03.499Z"
+          "timestamp": "2025-10-07T21:22:02.517Z"
         },
         {
           "functionName": "burnPermissionManager",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Permanently locks a permission so it can never be modified. This is done by changing the manager to a BURN_ENTITY.\t",
           "ownerDefinitions": [
             {
-              "path": "$self.permissionManager"
+              "path": "$self.permissions[eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb].CREATE_PERMISSIONS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xf73a1260d222f447210581DDf212D915c09a3249].ASSIGN_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xf73a1260d222f447210581DDf212D915c09a3249].MINT_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xf73a1260d222f447210581DDf212D915c09a3249].REVOKE_VESTINGS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].EXECUTE_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].RUN_SCRIPT_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].TRANSFER_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].EXECUTE_PAYMENTS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].MANAGE_PAYMENTS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].CREATE_PAYMENTS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].CHANGE_PERIOD_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86].CHANGE_BUDGETS_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].MODIFY_QUORUM_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].MODIFY_SUPPORT_ROLE.manager"
+            },
+            {
+              "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].CREATE_VOTES_ROLE.manager"
             }
           ],
-          "timestamp": "2025-10-02T13:35:26.270Z"
+          "timestamp": "2025-10-07T21:22:18.000Z"
         }
       ]
     },
@@ -241,42 +514,54 @@
         {
           "functionName": "requestBurnMyStETHForCover",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Tranfers stETH from the sender and irreversibly locks it on the burner contract. This increases the cover-backed burning counter. A share burn is to compensate a slashing event.\t",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.REQUEST_BURN_MY_STETH_ROLE.members"
             }
           ],
-          "timestamp": "2025-10-02T15:54:05.779Z"
+          "timestamp": "2025-10-08T00:14:47.521Z"
         },
         {
           "functionName": "requestBurnSharesForCover",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Transfers stETH shares from another user (who should have approved) and locks it on the burner contract. This increases the cover-backed burning counter. A share burn meant to cover is to compensate a slashing event.\t",
           "ownerDefinitions": [
             {
-              "path": "$self.REQUEST_BURN_SHARES_ROLE"
+              "path": "$self.accessControl.REQUEST_BURN_SHARES_ROLE"
             }
           ],
-          "timestamp": "2025-10-02T15:54:05.784Z"
+          "timestamp": "2025-10-08T00:18:36.050Z"
         },
         {
           "functionName": "requestBurnMyStETH",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Tranfers stETH from the sender and irreversibly locks it on the burner contract. This increases the non-cover backed burning counter.\t",
           "ownerDefinitions": [
             {
-              "path": "$self.REQUEST_BURN_MY_STETH_ROLE"
+              "path": "$self.accessControl.REQUEST_BURN_MY_STETH_ROLE"
             }
           ],
-          "timestamp": "2025-10-02T15:54:05.785Z"
+          "timestamp": "2025-10-08T00:19:24.302Z"
         },
         {
           "functionName": "requestBurnShares",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Transfers stETH shares from another user (who should have approved) and locks it on the burner contract. This increases the non-cover backed burning counter.\t",
           "ownerDefinitions": [
             {
-              "path": "$self.REQUEST_BURN_SHARES_ROLE"
+              "path": "$self.accessControl.REQUEST_BURN_SHARES_ROLE"
             }
           ],
-          "timestamp": "2025-10-02T15:54:05.785Z"
+          "timestamp": "2025-10-08T00:17:57.884Z"
         },
         {
           "functionName": "recoverExcessStETH",
@@ -296,12 +581,41 @@
         {
           "functionName": "commitSharesToBurn",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Marks previously requested to burn cover and non-cover shares as burnt. This function is meant to be called by the Lido contract in the same tx as the share burning it actually done.\t",
           "ownerDefinitions": [
             {
               "path": "$self.STETH"
             }
           ],
-          "timestamp": "2025-10-02T15:54:05.799Z"
+          "timestamp": "2025-10-08T00:16:58.886Z"
+        },
+        {
+          "functionName": "grantRole",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Grants a role within the contract to a specific address. There are roles to allow burning stETH either from a delegated address or from the caller itself. Only the Governance is currently allowed to burn its own stETH.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-08T00:21:11.982Z"
+        },
+        {
+          "functionName": "revokeRole",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Revokes a role to a specific address.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-08T00:21:58.565Z"
         }
       ]
     },
@@ -319,74 +633,106 @@
         {
           "functionName": "execute",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
           "description": "Executes arbitrary function calls to any external contract with a given ETH value. This can perform any action that is allowed to the Agent in other Lido contracts, which includes critical ones.",
-          "ownerDefinitions": [],
-          "timestamp": "2025-10-07T18:46:07.984Z"
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].EXECUTE_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-07T20:54:38.166Z"
         },
         {
           "functionName": "safeExecute",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Similar to execute but with protections for known critical tokens. It ensures there are no direct calls to the protected tokens, the token balances don't decrease, and the list of protected tokens doesn't change.",
           "ownerDefinitions": [
             {
-              "path": "@kernel.SAFE_EXECUTE_ROLE"
+              "path": "@acl.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].SAFE_EXECUTE_ROLE"
             }
           ],
-          "timestamp": "2025-10-02T19:19:15.306Z"
+          "timestamp": "2025-10-07T20:50:58.535Z"
         },
         {
           "functionName": "addProtectedToken",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Adds a token to the protected list (maximum of 10 tokens). Those tokens are safeguarded when proposals are executed using safeExecute.",
           "ownerDefinitions": [
             {
-              "path": "@kernel.ADD_PROTECTED_TOKEN_ROLE"
+              "path": "@acl.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].ADD_PROTECTED_TOKEN_ROLE"
             }
           ],
-          "timestamp": "2025-10-02T19:19:15.307Z"
+          "timestamp": "2025-10-07T20:58:00.862Z"
         },
         {
           "functionName": "removeProtectedToken",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Removes a token from the protected list.",
           "ownerDefinitions": [
             {
-              "path": "@kernel.REMOVE_PROTECTED_TOKEN_ROLE"
+              "path": "@acl.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].REMOVE_PROTECTED_TOKEN_ROLE"
             }
           ],
-          "timestamp": "2025-10-02T19:19:15.308Z"
+          "timestamp": "2025-10-07T20:58:48.570Z"
         },
         {
           "functionName": "presignHash",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Pre-approves a hash according to ERC-1271. It allows the governance to approve a hash so that it is considered valid once verified. This allows the approval of a message without requiring the contract to actually sign it.",
           "ownerDefinitions": [
             {
-              "path": "@kernel.ADD_PRESIGNED_HASH_ROLE"
+              "path": "@acl.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].ADD_PRESIGNED_HASH_ROLE"
             }
           ],
-          "timestamp": "2025-10-02T19:19:15.309Z"
+          "timestamp": "2025-10-07T20:59:27.623Z"
         },
         {
           "functionName": "setDesignatedSigner",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Adds a designated signer. The external address can sign messages on behalf of the Agent according to ERC-1271.",
           "ownerDefinitions": [
             {
-              "path": "@kernel.DESIGNATE_SIGNER_ROLE"
+              "path": "@acl.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].DESIGNATE_SIGNER_ROLE"
             }
           ],
-          "timestamp": "2025-10-02T19:19:15.309Z"
+          "timestamp": "2025-10-07T20:56:59.406Z"
         },
         {
           "functionName": "forward",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Executes a script as the Agent. This is meant to be called by to execute proposals through the Agent.",
           "ownerDefinitions": [
             {
-              "path": "@kernel.RUN_SCRIPT_ROLE"
+              "path": "@acl.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].RUN_SCRIPT_ROLE"
             }
           ],
-          "timestamp": "2025-10-02T19:19:15.311Z"
+          "timestamp": "2025-10-07T20:54:19.339Z"
         },
         {
           "functionName": "transfer",
-          "userClassification": "non-permissioned",
-          "timestamp": "2025-10-02T19:21:02.296Z"
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Transfers a given ERC20 token out of the contract to a given address.",
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].TRANSFER_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-07T20:51:56.517Z"
         },
         {
           "functionName": "initialize",
@@ -437,81 +783,143 @@
       "functions": [
         {
           "functionName": "updateInitialEpoch",
-          "userClassification": "permissioned",
+          "userClassification": "non-permissioned",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
             }
           ],
-          "timestamp": "2025-10-03T14:52:59.616Z"
+          "timestamp": "2025-10-08T00:32:47.706Z"
         },
         {
           "functionName": "setFrameConfig",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "medium-risk",
+          "description": "Sets the configuration of frames. Frames are time window of equal lenghts referencing the processing of a slot and the corresponding deadline. A report based on the consensus layer must be built and consensus must be reached before each deadline.\t",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.MANAGE_FRAME_CONFIG_ROLE.members"
             }
           ],
-          "timestamp": "2025-10-03T14:52:59.618Z"
+          "timestamp": "2025-10-08T00:33:57.962Z"
         },
         {
           "functionName": "setFastLaneLengthSlots",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Sets the duration of a fast lane rotation in slots. Members in the fast lane can (and are expected to) submit their report during a dedicated fast lane time window before submissions are open to all other members. The members in the fast lanes are rotated at a rate set using this function. The goal is to enforce active participation of all oracle members, preventing lazy copying.\t",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.MANAGE_FAST_LANE_CONFIG_ROLE.members"
             }
           ],
-          "timestamp": "2025-10-03T14:52:59.619Z"
+          "timestamp": "2025-10-08T00:34:14.239Z"
         },
         {
           "functionName": "addMember",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Adds a member to the consensus committee. Members can contribute to building consensus and submit reports.\t",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE.members"
             }
           ],
-          "timestamp": "2025-10-07T16:37:24.518Z"
+          "timestamp": "2025-10-08T00:25:43.190Z"
         },
         {
           "functionName": "removeMember",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Removes a member from the consensus committee, and sets a new quorum.",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE"
-            },
-            {
-              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
             }
           ],
-          "timestamp": "2025-10-07T19:14:19.889Z"
+          "timestamp": "2025-10-08T00:27:12.736Z"
         },
         {
           "functionName": "setQuorum",
-          "userClassification": "non-permissioned",
-          "timestamp": "2025-10-03T14:52:59.623Z"
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets the quorum value. This is the amount of equal reports that need to be accumulated for each slot for a report to be considered valid and ready for processing. A value higher the the number of members in the committee would make consensus impossible.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-08T00:29:15.115Z"
         },
         {
           "functionName": "disableConsensus",
-          "userClassification": "non-permissioned",
-          "timestamp": "2025-10-03T14:52:59.624Z"
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Temporarily disables consensus by increasing the quorum value to an unreachable number. This prevents any consensus from being reached. Consensus needs to be re-enabled using setQuorum.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DISABLE_CONSENSUS_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-08T00:30:04.541Z"
         },
         {
           "functionName": "setReportProcessor",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Sets the processor contract to which the reports are sent over to.",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.MANAGE_REPORT_PROCESSOR_ROLE.members"
             }
           ],
-          "timestamp": "2025-10-03T14:52:59.624Z"
+          "timestamp": "2025-10-08T00:33:31.985Z"
         },
         {
           "functionName": "submitReport",
-          "userClassification": "non-permissioned",
-          "timestamp": "2025-10-03T14:52:59.625Z"
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Used by oracle members to submit hash of the data calculated for the given reference slot. If consensus is reached (more submissions of the same report than the quorum amount) the HashConsensus contract submits this report to the processing contract (either AccountingOracle or ValidatorsExitBusOracle) to enable processing.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getMembers.addresses"
+            }
+          ],
+          "timestamp": "2025-10-08T00:32:20.266Z"
+        },
+        {
+          "functionName": "grantRole",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Grants a role within the contract to a specific address. This may allow addresses to execute any of the functions above related to the specific role.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-08T00:30:43.955Z"
+        },
+        {
+          "functionName": "revokeRole",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Revokes a role for a specific address.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-08T00:31:11.405Z"
         }
       ]
     },
@@ -519,17 +927,19 @@
       "functions": [
         {
           "functionName": "updateInitialEpoch",
-          "userClassification": "permissioned",
-          "ownerDefinitions": [
-            {
-              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
-            }
-          ],
-          "timestamp": "2025-10-03T14:58:41.696Z"
+          "userClassification": "non-permissioned",
+          "checked": false,
+          "score": "unscored",
+          "description": "",
+          "ownerDefinitions": [],
+          "timestamp": "2025-10-08T00:44:01.670Z"
         },
         {
           "functionName": "setFrameConfig",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "medium-risk",
+          "description": "Sets the configuration of frames. Frames are time window of equal lenghts referencing the processing of a slot and the corresponding deadline. A report based on the consensus layer must be built and consensus must be reached before each deadline.\t",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.MANAGE_FRAME_CONFIG_ROLE.members"
@@ -540,6 +950,9 @@
         {
           "functionName": "setFastLaneLengthSlots",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Sets the duration of a fast lane rotation in slots. Members in the fast lane can (and are expected to) submit their report during a dedicated fast lane time window before submissions are open to all other members. The members in the fast lanes are rotated at a rate set using this function. The goal is to enforce active participation of all oracle members, preventing lazy copying.\t",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.MANAGE_FAST_LANE_CONFIG_ROLE.members"
@@ -550,6 +963,9 @@
         {
           "functionName": "addMember",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Adds a member to the consensus committee. Members can contribute to building consensus and submit reports.\t",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE.members"
@@ -560,9 +976,12 @@
         {
           "functionName": "removeMember",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Removes a member from the consensus committee, and sets a new quorum.",
           "ownerDefinitions": [
             {
-              "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE.members"
+              "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE"
             }
           ],
           "timestamp": "2025-10-03T14:58:41.703Z"
@@ -570,9 +989,12 @@
         {
           "functionName": "setQuorum",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets the quorum value. This is the amount of equal reports that need to be accumulated for each slot for a report to be considered valid and ready for processing. A value higher the the number of members in the committee would make consensus impossible.\t",
           "ownerDefinitions": [
             {
-              "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE.members"
+              "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE"
             }
           ],
           "timestamp": "2025-10-03T14:58:41.704Z"
@@ -580,9 +1002,12 @@
         {
           "functionName": "disableConsensus",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Temporarily disables consensus by increasing the quorum value to an unreachable number. This prevents any consensus from being reached. Consensus needs to be re-enabled using setQuorum.\t",
           "ownerDefinitions": [
             {
-              "path": "$self.accessControl.DISABLE_CONSENSUS_ROLE.members"
+              "path": "$self.accessControl.DISABLE_CONSENSUS_ROLE"
             }
           ],
           "timestamp": "2025-10-03T14:58:41.705Z"
@@ -590,6 +1015,9 @@
         {
           "functionName": "setReportProcessor",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Sets the processor contract to which the reports are sent over to.",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.MANAGE_REPORT_PROCESSOR_ROLE.members"
@@ -599,8 +1027,185 @@
         },
         {
           "functionName": "submitReport",
-          "userClassification": "non-permissioned",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Used by oracle members to submit hash of the data calculated for the given reference slot. If consensus is reached (more submissions of the same report than the quorum amount) the HashConsensus contract submits this report to the processing contract (either AccountingOracle or ValidatorsExitBusOracle) to enable processing.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getMembers.addresses"
+            }
+          ],
           "timestamp": "2025-10-03T14:58:41.706Z"
+        },
+        {
+          "functionName": "grantRole",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Grants a role within the contract to a specific address. This may allow addresses to execute any of the functions above related to the specific role.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-03T14:58:41.707Z"
+        },
+        {
+          "functionName": "revokeRole",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Revokes a role for a specific address.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-03T14:58:41.708Z"
+        }
+      ]
+    },
+    "eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288": {
+      "functions": [
+        {
+          "functionName": "updateInitialEpoch",
+          "userClassification": "non-permissioned",
+          "checked": false,
+          "score": "unscored",
+          "description": "",
+          "ownerDefinitions": [],
+          "timestamp": "2025-10-08T00:43:46.419Z"
+        },
+        {
+          "functionName": "setFrameConfig",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "medium-risk",
+          "description": "Sets the configuration of frames. Frames are time window of equal lenghts referencing the processing of a slot and the corresponding deadline. A report based on the consensus layer must be built and consensus must be reached before each deadline.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_FRAME_CONFIG_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-08T00:35:01.000Z"
+        },
+        {
+          "functionName": "setFastLaneLengthSlots",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Sets the duration of a fast lane rotation in slots. Members in the fast lane can (and are expected to) submit their report during a dedicated fast lane time window before submissions are open to all other members. The members in the fast lanes are rotated at a rate set using this function. The goal is to enforce active participation of all oracle members, preventing lazy copying.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_FAST_LANE_CONFIG_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-08T00:35:02.000Z"
+        },
+        {
+          "functionName": "addMember",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Adds a member to the consensus committee. Members can contribute to building consensus and submit reports.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-08T00:35:03.000Z"
+        },
+        {
+          "functionName": "removeMember",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Removes a member from the consensus committee, and sets a new quorum.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-08T00:35:04.000Z"
+        },
+        {
+          "functionName": "setQuorum",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets the quorum value. This is the amount of equal reports that need to be accumulated for each slot for a report to be considered valid and ready for processing. A value higher the the number of members in the committee would make consensus impossible.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-08T00:35:05.000Z"
+        },
+        {
+          "functionName": "disableConsensus",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Temporarily disables consensus by increasing the quorum value to an unreachable number. This prevents any consensus from being reached. Consensus needs to be re-enabled using setQuorum.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DISABLE_CONSENSUS_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-08T00:35:06.000Z"
+        },
+        {
+          "functionName": "setReportProcessor",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Sets the processor contract to which the reports are sent over to.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_REPORT_PROCESSOR_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-08T00:35:07.000Z"
+        },
+        {
+          "functionName": "submitReport",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Used by oracle members to submit hash of the data calculated for the given reference slot. If consensus is reached (more submissions of the same report than the quorum amount) the HashConsensus contract submits this report to the processing contract (either AccountingOracle or ValidatorsExitBusOracle) to enable processing.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getMembers.addresses"
+            }
+          ],
+          "timestamp": "2025-10-08T00:35:08.000Z"
+        },
+        {
+          "functionName": "grantRole",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Grants a role within the contract to a specific address. This may allow addresses to execute any of the functions above related to the specific role.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-08T00:35:09.000Z"
+        },
+        {
+          "functionName": "revokeRole",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Revokes a role for a specific address.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-08T00:35:10.000Z"
         }
       ]
     },
