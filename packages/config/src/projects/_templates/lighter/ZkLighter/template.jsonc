@@ -43,18 +43,10 @@
         "type": "event",
         "select": "symbol",
         "add": {
-          "event": [
-            "CreateMarket"
-          ]
+          "event": ["CreateMarket"]
         }
       },
-      "edit": [
-        "map",
-        [
-          "format",
-          "Bytes32ToString"
-        ]
-      ]
+      "edit": ["map", ["format", "Bytes32ToString"]]
     }
   }
 }
