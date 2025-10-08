@@ -1,6 +1,6 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
 import { DEBRIDGE_NETWORKS } from './debridge'
 import {
+  Address32,
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
@@ -76,8 +76,8 @@ const parseFulfilledOrder = createEventParser(
 
 export const LogCreatedOrder = createBridgeEventType<{
   orderId: `0x${string}`
-  fromToken: EthereumAddress
-  toToken: EthereumAddress
+  fromToken: Address32
+  toToken: Address32
   fromAmount: string
   fillAmount: string
   $dstChain: string
@@ -85,8 +85,8 @@ export const LogCreatedOrder = createBridgeEventType<{
 
 export const LogFulfilledOrder = createBridgeEventType<{
   orderId: `0x${string}`
-  fromToken: EthereumAddress
-  toToken: EthereumAddress
+  fromToken: Address32
+  toToken: Address32
   fromAmount: string
   fillAmount: string
   $srcChain: string
@@ -100,8 +100,8 @@ export class DeBridgeDlnPlugin implements BridgePlugin {
     if (logOrderCreated) {
       return LogCreatedOrder.create(input.ctx, {
         orderId: logOrderCreated.orderId,
-        fromToken: EthereumAddress(logOrderCreated.order.giveTokenAddress),
-        toToken: EthereumAddress(logOrderCreated.order.takeTokenAddress),
+        fromToken: Address32.from(logOrderCreated.order.giveTokenAddress),
+        toToken: Address32.from(logOrderCreated.order.takeTokenAddress),
         fromAmount: logOrderCreated.order.giveAmount.toString(),
         fillAmount: logOrderCreated.order.takeAmount.toString(),
         $dstChain: findChain(
@@ -116,8 +116,8 @@ export class DeBridgeDlnPlugin implements BridgePlugin {
     if (logOrderFilled) {
       return LogFulfilledOrder.create(input.ctx, {
         orderId: logOrderFilled.orderId,
-        fromToken: EthereumAddress(logOrderFilled.order.giveTokenAddress),
-        toToken: EthereumAddress(logOrderFilled.order.takeTokenAddress),
+        fromToken: Address32.from(logOrderFilled.order.giveTokenAddress),
+        toToken: Address32.from(logOrderFilled.order.takeTokenAddress),
         fromAmount: logOrderFilled.order.giveAmount.toString(),
         fillAmount: logOrderFilled.order.takeAmount.toString(),
         $srcChain: findChain(
@@ -143,6 +143,11 @@ export class DeBridgeDlnPlugin implements BridgePlugin {
     if (!orderCreated) return
 
     return [
+      Result.Message('debridge-dln.Message', {
+        app: 'debridge-dln',
+        srcEvent: orderCreated,
+        dstEvent: orderFilled,
+      }),
       Result.Transfer('debridge-dln.Transfer', {
         srcEvent: orderCreated,
         srcTokenAddress: orderCreated.args.fromToken,

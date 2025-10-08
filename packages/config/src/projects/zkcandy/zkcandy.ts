@@ -35,6 +35,8 @@ export const zkcandy: ScalingProject = zkStackL2({
         'https://discord.gg/zkcandy',
         'https://t.me/zkcandy',
       ],
+      documentation: ['https://docs.zkcandyapi.com/'],
+      explorers: ['https://explorer.zkcandy.io/'],
     },
   },
   discovery,

@@ -1,3 +1,161 @@
+Generated with discovered.json: 0x23f4d2c2a8858416750d594735b77b6fbb0f9db7
+
+# Diff at Tue, 30 Sep 2025 17:10:58 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c66a02d28b2467edd595f8a8468988549dd6d3cf block: 1757939071
+- current timestamp: 1759252030
+
+## Description
+
+Introduced MVM_ProposerRegistry.
+https://disco.l2beat.com/diff/eth:0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1/eth:0xA738573Ec0FD7959BfA60Aaa8a23Fe7BEC6c4Bd7
+
+## Watched changes
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x081D1101855bD523bA69A9794e0217F0DB6323ff) {
+    +++ description: The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.owner:
+-        "eth:0xDD6FFC7D9a4Fb420b637747edc6456340d12d377"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract Lib_AddressManager (eth:0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      values.MVM_ProposerRegistry:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x5669d0C8C28B7E2c3d10eD246bEb042bDdd12E18"
+    }
+```
+
+```diff
+    contract StateCommitmentChain (eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6) {
+    +++ description: The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.
+      sourceHashes.1:
+-        "0x0e8553402b55057406811a803b14c4778f42fcf02523b10e695ec073a98202a9"
++        "0xa42c85a235f67f88b193b516224025a8c54c8fc5a0204c0f7b4fc0202b70eed0"
+      values.$implementation:
+-        "eth:0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1"
++        "eth:0xA738573Ec0FD7959BfA60Aaa8a23Fe7BEC6c4Bd7"
+      values.MVM_PROPOSER_REGISTRY_NAME:
++        "MVM_ProposerRegistry"
+      implementationNames.eth:0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1:
+-        "MVM_StateCommitmentChain"
+      implementationNames.eth:0xA738573Ec0FD7959BfA60Aaa8a23Fe7BEC6c4Bd7:
++        "MVM_StateCommitmentChain"
+    }
+```
+
+```diff
+    EOA  (eth:0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"propose","from":"eth:0x5669d0C8C28B7E2c3d10eD246bEb042bDdd12E18","role":".proposer"}
+    }
+```
+
+```diff
+    contract Ether Token (metis-andromeda:0x420000000000000000000000000000000000000A) {
+    +++ description: None
+      values.totalSupply:
+-        "4804391152042712516897"
++        "4803274560845429809151"
+    }
+```
+
+```diff
+    contract MVM_Coinbase (metis-andromeda:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000) {
+    +++ description: None
+      values.totalSupply:
+-        "6914444516037876739233851"
++        "6915210796933756685181355"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MVM_ProposerRegistry (eth:0x5669d0C8C28B7E2c3d10eD246bEb042bDdd12E18)
+    +++ description: The Proposer Registry contains the addresses of the current active proposers for the chain.
+```
+
+## Source code changes
+
+```diff
+.../projects/metis/.flat/MVM_ProposerRegistry.sol  | 105 ++++++++++++
+ .../MVM_StateCommitmentChain.sol                   | 187 +++++++++++----------
+ 2 files changed, 206 insertions(+), 86 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757939071 (main branch discovery), not current.
+
+```diff
+    contract Lib_AddressManager (eth:0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      values.blobBatcher:
+-        "eth:0xaE4d46bD9117Cb017C5185844699c51107cB28a9"
+      values.MVM_ProposerRegistry:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.OVM_Sequencer:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.Proxy__MVM_InboxSenderManager:
++        "eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0"
+    }
+```
+
+```diff
+    EOA  (eth:0xaE4d46bD9117Cb017C5185844699c51107cB28a9) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0x918778e825747a892b17C66fe7D24C618262867d"
++        "eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0"
+    }
+```
+
+```diff
+    contract Metis Security Council (eth:0xbf1752DE62d825aF0634F514226F881a449874b6) {
+    +++ description: None
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MVM_InboxSenderManager (eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0)
+    +++ description: Container contract for designated sequencer addresses.
+```
+
+```diff
++   Status: CREATED
+    contract OVM_L2ToL1MessagePasser (metis-andromeda:0x4200000000000000000000000000000000000000)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MVM_ChainConfig (metis-andromeda:0x4200000000000000000000000000000000000005)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Ether Token (metis-andromeda:0x420000000000000000000000000000000000000A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MVM_Coinbase (metis-andromeda:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xcc9ddcff41f36f31ec30ba9721e08d861988c4cf
 
 # Diff at Mon, 15 Sep 2025 12:26:22 GMT:

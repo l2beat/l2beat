@@ -20,6 +20,7 @@ import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { RISK_VIEW } from '../../common/riskView'
 import { getStage } from '../../common/stages/getStage'
 import { STATE_VALIDATION } from '../../common/stateValidation'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
@@ -57,6 +58,14 @@ const escrowUSDCMaxTotalBalanceString = formatMaxTotalBalanceString(
   'USDC',
   discovery.getContractValue<number>('USDC Bridge', 'maxTotalBalance'),
   6,
+)
+
+const paradexProgramHashes = []
+paradexProgramHashes.push(
+  discovery.getContractValue<string>('Paradex', 'programHash'),
+)
+paradexProgramHashes.push(
+  discovery.getContractValue<string>('Paradex', 'aggregatorProgramHash'),
 )
 
 export const paradex: ScalingProject = {
@@ -334,6 +343,7 @@ export const paradex: ScalingProject = {
   },
   stateValidation: {
     categories: [STATE_VALIDATION.VALIDITY_PROOFS],
+    zkProgramHashes: paradexProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   technology: {
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_ON_CHAIN(true),

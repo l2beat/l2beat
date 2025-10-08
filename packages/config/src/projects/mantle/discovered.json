@@ -300,7 +300,7 @@
         "opStackDA": {
           "isSequencerSendingBlobTx": false,
           "isUsingCelestia": false,
-          "isUsingEigenDA": true
+          "isUsingEigenDA": "v1"
         },
         "overhead": 188,
         "owner": "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",

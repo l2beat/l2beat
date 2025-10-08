@@ -22,6 +22,7 @@ import {
 import { BADGES } from '../../common/badges'
 import { PROOFS } from '../../common/proofSystems'
 import { getStage } from '../../common/stages/getStage'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getSHARPVerifierUpgradeDelay } from '../../discovery/starkware'
 import type { ScalingProject } from '../../internalTypes'
@@ -180,6 +181,14 @@ const finalizationPeriod = 0
 const scThreshold = discovery.getMultisigStats('Starkware Security Council')
 const sharpMsThreshold = discovery.getMultisigStats('SHARP Multisig')
 
+const starknetProgramHashes = []
+starknetProgramHashes.push(
+  discovery.getContractValue<string>('Starknet', 'programHash'),
+)
+starknetProgramHashes.push(
+  discovery.getContractValue<string>('Starknet', 'aggregatorProgramHash'),
+)
+
 export const starknet: ScalingProject = {
   type: 'layer2',
   id: ProjectId('starknet'),
@@ -260,7 +269,7 @@ export const starknet: ScalingProject = {
     },
     exitWindow: RISK_VIEW.EXIT_WINDOW_STARKNET(minNonScDelay),
     sequencerFailure: RISK_VIEW.SEQUENCER_CAN_SKIP('L1'),
-    proposerFailure: RISK_VIEW.PROPOSER_WHITELIST_SECURITY_COUNCIL,
+    proposerFailure: RISK_VIEW.PROPOSER_WHITELIST_SECURITY_COUNCIL(),
   },
   stage: getStage(
     {
@@ -388,6 +397,7 @@ export const starknet: ScalingProject = {
         },
       ],
     },
+    zkProgramHashes: starknetProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   contracts: {

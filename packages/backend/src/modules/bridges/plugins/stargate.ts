@@ -2,6 +2,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { BinaryReader } from '../BinaryReader'
 import { parseOFTReceived, parseOFTSent } from './layerzero-v2-ofts'
 import {
+  Address32,
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
@@ -17,7 +18,7 @@ export const StargateV2OFTSentBusRode = createBridgeEventType<{
   ticketId: number
   receiver: string
   destinationEid: number
-  tokenAddress: EthereumAddress | 'native'
+  tokenAddress: Address32 | 'native'
   amountSentLD: string
   amountReceivedLD: string
   amountSD: string
@@ -28,7 +29,7 @@ export const StargateV2OFTSentTaxi = createBridgeEventType<{
   guid: string
   amountSentLD: string
   amountReceivedLD: string
-  tokenAddress: EthereumAddress | 'native'
+  tokenAddress: Address32 | 'native'
   $dstChain: string
 }>('stargate-v2.OFTSentTaxi')
 
@@ -37,7 +38,7 @@ export const StargateV2OFTReceived = createBridgeEventType<{
   receiver: string
   emitter: EthereumAddress
   token: string
-  tokenAddress: EthereumAddress | 'native'
+  tokenAddress: Address32 | 'native'
   destinationEid: number
   amountReceivedLD: string
   $srcChain: string
@@ -69,7 +70,7 @@ const STARGATE_NETWORKS = defineNetworks('stargate', [
     },
     usdcPool: {
       address: EthereumAddress('0xc026395860Db2d07ee33e05fE50ed7bD583189C7'),
-      tokenAddress: EthereumAddress(
+      tokenAddress: Address32.from(
         '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
       ),
       token: 'USDC',
@@ -88,7 +89,7 @@ const STARGATE_NETWORKS = defineNetworks('stargate', [
     },
     usdcPool: {
       address: EthereumAddress('0xe8CDF27AcD73a434D661C84887215F7598e7d0d3'),
-      tokenAddress: EthereumAddress(
+      tokenAddress: Address32.from(
         '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
       ),
       token: 'USDC',
@@ -107,7 +108,7 @@ const STARGATE_NETWORKS = defineNetworks('stargate', [
     },
     usdcPool: {
       address: EthereumAddress('0x27a16dc786820B16E5c9028b75B99F6f604b5d26'),
-      tokenAddress: EthereumAddress(
+      tokenAddress: Address32.from(
         '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
       ),
       token: 'USDC',
@@ -230,7 +231,7 @@ export function decodeBusPassenger(encodedHex: string) {
   try {
     const reader = new BinaryReader(encodedHex)
     const assetId = reader.readUint16()
-    const receiver = EthereumAddress(reader.readAddress())
+    const receiver = Address32.from(reader.readBytes(32))
     const amountSD = reader.readUint64()
     const nativeDrop = reader.readUint8() !== 0
     return {

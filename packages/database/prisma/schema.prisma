@@ -345,6 +345,7 @@ model SyncMetadata {
 }
 
 model BridgeEvent {
+  plugin      String   @default("") @db.VarChar(64)
   eventId     String   @db.VarChar(40)
   type        String   @db.VarChar(64)
   expiresAt   DateTime @db.Timestamp(6)
@@ -364,8 +365,10 @@ model BridgeEvent {
 }
 
 model BridgeMessage {
+  plugin      String    @default("") @db.VarChar(64)
   messageId   String    @db.VarChar(40)
   type        String    @db.VarChar(64)
+  app         String    @default("") @db.VarChar(64)
   duration    Int?
   timestamp   DateTime  @db.Timestamp(6)
   srcTime     DateTime? @db.Timestamp(6)
@@ -384,6 +387,7 @@ model BridgeMessage {
 }
 
 model BridgeTransfer {
+  plugin      String    @default("") @db.VarChar(64)
   messageId   String    @db.VarChar(40)
   type        String    @db.VarChar(64)
   duration    Int?
@@ -432,4 +436,64 @@ model EcosystemToken {
 
   @@id([projectId, coingeckoId, configurationId])
   @@index([projectId])
+}
+
+model AbstractToken {
+  id                        String    @db.Char(6)
+  issuer                    String?   @db.VarChar(255)
+  symbol                    String    @db.VarChar(255)
+  category                  String    @db.VarChar(255)
+  iconUrl                   String?   @db.VarChar(255)
+  coingeckoId               String?   @db.VarChar(255)
+  coingeckoListingTimestamp DateTime? @db.Timestamp(6)
+  comment                   String?   @db.Text
+  reviewed                  Boolean   @default(false)
+
+  deployedTokens DeployedToken[]
+
+  @@id([id])
+  @@unique([issuer, symbol])
+}
+
+model DeployedToken {
+  chain               String   @db.VarChar(32)
+  address             String   @db.VarChar(255)
+  abstractTokenId     String?  @db.Char(6)
+  symbol              String   @db.VarChar(255)
+  decimals            Int
+  deploymentTimestamp DateTime @db.Timestamp(6)
+  comment             String?  @db.Text
+
+  abstractToken   AbstractToken?    @relation(fields: [abstractTokenId], references: [id], onDelete: Restrict)
+  connectionsFrom TokenConnection[] @relation("TokenConnection_tokenFrom")
+  connectionsTo   TokenConnection[] @relation("TokenConnection_tokenTo")
+
+  @@id([chain, address])
+  @@index([abstractTokenId])
+}
+
+model TokenConnection {
+  tokenFromChain   String  @db.VarChar(32)
+  tokenFromAddress String  @db.VarChar(255)
+  tokenToChain     String  @db.VarChar(32)
+  tokenToAddress   String  @db.VarChar(255)
+  type             String  @db.VarChar(32)
+  params           Json?   @db.Json
+  comment          String? @db.Text
+
+  tokenFrom DeployedToken @relation("TokenConnection_tokenFrom", fields: [tokenFromChain, tokenFromAddress], references: [chain, address], onDelete: Restrict)
+  tokenTo   DeployedToken @relation("TokenConnection_tokenTo", fields: [tokenToChain, tokenToAddress], references: [chain, address], onDelete: Restrict)
+
+  @@id([tokenFromChain, tokenFromAddress, tokenToChain, tokenToAddress, type])
+  @@index([tokenFromChain, tokenFromAddress])
+  @@index([tokenToChain, tokenToAddress])
+}
+
+model InteropRecentPrices {
+  coingeckoId         String    @db.VarChar(64)
+  timestamp           DateTime  @db.Timestamp(6)
+  priceUsd            Float     @db.Real
+
+  @@id([coingeckoId, timestamp])
+  @@index([timestamp])
 }

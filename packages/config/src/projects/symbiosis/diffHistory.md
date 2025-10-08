@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xfc26dd7c32072768ef88f4f79deff375af73e894
+
+# Diff at Thu, 02 Oct 2025 07:30:30 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@b1cfb9bd1821e27488215e4364f565cfd7d54c2e block: 1741681871
+- current timestamp: 1759390167
+
+## Description
+
+Multisig key rotation.
+
+## Watched changes
+
+```diff
+    contract Multisig (eth:0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x28e41c41f61cab69aA0b50668eB3c38ee76d0BA9"
++        "eth:0x1ff01AEcfe949a948fc28058fC36945c44e6a9c8"
+    }
+```
+
 Generated with discovered.json: 0x19b5aa8fdb9654a98dc3dda3114ffb719d7ecae9
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

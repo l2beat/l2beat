@@ -38,6 +38,25 @@
     "messages": ["ccip.Message"],
     "transfers": []
   },
+  "mayan-forwarder": {
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x0d21d8fa0872cdbe077ede33f2fc27ec5d2f41d9b59a97f594ec49aa032bf870"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x8f326f30f20067d1c618fe4862db448692c0ce9bac498ec0297f6a894d3cbb8c"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x47b1ddf11342a81aec106555a30da420ed831460a08bb347023515a761a10580"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
   "cctpv1": {
     "txs": [
       {

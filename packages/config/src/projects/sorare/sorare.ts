@@ -15,6 +15,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatDelay } from '../../common/formatDelays'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getCommittee,
@@ -45,6 +46,11 @@ const includingSHARPUpgradeDelaySeconds = Math.min(
 
 const { committeePermission, minSigners } = getCommittee(discovery)
 
+const sorareProgramHash = discovery.getContractValue<string>(
+  'GpsFactRegistryAdapter',
+  'programHash',
+)
+
 export const sorare: ScalingProject = {
   type: 'layer2',
   id: ProjectId('sorare'),
@@ -72,7 +78,7 @@ export const sorare: ScalingProject = {
       documentation: ['https://docs.starkware.co/starkex/index.html'],
       repositories: ['https://github.com/starkware-libs/starkex-contracts'],
       socialMedia: [
-        'https://discord.gg/TSjtHaM',
+        'https://discord.com/invite/sorare',
         'https://reddit.com/r/Sorare/',
         'https://twitter.com/Sorare',
         'https://instagram.com/sorare_official/',
@@ -133,6 +139,7 @@ export const sorare: ScalingProject = {
   },
   stateValidation: {
     categories: [STATE_VALIDATION.STARKEX_VALIDITY_PROOFS],
+    zkProgramHashes: [ZK_PROGRAM_HASHES(sorareProgramHash)],
   },
   technology: {
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKEX_OFF_CHAIN,

@@ -117,6 +117,13 @@ const SELF_CUSTODIED_INTMAX: DaProjectTableValue = {
     "The data needed to prove users' own balance is stored by the users themselves. This data can be received from an aggregator when depositing or transferring funds, or from senders when receiving funds. The protocol ensures that for a deposit or transfer to be accepted by the protocol, the user must confirm the collection of data from the aggregator.",
 }
 
+const ESPRESSO: DaProjectTableValue = {
+  value: 'Espresso',
+  sentiment: 'warning',
+  description: 'The data is posted to Espresso.',
+  projectId: ProjectId('espresso'),
+}
+
 export const DA_LAYERS = {
   ETH_CALLDATA,
   ETH_BLOBS,
@@ -134,4 +141,5 @@ export const DA_LAYERS = {
   POLYGON_POS_DA,
   HYPERLIQUID_DA,
   SELF_CUSTODIED_INTMAX,
+  ESPRESSO,
 }

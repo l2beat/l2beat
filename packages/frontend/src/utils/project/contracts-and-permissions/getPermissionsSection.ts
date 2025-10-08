@@ -188,6 +188,7 @@ function toTechnologyContract(
 
   const result: TechnologyContract[] = [
     {
+      id: permission.id,
       name,
       addresses,
       admins: [],

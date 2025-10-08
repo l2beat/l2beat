@@ -22,6 +22,8 @@ export const jovay: ScalingProject = upcomingL2({
         'https://discord.com/invite/8pYGeFAs44',
         'https://t.me/Jovay_Network',
       ],
+      bridges: ['https://bridge.jovay.io/page/jovay-bridge'],
+      repositories: ['https://github.com/jovaynetwork'],
     },
   },
   proofSystem: {

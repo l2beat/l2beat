@@ -1,4 +1,5 @@
-import { HomeIcon } from 'lucide-react'
+import { CirclePlusIcon, HomeIcon } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 import {
   Sidebar,
@@ -15,8 +16,13 @@ import {
 const items = [
   {
     title: 'Home',
-    url: '#',
+    url: '/',
     icon: HomeIcon,
+  },
+  {
+    title: 'Add',
+    url: '/tokens/new',
+    icon: CirclePlusIcon,
   },
 ]
 
@@ -31,10 +37,10 @@ export function AppSidebar() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <Link to={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
