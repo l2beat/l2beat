@@ -44,7 +44,7 @@ export const lighter: ScalingProject = {
     slug: 'lighter',
     description:
       'Lighter is an application-specific zk rollup on a mission to revolutionize trading by building provably fair, secure, and scalable infrastructure for finance.',
-    purposes: ['Universal', 'Exchange'],
+    purposes: ['Exchange'],
     links: {
       websites: ['https://lighter.xyz', 'https://app.lighter.xyz/'],
       explorers: [
