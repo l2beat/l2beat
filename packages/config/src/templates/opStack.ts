@@ -92,12 +92,16 @@ export function EIGENDA_DA_PROVIDER(
 
   const eigenDAConfig = opStackDA.isUsingEigenDA
   const isUsingDACertVerifier = eigenDAConfig !== false
-  const eigenDACertVersion = typeof eigenDAConfig === 'string' ? eigenDAConfig : 'v1'
+  const eigenDACertVersion =
+    typeof eigenDAConfig === 'string' ? eigenDAConfig : 'v1'
 
   return {
     layer: DA_LAYERS.EIGEN_DA,
     riskView: RISK_VIEW.DATA_EIGENDA(isUsingDACertVerifier, eigenDACertVersion),
-    technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(isUsingDACertVerifier, eigenDACertVersion),
+    technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(
+      isUsingDACertVerifier,
+      eigenDACertVersion,
+    ),
     bridge: DA_BRIDGES.NONE,
     badge: BADGES.DA.EigenDA,
   }
@@ -1423,12 +1427,14 @@ function getDAProvider(
     templateVars.discovery.getContractValue<{
       isUsingCelestia: boolean
     }>('SystemConfig', 'opStackDA').isUsingCelestia
-  
+
   let daProvider: DAProvider | undefined
   if (typeof templateVars.daProvider === 'function') {
     daProvider = templateVars.daProvider(templateVars)
   } else {
-    daProvider = templateVars.daProvider ?? (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+    daProvider =
+      templateVars.daProvider ??
+      (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
   }
 
   if (daProvider === undefined) {
