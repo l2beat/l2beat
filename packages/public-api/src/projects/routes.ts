@@ -3,7 +3,7 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { OpenApi } from '../OpenApi'
 import { GenericErrorResponse } from '../types'
-import { ContractSchema, ProjectSchema } from './types'
+import { ContractSchema, ProjectDetailSchema, ProjectSchema } from './types'
 
 export function addProjectsRoutes(openapi: OpenApi, ps: ProjectService) {
   openapi.get(
@@ -35,7 +35,7 @@ export function addProjectsRoutes(openapi: OpenApi, ps: ProjectService) {
       params: v.object({
         projectId: v.string(),
       }),
-      result: ProjectSchema,
+      result: ProjectDetailSchema,
       errors: {
         404: GenericErrorResponse,
       },
@@ -45,7 +45,15 @@ export function addProjectsRoutes(openapi: OpenApi, ps: ProjectService) {
 
       const project = await ps.getProject({
         id: ProjectId(projectId),
-        optional: ['chainConfig'],
+        optional: [
+          'scalingInfo',
+          'chainConfig',
+          'bridgeInfo',
+          'ecosystemInfo',
+          'display',
+          'isUpcoming',
+          'archivedAt',
+        ],
       })
 
       if (!project) {
@@ -60,6 +68,17 @@ export function addProjectsRoutes(openapi: OpenApi, ps: ProjectService) {
         slug: project.slug,
         name: project.name,
         chainId: project.chainConfig?.chainId,
+        type: project.scalingInfo?.type,
+        isUpcoming: project.isUpcoming,
+        isArchived: project.archivedAt !== undefined,
+        category: project.bridgeInfo?.category,
+        hostChain: project.scalingInfo?.hostChain.name,
+        stacks: project.scalingInfo?.stacks ?? [],
+        ecosystem: project.ecosystemInfo?.id,
+        gasTokens: project.chainConfig?.gasTokens ?? [],
+        stage: project.scalingInfo?.stage,
+        purposes: project.scalingInfo?.purposes ?? [],
+        badges: project.display?.badges.map((badge) => badge.name) ?? [],
       })
     },
   )
