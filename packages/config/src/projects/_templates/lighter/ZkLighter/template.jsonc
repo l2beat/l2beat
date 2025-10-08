@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The main rollup contract. It processes L2 batches, manages USDC deposits and withdrawals, allows users to submit censorship-resistnant L2 transactions and controls desert mode (recovery mode). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.",
   "displayName": "Lighter",
   "fields": {
     "verifier": {

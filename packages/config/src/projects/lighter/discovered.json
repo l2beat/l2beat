@@ -46,6 +46,7 @@
         "0xa9200f827141ae9be2188327085a679c20ed563bf9bb6e5e2fc895b99b2bd5b0"
       ],
       "proxyType": "zkLighter proxy",
+      "description": "The main rollup contract. It processes L2 batches, manages USDC deposits and withdrawals, allows users to submit censorship-resistnant L2 transactions and controls desert mode (recovery mode). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.",
       "sinceTimestamp": 1737090335,
       "sinceBlock": 21642011,
       "values": {
@@ -268,6 +269,7 @@
         "0xf6cff14a43f325bcc62514ffd204ebdd7d556d2b7d8111003a5d5809859f2223"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Manages the list of validators and the network governor.",
       "sinceTimestamp": 1737090335,
       "sinceBlock": 21642011,
       "values": {
@@ -315,6 +317,7 @@
         "0x5191196a6fb417df695e41cac070ffb36ce01a4c49b7d89ad809fea72e6e18c4"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.",
       "sinceTimestamp": 1737090335,
       "sinceBlock": 21642011,
       "values": {
