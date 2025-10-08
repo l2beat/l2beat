@@ -84,26 +84,27 @@ export const CELESTIA_DA_PROVIDER: DAProvider = {
 }
 
 export function EIGENDA_DA_PROVIDER(
-  templateVars: OpStackConfigCommon,
-): DAProvider {
+  isUsingDACertVerifier: boolean,
+): (templateVars: OpStackConfigCommon) => DAProvider {
+  return (templateVars: OpStackConfigCommon) => {
   const opStackDA = templateVars.discovery.getContractValue<{
     isUsingEigenDA: string | boolean
   }>('SystemConfig', 'opStackDA')
 
   const eigenDAConfig = opStackDA.isUsingEigenDA
-  const isUsingDACertVerifier = eigenDAConfig !== false
   const eigenDACertVersion =
     typeof eigenDAConfig === 'string' ? eigenDAConfig : 'v1'
 
-  return {
-    layer: DA_LAYERS.EIGEN_DA,
-    riskView: RISK_VIEW.DATA_EIGENDA(isUsingDACertVerifier, eigenDACertVersion),
-    technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(
-      isUsingDACertVerifier,
-      eigenDACertVersion,
-    ),
-    bridge: DA_BRIDGES.NONE,
-    badge: BADGES.DA.EigenDA,
+    return {
+      layer: DA_LAYERS.EIGEN_DA,
+      riskView: RISK_VIEW.DATA_EIGENDA(isUsingDACertVerifier, eigenDACertVersion),
+      technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(
+        isUsingDACertVerifier,
+        eigenDACertVersion,
+      ),
+      bridge: DA_BRIDGES.NONE,
+      badge: BADGES.DA.EigenDA,
+    }
   }
 }
 

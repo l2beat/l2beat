@@ -16,7 +16,7 @@ export const mantle: ScalingProject = opStackL2({
   addedAt: UnixTime(1680782525), // 2023-04-06T12:02:05Z
   discovery,
   genesisTimestamp: UnixTime(1688314886),
-  daProvider: EIGENDA_DA_PROVIDER,
+  daProvider: EIGENDA_DA_PROVIDER(false),
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'Mantle',
