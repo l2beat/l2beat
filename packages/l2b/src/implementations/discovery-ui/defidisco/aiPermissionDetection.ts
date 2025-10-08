@@ -13,27 +13,37 @@ export interface AiDetectionResult {
   functions: AiDetectedPermission[]
 }
 
-const AI_DETECTION_PROMPT = `You are a smart contract security analyzer. Analyze the provided Solidity source code and identify all state-changing (write) functions.
+const AI_DETECTION_PROMPT = `You are a smart contract security analyzer. Analyze the provided Solidity source code and identify all PERMISSIONED state-changing functions.
 
-For each write function, determine:
-1. Whether it is PERMISSIONED (has access control like onlyOwner, onlyAdmin, onlyRole, etc.) or NON-PERMISSIONED (anyone can call it)
-2. If permissioned, identify the owner/admin addresses using PATH EXPRESSIONS
+IMPORTANT: Only report functions that have access control (like onlyOwner, onlyAdmin, onlyRole, modifiers, require statements checking msg.sender, etc.). Do NOT include functions that anyone can call.
+
+For each permissioned function, identify the owner/admin addresses using PATH EXPRESSIONS
 
 IMPORTANT RULES FOR PATHS:
 - Only include EXTERNAL functions that change state (exclude view/pure/internal functions)
 - Owner definitions use a unified PATH format: "<contractRef>.<valuePath>"
-  - <contractRef>: $self (current contract), @fieldName (follow address field)
+  - Use "$self" when accessing fields in the CURRENT contract being analyzed
+  - Use "@fieldName" ONLY when you need to FOLLOW an address field to ANOTHER contract and access that other contract's fields
   - <valuePath>: JSONPath-like navigation (e.g., owner, accessControl.ROLE_NAME.members)
   - Add ".members" when referencing AccessControl role members specifically
 - Multiple ownerDefinitions can be provided for functions with multiple access control mechanisms
 
 PATH EXAMPLES:
-- Simple owner field: "$self.owner"
-- Admin field: "$self.admin"
+- Owner field in current contract: "$self.owner"
+- Admin field in current contract: "$self.admin"
+- Proxy admin (for proxy__ functions like upgradeTo, changeAdmin): "$self.$admin"
+- Any field in current contract: "$self.MODULE" or "$self.STRIKES" or "$self.governor"
 - Role-based (OpenZeppelin AccessControl): "$self.accessControl.MINTER_ROLE.members"
-- Following address field to external contract: "@governanceToken.owner"
-- Array element: "$self.signers[0]"
-- Current contract is owner: "$self"
+- Following address field to access ANOTHER contract's field: "@governanceContract.owner"
+- Array element in current contract: "$self.signers[0]"
+- Current contract itself is owner: "$self"
+
+SPECIAL PROXY RULES:
+- For proxy admin functions (proxy__upgradeTo, proxy__changeAdmin, proxy__upgradeToAndCall, proxy__ossify), ALWAYS use "$self.$admin" (note the $ prefix on admin)
+- Do NOT use accessControl.ADMIN_SLOT or other internal storage patterns for proxies
+- The system automatically discovers proxy admins and exposes them as the "$admin" field
+
+CRITICAL: Always use "$self.fieldName" for fields in the current contract. Only use "@fieldName" when you need to access a field in a DIFFERENT contract that the fieldName points to.
 
 Response MUST be valid JSON matching this schema:
 {
@@ -85,13 +95,6 @@ Examples:
        {"path": "$self.accessControl.DEFAULT_ADMIN_ROLE"},
        {"path": "@governor.owner"}
      ]
-   }
-
-5. Unprotected function:
-   {
-     "functionName": "deposit",
-     "aiClassification": "non-permissioned",
-     "sourceFile": "MyContract.sol"
    }
 
 Now analyze the following contract source code:`
@@ -223,14 +226,95 @@ function parseAiResponse(responseText: string): AiDetectionResult {
 }
 
 /**
+ * Filter source code to reduce tokens for AI analysis
+ * Removes abstract contracts, interfaces, imports, and other non-essential content
+ * Keeps comments as they help the AI understand the code
+ */
+export function filterSourceCodeForAI(sourceCode: string, filename: string): string {
+  // Skip files that are just interfaces or abstract contracts
+  if (filename.startsWith('I') && filename.endsWith('.sol')) {
+    // Interface files typically start with 'I' (e.g., IOwnable.sol)
+    return ''
+  }
+
+  const lines = sourceCode.split('\n')
+  const filtered: string[] = []
+  let inAbstractContract = false
+  let inInterface = false
+  let contractBraceDepth = 0
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i]!
+
+    // Skip empty lines
+    if (!line.trim()) {
+      continue
+    }
+
+    // Track abstract contracts and interfaces
+    if (line.includes('abstract contract') || line.includes('abstract  contract')) {
+      inAbstractContract = true
+      contractBraceDepth = 0
+    }
+    if (line.includes('interface ') && line.includes('{')) {
+      inInterface = true
+      contractBraceDepth = 0
+    }
+
+    // Track brace depth for abstract/interface contracts
+    if (inAbstractContract || inInterface) {
+      for (const char of line) {
+        if (char === '{') contractBraceDepth++
+        if (char === '}') contractBraceDepth--
+      }
+
+      // End of abstract contract or interface
+      if (contractBraceDepth === 0 && (line.includes('}'))) {
+        inAbstractContract = false
+        inInterface = false
+      }
+      continue
+    }
+
+    // Remove import statements (they don't help with permission detection)
+    if (line.trim().startsWith('import ')) {
+      continue
+    }
+
+    // Remove pragma statements (not needed)
+    if (line.trim().startsWith('pragma ')) {
+      continue
+    }
+
+    // Remove SPDX license identifiers
+    if (line.includes('SPDX-License-Identifier')) {
+      continue
+    }
+
+    filtered.push(line)
+  }
+
+  return filtered.join('\n')
+}
+
+/**
  * Combine source code files into a single string for AI analysis
+ * Applies filtering to reduce token usage
  */
 export function combineSourceFiles(files: Record<string, string>): string {
   const combined: string[] = []
 
   for (const [filename, content] of Object.entries(files)) {
+    const filtered = filterSourceCodeForAI(content, filename)
+
+    // Skip files that were completely filtered out
+    if (!filtered.trim()) {
+      console.log(`  Skipping ${filename} (filtered out)`)
+      continue
+    }
+
     combined.push(`// File: ${filename}`)
-    combined.push(content)
+    combined.push(filtered)
     combined.push('\n')
   }
 
