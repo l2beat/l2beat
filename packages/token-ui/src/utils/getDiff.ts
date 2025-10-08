@@ -39,7 +39,9 @@ function isDeepEqual(a: unknown, b: unknown): boolean {
   })
 }
 
-// NOTE(radomski): Fork of - https://github.com/AsyncBanana/microdiff
+// This is a copy of the diff function from the @l2beat/discovery package.
+// We need to share the code between the two packages to avoid duplication.
+// I did it this way to avoid wasting time related with moving the code.
 export function diff(left: unknown, right: unknown): Difference[] {
   const isLeftArray = Array.isArray(left)
   const isRightArray = Array.isArray(right)
