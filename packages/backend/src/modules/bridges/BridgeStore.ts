@@ -91,6 +91,7 @@ function fromDbRecord(record: BridgeEventRecord): BridgeEvent {
       logIndex: record.logIndex,
       timestamp: record.timestamp,
       txHash: record.txHash,
+      value: record.value,
       txTo: record.txTo ? Address32.from(record.txTo) : undefined,
     },
   }

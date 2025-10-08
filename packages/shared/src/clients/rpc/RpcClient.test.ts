@@ -881,6 +881,7 @@ const mockResponse = (blockNumber: number) => ({
 
 const mockRawTx = (to: string | undefined) => ({
   hash: '0x1',
+  value: '0x111111111',
   from: '0xf',
   to,
   input: '0x1',

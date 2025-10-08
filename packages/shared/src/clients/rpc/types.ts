@@ -25,6 +25,7 @@ export type EVMTransaction = z.infer<typeof EVMTransaction>
 export const EVMTransaction = z
   .object({
     hash: z.string(),
+    value: z.string(),
     from: z.string(),
     /** Address of the receiver, null when it's a contract creation transaction. */
     to: z
