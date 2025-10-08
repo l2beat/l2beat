@@ -11,8 +11,12 @@ import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { type Plan, tokenService } from '~/mock/MockTokenService'
 import type { AbstractToken } from '~/mock/types'
-import { getRandomAbstractTokenId } from '~/utils/getRandomAbstractTokenId'
+import { generateRandomString } from '~/utils/generateRandomString'
 import { validateResolver } from '~/utils/validateResolver'
+
+function generateRandomId() {
+  return generateRandomString(6)
+}
 
 export function AddAbstractToken({
   defaultValues,
@@ -22,7 +26,7 @@ export function AddAbstractToken({
   const form = useForm<AbstractTokenSchema>({
     resolver: validateResolver(AbstractTokenSchema),
     defaultValues: defaultValues ?? {
-      id: getRandomAbstractTokenId(),
+      id: generateRandomId(),
     },
   })
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
@@ -96,7 +100,7 @@ export function AddAbstractToken({
         onSubmit={onSubmit}
         isFormDisabled={isPlanPending}
         refreshId={() => {
-          const id = getRandomAbstractTokenId()
+          const id = generateRandomId()
           form.setValue('id', id)
         }}
         coingeckoFields={{
