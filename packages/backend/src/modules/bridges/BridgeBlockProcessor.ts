@@ -78,7 +78,7 @@ function getLogsToDecode(chain: string, block: Block, logs: Log[]) {
         blockNumber: block.number,
         // biome-ignore lint/style/noNonNullAssertion: We just checked
         txHash: tx.hash!,
-        txTo: tx.to !== undefined ? Address32(tx.to) : undefined,
+        txTo: tx.to !== undefined ? Address32.from(tx.to) : undefined,
       }),
     )
 
