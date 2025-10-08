@@ -279,7 +279,7 @@ export function DATA_EIGENDA(
   eigenDACertVersion: string,
 ): TableReadyValue {
   let additional: string
-  
+
   if (eigenDACertVersion === 'v1') {
     additional = isUsingDACertVerifier
       ? ' Sequencer transaction data roots are checked against the ServiceManager DA bridge data roots, signed off by EigenDA operators.'
@@ -290,7 +290,7 @@ export function DATA_EIGENDA(
       ? ' The sequencer is publishing data to EigenDA v2. Sequencer transaction data roots are checked against the DACert Verifier data roots, signed off by EigenDA operators.'
       : ' The sequencer is publishing data to EigenDA v2. Sequencer transaction data roots are not checked against the DACert Verifier onchain.'
   }
-  
+
   return {
     value: 'External',
     description:

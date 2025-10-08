@@ -193,7 +193,7 @@ function EIGENDA_OFF_CHAIN(
   eigenDACertVersion: string,
 ): ProjectTechnologyChoice {
   let additionalDescription: string
-  
+
   if (eigenDACertVersion === 'v1') {
     additionalDescription = isUsingDACertVerifier
       ? ' The ServiceManager bridge is used to verify attestations from the EigenDA operator set that the data is indeed available.'
@@ -201,10 +201,10 @@ function EIGENDA_OFF_CHAIN(
   } else {
     // v2 and v3 both use EigenDA v2
     additionalDescription = isUsingDACertVerifier
-      ? `The sequecencer is publishing data to EigenDA v2. The DACert Verifier is used to verify attestations from the EigenDA operator set that the data is indeed available.`
-      : `The sequecencer is publishing data to EigenDA v2. Since the DACert Verifier is not used, availability of the data is not verified against EigenDA operators, meaning that the Sequencer can single-handedly publish unavailable commitments.`
+      ? 'The sequecencer is publishing data to EigenDA v2. The DACert Verifier is used to verify attestations from the EigenDA operator set that the data is indeed available.'
+      : 'The sequecencer is publishing data to EigenDA v2. Since the DACert Verifier is not used, availability of the data is not verified against EigenDA operators, meaning that the Sequencer can single-handedly publish unavailable commitments.'
   }
-  
+
   return {
     name: 'Data is posted to EigenDA',
     description:
