@@ -59,7 +59,7 @@ export interface BridgeMessage {
 
 export interface TransferSide {
   event: BridgeEvent
-  tokenAddress?: Address32 | 'native'
+  tokenAddress?: Address32
   tokenAmount?: string
 }
 
@@ -232,11 +232,11 @@ function Message(
 
 export interface BridgeTransferOptions {
   srcEvent: BridgeEvent
-  srcTokenAddress?: Address32 | 'native'
+  srcTokenAddress?: Address32
   srcAmount?: string
 
   dstEvent: BridgeEvent
-  dstTokenAddress?: Address32 | 'native'
+  dstTokenAddress?: Address32
   dstAmount?: string
 
   extraEvents?: BridgeEvent[]
