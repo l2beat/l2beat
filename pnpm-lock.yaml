@@ -459,6 +459,9 @@ importers:
       '@l2beat/config':
         specifier: workspace:*
         version: link:../config
+      '@l2beat/dal':
+        specifier: workspace:*
+        version: link:../dal
       '@l2beat/database':
         specifier: workspace:*
         version: link:../database

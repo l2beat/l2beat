@@ -1,11 +1,13 @@
 import { getTvsChartQuery } from './getTvsChartQuery'
 import { getTvsTableQuery } from './getTvsTableQuery'
+import { getSummedByTimestampTvsValuesQuery } from './tvl/getSummedByTimestampTvsValuesQuery'
 import type { DropFirst } from './types'
 
 export type Queries = typeof queries
 export const queries = {
   getTvsChartQuery,
   getTvsTableQuery,
+  getSummedByTimestampTvsValuesQuery,
 }
 
 export type QueryOf<N extends keyof Queries> = {

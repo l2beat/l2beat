@@ -3,6 +3,7 @@ import type { Insertable, Selectable } from 'kysely'
 import { sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { TokenValue } from '../kysely/generated/types'
+import type { TokenCategory, TokenSource } from './TokenMetadataRepository'
 
 export interface TokenValueRecord {
   timestamp: UnixTime
@@ -215,6 +216,56 @@ export class TokenValueRepository extends BaseRepository {
       timestamp: row.timestamp.toISOString(),
       source: row.source,
       value: row.value,
+    }))
+  }
+
+  async getByProjects(
+    projectIds: string[],
+    fromInclusive: UnixTime | null,
+    toInclusive: UnixTime | null,
+    excludeAssociated: boolean,
+  ): Promise<
+    {
+      timestamp: UnixTime
+      source: TokenSource
+      category: TokenCategory
+      valueForProject: number
+      valueForSummary: number
+    }[]
+  > {
+    let query = this.db
+      .selectFrom('TokenValue')
+      .innerJoin('TokenMetadata', 'TokenValue.tokenId', 'TokenMetadata.tokenId')
+      .select([
+        'TokenValue.timestamp',
+        'TokenMetadata.source',
+        'TokenMetadata.category',
+        'TokenValue.valueForProject',
+        'TokenValue.valueForSummary',
+      ])
+      .where('TokenMetadata.projectId', 'in', projectIds)
+      .orderBy('TokenValue.timestamp', 'desc')
+
+    if (fromInclusive) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+    }
+
+    if (toInclusive) {
+      query = query.where('timestamp', '<=', UnixTime.toDate(toInclusive))
+    }
+
+    if (excludeAssociated) {
+      query = query.where('TokenMetadata.isAssociated', '=', false)
+    }
+
+    const rows = await query.execute()
+
+    return rows.map((row) => ({
+      timestamp: UnixTime.fromDate(row.timestamp),
+      source: row.source as TokenSource,
+      category: row.category as TokenCategory,
+      valueForProject: row.valueForProject,
+      valueForSummary: row.valueForSummary,
     }))
   }
 
