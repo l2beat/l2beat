@@ -35,6 +35,7 @@ export interface BridgeEventContext {
   blockNumber: number
   blockHash: string
   txHash: string
+  value: string
   txTo?: Address32
   logIndex: number
 }
