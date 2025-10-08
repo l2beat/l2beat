@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:dependencies": "cd ../.. && pnpm build:dependencies:token-ui",
     "preview": "vite preview",
     "format": "biome format .",
     "format:fix": "biome format --write .",
@@ -27,6 +28,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "1.0.0",
+    "fuzzysort": "3.1.0",
     "lucide-react": "^0.544.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",

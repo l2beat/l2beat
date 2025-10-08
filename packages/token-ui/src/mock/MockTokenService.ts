@@ -1,3 +1,4 @@
+import fuzzysort from 'fuzzysort'
 import { assert, assertUnreachable } from '~/utils/assertUnreachable'
 import {
   parseAbstractTokens,
@@ -102,6 +103,53 @@ class MockTokenService {
       ),
     }))
     return simulateNetworkDelay(result)
+  }
+
+  search(search: string) {
+    if (search.startsWith('0x')) {
+      return simulateNetworkDelay(
+        {
+          deployedTokens: this.deployedTokens.filter(
+            (t) => t.address === search,
+          ),
+          abstractTokens: [],
+        },
+        300,
+      )
+    }
+
+    const abstractTokens = fuzzysort
+      .go(search, this.abstractTokens, {
+        limit: 15,
+        keys: [
+          (e) => e.id,
+          (e) => e.symbol,
+          (e) => e.category,
+          (e) => e.coingeckoId ?? '',
+          (e) => e.issuer ?? 'unknown',
+        ],
+      })
+      .map((match) => match.obj)
+
+    const deployedTokens = fuzzysort
+      .go(search, this.deployedTokens, {
+        limit: 15,
+        keys: [
+          (e) => e.address,
+          (e) => e.symbol,
+          (e) => e.chain,
+          (e) => e.abstractTokenId ?? '',
+        ],
+      })
+      .map((match) => match.obj)
+
+    return simulateNetworkDelay(
+      {
+        abstractTokens,
+        deployedTokens,
+      },
+      300,
+    )
   }
 
   getMainPageTokens() {
