@@ -14,6 +14,7 @@ import {
   FRONTRUNNING_RISK,
   RISK_VIEW,
 } from '../../common'
+import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -36,6 +37,7 @@ export const lighter: ScalingProject = {
   type: 'layer2',
   capability: 'appchain',
   addedAt: UnixTime(1711551933), // 2024-03-27T15:05:33Z
+  badges: [BADGES.VM.AppChain, BADGES.DA.EthereumBlobs],
   display: {
     name: 'Lighter',
     slug: 'lighter',
