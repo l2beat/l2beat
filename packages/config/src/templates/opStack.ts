@@ -87,17 +87,20 @@ export function EIGENDA_DA_PROVIDER(
   isUsingDACertVerifier: boolean,
 ): (templateVars: OpStackConfigCommon) => DAProvider {
   return (templateVars: OpStackConfigCommon) => {
-  const opStackDA = templateVars.discovery.getContractValue<{
-    isUsingEigenDA: string | boolean
-  }>('SystemConfig', 'opStackDA')
+    const opStackDA = templateVars.discovery.getContractValue<{
+      isUsingEigenDA: string | boolean
+    }>('SystemConfig', 'opStackDA')
 
-  const eigenDAConfig = opStackDA.isUsingEigenDA
-  const eigenDACertVersion =
-    typeof eigenDAConfig === 'string' ? eigenDAConfig : 'v1'
+    const eigenDAConfig = opStackDA.isUsingEigenDA
+    const eigenDACertVersion =
+      typeof eigenDAConfig === 'string' ? eigenDAConfig : 'v1'
 
     return {
       layer: DA_LAYERS.EIGEN_DA,
-      riskView: RISK_VIEW.DATA_EIGENDA(isUsingDACertVerifier, eigenDACertVersion),
+      riskView: RISK_VIEW.DATA_EIGENDA(
+        isUsingDACertVerifier,
+        eigenDACertVersion,
+      ),
       technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(
         isUsingDACertVerifier,
         eigenDACertVersion,
