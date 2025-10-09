@@ -8,7 +8,17 @@ Generated with discovered.json: 0x84ea2fbab6fbef39dab55b93251def51c24d9224
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Upgrade 16 contracts upgrade.
+
+L1StandardBridge - added SUPERCHAIN_ETH_BRIDGE predeploy address.
+https://disco.l2beat.com/diff/eth:0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A/eth:0xe32B192fb1DcA88fCB1C56B3ACb429e32238aDCb
+
+DisputeGameFactory - https://disco.l2beat.com/diff/eth:0x4bbA758F006Ef09402eF31724203F316ab74e4a0/eth:0x33D1e8571a85a538ed3D5A4d88f46C112383439D
+
+gameImpls 0 - 
+https://disco.l2beat.com/diff/eth:0xAB91FB6cef84199145133f75cBD96B8a31F184ED/eth:0xe4066890367BF8A51d58377431808083A01b1E0c
+
+gameImpls 1 - 
 
 ## Watched changes
 
