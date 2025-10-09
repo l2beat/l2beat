@@ -10,9 +10,10 @@ import transformed from './transformed.json'
 
 function getTestDatabase() {
   dotenv()
-  const connection = process.env['TEST_DB_URL']
+
+  const connection = process.env['LOCAL_DB_URL']
   if (!connection || connection === '') {
-    throw new Error('Please setup TEST_DB_URL env variable')
+    throw new Error('Please setup LOCAL_DB_URL env variable')
   }
 
   return createTokenDatabase({
