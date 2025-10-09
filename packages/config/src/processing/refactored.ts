@@ -26,6 +26,7 @@ import { sp1 } from '../projects/sp1/sp1'
 import { sp1blobstream } from '../projects/sp1blobstream/sp1blobstream'
 import { sp1vector } from '../projects/sp1vector/sp1vector'
 import { stone } from '../projects/stone/stone'
+import { teeBridge } from '../projects/tee-bridge/tee-bridge'
 import { vector } from '../projects/vector/vector'
 import { worldcoinsemaphore } from '../projects/worldcoinsemaphore/worldcoinsemaphore'
 import { worldcoinsmtb } from '../projects/worldcoinsmtb/worldcoinsmtb'
@@ -66,6 +67,7 @@ export const refactored: BaseProject[] = [
   blobstream,
   near,
   espresso,
+  teeBridge,
   eigenda,
   memo,
   // chains
