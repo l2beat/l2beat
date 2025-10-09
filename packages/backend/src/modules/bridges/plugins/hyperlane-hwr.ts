@@ -26,7 +26,7 @@ const parseReceivedTransferRemote = createEventParser(
   'event ReceivedTransferRemote(uint32 indexed origin, bytes32 indexed recipient, uint256 amount)',
 )
 
-const HwrTransferSent = createBridgeEventType<{
+export const HwrTransferSent = createBridgeEventType<{
   messageId: `0x${string}`
   $dstChain: string
   destination: number
@@ -35,7 +35,7 @@ const HwrTransferSent = createBridgeEventType<{
   tokenAddress: Address32
 }>('hyperlane-hwr.TransferSent')
 
-const HwrTransferReceived = createBridgeEventType<{
+export const HwrTransferReceived = createBridgeEventType<{
   messageId: `0x${string}`
   $srcChain: string
   origin: number

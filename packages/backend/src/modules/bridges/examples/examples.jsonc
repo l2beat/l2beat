@@ -690,5 +690,21 @@
     "events": [],
     "messages": [],
     "transfers": []
+  },
+  "hyperlane-hwt": {
+    // 3 oft transfers
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x12fd0f1a3ed68b76b9f6aaaaf864097992287cf4ac1ae4628636ee1b5ace7b75"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0xc9b2b9924a0507d56a8bd5b4566208d9c28678e0ca7318de614a3704a79bea31"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
   }
 }

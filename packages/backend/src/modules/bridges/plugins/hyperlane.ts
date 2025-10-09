@@ -1,5 +1,4 @@
 import { keccak256 } from 'viem'
-import { HwrTransferReceived, HwrTransferSent } from './hyperlane-hwr-types'
 import {
   type BridgeEvent,
   type BridgeEventDb,
@@ -12,6 +11,7 @@ import {
   type MatchResult,
   Result,
 } from './types'
+import { HwrTransferReceived, HwrTransferSent } from './hyperlane-hwr'
 
 export const parseDispatch = createEventParser(
   'event Dispatch(address indexed sender, uint32 indexed destination, bytes32 indexed recipient, bytes message)',
