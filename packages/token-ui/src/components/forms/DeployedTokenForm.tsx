@@ -39,7 +39,6 @@ import { sanitize } from '~/utils/sanitize'
 
 export type DeployedTokenSchema = v.infer<typeof DeployedTokenSchema>
 export const DeployedTokenSchema = v.object({
-  id: v.string(),
   chain: v.string(),
   address: v.string().check(ethereumAddressCheck),
   decimals: v.number().check(minNumberCheck(1)),
