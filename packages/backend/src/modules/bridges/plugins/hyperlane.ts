@@ -1,4 +1,5 @@
 import { keccak256 } from 'viem'
+import { HwrTransferReceived, HwrTransferSent } from './hyperlane-hwr'
 import {
   type BridgeEvent,
   type BridgeEventDb,
@@ -89,9 +90,13 @@ export class HyperlanePlugIn implements BridgePlugin {
         return
       }
 
+      const isHwr =
+        !!db.find(HwrTransferSent, { messageId: delivery.args.messageId }) ||
+        !!db.find(HwrTransferReceived, { messageId: delivery.args.messageId })
+
       return [
         Result.Message('hyperlane.Message', {
-          app: 'unknown',
+          app: isHwr ? 'hwr' : 'unknown',
           srcEvent: dispatch,
           dstEvent: delivery,
         }),

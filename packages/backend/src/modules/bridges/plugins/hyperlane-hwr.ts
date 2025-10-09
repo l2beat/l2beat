@@ -1,7 +1,5 @@
 import {
-  Dispatch,
   HYPERLANE_NETWORKS,
-  Process,
   parseDispatch,
   parseDispatchId,
   parseProcess,
@@ -28,7 +26,7 @@ const parseReceivedTransferRemote = createEventParser(
   'event ReceivedTransferRemote(uint32 indexed origin, bytes32 indexed recipient, uint256 amount)',
 )
 
-const HwrTransferSent = createBridgeEventType<{
+export const HwrTransferSent = createBridgeEventType<{
   messageId: `0x${string}`
   $dstChain: string
   destination: number
@@ -37,7 +35,7 @@ const HwrTransferSent = createBridgeEventType<{
   tokenAddress: Address32
 }>('hyperlane-hwr.TransferSent')
 
-const HwrTransferReceived = createBridgeEventType<{
+export const HwrTransferReceived = createBridgeEventType<{
   messageId: `0x${string}`
   $srcChain: string
   origin: number
@@ -97,23 +95,12 @@ export class HyperlaneHwrPlugin implements BridgePlugin {
   match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
     if (!HwrTransferReceived.checkType(event)) return
 
-    const process = db.find(Process, { messageId: event.args.messageId })
-    if (!process) return
-
-    const dispatch = db.find(Dispatch, { messageId: event.args.messageId })
-    if (!dispatch) return
-
     const hwrSent = db.find(HwrTransferSent, {
       messageId: event.args.messageId,
     })
     if (!hwrSent) return
 
     return [
-      Result.Message('hyperlane.Message', {
-        app: 'hwr',
-        srcEvent: dispatch,
-        dstEvent: process,
-      }),
       Result.Transfer('hyperlaneHwr.Transfer', {
         srcEvent: hwrSent,
         srcTokenAddress: hwrSent.args.tokenAddress,
