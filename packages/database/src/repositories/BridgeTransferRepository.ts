@@ -35,7 +35,7 @@ export interface BridgeTransferRecord {
   dstAmount: number | undefined
   dstPrice: number | undefined
   dstValueUsd: number | undefined
-  isProcessed: boolean | undefined
+  isProcessed?: boolean
 }
 
 export function toRecord(
