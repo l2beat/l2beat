@@ -354,6 +354,7 @@ model BridgeEvent {
   blockNumber Int
   blockHash   String   @db.VarChar(66)
   txHash      String   @db.VarChar(66)
+  value       String   @default("") @db.VarChar(66)
   txTo        String?  @db.VarChar(66)
   matched     Boolean
   unsupported Boolean  @default(false)
@@ -398,12 +399,13 @@ model BridgeTransfer {
   srcLogIndex Int?
   srcEventId  String?   @db.VarChar(40)
 
-  srcTokenAddress String?  @db.VarChar(66)
-  srcRawAmount    Decimal? @db.Decimal(80, 0)
-  srcSymbol       String?  @db.VarChar(10)
-  srcAmount       Float?   @db.Real
-  srcPrice        Float?   @db.Real
-  srcValueUsd     Float?   @db.Real
+  srcTokenAddress    String?  @db.VarChar(66)
+  srcRawAmount       Decimal? @db.Decimal(80, 0)
+  srcSymbol          String?  @db.VarChar(10)
+  srcAbstractTokenId String?  @db.VarChar(66)
+  srcAmount          Float?   @db.Real
+  srcPrice           Float?   @db.Real
+  srcValueUsd        Float?   @db.Real
 
   dstTime     DateTime? @db.Timestamp(6)
   dstChain    String?   @db.VarChar(32)
@@ -411,12 +413,15 @@ model BridgeTransfer {
   dstLogIndex Int?
   dstEventId  String?   @db.VarChar(40)
 
-  dstTokenAddress String?  @db.VarChar(66)
-  dstRawAmount    Decimal? @db.Decimal(80, 0)
-  dstSymbol       String?  @db.VarChar(10)
-  dstAmount       Float?   @db.Real
-  dstPrice        Float?   @db.Real
-  dstValueUsd     Float?   @db.Real
+  dstTokenAddress    String?  @db.VarChar(66)
+  dstRawAmount       Decimal? @db.Decimal(80, 0)
+  dstSymbol          String?  @db.VarChar(10)
+  dstAbstractTokenId String?  @db.VarChar(66)
+  dstAmount          Float?   @db.Real
+  dstPrice           Float?   @db.Real
+  dstValueUsd        Float?   @db.Real
+
+  isProcessed Boolean @default(false)
 
   @@id([messageId])
   @@index([type])

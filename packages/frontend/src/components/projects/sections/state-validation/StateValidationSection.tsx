@@ -5,13 +5,11 @@ import {
   type ProjectDetailsRelatedProjectBannerProps,
 } from '~/components/ProjectDetailsRelatedProjectBanner'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
-import { HorizontalSeparator } from '../../core/HorizontalSeparator'
-import { Markdown } from '../../markdown/Markdown'
-import { SectionIncompleteNote } from './contracts/SectionIncompleteNote'
-import { ProjectSection } from './ProjectSection'
-import { ReferenceList } from './ReferenceList'
-import { RiskList } from './RiskList'
-import type { ProjectSectionProps } from './types'
+import { HorizontalSeparator } from '../../../core/HorizontalSeparator'
+import { Markdown } from '../../../markdown/Markdown'
+import { ProjectSection } from '../ProjectSection'
+import type { ProjectSectionProps } from '../types'
+import { Category } from './Category'
 
 export interface StateValidationSectionProps extends ProjectSectionProps {
   diagram: DiagramParams | undefined
@@ -55,30 +53,5 @@ export function StateValidationSection({
         />
       )}
     </ProjectSection>
-  )
-}
-
-type CategoryProps = {
-  category: ProjectScalingStateValidation['categories'][number]
-}
-
-function Category({ category }: CategoryProps) {
-  const risks = category.risks?.map((risk) => ({
-    text: `${risk.category} ${risk.text}`,
-    isCritical: !!risk.isCritical,
-  }))
-
-  return (
-    <div>
-      <span className="font-bold text-lg md:text-xl">{category.title}</span>
-      {category.isIncomplete && <SectionIncompleteNote />}
-      <Markdown className="mt-2 text-paragraph-15 md:text-paragraph-16">
-        {category.description}
-      </Markdown>
-      {risks && <RiskList risks={risks} />}
-      {category.references && (
-        <ReferenceList references={category.references} tight />
-      )}
-    </div>
   )
 }

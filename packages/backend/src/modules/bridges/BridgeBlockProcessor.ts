@@ -83,8 +83,10 @@ function getLogsToDecode(chain: string, block: Block, logs: Log[]) {
         chain,
         blockHash: block.hash,
         blockNumber: block.number,
-        // biome-ignore lint/style/noNonNullAssertion: We just checked
+        // biome-ignore lint/style/noNonNullAssertion: We know tx is not pending
         txHash: tx.hash!,
+        // biome-ignore lint/style/noNonNullAssertion: EVM tx should have it
+        value: tx.value!,
         txTo: tx.to !== undefined ? Address32.from(tx.to) : undefined,
       }),
     )

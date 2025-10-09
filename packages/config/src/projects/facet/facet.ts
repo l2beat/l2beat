@@ -353,11 +353,11 @@ export const facet: ScalingProject = {
         ],
       },
     ],
-    zkProgramHashes: facetProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   contracts: {
     addresses: discovery.getDiscoveredContracts(),
     risks: [],
+    zkProgramHashes: facetProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   permissions: discovery.getDiscoveredPermissions(),
   chainConfig: {

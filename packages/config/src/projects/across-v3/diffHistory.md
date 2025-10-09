@@ -1,3 +1,110 @@
+Generated with discovered.json: 0xfbbdfb0b407b4cb708d344887cbb040e3c6ccef8
+
+# Diff at Wed, 08 Oct 2025 14:28:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@36fbb0e5eb9fa07c58f97370d929eaabfcd6c5ff block: 1758801469
+- current timestamp: 1759932934
+
+## Description
+
+CCTPv2 support for some adapters.
+example diff: https://disco.l2beat.com/diff/eth:0xE1421233BF7158A19f89F17c9735F9cbd3D9529c/eth:0x799BDC55d91864b14B2eD63A34DeF5d502AA897f (base)
+minor oft-related diff for the arbitrum adapter: https://disco.l2beat.com/diff/eth:0x5eC9844936875E27eBF22172f4d92E107D35B57C/eth:0xc0b6d2f794cc787C71f2cA5ceCD57102C32379B3
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract Arbitrum_Adapter (eth:0x5eC9844936875E27eBF22172f4d92E107D35B57C)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h and a bond amount of 0.45 ABT.
+      values.Adapters.10:
+-        "eth:0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b"
++        "eth:0x3562e309C6C79626E5F0Cf746FB5Bf4f6b8EebE5"
+      values.Adapters.130:
+-        "eth:0xFADcC43096756e1527306FD92982FEbBe3c629Fa"
++        "eth:0x8956eFa31572E1d7ed5c8e36772F214A57DFA0D1"
+      values.Adapters.137:
+-        "eth:0xF71F1e20F75820b484F8A0959C2D9E5cdd89c9F0"
++        "eth:0x537abE038C223066B50312474409924487D2E655"
+      values.Adapters.8453:
+-        "eth:0xE1421233BF7158A19f89F17c9735F9cbd3D9529c"
++        "eth:0x799BDC55d91864b14B2eD63A34DeF5d502AA897f"
+      values.Adapters.42161:
+-        "eth:0x5eC9844936875E27eBF22172f4d92E107D35B57C"
++        "eth:0xc0b6d2f794cc787C71f2cA5ceCD57102C32379B3"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Base_Adapter (eth:0xE1421233BF7158A19f89F17c9735F9cbd3D9529c)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
+-   Status: DELETED
+    contract Optimism_Adapter (eth:0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
+-   Status: DELETED
+    contract Polygon_Adapter (eth:0xF71F1e20F75820b484F8A0959C2D9E5cdd89c9F0)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
+-   Status: DELETED
+    contract DoctorWho_Adapter (eth:0xFADcC43096756e1527306FD92982FEbBe3c629Fa)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract Optimism_Adapter (eth:0x3562e309C6C79626E5F0Cf746FB5Bf4f6b8EebE5)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract Polygon_Adapter (eth:0x537abE038C223066B50312474409924487D2E655)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract Base_Adapter (eth:0x799BDC55d91864b14B2eD63A34DeF5d502AA897f)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract DoctorWho_Adapter (eth:0x8956eFa31572E1d7ed5c8e36772F214A57DFA0D1)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract Arbitrum_Adapter (eth:0xc0b6d2f794cc787C71f2cA5ceCD57102C32379B3)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+## Source code changes
+
+```diff
+.../Arbitrum_Adapter.sol                           | 38 +++++++++++
+ .../{.flat@1758801469 => .flat}/Base_Adapter.sol   | 79 ++++++++++++++++++----
+ .../DoctorWho_Adapter.sol                          | 79 ++++++++++++++++++----
+ .../Optimism_Adapter.sol                           | 79 ++++++++++++++++++----
+ 4 files changed, 239 insertions(+), 36 deletions(-)
+```
+
 Generated with discovered.json: 0xfb99bdcd13a73aa5d0d48f3282992a1cdbbc6a9c
 
 # Diff at Thu, 25 Sep 2025 12:08:47 GMT:
