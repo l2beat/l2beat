@@ -13,7 +13,9 @@
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "lint": "biome check --formatter-enabled=false .",
     "test": "mocha",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build:dependencies": "cd ../.. && pnpm build:dependencies:dal",
+    "watch:dependencies": "cd ../.. && pnpm watch:dependencies:dal"
   },
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",
