@@ -24,6 +24,8 @@ export const polygonmiden: ScalingProject = upcomingL2({
         'https://discord.gg/0xPolygon',
         'https://t.me/polygonofficial',
       ],
+      bridges: ['https://faucet.testnet.miden.io'],
+      explorers: ['https://testnet.midenscan.com'],
     },
   },
   ecosystemInfo: {

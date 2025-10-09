@@ -189,11 +189,22 @@ function AVAIL_OFF_CHAIN(isUsingVector: boolean): ProjectTechnologyChoice {
 }
 
 function EIGENDA_OFF_CHAIN(
-  isUsingServiceManager: boolean,
+  isUsingDACertVerifier: boolean,
+  eigenDACertVersion: string,
 ): ProjectTechnologyChoice {
-  const additionalDescription = isUsingServiceManager
-    ? ' The ServiceManager bridge is used to verify attestations from the EigenDA operator set that the data is indeed available.'
-    : ' Since the ServiceManager bridge is not used, availability of the data is not verified against EigenDA operators, meaning that the Sequencer can single-handedly publish unavailable commitments.'
+  let additionalDescription: string
+
+  if (eigenDACertVersion === 'v1') {
+    additionalDescription = isUsingDACertVerifier
+      ? ' The ServiceManager bridge is used to verify attestations from the EigenDA operator set that the data is indeed available.'
+      : ' Since the ServiceManager bridge is not used, availability of the data is not verified against EigenDA operators, meaning that the Sequencer can single-handedly publish unavailable commitments.'
+  } else {
+    // v2 and v3 both use EigenDA v2
+    additionalDescription = isUsingDACertVerifier
+      ? 'The sequecencer is publishing data to EigenDA v2. The DACert Verifier is used to verify attestations from the EigenDA operator set that the data is indeed available.'
+      : 'The sequecencer is publishing data to EigenDA v2. Since the DACert Verifier is not used, availability of the data is not verified against EigenDA operators, meaning that the Sequencer can single-handedly publish unavailable commitments.'
+  }
+
   return {
     name: 'Data is posted to EigenDA',
     description:
