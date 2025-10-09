@@ -1,6 +1,6 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
 import { HttpClient, RpcClient } from '@l2beat/shared'
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { boolean, command, flag, positional, run, string } from 'cmd-ts'
 import { readFileSync } from 'fs'
@@ -10,10 +10,11 @@ import { logToViemLog } from '../BridgeBlockProcessor'
 import { match } from '../BridgeMatcher'
 import { InMemoryEventDb } from '../InMemoryEventDb'
 import { createBridgePlugins } from '../plugins'
-import type {
-  BridgeEvent,
-  BridgeMessage,
-  BridgeTransfer,
+import {
+  Address32,
+  type BridgeEvent,
+  type BridgeMessage,
+  type BridgeTransfer,
 } from '../plugins/types'
 
 export function readJsonc(path: string): JSON {
@@ -143,7 +144,8 @@ async function runExample(example: Example): Promise<RunResult> {
             blockNumber: block.number,
             blockHash: block.hash,
             txHash: tx.hash,
-            txTo: tx.to ? EthereumAddress(tx.to) : undefined,
+            value: tx.value,
+            txTo: tx.to ? Address32.from(tx.to) : undefined,
             logIndex: log.logIndex ?? -1,
           },
         })

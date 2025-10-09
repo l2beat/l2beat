@@ -1,11 +1,13 @@
 import tokens from './tokens.json'
 import type { AbstractToken, DeployedToken } from './types'
 
-export const chains: string[] = parseDeployedTokens()
-  .map((token) => token.chain)
-  .filter((chain, index, self) => self.indexOf(chain) === index)
+export function parseChains() {
+  return parseDeployedTokens()
+    .map((token) => token.chain)
+    .filter((chain, index, self) => self.indexOf(chain) === index)
+}
 
-function parseAbstractTokens(): AbstractToken[] {
+export function parseAbstractTokens(): AbstractToken[] {
   return tokens.abstractTokens.map((token) => {
     const [id, rest] = token.id.split(':')
     const [issuer, symbol] = rest?.split('.') ?? []
@@ -28,9 +30,7 @@ function parseAbstractTokens(): AbstractToken[] {
   })
 }
 
-export const abstractTokens: AbstractToken[] = parseAbstractTokens()
-
-function parseDeployedTokens(): DeployedToken[] {
+export function parseDeployedTokens(): DeployedToken[] {
   return tokens.deployedTokens.map((token) => {
     // ethereum+0x3506424F91fD33084466F402d5D97f05F8e3b4AF (CHZ 18)
     const [chain, ...rest] = token.id.split('+')
@@ -60,5 +60,3 @@ function parseDeployedTokens(): DeployedToken[] {
     }
   })
 }
-
-export const deployedTokens: DeployedToken[] = parseDeployedTokens()

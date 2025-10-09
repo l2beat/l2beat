@@ -549,6 +549,9 @@ App-specific data can be reconstructed by app clients, which request and assembl
         coingeckoId: 'avail',
       },
     },
+    validators: {
+      type: 'dynamic',
+    },
   },
 
   milestones: [

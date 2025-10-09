@@ -274,10 +274,23 @@ export function DATA_AVAIL(isUsingVector: boolean): TableReadyValue {
   }
 }
 
-export function DATA_EIGENDA(isUsingServiceManager: boolean): TableReadyValue {
-  const additional = isUsingServiceManager
-    ? ' Sequencer transaction data roots are checked against the ServiceManager DA bridge data roots, signed off by EigenDA operators.'
-    : ' Sequencer transaction data roots are not checked against the ServiceManager DA bridge data roots onchain.'
+export function DATA_EIGENDA(
+  isUsingDACertVerifier: boolean,
+  eigenDACertVersion: string,
+): TableReadyValue {
+  let additional: string
+
+  if (eigenDACertVersion === 'v1') {
+    additional = isUsingDACertVerifier
+      ? ' Sequencer transaction data roots are checked against the ServiceManager DA bridge data roots, signed off by EigenDA operators.'
+      : ' Sequencer transaction data roots are not checked against the ServiceManager DA bridge data roots onchain.'
+  } else {
+    // v2 and v3 both use EigenDA v2
+    additional = isUsingDACertVerifier
+      ? ' The sequencer is publishing data to EigenDA v2. Sequencer transaction data roots are checked against the DACert Verifier data roots, signed off by EigenDA operators.'
+      : ' The sequencer is publishing data to EigenDA v2. Sequencer transaction data roots are not checked against the DACert Verifier onchain.'
+  }
+
   return {
     value: 'External',
     description:
@@ -421,7 +434,7 @@ export function SEQUENCER_FORCE_VIA_L1(delay?: number): TableReadyValue {
     delay !== undefined ? ' for more than ' + formatSeconds(delay) : ''
   return {
     value: 'Force via L1',
-    description: `Users can force the sequencer to include a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for ${delayString}, users can use the exit hatch to withdraw their funds.`,
+    description: `Users can force the sequencer to include a transaction by submitting a request through L1. If the sequencer censors or is down for ${delayString}, users can use the exit hatch to withdraw their funds.`,
     sentiment: 'good',
     orderHint: delay,
   }

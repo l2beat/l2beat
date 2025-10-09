@@ -139,7 +139,6 @@ export const brine: ScalingProject = {
   },
   stateValidation: {
     categories: [STATE_VALIDATION.STARKEX_VALIDITY_PROOFS],
-    zkProgramHashes: [ZK_PROGRAM_HASHES(tanxProgramHash)],
   },
   technology: {
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
@@ -154,6 +153,7 @@ export const brine: ScalingProject = {
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
+    zkProgramHashes: [ZK_PROGRAM_HASHES(tanxProgramHash)],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

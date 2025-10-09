@@ -1,11 +1,12 @@
 import type { BridgeEventRecord, Database } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
 import { InMemoryEventDb } from './InMemoryEventDb'
-import type {
-  BridgeEvent,
-  BridgeEventDb,
-  BridgeEventQuery,
-  BridgeEventType,
+import {
+  Address32,
+  type BridgeEvent,
+  type BridgeEventDb,
+  type BridgeEventQuery,
+  type BridgeEventType,
 } from './plugins/types'
 
 export class BridgeStore implements BridgeEventDb {
@@ -90,7 +91,8 @@ function fromDbRecord(record: BridgeEventRecord): BridgeEvent {
       logIndex: record.logIndex,
       timestamp: record.timestamp,
       txHash: record.txHash,
-      txTo: record.txTo,
+      value: record.value,
+      txTo: record.txTo ? Address32.from(record.txTo) : undefined,
     },
   }
 }
@@ -108,6 +110,7 @@ function toDbRecord(event: BridgeEvent): BridgeEventRecord {
     logIndex: event.ctx.logIndex,
     timestamp: event.ctx.timestamp,
     txHash: event.ctx.txHash,
+    value: event.ctx.value,
     txTo: event.ctx.txTo,
     matched: false,
     unsupported: false,

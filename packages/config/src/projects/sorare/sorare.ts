@@ -139,7 +139,6 @@ export const sorare: ScalingProject = {
   },
   stateValidation: {
     categories: [STATE_VALIDATION.STARKEX_VALIDITY_PROOFS],
-    zkProgramHashes: [ZK_PROGRAM_HASHES(sorareProgramHash)],
   },
   technology: {
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
@@ -154,6 +153,7 @@ export const sorare: ScalingProject = {
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
+    zkProgramHashes: [ZK_PROGRAM_HASHES(sorareProgramHash)],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

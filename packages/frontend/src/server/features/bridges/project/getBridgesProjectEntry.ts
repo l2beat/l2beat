@@ -13,6 +13,7 @@ import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import { isTvsChartDataEmpty } from '~/server/features/utils/isChartDataEmpty'
+import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
@@ -91,18 +92,31 @@ export async function getBridgesProjectEntry(
     | 'colors'
   >,
 ): Promise<BridgesProjectEntry> {
-  const [projectsChangeReport, tvsStats, tvsChartData, tokens, contractUtils] =
-    await Promise.all([
-      getProjectsChangeReport(),
-      get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
-      helpers.tvs.chart.fetch({
-        range: { type: '1y' },
-        filter: { type: 'projects', projectIds: [project.id] },
-        excludeAssociatedTokens: false,
-      }),
-      getTokensForProject(project),
-      getContractUtils(),
-    ])
+  const [
+    projectsChangeReport,
+    tvsStats,
+    tvsChartData,
+    tokens,
+    contractUtils,
+    allProjectsWithContracts,
+    zkCatalogProjects,
+  ] = await Promise.all([
+    getProjectsChangeReport(),
+    get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
+    helpers.tvs.chart.fetch({
+      range: { type: '1y' },
+      filter: { type: 'projects', projectIds: [project.id] },
+      excludeAssociatedTokens: false,
+    }),
+    getTokensForProject(project),
+    getContractUtils(),
+    ps.getProjects({
+      select: ['contracts'],
+    }),
+    ps.getProjects({
+      select: ['zkCatalogInfo'],
+    }),
+  ])
 
   const tvsProjectStats = tvsStats.projects[project.id]
 
@@ -286,6 +300,8 @@ export async function getBridgesProjectEntry(
     },
     contractUtils,
     projectsChangeReport,
+    zkCatalogProjects,
+    allProjectsWithContracts,
   )
   if (contractsSection)
     sections.push({

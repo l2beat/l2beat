@@ -3,6 +3,7 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import { getLiveness } from '~/server/features/scaling/liveness/getLiveness'
+import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
@@ -44,10 +45,22 @@ export async function getRegularDaProjectSections({
   bridgeGrissiniValues,
   helpers,
 }: RegularDetailsParams) {
-  const [contractUtils, throughputSection, liveness] = await Promise.all([
+  const [
+    contractUtils,
+    throughputSection,
+    liveness,
+    allProjectsWithContracts,
+    zkCatalogProjects,
+  ] = await Promise.all([
     getContractUtils(),
     getDaThroughputSection(helpers, layer),
     bridge ? getLiveness(bridge.id) : undefined,
+    ps.getProjects({
+      select: ['contracts'],
+    }),
+    ps.getProjects({
+      select: ['zkCatalogInfo'],
+    }),
   ])
 
   const projectLiveness = bridge ? liveness?.[bridge.id] : undefined
@@ -76,6 +89,8 @@ export async function getRegularDaProjectSections({
       },
       contractUtils,
       projectsChangeReport,
+      zkCatalogProjects,
+      allProjectsWithContracts,
     )
 
   const riskSummarySection = getDaProjectRiskSummarySection(

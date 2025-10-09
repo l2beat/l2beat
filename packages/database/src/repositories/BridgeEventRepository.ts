@@ -1,4 +1,4 @@
-import { type EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { BridgeEvent } from '../kysely/generated/types'
@@ -13,7 +13,8 @@ export interface BridgeEventRecord {
   blockNumber: number
   blockHash: string
   txHash: string
-  txTo: EthereumAddress | undefined
+  value: string
+  txTo: string | undefined
   logIndex: number
   matched: boolean
   unsupported: boolean
@@ -31,7 +32,8 @@ export function toRecord(row: Selectable<BridgeEvent>): BridgeEventRecord {
     blockNumber: row.blockNumber,
     blockHash: row.blockHash,
     txHash: row.txHash,
-    txTo: (row.txTo ?? undefined) as EthereumAddress | undefined,
+    value: row.value,
+    txTo: row.txTo ?? undefined,
     logIndex: row.logIndex,
     matched: row.matched,
     unsupported: row.unsupported,
@@ -50,6 +52,7 @@ export function toRow(record: BridgeEventRecord): Insertable<BridgeEvent> {
     blockNumber: record.blockNumber,
     blockHash: record.blockHash.toLowerCase(),
     txHash: record.txHash.toLowerCase(),
+    value: record.value,
     txTo: record.txTo ?? null,
     logIndex: record.logIndex,
     matched: record.matched,

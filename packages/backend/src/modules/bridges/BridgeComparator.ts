@@ -14,7 +14,7 @@ export class BridgeComparator {
     private db: Database,
     private plugins: BridgeComparePlugin[],
     private logger: Logger,
-    private intervalMs = 10 * 60_000,
+    private intervalMs = 20 * 60_000,
   ) {
     this.logger = logger.for(this)
   }

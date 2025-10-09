@@ -138,6 +138,10 @@ export async function makeConfig(
     },
     da: flags.isEnabled('da') && (await getDaTrackingConfig(ps, env)),
     blockSync: {
+      delayFromTipInSeconds: env.integer(
+        ['BLOCK_SYNC_DELAY_FROM_TIP_IN_SECONDS'],
+        5 * 60,
+      ),
       ethereumWsUrl: env.optionalString(['ETHEREUM_WS_URL']),
     },
     anomalies: flags.isEnabled('anomalies') && {

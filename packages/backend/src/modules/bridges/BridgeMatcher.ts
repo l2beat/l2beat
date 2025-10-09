@@ -65,12 +65,17 @@ export class BridgeMatcher {
           unsupported: result.unsupportedIds,
         })
       }
-      await this.db.bridgeMessage.insertMany(
+      const messages = await this.db.bridgeMessage.insertMany(
         result.messages.map(toMessageRecord),
       )
-      await this.db.bridgeTransfer.insertMany(
+      const transfers = await this.db.bridgeTransfer.insertMany(
         result.transfers.map(toTransferRecord),
       )
+
+      this.logger.info('Matching results saved', {
+        messages,
+        transfers,
+      })
     })
   }
 }
@@ -121,7 +126,12 @@ export async function match(
         try {
           result = await plugin.match?.(event, db)
         } catch (e) {
-          logger.error(e, { project: plugin.name })
+          logger.error('Matching failed', e, {
+            plugin: plugin.name,
+            eventId: event.eventId,
+            eventType: event.type,
+            eventTxHash: event.ctx.txHash,
+          })
         }
         if (!result) {
           continue

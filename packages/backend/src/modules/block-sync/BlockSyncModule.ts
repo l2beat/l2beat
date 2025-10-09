@@ -42,6 +42,7 @@ export function createBlockSyncModule({
             providers.block.getBlockProvider(chain),
             chain,
             logger,
+            config.blockSync.delayFromTipInSeconds,
           )
 
     const blockIndexer = new BlockIndexer({

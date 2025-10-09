@@ -148,7 +148,6 @@ export const immutablex: ScalingProject = {
   },
   stateValidation: {
     categories: [STATE_VALIDATION.STARKEX_VALIDITY_PROOFS],
-    zkProgramHashes: [ZK_PROGRAM_HASHES(immutablexProgramHash)],
   },
   technology: {
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
@@ -163,6 +162,7 @@ export const immutablex: ScalingProject = {
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
+    zkProgramHashes: [ZK_PROGRAM_HASHES(immutablexProgramHash)],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

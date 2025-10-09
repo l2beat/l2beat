@@ -18,7 +18,7 @@ export const StargateV2OFTSentBusRode = createBridgeEventType<{
   ticketId: number
   receiver: string
   destinationEid: number
-  tokenAddress: Address32 | 'native'
+  tokenAddress: Address32
   amountSentLD: string
   amountReceivedLD: string
   amountSD: string
@@ -29,7 +29,7 @@ export const StargateV2OFTSentTaxi = createBridgeEventType<{
   guid: string
   amountSentLD: string
   amountReceivedLD: string
-  tokenAddress: Address32 | 'native'
+  tokenAddress: Address32
   $dstChain: string
 }>('stargate-v2.OFTSentTaxi')
 
@@ -38,7 +38,7 @@ export const StargateV2OFTReceived = createBridgeEventType<{
   receiver: string
   emitter: EthereumAddress
   token: string
-  tokenAddress: Address32 | 'native'
+  tokenAddress: Address32
   destinationEid: number
   amountReceivedLD: string
   $srcChain: string
@@ -65,7 +65,7 @@ const STARGATE_NETWORKS = defineNetworks('stargate', [
     eid: 30101,
     nativePool: {
       address: EthereumAddress('0x77b2043768d28E9C9aB44E1aBfC95944bcE57931'),
-      tokenAddress: 'native' as const,
+      tokenAddress: Address32.NATIVE,
       token: 'ETH',
     },
     usdcPool: {
@@ -84,7 +84,7 @@ const STARGATE_NETWORKS = defineNetworks('stargate', [
     eid: 30110,
     nativePool: {
       address: EthereumAddress('0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F'),
-      tokenAddress: 'native' as const,
+      tokenAddress: Address32.NATIVE,
       token: 'ETH',
     },
     usdcPool: {
@@ -103,7 +103,7 @@ const STARGATE_NETWORKS = defineNetworks('stargate', [
     eid: 30184,
     nativePool: {
       address: EthereumAddress('0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7'),
-      tokenAddress: 'native' as const,
+      tokenAddress: Address32.NATIVE,
       token: 'ETH',
     },
     usdcPool: {

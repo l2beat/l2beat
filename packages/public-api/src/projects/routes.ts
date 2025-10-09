@@ -1,21 +1,11 @@
-import { ProjectService } from '@l2beat/config'
+import type { ProjectContract, ProjectService } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { OpenApi } from '../OpenApi'
 import { GenericErrorResponse } from '../types'
+import { ContractSchema, DetailedProjectSchema, ProjectSchema } from './types'
 
-const ProjectSchema = v
-  .object({
-    id: v.string(),
-    slug: v.string(),
-    name: v.string(),
-    chainId: v.number().optional(),
-  })
-  .describe('Project')
-
-const projectService = new ProjectService()
-
-export function addProjectsRoutes(openapi: OpenApi) {
+export function addProjectsRoutes(openapi: OpenApi, ps: ProjectService) {
   openapi.get(
     '/projects',
     {
@@ -24,7 +14,7 @@ export function addProjectsRoutes(openapi: OpenApi) {
       result: v.array(ProjectSchema),
     },
     async (_, res) => {
-      const projects = await projectService.getProjects({
+      const projects = await ps.getProjects({
         optional: ['chainConfig'],
       })
       const response = projects.map((project) => ({
@@ -45,7 +35,7 @@ export function addProjectsRoutes(openapi: OpenApi) {
       params: v.object({
         projectId: v.string(),
       }),
-      result: ProjectSchema,
+      result: DetailedProjectSchema,
       errors: {
         404: GenericErrorResponse,
       },
@@ -53,9 +43,17 @@ export function addProjectsRoutes(openapi: OpenApi) {
     async (req, res) => {
       const { projectId } = req.params
 
-      const project = await projectService.getProject({
+      const project = await ps.getProject({
         id: ProjectId(projectId),
-        optional: ['chainConfig'],
+        optional: [
+          'scalingInfo',
+          'chainConfig',
+          'bridgeInfo',
+          'ecosystemInfo',
+          'display',
+          'isUpcoming',
+          'archivedAt',
+        ],
       })
 
       if (!project) {
@@ -70,7 +68,62 @@ export function addProjectsRoutes(openapi: OpenApi) {
         slug: project.slug,
         name: project.name,
         chainId: project.chainConfig?.chainId,
+        type: project.scalingInfo?.type,
+        isUpcoming: project.isUpcoming,
+        isArchived: project.archivedAt !== undefined,
+        category: project.bridgeInfo?.category,
+        hostChain: project.scalingInfo?.hostChain.name,
+        stacks: project.scalingInfo?.stacks ?? [],
+        ecosystem: project.ecosystemInfo?.id,
+        gasTokens: project.chainConfig?.gasTokens ?? [],
+        stage: project.scalingInfo?.stage,
+        purposes: project.scalingInfo?.purposes ?? [],
+        badges: project.display?.badges.map((badge) => badge.name) ?? [],
       })
+    },
+  )
+
+  openapi.get(
+    '/project/:projectId/contracts',
+    {
+      summary: ' List of contracts associated with the project and the chains',
+      tags: ['projects'],
+      params: v.object({
+        projectId: v.string(),
+      }),
+      result: v.array(ContractSchema),
+      errors: {
+        404: GenericErrorResponse,
+      },
+    },
+    async (req, res) => {
+      const { projectId } = req.params
+
+      const project = await ps.getProject({
+        id: ProjectId(projectId),
+        optional: ['chainConfig', 'contracts'],
+      })
+
+      if (!project) {
+        res.status(404).json()
+        return
+      }
+
+      if (!project.contracts) {
+        res.json([])
+        return
+      }
+
+      const contracts = Object.entries(project.contracts.addresses).flatMap(
+        ([chain, contracts]) =>
+          contracts.map((contract: ProjectContract) => ({
+            name: contract.name,
+            contractAddress: contract.address,
+            chain: chain,
+          })),
+      )
+
+      res.json(contracts)
     },
   )
 }
