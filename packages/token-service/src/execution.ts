@@ -1,8 +1,8 @@
 import { isDeepStrictEqual } from 'node:util'
 import type { TokenDatabase } from '@l2beat/database'
 import { assertUnreachable } from '@l2beat/shared-pure'
-import type { CommandSchema } from './commands'
-import type { IntentSchema } from './intents'
+import type { Command } from './commands'
+import type { Intent } from './intents'
 import { generatePlan, type PlanSchema } from './planning'
 
 export type PlanExecutionResult = PlanExecutionSuccess | PlanExecutionError
@@ -58,7 +58,7 @@ export function executePlan(
 
 export async function planAndExecute(
   db: TokenDatabase,
-  intent: IntentSchema,
+  intent: Intent,
 ): Promise<void> {
   await db.transaction(async () => {
     const planningResult = await generatePlan(db, intent)
@@ -71,7 +71,7 @@ export async function planAndExecute(
   }, 'serializable')
 }
 
-async function executeCommand(db: TokenDatabase, command: CommandSchema) {
+async function executeCommand(db: TokenDatabase, command: Command) {
   switch (command.type) {
     case 'AddAbstractTokenCommand':
       await db.abstractToken.insert(command.record)

@@ -1,13 +1,13 @@
 import type { TokenDatabase } from '@l2beat/database'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { CommandSchema } from './commands'
-import { IntentSchema } from './intents'
+import { Command } from './commands'
+import { Intent } from './intents'
 
 export type PlanSchema = v.infer<typeof PlanSchema>
 export const PlanSchema = v.object({
-  intent: IntentSchema,
-  commands: v.array(CommandSchema),
+  intent: Intent,
+  commands: v.array(Command),
 })
 
 export type PlanningResult = PlanningResultSuccess | PlanningResultError
@@ -31,9 +31,9 @@ interface PlanningResultError {
 
 export async function generatePlan(
   db: TokenDatabase,
-  intent: IntentSchema,
+  intent: Intent,
 ): Promise<PlanningResult> {
-  let commands: CommandSchema[]
+  let commands: Command[]
   try {
     switch (intent.type) {
       case 'AddAbstractTokenIntent':
@@ -78,8 +78,8 @@ export async function generatePlan(
 
 async function planAddAbstractToken(
   db: TokenDatabase,
-  intent: Extract<IntentSchema, { type: 'AddAbstractTokenIntent' }>,
-): Promise<CommandSchema[]> {
+  intent: Extract<Intent, { type: 'AddAbstractTokenIntent' }>,
+): Promise<Command[]> {
   const existingViaId = await db.abstractToken.findById(intent.record.id)
   if (existingViaId) {
     throw new PlanningError(`AbstractToken ${intent.record.id} already exist`)
@@ -106,8 +106,8 @@ async function planAddAbstractToken(
 
 async function planUpdateAbstractToken(
   db: TokenDatabase,
-  intent: Extract<IntentSchema, { type: 'UpdateAbstractTokenIntent' }>,
-): Promise<CommandSchema[]> {
+  intent: Extract<Intent, { type: 'UpdateAbstractTokenIntent' }>,
+): Promise<Command[]> {
   const existing = await db.abstractToken.findById(intent.id)
   if (existing === undefined) {
     throw new PlanningError(`AbstractToken ${intent.id} doesn't exist`)
@@ -123,8 +123,8 @@ async function planUpdateAbstractToken(
 }
 
 function planDeleteAllAbstractTokens(
-  intent: Extract<IntentSchema, { type: 'DeleteAllAbstractTokensIntent' }>,
-): CommandSchema[] {
+  intent: Extract<Intent, { type: 'DeleteAllAbstractTokensIntent' }>,
+): Command[] {
   return [
     {
       type: 'DeleteAllAbstractTokensCommand',
@@ -134,8 +134,8 @@ function planDeleteAllAbstractTokens(
 
 async function planAddDeployedToken(
   db: TokenDatabase,
-  intent: Extract<IntentSchema, { type: 'AddDeployedTokenIntent' }>,
-): Promise<CommandSchema[]> {
+  intent: Extract<Intent, { type: 'AddDeployedTokenIntent' }>,
+): Promise<Command[]> {
   const record = intent.record
   const existing = await db.deployedToken.findByChainAndAddress(record)
   if (existing !== undefined) {
@@ -153,8 +153,8 @@ async function planAddDeployedToken(
 
 async function planUpdateDeployedToken(
   db: TokenDatabase,
-  intent: Extract<IntentSchema, { type: 'UpdateDeployedTokenIntent' }>,
-): Promise<CommandSchema[]> {
+  intent: Extract<Intent, { type: 'UpdateDeployedTokenIntent' }>,
+): Promise<Command[]> {
   const existing = await db.deployedToken.findByChainAndAddress(intent.pk)
   if (existing === undefined) {
     throw new PlanningError(
@@ -172,8 +172,8 @@ async function planUpdateDeployedToken(
 }
 
 function planDeleteAllDeployedTokens(
-  intent: Extract<IntentSchema, { type: 'DeleteAllDeployedTokensIntent' }>,
-): CommandSchema[] {
+  intent: Extract<Intent, { type: 'DeleteAllDeployedTokensIntent' }>,
+): Command[] {
   return [
     {
       type: 'DeleteAllDeployedTokensCommand',

@@ -1,9 +1,13 @@
+import type {
+  AbstractTokenRecord as DbAbstractTokenRecord,
+  AbstractTokenUpdateable as DbAbstractTokenUpdateable,
+} from '@l2beat/database'
 import { v } from '@l2beat/validate'
+import type { Equal, Expect } from '../utils/expectEqual'
 
-export type AbstractTokenRecordSchema = v.infer<
-  typeof AbstractTokenRecordSchema
->
-export const AbstractTokenRecordSchema = v.object({
+type _ = Expect<Equal<AbstractTokenRecord, DbAbstractTokenRecord>>
+export type AbstractTokenRecord = v.infer<typeof AbstractTokenRecord>
+export const AbstractTokenRecord = v.object({
   symbol: v.string(),
   id: v.string(),
   issuer: v.union([v.string(), v.null()]),
@@ -15,10 +19,9 @@ export const AbstractTokenRecordSchema = v.object({
   reviewed: v.boolean(),
 })
 
-export type AbstractTokenUpdateableSchema = v.infer<
-  typeof AbstractTokenUpdateableSchema
->
-export const AbstractTokenUpdateableSchema = v.object({
+type __ = Expect<Equal<AbstractTokenUpdateable, DbAbstractTokenUpdateable>>
+export type AbstractTokenUpdateable = v.infer<typeof AbstractTokenUpdateable>
+export const AbstractTokenUpdateable = v.object({
   symbol: v.string().optional(),
   issuer: v.union([v.string(), v.null()]).optional(),
   category: v.string().optional(),

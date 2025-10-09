@@ -1,70 +1,66 @@
 import { v } from '@l2beat/validate'
 import {
-  AbstractTokenRecordSchema,
-  AbstractTokenUpdateableSchema,
+  AbstractTokenRecord,
+  AbstractTokenUpdateable,
 } from './schemas/AbstractToken'
 import {
-  DeployedTokenPrimaryKeySchema,
-  DeployedTokenRecordSchema,
-  DeployedTokenUpdateableSchema,
+  DeployedTokenPrimaryKey,
+  DeployedTokenRecord,
+  DeployedTokenUpdateable,
 } from './schemas/DeployedToken'
 
-export type AddAbstractTokenCommandSchema = v.infer<
-  typeof AddAbstractTokenCommandSchema
->
-export const AddAbstractTokenCommandSchema = v.object({
+export type AddAbstractTokenCommand = v.infer<typeof AddAbstractTokenCommand>
+export const AddAbstractTokenCommand = v.object({
   type: v.literal('AddAbstractTokenCommand'),
-  record: AbstractTokenRecordSchema,
+  record: AbstractTokenRecord,
 })
 
-export type UpdateAbstractTokenCommandSchema = v.infer<
-  typeof UpdateAbstractTokenCommandSchema
+export type UpdateAbstractTokenCommand = v.infer<
+  typeof UpdateAbstractTokenCommand
 >
-export const UpdateAbstractTokenCommandSchema = v.object({
+export const UpdateAbstractTokenCommand = v.object({
   type: v.literal('UpdateAbstractTokenCommand'),
   id: v.string(),
-  existing: AbstractTokenRecordSchema,
-  update: AbstractTokenUpdateableSchema,
+  existing: AbstractTokenRecord,
+  update: AbstractTokenUpdateable,
 })
 
-export type DeleteAllAbstractTokensCommandSchema = v.infer<
-  typeof DeleteAllAbstractTokensCommandSchema
+export type DeleteAllAbstractTokensCommand = v.infer<
+  typeof DeleteAllAbstractTokensCommand
 >
-export const DeleteAllAbstractTokensCommandSchema = v.object({
+export const DeleteAllAbstractTokensCommand = v.object({
   type: v.literal('DeleteAllAbstractTokensCommand'),
 })
 
-export type AddDeployedTokenCommandSchema = v.infer<
-  typeof AddDeployedTokenCommandSchema
->
-export const AddDeployedTokenCommandSchema = v.object({
+export type AddDeployedTokenCommand = v.infer<typeof AddDeployedTokenCommand>
+export const AddDeployedTokenCommand = v.object({
   type: v.literal('AddDeployedTokenCommand'),
-  record: DeployedTokenRecordSchema,
+  record: DeployedTokenRecord,
 })
 
-export type UpdateDeployedTokenCommandSchema = v.infer<
-  typeof UpdateDeployedTokenCommandSchema
+export type UpdateDeployedTokenCommand = v.infer<
+  typeof UpdateDeployedTokenCommand
 >
-export const UpdateDeployedTokenCommandSchema = v.object({
+export const UpdateDeployedTokenCommand = v.object({
   type: v.literal('UpdateDeployedTokenCommand'),
-  pk: DeployedTokenPrimaryKeySchema,
-  existing: DeployedTokenRecordSchema,
-  update: DeployedTokenUpdateableSchema,
+  pk: DeployedTokenPrimaryKey,
+  existing: DeployedTokenRecord,
+  update: DeployedTokenUpdateable,
 })
 
-export type DeleteAllDeployedTokensCommandSchema = v.infer<
-  typeof DeleteAllDeployedTokensCommandSchema
+export type DeleteAllDeployedTokensCommand = v.infer<
+  typeof DeleteAllDeployedTokensCommand
 >
-export const DeleteAllDeployedTokensCommandSchema = v.object({
+export const DeleteAllDeployedTokensCommand = v.object({
   type: v.literal('DeleteAllDeployedTokensCommand'),
 })
 
-export type CommandSchema = v.infer<typeof CommandSchema>
-export const CommandSchema = v.union([
-  AddAbstractTokenCommandSchema,
-  UpdateAbstractTokenCommandSchema,
-  DeleteAllAbstractTokensCommandSchema,
-  AddDeployedTokenCommandSchema,
-  UpdateDeployedTokenCommandSchema,
-  DeleteAllDeployedTokensCommandSchema,
+export type Command = v.infer<typeof Command>
+export const Command = v.union([
+  AddAbstractTokenCommand,
+  UpdateAbstractTokenCommand,
+  DeleteAllAbstractTokensCommand,
+  AddDeployedTokenCommand,
+  UpdateDeployedTokenCommand,
+  DeleteAllDeployedTokensCommand,
 ])

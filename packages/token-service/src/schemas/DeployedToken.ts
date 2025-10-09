@@ -1,9 +1,14 @@
+import type {
+  DeployedTokenPrimaryKey as DbDeployedTokenPrimaryKey,
+  DeployedTokenRecord as DbDeployedTokenRecord,
+  DeployedTokenUpdateable as DbDeployedTokenUpdateable,
+} from '@l2beat/database'
 import { v } from '@l2beat/validate'
+import type { Equal, Expect } from '../utils/expectEqual'
 
-export type DeployedTokenRecordSchema = v.infer<
-  typeof DeployedTokenRecordSchema
->
-export const DeployedTokenRecordSchema = v.object({
+type _ = Expect<Equal<DeployedTokenRecord, DbDeployedTokenRecord>>
+export type DeployedTokenRecord = v.infer<typeof DeployedTokenRecord>
+export const DeployedTokenRecord = v.object({
   symbol: v.string(),
   comment: v.union([v.string(), v.null()]),
   chain: v.string(),
@@ -13,10 +18,9 @@ export const DeployedTokenRecordSchema = v.object({
   deploymentTimestamp: v.number(),
 })
 
-export type DeployedTokenUpdateableSchema = v.infer<
-  typeof DeployedTokenUpdateableSchema
->
-export const DeployedTokenUpdateableSchema = v.object({
+type __ = Expect<Equal<DeployedTokenUpdateable, DbDeployedTokenUpdateable>>
+export type DeployedTokenUpdateable = v.infer<typeof DeployedTokenUpdateable>
+export const DeployedTokenUpdateable = v.object({
   symbol: v.string().optional(),
   comment: v.union([v.string(), v.null()]).optional(),
   abstractTokenId: v.union([v.string(), v.null()]).optional(),
@@ -24,10 +28,9 @@ export const DeployedTokenUpdateableSchema = v.object({
   deploymentTimestamp: v.number().optional(),
 })
 
-export type DeployedTokenPrimaryKeySchema = v.infer<
-  typeof DeployedTokenPrimaryKeySchema
->
-export const DeployedTokenPrimaryKeySchema = v.object({
+type ___ = Expect<Equal<DeployedTokenPrimaryKey, DbDeployedTokenPrimaryKey>>
+export type DeployedTokenPrimaryKey = v.infer<typeof DeployedTokenPrimaryKey>
+export const DeployedTokenPrimaryKey = v.object({
   chain: v.string(),
   address: v.string(),
 })
