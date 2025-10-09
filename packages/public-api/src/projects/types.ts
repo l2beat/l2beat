@@ -9,7 +9,7 @@ export const ProjectSchema = v
   })
   .describe('Project')
 
-export const ProjectDetailSchema = v
+export const DetailedProjectSchema = v
   .object({
     id: v.string(),
     slug: v.string(),
@@ -27,7 +27,7 @@ export const ProjectDetailSchema = v
     purposes: v.array(v.string()),
     badges: v.array(v.string()),
   })
-  .describe('Project')
+  .describe('DetailedProject')
 
 export const ContractSchema = v
   .object({

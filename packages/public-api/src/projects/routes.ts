@@ -3,7 +3,7 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { OpenApi } from '../OpenApi'
 import { GenericErrorResponse } from '../types'
-import { ContractSchema, ProjectDetailSchema, ProjectSchema } from './types'
+import { ContractSchema, DetailedProjectSchema, ProjectSchema } from './types'
 
 export function addProjectsRoutes(openapi: OpenApi, ps: ProjectService) {
   openapi.get(
@@ -35,7 +35,7 @@ export function addProjectsRoutes(openapi: OpenApi, ps: ProjectService) {
       params: v.object({
         projectId: v.string(),
       }),
-      result: ProjectDetailSchema,
+      result: DetailedProjectSchema,
       errors: {
         404: GenericErrorResponse,
       },
