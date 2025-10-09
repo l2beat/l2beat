@@ -21,6 +21,7 @@ export function MainPage() {
     queryKey: ['abstractTokens', 'deployedTokens'],
     queryFn: () => tokenService.getMainPageTokens(),
   })
+
   const [selectedAbstractToken, setSelectedAbstractToken] = useState<
     AbstractToken | undefined
   >(undefined)

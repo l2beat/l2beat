@@ -1,17 +1,56 @@
-import type { Selectable, Updateable } from 'kysely'
+import { UnixTime } from '@l2beat/shared-pure'
+import type { Insertable, Selectable, Updateable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { DeployedToken } from '../kysely/generated/types'
 
-export type DeployedTokenRecord = Selectable<DeployedToken>
-export type DeployedTokenUpdateable = Omit<
-  Updateable<DeployedToken>,
+export type DeployedTokenRecord = {
+  symbol: string
+  comment: string | null
+  chain: string
+  address: string
+  abstractTokenId: string | null
+  decimals: number
+  deploymentTimestamp: UnixTime
+}
+
+export type DeployedTokenPrimaryKey = Pick<
+  DeployedTokenRecord,
   'chain' | 'address'
 >
-export type DeployedTokenPrimaryKey = Pick<DeployedToken, 'chain' | 'address'>
+
+export type DeployedTokenUpdateable = Omit<
+  Updateable<DeployedTokenRecord>,
+  keyof DeployedTokenPrimaryKey
+>
+
+function toRecord(row: Selectable<DeployedToken>): DeployedTokenRecord {
+  return {
+    ...row,
+    deploymentTimestamp: UnixTime.fromDate(row.deploymentTimestamp),
+  }
+}
+
+function toRow(record: DeployedTokenRecord): Insertable<DeployedToken> {
+  return {
+    ...record,
+    deploymentTimestamp: UnixTime.toDate(record.deploymentTimestamp),
+  }
+}
+
+function toUpdateRow(
+  record: DeployedTokenUpdateable,
+): Updateable<DeployedToken> {
+  return {
+    ...record,
+    deploymentTimestamp: record.deploymentTimestamp
+      ? UnixTime.toDate(record.deploymentTimestamp)
+      : undefined,
+  }
+}
 
 export class DeployedTokenRepository extends BaseRepository {
   async insert(record: DeployedTokenRecord): Promise<void> {
-    await this.db.insertInto('DeployedToken').values(record).execute()
+    await this.db.insertInto('DeployedToken').values(toRow(record)).execute()
   }
 
   async updateByChainAndAddress(
@@ -20,7 +59,7 @@ export class DeployedTokenRepository extends BaseRepository {
   ): Promise<number> {
     const result = await this.db
       .updateTable('DeployedToken')
-      .set(patch)
+      .set(toUpdateRow(patch))
       .where('chain', '=', pk.chain)
       .where('address', '=', pk.address)
       .executeTakeFirst()
@@ -31,24 +70,27 @@ export class DeployedTokenRepository extends BaseRepository {
   async findByChainAndAddress(
     pk: DeployedTokenPrimaryKey,
   ): Promise<DeployedTokenRecord | undefined> {
-    return await this.db
+    const row = await this.db
       .selectFrom('DeployedToken')
       .selectAll()
       .where('chain', '=', pk.chain)
       .where('address', '=', pk.address)
       .executeTakeFirst()
+    return row ? toRecord(row) : undefined
   }
 
   async getByAbstractTokenId(id: string): Promise<DeployedTokenRecord[]> {
-    return await this.db
+    const rows = await this.db
       .selectFrom('DeployedToken')
       .selectAll()
       .where('abstractTokenId', '=', id)
       .execute()
+    return rows.map(toRecord)
   }
 
   async getAll(): Promise<DeployedTokenRecord[]> {
-    return await this.db.selectFrom('DeployedToken').selectAll().execute()
+    const rows = await this.db.selectFrom('DeployedToken').selectAll().execute()
+    return rows.map(toRecord)
   }
 
   async getByPrimaryKeys(
@@ -58,7 +100,7 @@ export class DeployedTokenRepository extends BaseRepository {
       return []
     }
 
-    return await this.db
+    const rows = await this.db
       .selectFrom('DeployedToken')
       .selectAll()
       .where((eb) =>
@@ -72,6 +114,7 @@ export class DeployedTokenRepository extends BaseRepository {
         ),
       )
       .execute()
+    return rows.map(toRecord)
   }
 
   async deleteByPrimaryKeys(keys: DeployedTokenPrimaryKey[]): Promise<number> {

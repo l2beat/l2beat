@@ -34,9 +34,7 @@ function toAbstractToken(
     symbol,
     category: fileEntry.category,
     coingeckoId: fileEntry.coingeckoId,
-    coingeckoListingTimestamp: new Date(
-      fileEntry.coingeckoListingTimestamp * 1000,
-    ),
+    coingeckoListingTimestamp: fileEntry.coingeckoListingTimestamp,
     iconUrl: fileEntry.iconUrl,
     reviewed: fileEntry.reviewed ?? false,
     comment: null,
@@ -59,7 +57,7 @@ function toDeployedToken(
     symbol: fileEntry.symbol,
     abstractTokenId: assignedAbstractTokenId ?? null,
     decimals: fileEntry.decimals,
-    deploymentTimestamp: new Date(fileEntry.deploymentTimestamp * 1000),
+    deploymentTimestamp: fileEntry.deploymentTimestamp,
     comment: null,
   }
 }

@@ -23,7 +23,9 @@
     "@l2beat/backend-tools": "workspace:*",
     "@l2beat/database": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
-    "@l2beat/typescript-config": "workspace:*"
+    "@l2beat/typescript-config": "workspace:*",
+    "@l2beat/validate": "workspace:*",
+    "@trpc/server": "^11.0.0-rc.446"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",

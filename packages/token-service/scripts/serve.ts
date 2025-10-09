@@ -1,26 +1,23 @@
-import { createTokenDatabase } from '@l2beat/database'
+import * as trpcExpress from '@trpc/server/adapters/express'
 import { config as dotenv } from 'dotenv'
 import express from 'express'
-import { executePlan } from '../src/execution'
-import { generatePlan } from '../src/planning'
+import { db } from '../src/trpc/database/db'
+import { appRouter } from '../src/trpc/root'
 
 dotenv()
-const db = createTokenDatabase({
-  connectionString: process.env['TEST_DB_URL'],
-})
 
 const app = express()
 app.use(express.json())
 
-app.post('/generatePlan', async (req, res) => {
-  const planningResult = await generatePlan(db, req.body)
-  res.json(planningResult)
-})
-
-app.post('/executePlan', async (req, res) => {
-  const executionResult = await executePlan(db, req.body)
-  res.json(executionResult)
-})
+app.use(
+  '/trpc',
+  trpcExpress.createExpressMiddleware({
+    router: appRouter,
+    createContext: ({ req }) => ({
+      headers: new Headers(req.headers as Record<string, string>),
+    }),
+  }),
+)
 
 const port = Number.parseInt(process.env['PORT'] ?? '3000', 10)
 const server = app.listen(port, () => {
@@ -34,7 +31,7 @@ function shutdown(signal: NodeJS.Signals) {
       .then(() => {
         process.exit(0)
       })
-      .catch((error) => {
+      .catch((error: unknown) => {
         console.error('Error while closing database connection', error)
         process.exit(1)
       })
