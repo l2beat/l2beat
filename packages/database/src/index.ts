@@ -5,10 +5,7 @@ export { compiledToSqlQuery } from './utils/compiledToSqlQuery'
 
 // Records
 
-export type {
-  AbstractTokenInsertable,
-  AbstractTokenUpdate,
-} from './repositories/AbstractTokenRepository'
+export type { AbstractTokenPatch } from './repositories/AbstractTokenRepository'
 export type { ActivityRecord } from './repositories/ActivityRepository'
 export type { AggregatedL2CostRecord } from './repositories/AggregatedL2CostRepository'
 export type { AggregatedLivenessRecord } from './repositories/AggregatedLivenessRepository'
@@ -33,9 +30,8 @@ export type {
   ProjectsSummedDataAvailabilityRecord,
 } from './repositories/DataAvailabilityRepository'
 export type {
-  DeployedTokenInsertable,
+  DeployedTokenPatch,
   DeployedTokenPrimaryKey,
-  DeployedTokenUpdate,
 } from './repositories/DeployedTokenRepository'
 export type { DiscoveryCacheRecord } from './repositories/DiscoveryCacheRepository'
 export type { FlatSourcesRecord } from './repositories/FlatSourcesRepository'

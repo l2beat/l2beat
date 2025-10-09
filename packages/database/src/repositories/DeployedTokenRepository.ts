@@ -1,28 +1,25 @@
 import { BaseRepository } from '../BaseRepository'
 import type { DeployedToken } from '../kysely/generated/types'
-import {
-  type AsInsertable,
-  type AsSelectable,
-  type AsUpdate,
-  toRecord,
-} from '../utils/typeUtils'
+import { type AsPatch, type AsSelectable, toRecord } from '../utils/typeUtils'
 
-export type DeployedTokenInsertable = AsInsertable<DeployedToken>
-export type DeployedTokenSelectable = AsSelectable<DeployedToken>
-export type DeployedTokenUpdate = AsUpdate<DeployedToken, 'chain' | 'address'>
+export type DeployedTokenRecord = AsSelectable<DeployedToken>
+export type DeployedTokenPatch = AsPatch<DeployedToken, 'chain' | 'address'>
 export type DeployedTokenPrimaryKey = Pick<DeployedToken, 'chain' | 'address'>
 
 export class DeployedTokenRepository extends BaseRepository {
-  async insert(record: DeployedTokenInsertable): Promise<void> {
+  async insert(record: DeployedTokenRecord): Promise<void> {
     await this.db.insertInto('DeployedToken').values(record).execute()
   }
 
-  async update(update: DeployedTokenUpdate): Promise<number> {
+  async updateByChainAndAddress(
+    pk: DeployedTokenPrimaryKey,
+    patch: DeployedTokenPatch,
+  ): Promise<number> {
     const result = await this.db
       .updateTable('DeployedToken')
-      .set(update)
-      .where('chain', '=', update.chain)
-      .where('address', '=', update.address)
+      .set(patch)
+      .where('chain', '=', pk.chain)
+      .where('address', '=', pk.address)
       .executeTakeFirst()
 
     return Number(result.numUpdatedRows)
@@ -31,7 +28,7 @@ export class DeployedTokenRepository extends BaseRepository {
   async findByChainAndAddress(
     chain: string,
     address: string,
-  ): Promise<DeployedTokenSelectable | undefined> {
+  ): Promise<DeployedTokenRecord | undefined> {
     const result = await this.db
       .selectFrom('DeployedToken')
       .selectAll()
@@ -42,7 +39,7 @@ export class DeployedTokenRepository extends BaseRepository {
     return result ? toRecord(result) : undefined
   }
 
-  async getByAbstractTokenId(id: string): Promise<DeployedTokenSelectable[]> {
+  async getByAbstractTokenId(id: string): Promise<DeployedTokenRecord[]> {
     const rows = await this.db
       .selectFrom('DeployedToken')
       .selectAll()
@@ -52,14 +49,14 @@ export class DeployedTokenRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getAll(): Promise<DeployedTokenSelectable[]> {
+  async getAll(): Promise<DeployedTokenRecord[]> {
     const rows = await this.db.selectFrom('DeployedToken').selectAll().execute()
     return rows.map(toRecord)
   }
 
   async getByPrimaryKeys(
     keys: DeployedTokenPrimaryKey[],
-  ): Promise<DeployedTokenSelectable[]> {
+  ): Promise<DeployedTokenRecord[]> {
     if (keys.length === 0) {
       return []
     }

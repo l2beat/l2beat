@@ -1,16 +1,18 @@
 import { BaseRepository } from '../BaseRepository'
 import type { TokenConnection } from '../kysely/generated/types'
-import {
-  type AsInsertable,
-  type AsSelectable,
-  type AsUpdate,
-  toRecord,
-} from '../utils/typeUtils'
+import { type AsPatch, type AsSelectable, toRecord } from '../utils/typeUtils'
 import type { DeployedTokenPrimaryKey } from './DeployedTokenRepository'
 
-export type TokenConnectionInsertable = AsInsertable<TokenConnection>
-export type TokenConnectionSelectable = AsSelectable<TokenConnection>
-export type TokenConnectionUpdate = AsUpdate<
+export type TokenConnectionRecord = AsSelectable<TokenConnection>
+export type TokenConnectionPrimaryKey = Pick<
+  TokenConnection,
+  | 'tokenFromChain'
+  | 'tokenFromAddress'
+  | 'tokenToChain'
+  | 'tokenToAddress'
+  | 'type'
+>
+export type TokenConnectionPatch = AsPatch<
   TokenConnection,
   | 'tokenFromChain'
   | 'tokenFromAddress'
@@ -20,38 +22,11 @@ export type TokenConnectionUpdate = AsUpdate<
 >
 
 export class TokenConnectionRepository extends BaseRepository {
-  async upsert(record: TokenConnectionInsertable): Promise<void> {
-    await this.upsertMany([record])
+  async insert(record: TokenConnectionRecord): Promise<void> {
+    await this.db.insertInto('TokenConnection').values(record).execute()
   }
 
-  async upsertMany(records: TokenConnectionInsertable[]): Promise<number> {
-    if (records.length === 0) return 0
-
-    await this.batch(records, 1_000, async (batch) => {
-      await this.db
-        .insertInto('TokenConnection')
-        .values(batch)
-        .onConflict((oc) =>
-          oc
-            .columns([
-              'tokenFromChain',
-              'tokenFromAddress',
-              'tokenToChain',
-              'tokenToAddress',
-              'type',
-            ])
-            .doUpdateSet((eb) => ({
-              params: eb.ref('excluded.params'),
-              comment: eb.ref('excluded.comment'),
-            })),
-        )
-        .execute()
-    })
-
-    return records.length
-  }
-
-  async getAll(): Promise<TokenConnectionSelectable[]> {
+  async getAll(): Promise<TokenConnectionRecord[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
       .selectAll()
@@ -62,7 +37,7 @@ export class TokenConnectionRepository extends BaseRepository {
 
   async getConnectionsFromOrTo(
     token: DeployedTokenPrimaryKey,
-  ): Promise<TokenConnectionSelectable[]> {
+  ): Promise<TokenConnectionRecord[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
       .selectAll()
@@ -85,7 +60,7 @@ export class TokenConnectionRepository extends BaseRepository {
 
   async getConnectionsFrom(
     token: DeployedTokenPrimaryKey,
-  ): Promise<TokenConnectionSelectable[]> {
+  ): Promise<TokenConnectionRecord[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
       .selectAll()
@@ -98,7 +73,7 @@ export class TokenConnectionRepository extends BaseRepository {
 
   async getConnectionsTo(
     token: DeployedTokenPrimaryKey,
-  ): Promise<TokenConnectionSelectable[]> {
+  ): Promise<TokenConnectionRecord[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
       .selectAll()
@@ -112,7 +87,7 @@ export class TokenConnectionRepository extends BaseRepository {
   async getFromTo(
     tokenFrom: DeployedTokenPrimaryKey,
     tokenTo: DeployedTokenPrimaryKey,
-  ): Promise<TokenConnectionSelectable[]> {
+  ): Promise<TokenConnectionRecord[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
       .selectAll()
@@ -128,7 +103,7 @@ export class TokenConnectionRepository extends BaseRepository {
   async getConnectionsBetween(
     tokenA: DeployedTokenPrimaryKey,
     tokenB: DeployedTokenPrimaryKey,
-  ): Promise<TokenConnectionSelectable[]> {
+  ): Promise<TokenConnectionRecord[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
       .selectAll()
@@ -168,7 +143,7 @@ export class TokenConnectionRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
-  async deleteByTokens(tokens: DeployedTokenPrimaryKey[]): Promise<number> {
+  async deleteByPK(tokens: DeployedTokenPrimaryKey[]): Promise<number> {
     if (tokens.length === 0) return 0
 
     const result = await this.db

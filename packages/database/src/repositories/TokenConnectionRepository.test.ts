@@ -2,18 +2,25 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeTokenDatabase } from '../test/tokenDatabase'
 import type {
-  DeployedTokenInsertable,
   DeployedTokenPrimaryKey,
+  DeployedTokenRecord,
 } from './DeployedTokenRepository'
 import {
-  type TokenConnectionInsertable,
+  type TokenConnectionRecord,
   TokenConnectionRepository,
-  type TokenConnectionSelectable,
 } from './TokenConnectionRepository'
 
 describeTokenDatabase(TokenConnectionRepository.name, (db) => {
   const repository = db.tokenConnection
   const deployedTokens = db.deployedToken
+
+  async function insertConnections(
+    connections: TokenConnectionRecord[],
+  ): Promise<void> {
+    for (const connection of connections) {
+      await repository.insert(connection)
+    }
+  }
 
   const tokenA: DeployedTokenPrimaryKey = {
     chain: 'ethereum',
@@ -39,7 +46,7 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
     await deployedTokens.deleteAll()
   })
 
-  describe(TokenConnectionRepository.prototype.upsertMany.name, () => {
+  describe(TokenConnectionRepository.prototype.insert.name, () => {
     it('inserts new records', async () => {
       const connections = [
         tokenConnection({
@@ -56,35 +63,12 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
         }),
       ]
 
-      const inserted = await repository.upsertMany(connections)
-      expect(inserted).toEqual(2)
+      for (const connection of connections) {
+        await repository.insert(connection)
+      }
 
       const result = await repository.getAll()
       expect(result).toEqualUnsorted(connections)
-    })
-
-    it('updates existing records when keys match', async () => {
-      await repository.upsertMany([
-        tokenConnection({
-          tokenFrom: tokenA,
-          tokenTo: tokenB,
-          type: 'canonical',
-          comment: 'initial',
-        }),
-      ])
-
-      const updated = tokenConnection({
-        tokenFrom: tokenA,
-        tokenTo: tokenB,
-        type: 'canonical',
-        params: { type: 'canonical' },
-        comment: 'updated comment',
-      })
-
-      await repository.upsert(updated)
-
-      const result = await repository.getFromTo(tokenA, tokenB)
-      expect(result).toEqual([updated])
     })
   })
 
@@ -92,7 +76,7 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
     TokenConnectionRepository.prototype.getConnectionsFromOrTo.name,
     () => {
       it('returns inbound and outbound connections', async () => {
-        await repository.upsertMany([
+        await insertConnections([
           tokenConnection({
             tokenFrom: tokenA,
             tokenTo: tokenB,
@@ -129,7 +113,7 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
 
   describe(TokenConnectionRepository.prototype.getConnectionsFrom.name, () => {
     it('returns outbound connections', async () => {
-      await repository.upsertMany([
+      await insertConnections([
         tokenConnection({
           tokenFrom: tokenA,
           tokenTo: tokenB,
@@ -165,7 +149,7 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
 
   describe(TokenConnectionRepository.prototype.getConnectionsTo.name, () => {
     it('returns inbound connections', async () => {
-      await repository.upsertMany([
+      await insertConnections([
         tokenConnection({
           tokenFrom: tokenA,
           tokenTo: tokenB,
@@ -193,7 +177,7 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
     TokenConnectionRepository.prototype.getConnectionsBetween.name,
     () => {
       it('returns connections in both directions', async () => {
-        await repository.upsertMany([
+        await insertConnections([
           tokenConnection({
             tokenFrom: tokenA,
             tokenTo: tokenB,
@@ -228,9 +212,9 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
     },
   )
 
-  describe(TokenConnectionRepository.prototype.deleteByTokens.name, () => {
+  describe(TokenConnectionRepository.prototype.deleteByPK.name, () => {
     it('deletes connections touching provided tokens', async () => {
-      await repository.upsertMany([
+      await insertConnections([
         tokenConnection({
           tokenFrom: tokenA,
           tokenTo: tokenB,
@@ -248,7 +232,7 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
         }),
       ])
 
-      const deleted = await repository.deleteByTokens([tokenA])
+      const deleted = await repository.deleteByPK([tokenA])
       expect(deleted).toEqual(2)
 
       const remaining = await repository.getAll()
@@ -266,7 +250,7 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
     TokenConnectionRepository.prototype.deleteConnectionsFromTo.name,
     () => {
       it('removes all connections between tokens regardless of type', async () => {
-        await repository.upsertMany([
+        await insertConnections([
           tokenConnection({
             tokenFrom: tokenA,
             tokenTo: tokenB,
@@ -302,8 +286,8 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
 
 function deployedToken(
   key: DeployedTokenPrimaryKey,
-  overrides: Partial<DeployedTokenInsertable> = {},
-): DeployedTokenInsertable {
+  overrides: Partial<DeployedTokenRecord> = {},
+): DeployedTokenRecord {
   return {
     chain: overrides.chain ?? key.chain,
     address: overrides.address ?? key.address,
@@ -318,14 +302,12 @@ function deployedToken(
 interface TokenConnectionInput {
   tokenFrom: DeployedTokenPrimaryKey
   tokenTo: DeployedTokenPrimaryKey
-  type: TokenConnectionInsertable['type']
-  params?: TokenConnectionInsertable['params']
+  type: TokenConnectionRecord['type']
+  params?: TokenConnectionRecord['params']
   comment?: string
 }
 
-function tokenConnection(
-  input: TokenConnectionInput,
-): TokenConnectionSelectable {
+function tokenConnection(input: TokenConnectionInput): TokenConnectionRecord {
   return {
     tokenFromChain: input.tokenFrom.chain,
     tokenFromAddress: input.tokenFrom.address,

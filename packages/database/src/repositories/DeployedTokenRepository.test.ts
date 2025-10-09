@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeTokenDatabase } from '../test/tokenDatabase'
-import type { AbstractTokenInsertable } from './AbstractTokenRepository'
+import type { AbstractTokenRecord } from './AbstractTokenRepository'
 import {
   type DeployedTokenPrimaryKey,
+  type DeployedTokenRecord,
   DeployedTokenRepository,
-  type DeployedTokenSelectable,
 } from './DeployedTokenRepository'
 
 describeTokenDatabase(DeployedTokenRepository.name, (db) => {
@@ -57,50 +57,57 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
     })
   })
 
-  describe(DeployedTokenRepository.prototype.update.name, () => {
-    it('updates record and returns number of affected rows', async () => {
-      const firstAbstractToken = abstractToken({ id: 'TK0001' })
-      const secondAbstractToken = abstractToken({ id: 'TK0002' })
-      await abstractTokens.insert(firstAbstractToken)
-      await abstractTokens.insert(secondAbstractToken)
+  describe(
+    DeployedTokenRepository.prototype.updateByChainAndAddress.name,
+    () => {
+      it('updates record and returns number of affected rows', async () => {
+        const firstAbstractToken = abstractToken({ id: 'TK0001' })
+        const secondAbstractToken = abstractToken({ id: 'TK0002' })
+        await abstractTokens.insert(firstAbstractToken)
+        await abstractTokens.insert(secondAbstractToken)
 
-      const record = deployedToken({
-        chain: 'ethereum',
-        address: '0x' + '2'.repeat(40),
-        abstractTokenId: firstAbstractToken.id,
-        symbol: 'TOKEN',
-        decimals: 18,
-        deploymentTimestamp: UnixTime.toDate(10),
-        comment: 'initial comment',
+        const record = deployedToken({
+          chain: 'ethereum',
+          address: '0x' + '2'.repeat(40),
+          abstractTokenId: firstAbstractToken.id,
+          symbol: 'TOKEN',
+          decimals: 18,
+          deploymentTimestamp: UnixTime.toDate(10),
+          comment: 'initial comment',
+        })
+        await repository.insert(record)
+
+        const updatedRows = await repository.updateByChainAndAddress(
+          {
+            chain: record.chain,
+            address: record.address,
+          },
+          {
+            abstractTokenId: secondAbstractToken.id,
+            symbol: 'UPDT',
+            decimals: 8,
+            deploymentTimestamp: UnixTime.toDate(20),
+            comment: 'updated comment',
+          },
+        )
+
+        expect(updatedRows).toEqual(1)
+
+        const stored = await repository.findByChainAndAddress(
+          record.chain,
+          record.address,
+        )
+        expect(stored).toEqual({
+          ...record,
+          abstractTokenId: secondAbstractToken.id,
+          symbol: 'UPDT',
+          decimals: 8,
+          deploymentTimestamp: UnixTime.toDate(20),
+          comment: 'updated comment',
+        })
       })
-      await repository.insert(record)
-
-      const updatedRows = await repository.update({
-        chain: record.chain,
-        address: record.address,
-        abstractTokenId: secondAbstractToken.id,
-        symbol: 'UPDT',
-        decimals: 8,
-        deploymentTimestamp: UnixTime.toDate(20),
-        comment: 'updated comment',
-      })
-
-      expect(updatedRows).toEqual(1)
-
-      const stored = await repository.findByChainAndAddress(
-        record.chain,
-        record.address,
-      )
-      expect(stored).toEqual({
-        ...record,
-        abstractTokenId: secondAbstractToken.id,
-        symbol: 'UPDT',
-        decimals: 8,
-        deploymentTimestamp: UnixTime.toDate(20),
-        comment: 'updated comment',
-      })
-    })
-  })
+    },
+  )
 
   describe(DeployedTokenRepository.prototype.getByAbstractTokenId.name, () => {
     it('returns matching records', async () => {
@@ -166,8 +173,8 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
 })
 
 function abstractToken(
-  overrides: Partial<AbstractTokenInsertable> & { id: string },
-): AbstractTokenInsertable {
+  overrides: Partial<AbstractTokenRecord> & { id: string },
+): AbstractTokenRecord {
   return {
     id: overrides.id,
     issuer: overrides.issuer,
@@ -177,14 +184,15 @@ function abstractToken(
     coingeckoId: overrides.coingeckoId,
     coingeckoListingTimestamp: overrides.coingeckoListingTimestamp,
     comment: overrides.comment,
+    reviewed: overrides.reviewed ?? false,
   }
 }
 
 function deployedToken(
-  overrides: Partial<DeployedTokenSelectable> &
+  overrides: Partial<DeployedTokenRecord> &
     Partial<DeployedTokenPrimaryKey> &
     Required<Pick<DeployedTokenPrimaryKey, 'chain' | 'address'>>,
-): DeployedTokenSelectable {
+): DeployedTokenRecord {
   return {
     chain: overrides.chain ?? 'ethereum',
     address: overrides.address,
@@ -196,9 +204,7 @@ function deployedToken(
   }
 }
 
-function toPrimaryKey(
-  record: DeployedTokenSelectable,
-): DeployedTokenPrimaryKey {
+function toPrimaryKey(record: DeployedTokenRecord): DeployedTokenPrimaryKey {
   return {
     chain: record.chain,
     address: record.address,
