@@ -1,9 +1,9 @@
 import { planRouter } from './routers/plan'
-import { procedure, router } from './trpc'
+import { protectedProcedure, router } from './trpc'
 
 export const appRouter = router({
   plan: planRouter,
-  test: procedure.query(() => 'Hello, world!'),
+  test: protectedProcedure.query(() => 'Hello, world!'),
 })
 
 export type AppRouter = typeof appRouter
