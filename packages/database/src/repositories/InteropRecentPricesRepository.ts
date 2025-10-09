@@ -50,25 +50,42 @@ export class InteropRecentPricesRepository extends BaseRepository {
     return row !== undefined
   }
 
-  async getClosestPrice(
-    coingeckoId: string,
+  async getClosestPrices(
+    coingeckoIds: string[],
     timestamp: UnixTime,
-  ): Promise<number | undefined> {
-    const targetTimestamp = UnixTime.toDate(timestamp)
-    const fromTime = UnixTime.toDate(timestamp - UnixTime.DAY)
-    const toTime = UnixTime.toDate(timestamp + UnixTime.DAY)
+    errorMargin: UnixTime,
+  ): Promise<Map<string, number | undefined>> {
+    if (coingeckoIds.length === 0) {
+      return new Map()
+    }
 
-    const row = await this.db
+    const targetTimestamp = UnixTime.toDate(timestamp)
+    const fromTime = UnixTime.toDate(timestamp - errorMargin)
+    const toTime = UnixTime.toDate(timestamp + errorMargin)
+
+    const rows = await this.db
       .selectFrom('InteropRecentPrices')
-      .select(['priceUsd'])
-      .where('coingeckoId', '=', coingeckoId)
+      .select([
+        'coingeckoId',
+        'priceUsd',
+        sql<string>`row_number() over (
+          partition by "coingeckoId"
+          order by abs(extract(epoch from age(timestamp, ${targetTimestamp})))
+        )`.as('rn'),
+      ])
+      .where('coingeckoId', 'in', coingeckoIds)
       .where('timestamp', '>=', fromTime)
       .where('timestamp', '<=', toTime)
-      .orderBy(sql`abs(extract(epoch from age(timestamp, ${targetTimestamp})))`)
-      .limit(1)
-      .executeTakeFirst()
+      .execute()
 
-    return row?.priceUsd
+    const closestRows = rows.filter((row) => row.rn === '1')
+
+    const result = new Map<string, number | undefined>()
+    for (const row of closestRows) {
+      result.set(row.coingeckoId, row?.priceUsd)
+    }
+
+    return result
   }
 
   // Test only methods
