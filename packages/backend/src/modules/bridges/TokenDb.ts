@@ -1,9 +1,9 @@
 import type { Branded } from '@l2beat/shared-pure'
 import mockData from './TokenDbMockData.json'
 
-type AbstractTokenId = Branded<string, 'AbstractTokenId'>
+export type AbstractTokenId = Branded<string, 'AbstractTokenId'>
 
-function AbstractTokenId(id: string) {
+export function AbstractTokenId(id: string) {
   return id as AbstractTokenId
 }
 
@@ -29,9 +29,9 @@ AbstractTokenId.symbol = function symbol(id: AbstractTokenId) {
   return withoutRealId.slice(withoutRealId.indexOf(':') + 1)
 }
 
-type DeployedTokenId = Branded<string, 'AbstractTokenId'>
+export type DeployedTokenId = Branded<string, 'AbstractTokenId'>
 
-function DeployedTokenId(id: string) {
+export function DeployedTokenId(id: string) {
   return id as DeployedTokenId
 }
 
@@ -49,7 +49,7 @@ DeployedTokenId.address = function address(id: DeployedTokenId) {
 
 export interface ITokenDb {
   getPriceInfo(deployedTokens: DeployedTokenId[]): Promise<
-    Record<
+    Map<
       DeployedTokenId,
       {
         abstractId: AbstractTokenId
@@ -76,20 +76,20 @@ export class MockTokenDb implements ITokenDb {
   async getPriceInfo(
     deployedTokens: DeployedTokenId[],
   ): Promise<
-    Record<
+    Map<
       DeployedTokenId,
       { abstractId: AbstractTokenId; coingeckoId: string | undefined }
     >
   > {
     await new Promise((r) => setTimeout(r, 1000))
-    const out: Record<
+    const out = new Map<
       DeployedTokenId,
       { abstractId: AbstractTokenId; coingeckoId: string | undefined }
-    > = {}
+    >()
     for (const id of deployedTokens) {
       const priceInfo = map.get(id)
       if (priceInfo) {
-        out[id] = priceInfo
+        out.set(id, priceInfo)
       }
     }
     return out
