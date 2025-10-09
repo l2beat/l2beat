@@ -5,7 +5,7 @@ Mayan Forwarder
 */
 
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { decodeFunctionData, parseAbi } from 'viem'
+import { decodeFunctionData, type Log, parseAbi } from 'viem'
 import {
   Address32,
   type BridgePlugin,
@@ -71,6 +71,7 @@ export const parseSwapAndForwardedERC20 = createEventParser(
 
 export const MayanForwarded = createBridgeEventType<{
   mayanProtocol: string
+  methodSignature: `0x${string}`
   tokenIn: Address32
   amountIn: string
   tokenOut?: Address32
@@ -91,6 +92,7 @@ export class MayanForwarderPlugin implements BridgePlugin {
           input.ctx.chain,
           forwardedEth.mayanProtocol,
         ),
+        methodSignature: decodedData.methodSignature,
         tokenIn: decodedData.tokenIn ?? Address32.NATIVE,
         amountIn: decodedData.amountIn ?? input.ctx.value,
         tokenOut: decodedData.tokenOut,
@@ -108,6 +110,7 @@ export class MayanForwarderPlugin implements BridgePlugin {
           input.ctx.chain,
           forwardedERC20.mayanProtocol,
         ),
+        methodSignature: decodedData.methodSignature,
         tokenIn: decodedData.tokenIn ?? Address32.from(forwardedERC20.token),
         amountIn: decodedData.amountIn ?? forwardedERC20.amount.toString(),
         tokenOut: decodedData.tokenOut,
@@ -125,6 +128,7 @@ export class MayanForwarderPlugin implements BridgePlugin {
           input.ctx.chain,
           swapAndForwardedEth.mayanProtocol,
         ),
+        methodSignature: decodedData.methodSignature,
         tokenIn: decodedData.tokenIn ?? Address32.ZERO,
         amountIn: decodedData.amountIn ?? '0',
         tokenOut: decodedData.tokenOut,
@@ -142,6 +146,7 @@ export class MayanForwarderPlugin implements BridgePlugin {
           input.ctx.chain,
           swapAndForwardedERC20.mayanProtocol,
         ),
+        methodSignature: decodedData.methodSignature,
         tokenIn: decodedData.tokenIn ?? Address32.ZERO,
         amountIn: decodedData.amountIn ?? '0',
         tokenOut: decodedData.tokenOut,
@@ -149,6 +154,18 @@ export class MayanForwarderPlugin implements BridgePlugin {
         $dstChain: decodedData.dstChain,
       })
     }
+  }
+}
+
+export function logToProtocolData(log: Log): DecodedData | undefined {
+  const parsed1 = parseForwardedEth(log, null) ?? parseForwardedERC20(log, null)
+  if (parsed1) {
+    return decodeProtocolData(parsed1.protocolData)
+  }
+  const parsed2 =
+    parseSwapAndForwardedERC20(log, null) ?? parseSwapAndForwardedEth(log, null)
+  if (parsed2) {
+    return decodeProtocolData(parsed2.mayanData)
   }
 }
 
@@ -185,6 +202,7 @@ const abiItems = parseAbi([
 
 interface DecodedData {
   functionName: string
+  methodSignature: `0x${string}`
   args: unknown
   dstChain: string
   tokenIn?: Address32
@@ -196,6 +214,7 @@ interface DecodedData {
 function decodeProtocolData(data: `0x${string}`): DecodedData | undefined {
   const decoded: DecodedData = {
     functionName: 'unknown',
+    methodSignature: data.slice(0, 10) as `0x${string}`,
     args: [],
     dstChain: 'unknown',
   }
