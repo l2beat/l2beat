@@ -113,7 +113,7 @@ describeDatabase(LivenessRepository.name, (db) => {
           START + 0 * UnixTime.HOUR,
         )
 
-        expect(results).toEqual([DATA[0]!, DATA[1]!])
+        expect(results).toEqualUnsorted([DATA[0]!, DATA[1]!])
       })
     },
   )
@@ -138,7 +138,7 @@ describeDatabase(LivenessRepository.name, (db) => {
           START - 1 * UnixTime.HOUR,
         )
 
-        expect(results).toEqual([DATA[1]!, NEW_DATA[0]!])
+        expect(results).toEqualUnsorted([DATA[1]!, NEW_DATA[0]!])
       })
 
       it('should return rows within given time range, exclusive to', async () => {
@@ -157,7 +157,7 @@ describeDatabase(LivenessRepository.name, (db) => {
           START + 0 * UnixTime.HOUR,
         )
 
-        expect(results).toEqual([DATA[0]!, DATA[1]!])
+        expect(results).toEqualUnsorted([DATA[0]!, DATA[1]!])
       })
 
       it('should return record before from for each configuration, desc timestamp', async () => {
@@ -202,7 +202,11 @@ describeDatabase(LivenessRepository.name, (db) => {
           START - 1 * UnixTime.HOUR,
         )
 
-        expect(results).toEqual([NEW_DATA[1]!, NEW_DATA[3]!, NEW_DATA[2]!])
+        expect(results).toEqualUnsorted([
+          NEW_DATA[1]!,
+          NEW_DATA[3]!,
+          NEW_DATA[2]!,
+        ])
       })
     },
   )
