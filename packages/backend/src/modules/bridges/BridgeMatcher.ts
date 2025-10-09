@@ -239,6 +239,7 @@ function toTransferRecord(transfer: BridgeTransfer): BridgeTransferRecord {
     srcTokenAddress: transfer.src.tokenAddress,
     srcRawAmount: transfer.src.tokenAmount,
     srcSymbol: undefined,
+    srcAbstractTokenId: undefined,
     srcAmount: undefined,
     srcPrice: undefined,
     srcValueUsd: undefined,
@@ -252,8 +253,11 @@ function toTransferRecord(transfer: BridgeTransfer): BridgeTransferRecord {
     dstTokenAddress: transfer.dst.tokenAddress,
     dstRawAmount: transfer.dst.tokenAmount,
     dstSymbol: undefined,
+    dstAbstractTokenId: undefined,
     dstAmount: undefined,
     dstPrice: undefined,
     dstValueUsd: undefined,
+
+    isProcessed: false,
   }
 }

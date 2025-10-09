@@ -1,8 +1,22 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
+import type { BridgeTransferRecord, Database } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { TimeLoop } from '../../tools/TimeLoop'
 import { DeployedTokenId, type MockTokenDb } from './TokenDb'
+
+interface OutboundTransfer {
+  srcAbstractTokenId: string
+  srcAmount: number
+  srcPrice: number
+  srcValueUsd: number
+}
+
+interface InboundTransfer {
+  dstAbstractTokenId: string
+  dstAmount: number
+  dstPrice: number
+  dstValueUsd: number
+}
 
 export class FinancialsService extends TimeLoop {
   constructor(
@@ -22,10 +36,10 @@ export class FinancialsService extends TimeLoop {
       return
     }
 
-    // TODO: change to unprocessed
-    const unprocessedTransfers = await this.db.bridgeTransfer.getAll()
+    // TODO: consider adding index to isProcessed
+    const unprocessedTransfers = await this.db.bridgeTransfer.getUnprocessed()
 
-    const aaa = unprocessedTransfers
+    const tokensFromTransfers = unprocessedTransfers
       .flatMap((u) => [
         { chain: u.srcChain, address: u.srcTokenAddress },
         { chain: u.dstChain, address: u.dstTokenAddress },
@@ -36,17 +50,37 @@ export class FinancialsService extends TimeLoop {
         return DeployedTokenId.from(chain, address)
       })
 
-    const priceInfo = await this.tokenDb.getPriceInfo(aaa)
+    const priceInfo = await this.tokenDb.getPriceInfo(tokensFromTransfers)
 
     const coingeckoIds = Array.from(priceInfo.values())
       .map((t) => t.coingeckoId)
       .filter((u) => u !== undefined)
 
-    const timestamp = UnixTime.now()
     const prices = await this.db.interopRecentPrices.getClosestPrices(
       coingeckoIds,
-      timestamp,
+      UnixTime.now(),
       UnixTime.DAY,
     )
+
+    const updatedTransfers: BridgeTransferRecord[] = []
+
+    for (const transfer of unprocessedTransfers) {
+      const outbound: OutboundTransfer | undefined
+      const inbound: InboundTransfer | undefined
+
+      // TODO: figure out inbound and outbound
+
+      if (outbound === undefined && inbound === undefined) {
+        continue
+      }
+      updatedTransfers.push({ ...transfer, ...outbound, ...inbound })
+    }
+
+    await this.db.transaction(async () => {
+      await this.db.bridgeTransfer.updateIsProcessed(
+        unprocessedTransfers.map((u) => u.messageId),
+      )
+      // TODO: update transfers
+    })
   }
 }
