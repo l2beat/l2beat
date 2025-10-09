@@ -103,28 +103,6 @@ describeDatabase(LivenessRepository.name, (db) => {
     })
   })
 
-  describe(LivenessRepository.prototype.getByConfigurationIdSince.name, () => {
-    it('should return rows since given time', async () => {
-      const results = await repository.getByConfigurationIdSince(
-        [txIdA, txIdB],
-        START - 2 * UnixTime.HOUR,
-      )
-
-      expect(results).toEqual([DATA[0]!, DATA[1]!])
-    })
-  })
-
-  describe(LivenessRepository.prototype.getByConfigurationIdUpTo.name, () => {
-    it('should return rows up to given time', async () => {
-      const results = await repository.getByConfigurationIdUpTo(
-        [txIdA, txIdB],
-        START - 1 * UnixTime.HOUR,
-      )
-
-      expect(results).toEqual([DATA[1]!, DATA[2]!])
-    })
-  })
-
   describe(
     LivenessRepository.prototype.getByConfigurationIdWithinTimeRange.name,
     () => {
