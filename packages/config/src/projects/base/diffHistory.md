@@ -8,7 +8,7 @@ Generated with discovered.json: 0x84ea2fbab6fbef39dab55b93251def51c24d9224
 
 ## Description
 
-Upgrade 16 contracts upgrade.
+Upgrade to 16/16a contracts.
 
 L1StandardBridge - added SUPERCHAIN_ETH_BRIDGE predeploy address.
 https://disco.l2beat.com/diff/eth:0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A/eth:0xe32B192fb1DcA88fCB1C56B3ACb429e32238aDCb
@@ -18,7 +18,16 @@ DisputeGameFactory - https://disco.l2beat.com/diff/eth:0x4bbA758F006Ef09402eF317
 gameImpls 0 - 
 https://disco.l2beat.com/diff/eth:0xAB91FB6cef84199145133f75cBD96B8a31F184ED/eth:0xe4066890367BF8A51d58377431808083A01b1E0c
 
-gameImpls 1 - 
+gameImpls 1 - https://disco.l2beat.com/diff/eth:0x7344Da3A618b86cdA67f8260C0cc2027D99F5B49/eth:0xe3803582fd5BCdc62720D2b80f35e8dDeA94e2ec 
+
+SystemConfig - https://disco.l2beat.com/diff/eth:0x78FFE9209dFF6Fe1c9B6F3EFdF996BeE60346D0e/eth:0x2bFE4A5Bd5A41e9d848d843ebCDFa15954e9A557
+
+OptimismPortal2 - https://disco.l2beat.com/diff/eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4/eth:0x381E729FF983FA4BCEd820e7b922d79bF653B999
+
+L1ERC721Bridge - https://disco.l2beat.com/diff/eth:0x7aE1d3BD877a4C5CA257404ce26BE93A02C98013/eth:0x7f1d12fB2911EB095278085f721e644C1f675696 
+
+L1CrossDomainMessenger - https://disco.l2beat.com/diff/eth:0x5D5a095665886119693F0B41d8DFeE78da033e8B/eth:0x22D12E0FAebD62d429514A65EBAe32dd316c12D6
+
 
 ## Watched changes
 
