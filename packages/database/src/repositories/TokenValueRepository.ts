@@ -3,7 +3,6 @@ import type { Insertable, Selectable } from 'kysely'
 import { sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { TokenValue } from '../kysely/generated/types'
-import type { TokenCategory, TokenSource } from './TokenMetadataRepository'
 
 export interface TokenValueRecord {
   timestamp: UnixTime
@@ -219,31 +218,130 @@ export class TokenValueRepository extends BaseRepository {
     }))
   }
 
-  async getByProjects(
+  async getSummedByTimestampByProjects(
     projectIds: string[],
     fromInclusive: UnixTime | null,
     toInclusive: UnixTime | null,
+    forSummary: boolean,
     excludeAssociated: boolean,
   ): Promise<
     {
       timestamp: UnixTime
-      source: TokenSource
-      category: TokenCategory
-      valueForProject: number
-      valueForSummary: number
+      value: number
+      canonical: number
+      external: number
+      native: number
+      ether: number
+      stablecoin: number
+      btc: number
+      rwaRestricted: number
+      rwaPublic: number
+      other: number
     }[]
   > {
+    const valueField = forSummary ? 'valueForSummary' : 'valueForProject'
+
     let query = this.db
       .selectFrom('TokenValue')
       .innerJoin('TokenMetadata', 'TokenValue.tokenId', 'TokenMetadata.tokenId')
-      .select([
+      .select((eb) => [
         'TokenValue.timestamp',
-        'TokenMetadata.source',
-        'TokenMetadata.category',
-        'TokenValue.valueForProject',
-        'TokenValue.valueForSummary',
+        eb.fn.sum(valueField).as('value'),
+        // Source breakdown
+        eb.fn
+          .sum(
+            eb
+              .case()
+              .when('TokenMetadata.source', '=', 'canonical')
+              .then(eb.ref(valueField))
+              .else(0)
+              .end(),
+          )
+          .as('canonical'),
+        eb.fn
+          .sum(
+            eb
+              .case()
+              .when('TokenMetadata.source', '=', 'external')
+              .then(eb.ref(valueField))
+              .else(0)
+              .end(),
+          )
+          .as('external'),
+        eb.fn
+          .sum(
+            eb
+              .case()
+              .when('TokenMetadata.source', '=', 'native')
+              .then(eb.ref(valueField))
+              .else(0)
+              .end(),
+          )
+          .as('native'),
+        // Category breakdown
+        eb.fn
+          .sum(
+            eb
+              .case()
+              .when('TokenMetadata.category', '=', 'ether')
+              .then(eb.ref(valueField))
+              .else(0)
+              .end(),
+          )
+          .as('ether'),
+        eb.fn
+          .sum(
+            eb
+              .case()
+              .when('TokenMetadata.category', '=', 'stablecoin')
+              .then(eb.ref(valueField))
+              .else(0)
+              .end(),
+          )
+          .as('stablecoin'),
+        eb.fn
+          .sum(
+            eb
+              .case()
+              .when('TokenMetadata.category', '=', 'btc')
+              .then(eb.ref(valueField))
+              .else(0)
+              .end(),
+          )
+          .as('btc'),
+        eb.fn
+          .sum(
+            eb
+              .case()
+              .when('TokenMetadata.category', '=', 'rwaRestricted')
+              .then(eb.ref(valueField))
+              .else(0)
+              .end(),
+          )
+          .as('rwaRestricted'),
+        eb.fn
+          .sum(
+            eb
+              .case()
+              .when('TokenMetadata.category', '=', 'rwaPublic')
+              .then(eb.ref(valueField))
+              .else(0)
+              .end(),
+          )
+          .as('rwaPublic'),
+        eb.fn
+          .sum(
+            eb
+              .case()
+              .when('TokenMetadata.category', '=', 'other')
+              .then(eb.ref(valueField))
+              .else(0)
+              .end(),
+          )
+          .as('other'),
       ])
       .where('TokenValue.projectId', 'in', projectIds)
+      .groupBy('TokenValue.timestamp')
 
     if (fromInclusive) {
       query = query.where('timestamp', '>=', UnixTime.toDate(fromInclusive))
@@ -261,10 +359,16 @@ export class TokenValueRepository extends BaseRepository {
 
     return rows.map((row) => ({
       timestamp: UnixTime.fromDate(row.timestamp),
-      source: row.source as TokenSource,
-      category: row.category as TokenCategory,
-      valueForProject: row.valueForProject,
-      valueForSummary: row.valueForSummary,
+      value: Number(row.value),
+      canonical: Number(row.canonical),
+      external: Number(row.external),
+      native: Number(row.native),
+      ether: Number(row.ether),
+      stablecoin: Number(row.stablecoin),
+      btc: Number(row.btc),
+      rwaRestricted: Number(row.rwaRestricted),
+      rwaPublic: Number(row.rwaPublic),
+      other: Number(row.other),
     }))
   }
 
