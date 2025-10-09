@@ -1,4 +1,5 @@
-import { skipToken, useMutation, useQuery } from '@tanstack/react-query'
+import type { Plan } from '@l2beat/token-service'
+import { skipToken, useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { coingecko } from '~/api/coingecko'
@@ -9,10 +10,10 @@ import {
 } from '~/components/forms/AbstractTokenForm'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
-import { type Plan, tokenService } from '~/mock/MockTokenService'
-import type { AbstractToken } from '~/mock/types'
+import { api } from '~/react-query/trpc'
 import { generateRandomString } from '~/utils/generateRandomString'
 import { toYYYYMMDD } from '~/utils/toYYYYMMDD'
+import { UnixTime } from '~/utils/UnixTime'
 import { validateResolver } from '~/utils/validateResolver'
 
 function generateRandomId() {
@@ -51,14 +52,10 @@ export function AddAbstractToken({
     retry: false,
   })
 
-  const { mutate: planAbstractToken, isPending: isPlanPending } = useMutation({
-    mutationFn: (token: AbstractToken) =>
-      tokenService.plan({
-        type: 'AddAbstractTokenIntent',
-        abstractToken: token,
-      }),
+  const { mutate: planMutate, isPending } = api.plan.generate.useMutation({
     onSuccess: (data) => {
-      setPlan(data)
+      if (data.outcome !== 'success') return
+      setPlan(data.plan)
     },
   })
 
@@ -115,11 +112,21 @@ export function AddAbstractToken({
       })
       return
     }
-    planAbstractToken({
-      ...values,
-      coingeckoListingTimestamp: values.coingeckoListingTimestamp
-        ? new Date(values.coingeckoListingTimestamp)
-        : undefined,
+    planMutate({
+      intent: {
+        type: 'AddAbstractTokenIntent',
+        record: {
+          ...values,
+          issuer: values.issuer || null,
+          iconUrl: values.iconUrl || null,
+          coingeckoId: values.coingeckoId || null,
+          comment: values.comment || null,
+          coingeckoListingTimestamp: values.coingeckoListingTimestamp
+            ? UnixTime.fromDate(new Date(values.coingeckoListingTimestamp))
+            : null,
+          reviewed: false,
+        },
+      },
     })
   }
 
@@ -136,7 +143,7 @@ export function AddAbstractToken({
       <AbstractTokenForm
         form={form}
         onSubmit={onSubmit}
-        isFormDisabled={isPlanPending}
+        isFormDisabled={isPending}
         refreshId={() => {
           const id = generateRandomId()
           form.setValue('id', id)
@@ -148,7 +155,7 @@ export function AddAbstractToken({
         }}
       >
         <ButtonWithSpinner
-          isLoading={isPlanPending}
+          isLoading={isPending}
           className="w-full"
           type="submit"
         >

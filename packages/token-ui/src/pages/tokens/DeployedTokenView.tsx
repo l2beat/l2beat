@@ -1,4 +1,5 @@
-import { skipToken, useMutation, useQuery } from '@tanstack/react-query'
+import type { Plan } from '@l2beat/token-service'
+import { skipToken, useQuery } from '@tanstack/react-query'
 import { TrashIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -15,10 +16,11 @@ import {
   setDeployedTokenExistsError,
 } from '~/components/forms/DeployedTokenForm'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
-import { type Plan, tokenService } from '~/mock/MockTokenService'
+import { tokenService } from '~/mock/MockTokenService'
 import type { DeployedToken } from '~/mock/types'
+import { api } from '~/react-query/trpc'
 import { ethereumAddressCheck } from '~/utils/checks'
-import { toYYYYMMDD } from '~/utils/toYYYYMMDD'
+import { UnixTime } from '~/utils/UnixTime'
 import { validateResolver } from '~/utils/validateResolver'
 
 export function DeployedTokenView({ token }: { token: DeployedToken }) {
@@ -28,31 +30,18 @@ export function DeployedTokenView({ token }: { token: DeployedToken }) {
     resolver: validateResolver(DeployedTokenSchema),
     defaultValues: {
       ...token,
-      deploymentTimestamp: toYYYYMMDD(token.deploymentTimestamp),
+      abstractTokenId: token.abstractTokenId ?? undefined,
+      comment: token.comment ?? undefined,
+      deploymentTimestamp: UnixTime.toYYYYMMDD(token.deploymentTimestamp),
     },
   })
 
-  const { mutate: planDeleteDeployedToken, isPending: isPlanDeletePending } =
-    useMutation({
-      mutationFn: () =>
-        tokenService.plan({
-          type: 'DeleteDeployedTokenIntent',
-          deployedTokenId: token.id,
-        }),
+  const { mutate: planMutate, isPending: isPending } =
+    api.plan.generate.useMutation({
       onSuccess: (data) => {
-        setPlan(data)
-      },
-    })
-
-  const { mutate: planUpdateDeployedToken, isPending: isPlanUpdatePending } =
-    useMutation({
-      mutationFn: (token: DeployedToken) =>
-        tokenService.plan({
-          type: 'UpdateDeployedTokenIntent',
-          deployedToken: token,
-        }),
-      onSuccess: (data) => {
-        setPlan(data)
+        if (data.outcome === 'success') {
+          setPlan(data.plan)
+        }
       },
     })
 
@@ -62,13 +51,25 @@ export function DeployedTokenView({ token }: { token: DeployedToken }) {
       setDeployedTokenExistsError(form)
       return
     }
-    planUpdateDeployedToken({
-      ...values,
-      deploymentTimestamp: new Date(values.deploymentTimestamp),
+    planMutate({
+      intent: {
+        type: 'UpdateDeployedTokenIntent',
+        pk: {
+          address: values.address,
+          chain: values.chain,
+        },
+        update: {
+          abstractTokenId: values.abstractTokenId || null,
+          comment: values.comment || null,
+          decimals: values.decimals,
+          symbol: values.symbol,
+          deploymentTimestamp: UnixTime.fromDate(
+            new Date(values.deploymentTimestamp),
+          ),
+        },
+      },
     })
   }
-
-  const isPending = isPlanDeletePending || isPlanUpdatePending
 
   const chain = form.watch('chain')
   const address = form.watch('address')
@@ -149,7 +150,15 @@ export function DeployedTokenView({ token }: { token: DeployedToken }) {
           variant="destructive"
           className="mt-2"
           onClick={() => {
-            planDeleteDeployedToken()
+            planMutate({
+              intent: {
+                type: 'DeleteDeployedTokenIntent',
+                pk: {
+                  address: token.address,
+                  chain: token.chain,
+                },
+              },
+            })
           }}
           isLoading={isPending}
         >

@@ -3,7 +3,7 @@ import type { TokenDatabase } from '@l2beat/database'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import type { Command } from './commands'
 import type { Intent } from './intents'
-import { generatePlan, type PlanSchema } from './planning'
+import { generatePlan, type Plan } from './planning'
 
 export type PlanExecutionResult = PlanExecutionSuccess | PlanExecutionError
 
@@ -18,7 +18,7 @@ interface PlanExecutionSuccess {
 
 export function executePlan(
   db: TokenDatabase,
-  plan: PlanSchema,
+  plan: Plan,
 ): Promise<PlanExecutionResult> {
   return db.transaction(
     async (): Promise<PlanExecutionResult> => {
@@ -79,6 +79,9 @@ async function executeCommand(db: TokenDatabase, command: Command) {
     case 'UpdateAbstractTokenCommand':
       await db.abstractToken.updateById(command.id, command.update)
       break
+    case 'DeleteAbstractTokenCommand':
+      await db.abstractToken.deleteById(command.id)
+      break
     case 'DeleteAllAbstractTokensCommand':
       await db.abstractToken.deleteAll()
       break
@@ -87,6 +90,9 @@ async function executeCommand(db: TokenDatabase, command: Command) {
       break
     case 'UpdateDeployedTokenCommand':
       await db.deployedToken.updateByChainAndAddress(command.pk, command.update)
+      break
+    case 'DeleteDeployedTokenCommand':
+      await db.deployedToken.deleteByPrimaryKey(command.pk)
       break
     case 'DeleteAllDeployedTokensCommand':
       await db.deployedToken.deleteAll()

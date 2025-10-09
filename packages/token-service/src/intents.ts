@@ -24,6 +24,14 @@ export const UpdateAbstractTokenIntent = v.object({
   update: AbstractTokenUpdateable,
 })
 
+export type DeleteAbstractTokenIntent = v.infer<
+  typeof DeleteAbstractTokenIntent
+>
+export const DeleteAbstractTokenIntent = v.object({
+  type: v.literal('DeleteAbstractTokenIntent'),
+  id: v.string(),
+})
+
 export type DeleteAllAbstractTokensIntent = v.infer<
   typeof DeleteAllAbstractTokensIntent
 >
@@ -46,6 +54,14 @@ export const UpdateDeployedTokenIntent = v.object({
   update: DeployedTokenUpdateable,
 })
 
+export type DeleteDeployedTokenIntent = v.infer<
+  typeof DeleteDeployedTokenIntent
+>
+export const DeleteDeployedTokenIntent = v.object({
+  type: v.literal('DeleteDeployedTokenIntent'),
+  pk: DeployedTokenPrimaryKey,
+})
+
 export type DeleteAllDeployedTokensIntent = v.infer<
   typeof DeleteAllDeployedTokensIntent
 >
@@ -57,8 +73,10 @@ export type Intent = v.infer<typeof Intent>
 export const Intent = v.union([
   AddAbstractTokenIntent,
   UpdateAbstractTokenIntent,
+  DeleteAbstractTokenIntent,
   DeleteAllAbstractTokensIntent,
   AddDeployedTokenIntent,
   UpdateDeployedTokenIntent,
+  DeleteDeployedTokenIntent,
   DeleteAllDeployedTokensIntent,
 ])

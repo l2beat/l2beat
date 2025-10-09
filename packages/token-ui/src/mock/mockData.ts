@@ -18,14 +18,14 @@ export function parseAbstractTokens(): AbstractToken[] {
 
     return {
       id,
-      issuer,
+      issuer: issuer ?? null,
       symbol,
       category: token.category as AbstractToken['category'],
       iconUrl: token.iconUrl,
       coingeckoId: token.coingeckoId,
-      coingeckoListingTimestamp: new Date(
-        token.coingeckoListingTimestamp * 1000,
-      ),
+      coingeckoListingTimestamp: token.coingeckoListingTimestamp,
+      comment: null,
+      reviewed: false,
     }
   })
 }
@@ -50,13 +50,13 @@ export function parseDeployedTokens(): DeployedToken[] {
       ?.id.split(':')[0]
 
     return {
-      id: `${chain}-${address}`,
       chain,
       address,
-      abstractTokenId,
+      abstractTokenId: abstractTokenId ?? null,
       symbol,
       decimals: Number(decimals),
-      deploymentTimestamp: new Date(token.deploymentTimestamp * 1000),
+      deploymentTimestamp: token.deploymentTimestamp,
+      comment: null,
     }
   })
 }

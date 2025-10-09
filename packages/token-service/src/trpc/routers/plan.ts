@@ -2,7 +2,7 @@ import { v } from '@l2beat/validate'
 import { db } from '../../database/db'
 import { executePlan } from '../../execution'
 import { Intent } from '../../intents'
-import { generatePlan, PlanSchema } from '../../planning'
+import { generatePlan, Plan } from '../../planning'
 import { protectedProcedure, router } from '../trpc'
 
 export const planRouter = router({
@@ -12,7 +12,7 @@ export const planRouter = router({
       return generatePlan(db, input.intent)
     }),
   execute: protectedProcedure
-    .input(v.object({ plan: PlanSchema }))
+    .input(v.object({ plan: Plan }))
     .mutation(({ input }) => {
       return executePlan(db, input.plan)
     }),

@@ -1,3 +1,4 @@
+import type { Command, Plan } from '@l2beat/token-service'
 import fuzzysort from 'fuzzysort'
 import { assert, assertUnreachable } from '~/utils/assertUnreachable'
 import {
@@ -6,89 +7,6 @@ import {
   parseDeployedTokens,
 } from './mockData'
 import type { AbstractToken, DeployedToken } from './types'
-
-type Intent =
-  | AddAbstractTokenIntent
-  | AddDeployedTokenIntent
-  | UpdateAbstractTokenIntent
-  | UpdateDeployedTokenIntent
-  | DeleteAbstractTokenIntent
-  | DeleteDeployedTokenIntent
-
-interface AddAbstractTokenIntent {
-  type: 'AddAbstractTokenIntent'
-  abstractToken: AbstractToken
-}
-
-interface AddDeployedTokenIntent {
-  type: 'AddDeployedTokenIntent'
-  deployedToken: DeployedToken
-}
-
-interface UpdateAbstractTokenIntent {
-  type: 'UpdateAbstractTokenIntent'
-  abstractToken: AbstractToken
-}
-
-interface UpdateDeployedTokenIntent {
-  type: 'UpdateDeployedTokenIntent'
-  deployedToken: DeployedToken
-}
-
-interface DeleteAbstractTokenIntent {
-  type: 'DeleteAbstractTokenIntent'
-  abstractTokenId: string
-}
-
-interface DeleteDeployedTokenIntent {
-  type: 'DeleteDeployedTokenIntent'
-  deployedTokenId: string
-}
-
-export type Command =
-  | AddAbstractTokenCommand
-  | AddDeployedTokenCommand
-  | UpdateAbstractTokenCommand
-  | UpdateDeployedTokenCommand
-  | DeleteAbstractTokenCommand
-  | DeleteDeployedTokenCommand
-
-interface AddAbstractTokenCommand {
-  type: 'AddAbstractTokenCommand'
-  abstractToken: AbstractToken
-}
-
-interface AddDeployedTokenCommand {
-  type: 'AddDeployedTokenCommand'
-  deployedToken: DeployedToken
-}
-
-interface UpdateAbstractTokenCommand {
-  type: 'UpdateAbstractTokenCommand'
-  before: AbstractToken
-  after: AbstractToken
-}
-
-interface UpdateDeployedTokenCommand {
-  type: 'UpdateDeployedTokenCommand'
-  before: DeployedToken
-  after: DeployedToken
-}
-
-interface DeleteAbstractTokenCommand {
-  type: 'DeleteAbstractTokenCommand'
-  abstractToken: AbstractToken
-}
-
-interface DeleteDeployedTokenCommand {
-  type: 'DeleteDeployedTokenCommand'
-  deployedToken: DeployedToken
-}
-
-export interface Plan {
-  intent: Intent
-  commands: Command[]
-}
 
 class MockTokenService {
   private chains: string[] = parseChains()
@@ -188,7 +106,10 @@ class MockTokenService {
         token: abstractTokenWithDeployedTokens,
       }
     }
-    const deployedToken = this.deployedTokens.find((t) => t.id === id)
+    const [chain, address] = id.split('+')
+    const deployedToken = this.deployedTokens.find(
+      (t) => t.address === address && t.chain === chain,
+    )
     if (deployedToken) {
       return {
         type: 'deployed' as const,
@@ -211,14 +132,14 @@ class MockTokenService {
     )
   }
 
-  plan(intent: Intent): Promise<Plan> {
+  plan(intent: Plan['intent']): Promise<Plan> {
     let commands: Command[]
     switch (intent.type) {
       case 'AddAbstractTokenIntent':
         commands = [
           {
             type: 'AddAbstractTokenCommand',
-            abstractToken: intent.abstractToken,
+            record: intent.record,
           },
         ]
         break
@@ -226,60 +147,64 @@ class MockTokenService {
         commands = [
           {
             type: 'AddDeployedTokenCommand',
-            deployedToken: intent.deployedToken,
+            record: intent.record,
           },
         ]
         break
 
       case 'UpdateAbstractTokenIntent': {
-        const before = this.abstractTokens.find(
-          (t) => t.id === intent.abstractToken.id,
-        )
+        const before = this.abstractTokens.find((t) => t.id === intent.id)
         assert(before, 'Abstract token not found')
 
         commands = [
           {
             type: 'UpdateAbstractTokenCommand',
-            before: before,
-            after: intent.abstractToken,
+            existing: before,
+            id: intent.id,
+            update: intent.update,
           },
         ]
         break
       }
       case 'UpdateDeployedTokenIntent': {
         const before = this.deployedTokens.find(
-          (t) => t.id === intent.deployedToken.id,
+          (t) => t.address === intent.pk.address && t.chain === intent.pk.chain,
         )
         assert(before, 'Deployed token not found')
 
         commands = [
           {
             type: 'UpdateDeployedTokenCommand',
-            before: before,
-            after: intent.deployedToken,
+            existing: before,
+            pk: intent.pk,
+            update: intent.update,
           },
         ]
         break
       }
       case 'DeleteAbstractTokenIntent': {
         const abstractToken = this.abstractTokens.find(
-          (t) => t.id === intent.abstractTokenId,
+          (t) => t.id === intent.id,
         )
         assert(abstractToken, 'Abstract token not found')
         const deployedTokens = this.deployedTokens.filter(
-          (t) => t.abstractTokenId === intent.abstractTokenId,
+          (t) => t.abstractTokenId === intent.id,
         )
         commands = [
           {
             type: 'DeleteAbstractTokenCommand',
-            abstractToken,
+            id: intent.id,
           },
           ...deployedTokens.map((t) => {
             const { abstractTokenId: _, ...tokenWithoutAbstractTokenId } = t
             return {
               type: 'UpdateDeployedTokenCommand' as const,
-              before: t,
-              after: tokenWithoutAbstractTokenId,
+              existing: t,
+              pk: {
+                chain: t.chain,
+                address: t.address,
+              },
+              update: tokenWithoutAbstractTokenId,
             }
           }),
         ]
@@ -287,13 +212,29 @@ class MockTokenService {
       }
       case 'DeleteDeployedTokenIntent': {
         const deployedToken = this.deployedTokens.find(
-          (t) => t.id === intent.deployedTokenId,
+          (t) => t.address === intent.pk.address && t.chain === intent.pk.chain,
         )
         assert(deployedToken, 'Deployed token not found')
         commands = [
           {
             type: 'DeleteDeployedTokenCommand',
-            deployedToken: deployedToken,
+            pk: intent.pk,
+          },
+        ]
+        break
+      }
+      case 'DeleteAllAbstractTokensIntent': {
+        commands = [
+          {
+            type: 'DeleteAllAbstractTokensCommand',
+          },
+        ]
+        break
+      }
+      case 'DeleteAllDeployedTokensIntent': {
+        commands = [
+          {
+            type: 'DeleteAllDeployedTokensCommand',
           },
         ]
         break
@@ -317,30 +258,39 @@ class MockTokenService {
   private executeCommand(command: Command) {
     switch (command.type) {
       case 'AddAbstractTokenCommand':
-        this.abstractTokens.push(command.abstractToken)
+        this.abstractTokens.push(command.record)
         break
       case 'AddDeployedTokenCommand':
-        this.deployedTokens.push(command.deployedToken)
+        this.deployedTokens.push(command.record)
         break
       case 'DeleteAbstractTokenCommand':
         this.abstractTokens = this.abstractTokens.filter(
-          (t) => t.id !== command.abstractToken.id,
+          (t) => t.id !== command.id,
         )
         break
       case 'DeleteDeployedTokenCommand':
         this.deployedTokens = this.deployedTokens.filter(
-          (t) => t.id !== command.deployedToken.id,
+          (t) =>
+            t.address !== command.pk.address && t.chain !== command.pk.chain,
         )
         break
       case 'UpdateAbstractTokenCommand':
         this.abstractTokens = this.abstractTokens.map((t) =>
-          t.id === command.before.id ? command.after : t,
+          t.id === command.id ? { ...t, ...command.update } : t,
         )
         break
       case 'UpdateDeployedTokenCommand':
         this.deployedTokens = this.deployedTokens.map((t) =>
-          t.id === command.before.id ? command.after : t,
+          t.address === command.pk.address && t.chain === command.pk.chain
+            ? { ...t, ...command.update }
+            : t,
         )
+        break
+      case 'DeleteAllAbstractTokensCommand':
+        this.abstractTokens = []
+        break
+      case 'DeleteAllDeployedTokensCommand':
+        this.deployedTokens = []
         break
       default:
         assertUnreachable(command)

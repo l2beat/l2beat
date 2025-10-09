@@ -25,6 +25,14 @@ export const UpdateAbstractTokenCommand = v.object({
   update: AbstractTokenUpdateable,
 })
 
+export type DeleteAbstractTokenCommand = v.infer<
+  typeof DeleteAbstractTokenCommand
+>
+export const DeleteAbstractTokenCommand = v.object({
+  type: v.literal('DeleteAbstractTokenCommand'),
+  id: v.string(),
+})
+
 export type DeleteAllAbstractTokensCommand = v.infer<
   typeof DeleteAllAbstractTokensCommand
 >
@@ -48,6 +56,14 @@ export const UpdateDeployedTokenCommand = v.object({
   update: DeployedTokenUpdateable,
 })
 
+export type DeleteDeployedTokenCommand = v.infer<
+  typeof DeleteDeployedTokenCommand
+>
+export const DeleteDeployedTokenCommand = v.object({
+  type: v.literal('DeleteDeployedTokenCommand'),
+  pk: DeployedTokenPrimaryKey,
+})
+
 export type DeleteAllDeployedTokensCommand = v.infer<
   typeof DeleteAllDeployedTokensCommand
 >
@@ -59,8 +75,10 @@ export type Command = v.infer<typeof Command>
 export const Command = v.union([
   AddAbstractTokenCommand,
   UpdateAbstractTokenCommand,
+  DeleteAbstractTokenCommand,
   DeleteAllAbstractTokensCommand,
   AddDeployedTokenCommand,
   UpdateDeployedTokenCommand,
+  DeleteDeployedTokenCommand,
   DeleteAllDeployedTokensCommand,
 ])

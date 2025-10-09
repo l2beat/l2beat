@@ -26,6 +26,7 @@ import {
 import { AppLayout } from '~/layouts/AppLayout'
 import { tokenService } from '~/mock/MockTokenService'
 import type { AbstractToken, DeployedToken } from '~/mock/types'
+import { UnixTime } from '~/utils/UnixTime'
 
 export function SearchPage() {
   const { search } = useParams()
@@ -108,8 +109,8 @@ function AbstractTokensTable({ tokens }: { tokens: AbstractToken[] }) {
               <TableCell>{token.issuer ?? 'unknown'}</TableCell>
               <TableCell>{token.iconUrl ?? '-'}</TableCell>
               <TableCell>
-                {token.coingeckoListingTimestamp
-                  ? token.coingeckoListingTimestamp.toISOString()
+                {token.coingeckoListingTimestamp !== null
+                  ? UnixTime.toYYYYMMDD(token.coingeckoListingTimestamp)
                   : '-'}
               </TableCell>
               <TableCell>
@@ -162,7 +163,7 @@ function DeployedTokensTable({ tokens }: { tokens: DeployedToken[] }) {
       <TableBody>
         {tokens.map((token) => {
           return (
-            <TableRow key={token.id}>
+            <TableRow key={`${token.chain}+${token.address}`}>
               <TableCell>{token.symbol}</TableCell>
               <TableCell>{token.chain}</TableCell>
               <TableCell>{token.address}</TableCell>
@@ -179,10 +180,12 @@ function DeployedTokensTable({ tokens }: { tokens: DeployedToken[] }) {
                 )}
               </TableCell>
               <TableCell>{token.decimals}</TableCell>
-              <TableCell>{token.deploymentTimestamp.toISOString()}</TableCell>
               <TableCell>
-                <Button asChild variant="outline">
-                  <Link to={`/tokens/${token.id}`}>
+                {UnixTime.toYYYYMMDD(token.deploymentTimestamp)}
+              </TableCell>
+              <TableCell>
+                <Button asChild variant="link">
+                  <Link to={`/tokens/${token.chain}+${token.address}`}>
                     <ArrowRightIcon />
                   </Link>
                 </Button>

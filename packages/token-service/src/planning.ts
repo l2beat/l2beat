@@ -4,8 +4,8 @@ import { v } from '@l2beat/validate'
 import { Command } from './commands'
 import { Intent } from './intents'
 
-export type PlanSchema = v.infer<typeof PlanSchema>
-export const PlanSchema = v.object({
+export type Plan = v.infer<typeof Plan>
+export const Plan = v.object({
   intent: Intent,
   commands: v.array(Command),
 })
@@ -21,7 +21,7 @@ export class PlanningError extends Error {
 
 interface PlanningResultSuccess {
   outcome: 'success'
-  plan: PlanSchema
+  plan: Plan
 }
 
 interface PlanningResultError {
@@ -42,6 +42,9 @@ export async function generatePlan(
       case 'UpdateAbstractTokenIntent':
         commands = await planUpdateAbstractToken(db, intent)
         break
+      case 'DeleteAbstractTokenIntent':
+        commands = planDeleteAbstractToken(db, intent)
+        break
       case 'DeleteAllAbstractTokensIntent':
         commands = planDeleteAllAbstractTokens(intent)
         break
@@ -50,6 +53,10 @@ export async function generatePlan(
         break
       case 'UpdateDeployedTokenIntent':
         commands = await planUpdateDeployedToken(db, intent)
+        break
+
+      case 'DeleteDeployedTokenIntent':
+        commands = planDeleteDeployedToken(intent)
         break
       case 'DeleteAllDeployedTokensIntent':
         commands = planDeleteAllDeployedTokens(intent)
@@ -122,6 +129,18 @@ async function planUpdateAbstractToken(
   ]
 }
 
+function planDeleteAbstractToken(
+  db: TokenDatabase,
+  intent: Extract<Intent, { type: 'DeleteAbstractTokenIntent' }>,
+): Command[] {
+  return [
+    {
+      type: 'DeleteAbstractTokenCommand',
+      id: intent.id,
+    },
+  ]
+}
+
 function planDeleteAllAbstractTokens(
   intent: Extract<Intent, { type: 'DeleteAllAbstractTokensIntent' }>,
 ): Command[] {
@@ -167,6 +186,17 @@ async function planUpdateDeployedToken(
       existing,
       pk: intent.pk,
       update: intent.update,
+    },
+  ]
+}
+
+function planDeleteDeployedToken(
+  intent: Extract<Intent, { type: 'DeleteDeployedTokenIntent' }>,
+): Command[] {
+  return [
+    {
+      type: 'DeleteDeployedTokenCommand',
+      pk: intent.pk,
     },
   ]
 }

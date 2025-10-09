@@ -7,7 +7,7 @@ export type AbstractTokenRecord = {
   symbol: string
   id: string
   issuer: string | null
-  category: string
+  category: 'btc' | 'ether' | 'stablecoin' | 'other'
   iconUrl: string | null
   coingeckoId: string | null
   coingeckoListingTimestamp: UnixTime | null
@@ -23,6 +23,7 @@ export type AbstractTokenUpdateable = Omit<
 function toRecord(row: Selectable<AbstractToken>): AbstractTokenRecord {
   return {
     ...row,
+    category: row.category as 'btc' | 'ether' | 'stablecoin' | 'other',
     coingeckoListingTimestamp: row.coingeckoListingTimestamp
       ? UnixTime.fromDate(row.coingeckoListingTimestamp)
       : null,
@@ -114,6 +115,15 @@ export class AbstractTokenRepository extends BaseRepository {
       .selectAll()
       .execute()
     return result.map(toRecord)
+  }
+
+  async deleteById(id: string): Promise<number> {
+    const result = await this.db
+      .deleteFrom('AbstractToken')
+      .where('id', '=', id)
+      .executeTakeFirst()
+
+    return Number(result.numDeletedRows)
   }
 
   async deleteByIds(ids: string[]): Promise<number> {

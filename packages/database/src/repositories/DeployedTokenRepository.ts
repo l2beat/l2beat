@@ -117,6 +117,16 @@ export class DeployedTokenRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async deleteByPrimaryKey(key: DeployedTokenPrimaryKey): Promise<number> {
+    const result = await this.db
+      .deleteFrom('DeployedToken')
+      .where('chain', '=', key.chain)
+      .where('address', '=', key.address)
+      .executeTakeFirst()
+
+    return Number(result.numDeletedRows)
+  }
+
   async deleteByPrimaryKeys(keys: DeployedTokenPrimaryKey[]): Promise<number> {
     if (keys.length === 0) {
       return 0

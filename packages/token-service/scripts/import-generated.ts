@@ -33,7 +33,7 @@ function toAbstractToken(
     id,
     issuer: issuer === 'unknown' ? null : issuer,
     symbol,
-    category: fileEntry.category,
+    category: fileEntry.category as AbstractTokenRecord['category'],
     coingeckoId: fileEntry.coingeckoId,
     coingeckoListingTimestamp: fileEntry.coingeckoListingTimestamp,
     iconUrl: fileEntry.iconUrl,

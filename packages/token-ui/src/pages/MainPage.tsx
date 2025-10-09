@@ -15,6 +15,7 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { tokenService } from '~/mock/MockTokenService'
 import type { AbstractToken, DeployedToken } from '~/mock/types'
 import { cn } from '~/utils/cn'
+import { UnixTime } from '~/utils/UnixTime'
 
 export function MainPage() {
   const { data, isLoading: isAbstractTokensLoading } = useQuery({
@@ -71,10 +72,13 @@ export function MainPage() {
                       <div className="mt-1 ml-6 flex flex-col items-start gap-1">
                         {token.deployedTokens.map((deployedToken) => (
                           <button
-                            key={deployedToken.id}
+                            key={`${deployedToken.chain}+${deployedToken.address}`}
                             className={cn(
                               'w-full rounded-md p-2 text-left text-muted-foreground text-sm',
-                              selectedDeployedToken?.id === deployedToken.id &&
+                              selectedDeployedToken?.chain ===
+                                deployedToken.chain &&
+                                selectedDeployedToken?.address ===
+                                  deployedToken.address &&
                                 'bg-muted',
                             )}
                             onClick={() => {
@@ -96,10 +100,12 @@ export function MainPage() {
                     {data?.deployedWithoutAbstractTokens.map((token) => {
                       return (
                         <button
-                          key={token.id}
+                          key={`${token.chain}+${token.address}`}
                           className={cn(
                             'w-full rounded-md p-2 text-left text-muted-foreground text-sm',
-                            selectedDeployedToken?.id === token.id &&
+                            selectedDeployedToken?.chain === token.chain &&
+                              selectedDeployedToken?.address ===
+                                token.address &&
                               'bg-muted',
                           )}
                           onClick={() => {
@@ -164,7 +170,13 @@ export function MainPage() {
 
                   <ItemWithLabel
                     label="Coingecko Listing Timestamp"
-                    value={selectedAbstractToken.coingeckoListingTimestamp?.toISOString()}
+                    value={
+                      selectedAbstractToken.coingeckoListingTimestamp !== null
+                        ? UnixTime.toYYYYMMDD(
+                            selectedAbstractToken.coingeckoListingTimestamp,
+                          )
+                        : null
+                    }
                   />
                   <ItemWithLabel
                     label="Category"
@@ -184,7 +196,9 @@ export function MainPage() {
               {selectedDeployedToken && (
                 <CardAction>
                   <Button asChild variant="outline">
-                    <Link to={`/tokens/${selectedDeployedToken.id}`}>
+                    <Link
+                      to={`/tokens/${selectedDeployedToken.chain}+${selectedDeployedToken.address}`}
+                    >
                       Go to Token page
                     </Link>
                   </Button>
@@ -224,7 +238,9 @@ export function MainPage() {
                   />
                   <ItemWithLabel
                     label="Deployment Timestamp"
-                    value={selectedDeployedToken.deploymentTimestamp.toISOString()}
+                    value={UnixTime.toYYYYMMDD(
+                      selectedDeployedToken.deploymentTimestamp,
+                    )}
                   />
                   <ItemWithLabel
                     label="Comment"
@@ -246,7 +262,7 @@ function ItemWithLabel({
   className,
 }: {
   label: string
-  value: string | undefined
+  value: string | null
   className?: string
 }) {
   return (

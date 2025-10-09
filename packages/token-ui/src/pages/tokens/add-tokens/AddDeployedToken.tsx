@@ -1,4 +1,5 @@
-import { skipToken, useMutation, useQuery } from '@tanstack/react-query'
+import type { Plan } from '@l2beat/token-service'
+import { skipToken, useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
@@ -8,10 +9,11 @@ import {
   setDeployedTokenExistsError,
 } from '~/components/forms/DeployedTokenForm'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
-import { type Plan, tokenService } from '~/mock/MockTokenService'
-import type { DeployedToken } from '~/mock/types'
+import { tokenService } from '~/mock/MockTokenService'
+import { api } from '~/react-query/trpc'
 import { ethereumAddressCheck } from '~/utils/checks'
 import { validateResolver } from '~/utils/validateResolver'
+import { UnixTime } from '../../../../../shared-pure/src/types'
 
 export function AddDeployedToken() {
   const form = useForm<DeployedTokenSchema>({
@@ -19,14 +21,11 @@ export function AddDeployedToken() {
   })
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
 
-  const { mutate: planDeployedToken, isPending: isPlanPending } = useMutation({
-    mutationFn: (token: DeployedToken) =>
-      tokenService.plan({
-        type: 'AddDeployedTokenIntent',
-        deployedToken: token,
-      }),
+  const { mutate: planMutate, isPending } = api.plan.generate.useMutation({
     onSuccess: (data) => {
-      setPlan(data)
+      if (data.outcome === 'success') {
+        setPlan(data.plan)
+      }
     },
   })
 
@@ -58,10 +57,18 @@ export function AddDeployedToken() {
       return
     }
 
-    planDeployedToken({
-      ...values,
-      id: `${values.chain}-${values.address}`,
-      deploymentTimestamp: new Date(values.deploymentTimestamp),
+    planMutate({
+      intent: {
+        type: 'AddDeployedTokenIntent',
+        record: {
+          ...values,
+          comment: values.comment || null,
+          abstractTokenId: values.abstractTokenId || null,
+          deploymentTimestamp: UnixTime.fromDate(
+            new Date(values.deploymentTimestamp),
+          ),
+        },
+      },
     })
   }
 
@@ -75,14 +82,14 @@ export function AddDeployedToken() {
       <DeployedTokenForm
         form={form}
         onSubmit={onSubmit}
-        isFormDisabled={isPlanPending}
+        isFormDisabled={isPending}
         deployedTokenCheck={{
           exists: deployedTokenExists,
           loading: deployedTokenExistsLoading,
         }}
       >
         <ButtonWithSpinner
-          isLoading={isPlanPending}
+          isLoading={isPending}
           className="w-full"
           type="submit"
         >

@@ -1,4 +1,5 @@
-import { skipToken, useMutation, useQuery } from '@tanstack/react-query'
+import type { Plan } from '@l2beat/token-service'
+import { skipToken, useQuery } from '@tanstack/react-query'
 import { ArrowRightIcon, TrashIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -18,12 +19,9 @@ import {
 } from '~/components/forms/AbstractTokenForm'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
-import { type Plan, tokenService } from '~/mock/MockTokenService'
-import type {
-  AbstractToken,
-  AbstractTokenWithDeployedTokens,
-} from '~/mock/types'
-import { toYYYYMMDD } from '~/utils/toYYYYMMDD'
+import type { AbstractTokenWithDeployedTokens } from '~/mock/types'
+import { api } from '~/react-query/trpc'
+import { UnixTime } from '~/utils/UnixTime'
 import { validateResolver } from '~/utils/validateResolver'
 
 export function AbstractTokenView({
@@ -37,8 +35,12 @@ export function AbstractTokenView({
     resolver: validateResolver(AbstractTokenSchema),
     defaultValues: {
       ...token,
+      issuer: token.issuer ?? undefined,
+      coingeckoId: token.coingeckoId ?? undefined,
+      iconUrl: token.iconUrl ?? undefined,
+      comment: token.comment ?? undefined,
       coingeckoListingTimestamp: token.coingeckoListingTimestamp
-        ? toYYYYMMDD(token.coingeckoListingTimestamp)
+        ? UnixTime.toYYYYMMDD(token.coingeckoListingTimestamp)
         : undefined,
     },
   })
@@ -56,29 +58,13 @@ export function AbstractTokenView({
 
   const showCoingeckoLoading = isLoading || coingeckoId !== debouncedCoingeckoId
 
-  const { mutate: planDeleteAbstractToken, isPending: isPlanDeletePending } =
-    useMutation({
-      mutationFn: () =>
-        tokenService.plan({
-          type: 'DeleteAbstractTokenIntent',
-          abstractTokenId: token.id,
-        }),
-      onSuccess: (data) => {
-        setPlan(data)
-      },
-    })
-
-  const { mutate: planUpdateAbstractToken, isPending: isPlanUpdatePending } =
-    useMutation({
-      mutationFn: (token: AbstractToken) =>
-        tokenService.plan({
-          type: 'UpdateAbstractTokenIntent',
-          abstractToken: token,
-        }),
-      onSuccess: (data) => {
-        setPlan(data)
-      },
-    })
+  const { mutate: planMutate, isPending } = api.plan.generate.useMutation({
+    onSuccess: (data) => {
+      if (data.outcome === 'success') {
+        setPlan(data.plan)
+      }
+    },
+  })
 
   useEffect(() => {
     if (isLoading) return
@@ -112,8 +98,6 @@ export function AbstractTokenView({
     token.iconUrl,
   ])
 
-  const isPending = isPlanDeletePending || isPlanUpdatePending
-
   return (
     <>
       <PlanConfirmationDialog
@@ -136,11 +120,26 @@ export function AbstractTokenView({
               <AbstractTokenForm
                 form={form}
                 onSubmit={(values) => {
-                  planUpdateAbstractToken({
-                    ...values,
-                    coingeckoListingTimestamp: values.coingeckoListingTimestamp
-                      ? new Date(values.coingeckoListingTimestamp)
-                      : undefined,
+                  planMutate({
+                    intent: {
+                      type: 'UpdateAbstractTokenIntent',
+                      id: token.id,
+                      update: {
+                        symbol: values.symbol,
+                        issuer: values.issuer || null,
+                        category: values.category,
+                        iconUrl: values.iconUrl || null,
+                        coingeckoId: values.coingeckoId || null,
+                        comment: values.comment || null,
+                        coingeckoListingTimestamp:
+                          values.coingeckoListingTimestamp
+                            ? UnixTime.fromDate(
+                                new Date(values.coingeckoListingTimestamp),
+                              )
+                            : null,
+                        reviewed: false,
+                      },
+                    },
                   })
                 }}
                 isFormDisabled={isPending}
@@ -173,12 +172,12 @@ export function AbstractTokenView({
             <CardContent className="space-y-1 p-0">
               {token.deployedTokens.map((token) => (
                 <div
-                  key={token.id}
+                  key={`${token.chain}+${token.address}`}
                   className="flex items-center justify-between gap-2 px-6 odd:bg-muted"
                 >
                   {token.chain}-{token.address} ({token.symbol})
                   <Button asChild variant="outline">
-                    <Link to={`/tokens/${token.id}`}>
+                    <Link to={`/tokens/${token.chain}+${token.address}`}>
                       <ArrowRightIcon />
                     </Link>
                   </Button>
@@ -191,7 +190,12 @@ export function AbstractTokenView({
           variant="destructive"
           className="mt-2"
           onClick={() => {
-            planDeleteAbstractToken()
+            planMutate({
+              intent: {
+                type: 'DeleteAbstractTokenIntent',
+                id: token.id,
+              },
+            })
           }}
           isLoading={isPending}
         >
