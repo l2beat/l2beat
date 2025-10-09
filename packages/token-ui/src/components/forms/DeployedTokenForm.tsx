@@ -1,5 +1,4 @@
 import { v } from '@l2beat/validate'
-import { useQuery } from '@tanstack/react-query'
 import { ArrowRightIcon, CheckIcon, ChevronsUpDownIcon } from 'lucide-react'
 import type { SubmitHandler, UseFormReturn } from 'react-hook-form'
 import { Link } from 'react-router-dom'
@@ -28,7 +27,6 @@ import {
 } from '~/components/core/Popover'
 import { Spinner } from '~/components/core/Spinner'
 import { Textarea } from '~/components/core/TextArea'
-import { tokenService } from '~/mock/MockTokenService'
 import { api } from '~/react-query/trpc'
 import {
   ethereumAddressCheck,
@@ -70,10 +68,7 @@ export function DeployedTokenForm({
   const { data: chains, isLoading: areChainsLoading } =
     api.chains.getAll.useQuery()
   const { data: abstractTokens, isLoading: areAbstractTokensLoading } =
-    useQuery({
-      queryKey: ['abstractTokens'],
-      queryFn: () => tokenService.getAbstractTokens(),
-    })
+    api.tokens.getAllAbstractTokens.useQuery()
 
   return (
     <Form {...form}>
