@@ -13,10 +13,12 @@ export class Cache {
   constructor(redisUrl: string) {
     this.client = createClient({
       url: redisUrl,
-      socket: {
-        tls: true,
-        rejectUnauthorized: false,
-      },
+      socket: redisUrl.includes('localhost')
+        ? undefined
+        : {
+            tls: true,
+            rejectUnauthorized: false,
+          },
     })
   }
 
