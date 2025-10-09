@@ -50,6 +50,7 @@ import type {
   ProjectReviewStatus,
   ProjectRisk,
   ProjectScalingCapability,
+  ProjectScalingContractsZkProgramHash,
   ProjectScalingDa,
   ProjectScalingProofSystem,
   ProjectScalingPurpose,
@@ -159,6 +160,7 @@ interface OpStackConfigCommon {
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   nonTemplateContractRisks?: ProjectRisk
+  nonTemplateZkProgramHashes?: ProjectScalingContractsZkProgramHash[]
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
@@ -385,6 +387,9 @@ function opStackCommon(
     contracts: {
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
       risks: nativeContractRisks,
+      zkProgramHashes:
+        templateVars.nonTemplateZkProgramHashes ??
+        getZkProgramHashes(templateVars),
     },
     milestones: templateVars.milestones ?? [],
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
@@ -545,6 +550,40 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
   }
 }
 
+function getZkProgramHashes(
+  templateVars: OpStackConfigCommon,
+): ProjectScalingContractsZkProgramHash[] {
+  const fraudProofType = getFraudProofType(templateVars)
+
+  switch (fraudProofType) {
+    case 'None':
+    case 'Permissioned':
+    case 'Permissionless':
+      return []
+    case 'Kailua': {
+      const kailuaProgramHash = templateVars.discovery.getContractValue<string>(
+        'KailuaTreasury',
+        'FPVM_IMAGE_ID',
+      )
+      return [ZK_PROGRAM_HASHES(kailuaProgramHash)]
+    }
+    case 'OpSuccinct': {
+      const opSuccinctProgramHashes = [
+        templateVars.discovery.getContractValue<string>(
+          'OPSuccinctL2OutputOracle',
+          'aggregationVkey',
+        ),
+        templateVars.discovery.getContractValue<string>(
+          'OPSuccinctL2OutputOracle',
+          'rangeVkeyCommitment',
+        ),
+      ]
+
+      return opSuccinctProgramHashes.map((el) => ZK_PROGRAM_HASHES(el))
+    }
+  }
+}
+
 function getStateValidation(
   templateVars: OpStackConfigCommon,
   explorerUrl: string | undefined,
@@ -702,10 +741,6 @@ function getStateValidation(
         'KailuaGame',
         'MAX_CLOCK_DURATION',
       )
-      const kailuaProgramHash = templateVars.discovery.getContractValue<string>(
-        'KailuaTreasury',
-        'FPVM_IMAGE_ID',
-      )
       return {
         categories: [
           {
@@ -785,23 +820,9 @@ The Kailua state validation system is primarily optimistically resolved, so no v
             ],
           },
         ],
-        zkProgramHashes: [ZK_PROGRAM_HASHES(kailuaProgramHash)],
       }
     }
     case 'OpSuccinct': {
-      const opSuccinctProgramHashes = []
-      opSuccinctProgramHashes.push(
-        templateVars.discovery.getContractValue<string>(
-          'OPSuccinctL2OutputOracle',
-          'aggregationVkey',
-        ),
-      )
-      opSuccinctProgramHashes.push(
-        templateVars.discovery.getContractValue<string>(
-          'OPSuccinctL2OutputOracle',
-          'rangeVkeyCommitment',
-        ),
-      )
       return {
         categories: [
           {
@@ -838,9 +859,6 @@ The Kailua state validation system is primarily optimistically resolved, so no v
             ],
           },
         ],
-        zkProgramHashes: opSuccinctProgramHashes.map((el) =>
-          ZK_PROGRAM_HASHES(el),
-        ),
       }
     }
   }

@@ -571,6 +571,7 @@ function bridgeEvent(
     blockNumber: 12345,
     blockHash: `0x${eventId}blockhash`,
     txHash: `0x${eventId}txhash`,
+    value: '0x111111',
     txTo: EthereumAddress.random(),
     logIndex: 0,
     matched: false,
