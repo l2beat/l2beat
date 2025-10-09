@@ -26,7 +26,7 @@ const parseReceivedTransferRemote = createEventParser(
   'event ReceivedTransferRemote(uint32 indexed origin, bytes32 indexed recipient, uint256 amount)',
 )
 
-export const HwrTransferSent = createBridgeEventType<{
+const HwrTransferSent = createBridgeEventType<{
   messageId: `0x${string}`
   $dstChain: string
   destination: number
@@ -35,7 +35,7 @@ export const HwrTransferSent = createBridgeEventType<{
   tokenAddress: Address32
 }>('hyperlane-hwr.TransferSent')
 
-export const HwrTransferReceived = createBridgeEventType<{
+const HwrTransferReceived = createBridgeEventType<{
   messageId: `0x${string}`
   $srcChain: string
   origin: number
@@ -50,8 +50,8 @@ export class HyperlaneHwrPlugin implements BridgePlugin {
   capture(input: LogToCapture) {
     const sentTransferRemote = parseSentTransferRemote(input.log, null)
     if (sentTransferRemote) {
-      const matchingDispatch = findMatchingDispatch(input, sentTransferRemote)
-      if (!matchingDispatch) return
+      const messageId = findDispatchMessageId(input, sentTransferRemote)
+      if (!messageId) return
 
       const $dstChain = findChain(
         HYPERLANE_NETWORKS,
@@ -60,7 +60,7 @@ export class HyperlaneHwrPlugin implements BridgePlugin {
       )
 
       return HwrTransferSent.create(input.ctx, {
-        messageId: matchingDispatch.messageId,
+        messageId,
         $dstChain,
         destination: Number(sentTransferRemote.destination),
         recipient: Address32.from(sentTransferRemote.recipient),
@@ -71,8 +71,8 @@ export class HyperlaneHwrPlugin implements BridgePlugin {
 
     const receivedTransferRemote = parseReceivedTransferRemote(input.log, null)
     if (receivedTransferRemote) {
-      const matchingProcess = findMatchingProcess(input, receivedTransferRemote)
-      if (!matchingProcess) return
+      const messageId = findProcessMessageId(input, receivedTransferRemote)
+      if (!messageId) return
 
       const $srcChain = findChain(
         HYPERLANE_NETWORKS,
@@ -81,7 +81,7 @@ export class HyperlaneHwrPlugin implements BridgePlugin {
       )
 
       return HwrTransferReceived.create(input.ctx, {
-        messageId: matchingProcess.messageId,
+        messageId,
         $srcChain,
         origin: Number(receivedTransferRemote.origin),
         recipient: Address32.from(receivedTransferRemote.recipient),
@@ -113,63 +113,82 @@ export class HyperlaneHwrPlugin implements BridgePlugin {
   }
 }
 
-function findMatchingDispatch(
+function findDispatchMessageId(
   input: LogToCapture,
   sentTransferRemote: NonNullable<ReturnType<typeof parseSentTransferRemote>>,
-):
-  | {
-      messageId: `0x${string}`
-    }
-  | undefined {
+): `0x${string}` | undefined {
+  const currentLogIndex = input.log.logIndex
+  if (currentLogIndex == null) return undefined
   const senderAddress = input.log.address.toLowerCase()
-  for (const txLog of input.txLogs) {
+
+  for (let i = input.txLogs.length - 1; i >= 0; i--) {
+    const txLog = input.txLogs[i]
+    if (txLog.logIndex == null || txLog.logIndex >= currentLogIndex) continue
+
     const dispatch = parseDispatch(txLog, null)
     if (!dispatch) continue
     if (dispatch.sender.toLowerCase() !== senderAddress) continue
     if (Number(dispatch.destination) !== Number(sentTransferRemote.destination))
       continue
-    if (txLog.logIndex == null) continue
-    const currentIndex = txLog.logIndex
-    let messageId: `0x${string}` | undefined
-    for (const candidate of input.txLogs) {
-      if (candidate.logIndex == null) continue
-      if (candidate.logIndex <= currentIndex) continue
-      const dispatchId = parseDispatchId(candidate, null)
-      if (!dispatchId) continue
-      messageId = dispatchId.messageId as `0x${string}`
-      break
-    }
+
+    const messageId = findDispatchIdAfter(input.txLogs, txLog.logIndex)
     if (!messageId) continue
-    return { messageId }
+    return messageId
   }
   return undefined
 }
 
-function findMatchingProcess(
+function findDispatchIdAfter(
+  logs: LogToCapture['txLogs'],
+  fromLogIndex: number,
+): `0x${string}` | undefined {
+  for (const candidate of logs) {
+    if (candidate.logIndex == null || candidate.logIndex <= fromLogIndex)
+      continue
+    const dispatchId = parseDispatchId(candidate, null)
+    if (!dispatchId) continue
+    return dispatchId.messageId as `0x${string}`
+  }
+  return undefined
+}
+
+function findProcessMessageId(
   input: LogToCapture,
   receivedTransferRemote: NonNullable<
     ReturnType<typeof parseReceivedTransferRemote>
   >,
-):
-  | {
-      messageId: `0x${string}`
-    }
-  | undefined {
+): `0x${string}` | undefined {
+  const currentLogIndex = input.log.logIndex
+  if (currentLogIndex == null) return undefined
   const recipientAddress = input.log.address.toLowerCase()
-  for (const txLog of input.txLogs) {
+
+  for (let i = input.txLogs.length - 1; i >= 0; i--) {
+    const txLog = input.txLogs[i]
+    if (txLog.logIndex == null || txLog.logIndex >= currentLogIndex) continue
+
     const process = parseProcess(txLog, null)
     if (!process) continue
     if (process.recipient.toLowerCase() !== recipientAddress) continue
     if (Number(process.origin) !== Number(receivedTransferRemote.origin))
       continue
-    if (txLog.logIndex == null) continue
-    const currentLogIndex = txLog.logIndex
-    const nextLog = input.txLogs.find((x) => x.logIndex === currentLogIndex + 1)
-    if (!nextLog) continue
-    const processId = parseProcessId(nextLog, null)
+
+    const processId = findProcessIdAfter(input.txLogs, txLog.logIndex)
     if (!processId) continue
-    const messageId = processId.messageId as `0x${string}`
-    return { messageId }
+    return processId
+  }
+  return undefined
+}
+
+function findProcessIdAfter(
+  logs: LogToCapture['txLogs'],
+  fromLogIndex: number,
+): `0x${string}` | undefined {
+  for (const candidate of logs) {
+    if (candidate.logIndex == null || candidate.logIndex <= fromLogIndex)
+      continue
+    const processId = parseProcessId(candidate, null)
+    if (!processId) continue
+    return processId.messageId as `0x${string}`
   }
   return undefined
 }

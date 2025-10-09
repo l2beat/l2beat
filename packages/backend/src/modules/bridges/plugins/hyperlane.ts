@@ -1,5 +1,5 @@
 import { keccak256 } from 'viem'
-import { HwrTransferReceived, HwrTransferSent } from './hyperlane-hwr'
+import { HwrTransferReceived, HwrTransferSent } from './hyperlane-hwr-types'
 import {
   type BridgeEvent,
   type BridgeEventDb,
