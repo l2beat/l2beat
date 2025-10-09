@@ -4,6 +4,7 @@ import type {
   BridgeTransferRecord,
   Database,
 } from '@l2beat/database'
+import { TimeLoop } from '../../tools/TimeLoop'
 import type { BridgeStore } from './BridgeStore'
 import {
   type BridgeEvent,
@@ -15,39 +16,20 @@ import {
   type MatchResult,
 } from './plugins/types'
 
-export class BridgeMatcher {
-  private running = false
-
+export class BridgeMatcher extends TimeLoop {
   constructor(
     private bridgeStore: BridgeStore,
     private db: Database,
     private plugins: BridgePlugin[],
     private supportedChains: string[],
-    private logger: Logger,
-    private intervalMs = 10_000,
+    protected logger: Logger,
+    intervalMs = 10_000,
   ) {
+    super({ intervalMs })
     this.logger = logger.for(this)
   }
 
-  start() {
-    const runMatching = async () => {
-      if (this.running) {
-        return
-      }
-      this.running = true
-      try {
-        await this.doMatching()
-      } catch (e) {
-        this.logger.error(e)
-      }
-      this.running = false
-    }
-    setInterval(runMatching, this.intervalMs)
-    runMatching()
-    this.logger.info('Started')
-  }
-
-  async doMatching() {
+  async run() {
     const result = await match(
       this.bridgeStore,
       (type) => this.bridgeStore.getEvents(type),
