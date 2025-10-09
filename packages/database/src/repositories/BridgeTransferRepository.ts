@@ -17,6 +17,8 @@ export interface BridgeTransferRecord {
   srcTokenAddress: string | undefined
   srcRawAmount: string | undefined
   srcSymbol: string | undefined
+  // TODO: change
+  srcAbstractTokenId?: string | undefined
   srcAmount: number | undefined
   srcPrice: number | undefined
   srcValueUsd: number | undefined
@@ -28,9 +30,12 @@ export interface BridgeTransferRecord {
   dstTokenAddress: string | undefined
   dstRawAmount: string | undefined
   dstSymbol: string | undefined
+  // TODO: change
+  dstAbstractTokenId?: string | undefined
   dstAmount: number | undefined
   dstPrice: number | undefined
   dstValueUsd: number | undefined
+  isProcessed?: boolean
 }
 
 export function toRecord(
@@ -50,6 +55,7 @@ export function toRecord(
     srcTokenAddress: row.srcTokenAddress ?? undefined,
     srcRawAmount: row.srcRawAmount ?? undefined,
     srcSymbol: row.srcSymbol ?? undefined,
+    srcAbstractTokenId: row.srcAbstractTokenId ?? undefined,
     srcAmount: row.srcAmount ?? undefined,
     srcPrice: row.srcPrice ?? undefined,
     srcValueUsd: row.srcValueUsd ?? undefined,
@@ -61,9 +67,11 @@ export function toRecord(
     dstTokenAddress: row.dstTokenAddress ?? undefined,
     dstRawAmount: row.dstRawAmount ?? undefined,
     dstSymbol: row.dstSymbol ?? undefined,
+    dstAbstractTokenId: row.dstAbstractTokenId ?? undefined,
     dstAmount: row.dstAmount ?? undefined,
     dstPrice: row.dstPrice ?? undefined,
     dstValueUsd: row.dstValueUsd ?? undefined,
+    isProcessed: row.isProcessed,
   }
 }
 
@@ -85,6 +93,7 @@ export function toRow(
     srcTokenAddress: record.srcTokenAddress,
     srcRawAmount: record.srcRawAmount,
     srcSymbol: record.srcSymbol,
+    srcAbstractTokenId: record.srcAbstractTokenId,
     srcAmount: record.srcAmount,
     srcPrice: record.srcPrice,
     srcValueUsd: record.srcValueUsd,
@@ -97,9 +106,11 @@ export function toRow(
     dstTokenAddress: record.dstTokenAddress,
     dstRawAmount: record.dstRawAmount,
     dstSymbol: record.dstSymbol,
+    dstAbstractTokenId: record.dstAbstractTokenId,
     dstAmount: record.dstAmount,
     dstPrice: record.dstPrice,
     dstValueUsd: record.dstValueUsd,
+    isProcessed: record.isProcessed,
   }
 }
 
