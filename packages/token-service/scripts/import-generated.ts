@@ -1,7 +1,7 @@
 import {
-  type AbstractTokenInsertable,
+  type AbstractTokenRecord,
   createTokenDatabase,
-  type DeployedTokenInsertable,
+  type DeployedTokenRecord,
   type TokenDatabase,
 } from '@l2beat/database'
 import { config as dotenv } from 'dotenv'
@@ -22,7 +22,7 @@ function getTestDatabase() {
 
 function toAbstractToken(
   fileEntry: (typeof transformed.abstractTokens)[0],
-): AbstractTokenInsertable {
+): AbstractTokenRecord {
   const match = /^(.*?):(.*?)\.(.*)$/.exec(fileEntry.id)
   if (!match) {
     throw new Error(`Invalid abstract token id: ${fileEntry.id}`)
@@ -30,7 +30,7 @@ function toAbstractToken(
   const [_all, id, issuer, symbol] = match
   return {
     id,
-    issuer: issuer === 'unknown' ? undefined : issuer,
+    issuer: issuer === 'unknown' ? null : issuer,
     symbol,
     category: fileEntry.category,
     coingeckoId: fileEntry.coingeckoId,
@@ -38,13 +38,15 @@ function toAbstractToken(
       fileEntry.coingeckoListingTimestamp * 1000,
     ),
     iconUrl: fileEntry.iconUrl,
+    reviewed: fileEntry.reviewed ?? false,
+    comment: null,
   }
 }
 
 function toDeployedToken(
   fileEntry: (typeof transformed.deployedTokens)[0],
   deployedToAbstract: Record<string, string>,
-): DeployedTokenInsertable {
+): DeployedTokenRecord {
   const match = /^(.*?)\+(.*?) .*$/.exec(fileEntry.id)
   if (!match) {
     throw new Error(`Invalid abstract token id: ${fileEntry.id}`)
@@ -58,6 +60,7 @@ function toDeployedToken(
     abstractTokenId: assignedAbstractTokenId ?? null,
     decimals: fileEntry.decimals,
     deploymentTimestamp: new Date(fileEntry.deploymentTimestamp * 1000),
+    comment: null,
   }
 }
 

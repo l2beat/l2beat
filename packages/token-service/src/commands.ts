@@ -1,8 +1,9 @@
 import type {
-  AbstractTokenInsertable,
-  AbstractTokenUpdate,
-  DeployedTokenInsertable,
-  DeployedTokenUpdate,
+  AbstractTokenRecord,
+  AbstractTokenUpdateable,
+  DeployedTokenPrimaryKey,
+  DeployedTokenRecord,
+  DeployedTokenUpdateable,
 } from '@l2beat/database'
 
 export type Command =
@@ -15,13 +16,14 @@ export type Command =
 
 export interface AddAbstractTokenCommand {
   type: 'AddAbstractTokenCommand'
-  record: AbstractTokenInsertable
+  record: AbstractTokenRecord
 }
 
 export interface UpdateAbstractTokenCommand {
   type: 'UpdateAbstractTokenCommand'
-  before: AbstractTokenInsertable
-  update: AbstractTokenUpdate
+  id: AbstractTokenRecord['id']
+  existing: AbstractTokenRecord
+  update: AbstractTokenUpdateable
 }
 
 export interface DeleteAllAbstractTokensCommand {
@@ -30,13 +32,14 @@ export interface DeleteAllAbstractTokensCommand {
 
 export interface AddDeployedTokenCommand {
   type: 'AddDeployedTokenCommand'
-  record: DeployedTokenInsertable
+  record: DeployedTokenRecord
 }
 
 export interface UpdateDeployedTokenCommand {
   type: 'UpdateDeployedTokenCommand'
-  before: DeployedTokenInsertable
-  update: DeployedTokenUpdate
+  pk: DeployedTokenPrimaryKey
+  existing: DeployedTokenRecord
+  update: DeployedTokenUpdateable
 }
 
 export interface DeleteAllDeployedTokensCommand {

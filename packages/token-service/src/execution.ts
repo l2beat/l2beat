@@ -77,7 +77,7 @@ async function executeCommand(db: TokenDatabase, command: Command) {
       await db.abstractToken.insert(command.record)
       break
     case 'UpdateAbstractTokenCommand':
-      await db.abstractToken.update(command.update)
+      await db.abstractToken.updateById(command.id, command.update)
       break
     case 'DeleteAllAbstractTokensCommand':
       await db.abstractToken.deleteAll()
@@ -86,7 +86,7 @@ async function executeCommand(db: TokenDatabase, command: Command) {
       await db.deployedToken.insert(command.record)
       break
     case 'UpdateDeployedTokenCommand':
-      await db.deployedToken.update(command.update)
+      await db.deployedToken.updateByChainAndAddress(command.pk, command.update)
       break
     case 'DeleteAllDeployedTokensCommand':
       await db.deployedToken.deleteAll()

@@ -114,14 +114,15 @@ async function planUpdateAbstractToken(
   db: TokenDatabase,
   intent: UpdateAbstractTokenIntent,
 ): Promise<Command[]> {
-  const before = await db.abstractToken.findById(intent.update.id)
-  if (before === undefined) {
-    throw new PlanningError(`AbstractToken ${intent.update.id} doesn't exist`)
+  const existing = await db.abstractToken.findById(intent.id)
+  if (existing === undefined) {
+    throw new PlanningError(`AbstractToken ${intent.id} doesn't exist`)
   }
   return [
     {
       type: 'UpdateAbstractTokenCommand',
-      before,
+      existing,
+      id: intent.id,
       update: intent.update,
     },
   ]
@@ -142,10 +143,7 @@ async function planAddDeployedToken(
   intent: AddDeployedTokenIntent,
 ): Promise<Command[]> {
   const record = intent.record
-  const existing = await db.deployedToken.findByChainAndAddress(
-    record.chain,
-    record.address,
-  )
+  const existing = await db.deployedToken.findByChainAndAddress(record)
   if (existing !== undefined) {
     throw new PlanningError(
       `DeployedToken ${record.chain}+${record.address} already exist`,
@@ -163,20 +161,17 @@ async function planUpdateDeployedToken(
   db: TokenDatabase,
   intent: UpdateDeployedTokenIntent,
 ): Promise<Command[]> {
-  const update = intent.update
-  const before = await db.deployedToken.findByChainAndAddress(
-    update.chain,
-    update.address,
-  )
-  if (before === undefined) {
+  const existing = await db.deployedToken.findByChainAndAddress(intent.pk)
+  if (existing === undefined) {
     throw new PlanningError(
-      `DeployedToken ${update.chain}+${update.address} doesn't exist`,
+      `DeployedToken ${intent.pk.chain}+${intent.pk.address} doesn't exist`,
     )
   }
   return [
     {
       type: 'UpdateDeployedTokenCommand',
-      before,
+      existing,
+      pk: intent.pk,
       update: intent.update,
     },
   ]

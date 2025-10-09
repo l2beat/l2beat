@@ -34,10 +34,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
 
       await repository.insert(record)
 
-      const stored = await repository.findByChainAndAddress(
-        record.chain,
-        record.address,
-      )
+      const stored = await repository.findByChainAndAddress(record)
       expect(stored).toEqual(record)
     })
 
@@ -49,10 +46,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
 
       await repository.insert(record)
 
-      const stored = await repository.findByChainAndAddress(
-        record.chain,
-        record.address,
-      )
+      const stored = await repository.findByChainAndAddress(record)
       expect(stored).toEqual(record)
     })
   })
@@ -93,10 +87,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
 
         expect(updatedRows).toEqual(1)
 
-        const stored = await repository.findByChainAndAddress(
-          record.chain,
-          record.address,
-        )
+        const stored = await repository.findByChainAndAddress(record)
         expect(stored).toEqual({
           ...record,
           abstractTokenId: secondAbstractToken.id,
@@ -128,7 +119,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
           deploymentTimestamp: UnixTime.toDate(20),
         }),
         deployedToken({
-          abstractTokenId: undefined,
+          abstractTokenId: null,
           chain: 'optimism',
           address: '0x' + '3'.repeat(40),
         }),
@@ -177,13 +168,13 @@ function abstractToken(
 ): AbstractTokenRecord {
   return {
     id: overrides.id,
-    issuer: overrides.issuer,
+    issuer: overrides.issuer ?? null,
     symbol: overrides.symbol ?? 'TOKEN',
     category: overrides.category ?? 'generic',
-    iconUrl: overrides.iconUrl,
-    coingeckoId: overrides.coingeckoId,
-    coingeckoListingTimestamp: overrides.coingeckoListingTimestamp,
-    comment: overrides.comment,
+    iconUrl: overrides.iconUrl ?? null,
+    coingeckoId: overrides.coingeckoId ?? null,
+    coingeckoListingTimestamp: overrides.coingeckoListingTimestamp ?? null,
+    comment: overrides.comment ?? null,
     reviewed: overrides.reviewed ?? false,
   }
 }
@@ -196,11 +187,11 @@ function deployedToken(
   return {
     chain: overrides.chain ?? 'ethereum',
     address: overrides.address,
-    abstractTokenId: overrides.abstractTokenId,
+    abstractTokenId: overrides.abstractTokenId ?? null,
     symbol: overrides.symbol ?? 'TOKEN',
     decimals: overrides.decimals ?? 18,
     deploymentTimestamp: overrides.deploymentTimestamp ?? UnixTime.toDate(0),
-    comment: overrides.comment,
+    comment: overrides.comment ?? null,
   }
 }
 

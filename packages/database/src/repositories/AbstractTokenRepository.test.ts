@@ -98,13 +98,13 @@ function abstractToken(
 ): AbstractTokenRecord {
   return {
     id: overrides.id,
-    issuer: overrides.issuer,
+    issuer: overrides.issuer ?? null,
     symbol: overrides.symbol ?? 'TOKEN',
     category: overrides.category ?? 'generic',
-    iconUrl: overrides.iconUrl,
-    coingeckoId: overrides.coingeckoId,
-    coingeckoListingTimestamp: overrides.coingeckoListingTimestamp,
-    comment: overrides.comment,
+    iconUrl: overrides.iconUrl ?? null,
+    coingeckoId: overrides.coingeckoId ?? null,
+    coingeckoListingTimestamp: overrides.coingeckoListingTimestamp ?? null,
+    comment: overrides.comment ?? null,
     reviewed: false,
   }
 }

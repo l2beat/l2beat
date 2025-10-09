@@ -1,13 +1,13 @@
 import { assert } from '@l2beat/shared-pure'
+import type { Insertable, Selectable, Updateable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { AbstractToken } from '../kysely/generated/types'
-import { type AsPatch, type AsSelectable, toRecord } from '../utils/typeUtils'
 
-export type AbstractTokenRecord = AsSelectable<AbstractToken>
-export type AbstractTokenPatch = AsPatch<AbstractToken, 'id'>
+export type AbstractTokenRecord = Selectable<AbstractToken>
+export type AbstractTokenUpdateable = Omit<Updateable<AbstractToken>, 'id'>
 
 export class AbstractTokenRepository extends BaseRepository {
-  async insert(record: AbstractTokenRecord): Promise<string> {
+  async insert(record: Insertable<AbstractToken>): Promise<string> {
     const row = await this.db
       .insertInto('AbstractToken')
       .values(record)
@@ -18,7 +18,10 @@ export class AbstractTokenRepository extends BaseRepository {
     return row.id
   }
 
-  async updateById(id: string, patch: AbstractTokenPatch): Promise<number> {
+  async updateById(
+    id: string,
+    patch: AbstractTokenUpdateable,
+  ): Promise<number> {
     const result = await this.db
       .updateTable('AbstractToken')
       .set(patch)
@@ -35,36 +38,31 @@ export class AbstractTokenRepository extends BaseRepository {
       .where('id', '=', id)
       .executeTakeFirst()
 
-    return result ? toRecord(result) : undefined
+    return result
   }
 
   async findByIssuerAndSymbol(
     issuer: string,
     symbol: string,
   ): Promise<AbstractTokenRecord | undefined> {
-    const result = await this.db
+    return await this.db
       .selectFrom('AbstractToken')
       .selectAll()
       .where('issuer', '=', issuer)
       .where('symbol', '=', symbol)
       .executeTakeFirst()
-
-    return result ? toRecord(result) : undefined
   }
 
   async getByIds(ids: string[]): Promise<AbstractTokenRecord[]> {
-    const rows = await this.db
+    return await this.db
       .selectFrom('AbstractToken')
       .selectAll()
       .where('id', 'in', ids)
       .execute()
-
-    return rows.map(toRecord)
   }
 
   async getAll(): Promise<AbstractTokenRecord[]> {
-    const rows = await this.db.selectFrom('AbstractToken').selectAll().execute()
-    return rows.map(toRecord)
+    return await this.db.selectFrom('AbstractToken').selectAll().execute()
   }
 
   async deleteByIds(ids: string[]): Promise<number> {

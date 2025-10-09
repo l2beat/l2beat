@@ -291,11 +291,11 @@ function deployedToken(
   return {
     chain: overrides.chain ?? key.chain,
     address: overrides.address ?? key.address,
-    abstractTokenId: overrides.abstractTokenId,
+    abstractTokenId: overrides.abstractTokenId ?? null,
     symbol: overrides.symbol ?? 'TOKEN',
     decimals: overrides.decimals ?? 18,
     deploymentTimestamp: overrides.deploymentTimestamp ?? UnixTime.toDate(0),
-    comment: overrides.comment,
+    comment: overrides.comment ?? null,
   }
 }
 
@@ -314,7 +314,7 @@ function tokenConnection(input: TokenConnectionInput): TokenConnectionRecord {
     tokenToChain: input.tokenTo.chain,
     tokenToAddress: input.tokenTo.address,
     type: input.type,
-    params: input.params,
-    comment: input.comment,
+    params: input.params ?? null,
+    comment: input.comment ?? null,
   }
 }
