@@ -243,8 +243,7 @@ export class TokenValueRepository extends BaseRepository {
         'TokenValue.valueForProject',
         'TokenValue.valueForSummary',
       ])
-      .where('TokenMetadata.projectId', 'in', projectIds)
-      .orderBy('TokenValue.timestamp', 'desc')
+      .where('TokenValue.projectId', 'in', projectIds)
 
     if (fromInclusive) {
       query = query.where('timestamp', '>=', UnixTime.toDate(fromInclusive))

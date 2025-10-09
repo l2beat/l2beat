@@ -1,8 +1,19 @@
-import type {
-  Database,
-  SummedByTimestampProjectValueRecord,
-} from '@l2beat/database'
-import type { ProjectId } from '@l2beat/shared-pure'
+import type { Database } from '@l2beat/database'
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+
+interface SummedByTimestampTvsValuesRecord {
+  value: number
+  timestamp: UnixTime
+  canonical: number
+  external: number
+  native: number
+  ether: number
+  stablecoin: number
+  btc: number
+  rwaRestricted: number
+  rwaPublic: number
+  other: number
+}
 
 export async function getSummedByTimestampTvsValuesQuery(
   db: Database,
@@ -10,7 +21,7 @@ export async function getSummedByTimestampTvsValuesQuery(
   range: [number | null, number | null],
   forSummary: boolean,
   excludeAssociated: boolean,
-): Promise<SummedByTimestampProjectValueRecord[]> {
+): Promise<SummedByTimestampTvsValuesRecord[]> {
   const tvsRecords = await db.tvsTokenValue.getByProjects(
     projectIds,
     range[0],
@@ -19,7 +30,7 @@ export async function getSummedByTimestampTvsValuesQuery(
   )
 
   // TODO: lagging records
-  const breakdownMap = new Map<number, SummedByTimestampProjectValueRecord>()
+  const breakdownMap = new Map<number, SummedByTimestampTvsValuesRecord>()
   for (const record of tvsRecords) {
     let mapItem = breakdownMap.get(record.timestamp)
     if (!mapItem) {
@@ -37,8 +48,6 @@ export async function getSummedByTimestampTvsValuesQuery(
         rwaRestricted: 0,
         rwaPublic: 0,
         other: 0,
-        // associated
-        associated: 0,
       }
     }
     const value = forSummary ? record.valueForSummary : record.valueForProject
