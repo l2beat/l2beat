@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x55b32044ebd850568f757d8965b323b8b37b1ae5
+
+# Diff at Wed, 08 Oct 2025 07:42:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@36fbb0e5eb9fa07c58f97370d929eaabfcd6c5ff block: 1759239729
+- current timestamp: 1759909174
+
+## Description
+
+Proposal 23: encrypted emergency proposal.
+'proposal is neither to fix a bug nor time-critical' - sc chat.
+
+verification of the calldata is pending.
+
+## Watched changes
+
+```diff
+    contract EmergencyMultisig (eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
++++ description: The total count of encrypted emergency proposals created.
+      values.proposalCount:
+-        23
++        24
+    }
+```
+
 Generated with discovered.json: 0xd05faca832046b1c1d0640225e033e34a4cccf9d
 
 # Diff at Tue, 30 Sep 2025 14:26:28 GMT:
