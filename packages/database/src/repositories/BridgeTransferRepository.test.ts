@@ -231,6 +231,169 @@ describeDatabase(BridgeTransferRepository.name, (db) => {
     })
   })
 
+  describe(BridgeTransferRepository.prototype.getUnprocessed.name, () => {
+    it('returns only unprocessed transfers', async () => {
+      const unprocessedRecord1 = bridgeTransfer(
+        'plugin1',
+        'msg1',
+        'deposit',
+        UnixTime(100),
+      )
+      const unprocessedRecord2 = bridgeTransfer(
+        'plugin1',
+        'msg2',
+        'withdraw',
+        UnixTime(200),
+      )
+      const processedRecord = bridgeTransfer(
+        'plugin2',
+        'msg3',
+        'deposit',
+        UnixTime(300),
+      )
+      processedRecord.isProcessed = true
+
+      await repository.insertMany([
+        unprocessedRecord1,
+        unprocessedRecord2,
+        processedRecord,
+      ])
+
+      const result = await repository.getUnprocessed()
+
+      expect(result).toHaveLength(2)
+      expect(result.map((r) => r.messageId)).toEqualUnsorted(['msg1', 'msg2'])
+      expect(result.every((r) => r.isProcessed === false)).toEqual(true)
+    })
+
+    it('returns empty array when no unprocessed transfers exist', async () => {
+      const processedRecord1 = bridgeTransfer(
+        'plugin1',
+        'msg1',
+        'deposit',
+        UnixTime(100),
+      )
+      const processedRecord2 = bridgeTransfer(
+        'plugin1',
+        'msg2',
+        'withdraw',
+        UnixTime(200),
+      )
+      processedRecord1.isProcessed = true
+      processedRecord2.isProcessed = true
+
+      await repository.insertMany([processedRecord1, processedRecord2])
+
+      const result = await repository.getUnprocessed()
+
+      expect(result).toEqual([])
+    })
+
+    it('returns empty array when no transfers exist', async () => {
+      const result = await repository.getUnprocessed()
+
+      expect(result).toEqual([])
+    })
+  })
+
+  describe(BridgeTransferRepository.prototype.updateIsProcessed.name, () => {
+    it('marks specified transfers as processed', async () => {
+      const records = [
+        bridgeTransfer('plugin1', 'msg1', 'deposit', UnixTime(100)),
+        bridgeTransfer('plugin1', 'msg2', 'withdraw', UnixTime(200)),
+        bridgeTransfer('plugin1', 'msg3', 'deposit', UnixTime(300)),
+      ]
+
+      await repository.insertMany(records)
+
+      // Verify all are initially unprocessed
+      const unprocessed = await repository.getUnprocessed()
+      expect(unprocessed).toHaveLength(3)
+
+      // Mark first two as processed
+      await repository.updateIsProcessed(['msg1', 'msg2'])
+
+      // Check that only the third one remains unprocessed
+      const stillUnprocessed = await repository.getUnprocessed()
+      expect(stillUnprocessed).toHaveLength(1)
+      expect(stillUnprocessed[0]?.messageId).toEqual('msg3')
+
+      // Verify the processed ones are marked correctly
+      const allRecords = await repository.getAll()
+      const msg1Record = allRecords.find((r) => r.messageId === 'msg1')
+      const msg2Record = allRecords.find((r) => r.messageId === 'msg2')
+      const msg3Record = allRecords.find((r) => r.messageId === 'msg3')
+
+      expect(msg1Record?.isProcessed).toEqual(true)
+      expect(msg2Record?.isProcessed).toEqual(true)
+      expect(msg3Record?.isProcessed).toEqual(false)
+    })
+
+    it('handles empty array without errors', async () => {
+      const records = [
+        bridgeTransfer('plugin1', 'msg1', 'deposit', UnixTime(100)),
+        bridgeTransfer('plugin1', 'msg2', 'withdraw', UnixTime(200)),
+      ]
+
+      await repository.insertMany(records)
+
+      // Should not throw and should not change anything
+      await repository.updateIsProcessed([])
+
+      const unprocessed = await repository.getUnprocessed()
+      expect(unprocessed).toHaveLength(2)
+    })
+
+    it('handles batch processing when more than 2000 transfer IDs', async () => {
+      const records = []
+      const transferIds = []
+      for (let i = 0; i < 2500; i++) {
+        const messageId = `msg${i}`
+        records.push(
+          bridgeTransfer('plugin', messageId, 'deposit', UnixTime(i)),
+        )
+        transferIds.push(messageId)
+      }
+
+      await repository.insertMany(records)
+
+      // Verify all are initially unprocessed
+      const unprocessed = await repository.getUnprocessed()
+      expect(unprocessed).toHaveLength(2500)
+
+      // Mark all as processed
+      await repository.updateIsProcessed(transferIds)
+
+      // Verify all are now processed
+      const stillUnprocessed = await repository.getUnprocessed()
+      expect(stillUnprocessed).toHaveLength(0)
+    })
+
+    it('ignores non-existent transfer IDs', async () => {
+      const records = [
+        bridgeTransfer('plugin1', 'msg1', 'deposit', UnixTime(100)),
+        bridgeTransfer('plugin1', 'msg2', 'withdraw', UnixTime(200)),
+      ]
+
+      await repository.insertMany(records)
+
+      // Try to update with mix of existing and non-existing IDs
+      await repository.updateIsProcessed([
+        'msg1',
+        'nonexistent',
+        'msg2',
+        'alsononexistent',
+      ])
+
+      const unprocessed = await repository.getUnprocessed()
+      expect(unprocessed).toHaveLength(0)
+
+      // Verify both existing records are marked as processed
+      const allRecords = await repository.getAll()
+      expect(allRecords.every((r) => r.isProcessed === true)).toEqual(true)
+    })
+  })
+
   afterEach(async () => {
     await repository.deleteAll()
   })
