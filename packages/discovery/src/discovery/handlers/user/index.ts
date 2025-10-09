@@ -35,6 +35,7 @@ import {
   EIP2535FacetHandler,
   EIP2535FacetHandlerDefinition,
 } from './EIP2535FacetHandler'
+import { EigenDAHandler, EigenDAHandlerDefinition } from './EigenDaHandler'
 import {
   ERC20DataDefinition,
   ERC20DataHandler,
@@ -139,6 +140,7 @@ export const UserHandlerDefinition = v.union([
   TradableDefinition,
   YieldFiMintersDefinition,
   EventTraceHandlerDefinition,
+  EigenDAHandlerDefinition,
 ])
 
 export function getUserHandler(
@@ -207,5 +209,7 @@ export function getUserHandler(
       return new YieldFiMintersHandler(field, definition, abi)
     case 'eventTrace':
       return new EventTraceHandler(field, definition, abi)
+    case 'eigenDa':
+      return new EigenDAHandler(field, definition)
   }
 }
