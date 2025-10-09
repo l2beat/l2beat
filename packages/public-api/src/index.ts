@@ -1,9 +1,19 @@
+import { ProjectService } from '@l2beat/config'
+import { createDatabase } from '@l2beat/database'
 import express from 'express'
 import swaggerUi from 'swagger-ui-express'
+import { addActivityRoutes } from './activity/routes'
+import { getConfig } from './config'
 import { OpenApi } from './OpenApi'
 import { addProjectsRoutes } from './projects/routes'
+import { addTvsRoutes } from './tvs/routes'
 
 function main() {
+  const config = getConfig()
+  const db = createDatabase(config.database)
+
+  const ps = new ProjectService()
+
   const app = express()
   const openapi = new OpenApi(app, {
     openapi: '3.0.0',
@@ -19,6 +29,14 @@ function main() {
         description:
           'Endpoints for listing projects and retrieving detailed information about individual projects.',
       },
+      {
+        name: 'tvs',
+        description: 'Endpoints for retrieving Total Value Secured (TVS) data',
+      },
+      {
+        name: 'activity',
+        description: 'Endpoints for retrieving activity data',
+      },
     ],
   })
 
@@ -26,7 +44,9 @@ function main() {
     res.json(openapi.getOpenApiSchema())
   })
 
-  addProjectsRoutes(openapi)
+  addProjectsRoutes(openapi, ps)
+  addTvsRoutes(openapi, ps, db)
+  addActivityRoutes(openapi, ps, db)
 
   app.use(
     '/docs',

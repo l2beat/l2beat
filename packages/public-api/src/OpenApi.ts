@@ -1,11 +1,7 @@
 import { toJsonSchema as _toJsonSchema, v } from '@l2beat/validate'
 import type { ImpMeta, Validator } from '@l2beat/validate/dist/cjs/validate'
 import type { Application, Request, RequestHandler } from 'express'
-import { httpResponsesDescriptions } from './utils.ts/errorDescriptions'
-
-type XOR<T, U> =
-  | (T & { [K in keyof U]?: never })
-  | (U & { [K in keyof T]?: never })
+import { httpResponsesDescriptions } from './utils/errorDescriptions'
 
 // biome-ignore lint/suspicious/noExplicitAny: its fine
 interface OpenApiRouteOptions<P = any, O = any, Q = any, E = any> {
@@ -43,7 +39,7 @@ type OpenApiResponse = {
   }
 }
 
-type Tags = 'projects'
+type Tags = 'projects' | 'tvs' | 'activity'
 
 const BadRequestResponse = v
   .object({
@@ -81,7 +77,7 @@ export class OpenApi {
   get<TParams, TOutput, TQuery, TErrors>(
     path: string,
     options: OpenApiRouteOptions<TParams, TOutput, TQuery, TErrors>,
-    handler: RequestHandler<TParams, XOR<TOutput, TErrors>, unknown, TQuery>,
+    handler: RequestHandler<TParams, TOutput | TErrors, unknown, TQuery>,
   ) {
     this.routes.push({ path, method: 'get', options })
 
@@ -118,7 +114,7 @@ export class OpenApi {
       }
 
       return handler(
-        req as Request<TParams, XOR<TOutput, TErrors>, unknown, TQuery>,
+        req as Request<TParams, TOutput | TErrors, unknown, TQuery>,
         res,
         next,
       )
