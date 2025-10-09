@@ -29,6 +29,7 @@ import {
 import { Spinner } from '~/components/core/Spinner'
 import { Textarea } from '~/components/core/TextArea'
 import { tokenService } from '~/mock/MockTokenService'
+import { api } from '~/react-query/trpc'
 import {
   ethereumAddressCheck,
   minLengthCheck,
@@ -66,10 +67,8 @@ export function DeployedTokenForm({
   }
   children: React.ReactNode
 }) {
-  const { data: chains, isLoading: areChainsLoading } = useQuery({
-    queryKey: ['chains'],
-    queryFn: () => tokenService.getChains(),
-  })
+  const { data: chains, isLoading: areChainsLoading } =
+    api.chains.getAll.useQuery()
   const { data: abstractTokens, isLoading: areAbstractTokensLoading } =
     useQuery({
       queryKey: ['abstractTokens'],

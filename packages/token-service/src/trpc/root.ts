@@ -1,9 +1,10 @@
+import { chainsRouter } from './routers/chains'
 import { planRouter } from './routers/plan'
-import { protectedProcedure, router } from './trpc'
+import { router } from './trpc'
 
 export const appRouter = router({
   plan: planRouter,
-  test: protectedProcedure.query(() => 'Hello, world!'),
+  chains: chainsRouter,
 })
 
 export type AppRouter = typeof appRouter

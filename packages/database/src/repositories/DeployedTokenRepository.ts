@@ -93,6 +93,15 @@ export class DeployedTokenRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getUniqueChains(): Promise<string[]> {
+    const rows = await this.db
+      .selectFrom('DeployedToken')
+      .select('chain')
+      .distinct()
+      .execute()
+    return rows.map((row) => row.chain)
+  }
+
   async getByPrimaryKeys(
     keys: DeployedTokenPrimaryKey[],
   ): Promise<DeployedTokenRecord[]> {
