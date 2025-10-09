@@ -1,5 +1,4 @@
 import type { Command, Plan } from '@l2beat/token-service'
-import { useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { api } from '~/react-query/trpc'
@@ -27,8 +26,22 @@ export function PlanConfirmationDialog({
   setPlan: (plan: Plan | undefined) => void
   onSuccess?: () => void
 }) {
-  const queryClient = useQueryClient()
+  const utils = api.useUtils()
   const navigate = useNavigate()
+
+  function invalidateAbstractTokenQueries() {
+    utils.tokens.getAllAbstractTokens.invalidate()
+    utils.tokens.getAllAbstractTokensWithDeployedTokens.invalidate()
+    utils.tokens.getById.invalidate()
+    utils.tokens.search.invalidate()
+  }
+
+  function invalidateDeployedTokenQueries() {
+    utils.tokens.getAllAbstractTokensWithDeployedTokens.invalidate()
+    utils.tokens.getById.invalidate()
+    utils.tokens.search.invalidate()
+    utils.tokens.checkIfDeployedTokenExists.invalidate()
+  }
 
   const { mutate: executePlan, isPending } = api.plan.execute.useMutation({
     onSuccess: () => {
@@ -47,7 +60,7 @@ export function PlanConfirmationDialog({
               </Link>
             </span>,
           )
-          queryClient.invalidateQueries({ queryKey: ['abstractTokens'] })
+          invalidateAbstractTokenQueries()
           break
         case 'AddDeployedTokenIntent':
           toast.success(
@@ -61,37 +74,25 @@ export function PlanConfirmationDialog({
               </Link>
             </span>,
           )
-          queryClient.invalidateQueries({ queryKey: ['abstractTokens'] })
+          invalidateDeployedTokenQueries()
           break
         case 'DeleteAbstractTokenIntent':
           toast.success('Abstract token deleted successfully')
-          // queryClient.invalidateQueries({ queryKey: ['abstractTokens'] })
-          // queryClient.invalidateQueries({
-          //   queryKey: ['token', plan.intent.abstractTokenId],
-          // })
+          invalidateAbstractTokenQueries()
           navigate('/')
           break
         case 'DeleteDeployedTokenIntent':
           toast.success('Deployed token deleted successfully')
-          // queryClient.invalidateQueries({ queryKey: ['abstractTokens'] })
-          // queryClient.invalidateQueries({
-          //   queryKey: ['token', plan.intent.deployedTokenId],
-          // })
+          invalidateDeployedTokenQueries()
           navigate('/')
           break
         case 'UpdateAbstractTokenIntent':
           toast.success('Abstract token updated successfully')
-          // queryClient.invalidateQueries({ queryKey: ['abstractTokens'] })
-          // queryClient.invalidateQueries({
-          //   queryKey: ['token', plan.intent.id],
-          // })
+          invalidateAbstractTokenQueries()
           break
         case 'UpdateDeployedTokenIntent':
           toast.success('Deployed token updated successfully')
-          // queryClient.invalidateQueries({ queryKey: ['abstractTokens'] })
-          // queryClient.invalidateQueries({
-          //   queryKey: ['token', plan.intent.id],
-          // })
+          invalidateDeployedTokenQueries()
           break
         case 'DeleteAllAbstractTokensIntent':
         case 'DeleteAllDeployedTokensIntent':
