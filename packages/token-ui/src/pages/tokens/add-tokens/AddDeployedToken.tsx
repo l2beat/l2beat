@@ -1,5 +1,4 @@
 import type { Plan } from '@l2beat/token-service'
-import { skipToken, useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
@@ -9,7 +8,6 @@ import {
   setDeployedTokenExistsError,
 } from '~/components/forms/DeployedTokenForm'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
-import { tokenService } from '~/mock/MockTokenService'
 import { api } from '~/react-query/trpc'
 import { ethereumAddressCheck } from '~/utils/checks'
 import { validateResolver } from '~/utils/validateResolver'
@@ -32,13 +30,15 @@ export function AddDeployedToken() {
   const chain = form.watch('chain')
   const address = form.watch('address')
   const { data: deployedTokenExists, isLoading: deployedTokenExistsLoading } =
-    useQuery({
-      queryKey: ['deployedTokenExists', chain, address],
-      queryFn:
-        chain && address && ethereumAddressCheck(address) === true
-          ? () => tokenService.checkIfDeployedTokenExists(address, chain)
-          : skipToken,
-    })
+    api.tokens.checkIfDeployedTokenExists.useQuery(
+      {
+        chain,
+        address,
+      },
+      {
+        enabled: !!chain && !!address && ethereumAddressCheck(address) === true,
+      },
+    )
 
   useEffect(() => {
     if (deployedTokenExistsLoading) return

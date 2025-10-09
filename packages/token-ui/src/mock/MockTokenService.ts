@@ -1,12 +1,7 @@
-import {
-  parseAbstractTokens,
-  parseChains,
-  parseDeployedTokens,
-} from './mockData'
+import { parseAbstractTokens, parseDeployedTokens } from './mockData'
 import type { AbstractToken, DeployedToken } from './types'
 
 class MockTokenService {
-  private chains: string[] = parseChains()
   private abstractTokens: AbstractToken[] = parseAbstractTokens()
   private deployedTokens: DeployedToken[] = parseDeployedTokens()
 
@@ -28,44 +23,6 @@ class MockTokenService {
       abstractTokens: result,
       deployedWithoutAbstractTokens,
     })
-  }
-
-  getToken(id: string) {
-    const abstractToken = this.abstractTokens.find((t) => t.id === id)
-    const abstractTokenWithDeployedTokens = abstractToken
-      ? {
-          ...abstractToken,
-          deployedTokens: this.deployedTokens.filter(
-            (t) => t.abstractTokenId === abstractToken.id,
-          ),
-        }
-      : undefined
-    if (abstractTokenWithDeployedTokens) {
-      return {
-        type: 'abstract' as const,
-        token: abstractTokenWithDeployedTokens,
-      }
-    }
-    const [chain, address] = id.split('+')
-    const deployedToken = this.deployedTokens.find(
-      (t) => t.address === address && t.chain === chain,
-    )
-    if (deployedToken) {
-      return {
-        type: 'deployed' as const,
-        token: deployedToken,
-      }
-    }
-
-    return null
-  }
-
-  checkIfDeployedTokenExists(address: string, chain: string) {
-    return simulateNetworkDelay(
-      this.deployedTokens.some(
-        (t) => t.address === address && t.chain === chain,
-      ),
-    )
   }
 }
 

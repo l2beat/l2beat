@@ -1,6 +1,6 @@
 import type { Plan } from '@l2beat/token-service'
 import { skipToken, useQuery } from '@tanstack/react-query'
-import { ArrowRightIcon, TrashIcon } from 'lucide-react'
+import { ArrowRightIcon, CoinsIcon, TrashIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
@@ -13,6 +13,13 @@ import {
   CardHeader,
   CardTitle,
 } from '~/components/core/Card'
+import {
+  Empty,
+  EmptyContent,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from '~/components/core/Empty'
 import {
   AbstractTokenForm,
   AbstractTokenSchema,
@@ -170,19 +177,35 @@ export function AbstractTokenView({
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-1 p-0">
-              {token.deployedTokens.map((token) => (
-                <div
-                  key={`${token.chain}+${token.address}`}
-                  className="flex items-center justify-between gap-2 px-6 odd:bg-muted"
-                >
-                  {token.chain}-{token.address} ({token.symbol})
-                  <Button asChild variant="outline">
-                    <Link to={`/tokens/${token.chain}+${token.address}`}>
-                      <ArrowRightIcon />
-                    </Link>
-                  </Button>
-                </div>
-              ))}
+              {token.deployedTokens.length !== 0 ? (
+                token.deployedTokens.map((token) => (
+                  <div
+                    key={`${token.chain}+${token.address}`}
+                    className="flex items-center justify-between gap-2 px-6 odd:bg-muted"
+                  >
+                    {token.chain}-{token.address} ({token.symbol})
+                    <Button asChild variant="outline">
+                      <Link to={`/tokens/${token.chain}+${token.address}`}>
+                        <ArrowRightIcon />
+                      </Link>
+                    </Button>
+                  </div>
+                ))
+              ) : (
+                <Empty>
+                  <EmptyHeader>
+                    <EmptyMedia variant="icon">
+                      <CoinsIcon />
+                    </EmptyMedia>
+                    <EmptyTitle>No Deployed Tokens</EmptyTitle>
+                    <EmptyContent>
+                      <Button asChild>
+                        <Link to="/tokens/new?tab=deployed">Add new</Link>
+                      </Button>
+                    </EmptyContent>
+                  </EmptyHeader>
+                </Empty>
+              )}
             </CardContent>
           </Card>
         </div>

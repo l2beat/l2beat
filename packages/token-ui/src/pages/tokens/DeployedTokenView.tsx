@@ -1,5 +1,4 @@
 import type { Plan } from '@l2beat/token-service'
-import { skipToken, useQuery } from '@tanstack/react-query'
 import { TrashIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -16,7 +15,6 @@ import {
   setDeployedTokenExistsError,
 } from '~/components/forms/DeployedTokenForm'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
-import { tokenService } from '~/mock/MockTokenService'
 import type { DeployedToken } from '~/mock/types'
 import { api } from '~/react-query/trpc'
 import { ethereumAddressCheck } from '~/utils/checks'
@@ -74,17 +72,20 @@ export function DeployedTokenView({ token }: { token: DeployedToken }) {
   const chain = form.watch('chain')
   const address = form.watch('address')
   const { data: deployedTokenExists, isLoading: deployedTokenExistsLoading } =
-    useQuery({
-      queryKey: ['deployedTokenExists', chain, address],
-      queryFn:
-        chain &&
-        address &&
-        (address !== form.formState.defaultValues?.address ||
-          chain !== form.formState.defaultValues?.chain) &&
-        ethereumAddressCheck(address) === true
-          ? () => tokenService.checkIfDeployedTokenExists(address, chain)
-          : skipToken,
-    })
+    api.tokens.checkIfDeployedTokenExists.useQuery(
+      {
+        chain,
+        address,
+      },
+      {
+        enabled:
+          !!chain &&
+          !!address &&
+          (address !== form.formState.defaultValues?.address ||
+            chain !== form.formState.defaultValues?.chain) &&
+          ethereumAddressCheck(address) === true,
+      },
+    )
 
   useEffect(() => {
     if (deployedTokenExistsLoading) return

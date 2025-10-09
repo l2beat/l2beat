@@ -7,6 +7,45 @@ export const tokensRouter = router({
   getAllAbstractTokens: protectedProcedure.query(() => {
     return db.abstractToken.getAll()
   }),
+  getById: protectedProcedure
+    .input(v.object({ id: v.string() }))
+    .query(async ({ input }) => {
+      const abstractToken = await db.abstractToken.findById(input.id)
+      if (abstractToken) {
+        const deployedTokens = await db.deployedToken.getByAbstractTokenId(
+          input.id,
+        )
+        return {
+          type: 'abstract' as const,
+          token: {
+            ...abstractToken,
+            deployedTokens,
+          },
+        }
+      }
+      const [chain, address] = input.id.split('+')
+      const deployedToken = await db.deployedToken.findByChainAndAddress({
+        chain,
+        address,
+      })
+      if (deployedToken) {
+        return {
+          type: 'deployed' as const,
+          token: deployedToken,
+        }
+      }
+      return null
+    }),
+
+  checkIfDeployedTokenExists: protectedProcedure
+    .input(v.object({ chain: v.string(), address: v.string() }))
+    .query(async ({ input }) => {
+      const result = await db.deployedToken.findByChainAndAddress({
+        chain: input.chain,
+        address: input.address,
+      })
+      return result !== undefined
+    }),
   search: protectedProcedure
     .input(v.object({ search: v.string() }))
     .query(async ({ input }) => {
