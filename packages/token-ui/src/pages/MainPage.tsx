@@ -1,4 +1,3 @@
-import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Badge } from '~/components/core/Badge'
@@ -12,16 +11,14 @@ import {
 } from '~/components/core/Card'
 import { Separator } from '~/components/core/Separator'
 import { AppLayout } from '~/layouts/AppLayout'
-import { tokenService } from '~/mock/MockTokenService'
 import type { AbstractToken, DeployedToken } from '~/mock/types'
+import { api } from '~/react-query/trpc'
 import { cn } from '~/utils/cn'
 import { UnixTime } from '~/utils/UnixTime'
 
 export function MainPage() {
-  const { data, isLoading: isAbstractTokensLoading } = useQuery({
-    queryKey: ['abstractTokens', 'deployedTokens'],
-    queryFn: () => tokenService.getMainPageTokens(),
-  })
+  const { data, isLoading: isAbstractTokensLoading } =
+    api.tokens.getAllAbstractTokensWithDeployedTokens.useQuery()
 
   const [selectedAbstractToken, setSelectedAbstractToken] = useState<
     AbstractToken | undefined
