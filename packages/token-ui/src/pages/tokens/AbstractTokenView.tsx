@@ -147,6 +147,7 @@ export function AbstractTokenView({
                 coingeckoFields={{
                   isLoading: showCoingeckoLoading,
                   success: !!coin,
+                  isListingTimestampLoading: false,
                 }}
               >
                 <ButtonWithSpinner
