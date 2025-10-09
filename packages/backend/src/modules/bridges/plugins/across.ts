@@ -20,7 +20,7 @@ export const AcrossFundsDeposited = createBridgeEventType<{
   $dstChain: string
   originChainId: number
   destinationChainId: number
-  depositId: number
+  depositId: string
   tokenAddress: Address32
   amount: string
 }>('across.FundsDeposited')
@@ -35,7 +35,7 @@ const parseFilledV3Relay = createEventParser(
 export const AcrossFilledRelay = createBridgeEventType<{
   $srcChain: string
   originChainId: number
-  depositId: number
+  depositId: string
   tokenAddress: Address32
   amount: string
 }>('across.FilledRelay')
@@ -100,7 +100,7 @@ export class AcrossPlugin implements BridgePlugin {
         ),
         originChainId: network.chainId,
         destinationChainId: Number(fundsDeposited.destinationChainId),
-        depositId: Number(fundsDeposited.depositId),
+        depositId: fundsDeposited.depositId.toString(),
         tokenAddress: Address32.from(fundsDeposited.inputToken),
         amount: fundsDeposited.inputAmount.toString(),
       })
@@ -115,7 +115,7 @@ export class AcrossPlugin implements BridgePlugin {
           Number(filledRelay.originChainId),
         ),
         originChainId: Number(filledRelay.originChainId),
-        depositId: Number(filledRelay.depositId),
+        depositId: filledRelay.depositId.toString(),
         tokenAddress: Address32.from(filledRelay.outputToken),
         amount: filledRelay.outputAmount.toString(),
       })
@@ -130,7 +130,7 @@ export class AcrossPlugin implements BridgePlugin {
           Number(filledV3Relay.originChainId),
         ),
         originChainId: Number(filledV3Relay.originChainId),
-        depositId: Number(filledV3Relay.depositId),
+        depositId: filledV3Relay.depositId.toString(),
         tokenAddress: Address32.from(filledV3Relay.outputToken),
         amount: filledV3Relay.outputAmount.toString(),
       })

@@ -825,12 +825,21 @@ importers:
 
   packages/public-api:
     dependencies:
+      '@l2beat/backend-tools':
+        specifier: workspace:*
+        version: link:../backend-tools
+      '@l2beat/database':
+        specifier: workspace:*
+        version: link:../database
       '@l2beat/validate':
         specifier: workspace:*
         version: link:../validate
       express:
         specifier: ^5.0.0
         version: 5.0.1
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       swagger-ui-express:
         specifier: ^5.0.1
         version: 5.0.1(express@5.0.1)
@@ -847,6 +856,9 @@ importers:
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.0
+      '@types/lodash':
+        specifier: ^4.17.4
+        version: 4.17.13
       '@types/swagger-ui-express':
         specifier: ^4.1.8
         version: 4.1.8

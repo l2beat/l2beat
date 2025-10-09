@@ -14,6 +14,7 @@ import type {
 import { cn } from '~/utils/cn'
 import { formatBpsToMbps } from '~/utils/number-format/formatBytes'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { formatNumber } from '~/utils/number-format/formatNumber'
 
 interface Props {
   stats: (ProjectSummaryStatProps & { key: string })[]
@@ -88,6 +89,20 @@ export function getCommonDaProjectStats(
     tooltip:
       'The assets that are slashable in case of a data withholding attack. For public blockchains, it is equal to 2/3 of the total validating stake.',
   })
+
+  // Secured by
+  if (project.header.numberOfValidators) {
+    stats.push({
+      key: 'validators',
+      title: 'Secured by',
+      value:
+        project.slug === 'ethereum'
+          ? `${formatNumber(project.header.numberOfValidators)} validators`
+          : project.type === 'Public Blockchain'
+            ? `${project.header.numberOfValidators} validators`
+            : `${project.header.numberOfValidators} operators`,
+    })
+  }
 
   // Duration of storage
   const durationOfStorage =

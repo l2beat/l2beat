@@ -274,10 +274,23 @@ export function DATA_AVAIL(isUsingVector: boolean): TableReadyValue {
   }
 }
 
-export function DATA_EIGENDA(isUsingServiceManager: boolean): TableReadyValue {
-  const additional = isUsingServiceManager
-    ? ' Sequencer transaction data roots are checked against the ServiceManager DA bridge data roots, signed off by EigenDA operators.'
-    : ' Sequencer transaction data roots are not checked against the ServiceManager DA bridge data roots onchain.'
+export function DATA_EIGENDA(
+  isUsingDACertVerifier: boolean,
+  eigenDACertVersion: string,
+): TableReadyValue {
+  let additional: string
+
+  if (eigenDACertVersion === 'v1') {
+    additional = isUsingDACertVerifier
+      ? ' Sequencer transaction data roots are checked against the ServiceManager DA bridge data roots, signed off by EigenDA operators.'
+      : ' Sequencer transaction data roots are not checked against the ServiceManager DA bridge data roots onchain.'
+  } else {
+    // v2 and v3 both use EigenDA v2
+    additional = isUsingDACertVerifier
+      ? ' The sequencer is publishing data to EigenDA v2. Sequencer transaction data roots are checked against the DACert Verifier data roots, signed off by EigenDA operators.'
+      : ' The sequencer is publishing data to EigenDA v2. Sequencer transaction data roots are not checked against the DACert Verifier onchain.'
+  }
+
   return {
     value: 'External',
     description:

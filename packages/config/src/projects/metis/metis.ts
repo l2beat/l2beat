@@ -5,7 +5,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-
+import { formatEther } from 'ethers/lib/utils'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -50,13 +50,24 @@ const DISPUTE_TIMEOUT_PERIOD = discovery.getContractValue<number>(
   'DISPUTE_TIMEOUT_PERIOD',
 )
 
+const disputeGameBond = discovery.getContractValue<number[]>(
+  'DisputeGameFactory',
+  'initBonds',
+)[0]
+
 export const metis: ScalingProject = {
   type: 'layer2',
   id: ProjectId('metis'),
   capability: 'universal',
   addedAt: UnixTime(1637945259), // 2021-11-26T16:47:39Z
   badges: [BADGES.VM.EVM, BADGES.Fork.OVM, BADGES.DA.EthereumBlobs],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  reasonsForBeingOther: [
+    {
+      ...REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+      explanation:
+        'The current proof system is forked from the standard permissionless OP stack proof system. Importantly, new state root proposals do not create new dispute games and although challenge requests can be made by any bonded user, creating dispute games (creator role) and deleting a state root (state deleter role) after winning a challenge is not permissionless.',
+    },
+  ],
   display: {
     name: 'Metis Andromeda',
     shortName: 'Metis',
@@ -254,7 +265,7 @@ export const metis: ScalingProject = {
       },
       {
         title: 'Challenges',
-        description: `Games can only be created on demand by the permissioned GameCreator should a dispute be requested. Users can signal the need for a dispute through the dispute() function of the \`DisputeGameFactory\`. If a game is not created by the \`GameCreator\` within the dispute timeout period of ${formatSeconds(
+        description: `Games can only be created on demand by the permissioned GameCreator should a dispute be requested. Users can signal the need for a dispute by bonding ${formatEther(disputeGameBond)} METIS and calling the dispute() function of the \`DisputeGameFactory\`. If a game is not created by the \`GameCreator\` within the dispute timeout period of ${formatSeconds(
           DISPUTE_TIMEOUT_PERIOD,
         )}, anyone can call \`disputeTimeout()\`. This function calls \`saveDisputedBatchTimeout()\` on the \`StateCommitmentChain\`, which marks the batch as disputed. This blocks L2->L1 messaging and withdrawals for the disputed batch and any subsequent batches until the dispute is deleted. Should a game be created and resolved, disputed state batches can be marked as such in the \`StateCommitmentChain\`. Then, these flagged batches can be deleted (within the fraud proof window). Batches can only be deleted by the MVM_Fraud_Verifier contract address, which currently corresponds to the \`Metis Security Council\` minority.`,
         risks: [
