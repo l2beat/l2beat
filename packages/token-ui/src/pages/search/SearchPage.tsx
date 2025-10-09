@@ -1,4 +1,3 @@
-import { skipToken, useQuery } from '@tanstack/react-query'
 import { ArrowRightIcon, CoinsIcon } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
 import { Button } from '~/components/core/Button'
@@ -24,16 +23,18 @@ import {
   TableRow,
 } from '~/components/core/Table'
 import { AppLayout } from '~/layouts/AppLayout'
-import { tokenService } from '~/mock/MockTokenService'
 import type { AbstractToken, DeployedToken } from '~/mock/types'
+import { api } from '~/react-query/trpc'
 import { UnixTime } from '~/utils/UnixTime'
 
 export function SearchPage() {
   const { search } = useParams()
-  const { data } = useQuery({
-    queryKey: ['search', search],
-    queryFn: search ? () => tokenService.search(search) : skipToken,
-  })
+  const { data } = api.tokens.search.useQuery(
+    { search: search ?? '' },
+    {
+      enabled: search !== '',
+    },
+  )
 
   return (
     <AppLayout>

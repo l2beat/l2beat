@@ -17,7 +17,8 @@ const getQueryClient = () => {
   return (clientQueryClientSingleton ??= createQueryClient())
 }
 
-export const api = createTRPCReact<AppRouter>()
+export const api: ReturnType<typeof createTRPCReact<AppRouter>> =
+  createTRPCReact<AppRouter>()
 
 export function TRPCReactProvider(props: { children: React.ReactNode }) {
   const queryClient = getQueryClient()

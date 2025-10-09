@@ -954,6 +954,9 @@ importers:
       '@trpc/server':
         specifier: ^11.0.0-rc.446
         version: 11.0.0-rc.599
+      fuzzysort:
+        specifier: 3.1.0
+        version: 3.1.0
       jose:
         specifier: ^6.1.0
         version: 6.1.0
