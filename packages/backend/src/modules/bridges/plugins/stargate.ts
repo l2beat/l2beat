@@ -65,7 +65,7 @@ const STARGATE_NETWORKS = defineNetworks('stargate', [
     eid: 30101,
     nativePool: {
       address: EthereumAddress('0x77b2043768d28E9C9aB44E1aBfC95944bcE57931'),
-      tokenAddress: Address32.ZERO,
+      tokenAddress: Address32.NATIVE,
       token: 'ETH',
     },
     usdcPool: {
@@ -84,7 +84,7 @@ const STARGATE_NETWORKS = defineNetworks('stargate', [
     eid: 30110,
     nativePool: {
       address: EthereumAddress('0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F'),
-      tokenAddress: Address32.ZERO,
+      tokenAddress: Address32.NATIVE,
       token: 'ETH',
     },
     usdcPool: {
@@ -103,7 +103,7 @@ const STARGATE_NETWORKS = defineNetworks('stargate', [
     eid: 30184,
     nativePool: {
       address: EthereumAddress('0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7'),
-      tokenAddress: Address32.ZERO,
+      tokenAddress: Address32.NATIVE,
       token: 'ETH',
     },
     usdcPool: {

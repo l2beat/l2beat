@@ -29,10 +29,10 @@ const categoryValues = ['btc', 'ether', 'stablecoin', 'other'] as const
 export type AbstractTokenSchema = v.infer<typeof AbstractTokenSchema>
 export const AbstractTokenSchema = v.object({
   id: v.string(),
-  issuer: v.string().check(minLengthCheck(1)).optional(),
+  issuer: v.string().optional(),
   symbol: v.string().check(minLengthCheck(1)),
   category: v.enum(categoryValues),
-  coingeckoId: v.string().check(minLengthCheck(1)).optional(),
+  coingeckoId: v.string().optional(),
   coingeckoListingTimestamp: v.string().optional(),
   iconUrl: v
     .string()
@@ -61,6 +61,7 @@ export function AbstractTokenForm({
   coingeckoFields: {
     isLoading: boolean
     success: boolean
+    isListingTimestampLoading: boolean
   }
   children: React.ReactNode
 }) {
@@ -189,7 +190,12 @@ export function AbstractTokenForm({
             name="coingeckoListingTimestamp"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Coingecko Listing Timestamp</FormLabel>
+                <FormLabel>
+                  Coingecko Listing Timestamp{' '}
+                  {coingeckoFields.isListingTimestampLoading && (
+                    <Spinner className="size-3.5" />
+                  )}
+                </FormLabel>
                 <FormControl>
                   <Input type="date" {...field} />
                 </FormControl>

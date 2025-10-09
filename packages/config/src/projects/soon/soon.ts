@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('soon')
 export const soon: ScalingProject = opStackL2({
   addedAt: UnixTime(1726836904), // 2024-09-20T12:55:04Z
   discovery,
-  daProvider: EIGENDA_DA_PROVIDER,
+  daProvider: EIGENDA_DA_PROVIDER(false),
   additionalBadges: [BADGES.DA.EigenDA, BADGES.VM.SolanaVM],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
