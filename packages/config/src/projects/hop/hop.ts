@@ -19,6 +19,7 @@ export const hop: Bridge = {
       socialMedia: [
         'https://twitter.com/HopProtocol',
         'https://medium.com/hop-protocol',
+        'https://discord.com/invite/PwCF88emV4',
       ],
     },
     description:

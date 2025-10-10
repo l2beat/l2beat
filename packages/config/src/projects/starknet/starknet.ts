@@ -22,6 +22,7 @@ import {
 import { BADGES } from '../../common/badges'
 import { PROOFS } from '../../common/proofSystems'
 import { getStage } from '../../common/stages/getStage'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getSHARPVerifierUpgradeDelay } from '../../discovery/starkware'
 import type { ScalingProject } from '../../internalTypes'
@@ -180,6 +181,14 @@ const finalizationPeriod = 0
 const scThreshold = discovery.getMultisigStats('Starkware Security Council')
 const sharpMsThreshold = discovery.getMultisigStats('SHARP Multisig')
 
+const starknetProgramHashes = []
+starknetProgramHashes.push(
+  discovery.getContractValue<string>('Starknet', 'programHash'),
+)
+starknetProgramHashes.push(
+  discovery.getContractValue<string>('Starknet', 'aggregatorProgramHash'),
+)
+
 export const starknet: ScalingProject = {
   type: 'layer2',
   id: ProjectId('starknet'),
@@ -260,7 +269,7 @@ export const starknet: ScalingProject = {
     },
     exitWindow: RISK_VIEW.EXIT_WINDOW_STARKNET(minNonScDelay),
     sequencerFailure: RISK_VIEW.SEQUENCER_CAN_SKIP('L1'),
-    proposerFailure: RISK_VIEW.PROPOSER_WHITELIST_SECURITY_COUNCIL,
+    proposerFailure: RISK_VIEW.PROPOSER_WHITELIST_SECURITY_COUNCIL(),
   },
   stage: getStage(
     {
@@ -393,6 +402,7 @@ export const starknet: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
+    zkProgramHashes: starknetProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   upgradesAndGovernance: `
 The Starknet zk Rollup shares its SHARP verifier with other StarkEx and SN Stack Layer 2s. Governance of the main Starknet rollup contract and its core bridge escrows (ETHBridge, STRKBridge) is currently split between the ${scThreshold} Security Council with instant upgrade capability and the ${discovery.getMultisigStats('Starkware Multisig 2')} Starkware Multisig 2 who can upgrade with a ${discovery.getContractValue('DelayedExecutor', 'executionDelayFmt')} delay. The former Multisig also governs most other bridge escrows with instant upgradeability. The shared SHARP verifier used for state validation can be changed by the ${sharpMsThreshold} SHARP Multisig with and a ${discovery.getContractValue('SHARPVerifierCallProxy', 'upgradeActivationDelayFmt')} delay, affecting all rollups like Starknet that are sharing it. 

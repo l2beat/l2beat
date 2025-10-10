@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation."
+}

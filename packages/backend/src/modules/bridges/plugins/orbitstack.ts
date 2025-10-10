@@ -84,10 +84,11 @@ export class OrbitStackPlugin implements BridgePlugin {
     if (!l2ToL1Tx) return
 
     return [
-      Result.Message('orbistack.Message', [
-        l2ToL1Tx,
-        outBoxTransactionExecuted,
-      ]),
+      Result.Message('orbistack.Message', {
+        app: 'unknown',
+        srcEvent: l2ToL1Tx,
+        dstEvent: outBoxTransactionExecuted,
+      }),
     ]
   }
 }

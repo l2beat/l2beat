@@ -18,6 +18,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
@@ -34,6 +35,7 @@ const emergencyActivatedCount = discovery.getContractValue<number>(
   'PolygonRollupManager',
   'emergencyStateCount',
 )
+const katanaVKeys = getKatanaVKeys()
 
 export const katana: ScalingProject = {
   id: ProjectId('katana'),
@@ -353,6 +355,7 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
         text: 'the contracts or their dependencies (e.g. AggLayerGateway) receive a malicious code upgrade. There is no delay on upgrades.',
       },
     ],
+    zkProgramHashes: katanaVKeys.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   milestones: [
@@ -364,4 +367,44 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
       type: 'general',
     },
   ],
+}
+
+function getKatanaVKeys(): string[] {
+  const vKeys: string[] = []
+  vKeys.push(
+    discovery.getContractValue<string>('AggchainFEP', 'aggregationVkey'),
+  )
+  vKeys.push(
+    discovery.getContractValue<string>('AggchainFEP', 'rangeVkeyCommitment'),
+  )
+
+  // If default gateway is used, aggchain program hashes are taken from AggLayerGateway
+  // Otherwise they are taken from AggchainFEP itself
+  type ProgramHashDict = Record<string, Record<string, string>[]>
+  const useDefaultGateway = discovery.getContractValue<boolean>(
+    'AggchainFEP',
+    'useDefaultGateway',
+  )
+  const aggchainVKeyDict = useDefaultGateway
+    ? discovery.getContractValue<ProgramHashDict>(
+        'AggLayerGateway',
+        'aggchainVKeys',
+      )
+    : discovery.getContractValue<ProgramHashDict>(
+        'AggchainFEP',
+        'ownedAggchainVKeys',
+      )
+  const pessimisticVKeyDict = discovery.getContractValue<ProgramHashDict>(
+    'AggLayerGateway',
+    'routes',
+  )
+
+  // Iterate over all selectors, each of the selectors could be used as it is set in calldata
+  const aggchainVKeys = Object.values(aggchainVKeyDict).flatMap((arr) =>
+    arr.map((el) => el['newVKey']),
+  )
+  const pessimisticVKeys = Object.values(pessimisticVKeyDict).flatMap((arr) =>
+    arr.map((el) => el['pessimisticVKey']),
+  )
+  return vKeys.concat(aggchainVKeys).concat(pessimisticVKeys)
 }

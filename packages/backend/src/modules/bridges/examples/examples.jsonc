@@ -38,6 +38,25 @@
     "messages": ["ccip.Message"],
     "transfers": []
   },
+  "mayan-forwarder": {
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x0d21d8fa0872cdbe077ede33f2fc27ec5d2f41d9b59a97f594ec49aa032bf870"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x8f326f30f20067d1c618fe4862db448692c0ce9bac498ec0297f6a894d3cbb8c"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x47b1ddf11342a81aec106555a30da420ed831460a08bb347023515a761a10580"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
   "cctpv1": {
     "txs": [
       {
@@ -587,23 +606,23 @@
     "txs": [
       {
         "chain": "optimism",
-        "tx": "0x196da52c2139bc69199b3b4921b199ee10623b0fffb520102d4b038c28a4648b"
+        "tx": "0x196da52c2139bc69199b3b4921b199ee10623b0fffb520102d4b038c28a4648b" // 1 dispatch message, merkly(? uses same event as hwr but not on destination)
       },
       {
         "chain": "ethereum",
-        "tx": "0x7c0494779f339006aa5930eab84a7c70ecd22d54c1a48c952f0af1435c8db4f9"
+        "tx": "0x7c0494779f339006aa5930eab84a7c70ecd22d54c1a48c952f0af1435c8db4f9" // single process message (destination event of above one)
       },
       {
         "chain": "base",
-        "tx": "0x297484366df26801ae4123266cd4f59f3de4cc26dbcc78179de54daefd42d8a3"
+        "tx": "0x297484366df26801ae4123266cd4f59f3de4cc26dbcc78179de54daefd42d8a3" // 1 dispatch message, 1 hwr
       },
       {
         "chain": "base",
-        "tx": "0xc431a37bc0700d893e1613c84775aa5ca79277cca533d8947a8be8733cfdf719"
+        "tx": "0xc431a37bc0700d893e1613c84775aa5ca79277cca533d8947a8be8733cfdf719" // 1 dispatch message, 1 hwr
       },
       {
         "chain": "arbitrum",
-        "tx": "0x64d3de3fda6a9df908cd77940c1c416f1df71f92fda9c99550529d0803055ceb"
+        "tx": "0x64d3de3fda6a9df908cd77940c1c416f1df71f92fda9c99550529d0803055ceb" // 2x process message, 2x hwr received
       }
     ],
     "events": [],
@@ -640,7 +659,7 @@
     "messages": [],
     "transfers": []
   },
-  "layerzero-v2-ofts": {
+  "oft": {
     // 3 oft transfers
     "txs": [
       {
@@ -666,6 +685,22 @@
       {
         "chain": "ethereum",
         "tx": "0x17a8188cbc60c5fdea6160dd4f51b5c0be25f4e93d5bcfc9a53fda3047a4e1db"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "hwr": {
+    // 3 oft transfers
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x12fd0f1a3ed68b76b9f6aaaaf864097992287cf4ac1ae4628636ee1b5ace7b75"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0xc9b2b9924a0507d56a8bd5b4566208d9c28678e0ca7318de614a3704a79bea31"
       }
     ],
     "events": [],

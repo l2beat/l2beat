@@ -1,6 +1,6 @@
 {
   "name": "zksync",
-  "timestamp": 1751371847,
+  "timestamp": 1759932670,
   "configHash": "0xaffa6238252a00c9bae2594462bdfbf4af0fbd9a8287642b89b3272a024e35e0",
   "entries": [
     {
@@ -40,12 +40,12 @@
       }
     },
     {
-      "address": "eth:0x01c3A1a6890A146aC187A019F9863B3Ab2BfF91e",
+      "address": "eth:0x050b37a12451F188c7bA53D48b8A1adE6D138E71",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x050b37a12451F188c7bA53D48b8A1adE6D138E71",
+      "address": "eth:0x0C6E6F8bb16846a0E9E866F3B9b8ec071f885Df5",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -138,7 +138,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 414,
+        "nonce": 434,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -177,7 +177,7 @@
         "networkGovernor": "eth:0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
         "tokenGovernance": "eth:0x35cc31f63deef017c38d51B038891bAE7d614e86",
         "totalTokens": 184,
-        "validators": ["eth:0x01c3A1a6890A146aC187A019F9863B3Ab2BfF91e"]
+        "validators": ["eth:0x0C6E6F8bb16846a0E9E866F3B9b8ec071f885Df5"]
       },
       "implementationNames": {
         "eth:0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01": "Proxy",
@@ -251,7 +251,7 @@
         "nextTargets": [],
         "noticePeriodFinishTimestamp": 0,
         "upgradeStatus": 0,
-        "versionId": 11
+        "versionId": 12
       },
       "implementationNames": {
         "eth:0x38A43F4330f24fe920F943409709fc9A6084C939": "UpgradeGatekeeper"
@@ -298,20 +298,20 @@
       "type": "Contract",
       "sourceHashes": [
         "0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6",
-        "0xcf125cd39e9e7620aea95320666f3e3c19a3ae1da200337d94d11de29e8d97af"
+        "0xd2a07a5a9b9bf3e2f936b5530eabc67694e9fa89a92407b692f35c2a46175f39"
       ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1592218707,
       "sinceBlock": 10269890,
       "values": {
         "$admin": "eth:0x38A43F4330f24fe920F943409709fc9A6084C939",
-        "$implementation": "eth:0x6e95812C432F293b8045811F4B1758285EBDB206",
+        "$implementation": "eth:0x57B09100e6160503aBDEBC76012b6c358eA4e462",
         "$pastUpgrades": [],
         "$upgradeCount": 0
       },
       "implementationNames": {
         "eth:0x5290E9582B4FB706EaDf87BB1c129e897e04d06D": "Proxy",
-        "eth:0x6e95812C432F293b8045811F4B1758285EBDB206": "Verifier"
+        "eth:0x57B09100e6160503aBDEBC76012b6c358eA4e462": "Verifier"
       }
     },
     {
@@ -345,16 +345,11 @@
         "baseURI": "",
         "name": "zkSync NFT Factory Contract",
         "symbol": "ZKNFT",
-        "totalSupply": 18774
+        "totalSupply": 18798
       },
       "implementationNames": {
         "eth:0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D": "ZkSyncNFTFactory"
       }
-    },
-    {
-      "address": "eth:0x890Da36c3dD697CbB88E616668BEDaFA369f3793",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x9D5d6D4BaCCEDf6ECE1883456AA785dc996df607",
@@ -464,6 +459,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xC9474de11503D63D892cEDD12d6B93f6A25a9cbF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xD613b3a3924D0dE9B4a352ca0669e743cBC3C4AA",
       "type": "EOA",
       "proxyType": "EOA"
@@ -493,7 +493,7 @@
           "eth:0x4964D00fA975a7346ee6196a94b07c01ed1cD3CE",
           "eth:0x050b37a12451F188c7bA53D48b8A1adE6D138E71",
           "eth:0x37A71E0C1A5808343D893Db40e12A74e0A387908",
-          "eth:0x890Da36c3dD697CbB88E616668BEDaFA369f3793",
+          "eth:0xC9474de11503D63D892cEDD12d6B93f6A25a9cbF",
           "eth:0x45F9AfCf9565051344aFb36e665f4d7bb2d18415",
           "eth:0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
           "eth:0xD613b3a3924D0dE9B4a352ca0669e743cBC3C4AA",
@@ -505,7 +505,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
         "NAME": "Gnosis Safe",
-        "nonce": 120,
+        "nonce": 125,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -729,7 +729,7 @@
       "function upgradePreparationStarted()",
       "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
     ],
-    "eth:0x6e95812C432F293b8045811F4B1758285EBDB206": [
+    "eth:0x57B09100e6160503aBDEBC76012b6c358eA4e462": [
       "function initialize(bytes)",
       "function upgrade(bytes upgradeParameters)",
       "function verifyAggregatedBlockProof(uint256[] _recursiveInput, uint256[] _proof, uint8[] _vkIndexes, uint256[] _individualVksInputs, uint256[16] _subproofsLimbs) view returns (bool)",
@@ -895,6 +895,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 22824302 },
-  "permissionsConfigHash": "0xc6d6de439aad491fd569d13b52ded8888ec8904706ba79d750f56d4bda2d5779"
+  "usedBlockNumbers": { "ethereum": 23533538 },
+  "permissionsConfigHash": "0x7417a17180636f40c31154f88ab1522e66183fab432008beb6593ece3b210f7f"
 }

@@ -123,7 +123,7 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
         },
         {
           title: 'Near documentation',
-          url: 'https://dev.near.org/documentation/',
+          url: 'https://docs.near.org/',
         },
         {
           title: 'Near Core - Architecture',
@@ -169,12 +169,14 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
     },
     economicSecurity: {
-      name: 'Near',
       token: {
         symbol: 'NEAR',
         decimals: 24,
         coingeckoId: 'near',
       },
+    },
+    validators: {
+      type: 'dynamic',
     },
   },
   milestones: [

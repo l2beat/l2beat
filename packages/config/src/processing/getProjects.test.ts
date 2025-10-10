@@ -179,9 +179,51 @@ describe('getProjects', () => {
     })
   })
 
+  describe('daLayer', () => {
+    const SUPPORTED_ECONOMIC_SECURITY_PROJECTS = [
+      'ethereum',
+      'celestia',
+      'avail',
+      'near-da',
+    ]
+
+    for (const project of projects) {
+      if (project.daLayer?.economicSecurity) {
+        it(`${project.id} economicSecurity is supported in BE code`, () => {
+          expect(
+            SUPPORTED_ECONOMIC_SECURITY_PROJECTS.includes(project.id),
+          ).toEqual(true)
+        })
+      }
+    }
+
+    const SUPPORTED_DYNAMIC_VALIDATORS_PROJECTS = [
+      'ethereum',
+      'celestia',
+      'avail',
+      'near-da',
+    ]
+
+    for (const project of projects) {
+      if (project.daLayer?.validators?.type === 'dynamic') {
+        it(`${project.id} dynamic type validators is supported in BE code`, () => {
+          expect(
+            SUPPORTED_DYNAMIC_VALIDATORS_PROJECTS.includes(project.id),
+          ).toEqual(true)
+        })
+      }
+    }
+  })
+
   describe('contracts', () => {
     for (const project of getProjects()) {
       describe(project.id, () => {
+        const permissions = Object.values(project.permissions ?? {})
+        const all = [
+          ...permissions.flatMap((p) => p.roles ?? []),
+          ...permissions.flatMap((p) => p.actors ?? []),
+        ]
+
         const contracts = project.contracts?.addresses ?? {}
         for (const [chain, perChain] of Object.entries(contracts)) {
           for (const [i, contract] of perChain.entries()) {
@@ -196,22 +238,17 @@ describe('getProjects', () => {
             })
 
             const upgradableBy = contract.upgradableBy
-            const permissions = Object.values(project.permissions ?? {})
-            const all = [
-              ...permissions.flatMap((p) => p.roles ?? []),
-              ...permissions.flatMap((p) => p.actors ?? []),
-            ]
-            const actors = all.map((x) => {
-              if (x.name === 'EOA') {
-                assert(x.accounts[0].type === 'EOA')
-                return x.accounts[0].address
-              }
-              return x.name
-            })
+            const actorIds = all.map((a) => a.id)
 
             if (upgradableBy) {
-              it(`contracts[${project.id}][${chain}][${i}].upgradableBy is valid`, () => {
-                expect(actors).toInclude(...upgradableBy.map((a) => a.name))
+              it(`contracts[${project.id}][${chain}][${contract.name ?? contract.address.toString()} (${i})].upgradableBy is valid \n ${actorIds} | \n${upgradableBy.map((a) => a.name)}`, () => {
+                const expectedToContain = upgradableBy.map(
+                  (a) => a.id ?? a.name,
+                )
+
+                for (const expected of expectedToContain) {
+                  expect(actorIds).toInclude(expected)
+                }
               })
             }
           }

@@ -30,9 +30,10 @@ export const huddle01: ScalingProject = underReviewL3({
       ],
       documentation: ['https://docs.huddle01.com/docs'],
       explorers: ['https://huddle01.calderaexplorer.xyz/'],
+      repositories: ['https://github.com/huddle01'],
       socialMedia: [
         'https://x.com/huddle01com',
-        'https://discord.gg/hkYx393Sps',
+        'https://discord.com/invite/huddle01',
         'https://t.me/+lVTBdo1s98E1MGJl',
         'https://warpcast.com/huddle01',
         'https://linkedin.com/company/huddle-01/',

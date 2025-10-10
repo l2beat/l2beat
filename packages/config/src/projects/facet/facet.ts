@@ -17,6 +17,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -36,6 +37,14 @@ const MAX_CHALLENGE_SECS = discovery.getContractValue<number>(
 const proposerBond = discovery.getContractValue<number>(
   'Rollup',
   'PROPOSER_BOND',
+)
+
+const facetProgramHashes = []
+facetProgramHashes.push(
+  discovery.getContractValue<string>('Rollup', 'AGG_VKEY'),
+)
+facetProgramHashes.push(
+  discovery.getContractValue<string>('Rollup', 'RANGE_VKEY_COMMITMENT'),
 )
 
 export const facet: ScalingProject = {
@@ -348,6 +357,7 @@ export const facet: ScalingProject = {
   contracts: {
     addresses: discovery.getDiscoveredContracts(),
     risks: [],
+    zkProgramHashes: facetProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   permissions: discovery.getDiscoveredPermissions(),
   chainConfig: {

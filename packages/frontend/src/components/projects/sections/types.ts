@@ -13,13 +13,14 @@ import type { MarkdownSectionProps } from './MarkdownSection'
 import type { MilestonesAndIncidentsSectionProps } from './MilestonesAndIncidentsSection'
 import type { ExtendedProjectSectionProps } from './ProjectSection'
 import type { PermissionsSectionProps } from './permissions/PermissionsSection'
+import type { ProgramHashesSectionProps } from './program-hashes/ProgramHashesSection'
 import type { RiskAnalysisSectionProps } from './RiskAnalysisSection'
 import type { RiskSummarySectionProps } from './RiskSummarySection'
 import type { ScalingTvsSectionProps } from './ScalingTvsSection'
 import type { SequencingSectionProps } from './SequencingSection'
 import type { StageSectionProps } from './StageSection'
 import type { StateDerivationSectionProps } from './StateDerivationSection'
-import type { StateValidationSectionProps } from './StateValidationSection'
+import type { StateValidationSectionProps } from './state-validation/StateValidationSection'
 import type { TechnologyChoicesSectionProps } from './TechnologyChoicesSection'
 import type { TrustedSetupSectionProps } from './TrustedSetupsSection'
 import type { ThroughputSectionProps } from './throughput/ThroughputSection'
@@ -51,6 +52,7 @@ type SectionId =
   | 'proof-system'
   | 'trusted-setups'
   | 'verifiers'
+  | 'program-hashes'
 
 type GroupId = 'da-layer' | 'da-bridge'
 
@@ -126,6 +128,11 @@ interface ProjectDetailsTrustedSetupSection {
 interface ProjectDetailsVerifiersSection {
   type: 'VerifiersSection'
   props: ProjectDetailsProps<VerifiersSectionProps>
+}
+
+interface ProjectDetailsProgramHashesSection {
+  type: 'ProgramHashesSection'
+  props: ProjectDetailsProps<ProgramHashesSectionProps>
 }
 
 interface L3ProjectDetailsRiskAnalysisSection {
@@ -223,4 +230,5 @@ export type ProjectDetailsSection = {
   | ProjectDetailsActivitySection
   | ProjectDetailsTrustedSetupSection
   | ProjectDetailsVerifiersSection
+  | ProjectDetailsProgramHashesSection
 )

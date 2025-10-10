@@ -84,7 +84,11 @@ export class OpStackPlugin implements BridgePlugin {
     })
     if (!messagePassed) return
     return [
-      Result.Message('opstack.Message', [messagePassed, withdrawalFinalized]),
+      Result.Message('opstack.Message', {
+        app: 'unknown',
+        srcEvent: messagePassed,
+        dstEvent: withdrawalFinalized,
+      }),
     ]
   }
 }
