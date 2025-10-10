@@ -218,7 +218,7 @@ export interface BridgesConfig {
     intervalMs?: number
   }
   financials: {
-    prices: boolean
+    enabled: boolean
   }
 }
 

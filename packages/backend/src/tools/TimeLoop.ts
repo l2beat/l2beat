@@ -19,7 +19,7 @@ export abstract class TimeLoop {
     return setInterval(() => this.loopBody(), this.options.intervalMs)
   }
 
-  async loopBody() {
+  protected async loopBody() {
     if (this.running) {
       return
     }

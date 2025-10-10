@@ -86,7 +86,7 @@ export function createBridgeModule({
     if (config.bridges && config.bridges.cleaner) {
       bridgeCleaner.start()
     }
-    if (config.bridges && config.bridges.financials.prices) {
+    if (config.bridges && config.bridges.financials.enabled) {
       await hourlyIndexer.start()
       await recentPricesIndexer.start()
     }

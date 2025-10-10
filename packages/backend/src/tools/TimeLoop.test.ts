@@ -32,7 +32,7 @@ describe(TimeLoop.name, () => {
     })
   })
 
-  describe(TimeLoop.prototype.loopBody.name, () => {
+  describe(TestTimeLoop.prototype.loopBody.name, () => {
     it('skips execution when already running (prevents concurrent runs)', async () => {
       const fn = mockFn().resolvesTo('')
 
@@ -66,5 +66,9 @@ class TestTimeLoop extends TimeLoop {
 
   async run() {
     await this.fn()
+  }
+
+  override loopBody(): Promise<void> {
+    return super.loopBody()
   }
 }
