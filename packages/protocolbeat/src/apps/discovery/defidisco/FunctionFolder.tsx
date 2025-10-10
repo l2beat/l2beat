@@ -479,6 +479,10 @@ export function FunctionFolder({
   const [localDescription, setLocalDescription] = useState(description)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
+  // Local state for owner path editing with debouncing
+  const [editedOwnerPaths, setEditedOwnerPaths] = useState<Record<number, string>>({})
+  const ownerPathTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
   // State for managing delay field
   const [isSettingDelay, setIsSettingDelay] = useState(false)
   const [newDelayData, setNewDelayData] = useState({
@@ -490,6 +494,19 @@ export function FunctionFolder({
   useEffect(() => {
     setLocalDescription(description)
   }, [description])
+
+  // Update edited owner paths when external data changes
+  useEffect(() => {
+    if (currentOverride?.ownerDefinitions) {
+      const initialPaths: Record<number, string> = {}
+      currentOverride.ownerDefinitions.forEach((def, index) => {
+        initialPaths[index] = def.path
+      })
+      setEditedOwnerPaths(initialPaths)
+    } else {
+      setEditedOwnerPaths({})
+    }
+  }, [currentOverride?.ownerDefinitions])
 
   const isPermissioned = permissionStatus === 'permissioned'
   const isChecked = checkedStatus
@@ -537,11 +554,41 @@ export function FunctionFolder({
     }, 500)
   }
 
+  const handleOwnerPathChange = (index: number, newPath: string) => {
+    // Update local state immediately for responsive UI
+    setEditedOwnerPaths(prev => ({
+      ...prev,
+      [index]: newPath
+    }))
+
+    // Clear existing timeout
+    if (ownerPathTimeoutRef.current) {
+      clearTimeout(ownerPathTimeoutRef.current)
+    }
+
+    // Set new timeout to save after user stops typing (500ms delay)
+    ownerPathTimeoutRef.current = setTimeout(() => {
+      const currentDefinitions = currentOverride?.ownerDefinitions || []
+      const originalPath = currentDefinitions[index]?.path
+
+      if (newPath !== originalPath && newPath.trim().length > 0) {
+        // Create updated definitions array with the new path
+        const updatedDefinitions = currentDefinitions.map((def, i) =>
+          i === index ? { path: newPath } : def
+        )
+        onOwnerDefinitionsUpdate(contractAddress, functionName, updatedDefinitions)
+      }
+    }, 500)
+  }
+
   // Cleanup timeout on unmount
   useEffect(() => {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current)
+      }
+      if (ownerPathTimeoutRef.current) {
+        clearTimeout(ownerPathTimeoutRef.current)
       }
     }
   }, [])
@@ -785,16 +832,39 @@ export function FunctionFolder({
 
                     return (
                       <div key={index} className="bg-coffee-800 p-2 rounded">
-                        <div className="flex items-center justify-between text-xs font-mono text-coffee-300 mb-1">
-                          <span>{formatOwnerDefinition(definition, correspondingResolved)}</span>
+                        <div className="flex items-center gap-2 mb-1">
+                          <input
+                            type="text"
+                            value={editedOwnerPaths[index] || definition.path}
+                            onChange={(e) => handleOwnerPathChange(index, e.target.value)}
+                            className="flex-1 px-2 py-1 text-xs bg-coffee-700 text-coffee-100 border border-coffee-600 rounded font-mono focus:outline-none focus:border-coffee-500"
+                            placeholder="e.g., $self.owner"
+                          />
                           <button
                             onClick={() => handleRemoveOwnerDefinition(index)}
-                            className="text-red-400 hover:text-red-300 ml-2"
+                            className="text-red-400 hover:text-red-300 flex-shrink-0"
                             title="Remove this owner definition"
                           >
                             ✕
                           </button>
                         </div>
+                        {correspondingResolved?.isResolved && (
+                          <div className="text-xs text-coffee-400 mb-1 px-2">
+                            {(() => {
+                              const isStructured = correspondingResolved.structuredValue &&
+                                                  typeof correspondingResolved.structuredValue === 'object' &&
+                                                  !Array.isArray(correspondingResolved.structuredValue) &&
+                                                  !correspondingResolved.structuredValue.startsWith?.('eth:')
+                              if (isStructured) {
+                                return `→ [structured value with ${correspondingResolved.allAddresses?.length || 0} address(es)]`
+                              } else if (correspondingResolved.allAddresses?.length === 1) {
+                                return `→ ${correspondingResolved.allAddresses[0]!.slice(0, 10)}...`
+                              } else {
+                                return `→ ${correspondingResolved.allAddresses?.length || 0} addresses`
+                              }
+                            })()}
+                          </div>
+                        )}
 
                         {/* Show resolved owners */}
                         {!ownersLoading && correspondingResolved && correspondingResolved.isResolved && (

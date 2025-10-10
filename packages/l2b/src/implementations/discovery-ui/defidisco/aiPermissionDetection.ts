@@ -241,6 +241,7 @@ export function filterSourceCodeForAI(sourceCode: string, filename: string): str
   const filtered: string[] = []
   let inAbstractContract = false
   let inInterface = false
+  let inLibrary = false
   let contractBraceDepth = 0
 
   for (let i = 0; i < lines.length; i++) {
@@ -251,7 +252,7 @@ export function filterSourceCodeForAI(sourceCode: string, filename: string): str
       continue
     }
 
-    // Track abstract contracts and interfaces
+    // Track abstract contracts, interfaces, and libraries
     if (line.includes('abstract contract') || line.includes('abstract  contract')) {
       inAbstractContract = true
       contractBraceDepth = 0
@@ -260,18 +261,23 @@ export function filterSourceCodeForAI(sourceCode: string, filename: string): str
       inInterface = true
       contractBraceDepth = 0
     }
+    if (line.includes('library ') && line.includes('{')) {
+      inLibrary = true
+      contractBraceDepth = 0
+    }
 
-    // Track brace depth for abstract/interface contracts
-    if (inAbstractContract || inInterface) {
+    // Track brace depth for abstract/interface/library
+    if (inAbstractContract || inInterface || inLibrary) {
       for (const char of line) {
         if (char === '{') contractBraceDepth++
         if (char === '}') contractBraceDepth--
       }
 
-      // End of abstract contract or interface
+      // End of abstract/interface/library
       if (contractBraceDepth === 0 && (line.includes('}'))) {
         inAbstractContract = false
         inInterface = false
+        inLibrary = false
       }
       continue
     }
