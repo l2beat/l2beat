@@ -81,10 +81,6 @@ export class FinancialsService extends TimeLoop {
       UnixTime.DAY,
     )
 
-    // run
-    // take a look at unmatched event
-    // add logs
-    // add tests for repository
     // add tests for Financials Service
     function getUpdate(
       id: DeployedTokenId,
