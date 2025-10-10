@@ -1,5 +1,7 @@
 import {
+  Dispatch,
   HYPERLANE_NETWORKS,
+  Process,
   parseDispatch,
   parseDispatchId,
   parseProcess,
@@ -17,6 +19,12 @@ import {
   type MatchResult,
   Result,
 } from './types'
+
+/**
+ * This plugin tracks Hyperlane Warp Route tokens, adapters and wrappers (OFT equivalent).
+ * examples: HypERC20, HypXERC20, HypERC20Collateral, HypNative(partial)
+ * TODO: native token HWR only emit at the source
+ */
 
 const parseSentTransferRemote = createEventParser(
   'event SentTransferRemote(uint32 indexed destination, bytes32 indexed recipient, uint256 amount)',
@@ -100,13 +108,32 @@ export class HyperlaneHwrPlugin implements BridgePlugin {
     })
     if (!hwrSent) return
 
+    const dispatch = db.find(Dispatch, {
+      messageId: event.args.messageId,
+    })
+    if (!dispatch) {
+      return
+    }
+
+    const process = db.find(Process, {
+      messageId: event.args.messageId,
+    })
+    if (!process) {
+      return
+    }
+
     return [
+      Result.Message('hyperlane.Message', {
+        app: 'hwr',
+        srcEvent: dispatch,
+        dstEvent: process,
+      }),
       Result.Transfer('hyperlaneHwr.Transfer', {
         srcEvent: hwrSent,
         srcTokenAddress: hwrSent.args.tokenAddress,
         srcAmount: hwrSent.args.amount,
         dstEvent: event,
-        dstTokenAddress: event.args.tokenAddress,
+        dstTokenAddress: event.args.tokenAddress, // TODO: not necessarily the token address, can be an adapter or wrapper
         dstAmount: event.args.amount,
       }),
     ]

@@ -11,7 +11,6 @@ import {
   type MatchResult,
   Result,
 } from './types'
-import { HwrTransferReceived, HwrTransferSent } from './hyperlane-hwr'
 
 export const parseDispatch = createEventParser(
   'event Dispatch(address indexed sender, uint32 indexed destination, bytes32 indexed recipient, bytes message)',
@@ -90,13 +89,9 @@ export class HyperlanePlugIn implements BridgePlugin {
         return
       }
 
-      const isHwr =
-        !!db.find(HwrTransferSent, { messageId: delivery.args.messageId }) ||
-        !!db.find(HwrTransferReceived, { messageId: delivery.args.messageId })
-
       return [
         Result.Message('hyperlane.Message', {
-          app: isHwr ? 'hwr' : 'unknown',
+          app: 'unknown',
           srcEvent: dispatch,
           dstEvent: delivery,
         }),

@@ -659,7 +659,7 @@
     "messages": [],
     "transfers": []
   },
-  "layerzero-v2-ofts": {
+  "oft": {
     // 3 oft transfers
     "txs": [
       {
