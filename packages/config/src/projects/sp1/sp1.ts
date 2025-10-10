@@ -30,7 +30,7 @@ export const sp1: BaseProject = {
   },
   milestones: [
     {
-      title: 'Plonky3 FRI size check vulnerability',
+      title: '[Disclosed vulnerability] Plonky3 FRI size check vulnerability',
       url: 'https://x.com/SuccinctLabs/status/1905818676848406801',
       date: '2025-03-28T00:00:00Z',
       description:
@@ -38,7 +38,7 @@ export const sp1: BaseProject = {
       type: 'incident',
     },
     {
-      title: 'Plonky3 final polynomial degree check vulnerability',
+      title: '[Disclosed vulnerability] Plonky3 final polynomial degree check vulnerability',
       url: 'https://x.com/SuccinctLabs/status/1929773028034204121',
       date: '2025-06-03T00:00:00Z',
       description:

@@ -32,7 +32,7 @@ export const risc0: BaseProject = {
   },
   milestones: [
     {
-      title: 'rv32im circuit soundness vulnerability',
+      title: '[Disclosed vulnerability] rv32im circuit soundness vulnerability',
       url: 'https://x.com/RiscZero/status/1935404812146725042',
       date: '2025-06-18T00:00:00Z',
       description:
@@ -40,7 +40,7 @@ export const risc0: BaseProject = {
       type: 'incident',
     },
     {
-      title: 'Underconstrained division vulnerability',
+      title: '[Disclosed vulnerability] Underconstrained division vulnerability',
       url: 'https://x.com/RiscZero/status/1952503598056882225',
       date: '2025-08-05T00:00:00Z',
       description:
@@ -48,7 +48,7 @@ export const risc0: BaseProject = {
       type: 'incident',
     },
     {
-      title: 'Critical malicious host vulnerability',
+      title: '[Disclosed vulnerability] Critical malicious host vulnerability',
       url: 'https://x.com/RiscZero/status/1973490104883990791',
       date: '2025-10-02T00:00:00Z',
       description:
