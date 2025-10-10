@@ -12,8 +12,8 @@ import {
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { api } from '~/react-query/trpc'
 import { ethereumAddressCheck } from '~/utils/checks'
+import { UnixTime } from '~/utils/UnixTime'
 import { validateResolver } from '~/utils/validateResolver'
-import { UnixTime } from '../../../../../shared-pure/src/types'
 
 export function AddDeployedToken() {
   const [searchParams] = useSearchParams()
