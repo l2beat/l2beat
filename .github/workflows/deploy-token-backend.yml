@@ -34,12 +34,12 @@ jobs:
             -t ${TAG} -f ${DOCKERFILE} .
         env:
           DOCKERFILE: Dockerfile.token-backend
-          TAG: registry.heroku.com/${{ secrets.HEROKU_TOKEN_BACKEND_PROD }}/web
+          TAG: registry.heroku.com/${{ secrets.HEROKU_TOKEN_BACKEND }}/web
           TURBO_TEAM: ${{ vars.TURBO_TEAM }}
           TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       - name: Release published container
         run: |
-          heroku container:release -a ${{ secrets.HEROKU_TOKEN_BACKEND_PROD }} -v web
+          heroku container:release -a ${{ secrets.HEROKU_TOKEN_BACKEND }} -v web
         env:
           HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
           HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
