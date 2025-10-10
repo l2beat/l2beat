@@ -1,8 +1,8 @@
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable, Updateable } from 'kysely'
-import isNil from 'lodash/isNil'
 import { BaseRepository } from '../BaseRepository'
 import type { AbstractToken } from '../kysely/generated/types'
+import { fromTimestamp, toTimestamp } from '../utils/timestamp'
 
 export type AbstractTokenRecord = {
   symbol: string
@@ -25,18 +25,14 @@ function toRecord(row: Selectable<AbstractToken>): AbstractTokenRecord {
   return {
     ...row,
     category: row.category as 'btc' | 'ether' | 'stablecoin' | 'other',
-    coingeckoListingTimestamp: row.coingeckoListingTimestamp
-      ? UnixTime.fromDate(row.coingeckoListingTimestamp)
-      : null,
+    coingeckoListingTimestamp: toTimestamp(row.coingeckoListingTimestamp),
   }
 }
 
 function toRow(record: AbstractTokenRecord): Insertable<AbstractToken> {
   return {
     ...record,
-    coingeckoListingTimestamp: record.coingeckoListingTimestamp
-      ? UnixTime.toDate(record.coingeckoListingTimestamp)
-      : null,
+    coingeckoListingTimestamp: fromTimestamp(record.coingeckoListingTimestamp),
   }
 }
 
@@ -45,9 +41,7 @@ function toUpdateRow(
 ): Updateable<AbstractToken> {
   return {
     ...record,
-    coingeckoListingTimestamp: isNil(record.coingeckoListingTimestamp)
-      ? record.coingeckoListingTimestamp
-      : UnixTime.toDate(record.coingeckoListingTimestamp),
+    coingeckoListingTimestamp: fromTimestamp(record.coingeckoListingTimestamp),
   }
 }
 
