@@ -1,12 +1,6 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
-import {
-  CoingeckoClient,
-  CoingeckoQueryService,
-  HttpClient,
-  PriceProvider,
-  RpcClient,
-} from '@l2beat/shared'
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { HttpClient, RpcClient } from '@l2beat/shared'
+import { assert } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { boolean, command, flag, positional, run, string } from 'cmd-ts'
 import { readFileSync } from 'fs'
@@ -14,15 +8,13 @@ import { type ParseError, parse } from 'jsonc-parser'
 import { join } from 'path'
 import { logToViemLog } from '../BridgeBlockProcessor'
 import { match } from '../BridgeMatcher'
-import { FinancialsService } from '../financials/FinancialsService'
-import { INTEROP_TOKENS } from '../financials/tokens'
 import { InMemoryEventDb } from '../InMemoryEventDb'
 import { createBridgePlugins } from '../plugins'
-import type {
-  BridgeEvent,
-  BridgeMessage,
-  BridgeTransfer,
-  BridgeTransferWithFinancials,
+import {
+  Address32,
+  type BridgeEvent,
+  type BridgeMessage,
+  type BridgeTransfer,
 } from '../plugins/types'
 
 export function readJsonc(path: string): JSON {
@@ -110,18 +102,6 @@ async function runExample(example: Example): Promise<RunResult> {
   const logger = Logger.ERROR
   const http = new HttpClient()
   const env = getEnv()
-  const coingeckoClient = new CoingeckoClient({
-    http,
-    logger,
-    sourceName: 'coingecko',
-    callsPerMinute: 600,
-    retryStrategy: 'SCRIPT',
-    apiKey: env.optionalString('COINGECKO_API_KEY'),
-  })
-  const priceProvider = new PriceProvider(
-    new CoingeckoQueryService(coingeckoClient),
-  )
-  const financialsService = new FinancialsService(INTEROP_TOKENS, priceProvider)
 
   const chains = example.txs.map(({ chain, tx }) => {
     return {
@@ -164,13 +144,14 @@ async function runExample(example: Example): Promise<RunResult> {
             blockNumber: block.number,
             blockHash: block.hash,
             txHash: tx.hash,
-            txTo: tx.to ? EthereumAddress(tx.to) : undefined,
+            value: tx.value,
+            txTo: tx.to ? Address32.from(tx.to) : undefined,
             logIndex: log.logIndex ?? -1,
           },
         })
 
         if (event) {
-          events.push(event)
+          events.push({ ...event, plugin: plugin.name })
           break
         }
       }
@@ -191,14 +172,11 @@ async function runExample(example: Example): Promise<RunResult> {
     chains.map((x) => x.name),
     logger,
   )
-  const transfers: BridgeTransferWithFinancials[] = await Promise.all(
-    result.transfers.map(async (b) => await financialsService.addFinancials(b)),
-  )
 
   return {
     events,
     messages: result.messages,
-    transfers: transfers,
+    transfers: result.transfers,
   }
 }
 

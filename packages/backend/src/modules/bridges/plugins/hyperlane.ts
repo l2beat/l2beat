@@ -16,12 +16,16 @@ export const parseDispatch = createEventParser(
   'event Dispatch(address indexed sender, uint32 indexed destination, bytes32 indexed recipient, bytes message)',
 )
 
-const parseProcess = createEventParser(
+export const parseProcess = createEventParser(
   'event Process(uint32 indexed origin, bytes32 indexed sender, address indexed recipient)',
 )
 
-const parseProcessId = createEventParser(
+export const parseProcessId = createEventParser(
   'event ProcessId(bytes32 indexed messageId)',
+)
+
+export const parseDispatchId = createEventParser(
+  'event DispatchId(bytes32 indexed messageId)',
 )
 
 export const Dispatch = createBridgeEventType<{
@@ -34,7 +38,7 @@ export const Process = createBridgeEventType<{
   $srcChain: string
 }>('hyperlane.Process')
 
-const HYPERLANE_NETWORKS = defineNetworks('hyperlane', [
+export const HYPERLANE_NETWORKS = defineNetworks('hyperlane', [
   { chain: 'ethereum', chainId: 1 },
   { chain: 'arbitrum', chainId: 42161 },
   { chain: 'base', chainId: 8453 },
@@ -85,7 +89,13 @@ export class HyperlanePlugIn implements BridgePlugin {
         return
       }
 
-      return [Result.Message('hyperlane.Message', [dispatch, delivery])]
+      return [
+        Result.Message('hyperlane.Message', {
+          app: 'unknown',
+          srcEvent: dispatch,
+          dstEvent: delivery,
+        }),
+      ]
     }
   }
 }

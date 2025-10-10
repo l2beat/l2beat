@@ -1,7 +1,8 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
 import { BinaryReader } from '../BinaryReader'
 import { CCTPv2MessageReceived, CCTPv2MessageSent } from './cctp'
+import { MayanForwarded } from './mayan-forwarder'
 import {
+  Address32,
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
@@ -59,14 +60,23 @@ export class MayanMctpFastPlugin implements BridgePlugin {
       hookData: messageReceived.args.hookData,
     })
     if (!messageSent || !messageSent.args.amount) return
+    const mayanForwarded = db.find(MayanForwarded, {
+      sameTxAfter: messageSent,
+    })
+    if (!mayanForwarded) return
     const orderPayload = decodeOrderPayload(messageReceived.args.hookData)
     if (!orderPayload) return
     return [
       Result.Message(
         messageSent.args.fast ? 'cctp-v2.FastMessage' : 'cctp-v2.SlowMessage',
-        [messageSent, messageReceived],
+        {
+          app: 'mayan-mctp-fast',
+          srcEvent: messageSent,
+          dstEvent: messageReceived,
+        },
       ),
-      Result.Transfer('cctp-v2.Transfer.mayan-mctp-fast', {
+      Result.Transfer('cctp-v2.Transfer', {
+        // TODO: maybe this also has app: mayan-mctp-fast ?
         srcEvent: messageSent,
         srcTokenAddress: messageSent.args.tokenAddress,
         srcAmount: messageSent.args.amount.toString(),
@@ -77,10 +87,9 @@ export class MayanMctpFastPlugin implements BridgePlugin {
         srcTokenAddress: messageSent.args.tokenAddress,
         srcAmount: messageSent.args.amount.toString(),
         dstEvent: orderFulfilled,
-        dstTokenAddress: EthereumAddress(
-          `0x${orderPayload.tokenOut.slice(-40)}`,
-        ),
+        dstTokenAddress: Address32.from(orderPayload.tokenOut),
         dstAmount: orderFulfilled.args.amount.toString(),
+        extraEvents: [mayanForwarded],
       }),
     ]
   }

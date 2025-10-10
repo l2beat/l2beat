@@ -5,11 +5,17 @@ import {
   DaUpgradeabilityRisk,
 } from '../../common'
 import { linkByDA } from '../../common/linkByDA'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 
 const discovery = new ProjectDiscovery('vector')
+
+const vectorProgramHash = discovery.getContractValue<string>(
+  'Vector',
+  'vectorXProgramVkey',
+)
 
 export const vector: BaseProject = {
   id: ProjectId('vector'),
@@ -134,6 +140,7 @@ By default, Vector on Ethereum is updated by the Succinct operator at a cadence 
         text: 'the bridge contract is frozen by the Guardian (AvailMultisig).',
       },
     ],
+    zkProgramHashes: [ZK_PROGRAM_HASHES(vectorProgramHash)],
   },
   permissions: discovery.getDiscoveredPermissions(),
   milestones: [

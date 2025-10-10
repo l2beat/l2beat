@@ -52,6 +52,7 @@ export const kinto: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1716336000), // 2024-05-22T00:00:00Z
   discovery,
   additionalBadges: [BADGES.RaaS.Caldera, BADGES.VM.AppChain],
+  archivedAt: UnixTime(1759409514),
   overridingPurposes: ['KYC-ed DeFi'],
   display: {
     name: 'Kinto',
@@ -60,7 +61,7 @@ export const kinto: ScalingProject = orbitStackL2({
     description:
       'Kinto is an Orbit stack L2 with account abstraction and KYC enabled for all users, supporting both modern financial institutions and decentralized protocols.',
     headerWarning:
-      '[Kinto will shutdown on September 30, 2025](https://x.com/KintoXYZ/status/1964721235675537573). After this deadline, all remaining assets will be converted to USDC and a permament distribution contract will be deployed on Ethereum mainnet.',
+      '[Kinto shut down on September 30, 2025](https://x.com/KintoXYZ/status/1964721235675537573). Remaining assets were removed from the bridges and are redistributed through onchain smart contracts and [the Kinto CVR frontend](https://engen.kinto.xyz/cvr-claim).',
     links: {
       websites: ['https://kinto.xyz'],
       bridges: ['https://engen.kinto.xyz'],

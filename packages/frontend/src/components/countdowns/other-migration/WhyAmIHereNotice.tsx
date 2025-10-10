@@ -26,6 +26,11 @@ export function WhyAmIHereNotice({
                 <CloseIcon className="mt-[3px] size-[15px] fill-negative md:mt-1 md:size-3.5" />
               }
             />
+            {reason.explanation && (
+              <p className="mt-3 text-paragraph-15 md:text-paragraph-16">
+                {reason.explanation}
+              </p>
+            )}
             <p className="mt-3 gap-1 text-paragraph-15 md:text-paragraph-16">
               <strong>Consequence: </strong>
               {lowercaseFirstLetter(reason.description)}

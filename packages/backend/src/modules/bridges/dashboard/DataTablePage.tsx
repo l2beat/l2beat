@@ -19,7 +19,7 @@ export function DataTablePage(props: DataTablePageProps) {
 
   const getTableOptions = (tableOptions: object = {}) => {
     const defaultOptions = {
-      pageLength: 25,
+      pageLength: 100,
       order: [[0, 'desc']], // Default sort by first column
       dom: 'Bfrtip', // B = Buttons, f = filter, r = processing, t = table, i = info, p = pagination
       buttons: [

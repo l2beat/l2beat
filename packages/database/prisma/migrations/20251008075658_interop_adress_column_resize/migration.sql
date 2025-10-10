@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE "BridgeEvent" ALTER COLUMN "txTo" SET DATA TYPE VARCHAR(66);
+
+-- AlterTable
+ALTER TABLE "BridgeTransfer" ALTER COLUMN "srcTokenAddress" SET DATA TYPE VARCHAR(66),
+ALTER COLUMN "dstTokenAddress" SET DATA TYPE VARCHAR(66);

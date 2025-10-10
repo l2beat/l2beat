@@ -52,7 +52,11 @@ export class StargateV2BusPlugin implements BridgePlugin {
     }
 
     const result: MatchResult = [
-      Result.Message('layerzero-v2.Message', [packetSent, packetDelivered]),
+      Result.Message('layerzero-v2.Message', {
+        app: 'stargate-v2-bus',
+        srcEvent: packetSent,
+        dstEvent: packetDelivered,
+      }),
     ]
     for (const oftSentBusRode of oftSentBusRodeBatch) {
       const matchedOftReceived = oftReceivedBatch.find(

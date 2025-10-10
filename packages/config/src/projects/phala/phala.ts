@@ -51,22 +51,6 @@ export const phala: ScalingProject = opStackL2({
     type: 'Validity',
     zkCatalogId: ProjectId('sp1'),
   },
-  nonTemplateEscrows: [
-    discovery.getEscrowDetails({
-      address: ChainSpecificAddress(
-        'eth:0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521',
-      ),
-      sinceTimestamp: UnixTime(1734388655),
-      tokens: '*',
-    }),
-    discovery.getEscrowDetails({
-      address: ChainSpecificAddress(
-        'eth:0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A',
-      ),
-      sinceTimestamp: UnixTime(1734388655),
-      tokens: ['ETH'],
-    }),
-  ],
   nonTemplateTrackedTxs: [
     {
       uses: [
@@ -151,6 +135,9 @@ export const phala: ScalingProject = opStackL2({
         selector: '0xa4ee9d7b', // non-optimistic mode
         functionSignature:
           'function proposeL2Output(bytes32 _configName, bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress)',
+        topics: [
+          '0xa7aaf2512769da4e444e3de247be2564225c2e7a8f74cfe528e46e17d24868e2', // OutputProposed (for anomaly detection support)
+        ],
         sinceTimestamp: UnixTime(1757405447),
       },
     },

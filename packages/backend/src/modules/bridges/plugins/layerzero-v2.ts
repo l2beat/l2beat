@@ -112,7 +112,11 @@ export class LayerZeroV2Plugin implements BridgePlugin {
     const packetSent = db.find(PacketSent, { guid: packetDelivered.args.guid })
     if (!packetSent) return
     return [
-      Result.Message('layerzero-v2.Message', [packetSent, packetDelivered]),
+      Result.Message('layerzero-v2.Message', {
+        app: 'unknown',
+        srcEvent: packetSent,
+        dstEvent: packetDelivered,
+      }),
     ]
   }
 }

@@ -1,12 +1,14 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
 import {
   createLayerZeroGuid,
   decodePacket,
   LAYERZERO_NETWORKS,
+  PacketDelivered,
+  PacketSent,
   parsePacketDelivered,
   parsePacketSent,
 } from './layerzero-v2'
 import {
+  Address32,
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
@@ -30,14 +32,14 @@ const OFTSentPacketSent = createBridgeEventType<{
   guid: string
   amountSentLD: number
   amountReceivedLD: number
-  tokenAddress: EthereumAddress
+  tokenAddress: Address32
 }>('layerzero-v2.PacketOFTSent')
 
 const OFTReceivedPacketDelivered = createBridgeEventType<{
   $srcChain: string
   guid: string
   amountReceivedLD: number
-  tokenAddress: EthereumAddress
+  tokenAddress: Address32
 }>('layerzero-v2.PacketOFTDelivered')
 
 export class LayerZeroV2OFTsPlugin implements BridgePlugin {
@@ -75,7 +77,7 @@ export class LayerZeroV2OFTsPlugin implements BridgePlugin {
               guid,
               amountSentLD: Number(oftSent.amountSentLD),
               amountReceivedLD: Number(oftSent.amountReceivedLD),
-              tokenAddress: EthereumAddress(input.log.address),
+              tokenAddress: Address32.from(input.log.address),
             })
           }
         }
@@ -107,7 +109,8 @@ export class LayerZeroV2OFTsPlugin implements BridgePlugin {
             $srcChain,
             guid,
             amountReceivedLD: Number(oftReceived.amountReceivedLD),
-            tokenAddress: EthereumAddress(input.log.address), // TODO: OFT log emitter is not always the token contract (needs effects)
+            // TODO: OFT log emitter is not always the token contract (needs effects)
+            tokenAddress: Address32.from(input.log.address),
           })
         }
       }
@@ -121,18 +124,32 @@ export class LayerZeroV2OFTsPlugin implements BridgePlugin {
   ): MatchResult | undefined {
     if (!OFTReceivedPacketDelivered.checkType(oftReceivedPacketDelivered))
       return
-    const oftSentPacketSent = db.find(OFTSentPacketSent, {
-      guid: oftReceivedPacketDelivered.args.guid,
-    })
+
+    const guid = oftReceivedPacketDelivered.args.guid
+
+    const oftSentPacketSent = db.find(OFTSentPacketSent, { guid })
     if (!oftSentPacketSent) return
+
+    const packetSent = db.find(PacketSent, { guid })
+    if (!packetSent) return
+
+    const packetDelivered = db.find(PacketDelivered, { guid })
+    if (!packetDelivered) return
+
     return [
+      Result.Message('layerzero-v2.Message', {
+        app: 'oftv2',
+        srcEvent: packetSent,
+        dstEvent: packetDelivered,
+      }),
       Result.Transfer('oftv2.Transfer', {
         srcEvent: oftSentPacketSent,
         srcAmount: oftSentPacketSent.args.amountSentLD.toString(),
         srcTokenAddress: oftSentPacketSent.args.tokenAddress,
         dstEvent: oftReceivedPacketDelivered,
         dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD.toString(),
-        dstTokenAddress: oftReceivedPacketDelivered.args.tokenAddress, // TODO: OFT log emitter is not always the token contract (needs effects)
+        // TODO: OFT log emitter is not always the token contract (needs effects)
+        dstTokenAddress: oftReceivedPacketDelivered.args.tokenAddress,
       }),
     ]
   }

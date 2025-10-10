@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "name": "MVM_ProposerRegistry",
+  "description": "The Proposer Registry contains the addresses of the current active proposers for the chain.",
+  "ignoreMethods": ["proposers", "getProposer"], // mappings
+  "fields": {
+    "proposer": {
+      "handler": {
+        "type": "call",
+        "method": "getProposer",
+        "args": ["1088"]
+      },
+      "permissions": [
+        {
+          "type": "propose"
+        }
+      ]
+    }
+  }
+}

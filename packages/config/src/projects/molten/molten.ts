@@ -30,7 +30,7 @@ export const molten: ScalingProject = orbitStackL3({
       explorers: ['https://molten.calderaexplorer.xyz'],
       socialMedia: [
         'https://x.com/moltenl3',
-        'https://discord.gg/moltennetwork',
+        'https://discord.com/invite/YACsZnuqC9',
         'https://mirror.xyz/unidexexchange.eth',
         'https://t.me/unidexfinance',
       ],

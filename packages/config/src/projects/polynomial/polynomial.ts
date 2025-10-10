@@ -31,7 +31,7 @@ export const polynomial: ScalingProject = opStackL2({
       repositories: ['https://github.com/Polynomial-Protocol'],
       socialMedia: [
         'https://x.com/PolynomialFi',
-        'https://discord.gg/Mr9XKU5W',
+        'https://discord.com/invite/8WYEPDqyCR',
       ],
     },
   },

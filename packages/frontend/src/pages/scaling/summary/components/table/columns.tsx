@@ -192,6 +192,9 @@ export const scalingSummaryOthersColumns = [
                 </Badge>
               </TooltipTrigger>
               <TooltipContent>
+                {reason.explanation && (
+                  <p className="mb-0.5">{reason.explanation}</p>
+                )}
                 <p>{reason.description}</p>
               </TooltipContent>
             </Tooltip>

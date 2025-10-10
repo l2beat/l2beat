@@ -133,6 +133,10 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
       economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
     },
+    validators: {
+      type: 'static',
+      count: 100,
+    },
   },
   daBridge: {
     name: 'HotShot Light Client',

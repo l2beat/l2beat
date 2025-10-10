@@ -62,6 +62,7 @@ import { fuse } from '../projects/fuse/fuse'
 import { galxegravity } from '../projects/galxegravity/galxegravity'
 import { gameswift } from '../projects/gameswift/gameswift'
 import { gasp } from '../projects/gasp/gasp'
+import { gateLayer } from '../projects/gate-layer/gate-layer'
 import { genlayer } from '../projects/genlayer/genlayer'
 import { giwa } from '../projects/giwa/giwa'
 import { gluon } from '../projects/gluon/gluon'
@@ -97,6 +98,7 @@ import { layer2financezk } from '../projects/layer2financezk/layer2financezk'
 import { layerai } from '../projects/layerai/layerai'
 import { lens } from '../projects/lens/lens'
 import { liftchain } from '../projects/liftchain/liftchain'
+import { lighter } from '../projects/lighter/lighter'
 import { lightlink } from '../projects/lightlink/lightlink'
 import { linea } from '../projects/linea/linea'
 import { lisk } from '../projects/lisk/lisk'
@@ -146,6 +148,7 @@ import { polygonmiden } from '../projects/polygonmiden/polygonmiden'
 import { polygonzkevm } from '../projects/polygonzkevm/polygonzkevm'
 import { polynomial } from '../projects/polynomial/polynomial'
 import { powerloom } from '../projects/powerloom/powerloom'
+import { primechain } from '../projects/primechain/primechain'
 import { prom } from '../projects/prom/prom'
 import { publicgoodsnetwork } from '../projects/publicgoodsnetwork/publicgoodsnetwork'
 import { puffer } from '../projects/puffer/puffer'
@@ -220,7 +223,6 @@ import { zeronetwork } from '../projects/zeronetwork/zeronetwork'
 import { zircuit } from '../projects/zircuit/zircuit'
 import { zkcandy } from '../projects/zkcandy/zkcandy'
 import { zkfair } from '../projects/zkfair/zkfair'
-import { zklighter } from '../projects/zklighter/zklighter'
 import { zkspace } from '../projects/zkspace/zkspace'
 import { zkswap } from '../projects/zkswap/zkswap'
 import { zkswap2 } from '../projects/zkswap2/zkswap2'
@@ -246,6 +248,7 @@ export const layer2s: ScalingProject[] = [
   automata,
   aztecconnect,
   aztec,
+  primechain,
   aztecV2,
   base,
   blast,
@@ -325,6 +328,7 @@ export const layer2s: ScalingProject[] = [
   lens,
   liftchain,
   lightlink,
+  lighter,
   linea,
   lisk,
   litecoinvm,
@@ -384,6 +388,7 @@ export const layer2s: ScalingProject[] = [
   real,
   reddioex,
   roninNetwork,
+  gateLayer,
   reddiozkvm,
   redstone,
   reya,
@@ -449,7 +454,6 @@ export const layer2s: ScalingProject[] = [
   zircuit,
   zkcandy,
   zkfair,
-  zklighter,
   zkspace,
   zkswap,
   zkswap2,
