@@ -40,7 +40,8 @@ export const risc0: BaseProject = {
       type: 'incident',
     },
     {
-      title: '[Disclosed vulnerability] Underconstrained division vulnerability',
+      title:
+        '[Disclosed vulnerability] Underconstrained division vulnerability',
       url: 'https://x.com/RiscZero/status/1952503598056882225',
       date: '2025-08-05T00:00:00Z',
       description:

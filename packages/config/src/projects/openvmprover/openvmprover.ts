@@ -35,7 +35,8 @@ export const openvmprover: BaseProject = {
   },
   milestones: [
     {
-      title: '[Disclosed vulnerability] Plonky3 final polynomial degree check vulnerability',
+      title:
+        '[Disclosed vulnerability] Plonky3 final polynomial degree check vulnerability',
       url: 'https://forum.scroll.io/t/security-council-report-scroll-mainnet-emergency-upgrade-on-2025-05-26/810',
       date: '2025-05-26T00:00:00Z',
       description:
