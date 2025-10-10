@@ -117,7 +117,7 @@ export function DeployedTokenView({ token }: { token: DeployedToken }) {
           form.reset(form.getValues())
         }}
       />
-      <div className="mx-auto flex max-w-2xl gap-2">
+      <div className="mx-auto flex w-full max-w-3xl gap-2">
         <Card className="w-full">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">

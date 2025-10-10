@@ -82,18 +82,6 @@ export function DeployedTokenForm({
         onSubmit={form.handleSubmit((values) => onSubmit(sanitize(values)))}
       >
         <fieldset disabled={isFormDisabled} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="id"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>ID</FormLabel>
-                <FormControl>
-                  <Input {...field} disabled className="font-mono" />
-                </FormControl>
-              </FormItem>
-            )}
-          />
           <div className="grid grid-cols-3 items-start gap-2">
             <FormField
               control={form.control}

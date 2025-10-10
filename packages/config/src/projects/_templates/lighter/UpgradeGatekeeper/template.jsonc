@@ -13,7 +13,8 @@
     "getMaster": {
       "permissions": [
         { "type": "act", "delay": "{{approvedUpgradeNoticePeriod}}" }
-      ]
+      ],
+      "severity": "HIGH"
     },
     "approvedUpgradeNoticePeriodFmt": {
       "description": "upgrade delay, can be skipped by the 'securityCouncil' role.",

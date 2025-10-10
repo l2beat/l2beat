@@ -9,7 +9,8 @@
           "type": "interact",
           "description": "manage validators, update the address that manages the insurance fund, and update the treasury address that collects fees from markets."
         }
-      ]
+      ],
+      "severity": "HIGH"
     },
     "validators": {
       "handler": {

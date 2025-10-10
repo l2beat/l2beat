@@ -10,6 +10,7 @@ export function SidebarSearch() {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if (search === '') return
     navigate(`/search/${search}`)
   }
 

@@ -1,5 +1,6 @@
 import { BinaryReader } from '../BinaryReader'
 import { CCTPv2MessageReceived, CCTPv2MessageSent } from './cctp'
+import { MayanForwarded } from './mayan-forwarder'
 import {
   Address32,
   type BridgeEvent,
@@ -59,6 +60,10 @@ export class MayanMctpFastPlugin implements BridgePlugin {
       hookData: messageReceived.args.hookData,
     })
     if (!messageSent || !messageSent.args.amount) return
+    const mayanForwarded = db.find(MayanForwarded, {
+      sameTxAfter: messageSent,
+    })
+    if (!mayanForwarded) return
     const orderPayload = decodeOrderPayload(messageReceived.args.hookData)
     if (!orderPayload) return
     return [
@@ -84,6 +89,7 @@ export class MayanMctpFastPlugin implements BridgePlugin {
         dstEvent: orderFulfilled,
         dstTokenAddress: Address32.from(orderPayload.tokenOut),
         dstAmount: orderFulfilled.args.amount.toString(),
+        extraEvents: [mayanForwarded],
       }),
     ]
   }
