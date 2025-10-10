@@ -1,5 +1,7 @@
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import keyBy from 'lodash/keyBy'
+import { env } from '~/env'
+import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { queryExecutor } from '~/server/queryExecutor'
 import { getTimestampedValuesRange } from '~/utils/range/range'
@@ -27,29 +29,37 @@ export async function getSummedTvsValues(
     excludeAssociatedTokens,
   }: { forSummary: boolean; excludeAssociatedTokens: boolean },
 ): Promise<SummedTvsValues[]> {
+  const db = getDb()
   const resolution = rangeToResolution(range)
 
   const [from, to] = getTimestampedValuesRange(range, resolution, {
     offset: -UnixTime.HOUR - 15 * UnixTime.MINUTE,
   })
 
-  const valueRecords = await queryExecutor.execute(
-    {
-      name: 'getSummedByTimestampTvsValuesQuery',
-      args: [projectIds, [from, to], forSummary, excludeAssociatedTokens],
-    },
-    100,
-  )
+  const valueRecords = env.USE_DAL
+    ? (
+        await queryExecutor.execute(
+          {
+            name: 'getSummedByTimestampTvsValuesQuery',
+            args: [projectIds, [from, to], forSummary, excludeAssociatedTokens],
+          },
+          100,
+        )
+      ).data
+    : await db.tvsProjectValue.getSummedByTimestamp(
+        projectIds,
+        getType(forSummary, excludeAssociatedTokens),
+        [from, to],
+      )
 
-  if (valueRecords.data.length === 0) {
+  if (valueRecords.length === 0) {
     return []
   }
 
-  const timestamps = valueRecords.data.map((v) => v.timestamp)
+  const timestamps = valueRecords.map((v) => v.timestamp)
   const fromTimestamp = Math.min(...timestamps)
   const maxTimestamp = Math.max(...timestamps)
-
-  const groupedByTimestamp = keyBy(valueRecords.data, (v) => v.timestamp)
+  const groupedByTimestamp = keyBy(valueRecords, (v) => v.timestamp)
 
   const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : to
 
@@ -72,4 +82,11 @@ export async function getSummedTvsValues(
     }
     return record
   })
+}
+
+function getType(forSummary: boolean, excludeAssociatedTokens: boolean) {
+  if (!forSummary) {
+    return excludeAssociatedTokens ? 'PROJECT_WA' : 'PROJECT'
+  }
+  return excludeAssociatedTokens ? 'SUMMARY_WA' : 'SUMMARY'
 }
