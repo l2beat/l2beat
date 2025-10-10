@@ -11,6 +11,7 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
   return {
     database: getDatabaseConfig(env, options),
     auth: options.isLocal ? false : getAuthConfig(env),
+    coingeckoApiKey: env.string('COINGECKO_API_KEY'),
   }
 }
 

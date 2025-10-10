@@ -1,11 +1,9 @@
 import type { Plan } from '@l2beat/token-service'
-import { skipToken, useQuery } from '@tanstack/react-query'
 import { ArrowRightIcon, CoinsIcon, TrashIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
-import { coingecko } from '~/api/coingecko'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import { Button } from '~/components/core/Button'
 import {
@@ -55,14 +53,14 @@ export function AbstractTokenView({
 
   const coingeckoId = form.watch('coingeckoId')
   const debouncedCoingeckoId = useDebouncedValue(form.watch('coingeckoId'), 500)
-  const { data: coin, isLoading } = useQuery({
-    queryKey: ['coingecko', 'coin', debouncedCoingeckoId],
-    queryFn:
-      debouncedCoingeckoId && token.coingeckoId !== debouncedCoingeckoId
-        ? () => coingecko.getCoinById(debouncedCoingeckoId)
-        : skipToken,
-    retry: false,
-  })
+  const { data: coin, isLoading } = api.coingecko.getCoinById.useQuery(
+    debouncedCoingeckoId ?? '',
+    {
+      enabled:
+        !!debouncedCoingeckoId && token.coingeckoId !== debouncedCoingeckoId,
+      retry: false,
+    },
+  )
 
   const showCoingeckoLoading = isLoading || coingeckoId !== debouncedCoingeckoId
 
@@ -186,8 +184,8 @@ export function AbstractTokenView({
                     key={`${token.chain}+${token.address}`}
                     className="flex items-center justify-between gap-2 px-6 odd:bg-muted"
                   >
-                    {token.chain}-{token.address} ({token.symbol})
-                    <Button asChild variant="outline">
+                    {token.chain} ({token.symbol})
+                    <Button asChild variant="link">
                       <Link to={`/tokens/${token.chain}+${token.address}`}>
                         <ArrowRightIcon />
                       </Link>

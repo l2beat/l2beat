@@ -2,6 +2,7 @@ import type { Plan } from '@l2beat/token-service'
 import { TrashIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import {
@@ -25,6 +26,7 @@ import { validateResolver } from '~/utils/validateResolver'
 export function DeployedTokenView({ token }: { token: DeployedToken }) {
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
 
+  const [searchParams] = useSearchParams()
   const form = useForm<DeployedTokenSchema>({
     resolver: validateResolver(DeployedTokenSchema),
     defaultValues: {
@@ -34,6 +36,13 @@ export function DeployedTokenView({ token }: { token: DeployedToken }) {
       deploymentTimestamp: UnixTime.toYYYYMMDD(token.deploymentTimestamp),
     },
   })
+
+  useEffect(() => {
+    const abstractTokenId = searchParams.get('abstractTokenId')
+    if (abstractTokenId) {
+      form.setValue('abstractTokenId', abstractTokenId, { shouldDirty: true })
+    }
+  }, [searchParams, form.setValue])
 
   const { mutate: planMutate, isPending: isPending } =
     api.plan.generate.useMutation({

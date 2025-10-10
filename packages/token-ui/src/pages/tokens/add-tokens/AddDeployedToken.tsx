@@ -1,6 +1,7 @@
 import type { Plan } from '@l2beat/token-service'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import {
@@ -15,8 +16,12 @@ import { validateResolver } from '~/utils/validateResolver'
 import { UnixTime } from '../../../../../shared-pure/src/types'
 
 export function AddDeployedToken() {
+  const [searchParams] = useSearchParams()
   const form = useForm<DeployedTokenSchema>({
     resolver: validateResolver(DeployedTokenSchema),
+    defaultValues: {
+      abstractTokenId: searchParams.get('abstractTokenId') ?? undefined,
+    },
   })
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
 

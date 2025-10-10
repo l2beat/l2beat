@@ -1,9 +1,7 @@
 import type { Plan } from '@l2beat/token-service'
-import { skipToken, useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import { coingecko } from '~/api/coingecko'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import {
   AbstractTokenForm,
@@ -13,7 +11,6 @@ import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { api } from '~/react-query/trpc'
 import { generateRandomString } from '~/utils/generateRandomString'
-import { toYYYYMMDD } from '~/utils/toYYYYMMDD'
 import { UnixTime } from '~/utils/UnixTime'
 import { validateResolver } from '~/utils/validateResolver'
 
@@ -36,20 +33,17 @@ export function AddAbstractToken({
 
   const coingeckoId = form.watch('coingeckoId')
   const debouncedCoingeckoId = useDebouncedValue(form.watch('coingeckoId'), 500)
-  const { data: coin, isLoading: isCoinLoading } = useQuery({
-    queryKey: ['coingecko', 'coin', debouncedCoingeckoId],
-    queryFn: debouncedCoingeckoId
-      ? () => coingecko.getCoinById(debouncedCoingeckoId)
-      : skipToken,
-    retry: false,
-  })
+  const { data: coin, isLoading: isCoinLoading } =
+    api.coingecko.getCoinById.useQuery(debouncedCoingeckoId ?? '', {
+      enabled: !!debouncedCoingeckoId,
+      retry: false,
+    })
 
   const {
     data: coingeckoListingTimestamp,
     isLoading: isCoingeckoListingTimestampLoading,
-  } = useQuery({
-    queryKey: ['coingecko', 'listingTimestamp', debouncedCoingeckoId],
-    queryFn: coin ? () => coingecko.getListingTimestamp(coin.id) : skipToken,
+  } = api.coingecko.getListingTimestamp.useQuery(coin?.id ?? '', {
+    enabled: !!coin?.id,
     retry: false,
   })
 
@@ -94,7 +88,7 @@ export function AddAbstractToken({
       form.clearErrors('coingeckoListingTimestamp')
       form.setValue(
         'coingeckoListingTimestamp',
-        toYYYYMMDD(coingeckoListingTimestamp),
+        UnixTime.toYYYYMMDD(coingeckoListingTimestamp),
       )
       return
     }
