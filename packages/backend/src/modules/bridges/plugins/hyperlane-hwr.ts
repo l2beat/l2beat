@@ -26,7 +26,7 @@ import {
  * TODO: native token HWR only emit at the source
  */
 
-const parseSentTransferRemote = createEventParser(
+export const parseSentTransferRemote = createEventParser(
   'event SentTransferRemote(uint32 indexed destination, bytes32 indexed recipient, uint256 amount)',
 )
 
@@ -34,7 +34,7 @@ const parseReceivedTransferRemote = createEventParser(
   'event ReceivedTransferRemote(uint32 indexed origin, bytes32 indexed recipient, uint256 amount)',
 )
 
-export const HwrTransferSent = createBridgeEventType<{
+const HwrTransferSent = createBridgeEventType<{
   messageId: `0x${string}`
   $dstChain: string
   destination: number
@@ -43,7 +43,7 @@ export const HwrTransferSent = createBridgeEventType<{
   tokenAddress: Address32
 }>('hyperlane-hwr.TransferSent')
 
-export const HwrTransferReceived = createBridgeEventType<{
+const HwrTransferReceived = createBridgeEventType<{
   messageId: `0x${string}`
   $srcChain: string
   origin: number
@@ -140,7 +140,7 @@ export class HyperlaneHwrPlugin implements BridgePlugin {
   }
 }
 
-function findDispatchMessageId(
+export function findDispatchMessageId(
   input: LogToCapture,
   sentTransferRemote: NonNullable<ReturnType<typeof parseSentTransferRemote>>,
 ): `0x${string}` | undefined {

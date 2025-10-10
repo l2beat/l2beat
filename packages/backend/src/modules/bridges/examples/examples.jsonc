@@ -147,7 +147,7 @@
     "messages": [],
     "transfers": []
   },
-  "hyperlane": {
+  "hyperlane-mix": {
     "txs": [
       {
         "chain": "arbitrum",
