@@ -19443,10 +19443,17 @@
       "name": "BurnMintERC20",
       "address": "eth:0xea17Df5Cf6D172224892B5477A16ACb111182478",
       "type": "Contract",
+      "template": "transporter/TokenPool",
       "sourceHashes": [
         "0xaad5fab64eb7b1f522906d4dea61cc4467e050fd6c8ab74e021332248e3d8d36"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1759982495,
       "sinceBlock": 23537663,
       "values": {

@@ -179,5 +179,11 @@
     "address": "eth:0xC8ADf2f51a35b0a9d8f74675b64c954Ca2Dcbc14",
     "chain": "ethereum",
     "blockNumber": 23383001
+  },
+  "BurnMintERC20.sol": {
+    "hash": "0xaad5fab64eb7b1f522906d4dea61cc4467e050fd6c8ab74e021332248e3d8d36",
+    "address": "eth:0xea17Df5Cf6D172224892B5477A16ACb111182478",
+    "chain": "ethereum",
+    "blockNumber": 23547033
   }
 }
