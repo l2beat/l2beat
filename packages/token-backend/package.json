@@ -1,0 +1,53 @@
+{
+  "name": "@l2beat/token-backend",
+  "version": "0.1.0",
+  "private": true,
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": "./build/index.js",
+      "default": "./build/index.js"
+    }
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node build/server.js",
+    "dev": "node --watch -r esbuild-register src/server.ts",
+    "clean": "rm -rf build",
+    "build:dependencies": "cd ../.. && pnpm build:dependencies:token-backend",
+    "watch:dependencies": "cd ../.. && pnpm watch:dependencies:token-backend",
+    "format:fix": "biome format --write .",
+    "format": "biome format .",
+    "lint:fix": "biome check --formatter-enabled=false --write .",
+    "lint": "biome check --formatter-enabled=false .",
+    "test": "mocha",
+    "typecheck": "tsc --noEmit",
+    "import-generated": "ts-node ./scripts/import-generated.ts"
+  },
+  "dependencies": {
+    "@l2beat/backend-tools": "workspace:*",
+    "@l2beat/database": "workspace:*",
+    "@l2beat/shared-pure": "workspace:*",
+    "@l2beat/typescript-config": "workspace:*",
+    "@l2beat/validate": "workspace:*",
+    "@trpc/server": "^11.0.0-rc.446",
+    "fuzzysort": "3.1.0",
+    "jose": "^6.1.0"
+  },
+  "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*",
+    "@types/express": "^5.0.0",
+    "@types/mocha": "^10.0.6",
+    "dotenv": "^17.2.3",
+    "earl": "^1.1.0",
+    "express": "^5.1.0",
+    "mocha": "^10.2.0",
+    "ts-node-dev": "^2.0.0"
+  }
+}
