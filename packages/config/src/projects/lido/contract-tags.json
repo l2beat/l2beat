@@ -1,0 +1,13 @@
+{
+  "version": "1.0",
+  "lastModified": "2025-10-08T14:43:17.349Z",
+  "tags": [
+    {
+      "contractAddress": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
+      "isExternal": true,
+      "timestamp": "2025-10-08T14:43:17.349Z",
+      "centralization": "low",
+      "mitigations": "none"
+    }
+  ]
+}

@@ -27,6 +27,26 @@
         }
       }
     },
+    "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84": {
+      "fields": {
+        "acl": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb"
+          }
+        }
+      }
+    },
+    "eth:0xf73a1260d222f447210581DDf212D915c09a3249": {
+      "fields": {
+        "acl": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb"
+          }
+        }
+      }
+    },
     "eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb": {
       "ignoreRelatives": ["permissions"]
     },

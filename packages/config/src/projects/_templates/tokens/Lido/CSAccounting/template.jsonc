@@ -13,5 +13,12 @@
     "getUnbondedKeysCount",
     "getUnbondedKeysCountToEject"
   ],
-  "ignoreInWatchMode": ["getBondLockRetentionPeriod", "totalBondShares"]
+  "ignoreInWatchMode": ["getBondLockRetentionPeriod", "totalBondShares"],
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    }
+  }
 }

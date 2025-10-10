@@ -1,3 +1,265 @@
+Generated with discovered.json: 0x9f79994d06fcbbaa9948731449fb70e5194f87c7
+
+# Diff at Thu, 09 Oct 2025 17:24:11 GMT:
+
+- author: emduc (<emilien@defiscan.info>)
+- comparing to: main@41459fd2a6c92f593a7ac7877370a1a5e03c2693 block: 1759786119
+- current timestamp: 1759786119
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759786119 (main branch discovery), not current.
+
+```diff
+    contract Lido Dao Agent (eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c) {
+    +++ description: Custom role-based operations entrypoint for Lido.
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"eth:0xB314D4A76C457c93150d308787939063F4Cc67E0","role":"admin"}
+    }
+```
+
+```diff
+    contract CSAccounting (eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da) {
+    +++ description: None
+      values.getActualLockedBond:
+-        [0,0,0,0,0]
+      values.getBond:
+-        ["13280448660295532030","25826627859852877247","8015475175151572667","2851511178601980838","16237439667328342654"]
+      values.getBondCurve:
+-        [[[[1,"1500000000000000000","1500000000000000000"],[2,"2800000000000000000","1300000000000000000"]]],[[[1,"1500000000000000000","1500000000000000000"],[2,"2800000000000000000","1300000000000000000"]]],[[[1,"1500000000000000000","1500000000000000000"],[2,"2800000000000000000","1300000000000000000"]]],[[[1,"1500000000000000000","1500000000000000000"],[2,"2800000000000000000","1300000000000000000"]]],[[[1,"1500000000000000000","1500000000000000000"],[2,"2800000000000000000","1300000000000000000"]]]]
+      values.getBondCurveId:
+-        [2,2,2,1,1]
+      values.getBondShares:
+-        ["10924814826882310705","21245602026627142420","6593721663922635237","2345721323116679800","13357306380663207248"]
+      values.getBondSummary:
+-        [["13280448660295532030","13200000000000000000"],["25826627859852877247","24900000000000000000"],["8015475175151572667","8000000000000000000"],["2851511178601980838","2800000000000000000"],["16237439667328342654","15800000000000000000"]]
+      values.getBondSummaryShares:
+-        [["10924814826882310705","10858635834042479300"],["21245602026627142420","20483335777852858680"],["6593721663922635237","6580991414571199576"],["2345721323116679800","2303346995099919851"],["13357306380663207248","12997458043778119162"]]
+      values.getCurveInfo:
+-        [[[[1,"2400000000000000000","2400000000000000000"],[2,"3700000000000000000","1300000000000000000"]]],[[[1,"1500000000000000000","1500000000000000000"],[2,"2800000000000000000","1300000000000000000"]]],[[[1,"1500000000000000000","1500000000000000000"],[2,"2800000000000000000","1300000000000000000"]]]]
+      values.getLockedBondInfo:
+-        [[0,0],[0,0],[0,0],[0,0],[0,0]]
+      values.getUnbondedKeysCount:
+-        [0,0,0,0,0]
+      values.getUnbondedKeysCountToEject:
+-        [0,0,0,0,0]
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]},"SET_BOND_CURVE_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xC52fC3081123073078698F1EAc2f1Dc7Bd71880f","eth:0xB314D4A76C457c93150d308787939063F4Cc67E0"]},"0xb5dffea014b759c493d63b1edaceb942631d6468998125e1b4fe427c99082134":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"MANAGE_BOND_CURVES_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"PAUSE_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24","eth:0xE1686C2E90eb41a48356c1cC7FaA17629af3ADB3"]},"RESUME_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"]}}
+      errors.getActualLockedBond:
+-        "Processing error occurred."
+      errors.getBond:
+-        "Processing error occurred."
+      errors.getBondCurve:
+-        "Processing error occurred."
+      errors.getBondCurveId:
+-        "Processing error occurred."
+      errors.getBondShares:
+-        "Processing error occurred."
+      errors.getBondSummary:
+-        "Processing error occurred."
+      errors.getBondSummaryShares:
+-        "Processing error occurred."
+      errors.getLockedBondInfo:
+-        "Processing error occurred."
+      errors.getUnbondedKeysCount:
+-        "Processing error occurred."
+      errors.getUnbondedKeysCountToEject:
+-        "Processing error occurred."
+      template:
++        "tokens/Lido/CSAccounting"
+    }
+```
+
+```diff
+    contract Liquid staked Ether 2.0 Token (eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84) {
+    +++ description: None
+      values.acl:
++        "eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb"
+    }
+```
+
+```diff
+    contract TokenManager (eth:0xf73a1260d222f447210581DDf212D915c09a3249) {
+    +++ description: None
+      values.acl:
++        "eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Escrow (eth:0x165813A31446a98c84E20Dda8C101BB3C8228e1c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GateSeal (eth:0x16Dbd4B85a448bE564f1742d5c8cCdD2bB3185D0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TiebreakerCoreCommittee (eth:0x175742c3DDD88B0192df3EcF98f180A79cb259D0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Executor (eth:0x23E0B465633FF5178808F4A75186E2F2F9537021)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimeConstraints (eth:0x2a30F5aC03187674553024296bed35Aa49749DDa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DGRolesValidatorMainnet (eth:0x31534e3aFE219B609da3715a00a1479D2A2d7981)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DGUpgradeStateVerifierMainnet (eth:0x487b764a2085ffd595D9141BAec0A766B7904786)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AllowedTokensRegistry (eth:0x4AC40c34f8992bb1e5E856A448792158022551ca)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockedGovernance (eth:0x553337946F2FAb8911774b20025fa776B76a7CcE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ResealManager (eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract InsuranceFund (eth:0x8B3f33234ABD88493c0Cd28De33D583B70beDe35)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x8B7854488Fde088d686Ea672B6ba1A5242515f45)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ImmutableDualGovernanceConfigProvider (eth:0xa1692Af6FDfdD1030E4E9c4Bc429986FA64CB5EF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Escrow (eth:0xA8F14D033f377779274Ae016584a05bF14Dccaf8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VettedGate (eth:0xB314D4A76C457c93150d308787939063F4Cc67E0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Finance (eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DualGovernance (eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0xC52fC3081123073078698F1EAc2f1Dc7Bd71880f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xC7792b3F2B399bB0EdF53fECDceCeB97FBEB18AF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ImmutableDualGovernanceConfigProvider (eth:0xc934E90E76449F09f2369BB85DCEa056567A327a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DualGovernance (eth:0xcdF49b058D606AD34c5789FD8c3BF8B3E54bA2db)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EmergencyProtectedTimelock (eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CSVerifier (eth:0xdC5FE1782B6943f318E05230d688713a560063DC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GateSeal (eth:0xE1686C2E90eb41a48356c1cC7FaA17629af3ADB3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TiebreakerCoreCommittee (eth:0xf65614d73952Be91ce0aE7Dd9cFf25Ba15bEE2f5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GateSeal (eth:0xf9C9fDB4A5D2AA1D836D5370AB9b28BC1847e178)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVMScriptExecutor (eth:0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xFFe21561251c49AdccFad065C94Fb4931dF49081)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xf2259c3e2e01292785d86a8bf01bcf552e408ed0
 
 # Diff at Tue, 07 Oct 2025 20:39:03 GMT:

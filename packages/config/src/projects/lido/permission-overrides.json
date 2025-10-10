@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-10-08T00:44:01.670Z",
+  "lastModified": "2025-10-10T05:38:22.883Z",
   "contracts": {
     "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": {
       "functions": [
@@ -1262,6 +1262,1064 @@
             }
           ],
           "timestamp": "2025-10-06T14:30:30.496Z"
+        }
+      ]
+    },
+    "eth:0x06cd61045f958A209a0f8D746e103eCc625f4193": {
+      "functions": [
+        {
+          "functionName": "proxy__ossify",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-10-08T14:06:47.587Z"
+        },
+        {
+          "functionName": "proxy__changeAdmin",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-10-08T14:06:47.589Z"
+        },
+        {
+          "functionName": "proxy__upgradeTo",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-10-08T14:06:47.596Z"
+        },
+        {
+          "functionName": "proxy__upgradeToAndCall",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-10-08T14:06:47.597Z"
+        }
+      ]
+    },
+    "eth:0xDa22fA1CEa40d05Fe4CD536967afdD839586D546": {
+      "functions": [
+        {
+          "functionName": "processExitDelayReport",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.MODULE"
+            }
+          ],
+          "timestamp": "2025-10-08T14:27:24.874Z"
+        },
+        {
+          "functionName": "processStrikesReport",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.STRIKES"
+            }
+          ],
+          "timestamp": "2025-10-08T14:28:07.217Z"
+        },
+        {
+          "functionName": "processTriggeredExit",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.MODULE"
+            }
+          ],
+          "timestamp": "2025-10-08T14:28:25.469Z"
+        }
+      ]
+    },
+    "eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f": {
+      "functions": [
+        {
+          "functionName": "proxy_upgradeTo",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Upgrades the implementation of the WithdrawalVault This can change the entire logic of the contract including change ownership of funds locked in the contract, if any.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-10-08T14:45:56.984Z"
+        },
+        {
+          "functionName": "proxy_changeAdmin",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Changes the proxy admin. The admin can update the entire implementation and logic of the WithdrawalVault.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-10-08T14:46:08.811Z"
+        }
+      ]
+    },
+    "eth:0x7D2BAa6094E1C4B60Da4cbAF4A77C3f4694fD53D": {
+      "functions": [
+        {
+          "functionName": "withdrawWithdrawals",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.LIDO"
+            }
+          ],
+          "timestamp": "2025-10-08T14:44:13.265Z"
+        },
+        {
+          "functionName": "recoverERC20",
+          "userClassification": "non-permissioned",
+          "timestamp": "2025-10-08T14:44:13.266Z"
+        },
+        {
+          "functionName": "recoverERC721",
+          "userClassification": "non-permissioned",
+          "timestamp": "2025-10-08T14:44:13.266Z"
+        },
+        {
+          "functionName": "addWithdrawalRequests",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.TRIGGERABLE_WITHDRAWALS_GATEWAY"
+            }
+          ],
+          "timestamp": "2025-10-08T14:44:13.267Z"
+        }
+      ]
+    },
+    "eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da": {
+      "functions": [
+        {
+          "functionName": "proxy__ossify",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Ossifies the proxy. This freezes the current implementation of the CSAccounting and effectively makes it non-upagreable by changing the proxy admin to the zero address.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-10-09T16:08:06.686Z"
+        },
+        {
+          "functionName": "proxy__changeAdmin",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Changes the proxy admin. The admin can update the entire implementation and logic of the CSAccounting.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-10-09T16:07:51.268Z"
+        },
+        {
+          "functionName": "proxy__upgradeTo",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Upgrades the implementation of the CSAccounting This can change the entire logic of the contract including change ownership of funds locked in the contract, if any, or influence interaction with the rest of the protocol.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-10-09T16:08:11.861Z"
+        },
+        {
+          "functionName": "proxy__upgradeToAndCall",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Upgrades the implementation of the CSAccounting (similarly to proxy__upgradeTo), and then calls a function in the new contract.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-10-09T16:08:23.930Z"
+        }
+      ]
+    },
+    "eth:0x6f09d2426c7405C5546413e6059F884D2D03f449": {
+      "functions": [
+        {
+          "functionName": "resume",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Resumes all paused functions.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.RESUME_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-09T16:00:27.921Z"
+        },
+        {
+          "functionName": "pauseFor",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Pauses deposits and rewards claims for a given amount of seconds.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.PAUSE_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-09T15:59:27.742Z"
+        },
+        {
+          "functionName": "setChargePenaltyRecipient",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Sets the charge recipient. The address that will receive the withdrawal charge.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-09T16:02:21.345Z"
+        },
+        {
+          "functionName": "setBondLockPeriod",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets the period (in seconds) to retain the bond lock.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-09T16:02:11.156Z"
+        },
+        {
+          "functionName": "addBondCurve",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Adds a new bond curve. Bond curves determine the price of a bond given the amount of validator keys a node operator has created.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_BOND_CURVES_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-09T15:51:14.611Z"
+        },
+        {
+          "functionName": "updateBondCurve",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Updates an existing bond curve.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_BOND_CURVES_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-09T16:02:41.704Z"
+        },
+        {
+          "functionName": "setBondCurve",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Sets the bond curve for a given node operator. This sets how much a node operator needs to deposit for bonds for each validator keys created.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.SET_BOND_CURVE_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-09T16:02:08.809Z"
+        },
+        {
+          "functionName": "depositETH",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Stake ETH with Lido and deposit stETH to the a node operator's bond.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.MODULE"
+            }
+          ],
+          "timestamp": "2025-10-09T15:52:11.687Z"
+        },
+        {
+          "functionName": "depositStETH",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Deposit stETH to the a node operator's bond.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.MODULE"
+            }
+          ],
+          "timestamp": "2025-10-09T15:52:26.023Z"
+        },
+        {
+          "functionName": "depositWstETH",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Unwarps wstETH and deposit stETH to a node operator's bond.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.MODULE"
+            }
+          ],
+          "timestamp": "2025-10-09T15:52:37.195Z"
+        },
+        {
+          "functionName": "lockBondETH",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Locks an amount in ETH from a node operator's bond. (see CSModule)\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.MODULE"
+            }
+          ],
+          "timestamp": "2025-10-09T15:57:30.728Z"
+        },
+        {
+          "functionName": "releaseLockedBondETH",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Releases a node operator's locked bond. (see CSModule)\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.MODULE"
+            }
+          ],
+          "timestamp": "2025-10-09T15:57:48.125Z"
+        },
+        {
+          "functionName": "compensateLockedBondETH",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Compensates a locked bond for the given node operator (see CSModule)\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.MODULE"
+            }
+          ],
+          "timestamp": "2025-10-09T15:51:54.934Z"
+        },
+        {
+          "functionName": "settleLockedBondETH",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Settle a locked bond for the given node operator. (see CSModule)\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.MODULE"
+            }
+          ],
+          "timestamp": "2025-10-09T15:58:14.199Z"
+        },
+        {
+          "functionName": "penalize",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Penalize a bond by burning stETH shares of the node operator.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.MODULE"
+            }
+          ],
+          "timestamp": "2025-10-09T15:58:34.173Z"
+        },
+        {
+          "functionName": "chargeFee",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Charge a fee from the bond by transfering stETH to the charge recipient.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.MODULE"
+            }
+          ],
+          "timestamp": "2025-10-09T15:51:35.781Z"
+        },
+        {
+          "functionName": "recoverERC20",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Sends the amount of token for the specified ERC-20 to the caller.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.RECOVERER_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-09T16:04:19.864Z"
+        },
+        {
+          "functionName": "recoverStETHShares",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Recovers all stETH shares from the contract (except bonds).",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.RECOVERER_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-09T16:05:14.117Z"
+        },
+        {
+          "functionName": "grantRole",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Grants a role within the contract to a given address. Roles may allow any address to manage bond curves and change the charge recipient. Contrary to the CSModule's design, the functions destined to be called by contracts (namely by the CSModule) cannot be hijacked as the CSModule's address used cannot be changed.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-09T16:06:18.562Z"
+        },
+        {
+          "functionName": "revokeRole",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Revokes a role within the contract.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-09T16:06:37.902Z"
+        }
+      ]
+    },
+    "eth:0x2b33CF282f867A7FF693A66e11B0FcC5552e4425": {
+      "functions": [
+        {
+          "functionName": "newAppInstance",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Creates a new upgradeable application instance by deploying the proxy. The instance has an app ID and will use the implementation contract (code logic) currently associated with this ID.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc].APP_MANAGER_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-08T16:16:03.134Z"
+        },
+        {
+          "functionName": "newPinnedAppInstance",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Creates a new non-upgradeable (pinned) application instance. The instance has an app ID and will use the implementation contract (code logic) associated with this ID.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc].APP_MANAGER_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-08T16:17:43.679Z"
+        },
+        {
+          "functionName": "setApp",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets the implementation contract (code logic) that corresponds to a given namespace and app ID in the registry. All proxies in this namespace with this AppID will now point to this new implementation.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc].APP_MANAGER_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-08T16:15:38.344Z"
+        },
+        {
+          "functionName": "setRecoveryVaultAppId",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Sets the recovery vault. A contract to recover assets if neeeded. The current vault is the Agent contract.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc].APP_MANAGER_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-08T16:16:37.995Z"
+        }
+      ]
+    },
+    "eth:0xde3A93028F2283cc28756B3674BD657eaFB992f4": {
+      "functions": [
+        {
+          "functionName": "mint",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "unscored",
+          "description": "Mints a given amount of LDO token to a specified address.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[0xf73a1260d222f447210581DDf212D915c09a3249].MINT_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-08T16:27:58.298Z"
+        },
+        {
+          "functionName": "issue",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Mints a given amount of LDO token to the TokenManager. This is used to create a treasury of tokens that can later be assigned.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[0xf73a1260d222f447210581DDf212D915c09a3249].ISSUE_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-08T16:26:56.132Z"
+        },
+        {
+          "functionName": "assign",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Assigns a given amount of LDO tokens to a recipient. The tokens are directly taken out of the TokenManager and transferred to the recipient.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[0xf73a1260d222f447210581DDf212D915c09a3249].ASSIGN_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-08T16:25:14.434Z"
+        },
+        {
+          "functionName": "burn",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Burns the given amount of LDO tokens of any given address. This allows this contract to burn any user's LDO tokens.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[0xf73a1260d222f447210581DDf212D915c09a3249].BURN_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-08T16:26:10.326Z"
+        },
+        {
+          "functionName": "assignVested",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Assigns a given amount of LDO tokens to a recipient with a specific vesting plan. The full amount is transferred to the address but the LDO token is trusted to call the TokenManager upon each transfer and enforce the vesting plan. The plan can optionally contain a revokable flag which allows the manager to cancel the remaining locked tokens in a plan at any time before the plan expires.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[0xf73a1260d222f447210581DDf212D915c09a3249].ASSIGN_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-08T16:25:15.618Z"
+        },
+        {
+          "functionName": "revokeVesting",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Revokes a user's vesting plan. This will cancel all the tokens that are still locked.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[0xf73a1260d222f447210581DDf212D915c09a3249].REVOKE_VESTINGS_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-08T16:29:18.966Z"
+        },
+        {
+          "functionName": "forward",
+          "userClassification": "non-permissioned",
+          "checked": true,
+          "score": "unscored",
+          "description": "Runs an Aragon EVM script on behalf of a token holder. The token holder needs to have permission and the contract uses a blacklist to prevent the holder from executing actions on behalf of the TokenManager.\t",
+          "ownerDefinitions": [],
+          "timestamp": "2025-10-08T16:28:45.040Z"
+        }
+      ]
+    },
+    "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32": {
+      "functions": [
+        {
+          "functionName": "changeController",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Changes the controller contract. The controller (currently TokenManager) can arbitrarily mint and burn LDO tokens from and to any user. This could put the governance and entire protocol at risk since LDO tokens are used to vote.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.controller"
+            }
+          ],
+          "timestamp": "2025-10-08T16:32:53.157Z"
+        },
+        {
+          "functionName": "generateTokens",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Generates (mints) new LDO to a specific address.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.controller"
+            }
+          ],
+          "timestamp": "2025-10-08T16:32:26.125Z"
+        },
+        {
+          "functionName": "destroyTokens",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Destroys (burns) LDO tokens from a given arbitrary address.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.controller"
+            }
+          ],
+          "timestamp": "2025-10-08T16:32:39.777Z"
+        },
+        {
+          "functionName": "enableTransfers",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Enables or disables transfer of LDO tokens.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.controller"
+            }
+          ],
+          "timestamp": "2025-10-08T16:33:30.402Z"
+        },
+        {
+          "functionName": "claimTokens",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Transfers any given token held in the contract to the TokenManager. This is meant to recover funds sent to the contract by mistake.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.controller"
+            }
+          ],
+          "timestamp": "2025-10-08T16:33:14.732Z"
+        }
+      ]
+    },
+    "eth:0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb": {
+      "functions": [
+        {
+          "functionName": "pauseStaking",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Stops accepting new ETH deposits to the protocol. This ensures new funds do not enter the system without affecting other operations.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84].STAKING_PAUSE_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-09T17:28:09.280Z"
+        },
+        {
+          "functionName": "resumeStaking",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Re-enables staking of new ETH into the contract.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84].STAKING_CONTROL_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-09T17:27:38.945Z"
+        },
+        {
+          "functionName": "setStakingLimit",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Limits the rate and total stake of ETH allows into the contract. This is done by imposing a maximum stake limit and a rate of increase per block. This will prevent users from depositing additional ETH if the limit is reached.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84].STAKING_CONTROL_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-09T17:28:21.692Z"
+        },
+        {
+          "functionName": "removeStakingLimit",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Removes the staking limit, allowing unlimited deposits.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84].STAKING_CONTROL_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-09T17:27:53.101Z"
+        },
+        {
+          "functionName": "stop",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Stops all staking similarly to pauseStaking, and prevents transfer of stETH as well as beacone chain oracle submissions. This is a critical emergency function that completely halts the users' ability to enter and exit the system.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84].PAUSE_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-09T17:28:39.634Z"
+        },
+        {
+          "functionName": "resume",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Resumes all operations paused after stop was called.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.kernel().accessControl.RESUME_ROLE.members"
+            },
+            {
+              "path": "@acl.permissions[eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84].RESUME_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-09T17:28:51.443Z"
+        },
+        {
+          "functionName": "unsafeChangeDepositedValidators",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Unsafely changes the deposited validators counter. This may be used to onboard external validators to Lido. This is function could dangerously change the accounting metrics in Lido as it changes a parameter without any safeguards. Such a change could artificially inflate or deflate the value of stETH or manipulate the expected returns calculation.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84].UNSAFE_CHANGE_DEPOSITED_VALIDATORS_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-09T17:28:17.408Z"
+        },
+        {
+          "functionName": "transferToVault",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Default recovery function in Aragon Apps. Irreversably disabled.\t",
+          "ownerDefinitions": [
+            {
+              "path": "0x0"
+            }
+          ],
+          "timestamp": "2025-10-09T16:10:16.817Z"
+        },
+        {
+          "functionName": "receiveELRewards",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "A function to allow the rewards vault to send rewards to this contract without them being considered user deposits.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@getLidoLocator.elRewardsVault"
+            }
+          ],
+          "timestamp": "2025-10-09T16:20:58.726Z"
+        },
+        {
+          "functionName": "receiveWithdrawals",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "A function to allow the WithdrawalVault to receive funds from exited validators without them being considered user deposits.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@getLidoLocator.withdrawalVault"
+            }
+          ],
+          "timestamp": "2025-10-09T16:22:33.790Z"
+        },
+        {
+          "functionName": "handleOracleReport",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Handles the oracle data and takes a series of actions accordingly. Actions include process withdrawals, burning shares, distribute rewards, and rebase tokens. Malicious or wrong data reporting could lead to accounting errors and potential loss of user funds and unclaimed yield.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@getLidoLocator.accountingOracle"
+            }
+          ],
+          "timestamp": "2025-10-09T16:25:50.042Z"
+        },
+        {
+          "functionName": "deposit",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Deposits a multiple of DEPOSIT_SIZE ETH into the ethereum staking contract to create a new validator. This can only be called by the DepositSecurityModule which will make sure the call reverts if the state of the deposit contract has changed between the submission and execution of the deposit.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@getLidoLocator.depositSecurityModule"
+            }
+          ],
+          "timestamp": "2025-10-09T16:27:33.055Z"
+        }
+      ]
+    },
+    "eth:0x23E0B465633FF5178808F4A75186E2F2F9537021": {
+      "functions": [
+        {
+          "functionName": "execute",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Allows the contract owner to execute external function calls on target contracts, optionally transferring ether. The purpose of this function is to execute governance decision, in particular, it has the permission to execute calls throught the Agent contract, controlling the entire Lido protocol.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2025-10-10T01:06:19.062Z"
+        },
+        {
+          "functionName": "renounceOwnership",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "This changes the owner of the contract to the zero address, preventing any further _execute_ calls. If at the time of use this contract is still the only allowed caller of the Agent, this could render the protocol immutable.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2025-10-10T01:08:00.586Z"
+        },
+        {
+          "functionName": "transferOwnership",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Transfer the ownership of the contract to an other address. The address will have the right to call _execute_, potentially making any action in the protocol.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2025-10-10T01:08:46.624Z"
+        }
+      ]
+    },
+    "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316": {
+      "functions": [
+        {
+          "functionName": "submit",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self._timelockState.governance"
+            }
+          ],
+          "timestamp": "2025-10-10T05:14:06.516Z"
+        },
+        {
+          "functionName": "schedule",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getGovernance"
+            }
+          ],
+          "timestamp": "2025-10-10T05:38:22.883Z"
+        },
+        {
+          "functionName": "cancelAllNonExecutedProposals",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getGovernance"
+            }
+          ],
+          "timestamp": "2025-10-10T05:38:13.563Z"
+        },
+        {
+          "functionName": "setGovernance",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getAdminExecutor"
+            }
+          ],
+          "timestamp": "2025-10-10T05:37:12.933Z"
+        },
+        {
+          "functionName": "setAfterSubmitDelay",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getAdminExecutor"
+            }
+          ],
+          "timestamp": "2025-10-10T05:37:28.728Z"
+        },
+        {
+          "functionName": "setAfterScheduleDelay",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getAdminExecutor"
+            }
+          ],
+          "timestamp": "2025-10-10T05:37:31.937Z"
+        },
+        {
+          "functionName": "transferExecutorOwnership",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getAdminExecutor"
+            }
+          ],
+          "timestamp": "2025-10-10T05:37:02.362Z"
+        },
+        {
+          "functionName": "setEmergencyProtectionActivationCommittee",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getAdminExecutor"
+            }
+          ],
+          "timestamp": "2025-10-10T05:37:20.649Z"
+        },
+        {
+          "functionName": "setEmergencyProtectionExecutionCommittee",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getAdminExecutor"
+            }
+          ],
+          "timestamp": "2025-10-10T05:37:15.440Z"
+        },
+        {
+          "functionName": "setEmergencyProtectionEndDate",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getAdminExecutor"
+            }
+          ],
+          "timestamp": "2025-10-10T05:36:50.770Z"
+        },
+        {
+          "functionName": "setEmergencyModeDuration",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getAdminExecutor"
+            }
+          ],
+          "timestamp": "2025-10-10T05:37:23.534Z"
+        },
+        {
+          "functionName": "setEmergencyGovernance",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getAdminExecutor"
+            }
+          ],
+          "timestamp": "2025-10-10T05:37:26.152Z"
+        },
+        {
+          "functionName": "activateEmergencyMode",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getEmergencyActivationCommittee"
+            }
+          ],
+          "timestamp": "2025-10-10T05:14:40.950Z"
+        },
+        {
+          "functionName": "emergencyExecute",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getEmergencyActivationCommittee"
+            }
+          ],
+          "timestamp": "2025-10-10T05:15:01.907Z"
+        },
+        {
+          "functionName": "deactivateEmergencyMode",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getAdminExecutor"
+            }
+          ],
+          "timestamp": "2025-10-10T05:37:44.835Z"
+        },
+        {
+          "functionName": "emergencyReset",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getEmergencyActivationCommittee"
+            }
+          ],
+          "timestamp": "2025-10-10T05:15:13.834Z"
+        },
+        {
+          "functionName": "setAdminExecutor",
+          "userClassification": "permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getAdminExecutor"
+            }
+          ],
+          "timestamp": "2025-10-10T05:37:34.659Z"
         }
       ]
     }
