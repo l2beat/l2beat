@@ -9,8 +9,11 @@ export interface CacheItem<T = unknown> {
 }
 
 export class Cache {
-  private client: RedisClientType
-  constructor(redisUrl: string) {
+  private client: RedisClientType | undefined
+  constructor(redisUrl: string | undefined) {
+    if (!redisUrl) {
+      return
+    }
     this.client = createClient({
       url: redisUrl,
       socket: redisUrl.includes('localhost')
@@ -33,6 +36,7 @@ export class Cache {
   }
 
   async write(key: string, data: unknown, expires: number) {
+    if (!this.client) return
     const item: CacheItem = {
       data,
       timestamp: UnixTime.now(),
@@ -45,6 +49,8 @@ export class Cache {
   }
 
   async read<T>(key: string): Promise<CacheItem<T> | undefined> {
+    if (!this.client) return
+
     await this.connect()
     const data = await this.client.get(key)
     if (!data) {
@@ -59,7 +65,7 @@ export class Cache {
 
   private async connect() {
     // opening a connection takes significant time so it's better to keep it open
-    if (this.client.isReady) return
+    if (!this.client || this.client.isReady) return
     await this.client.connect()
   }
 }
