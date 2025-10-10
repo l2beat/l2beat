@@ -1,12 +1,10 @@
 import type { Project } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import groupBy from 'lodash/groupBy'
-import partition from 'lodash/partition'
 import pick from 'lodash/pick'
 import { env } from '~/env'
-import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { queryExecutor } from '~/server/queryExecutor'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { getTvsProjects } from './utils/getTvsProjects'
 import { getTvsTargetTimestamp } from './utils/getTvsTargetTimestamp'
@@ -52,37 +50,33 @@ export async function get7dTvsBreakdown(
     return getMockTvsBreakdownData()
   }
 
-  const db = getDb()
   const target = customTarget ?? getTvsTargetTimestamp()
 
-  const projectIds = props.type === 'projects' ? props.projectIds : undefined
-
-  const [tvsProjects, values] = await Promise.all([
-    getTvsProjects(createTvsBreakdownProjectFilter(props)),
-    db.tvsProjectValue.getProjectValuesAtTimestamps(
+  const tvsProjects = await getTvsProjects(
+    createTvsBreakdownProjectFilter(props),
+  )
+  const values = await queryExecutor.execute({
+    name: 'getSummedByTimestampTvsPerProjectQuery',
+    args: [
       target - 7 * UnixTime.DAY,
       target,
-      ['PROJECT', 'PROJECT_WA'],
-      projectIds,
-    ),
-  ])
+      tvsProjects.map((p) => p.projectId),
+    ],
+  })
 
   const valuesByProject = pick(
-    groupBy(values, (v) => v.project),
+    values.data,
     tvsProjects.map((p) => p.projectId),
   )
 
   const projects: Record<string, ProjectSevenDayTvsBreakdown> = {}
   for (const [projectId, projectValues] of Object.entries(valuesByProject)) {
-    const [projectValuesAll, projectValuesWithoutAssociated] = partition(
-      projectValues,
-      (v) => v.type === 'PROJECT',
-    )
+    const { all, withoutAssociated } = projectValues
 
-    const latestWithoutAssociated = projectValuesWithoutAssociated.at(-1)
-    const oldestWithoutAssociated = projectValuesWithoutAssociated.at(0)
-    const latestValue = projectValuesAll.at(-1)
-    const oldestValue = projectValuesAll.at(0)
+    const latestWithoutAssociated = withoutAssociated.at(-1)
+    const oldestWithoutAssociated = withoutAssociated.at(0)
+    const latestValue = all.at(-1)
+    const oldestValue = all.at(0)
 
     if (
       !latestValue ||

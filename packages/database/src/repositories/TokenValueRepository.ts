@@ -372,6 +372,181 @@ export class TokenValueRepository extends BaseRepository {
     }))
   }
 
+  async getSummedAtTimestampsByProjects(
+    oldestTimestamp: number,
+    latestTimestamp: number,
+    excludeAssociated: boolean,
+    projectIds?: string[],
+    cutOffTimestamp?: number,
+  ): Promise<
+    {
+      timestamp: UnixTime
+      project: string
+      value: number
+      canonical: number
+      external: number
+      native: number
+      ether: number
+      stablecoin: number
+      btc: number
+      rwaRestricted: number
+      rwaPublic: number
+      other: number
+      associated: number
+    }[]
+  > {
+    const valueField = 'valueForProject'
+
+    let query = this.db
+      .selectFrom('TokenValue')
+      .innerJoin('TokenMetadata', 'TokenValue.tokenId', 'TokenMetadata.tokenId')
+      .select((eb) => [
+        'TokenValue.projectId',
+        'TokenValue.timestamp',
+        eb.fn.sum(valueField).as('value'),
+        // Source breakdown
+        eb.fn
+          .sum(
+            eb
+              .case()
+              .when('TokenMetadata.source', '=', 'canonical')
+              .then(eb.ref(valueField))
+              .else(0)
+              .end(),
+          )
+          .as('canonical'),
+        eb.fn
+          .sum(
+            eb
+              .case()
+              .when('TokenMetadata.source', '=', 'external')
+              .then(eb.ref(valueField))
+              .else(0)
+              .end(),
+          )
+          .as('external'),
+        eb.fn
+          .sum(
+            eb
+              .case()
+              .when('TokenMetadata.source', '=', 'native')
+              .then(eb.ref(valueField))
+              .else(0)
+              .end(),
+          )
+          .as('native'),
+        // Category breakdown
+        eb.fn
+          .sum(
+            eb
+              .case()
+              .when('TokenMetadata.category', '=', 'ether')
+              .then(eb.ref(valueField))
+              .else(0)
+              .end(),
+          )
+          .as('ether'),
+        eb.fn
+          .sum(
+            eb
+              .case()
+              .when('TokenMetadata.category', '=', 'stablecoin')
+              .then(eb.ref(valueField))
+              .else(0)
+              .end(),
+          )
+          .as('stablecoin'),
+        eb.fn
+          .sum(
+            eb
+              .case()
+              .when('TokenMetadata.category', '=', 'btc')
+              .then(eb.ref(valueField))
+              .else(0)
+              .end(),
+          )
+          .as('btc'),
+        eb.fn
+          .sum(
+            eb
+              .case()
+              .when('TokenMetadata.category', '=', 'rwaRestricted')
+              .then(eb.ref(valueField))
+              .else(0)
+              .end(),
+          )
+          .as('rwaRestricted'),
+        eb.fn
+          .sum(
+            eb
+              .case()
+              .when('TokenMetadata.category', '=', 'rwaPublic')
+              .then(eb.ref(valueField))
+              .else(0)
+              .end(),
+          )
+          .as('rwaPublic'),
+        eb.fn
+          .sum(
+            eb
+              .case()
+              .when('TokenMetadata.category', '=', 'other')
+              .then(eb.ref(valueField))
+              .else(0)
+              .end(),
+          )
+          .as('other'),
+        eb.fn
+          .sum(
+            eb
+              .case()
+              .when('TokenMetadata.isAssociated', '=', true)
+              .then(eb.ref(valueField))
+              .else(0)
+              .end(),
+          )
+          .as('associated'),
+      ])
+      .where('timestamp', 'in', [
+        UnixTime.toDate(oldestTimestamp),
+        UnixTime.toDate(latestTimestamp),
+      ])
+      .where(
+        'timestamp',
+        '>=',
+        cutOffTimestamp
+          ? UnixTime.toDate(cutOffTimestamp)
+          : sql<Date>`NOW() - INTERVAL '30 days'`,
+      )
+      .groupBy(['TokenValue.timestamp', 'TokenValue.projectId'])
+
+    if (projectIds && projectIds.length > 0) {
+      query = query.where('TokenValue.projectId', 'in', projectIds)
+    }
+
+    if (excludeAssociated) {
+      query = query.where('TokenMetadata.isAssociated', '=', false)
+    }
+
+    const rows = await query.execute()
+
+    return rows.map((row) => ({
+      project: row.projectId,
+      timestamp: UnixTime.fromDate(row.timestamp),
+      value: Number(row.value),
+      canonical: Number(row.canonical),
+      external: Number(row.external),
+      native: Number(row.native),
+      ether: Number(row.ether),
+      stablecoin: Number(row.stablecoin),
+      btc: Number(row.btc),
+      rwaRestricted: Number(row.rwaRestricted),
+      rwaPublic: Number(row.rwaPublic),
+      other: Number(row.other),
+      associated: Number(row.associated),
+    }))
+  }
+
   async getTvsTableBySource(
     projectIds: string[],
     depth: number,
