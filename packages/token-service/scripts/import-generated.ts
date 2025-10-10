@@ -96,8 +96,8 @@ async function importTransformed(db: TokenDatabase) {
 
 async function clearTokenTables(db: TokenDatabase) {
   console.log('Clearing all Abstract and Deployed tokens')
-  await planAndExecute(db, { type: 'DeleteAllDeployedTokensIntent' })
-  await planAndExecute(db, { type: 'DeleteAllAbstractTokensIntent' })
+  await db.deployedToken.deleteAll()
+  await db.abstractToken.deleteAll()
 }
 
 async function main() {

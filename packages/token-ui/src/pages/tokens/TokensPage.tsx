@@ -7,12 +7,9 @@ import { DeployedTokenView } from './DeployedTokenView'
 export function TokensPage() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { data } = api.tokens.getById.useQuery(
-    { id: id ?? '' },
-    {
-      enabled: id !== '',
-    },
-  )
+  const { data } = api.tokens.getById.useQuery(id ?? '', {
+    enabled: id !== '',
+  })
   if (!id || data === null) {
     navigate('/not-found')
     return

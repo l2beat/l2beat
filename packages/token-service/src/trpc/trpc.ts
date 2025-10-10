@@ -1,5 +1,4 @@
 import { initTRPC, TRPCError } from '@trpc/server'
-
 import { jwtVerify } from 'jose'
 import { config } from '../config'
 import { parseCookies } from '../utils/parseCookies'
@@ -41,9 +40,9 @@ export const router = t.router
 /**
  * Used to define a procedure in the tRPC API.
  */
-export const publicProcedure = t.procedure
+const publicProcedure = t.procedure
 
-export const protectedProcedure = t.procedure.use(async (opts) => {
+export const protectedProcedure = publicProcedure.use(async (opts) => {
   const auth = config.auth
   if (auth === false) {
     return opts.next()
