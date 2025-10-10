@@ -2,6 +2,7 @@ import type { Plan } from '@l2beat/token-service'
 import { skipToken, useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { coingecko } from '~/api/coingecko'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import {
@@ -54,8 +55,11 @@ export function AddAbstractToken({
 
   const { mutate: planMutate, isPending } = api.plan.generate.useMutation({
     onSuccess: (data) => {
-      if (data.outcome !== 'success') return
-      setPlan(data.plan)
+      if (data.outcome === 'success') {
+        setPlan(data.plan)
+      } else {
+        toast.error(data.error)
+      }
     },
   })
 

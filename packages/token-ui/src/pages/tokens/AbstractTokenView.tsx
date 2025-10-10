@@ -4,6 +4,7 @@ import { ArrowRightIcon, CoinsIcon, TrashIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import { toast } from 'sonner'
 import { coingecko } from '~/api/coingecko'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import { Button } from '~/components/core/Button'
@@ -69,6 +70,8 @@ export function AbstractTokenView({
     onSuccess: (data) => {
       if (data.outcome === 'success') {
         setPlan(data.plan)
+      } else {
+        toast.error(data.error)
       }
     },
   })

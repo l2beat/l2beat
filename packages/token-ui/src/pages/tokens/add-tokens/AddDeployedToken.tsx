@@ -1,6 +1,7 @@
 import type { Plan } from '@l2beat/token-service'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import {
   DeployedTokenForm,
@@ -23,6 +24,8 @@ export function AddDeployedToken() {
     onSuccess: (data) => {
       if (data.outcome === 'success') {
         setPlan(data.plan)
+      } else {
+        toast.error(data.error)
       }
     },
   })
