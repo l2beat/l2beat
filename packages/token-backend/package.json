@@ -5,6 +5,16 @@
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": "./build/index.js",
+      "default": "./build/index.js"
+    }
+  },
+  "files": [
+    "build"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "start": "node build/server.js",
