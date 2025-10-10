@@ -145,7 +145,7 @@ function findDispatchMessageId(
   sentTransferRemote: NonNullable<ReturnType<typeof parseSentTransferRemote>>,
 ): `0x${string}` | undefined {
   const currentLogIndex = input.log.logIndex
-  if (currentLogIndex == null) return undefined
+  if (currentLogIndex == null) return
   const senderAddress = input.log.address.toLowerCase()
 
   for (let i = input.txLogs.length - 1; i >= 0; i--) {
@@ -154,19 +154,17 @@ function findDispatchMessageId(
 
     const dispatch = parseDispatch(txLog, null)
     if (!dispatch) continue
-    if (dispatch.sender.toLowerCase() !== senderAddress) continue
+    if (dispatch.sender.toLowerCase() !== senderAddress) return
+    // TODO: edge case logs
     if (Number(dispatch.destination) !== Number(sentTransferRemote.destination))
-      continue
+      return
 
-    const nextLog = input.txLogs.find(
-      // biome-ignore lint/style/noNonNullAssertion: It's there
-      (x) => x.logIndex === txLog.logIndex! + 1,
-    )
+    const nextLog = input.txLogs[i + 1]
     const dispatchId = nextLog && parseDispatchId(nextLog, null)
     if (!dispatchId) continue
     return dispatchId.messageId
   }
-  return undefined
+  return
 }
 
 function findProcessMessageId(
@@ -176,7 +174,7 @@ function findProcessMessageId(
   >,
 ): `0x${string}` | undefined {
   const currentLogIndex = input.log.logIndex
-  if (currentLogIndex == null) return undefined
+  if (currentLogIndex == null) return
   const recipientAddress = input.log.address.toLowerCase()
 
   for (let i = input.txLogs.length - 1; i >= 0; i--) {
@@ -185,17 +183,16 @@ function findProcessMessageId(
 
     const process = parseProcess(txLog, null)
     if (!process) continue
-    if (process.recipient.toLowerCase() !== recipientAddress) continue
-    if (Number(process.origin) !== Number(receivedTransferRemote.origin))
-      continue
+    if (process.recipient.toLowerCase() !== recipientAddress) return
+    if (Number(process.origin) !== Number(receivedTransferRemote.origin)) return
 
     const nextLog = input.txLogs.find(
       // biome-ignore lint/style/noNonNullAssertion: It's there
       (x) => x.logIndex === txLog.logIndex! + 1,
     )
     const processId = nextLog && parseProcessId(nextLog, null)
-    if (!processId) continue
+    if (!processId) return
     return processId.messageId
   }
-  return undefined
+  return
 }
