@@ -547,6 +547,31 @@ export class TokenValueRepository extends BaseRepository {
     }))
   }
 
+  async getSummedAtTimestampPerProject(timestamp: number): Promise<
+    {
+      project: string
+      value: number
+    }[]
+  > {
+    const valueField = 'valueForProject'
+
+    const query = this.db
+      .selectFrom('TokenValue')
+      .select((eb) => [
+        'TokenValue.projectId',
+        eb.fn.sum(valueField).as('value'),
+      ])
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .groupBy('TokenValue.projectId')
+
+    const rows = await query.execute()
+
+    return rows.map((row) => ({
+      project: row.projectId,
+      value: Number(row.value),
+    }))
+  }
+
   async getTvsTableBySource(
     projectIds: string[],
     depth: number,

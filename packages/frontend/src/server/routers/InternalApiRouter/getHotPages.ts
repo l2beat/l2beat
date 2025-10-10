@@ -1,14 +1,14 @@
 import type { Project } from '@l2beat/config'
-import type { ProjectValueRecord } from '@l2beat/database'
 import { groupByBridgeTabs } from '~/pages/bridges/utils/groupByBridgeTabs'
 import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
-import { getDb } from '~/server/database'
 import { getScalingTab } from '~/server/features/scaling/getCommonScalingEntry'
+import {
+  getProjectsLatestTvsUsd,
+  type ProjectsLatestTvsUsd,
+} from '~/server/features/scaling/tvs/getLatestTvsUsd'
 import { ps } from '~/server/projects'
 
 export async function getHotPages() {
-  const db = getDb()
-
   const [scaling, bridges, daLayers, daBridges, ecosystems, latestValues] =
     await Promise.all([
       ps.getProjects({
@@ -28,7 +28,7 @@ export async function getHotPages() {
       ps.getProjects({
         select: ['ecosystemConfig'],
       }),
-      db.tvsProjectValue.getLatestValues('PROJECT'),
+      getProjectsLatestTvsUsd(),
     ])
 
   const groupedScaling = groupByScalingTabs(
@@ -86,10 +86,10 @@ export async function getHotPages() {
     ...ecosystemPaths,
   ]
 }
-function sortByTvs(latestValues: ProjectValueRecord[]) {
+function sortByTvs(latestValues: ProjectsLatestTvsUsd) {
   return (a: Project, b: Project) => {
-    const aValue = latestValues.find((v) => v.project === a.id)
-    const bValue = latestValues.find((v) => v.project === b.id)
-    return (bValue?.value ?? 0) - (aValue?.value ?? 0)
+    const aValue = latestValues[a.id]
+    const bValue = latestValues[b.id]
+    return (bValue ?? 0) - (aValue ?? 0)
   }
 }

@@ -1,9 +1,11 @@
 import type { ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
-import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { queryExecutor } from '~/server/queryExecutor'
+import { getTvsProjects } from './utils/getTvsProjects'
+import { getTvsTargetTimestamp } from './utils/getTvsTargetTimestamp'
 
-type ProjectsLatestTvsUsd = Record<ProjectId, number>
+export type ProjectsLatestTvsUsd = Record<ProjectId, number>
 
 /*
   This function should only be used for ordering projects by S.
@@ -14,12 +16,21 @@ export async function getProjectsLatestTvsUsd(): Promise<ProjectsLatestTvsUsd> {
   if (env.MOCK) {
     return getMockProjectsLatestTvsUsd()
   }
-  const db = getDb()
-  const values = await db.tvsProjectValue.getLatestValues('PROJECT')
+  const target = getTvsTargetTimestamp()
+
+  const tvsProjects = await getTvsProjects((p) => true)
+  const values = await queryExecutor.execute({
+    name: 'getAtTimestampPerProjectQuery',
+    args: [target],
+  })
 
   const groupedByProject: Record<ProjectId, number> = {}
-  for (const value of values) {
-    groupedByProject[value.project as ProjectId] = value.value
+  for (const { projectId } of tvsProjects) {
+    const value = values.data[projectId]
+    if (!value) {
+      continue
+    }
+    groupedByProject[projectId] = value
   }
 
   return groupedByProject
