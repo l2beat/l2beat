@@ -129,24 +129,22 @@ export function AbstractTokenView({
                 form={form}
                 onSubmit={(values) => {
                   planMutate({
-                    intent: {
-                      type: 'UpdateAbstractTokenIntent',
-                      id: token.id,
-                      update: {
-                        symbol: values.symbol,
-                        issuer: values.issuer || null,
-                        category: values.category,
-                        iconUrl: values.iconUrl || null,
-                        coingeckoId: values.coingeckoId || null,
-                        comment: values.comment || null,
-                        coingeckoListingTimestamp:
-                          values.coingeckoListingTimestamp
-                            ? UnixTime.fromDate(
-                                new Date(values.coingeckoListingTimestamp),
-                              )
-                            : null,
-                        reviewed: false,
-                      },
+                    type: 'UpdateAbstractTokenIntent',
+                    id: token.id,
+                    update: {
+                      symbol: values.symbol,
+                      issuer: values.issuer || null,
+                      category: values.category,
+                      iconUrl: values.iconUrl || null,
+                      coingeckoId: values.coingeckoId || null,
+                      comment: values.comment || null,
+                      coingeckoListingTimestamp:
+                        values.coingeckoListingTimestamp
+                          ? UnixTime.fromDate(
+                              new Date(values.coingeckoListingTimestamp),
+                            )
+                          : null,
+                      reviewed: false,
                     },
                   })
                 }}
@@ -215,10 +213,8 @@ export function AbstractTokenView({
           className="mt-2"
           onClick={() => {
             planMutate({
-              intent: {
-                type: 'DeleteAbstractTokenIntent',
-                id: token.id,
-              },
+              type: 'DeleteAbstractTokenIntent',
+              id: token.id,
             })
           }}
           isLoading={isPending}

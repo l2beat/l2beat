@@ -19,7 +19,7 @@ export const tokensRouter = router({
           if (!acc[deployed.abstractTokenId]) {
             acc[deployed.abstractTokenId] = []
           }
-          acc[deployed.abstractTokenId].push(deployed)
+          acc[deployed.abstractTokenId]?.push(deployed)
         }
         return acc
       },

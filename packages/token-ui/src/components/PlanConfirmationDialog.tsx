@@ -126,7 +126,7 @@ export function PlanConfirmationDialog({
           </DialogDescription>
           <DialogFooter>
             <ButtonWithSpinner
-              onClick={() => executePlan({ plan })}
+              onClick={() => executePlan(plan)}
               isLoading={isPending}
             >
               Confirm

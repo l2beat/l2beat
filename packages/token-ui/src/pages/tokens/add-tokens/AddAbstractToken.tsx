@@ -111,19 +111,17 @@ export function AddAbstractToken({
       return
     }
     planMutate({
-      intent: {
-        type: 'AddAbstractTokenIntent',
-        record: {
-          ...values,
-          issuer: values.issuer || null,
-          iconUrl: values.iconUrl || null,
-          coingeckoId: values.coingeckoId || null,
-          comment: values.comment || null,
-          coingeckoListingTimestamp: values.coingeckoListingTimestamp
-            ? UnixTime.fromDate(new Date(values.coingeckoListingTimestamp))
-            : null,
-          reviewed: false,
-        },
+      type: 'AddAbstractTokenIntent',
+      record: {
+        ...values,
+        issuer: values.issuer || null,
+        iconUrl: values.iconUrl || null,
+        coingeckoId: values.coingeckoId || null,
+        comment: values.comment || null,
+        coingeckoListingTimestamp: values.coingeckoListingTimestamp
+          ? UnixTime.fromDate(new Date(values.coingeckoListingTimestamp))
+          : null,
+        reviewed: false,
       },
     })
   }

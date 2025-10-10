@@ -2,7 +2,7 @@ import * as trpcExpress from '@trpc/server/adapters/express'
 import { config as dotenv } from 'dotenv'
 import express from 'express'
 import { db } from './database/db'
-import { appRouter } from './trpc/root'
+import { appRouter } from './trpc/appRouter'
 
 dotenv()
 

@@ -66,16 +66,14 @@ export function AddDeployedToken() {
     }
 
     planMutate({
-      intent: {
-        type: 'AddDeployedTokenIntent',
-        record: {
-          ...values,
-          comment: values.comment || null,
-          abstractTokenId: values.abstractTokenId || null,
-          deploymentTimestamp: UnixTime.fromDate(
-            new Date(values.deploymentTimestamp),
-          ),
-        },
+      type: 'AddDeployedTokenIntent',
+      record: {
+        ...values,
+        comment: values.comment || null,
+        abstractTokenId: values.abstractTokenId || null,
+        deploymentTimestamp: UnixTime.fromDate(
+          new Date(values.deploymentTimestamp),
+        ),
       },
     })
   }

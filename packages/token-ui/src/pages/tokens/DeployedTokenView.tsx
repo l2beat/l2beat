@@ -62,21 +62,19 @@ export function DeployedTokenView({ token }: { token: DeployedToken }) {
       return
     }
     planMutate({
-      intent: {
-        type: 'UpdateDeployedTokenIntent',
-        pk: {
-          address: values.address,
-          chain: values.chain,
-        },
-        update: {
-          abstractTokenId: values.abstractTokenId || null,
-          comment: values.comment || null,
-          decimals: values.decimals,
-          symbol: values.symbol,
-          deploymentTimestamp: UnixTime.fromDate(
-            new Date(values.deploymentTimestamp),
-          ),
-        },
+      type: 'UpdateDeployedTokenIntent',
+      pk: {
+        address: values.address,
+        chain: values.chain,
+      },
+      update: {
+        abstractTokenId: values.abstractTokenId || null,
+        comment: values.comment || null,
+        decimals: values.decimals,
+        symbol: values.symbol,
+        deploymentTimestamp: UnixTime.fromDate(
+          new Date(values.deploymentTimestamp),
+        ),
       },
     })
   }
@@ -164,12 +162,10 @@ export function DeployedTokenView({ token }: { token: DeployedToken }) {
           className="mt-2"
           onClick={() => {
             planMutate({
-              intent: {
-                type: 'DeleteDeployedTokenIntent',
-                pk: {
-                  address: token.address,
-                  chain: token.chain,
-                },
+              type: 'DeleteDeployedTokenIntent',
+              pk: {
+                address: token.address,
+                chain: token.chain,
               },
             })
           }}
