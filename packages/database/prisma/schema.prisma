@@ -265,6 +265,7 @@ model TokenValue {
   @@index([projectId])
   @@index([tokenId])
   @@index([projectId, tokenId, timestamp(sort: Desc)])
+  @@index([projectId, timestamp, tokenId, valueForProject, valueForSummary])
 }
 
 model TokenMetadata {
