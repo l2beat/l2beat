@@ -20,6 +20,8 @@ export const myshell: ScalingProject = upcomingL2({
         'https://twitter.com/myshell_ai',
         'https://discord.com/invite/myshell',
       ],
+      bridges: ['https://bridge.myshell.ai/'],
+      explorers: ['https://myshell-testnet-explorer.alt.technology'],
     },
   },
   proofSystem: {
