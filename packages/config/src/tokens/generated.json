@@ -15155,6 +15155,20 @@
       "supply": "totalSupply"
     },
     {
+      "name": "Bitcoin on Katana",
+      "coingeckoId": "bitcoin-on-katana",
+      "address": "0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
+      "symbol": "BTCK",
+      "decimals": 8,
+      "deploymentTimestamp": 1750956714,
+      "coingeckoListingTimestamp": 1755216000,
+      "category": "btc",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68287/large/btc.png?1755248096",
+      "chainId": 747474,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Jito Staked SOL",
       "coingeckoId": "jito-staked-sol",
       "address": "0x6C16E26013f2431e8B2e1Ba7067ECCcad0Db6C52",
