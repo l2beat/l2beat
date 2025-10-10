@@ -18,6 +18,9 @@ function toDeployedId(chain: string | undefined, address: string | undefined) {
   if (!chain || !address) {
     return
   }
+  if (address === 'native' || address === '0x') {
+    return
+  }
   const format = chainToAddressFormat[chain]
   if (!format) {
     return
@@ -30,7 +33,7 @@ export class FinancialsService extends TimeLoop {
     private db: Database,
     private tokenDb: ITokenDb,
     protected logger: Logger,
-    intervalMs = 20 * 60 * 1000,
+    intervalMs = 10_000,
   ) {
     super({ intervalMs })
     this.logger = logger.for(this)
@@ -51,6 +54,13 @@ export class FinancialsService extends TimeLoop {
         dstId: toDeployedId(u.dstChain, u.dstTokenAddress),
       }),
     )
+    if (unprocessed.length === 0) {
+      this.logger.info('No uprocessed transfers found')
+      return
+    }
+    this.logger.info('Processing transfers', {
+      transfers: unprocessed.length,
+    })
 
     const tokens = unique(
       unprocessed
@@ -71,7 +81,16 @@ export class FinancialsService extends TimeLoop {
       UnixTime.DAY,
     )
 
-    function getUpdate(id: DeployedTokenId, rawAmount: string | undefined) {
+    // run
+    // take a look at unmatched event
+    // add logs
+    // add tests for repository
+    // add tests for Financials Service
+    function getUpdate(
+      id: DeployedTokenId,
+      rawAmount: string | undefined,
+      logger: Logger,
+    ) {
       let abstractTokenId: AbstractTokenId | undefined
       let price: number | undefined
       let amount: number | undefined
@@ -79,6 +98,8 @@ export class FinancialsService extends TimeLoop {
       const priceInfo = priceInfos.get(id)
       if (priceInfo) {
         abstractTokenId = priceInfo.abstractId
+      } else {
+        logger.warn('Missing price info', { id })
       }
       if (priceInfo?.coingeckoId) {
         price = prices.get(priceInfo.coingeckoId)
@@ -94,6 +115,7 @@ export class FinancialsService extends TimeLoop {
       }
       if (price !== undefined && amount !== undefined) {
         valueUsd = price * amount
+        logger.info('Value updated', { id, valueUsd })
       }
       return { abstractTokenId, price, amount, valueUsd }
     }
@@ -102,14 +124,22 @@ export class FinancialsService extends TimeLoop {
       unprocessed.map((t) => {
         const update: BridgeTransferUpdate = {}
         if (t.srcId) {
-          const srcUpdate = getUpdate(t.srcId, t.transfer.srcRawAmount)
+          const srcUpdate = getUpdate(
+            t.srcId,
+            t.transfer.srcRawAmount,
+            this.logger,
+          )
           update.srcAbstractTokenId = srcUpdate.abstractTokenId
           update.srcAmount = srcUpdate.amount
           update.srcPrice = srcUpdate.price
           update.srcValueUsd = srcUpdate.valueUsd
         }
         if (t.dstId) {
-          const dstUpdate = getUpdate(t.dstId, t.transfer.dstRawAmount)
+          const dstUpdate = getUpdate(
+            t.dstId,
+            t.transfer.dstRawAmount,
+            this.logger,
+          )
           update.dstAbstractTokenId = dstUpdate.abstractTokenId
           update.dstAmount = dstUpdate.amount
           update.dstPrice = dstUpdate.price
@@ -118,12 +148,19 @@ export class FinancialsService extends TimeLoop {
         return { id: t.transfer.messageId, update }
       })
 
+    this.logger.info('Transfers processed', {
+      transfers: updates.length,
+    })
+
     await this.db.transaction(async () => {
       await Promise.all(
         updates.map((u) =>
           this.db.bridgeTransfer.updateFinancials(u.id, u.update),
         ),
       )
+    })
+    this.logger.info('Updated transfers saved in DB', {
+      transfers: updates.length,
     })
   }
 }

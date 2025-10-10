@@ -3,6 +3,23 @@ import { assert } from '@l2beat/shared-pure'
 import { expect, mockFn } from 'earl'
 import { TimeLoop } from './TimeLoop'
 
+class TestTimeLoop extends TimeLoop {
+  constructor(
+    private fn: () => Promise<string>,
+    protected logger: Logger,
+  ) {
+    super({ intervalMs: 1 })
+  }
+
+  async run() {
+    await this.fn()
+  }
+
+  override loopBody(): Promise<void> {
+    return super.loopBody()
+  }
+}
+
 describe(TimeLoop.name, () => {
   describe(TimeLoop.prototype.start.name, () => {
     it('executes and sets interval', async () => {
@@ -55,20 +72,3 @@ describe(TimeLoop.name, () => {
     })
   })
 })
-
-class TestTimeLoop extends TimeLoop {
-  constructor(
-    private fn: () => Promise<string>,
-    protected logger: Logger,
-  ) {
-    super({ intervalMs: 1 })
-  }
-
-  async run() {
-    await this.fn()
-  }
-
-  override loopBody(): Promise<void> {
-    return super.loopBody()
-  }
-}

@@ -200,7 +200,7 @@ export class BridgeTransferRepository extends BaseRepository {
     await this.db
       .updateTable('BridgeTransfer')
       .set({ ...update, isProcessed: true })
-      .where('messageId', 'in', id) // Should be renamed to transferId
+      .where('messageId', '=', id) // Should be renamed to transferId
       .execute()
   }
 
