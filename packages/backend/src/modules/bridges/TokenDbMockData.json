@@ -11,112 +11,112 @@
         {
           "chain": "arbitrum",
           "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "arbitrum",
           "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "base",
           "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "base",
           "address": "0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "bnb",
           "address": "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "ethereum",
           "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "hyperevm",
           "address": "0xb88339CB7199b77E23DB6E890353E22632Ba630f",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "lens",
           "address": "0x88F08E304EC4f90D644Cec3Fb69b8aD414acf884",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "linea",
           "address": "0x176211869cA2b568f2A7D4EE941E073a821EE1ff",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "lisk",
           "address": "0xF242275d3a6527d877f2c927a82D9b057609cc71",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "mode",
           "address": "0xd988097fb8612cc24eeC14542bC03424c656005f",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "optimism",
           "address": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "optimism",
           "address": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "polygon",
           "address": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "polygon",
           "address": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "scroll",
           "address": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "solana",
           "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "soneium",
           "address": "0xbA9986D2381edf1DA03B0B9c1f8b00dc4AacC369",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "unichain",
           "address": "0x078D782b760474a361dDA0AF3839290b0EF57AD6",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "worldchain",
           "address": "0x79A02482A880bCE3F13e09Da970dC34db4CD24d1",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "zksyncera",
           "address": "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "zora",
           "address": "0xCccCCccc7021b32EBb4e8C08314bD62F7c653EC4",
-          "decimals": 18
+          "decimals": 6
         }
       ]
     },
@@ -236,47 +236,47 @@
         {
           "chain": "ethereum",
           "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "linea",
           "address": "0xA219439258ca9da29E9Cc4cE5596924745e12B93",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "lisk",
           "address": "0x05D032ac25d322df992303dCa074EE7392C117b9",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "mode",
           "address": "0xf0F161fDA2712DB8b566946122a5af183995e2eD",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "optimism",
           "address": "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "plasma",
           "address": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "polygon",
           "address": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "scroll",
           "address": "0xf55BEC9cafDbE8730f096Aa55dad6D22d44099Df",
-          "decimals": 18
+          "decimals": 6
         },
         {
           "chain": "zksyncera",
           "address": "0x493257fD37EDB34451f62EDf8D2a0C418852bA4C",
-          "decimals": 18
+          "decimals": 6
         }
       ]
     },
@@ -291,47 +291,47 @@
         {
           "chain": "ethereum",
           "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
-          "decimals": 18
+          "decimals": 8
         },
         {
           "chain": "linea",
           "address": "0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4",
-          "decimals": 18
+          "decimals": 8
         },
         {
           "chain": "lisk",
           "address": "0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3",
-          "decimals": 18
+          "decimals": 8
         },
         {
           "chain": "mode",
           "address": "0xcDd475325D6F564d27247D1DddBb0DAc6fA0a5CF",
-          "decimals": 18
+          "decimals": 8
         },
         {
           "chain": "optimism",
           "address": "0x68f180fcCe6836688e9084f035309E29Bf0A2095",
-          "decimals": 18
+          "decimals": 8
         },
         {
           "chain": "polygon",
           "address": "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
-          "decimals": 18
+          "decimals": 8
         },
         {
           "chain": "scroll",
           "address": "0x3C1BCa5a656e69edCD0D4E36BEbb3FcDAcA60Cf1",
-          "decimals": 18
+          "decimals": 8
         },
         {
           "chain": "worldchain",
           "address": "0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3",
-          "decimals": 18
+          "decimals": 8
         },
         {
           "chain": "zksyncera",
           "address": "0xBBeB516fb02a01611cBBE0453Fe3c580D7281011",
-          "decimals": 18
+          "decimals": 8
         }
       ]
     },
