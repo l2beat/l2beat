@@ -26,8 +26,8 @@ export async function getSummedByTimestampTvsValuesQuery(
     projectIds,
     range[0],
     range[1],
-    excludeAssociated,
     forSummary,
+    excludeAssociated,
   )
 
   return tvsRecords
