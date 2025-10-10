@@ -235,9 +235,9 @@ export function MainPage() {
                   />
                   <ItemWithLabel
                     label="Deployment Timestamp"
-                    value={UnixTime.toYYYYMMDD(
+                    value={UnixTime.toDate(
                       selectedDeployedToken.deploymentTimestamp,
-                    )}
+                    ).toISOString()}
                   />
                   <ItemWithLabel
                     label="Comment"

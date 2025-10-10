@@ -19,7 +19,6 @@ import {
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import type { DeployedToken } from '~/mock/types'
 import { api } from '~/react-query/trpc'
-import { ethereumAddressCheck } from '~/utils/checks'
 import { UnixTime } from '~/utils/UnixTime'
 import { validateResolver } from '~/utils/validateResolver'
 
@@ -33,7 +32,9 @@ export function DeployedTokenView({ token }: { token: DeployedToken }) {
       ...token,
       abstractTokenId: token.abstractTokenId ?? undefined,
       comment: token.comment ?? undefined,
-      deploymentTimestamp: UnixTime.toYYYYMMDD(token.deploymentTimestamp),
+      deploymentTimestamp: UnixTime.toDate(token.deploymentTimestamp)
+        .toISOString()
+        .slice(0, -5),
     },
   })
 
@@ -92,8 +93,7 @@ export function DeployedTokenView({ token }: { token: DeployedToken }) {
           !!chain &&
           !!address &&
           (address !== form.formState.defaultValues?.address ||
-            chain !== form.formState.defaultValues?.chain) &&
-          ethereumAddressCheck(address) === true,
+            chain !== form.formState.defaultValues?.chain),
       },
     )
 

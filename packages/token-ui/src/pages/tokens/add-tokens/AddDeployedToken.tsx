@@ -11,7 +11,6 @@ import {
 } from '~/components/forms/DeployedTokenForm'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { api } from '~/react-query/trpc'
-import { ethereumAddressCheck } from '~/utils/checks'
 import { UnixTime } from '~/utils/UnixTime'
 import { validateResolver } from '~/utils/validateResolver'
 
@@ -44,7 +43,7 @@ export function AddDeployedToken() {
         address,
       },
       {
-        enabled: !!chain && !!address && ethereumAddressCheck(address) === true,
+        enabled: !!chain && !!address,
       },
     )
 

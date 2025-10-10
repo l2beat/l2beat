@@ -179,7 +179,7 @@ function DeployedTokensTable({ tokens }: { tokens: DeployedToken[] }) {
               </TableCell>
               <TableCell>{token.decimals}</TableCell>
               <TableCell>
-                {UnixTime.toYYYYMMDD(token.deploymentTimestamp)}
+                {UnixTime.toDate(token.deploymentTimestamp).toISOString()}
               </TableCell>
               <TableCell>
                 <Button asChild variant="link">
