@@ -21,7 +21,7 @@ export const zentachain: ScalingProject = upcomingL2({
       repositories: ['https://github.com/ZentaChain'],
       socialMedia: [
         'https://twitter.com/zentachain',
-        'https://discord.com/invite/TR5bv3e8Ny',
+        'https://discord.com/invite/wbzS8Ve6wW',
         'https://zentachain.blog/',
         'https://t.me/ZentachainOfficialChat',
         'https://reddit.com/r/Zentachain/',

@@ -11,7 +11,6 @@ import {
   type BridgeMessage,
   type BridgePlugin,
   type BridgeTransfer,
-  type BridgeTransferWithFinancials,
   generateId,
   type MatchResult,
 } from './plugins/types'
@@ -66,12 +65,17 @@ export class BridgeMatcher {
           unsupported: result.unsupportedIds,
         })
       }
-      await this.db.bridgeMessage.insertMany(
+      const messages = await this.db.bridgeMessage.insertMany(
         result.messages.map(toMessageRecord),
       )
-      await this.db.bridgeTransfer.insertMany(
+      const transfers = await this.db.bridgeTransfer.insertMany(
         result.transfers.map(toTransferRecord),
       )
+
+      this.logger.info('Matching results saved', {
+        messages,
+        transfers,
+      })
     })
   }
 }
@@ -122,7 +126,12 @@ export async function match(
         try {
           result = await plugin.match?.(event, db)
         } catch (e) {
-          logger.error(e, { project: plugin.name })
+          logger.error('Matching failed', e, {
+            plugin: plugin.name,
+            eventId: event.eventId,
+            eventType: event.type,
+            eventTxHash: event.ctx.txHash,
+          })
         }
         if (!result) {
           continue
@@ -225,9 +234,7 @@ function toMessageRecord(message: BridgeMessage): BridgeMessageRecord {
   }
 }
 
-function toTransferRecord(
-  transfer: BridgeTransferWithFinancials,
-): BridgeTransferRecord {
+function toTransferRecord(transfer: BridgeTransfer): BridgeTransferRecord {
   return {
     plugin: transfer.plugin,
     messageId: generateId('T'),
@@ -249,10 +256,10 @@ function toTransferRecord(
 
     srcTokenAddress: transfer.src.tokenAddress,
     srcRawAmount: transfer.src.tokenAmount,
-    srcSymbol: transfer.src.financials?.symbol,
-    srcAmount: transfer.src.financials?.amount,
-    srcPrice: transfer.src.financials?.price,
-    srcValueUsd: transfer.src.financials?.valueUsd,
+    srcSymbol: undefined,
+    srcAmount: undefined,
+    srcPrice: undefined,
+    srcValueUsd: undefined,
 
     dstChain: transfer.dst.event.ctx.chain,
     dstTime: transfer.dst.event.ctx.timestamp,
@@ -262,9 +269,9 @@ function toTransferRecord(
 
     dstTokenAddress: transfer.dst.tokenAddress,
     dstRawAmount: transfer.dst.tokenAmount,
-    dstSymbol: transfer.dst.financials?.symbol,
-    dstAmount: transfer.dst.financials?.amount,
-    dstPrice: transfer.dst.financials?.price,
-    dstValueUsd: transfer.dst.financials?.valueUsd,
+    dstSymbol: undefined,
+    dstAmount: undefined,
+    dstPrice: undefined,
+    dstValueUsd: undefined,
   }
 }

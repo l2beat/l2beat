@@ -56,7 +56,7 @@ export const zksyncprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
         knownDeployments: [
           {
-            address: '0x6e95812C432F293b8045811F4B1758285EBDB206',
+            address: '0x57B09100e6160503aBDEBC76012b6c358eA4e462',
             chain: 'ethereum',
           },
         ],
@@ -69,7 +69,7 @@ export const zksyncprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
         knownDeployments: [
           {
-            address: '0x6e95812C432F293b8045811F4B1758285EBDB206',
+            address: '0x57B09100e6160503aBDEBC76012b6c358eA4e462',
             chain: 'ethereum',
           },
         ],
@@ -82,7 +82,7 @@ export const zksyncprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
         knownDeployments: [
           {
-            address: '0x6e95812C432F293b8045811F4B1758285EBDB206',
+            address: '0x57B09100e6160503aBDEBC76012b6c358eA4e462',
             chain: 'ethereum',
           },
         ],

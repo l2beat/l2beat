@@ -1,6 +1,6 @@
 {
   "name": "across-v3",
-  "timestamp": 1758801469,
+  "timestamp": 1759932934,
   "configHash": "0x61dd08494791b2aa0c5ead85995d06cf73e1c0ee945f91435144e010cee2fab5",
   "entries": [
     {
@@ -30,28 +30,28 @@
       "values": {
         "$immutable": true,
         "ANCILLARY_BYTES_LIMIT": 8192,
-        "cumulativeStake": "22207661262932743587162557",
+        "cumulativeStake": "22609485916246922730855924",
         "currentActiveRequests": true,
         "delayFmt": "1d",
         "emissionRate": "130000000000000000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "gat": "5000000000000000000000000",
-        "getCurrentRoundId": 10178,
+        "getCurrentRoundId": 10184,
         "getNumberOfPriceRequests": {
-          "numberPendingPriceRequests": 26,
-          "numberResolvedPriceRequests": 1438
+          "numberPendingPriceRequests": 17,
+          "numberResolvedPriceRequests": 1472
         },
-        "getVotePhase": 0,
-        "lastRoundIdProcessed": 10178,
-        "lastUpdateTime": 1758801371,
+        "getVotePhase": 1,
+        "lastRoundIdProcessed": 10184,
+        "lastUpdateTime": 1759932851,
         "maxRequestsPerRound": 1000,
         "maxRolls": 4,
         "migratedAddress": "eth:0x0000000000000000000000000000000000000000",
-        "nextPendingIndexToProcess": 26,
+        "nextPendingIndexToProcess": 17,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "previousVotingContract": "eth:0x8B1631ab830d11531aE83725fDa4D86012eCCd77",
-        "rewardPerToken": "677667409112736254",
-        "rewardPerTokenStored": "677666847144510414",
+        "rewardPerToken": "684230278778222749",
+        "rewardPerTokenStored": "684229864792693195",
         "slashingLibrary": "eth:0x9a406ba5a99983250Fd663947b3c968D387ce5cd",
         "spat": "650000000000000000",
         "UINT64_MAX": "18446744073709551615",
@@ -279,6 +279,42 @@
       },
       "implementationNames": {
         "eth:0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3": "Boba_Adapter"
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
+    },
+    {
+      "name": "Optimism_Adapter",
+      "address": "eth:0x3562e309C6C79626E5F0Cf746FB5Bf4f6b8EebE5",
+      "type": "Contract",
+      "template": "acrossv3/Adapter",
+      "sourceHashes": [
+        "0xbc0e9c23007f3c3c61476c843d07e2734aef4507d5180c4e849a4f48580101b7"
+      ],
+      "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
+      "ignoreInWatchMode": [
+        "L2_MESSAGE_RELAY_GAS_LIMIT",
+        "L2_TOKEN_RELAY_GAS_LIMIT"
+      ],
+      "sinceTimestamp": 1759509539,
+      "sinceBlock": 23498500,
+      "values": {
+        "$immutable": true,
+        "cctpTokenMessenger": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
+        "cctpV2": true,
+        "DAI": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "DAI_OPTIMISM_BRIDGE": "eth:0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
+        "L1_STANDARD_BRIDGE": "eth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "L1_WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "L2_GAS_LIMIT": 200000,
+        "MESSENGER": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+        "recipientCircleDomainId": 2,
+        "SNX": "eth:0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
+        "SNX_OPTIMISM_BRIDGE": "eth:0x39Ea01a0298C315d149a490E34B59Dbf2EC7e48F",
+        "usdcToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      },
+      "implementationNames": {
+        "eth:0x3562e309C6C79626E5F0Cf746FB5Bf4f6b8EebE5": "Optimism_Adapter"
       },
       "category": { "name": "External Bridges", "priority": 1 }
     },
@@ -608,7 +644,7 @@
         "bond": "5000000000000000000000",
         "bondFmt": "5,000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1758801467,
+        "getCurrentTime": 1759932923,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -638,6 +674,44 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x527E872a5c3f0C7c24Fe33F2593cFB890a285084": "Ethereum_Adapter"
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
+    },
+    {
+      "name": "Polygon_Adapter",
+      "address": "eth:0x537abE038C223066B50312474409924487D2E655",
+      "type": "Contract",
+      "template": "acrossv3/Adapter",
+      "sourceHashes": [
+        "0x6e7fdec1dea08a851a5c7c7d013648db8f07fcd751548a002281e712f89f6c49"
+      ],
+      "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
+      "ignoreInWatchMode": [
+        "L2_MESSAGE_RELAY_GAS_LIMIT",
+        "L2_TOKEN_RELAY_GAS_LIMIT"
+      ],
+      "sinceTimestamp": 1759511339,
+      "sinceBlock": 23498649,
+      "values": {
+        "$immutable": true,
+        "cctpTokenMessenger": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
+        "cctpV2": true,
+        "DEPOSIT_MANAGER": "eth:0x401F6c983eA34274ec46f84D70b31C151321188b",
+        "EMPTY_MSG_BYTES": "0x",
+        "ERC20_PREDICATE": "eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
+        "FX_STATE_SENDER": "eth:0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2",
+        "L1_MATIC": "eth:0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
+        "L1_WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "OFT_ADAPTER_STORE": "eth:0x42df4D71f35ffBD28ae217d52E83C1DA0007D63b",
+        "OFT_DST_EID": 30109,
+        "OFT_FEE_CAP": "1000000000000000000",
+        "recipientCircleDomainId": 7,
+        "ROOT_CHAIN_MANAGER": "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
+        "usdcToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      },
+      "implementationNames": {
+        "eth:0x537abE038C223066B50312474409924487D2E655": "Polygon_Adapter"
       },
       "category": { "name": "External Bridges", "priority": 1 }
     },
@@ -782,11 +856,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1758801467,
+        "getCurrentTime": 1759932923,
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 3179479,
+        "numberOfDeposits": 3245211,
         "owner": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -835,47 +909,6 @@
       },
       "implementationNames": {
         "eth:0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf": "ZkStack_CustomGasToken_Adapter"
-      },
-      "category": { "name": "External Bridges", "priority": 1 }
-    },
-    {
-      "name": "Arbitrum_Adapter",
-      "address": "eth:0x5eC9844936875E27eBF22172f4d92E107D35B57C",
-      "type": "Contract",
-      "template": "acrossv3/Adapter",
-      "sourceHashes": [
-        "0x9f6b3eb8d2e2f04dbfa536018999afb7482a88d8ada0182ab2a2a9b8ca5c79f6"
-      ],
-      "proxyType": "immutable",
-      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
-      "ignoreInWatchMode": [
-        "L2_MESSAGE_RELAY_GAS_LIMIT",
-        "L2_TOKEN_RELAY_GAS_LIMIT"
-      ],
-      "sinceTimestamp": 1754538563,
-      "sinceBlock": 23086601,
-      "values": {
-        "$immutable": true,
-        "cctpTokenMessenger": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
-        "cctpV2": false,
-        "EMPTY_MSG_BYTES": "0x",
-        "L1_DAI": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "L1_ERC20_GATEWAY_ROUTER": "eth:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
-        "L1_INBOX": "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
-        "L2_CALL_VALUE": 0,
-        "L2_GAS_PRICE": 5000000000,
-        "L2_MAX_SUBMISSION_COST": "10000000000000000",
-        "L2_REFUND_L2_ADDRESS": "eth:0x07aE8551Be970cB1cCa11Dd7a11F47Ae82e70E67",
-        "OFT_ADAPTER_STORE": "eth:0x42df4D71f35ffBD28ae217d52E83C1DA0007D63b",
-        "OFT_DST_EID": 30110,
-        "OFT_FEE_CAP": "1000000000000000000",
-        "recipientCircleDomainId": 3,
-        "RELAY_MESSAGE_L2_GAS_LIMIT": 2000000,
-        "RELAY_TOKENS_L2_GAS_LIMIT": 300000,
-        "usdcToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      },
-      "implementationNames": {
-        "eth:0x5eC9844936875E27eBF22172f4d92E107D35B57C": "Arbitrum_Adapter"
       },
       "category": { "name": "External Bridges", "priority": 1 }
     },
@@ -943,6 +976,38 @@
       },
       "implementationNames": {
         "eth:0x6F4083304C2cA99B077ACE06a5DcF670615915Af": "Arbitrum_CustomGasToken_Adapter"
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
+    },
+    {
+      "name": "Base_Adapter",
+      "address": "eth:0x799BDC55d91864b14B2eD63A34DeF5d502AA897f",
+      "type": "Contract",
+      "template": "acrossv3/Adapter",
+      "sourceHashes": [
+        "0x235e6017ab764deb7de4cf894fc0b8d15bebacad6ff219fc122864ee964bf523"
+      ],
+      "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
+      "ignoreInWatchMode": [
+        "L2_MESSAGE_RELAY_GAS_LIMIT",
+        "L2_TOKEN_RELAY_GAS_LIMIT"
+      ],
+      "sinceTimestamp": 1759512707,
+      "sinceBlock": 23498763,
+      "values": {
+        "$immutable": true,
+        "cctpTokenMessenger": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
+        "cctpV2": true,
+        "L1_STANDARD_BRIDGE": "eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "L1_WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "L2_GAS_LIMIT": 200000,
+        "MESSENGER": "eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
+        "recipientCircleDomainId": 6,
+        "usdcToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      },
+      "implementationNames": {
+        "eth:0x799BDC55d91864b14B2eD63A34DeF5d502AA897f": "Base_Adapter"
       },
       "category": { "name": "External Bridges", "priority": 1 }
     },
@@ -1025,7 +1090,7 @@
         "$immutable": true,
         "emergencyProposer": "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1758801467,
+        "getCurrentTime": 1759932923,
         "getMember": [
           "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -1107,7 +1172,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 879,
+        "nonce": 884,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1219,6 +1284,38 @@
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
     },
     {
+      "name": "DoctorWho_Adapter",
+      "address": "eth:0x8956eFa31572E1d7ed5c8e36772F214A57DFA0D1",
+      "type": "Contract",
+      "template": "acrossv3/Adapter",
+      "sourceHashes": [
+        "0x4fed24508db075cc7ece3f2b393b38baa14d83cb16b7435622c6b3b7a2af178f"
+      ],
+      "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
+      "ignoreInWatchMode": [
+        "L2_MESSAGE_RELAY_GAS_LIMIT",
+        "L2_TOKEN_RELAY_GAS_LIMIT"
+      ],
+      "sinceTimestamp": 1759512947,
+      "sinceBlock": 23498783,
+      "values": {
+        "$immutable": true,
+        "cctpTokenMessenger": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
+        "cctpV2": true,
+        "L1_STANDARD_BRIDGE": "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+        "L1_WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "L2_GAS_LIMIT": 200000,
+        "MESSENGER": "eth:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
+        "recipientCircleDomainId": 10,
+        "usdcToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      },
+      "implementationNames": {
+        "eth:0x8956eFa31572E1d7ed5c8e36772F214A57DFA0D1": "DoctorWho_Adapter"
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
+    },
+    {
       "name": "WorldChain_Adapter",
       "address": "eth:0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1",
       "type": "Contract",
@@ -1277,7 +1374,7 @@
         "delayFmt": "10d",
         "emergencyProposals": [],
         "executor": "eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1758801467,
+        "getCurrentTime": 1759932923,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -1469,13 +1566,54 @@
           "eth:0x8692B776d1Ff0664177c90465038056Dc64f8991"
         ],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 363,
+        "nonce": 371,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
         "eth:0xB524735356985D2f267FA010D681f061DfF03715": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
+    },
+    {
+      "name": "Arbitrum_Adapter",
+      "address": "eth:0xc0b6d2f794cc787C71f2cA5ceCD57102C32379B3",
+      "type": "Contract",
+      "template": "acrossv3/Adapter",
+      "sourceHashes": [
+        "0x6ca9ce1725f28d3a737cdadeddcf98fdfee47b324e779a5cdbab51cea361d883"
+      ],
+      "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
+      "ignoreInWatchMode": [
+        "L2_MESSAGE_RELAY_GAS_LIMIT",
+        "L2_TOKEN_RELAY_GAS_LIMIT"
+      ],
+      "sinceTimestamp": 1759509359,
+      "sinceBlock": 23498485,
+      "values": {
+        "$immutable": true,
+        "cctpTokenMessenger": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
+        "cctpV2": true,
+        "EMPTY_MSG_BYTES": "0x",
+        "L1_DAI": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "L1_ERC20_GATEWAY_ROUTER": "eth:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
+        "L1_INBOX": "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
+        "L2_CALL_VALUE": 0,
+        "L2_GAS_PRICE": 5000000000,
+        "L2_MAX_SUBMISSION_COST": "10000000000000000",
+        "L2_REFUND_L2_ADDRESS": "eth:0x07aE8551Be970cB1cCa11Dd7a11F47Ae82e70E67",
+        "OFT_ADAPTER_STORE": "eth:0x42df4D71f35ffBD28ae217d52E83C1DA0007D63b",
+        "OFT_DST_EID": 30110,
+        "OFT_FEE_CAP": "1000000000000000000",
+        "recipientCircleDomainId": 3,
+        "RELAY_MESSAGE_L2_GAS_LIMIT": 2000000,
+        "RELAY_TOKENS_L2_GAS_LIMIT": 300000,
+        "usdcToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      },
+      "implementationNames": {
+        "eth:0xc0b6d2f794cc787C71f2cA5ceCD57102C32379B3": "Arbitrum_Adapter"
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "HubPool",
@@ -1507,10 +1645,10 @@
         "$immutable": true,
         "Adapters": {
           "1": "eth:0x527E872a5c3f0C7c24Fe33F2593cFB890a285084",
-          "10": "eth:0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b",
+          "10": "eth:0x3562e309C6C79626E5F0Cf746FB5Bf4f6b8EebE5",
           "56": "eth:0x6f1C9d3bcDF51316E7b515a62C02F601500b084b",
-          "130": "eth:0xFADcC43096756e1527306FD92982FEbBe3c629Fa",
-          "137": "eth:0xF71F1e20F75820b484F8A0959C2D9E5cdd89c9F0",
+          "130": "eth:0x8956eFa31572E1d7ed5c8e36772F214A57DFA0D1",
+          "137": "eth:0x537abE038C223066B50312474409924487D2E655",
           "232": "eth:0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf",
           "288": "eth:0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
           "324": "eth:0xA374585E6062517Ee367ee5044946A6fBe17724f",
@@ -1519,11 +1657,11 @@
           "999": "eth:0x0ec70777Ac388774041dD5A1778Cdf3AF3134D2B",
           "1135": "eth:0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b",
           "1868": "eth:0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2",
-          "8453": "eth:0xE1421233BF7158A19f89F17c9735F9cbd3D9529c",
+          "8453": "eth:0x799BDC55d91864b14B2eD63A34DeF5d502AA897f",
           "9745": "eth:0xb47fD69FE25878F4E43aAF2F9ad7D0A3A0B22363",
           "34443": "eth:0xf1B59868697f3925b72889ede818B9E7ba0316d0",
           "41455": "eth:0x6F4083304C2cA99B077ACE06a5DcF670615915Af",
-          "42161": "eth:0x5eC9844936875E27eBF22172f4d92E107D35B57C",
+          "42161": "eth:0xc0b6d2f794cc787C71f2cA5ceCD57102C32379B3",
           "57073": "eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2",
           "59144": "eth:0x5A44A32c13e2C43416bFDE5dDF5DCb3880c42787",
           "81457": "eth:0xF2bEf5E905AAE0295003ab14872F811E914EdD81",
@@ -1571,13 +1709,13 @@
         "protocolFeeCaptureAddress": "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0xa48338e632389a2c76c7797af567820ff3629671b615db21b20d0257524dbbae",
-          "relayerRefundRoot": "0x9fe0ab971cd2adcb39a3688a371d561dd879ce5d52174ed25ab49d34dcc2a4f3",
-          "slowRelayRoot": "0xdf652f2442f3cad2bee4b16bf11a47f3ffe87076450db6c8dfe75c85c727eb1b",
+          "poolRebalanceRoot": "0xe62eeb43d452f23c32ed4f605b6ced5aa4794e05f8649fa0065c92aaaaa8b6cf",
+          "relayerRefundRoot": "0x68e4e006f115536d558819c1e7a155bf2f4012fcb98f8abd086105ddbd48d448",
+          "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "claimedBitMap": 0,
           "proposer": "eth:0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
-          "unclaimedPoolRebalanceLeafCount": 21,
-          "challengePeriodEndTimestamp": 1758804131
+          "unclaimedPoolRebalanceLeafCount": 20,
+          "challengePeriodEndTimestamp": 1759934963
         },
         "spokePool": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
         "timerAddress": "eth:0x0000000000000000000000000000000000000000",
@@ -2193,72 +2331,6 @@
       }
     },
     {
-      "name": "Base_Adapter",
-      "address": "eth:0xE1421233BF7158A19f89F17c9735F9cbd3D9529c",
-      "type": "Contract",
-      "template": "acrossv3/Adapter",
-      "sourceHashes": [
-        "0x172a1f27f0fecf665d90a6adc1287223f05a73acd9ed19d9c446972880ccce0f"
-      ],
-      "proxyType": "immutable",
-      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
-      "ignoreInWatchMode": [
-        "L2_MESSAGE_RELAY_GAS_LIMIT",
-        "L2_TOKEN_RELAY_GAS_LIMIT"
-      ],
-      "sinceTimestamp": 1716255947,
-      "sinceBlock": 19915087,
-      "values": {
-        "$immutable": true,
-        "cctpTokenMessenger": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
-        "L1_STANDARD_BRIDGE": "eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-        "L1_WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "L2_GAS_LIMIT": 200000,
-        "MESSENGER": "eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
-        "recipientCircleDomainId": 6,
-        "usdcToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      },
-      "implementationNames": {
-        "eth:0xE1421233BF7158A19f89F17c9735F9cbd3D9529c": "Base_Adapter"
-      },
-      "category": { "name": "External Bridges", "priority": 1 }
-    },
-    {
-      "name": "Optimism_Adapter",
-      "address": "eth:0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b",
-      "type": "Contract",
-      "template": "acrossv3/Adapter",
-      "sourceHashes": [
-        "0x59784b70d01278196c00fbfe1f237b01ec891dca28b0542cdf8dcc9e672b3849"
-      ],
-      "proxyType": "immutable",
-      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
-      "ignoreInWatchMode": [
-        "L2_MESSAGE_RELAY_GAS_LIMIT",
-        "L2_TOKEN_RELAY_GAS_LIMIT"
-      ],
-      "sinceTimestamp": 1716255311,
-      "sinceBlock": 19915034,
-      "values": {
-        "$immutable": true,
-        "cctpTokenMessenger": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
-        "DAI": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "DAI_OPTIMISM_BRIDGE": "eth:0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
-        "L1_STANDARD_BRIDGE": "eth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-        "L1_WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "L2_GAS_LIMIT": 200000,
-        "MESSENGER": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-        "recipientCircleDomainId": 2,
-        "SNX": "eth:0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
-        "SNX_OPTIMISM_BRIDGE": "eth:0x39Ea01a0298C315d149a490E34B59Dbf2EC7e48F",
-        "usdcToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      },
-      "implementationNames": {
-        "eth:0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b": "Optimism_Adapter"
-      },
-      "category": { "name": "External Bridges", "priority": 1 }
-    },
-    {
       "name": "AcrossBondToken (ABT)",
       "address": "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
       "type": "Contract",
@@ -2407,44 +2479,6 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "name": "Polygon_Adapter",
-      "address": "eth:0xF71F1e20F75820b484F8A0959C2D9E5cdd89c9F0",
-      "type": "Contract",
-      "template": "acrossv3/Adapter",
-      "sourceHashes": [
-        "0x6e7fdec1dea08a851a5c7c7d013648db8f07fcd751548a002281e712f89f6c49"
-      ],
-      "proxyType": "immutable",
-      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
-      "ignoreInWatchMode": [
-        "L2_MESSAGE_RELAY_GAS_LIMIT",
-        "L2_TOKEN_RELAY_GAS_LIMIT"
-      ],
-      "sinceTimestamp": 1756241615,
-      "sinceBlock": 23227800,
-      "values": {
-        "$immutable": true,
-        "cctpTokenMessenger": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
-        "cctpV2": false,
-        "DEPOSIT_MANAGER": "eth:0x401F6c983eA34274ec46f84D70b31C151321188b",
-        "EMPTY_MSG_BYTES": "0x",
-        "ERC20_PREDICATE": "eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-        "FX_STATE_SENDER": "eth:0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2",
-        "L1_MATIC": "eth:0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
-        "L1_WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "OFT_ADAPTER_STORE": "eth:0x42df4D71f35ffBD28ae217d52E83C1DA0007D63b",
-        "OFT_DST_EID": 30109,
-        "OFT_FEE_CAP": "1000000000000000000",
-        "recipientCircleDomainId": 7,
-        "ROOT_CHAIN_MANAGER": "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
-        "usdcToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      },
-      "implementationNames": {
-        "eth:0xF71F1e20F75820b484F8A0959C2D9E5cdd89c9F0": "Polygon_Adapter"
-      },
-      "category": { "name": "External Bridges", "priority": 1 }
-    },
-    {
       "address": "eth:0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
       "type": "EOA",
       "proxyType": "EOA",
@@ -2461,37 +2495,6 @@
           "role": ".proposers"
         }
       ]
-    },
-    {
-      "name": "DoctorWho_Adapter",
-      "address": "eth:0xFADcC43096756e1527306FD92982FEbBe3c629Fa",
-      "type": "Contract",
-      "template": "acrossv3/Adapter",
-      "sourceHashes": [
-        "0x26a48559a60b482a96526e1ee27fef2111bb46e40395ee2122284141ffc30e14"
-      ],
-      "proxyType": "immutable",
-      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
-      "ignoreInWatchMode": [
-        "L2_MESSAGE_RELAY_GAS_LIMIT",
-        "L2_TOKEN_RELAY_GAS_LIMIT"
-      ],
-      "sinceTimestamp": 1738675907,
-      "sinceBlock": 21773451,
-      "values": {
-        "$immutable": true,
-        "cctpTokenMessenger": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
-        "L1_STANDARD_BRIDGE": "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
-        "L1_WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "L2_GAS_LIMIT": 200000,
-        "MESSENGER": "eth:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
-        "recipientCircleDomainId": 10,
-        "usdcToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      },
-      "implementationNames": {
-        "eth:0xFADcC43096756e1527306FD92982FEbBe3c629Fa": "DoctorWho_Adapter"
-      },
-      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "OptimisticOracleV3",
@@ -2721,6 +2724,25 @@
       "function relayMessage(address target, bytes message) payable",
       "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable"
     ],
+    "eth:0x3562e309C6C79626E5F0Cf746FB5Bf4f6b8EebE5": [
+      "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge, address _l1Usdc, address _cctpTokenMessenger)",
+      "event MessageRelayed(address target, bytes message)",
+      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
+      "function DAI() view returns (address)",
+      "function DAI_OPTIMISM_BRIDGE() view returns (address)",
+      "function L1_STANDARD_BRIDGE() view returns (address)",
+      "function L1_WETH() view returns (address)",
+      "function L2_GAS_LIMIT() view returns (uint32)",
+      "function MESSENGER() view returns (address)",
+      "function SNX() view returns (address)",
+      "function SNX_OPTIMISM_BRIDGE() view returns (address)",
+      "function cctpTokenMessenger() view returns (address)",
+      "function cctpV2() view returns (bool)",
+      "function recipientCircleDomainId() view returns (uint32)",
+      "function relayMessage(address target, bytes message) payable",
+      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
+      "function usdcToken() view returns (address)"
+    ],
     "eth:0x3B03509645713718B78951126E0A6de6f10043f5": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event UpdatedGlobalConfig(bytes32 indexed key, string value)",
@@ -2807,6 +2829,32 @@
       "function relayMessage(address target, bytes message) payable",
       "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable"
     ],
+    "eth:0x537abE038C223066B50312474409924487D2E655": [
+      "constructor(address _rootChainManager, address _fxStateSender, address _depositManager, address _erc20Predicate, address _l1Matic, address _l1Weth, address _l1Usdc, address _cctpTokenMessenger, address _adapterStore, uint32 _oftDstEid, uint256 _oftFeeCap)",
+      "error OftFeeCapExceeded()",
+      "error OftIncorrectAmountReceivedLD()",
+      "error OftIncorrectAmountSentLD()",
+      "error OftInsufficientBalanceForFee()",
+      "error OftLzFeeNotZero()",
+      "event MessageRelayed(address target, bytes message)",
+      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
+      "function DEPOSIT_MANAGER() view returns (address)",
+      "function EMPTY_MSG_BYTES() view returns (bytes)",
+      "function ERC20_PREDICATE() view returns (address)",
+      "function FX_STATE_SENDER() view returns (address)",
+      "function L1_MATIC() view returns (address)",
+      "function L1_WETH() view returns (address)",
+      "function OFT_ADAPTER_STORE() view returns (address)",
+      "function OFT_DST_EID() view returns (uint32)",
+      "function OFT_FEE_CAP() view returns (uint256)",
+      "function ROOT_CHAIN_MANAGER() view returns (address)",
+      "function cctpTokenMessenger() view returns (address)",
+      "function cctpV2() view returns (bool)",
+      "function recipientCircleDomainId() view returns (uint32)",
+      "function relayMessage(address target, bytes message) payable",
+      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
+      "function usdcToken() view returns (address)"
+    ],
     "eth:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF": [
       "constructor(tuple(uint256 rawValue) _fixedOracleFeePerSecondPerPfc, tuple(uint256 rawValue) _weeklyDelayFeePerSecondPerPfc, address _timerAddress)",
       "event AddedSharedMember(uint256 indexed roleId, address indexed newMember, address indexed manager)",
@@ -2881,36 +2929,6 @@
       "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
       "function usdcToken() view returns (address)"
     ],
-    "eth:0x5eC9844936875E27eBF22172f4d92E107D35B57C": [
-      "constructor(address _l1ArbitrumInbox, address _l1ERC20GatewayRouter, address _l2RefundL2Address, address _l1Usdc, address _cctpTokenMessenger, address _adapterStore, uint32 _oftDstEid, uint256 _oftFeeCap)",
-      "error OftFeeCapExceeded()",
-      "error OftIncorrectAmountReceivedLD()",
-      "error OftIncorrectAmountSentLD()",
-      "error OftInsufficientBalanceForFee()",
-      "error OftLzFeeNotZero()",
-      "event MessageRelayed(address target, bytes message)",
-      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
-      "function EMPTY_MSG_BYTES() view returns (bytes)",
-      "function L1_DAI() view returns (address)",
-      "function L1_ERC20_GATEWAY_ROUTER() view returns (address)",
-      "function L1_INBOX() view returns (address)",
-      "function L2_CALL_VALUE() view returns (uint256)",
-      "function L2_GAS_PRICE() view returns (uint256)",
-      "function L2_MAX_SUBMISSION_COST() view returns (uint256)",
-      "function L2_REFUND_L2_ADDRESS() view returns (address)",
-      "function OFT_ADAPTER_STORE() view returns (address)",
-      "function OFT_DST_EID() view returns (uint32)",
-      "function OFT_FEE_CAP() view returns (uint256)",
-      "function RELAY_MESSAGE_L2_GAS_LIMIT() view returns (uint32)",
-      "function RELAY_TOKENS_L2_GAS_LIMIT() view returns (uint32)",
-      "function cctpTokenMessenger() view returns (address)",
-      "function cctpV2() view returns (bool)",
-      "function getL1CallValue(uint32 l2GasLimit) pure returns (uint256)",
-      "function recipientCircleDomainId() view returns (uint32)",
-      "function relayMessage(address target, bytes message) payable",
-      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
-      "function usdcToken() view returns (address)"
-    ],
     "eth:0x6f1C9d3bcDF51316E7b515a62C02F601500b084b": [
       "constructor(address _store, address _l1Usdc, address _cctpTokenMessenger, uint32 _cctpDestinationDomainId, address _adapterStore, uint32 _oftDstEid, uint256 _oftFeeCap)",
       "error NotImplemented()",
@@ -2953,6 +2971,21 @@
       "function RELAY_TOKENS_L2_GAS_LIMIT() view returns (uint32)",
       "function cctpTokenMessenger() view returns (address)",
       "function getL1CallValue(uint32 l2GasLimit) view returns (uint256)",
+      "function recipientCircleDomainId() view returns (uint32)",
+      "function relayMessage(address target, bytes message) payable",
+      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
+      "function usdcToken() view returns (address)"
+    ],
+    "eth:0x799BDC55d91864b14B2eD63A34DeF5d502AA897f": [
+      "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge, address _l1Usdc, address _cctpTokenMessenger)",
+      "event MessageRelayed(address target, bytes message)",
+      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
+      "function L1_STANDARD_BRIDGE() view returns (address)",
+      "function L1_WETH() view returns (address)",
+      "function L2_GAS_LIMIT() view returns (uint32)",
+      "function MESSENGER() view returns (address)",
+      "function cctpTokenMessenger() view returns (address)",
+      "function cctpV2() view returns (bool)",
       "function recipientCircleDomainId() view returns (uint32)",
       "function relayMessage(address target, bytes message) payable",
       "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
@@ -3056,6 +3089,21 @@
       "function sync()",
       "function target() view returns (address)",
       "function transferOwnership(address newOwner)"
+    ],
+    "eth:0x8956eFa31572E1d7ed5c8e36772F214A57DFA0D1": [
+      "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge, address _l1Usdc, address _cctpTokenMessenger)",
+      "event MessageRelayed(address target, bytes message)",
+      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
+      "function L1_STANDARD_BRIDGE() view returns (address)",
+      "function L1_WETH() view returns (address)",
+      "function L2_GAS_LIMIT() view returns (uint32)",
+      "function MESSENGER() view returns (address)",
+      "function cctpTokenMessenger() view returns (address)",
+      "function cctpV2() view returns (bool)",
+      "function recipientCircleDomainId() view returns (uint32)",
+      "function relayMessage(address target, bytes message) payable",
+      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
+      "function usdcToken() view returns (address)"
     ],
     "eth:0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1": [
       "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge, address _l1Usdc, address _cctpTokenMessenger)",
@@ -3174,6 +3222,36 @@
     ],
     "eth:0xB524735356985D2f267FA010D681f061DfF03715": [
       "constructor(address _singleton)"
+    ],
+    "eth:0xc0b6d2f794cc787C71f2cA5ceCD57102C32379B3": [
+      "constructor(address _l1ArbitrumInbox, address _l1ERC20GatewayRouter, address _l2RefundL2Address, address _l1Usdc, address _cctpTokenMessenger, address _adapterStore, uint32 _oftDstEid, uint256 _oftFeeCap)",
+      "error OftFeeCapExceeded()",
+      "error OftIncorrectAmountReceivedLD()",
+      "error OftIncorrectAmountSentLD()",
+      "error OftInsufficientBalanceForFee()",
+      "error OftLzFeeNotZero()",
+      "event MessageRelayed(address target, bytes message)",
+      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
+      "function EMPTY_MSG_BYTES() view returns (bytes)",
+      "function L1_DAI() view returns (address)",
+      "function L1_ERC20_GATEWAY_ROUTER() view returns (address)",
+      "function L1_INBOX() view returns (address)",
+      "function L2_CALL_VALUE() view returns (uint256)",
+      "function L2_GAS_PRICE() view returns (uint256)",
+      "function L2_MAX_SUBMISSION_COST() view returns (uint256)",
+      "function L2_REFUND_L2_ADDRESS() view returns (address)",
+      "function OFT_ADAPTER_STORE() view returns (address)",
+      "function OFT_DST_EID() view returns (uint32)",
+      "function OFT_FEE_CAP() view returns (uint256)",
+      "function RELAY_MESSAGE_L2_GAS_LIMIT() view returns (uint32)",
+      "function RELAY_TOKENS_L2_GAS_LIMIT() view returns (uint32)",
+      "function cctpTokenMessenger() view returns (address)",
+      "function cctpV2() view returns (bool)",
+      "function getL1CallValue(uint32 l2GasLimit) pure returns (uint256)",
+      "function recipientCircleDomainId() view returns (uint32)",
+      "function relayMessage(address target, bytes message) payable",
+      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
+      "function usdcToken() view returns (address)"
     ],
     "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda": [
       "constructor(address _lpTokenFactory, address _finder, address _weth, address _timer)",
@@ -3319,38 +3397,6 @@
       "function whitelist(address) view returns (uint8)",
       "function whitelistIndices(uint256) view returns (address)"
     ],
-    "eth:0xE1421233BF7158A19f89F17c9735F9cbd3D9529c": [
-      "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge, address _l1Usdc, address _cctpTokenMessenger)",
-      "event MessageRelayed(address target, bytes message)",
-      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
-      "function L1_STANDARD_BRIDGE() view returns (address)",
-      "function L1_WETH() view returns (address)",
-      "function L2_GAS_LIMIT() view returns (uint32)",
-      "function MESSENGER() view returns (address)",
-      "function cctpTokenMessenger() view returns (address)",
-      "function recipientCircleDomainId() view returns (uint32)",
-      "function relayMessage(address target, bytes message) payable",
-      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
-      "function usdcToken() view returns (address)"
-    ],
-    "eth:0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b": [
-      "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge, address _l1Usdc, address _cctpTokenMessenger)",
-      "event MessageRelayed(address target, bytes message)",
-      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
-      "function DAI() view returns (address)",
-      "function DAI_OPTIMISM_BRIDGE() view returns (address)",
-      "function L1_STANDARD_BRIDGE() view returns (address)",
-      "function L1_WETH() view returns (address)",
-      "function L2_GAS_LIMIT() view returns (uint32)",
-      "function MESSENGER() view returns (address)",
-      "function SNX() view returns (address)",
-      "function SNX_OPTIMISM_BRIDGE() view returns (address)",
-      "function cctpTokenMessenger() view returns (address)",
-      "function recipientCircleDomainId() view returns (uint32)",
-      "function relayMessage(address target, bytes message) payable",
-      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
-      "function usdcToken() view returns (address)"
-    ],
     "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea": [
       "constructor(address _hubPool)",
       "event Approval(address indexed src, address indexed guy, uint256 wad)",
@@ -3437,46 +3483,6 @@
       "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
       "function L1_BLAST_BRIDGE() view returns (address)",
       "function L1_DAI() view returns (address)",
-      "function L1_STANDARD_BRIDGE() view returns (address)",
-      "function L1_WETH() view returns (address)",
-      "function L2_GAS_LIMIT() view returns (uint32)",
-      "function MESSENGER() view returns (address)",
-      "function cctpTokenMessenger() view returns (address)",
-      "function recipientCircleDomainId() view returns (uint32)",
-      "function relayMessage(address target, bytes message) payable",
-      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
-      "function usdcToken() view returns (address)"
-    ],
-    "eth:0xF71F1e20F75820b484F8A0959C2D9E5cdd89c9F0": [
-      "constructor(address _rootChainManager, address _fxStateSender, address _depositManager, address _erc20Predicate, address _l1Matic, address _l1Weth, address _l1Usdc, address _cctpTokenMessenger, address _adapterStore, uint32 _oftDstEid, uint256 _oftFeeCap)",
-      "error OftFeeCapExceeded()",
-      "error OftIncorrectAmountReceivedLD()",
-      "error OftIncorrectAmountSentLD()",
-      "error OftInsufficientBalanceForFee()",
-      "error OftLzFeeNotZero()",
-      "event MessageRelayed(address target, bytes message)",
-      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
-      "function DEPOSIT_MANAGER() view returns (address)",
-      "function EMPTY_MSG_BYTES() view returns (bytes)",
-      "function ERC20_PREDICATE() view returns (address)",
-      "function FX_STATE_SENDER() view returns (address)",
-      "function L1_MATIC() view returns (address)",
-      "function L1_WETH() view returns (address)",
-      "function OFT_ADAPTER_STORE() view returns (address)",
-      "function OFT_DST_EID() view returns (uint32)",
-      "function OFT_FEE_CAP() view returns (uint256)",
-      "function ROOT_CHAIN_MANAGER() view returns (address)",
-      "function cctpTokenMessenger() view returns (address)",
-      "function cctpV2() view returns (bool)",
-      "function recipientCircleDomainId() view returns (uint32)",
-      "function relayMessage(address target, bytes message) payable",
-      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
-      "function usdcToken() view returns (address)"
-    ],
-    "eth:0xFADcC43096756e1527306FD92982FEbBe3c629Fa": [
-      "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge, address _l1Usdc, address _cctpTokenMessenger)",
-      "event MessageRelayed(address target, bytes message)",
-      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
       "function L1_STANDARD_BRIDGE() view returns (address)",
       "function L1_WETH() view returns (address)",
       "function L2_GAS_LIMIT() view returns (uint32)",
@@ -3655,6 +3661,6 @@
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b",
     "uma/VotingV2": "0x8f7872c0ad9d4612ce7305fb6318475b85db06d8406d8e835e88e5afc8367f64"
   },
-  "usedBlockNumbers": { "ethereum": 23439901 },
-  "permissionsConfigHash": "0x1fb6386df200deb4ac51a15beb5c4dd927a7af238bb08e6d4227b1297b6a0704"
+  "usedBlockNumbers": { "ethereum": 23533560 },
+  "permissionsConfigHash": "0x95c7dec47993af3a0ecff4e5e4f14a43048d8cf2795765df9aa39600da9c5006"
 }

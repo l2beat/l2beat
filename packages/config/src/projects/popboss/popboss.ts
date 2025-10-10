@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('popboss')
 
 export const popboss: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1710836229), // 2024-03-19T08:17:09Z
+  archivedAt: UnixTime(1759835040),
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
   hostChain: 'arbitrum',

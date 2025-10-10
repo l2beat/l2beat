@@ -59,6 +59,7 @@ describeDatabase(BridgeTransferRepository.name, (db) => {
         srcTokenAddress: undefined,
         srcRawAmount: undefined,
         srcSymbol: undefined,
+        srcAbstractTokenId: undefined,
         srcAmount: undefined,
         srcPrice: undefined,
         srcValueUsd: undefined,
@@ -70,9 +71,11 @@ describeDatabase(BridgeTransferRepository.name, (db) => {
         dstTokenAddress: undefined,
         dstRawAmount: undefined,
         dstSymbol: undefined,
+        dstAbstractTokenId: undefined,
         dstAmount: undefined,
         dstPrice: undefined,
         dstValueUsd: undefined,
+        isProcessed: false,
       }
 
       const inserted = await repository.insertMany([record])
@@ -80,28 +83,6 @@ describeDatabase(BridgeTransferRepository.name, (db) => {
 
       const result = await repository.getAll()
       expect(result).toEqual([record])
-    })
-
-    it('handles records with native token addresses', async () => {
-      const record = bridgeTransfer(
-        'plugin1',
-        'msg1',
-        'deposit',
-        UnixTime(100),
-        'ethereum',
-        'arbitrum',
-        5000,
-      )
-
-      record.srcTokenAddress = 'native'
-      record.dstTokenAddress = 'native'
-
-      const inserted = await repository.insertMany([record])
-      expect(inserted).toEqual(1)
-
-      const result = await repository.getAll()
-      expect(result[0]?.srcTokenAddress).toEqual('native')
-      expect(result[0]?.dstTokenAddress).toEqual('native')
     })
 
     it('handles records with ethereum token addresses', async () => {
@@ -278,6 +259,7 @@ function bridgeTransfer(
     srcTokenAddress: srcChain ? EthereumAddress.random() : undefined,
     srcRawAmount: srcChain ? '1000000000000000000' : undefined,
     srcSymbol: srcChain ? 'ETH' : undefined,
+    srcAbstractTokenId: srcChain ? 'ethereum' : undefined,
     srcAmount: srcChain ? 1.0 : undefined,
     srcPrice: srcChain ? 2000.0 : undefined,
     srcValueUsd: srcChain ? 2000.0 : undefined,
@@ -289,8 +271,10 @@ function bridgeTransfer(
     dstTokenAddress: dstChain ? EthereumAddress.random() : undefined,
     dstRawAmount: dstChain ? '1000000000000000000' : undefined,
     dstSymbol: dstChain ? 'ETH' : undefined,
+    dstAbstractTokenId: dstChain ? 'ethereum' : undefined,
     dstAmount: dstChain ? 1.0 : undefined,
     dstPrice: dstChain ? 2000.0 : undefined,
     dstValueUsd: dstChain ? 2000.0 : undefined,
+    isProcessed: false,
   }
 }

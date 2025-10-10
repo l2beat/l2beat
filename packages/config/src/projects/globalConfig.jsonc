@@ -27,7 +27,7 @@
     }
   },
   "names": {
-    // suggest tracking EOAs here and contracts in the chain-specific configs
+    "eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045": "Lighter Multisig",
     "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f": "Scroll Multisig 1",
     "eth:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": "Scroll Multisig 2",
     "eth:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe": "Scroll Multisig 3",

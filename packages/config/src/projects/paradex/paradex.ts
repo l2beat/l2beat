@@ -343,7 +343,6 @@ export const paradex: ScalingProject = {
   },
   stateValidation: {
     categories: [STATE_VALIDATION.VALIDITY_PROOFS],
-    zkProgramHashes: paradexProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   technology: {
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_ON_CHAIN(true),
@@ -362,6 +361,7 @@ export const paradex: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
+    zkProgramHashes: paradexProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [
