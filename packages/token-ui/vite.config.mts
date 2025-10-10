@@ -4,8 +4,6 @@ import react from '@vitejs/plugin-react-swc'
 import path from 'path'
 import { defineConfig } from 'vite'
 
-const backendUrl = process.env.VITE_BACKEND_URL ?? 'http://localhost:3000'
-
 // https://vitejs.dev/config/
 // biome-ignore lint/style/noDefaultExport: Vite requires default export
 export default defineConfig({
@@ -13,7 +11,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/trpc': {
-        target: backendUrl,
+        target: 'http://localhost:3000',
         changeOrigin: true,
       },
     },
