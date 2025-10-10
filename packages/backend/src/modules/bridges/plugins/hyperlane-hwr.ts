@@ -158,23 +158,13 @@ function findDispatchMessageId(
     if (Number(dispatch.destination) !== Number(sentTransferRemote.destination))
       continue
 
-    const messageId = findDispatchIdAfter(input.txLogs, txLog.logIndex)
-    if (!messageId) continue
-    return messageId
-  }
-  return undefined
-}
-
-function findDispatchIdAfter(
-  logs: LogToCapture['txLogs'],
-  fromLogIndex: number,
-): `0x${string}` | undefined {
-  for (const candidate of logs) {
-    if (candidate.logIndex == null || candidate.logIndex <= fromLogIndex)
-      continue
-    const dispatchId = parseDispatchId(candidate, null)
+    const nextLog = input.txLogs.find(
+      // biome-ignore lint/style/noNonNullAssertion: It's there
+      (x) => x.logIndex === txLog.logIndex! + 1,
+    )
+    const dispatchId = nextLog && parseDispatchId(nextLog, null)
     if (!dispatchId) continue
-    return dispatchId.messageId as `0x${string}`
+    return dispatchId.messageId
   }
   return undefined
 }
@@ -199,23 +189,13 @@ function findProcessMessageId(
     if (Number(process.origin) !== Number(receivedTransferRemote.origin))
       continue
 
-    const processId = findProcessIdAfter(input.txLogs, txLog.logIndex)
+    const nextLog = input.txLogs.find(
+      // biome-ignore lint/style/noNonNullAssertion: It's there
+      (x) => x.logIndex === txLog.logIndex! + 1,
+    )
+    const processId = nextLog && parseProcessId(nextLog, null)
     if (!processId) continue
-    return processId
-  }
-  return undefined
-}
-
-function findProcessIdAfter(
-  logs: LogToCapture['txLogs'],
-  fromLogIndex: number,
-): `0x${string}` | undefined {
-  for (const candidate of logs) {
-    if (candidate.logIndex == null || candidate.logIndex <= fromLogIndex)
-      continue
-    const processId = parseProcessId(candidate, null)
-    if (!processId) continue
-    return processId.messageId as `0x${string}`
+    return processId.messageId
   }
   return undefined
 }

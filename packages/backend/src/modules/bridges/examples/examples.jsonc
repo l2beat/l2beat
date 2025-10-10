@@ -691,7 +691,7 @@
     "messages": [],
     "transfers": []
   },
-  "hyperlane-hwt": {
+  "hwr": {
     // 3 oft transfers
     "txs": [
       {
