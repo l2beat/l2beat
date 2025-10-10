@@ -7,6 +7,8 @@
   "sideEffects": false,
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "start": "node build/server.js",
+    "dev": "node --watch -r esbuild-register src/server.ts",
     "clean": "rm -rf build",
     "build:dependencies": "cd ../.. && pnpm build:dependencies:token-service",
     "watch:dependencies": "cd ../.. && pnpm watch:dependencies:token-service",
@@ -16,14 +18,17 @@
     "lint": "biome check --formatter-enabled=false .",
     "test": "mocha",
     "typecheck": "tsc --noEmit",
-    "serve": "ts-node ./scripts/serve.ts",
     "import-generated": "ts-node ./scripts/import-generated.ts"
   },
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",
     "@l2beat/database": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
-    "@l2beat/typescript-config": "workspace:*"
+    "@l2beat/typescript-config": "workspace:*",
+    "@l2beat/validate": "workspace:*",
+    "@trpc/server": "^11.0.0-rc.446",
+    "fuzzysort": "3.1.0",
+    "jose": "^6.1.0"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",

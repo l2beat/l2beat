@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeTokenDatabase } from '../test/tokenDatabase'
 import type { AbstractTokenRecord } from './AbstractTokenRepository'
@@ -28,7 +27,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
         abstractTokenId: abstractTokenRecord.id,
         symbol: 'ARB',
         decimals: 6,
-        deploymentTimestamp: UnixTime.toDate(10),
+        deploymentTimestamp: 10,
         comment: 'initial deployment',
       })
 
@@ -66,7 +65,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
           abstractTokenId: firstAbstractToken.id,
           symbol: 'TOKEN',
           decimals: 18,
-          deploymentTimestamp: UnixTime.toDate(10),
+          deploymentTimestamp: 10,
           comment: 'initial comment',
         })
         await repository.insert(record)
@@ -80,7 +79,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
             abstractTokenId: secondAbstractToken.id,
             symbol: 'UPDT',
             decimals: 8,
-            deploymentTimestamp: UnixTime.toDate(20),
+            deploymentTimestamp: 20,
             comment: 'updated comment',
           },
         )
@@ -93,7 +92,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
           abstractTokenId: secondAbstractToken.id,
           symbol: 'UPDT',
           decimals: 8,
-          deploymentTimestamp: UnixTime.toDate(20),
+          deploymentTimestamp: 20,
           comment: 'updated comment',
         })
       })
@@ -110,13 +109,13 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
           abstractTokenId: 'TK0001',
           chain: 'ethereum',
           address: '0x' + '1'.repeat(40),
-          deploymentTimestamp: UnixTime.toDate(10),
+          deploymentTimestamp: 10,
         }),
         deployedToken({
           abstractTokenId: 'TK0002',
           chain: 'arbitrum',
           address: '0x' + '2'.repeat(40),
-          deploymentTimestamp: UnixTime.toDate(20),
+          deploymentTimestamp: 20,
         }),
         deployedToken({
           abstractTokenId: null,
@@ -170,7 +169,7 @@ function abstractToken(
     id: overrides.id,
     issuer: overrides.issuer ?? null,
     symbol: overrides.symbol ?? 'TOKEN',
-    category: overrides.category ?? 'generic',
+    category: overrides.category ?? 'other',
     iconUrl: overrides.iconUrl ?? null,
     coingeckoId: overrides.coingeckoId ?? null,
     coingeckoListingTimestamp: overrides.coingeckoListingTimestamp ?? null,
@@ -190,7 +189,7 @@ function deployedToken(
     abstractTokenId: overrides.abstractTokenId ?? null,
     symbol: overrides.symbol ?? 'TOKEN',
     decimals: overrides.decimals ?? 18,
-    deploymentTimestamp: overrides.deploymentTimestamp ?? UnixTime.toDate(0),
+    deploymentTimestamp: overrides.deploymentTimestamp ?? 0,
     comment: overrides.comment ?? null,
   }
 }

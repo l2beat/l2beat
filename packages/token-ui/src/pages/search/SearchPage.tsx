@@ -1,4 +1,3 @@
-import { skipToken, useQuery } from '@tanstack/react-query'
 import { ArrowRightIcon, CoinsIcon } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
 import { Button } from '~/components/core/Button'
@@ -24,19 +23,22 @@ import {
   TableRow,
 } from '~/components/core/Table'
 import { AppLayout } from '~/layouts/AppLayout'
-import { tokenService } from '~/mock/MockTokenService'
 import type { AbstractToken, DeployedToken } from '~/mock/types'
+import { api } from '~/react-query/trpc'
+import { UnixTime } from '~/utils/UnixTime'
 
 export function SearchPage() {
   const { search } = useParams()
-  const { data } = useQuery({
-    queryKey: ['search', search],
-    queryFn: search ? () => tokenService.search(search) : skipToken,
-  })
+  const { data } = api.tokens.search.useQuery(
+    { search: search ?? '' },
+    {
+      enabled: search !== '',
+    },
+  )
 
   return (
     <AppLayout>
-      <Card className="">
+      <Card>
         <CardHeader>
           <CardTitle>Abstract Tokens</CardTitle>
         </CardHeader>
@@ -48,7 +50,7 @@ export function SearchPage() {
           )}
         </CardContent>
       </Card>
-      <Card className="">
+      <Card className="mt-2">
         <CardHeader>
           <CardTitle>Deployed Tokens</CardTitle>
         </CardHeader>
@@ -108,8 +110,8 @@ function AbstractTokensTable({ tokens }: { tokens: AbstractToken[] }) {
               <TableCell>{token.issuer ?? 'unknown'}</TableCell>
               <TableCell>{token.iconUrl ?? '-'}</TableCell>
               <TableCell>
-                {token.coingeckoListingTimestamp
-                  ? token.coingeckoListingTimestamp.toISOString()
+                {token.coingeckoListingTimestamp !== null
+                  ? UnixTime.toYYYYMMDD(token.coingeckoListingTimestamp)
                   : '-'}
               </TableCell>
               <TableCell>
@@ -162,7 +164,7 @@ function DeployedTokensTable({ tokens }: { tokens: DeployedToken[] }) {
       <TableBody>
         {tokens.map((token) => {
           return (
-            <TableRow key={token.id}>
+            <TableRow key={`${token.chain}+${token.address}`}>
               <TableCell>{token.symbol}</TableCell>
               <TableCell>{token.chain}</TableCell>
               <TableCell>{token.address}</TableCell>
@@ -179,10 +181,12 @@ function DeployedTokensTable({ tokens }: { tokens: DeployedToken[] }) {
                 )}
               </TableCell>
               <TableCell>{token.decimals}</TableCell>
-              <TableCell>{token.deploymentTimestamp.toISOString()}</TableCell>
               <TableCell>
-                <Button asChild variant="outline">
-                  <Link to={`/tokens/${token.id}`}>
+                {UnixTime.toYYYYMMDD(token.deploymentTimestamp)}
+              </TableCell>
+              <TableCell>
+                <Button asChild variant="link">
+                  <Link to={`/tokens/${token.chain}+${token.address}`}>
                     <ArrowRightIcon />
                   </Link>
                 </Button>

@@ -14,11 +14,7 @@ export type TokenConnectionPrimaryKey = Pick<
 >
 export type TokenConnectionUpdateable = Omit<
   Updateable<TokenConnection>,
-  | 'tokenFromChain'
-  | 'tokenFromAddress'
-  | 'tokenToChain'
-  | 'tokenToAddress'
-  | 'type'
+  keyof TokenConnectionPrimaryKey
 >
 
 export class TokenConnectionRepository extends BaseRepository {

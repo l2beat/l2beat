@@ -22,7 +22,6 @@ import {
 import { Spinner } from '~/components/core/Spinner'
 import { Textarea } from '~/components/core/TextArea'
 import { minLengthCheck, urlCheck } from '~/utils/checks'
-import { sanitize } from '~/utils/sanitize'
 
 const categoryValues = ['btc', 'ether', 'stablecoin', 'other'] as const
 
@@ -67,9 +66,7 @@ export function AbstractTokenForm({
 }) {
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit((values) => onSubmit(sanitize(values)))}
-      >
+      <form onSubmit={form.handleSubmit((values) => onSubmit(values))}>
         <fieldset disabled={isFormDisabled} className="space-y-8">
           <div className="grid grid-cols-[minmax(0,_1fr)_20px_minmax(0,_1fr)_20px_minmax(0,_1fr)] items-start gap-2">
             <FormField
@@ -111,7 +108,7 @@ export function AbstractTokenForm({
                 </FormItem>
               )}
             />
-            <p className="mt-7 text-center font-bold">.</p>
+            <p className="mt-7 text-center font-bold">:</p>
             <FormField
               control={form.control}
               name="symbol"

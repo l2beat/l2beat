@@ -1,45 +1,66 @@
-import type {
+import { v } from '@l2beat/validate'
+import {
   AbstractTokenRecord,
   AbstractTokenUpdateable,
+} from './schemas/AbstractToken'
+import {
   DeployedTokenPrimaryKey,
   DeployedTokenRecord,
   DeployedTokenUpdateable,
-} from '@l2beat/database'
+} from './schemas/DeployedToken'
 
-export type Intent =
-  | AddAbstractTokenIntent
-  | UpdateAbstractTokenIntent
-  | DeleteAllAbstractTokensIntent
-  | AddDeployedTokenIntent
-  | UpdateDeployedTokenIntent
-  | DeleteAllDeployedTokensIntent
+export type AddAbstractTokenIntent = v.infer<typeof AddAbstractTokenIntent>
+export const AddAbstractTokenIntent = v.object({
+  type: v.literal('AddAbstractTokenIntent'),
+  record: AbstractTokenRecord,
+})
 
-export interface AddAbstractTokenIntent {
-  type: 'AddAbstractTokenIntent'
-  record: AbstractTokenRecord
-}
+export type UpdateAbstractTokenIntent = v.infer<
+  typeof UpdateAbstractTokenIntent
+>
+export const UpdateAbstractTokenIntent = v.object({
+  type: v.literal('UpdateAbstractTokenIntent'),
+  id: v.string(),
+  update: AbstractTokenUpdateable,
+})
 
-export interface UpdateAbstractTokenIntent {
-  type: 'UpdateAbstractTokenIntent'
-  id: AbstractTokenRecord['id']
-  update: AbstractTokenUpdateable
-}
+export type DeleteAbstractTokenIntent = v.infer<
+  typeof DeleteAbstractTokenIntent
+>
+export const DeleteAbstractTokenIntent = v.object({
+  type: v.literal('DeleteAbstractTokenIntent'),
+  id: v.string(),
+})
 
-export interface DeleteAllAbstractTokensIntent {
-  type: 'DeleteAllAbstractTokensIntent'
-}
+export type AddDeployedTokenIntent = v.infer<typeof AddDeployedTokenIntent>
+export const AddDeployedTokenIntent = v.object({
+  type: v.literal('AddDeployedTokenIntent'),
+  record: DeployedTokenRecord,
+})
 
-export interface AddDeployedTokenIntent {
-  type: 'AddDeployedTokenIntent'
-  record: DeployedTokenRecord
-}
+export type UpdateDeployedTokenIntent = v.infer<
+  typeof UpdateDeployedTokenIntent
+>
+export const UpdateDeployedTokenIntent = v.object({
+  type: v.literal('UpdateDeployedTokenIntent'),
+  pk: DeployedTokenPrimaryKey,
+  update: DeployedTokenUpdateable,
+})
 
-export interface UpdateDeployedTokenIntent {
-  type: 'UpdateDeployedTokenIntent'
-  pk: DeployedTokenPrimaryKey
-  update: DeployedTokenUpdateable
-}
+export type DeleteDeployedTokenIntent = v.infer<
+  typeof DeleteDeployedTokenIntent
+>
+export const DeleteDeployedTokenIntent = v.object({
+  type: v.literal('DeleteDeployedTokenIntent'),
+  pk: DeployedTokenPrimaryKey,
+})
 
-export interface DeleteAllDeployedTokensIntent {
-  type: 'DeleteAllDeployedTokensIntent'
-}
+export type Intent = v.infer<typeof Intent>
+export const Intent = v.union([
+  AddAbstractTokenIntent,
+  UpdateAbstractTokenIntent,
+  DeleteAbstractTokenIntent,
+  AddDeployedTokenIntent,
+  UpdateDeployedTokenIntent,
+  DeleteDeployedTokenIntent,
+])

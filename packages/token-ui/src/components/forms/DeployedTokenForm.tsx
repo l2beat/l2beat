@@ -1,8 +1,7 @@
 import { v } from '@l2beat/validate'
-import { useQuery } from '@tanstack/react-query'
 import { ArrowRightIcon, CheckIcon, ChevronsUpDownIcon } from 'lucide-react'
 import type { SubmitHandler, UseFormReturn } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { Button } from '~/components/core/Button'
 import {
   Command,
@@ -28,7 +27,7 @@ import {
 } from '~/components/core/Popover'
 import { Spinner } from '~/components/core/Spinner'
 import { Textarea } from '~/components/core/TextArea'
-import { tokenService } from '~/mock/MockTokenService'
+import { api } from '~/react-query/trpc'
 import {
   ethereumAddressCheck,
   minLengthCheck,
@@ -36,11 +35,9 @@ import {
 } from '~/utils/checks'
 import { cn } from '~/utils/cn'
 import { getAbstractTokenDisplayId } from '~/utils/getAbstractTokenDisplayId'
-import { sanitize } from '~/utils/sanitize'
 
 export type DeployedTokenSchema = v.infer<typeof DeployedTokenSchema>
 export const DeployedTokenSchema = v.object({
-  id: v.string(),
   chain: v.string(),
   address: v.string().check(ethereumAddressCheck),
   decimals: v.number().check(minNumberCheck(1)),
@@ -66,21 +63,15 @@ export function DeployedTokenForm({
   }
   children: React.ReactNode
 }) {
-  const { data: chains, isLoading: areChainsLoading } = useQuery({
-    queryKey: ['chains'],
-    queryFn: () => tokenService.getChains(),
-  })
+  const [searchParams, setSearchParams] = useSearchParams()
+  const { data: chains, isLoading: areChainsLoading } =
+    api.chains.getAll.useQuery()
   const { data: abstractTokens, isLoading: areAbstractTokensLoading } =
-    useQuery({
-      queryKey: ['abstractTokens'],
-      queryFn: () => tokenService.getAbstractTokens(),
-    })
+    api.tokens.getAllAbstractTokens.useQuery()
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit((values) => onSubmit(sanitize(values)))}
-      >
+      <form onSubmit={form.handleSubmit((values) => onSubmit(values))}>
         <fieldset disabled={isFormDisabled} className="space-y-8">
           <div className="grid grid-cols-3 items-start gap-2">
             <FormField
@@ -259,6 +250,12 @@ export function DeployedTokenForm({
                                     abstractToken.id,
                                     { shouldDirty: true },
                                   )
+                                  setSearchParams({
+                                    ...Object.fromEntries(
+                                      searchParams.entries(),
+                                    ),
+                                    abstractTokenId: abstractToken.id,
+                                  })
                                 }}
                               >
                                 {getAbstractTokenDisplayId(abstractToken)}
@@ -277,7 +274,12 @@ export function DeployedTokenForm({
                       </Command>
                     </PopoverContent>
                   </Popover>
-                  <Button variant="outline" asChild className="shrink-0">
+                  <Button
+                    variant="outline"
+                    className="shrink-0"
+                    disabled={!field.value}
+                    type="button"
+                  >
                     <Link to={`/tokens/${field.value}`}>
                       <ArrowRightIcon />
                     </Link>

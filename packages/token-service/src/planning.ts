@@ -1,20 +1,22 @@
 import type { TokenDatabase } from '@l2beat/database'
 import { assertUnreachable } from '@l2beat/shared-pure'
-import type { Command } from './commands'
-import type {
-  AddAbstractTokenIntent,
-  AddDeployedTokenIntent,
-  DeleteAllAbstractTokensIntent,
-  DeleteAllDeployedTokensIntent,
+import { v } from '@l2beat/validate'
+import { Command } from './commands'
+import {
+  type AddAbstractTokenIntent,
+  type AddDeployedTokenIntent,
+  type DeleteAbstractTokenIntent,
+  type DeleteDeployedTokenIntent,
   Intent,
-  UpdateAbstractTokenIntent,
-  UpdateDeployedTokenIntent,
+  type UpdateAbstractTokenIntent,
+  type UpdateDeployedTokenIntent,
 } from './intents'
 
-export interface Plan {
-  intent: Intent
-  commands: Command[]
-}
+export type Plan = v.infer<typeof Plan>
+export const Plan = v.object({
+  intent: Intent,
+  commands: v.array(Command),
+})
 
 export type PlanningResult = PlanningResultSuccess | PlanningResultError
 
@@ -48,8 +50,8 @@ export async function generatePlan(
       case 'UpdateAbstractTokenIntent':
         commands = await planUpdateAbstractToken(db, intent)
         break
-      case 'DeleteAllAbstractTokensIntent':
-        commands = planDeleteAllAbstractTokens(intent)
+      case 'DeleteAbstractTokenIntent':
+        commands = planDeleteAbstractToken(db, intent)
         break
       case 'AddDeployedTokenIntent':
         commands = await planAddDeployedToken(db, intent)
@@ -57,8 +59,9 @@ export async function generatePlan(
       case 'UpdateDeployedTokenIntent':
         commands = await planUpdateDeployedToken(db, intent)
         break
-      case 'DeleteAllDeployedTokensIntent':
-        commands = planDeleteAllDeployedTokens(intent)
+
+      case 'DeleteDeployedTokenIntent':
+        commands = planDeleteDeployedToken(intent)
         break
       default:
         assertUnreachable(intent)
@@ -128,12 +131,14 @@ async function planUpdateAbstractToken(
   ]
 }
 
-function planDeleteAllAbstractTokens(
-  intent: DeleteAllAbstractTokensIntent,
+function planDeleteAbstractToken(
+  db: TokenDatabase,
+  intent: DeleteAbstractTokenIntent,
 ): Command[] {
   return [
     {
-      type: 'DeleteAllAbstractTokensCommand',
+      type: 'DeleteAbstractTokenCommand',
+      id: intent.id,
     },
   ]
 }
@@ -177,12 +182,11 @@ async function planUpdateDeployedToken(
   ]
 }
 
-function planDeleteAllDeployedTokens(
-  intent: DeleteAllDeployedTokensIntent,
-): Command[] {
+function planDeleteDeployedToken(intent: DeleteDeployedTokenIntent): Command[] {
   return [
     {
-      type: 'DeleteAllDeployedTokensCommand',
+      type: 'DeleteDeployedTokenCommand',
+      pk: intent.pk,
     },
   ]
 }

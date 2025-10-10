@@ -10,9 +10,10 @@ import transformed from './transformed.json'
 
 function getTestDatabase() {
   dotenv()
-  const connection = process.env['TEST_DB_URL']
+
+  const connection = process.env['LOCAL_DB_URL']
   if (!connection || connection === '') {
-    throw new Error('Please setup TEST_DB_URL env variable')
+    throw new Error('Please setup LOCAL_DB_URL env variable')
   }
 
   return createTokenDatabase({
@@ -32,11 +33,9 @@ function toAbstractToken(
     id,
     issuer: issuer === 'unknown' ? null : issuer,
     symbol,
-    category: fileEntry.category,
+    category: fileEntry.category as AbstractTokenRecord['category'],
     coingeckoId: fileEntry.coingeckoId,
-    coingeckoListingTimestamp: new Date(
-      fileEntry.coingeckoListingTimestamp * 1000,
-    ),
+    coingeckoListingTimestamp: fileEntry.coingeckoListingTimestamp,
     iconUrl: fileEntry.iconUrl,
     reviewed: fileEntry.reviewed ?? false,
     comment: null,
@@ -59,7 +58,7 @@ function toDeployedToken(
     symbol: fileEntry.symbol,
     abstractTokenId: assignedAbstractTokenId ?? null,
     decimals: fileEntry.decimals,
-    deploymentTimestamp: new Date(fileEntry.deploymentTimestamp * 1000),
+    deploymentTimestamp: fileEntry.deploymentTimestamp,
     comment: null,
   }
 }
@@ -97,8 +96,8 @@ async function importTransformed(db: TokenDatabase) {
 
 async function clearTokenTables(db: TokenDatabase) {
   console.log('Clearing all Abstract and Deployed tokens')
-  await planAndExecute(db, { type: 'DeleteAllDeployedTokensIntent' })
-  await planAndExecute(db, { type: 'DeleteAllAbstractTokensIntent' })
+  await db.deployedToken.deleteAll()
+  await db.abstractToken.deleteAll()
 }
 
 async function main() {
