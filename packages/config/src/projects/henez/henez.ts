@@ -7,6 +7,7 @@ export const henez: ScalingProject = underReviewL3({
   id: 'henez',
   capability: 'universal',
   addedAt: UnixTime(1737469444), // 2025-01-21T14:24:03+00:00
+  archivedAt: UnixTime(1759983088),
   hostChain: ProjectId('arbitrum'),
   badges: [
     BADGES.RaaS.Caldera,
