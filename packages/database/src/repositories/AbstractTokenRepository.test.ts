@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeTokenDatabase } from '../test/tokenDatabase'
 import {
@@ -22,7 +21,7 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
         category: 'stablecoin',
         iconUrl: 'https://example.com/icon.png',
         coingeckoId: 'coin-1',
-        coingeckoListingTimestamp: UnixTime.toDate(10),
+        coingeckoListingTimestamp: 10,
         comment: 'some comment',
       })
 
@@ -53,7 +52,7 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
         category: 'stablecoin',
         iconUrl: 'https://example.com/icon.png',
         coingeckoId: 'coin-1',
-        coingeckoListingTimestamp: UnixTime.toDate(10),
+        coingeckoListingTimestamp: 10,
         comment: 'initial comment',
       })
       await repository.insert(record)
@@ -100,7 +99,7 @@ function abstractToken(
     id: overrides.id,
     issuer: overrides.issuer ?? null,
     symbol: overrides.symbol ?? 'TOKEN',
-    category: overrides.category ?? 'generic',
+    category: overrides.category ?? 'other',
     iconUrl: overrides.iconUrl ?? null,
     coingeckoId: overrides.coingeckoId ?? null,
     coingeckoListingTimestamp: overrides.coingeckoListingTimestamp ?? null,
