@@ -15,7 +15,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@l2beat/token-service": "workspace:*",
+    "@l2beat/token-backend": "workspace:*",
     "@l2beat/typescript-config": "workspace:*",
     "@l2beat/validate": "workspace:*",
     "@radix-ui/react-dialog": "1.1.2",

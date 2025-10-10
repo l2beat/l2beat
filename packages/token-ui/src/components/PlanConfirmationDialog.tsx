@@ -1,4 +1,4 @@
-import type { Command, Plan } from '@l2beat/token-service'
+import type { Command, Plan } from '@l2beat/token-backend'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { api } from '~/react-query/trpc'

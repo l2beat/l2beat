@@ -1,4 +1,4 @@
-import type { Plan } from '@l2beat/token-service'
+import type { Plan } from '@l2beat/token-backend'
 import { ArrowRightIcon, CoinsIcon, TrashIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'

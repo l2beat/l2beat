@@ -1,5 +1,5 @@
 {
-  "name": "@l2beat/token-service",
+  "name": "@l2beat/token-backend",
   "version": "0.1.0",
   "private": true,
   "main": "build/index.js",
@@ -10,8 +10,8 @@
     "start": "node build/server.js",
     "dev": "node --watch -r esbuild-register src/server.ts",
     "clean": "rm -rf build",
-    "build:dependencies": "cd ../.. && pnpm build:dependencies:token-service",
-    "watch:dependencies": "cd ../.. && pnpm watch:dependencies:token-service",
+    "build:dependencies": "cd ../.. && pnpm build:dependencies:token-backend",
+    "watch:dependencies": "cd ../.. && pnpm watch:dependencies:token-backend",
     "format:fix": "biome format --write .",
     "format": "biome format .",
     "lint:fix": "biome check --formatter-enabled=false --write .",

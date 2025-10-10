@@ -1,4 +1,4 @@
-import type { AppRouter } from '@l2beat/token-service'
+import type { AppRouter } from '@l2beat/token-backend'
 import type { QueryClient } from '@tanstack/react-query'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { httpBatchLink, loggerLink } from '@trpc/client'

@@ -934,7 +934,7 @@ importers:
         specifier: workspace:*
         version: link:../typescript-config
 
-  packages/token-service:
+  packages/token-backend:
     dependencies:
       '@l2beat/backend-tools':
         specifier: workspace:*
@@ -985,9 +985,9 @@ importers:
 
   packages/token-ui:
     dependencies:
-      '@l2beat/token-service':
+      '@l2beat/token-backend':
         specifier: workspace:*
-        version: link:../token-service
+        version: link:../token-backend
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -10868,7 +10868,7 @@ snapshots:
 
   accepts@2.0.0:
     dependencies:
-      mime-types: 3.0.0
+      mime-types: 3.0.1
       negotiator: 1.0.0
 
   acorn-import-attributes@1.9.5(acorn@8.15.0):
@@ -11109,7 +11109,7 @@ snapshots:
       on-finished: 2.4.1
       qs: 6.14.0
       raw-body: 3.0.0
-      type-is: 2.0.0
+      type-is: 2.0.1
     transitivePeerDependencies:
       - supports-color
 
@@ -12142,7 +12142,7 @@ snapshots:
       fresh: 2.0.0
       http-errors: 2.0.0
       merge-descriptors: 2.0.0
-      mime-types: 3.0.0
+      mime-types: 3.0.1
       on-finished: 2.4.1
       once: 1.4.0
       parseurl: 1.3.3
@@ -12150,7 +12150,7 @@ snapshots:
       qs: 6.14.0
       range-parser: 1.2.1
       router: 2.2.0
-      send: 1.1.0
+      send: 1.2.0
       serve-static: 2.2.0
       statuses: 2.0.1
       type-is: 2.0.1
@@ -14329,7 +14329,7 @@ snapshots:
       encodeurl: 2.0.0
       escape-html: 1.0.3
       parseurl: 1.3.3
-      send: 1.1.0
+      send: 1.2.0
     transitivePeerDependencies:
       - supports-color
 
@@ -15024,13 +15024,13 @@ snapshots:
     dependencies:
       content-type: 1.0.5
       media-typer: 1.1.0
-      mime-types: 3.0.0
+      mime-types: 3.0.1
 
   type-is@2.0.1:
     dependencies:
       content-type: 1.0.5
       media-typer: 1.1.0
-      mime-types: 3.0.0
+      mime-types: 3.0.1
 
   typescript@5.6.3: {}
 

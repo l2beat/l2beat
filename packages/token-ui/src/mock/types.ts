@@ -1,7 +1,7 @@
 import type {
   AbstractTokenRecord,
   DeployedTokenRecord,
-} from '@l2beat/token-service'
+} from '@l2beat/token-backend'
 
 export type AbstractToken = AbstractTokenRecord
 
