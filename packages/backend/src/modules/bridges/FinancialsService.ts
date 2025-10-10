@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BridgeTransferUpdate, Database } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime, unique } from '@l2beat/shared-pure'
 import { TimeLoop } from '../../tools/TimeLoop'
 import { Address32 } from './plugins/types'
 import { type AbstractTokenId, DeployedTokenId, type ITokenDb } from './TokenDb'
@@ -52,21 +52,17 @@ export class FinancialsService extends TimeLoop {
       }),
     )
 
-    const tokens = Array.from(
-      new Set(
-        unprocessed
-          .flatMap((t) => [t.srcId, t.dstId])
-          .filter((x) => x !== undefined),
-      ),
+    const tokens = unique(
+      unprocessed
+        .flatMap((t) => [t.srcId, t.dstId])
+        .filter((x) => x !== undefined),
     )
     const priceInfos = await this.tokenDb.getPriceInfo(tokens)
 
-    const coingeckoIds = Array.from(
-      new Set(
-        Array.from(priceInfos.values())
-          .map((t) => t.coingeckoId)
-          .filter((u) => u !== undefined),
-      ),
+    const coingeckoIds = unique(
+      Array.from(priceInfos.values())
+        .map((t) => t.coingeckoId)
+        .filter((u) => u !== undefined),
     )
 
     const prices = await this.db.interopRecentPrices.getClosestPrices(
@@ -74,15 +70,6 @@ export class FinancialsService extends TimeLoop {
       UnixTime.now(),
       UnixTime.DAY,
     )
-
-    const tokenIdToPrice = new Map<DeployedTokenId, number>()
-    for (const token of tokens) {
-      const coingeckoId = priceInfos.get(token)?.coingeckoId
-      const price = coingeckoId ? prices.get(coingeckoId) : undefined
-      if (price !== undefined) {
-        tokenIdToPrice.set(token, price)
-      }
-    }
 
     function getUpdate(id: DeployedTokenId, rawAmount: string | undefined) {
       let abstractTokenId: AbstractTokenId | undefined
