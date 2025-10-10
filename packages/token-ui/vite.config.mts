@@ -5,7 +5,7 @@ import path from 'path'
 import { defineConfig } from 'vite'
 
 const backendUrl = process.env.VITE_BACKEND_URL ?? 'http://localhost:3000'
-
+console.log('backendUrl', backendUrl)
 // https://vitejs.dev/config/
 // biome-ignore lint/style/noDefaultExport: Vite requires default export
 export default defineConfig({
