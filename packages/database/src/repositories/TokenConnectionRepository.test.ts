@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeTokenDatabase } from '../test/tokenDatabase'
 import type {
@@ -58,7 +57,7 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
           tokenFrom: tokenB,
           tokenTo: tokenC,
           type: 'wrapper',
-          params: { type: 'canonical' },
+          params: { type: 'canonical', data: 'another' },
           comment: 'wrapped',
         }),
       ]
@@ -294,7 +293,7 @@ function deployedToken(
     abstractTokenId: overrides.abstractTokenId ?? null,
     symbol: overrides.symbol ?? 'TOKEN',
     decimals: overrides.decimals ?? 18,
-    deploymentTimestamp: overrides.deploymentTimestamp ?? UnixTime.toDate(0),
+    deploymentTimestamp: 0,
     comment: overrides.comment ?? null,
   }
 }
