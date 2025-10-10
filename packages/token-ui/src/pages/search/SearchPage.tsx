@@ -29,12 +29,9 @@ import { UnixTime } from '~/utils/UnixTime'
 
 export function SearchPage() {
   const { search } = useParams()
-  const { data } = api.tokens.search.useQuery(
-    { search: search ?? '' },
-    {
-      enabled: search !== '',
-    },
-  )
+  const { data } = api.tokens.search.useQuery(search ?? '', {
+    enabled: search !== '',
+  })
 
   return (
     <AppLayout>

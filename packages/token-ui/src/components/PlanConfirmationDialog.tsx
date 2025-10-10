@@ -94,9 +94,6 @@ export function PlanConfirmationDialog({
           toast.success('Deployed token updated successfully')
           invalidateDeployedTokenQueries()
           break
-        case 'DeleteAllAbstractTokensIntent':
-        case 'DeleteAllDeployedTokensIntent':
-          throw new Error('Not implemented')
         default:
           assertUnreachable(plan.intent)
       }
