@@ -38,7 +38,7 @@ export function SearchPage() {
 
   return (
     <AppLayout>
-      <Card className="">
+      <Card>
         <CardHeader>
           <CardTitle>Abstract Tokens</CardTitle>
         </CardHeader>
@@ -50,7 +50,7 @@ export function SearchPage() {
           )}
         </CardContent>
       </Card>
-      <Card className="">
+      <Card className="mt-2">
         <CardHeader>
           <CardTitle>Deployed Tokens</CardTitle>
         </CardHeader>
