@@ -23,14 +23,14 @@ const zkProgramHashes: Record<
   '0x003991487ea72a40a1caa7c234b12c0da52fc4ccc748a07f6ebd354bbb54772e': {
     title: 'Aggregation program of OP Succinct',
     description:
-      'Aggregates proofs of correct execution for several consecuitive block ranges of OP L2 client.',
+      'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
   '0x490685ea27adbbb83301073734f40a5656c984fe352359d54dd637e828e66872': {
     title: 'Range program of OP Succinct',
     description:
-      'Proves correct state transition function within an OP L2 client over a range of consecuitive L2 blocks.',
+      'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
@@ -65,42 +65,42 @@ const zkProgramHashes: Record<
   '0x00bca7947ba758bd6f539f480c6d983cca4bd4387a411a41a71fb953d5df3de7': {
     title: 'Aggregation program of OP Succinct',
     description:
-      'Aggregates proofs of correct execution for several consecuitive block ranges of OP L2 client.',
+      'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
   '0x2d0dcc4f4a5e59b80239c28a3fb68ab63b8eaf6f132239e95f927da9046f4256': {
     title: 'Range program of OP Succinct',
     description:
-      'Proves correct state transition function within an OP L2 client over a range of consecuitive L2 blocks.',
+      'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
   '0x008adbf6e7ba087ac0b05572c938b7707400d7b41318efcbc1d7ffbbbed50452': {
     title: 'Aggregation program of OP Succinct',
     description:
-      'Aggregates proofs of correct execution for several consecuitive block ranges of OP L2 client.',
+      'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
   '0x40bc0563112dcc6868037ea0445916342df200ec0152bf7b4c2cca1d640fdaa3': {
     title: 'Range program of OP Succinct',
     description:
-      'Proves correct state transition function within an OP L2 client over a range of consecuitive L2 blocks.',
+      'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
   '0x0083a8b50160475a7a5911c03dfdee30f6c8a83112a71c5c1125cfb96148b8c2': {
     title: 'Aggregation program of OP Succinct',
     description:
-      'Aggregates proofs of correct execution for several consecuitive block ranges of OP L2 client.',
+      'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
   '0x43f01f7522e77ddc0bea30de6cb8075608a0d0c906660e4f5f430a1e5e170829': {
     title: 'Range program of OP Succinct',
     description:
-      'Proves correct state transition function within an OP L2 client over a range of consecuitive L2 blocks.',
+      'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
@@ -114,14 +114,14 @@ const zkProgramHashes: Record<
   '0x0040b6021bbe547fc651492bcc4eea12eaaa9b0a60086439206e27495ec6d6c3': {
     title: 'Aggregation program of Raiko (reth Taiko)',
     description:
-      'Aggregates proofs of correct execution for several consecuitive block batches of Rust-based Taiko L2 client (raiko).',
+      'Aggregates proofs of correct execution for several consecutive block batches of Rust-based Taiko L2 client (raiko).',
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
   '0x58a28867325f4d123d7097024be2f4b56d71f5ab14a35aed4bc3550426f2bed3': {
     title: 'Batch proving program of Raiko (reth Taiko)',
     description:
-      'Proves correct state transition function within Rust-based Taiko L2 client (raiko) over a batch of consecuitive L2 blocks.',
+      'Proves correct state transition function within Rust-based Taiko L2 client (raiko) over a batch of consecutive L2 blocks.',
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
@@ -135,14 +135,14 @@ const zkProgramHashes: Record<
   '0xe9aec1d30d25da1ccfc02a81c4b71f32e0a6f675dff4ce01fe4bd5f96ff320bd': {
     title: 'Aggregation program of Raiko (reth Taiko)',
     description:
-      'Aggregates proofs of correct execution for several consecuitive block batches of Rust-based Taiko L2 client (raiko).',
+      'Aggregates proofs of correct execution for several consecutive block batches of Rust-based Taiko L2 client (raiko).',
     proverSystemProject: ProjectId('risc0'),
     verificationStatus: 'notVerified',
   },
   '0xee950d20e2483b9b6b859272feaea2dd84cea8a9cfdf1af8834df6b75c3d715e': {
     title: 'Batch proving program of Raiko (reth Taiko)',
     description:
-      'Proves correct state transition function within Rust-based Taiko L2 client (raiko) over a batch of consecuitive L2 blocks.',
+      'Proves correct state transition function within Rust-based Taiko L2 client (raiko) over a batch of consecutive L2 blocks.',
     proverSystemProject: ProjectId('risc0'),
     verificationStatus: 'notVerified',
   },
@@ -159,14 +159,14 @@ const zkProgramHashes: Record<
       title: 'StarkNet OS',
       proverSystemProject: ProjectId('stone'),
       description:
-        'Proves correct state transition for a range of consecuitive Starknet transactions.',
+        'Proves correct state transition for a range of consecutive Starknet transactions.',
       verificationStatus: 'notVerified',
     },
   '273279642033703284306509103355536170486431195329675679055627933497997642494':
     {
       title: 'Aggregation program for Stone prover',
       description:
-        'Aggregates proofs of correct execution for several consecuitive transaction ranges generated by StarkNet OS.',
+        'Aggregates proofs of correct execution for several consecutive transaction ranges generated by StarkNet OS.',
       proverSystemProject: ProjectId('stone'),
       verificationStatus: 'notVerified',
     },
@@ -174,7 +174,7 @@ const zkProgramHashes: Record<
     {
       title: 'Paradex implementation of StarkNet OS',
       description:
-        'Proves correct state transition for a range of consecuitive Paradex transactions.',
+        'Proves correct state transition for a range of consecutive Paradex transactions.',
       proverSystemProject: ProjectId('stone'),
       verificationStatus: 'notVerified',
     },
