@@ -53,6 +53,7 @@ export interface ITokenDb {
       DeployedTokenId,
       {
         abstractId: AbstractTokenId
+        decimals: number
         coingeckoId: string | undefined
       }
     >
@@ -61,31 +62,26 @@ export interface ITokenDb {
 
 const map = new Map<
   DeployedTokenId,
-  { abstractId: AbstractTokenId; coingeckoId: string | undefined }
+  {
+    abstractId: AbstractTokenId
+    decimals: number
+    coingeckoId: string | undefined
+  }
 >()
 for (const abstractToken of mockData.tokens) {
-  for (const deployedId of abstractToken.deployed) {
-    map.set(DeployedTokenId(deployedId), {
+  for (const deployed of abstractToken.deployed) {
+    map.set(DeployedTokenId.from(deployed.chain, deployed.address), {
       abstractId: AbstractTokenId(abstractToken.abstractId),
       coingeckoId: abstractToken.coingeckoId,
+      decimals: deployed.decimals,
     })
   }
 }
 
 export class MockTokenDb implements ITokenDb {
-  async getPriceInfo(
-    deployedTokens: DeployedTokenId[],
-  ): Promise<
-    Map<
-      DeployedTokenId,
-      { abstractId: AbstractTokenId; coingeckoId: string | undefined }
-    >
-  > {
+  async getPriceInfo(deployedTokens: DeployedTokenId[]) {
     await new Promise((r) => setTimeout(r, 1000))
-    const out = new Map<
-      DeployedTokenId,
-      { abstractId: AbstractTokenId; coingeckoId: string | undefined }
-    >()
+    const out = new Map()
     for (const id of deployedTokens) {
       const priceInfo = map.get(id)
       if (priceInfo) {

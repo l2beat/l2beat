@@ -3,11 +3,7 @@ import type { BridgeTransferUpdate, Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { TimeLoop } from '../../tools/TimeLoop'
 import { Address32 } from './plugins/types'
-import {
-  type AbstractTokenId,
-  DeployedTokenId,
-  type MockTokenDb,
-} from './TokenDb'
+import { type AbstractTokenId, DeployedTokenId, type ITokenDb } from './TokenDb'
 
 const chainToAddressFormat: Record<
   string,
@@ -32,7 +28,7 @@ function toDeployedId(chain: string | undefined, address: string | undefined) {
 export class FinancialsService extends TimeLoop {
   constructor(
     private db: Database,
-    private tokenDb: MockTokenDb,
+    private tokenDb: ITokenDb,
     protected logger: Logger,
     intervalMs = 20 * 60 * 1000,
   ) {
@@ -101,8 +97,13 @@ export class FinancialsService extends TimeLoop {
         price = prices.get(priceInfo.coingeckoId)
       }
       if (rawAmount && priceInfo) {
-        // TODO: priceInfo needs decimals
-        amount = 1
+        // This calculation gives us 6 decimal places of precision while not
+        // calculating absurd values using basic numbers
+        amount =
+          Number(
+            (BigInt(rawAmount) * 1_000_000n) /
+              10n ** BigInt(priceInfo.decimals),
+          ) / 1_000_000
       }
       if (price !== undefined && amount !== undefined) {
         valueUsd = price * amount
