@@ -25,11 +25,13 @@ interface SummedByTimestampTvsValuesRecord {
   associated: number
 }
 
-export async function getSummedByTimestampTvsPerProjectQuery(
+export async function getAtTimestampsPerProjectQuery(
   db: Database,
   oldestTimestamp: number,
   latestTimestamp: number,
   projectIds: string[],
+  skipWithoutAssociated?: boolean,
+  cutOffTimestamp?: number,
 ): Promise<SummedByTimestampTvsPerProject> {
   const [all, withoutAssociated] = await Promise.all([
     db.tvsTokenValue.getSummedAtTimestampsByProjects(
@@ -37,13 +39,17 @@ export async function getSummedByTimestampTvsPerProjectQuery(
       latestTimestamp,
       false,
       projectIds,
+      cutOffTimestamp,
     ),
-    db.tvsTokenValue.getSummedAtTimestampsByProjects(
-      oldestTimestamp,
-      latestTimestamp,
-      true,
-      projectIds,
-    ),
+    skipWithoutAssociated
+      ? undefined
+      : db.tvsTokenValue.getSummedAtTimestampsByProjects(
+          oldestTimestamp,
+          latestTimestamp,
+          true,
+          projectIds,
+          cutOffTimestamp,
+        ),
   ])
 
   const values: SummedByTimestampTvsPerProject = {}
@@ -53,8 +59,10 @@ export async function getSummedByTimestampTvsPerProjectQuery(
         .filter((v) => v.project === project)
         .sort((a, b) => a.timestamp - b.timestamp),
       withoutAssociated: withoutAssociated
-        .filter((v) => v.project === project)
-        .sort((a, b) => a.timestamp - b.timestamp),
+        ? withoutAssociated
+            .filter((v) => v.project === project)
+            .sort((a, b) => a.timestamp - b.timestamp)
+        : [],
     }
   }
 

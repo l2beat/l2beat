@@ -56,7 +56,7 @@ export async function get7dTvsBreakdown(
     createTvsBreakdownProjectFilter(props),
   )
   const values = await queryExecutor.execute({
-    name: 'getSummedByTimestampTvsPerProjectQuery',
+    name: 'getAtTimestampsPerProjectQuery',
     args: [
       target - 7 * UnixTime.DAY,
       target,
