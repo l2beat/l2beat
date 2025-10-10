@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable, Updateable } from 'kysely'
+import isNil from 'lodash/isNil'
 import { BaseRepository } from '../BaseRepository'
 import type { DeployedToken } from '../kysely/generated/types'
 
@@ -42,9 +43,9 @@ function toUpdateRow(
 ): Updateable<DeployedToken> {
   return {
     ...record,
-    deploymentTimestamp: record.deploymentTimestamp
-      ? UnixTime.toDate(record.deploymentTimestamp)
-      : undefined,
+    deploymentTimestamp: isNil(record.deploymentTimestamp)
+      ? record.deploymentTimestamp
+      : UnixTime.toDate(record.deploymentTimestamp),
   }
 }
 

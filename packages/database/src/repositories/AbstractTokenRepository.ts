@@ -1,5 +1,6 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable, Updateable } from 'kysely'
+import isNil from 'lodash/isNil'
 import { BaseRepository } from '../BaseRepository'
 import type { AbstractToken } from '../kysely/generated/types'
 
@@ -44,9 +45,9 @@ function toUpdateRow(
 ): Updateable<AbstractToken> {
   return {
     ...record,
-    coingeckoListingTimestamp: record.coingeckoListingTimestamp
-      ? UnixTime.toDate(record.coingeckoListingTimestamp)
-      : null,
+    coingeckoListingTimestamp: isNil(record.coingeckoListingTimestamp)
+      ? record.coingeckoListingTimestamp
+      : UnixTime.toDate(record.coingeckoListingTimestamp),
   }
 }
 
