@@ -30,6 +30,12 @@ Address32.from = function from(value: string | EthereumAddress) {
   throw new Error('Cannot create Bytes32Address')
 }
 
+Address32.cropToEthereumAddress = function cropToEthereumAddress(
+  value: Address32,
+) {
+  return EthereumAddress(`0x${value.slice(-40)}`)
+}
+
 Address32.ZERO = Address32.from('0x')
 Address32.NATIVE = Address32('native')
 
