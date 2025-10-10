@@ -15974,10 +15974,17 @@
       "name": "BurnMintTokenPool",
       "address": "eth:0xC03F9E6c1C5F5D553C77781327640E0c7d30a73d",
       "type": "Contract",
+      "template": "transporter/TokenPool",
       "sourceHashes": [
         "0x0d500b634b888b3ac68c0c2752060ab040f1d34003f0c52a14d3429fb43ee310"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
       "sinceTimestamp": 1760021495,
       "sinceBlock": 23540887,
       "values": {
@@ -19440,39 +19447,6 @@
       }
     },
     {
-      "name": "BurnMintERC20",
-      "address": "eth:0xea17Df5Cf6D172224892B5477A16ACb111182478",
-      "type": "Contract",
-      "template": "transporter/TokenPool",
-      "sourceHashes": [
-        "0xaad5fab64eb7b1f522906d4dea61cc4467e050fd6c8ab74e021332248e3d8d36"
-      ],
-      "proxyType": "immutable",
-      "ignoreInWatchMode": [
-        "getOnRamps",
-        "getCurrentBridgedAmount",
-        "getUnsiloedLiquidity",
-        "getLockedTokens"
-      ],
-      "sinceTimestamp": 1759982495,
-      "sinceBlock": 23537663,
-      "values": {
-        "$immutable": true,
-        "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "decimals": 9,
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCCIPAdmin": "eth:0xfC2F1F744949DdF60aEbc1B0A6344B7f48F72148",
-        "maxSupply": 0,
-        "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
-        "name": "elizaOS",
-        "symbol": "elizaOS",
-        "totalSupply": 0
-      },
-      "implementationNames": {
-        "eth:0xea17Df5Cf6D172224892B5477A16ACb111182478": "BurnMintERC20"
-      }
-    },
-    {
       "address": "eth:0xEa8112530cA10945C2aA976f8F615582Af9B70fa",
       "type": "EOA",
       "proxyType": "EOA"
@@ -20827,11 +20801,6 @@
     },
     {
       "address": "eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xfC2F1F744949DdF60aEbc1B0A6344B7f48F72148",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -47286,45 +47255,6 @@
       "function transferOwnership(address to)",
       "function typeAndVersion() view returns (string)"
     ],
-    "eth:0xea17Df5Cf6D172224892B5477A16ACb111182478": [
-      "constructor(string name, string symbol, uint8 decimals_, uint256 maxSupply_, uint256 preMint)",
-      "error InvalidRecipient(address recipient)",
-      "error MaxSupplyExceeded(uint256 supplyAfterMint)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event CCIPAdminTransferred(address indexed previousAdmin, address indexed newAdmin)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function BURNER_ROLE() view returns (bytes32)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function MINTER_ROLE() view returns (bytes32)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function burn(uint256 amount)",
-      "function burn(address account, uint256 amount)",
-      "function burnFrom(address account, uint256 amount)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function getCCIPAdmin() view returns (address)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantMintAndBurnRoles(address burnAndMinter)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function maxSupply() view returns (uint256)",
-      "function mint(address account, uint256 amount)",
-      "function name() view returns (string)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function setCCIPAdmin(address newAdmin)",
-      "function supportsInterface(bytes4 interfaceId) pure returns (bool)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 amount) returns (bool)",
-      "function transferFrom(address from, address to, uint256 amount) returns (bool)"
-    ],
     "eth:0xEa9c3dB69C9eE60FB0B06d1A1c9077B16F2D7C82": [
       "constructor(address token, uint8 localTokenDecimals, address[] allowlist, address rmnProxy, bool acceptLiquidity, address router)",
       "error AggregateValueMaxCapacityExceeded(uint256 capacity, uint256 requested)",
@@ -49813,5 +49743,5 @@
     "transporter/TokenPool": "0x59c72ebd7fccb0c082baa2045709200cefcb0c32301f4f9f545b571a1e1d7d45"
   },
   "usedBlockNumbers": { "ethereum": 23547033 },
-  "permissionsConfigHash": "0x8d3833209d90ca47e28d904776443f2075e16ee973ffb3ab49a83eb7ea7256d2"
+  "permissionsConfigHash": "0x6e9247d14787cb3dd606c9a9a561739f5f1037877538d4aecc60cd956dc8108f"
 }

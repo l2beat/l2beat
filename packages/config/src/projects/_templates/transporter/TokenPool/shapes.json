@@ -185,5 +185,11 @@
     "address": "eth:0xea17Df5Cf6D172224892B5477A16ACb111182478",
     "chain": "ethereum",
     "blockNumber": 23547033
+  },
+  "BurnMintTokenPool_v9": {
+    "hash": "0x0d500b634b888b3ac68c0c2752060ab040f1d34003f0c52a14d3429fb43ee310",
+    "address": "eth:0xC03F9E6c1C5F5D553C77781327640E0c7d30a73d",
+    "chain": "ethereum",
+    "blockNumber": 23547033
   }
 }

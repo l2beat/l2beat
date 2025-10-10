@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xb159eeb3c46c9cf24ebded8e040deff205ff6020
+Generated with discovered.json: 0x2180d807ab54110efef18edfdf6502a128a486dc
 
-# Diff at Fri, 10 Oct 2025 13:21:41 GMT:
+# Diff at Fri, 10 Oct 2025 13:32:23 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@f6cb63a25b2e49df3a03a7d6feda0ff694b76199 block: 1759764743
@@ -75,18 +75,11 @@ Some pools added.
     +++ description: None
 ```
 
-```diff
-+   Status: CREATED
-    contract BurnMintERC20 (eth:0xea17Df5Cf6D172224892B5477A16ACb111182478)
-    +++ description: None
-```
-
 ## Source code changes
 
 ```diff
-.../projects/transporter/.flat/BurnMintERC20.sol   | 1330 +++++++++++++++++++
- ...:0xC03F9E6c1C5F5D553C77781327640E0c7d30a73d.sol | 1401 ++++++++++++++++++++
- 2 files changed, 2731 insertions(+)
+...:0xC03F9E6c1C5F5D553C77781327640E0c7d30a73d.sol | 1401 ++++++++++++++++++++
+ 1 file changed, 1401 insertions(+)
 ```
 
 Generated with discovered.json: 0x4762a8fb7f3f61c4047256a00966686b67169f0b
