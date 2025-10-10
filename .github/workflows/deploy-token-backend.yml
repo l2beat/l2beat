@@ -1,4 +1,4 @@
-name: Deploy token-backend prod
+name: Deploy token-backend
 
 concurrency:
   group: token-backend-deployment
