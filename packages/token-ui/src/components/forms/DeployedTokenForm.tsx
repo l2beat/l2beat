@@ -30,7 +30,7 @@ import { Textarea } from '~/components/core/TextArea'
 import { api } from '~/react-query/trpc'
 import { minLengthCheck, minNumberCheck } from '~/utils/checks'
 import { cn } from '~/utils/cn'
-import { getAbstractTokenDisplayId } from '~/utils/getAbstractTokenDisplayId'
+import { getAbstractTokenDisplayId } from '~/utils/getDisplayId'
 
 export type DeployedTokenSchema = v.infer<typeof DeployedTokenSchema>
 export const DeployedTokenSchema = v.object({

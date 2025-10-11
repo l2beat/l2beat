@@ -2,7 +2,7 @@ import type { Plan } from '@l2beat/token-backend'
 import { TrashIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import {
@@ -16,13 +16,43 @@ import {
   DeployedTokenSchema,
   setDeployedTokenExistsError,
 } from '~/components/forms/DeployedTokenForm'
+import { LoadingText } from '~/components/LoadingText'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
+import { AppLayout } from '~/layouts/AppLayout'
 import type { DeployedToken } from '~/mock/types'
 import { api } from '~/react-query/trpc'
 import { UnixTime } from '~/utils/UnixTime'
 import { validateResolver } from '~/utils/validateResolver'
 
-export function DeployedTokenView({ token }: { token: DeployedToken }) {
+export function DeployedTokenPage() {
+  const { chain, address } = useParams()
+  const navigate = useNavigate()
+  const { data } = api.tokens.getDeployedByChainAndAddress.useQuery(
+    {
+      chain: chain ?? '',
+      address: address ?? '',
+    },
+    {
+      enabled: chain !== '' && address !== '',
+    },
+  )
+  if (!chain || !address || data === null) {
+    navigate('/not-found')
+    return
+  }
+
+  return (
+    <AppLayout>
+      {data === undefined ? (
+        <LoadingText />
+      ) : (
+        <DeployedTokenView token={data} />
+      )}
+    </AppLayout>
+  )
+}
+
+function DeployedTokenView({ token }: { token: DeployedToken }) {
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
 
   const [searchParams] = useSearchParams()
