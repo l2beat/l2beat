@@ -22,6 +22,7 @@ import {
 import { Spinner } from '~/components/core/Spinner'
 import { Textarea } from '~/components/core/TextArea'
 import { minLengthCheck, urlCheck } from '~/utils/checks'
+import { Checkbox } from '../core/Checkbox'
 
 const categoryValues = ['btc', 'ether', 'stablecoin', 'other'] as const
 
@@ -43,6 +44,7 @@ export const AbstractTokenSchema = v.object({
     })
     .optional(),
   comment: v.string().optional(),
+  reviewed: v.boolean(),
 })
 
 export function AbstractTokenForm({
@@ -239,6 +241,26 @@ export function AbstractTokenForm({
                   <Textarea {...field} />
                 </FormControl>
                 <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="reviewed"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-center gap-2">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={(checked) => {
+                      return checked
+                        ? field.onChange(true)
+                        : field.onChange(false)
+                    }}
+                  />
+                </FormControl>
+                <FormLabel className="font-normal text-sm">Reviewed</FormLabel>
               </FormItem>
             )}
           />

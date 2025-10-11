@@ -183,6 +183,10 @@ export function MainPage() {
                     label="Comment"
                     value={selectedAbstractToken.comment}
                   />
+                  <ItemWithLabel
+                    label="Reviewed"
+                    value={selectedAbstractToken.reviewed ? 'Yes' : 'No'}
+                  />
                 </div>
               )}
             </CardContent>

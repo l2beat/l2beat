@@ -132,9 +132,8 @@ export function AbstractTokenView({
                     type: 'UpdateAbstractTokenIntent',
                     id: token.id,
                     update: {
-                      symbol: values.symbol,
+                      ...values,
                       issuer: values.issuer || null,
-                      category: values.category,
                       iconUrl: values.iconUrl || null,
                       coingeckoId: values.coingeckoId || null,
                       comment: values.comment || null,
@@ -144,7 +143,6 @@ export function AbstractTokenView({
                               new Date(values.coingeckoListingTimestamp),
                             )
                           : null,
-                      reviewed: false,
                     },
                   })
                 }}
