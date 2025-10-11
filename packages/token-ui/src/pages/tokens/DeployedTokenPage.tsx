@@ -21,6 +21,7 @@ import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { DeployedToken } from '~/mock/types'
 import { api } from '~/react-query/trpc'
+import { dateTimeInputToUnixTimestamp } from '~/utils/dateTimeInputToUnixTimestamp'
 import { UnixTime } from '~/utils/UnixTime'
 import { validateResolver } from '~/utils/validateResolver'
 
@@ -103,8 +104,8 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
         comment: values.comment || null,
         decimals: values.decimals,
         symbol: values.symbol,
-        deploymentTimestamp: UnixTime.fromDate(
-          new Date(values.deploymentTimestamp),
+        deploymentTimestamp: dateTimeInputToUnixTimestamp(
+          values.deploymentTimestamp,
         ),
       },
     })

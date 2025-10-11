@@ -294,7 +294,7 @@ export function DeployedTokenForm({
               <FormItem>
                 <FormLabel>Deployment Timestamp</FormLabel>
                 <FormControl>
-                  <Input type="date" {...field} />
+                  <Input type="datetime-local" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

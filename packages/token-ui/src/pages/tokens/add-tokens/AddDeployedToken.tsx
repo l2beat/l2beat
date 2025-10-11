@@ -11,7 +11,7 @@ import {
 } from '~/components/forms/DeployedTokenForm'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { api } from '~/react-query/trpc'
-import { UnixTime } from '~/utils/UnixTime'
+import { dateTimeInputToUnixTimestamp } from '~/utils/dateTimeInputToUnixTimestamp'
 import { validateResolver } from '~/utils/validateResolver'
 
 export function AddDeployedToken() {
@@ -63,6 +63,7 @@ export function AddDeployedToken() {
       setDeployedTokenExistsError(form)
       return
     }
+    console.log(values)
 
     planMutate({
       type: 'AddDeployedTokenIntent',
@@ -70,8 +71,8 @@ export function AddDeployedToken() {
         ...values,
         comment: values.comment || null,
         abstractTokenId: values.abstractTokenId || null,
-        deploymentTimestamp: UnixTime.fromDate(
-          new Date(values.deploymentTimestamp),
+        deploymentTimestamp: dateTimeInputToUnixTimestamp(
+          values.deploymentTimestamp,
         ),
       },
     })
