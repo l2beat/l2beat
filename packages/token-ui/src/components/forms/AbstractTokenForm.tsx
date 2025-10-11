@@ -2,7 +2,7 @@ import { v } from '@l2beat/validate'
 import { ArrowRightIcon, RefreshCwIcon } from 'lucide-react'
 import type { SubmitHandler, UseFormReturn } from 'react-hook-form'
 import { Link } from 'react-router-dom'
-import { Button } from '~/components/core/Button'
+import { Button, buttonVariants } from '~/components/core/Button'
 import {
   Form,
   FormControl,
@@ -141,14 +141,17 @@ export function AbstractTokenForm({
                 <FormControl>
                   <div className="group flex items-center gap-2">
                     <Input {...field} />
-                    <Button variant="outline" disabled={!field.value}>
-                      <Link
-                        to={`https://www.coingecko.com/en/coins/${field.value}`}
-                        target="_blank"
-                      >
-                        <ArrowRightIcon />
-                      </Link>
-                    </Button>
+                    <Link
+                      to={`https://www.coingecko.com/en/coins/${field.value}`}
+                      target="_blank"
+                      aria-disabled={!coingeckoFields.success}
+                      className={buttonVariants({
+                        variant: 'outline',
+                        className: 'shrink-0',
+                      })}
+                    >
+                      <ArrowRightIcon />
+                    </Link>
                   </div>
                 </FormControl>
 

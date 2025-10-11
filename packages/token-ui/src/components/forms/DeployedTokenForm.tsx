@@ -2,7 +2,7 @@ import { v } from '@l2beat/validate'
 import { ArrowRightIcon, CheckIcon, ChevronsUpDownIcon } from 'lucide-react'
 import type { SubmitHandler, UseFormReturn } from 'react-hook-form'
 import { Link, useSearchParams } from 'react-router-dom'
-import { Button } from '~/components/core/Button'
+import { Button, buttonVariants } from '~/components/core/Button'
 import {
   Command,
   CommandEmpty,
@@ -270,16 +270,17 @@ export function DeployedTokenForm({
                       </Command>
                     </PopoverContent>
                   </Popover>
-                  <Button
-                    variant="outline"
-                    className="shrink-0"
-                    disabled={!field.value}
-                    type="button"
+
+                  <Link
+                    to={`/tokens/${field.value}`}
+                    aria-disabled={!field.value}
+                    className={buttonVariants({
+                      variant: 'outline',
+                      className: 'shrink-0',
+                    })}
                   >
-                    <Link to={`/tokens/${field.value}`}>
-                      <ArrowRightIcon />
-                    </Link>
-                  </Button>
+                    <ArrowRightIcon />
+                  </Link>
                 </div>
                 <FormMessage />
               </FormItem>
