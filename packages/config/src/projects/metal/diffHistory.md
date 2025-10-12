@@ -39,7 +39,7 @@ https://disco.l2beat.com/diff/eth:0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C/eth
 DelayedWETH (replacement)
 https://disco.l2beat.com/diff/eth:0x953C004e1FE1aD38ec8Ca614CcDC0fd675FFc7e2/eth:0x3dAa8aFA6e7f6CDD3be5f2Ea610a0e795B76BB1f
 
-OptimismMintableERC20Factory - minor changes.
+OptimismMintableERC20Factory
 https://disco.l2beat.com/diff/eth:0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846/eth:0x5493f4677A186f64805fe7317D6993ba4863988F
 
 ## Watched changes
