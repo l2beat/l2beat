@@ -1,6 +1,6 @@
 {
   "name": "metal",
-  "timestamp": 1760306242,
+  "timestamp": 1760308068,
   "configHash": "0x03e41993098d048e2126bd6ec0683e9570dbf3cbf2eb51c05cda9ba139ced211",
   "entries": [
     {
@@ -2727,6 +2727,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23564471 },
+  "usedBlockNumbers": { "ethereum": 23564623 },
   "permissionsConfigHash": "0x602e5fcd639e54ee9d1d8145c9229a397804cc37235a7547330b81455f325a1b"
 }
