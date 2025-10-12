@@ -8,7 +8,39 @@ Generated with discovered.json: 0xf95c2e66a27087200e4cd6f5196c37b71deee85d
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Upgrade to 16a contracts version (https://gov.optimism.io/t/maintenance-upgrade-proposal-u16a/10288
+) - all contracts templatized.
+
+
+SystemConfig - setFeature function to activate/deactivate features (currently used for the ETHLockbox feature).
+https://disco.l2beat.com/diff/eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375/eth:0x2bFE4A5Bd5A41e9d848d843ebCDFa15954e9A557
+
+OptimismPortal2
+https://disco.l2beat.com/diff/eth:0xe2F826324b2faf99E513D16D266c3F80aE87832B/eth:0x381E729FF983FA4BCEd820e7b922d79bF653B999
+
+L1ERC721Bridge 
+https://disco.l2beat.com/diff/eth:0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d/eth:0x7f1d12fB2911EB095278085f721e644C1f675696
+
+L1CrossDomainMessenger
+https://disco.l2beat.com/diff/eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65/eth:0x22D12E0FAebD62d429514A65EBAe32dd316c12D6
+
+L1StandardBridge 
+https://disco.l2beat.com/diff/eth:0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF/eth:0xe32B192fb1DcA88fCB1C56B3ACb429e32238aDCb
+
+FaultDisputeGame
+https://disco.l2beat.com/diff/eth:0x4F0f6B7877A174A4fd41DF80dB80DeF8883bc772/eth:0x42891199E6abD6A346E26B7d187EF5657FDfF603
+
+PermissionedDisputeGame 
+https://disco.l2beat.com/diff/eth:0x044CEC24Be9DFDd9c65DAC10059a13Fe0f617a5D/eth:0x46CFB83A1cd3cFd26207fbD9F02351C3C0E5C367
+
+MIPS 
+https://disco.l2beat.com/diff/eth:0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C/eth:0x07BABE08EE4D07dBA236530183B24055535A7011
+
+DelayedWETH (replacement)
+https://disco.l2beat.com/diff/eth:0x953C004e1FE1aD38ec8Ca614CcDC0fd675FFc7e2/eth:0x3dAa8aFA6e7f6CDD3be5f2Ea610a0e795B76BB1f
+
+OptimismMintableERC20Factory - minor changes.
+https://disco.l2beat.com/diff/eth:0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846/eth:0x5493f4677A186f64805fe7317D6993ba4863988F
 
 ## Watched changes
 
