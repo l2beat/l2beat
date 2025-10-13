@@ -196,8 +196,8 @@ async function getTransfersStats(db: Database) {
     type: overall.type,
     count: Number(overall.count),
     medianDuration: Number(overall.medianDuration),
-    outboundValueSum: Number(overall.outboundValueSum),
-    inboundValueSum: Number(overall.inboundValueSum),
+    sourceValueSum: Number(overall.sourceValueSum),
+    destinationValueSum: Number(overall.destinationValueSum),
     chains: detailedStats
       .filter((chain) => chain.type === overall.type)
       .map((chain) => {
@@ -208,8 +208,8 @@ async function getTransfersStats(db: Database) {
           destinationChain: chain.destinationChain,
           count: Number(chain.count),
           medianDuration: Number(chain.medianDuration),
-          outboundValueSum: Number(chain.outboundValueSum),
-          inboundValueSum: Number(chain.inboundValueSum),
+          sourceValueSum: Number(chain.sourceValueSum),
+          destinationValueSum: Number(chain.destinationValueSum),
         }
       }),
   }))
