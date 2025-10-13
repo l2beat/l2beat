@@ -559,6 +559,32 @@
           "decimals": 18
         }
       ]
+    },
+    {
+      "abstractId": "MOCK15:layerzero:ZRO",
+      "coingeckoId": "layerzero",
+      "deployed": [
+        {
+          "chain": "ethereum",
+          "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+          "decimals": 18
+        },
+        {
+          "chain": "arbitrum",
+          "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+          "decimals": 18
+        },
+        {
+          "chain": "base",
+          "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+          "decimals": 18
+        },
+        {
+          "chain": "optimism",
+          "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+          "decimals": 18
+        }
+      ]
     }
   ]
 }
