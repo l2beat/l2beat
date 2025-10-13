@@ -585,11 +585,13 @@ function getZkProgramHashes(
         'KailuaTreasury',
         'FPVM_IMAGE_ID',
       )
-      const setBuilderProgramHash = templateVars.discovery.getContractValue<string[]>(
-        'RiscZeroSetVerifier',
-        'imageInfo'
-      )[0]
-      return [ZK_PROGRAM_HASHES(kailuaProgramHash), ZK_PROGRAM_HASHES(setBuilderProgramHash)]
+      const setBuilderProgramHash = templateVars.discovery.getContractValue<
+        string[]
+      >('RiscZeroSetVerifier', 'imageInfo')[0]
+      return [
+        ZK_PROGRAM_HASHES(kailuaProgramHash),
+        ZK_PROGRAM_HASHES(setBuilderProgramHash),
+      ]
     }
     case 'OpSuccinct': {
       const opSuccinctProgramHashes = [
