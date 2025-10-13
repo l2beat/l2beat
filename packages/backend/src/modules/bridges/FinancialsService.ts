@@ -103,7 +103,7 @@ export class FinancialsService extends TimeLoop {
         })
         return
       }
-      if (priceInfo?.coingeckoId) {
+      if (priceInfo.coingeckoId) {
         price = prices.get(priceInfo.coingeckoId)
       }
       if (rawAmount && priceInfo) {
