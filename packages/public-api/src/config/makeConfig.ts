@@ -22,7 +22,7 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
       : {
           connectionString: env.string(
             'PUBLIC_API_URL',
-            env.string('DATABASE_URL'),
+            env.optionalString('DATABASE_URL'),
           ),
           application_name: env.string('DATABASE_APP_NAME', options.name),
           ssl: { rejectUnauthorized: false },
