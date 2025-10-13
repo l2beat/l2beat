@@ -151,7 +151,7 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
         config('a', 1, null, 10), // update: current < toUpdate
         config('b', 1, null, null), // update: current == null
         config('c', 1, null, 1_000), // do not update: current > toUpdate
-        config('d', 1_000, null, null), // do  not update: min > toUpdate
+        config('d', 1_000, null, null), // do not update: min > toUpdate
         config('e', 1, 10, null), // do not update: max < toUpdate
         { ...config('f', 1, null, null), indexerId: 'other' }, // do not update: other indexer
       ]
