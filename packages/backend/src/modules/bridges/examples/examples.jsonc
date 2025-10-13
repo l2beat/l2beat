@@ -710,21 +710,6 @@
     "messages": [],
     "transfers": []
   },
-  "stargate-debug": {
-    "txs": [
-      {
-        "chain": "arbitrum",
-        "tx": "0xb257d1d886fbd7b7edff122d369ff5567719f4f2566c4c0a1492a57c79eb5526"
-      },
-      {
-        "chain": "base",
-        "tx": "0xd9b1e59ed889335a82bae3643c2cc695e490c4dec1e3e2d638e5e2157d3dca28"
-      }
-    ],
-    "events": [],
-    "messages": [],
-    "transfers": []
-  },
   "oft": {
     // 3 oft transfers
     "txs": [
@@ -813,7 +798,7 @@
     "messages": [],
     "transfers": []
   },
-  "oftv2-debug": {
+  "stargate-debug": {
     "txs": [
       {
         "chain": "optimism",
