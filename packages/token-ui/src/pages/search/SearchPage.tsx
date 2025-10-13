@@ -22,9 +22,11 @@ import {
   TableHeader,
   TableRow,
 } from '~/components/core/Table'
+import { LoadingText } from '~/components/LoadingText'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractToken, DeployedToken } from '~/mock/types'
 import { api } from '~/react-query/trpc'
+import { getDeployedTokenDisplayId } from '~/utils/getDisplayId'
 import { UnixTime } from '~/utils/UnixTime'
 
 export function SearchPage() {
@@ -43,7 +45,7 @@ export function SearchPage() {
           {data?.abstractTokens ? (
             <AbstractTokensTable tokens={data.abstractTokens} />
           ) : (
-            <span className="text-muted-foreground text-sm">Loading...</span>
+            <LoadingText />
           )}
         </CardContent>
       </Card>
@@ -55,7 +57,7 @@ export function SearchPage() {
           {data?.deployedTokens ? (
             <DeployedTokensTable tokens={data.deployedTokens} />
           ) : (
-            <span className="text-muted-foreground text-sm">Loading...</span>
+            <LoadingText />
           )}
         </CardContent>
       </Card>
@@ -161,7 +163,7 @@ function DeployedTokensTable({ tokens }: { tokens: DeployedToken[] }) {
       <TableBody>
         {tokens.map((token) => {
           return (
-            <TableRow key={`${token.chain}+${token.address}`}>
+            <TableRow key={getDeployedTokenDisplayId(token)}>
               <TableCell>{token.symbol}</TableCell>
               <TableCell>{token.chain}</TableCell>
               <TableCell>{token.address}</TableCell>
@@ -179,11 +181,11 @@ function DeployedTokensTable({ tokens }: { tokens: DeployedToken[] }) {
               </TableCell>
               <TableCell>{token.decimals}</TableCell>
               <TableCell>
-                {UnixTime.toYYYYMMDD(token.deploymentTimestamp)}
+                {UnixTime.toDate(token.deploymentTimestamp).toISOString()}
               </TableCell>
               <TableCell>
                 <Button asChild variant="link">
-                  <Link to={`/tokens/${token.chain}+${token.address}`}>
+                  <Link to={`/tokens/${token.chain}/${token.address}`}>
                     <ArrowRightIcon />
                   </Link>
                 </Button>

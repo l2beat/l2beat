@@ -2,7 +2,7 @@ import type { Plan } from '@l2beat/token-backend'
 import { TrashIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import {
@@ -16,14 +16,44 @@ import {
   DeployedTokenSchema,
   setDeployedTokenExistsError,
 } from '~/components/forms/DeployedTokenForm'
+import { LoadingText } from '~/components/LoadingText'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
+import { AppLayout } from '~/layouts/AppLayout'
 import type { DeployedToken } from '~/mock/types'
 import { api } from '~/react-query/trpc'
-import { ethereumAddressCheck } from '~/utils/checks'
+import { dateTimeInputToUnixTimestamp } from '~/utils/dateTimeInputToUnixTimestamp'
 import { UnixTime } from '~/utils/UnixTime'
 import { validateResolver } from '~/utils/validateResolver'
 
-export function DeployedTokenView({ token }: { token: DeployedToken }) {
+export function DeployedTokenPage() {
+  const { chain, address } = useParams()
+  const navigate = useNavigate()
+  const { data } = api.tokens.getDeployedByChainAndAddress.useQuery(
+    {
+      chain: chain ?? '',
+      address: address ?? '',
+    },
+    {
+      enabled: chain !== '' && address !== '',
+    },
+  )
+  if (!chain || !address || data === null) {
+    navigate('/not-found')
+    return
+  }
+
+  return (
+    <AppLayout>
+      {data === undefined ? (
+        <LoadingText />
+      ) : (
+        <DeployedTokenView token={data} />
+      )}
+    </AppLayout>
+  )
+}
+
+function DeployedTokenView({ token }: { token: DeployedToken }) {
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
 
   const [searchParams] = useSearchParams()
@@ -33,7 +63,9 @@ export function DeployedTokenView({ token }: { token: DeployedToken }) {
       ...token,
       abstractTokenId: token.abstractTokenId ?? undefined,
       comment: token.comment ?? undefined,
-      deploymentTimestamp: UnixTime.toYYYYMMDD(token.deploymentTimestamp),
+      deploymentTimestamp: UnixTime.toDate(token.deploymentTimestamp)
+        .toISOString()
+        .slice(0, -5),
     },
   })
 
@@ -72,8 +104,8 @@ export function DeployedTokenView({ token }: { token: DeployedToken }) {
         comment: values.comment || null,
         decimals: values.decimals,
         symbol: values.symbol,
-        deploymentTimestamp: UnixTime.fromDate(
-          new Date(values.deploymentTimestamp),
+        deploymentTimestamp: dateTimeInputToUnixTimestamp(
+          values.deploymentTimestamp,
         ),
       },
     })
@@ -92,8 +124,7 @@ export function DeployedTokenView({ token }: { token: DeployedToken }) {
           !!chain &&
           !!address &&
           (address !== form.formState.defaultValues?.address ||
-            chain !== form.formState.defaultValues?.chain) &&
-          ethereumAddressCheck(address) === true,
+            chain !== form.formState.defaultValues?.chain),
       },
     )
 
