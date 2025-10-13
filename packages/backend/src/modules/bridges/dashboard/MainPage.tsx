@@ -195,23 +195,19 @@ function MessagesTable(props: {
               {NETWORKS.map((n) => {
                 const srcDstCount = t.chains.find(
                   (tt) =>
-                    tt.sourceChain === n[0].name &&
-                    tt.destinationChain === n[1].name,
+                    tt.srcChain === n[0].name && tt.dstChain === n[1].name,
                 )?.count
                 const srcDstDuration = t.chains.find(
                   (tt) =>
-                    tt.sourceChain === n[0].name &&
-                    tt.destinationChain === n[1].name,
+                    tt.srcChain === n[0].name && tt.dstChain === n[1].name,
                 )?.medianDuration
                 const dstSrcCount = t.chains.find(
                   (tt) =>
-                    tt.sourceChain === n[1].name &&
-                    tt.destinationChain === n[0].name,
+                    tt.srcChain === n[1].name && tt.dstChain === n[0].name,
                 )?.count
                 const dstSrcDuration = t.chains.find(
                   (tt) =>
-                    tt.sourceChain === n[1].name &&
-                    tt.destinationChain === n[0].name,
+                    tt.srcChain === n[1].name && tt.dstChain === n[0].name,
                 )?.medianDuration
                 return (
                   <>

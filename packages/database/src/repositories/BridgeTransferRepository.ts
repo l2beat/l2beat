@@ -124,8 +124,8 @@ export interface BridgeTransfersStatsRecord {
 
 export interface BridgeTransfersDetailedStatsRecord {
   type: string
-  sourceChain: string
-  destinationChain: string
+  srcChain: string
+  dstChain: string
   count: number
   medianDuration: number
   srcValueSum: number
@@ -221,8 +221,8 @@ export class BridgeTransferRepository extends BaseRepository {
       assert(chain.srcChain && chain.dstChain)
       return {
         type: chain.type,
-        sourceChain: chain.srcChain,
-        destinationChain: chain.dstChain,
+        srcChain: chain.srcChain,
+        dstChain: chain.dstChain,
         count: Number(chain.count),
         medianDuration: Number(chain.medianDuration),
         srcValueSum: Number(chain.srcValueSum),

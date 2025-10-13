@@ -176,11 +176,11 @@ async function getMessagesStats(db: Database) {
     chains: detailedStats
       .filter((chain) => chain.type === overall.type)
       .map((chain) => {
-        assert(chain.sourceChain && chain.destinationChain)
+        assert(chain.srcChain && chain.dstChain)
         return {
           type: chain.type,
-          sourceChain: chain.sourceChain,
-          destinationChain: chain.destinationChain,
+          srcChain: chain.srcChain,
+          dstChain: chain.dstChain,
           count: Number(chain.count),
           medianDuration: Number(chain.medianDuration),
         }
