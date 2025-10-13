@@ -46,6 +46,7 @@ import { dydx } from '../projects/dydx/dydx'
 import { ebichain } from '../projects/ebichain/ebichain'
 import { eclipse } from '../projects/eclipse/eclipse'
 import { edgeless } from '../projects/edgeless/edgeless'
+import { edgex } from '../projects/edgex/edgex'
 import { ethernity } from '../projects/ethernity/ethernity'
 import { everclear } from '../projects/everclear/everclear'
 import { facet } from '../projects/facet/facet'
@@ -229,7 +230,6 @@ import { zkswap2 } from '../projects/zkswap2/zkswap2'
 import { zksync } from '../projects/zksync/zksync'
 import { zksync2 } from '../projects/zksync2/zksync2'
 import { zora } from '../projects/zora/zora'
-import { edgex } from '../projects/edgex/edgex'
 
 export const layer2s: ScalingProject[] = [
   abstract,
