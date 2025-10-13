@@ -298,6 +298,28 @@
     "messages": ["axelar.ContractCallMessage.its"],
     "transfers": ["axelar-its.Transfer"]
   },
+  "axelar-contractCallWithMint2": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0xb3bcbed1cec775088aa6c1785fd84d3c41cd904976554ff8edf32477b1980e48"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x6280c9278d845daa6fddcbfdd0e855e64153d25f99eb16cfcc38a066b5e157c3"
+      },
+      {
+        "chain": "base",
+        "tx": "0xe2f90a6a31aec70efd13ac2e4e0e6bfba2a916ef90013bc41c63a0590f8c40ac"
+      }
+    ],
+    "events": [
+      "axelar.ContractCallWithToken",
+      "axelar.ContractCallApprovedWithMint"
+    ],
+    "messages": ["axelar.ContractCallWithTokenMessage"],
+    "transfers": ["axelar-gateway.Transfer"]
+  },
   "axelar-contractCallWithMint": {
     "txs": [
       {

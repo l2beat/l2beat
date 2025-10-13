@@ -44,7 +44,7 @@ const parseContractCallExecuted = createEventParser(
 
 export const AXELAR_NETWORKS = defineNetworks('axelar', [
   { axelarChainName: 'Ethereum', chain: 'ethereum' },
-  { axelarChainName: 'arbitrum', chain: 'arbitrum' },
+  { axelarChainName: 'Arbitrum', chain: 'arbitrum' },
   { axelarChainName: 'Avalanche', chain: 'avalanche' },
   { axelarChainName: 'base', chain: 'base' },
   { axelarChainName: 'mantle', chain: 'mantle' },
