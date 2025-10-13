@@ -1,7 +1,12 @@
 export interface Config {
   readonly database: DatabaseConfig
+  readonly api: ApiConfig
   readonly auth: AuthConfig | false
   readonly openapi: OpenApiConfig
+}
+
+export interface ApiConfig {
+  port: number
 }
 
 export interface DatabaseConfig {

@@ -22,7 +22,7 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
       : {
           connectionString: env.string(
             'PUBLIC_API_URL',
-            env.string('DATABASE_URL'),
+            env.optionalString('DATABASE_URL'),
           ),
           application_name: env.string('DATABASE_APP_NAME', options.name),
           ssl: { rejectUnauthorized: false },
@@ -30,6 +30,9 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
           min: 20,
           max: env.integer('DATABASE_MAX_POOL_SIZE', 20),
         },
+    api: {
+      port: env.integer('PORT', 3000),
+    },
     auth: options.isLocal
       ? false
       : {
