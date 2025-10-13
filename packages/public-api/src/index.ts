@@ -55,6 +55,10 @@ function main() {
     security: [{ apiKeyAuth: [] }],
   })
 
+  app.get('/', (_, res) => {
+    res.redirect('/docs')
+  })
+
   app.get('/openapi', (_, res) => {
     res.json(openapi.getOpenApiSchema())
   })
