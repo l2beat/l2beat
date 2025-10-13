@@ -246,7 +246,7 @@ export class TokenValueRepository extends BaseRepository {
       .innerJoin('TokenMetadata', 'TokenValue.tokenId', 'TokenMetadata.tokenId')
       .select((eb) => [
         'TokenValue.timestamp',
-        eb.fn.sum(valueField).as('value'),
+        eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
         // Source breakdown
         eb.fn
           .sum(
@@ -254,7 +254,7 @@ export class TokenValueRepository extends BaseRepository {
               .case()
               .when('TokenMetadata.source', '=', 'canonical')
               .then(eb.ref(valueField))
-              .else(0)
+              .else(eb.cast(eb.val(0), 'double precision'))
               .end(),
           )
           .as('canonical'),
@@ -264,7 +264,7 @@ export class TokenValueRepository extends BaseRepository {
               .case()
               .when('TokenMetadata.source', '=', 'external')
               .then(eb.ref(valueField))
-              .else(0)
+              .else(eb.cast(eb.val(0), 'double precision'))
               .end(),
           )
           .as('external'),
@@ -274,7 +274,7 @@ export class TokenValueRepository extends BaseRepository {
               .case()
               .when('TokenMetadata.source', '=', 'native')
               .then(eb.ref(valueField))
-              .else(0)
+              .else(eb.cast(eb.val(0), 'double precision'))
               .end(),
           )
           .as('native'),
@@ -285,7 +285,7 @@ export class TokenValueRepository extends BaseRepository {
               .case()
               .when('TokenMetadata.category', '=', 'ether')
               .then(eb.ref(valueField))
-              .else(0)
+              .else(eb.cast(eb.val(0), 'double precision'))
               .end(),
           )
           .as('ether'),
@@ -295,7 +295,7 @@ export class TokenValueRepository extends BaseRepository {
               .case()
               .when('TokenMetadata.category', '=', 'stablecoin')
               .then(eb.ref(valueField))
-              .else(0)
+              .else(eb.cast(eb.val(0), 'double precision'))
               .end(),
           )
           .as('stablecoin'),
@@ -305,7 +305,7 @@ export class TokenValueRepository extends BaseRepository {
               .case()
               .when('TokenMetadata.category', '=', 'btc')
               .then(eb.ref(valueField))
-              .else(0)
+              .else(eb.cast(eb.val(0), 'double precision'))
               .end(),
           )
           .as('btc'),
@@ -315,7 +315,7 @@ export class TokenValueRepository extends BaseRepository {
               .case()
               .when('TokenMetadata.category', '=', 'rwaRestricted')
               .then(eb.ref(valueField))
-              .else(0)
+              .else(eb.cast(eb.val(0), 'double precision'))
               .end(),
           )
           .as('rwaRestricted'),
@@ -325,7 +325,7 @@ export class TokenValueRepository extends BaseRepository {
               .case()
               .when('TokenMetadata.category', '=', 'rwaPublic')
               .then(eb.ref(valueField))
-              .else(0)
+              .else(eb.cast(eb.val(0), 'double precision'))
               .end(),
           )
           .as('rwaPublic'),
@@ -335,7 +335,7 @@ export class TokenValueRepository extends BaseRepository {
               .case()
               .when('TokenMetadata.category', '=', 'other')
               .then(eb.ref(valueField))
-              .else(0)
+              .else(eb.cast(eb.val(0), 'double precision'))
               .end(),
           )
           .as('other'),
@@ -402,7 +402,7 @@ export class TokenValueRepository extends BaseRepository {
       .select((eb) => [
         'TokenValue.projectId',
         'TokenValue.timestamp',
-        eb.fn.sum(valueField).as('value'),
+        eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
         // Source breakdown
         eb.fn
           .sum(
@@ -410,7 +410,7 @@ export class TokenValueRepository extends BaseRepository {
               .case()
               .when('TokenMetadata.source', '=', 'canonical')
               .then(eb.ref(valueField))
-              .else(0)
+              .else(eb.cast(eb.val(0), 'double precision'))
               .end(),
           )
           .as('canonical'),
@@ -420,7 +420,7 @@ export class TokenValueRepository extends BaseRepository {
               .case()
               .when('TokenMetadata.source', '=', 'external')
               .then(eb.ref(valueField))
-              .else(0)
+              .else(eb.cast(eb.val(0), 'double precision'))
               .end(),
           )
           .as('external'),
@@ -430,7 +430,7 @@ export class TokenValueRepository extends BaseRepository {
               .case()
               .when('TokenMetadata.source', '=', 'native')
               .then(eb.ref(valueField))
-              .else(0)
+              .else(eb.cast(eb.val(0), 'double precision'))
               .end(),
           )
           .as('native'),
@@ -441,7 +441,7 @@ export class TokenValueRepository extends BaseRepository {
               .case()
               .when('TokenMetadata.category', '=', 'ether')
               .then(eb.ref(valueField))
-              .else(0)
+              .else(eb.cast(eb.val(0), 'double precision'))
               .end(),
           )
           .as('ether'),
@@ -451,7 +451,7 @@ export class TokenValueRepository extends BaseRepository {
               .case()
               .when('TokenMetadata.category', '=', 'stablecoin')
               .then(eb.ref(valueField))
-              .else(0)
+              .else(eb.cast(eb.val(0), 'double precision'))
               .end(),
           )
           .as('stablecoin'),
@@ -461,7 +461,7 @@ export class TokenValueRepository extends BaseRepository {
               .case()
               .when('TokenMetadata.category', '=', 'btc')
               .then(eb.ref(valueField))
-              .else(0)
+              .else(eb.cast(eb.val(0), 'double precision'))
               .end(),
           )
           .as('btc'),
@@ -471,7 +471,7 @@ export class TokenValueRepository extends BaseRepository {
               .case()
               .when('TokenMetadata.category', '=', 'rwaRestricted')
               .then(eb.ref(valueField))
-              .else(0)
+              .else(eb.cast(eb.val(0), 'double precision'))
               .end(),
           )
           .as('rwaRestricted'),
@@ -481,7 +481,7 @@ export class TokenValueRepository extends BaseRepository {
               .case()
               .when('TokenMetadata.category', '=', 'rwaPublic')
               .then(eb.ref(valueField))
-              .else(0)
+              .else(eb.cast(eb.val(0), 'double precision'))
               .end(),
           )
           .as('rwaPublic'),
@@ -491,7 +491,7 @@ export class TokenValueRepository extends BaseRepository {
               .case()
               .when('TokenMetadata.category', '=', 'other')
               .then(eb.ref(valueField))
-              .else(0)
+              .else(eb.cast(eb.val(0), 'double precision'))
               .end(),
           )
           .as('other'),
@@ -501,7 +501,7 @@ export class TokenValueRepository extends BaseRepository {
               .case()
               .when('TokenMetadata.isAssociated', '=', true)
               .then(eb.ref(valueField))
-              .else(0)
+              .else(eb.cast(eb.val(0), 'double precision'))
               .end(),
           )
           .as('associated'),
@@ -554,7 +554,7 @@ export class TokenValueRepository extends BaseRepository {
       .selectFrom('TokenValue')
       .select((eb) => [
         'TokenValue.projectId',
-        eb.fn.sum(valueField).as('value'),
+        eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
       ])
       .where('timestamp', '=', UnixTime.toDate(timestamp))
       .groupBy('TokenValue.projectId')
