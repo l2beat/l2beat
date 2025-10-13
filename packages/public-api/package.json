@@ -16,14 +16,18 @@
   },
   "dependencies": {
     "@l2beat/validate": "workspace:*",
+    "@l2beat/database": "workspace:*",
+    "@l2beat/backend-tools": "workspace:*",
     "express": "^5.0.0",
-    "swagger-ui-express": "^5.0.1"
+    "swagger-ui-express": "^5.0.1",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@l2beat/config": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
     "@l2beat/typescript-config": "workspace:*",
     "@types/express": "^5.0.0",
-    "@types/swagger-ui-express": "^4.1.8"
+    "@types/swagger-ui-express": "^4.1.8",
+    "@types/lodash": "^4.17.4"
   }
 }

@@ -1332,6 +1332,8 @@
   "static/icons/vemphorizon.png": "40e642c1e9b1908e0387ac6a8620f781",
   "static/meta-images/scaling/projects/vemphorizon/opengraph-image.png": "a1b7b7362c111337b0b48aeaff349b0c",
   "static/icons/aztecv1prover.png": "56de9d06ea64d786eefdcccaf747d2f6",
+  "static/meta-images/governance/publications/governance-review-65.png": "50950216ec74ee3a5fa669529bf68a33",
+  "static/icons/tee-bridge.png": "b0336861f639aaf845e7c7cda35eb2dd",
   "static/icons/zkprover.png": "9209da36dc894b389ad580067aa77c59",
   "static/icons/t3rn.png": "91654d12e3956bbf15cf1f9d5e319fe7",
   "static/meta-images/scaling/projects/t3rn/opengraph-image.png": "78f6c58b12a9a86d7e1cb53815e3734c",
@@ -1488,6 +1490,8 @@
   "static/images/badges/EspressoHotShotLightClient.png": "d462fc8a4216e612bdea05b40ee11ad8",
   "static/images/architecture/lighter.png": "a81a717790ecc4e767228cefc9c7fcc0",
   "static/meta-images/scaling/projects/gate-layer/opengraph-image.png": "88b59637488f33560ee827346e894118",
+  "static/icons/intuition.png": "17940743ab90b6db161988bc59ca68bd",
+  "static/meta-images/scaling/projects/intuition/opengraph-image.png": "fcb1046a25f7e1b08c98811ec4fa9390",
   "static/meta-images/publications/governance-review-72.png": "485faf85ece1e4c2cd9bd71bf428f462",
   "static/icons/lighterprover.png": "fe6ccd8714654e4c7dec57ea70045838",
   "static/meta-images/zk-catalog/projects/lighterprover/opengraph-image.png": "43f9d97612fee339df3da1f46cd63f36"

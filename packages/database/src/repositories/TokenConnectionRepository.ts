@@ -1,17 +1,35 @@
+import type { Updateable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { TokenConnection } from '../kysely/generated/types'
-import {
-  type AsInsertable,
-  type AsSelectable,
-  type AsUpdate,
-  toRecord,
-} from '../utils/typeUtils'
 import type { DeployedTokenPrimaryKey } from './DeployedTokenRepository'
 
-export type TokenConnectionInsertable = AsInsertable<TokenConnection>
-export type TokenConnectionSelectable = AsSelectable<TokenConnection>
-export type TokenConnectionUpdate = AsUpdate<
-  TokenConnection,
+type TokenConnectionType = TokenConnectionParams['type']
+
+type WrapperConnectionParams = {
+  type: 'wrapper'
+  some: string
+  data: number
+}
+type CanonicalConnectionParams = {
+  type: 'canonical'
+  data: string
+}
+type TokenConnectionParams = WrapperConnectionParams | CanonicalConnectionParams
+
+export type TokenConnectionRecord<
+  T extends TokenConnectionType = TokenConnectionType,
+> = {
+  tokenFromChain: string
+  tokenFromAddress: string
+  tokenToChain: string
+  tokenToAddress: string
+  type: T
+  params: Extract<TokenConnectionParams, { type: T }> | null
+  comment: string | null
+}
+
+export type TokenConnectionPrimaryKey = Pick<
+  TokenConnectionRecord,
   | 'tokenFromChain'
   | 'tokenFromAddress'
   | 'tokenToChain'
@@ -19,50 +37,46 @@ export type TokenConnectionUpdate = AsUpdate<
   | 'type'
 >
 
+export type TokenConnectionUpdateable = Omit<
+  Updateable<TokenConnectionRecord>,
+  keyof TokenConnectionPrimaryKey
+>
+
+const toRecord = <T extends TokenConnectionType>(
+  record: TokenConnection,
+): TokenConnectionRecord<T> => {
+  return {
+    ...record,
+    type: record.type as T,
+    params: record.params as Extract<TokenConnectionParams, { type: T }>,
+  }
+}
+
+const toRow = <T extends TokenConnectionType>(
+  record: TokenConnectionRecord<T>,
+): TokenConnection => {
+  return {
+    ...record,
+    params: record.params as TokenConnectionParams,
+  }
+}
+
 export class TokenConnectionRepository extends BaseRepository {
-  async upsert(record: TokenConnectionInsertable): Promise<void> {
-    await this.upsertMany([record])
+  async insert(record: TokenConnectionRecord): Promise<void> {
+    await this.db.insertInto('TokenConnection').values(toRow(record)).execute()
   }
 
-  async upsertMany(records: TokenConnectionInsertable[]): Promise<number> {
-    if (records.length === 0) return 0
-
-    await this.batch(records, 1_000, async (batch) => {
-      await this.db
-        .insertInto('TokenConnection')
-        .values(batch)
-        .onConflict((oc) =>
-          oc
-            .columns([
-              'tokenFromChain',
-              'tokenFromAddress',
-              'tokenToChain',
-              'tokenToAddress',
-              'type',
-            ])
-            .doUpdateSet((eb) => ({
-              params: eb.ref('excluded.params'),
-              comment: eb.ref('excluded.comment'),
-            })),
-        )
-        .execute()
-    })
-
-    return records.length
-  }
-
-  async getAll(): Promise<TokenConnectionSelectable[]> {
+  async getAll(): Promise<TokenConnectionRecord[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
       .selectAll()
       .execute()
-
     return rows.map(toRecord)
   }
 
   async getConnectionsFromOrTo(
     token: DeployedTokenPrimaryKey,
-  ): Promise<TokenConnectionSelectable[]> {
+  ): Promise<TokenConnectionRecord[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
       .selectAll()
@@ -79,40 +93,37 @@ export class TokenConnectionRepository extends BaseRepository {
         ]),
       )
       .execute()
-
     return rows.map(toRecord)
   }
 
   async getConnectionsFrom(
     token: DeployedTokenPrimaryKey,
-  ): Promise<TokenConnectionSelectable[]> {
+  ): Promise<TokenConnectionRecord[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
       .selectAll()
       .where('tokenFromChain', '=', token.chain)
       .where('tokenFromAddress', '=', token.address)
       .execute()
-
     return rows.map(toRecord)
   }
 
   async getConnectionsTo(
     token: DeployedTokenPrimaryKey,
-  ): Promise<TokenConnectionSelectable[]> {
+  ): Promise<TokenConnectionRecord[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
       .selectAll()
       .where('tokenToChain', '=', token.chain)
       .where('tokenToAddress', '=', token.address)
       .execute()
-
     return rows.map(toRecord)
   }
 
   async getFromTo(
     tokenFrom: DeployedTokenPrimaryKey,
     tokenTo: DeployedTokenPrimaryKey,
-  ): Promise<TokenConnectionSelectable[]> {
+  ): Promise<TokenConnectionRecord[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
       .selectAll()
@@ -121,14 +132,13 @@ export class TokenConnectionRepository extends BaseRepository {
       .where('tokenToChain', '=', tokenTo.chain)
       .where('tokenToAddress', '=', tokenTo.address)
       .execute()
-
     return rows.map(toRecord)
   }
 
   async getConnectionsBetween(
     tokenA: DeployedTokenPrimaryKey,
     tokenB: DeployedTokenPrimaryKey,
-  ): Promise<TokenConnectionSelectable[]> {
+  ): Promise<TokenConnectionRecord[]> {
     const rows = await this.db
       .selectFrom('TokenConnection')
       .selectAll()
@@ -149,7 +159,6 @@ export class TokenConnectionRepository extends BaseRepository {
         ]),
       )
       .execute()
-
     return rows.map(toRecord)
   }
 
@@ -168,7 +177,7 @@ export class TokenConnectionRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
-  async deleteByTokens(tokens: DeployedTokenPrimaryKey[]): Promise<number> {
+  async deleteByPK(tokens: DeployedTokenPrimaryKey[]): Promise<number> {
     if (tokens.length === 0) return 0
 
     const result = await this.db
