@@ -58,6 +58,7 @@ export interface BridgeMessage {
   kind: 'BridgeMessage'
   app: string
   type: string
+  events: BridgeEvent[]
   src: BridgeEvent
   dst: BridgeEvent
 }
@@ -213,13 +214,16 @@ export function createEventParser<T extends `event ${string}(${string}`>(
 
 export const Result = { Message, Transfer }
 
+interface BridgeMessageOptions {
+  app: string
+  srcEvent: BridgeEvent
+  dstEvent: BridgeEvent
+  extraEvents?: BridgeEvent[]
+}
+
 function Message(
   type: string,
-  options: {
-    app: string
-    srcEvent: BridgeEvent
-    dstEvent: BridgeEvent
-  },
+  options: BridgeMessageOptions,
 ): Omit<BridgeMessage, 'plugin'> {
   if (!/\w+\.\w+(\.\w+)?/.test(type)) {
     throw new Error(
@@ -232,6 +236,11 @@ function Message(
     app: options.app,
     src: options.srcEvent,
     dst: options.dstEvent,
+    events: [
+      options.srcEvent,
+      options.dstEvent,
+      ...(options.extraEvents ?? []),
+    ],
   }
 }
 
