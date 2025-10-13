@@ -8,7 +8,7 @@ export function getConfig(env: Env): Config {
   switch (deploymentEnv) {
     case 'local':
       return makeConfig(env, {
-        name: 'Backend/Local',
+        name: 'API-Local',
         isLocal: true,
       })
     case 'staging':
