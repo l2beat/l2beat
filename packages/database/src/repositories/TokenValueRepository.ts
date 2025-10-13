@@ -1,8 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import type { ExpressionBuilder, Insertable, Selectable } from 'kysely'
 import { sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
+import type { DB } from '../kysely'
 import type { TokenValue } from '../kysely/generated/types'
+import type { TokenCategory, TokenSource } from './TokenMetadataRepository'
 
 export interface TokenValueRecord {
   timestamp: UnixTime
@@ -248,97 +250,16 @@ export class TokenValueRepository extends BaseRepository {
         'TokenValue.timestamp',
         eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
         // Source breakdown
-        eb.fn
-          .sum(
-            eb
-              .case()
-              .when('TokenMetadata.source', '=', 'canonical')
-              .then(eb.ref(valueField))
-              .else(eb.cast(eb.val(0), 'double precision'))
-              .end(),
-          )
-          .as('canonical'),
-        eb.fn
-          .sum(
-            eb
-              .case()
-              .when('TokenMetadata.source', '=', 'external')
-              .then(eb.ref(valueField))
-              .else(eb.cast(eb.val(0), 'double precision'))
-              .end(),
-          )
-          .as('external'),
-        eb.fn
-          .sum(
-            eb
-              .case()
-              .when('TokenMetadata.source', '=', 'native')
-              .then(eb.ref(valueField))
-              .else(eb.cast(eb.val(0), 'double precision'))
-              .end(),
-          )
-          .as('native'),
+        sumBySource(eb, valueField, 'canonical'),
+        sumBySource(eb, valueField, 'external'),
+        sumBySource(eb, valueField, 'native'),
         // Category breakdown
-        eb.fn
-          .sum(
-            eb
-              .case()
-              .when('TokenMetadata.category', '=', 'ether')
-              .then(eb.ref(valueField))
-              .else(eb.cast(eb.val(0), 'double precision'))
-              .end(),
-          )
-          .as('ether'),
-        eb.fn
-          .sum(
-            eb
-              .case()
-              .when('TokenMetadata.category', '=', 'stablecoin')
-              .then(eb.ref(valueField))
-              .else(eb.cast(eb.val(0), 'double precision'))
-              .end(),
-          )
-          .as('stablecoin'),
-        eb.fn
-          .sum(
-            eb
-              .case()
-              .when('TokenMetadata.category', '=', 'btc')
-              .then(eb.ref(valueField))
-              .else(eb.cast(eb.val(0), 'double precision'))
-              .end(),
-          )
-          .as('btc'),
-        eb.fn
-          .sum(
-            eb
-              .case()
-              .when('TokenMetadata.category', '=', 'rwaRestricted')
-              .then(eb.ref(valueField))
-              .else(eb.cast(eb.val(0), 'double precision'))
-              .end(),
-          )
-          .as('rwaRestricted'),
-        eb.fn
-          .sum(
-            eb
-              .case()
-              .when('TokenMetadata.category', '=', 'rwaPublic')
-              .then(eb.ref(valueField))
-              .else(eb.cast(eb.val(0), 'double precision'))
-              .end(),
-          )
-          .as('rwaPublic'),
-        eb.fn
-          .sum(
-            eb
-              .case()
-              .when('TokenMetadata.category', '=', 'other')
-              .then(eb.ref(valueField))
-              .else(eb.cast(eb.val(0), 'double precision'))
-              .end(),
-          )
-          .as('other'),
+        sumByCategory(eb, valueField, 'ether'),
+        sumByCategory(eb, valueField, 'stablecoin'),
+        sumByCategory(eb, valueField, 'btc'),
+        sumByCategory(eb, valueField, 'rwaRestricted'),
+        sumByCategory(eb, valueField, 'rwaPublic'),
+        sumByCategory(eb, valueField, 'other'),
       ])
       .where('TokenValue.projectId', 'in', projectIds)
       .groupBy('TokenValue.timestamp')
@@ -404,97 +325,16 @@ export class TokenValueRepository extends BaseRepository {
         'TokenValue.timestamp',
         eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
         // Source breakdown
-        eb.fn
-          .sum(
-            eb
-              .case()
-              .when('TokenMetadata.source', '=', 'canonical')
-              .then(eb.ref(valueField))
-              .else(eb.cast(eb.val(0), 'double precision'))
-              .end(),
-          )
-          .as('canonical'),
-        eb.fn
-          .sum(
-            eb
-              .case()
-              .when('TokenMetadata.source', '=', 'external')
-              .then(eb.ref(valueField))
-              .else(eb.cast(eb.val(0), 'double precision'))
-              .end(),
-          )
-          .as('external'),
-        eb.fn
-          .sum(
-            eb
-              .case()
-              .when('TokenMetadata.source', '=', 'native')
-              .then(eb.ref(valueField))
-              .else(eb.cast(eb.val(0), 'double precision'))
-              .end(),
-          )
-          .as('native'),
+        sumBySource(eb, valueField, 'canonical'),
+        sumBySource(eb, valueField, 'external'),
+        sumBySource(eb, valueField, 'native'),
         // Category breakdown
-        eb.fn
-          .sum(
-            eb
-              .case()
-              .when('TokenMetadata.category', '=', 'ether')
-              .then(eb.ref(valueField))
-              .else(eb.cast(eb.val(0), 'double precision'))
-              .end(),
-          )
-          .as('ether'),
-        eb.fn
-          .sum(
-            eb
-              .case()
-              .when('TokenMetadata.category', '=', 'stablecoin')
-              .then(eb.ref(valueField))
-              .else(eb.cast(eb.val(0), 'double precision'))
-              .end(),
-          )
-          .as('stablecoin'),
-        eb.fn
-          .sum(
-            eb
-              .case()
-              .when('TokenMetadata.category', '=', 'btc')
-              .then(eb.ref(valueField))
-              .else(eb.cast(eb.val(0), 'double precision'))
-              .end(),
-          )
-          .as('btc'),
-        eb.fn
-          .sum(
-            eb
-              .case()
-              .when('TokenMetadata.category', '=', 'rwaRestricted')
-              .then(eb.ref(valueField))
-              .else(eb.cast(eb.val(0), 'double precision'))
-              .end(),
-          )
-          .as('rwaRestricted'),
-        eb.fn
-          .sum(
-            eb
-              .case()
-              .when('TokenMetadata.category', '=', 'rwaPublic')
-              .then(eb.ref(valueField))
-              .else(eb.cast(eb.val(0), 'double precision'))
-              .end(),
-          )
-          .as('rwaPublic'),
-        eb.fn
-          .sum(
-            eb
-              .case()
-              .when('TokenMetadata.category', '=', 'other')
-              .then(eb.ref(valueField))
-              .else(eb.cast(eb.val(0), 'double precision'))
-              .end(),
-          )
-          .as('other'),
+        sumByCategory(eb, valueField, 'ether'),
+        sumByCategory(eb, valueField, 'stablecoin'),
+        sumByCategory(eb, valueField, 'btc'),
+        sumByCategory(eb, valueField, 'rwaRestricted'),
+        sumByCategory(eb, valueField, 'rwaPublic'),
+        sumByCategory(eb, valueField, 'other'),
         eb.fn
           .sum(
             eb
@@ -610,4 +450,38 @@ export class TokenValueRepository extends BaseRepository {
       value: row.value,
     }))
   }
+}
+
+function sumByCategory(
+  eb: ExpressionBuilder<DB, 'TokenValue' | 'TokenMetadata'>,
+  valueField: 'valueForProject' | 'valueForSummary',
+  category: TokenCategory,
+) {
+  return eb.fn
+    .sum(
+      eb
+        .case()
+        .when('TokenMetadata.category', '=', category)
+        .then(eb.ref(valueField))
+        .else(eb.cast(eb.val(0), 'double precision'))
+        .end(),
+    )
+    .as(category)
+}
+
+function sumBySource(
+  eb: ExpressionBuilder<DB, 'TokenValue' | 'TokenMetadata'>,
+  valueField: 'valueForProject' | 'valueForSummary',
+  source: TokenSource,
+) {
+  return eb.fn
+    .sum(
+      eb
+        .case()
+        .when('TokenMetadata.source', '=', source)
+        .then(eb.ref(valueField))
+        .else(eb.cast(eb.val(0), 'double precision'))
+        .end(),
+    )
+    .as(source)
 }
