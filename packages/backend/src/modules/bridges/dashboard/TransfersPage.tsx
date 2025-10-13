@@ -93,13 +93,13 @@ function TransfersTable(props: {
                 )}
               </td>
               <td>
-                {srcExplorerUrl &&
+                {dstExplorerUrl &&
                   e.dstTokenAddress &&
                   e.dstTokenAddress !== 'native' &&
                   e.dstTokenAddress !== EthereumAddress.ZERO && (
                     <a
                       target="_blank"
-                      href={`${srcExplorerUrl}/address/${Address32.cropToEthereumAddress(Address32(e.dstTokenAddress))}`}
+                      href={`${dstExplorerUrl}/address/${Address32.cropToEthereumAddress(Address32(e.dstTokenAddress))}`}
                     >
                       {Address32.cropToEthereumAddress(
                         Address32(e.dstTokenAddress),
