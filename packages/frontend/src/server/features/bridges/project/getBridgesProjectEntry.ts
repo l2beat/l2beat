@@ -11,7 +11,6 @@ import compact from 'lodash/compact'
 import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import { getDb } from '~/server/database'
 import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import { ps } from '~/server/projects'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
@@ -26,6 +25,7 @@ import type { UnderReviewStatus } from '~/utils/project/underReview'
 import { getUnderReviewStatus } from '~/utils/project/underReview'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
+import { checkIfTvsExist } from '../../scaling/tvs/utils/checkIfTvsExist'
 import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/getAssociatedTokenWarning'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 import { getProjectIcon } from '../../utils/getProjectIcon'
@@ -90,7 +90,6 @@ export async function getBridgesProjectEntry(
     | 'colors'
   >,
 ): Promise<BridgesProjectEntry> {
-  const db = getDb()
   const [
     projectsChangeReport,
     tvsStats,
@@ -102,10 +101,7 @@ export async function getBridgesProjectEntry(
   ] = await Promise.all([
     getProjectsChangeReport(),
     get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
-    db.tvsTokenValue.checkIfExists(
-      project.id,
-      UnixTime.now() - 365 * UnixTime.DAY,
-    ),
+    checkIfTvsExist(project.id, UnixTime.now() - 365 * UnixTime.DAY),
     getTokensForProject(project),
     getContractUtils(),
     ps.getProjects({

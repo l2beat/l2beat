@@ -1,20 +1,12 @@
 import type { Project } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { ScalingTvsSectionProps } from '~/components/projects/sections/ScalingTvsSection'
-import { env } from '~/env'
-import { getDb } from '~/server/database'
+import { checkIfTvsExist } from '~/server/features/scaling/tvs/utils/checkIfTvsExist'
 
 export async function getScalingTvsSection(
   project: Project<never, 'archivedAt'>,
 ): Promise<Pick<ScalingTvsSectionProps, 'defaultRange'> | undefined> {
-  if (env.MOCK) {
-    return {
-      defaultRange: '1y',
-    }
-  }
-
-  const db = getDb()
-  const hasData = await db.tvsTokenValue.checkIfExists(
+  const hasData = await checkIfTvsExist(
     project.id,
     !project.archivedAt ? UnixTime.now() - 365 * UnixTime.DAY : undefined,
   )
