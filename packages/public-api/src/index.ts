@@ -83,9 +83,8 @@ function main() {
   addTvsRoutes(openapi, ps, db)
   addActivityRoutes(openapi, ps, db)
 
-  const port = 3000
-  app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+  app.listen(config.api.port, () => {
+    console.log(`Example app listening on port ${config.api.port}`)
   })
 }
 
