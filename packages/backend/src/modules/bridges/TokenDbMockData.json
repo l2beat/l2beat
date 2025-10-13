@@ -332,6 +332,11 @@
           "chain": "zksyncera",
           "address": "0xBBeB516fb02a01611cBBE0453Fe3c580D7281011",
           "decimals": 8
+        },
+        {
+          "chain": "arbitrum",
+          "address": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+          "decimals": 8
         }
       ]
     },
@@ -597,12 +602,12 @@
         },
         {
           "chain": "arbitrum",
-          "address": "0x14E4A1B13bf7F943c8ff7C51fb60FA964A298D92",
+          "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
           "decimals": 18
         },
         {
           "chain": "optimism",
-          "address": "0xF03b4d9AC1D5d1E7c4cEf54C2A313b9fe051A0aD",
+          "address": "0x01bFF41798a0BcF287b996046Ca68b395DbC1071",
           "decimals": 18
         }
       ]
