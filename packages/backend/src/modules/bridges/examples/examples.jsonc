@@ -812,5 +812,20 @@
     "events": [],
     "messages": [],
     "transfers": []
+  },
+  "oftv2-debug": {
+    "txs": [
+      {
+        "chain": "optimism",
+        "tx": "0x5486e7ce1d6e0ef138dcb4a6b82ec06832b035141fc85184bf98c7a790cea268"
+      },
+      {
+        "chain": "base",
+        "tx": "0xe3d4a5bcdaeb683da03ef7bb73b6e3e110108c6de4c318551a203df6a8c73ef9"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
   }
 }

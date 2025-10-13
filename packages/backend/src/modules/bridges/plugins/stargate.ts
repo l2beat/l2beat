@@ -75,6 +75,13 @@ const STARGATE_NETWORKS = defineNetworks('stargate', [
       ),
       token: 'USDC',
     },
+    usdtPool: {
+      address: EthereumAddress('0x933597a323Eb81cAe705C5bC29985172fd5A3973'),
+      tokenAddress: Address32.from(
+        '0xdAC17F958D2ee523a2206206994597C13D831ec7',
+      ),
+      token: 'USDT',
+    },
     tokenMessaging: EthereumAddress(
       '0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980',
     ),
@@ -93,6 +100,13 @@ const STARGATE_NETWORKS = defineNetworks('stargate', [
         '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
       ),
       token: 'USDC',
+    },
+    usdtPool: {
+      address: EthereumAddress('0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0'),
+      tokenAddress: Address32.from(
+        '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9',
+      ),
+      token: 'USDT',
     },
     tokenMessaging: EthereumAddress(
       '0x6E3d884C96d640526F273C61dfcF08915eBd7e2B',
@@ -113,8 +127,35 @@ const STARGATE_NETWORKS = defineNetworks('stargate', [
       ),
       token: 'USDC',
     },
+    // no usdt
     tokenMessaging: EthereumAddress(
       '0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47',
+    ),
+  },
+  {
+    chain: 'optimism',
+    eid: 30111,
+    nativePool: {
+      address: EthereumAddress('0xe8CDF27AcD73a434D661C84887215F7598e7d0d3'),
+      tokenAddress: Address32.NATIVE,
+      token: 'ETH',
+    },
+    usdcPool: {
+      address: EthereumAddress('0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0'),
+      tokenAddress: Address32.from(
+        '0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85',
+      ),
+      token: 'USDC',
+    },
+    usdtPool: {
+      address: EthereumAddress('0x19cFCE47eD54a88614648DC3f19A5980097007dD'),
+      tokenAddress: Address32.from(
+        '0x94b008aA00579c1307B0EF2c499aD98a8ce58e58',
+      ),
+      token: 'USDT',
+    },
+    tokenMessaging: EthereumAddress(
+      '0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6',
     ),
   },
 ])
@@ -131,10 +172,13 @@ export class StargatePlugin implements BridgePlugin {
       return
     }
 
-    const oftSent = parseOFTSent(input.log, [
+    const poolAddresses = [
       network.nativePool.address,
       network.usdcPool.address,
-    ])
+      network.usdtPool?.address,
+    ].filter((addy): addy is EthereumAddress => !!addy)
+
+    const oftSent = parseOFTSent(input.log, poolAddresses)
     if (oftSent) {
       const pool = [network.nativePool, network.usdcPool].find(
         (t) => t.address === EthereumAddress(input.log.address),
@@ -178,10 +222,7 @@ export class StargatePlugin implements BridgePlugin {
       })
     }
 
-    const oftReceived = parseOFTReceived(input.log, [
-      network.nativePool.address,
-      network.usdcPool.address,
-    ])
+    const oftReceived = parseOFTReceived(input.log, poolAddresses)
     if (oftReceived) {
       const pool = [network.nativePool, network.usdcPool].find(
         (t) => t.address === EthereumAddress(input.log.address),
