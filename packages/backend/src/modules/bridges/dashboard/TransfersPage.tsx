@@ -2,7 +2,9 @@ import type { BridgeTransferRecord } from '@l2beat/database'
 import { EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
+import { Address32 } from '../plugins/types'
 import { DataTablePage } from './DataTablePage'
+import { formatDollars } from './formatDollars'
 import {
   type ProcessorsStatus,
   ProcessorsStatusTable,
@@ -18,14 +20,16 @@ function TransfersTable(props: {
         <tr>
           <th>Timestamp UTC</th>
           <th>Duration</th>
+          <th>srcToken</th>
+          <th>srcValue</th>
+          <th>dstToken</th>
+          <th>dstValue</th>
           <th>srcChain</th>
           <th>srcTx</th>
           <th>srcToken</th>
-          <th>srcRawAmount</th>
           <th>dstChain</th>
           <th>dstTx</th>
           <th>dstToken</th>
-          <th>dstRawAmount</th>
         </tr>
       </thead>
       <tbody>
@@ -39,6 +43,14 @@ function TransfersTable(props: {
                 {new Date(e.timestamp * 1000).toLocaleString()}
               </td>
               <td>{e.duration && formatSeconds(e.duration)}</td>
+              <td>
+                {e.srcAmount} {e.srcAbstractTokenId?.split(':')[2]}
+              </td>
+              <td data-order={e.srcValueUsd}>{formatDollars(e.srcValueUsd)}</td>
+              <td>
+                {e.dstAmount} {e.dstAbstractTokenId?.split(':')[2]}
+              </td>
+              <td data-order={e.dstValueUsd}>{formatDollars(e.dstValueUsd)}</td>
               <td>{e.srcChain}</td>
               <td>
                 {srcExplorerUrl ? (
@@ -54,20 +66,19 @@ function TransfersTable(props: {
               </td>
               <td>
                 {srcExplorerUrl &&
-                e.srcTokenAddress !==
-                  '&& e.srcTokenAddress !== EthereumAddress.ZERO' &&
-                e.srcTokenAddress !== EthereumAddress.ZERO ? (
-                  <a
-                    target="_blank"
-                    href={`${srcExplorerUrl}/address/${e.srcTokenAddress}`}
-                  >
-                    {e.srcTokenAddress}
-                  </a>
-                ) : (
-                  e.srcTokenAddress
-                )}
+                  e.srcTokenAddress &&
+                  e.srcTokenAddress !== 'native' &&
+                  e.srcTokenAddress !== EthereumAddress.ZERO && (
+                    <a
+                      target="_blank"
+                      href={`${srcExplorerUrl}/address/${Address32.cropToEthereumAddress(Address32(e.srcTokenAddress))}`}
+                    >
+                      {Address32.cropToEthereumAddress(
+                        Address32(e.srcTokenAddress),
+                      )}
+                    </a>
+                  )}
               </td>
-              <td>{e.srcRawAmount}</td>
               <td>{e.dstChain}</td>
               <td>
                 {dstExplorerUrl ? (
@@ -83,19 +94,19 @@ function TransfersTable(props: {
               </td>
               <td>
                 {srcExplorerUrl &&
-                e.dstTokenAddress !== 'native' &&
-                e.dstTokenAddress !== EthereumAddress.ZERO ? (
-                  <a
-                    target="_blank"
-                    href={`${srcExplorerUrl}/address/${e.dstTokenAddress}`}
-                  >
-                    {e.dstTokenAddress}
-                  </a>
-                ) : (
-                  e.dstTokenAddress
-                )}
+                  e.dstTokenAddress &&
+                  e.dstTokenAddress !== 'native' &&
+                  e.dstTokenAddress !== EthereumAddress.ZERO && (
+                    <a
+                      target="_blank"
+                      href={`${srcExplorerUrl}/address/${Address32.cropToEthereumAddress(Address32(e.dstTokenAddress))}`}
+                    >
+                      {Address32.cropToEthereumAddress(
+                        Address32(e.dstTokenAddress),
+                      )}
+                    </a>
+                  )}
               </td>
-              <td>{e.dstRawAmount}</td>
             </tr>
           )
         })}

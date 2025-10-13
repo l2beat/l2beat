@@ -9,6 +9,7 @@ import { formatSeconds } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { DataTablePage } from './DataTablePage'
+import { formatDollars } from './formatDollars'
 import {
   type ProcessorsStatus,
   ProcessorsStatusTable,
@@ -135,12 +136,7 @@ const NETWORKS: [
   ],
 ]
 
-// currently this component is used also for Transfers
-function MessagesTable(props: {
-  items: MessageStats[] | TransferStats[]
-  id: string
-  type: 'messages' | 'transfers'
-}) {
+function MessagesTable(props: { items: MessageStats[]; id: string }) {
   return (
     <table id={props.id} className="display">
       <thead>
@@ -148,7 +144,7 @@ function MessagesTable(props: {
           <th rowSpan={2}>Type</th>
           <th rowSpan={2}>Count</th>
           <th rowSpan={2}>Median Duration</th>
-          {props.type === 'messages' && <th rowSpan={2}>Known %</th>}
+          <th rowSpan={2}>Known %</th>
           {NETWORKS.map((n) => (
             <>
               <th colSpan={2}>
@@ -177,21 +173,18 @@ function MessagesTable(props: {
             <tr>
               <td>{t.type}</td>
               <td>
-                <a href={`/bridges/${props.type}/${t.type}`}>{t.count}</a>
+                <a href={`/bridges/messages/${t.type}`}>{t.count}</a>
               </td>
               <td data-order={t.medianDuration}>
                 {formatSeconds(t.medianDuration)}
               </td>
-              {props.type === 'messages' && (
+              {
                 <td>
                   {t.count > 0
-                    ? (
-                        ((t as MessageStats).knownAppCount / t.count) *
-                        100
-                      ).toFixed(1) + '%'
+                    ? ((t.knownAppCount / t.count) * 100).toFixed(1) + '%'
                     : ''}
                 </td>
-              )}
+              }
               {NETWORKS.map((n) => {
                 const srcDstCount = t.chains.find(
                   (tt) =>
@@ -214,7 +207,7 @@ function MessagesTable(props: {
                     <td>
                       {srcDstCount && (
                         <a
-                          href={`/bridges/${props.type}/${t.type}?srcChain=${n[0].name}&dstChain=${n[1].name}`}
+                          href={`/bridges/messages/${t.type}?srcChain=${n[0].name}&dstChain=${n[1].name}`}
                         >
                           {srcDstCount}
                         </a>
@@ -226,7 +219,106 @@ function MessagesTable(props: {
                     <td>
                       {dstSrcCount && (
                         <a
-                          href={`/bridges/${props.type}/${t.type}?srcChain=${n[1].name}&dstChain=${n[0].name}`}
+                          href={`/bridges/messages/${t.type}?srcChain=${n[1].name}&dstChain=${n[0].name}`}
+                        >
+                          {dstSrcCount}
+                        </a>
+                      )}
+                    </td>
+                    <td data-order={dstSrcDuration ?? ''}>
+                      {dstSrcDuration && formatSeconds(dstSrcDuration)}
+                    </td>
+                  </>
+                )
+              })}
+            </tr>
+          )
+        })}
+      </tbody>
+    </table>
+  )
+}
+
+function TransfersTable(props: { items: TransferStats[]; id: string }) {
+  return (
+    <table id={props.id} className="display">
+      <thead>
+        <tr>
+          <th rowSpan={2}>Type</th>
+          <th rowSpan={2}>Count</th>
+          <th rowSpan={2}>Median Duration</th>
+          <th rowSpan={2}>srcValue</th>
+          <th rowSpan={2}>dstValue</th>
+          {NETWORKS.map((n) => (
+            <>
+              <th colSpan={2}>
+                {n[0].display} {'>'} {n[1].display}
+              </th>
+              <th colSpan={2}>
+                {n[0].display} {'<'} {n[1].display}
+              </th>
+            </>
+          ))}
+        </tr>
+        <tr>
+          {NETWORKS.map((_) => (
+            <>
+              <th>Count</th>
+              <th>Duration</th>
+              <th>Count</th>
+              <th>Duration</th>
+            </>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {props.items.map((t) => {
+          return (
+            <tr>
+              <td>{t.type}</td>
+              <td>
+                <a href={`/bridges/transfers/${t.type}`}>{t.count}</a>
+              </td>
+              <td data-order={t.medianDuration}>
+                {formatSeconds(t.medianDuration)}
+              </td>
+              <td>{formatDollars(t.srcValueSum)}</td>
+              <td>{formatDollars(t.dstValueSum)}</td>
+              {NETWORKS.map((n) => {
+                const srcDstCount = t.chains.find(
+                  (tt) =>
+                    tt.srcChain === n[0].name && tt.dstChain === n[1].name,
+                )?.count
+                const srcDstDuration = t.chains.find(
+                  (tt) =>
+                    tt.srcChain === n[0].name && tt.dstChain === n[1].name,
+                )?.medianDuration
+                const dstSrcCount = t.chains.find(
+                  (tt) =>
+                    tt.srcChain === n[1].name && tt.dstChain === n[0].name,
+                )?.count
+                const dstSrcDuration = t.chains.find(
+                  (tt) =>
+                    tt.srcChain === n[1].name && tt.dstChain === n[0].name,
+                )?.medianDuration
+                return (
+                  <>
+                    <td>
+                      {srcDstCount && (
+                        <a
+                          href={`/bridges/transfers/${t.type}?srcChain=${n[0].name}&dstChain=${n[1].name}`}
+                        >
+                          {srcDstCount}
+                        </a>
+                      )}
+                    </td>
+                    <td data-order={srcDstDuration ?? ''}>
+                      {srcDstDuration && formatSeconds(srcDstDuration)}
+                    </td>
+                    <td>
+                      {dstSrcCount && (
+                        <a
+                          href={`/bridges/transfers/${t.type}?srcChain=${n[1].name}&dstChain=${n[0].name}`}
                         >
                           {dstSrcCount}
                         </a>
@@ -254,18 +346,10 @@ function MainPageLayout(props: {
 }) {
   const eventsTable = <EventsTable {...props} />
   const messagesTable = (
-    <MessagesTable
-      id="messagesTable"
-      items={props.messages}
-      type={'messages'}
-    />
+    <MessagesTable id="messagesTable" items={props.messages} />
   )
   const transfersTable = (
-    <MessagesTable
-      id="transfersTable"
-      items={props.transfers}
-      type={'transfers'}
-    />
+    <TransfersTable id="transfersTable" items={props.transfers} />
   )
 
   return (
