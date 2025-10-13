@@ -585,6 +585,27 @@
           "decimals": 18
         }
       ]
+    },
+    {
+      "abstractId": "MOCK16:usdt0:USDT0",
+      "coingeckoId": "usdt0",
+      "deployed": [
+        {
+          "chain": "ethereum",
+          "address": "0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee",
+          "decimals": 18
+        },
+        {
+          "chain": "arbitrum",
+          "address": "0x14E4A1B13bf7F943c8ff7C51fb60FA964A298D92",
+          "decimals": 18
+        },
+        {
+          "chain": "optimism",
+          "address": "0xF03b4d9AC1D5d1E7c4cEf54C2A313b9fe051A0aD",
+          "decimals": 18
+        }
+      ]
     }
   ]
 }
