@@ -31,6 +31,7 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
       ? false
       : {
           apiKeys: {
+            l2beat: env.string('API_KEY_L2BEAT'),
             optimism: env.string('API_KEY_OPTIMISM'),
             arbitrum: env.string('API_KEY_ARBITRUM'),
             agglayer: env.string('API_KEY_AGGLAYER'),

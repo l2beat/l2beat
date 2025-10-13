@@ -15,12 +15,7 @@ export interface DatabaseConfig {
 }
 
 export interface AuthConfig {
-  apiKeys: {
-    optimism: string
-    arbitrum: string
-    agglayer: string
-    theElasticNetwork: string
-  }
+  apiKeys: Record<string, string>
 }
 
 export interface OpenApiConfig {

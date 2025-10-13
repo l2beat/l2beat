@@ -7,7 +7,9 @@ export function authMiddleware(config: AuthConfig) {
   return (req: Request, res: Response, next: NextFunction) => {
     const apiKey = req.query.apiKey
     if (!apiKey || !Object.values(config.apiKeys).includes(apiKey.toString())) {
-      res.status(401).json({ error: 'Unauthorized' })
+      res.status(401).json({
+        message: 'Unauthorized. Use apiKey query parameter with valid API key.',
+      })
       return
     }
 

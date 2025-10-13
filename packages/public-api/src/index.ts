@@ -43,6 +43,16 @@ function main() {
         description: 'Endpoints for retrieving activity data',
       },
     ],
+    components: {
+      securitySchemes: {
+        apiKeyAuth: {
+          type: 'apiKey',
+          in: 'query',
+          name: 'apiKey',
+        },
+      },
+    },
+    security: [{ apiKeyAuth: [] }],
   })
 
   app.get('/openapi', (_, res) => {
