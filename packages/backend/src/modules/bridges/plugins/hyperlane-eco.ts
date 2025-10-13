@@ -1,9 +1,7 @@
-import { parse } from 'path'
 import {
   Dispatch,
   HYPERLANE_NETWORKS,
   Process,
-  parseDispatch,
   parseDispatchId,
   parseProcess,
   parseProcessId,
@@ -40,16 +38,16 @@ const parseIntentProven = createEventParser(
 const BatchSentDispatch = createBridgeEventType<{
   messageId: `0x${string}`
   $dstChain: string
-}>('eco-hyperlane.BatchSentDispatch')
+}>('hyperlane-eco.BatchSentDispatch')
 
 const IntentProvenProcess = createBridgeEventType<{
   messageId: `0x${string}`
   $srcChain: string
   recipient: Address32 // claimant
-}>('eco-hyperlane.IntentProvenProcess')
+}>('hyperlane-eco.IntentProvenProcess')
 
-export class EcoHyperlanePlugin implements BridgePlugin {
-  name = 'eco-hyperlane'
+export class HyperlaneEcoPlugin implements BridgePlugin {
+  name = 'hyperlane-eco'
 
   capture(input: LogToCapture) {
     const batchSent = parseBatchSent(input.log, null)
@@ -86,7 +84,8 @@ export class EcoHyperlanePlugin implements BridgePlugin {
         // biome-ignore lint/style/noNonNullAssertion: It's there
         (x) => x.logIndex === input.log.logIndex! - 2,
       )
-      const process = previouspreviousLog && parseProcess(previouspreviousLog, null)
+      const process =
+        previouspreviousLog && parseProcess(previouspreviousLog, null)
       if (!process) return
 
       const $srcChain = findChain(
@@ -132,7 +131,8 @@ export class EcoHyperlanePlugin implements BridgePlugin {
         srcEvent: dispatch,
         dstEvent: process,
       }),
-      Result.Transfer('hyperlaneEco.Transfer', { // TODO: intent settlement, not really transfer (but we need to consume the events)
+      Result.Transfer('hyperlaneEco.Transfer', {
+        // TODO: intent settlement, not really transfer (but we need to consume the events)
         srcEvent: batchSentDispatch,
         dstEvent: event,
       }),

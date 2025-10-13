@@ -773,7 +773,7 @@
     "messages": [],
     "transfers": []
   },
-  "eco-hyperlane": {
+  "hyperlane-eco": {
     "txs": [
       {
         "chain": "ethereum",
