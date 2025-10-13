@@ -248,13 +248,15 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
           <th rowSpan={2}>Count</th>
           <th rowSpan={2}>Median Duration</th>
           <th rowSpan={2}>srcValue</th>
-          <th rowSpan={2}>dstValue</th>
           {NETWORKS.map((n) => (
             <>
-              <th colSpan={2}>
+              <th
+                colSpan={3}
+                style={{ textAlign: 'center', border: '1px solid black' }}
+              >
                 {n[0].display} {'>'} {n[1].display}
               </th>
-              <th colSpan={2}>
+              <th colSpan={3} style={{ textAlign: 'center' }}>
                 {n[0].display} {'<'} {n[1].display}
               </th>
             </>
@@ -265,8 +267,10 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
             <>
               <th>Count</th>
               <th>Duration</th>
+              <th>srcValue</th>
               <th>Count</th>
               <th>Duration</th>
+              <th>srcValue</th>
             </>
           ))}
         </tr>
@@ -282,8 +286,7 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
               <td data-order={t.medianDuration}>
                 {formatSeconds(t.medianDuration)}
               </td>
-              <td>{formatDollars(t.srcValueSum)}</td>
-              <td>{formatDollars(t.dstValueSum)}</td>
+              <td data-order={t.srcValueSum}>{formatDollars(t.srcValueSum)}</td>
               {NETWORKS.map((n) => {
                 const srcDstCount = t.chains.find(
                   (tt) =>
@@ -301,6 +304,14 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
                   (tt) =>
                     tt.srcChain === n[1].name && tt.dstChain === n[0].name,
                 )?.medianDuration
+                const srcDstValue = t.chains.find(
+                  (tt) =>
+                    tt.srcChain === n[0].name && tt.dstChain === n[1].name,
+                )?.srcValueSum
+                const dstSrcValue = t.chains.find(
+                  (tt) =>
+                    tt.srcChain === n[1].name && tt.dstChain === n[0].name,
+                )?.srcValueSum
                 return (
                   <>
                     <td>
@@ -315,6 +326,9 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
                     <td data-order={srcDstDuration ?? ''}>
                       {srcDstDuration && formatSeconds(srcDstDuration)}
                     </td>
+                    <td data-order={srcDstValue}>
+                      {formatDollars(srcDstValue)}
+                    </td>
                     <td>
                       {dstSrcCount && (
                         <a
@@ -326,6 +340,9 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
                     </td>
                     <td data-order={dstSrcDuration ?? ''}>
                       {dstSrcDuration && formatSeconds(dstSrcDuration)}
+                    </td>
+                    <td data-order={dstSrcValue}>
+                      {formatDollars(dstSrcValue)}
                     </td>
                   </>
                 )
