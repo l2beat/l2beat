@@ -417,6 +417,37 @@ describeDatabase(TokenValueRepository.name, (db) => {
     },
   )
 
+  describe(TokenValueRepository.prototype.checkIfExists.name, () => {
+    beforeEach(async () => {
+      await repository.insertMany([
+        tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500, 10),
+        tokenValue('a', 'ethereum', UnixTime(200), 2, 2000, 1600, 1000, 10),
+        tokenValue('b', 'arbitrum', UnixTime(150), 10, 10000, 8000, 5000, 20),
+        tokenValue('c', 'optimism', UnixTime(300), 5, 5000, 4000, 2500, 30),
+      ])
+    })
+
+    it('returns true when project exists', async () => {
+      const exists = await repository.checkIfExists('ethereum')
+      expect(exists).toEqual(true)
+    })
+
+    it('returns false when project does not exist', async () => {
+      const exists = await repository.checkIfExists('non-existent')
+      expect(exists).toEqual(false)
+    })
+
+    it('returns true when project has records from specified timestamp', async () => {
+      const exists = await repository.checkIfExists('ethereum', UnixTime(200))
+      expect(exists).toEqual(true)
+    })
+
+    it('returns false when project has no records from specified timestamp', async () => {
+      const exists = await repository.checkIfExists('ethereum', UnixTime(250))
+      expect(exists).toEqual(false)
+    })
+  })
+
   describe('dal tvs', () => {
     const metadataRepository = db.tvsTokenMetadata
 

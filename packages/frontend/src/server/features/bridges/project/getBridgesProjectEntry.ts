@@ -6,15 +6,14 @@ import type {
   TableReadyValue,
   WarningWithSentiment,
 } from '@l2beat/config'
-import type { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import { getDb } from '~/server/database'
 import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
-import { isTvsChartDataEmpty } from '~/server/features/utils/isChartDataEmpty'
 import { ps } from '~/server/projects'
-import type { SsrHelpers } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
@@ -72,7 +71,6 @@ export interface BridgesProjectEntry {
 }
 
 export async function getBridgesProjectEntry(
-  helpers: SsrHelpers,
   project: Project<
     | 'statuses'
     | 'tvsInfo'
@@ -92,10 +90,11 @@ export async function getBridgesProjectEntry(
     | 'colors'
   >,
 ): Promise<BridgesProjectEntry> {
+  const db = getDb()
   const [
     projectsChangeReport,
     tvsStats,
-    tvsChartData,
+    hasTvsData,
     tokens,
     contractUtils,
     allProjectsWithContracts,
@@ -103,11 +102,10 @@ export async function getBridgesProjectEntry(
   ] = await Promise.all([
     getProjectsChangeReport(),
     get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
-    helpers.tvs.chart.fetch({
-      range: { type: '1y' },
-      filter: { type: 'projects', projectIds: [project.id] },
-      excludeAssociatedTokens: false,
-    }),
+    db.tvsTokenValue.checkIfExists(
+      project.id,
+      UnixTime.now() - 365 * UnixTime.DAY,
+    ),
     getTokensForProject(project),
     getContractUtils(),
     ps.getProjects({
@@ -172,7 +170,7 @@ export async function getBridgesProjectEntry(
 
   const sections: ProjectDetailsSection[] = []
 
-  if (!project.isUpcoming && !isTvsChartDataEmpty(tvsChartData.chart)) {
+  if (!project.isUpcoming && hasTvsData) {
     sections.push({
       type: 'BridgesTvsSection',
       props: {

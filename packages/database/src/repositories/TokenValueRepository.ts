@@ -407,6 +407,24 @@ export class TokenValueRepository extends BaseRepository {
     }))
   }
 
+  async checkIfExists(
+    projectId: string,
+    fromInclusive?: UnixTime,
+  ): Promise<boolean> {
+    let query = this.db
+      .selectFrom('TokenValue')
+      .select('projectId')
+      .where('projectId', '=', projectId)
+      .limit(1)
+
+    if (fromInclusive) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+    }
+
+    const result = await query.executeTakeFirst()
+    return result !== undefined
+  }
+
   async getTvsTableBySource(
     projectIds: string[],
     depth: number,
