@@ -63,7 +63,6 @@ export function AddDeployedToken() {
       setDeployedTokenExistsError(form)
       return
     }
-    console.log(values)
 
     planMutate({
       type: 'AddDeployedTokenIntent',
