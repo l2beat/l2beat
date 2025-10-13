@@ -7,6 +7,7 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
@@ -68,6 +69,7 @@ export const lumia: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    zkProgramHashes: getPessimisticVKeys().map((el) => ZK_PROGRAM_HASHES(el)),
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   ecosystemInfo: {
@@ -161,4 +163,16 @@ export const lumia: ScalingProject = {
       type: 'general',
     },
   ],
+}
+
+function getPessimisticVKeys(): string[] {
+  type ProgramHashDict = Record<string, Record<string, string>[]>
+  const pessimisticVKeyDict = discovery.getContractValue<ProgramHashDict>(
+    'AggLayerGateway',
+    'routes',
+  )
+  // Iterate over all selectors, each of the selectors could be used as it is set in calldata
+  return Object.values(pessimisticVKeyDict).flatMap((arr) =>
+    arr.map((el) => el['pessimisticVKey']),
+  )
 }
