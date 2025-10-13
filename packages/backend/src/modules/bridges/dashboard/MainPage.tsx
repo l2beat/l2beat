@@ -248,15 +248,16 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
           <th rowSpan={2}>Count</th>
           <th rowSpan={2}>Median Duration</th>
           <th rowSpan={2}>srcValue</th>
+          <th rowSpan={2}>dstValue</th>
           {NETWORKS.map((n) => (
             <>
               <th
-                colSpan={3}
+                colSpan={4}
                 style={{ textAlign: 'center', border: '1px solid black' }}
               >
                 {n[0].display} {'>'} {n[1].display}
               </th>
-              <th colSpan={3} style={{ textAlign: 'center' }}>
+              <th colSpan={4} style={{ textAlign: 'center' }}>
                 {n[0].display} {'<'} {n[1].display}
               </th>
             </>
@@ -268,9 +269,11 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
               <th>Count</th>
               <th>Duration</th>
               <th>srcValue</th>
+              <th>dstValue</th>
               <th>Count</th>
               <th>Duration</th>
               <th>srcValue</th>
+              <th>dstValue</th>
             </>
           ))}
         </tr>
@@ -287,62 +290,62 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
                 {formatSeconds(t.medianDuration)}
               </td>
               <td data-order={t.srcValueSum}>{formatDollars(t.srcValueSum)}</td>
+              <td data-order={t.dstValueSum}>{formatDollars(t.dstValueSum)}</td>
               {NETWORKS.map((n) => {
-                const srcDstCount = t.chains.find(
+                const forwardStats = t.chains.find(
                   (tt) =>
                     tt.srcChain === n[0].name && tt.dstChain === n[1].name,
-                )?.count
-                const srcDstDuration = t.chains.find(
-                  (tt) =>
-                    tt.srcChain === n[0].name && tt.dstChain === n[1].name,
-                )?.medianDuration
-                const dstSrcCount = t.chains.find(
+                )
+                const backwardStats = t.chains.find(
                   (tt) =>
                     tt.srcChain === n[1].name && tt.dstChain === n[0].name,
-                )?.count
-                const dstSrcDuration = t.chains.find(
-                  (tt) =>
-                    tt.srcChain === n[1].name && tt.dstChain === n[0].name,
-                )?.medianDuration
-                const srcDstValue = t.chains.find(
-                  (tt) =>
-                    tt.srcChain === n[0].name && tt.dstChain === n[1].name,
-                )?.srcValueSum
-                const dstSrcValue = t.chains.find(
-                  (tt) =>
-                    tt.srcChain === n[1].name && tt.dstChain === n[0].name,
-                )?.srcValueSum
+                )
+
+                const forwardCount = forwardStats?.count
+                const forwardDuration = forwardStats?.medianDuration
+                const forwardDstValue = forwardStats?.dstValueSum
+                const forwardSrcValue = forwardStats?.srcValueSum
+                const backwardCount = backwardStats?.count
+                const backwardDuration = backwardStats?.medianDuration
+                const backwardSrcValue = backwardStats?.srcValueSum
+                const backwardDstValue = backwardStats?.dstValueSum
                 return (
                   <>
                     <td>
-                      {srcDstCount && (
+                      {
                         <a
                           href={`/bridges/transfers/${t.type}?srcChain=${n[0].name}&dstChain=${n[1].name}`}
                         >
-                          {srcDstCount}
+                          {forwardCount}
                         </a>
-                      )}
+                      }
                     </td>
-                    <td data-order={srcDstDuration ?? ''}>
-                      {srcDstDuration && formatSeconds(srcDstDuration)}
+                    <td data-order={forwardDuration}>
+                      {forwardDuration && formatSeconds(forwardDuration)}
                     </td>
-                    <td data-order={srcDstValue}>
-                      {formatDollars(srcDstValue)}
+                    <td data-order={forwardSrcValue}>
+                      {formatDollars(forwardSrcValue)}
+                    </td>
+                    <td data-order={forwardDstValue}>
+                      {formatDollars(forwardDstValue)}
                     </td>
                     <td>
-                      {dstSrcCount && (
+                      {
                         <a
                           href={`/bridges/transfers/${t.type}?srcChain=${n[1].name}&dstChain=${n[0].name}`}
                         >
-                          {dstSrcCount}
+                          {backwardCount}
                         </a>
-                      )}
+                      }
                     </td>
-                    <td data-order={dstSrcDuration ?? ''}>
-                      {dstSrcDuration && formatSeconds(dstSrcDuration)}
+                    <td data-order={backwardDuration}>
+                      {backwardDuration && formatSeconds(backwardDuration)}
                     </td>
-                    <td data-order={dstSrcValue}>
-                      {formatDollars(dstSrcValue)}
+                    <td data-order={backwardSrcValue}>
+                      {formatDollars(backwardSrcValue)}
+                    </td>
+                    <td data-order={backwardDstValue}>
+                      {formatDollars(backwardDstValue)}
                     </td>
                   </>
                 )
