@@ -17,5 +17,6 @@
     "depositQueue",
     "getStakingModuleSummary",
     "getNodeOperatorsCount"
-  ]
+  ],
+  "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
 }

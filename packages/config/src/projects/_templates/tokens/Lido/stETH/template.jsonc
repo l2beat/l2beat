@@ -16,5 +16,56 @@
     "getTotalPooledEther",
     "getTotalShares",
     "getCurrentStakeLimit"
-  ]
+  ],
+  "fields": {
+    "accessControl": { "handler": { "type": "accessControl" } },
+    "storageStakeLimit": {
+      "handler": {
+        "type": "storage",
+        "slot": "0xa3678de4a579be090bed1177e0a24f77cc29d181ac22fd7688aca344d8938015"
+      }
+    },
+    "lidoLocator": {
+      "handler": {
+        "type": "storage",
+        "slot": "0x9ef78dff90f100ea94042bd00ccb978430524befc391d3e510b5f55ff3166df7",
+        "returnType": "address"
+      }
+    },
+    "bufferedEtherPosition": {
+      "handler": {
+        "type": "storage",
+        "slot": "0xed310af23f61f96daefbcd140b306c0bdbf8c178398299741687b90e794772b0",
+        "returnType": "number"
+      }
+    },
+    "depositedValidatorsPosition": {
+      "handler": {
+        "type": "storage",
+        "slot": "0xe6e35175eb53fc006520a2a9c3e9711a7c00de6ff2c32dd31df8c5a24cac1b5c",
+        "returnType": "number"
+      }
+    },
+    "clBalancePosition": {
+      "handler": {
+        "type": "storage",
+        "slot": "0xa66d35f054e68143c18f32c990ed5cb972bb68a68f500cd2dd3a16bbf3686483",
+        "returnType": "number"
+      }
+    },
+    "clValidatorsPosition": {
+      "handler": {
+        "type": "storage",
+        "slot": "0x9f70001d82b6ef54e9d3725b46581c3eb9ee3aa02b941b6aa54d678a9ca35b10",
+        "returnType": "number"
+      }
+    },
+    "totalElRewardsCollectedPosition": {
+      "handler": {
+        "type": "storage",
+        "slot": "0xafe016039542d12eec0183bb0b1ffc2ca45b027126a494672fba4154ee77facb",
+        "returnType": "number"
+      }
+    }
+  }
 }

@@ -2696,6 +2696,7 @@
       "name": "ACL",
       "address": "eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb",
       "type": "Contract",
+      "template": "tokens/Lido",
       "sourceHashes": [
         "0xe95d65e50752cf7b137131ff78cb164641fe141b0780189482701ebda1b66d4a",
         "0x766bf5f8bd85cd18a36ec23449bcbb22c66fbc01f44a2e38ff2a06dd5919eb4b"
@@ -2720,12 +2721,524 @@
         "isPetrified": false,
         "kernel": "eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
         "NO_PERMISSION": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "permissions": [
+          {
+            "app": "eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb",
+            "permissions": [
+              {
+                "entity": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+                "role": "CREATE_PERMISSIONS_ROLE"
+              }
+            ]
+          },
+          {
+            "app": "eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
+            "permissions": []
+          },
+          {
+            "app": "eth:0x853cc0D5917f49B57B8e9F89e491F5E18919093A",
+            "permissions": []
+          },
+          {
+            "app": "eth:0xf73a1260d222f447210581DDf212D915c09a3249",
+            "permissions": [
+              {
+                "entity": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
+                "role": "ASSIGN_ROLE"
+              },
+              {
+                "entity": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
+                "role": "MINT_ROLE"
+              },
+              {
+                "entity": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
+                "role": "REVOKE_VESTINGS_ROLE"
+              }
+            ]
+          },
+          {
+            "app": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+            "permissions": []
+          },
+          {
+            "app": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+            "permissions": [
+              {
+                "entity": "eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86",
+                "role": "TRANSFER_ROLE"
+              },
+              {
+                "entity": "eth:0x23E0B465633FF5178808F4A75186E2F2F9537021",
+                "role": "RUN_SCRIPT_ROLE"
+              },
+              {
+                "entity": "eth:0x23E0B465633FF5178808F4A75186E2F2F9537021",
+                "role": "EXECUTE_ROLE"
+              }
+            ]
+          },
+          {
+            "app": "eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86",
+            "permissions": [
+              {
+                "entity": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
+                "role": "EXECUTE_PAYMENTS_ROLE"
+              },
+              {
+                "entity": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
+                "role": "MANAGE_PAYMENTS_ROLE"
+              },
+              {
+                "entity": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
+                "role": "CREATE_PAYMENTS_ROLE"
+              },
+              {
+                "entity": "eth:0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977",
+                "role": "CREATE_PAYMENTS_ROLE"
+              },
+              {
+                "entity": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
+                "role": "CHANGE_PERIOD_ROLE"
+              },
+              {
+                "entity": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
+                "role": "CHANGE_BUDGET_ROLE"
+              }
+            ]
+          },
+          {
+            "app": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
+            "permissions": [
+              {
+                "entity": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
+                "role": "MODIFY_QUORUM_ROLE"
+              },
+              {
+                "entity": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
+                "role": "MODIFY_SUPPORT_ROLE"
+              },
+              {
+                "entity": "eth:0xf73a1260d222f447210581DDf212D915c09a3249",
+                "role": "CREATE_VOTES_ROLE"
+              }
+            ]
+          },
+          {
+            "app": "eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb",
+            "permissions": []
+          },
+          {
+            "app": "eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5",
+            "permissions": [
+              {
+                "entity": "eth:0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977",
+                "role": "SET_NODE_OPERATOR_LIMIT_ROLE"
+              },
+              {
+                "entity": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
+                "role": "STAKING_ROUTER_ROLE"
+              },
+              {
+                "entity": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+                "role": "MANAGE_NODE_OPERATOR_ROLE"
+              }
+            ]
+          },
+          {
+            "app": "eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433",
+            "permissions": [
+              {
+                "entity": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
+                "role": "STAKING_ROUTER_ROLE"
+              },
+              {
+                "entity": "eth:0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977",
+                "role": "MANAGE_NODE_OPERATOR_ROLE"
+              },
+              {
+                "entity": "eth:0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977",
+                "role": "SET_NODE_OPERATOR_LIMIT_ROLE"
+              },
+              {
+                "entity": "eth:0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977",
+                "role": "STAKING_ROUTER_ROLE"
+              },
+              {
+                "entity": "eth:0x83D3DCEE0289cE96aF4051Ab50f01E5E8cE7677C",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x94890C2E0E98F149985f0444f01B36D1D37Cb182",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x8C1699304F4eac58077B1648e5b80bD0B41ec9F1",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x63e8a52995EDdcE799De72163Cdf688f1B16f347",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xd058AfF17a61e51404d205a84c6B5F73F0788E4b",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x64397E9dB5d9f0Ba15c58dd377FC258b4505e7d9",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x0606c73F51CAe370F11085E19506d59a8c86f889",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xa9c48f5B6227Ee15842DD24e0E3128fCA28aa65C",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x35E3c61c3d7F1786C1C12dbDE2AC7B7E204f5034",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x92F0339F592C58d3881789E3e2Aef6861Cf022b2",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x2A0d2Ed8a47d818BD430a355C4090CaB9EEDF8B1",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xBe511Fa89011fC8C90259C5D1fAFF9F8fd92c3EF",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x3b3BCa3D0296F3e3a2A10197bdB8515DDF59F2eb",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xc4c04aDd0Fe21ECc4F186893Bfc714Da0cFD5Ac3",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x9ea5C73eEF6FE5b1dF238930C5A3B8dd82Ff1422",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x1DdB4e46810806b5fbf67AC69b84CA48B8CBEd1F",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x1C4EDa5E2be9055126B9833dB4eA99A30822f751",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x75f9aF7483EF01635A6b80eC1B1F51c2024e22c8",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x1d9903f7B14f6E12a278Bb2e83F51bd9429ab482",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xe468a9e3d1fc6983D6Aea9266D99a5daeEbaC58A",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xF97365034279D638d0094EdC638075096bcBF373",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x2cB72bC8176e6056F5090BDF5f6497AcAb327a5F",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x0BACB8024F58add1b22641a791d47Aa9eB752ACF",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x5ED21077adEF79628516B7628839c0CD2B44ca5F",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x80Dee92dD859DeAc0DC580EeA86B40917354bCBC",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xdBFd08B7B1e6dBb057FcE140b74a06351c4A157d",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x1E938E83e8B3daA03a4bD0298cEc8EcFB534975f",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xfb668D6C258e37267C124130C77D824471F84DBC",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x6519DA1Bb0a4Be96FEc435A482a221CC7E4952a1",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x8167FA100d768EEaEC642279603a40054F26ce29",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x871872c461bCEFfABc527D73d279C33C05A4E73F",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xAf72da734303C8187ecF3701D74255c481A48593",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x2e990b8dbC3ABC4539B848feC9b5151041650E84",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x6fEd41080283A4ea4B238f3b2b8aA5Db28Af8D49",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xDE388E04f893AFd12BDa0f80b0C750e6d9f7A47D",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x257A6f40e7E93461D249096fa9cfCd117d505707",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xB2530002565f2b9E598657b18B752c03217662ca",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x8b37B36adeB7E3e69a17B93F6aF3Da1823655Ba0",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xc9adc7184C2817b084fbd768f0073C6e4eB8dB63",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x88fD4D0F2342b079a3ef2b709b567e4cFE4C143d",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x29Fc7A8768949A2A9130Fa7500512De14112d337",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xbe8d0149f8ab1BDf394379ae0adD6A9103633FbE",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x4c3d31aB3c7e31FBaab548b6F3aDF46fEcf59895",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x8B87D5d4CCaBc26a99d44BeC19C5f25f0A0d6019",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x8682982Ad244efc789dc60EEB6a4823FD883319A",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x36c930FeCEB25DC4418438d171C4a4dbf6712896",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x7BF6945430017AeFea7dd0cd450382aae01220F5",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x5FaE2734CD11029D8BCcbcdC3752bF0299C0934c",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xCA787cdb322dF3aD5B9e230BABa8346f1Bf8fE8b",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x37eD9424465F9ff2f6A012E688DE8735cb9e2aFb",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xfc23dd69B6968c8623db910984886C94cc2236AA",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x6706A45D13685950308EFF93B45D1A4Ebb054f84",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x2ec75Fd873860151EEeeC4da50E9594bD168eF98",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x6E809aaDF0e4686322D53c611e9facf9cFB0F636",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x4c46FeCc566a196cD3196D19899D9a9d73dF5b56",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xc8D12601f8680EF2408dD4FD17C008817dBC36e0",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x306b5C7475b97BF6Df43dFeD00a268e5DdcAe75e",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x7F34d125Aec27Cb22f923b2354C4114341047dc0",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x49cBEe5e1b9857b82e01AF0755Ee563F3B190769",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x5987A1fDF5d7C24Ba7074EF9DC5fB36A1F0acd44",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x12E804Caf53dBB9ee1Db85AD8483deaAd5dd457D",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x512489b537c38e04f231e797BA9F76d5108Bfd48",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x560630a67307593D0c55E2a0284EB14E0A00D77d",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x70003FD8d8c405F767a49336c349777A66497d01",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x88676DeAc738Ad9397c305FFc5AbAD2e9952FD93",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xa9feDcAec979d6e6B20d026B3790115970B66412",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x585C0b0B9e0F3f649C6c7E4dcF4d44BA348c018a",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xB962865ACc35256dB89edf5C25Da1988326F939D",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xc407e117738f1f7002105262E4e625CB8Ba6e1da",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xB39b6AB2d93328a96EfEea19175D95D833ba378d",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x3aEAd7ef230851487173F944a4Fa1A7B4ec6da7f",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xc1659aAad93c1dCc4Cc62D5D0c9f0E0Da6229536",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xf2415cDb4A4A45AF77D7dD77154a245f37cDC449",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xAF1beC9B5A0A35199529E8B8e7bC5B74C9bFd252",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x1D3F689dea4105029Ebb8E8F6cad3A6efbf43fD0",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xEC730Ca6e0555626bfc641c8465D2B5335f41c89",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x45345ea372E3DA5753684B546682ba035a3f7ceC",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x553BCf02058310ef1ac91a1588ea114C436EAFAa",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x57ceA99437a5e01EabB137134F1CED8BdbA974F8",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xd30EBE002f4e8D27b4121a9229fDbc9d069AAd86",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0x7C4E5fCd974702c7a4F23F9782dBD80A63638216",
+                "role": "MANAGE_SIGNING_KEYS"
+              },
+              {
+                "entity": "eth:0xDD10e17AfA24BD6ED9CF8650c631C5dF8E7FA290",
+                "role": "MANAGE_SIGNING_KEYS"
+              }
+            ]
+          }
+        ],
         "proxyType": 2
       },
       "implementationNames": {
         "eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb": "AppProxyUpgradeable",
         "eth:0x9f3b9198911054B122fDb865f8A5Ac516201c339": "ACL"
-      }
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0x139c2898040ef16910dc9f44dc697df79363da767d8bc92f2e310312b816e46d": "PAUSE_ROLE",
+            "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a": "CREATE_PERMISSIONS_ROLE",
+            "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0": "APP_MANAGER_ROLE",
+            "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2": "REGISTRY_ADD_EXECUTOR_ROLE",
+            "0xf7a450ef335e1892cb42c8ca72e7242359d7711924b75db5717410da3f614aa3": "REGISTRY_MANAGER_ROLE",
+            "0xf5a08927c847d7a29dc35e105208dbde5ce951392105d712761cc5d17440e2ff": "ASSIGN_ROLE",
+            "0xe97b137254058bd94f28d2f3eb79e2d34074ffb488d042e3bc958e0a57d2fa22": "BURN_ROLE",
+            "0x2406f1e99f79cea012fb88c5c36566feaeefee0f4b98d3a376b49310222b53c4": "ISSUE_ROLE",
+            "0x154c00819833dac601ee5ddded6fda79d9d8b506b911b3dbd54cdb95fe6c3686": "MINT_ROLE",
+            "0x95ffc68daedf1eb334cfcd22ee24a5eeb5a8e58aa40679f2ad247a84140f8d6e": "REVOKE_VESTINGS_ROLE",
+            "0x71eee93d500f6f065e38b27d242a756466a00a52a1dbcd6b4260f01a8640402a": "REMOVE_PROTECTED_TOKEN_ROLE",
+            "0xb421f7ad7646747f3051c50c0b8e2377839296cd4973e27f63821d73e390338f": "RUN_SCRIPT_ROLE",
+            "0x0a1ad7b87f5846153c6d5a1f761d71c7d0cfd122384f56066cd33239b7933694": "SAFE_EXECUTE_ROLE",
+            "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c": "TRANSFER_ROLE",
+            "0xcebf517aa4440d1d125e0355aae64401211d0848a23c02cc5d29a14822580ba4": "EXECUTE_ROLE",
+            "0xd79730e82bfef7d2f9639b9d10bf37ebb662b22ae2211502a00bdf7b2cc3a23a": "CHANGE_BUDGET_ROLE",
+            "0xd35e458bacdd5343c2f050f574554b2f417a8ea38d6a9a65ce2225dbe8bb9a9d": "CHANGE_PERIOD_ROLE",
+            "0x5de467a460382d13defdc02aacddc9c7d6605d6d4e0b8bd2f70732cae8ea17bc": "CREATE_PAYMENTS_ROLE",
+            "0x563165d3eae48bcb0a092543ca070d989169c98357e9a1b324ec5da44bab75fd": "EXECUTE_PAYMENTS_ROLE",
+            "0x30597dd103acfaef0649675953d9cb22faadab7e9d9ed57acc1c429d04b80777": "MANAGE_PAYMENTS_ROLE",
+            "0xad15e7261800b4bb73f1b69d3864565ffb1fd00cb93cf14fe48da8f1f2149f39": "MODIFY_QUORUM_ROLE",
+            "0xe7dcd7275292e064d090fbc5f3bd7995be23b502c1fed5cd94cfddbbdcd32bbc": "CREATE_VOTES_ROLE",
+            "0xda3972983e62bdf826c4b807c4c9c2b8a941e1f83dfa76d53d6aeac11e1be650": "MODIFY_SUPPORT_ROLE",
+            "0x068ca51c9d69625c7add396c98ca4f3b27d894c3b973051ad3ee53017d7094ea": "UNSAFELY_MODIFY_VOTE_TIME_ROLE",
+            "0x78523850fdd761612f46e844cf5a16bda6b3151d6ae961fd7e8e7b92bfbca7f8": "MANAGE_NODE_OPERATOR_ROLE",
+            "0x75abc64490e17b40ea1e66691c3eb493647b24430b358bd87ec3e5127f1621ee": "MANAGE_SIGNING_KEYS",
+            "0x07b39e0faf2521001ae4e58cb9ffd3840a63e205d288dc9c93c3774f0d794754": "SET_NODE_OPERATOR_LIMIT_ROLE",
+            "0xbb75b874360e0bfd87f964eadd8276d8efb7c942134fc329b513032d0803e0c6": "STAKING_ROUTER_ROLE"
+          }
+        }
+      ]
     },
     {
       "address": "eth:0x99E55F86526e2aA2Abf63A7A562a46cE3bd3F8c3",
@@ -7970,6 +8483,7 @@
     "tokens/circle/TokenMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97",
     "tokens/EUTBL": "0x81f0a4ba908b50bd6aeb98ad11d5d6a3e2983f1ae5079341231489456a5b84f8",
+    "tokens/Lido": "0x233658ee245b7be75c55b7bc9344dc37e1beb97e6d3f97a455efc46c299e72ec",
     "tokens/Lido/AccountingOracle": "0x932fc7139d4e4e7175a766e7f02cd072df41c8a83dd102aae45da3c8ce3cac62",
     "tokens/Lido/Burner": "0xf6c8cf6cb60ea799f5de86286c9080914905458749bb49c535b87e53b5a0247d",
     "tokens/Lido/CSAccounting": "0x8af482360812b36721426ee5602c036f78274ac0a1c4c72914da2de993ec8e18",

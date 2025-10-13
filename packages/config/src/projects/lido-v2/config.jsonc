@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "lido-v2",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 200,
+  "initialAddresses": [
+    "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
+    "eth:0xf73a1260d222f447210581DDf212D915c09a3249",
+    "eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86",
+    "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
+    "eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"
+  ],
+  "names": {
+    "eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5": "CuratedModule",
+    "eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433": "SimpleDVTModule"
+  }
+}
