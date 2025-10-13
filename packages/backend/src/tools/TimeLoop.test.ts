@@ -4,11 +4,13 @@ import { expect, mockFn } from 'earl'
 import { TimeLoop } from './TimeLoop'
 
 class TestTimeLoop extends TimeLoop {
-  constructor(
-    private fn: () => Promise<string>,
-    protected logger: Logger,
-  ) {
+  private fn: () => Promise<string>
+  protected logger: Logger
+
+  constructor(fn: () => Promise<string>, logger: Logger) {
     super({ intervalMs: 1 })
+    this.fn = fn
+    this.logger = logger
   }
 
   async run() {
