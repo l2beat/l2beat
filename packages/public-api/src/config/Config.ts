@@ -1,5 +1,7 @@
 export interface Config {
   readonly database: DatabaseConfig
+  readonly auth: AuthConfig | false
+  readonly openapi: OpenApiConfig
 }
 
 export interface DatabaseConfig {
@@ -10,4 +12,12 @@ export interface DatabaseConfig {
   }
   min: number
   max: number
+}
+
+export interface AuthConfig {
+  apiKeys: Record<string, string>
+}
+
+export interface OpenApiConfig {
+  url: string
 }

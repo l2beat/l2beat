@@ -1,16 +1,22 @@
+import { getEnv } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import { createDatabase } from '@l2beat/database'
 import express from 'express'
 import swaggerUi from 'swagger-ui-express'
-import { addActivityRoutes } from './activity/routes'
 import { getConfig } from './config'
+import { authMiddleware } from './middleware/authMiddleware'
+import { loggerMiddleware } from './middleware/loggerMiddleware'
 import { OpenApi } from './OpenApi'
-import { addProjectsRoutes } from './projects/routes'
-import { addTvsRoutes } from './tvs/routes'
+import { addActivityRoutes } from './routes/activity/routes'
+import { addProjectsRoutes } from './routes/projects/routes'
+import { addTvsRoutes } from './routes/tvs/routes'
+import { createLogger } from './utils/logger/createLogger'
 
 function main() {
-  const config = getConfig()
+  const env = getEnv()
+  const config = getConfig(env)
   const db = createDatabase(config.database)
+  const logger = createLogger(env)
 
   const ps = new ProjectService()
 
@@ -21,8 +27,7 @@ function main() {
       title: 'L2BEAT API',
       version: '1.0.0',
     },
-    // TODO: add proper server url
-    servers: [{ url: 'http://localhost:3000' }],
+    servers: [{ url: config.openapi.url }],
     tags: [
       {
         name: 'projects',
@@ -38,15 +43,25 @@ function main() {
         description: 'Endpoints for retrieving activity data',
       },
     ],
+    components: {
+      securitySchemes: {
+        apiKeyAuth: {
+          type: 'apiKey',
+          in: 'query',
+          name: 'apiKey',
+        },
+      },
+    },
+    security: [{ apiKeyAuth: [] }],
+  })
+
+  app.get('/', (_, res) => {
+    res.redirect('/docs')
   })
 
   app.get('/openapi', (_, res) => {
     res.json(openapi.getOpenApiSchema())
   })
-
-  addProjectsRoutes(openapi, ps)
-  addTvsRoutes(openapi, ps, db)
-  addActivityRoutes(openapi, ps, db)
 
   app.use(
     '/docs',
@@ -58,6 +73,15 @@ function main() {
       },
     }),
   )
+
+  if (config.auth) {
+    app.use(authMiddleware(config.auth))
+  }
+  app.use(loggerMiddleware(logger))
+
+  addProjectsRoutes(openapi, ps)
+  addTvsRoutes(openapi, ps, db)
+  addActivityRoutes(openapi, ps, db)
 
   const port = 3000
   app.listen(port, () => {

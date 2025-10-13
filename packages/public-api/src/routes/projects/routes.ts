@@ -1,8 +1,8 @@
 import type { ProjectContract, ProjectService } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import type { OpenApi } from '../OpenApi'
-import { GenericErrorResponse } from '../types'
+import type { OpenApi } from '../../OpenApi'
+import { GenericErrorResponse } from '../../types'
 import { ContractSchema, DetailedProjectSchema, ProjectSchema } from './types'
 
 export function addProjectsRoutes(openapi: OpenApi, ps: ProjectService) {
@@ -13,7 +13,7 @@ export function addProjectsRoutes(openapi: OpenApi, ps: ProjectService) {
       tags: ['projects'],
       result: v.array(ProjectSchema),
     },
-    async (_, res) => {
+    async (req, res) => {
       const projects = await ps.getProjects({
         optional: ['chainConfig'],
       })
