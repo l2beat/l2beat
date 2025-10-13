@@ -33,7 +33,6 @@ export async function getTvsLeaderboard(
     args: [
       range.from,
       range.to,
-      props.projectIds,
       true,
       range.from - 30 * UnixTime.DAY, // Cut off 30 days before the range
     ],
