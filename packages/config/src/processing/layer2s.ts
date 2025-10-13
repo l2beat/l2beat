@@ -229,6 +229,7 @@ import { zkswap2 } from '../projects/zkswap2/zkswap2'
 import { zksync } from '../projects/zksync/zksync'
 import { zksync2 } from '../projects/zksync2/zksync2'
 import { zora } from '../projects/zora/zora'
+import { edgex } from '../projects/edgex/edgex'
 
 export const layer2s: ScalingProject[] = [
   abstract,
@@ -276,6 +277,7 @@ export const layer2s: ScalingProject[] = [
   ebichain,
   eclipse,
   edgeless,
+  edgex,
   ethernity,
   everclear,
   facet,

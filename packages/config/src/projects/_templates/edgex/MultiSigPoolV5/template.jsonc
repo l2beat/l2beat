@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EdgeXDepositor",
+  "description": "This smart contract implements a deposit wrapper that allows users deposit arbitrary tokens into EdgeX. Underlying logic swaps given tokens into USDT via a 1inch aggregation router and deposits USDT under user's starkKey into StarkPerpetual. This contract also defines withdrawals that are not connected with StarkPerpetual, so users must withdraw on StarkPerpetual contract.",
+  "ignoreRelatives": ["USDT_ADDRESS"]
+}
