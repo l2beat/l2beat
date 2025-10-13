@@ -316,6 +316,25 @@ describe(CoingeckoQueryService.name, () => {
       expect(result).toEqual(to)
     })
   })
+
+  describe(CoingeckoQueryService.prototype.getAllCoingeckoIds.name, () => {
+    it('returns all coingecko ids from coin list', async () => {
+      const mockCoinList = [
+        { id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin' },
+        { id: 'ethereum', symbol: 'ETH', name: 'Ethereum' },
+        { id: 'tether', symbol: 'USDT', name: 'Tether' },
+      ]
+
+      const coingeckoClient = mockObject<CoingeckoClient>({
+        getCoinList: mockFn().returns(mockCoinList),
+      })
+
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+      const result = await coingeckoQueryService.getAllCoingeckoIds()
+
+      expect(result).toEqual(['bitcoin', 'ethereum', 'tether'].map(CoingeckoId))
+    })
+  })
 })
 
 describe(pickClosestValues.name, () => {

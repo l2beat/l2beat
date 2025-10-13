@@ -17,8 +17,7 @@ export interface BridgeTransferRecord {
   srcTokenAddress: string | undefined
   srcRawAmount: string | undefined
   srcSymbol: string | undefined
-  // TODO: change
-  srcAbstractTokenId?: string | undefined
+  srcAbstractTokenId: string | undefined
   srcAmount: number | undefined
   srcPrice: number | undefined
   srcValueUsd: number | undefined
@@ -30,12 +29,22 @@ export interface BridgeTransferRecord {
   dstTokenAddress: string | undefined
   dstRawAmount: string | undefined
   dstSymbol: string | undefined
-  // TODO: change
-  dstAbstractTokenId?: string | undefined
+  dstAbstractTokenId: string | undefined
   dstAmount: number | undefined
   dstPrice: number | undefined
   dstValueUsd: number | undefined
   isProcessed?: boolean
+}
+
+export interface BridgeTransferUpdate {
+  srcAbstractTokenId?: string
+  srcPrice?: number
+  srcAmount?: number
+  srcValueUsd?: number
+  dstAbstractTokenId?: string
+  dstPrice?: number
+  dstAmount?: number
+  dstValueUsd?: number
 }
 
 export function toRecord(
@@ -172,6 +181,27 @@ export class BridgeTransferRepository extends BaseRepository {
     const rows = await query.orderBy('timestamp', 'desc').selectAll().execute()
 
     return rows.map(toRecord)
+  }
+
+  async getUnprocessed() {
+    const rows = await this.db
+      .selectFrom('BridgeTransfer')
+      .where('isProcessed', '=', false)
+      .selectAll()
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async updateFinancials(
+    id: string,
+    update: BridgeTransferUpdate,
+  ): Promise<void> {
+    await this.db
+      .updateTable('BridgeTransfer')
+      .set({ ...update, isProcessed: true })
+      .where('messageId', '=', id) // Should be renamed to transferId
+      .execute()
   }
 
   async getStats(): Promise<BridgeTransfersStatsRecord[]> {

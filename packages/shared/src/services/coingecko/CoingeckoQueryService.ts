@@ -194,13 +194,18 @@ export class CoingeckoQueryService {
         result.set(c, { price: 0, circulating: 0 })
       } else {
         result.set(c, {
-          price: p.current_price,
-          circulating: p.circulating_supply,
+          price: p.current_price ?? 0,
+          circulating: p.circulating_supply ?? 0,
         })
       }
     }
 
     return result
+  }
+
+  async getAllCoingeckoIds() {
+    const coins = await this.coingeckoClient.getCoinList()
+    return coins.map((c) => c.id).filter((c) => c !== undefined)
   }
 }
 

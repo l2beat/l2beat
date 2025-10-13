@@ -26,6 +26,10 @@ export class PriceProvider {
     return result
   }
 
+  async getAllCoingeckoIds(): Promise<CoingeckoId[]> {
+    return await this.client.getAllCoingeckoIds()
+  }
+
   getAdjustedTo(from: number, to: number): UnixTime {
     return CoingeckoQueryService.calculateAdjustedTo(
       UnixTime(from),

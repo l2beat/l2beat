@@ -26,6 +26,7 @@ export type {
 export type {
   BridgeTransferRecord,
   BridgeTransfersStatsRecord,
+  BridgeTransferUpdate,
 } from './repositories/BridgeTransferRepository'
 export type { CurrentPriceRecord } from './repositories/CurrentPriceRepository'
 export type {
