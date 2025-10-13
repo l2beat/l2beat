@@ -27,7 +27,7 @@ export async function getProjectsLatestTvsUsd(): Promise<ProjectsLatestTvsUsd> {
   const groupedByProject: Record<ProjectId, number> = {}
   for (const { projectId } of tvsProjects) {
     const value = values.data[projectId]
-    if (!value) {
+    if (value === undefined) {
       continue
     }
     groupedByProject[projectId] = value
