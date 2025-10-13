@@ -194,23 +194,10 @@ async function getTransfersStats(db: Database) {
 
   return stats.map((overall) => ({
     type: overall.type,
-    count: Number(overall.count),
-    medianDuration: Number(overall.medianDuration),
-    sourceValueSum: Number(overall.sourceValueSum),
-    destinationValueSum: Number(overall.destinationValueSum),
-    chains: detailedStats
-      .filter((chain) => chain.type === overall.type)
-      .map((chain) => {
-        assert(chain.sourceChain && chain.destinationChain)
-        return {
-          type: chain.type,
-          sourceChain: chain.sourceChain,
-          destinationChain: chain.destinationChain,
-          count: Number(chain.count),
-          medianDuration: Number(chain.medianDuration),
-          sourceValueSum: Number(chain.sourceValueSum),
-          destinationValueSum: Number(chain.destinationValueSum),
-        }
-      }),
+    count: overall.count,
+    medianDuration: overall.medianDuration,
+    srcValueSum: overall.srcValueSum,
+    dstValueSum: overall.dstValueSum,
+    chains: detailedStats.filter((chain) => chain.type === overall.type),
   }))
 }
