@@ -82,6 +82,7 @@ export class FinancialsService extends TimeLoop {
     )
 
     function getUpdate(
+      plugin: string,
       id: DeployedTokenId,
       rawAmount: string | undefined,
       logger: Logger,
@@ -94,7 +95,12 @@ export class FinancialsService extends TimeLoop {
       if (priceInfo) {
         abstractTokenId = priceInfo.abstractId
       } else {
-        logger.warn('Missing price info', { id })
+        logger.warn('Missing price info', {
+          plugin,
+          id,
+          chain: DeployedTokenId.chain(id),
+          token: DeployedTokenId.address(id),
+        })
       }
       if (priceInfo?.coingeckoId) {
         price = prices.get(priceInfo.coingeckoId)
@@ -120,6 +126,7 @@ export class FinancialsService extends TimeLoop {
         const update: BridgeTransferUpdate = {}
         if (t.srcId) {
           const srcUpdate = getUpdate(
+            t.transfer.plugin,
             t.srcId,
             t.transfer.srcRawAmount,
             this.logger,
@@ -131,6 +138,7 @@ export class FinancialsService extends TimeLoop {
         }
         if (t.dstId) {
           const dstUpdate = getUpdate(
+            t.transfer.plugin,
             t.dstId,
             t.transfer.dstRawAmount,
             this.logger,
