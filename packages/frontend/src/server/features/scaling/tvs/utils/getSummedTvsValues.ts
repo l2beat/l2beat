@@ -36,7 +36,7 @@ export async function getSummedTvsValues(
     offset: -UnixTime.HOUR - 15 * UnixTime.MINUTE,
   })
 
-  const valueRecords = env.USE_DAL
+  const valueRecords = env.REDIS_URL
     ? (
         await queryExecutor.execute(
           {
