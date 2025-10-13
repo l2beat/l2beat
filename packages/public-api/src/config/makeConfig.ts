@@ -27,5 +27,18 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
           min: 20,
           max: env.integer('DATABASE_MAX_POOL_SIZE', 20),
         },
+    auth: options.isLocal
+      ? false
+      : {
+          apiKeys: {
+            optimism: env.string('API_KEY_OPTIMISM'),
+            arbitrum: env.string('API_KEY_ARBITRUM'),
+            agglayer: env.string('API_KEY_AGGLAYER'),
+            theElasticNetwork: env.string('API_KEY_THE_ELASTIC_NETWORK'),
+          },
+        },
+    openapi: {
+      url: env.string('BACKEND_URL', 'http://localhost:3000'),
+    },
   }
 }

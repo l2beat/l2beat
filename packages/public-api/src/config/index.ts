@@ -1,9 +1,8 @@
-import { getEnv } from '@l2beat/backend-tools'
+import type { Env } from '@l2beat/backend-tools'
 import type { Config } from './Config'
 import { makeConfig } from './makeConfig'
 
-export function getConfig(): Config {
-  const env = getEnv()
+export function getConfig(env: Env): Config {
   const deploymentEnv = env.optionalString('DEPLOYMENT_ENV') ?? 'local'
 
   switch (deploymentEnv) {
