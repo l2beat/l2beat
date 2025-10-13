@@ -2,7 +2,7 @@ import { v } from '@l2beat/validate'
 import { ArrowRightIcon, CheckIcon, ChevronsUpDownIcon } from 'lucide-react'
 import type { SubmitHandler, UseFormReturn } from 'react-hook-form'
 import { Link, useSearchParams } from 'react-router-dom'
-import { Button } from '~/components/core/Button'
+import { Button, buttonVariants } from '~/components/core/Button'
 import {
   Command,
   CommandEmpty,
@@ -28,18 +28,14 @@ import {
 import { Spinner } from '~/components/core/Spinner'
 import { Textarea } from '~/components/core/TextArea'
 import { api } from '~/react-query/trpc'
-import {
-  ethereumAddressCheck,
-  minLengthCheck,
-  minNumberCheck,
-} from '~/utils/checks'
+import { minLengthCheck, minNumberCheck } from '~/utils/checks'
 import { cn } from '~/utils/cn'
-import { getAbstractTokenDisplayId } from '~/utils/getAbstractTokenDisplayId'
+import { getAbstractTokenDisplayId } from '~/utils/getDisplayId'
 
 export type DeployedTokenSchema = v.infer<typeof DeployedTokenSchema>
 export const DeployedTokenSchema = v.object({
   chain: v.string(),
-  address: v.string().check(ethereumAddressCheck),
+  address: v.string(),
   decimals: v.number().check(minNumberCheck(1)),
   symbol: v.string().check(minLengthCheck(1)),
   abstractTokenId: v.string().optional(),
@@ -274,16 +270,17 @@ export function DeployedTokenForm({
                       </Command>
                     </PopoverContent>
                   </Popover>
-                  <Button
-                    variant="outline"
-                    className="shrink-0"
-                    disabled={!field.value}
-                    type="button"
+
+                  <Link
+                    to={`/tokens/${field.value}`}
+                    aria-disabled={!field.value}
+                    className={buttonVariants({
+                      variant: 'outline',
+                      className: 'shrink-0',
+                    })}
                   >
-                    <Link to={`/tokens/${field.value}`}>
-                      <ArrowRightIcon />
-                    </Link>
-                  </Button>
+                    <ArrowRightIcon />
+                  </Link>
                 </div>
                 <FormMessage />
               </FormItem>
@@ -297,7 +294,7 @@ export function DeployedTokenForm({
               <FormItem>
                 <FormLabel>Deployment Timestamp</FormLabel>
                 <FormControl>
-                  <Input type="date" {...field} />
+                  <Input type="datetime-local" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

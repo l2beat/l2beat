@@ -18,6 +18,7 @@
     "@l2beat/token-backend": "workspace:*",
     "@l2beat/typescript-config": "workspace:*",
     "@l2beat/validate": "workspace:*",
+    "@radix-ui/react-checkbox": "^1.1.0",
     "@radix-ui/react-dialog": "1.1.2",
     "@radix-ui/react-popover": "1.1.2",
     "@radix-ui/react-select": "2.1.2",

@@ -2,7 +2,7 @@ import type { Plan } from '@l2beat/token-backend'
 import { ArrowRightIcon, CoinsIcon, TrashIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import { Button } from '~/components/core/Button'
@@ -23,14 +23,35 @@ import {
   AbstractTokenForm,
   AbstractTokenSchema,
 } from '~/components/forms/AbstractTokenForm'
+import { LoadingText } from '~/components/LoadingText'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
+import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractTokenWithDeployedTokens } from '~/mock/types'
 import { api } from '~/react-query/trpc'
+import { getDeployedTokenDisplayId } from '~/utils/getDisplayId'
 import { UnixTime } from '~/utils/UnixTime'
 import { validateResolver } from '~/utils/validateResolver'
 
-export function AbstractTokenView({
+export function AbstractTokenPage() {
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const { data } = api.tokens.getAbstractById.useQuery(id ?? '', {
+    enabled: id !== '',
+  })
+  if (!id || data === null) {
+    navigate('/not-found')
+    return
+  }
+
+  return (
+    <AppLayout>
+      {data ? <AbstractTokenView token={data} /> : <LoadingText />}
+    </AppLayout>
+  )
+}
+
+function AbstractTokenView({
   token,
 }: {
   token: AbstractTokenWithDeployedTokens
@@ -132,9 +153,8 @@ export function AbstractTokenView({
                     type: 'UpdateAbstractTokenIntent',
                     id: token.id,
                     update: {
-                      symbol: values.symbol,
+                      ...values,
                       issuer: values.issuer || null,
-                      category: values.category,
                       iconUrl: values.iconUrl || null,
                       coingeckoId: values.coingeckoId || null,
                       comment: values.comment || null,
@@ -144,7 +164,6 @@ export function AbstractTokenView({
                               new Date(values.coingeckoListingTimestamp),
                             )
                           : null,
-                      reviewed: false,
                     },
                   })
                 }}
@@ -179,12 +198,12 @@ export function AbstractTokenView({
               {token.deployedTokens.length !== 0 ? (
                 token.deployedTokens.map((token) => (
                   <div
-                    key={`${token.chain}+${token.address}`}
+                    key={getDeployedTokenDisplayId(token)}
                     className="flex items-center justify-between gap-2 px-6 odd:bg-muted"
                   >
                     {token.chain} ({token.symbol})
                     <Button asChild variant="link">
-                      <Link to={`/tokens/${token.chain}+${token.address}`}>
+                      <Link to={`/tokens/${token.chain}/${token.address}`}>
                         <ArrowRightIcon />
                       </Link>
                     </Button>
