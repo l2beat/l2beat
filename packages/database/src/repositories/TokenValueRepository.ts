@@ -376,7 +376,6 @@ export class TokenValueRepository extends BaseRepository {
     oldestTimestamp: number,
     latestTimestamp: number,
     excludeAssociated: boolean,
-    projectIds?: string[],
     cutOffTimestamp?: number,
   ): Promise<
     {
@@ -519,10 +518,6 @@ export class TokenValueRepository extends BaseRepository {
           : sql<Date>`NOW() - INTERVAL '30 days'`,
       )
       .groupBy(['TokenValue.timestamp', 'TokenValue.projectId'])
-
-    if (projectIds && projectIds.length > 0) {
-      query = query.where('TokenValue.projectId', 'in', projectIds)
-    }
 
     if (excludeAssociated) {
       query = query.where('TokenMetadata.isAssociated', '=', false)

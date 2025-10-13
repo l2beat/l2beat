@@ -52,18 +52,13 @@ export async function get7dTvsBreakdown(
 
   const target = customTarget ?? getTvsTargetTimestamp()
 
-  const tvsProjects = await getTvsProjects(
-    createTvsBreakdownProjectFilter(props),
-  )
-  const values = await queryExecutor.execute({
-    name: 'getAtTimestampsPerProjectQuery',
-    args: [
-      target - 7 * UnixTime.DAY,
-      target,
-      tvsProjects.map((p) => p.projectId),
-    ],
-  })
-
+  const [tvsProjects, values] = await Promise.all([
+    getTvsProjects(createTvsBreakdownProjectFilter(props)),
+    queryExecutor.execute({
+      name: 'getAtTimestampsPerProjectQuery',
+      args: [target - 7 * UnixTime.DAY, target],
+    }),
+  ])
   const valuesByProject = pick(
     values.data,
     tvsProjects.map((p) => p.projectId),
