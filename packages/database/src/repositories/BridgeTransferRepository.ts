@@ -127,18 +127,18 @@ export interface BridgeTransfersStatsRecord {
   type: string
   count: number
   medianDuration: number
-  outboundValueSum: number
-  inboundValueSum: number
+  srcValueSum: number
+  dstValueSum: number
 }
 
 export interface BridgeTransfersDetailedStatsRecord {
   type: string
-  sourceChain: string
-  destinationChain: string
+  srcChain: string
+  dstChain: string
   count: number
   medianDuration: number
-  outboundValueSum: number
-  inboundValueSum: number
+  srcValueSum: number
+  dstValueSum: number
 }
 
 export class BridgeTransferRepository extends BaseRepository {
@@ -213,8 +213,8 @@ export class BridgeTransferRepository extends BaseRepository {
         sql<number>`percentile_cont(0.5) within group (order by duration)`.as(
           'medianDuration',
         ),
-        eb.fn.sum('srcValueUsd').as('outboundValueSum'),
-        eb.fn.sum('dstValueUsd').as('inboundValueSum'),
+        eb.fn.sum('srcValueUsd').as('srcValueSum'),
+        eb.fn.sum('dstValueUsd').as('dstValueSum'),
       ])
       .groupBy('type')
       .execute()
@@ -223,8 +223,8 @@ export class BridgeTransferRepository extends BaseRepository {
       type: overall.type,
       count: Number(overall.count),
       medianDuration: Number(overall.medianDuration),
-      outboundValueSum: Number(overall.outboundValueSum),
-      inboundValueSum: Number(overall.inboundValueSum),
+      srcValueSum: Number(overall.srcValueSum),
+      dstValueSum: Number(overall.dstValueSum),
     }))
   }
 
@@ -239,8 +239,8 @@ export class BridgeTransferRepository extends BaseRepository {
         sql<number>`percentile_cont(0.5) within group (order by duration)`.as(
           'medianDuration',
         ),
-        eb.fn.sum('srcValueUsd').as('outboundValueSum'),
-        eb.fn.sum('dstValueUsd').as('inboundValueSum'),
+        eb.fn.sum('srcValueUsd').as('srcValueSum'),
+        eb.fn.sum('dstValueUsd').as('dstValueSum'),
       ])
       .where('srcChain', 'is not', null)
       .where('dstChain', 'is not', null)
@@ -251,12 +251,12 @@ export class BridgeTransferRepository extends BaseRepository {
       assert(chain.srcChain && chain.dstChain)
       return {
         type: chain.type,
-        sourceChain: chain.srcChain,
-        destinationChain: chain.dstChain,
+        srcChain: chain.srcChain,
+        dstChain: chain.dstChain,
         count: Number(chain.count),
         medianDuration: Number(chain.medianDuration),
-        outboundValueSum: Number(chain.outboundValueSum),
-        inboundValueSum: Number(chain.inboundValueSum),
+        srcValueSum: Number(chain.srcValueSum),
+        dstValueSum: Number(chain.dstValueSum),
       }
     })
   }
