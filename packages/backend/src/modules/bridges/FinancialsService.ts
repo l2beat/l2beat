@@ -101,6 +101,7 @@ export class FinancialsService extends TimeLoop {
           chain: DeployedTokenId.chain(id),
           token: DeployedTokenId.address(id),
         })
+        return
       }
       if (priceInfo?.coingeckoId) {
         price = prices.get(priceInfo.coingeckoId)
@@ -131,10 +132,10 @@ export class FinancialsService extends TimeLoop {
             t.transfer.srcRawAmount,
             this.logger,
           )
-          update.srcAbstractTokenId = srcUpdate.abstractTokenId
-          update.srcAmount = srcUpdate.amount
-          update.srcPrice = srcUpdate.price
-          update.srcValueUsd = srcUpdate.valueUsd
+          update.srcAbstractTokenId = srcUpdate?.abstractTokenId
+          update.srcAmount = srcUpdate?.amount
+          update.srcPrice = srcUpdate?.price
+          update.srcValueUsd = srcUpdate?.valueUsd
         }
         if (t.dstId) {
           const dstUpdate = getUpdate(
@@ -143,10 +144,10 @@ export class FinancialsService extends TimeLoop {
             t.transfer.dstRawAmount,
             this.logger,
           )
-          update.dstAbstractTokenId = dstUpdate.abstractTokenId
-          update.dstAmount = dstUpdate.amount
-          update.dstPrice = dstUpdate.price
-          update.dstValueUsd = dstUpdate.valueUsd
+          update.dstAbstractTokenId = dstUpdate?.abstractTokenId
+          update.dstAmount = dstUpdate?.amount
+          update.dstPrice = dstUpdate?.price
+          update.dstValueUsd = dstUpdate?.valueUsd
         }
         return { id: t.transfer.messageId, update }
       })

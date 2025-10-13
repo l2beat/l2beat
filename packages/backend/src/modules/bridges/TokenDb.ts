@@ -54,7 +54,7 @@ export interface ITokenDb {
       {
         abstractId: AbstractTokenId
         decimals: number
-        coingeckoId: string | undefined
+        coingeckoId: string
       }
     >
   >
@@ -65,7 +65,7 @@ const map = new Map<
   {
     abstractId: AbstractTokenId
     decimals: number
-    coingeckoId: string | undefined
+    coingeckoId: string
   }
 >()
 for (const abstractToken of mockData.tokens) {
