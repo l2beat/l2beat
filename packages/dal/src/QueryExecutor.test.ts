@@ -17,7 +17,7 @@ describe(QueryExecutor.name, () => {
       ]
       const mockCache = mockObject<Cache>({
         generateKey: mockFn().returns(testKey),
-        read: mockFn().resolvesTo(cachedData),
+        read: mockFn().resolvesTo({ data: cachedData }),
         write: mockFn().resolvesTo(undefined),
       })
 
