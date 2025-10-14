@@ -61,7 +61,6 @@ const includingSHARPUpgradeDelaySeconds = Math.min(
   getSHARPVerifierUpgradeDelay(),
 )
 
-// todo: logo needs to be added
 export const edgex: ScalingProject = {
   type: 'layer2',
   id: ProjectId('edgex'),
@@ -82,7 +81,7 @@ export const edgex: ScalingProject = {
       "EdgeX is a high-performance on-chain trading platform, build as an L2 on Starknet's StarkEx tech.",
     purposes: ['Exchange'],
     links: {
-      websites: ['https://www.edgex.exchange'],
+      websites: ['https://edgex.exchange'],
       documentation: ['https://edgex-1.gitbook.io/edgeX-documentation'],
       bridges: ['https://pro.edgex.exchange'],
       socialMedia: [
@@ -101,7 +100,7 @@ export const edgex: ScalingProject = {
     stage: 'NotApplicable',
   },
   chainConfig: {
-    name: 'apex',
+    name: 'edgex',
     chainId: undefined,
     apis: [{ type: 'starkex', product: ['edgex'] }],
   },
@@ -151,7 +150,6 @@ export const edgex: ScalingProject = {
     exitMechanisms: EXITS.STARKEX_PERPETUAL,
   },
   contracts: {
-    // todo: It would also be nice to add a diagram with the EdgeXDepositor added
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [
       CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(
