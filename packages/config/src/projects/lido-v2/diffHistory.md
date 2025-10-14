@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x2964164b14f7bb6b7c10ce82ec66036e74bfc2bf
+Generated with discovered.json: 0xcd43329b877107b793e792c33c7418ac198725d5
 
-# Diff at Mon, 13 Oct 2025 13:06:53 GMT:
+# Diff at Tue, 14 Oct 2025 09:38:01 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current timestamp: 1760177696
+- current timestamp: 1760434597
 
 ## Description
 
@@ -163,7 +163,19 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract GnosisSafe (eth:0x8772E3a2D86B9347A2688f9bc1808A6d8917760C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract WithdrawalQueueERC721 (eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GateSeal (eth:0x8A854C4E750CDf24f138f34A9061b2f556066912)
     +++ description: None
 ```
 

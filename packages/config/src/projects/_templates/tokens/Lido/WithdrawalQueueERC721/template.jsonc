@@ -12,5 +12,6 @@
     "getLockedEtherAmount",
     "unfinalizedRequestNumber",
     "unfinalizedStETH"
-  ]
+  ],
+  "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
 }
