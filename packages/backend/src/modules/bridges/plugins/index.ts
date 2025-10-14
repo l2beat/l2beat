@@ -27,6 +27,7 @@ import type { BridgePlugin } from './types'
 import { WormholePlugin } from './wormhole'
 import { WormholeRelayerPlugin } from './wormhole-relayer'
 import { WormholeTokenBridgePlugin } from './wormhole-token-bridge'
+import { WormholeNTTPlugin } from './wormhole-ntt'
 
 export function createBridgePlugins(): BridgePlugin[] {
   return [
@@ -46,6 +47,7 @@ export function createBridgePlugins(): BridgePlugin[] {
     new LayerZeroV2OFTsPlugin(), // should be run before LayerZeroV2
     new LayerZeroV1Plugin(),
     new LayerZeroV2Plugin(),
+    new WormholeNTTPlugin(), // should be run before WormholeCore and WormholeRelayer
     new WormholeTokenBridgePlugin(), // should be run before Wormhole
     new WormholeRelayerPlugin(), // should be run before Wormhole
     new WormholePlugin(),
