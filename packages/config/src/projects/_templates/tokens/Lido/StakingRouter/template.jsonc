@@ -17,5 +17,20 @@
     "getStakingModules",
     "getStakingRewardsDistribution"
   ],
-  "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xe7c742a54cd11fc9749a47ab34bdcd7327820908e8d0d48b4a5c7f17b0294098": "MANAGE_WITHDRAWAL_CREDENTIALS_ROLE"
+        }
+      }
+    },
+    "formattedWithdrawalCredential": {
+      "handler": {
+        "type": "hardcoded",
+        "value": "0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f"
+      }
+    }
+  }
 }

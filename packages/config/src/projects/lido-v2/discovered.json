@@ -903,10 +903,7 @@
         "secondOpinionOracle": "eth:0x0000000000000000000000000000000000000000",
         "SHARE_RATE_DEVIATION_LIMIT_MANAGER_ROLE": "0x7b21c0949109e9e143f66d6aa1f8a065b3f4ab47ee9f84f6837fd0490eace4d5"
       },
-      "errors": {
-        "@template": "Processing error occurred.",
-        "reportData": "Processing error occurred."
-      },
+      "errors": { "reportData": "Processing error occurred." },
       "implementationNames": {
         "eth:0x6232397ebac4f5772e53285B26c47914E9461E75": "OracleReportSanityChecker"
       }
@@ -3883,6 +3880,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEPOSIT_CONTRACT": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
         "FEE_PRECISION_POINTS": "100000000000000000000",
+        "formattedWithdrawalCredential": "eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f",
         "getAllStakingModuleDigests": [
           {
             "nodeOperatorsCount": 39,
@@ -8022,7 +8020,7 @@
     "tokens/Lido/MiniMeToken": "0x4477605aa619c192084296dec31b5dc3ef87585bb125619bf0732705aa9b8500",
     "tokens/Lido/NodeOperatorsRegistry": "0xe7998a3d16a66518764c4ed39e42d9e4c686ab433f69ab3cc04266651aca2bcc",
     "tokens/Lido/OpStackTokenRatePusher": "0x0803b1e88c67bebc35eefc187ea1d4d767067c1b9a88db89e2a7ca732f48acca",
-    "tokens/Lido/StakingRouter": "0x2861410254db05c174e6624757e7277520697a80a1d9c4a5f17b7cab13f9fdd3",
+    "tokens/Lido/StakingRouter": "0x3b8deac80914582607e6b92707925aa8457611db826cca0ad5cf7085e62cacb1",
     "tokens/Lido/stETH": "0x7f5ae107bccaebd6f82f68a717c01c505f08fad1375810e9f0cbb70152f86bc2",
     "tokens/Lido/ValidatorsExitBusOracle": "0x11365707f780cd17f5f0f1cc48c59745a28a1f5725b533c928cdaac71c9e3938",
     "tokens/Lido/Voting": "0xfe60c9f930249cf52507a6861a5f27ba4d2b0e05965376084669ce656fa4565f",
