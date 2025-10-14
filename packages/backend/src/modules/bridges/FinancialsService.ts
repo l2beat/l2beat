@@ -1,35 +1,13 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BridgeTransferUpdate, Database } from '@l2beat/database'
-import { UnixTime, unique } from '@l2beat/shared-pure'
+import { assertUnreachable, UnixTime, unique } from '@l2beat/shared-pure'
 import { TimeLoop } from '../../tools/TimeLoop'
 import { Address32 } from './plugins/types'
 import { type AbstractTokenId, DeployedTokenId, type ITokenDb } from './TokenDb'
 
-const chainToAddressFormat: Record<
-  string,
-  ((a: Address32) => string) | undefined
-> = {
-  ethereum: Address32.cropToEthereumAddress,
-  base: Address32.cropToEthereumAddress,
-  arbitrum: Address32.cropToEthereumAddress,
-}
-
-function toDeployedId(chain: string | undefined, address: string | undefined) {
-  if (!chain || !address) {
-    return
-  }
-  if (address === 'native' || address === '0x') {
-    return
-  }
-  const format = chainToAddressFormat[chain]
-  if (!format) {
-    return
-  }
-  return DeployedTokenId.from(chain, format(Address32(address)))
-}
-
 export class FinancialsService extends TimeLoop {
   constructor(
+    private chains: { name: string; type: 'evm' }[],
     private db: Database,
     private tokenDb: ITokenDb,
     protected logger: Logger,
@@ -50,8 +28,8 @@ export class FinancialsService extends TimeLoop {
     const unprocessed = (await this.db.bridgeTransfer.getUnprocessed()).map(
       (u) => ({
         transfer: u,
-        srcId: toDeployedId(u.srcChain, u.srcTokenAddress),
-        dstId: toDeployedId(u.dstChain, u.dstTokenAddress),
+        srcId: this.toDeployedId(u.srcChain, u.srcTokenAddress),
+        dstId: this.toDeployedId(u.dstChain, u.dstTokenAddress),
       }),
     )
     if (unprocessed.length === 0) {
@@ -103,9 +81,7 @@ export class FinancialsService extends TimeLoop {
         })
         return
       }
-      if (priceInfo.coingeckoId) {
-        price = prices.get(priceInfo.coingeckoId)
-      }
+      price = prices.get(priceInfo.coingeckoId)
       if (rawAmount && priceInfo) {
         // This calculation gives us 6 decimal places of precision while not
         // calculating absurd values using basic numbers
@@ -114,10 +90,22 @@ export class FinancialsService extends TimeLoop {
             (BigInt(rawAmount) * 1_000_000n) /
               10n ** BigInt(priceInfo.decimals),
           ) / 1_000_000
+      } else {
+        logger.warn('Could not calculate amount', {
+          id,
+          rawAmount,
+          priceInfo,
+        })
       }
       if (price !== undefined && amount !== undefined) {
         valueUsd = price * amount
         logger.info('Value updated', { id, valueUsd })
+      } else {
+        logger.warn('Could not calculate value', {
+          id,
+          price,
+          amount,
+        })
       }
       return { abstractTokenId, price, amount, valueUsd }
     }
@@ -166,5 +154,32 @@ export class FinancialsService extends TimeLoop {
     this.logger.info('Updated transfers saved in DB', {
       transfers: updates.length,
     })
+  }
+
+  toDeployedId(chain: string | undefined, address: string | undefined) {
+    if (!chain || !address) {
+      return
+    }
+    if (
+      address === 'native' ||
+      address === '0x' ||
+      address === Address32.ZERO
+    ) {
+      return
+    }
+    const chainConfig = this.chains.find((c) => c.name === chain)
+    if (!chainConfig) {
+      return
+    }
+
+    switch (chainConfig.type) {
+      case 'evm':
+        return DeployedTokenId.from(
+          chain,
+          Address32.cropToEthereumAddress(Address32(address)),
+        )
+      default:
+        assertUnreachable(chainConfig.type)
+    }
   }
 }
