@@ -7,7 +7,7 @@ import { ContractSchema, DetailedProjectSchema, ProjectSchema } from './types'
 
 export function addProjectsRoutes(openapi: OpenApi, ps: ProjectService) {
   openapi.get(
-    '/projects',
+    '/v1/projects',
     {
       summary: 'List all projects',
       tags: ['projects'],
@@ -28,7 +28,7 @@ export function addProjectsRoutes(openapi: OpenApi, ps: ProjectService) {
   )
 
   openapi.get(
-    '/project/:projectId',
+    '/v1/project/:projectId',
     {
       summary: 'Get a project by ID',
       tags: ['projects'],
@@ -84,7 +84,7 @@ export function addProjectsRoutes(openapi: OpenApi, ps: ProjectService) {
   )
 
   openapi.get(
-    '/project/:projectId/contracts',
+    '/v1/project/:projectId/contracts',
     {
       summary: ' List of contracts associated with the project and the chains',
       tags: ['projects'],
