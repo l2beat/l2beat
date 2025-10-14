@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x9dfa3ca69ccb7f5da4ce2109adc02dc752c34bc6
+
+# Diff at Mon, 13 Oct 2025 15:39:54 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@51600557d780ac92375cfae390fda922b972fb85 block: 1759847246
+- current timestamp: 1760369926
+
+## Description
+
+Queued this proposal: https://www.tally.xyz/gov/zksync/proposal/15539336001504922041482045464843306651217071205321499428543388348391561812720?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746.
+
+Also started executing this proposal: https://www.tally.xyz/gov/zksync/proposal/40562439712311128665286075271414168289029475306445402072499591795343687723101?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f, which paused migrations. Note that only 1 out of 3 upgrade transactions were submitted on L1 (https://tools.l2beat.com/decoder-new/?hash=0x633f744ab8ceebcd8454fa3e10b9db8cf9e20250be28b38734060b2c985a8424).
+
+## Watched changes
+
+```diff
+    contract BridgeHub (eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stmores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
++++ description: If false, chains can migrate to whitelisted settlement layers.
++++ severity: HIGH
+      values.migrationPaused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        7
++        8
+    }
+```
+
 Generated with discovered.json: 0xb1223811c0458c0113ca44d28d27e0531791d19b
 
 # Diff at Tue, 07 Oct 2025 14:28:34 GMT:
