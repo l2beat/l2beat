@@ -8,7 +8,7 @@ Generated with discovered.json: 0xf08e460e540199d2855da1bcfe0887eb7345f562
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Manually decoded commitment, turns out it's v3.
 
 ## Config/verification related changes
 
