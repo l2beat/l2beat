@@ -271,7 +271,7 @@
         {
           "permission": "interact",
           "from": "eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
+          "description": "manage supported tokens.",
           "role": ".tokenAdmins"
         }
       ]
@@ -983,5 +983,5 @@
     "starkex/StarkPerpetual": "0x2c320b80005728ab66e5a80a93fb2a160ce7cd11e884bbe1e399562c8b0c52d6"
   },
   "usedBlockNumbers": { "ethereum": 23574856 },
-  "permissionsConfigHash": "0x0548f5927d6d5a2431135b9045207eb07e3d8baf050d407829661537d532b1ba"
+  "permissionsConfigHash": "0xd595fbf825e4f79b40d7261ef564d09ea68d18d5a7d46f3f1c421b8fc577cf86"
 }
