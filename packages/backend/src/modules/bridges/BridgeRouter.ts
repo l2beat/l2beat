@@ -140,6 +140,7 @@ export function createBridgeRouter(
     })
   })
 
+  // TODO: maybe it will be better to receive fields as query params
   router.get('/bridges/csv/transfers/:type', async (ctx) => {
     console.log(ctx.params)
     const params = v.object({ type: v.string() }).validate(ctx.params)
