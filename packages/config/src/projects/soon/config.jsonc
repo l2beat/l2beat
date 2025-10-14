@@ -25,7 +25,7 @@
             "value": {
               "isSequencerSendingBlobTx": false,
               "isUsingCelestia": false,
-              "isUsingEigenDA": "v1"
+              "isUsingEigenDA": "v3"
             }
           }
         },
