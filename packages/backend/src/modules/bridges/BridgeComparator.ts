@@ -1,9 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import { TimeLoop } from '../../tools/TimeLoop'
 import type { BridgeComparePlugin, BridgeExternalItem } from './compare/types'
 
-export class BridgeComparator {
-  private running = false
+export class BridgeComparator extends TimeLoop {
   private items: {
     plugin: string
     type: BridgeComparePlugin['type']
@@ -13,33 +13,16 @@ export class BridgeComparator {
   constructor(
     private db: Database,
     private plugins: BridgeComparePlugin[],
-    private logger: Logger,
-    private intervalMs = 20 * 60_000,
+    protected logger: Logger,
+    intervalMs = 20 * 60_000,
   ) {
+    super({ intervalMs })
     this.logger = logger.for(this)
   }
 
-  start() {
-    setInterval(this.runCompare, this.intervalMs)
-    this.logger.info('Compare scheduled', {
-      intervalMs: this.intervalMs,
-    })
-    this.runCompare()
-    this.logger.info('Started')
-  }
-
-  async runCompare() {
-    if (this.running) {
-      return
-    }
-    this.running = true
-    try {
-      await this.fetchExternalItems()
-      await this.compare()
-    } catch (e) {
-      this.logger.error(e)
-    }
-    this.running = false
+  async run() {
+    await this.fetchExternalItems()
+    await this.compare()
   }
 
   async fetchExternalItems() {

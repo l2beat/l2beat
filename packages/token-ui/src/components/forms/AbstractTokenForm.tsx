@@ -2,7 +2,7 @@ import { v } from '@l2beat/validate'
 import { ArrowRightIcon, RefreshCwIcon } from 'lucide-react'
 import type { SubmitHandler, UseFormReturn } from 'react-hook-form'
 import { Link } from 'react-router-dom'
-import { Button } from '~/components/core/Button'
+import { Button, buttonVariants } from '~/components/core/Button'
 import {
   Form,
   FormControl,
@@ -22,7 +22,7 @@ import {
 import { Spinner } from '~/components/core/Spinner'
 import { Textarea } from '~/components/core/TextArea'
 import { minLengthCheck, urlCheck } from '~/utils/checks'
-import { sanitize } from '~/utils/sanitize'
+import { Checkbox } from '../core/Checkbox'
 
 const categoryValues = ['btc', 'ether', 'stablecoin', 'other'] as const
 
@@ -44,6 +44,7 @@ export const AbstractTokenSchema = v.object({
     })
     .optional(),
   comment: v.string().optional(),
+  reviewed: v.boolean(),
 })
 
 export function AbstractTokenForm({
@@ -67,9 +68,7 @@ export function AbstractTokenForm({
 }) {
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit((values) => onSubmit(sanitize(values)))}
-      >
+      <form onSubmit={form.handleSubmit((values) => onSubmit(values))}>
         <fieldset disabled={isFormDisabled} className="space-y-8">
           <div className="grid grid-cols-[minmax(0,_1fr)_20px_minmax(0,_1fr)_20px_minmax(0,_1fr)] items-start gap-2">
             <FormField
@@ -111,7 +110,7 @@ export function AbstractTokenForm({
                 </FormItem>
               )}
             />
-            <p className="mt-7 text-center font-bold">.</p>
+            <p className="mt-7 text-center font-bold">:</p>
             <FormField
               control={form.control}
               name="symbol"
@@ -142,14 +141,17 @@ export function AbstractTokenForm({
                 <FormControl>
                   <div className="group flex items-center gap-2">
                     <Input {...field} />
-                    <Button variant="outline" disabled={!field.value}>
-                      <Link
-                        to={`https://www.coingecko.com/en/coins/${field.value}`}
-                        target="_blank"
-                      >
-                        <ArrowRightIcon />
-                      </Link>
-                    </Button>
+                    <Link
+                      to={`https://www.coingecko.com/en/coins/${field.value}`}
+                      target="_blank"
+                      aria-disabled={!coingeckoFields.success}
+                      className={buttonVariants({
+                        variant: 'outline',
+                        className: 'shrink-0',
+                      })}
+                    >
+                      <ArrowRightIcon />
+                    </Link>
                   </div>
                 </FormControl>
 
@@ -242,6 +244,26 @@ export function AbstractTokenForm({
                   <Textarea {...field} />
                 </FormControl>
                 <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="reviewed"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-center gap-2">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={(checked) => {
+                      return checked
+                        ? field.onChange(true)
+                        : field.onChange(false)
+                    }}
+                  />
+                </FormControl>
+                <FormLabel className="font-normal text-sm">Reviewed</FormLabel>
               </FormItem>
             )}
           />

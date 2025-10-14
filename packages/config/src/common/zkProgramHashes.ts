@@ -146,6 +146,13 @@ const zkProgramHashes: Record<
     proverSystemProject: ProjectId('risc0'),
     verificationStatus: 'notVerified',
   },
+  '0x70909b25db0db00f1d4b4016aeb876f53568a3e5a8e6397cb562d79947a02cc9': {
+    title: 'Set builder program',
+    description:
+      'Recursively verifies a Merkle tree of zk proofs at once, identified by a Merkle Mountain Range root.',
+    proverSystemProject: ProjectId('risc0'),
+    verificationStatus: 'notVerified',
+  },
   '760308386675154762009993173725077399730170358078020153308029499928875469870':
     {
       title: 'Aggregation program for Stone prover',

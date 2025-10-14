@@ -1,7 +1,7 @@
-import { skipToken, useMutation, useQuery } from '@tanstack/react-query'
+import type { Plan } from '@l2beat/token-backend'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { coingecko } from '~/api/coingecko'
+import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import {
   AbstractTokenForm,
@@ -9,10 +9,9 @@ import {
 } from '~/components/forms/AbstractTokenForm'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
-import { type Plan, tokenService } from '~/mock/MockTokenService'
-import type { AbstractToken } from '~/mock/types'
+import { api } from '~/react-query/trpc'
 import { generateRandomString } from '~/utils/generateRandomString'
-import { toYYYYMMDD } from '~/utils/toYYYYMMDD'
+import { UnixTime } from '~/utils/UnixTime'
 import { validateResolver } from '~/utils/validateResolver'
 
 function generateRandomId() {
@@ -28,37 +27,34 @@ export function AddAbstractToken({
     resolver: validateResolver(AbstractTokenSchema),
     defaultValues: defaultValues ?? {
       id: generateRandomId(),
+      reviewed: true,
     },
   })
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
 
   const coingeckoId = form.watch('coingeckoId')
   const debouncedCoingeckoId = useDebouncedValue(form.watch('coingeckoId'), 500)
-  const { data: coin, isLoading: isCoinLoading } = useQuery({
-    queryKey: ['coingecko', 'coin', debouncedCoingeckoId],
-    queryFn: debouncedCoingeckoId
-      ? () => coingecko.getCoinById(debouncedCoingeckoId)
-      : skipToken,
-    retry: false,
-  })
+  const { data: coin, isLoading: isCoinLoading } =
+    api.coingecko.getCoinById.useQuery(debouncedCoingeckoId ?? '', {
+      enabled: !!debouncedCoingeckoId,
+      retry: false,
+    })
 
   const {
     data: coingeckoListingTimestamp,
     isLoading: isCoingeckoListingTimestampLoading,
-  } = useQuery({
-    queryKey: ['coingecko', 'listingTimestamp', debouncedCoingeckoId],
-    queryFn: coin ? () => coingecko.getListingTimestamp(coin.id) : skipToken,
+  } = api.coingecko.getListingTimestamp.useQuery(coin?.id ?? '', {
+    enabled: !!coin?.id,
     retry: false,
   })
 
-  const { mutate: planAbstractToken, isPending: isPlanPending } = useMutation({
-    mutationFn: (token: AbstractToken) =>
-      tokenService.plan({
-        type: 'AddAbstractTokenIntent',
-        abstractToken: token,
-      }),
+  const { mutate: planMutate, isPending } = api.plan.generate.useMutation({
     onSuccess: (data) => {
-      setPlan(data)
+      if (data.outcome === 'success') {
+        setPlan(data.plan)
+      } else {
+        toast.error(data.error)
+      }
     },
   })
 
@@ -93,7 +89,7 @@ export function AddAbstractToken({
       form.clearErrors('coingeckoListingTimestamp')
       form.setValue(
         'coingeckoListingTimestamp',
-        toYYYYMMDD(coingeckoListingTimestamp),
+        UnixTime.toYYYYMMDD(coingeckoListingTimestamp),
       )
       return
     }
@@ -115,11 +111,18 @@ export function AddAbstractToken({
       })
       return
     }
-    planAbstractToken({
-      ...values,
-      coingeckoListingTimestamp: values.coingeckoListingTimestamp
-        ? new Date(values.coingeckoListingTimestamp)
-        : undefined,
+    planMutate({
+      type: 'AddAbstractTokenIntent',
+      record: {
+        ...values,
+        issuer: values.issuer || null,
+        iconUrl: values.iconUrl || null,
+        coingeckoId: values.coingeckoId || null,
+        comment: values.comment || null,
+        coingeckoListingTimestamp: values.coingeckoListingTimestamp
+          ? UnixTime.fromDate(new Date(values.coingeckoListingTimestamp))
+          : null,
+      },
     })
   }
 
@@ -136,7 +139,7 @@ export function AddAbstractToken({
       <AbstractTokenForm
         form={form}
         onSubmit={onSubmit}
-        isFormDisabled={isPlanPending}
+        isFormDisabled={isPending}
         refreshId={() => {
           const id = generateRandomId()
           form.setValue('id', id)
@@ -148,7 +151,7 @@ export function AddAbstractToken({
         }}
       >
         <ButtonWithSpinner
-          isLoading={isPlanPending}
+          isLoading={isPending}
           className="w-full"
           type="submit"
         >

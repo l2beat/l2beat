@@ -1,6 +1,6 @@
 {
   "name": "degen",
-  "timestamp": 1758286534,
+  "timestamp": 1760090951,
   "configHash": "0xb2b5013c9dc558abeca5c1b747e6e603905aa47387cd99279ee755ef5eaee889",
   "entries": [
     {
@@ -225,7 +225,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 38706,
+        "batchCount": 39195,
         "batchPosterManager": "base:0x0000000000000000000000000000000000000000",
         "batchPosters": ["base:0xc98A32DdD1b30B3788670C9992f3B18EF83Da491"],
         "bridge": "base:0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
@@ -257,7 +257,7 @@
         "rollup": "base:0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 148840,
+        "totalDelayedMessagesRead": 148852,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -483,7 +483,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 16,
+        "nonce": 17,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -639,7 +639,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 5621,
+        "nonce": 6111,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -710,7 +710,7 @@
         ],
         "$upgradeCount": 2,
         "anyTrustFastConfirmer": "base:0xc207cbC35DD3CD172059730380A45aE14eb0e403",
-        "arbOsFromWmRoot": "ArbOS v32 wasmModuleRoot",
+        "arbOsFromWmRoot": "ArbOS v40 wasmModuleRoot",
         "baseStake": "100000000000000000",
         "bridge": "base:0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
         "chainId": 666666666,
@@ -719,13 +719,13 @@
         "confirmPeriodBlocks": 241920,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 8317,
+        "firstUnresolvedNode": 8807,
         "inbox": "base:0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 23492774,
-        "latestConfirmed": 8316,
-        "latestNodeCreated": 8316,
+        "latestConfirmed": 8806,
+        "latestNodeCreated": 8806,
         "loserStakeEscrow": "base:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "base:0xe63ddb12FBb6211a73F12a4367b10dA0834B82da",
@@ -746,7 +746,7 @@
         "validatorUtils": "base:0x23b0348788b96ee1cE4e7DdED4AC2A99de516F51",
         "validatorWalletCreator": "base:0xB546310EA2De84220811a03BCD5CeE96D251fA7D",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39",
+        "wasmModuleRoot": "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
@@ -948,7 +948,7 @@
           "base:0xe63ddb12FBb6211a73F12a4367b10dA0834B82da",
           "base:0xDb8E759859058952c34953c8469f464109826e52"
         ],
-        "delayedMessageCount": 148840,
+        "delayedMessageCount": 148852,
         "inboxHistory": [
           "base:0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",
           "base:0x766DD3A13d17C6D175975C89225bde89F052dBc4",
@@ -962,8 +962,8 @@
         ],
         "rollup": "base:0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerInbox": "base:0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
-        "sequencerMessageCount": 38706,
-        "sequencerReportedSubMessageCount": 26264261
+        "sequencerMessageCount": 39195,
+        "sequencerReportedSubMessageCount": 26299684
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1830,6 +1830,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "base": 35748593 },
+  "usedBlockNumbers": { "base": 36650802 },
   "permissionsConfigHash": "0xd45120059495bcc344bad40906c7f558b4443a1b2c1ea538102a8d740fafebd0"
 }

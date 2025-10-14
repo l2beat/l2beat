@@ -18,6 +18,7 @@ import { EcosystemTokenRepository } from './repositories/EcosystemTokenRepositor
 import { FlatSourcesRepository } from './repositories/FlatSourcesRepository'
 import { IndexerConfigurationRepository } from './repositories/IndexerConfigurationRepository'
 import { IndexerStateRepository } from './repositories/IndexerStateRepository'
+import { InteropRecentPricesRepository } from './repositories/InteropRecentPricesRepository'
 import { L2CostPriceRepository } from './repositories/L2CostPriceRepository'
 import { L2CostRepository } from './repositories/L2CostRepository'
 import { LivenessRepository } from './repositories/LivenessRepository'
@@ -54,6 +55,7 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
     bridgeEvent: new BridgeEventRepository(db),
     bridgeMessage: new BridgeMessageRepository(db),
     bridgeTransfer: new BridgeTransferRepository(db),
+    interopRecentPrices: new InteropRecentPricesRepository(db),
     // #endregion
 
     // #region DA BEAT

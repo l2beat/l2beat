@@ -17,8 +17,7 @@ export interface BridgeTransferRecord {
   srcTokenAddress: string | undefined
   srcRawAmount: string | undefined
   srcSymbol: string | undefined
-  // TODO: change
-  srcAbstractTokenId?: string | undefined
+  srcAbstractTokenId: string | undefined
   srcAmount: number | undefined
   srcPrice: number | undefined
   srcValueUsd: number | undefined
@@ -30,12 +29,22 @@ export interface BridgeTransferRecord {
   dstTokenAddress: string | undefined
   dstRawAmount: string | undefined
   dstSymbol: string | undefined
-  // TODO: change
-  dstAbstractTokenId?: string | undefined
+  dstAbstractTokenId: string | undefined
   dstAmount: number | undefined
   dstPrice: number | undefined
   dstValueUsd: number | undefined
   isProcessed?: boolean
+}
+
+export interface BridgeTransferUpdate {
+  srcAbstractTokenId?: string
+  srcPrice?: number
+  srcAmount?: number
+  srcValueUsd?: number
+  dstAbstractTokenId?: string
+  dstPrice?: number
+  dstAmount?: number
+  dstValueUsd?: number
 }
 
 export function toRecord(
@@ -118,18 +127,18 @@ export interface BridgeTransfersStatsRecord {
   type: string
   count: number
   medianDuration: number
-  outboundValueSum: number
-  inboundValueSum: number
+  srcValueSum: number
+  dstValueSum: number
 }
 
 export interface BridgeTransfersDetailedStatsRecord {
   type: string
-  sourceChain: string
-  destinationChain: string
+  srcChain: string
+  dstChain: string
   count: number
   medianDuration: number
-  outboundValueSum: number
-  inboundValueSum: number
+  srcValueSum: number
+  dstValueSum: number
 }
 
 export class BridgeTransferRepository extends BaseRepository {
@@ -174,6 +183,27 @@ export class BridgeTransferRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getUnprocessed() {
+    const rows = await this.db
+      .selectFrom('BridgeTransfer')
+      .where('isProcessed', '=', false)
+      .selectAll()
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async updateFinancials(
+    id: string,
+    update: BridgeTransferUpdate,
+  ): Promise<void> {
+    await this.db
+      .updateTable('BridgeTransfer')
+      .set({ ...update, isProcessed: true })
+      .where('messageId', '=', id) // Should be renamed to transferId
+      .execute()
+  }
+
   async getStats(): Promise<BridgeTransfersStatsRecord[]> {
     const overallStats = await this.db
       .selectFrom('BridgeTransfer')
@@ -183,8 +213,8 @@ export class BridgeTransferRepository extends BaseRepository {
         sql<number>`percentile_cont(0.5) within group (order by duration)`.as(
           'medianDuration',
         ),
-        eb.fn.sum('srcValueUsd').as('outboundValueSum'),
-        eb.fn.sum('dstValueUsd').as('inboundValueSum'),
+        eb.fn.sum('srcValueUsd').as('srcValueSum'),
+        eb.fn.sum('dstValueUsd').as('dstValueSum'),
       ])
       .groupBy('type')
       .execute()
@@ -193,8 +223,8 @@ export class BridgeTransferRepository extends BaseRepository {
       type: overall.type,
       count: Number(overall.count),
       medianDuration: Number(overall.medianDuration),
-      outboundValueSum: Number(overall.outboundValueSum),
-      inboundValueSum: Number(overall.inboundValueSum),
+      srcValueSum: Number(overall.srcValueSum),
+      dstValueSum: Number(overall.dstValueSum),
     }))
   }
 
@@ -209,8 +239,8 @@ export class BridgeTransferRepository extends BaseRepository {
         sql<number>`percentile_cont(0.5) within group (order by duration)`.as(
           'medianDuration',
         ),
-        eb.fn.sum('srcValueUsd').as('outboundValueSum'),
-        eb.fn.sum('dstValueUsd').as('inboundValueSum'),
+        eb.fn.sum('srcValueUsd').as('srcValueSum'),
+        eb.fn.sum('dstValueUsd').as('dstValueSum'),
       ])
       .where('srcChain', 'is not', null)
       .where('dstChain', 'is not', null)
@@ -221,12 +251,12 @@ export class BridgeTransferRepository extends BaseRepository {
       assert(chain.srcChain && chain.dstChain)
       return {
         type: chain.type,
-        sourceChain: chain.srcChain,
-        destinationChain: chain.dstChain,
+        srcChain: chain.srcChain,
+        dstChain: chain.dstChain,
         count: Number(chain.count),
         medianDuration: Number(chain.medianDuration),
-        outboundValueSum: Number(chain.outboundValueSum),
-        inboundValueSum: Number(chain.inboundValueSum),
+        srcValueSum: Number(chain.srcValueSum),
+        dstValueSum: Number(chain.dstValueSum),
       }
     })
   }

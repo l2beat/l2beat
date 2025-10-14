@@ -1,6 +1,7 @@
 import { toJsonSchema as _toJsonSchema, v } from '@l2beat/validate'
 import type { ImpMeta, Validator } from '@l2beat/validate/dist/cjs/validate'
 import type { Application, Request, RequestHandler } from 'express'
+import { GenericErrorResponse } from './types'
 import { httpResponsesDescriptions } from './utils/errorDescriptions'
 
 // biome-ignore lint/suspicious/noExplicitAny: its fine
@@ -56,7 +57,7 @@ interface Route {
   options: OpenApiRouteOptions
 }
 
-interface BaseOpenApiSchema {
+export interface BaseOpenApiSchema {
   openapi: '3.0.0'
   info: {
     title: string
@@ -64,6 +65,16 @@ interface BaseOpenApiSchema {
   }
   servers: { url: string }[]
   tags: { name: Tags; description: string }[]
+  components: {
+    securitySchemes: {
+      apiKeyAuth: {
+        type: 'apiKey'
+        in: 'query'
+        name: 'apiKey'
+      }
+    }
+  }
+  security: { apiKeyAuth: [] }[]
 }
 
 export class OpenApi {
@@ -122,10 +133,14 @@ export class OpenApi {
   }
 
   getOpenApiSchema() {
+    const { components, ...rest } = this.baseSchema
     return {
-      ...this.baseSchema,
+      ...rest,
       paths: this.getPaths(),
-      components: this.getComponents(),
+      components: {
+        ...components,
+        ...this.getComponents(),
+      },
     }
   }
 
@@ -227,9 +242,10 @@ export class OpenApi {
     }
 
     // Add custom error responses if specified
-    for (const [statusCode, errorValidator] of Object.entries(
-      route.options.errors ?? {},
-    )) {
+    for (const [statusCode, errorValidator] of Object.entries({
+      401: GenericErrorResponse,
+      ...route.options.errors,
+    })) {
       const code = Number.parseInt(statusCode, 10)
       base[code] = {
         description:

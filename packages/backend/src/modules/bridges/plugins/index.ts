@@ -8,6 +8,9 @@ import { CircleGatewayPlugIn } from './circle-gateway'
 import { DeBridgePlugin } from './debridge'
 import { DeBridgeDlnPlugin } from './debridge-dln'
 import { HyperlanePlugIn } from './hyperlane'
+import { HyperlaneEcoPlugin } from './hyperlane-eco'
+import { HyperlaneHwrPlugin } from './hyperlane-hwr'
+import { HyperlaneMerklyTokenBridgePlugin } from './hyperlane-merkly-tokenbridge'
 import { LayerZeroV1Plugin } from './layerzero-v1'
 import { LayerZeroV2Plugin } from './layerzero-v2'
 import { LayerZeroV2OFTsPlugin } from './layerzero-v2-ofts'
@@ -23,6 +26,7 @@ import { StargateV2BusPlugin } from './stargate-v2-bus'
 import { StargateV2TaxiPlugin } from './stargate-v2-taxi'
 import type { BridgePlugin } from './types'
 import { WormholePlugin } from './wormhole'
+import { WormholeNTTPlugin } from './wormhole-ntt'
 import { WormholeRelayerPlugin } from './wormhole-relayer'
 import { WormholeTokenBridgePlugin } from './wormhole-token-bridge'
 
@@ -44,6 +48,7 @@ export function createBridgePlugins(): BridgePlugin[] {
     new LayerZeroV2OFTsPlugin(), // should be run before LayerZeroV2
     new LayerZeroV1Plugin(),
     new LayerZeroV2Plugin(),
+    new WormholeNTTPlugin(), // should be run before WormholeCore and WormholeRelayer
     new WormholeTokenBridgePlugin(), // should be run before Wormhole
     new WormholeRelayerPlugin(), // should be run before Wormhole
     new WormholePlugin(),
@@ -53,6 +58,9 @@ export function createBridgePlugins(): BridgePlugin[] {
     new AcrossPlugin(),
     new OrbitStackPlugin(),
     new OpStackPlugin(),
+    new HyperlaneMerklyTokenBridgePlugin(), // should be run before HyperlaneHWR
+    new HyperlaneHwrPlugin(), // should be run before Hyperlane
+    new HyperlaneEcoPlugin(), // should be run before Hyperlane
     new HyperlanePlugIn(),
   ]
 }

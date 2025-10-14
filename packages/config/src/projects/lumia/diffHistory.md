@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xdf0a6975baa5a9b16816931d5ad3529a5dbd2f96
+
+# Diff at Mon, 13 Oct 2025 06:48:37 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@fe3c735ad76bcc6ebcc73f187993a692bfbc0eba block: 1759756767
+- current timestamp: 1759756767
+
+## Description
+
+Removed zkProver verifier from Lumia disco to clean up zk catalog entry.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759756767 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Verifier (eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
 Generated with discovered.json: 0x97721b53fcc0be160f72335781f4f61e9d5e4897
 
 # Diff at Mon, 06 Oct 2025 13:20:35 GMT:
