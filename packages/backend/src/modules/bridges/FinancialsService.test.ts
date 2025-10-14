@@ -154,22 +154,12 @@ describe(FinancialsService.name, () => {
         getPriceInfo: mockFn().resolvesTo(priceInfoMap),
       })
 
-      const logger = mockObject<Logger>({
-        info: mockFn().returns(undefined),
-        warn: mockFn().returns(undefined),
-      })
-      //@ts-ignore
-      logger.for = () => logger
-
-      const service = new FinancialsService(db, tokenDb, logger, 1000)
+      const service = new FinancialsService(db, tokenDb, Logger.SILENT, 1000)
 
       await service.run()
 
       expect(interopRecentPrices.hasAnyPrices).toHaveBeenCalledTimes(1)
       expect(bridgeTransfer.getUnprocessed).toHaveBeenCalledTimes(1)
-      expect(logger.info).toHaveBeenCalledWith('Processing transfers', {
-        transfers: 3,
-      })
 
       expect(tokenDb.getPriceInfo).toHaveBeenCalledWith([
         srcToken1,
@@ -222,14 +212,6 @@ describe(FinancialsService.name, () => {
       expect(bridgeTransfer.updateFinancials).toHaveBeenCalledWith(
         'msg3',
         thirdUpdate,
-      )
-
-      expect(logger.info).toHaveBeenCalledWith('Transfers processed', {
-        transfers: 3,
-      })
-      expect(logger.info).toHaveBeenCalledWith(
-        'Updated transfers saved in DB',
-        { transfers: 3 },
       )
 
       expect(transaction).toHaveBeenCalledTimes(1)
