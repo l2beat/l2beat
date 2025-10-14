@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x457f760bd58e7157b21d2b9ff44ee85830b64944
+Generated with discovered.json: 0x96358ad38d2a03b51c551085acd8a17464ddc24b
 
-# Diff at Mon, 13 Oct 2025 15:14:12 GMT:
+# Diff at Tue, 14 Oct 2025 08:51:19 GMT:
 
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- current timestamp: 1760351153
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- current timestamp: 1760431807
 
 ## Description
 
