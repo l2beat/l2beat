@@ -167,7 +167,11 @@ describe(FinancialsService.name, () => {
       })
 
       const service = new FinancialsService(
-        [],
+        [
+          { name: 'ethereum', type: 'evm' as const },
+          { name: 'arbitrum', type: 'evm' as const },
+          { name: 'base', type: 'evm' as const },
+        ],
         db,
         tokenDb,
         Logger.SILENT,
