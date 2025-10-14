@@ -39,13 +39,10 @@ export async function getSummedTvsValues(
 
   const valueRecords = env.REDIS_URL
     ? (
-        await queryExecutor.execute(
-          {
-            name: 'getSummedByTimestampTvsValuesQuery',
-            args: [projectIds, [from, to], forSummary, excludeAssociatedTokens],
-          },
-          100,
-        )
+        await queryExecutor.execute({
+          name: 'getSummedByTimestampTvsValuesQuery',
+          args: [projectIds, [from, to], forSummary, excludeAssociatedTokens],
+        })
       ).data.map(mapArrayToObject)
     : await db.tvsProjectValue.getSummedByTimestamp(
         projectIds,

@@ -5,7 +5,7 @@ import type { Cache } from './cache/Cache'
 import { type Query, type QueryOf, type QueryResult, queries } from './queries'
 import type { DropFirst, Simplify } from './queries/types'
 
-const DEFAULT_EXPIRATION = 60 // 1 minute
+const DEFAULT_EXPIRATION = 30 * 60 // 30 minutes
 
 export type QueryResultWithTimestamp<N extends Query['name']> = {
   data: QueryResult<N>
