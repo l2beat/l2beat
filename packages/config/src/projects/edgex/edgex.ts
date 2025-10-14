@@ -111,7 +111,6 @@ export const edgex: ScalingProject = {
       sinceTimestamp: UnixTime(1720435943),
       resyncLastDays: 7,
     },
-    // todo: I have not generated tokens becuase I forgot the command
     escrows: [
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
