@@ -1,5 +1,5 @@
 import type { ProjectContract, ProjectService } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { OpenApi } from '../../OpenApi'
 import { GenericErrorResponse } from '../../types'
@@ -116,11 +116,15 @@ export function addProjectsRoutes(openapi: OpenApi, ps: ProjectService) {
 
       const contracts = Object.entries(project.contracts.addresses).flatMap(
         ([chain, contracts]) =>
-          contracts.map((contract: ProjectContract) => ({
-            name: contract.name,
-            contractAddress: contract.address,
-            chain: chain,
-          })),
+          contracts.map((contract: ProjectContract) => {
+            const [_, address] = contract.address.split(':')
+            assert(address, 'Address is undefined')
+            return {
+              name: contract.name,
+              contractAddress: address,
+              chain: chain,
+            }
+          }),
       )
 
       res.json(contracts)
