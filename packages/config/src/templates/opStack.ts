@@ -135,7 +135,7 @@ export function DACHALLENGES_DA_PROVIDER(
       nodeSourceLink,
     ),
     bridge: DA_BRIDGES.NONE_WITH_DA_CHALLENGES,
-    badge: BADGES.DA.DAC,
+    badge: BADGES.DA.CustomDA,
   }
 }
 
