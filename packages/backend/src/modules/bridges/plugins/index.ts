@@ -25,9 +25,9 @@ import { StargateV2BusPlugin } from './stargate-v2-bus'
 import { StargateV2TaxiPlugin } from './stargate-v2-taxi'
 import type { BridgePlugin } from './types'
 import { WormholePlugin } from './wormhole'
+import { WormholeNTTPlugin } from './wormhole-ntt'
 import { WormholeRelayerPlugin } from './wormhole-relayer'
 import { WormholeTokenBridgePlugin } from './wormhole-token-bridge'
-import { WormholeNTTPlugin } from './wormhole-ntt'
 
 export function createBridgePlugins(): BridgePlugin[] {
   return [

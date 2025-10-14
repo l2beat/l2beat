@@ -47,7 +47,6 @@ export class WormholeRelayerPlugin implements BridgePlugin {
   capture(input: LogToCapture) {
     const parsed = parseDelivery(input.log, null)
     if (parsed) {
-
       return Delivery.create(input.ctx, {
         recipientContract: parsed.recipientContract,
         sourceChain: parsed.sourceChain,

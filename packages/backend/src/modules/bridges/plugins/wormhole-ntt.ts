@@ -24,7 +24,6 @@ Note that (TODO: )
 
 */
 
-import { send } from 'process'
 import { BinaryReader } from '../BinaryReader'
 import {
   Address32,
@@ -39,8 +38,8 @@ import {
   Result,
 } from './types'
 import { LogMessagePublished, WORMHOLE_NETWORKS } from './wormhole'
-import { Delivery, SendEvent } from './wormhole-relayer'
-import { log } from 'console'
+import { Delivery } from './wormhole-relayer'
+
 /*     
 
 event SendTransceiverMessage(
@@ -65,8 +64,9 @@ event SendTransceiverMessage(
 // NTT_MANAGERS store token addresses for each NTT manager on a given chain
 const NTT_MANAGERS: { [chain: string]: { [manager: string]: string } } = {
   base: {
-    '0xbc51f76178a56811fdfe95d3897e6ac2b11dbb62': '0x46777c76dbbe40fabb2aab99e33ce20058e76c59', // L3
-  }
+    '0xbc51f76178a56811fdfe95d3897e6ac2b11dbb62':
+      '0x46777c76dbbe40fabb2aab99e33ce20058e76c59', // L3
+  },
 }
 
 const parseSendTransceiverMessage = createEventParser(
@@ -125,10 +125,9 @@ export class WormholeNTTPlugin implements BridgePlugin {
   matchTypes = [ReceivedRelayedMessage]
   match(received: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
     if (ReceivedRelayedMessage.checkType(received)) {
-
       // find on DST WormholeRelayer.Delivery with the same digest, extract sequenceId
       const delivery = db.find(Delivery, {
-        deliveryVaaHash: received.args.digest
+        deliveryVaaHash: received.args.digest,
       })
       if (!delivery) return
 
@@ -152,10 +151,17 @@ export class WormholeNTTPlugin implements BridgePlugin {
       })
       if (!sentTransceiverMessage) return
 
-      const srcTokenAddress = decodeNTTManagerPayload(sentTransceiverMessage.args.nttManagerPayload)?.sourceToken
-      const dstNTTAddress = Address32.cropToEthereumAddress(Address32.from(sentTransceiverMessage.args.recipientNttManagerAddress)).toLowerCase()
-      const dstTokenAddress = NTT_MANAGERS[sentTransceiverMessage.args.$dstChain]?.[dstNTTAddress]
-      const amount = decodeNTTManagerPayload(sentTransceiverMessage.args.nttManagerPayload)?.amount
+      const srcTokenAddress = decodeNTTManagerPayload(
+        sentTransceiverMessage.args.nttManagerPayload,
+      )?.sourceToken
+      const dstNTTAddress = Address32.cropToEthereumAddress(
+        Address32.from(sentTransceiverMessage.args.recipientNttManagerAddress),
+      ).toLowerCase()
+      const dstTokenAddress =
+        NTT_MANAGERS[sentTransceiverMessage.args.$dstChain]?.[dstNTTAddress]
+      const amount = decodeNTTManagerPayload(
+        sentTransceiverMessage.args.nttManagerPayload,
+      )?.amount
 
       return [
         Result.Message('wormhole.Message', {
@@ -167,10 +173,14 @@ export class WormholeNTTPlugin implements BridgePlugin {
           extraEvents: [logMessagePublished, delivery],
           srcEvent: sentTransceiverMessage,
           dstEvent: received,
-          srcTokenAddress: srcTokenAddress ? Address32.from(srcTokenAddress) : Address32.ZERO,
+          srcTokenAddress: srcTokenAddress
+            ? Address32.from(srcTokenAddress)
+            : Address32.ZERO,
           srcAmount: amount,
-          dstTokenAddress: dstTokenAddress ? Address32.from(dstTokenAddress) : Address32.ZERO, // TODO: Should extract token from dst NTT manager
-          dstAmount: amount
+          dstTokenAddress: dstTokenAddress
+            ? Address32.from(dstTokenAddress)
+            : Address32.ZERO, // TODO: Should extract token from dst NTT manager
+          dstAmount: amount,
         }),
       ]
     }
@@ -192,12 +202,21 @@ function decodeNTTManagerPayload(payload: string) {
     const sourceToken = reader2.readBytes(32)
     const toAddress = reader2.readBytes(32)
     const toChain = reader2.readBytes(2)
-    return { id, sender, payloadData, prefix, decimals, amount, sourceToken, toAddress, toChain }
+    return {
+      id,
+      sender,
+      payloadData,
+      prefix,
+      decimals,
+      amount,
+      sourceToken,
+      toAddress,
+      toChain,
+    }
   } catch {
     return undefined
   }
 }
-
 
 /* 
 
