@@ -39,7 +39,7 @@ export async function getTvsLeaderboard(
   })
 
   const projects: TvsLeaderboard['projects'] = {}
-  for (const [projectId, values] of Object.entries(projectsValues.data)) {
+  for (const [projectId, values] of Object.entries(projectsValues)) {
     const { all } = values
     const oldestValue = all[0]
     const latestValue = all.at(-1)

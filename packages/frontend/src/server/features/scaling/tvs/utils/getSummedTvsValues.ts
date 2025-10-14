@@ -43,7 +43,7 @@ export async function getSummedTvsValues(
           name: 'getSummedByTimestampTvsValuesQuery',
           args: [projectIds, [from, to], forSummary, excludeAssociatedTokens],
         })
-      ).data.map(mapArrayToObject)
+      ).map(mapArrayToObject)
     : await db.tvsProjectValue.getSummedByTimestamp(
         projectIds,
         getType(forSummary, excludeAssociatedTokens),

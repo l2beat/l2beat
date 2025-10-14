@@ -1,10 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { Cache } from './cache/Cache'
-import { QueryExecutor, type QueryResultWithTimestamp } from './QueryExecutor'
-import type { Query } from './queries'
+import { QueryExecutor } from './QueryExecutor'
+import type { Query, QueryResult } from './queries'
 
 describe(QueryExecutor.name, () => {
   const testKey = 'test-key'
@@ -12,10 +12,9 @@ describe(QueryExecutor.name, () => {
     const mockDb = mockObject<Database>({})
 
     it('should return cached data when cache hit occurs', async () => {
-      const cachedData: QueryResultWithTimestamp<'getTvsChartQuery'> = {
-        data: [{ timestamp: 1234567890, value: 100 }],
-        timestamp: UnixTime.now(),
-      }
+      const cachedData: QueryResult<'getTvsChartQuery'> = [
+        { timestamp: 1234567890, value: 100 },
+      ]
       const mockCache = mockObject<Cache>({
         generateKey: mockFn().returns(testKey),
         read: mockFn().resolvesTo(cachedData),
@@ -49,12 +48,11 @@ describe(QueryExecutor.name, () => {
         name: 'getTvsChartQuery',
         args: [[ProjectId.ETHEREUM]],
       }
-      const dbResult: QueryResultWithTimestamp<'getTvsChartQuery'> = {
-        data: [{ timestamp: 1234567890, value: 100 }],
-        timestamp: UnixTime.now(),
-      }
+      const dbResult: QueryResult<'getTvsChartQuery'> = [
+        { timestamp: 1234567890, value: 100 },
+      ]
 
-      const mockExecuteRawQuery = mockFn().resolvesTo(dbResult.data)
+      const mockExecuteRawQuery = mockFn().resolvesTo(dbResult)
       queryExecutor.executeRawQuery = mockExecuteRawQuery
 
       const result = await queryExecutor.execute(query, 120)
@@ -66,7 +64,7 @@ describe(QueryExecutor.name, () => {
       expect(mockExecuteRawQuery).toHaveBeenCalledWith(query)
       expect(mockCache.write).toHaveBeenCalledWith(
         testKey,
-        JSON.stringify(dbResult.data),
+        JSON.stringify(dbResult),
         120,
       )
       expect(result).toEqual(dbResult)

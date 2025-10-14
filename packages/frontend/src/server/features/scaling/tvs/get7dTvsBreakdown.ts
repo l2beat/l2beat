@@ -60,7 +60,7 @@ export async function get7dTvsBreakdown(
     }),
   ])
   const valuesByProject = pick(
-    values.data,
+    values,
     tvsProjects.map((p) => p.projectId),
   )
 
