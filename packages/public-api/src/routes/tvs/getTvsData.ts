@@ -4,9 +4,9 @@ import type {
 } from '@l2beat/database'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import keyBy from 'lodash/keyBy'
-import { generateTimestamps } from '../utils/generateTimestamps'
-import { getTimestampedValuesRange } from '../utils/getTimestampedValuesRange'
-import { rangeToResolution } from '../utils/range'
+import { generateTimestamps } from '../../utils/generateTimestamps'
+import { getTimestampedValuesRange } from '../../utils/getTimestampedValuesRange'
+import { rangeToResolution } from '../../utils/range'
 import type { TvsRange, TvsResultItem } from './types'
 
 export async function getTvsData(

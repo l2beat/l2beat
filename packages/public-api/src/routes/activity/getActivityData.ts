@@ -1,7 +1,7 @@
 import type { ActivityRecord, Database } from '@l2beat/database'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { generateTimestamps } from '../utils/generateTimestamps'
-import { rangeToDays } from '../utils/range'
+import { generateTimestamps } from '../../utils/generateTimestamps'
+import { rangeToDays } from '../../utils/range'
 import type { ActivityRange, ActivityResultItem } from './types'
 
 export async function getActivityData(
