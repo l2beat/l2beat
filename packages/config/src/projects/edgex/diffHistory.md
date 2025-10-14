@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x96358ad38d2a03b51c551085acd8a17464ddc24b
+Generated with discovered.json: 0x7e33e1e4bcbf1b98bbf4db28f4023e7f364665c0
 
-# Diff at Tue, 14 Oct 2025 08:51:19 GMT:
+# Diff at Tue, 14 Oct 2025 09:56:38 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current timestamp: 1760431807
@@ -20,7 +20,7 @@ Init discovery of EdgeX.
 ```diff
 +   Status: CREATED
     contract FinalizableCommittee (eth:0x23bf3dcc14680162b7f5355aAbb56D31823c946e)
-    +++ description: DAC that allows admin adding new members, unless isFinalized is set to true. List of admins is not discoverable, so it is not in the fields of this contract.
+    +++ description: DAC with admin funtions to manage members. Admins are not discoverable and thus not shown here.
 ```
 
 ```diff
@@ -49,14 +49,8 @@ Init discovery of EdgeX.
 
 ```diff
 +   Status: CREATED
-    contract TransferRegistry (eth:0xBE9a129909EbCb954bC065536D2bfAfBd170d27A)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract EdgeXDepositor (eth:0xC0a1a1e4AF873E9A37a0caC37F3aB81152432Cc5)
-    +++ description: This smart contract implements a deposit wrapper that allows users deposit arbitrary tokens into EdgeX. Underlying logic swaps given tokens into USDT via a 1inch aggregation router and deposits USDT under user's starkKey into StarkPerpetual. This contract also defines withdrawals that are not connected with StarkPerpetual, so users must withdraw on StarkPerpetual contract.
+    +++ description: A deposit wrapper that allows users to deposit arbitrary tokens to EdgeX. Tokens are swapped to USDT via 1inch and deposited to edgeX. This deposit wrapper also has fast withdrawal support using liquidity providers, but it seems deprecated in practice. Standard direct deposits and withdrawals of USDT at the StarkPerpetual contract are fully supported.
 ```
 
 ```diff

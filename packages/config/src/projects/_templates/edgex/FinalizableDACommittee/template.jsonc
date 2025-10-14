@@ -1,12 +1,10 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "DAC that allows admin adding new members, unless isFinalized is set to true. List of admins is not discoverable, so it is not in the fields of this contract.",
+  "description": "DAC with admin funtions to manage members. Admins are not discoverable and thus not shown here.",
   "fields": {
     "constructorArgs": {
       "description": "Includes DAC members and threshold.",
-      "handler": {
-        "type": "constructorArgs"
-      }
+      "handler": { "type": "constructorArgs" }
     },
     "addedDACMembers": {
       "description": "DAC members added to the initial set from the constructor.",
@@ -16,8 +14,6 @@
         "add": { "event": "NewMemberAdded" }
       }
     },
-    "isFinalized": {
-      "severity": "HIGH"
-    }
+    "isFinalized": { "severity": "HIGH" }
   }
 }

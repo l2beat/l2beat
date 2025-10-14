@@ -105,7 +105,7 @@ export const edgex: ScalingProject = {
     chainId: undefined,
     apis: [{ type: 'starkex', product: ['edgex'] }],
   },
-  
+
   config: {
     activityConfig: {
       type: 'day',
@@ -121,7 +121,6 @@ export const edgex: ScalingProject = {
         tokens: ['USDT'],
       }),
     ],
-    
   },
   dataAvailability: {
     layer: DA_LAYERS.DAC,

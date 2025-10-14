@@ -66,7 +66,7 @@
         "0x7045af363bcf661aba6037e47938336e3946bbe761fff22861a972df02c1082e"
       ],
       "proxyType": "immutable",
-      "description": "DAC that allows admin adding new members, unless isFinalized is set to true. List of admins is not discoverable, so it is not in the fields of this contract.",
+      "description": "DAC with admin funtions to manage members. Admins are not discoverable and thus not shown here.",
       "sinceTimestamp": 1720435883,
       "sinceBlock": 20261309,
       "values": {
@@ -107,7 +107,15 @@
     {
       "address": "eth:0x38ACC82ED19e303841e222d7e933846001F969F8",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xC0a1a1e4AF873E9A37a0caC37F3aB81152432Cc5",
+          "description": "withdraw any funds from this deposit wrapper contract by reaching a threshold of 2 signers.",
+          "role": ".signers"
+        }
+      ]
     },
     {
       "address": "eth:0x3A6ED6885608Ead8174789a81Eb2B05600ca89F8",
@@ -185,7 +193,15 @@
     {
       "address": "eth:0x5C37D9fCD71F8d0D9E11a58b73D49148cf3A0323",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xC0a1a1e4AF873E9A37a0caC37F3aB81152432Cc5",
+          "description": "withdraw any funds from this deposit wrapper contract by reaching a threshold of 2 signers.",
+          "role": ".signers"
+        }
+      ]
     },
     {
       "name": "GnosisSafe",
@@ -197,6 +213,14 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1111111254EEB25477B68fb85Ed929f73A960582",
+          "description": "destroy the contract and rescue funds from it.",
+          "role": ".owner"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1608623778,
       "sinceBlock": 11502031,
@@ -229,7 +253,15 @@
     {
       "address": "eth:0x811aBa59F2486A0a6D93b8c708086d9A789dcFe2",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xC0a1a1e4AF873E9A37a0caC37F3aB81152432Cc5",
+          "description": "withdraw any funds from this deposit wrapper contract by reaching a threshold of 2 signers.",
+          "role": ".signers"
+        }
+      ]
     },
     {
       "address": "eth:0x8847c33C6AEB53bf9a43D6b5579e9146478e6D3a",
@@ -281,25 +313,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "TransferRegistry",
-      "address": "eth:0xBE9a129909EbCb954bC065536D2bfAfBd170d27A",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xca65c90eab3222ece5205fccdae3a20a07419751133d38894a85db4802060a14"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1613903192,
-      "sinceBlock": 11899719,
-      "values": {
-        "$immutable": true,
-        "hasRegisteredFact": true,
-        "identify": "StarkWare_TransferRegistry_2020_1"
-      },
-      "implementationNames": {
-        "eth:0xBE9a129909EbCb954bC065536D2bfAfBd170d27A": "TransferRegistry"
-      }
-    },
-    {
       "name": "EdgeXDepositor",
       "address": "eth:0xC0a1a1e4AF873E9A37a0caC37F3aB81152432Cc5",
       "type": "Contract",
@@ -308,7 +321,7 @@
         "0x483e1f93408a0dc81d042ba65e3cf63dbc4a7330de88ad6a7dcb3925de28b3e0"
       ],
       "proxyType": "immutable",
-      "description": "This smart contract implements a deposit wrapper that allows users deposit arbitrary tokens into EdgeX. Underlying logic swaps given tokens into USDT via a 1inch aggregation router and deposits USDT under user's starkKey into StarkPerpetual. This contract also defines withdrawals that are not connected with StarkPerpetual, so users must withdraw on StarkPerpetual contract.",
+      "description": "A deposit wrapper that allows users to deposit arbitrary tokens to EdgeX. Tokens are swapped to USDT via 1inch and deposited to edgeX. This deposit wrapper also has fast withdrawal support using liquidity providers, but it seems deprecated in practice. Standard direct deposits and withdrawals of USDT at the StarkPerpetual contract are fully supported.",
       "sinceTimestamp": 1721641931,
       "sinceBlock": 20361294,
       "values": {
@@ -850,14 +863,6 @@
       "function isValid(bytes32 fact) view returns (bool)",
       "function verifyEscape(uint256[] merkleProof, uint256 nAssets, uint256[] sharedState)"
     ],
-    "eth:0xBE9a129909EbCb954bC065536D2bfAfBd170d27A": [
-      "event LogRegisteredTransfer(address recipient, address token, uint256 amount, uint256 salt)",
-      "function hasRegisteredFact() view returns (bool)",
-      "function identify() pure returns (string)",
-      "function isValid(bytes32 fact) view returns (bool)",
-      "function transfer(address recipient, uint256 salt) payable",
-      "function transferERC20(address recipient, address erc20, uint256 amount, uint256 salt)"
-    ],
     "eth:0xC0a1a1e4AF873E9A37a0caC37F3aB81152432Cc5": [
       "constructor(address[] allowedSigners, address usdt, address aggregationRouterV5, address starkex, address fact, uint256 assetType)",
       "event Deposit(address from, address token, uint256 spentAmount, uint256 swapReturnAmount, uint256 starkKey, uint256 positionId)",
@@ -969,14 +974,14 @@
     ]
   },
   "usedTemplates": {
-    "edgex/1InchAggregationRouterV5": "0x2b2bd1d665f9c93ade1acf8ffa1d9dfd98f2b09d2649e891ef8d59352973f1c4",
+    "edgex/1InchAggregationRouterV5": "0x272508cb0bd69dd555c706500dec20424774e130af6fcab5c395f4dae0e84511",
     "edgex/FinalizableDACommittee": "0x1ae3a236bc764f054b54aa085fc783fa948ea7bb89b09a4ecef9d7f110221f9d",
-    "edgex/MultiSigPoolV5": "0xc8f7cb48deee706eaf544d05c5d7cd829f28475f61a03ae143ac17c16a3437ff",
+    "edgex/MultiSigPoolV5": "0x404c9680db0038ee4a2fbbe47eed77cc3bfb5547b3232fc52e52b15a2fed25b8",
     "edgex/PerpetualEscapeVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb",
     "starkex/StarkPerpetual": "0x2c320b80005728ab66e5a80a93fb2a160ce7cd11e884bbe1e399562c8b0c52d6"
   },
   "usedBlockNumbers": { "ethereum": 23574856 },
-  "permissionsConfigHash": "0xd81b0e4266dfe0468fccc11498ed48e6fb834dd0977da2652955fb01dfe1f98f"
+  "permissionsConfigHash": "0x0548f5927d6d5a2431135b9045207eb07e3d8baf050d407829661537d532b1ba"
 }
