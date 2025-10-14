@@ -94,7 +94,7 @@ describe(QueryExecutor.name, () => {
       expect(mockCache.write).toHaveBeenCalledWith(
         testKey,
         JSON.stringify(dbResult),
-        60,
+        60 * 30,
       )
     })
 
