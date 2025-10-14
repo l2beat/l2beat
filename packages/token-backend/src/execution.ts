@@ -28,7 +28,16 @@ export function executePlan(
   logger.info('Executing plan', { plan, meta })
   return db.transaction(
     async (): Promise<PlanExecutionResult> => {
-      const planRegeneration = await generatePlan(db, plan.intent)
+      const planRegeneration = await generatePlan(
+        db,
+        plan.intent,
+        meta
+          ? {
+              ...meta,
+              caller: 'executePlan',
+            }
+          : undefined,
+      )
       if (planRegeneration.outcome === 'error') {
         logger.error('Plan is no longer valid', {
           error: planRegeneration.error,

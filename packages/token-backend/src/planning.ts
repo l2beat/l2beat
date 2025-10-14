@@ -43,6 +43,7 @@ export async function generatePlan(
   intent: Intent,
   meta?: {
     email: string
+    caller?: 'executePlan'
   },
 ): Promise<PlanningResult> {
   const logger = getLogger().for('generatePlan')
