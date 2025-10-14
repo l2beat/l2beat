@@ -90,5 +90,5 @@ export const mantapacific: ScalingProject = opStackL2({
       type: 'general',
     },
   ],
-  additionalBadges: [BADGES.DA.Celestia, BADGES.RaaS.Caldera],
+  additionalBadges: [BADGES.RaaS.Caldera],
 })
