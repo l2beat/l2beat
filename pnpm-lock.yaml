@@ -945,6 +945,9 @@ importers:
 
   packages/token-backend:
     dependencies:
+      '@elastic/elasticsearch':
+        specifier: 8.18.2
+        version: 8.18.2
       '@l2beat/backend-tools':
         specifier: workspace:*
         version: link:../backend-tools
@@ -969,6 +972,9 @@ importers:
       jose:
         specifier: ^6.1.0
         version: 6.1.0
+      uuid:
+        specifier: 11.1.0
+        version: 11.1.0
     devDependencies:
       '@types/express':
         specifier: ^5.0.0

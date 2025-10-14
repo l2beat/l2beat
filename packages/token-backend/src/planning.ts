@@ -11,6 +11,7 @@ import {
   type UpdateAbstractTokenIntent,
   type UpdateDeployedTokenIntent,
 } from './intents'
+import { getLogger } from './logger'
 
 export type Plan = v.infer<typeof Plan>
 export const Plan = v.object({
@@ -40,7 +41,12 @@ interface PlanningResultError {
 export async function generatePlan(
   db: TokenDatabase,
   intent: Intent,
+  meta?: {
+    email: string
+  },
 ): Promise<PlanningResult> {
+  const logger = getLogger().for('generatePlan')
+  logger.info('Generating plan', { intent, meta })
   let commands: Command[]
   try {
     switch (intent.type) {
@@ -76,6 +82,7 @@ export async function generatePlan(
     throw error
   }
 
+  logger.info('Plan generated', { commands, meta })
   return {
     outcome: 'success',
     plan: {
