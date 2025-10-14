@@ -150,6 +150,7 @@ import { polynomial } from '../projects/polynomial/polynomial'
 import { powerloom } from '../projects/powerloom/powerloom'
 import { primechain } from '../projects/primechain/primechain'
 import { prom } from '../projects/prom/prom'
+import { ethstorage } from '../projects/ethstorage/ethstorage'
 import { publicgoodsnetwork } from '../projects/publicgoodsnetwork/publicgoodsnetwork'
 import { puffer } from '../projects/puffer/puffer'
 import { quarkchain } from '../projects/quarkchain/quarkchain'
@@ -378,6 +379,7 @@ export const layer2s: ScalingProject[] = [
   polynomial,
   powerloom,
   prom,
+  ethstorage,
   publicgoodsnetwork,
   puffer,
   quarkchain,

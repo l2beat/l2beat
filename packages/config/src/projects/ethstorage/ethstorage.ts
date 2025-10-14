@@ -3,7 +3,7 @@ import { BADGES } from '../../common/badges'
 import type { ScalingProject } from '../../internalTypes'
 import { underReviewL2 } from '../../templates/underReview'
 
-export const perennial: ScalingProject = underReviewL2({
+export const ethstorage: ScalingProject = underReviewL2({
   id: 'ethstorage',
   capability: 'universal',
   addedAt: UnixTime(1760437967),
