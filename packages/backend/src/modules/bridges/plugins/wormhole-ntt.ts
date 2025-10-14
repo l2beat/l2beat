@@ -1,5 +1,7 @@
 /*
-This version of a plugin assumes that Wormhole Relayer is used
+This version of a plugin assumes that Wormhole Relayer is used. NTT token is burn/mint by sending 
+a transfer() call on SRC to NTT manager assosciated with a given token. On DST, NTT manager mints the token.
+There is one NTT manager per token.
 
 SRC: 
 - WormholeCore.LogMessagePublished
@@ -59,6 +61,13 @@ event SendTransceiverMessage(
 
 
     */
+
+// NTT_MANAGERS store token addresses for each NTT manager on a given chain
+const NTT_MANAGERS: { [chain: string]: { [manager: string]: string } } = {
+  base: {
+    '0xbc51f76178a56811fdfe95d3897e6ac2b11dbb62': '0x46777c76dbbe40fabb2aab99e33ce20058e76c59', // L3
+  }
+}
 
 const parseSendTransceiverMessage = createEventParser(
   'event SendTransceiverMessage(uint16 recipientChain, (bytes32 sourceNttManagerAddress, bytes32 recipientNttManagerAddress, bytes nttManagerPayload, bytes transceiverPayload) message)',
@@ -143,7 +152,9 @@ export class WormholeNTTPlugin implements BridgePlugin {
       })
       if (!sentTransceiverMessage) return
 
-      const tokenAddress = decodeNTTManagerPayload(sentTransceiverMessage.args.nttManagerPayload)?.sourceToken
+      const srcTokenAddress = decodeNTTManagerPayload(sentTransceiverMessage.args.nttManagerPayload)?.sourceToken
+      const dstNTTAddress = Address32.cropToEthereumAddress(Address32.from(sentTransceiverMessage.args.recipientNttManagerAddress)).toLowerCase()
+      const dstTokenAddress = NTT_MANAGERS[sentTransceiverMessage.args.$dstChain]?.[dstNTTAddress]
       const amount = decodeNTTManagerPayload(sentTransceiverMessage.args.nttManagerPayload)?.amount
 
       return [
@@ -156,8 +167,10 @@ export class WormholeNTTPlugin implements BridgePlugin {
           extraEvents: [logMessagePublished, delivery],
           srcEvent: sentTransceiverMessage,
           dstEvent: received,
-          srcTokenAddress: tokenAddress ? Address32.from(tokenAddress) : Address32.ZERO,
-          srcAmount: amount
+          srcTokenAddress: srcTokenAddress ? Address32.from(srcTokenAddress) : Address32.ZERO,
+          srcAmount: amount,
+          dstTokenAddress: dstTokenAddress ? Address32.from(dstTokenAddress) : Address32.ZERO, // TODO: Should extract token from dst NTT manager
+          dstAmount: amount
         }),
       ]
     }
@@ -175,7 +188,7 @@ function decodeNTTManagerPayload(payload: string) {
     const reader2 = new BinaryReader(payloadData)
     const prefix = reader2.readBytes(4)
     const decimals = reader2.readBytes(1)
-    const amount = reader2.readBytes(8)
+    const amount = reader2.readUint64().toString()
     const sourceToken = reader2.readBytes(32)
     const toAddress = reader2.readBytes(32)
     const toChain = reader2.readBytes(2)
