@@ -166,7 +166,13 @@ describe(FinancialsService.name, () => {
         getPriceInfo: mockFn().resolvesTo(priceInfoMap),
       })
 
-      const service = new FinancialsService(db, tokenDb, Logger.SILENT, 1000)
+      const service = new FinancialsService(
+        [],
+        db,
+        tokenDb,
+        Logger.SILENT,
+        1000,
+      )
 
       await service.run()
 
