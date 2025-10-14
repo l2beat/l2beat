@@ -205,7 +205,10 @@ export interface AnomaliesConfig {
 export interface BridgesConfig {
   capture: {
     enabled: boolean
-    chains: string[]
+    chains: {
+      name: string
+      type: 'evm'
+    }[]
   }
   matching: boolean
   cleaner: boolean

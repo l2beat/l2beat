@@ -34,7 +34,7 @@ export function createBridgeModule({
   if (config.bridges.capture.enabled) {
     for (const chain of config.bridges.capture.chains) {
       const processor = new BridgeBlockProcessor(
-        chain,
+        chain.name,
         plugins,
         bridgeStore,
         logger,
@@ -48,7 +48,7 @@ export function createBridgeModule({
     bridgeStore,
     db,
     plugins,
-    config.bridges.capture.chains,
+    config.bridges.capture.chains.map((c) => c.name),
     logger,
   )
 
@@ -75,7 +75,12 @@ export function createBridgeModule({
     indexerService: new IndexerService(db),
   })
   const tokenDb = new MockTokenDb()
-  const financialsService = new FinancialsService(db, tokenDb, logger)
+  const financialsService = new FinancialsService(
+    config.bridges.capture.chains,
+    db,
+    tokenDb,
+    logger,
+  )
 
   const start = async () => {
     logger = logger.for('BridgeModule')

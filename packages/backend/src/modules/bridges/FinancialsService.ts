@@ -1,35 +1,13 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BridgeTransferUpdate, Database } from '@l2beat/database'
-import { UnixTime, unique } from '@l2beat/shared-pure'
+import { assertUnreachable, UnixTime, unique } from '@l2beat/shared-pure'
 import { TimeLoop } from '../../tools/TimeLoop'
 import { Address32 } from './plugins/types'
-import { type AbstractTokenId, DeployedTokenId, type ITokenDb } from './TokenDb'
-
-const chainToAddressFormat: Record<
-  string,
-  ((a: Address32) => string) | undefined
-> = {
-  ethereum: Address32.cropToEthereumAddress,
-  base: Address32.cropToEthereumAddress,
-  arbitrum: Address32.cropToEthereumAddress,
-}
-
-function toDeployedId(chain: string | undefined, address: string | undefined) {
-  if (!chain || !address) {
-    return
-  }
-  if (address === 'native' || address === '0x') {
-    return
-  }
-  const format = chainToAddressFormat[chain]
-  if (!format) {
-    return
-  }
-  return DeployedTokenId.from(chain, format(Address32(address)))
-}
+import { DeployedTokenId, type ITokenDb, type PriceInfo } from './TokenDb'
 
 export class FinancialsService extends TimeLoop {
   constructor(
+    private chains: { name: string; type: 'evm' }[],
     private db: Database,
     private tokenDb: ITokenDb,
     protected logger: Logger,
@@ -50,8 +28,8 @@ export class FinancialsService extends TimeLoop {
     const unprocessed = (await this.db.bridgeTransfer.getUnprocessed()).map(
       (u) => ({
         transfer: u,
-        srcId: toDeployedId(u.srcChain, u.srcTokenAddress),
-        dstId: toDeployedId(u.dstChain, u.dstTokenAddress),
+        srcId: this.toDeployedId(u.srcChain, u.srcTokenAddress),
+        dstId: this.toDeployedId(u.dstChain, u.dstTokenAddress),
       }),
     )
     if (unprocessed.length === 0) {
@@ -81,63 +59,30 @@ export class FinancialsService extends TimeLoop {
       UnixTime.DAY,
     )
 
-    function getUpdate(
-      id: DeployedTokenId,
-      rawAmount: string | undefined,
-      logger: Logger,
-    ) {
-      let abstractTokenId: AbstractTokenId | undefined
-      let price: number | undefined
-      let amount: number | undefined
-      let valueUsd: number | undefined
-      const priceInfo = priceInfos.get(id)
-      if (priceInfo) {
-        abstractTokenId = priceInfo.abstractId
-      } else {
-        logger.warn('Missing price info', { id })
-      }
-      if (priceInfo?.coingeckoId) {
-        price = prices.get(priceInfo.coingeckoId)
-      }
-      if (rawAmount && priceInfo) {
-        // This calculation gives us 6 decimal places of precision while not
-        // calculating absurd values using basic numbers
-        amount =
-          Number(
-            (BigInt(rawAmount) * 1_000_000n) /
-              10n ** BigInt(priceInfo.decimals),
-          ) / 1_000_000
-      }
-      if (price !== undefined && amount !== undefined) {
-        valueUsd = price * amount
-      }
-      return { abstractTokenId, price, amount, valueUsd }
-    }
-
     const updates: { id: string; update: BridgeTransferUpdate }[] =
       unprocessed.map((t) => {
         const update: BridgeTransferUpdate = {}
         if (t.srcId) {
-          const srcUpdate = getUpdate(
+          this.applyTokenUpdate(
+            update,
+            t.transfer.plugin,
             t.srcId,
             t.transfer.srcRawAmount,
-            this.logger,
+            priceInfos,
+            prices,
+            'src',
           )
-          update.srcAbstractTokenId = srcUpdate.abstractTokenId
-          update.srcAmount = srcUpdate.amount
-          update.srcPrice = srcUpdate.price
-          update.srcValueUsd = srcUpdate.valueUsd
         }
         if (t.dstId) {
-          const dstUpdate = getUpdate(
+          this.applyTokenUpdate(
+            update,
+            t.transfer.plugin,
             t.dstId,
             t.transfer.dstRawAmount,
-            this.logger,
+            priceInfos,
+            prices,
+            'dst',
           )
-          update.dstAbstractTokenId = dstUpdate.abstractTokenId
-          update.dstAmount = dstUpdate.amount
-          update.dstPrice = dstUpdate.price
-          update.dstValueUsd = dstUpdate.valueUsd
         }
         return { id: t.transfer.messageId, update }
       })
@@ -156,5 +101,129 @@ export class FinancialsService extends TimeLoop {
         (u) => u.update.srcValueUsd || u.update.dstValueUsd,
       ).length,
     })
+  }
+
+  private applyTokenUpdate(
+    update: BridgeTransferUpdate,
+    plugin: string,
+    id: DeployedTokenId,
+    rawAmount: string | undefined,
+    priceInfos: PriceInfo,
+    prices: Map<string, number | undefined>,
+    prefix: 'src' | 'dst',
+  ) {
+    const tokenUpdate = this.calculateTokenUpdate(
+      plugin,
+      id,
+      rawAmount,
+      priceInfos,
+      prices,
+    )
+
+    if (!tokenUpdate) return
+
+    const fieldMapping = {
+      abstractTokenId: `${prefix}AbstractTokenId`,
+      price: `${prefix}Price`,
+      amount: `${prefix}Amount`,
+      valueUsd: `${prefix}ValueUsd`,
+    } as const
+
+    Object.entries(tokenUpdate).forEach(([key, value]) => {
+      if (value !== undefined) {
+        const updateKey = fieldMapping[key as keyof typeof fieldMapping]
+        // biome-ignore lint/suspicious/noExplicitAny: generic type
+        ;(update as any)[updateKey] = value
+      }
+    })
+  }
+
+  private calculateTokenUpdate(
+    plugin: string,
+    id: DeployedTokenId,
+    rawAmount: string | undefined,
+    priceInfos: PriceInfo,
+    prices: Map<string, number | undefined>,
+  ) {
+    const priceInfo = priceInfos.get(id)
+    if (!priceInfo) {
+      this.logger.warn('Missing price info', {
+        plugin,
+        id,
+        chain: DeployedTokenId.chain(id),
+        token: DeployedTokenId.address(id),
+      })
+      return
+    }
+
+    const price = prices.get(priceInfo.coingeckoId)
+    if (price === undefined) {
+      this.logger.warn('Missing price data', {
+        plugin,
+        id,
+        coingeckoId: priceInfo.coingeckoId,
+      })
+      return
+    }
+
+    if (!rawAmount) {
+      this.logger.warn('Missing raw amount', {
+        plugin,
+        id,
+        rawAmount,
+      })
+      return
+    }
+
+    // This calculation gives us 6 decimal places of precision while not
+    // calculating absurd values using basic numbers
+    const amount =
+      Number(
+        (BigInt(rawAmount) * 1_000_000n) / 10n ** BigInt(priceInfo.decimals),
+      ) / 1_000_000
+
+    const valueUsd = price * amount
+
+    this.logger.info('Token value calculated', {
+      plugin,
+      id,
+      amount,
+      price,
+      valueUsd,
+    })
+
+    return {
+      abstractTokenId: priceInfo.abstractId,
+      price,
+      amount,
+      valueUsd,
+    }
+  }
+
+  toDeployedId(chain: string | undefined, address: string | undefined) {
+    if (!chain || !address) {
+      return
+    }
+    if (
+      address === 'native' ||
+      address === '0x' ||
+      address === Address32.ZERO
+    ) {
+      return
+    }
+    const chainConfig = this.chains.find((c) => c.name === chain)
+    if (!chainConfig) {
+      return
+    }
+
+    switch (chainConfig.type) {
+      case 'evm':
+        return DeployedTokenId.from(
+          chain,
+          Address32.cropToEthereumAddress(Address32(address)),
+        )
+      default:
+        assertUnreachable(chainConfig.type)
+    }
   }
 }
