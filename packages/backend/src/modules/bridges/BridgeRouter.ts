@@ -30,12 +30,6 @@ export function createBridgeRouter(
     })
   })
 
-  router.get('/bridges.json', async (ctx) => {
-    const events = await db.bridgeEvent.getStats()
-    const messages = await db.bridgeMessage.getStats()
-    ctx.body = { events, messages }
-  })
-
   const Params = v.object({
     kind: v.enum([
       'all',
@@ -144,6 +138,28 @@ export function createBridgeRouter(
       getExplorerUrl: config.dashboard.getExplorerUrl,
       status,
     })
+  })
+
+  router.get('/bridges/csv/transfers/:type', async (ctx) => {
+    console.log(ctx.params)
+    const params = v.object({ type: v.string() }).validate(ctx.params)
+    const transfers = await db.bridgeTransfer.getByType(params.type)
+
+    ctx.body =
+      'durationMs,srcValueUsd,dstValueUsd,srcChain,srcTxHash,dstChain,dstTxHash\n' +
+      transfers
+        .map((t) =>
+          [
+            t.duration,
+            t.srcValueUsd,
+            t.dstValueUsd,
+            t.srcChain,
+            t.srcTxHash,
+            t.dstChain,
+            t.dstTxHash,
+          ].join(','),
+        )
+        .join('\n')
   })
 
   return router
