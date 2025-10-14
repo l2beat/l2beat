@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import type { ScalingProject } from '../../internalTypes'
 import { underReviewL2 } from '../../templates/underReview'
@@ -7,11 +7,7 @@ export const ethstorage: ScalingProject = underReviewL2({
   id: 'ethstorage',
   capability: 'universal',
   addedAt: UnixTime(1760437967),
-  badges: [
-    BADGES.DA.EthereumBlobs,
-    BADGES.Stack.OPStack,
-    BADGES.VM.EVM,
-  ],
+  badges: [BADGES.DA.EthereumBlobs, BADGES.Stack.OPStack, BADGES.VM.EVM],
   display: {
     name: 'EthStorage',
     slug: 'ethstorage',
@@ -53,4 +49,4 @@ export const ethstorage: ScalingProject = underReviewL2({
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
   },
-}) 
+})
