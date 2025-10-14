@@ -1,0 +1,359 @@
+{
+  "name": "ethstorage",
+  "timestamp": 1760447663,
+  "configHash": "0x54f425014dc9ddcc793066abc55285531708539de9b4c1183e7b6569dfe8b060",
+  "entries": [
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0x654dd56444856e928917549263aAc6f9D6A96372",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xf0193d6E8fc186e77b6E63af4151db07524f6a7A",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1757488619,
+      "sinceBlock": 23331141,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xA10D87502a0D8FcE45610c6028f0756383649F3C",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "eth:0x654dd56444856e928917549263aAc6f9D6A96372": "ProxyAdmin"
+      }
+    },
+    {
+      "address": "eth:0x6fD772E4F7129C259A3C10650A24aCc61802971f",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xf0193d6E8fc186e77b6E63af4151db07524f6a7A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x654dd56444856e928917549263aAc6f9D6A96372" },
+            { "address": "eth:0xA10D87502a0D8FcE45610c6028f0756383649F3C" }
+          ]
+        }
+      ]
+    },
+    {
+      "address": "eth:0x905D49785b3D28714a9bC7532F74c5a2228E0602",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xf0193d6E8fc186e77b6E63af4151db07524f6a7A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x654dd56444856e928917549263aAc6f9D6A96372" },
+            { "address": "eth:0xA10D87502a0D8FcE45610c6028f0756383649F3C" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Safe",
+      "address": "eth:0xA10D87502a0D8FcE45610c6028f0756383649F3C",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x654dd56444856e928917549263aAc6f9D6A96372",
+          "role": ".owner"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1757486915,
+      "sinceBlock": 23331000,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0x6fD772E4F7129C259A3C10650A24aCc61802971f",
+          "eth:0x905D49785b3D28714a9bC7532F74c5a2228E0602"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0x9351fbf99a4d7e5692fff1ae3ffef97c251d90ab3c7dff11c82702ad1fd0f61e",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 2 (50%)",
+        "nonce": 2,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0xA10D87502a0D8FcE45610c6028f0756383649F3C": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "name": "EthStorageContractM2",
+      "address": "eth:0xf0193d6E8fc186e77b6E63af4151db07524f6a7A",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xc965ec2e349a03ba7ca773ef8fd4b415a43a04292180400d341613d67b628b2c",
+        "0x48fa1c536a19a210c84464720ff074f092f2c1c3dd8f5d9d487a63b08508e08f"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1757488619,
+      "sinceBlock": 23331141,
+      "values": {
+        "$admin": "eth:0x654dd56444856e928917549263aAc6f9D6A96372",
+        "$implementation": "eth:0x99F5cC6Ad111584C88891b4C6Fff5784A46AdF33",
+        "$pastUpgrades": [
+          [
+            "2025-09-10T07:16:59.000Z",
+            "0x7f9d2c835283b4709d9a90540b9474cbd6803c276ab5abc2c7ce3c9809fc07b7",
+            ["eth:0x99F5cC6Ad111584C88891b4C6Fff5784A46AdF33"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "accPrepaidAmount": "1129762462034188502",
+        "cutoff": 28800,
+        "dcfFactor": "340282366367469178095360967382638002176",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "diffAdjDivisor": 32,
+        "enforceMinerRole": true,
+        "infos": [
+          [1760403479, 3774873600, 48],
+          [0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0]
+        ],
+        "kvEntryCount": 72,
+        "maxKvSize": 131072,
+        "maxKvSizeBits": 17,
+        "maxL1MiningDrift": 64,
+        "MINER_ROLE": "0xa952726ef2588ad078edf35b066f7c7406e207cb0003bbaba8cb53eba9553e72",
+        "minimumDiff": 3774873600,
+        "nonceLimit": 1048576,
+        "prepaidAmount": "25165824000000000000",
+        "prepaidLastMineTime": 1760403479,
+        "randomChecks": 2,
+        "sampleLenBits": 12,
+        "sampleSizeBits": 5,
+        "shardEntryBits": 22,
+        "shardSizeBits": 39,
+        "startTime": 1757488571,
+        "storageCost": 60000000000000,
+        "treasury": "eth:0xA10D87502a0D8FcE45610c6028f0756383649F3C",
+        "treasuryShare": 2500,
+        "upfrontPayment": 59716207395910,
+        "upfrontPaymentInBatch": [
+          0, 59716207395910, 119432414791820, 179148622187730, 238864829583640
+        ],
+        "version": "0.2.1"
+      },
+      "errors": {
+        "infos": "Processing error occurred.",
+        "upfrontPaymentInBatch": "Processing error occurred."
+      },
+      "implementationNames": {
+        "eth:0xf0193d6E8fc186e77b6E63af4151db07524f6a7A": "TransparentUpgradeableProxy",
+        "eth:0x99F5cC6Ad111584C88891b4C6Fff5784A46AdF33": "EthStorageContractM2"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0x654dd56444856e928917549263aAc6f9D6A96372": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0x99F5cC6Ad111584C88891b4C6Fff5784A46AdF33": [
+      "constructor(tuple(uint256 maxKvSizeBits, uint256 shardSizeBits, uint256 randomChecks, uint256 cutoff, uint256 diffAdjDivisor, uint256 treasuryShare) _config, uint256 _startTime, uint256 _storageCost, uint256 _dcfFactor)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error DecentralizedKV_BeyondRangeOfKVSize()",
+      "error DecentralizedKV_DataLenZero()",
+      "error DecentralizedKV_DataNotExist()",
+      "error DecentralizedKV_DataTooLarge()",
+      "error DecentralizedKV_GetMustBeCalledOnESNode()",
+      "error DecentralizedKV_NotEnoughBatchPayment()",
+      "error DecentralizedKV_RemoveToUnimplemented()",
+      "error EthStorageContractM2_DecodeFailed()",
+      "error EthStorageContractM2_InvalidSamples()",
+      "error EthStorageContractM2_LengthMismatch()",
+      "error EthStorageContract_FailedToGetBlobHash()",
+      "error EthStorageContract_LengthMismatch()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error RandaoLib_HeaderHashMismatch()",
+      "error StorageContract_AtLeastOneCheckpointNeeded()",
+      "error StorageContract_BlockNumberTooOld()",
+      "error StorageContract_DifficultyNotMet()",
+      "error StorageContract_FailedToObtainBlockhash()",
+      "error StorageContract_MaxKvSizeTooSmall()",
+      "error StorageContract_MinedTsTooSmall()",
+      "error StorageContract_MinerNotWhitelisted()",
+      "error StorageContract_NonceTooBig()",
+      "error StorageContract_NotEnoughBalance()",
+      "error StorageContract_NotEnoughBatchPayment()",
+      "error StorageContract_NotEnoughMinerReward()",
+      "error StorageContract_NotEnoughPrepaidAmount()",
+      "error StorageContract_ReentrancyAttempt()",
+      "error StorageContract_ShardSizeTooSmall()",
+      "event Initialized(uint64 version)",
+      "event MinedBlock(uint256 indexed shardId, uint256 indexed difficulty, uint256 indexed blockMined, uint256 lastMineTime, address miner, uint256 minerReward)",
+      "event PutBlob(uint256 indexed kvIdx, uint256 indexed kvSize, bytes32 indexed dataHash)",
+      "event Remove(uint256 indexed kvIdx, uint256 indexed kvEntryCount)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function MINER_ROLE() view returns (bytes32)",
+      "function __init_storage(uint256 _minimumDiff, uint256 _prepaidAmount, uint256 _nonceLimit, address _treasury, address _owner)",
+      "function accPrepaidAmount() view returns (uint256)",
+      "function checkInclusive(bytes32 _dataHash, uint256 _sampleIdxInKv, uint256 _decodedData, bytes _peInput) view returns (bool)",
+      "function cutoff() view returns (uint256)",
+      "function dcfFactor() view returns (uint256)",
+      "function decodeSamples(uint256[] _masks, uint256[] _kvIdxs, uint256[] _sampleIdxs, address _miner, bytes _decodeProof) view returns (bool)",
+      "function diffAdjDivisor() view returns (uint256)",
+      "function enforceMinerRole() view returns (bool)",
+      "function exist(bytes32 _key) view returns (bool)",
+      "function get(bytes32 _key, uint8 _decodeType, uint256 _off, uint256 _len) view returns (bytes)",
+      "function getKvMetas(uint256[] _kvIndices) view returns (bytes32[])",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getSampleIdx(uint256 _rows, uint256 _startShardId, bytes32 _hash0) view returns (uint256, uint256)",
+      "function grantMinerRole(address _miner)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasMinerRole(address _miner) view returns (bool)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hash(bytes32 _key) view returns (bytes24)",
+      "function infos(uint256 _shardId) view returns (uint256, uint256, uint256)",
+      "function initialize(uint256 _minimumDiff, uint256 _prepaidAmount, uint256 _nonceLimit, address _treasury, address _admin) payable",
+      "function kvEntryCount() view returns (uint40)",
+      "function maxKvSize() view returns (uint256)",
+      "function maxKvSizeBits() view returns (uint256)",
+      "function maxL1MiningDrift() pure returns (uint8)",
+      "function mine(uint256 _blockNum, uint256 _shardId, address _miner, uint256 _nonce, bytes32[] _encodedSamples, uint256[] _masks, bytes _randaoProof, bytes[] _inclusiveProofs, bytes[] _decodeProof)",
+      "function minimumDiff() view returns (uint256)",
+      "function miningReward(uint256 _shardId, uint256 _minedTs) view returns (uint256)",
+      "function nonceLimit() view returns (uint256)",
+      "function prepaidAmount() view returns (uint256)",
+      "function prepaidLastMineTime() view returns (uint256)",
+      "function putBlob(bytes32 _key, uint256 _blobIdx, uint256 _length) payable",
+      "function putBlobs(bytes32[] _keys, uint256[] _blobIdxs, uint256[] _lengths) payable",
+      "function randomChecks() view returns (uint256)",
+      "function remove(bytes32 _key)",
+      "function removeTo(bytes32, address)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeMinerRole(address _miner)",
+      "function revokeRole(bytes32 role, address account)",
+      "function sampleLenBits() view returns (uint256)",
+      "function sampleSizeBits() pure returns (uint256)",
+      "function sendValue() payable",
+      "function setEnforceMinerRole(bool _enforceMinerRole)",
+      "function setMinimumDiff(uint256 _minimumDiff)",
+      "function setNonceLimit(uint256 _nonceLimit)",
+      "function setPrepaidAmount(uint256 _prepaidAmount)",
+      "function shardEntryBits() view returns (uint256)",
+      "function shardSizeBits() view returns (uint256)",
+      "function size(bytes32 _key) view returns (uint256)",
+      "function startTime() view returns (uint256)",
+      "function storageCost() view returns (uint256)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function treasury() view returns (address)",
+      "function treasuryShare() view returns (uint256)",
+      "function upfrontPayment() view returns (uint256)",
+      "function upfrontPaymentInBatch(uint256 _batchSize) view returns (uint256)",
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[6] _pubSignals) view returns (bool)",
+      "function verifySamples(uint256 _startShardId, bytes32 _hash0, address _miner, bytes32[] _encodedSamples, uint256[] _masks, bytes[] _inclusiveProofs, bytes[] _decodeProof) view returns (bytes32)",
+      "function version() view returns (string)",
+      "function withdraw(uint256 _amount)"
+    ],
+    "eth:0xA10D87502a0D8FcE45610c6028f0756383649F3C": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xf0193d6E8fc186e77b6E63af4151db07524f6a7A": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ]
+  },
+  "usedTemplates": {
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+  },
+  "usedBlockNumbers": { "ethereum": 23576174 },
+  "permissionsConfigHash": "0xad0014098903aec41036d6deefb77b7453c6c58390cf9b9e67b0562b6b7485a0"
+}
