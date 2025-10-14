@@ -714,4 +714,59 @@ describe(getReferencedEntries.name, () => {
       })
     })
   })
+
+  describe('pair programming', () => {
+    it('adrian cases', () => {
+      const entryA = createMockEntry(
+        ADDRESSES.A,
+        'Contract',
+        {
+          ref: ADDRESSES.B,
+        },
+        'ContractA',
+      )
+
+      const entryB = createMockEntry(
+        ADDRESSES.B,
+        'Contract',
+        {
+          ref: ADDRESSES.D,
+        },
+        'ContractB',
+      )
+
+      const entryC = createMockEntry(ADDRESSES.C, 'Contract', {}, 'ContractC')
+      const entryD = createMockEntry(
+        ADDRESSES.D,
+        'Contract',
+        {
+          ref: ADDRESSES.E,
+        },
+        'ContractD',
+      )
+      const entryE = createMockEntry(ADDRESSES.E, 'Contract', {}, 'ContractE')
+      const entryF = createMockEntry(ADDRESSES.E, 'Contract', {}, 'ContractF')
+
+      entryD.receivedPermissions = [
+        {
+          permission: 'upgrade',
+          from: ChainSpecificAddress(entryC.address),
+        },
+      ]
+
+      entryF.receivedPermissions = [
+        { permission: 'upgrade', from: ChainSpecificAddress(entryD.address) },
+      ]
+
+      const entries = [entryA, entryB, entryC, entryD, entryE]
+      const refs = [entryA]
+
+      const result = getReferencedEntries(refs, entries)
+
+      const hasContractC = result.some((entry) => entry.name === 'ContractC')
+
+      expect(result).toHaveLength(5)
+      expect(hasContractC).toEqual(false)
+    })
+  })
 })
