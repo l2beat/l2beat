@@ -224,16 +224,7 @@ describe(FinancialsService.name, () => {
         firstUpdate,
       )
 
-      const secondUpdate: BridgeTransferUpdate = {
-        dstAbstractTokenId: AbstractTokenId('fedcba:base:BASE'),
-        dstAmount: undefined,
-        dstPrice: undefined,
-        dstValueUsd: undefined,
-      }
-      expect(bridgeTransfer.updateFinancials).toHaveBeenCalledWith(
-        'msg2',
-        secondUpdate,
-      )
+      expect(bridgeTransfer.updateFinancials).toHaveBeenCalledWith('msg2', {})
 
       const thirdUpdate: BridgeTransferUpdate = {
         dstAbstractTokenId: AbstractTokenId('222222:ethereum:TOKEN'),
@@ -334,20 +325,7 @@ describe(FinancialsService.name, () => {
       })
 
       // Should still update with empty financials
-      const expectedUpdate: BridgeTransferUpdate = {
-        srcAbstractTokenId: undefined,
-        srcAmount: undefined,
-        srcPrice: undefined,
-        srcValueUsd: undefined,
-        dstAbstractTokenId: undefined,
-        dstAmount: undefined,
-        dstPrice: undefined,
-        dstValueUsd: undefined,
-      }
-      expect(bridgeTransfer.updateFinancials).toHaveBeenCalledWith(
-        'msg1',
-        expectedUpdate,
-      )
+      expect(bridgeTransfer.updateFinancials).toHaveBeenCalledWith('msg1', {})
     })
   })
 })

@@ -47,27 +47,20 @@ DeployedTokenId.address = function address(id: DeployedTokenId) {
   return id.slice(id.indexOf('+') + 1)
 }
 
-export interface ITokenDb {
-  getPriceInfo(deployedTokens: DeployedTokenId[]): Promise<
-    Map<
-      DeployedTokenId,
-      {
-        abstractId: AbstractTokenId
-        decimals: number
-        coingeckoId: string
-      }
-    >
-  >
-}
-
-const map = new Map<
+export type PriceInfo = Map<
   DeployedTokenId,
   {
     abstractId: AbstractTokenId
     decimals: number
     coingeckoId: string
   }
->()
+>
+
+export interface ITokenDb {
+  getPriceInfo(deployedTokens: DeployedTokenId[]): Promise<PriceInfo>
+}
+
+const map: PriceInfo = new Map()
 for (const abstractToken of mockData.tokens) {
   for (const deployed of abstractToken.deployed) {
     map.set(DeployedTokenId.from(deployed.chain, deployed.address), {
