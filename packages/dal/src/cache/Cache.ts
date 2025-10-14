@@ -10,6 +10,7 @@ export interface CacheItem<T = unknown> {
 
 export class Cache {
   private client: RedisClientType | undefined
+  private connectionPromise: Promise<RedisClientType> | undefined
   constructor(redisUrl: string | undefined) {
     if (!redisUrl) {
       return
@@ -62,8 +63,10 @@ export class Cache {
   }
 
   private async connect() {
-    // opening a connection takes significant time so it's better to keep it open
     if (!this.client || this.client.isReady) return
-    await this.client.connect()
+
+    // Reuse the same connection promise for all concurrent requests
+    this.connectionPromise ??= this.client.connect()
+    await this.connectionPromise
   }
 }
