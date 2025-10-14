@@ -807,6 +807,12 @@
       {
         "chain": "base",
         "tx": "0xe3d4a5bcdaeb683da03ef7bb73b6e3e110108c6de4c318551a203df6a8c73ef9"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
   "hyperlane-eco": {
     // 3 msgs, 3 'transfers'/intent settlements
     "txs": [
