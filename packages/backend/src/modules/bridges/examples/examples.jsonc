@@ -415,6 +415,21 @@
     "messages": [],
     "transfers": []
   },
+  "wormhole-ntt": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0xd8cec5a2163774b308d382442a59f3558f0e7d6ebf9817bc5953c27c3d98b671"
+      },
+      {
+        "chain": "base",
+        "tx": "0xed7885b062d7b42ec332ffc035410686128103db9a38c6d4842276f95ed68539"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
   "wormhole-token-bridge": {
     "txs": [
       {
