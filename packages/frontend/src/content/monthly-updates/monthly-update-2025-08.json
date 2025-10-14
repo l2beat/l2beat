@@ -3,6 +3,7 @@
   "startDate": "2025-08-01",
   "endDate": "2025-08-31",
   "publishedOn": "2025-09-01",
+  "description": "Discover the key highlights from August, from protocol upgrades to ecosystem growth and more",
   "updates": [
     {
       "type": "ecosystem",
@@ -99,6 +100,7 @@
     {
       "type": "data-availability",
       "daLayerId": "eigenda",
+      "name": "EigenLayer",
       "news": [
         {
           "title": "EigenLayer Proposes Incentives v2",

@@ -18,6 +18,7 @@ function MessagesTable(props: {
         <tr>
           <th>Timestamp UTC</th>
           <th>Duration</th>
+          <th>App</th>
           <th>srcChain</th>
           <th>srcTx</th>
           <th>dstChain</th>
@@ -35,6 +36,7 @@ function MessagesTable(props: {
                 {new Date(e.timestamp * 1000).toLocaleString()}
               </td>
               <td>{e.duration && formatSeconds(e.duration)}</td>
+              <td>{e.app}</td>
               <td>{e.srcChain}</td>
               <td>
                 {srcExplorerUrl ? (
@@ -77,7 +79,6 @@ function MessagesPageLayout(props: {
   const eventsTable = <MessagesTable {...props} />
 
   const dataTableOptions = {
-    pageLength: 25,
     order: [[0, 'desc']], // Sort by timestamp descending
     columnDefs: [
       {

@@ -3,13 +3,9 @@
   "name": "everclearbridge",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
-    "everclear:0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa",
     "everclear:0xa05A3380889115bf313f1Db9d5f335157Be4D816",
     "eth:0xa05A3380889115bf313f1Db9d5f335157Be4D816"
   ],
-  "names": {
-    "everclear:0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa": "EverclearHubGateway"
-  },
   "overrides": {
     "everclear:0xa05A3380889115bf313f1Db9d5f335157Be4D816": {
       "proxyType": "Everclear proxy",

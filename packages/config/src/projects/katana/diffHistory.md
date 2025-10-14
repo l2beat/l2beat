@@ -1,3 +1,54 @@
+Generated with discovered.json: 0xd9c2099b68f8527d6a640777732122bfe2d0affd
+
+# Diff at Fri, 03 Oct 2025 08:42:02 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@e647409961cd173771dcfcaeb808991c99e73911 block: 1759236440
+- current timestamp: 1759480843
+
+## Description
+
+Member removed from multisig.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 10 (40%)"
+    }
+```
+
+Generated with discovered.json: 0x4a792804785baba4ef9ecb5337e818170bbeee79
+
+# Diff at Tue, 30 Sep 2025 14:26:33 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@8b1e8b6b8628030e60b22b7773a337689b280854 block: 1756453226
+- current timestamp: 1759236440
+
+## Description
+
+Config-related changes: added desciption for non-default aggchainVKey derivation.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756453226 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Layer 2 logic. As this contract is based on the OP-Succinct L2OutputOracle, OP stack outputRoots (L2 state roots) are saved here.
+      fieldMeta.useDefaultGateway:
++        {"severity":"HIGH","description":"If set to false then aggchainVKey will be loaded from this contract and not from AggLayerGateway. In this case you can uncomment two handlers in this template to track ownedAggchainVKeys."}
+    }
+```
+
 Generated with discovered.json: 0x74ddcd025d71b7a6ec07c9512c409eb94913e195
 
 # Diff at Mon, 15 Sep 2025 09:50:24 GMT:

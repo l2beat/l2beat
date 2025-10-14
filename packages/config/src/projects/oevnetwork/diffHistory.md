@@ -1,3 +1,86 @@
+Generated with discovered.json: 0x937e404ba297fbfb94889f05b61e540e22850fd3
+
+# Diff at Tue, 07 Oct 2025 09:46:20 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@5e88ba37ad7744f9d7831779a58849b5d00ec673 block: 1759389007
+- current timestamp: 1759830313
+
+## Description
+
+Two members removed from multisig.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675"
+      values.$members.7:
+-        "eth:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
+      values.multisigThreshold:
+-        "4 of 9 (44%)"
++        "4 of 7 (57%)"
+    }
+```
+
+Generated with discovered.json: 0xdd2f21e07062df7ed55d00075d37eca35aab1c12
+
+# Diff at Thu, 02 Oct 2025 07:11:23 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@b1cfb9bd1821e27488215e4364f565cfd7d54c2e block: 1759250628
+- current timestamp: 1759389007
+
+## Description
+
+Caldera multisig members decrease.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) {
+    +++ description: None
+      values.$members.9:
+-        "eth:0xbf853295743511e8DC5F03809d209C33fC136d24"
+      values.$members.10:
+-        "eth:0x15D5fF2dEc328a1cF3D64413caaBdcE29bff050A"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 9 (44%)"
+    }
+```
+
+Generated with discovered.json: 0x242513a505a4a430e41860f95796631db9a7cd75
+
+# Diff at Tue, 30 Sep 2025 16:44:53 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c66a02d28b2467edd595f8a8468988549dd6d3cf block: 1758875907
+- current timestamp: 1759250628
+
+## Description
+
+Caldera multisig threshold increase.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A"
+      values.$members.1:
++        "eth:0xe5219fe14E2FD520Ff80be036790913053d1575d"
+      values.$members.2:
++        "eth:0xEC114946E7213d113c9B9481028271B5E9e09371"
+      values.multisigThreshold:
+-        "4 of 8 (50%)"
++        "4 of 11 (36%)"
+    }
+```
+
 Generated with discovered.json: 0x26431edf943e946a1fc5a659b0fa7e2fb974528f
 
 # Diff at Fri, 26 Sep 2025 13:01:00 GMT:

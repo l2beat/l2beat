@@ -138,6 +138,10 @@ export async function makeConfig(
     },
     da: flags.isEnabled('da') && (await getDaTrackingConfig(ps, env)),
     blockSync: {
+      delayFromTipInSeconds: env.integer(
+        ['BLOCK_SYNC_DELAY_FROM_TIP_IN_SECONDS'],
+        5 * 60,
+      ),
       ethereumWsUrl: env.optionalString(['ETHEREUM_WS_URL']),
     },
     anomalies: flags.isEnabled('anomalies') && {
@@ -150,9 +154,12 @@ export async function makeConfig(
     bridges: flags.isEnabled('bridges') && {
       capture: {
         enabled: flags.isEnabled('bridges', 'capture'),
-        chains: ['ethereum', 'arbitrum', 'base', 'optimism'].filter((c) =>
-          flags.isEnabled('bridges', 'capture', c),
-        ),
+        chains: [
+          { name: 'ethereum', type: 'evm' as const },
+          { name: 'arbitrum', type: 'evm' as const },
+          { name: 'base', type: 'evm' as const },
+          { name: 'optimism', type: 'evm' as const },
+        ].filter((c) => flags.isEnabled('bridges', 'capture', c.name)),
       },
       matching: flags.isEnabled('bridges', 'matching'),
       cleaner: flags.isEnabled('bridges', 'cleaner'),
@@ -163,6 +170,13 @@ export async function makeConfig(
 
           return c?.explorerUrl
         },
+      },
+      compare: {
+        enabled: flags.isEnabled('bridges', 'compare'),
+        intervalMs: env.optionalInteger(['BRIDGES_COMPARE_INTERVAL_MS']),
+      },
+      financials: {
+        enabled: flags.isEnabled('bridges', 'financials'),
       },
     },
     // Must be last

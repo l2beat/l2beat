@@ -128,5 +128,11 @@
     "hash": "0x55baff01a4d31b7dd4257fdb3509fffb44fb2fcc634cb987ae812f322bde0fcf",
     "address": "eth:0x83085450544c3F360a40720859EbB1bfd311584D",
     "blockNumber": 23216770
+  },
+  "SystemConfig_v3_7_0": {
+    "hash": "0xc64176b1425d9639f5082ecef5e30b3b365111e2be71596ab1bd831edba65bd9",
+    "address": "eth:0x2bFE4A5Bd5A41e9d848d843ebCDFa15954e9A557",
+    "chain": "ethereum",
+    "blockNumber": 23496267
   }
 }

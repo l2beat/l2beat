@@ -43,7 +43,7 @@ function getImplementations(
   return implementations.map((implementation, index) => {
     const previousImplementation = pastUpgrade?.implementations[index]
     const diffUrl = previousImplementation
-      ? `https://disco.l2beat.com/diff/${implementation}/${previousImplementation}`
+      ? `https://disco.l2beat.com/diff/${previousImplementation}/${implementation}`
       : undefined
 
     return {
@@ -66,6 +66,11 @@ function getPastUpgradesStats(
     const currentUpgrade = pastUpgrades[i]
     if (!prevUpgrade || !currentUpgrade) continue
     intervals.push(prevUpgrade.timestamp - currentUpgrade.timestamp)
+  }
+
+  // we want to add the interval from the last upgrade to now
+  if (pastUpgrades.length > 1) {
+    intervals.push(UnixTime.now() - lastUpgrade.timestamp)
   }
 
   return {

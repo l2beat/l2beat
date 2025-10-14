@@ -1,37 +1,21 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
+import { TimeLoop } from '../../tools/TimeLoop'
 import type { BridgeStore } from './BridgeStore'
 
-export class BridgeCleaner {
-  private running = false
-
+export class BridgeCleaner extends TimeLoop {
   constructor(
     private bridgeStore: BridgeStore,
     private db: Database,
-    private logger: Logger,
-    private intervalMs = 20 * 60 * 1000,
-  ) {}
-
-  start() {
-    const run = async () => {
-      if (this.running) {
-        return
-      }
-      this.running = true
-      try {
-        await this.clean()
-      } catch (e) {
-        this.logger.error(e)
-      }
-      this.running = false
-    }
-    setInterval(run, this.intervalMs)
-    run()
-    this.logger.info('Started')
+    protected logger: Logger,
+    intervalMs = 20 * 60 * 1000,
+  ) {
+    super({ intervalMs })
+    this.logger = logger.for(this)
   }
 
-  async clean() {
+  async run() {
     const now = UnixTime.now()
 
     const expiredEvents = await this.bridgeStore.deleteExpired(now)
@@ -41,11 +25,15 @@ export class BridgeCleaner {
     const expiredTransfers = await this.db.bridgeTransfer.deleteBefore(
       now - 1 * UnixTime.DAY,
     )
+    const expiredPrices = await this.db.interopRecentPrices.deleteBefore(
+      now - 7 * UnixTime.DAY,
+    )
 
     this.logger.info('Cleaning finished', {
       expiredEvents,
       expiredMessages,
       expiredTransfers,
+      expiredPrices,
     })
   }
 }

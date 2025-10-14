@@ -1,9 +1,10 @@
-import { type EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { BridgeEvent } from '../kysely/generated/types'
 
 export interface BridgeEventRecord {
+  plugin: string
   eventId: string
   type: string
   expiresAt: UnixTime
@@ -12,7 +13,8 @@ export interface BridgeEventRecord {
   blockNumber: number
   blockHash: string
   txHash: string
-  txTo: EthereumAddress | undefined
+  value: string
+  txTo: string | undefined
   logIndex: number
   matched: boolean
   unsupported: boolean
@@ -21,6 +23,7 @@ export interface BridgeEventRecord {
 
 export function toRecord(row: Selectable<BridgeEvent>): BridgeEventRecord {
   return {
+    plugin: row.plugin,
     eventId: row.eventId,
     type: row.type,
     expiresAt: UnixTime.fromDate(row.expiresAt),
@@ -29,7 +32,8 @@ export function toRecord(row: Selectable<BridgeEvent>): BridgeEventRecord {
     blockNumber: row.blockNumber,
     blockHash: row.blockHash,
     txHash: row.txHash,
-    txTo: row.txTo as EthereumAddress | undefined,
+    value: row.value,
+    txTo: row.txTo ?? undefined,
     logIndex: row.logIndex,
     matched: row.matched,
     unsupported: row.unsupported,
@@ -39,14 +43,16 @@ export function toRecord(row: Selectable<BridgeEvent>): BridgeEventRecord {
 
 export function toRow(record: BridgeEventRecord): Insertable<BridgeEvent> {
   return {
+    plugin: record.plugin,
     eventId: record.eventId,
     type: record.type,
     expiresAt: UnixTime.toDate(record.expiresAt),
     timestamp: UnixTime.toDate(record.timestamp),
     chain: record.chain,
     blockNumber: record.blockNumber,
-    blockHash: record.blockHash,
-    txHash: record.txHash,
+    blockHash: record.blockHash.toLowerCase(),
+    txHash: record.txHash.toLowerCase(),
+    value: record.value,
     txTo: record.txTo ?? null,
     logIndex: record.logIndex,
     matched: record.matched,

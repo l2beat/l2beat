@@ -18,6 +18,7 @@ import { EcosystemTokenRepository } from './repositories/EcosystemTokenRepositor
 import { FlatSourcesRepository } from './repositories/FlatSourcesRepository'
 import { IndexerConfigurationRepository } from './repositories/IndexerConfigurationRepository'
 import { IndexerStateRepository } from './repositories/IndexerStateRepository'
+import { InteropRecentPricesRepository } from './repositories/InteropRecentPricesRepository'
 import { L2CostPriceRepository } from './repositories/L2CostPriceRepository'
 import { L2CostRepository } from './repositories/L2CostRepository'
 import { LivenessRepository } from './repositories/LivenessRepository'
@@ -25,7 +26,6 @@ import { NotificationsRepository } from './repositories/NotificationsRepository'
 import { ProjectValueRepository } from './repositories/ProjectValueRepository'
 import { RealTimeAnomaliesRepository } from './repositories/RealTimeAnomaliesRepository'
 import { RealTimeLivenessRepository } from './repositories/RealTimeLivenessRepository'
-import { StakeRepository } from './repositories/StakeRepository'
 import { SyncMetadataRepository } from './repositories/SyncMetadataRepository'
 import { TokenMetadataRepository } from './repositories/TokenMetadataRepository'
 import { TokenValueRepository } from './repositories/TokenValueRepository'
@@ -55,11 +55,11 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
     bridgeEvent: new BridgeEventRepository(db),
     bridgeMessage: new BridgeMessageRepository(db),
     bridgeTransfer: new BridgeTransferRepository(db),
+    interopRecentPrices: new InteropRecentPricesRepository(db),
     // #endregion
 
     // #region DA BEAT
     currentPrice: new CurrentPriceRepository(db),
-    stake: new StakeRepository(db),
     daBeatStats: new DaBeatStatsRepository(db),
     dataAvailability: new DataAvailabilityRepository(db),
     blobs: new BlobsRepository(db),

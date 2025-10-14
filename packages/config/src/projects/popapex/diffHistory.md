@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x0248ee1aca0df1f590b681bc48e556777716f911
+
+# Diff at Fri, 10 Oct 2025 09:50:27 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a91384a270a047b2514885e053feff1edc24f495 block: 1759481178
+- current timestamp: 1760089728
+
+## Description
+
+No more stakers. Project archived.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.1:
++        "arb1:0xF57362969fe0d5fcaeB8a3Cf2d185eF39A5b3BD6"
+      values.executors.1:
++        "arb1:0xF57362969fe0d5fcaeB8a3Cf2d185eF39A5b3BD6"
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0x65AD139061B3f6DDb16170a07b925337ddf42407) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.stakerCount:
+-        1
++        0
+    }
+```
+
+Generated with discovered.json: 0x1773b2eaacecc8a12e0842bd3554d06aaa2911e6
+
+# Diff at Fri, 03 Oct 2025 08:48:07 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@e647409961cd173771dcfcaeb808991c99e73911 block: 1756452867
+- current timestamp: 1759481178
+
+## Description
+
+Member removed from multisig.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      values.$members.2:
+-        "arb1:0x50930d652266EF4127FA3A1906B7Cb9951076628"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 10 (40%)"
+    }
+```
+
 Generated with discovered.json: 0xbc5e373f30f1370d5a0d32db9db0e8b4e7d2f542
 
 # Diff at Fri, 26 Sep 2025 13:08:42 GMT:

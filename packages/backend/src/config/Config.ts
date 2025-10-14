@@ -205,7 +205,10 @@ export interface AnomaliesConfig {
 export interface BridgesConfig {
   capture: {
     enabled: boolean
-    chains: string[]
+    chains: {
+      name: string
+      type: 'evm'
+    }[]
   }
   matching: boolean
   cleaner: boolean
@@ -213,16 +216,19 @@ export interface BridgesConfig {
     enabled: boolean
     getExplorerUrl: (chain: string) => string | undefined
   }
+  compare: {
+    enabled: boolean
+    intervalMs?: number
+  }
+  financials: {
+    enabled: boolean
+  }
 }
 
 export interface DaBeatConfig {
   readonly projectsForDaBeatStats: ProjectId[]
   /** Coingecko ids of tokens for economic security */
   readonly coingeckoIds: string[]
-  /** Names of the economic security types */
-  readonly types: string[]
-  readonly quicknodeApiUrl: string
-  readonly quicknodeCallsPerMinute: number
   readonly celestiaApiUrl: string
   readonly celestiaCallsPerMinute: number
   readonly nearRpcUrl: string
@@ -296,5 +302,6 @@ export interface DataAvailabilityTrackingConfig {
 }
 
 export interface BlockSyncModuleConfig {
+  delayFromTipInSeconds: number
   ethereumWsUrl?: string
 }

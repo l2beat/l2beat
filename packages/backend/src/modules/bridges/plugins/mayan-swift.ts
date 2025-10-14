@@ -7,20 +7,17 @@ However on the destination there's only OrderFulfilled event with the order hash
 we would need to extract it from calldata (trace) - currently we don't do that.
 */
 
-import { decodeFunctionData, parseAbiItem } from 'viem'
-import { parseForwardedEth } from './mayan-forwarder'
+import { logToProtocolData, MayanForwarded } from './mayan-forwarder'
 import {
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
-  findChain,
   type LogToCapture,
   type MatchResult,
   Result,
 } from './types'
-import { WORMHOLE_NETWORKS } from './wormhole'
 
 const parseOrderCreated = createEventParser('event OrderCreated(bytes32 key)')
 
@@ -30,7 +27,6 @@ const parseOrderFulfilled = createEventParser(
 
 export const OrderCreated = createBridgeEventType<{
   key: string
-  protocolData: `0x${string}` | null
   $dstChain: string
 }>('mayan-swift.OrderCreated')
 
@@ -49,42 +45,17 @@ export class MayanSwiftPlugin implements BridgePlugin {
       })
     }
 
-    const abi =
-      'function createOrderWithEth((bytes32 trader,bytes32 tokenOut,uint64 minAmountOut,uint64 gasDrop,uint64 cancelFee,uint64 refundFee,uint64 deadline, bytes32 destAddr,uint16 dstChainId,bytes32 referrerAddress,uint8 referrerBps,uint8 auctionMode,bytes32 random))'
-
     const orderCreated = parseOrderCreated(input.log, null)
     if (orderCreated) {
-      let dstChain = 'no protocolData, nothing to extract'
-      let protocolData = null
       // see if we have Forwarded event in the same tx
       const nextLog = input.txLogs.find(
         // biome-ignore lint/style/noNonNullAssertion: It's there
         (x) => x.logIndex === input.log.logIndex! + 1,
       )
-      if (nextLog) {
-        const forwardedEth = parseForwardedEth(nextLog, null)
-        if (forwardedEth) {
-          protocolData = forwardedEth.protocolData
-          const abiItem = parseAbiItem(abi)
-          const { functionName, args } = decodeFunctionData({
-            abi: [abiItem],
-            data: protocolData,
-          })
-
-          // console.log(args)
-
-          if (functionName === 'createOrderWithEth') {
-            dstChain = findChain(
-              WORMHOLE_NETWORKS,
-              (x) => x.wormholeChainId,
-              args[0].dstChainId,
-            )
-          }
-        }
-      }
+      const parsed = nextLog && logToProtocolData(nextLog)
+      const dstChain = parsed?.dstChain ?? 'unknown_missing_protocolData'
       return OrderCreated.create(input.ctx, {
         key: orderCreated.key.toString(),
-        protocolData: protocolData,
         $dstChain: dstChain,
       })
     }
@@ -100,11 +71,23 @@ export class MayanSwiftPlugin implements BridgePlugin {
       key: orderFulfilled.args.key,
     })
     if (!orderCreated) return
+    const mayanForwarded = db.find(MayanForwarded, {
+      sameTxAfter: orderCreated,
+    })
+    if (!mayanForwarded) return
     return [
-      // TODO: implement properly. Handle optional wormhole core settlement event
-      Result.Transfer('mayan-swift.Swap', {
+      // NOTE: This is a synthetic message. The real thing goes through wormhole and solana and we can't see it
+      Result.Message('mayan-swift.Message', {
+        app: 'mayan-swift',
         srcEvent: orderCreated,
         dstEvent: orderFulfilled,
+      }),
+      // TODO: implement properly. Handle optional wormhole core settlement event
+      // TODO: tokens
+      Result.Transfer('mayan-swift.Transfer', {
+        srcEvent: orderCreated,
+        dstEvent: orderFulfilled,
+        extraEvents: [mayanForwarded],
       }),
     ]
   }

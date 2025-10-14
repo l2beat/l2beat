@@ -1,72 +1,46 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
-import { createLayerZeroGuid, decodePacket } from './layerzero-v2'
 import {
+  createLayerZeroGuid,
+  decodePacket,
+  LAYERZERO_NETWORKS,
+  PacketDelivered,
+  PacketSent,
+  parsePacketDelivered,
+  parsePacketSent,
+} from './layerzero-v2'
+import {
+  Address32,
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
-  defineNetworks,
   findChain,
   type LogToCapture,
   type MatchResult,
   Result,
 } from './types'
 
-const parsePacketSent = createEventParser(
-  'event PacketSent(bytes encodedPayload, bytes options, address sendLibrary)',
-)
-
-const parsePacketDelivered = createEventParser(
-  'event PacketDelivered((uint32 srcEid,bytes32 sender, uint64 nonce) origin, address receiver)',
-)
-
-const parseOFTSent = createEventParser(
+export const parseOFTSent = createEventParser(
   'event OFTSent(bytes32 indexed guid, uint32 dstEid, address indexed fromAddress, uint256 amountSentLD, uint256 amountReceivedLD)',
 )
-const parseOFTReceived = createEventParser(
+export const parseOFTReceived = createEventParser(
   'event OFTReceived(bytes32 indexed guid, uint32 srcEid, address indexed toAddress, uint256 amountReceivedLD)',
 )
 
-export const PacketOFTSent = createBridgeEventType<{
+const OFTSentPacketSent = createBridgeEventType<{
   $dstChain: string
   guid: string
   amountSentLD: number
   amountReceivedLD: number
+  tokenAddress: Address32
 }>('layerzero-v2.PacketOFTSent')
 
-export const PacketOFTDelivered = createBridgeEventType<{
+const OFTReceivedPacketDelivered = createBridgeEventType<{
   $srcChain: string
   guid: string
   amountReceivedLD: number
+  tokenAddress: Address32
 }>('layerzero-v2.PacketOFTDelivered')
-
-const LAYERZERO_NETWORKS = defineNetworks('layerzero', [
-  {
-    chainId: 1,
-    eid: 30101,
-    chain: 'ethereum',
-    address: EthereumAddress('0x1a44076050125825900e736c501f859c50fE728c'),
-  },
-  {
-    chainId: 42161,
-    eid: 30110,
-    chain: 'arbitrum',
-    address: EthereumAddress('0x1a44076050125825900e736c501f859c50fE728c'),
-  },
-  {
-    chainId: 8453,
-    eid: 30184,
-    chain: 'base',
-    address: EthereumAddress('0x1a44076050125825900e736c501f859c50fE728c'),
-  },
-  {
-    chainId: 10,
-    eid: 30111,
-    chain: 'optimism',
-    address: EthereumAddress('0x1a44076050125825900e736c501f859c50fE728c'),
-  },
-])
 
 export class LayerZeroV2OFTsPlugin implements BridgePlugin {
   name = 'layerzero-v2-ofts'
@@ -75,85 +49,107 @@ export class LayerZeroV2OFTsPlugin implements BridgePlugin {
     const network = LAYERZERO_NETWORKS.find((x) => x.chain === input.ctx.chain)
     if (!network) return
 
-    const packetSent = parsePacketSent(input.log, [network.address])
-    if (packetSent) {
-      const nextLog = input.txLogs.find(
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        (x) => x.logIndex === input.log.logIndex! + 1,
-      )
-      const oftSent = nextLog && parseOFTSent(nextLog, null)
-      if (!oftSent) return
-      const packet = decodePacket(packetSent.encodedPayload)
-      if (!packet) return
-
-      const guid = createLayerZeroGuid(
-        packet.header.nonce,
-        packet.header.srcEid,
-        packet.header.sender,
-        packet.header.dstEid,
-        packet.header.receiver,
-      )
-      const $dstChain = findChain(
-        LAYERZERO_NETWORKS,
-        (x) => x.eid,
-        packet.header.dstEid,
-      )
-      return PacketOFTSent.create(input.ctx, {
-        $dstChain,
-        guid,
-        amountSentLD: Number(oftSent.amountSentLD),
-        amountReceivedLD: Number(oftSent.amountReceivedLD),
-      })
-    }
-
-    const packetDelivered = parsePacketDelivered(input.log, [network.address])
-    if (packetDelivered) {
+    const oftSent = parseOFTSent(input.log, null)
+    if (oftSent) {
       const previousLog = input.txLogs.find(
         // biome-ignore lint/style/noNonNullAssertion: It's there
         (x) => x.logIndex === input.log.logIndex! - 1,
       )
-      const oftReceived = previousLog && parseOFTReceived(previousLog, null)
-      if (!oftReceived) return
-      const guid = createLayerZeroGuid(
-        packetDelivered.origin.nonce,
-        packetDelivered.origin.srcEid,
-        packetDelivered.origin.sender,
-        network.eid,
-        packetDelivered.receiver,
+      if (previousLog) {
+        const packetSent = parsePacketSent(previousLog, [network.address])
+        if (packetSent) {
+          const packet = decodePacket(packetSent.encodedPayload)
+          if (packet) {
+            const guid = createLayerZeroGuid(
+              packet.header.nonce,
+              packet.header.srcEid,
+              packet.header.sender,
+              packet.header.dstEid,
+              packet.header.receiver,
+            )
+            const $dstChain = findChain(
+              LAYERZERO_NETWORKS,
+              (x) => x.eid,
+              packet.header.dstEid,
+            )
+            return OFTSentPacketSent.create(input.ctx, {
+              $dstChain,
+              guid,
+              amountSentLD: Number(oftSent.amountSentLD),
+              amountReceivedLD: Number(oftSent.amountReceivedLD),
+              tokenAddress: Address32.from(input.log.address),
+            })
+          }
+        }
+      }
+    }
+
+    const oftReceived = parseOFTReceived(input.log, null)
+    if (oftReceived) {
+      const nextLog = input.txLogs.find(
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        (x) => x.logIndex === input.log.logIndex! + 1,
       )
-      const $srcChain = findChain(
-        LAYERZERO_NETWORKS,
-        (x) => x.eid,
-        packetDelivered.origin.srcEid,
-      )
-      return PacketOFTDelivered.create(input.ctx, {
-        $srcChain,
-        guid,
-        amountReceivedLD: Number(oftReceived.amountReceivedLD),
-      })
+      if (nextLog) {
+        const packetDelivered = parsePacketDelivered(nextLog, [network.address])
+        if (packetDelivered) {
+          const guid = createLayerZeroGuid(
+            packetDelivered.origin.nonce,
+            packetDelivered.origin.srcEid,
+            packetDelivered.origin.sender,
+            network.eid,
+            packetDelivered.receiver,
+          )
+          const $srcChain = findChain(
+            LAYERZERO_NETWORKS,
+            (x) => x.eid,
+            packetDelivered.origin.srcEid,
+          )
+          return OFTReceivedPacketDelivered.create(input.ctx, {
+            $srcChain,
+            guid,
+            amountReceivedLD: Number(oftReceived.amountReceivedLD),
+            // TODO: OFT log emitter is not always the token contract (needs effects)
+            tokenAddress: Address32.from(input.log.address),
+          })
+        }
+      }
     }
   }
 
-  matchTypes = [PacketOFTDelivered]
+  matchTypes = [OFTReceivedPacketDelivered]
   match(
-    packetOFTDelivered: BridgeEvent,
+    oftReceivedPacketDelivered: BridgeEvent,
     db: BridgeEventDb,
   ): MatchResult | undefined {
-    if (!PacketOFTDelivered.checkType(packetOFTDelivered)) return
-    const packetOFTSent = db.find(PacketOFTSent, {
-      guid: packetOFTDelivered.args.guid,
-    })
-    if (!packetOFTSent) return
+    if (!OFTReceivedPacketDelivered.checkType(oftReceivedPacketDelivered))
+      return
+
+    const guid = oftReceivedPacketDelivered.args.guid
+
+    const oftSentPacketSent = db.find(OFTSentPacketSent, { guid })
+    if (!oftSentPacketSent) return
+
+    const packetSent = db.find(PacketSent, { guid })
+    if (!packetSent) return
+
+    const packetDelivered = db.find(PacketDelivered, { guid })
+    if (!packetDelivered) return
+
     return [
-      Result.Message('layerzero-v2.Message', [
-        packetOFTSent,
-        packetOFTDelivered,
-      ]),
-      Result.Transfer('oftv2.Swap', {
-        srcEvent: packetOFTSent,
-        srcAmount: packetOFTSent.args.amountSentLD.toString(),
-        dstEvent: packetOFTDelivered,
-        dstAmount: packetOFTDelivered.args.amountReceivedLD.toString(),
+      Result.Message('layerzero-v2.Message', {
+        app: 'oftv2',
+        srcEvent: packetSent,
+        dstEvent: packetDelivered,
+      }),
+      Result.Transfer('oftv2.Transfer', {
+        srcEvent: oftSentPacketSent,
+        srcAmount: oftSentPacketSent.args.amountSentLD.toString(),
+        srcTokenAddress: oftSentPacketSent.args.tokenAddress,
+        dstEvent: oftReceivedPacketDelivered,
+        dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD.toString(),
+        // TODO: OFT log emitter is not always the token contract (needs effects)
+        dstTokenAddress: oftReceivedPacketDelivered.args.tokenAddress,
       }),
     ]
   }

@@ -1,6 +1,11 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreMethods": ["distributedShares", "logCid", "treeCid"],
+  "ignoreMethods": [
+    "distributedShares",
+    "logCid",
+    "treeCid",
+    "getHistoricalDistributionData"
+  ],
   "ignoreInWatchMode": [
     "treeRoot",
     "totalClaimableShares",

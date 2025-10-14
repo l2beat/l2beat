@@ -53,7 +53,7 @@ export function getLogger(): Logger {
   }
 
   const options: Partial<LoggerOptions> = {
-    logLevel: 'INFO',
+    logLevel: env.LOG_LEVEL,
     utc: isLocal ? false : true,
     transports: loggerTransports,
     // TODO: make this configurable

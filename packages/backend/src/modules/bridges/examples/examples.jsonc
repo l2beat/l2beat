@@ -1,19 +1,4 @@
 {
-  "stargate": {
-    "txs": [
-      {
-        "chain": "ethereum",
-        "tx": "0xca89268e8e787bc9ffd0d0f2d47369161634acea27c6a2374c8c9a9b8ed6189f"
-      },
-      {
-        "chain": "arbitrum",
-        "tx": "0x9fdc94bf02e1efd47970137e4f4642810c733c834a23d48fd0de946d32deb6e3"
-      }
-    ],
-    "events": [],
-    "messages": [],
-    "transfers": []
-  },
   "allbridge": {
     "txs": [
       {
@@ -36,7 +21,7 @@
       "allbridge.TokensReceived"
     ],
     "messages": ["allbridge.Message.allbridgeswap"],
-    "transfers": ["allbridge.Swap"]
+    "transfers": ["allbridge.Transfer"]
   },
   "ccip": {
     "txs": [
@@ -51,6 +36,25 @@
     ],
     "events": ["ccip.ExecutionStateChanged", "ccip.CCIPSendRequested"],
     "messages": ["ccip.Message"],
+    "transfers": []
+  },
+  "mayan-forwarder": {
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x0d21d8fa0872cdbe077ede33f2fc27ec5d2f41d9b59a97f594ec49aa032bf870"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x8f326f30f20067d1c618fe4862db448692c0ce9bac498ec0297f6a894d3cbb8c"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x47b1ddf11342a81aec106555a30da420ed831460a08bb347023515a761a10580"
+      }
+    ],
+    "events": [],
+    "messages": [],
     "transfers": []
   },
   "cctpv1": {
@@ -240,6 +244,35 @@
     "messages": [],
     "transfers": []
   },
+  "axelar-its-contractCall1": {
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0xb657295d2974c014be09a245737a66482f802427a111f6e01263b485026d3099"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x0aa49d09eacaa4592aad58134fd07722e293fe461d690c1f81ebd3d83c5c8850"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x310102e5e52c03bb1b6ef2d6cb9f499e9c7ee651fc0a14d7d7b3e5d0c60fec34"
+      }
+    ],
+    "events": [
+      "axelar-its.InterchainTransfer",
+      "axelar.ContractCall",
+      "axelar.ContractCallApproved",
+      "axelar.ContractCallApproved",
+      "axelar.ContractCallApproved",
+      "axelar.ContractCallApprovedWithMint",
+      "axelar.ContractCallApprovedWithMint",
+      "axelar.ContractCallExecuted",
+      "axelar-its.InterchainTransferReceived"
+    ],
+    "messages": [],
+    "transfers": []
+  },
   "axelar-its-contractCall": {
     "txs": [
       {
@@ -264,6 +297,28 @@
     ],
     "messages": ["axelar.ContractCallMessage.its"],
     "transfers": ["axelar-its.Transfer"]
+  },
+  "axelar-contractCallWithMint2": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0xb3bcbed1cec775088aa6c1785fd84d3c41cd904976554ff8edf32477b1980e48"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x6280c9278d845daa6fddcbfdd0e855e64153d25f99eb16cfcc38a066b5e157c3"
+      },
+      {
+        "chain": "base",
+        "tx": "0xe2f90a6a31aec70efd13ac2e4e0e6bfba2a916ef90013bc41c63a0590f8c40ac"
+      }
+    ],
+    "events": [
+      "axelar.ContractCallWithToken",
+      "axelar.ContractCallApprovedWithMint"
+    ],
+    "messages": ["axelar.ContractCallWithTokenMessage"],
+    "transfers": ["axelar-gateway.Transfer"]
   },
   "axelar-contractCallWithMint": {
     "txs": [
@@ -360,6 +415,21 @@
     "messages": [],
     "transfers": []
   },
+  "wormhole-ntt": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0xd8cec5a2163774b308d382442a59f3558f0e7d6ebf9817bc5953c27c3d98b671"
+      },
+      {
+        "chain": "base",
+        "tx": "0xed7885b062d7b42ec332ffc035410686128103db9a38c6d4842276f95ed68539"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
   "wormhole-token-bridge": {
     "txs": [
       {
@@ -406,6 +476,8 @@
     "transfers": []
   },
   "stargatev2bus": {
+    // 1. bus with 2 passengers from Base to Ethereum
+    // 2. bus with 1 passenger from Ethereum to Arbitrum
     "txs": [
       {
         "chain": "base",
@@ -441,6 +513,12 @@
     "transfers": []
   },
   "layerzeromix": {
+    // Messages:
+    //   layerzero-v2.Message 5
+    // Transfers:
+    //   oftv2.Transfer 2
+    //   stargate-v2-bus.Transfer 3
+    //   stargate-v2-taxi.Transfer 1
     "txs": [
       {
         "chain": "base",
@@ -522,6 +600,21 @@
     "messages": [],
     "transfers": []
   },
+  "across2": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xe0ef176608450355ce700cc2f697b9b9bf9a1b1c849ae245569691aeb894f506"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xf9ae34c090a6073f3503144cf9aafe7ccdabc4f25f7a362037646741b6e3f332"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
   "across1": {
     "txs": [
       {
@@ -590,27 +683,27 @@
     "messages": [],
     "transfers": []
   },
-  "hyperlane-debug": {
+  "hyperlane-mix": {
     "txs": [
       {
         "chain": "optimism",
-        "tx": "0x196da52c2139bc69199b3b4921b199ee10623b0fffb520102d4b038c28a4648b"
+        "tx": "0x196da52c2139bc69199b3b4921b199ee10623b0fffb520102d4b038c28a4648b" // 1 dispatch message, merkly(? uses same event as hwr but not on destination)
       },
       {
         "chain": "ethereum",
-        "tx": "0x7c0494779f339006aa5930eab84a7c70ecd22d54c1a48c952f0af1435c8db4f9"
+        "tx": "0x7c0494779f339006aa5930eab84a7c70ecd22d54c1a48c952f0af1435c8db4f9" // single process message (destination event of above one)
       },
       {
         "chain": "base",
-        "tx": "0x297484366df26801ae4123266cd4f59f3de4cc26dbcc78179de54daefd42d8a3"
+        "tx": "0x297484366df26801ae4123266cd4f59f3de4cc26dbcc78179de54daefd42d8a3" // 1 dispatch message, 1 hwr
       },
       {
         "chain": "base",
-        "tx": "0xc431a37bc0700d893e1613c84775aa5ca79277cca533d8947a8be8733cfdf719"
+        "tx": "0xc431a37bc0700d893e1613c84775aa5ca79277cca533d8947a8be8733cfdf719" // 1 dispatch message, 1 hwr
       },
       {
         "chain": "arbitrum",
-        "tx": "0x64d3de3fda6a9df908cd77940c1c416f1df71f92fda9c99550529d0803055ceb"
+        "tx": "0x64d3de3fda6a9df908cd77940c1c416f1df71f92fda9c99550529d0803055ceb" // 2x process message, 2x hwr received
       }
     ],
     "events": [],
@@ -632,22 +725,8 @@
     "messages": [],
     "transfers": []
   },
-  "stargate-debug": {
-    "txs": [
-      {
-        "chain": "arbitrum",
-        "tx": "0xb257d1d886fbd7b7edff122d369ff5567719f4f2566c4c0a1492a57c79eb5526"
-      },
-      {
-        "chain": "base",
-        "tx": "0xd9b1e59ed889335a82bae3643c2cc695e490c4dec1e3e2d638e5e2157d3dca28"
-      }
-    ],
-    "events": [],
-    "messages": [],
-    "transfers": []
-  },
-  "lzv2ofts": {
+  "oft": {
+    // 3 oft transfers
     "txs": [
       {
         "chain": "ethereum",
@@ -672,6 +751,109 @@
       {
         "chain": "ethereum",
         "tx": "0x17a8188cbc60c5fdea6160dd4f51b5c0be25f4e93d5bcfc9a53fda3047a4e1db"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "hwr": {
+    // 3 oft transfers
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x12fd0f1a3ed68b76b9f6aaaaf864097992287cf4ac1ae4628636ee1b5ace7b75"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0xc9b2b9924a0507d56a8bd5b4566208d9c28678e0ca7318de614a3704a79bea31"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "cctpv1-debug": {
+    // should be 4 cctpv1 message and a couple other ones. somehow these are not correctly tracked in prod but work locally
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x48c77cfedbee0ab31da92f80e0e4f4f8dfce70af2e5fef3ceedc745271731100"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x2ed62eb30a3cf2f14271c2f326260fb075b55fc05fbe9ffe053315f46f316218"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xc90e5bdba18692abe5dff1bd14ea88e5ebcad4d2941dd79c722420f2fb7c8671"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x595eb76b9a979c11fc7a97b100430fd3f1dd466ff31d2f801989dbb44b6038fc"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x71b0cfd087f2a437cbbe101871bcf59f4a13e50c4de968afb8f933598a316be2"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xd7bc5d2879c1934c85fd625a5617e337c106654a13e2dbe3ddd445c44063a1ce"
+      },
+      {
+        "chain": "base",
+        "tx": "0x14eb8ea83c5b870d6c74654ab71afed261254c4aa76da2442984c8b7006bb25e"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x965f34ffda2c1f164fc6a485f92e7884ca50bdb219ae5f6fb89b148b38f8c6e3"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "stargate-debug": {
+    "txs": [
+      {
+        "chain": "optimism",
+        "tx": "0x5486e7ce1d6e0ef138dcb4a6b82ec06832b035141fc85184bf98c7a790cea268"
+      },
+      {
+        "chain": "base",
+        "tx": "0xe3d4a5bcdaeb683da03ef7bb73b6e3e110108c6de4c318551a203df6a8c73ef9"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "hyperlane-eco": {
+    // 3 msgs, 3 'transfers'/intent settlements
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xd4cd1b60d6d5751f419b95a0586c202769aa05951b6fe9ddb5132a1b1d74aa68"
+      },
+      {
+        "chain": "base",
+        "tx": "0xe9113abd9b70bdaeaec906aa89c8dab23c4212ac5717fbc0463467c336bbb375"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xa888a3621a61a8c022f8c5f119215d057f29298cbb4324d94c5a771f21fc881a"
+      },
+      {
+        "chain": "base",
+        "tx": "0xaa6331e50456f6458cc1406e73879fc55dad4b27a89af405bcd7e3dc32d350dd"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x6cce7e0eeecca07348fb1376a527beb980fcfe6593920bb88e4461e8cc974b10"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0xb797cbc61f80cd79d92a7e11ad8e74900c87ebeba2650f622424096798f7d0c9"
       }
     ],
     "events": [],

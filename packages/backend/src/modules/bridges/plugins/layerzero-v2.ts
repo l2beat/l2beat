@@ -14,11 +14,11 @@ import {
   Result,
 } from './types'
 
-const parsePacketSent = createEventParser(
+export const parsePacketSent = createEventParser(
   'event PacketSent(bytes encodedPayload, bytes options, address sendLibrary)',
 )
 
-const parsePacketDelivered = createEventParser(
+export const parsePacketDelivered = createEventParser(
   'event PacketDelivered((uint32 srcEid,bytes32 sender, uint64 nonce) origin, address receiver)',
 )
 
@@ -32,7 +32,7 @@ export const PacketDelivered = createBridgeEventType<{
   guid: string
 }>('layerzero-v2.PacketDelivered')
 
-const LAYERZERO_NETWORKS = defineNetworks('layerzero', [
+export const LAYERZERO_NETWORKS = defineNetworks('layerzero', [
   {
     chainId: 1,
     eid: 30101,
@@ -112,7 +112,11 @@ export class LayerZeroV2Plugin implements BridgePlugin {
     const packetSent = db.find(PacketSent, { guid: packetDelivered.args.guid })
     if (!packetSent) return
     return [
-      Result.Message('layerzero-v2.Message', [packetSent, packetDelivered]),
+      Result.Message('layerzero-v2.Message', {
+        app: 'unknown',
+        srcEvent: packetSent,
+        dstEvent: packetDelivered,
+      }),
     ]
   }
 }

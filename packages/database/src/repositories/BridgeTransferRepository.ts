@@ -1,9 +1,10 @@
-import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { BridgeTransfer } from '../kysely/generated/types'
 
 export interface BridgeTransferRecord {
+  plugin: string
   messageId: string
   type: string
   duration: number | undefined
@@ -16,6 +17,7 @@ export interface BridgeTransferRecord {
   srcTokenAddress: string | undefined
   srcRawAmount: string | undefined
   srcSymbol: string | undefined
+  srcAbstractTokenId: string | undefined
   srcAmount: number | undefined
   srcPrice: number | undefined
   srcValueUsd: number | undefined
@@ -27,15 +29,29 @@ export interface BridgeTransferRecord {
   dstTokenAddress: string | undefined
   dstRawAmount: string | undefined
   dstSymbol: string | undefined
+  dstAbstractTokenId: string | undefined
   dstAmount: number | undefined
   dstPrice: number | undefined
   dstValueUsd: number | undefined
+  isProcessed?: boolean
+}
+
+export interface BridgeTransferUpdate {
+  srcAbstractTokenId?: string
+  srcPrice?: number
+  srcAmount?: number
+  srcValueUsd?: number
+  dstAbstractTokenId?: string
+  dstPrice?: number
+  dstAmount?: number
+  dstValueUsd?: number
 }
 
 export function toRecord(
   row: Selectable<BridgeTransfer>,
 ): BridgeTransferRecord {
   return {
+    plugin: row.plugin,
     messageId: row.messageId,
     type: row.type,
     duration: row.duration ?? undefined,
@@ -45,13 +61,10 @@ export function toRecord(
     srcTxHash: row.srcTxHash ?? undefined,
     srcLogIndex: row.srcLogIndex ?? undefined,
     srcEventId: row.srcEventId ?? undefined,
-    srcTokenAddress: row.srcTokenAddress
-      ? row.srcTokenAddress === 'native'
-        ? 'native'
-        : EthereumAddress(row.srcTokenAddress)
-      : undefined,
+    srcTokenAddress: row.srcTokenAddress ?? undefined,
     srcRawAmount: row.srcRawAmount ?? undefined,
     srcSymbol: row.srcSymbol ?? undefined,
+    srcAbstractTokenId: row.srcAbstractTokenId ?? undefined,
     srcAmount: row.srcAmount ?? undefined,
     srcPrice: row.srcPrice ?? undefined,
     srcValueUsd: row.srcValueUsd ?? undefined,
@@ -60,16 +73,14 @@ export function toRecord(
     dstTxHash: row.dstTxHash ?? undefined,
     dstLogIndex: row.dstLogIndex ?? undefined,
     dstEventId: row.dstEventId ?? undefined,
-    dstTokenAddress: row.dstTokenAddress
-      ? row.dstTokenAddress === 'native'
-        ? 'native'
-        : EthereumAddress(row.dstTokenAddress)
-      : undefined,
+    dstTokenAddress: row.dstTokenAddress ?? undefined,
     dstRawAmount: row.dstRawAmount ?? undefined,
     dstSymbol: row.dstSymbol ?? undefined,
+    dstAbstractTokenId: row.dstAbstractTokenId ?? undefined,
     dstAmount: row.dstAmount ?? undefined,
     dstPrice: row.dstPrice ?? undefined,
     dstValueUsd: row.dstValueUsd ?? undefined,
+    isProcessed: row.isProcessed,
   }
 }
 
@@ -77,6 +88,7 @@ export function toRow(
   record: BridgeTransferRecord,
 ): Insertable<BridgeTransfer> {
   return {
+    plugin: record.plugin,
     messageId: record.messageId,
     type: record.type,
     duration: record.duration,
@@ -84,35 +96,30 @@ export function toRow(
     srcTime:
       record.srcTime !== undefined ? UnixTime.toDate(record.srcTime) : null,
     srcChain: record.srcChain,
-    srcTxHash: record.srcTxHash,
+    srcTxHash: record.srcTxHash?.toLowerCase(),
     srcLogIndex: record.srcLogIndex,
     srcEventId: record.srcEventId,
-    srcTokenAddress: record.srcTokenAddress
-      ? record.srcTokenAddress === 'native'
-        ? 'native'
-        : EthereumAddress(record.srcTokenAddress)
-      : undefined,
+    srcTokenAddress: record.srcTokenAddress,
     srcRawAmount: record.srcRawAmount,
     srcSymbol: record.srcSymbol,
+    srcAbstractTokenId: record.srcAbstractTokenId,
     srcAmount: record.srcAmount,
     srcPrice: record.srcPrice,
     srcValueUsd: record.srcValueUsd,
     dstTime:
       record.dstTime !== undefined ? UnixTime.toDate(record.dstTime) : null,
     dstChain: record.dstChain,
-    dstTxHash: record.dstTxHash,
+    dstTxHash: record.dstTxHash?.toLowerCase(),
     dstLogIndex: record.dstLogIndex,
     dstEventId: record.dstEventId,
-    dstTokenAddress: record.dstTokenAddress
-      ? record.dstTokenAddress === 'native'
-        ? 'native'
-        : EthereumAddress(record.dstTokenAddress)
-      : undefined,
+    dstTokenAddress: record.dstTokenAddress,
     dstRawAmount: record.dstRawAmount,
     dstSymbol: record.dstSymbol,
+    dstAbstractTokenId: record.dstAbstractTokenId,
     dstAmount: record.dstAmount,
     dstPrice: record.dstPrice,
     dstValueUsd: record.dstValueUsd,
+    isProcessed: record.isProcessed,
   }
 }
 
@@ -120,18 +127,18 @@ export interface BridgeTransfersStatsRecord {
   type: string
   count: number
   medianDuration: number
-  outboundValueSum: number
-  inboundValueSum: number
+  srcValueSum: number
+  dstValueSum: number
 }
 
 export interface BridgeTransfersDetailedStatsRecord {
   type: string
-  sourceChain: string
-  destinationChain: string
+  srcChain: string
+  dstChain: string
   count: number
   medianDuration: number
-  outboundValueSum: number
-  inboundValueSum: number
+  srcValueSum: number
+  dstValueSum: number
 }
 
 export class BridgeTransferRepository extends BaseRepository {
@@ -176,6 +183,27 @@ export class BridgeTransferRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getUnprocessed() {
+    const rows = await this.db
+      .selectFrom('BridgeTransfer')
+      .where('isProcessed', '=', false)
+      .selectAll()
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async updateFinancials(
+    id: string,
+    update: BridgeTransferUpdate,
+  ): Promise<void> {
+    await this.db
+      .updateTable('BridgeTransfer')
+      .set({ ...update, isProcessed: true })
+      .where('messageId', '=', id) // Should be renamed to transferId
+      .execute()
+  }
+
   async getStats(): Promise<BridgeTransfersStatsRecord[]> {
     const overallStats = await this.db
       .selectFrom('BridgeTransfer')
@@ -185,8 +213,8 @@ export class BridgeTransferRepository extends BaseRepository {
         sql<number>`percentile_cont(0.5) within group (order by duration)`.as(
           'medianDuration',
         ),
-        eb.fn.sum('srcValueUsd').as('outboundValueSum'),
-        eb.fn.sum('dstValueUsd').as('inboundValueSum'),
+        eb.fn.sum('srcValueUsd').as('srcValueSum'),
+        eb.fn.sum('dstValueUsd').as('dstValueSum'),
       ])
       .groupBy('type')
       .execute()
@@ -195,8 +223,8 @@ export class BridgeTransferRepository extends BaseRepository {
       type: overall.type,
       count: Number(overall.count),
       medianDuration: Number(overall.medianDuration),
-      outboundValueSum: Number(overall.outboundValueSum),
-      inboundValueSum: Number(overall.inboundValueSum),
+      srcValueSum: Number(overall.srcValueSum),
+      dstValueSum: Number(overall.dstValueSum),
     }))
   }
 
@@ -211,8 +239,8 @@ export class BridgeTransferRepository extends BaseRepository {
         sql<number>`percentile_cont(0.5) within group (order by duration)`.as(
           'medianDuration',
         ),
-        eb.fn.sum('srcValueUsd').as('outboundValueSum'),
-        eb.fn.sum('dstValueUsd').as('inboundValueSum'),
+        eb.fn.sum('srcValueUsd').as('srcValueSum'),
+        eb.fn.sum('dstValueUsd').as('dstValueSum'),
       ])
       .where('srcChain', 'is not', null)
       .where('dstChain', 'is not', null)
@@ -223,14 +251,30 @@ export class BridgeTransferRepository extends BaseRepository {
       assert(chain.srcChain && chain.dstChain)
       return {
         type: chain.type,
-        sourceChain: chain.srcChain,
-        destinationChain: chain.dstChain,
+        srcChain: chain.srcChain,
+        dstChain: chain.dstChain,
         count: Number(chain.count),
         medianDuration: Number(chain.medianDuration),
-        outboundValueSum: Number(chain.outboundValueSum),
-        inboundValueSum: Number(chain.inboundValueSum),
+        srcValueSum: Number(chain.srcValueSum),
+        dstValueSum: Number(chain.dstValueSum),
       }
     })
+  }
+
+  async getExistingItems(
+    items: { srcTxHash: string; dstTxHash: string }[],
+  ): Promise<BridgeTransferRecord[]> {
+    if (items.length === 0) return []
+
+    const srcHashes = items.map((x) => x.srcTxHash.toLowerCase())
+    const dstHashes = items.map((x) => x.dstTxHash.toLowerCase())
+    const rows = await this.db
+      .selectFrom('BridgeTransfer')
+      .selectAll()
+      .where('srcTxHash', 'in', srcHashes)
+      .where('dstTxHash', 'in', dstHashes)
+      .execute()
+    return rows.map(toRecord)
   }
 
   async deleteBefore(timestamp: UnixTime): Promise<number> {

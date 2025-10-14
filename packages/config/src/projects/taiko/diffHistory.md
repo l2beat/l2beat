@@ -1,3 +1,72 @@
+Generated with discovered.json: 0x55b32044ebd850568f757d8965b323b8b37b1ae5
+
+# Diff at Wed, 08 Oct 2025 07:42:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@36fbb0e5eb9fa07c58f97370d929eaabfcd6c5ff block: 1759239729
+- current timestamp: 1759909174
+
+## Description
+
+Proposal 23: encrypted emergency proposal.
+'proposal is neither to fix a bug nor time-critical' - sc chat.
+
+verification of the calldata is pending.
+
+## Watched changes
+
+```diff
+    contract EmergencyMultisig (eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
++++ description: The total count of encrypted emergency proposals created.
+      values.proposalCount:
+-        23
++        24
+    }
+```
+
+Generated with discovered.json: 0xd05faca832046b1c1d0640225e033e34a4cccf9d
+
+# Diff at Tue, 30 Sep 2025 14:26:28 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@8b1e8b6b8628030e60b22b7773a337689b280854 block: 1758523605
+- current timestamp: 1759239729
+
+## Description
+
+Config-related changes: added tracking for trusted zk program hashes for SP1 and Risc0 verifiers.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758523605 (main branch discovery), not current.
+
+```diff
+    contract Risc0VerifierGateway (eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE) {
+    +++ description: Entry contract to verify batches using RISC Zero.
++++ description: Image IDs (i.e. program digest) of Risc0 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedImages:
++        ["0x49c8f13fdfbec7c03fc8516ef7d32d8fa43fa4f495d62e9ff6bf63710df402d4","0x052010a130f9957a9d218a173242070c47af1c5d2c3ccae1d8e8d85ce6c7d78e","0x1f28744f3b199dd31cfe84ee45bf6a7c9e4b7e8f7e888bb47889bba0237e00ff","0x0a0488e485692dd711b60258bd799099f8d1e6776cb96ede88c9fecfcc9b7e7c","0xa41db9223051c1a6b046829dc372eab4989ff0a3e027c360d8c906d831ca60d4","0xa3f175713dc988430192dfd9a6c49ea111e389e2c008428eedd5f38648094404","0xe9aec1d30d25da1ccfc02a81c4b71f32e0a6f675dff4ce01fe4bd5f96ff320bd","0xee950d20e2483b9b6b859272feaea2dd84cea8a9cfdf1af8834df6b75c3d715e"]
+      fieldMeta:
++        {"trustedImages":{"severity":"HIGH","description":"Image IDs (i.e. program digest) of Risc0 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them."}}
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9) {
+    +++ description: Entry contract to verify batches using SP1.
++++ description: Program hashes of SP1 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains program hash data within them.
++++ severity: HIGH
+      values.trustedPrograms:
++        ["0x00380861a3c05aa16421c66921e7b952005ddad5b91b81e56d1a5f92a88db099","0x1c0430d17016a8590438cd241e7b952002eed6ad646e07955a34bf25288db099","0x00745853e47349fb2ddb364dae473e099c19890da8c786490da83066a0959689","0x3a2c29f21cd27ecb3b66c9b56473e09960cc486d231e19241b5060cd20959689","0x34712aed5061bce303b4bae32d3edafc05a1b9ec04c6d1d84dedc5ab28e8fe98","0x0068e255db4186f38c1da5d71ad3edafc0b4373d8131b47626f6e2d5a8e8fe98","0x43645b1b5d225d4539e38da910e3ba2a4d8d8dfc457a10d26a03d3cf1fb969be","0x0086c8b63774897515cf1c6d490e3ba2a9b1b1bf915e8434b501e9e79fb969be","0x0040b6021bbe547fc651492bcc4eea12eaaa9b0a60086439206e27495ec6d6c3","0x205b010d6f951ff14a29257944eea12e5554d853002190e440dc4e925ec6d6c3","0x00b14510cec97d3449eb84b814be2f4b5dae3eb56528d6bb65e1aa8226f2bed3","0x58a28867325f4d123d7097024be2f4b56d71f5ab14a35aed4bc3550426f2bed3"]
+      fieldMeta:
++        {"trustedPrograms":{"severity":"HIGH","description":"Program hashes of SP1 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains program hash data within them."}}
+    }
+```
+
 Generated with discovered.json: 0x4831d3cceba0daa71cc689f23f9d7c40332b0fd4
 
 # Diff at Mon, 22 Sep 2025 07:47:06 GMT:

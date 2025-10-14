@@ -28,5 +28,11 @@
     "hash": "0x61779e0cf81852e74f9420c1500237e5c588b39f95b03369daca20d2e624b741",
     "address": "eth:0x215A5fF85308A72A772F09B520dA71D3520e9aC7",
     "blockNumber": 22882513
+  },
+  "OptimismPortal2_v5_0_0": {
+    "hash": "0x8ca0818fc584e81a5cead0efc1c32f3273182323dcbd08a60779d55cb0aa90c9",
+    "address": "eth:0x381E729FF983FA4BCEd820e7b922d79bF653B999",
+    "chain": "ethereum",
+    "blockNumber": 23496267
   }
 }

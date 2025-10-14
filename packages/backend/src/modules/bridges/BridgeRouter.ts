@@ -171,14 +171,16 @@ async function getMessagesStats(db: Database) {
     type: overall.type,
     count: Number(overall.count),
     medianDuration: Number(overall.medianDuration),
+    knownAppCount: Number(overall.knownAppCount),
+    knownApps: overall.knownApps,
     chains: detailedStats
       .filter((chain) => chain.type === overall.type)
       .map((chain) => {
-        assert(chain.sourceChain && chain.destinationChain)
+        assert(chain.srcChain && chain.dstChain)
         return {
           type: chain.type,
-          sourceChain: chain.sourceChain,
-          destinationChain: chain.destinationChain,
+          srcChain: chain.srcChain,
+          dstChain: chain.dstChain,
           count: Number(chain.count),
           medianDuration: Number(chain.medianDuration),
         }
@@ -192,23 +194,10 @@ async function getTransfersStats(db: Database) {
 
   return stats.map((overall) => ({
     type: overall.type,
-    count: Number(overall.count),
-    medianDuration: Number(overall.medianDuration),
-    outboundValueSum: Number(overall.outboundValueSum),
-    inboundValueSum: Number(overall.inboundValueSum),
-    chains: detailedStats
-      .filter((chain) => chain.type === overall.type)
-      .map((chain) => {
-        assert(chain.sourceChain && chain.destinationChain)
-        return {
-          type: chain.type,
-          sourceChain: chain.sourceChain,
-          destinationChain: chain.destinationChain,
-          count: Number(chain.count),
-          medianDuration: Number(chain.medianDuration),
-          outboundValueSum: Number(chain.outboundValueSum),
-          inboundValueSum: Number(chain.inboundValueSum),
-        }
-      }),
+    count: overall.count,
+    medianDuration: overall.medianDuration,
+    srcValueSum: overall.srcValueSum,
+    dstValueSum: overall.dstValueSum,
+    chains: detailedStats.filter((chain) => chain.type === overall.type),
   }))
 }

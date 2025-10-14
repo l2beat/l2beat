@@ -6,12 +6,7 @@ Mayan MCTP Protocol
 */
 
 import { CCTPv1MessageReceived, CCTPv1MessageSent } from './cctp'
-import {
-  ForwardedERC20,
-  ForwardedEth,
-  SwapAndForwardedERC20,
-  SwapAndForwardedEth,
-} from './mayan-forwarder'
+import { MayanForwarded } from './mayan-forwarder'
 import {
   type BridgeEvent,
   type BridgeEventDb,
@@ -24,20 +19,10 @@ import { LogMessagePublished } from './wormhole'
 export class MayanMctpPlugin implements BridgePlugin {
   name = 'mayan-mctp'
 
-  matchTypes = [
-    ForwardedERC20,
-    ForwardedEth,
-    SwapAndForwardedERC20,
-    SwapAndForwardedEth,
-  ]
+  matchTypes = [MayanForwarded]
   //TODO: This plugin starts from the SRC (ForwardedERC20) but CCTP plugin starts from DST and clears events. This needs to be solved somehow...
   match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
-    if (
-      !ForwardedERC20.checkType(event) &&
-      !ForwardedEth.checkType(event) &&
-      !SwapAndForwardedERC20.checkType(event) &&
-      !SwapAndForwardedEth.checkType(event)
-    ) {
+    if (!MayanForwarded.checkType(event)) {
       return
     }
     // find CCTP MessageSent in the same transaction as Mayan Forwarder event
@@ -51,29 +36,37 @@ export class MayanMctpPlugin implements BridgePlugin {
     })
     if (!messageReceived) return
     // find Wormhole LogMessagePublished from Src --> Dst if bridgedWithFee() or createdOrder() is used
-    const method = event.args.protocolData.slice(0, 10)
     if (
       // TODO: say what those are :)
-      method === '0x9445a5d' ||
-      method === '0xafd9b706' ||
-      method === '0x2072197f' ||
-      method === '0x1c59b7fc'
+      event.args.methodSignature === '0x9445a5d' ||
+      event.args.methodSignature === '0xafd9b706' ||
+      event.args.methodSignature === '0x2072197f' ||
+      event.args.methodSignature === '0x1c59b7fc'
     ) {
       const logMessagePublished = db.find(LogMessagePublished, {
         sameTxAfter: messageSent,
       })
       if (!logMessagePublished) return
       return [
-        Result.Message('cctp-v1.Message', [messageSent, messageReceived]),
-        Result.Message('wormhole.Message.mayan-mctp', [
-          logMessagePublished,
-          messageReceived,
-        ]),
+        Result.Message('cctp-v1.Message', {
+          app: 'mayan-mctp',
+          srcEvent: messageSent,
+          dstEvent: messageReceived,
+        }),
+        Result.Message('wormhole.Message', {
+          app: 'mayan-mctp',
+          srcEvent: logMessagePublished,
+          dstEvent: messageReceived,
+        }),
         // TODO: transfer, use event
       ]
     }
     return [
-      Result.Message('cctp-v1.Message', [messageSent, messageReceived]),
+      Result.Message('cctp-v1.Message', {
+        app: 'mayan-mctp',
+        srcEvent: messageSent,
+        dstEvent: messageReceived,
+      }),
       // TODO: transfer, use event
     ]
   }

@@ -16,7 +16,7 @@ function REGULAR_WITHDRAWAL(
       : ''
   // zk specific considerations
   const zkConsideration =
-    type === 'zk' ? 'ZK proofs are required to settle blocks.' : ''
+    type === 'zk' ? ' ZK proofs are required to settle blocks.' : ''
   return {
     name: 'Regular exit',
     description: `The user initiates the withdrawal by submitting a regular transaction on this chain. When the block containing that transaction is settled the funds become available for withdrawal on L1.${optimisticConsideration}${zkConsideration} Finally the user submits an L1 transaction to claim the funds.`,

@@ -1,20 +1,16 @@
 import type { Project } from '@l2beat/config'
 import type { ProjectDetailsRelatedProjectBannerProps } from '~/components/ProjectDetailsRelatedProjectBanner'
-import type { StateValidationSectionProps } from '~/components/projects/sections/StateValidationSection'
+import type { StateValidationSectionProps } from '~/components/projects/sections/state-validation/StateValidationSection'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
-import { ps } from '~/server/projects'
 import { getDiagramParams } from '../getDiagramParams'
 
-export async function getStateValidationSection(
+export function getStateValidationSection(
   project: Project<'scalingTechnology' | 'statuses' | 'scalingInfo'>,
-): Promise<
-  Omit<StateValidationSectionProps, 'id' | 'title' | 'sectionOrder'> | undefined
-> {
+  zkCatalogProjects: Project<'zkCatalogInfo'>[],
+):
+  | Omit<StateValidationSectionProps, 'id' | 'title' | 'sectionOrder'>
+  | undefined {
   if (!project.scalingTechnology.stateValidation) return undefined
-
-  const zkCatalogProjects = await ps.getProjects({
-    where: ['zkCatalogInfo'],
-  })
 
   const zkCatalogBanner = getZkCatalogBanner(
     project.scalingInfo.proofSystem?.zkCatalogId,

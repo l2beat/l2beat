@@ -43,6 +43,7 @@ export const ManualProxyType = v.enum([
   'new Arbitrum proxy',
   'call implementation proxy',
   'zkSync Lite proxy',
+  'zkLighter proxy',
   'zkSpace proxy',
   'Eternal Storage proxy',
   'Polygon Extension proxy',

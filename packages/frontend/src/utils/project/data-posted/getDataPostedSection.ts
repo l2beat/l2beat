@@ -1,13 +1,13 @@
 import type { Project } from '@l2beat/config'
 import type { DataPostedSectionProps } from '~/components/projects/sections/data-posted/DataPostedSection'
-import type { DaSolution } from '~/server/features/scaling/project/getScalingDaSolution'
+import type { DaSolution } from '~/server/features/scaling/project/getScalingDaSolutions'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import type { SsrHelpers } from '~/trpc/server'
 
 export async function getDataPostedSection(
   helpers: SsrHelpers,
   project: Project<never | 'scalingInfo', 'archivedAt' | 'daTrackingConfig'>,
-  daSolution: DaSolution | undefined,
+  daSolutions: DaSolution[] | undefined,
 ): Promise<
   | Pick<
       DataPostedSectionProps,
@@ -15,7 +15,12 @@ export async function getDataPostedSection(
     >
   | undefined
 > {
-  if (!project.daTrackingConfig || !daSolution) return undefined
+  const usedDaSolution = daSolutions?.find(
+    (daSolution) =>
+      project.daTrackingConfig &&
+      daSolution.layerId === project.daTrackingConfig[0]?.daLayer,
+  )
+  if (!project.daTrackingConfig || !usedDaSolution) return undefined
 
   const range = project.archivedAt ? 'max' : '1y'
   const data = await helpers.da.scalingProjectChart.fetch({
@@ -27,9 +32,9 @@ export async function getDataPostedSection(
 
   return {
     daLayer: {
-      name: daSolution.layerName,
-      logo: getProjectIcon(daSolution.layerSlug),
-      href: `/data-availability/projects/${daSolution.layerSlug}/${daSolution.bridgeSlug ?? 'no-bridge'}`,
+      name: usedDaSolution.layerName,
+      logo: getProjectIcon(usedDaSolution.layerSlug),
+      href: `/data-availability/projects/${usedDaSolution.layerSlug}/${usedDaSolution.bridgeSlug ?? 'no-bridge'}`,
     },
     defaultRange: range,
     daTrackingConfig: project.daTrackingConfig,

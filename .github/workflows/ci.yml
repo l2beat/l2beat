@@ -151,6 +151,22 @@ jobs:
       - name: Build tx-decoder
         run: pnpm build:uops-dashboard
 
+  build-token-backend:
+    name: Build token-backend container image
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Build container
+        uses: docker/build-push-action@v5
+        with:
+          push: false
+          file: Dockerfile.token-backend
+          build-args: |
+            TURBO_TEAM=${{ vars.TURBO_TEAM }}
+            TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
+
   typecheck:
     name: Typecheck
     runs-on: ubuntu-latest
@@ -269,22 +285,7 @@ jobs:
       - name: Start mock server and test pages
         run: |
           cd packages/frontend 
-
-          pnpm build
-          
-          # Start the mock server in the background and redirect output to /dev/null
-          pnpm start:mock > /dev/null 2>&1 &
-          SERVER_PID=$!
-          
-          # Wait for server to start
-          sleep 3
-          
-          # Test all pages
           pnpm test-all-pages
-          
-          # Kill the server
-          echo "Stopping server..."
-          kill $SERVER_PID
 
   test-gha-timeouts:
     name: Test if all GH Action jobs have timeout defined

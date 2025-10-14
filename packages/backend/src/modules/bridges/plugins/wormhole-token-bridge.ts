@@ -57,10 +57,12 @@ export class WormholeTokenBridgePlugin implements BridgePlugin {
       }
 
       return [
-        Result.Message('wormhole.Message.wormhole-token-bridge', [
-          logMessagePublished,
-          transferRedeemed,
-        ]),
+        Result.Message('wormhole.Message', {
+          app: 'wormhole-token-bridge',
+          srcEvent: logMessagePublished,
+          dstEvent: transferRedeemed,
+        }),
+        // TODO: Add transfer
       ]
     }
   }

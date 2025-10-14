@@ -1,5 +1,5 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
 import {
+  Address32,
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
@@ -67,8 +67,8 @@ export const SQUIDCORAL_NETWORKS = defineNetworks('squidcoral', [
 
 export const LogOrderCreated = createBridgeEventType<{
   orderHash: `0x${string}`
-  fromToken: EthereumAddress
-  toToken: EthereumAddress
+  fromToken: Address32
+  toToken: Address32
   fromAmount: string
   fillAmount: string
   $dstChain: string
@@ -76,8 +76,8 @@ export const LogOrderCreated = createBridgeEventType<{
 
 export const LogOrderFilled = createBridgeEventType<{
   orderHash: `0x${string}`
-  fromToken: EthereumAddress
-  toToken: EthereumAddress
+  fromToken: Address32
+  toToken: Address32
   fromAmount: string
   fillAmount: string
   $srcChain: string
@@ -91,8 +91,8 @@ export class SquidCoralPlugin implements BridgePlugin {
     if (logOrderCreated) {
       return LogOrderCreated.create(input.ctx, {
         orderHash: logOrderCreated.orderHash,
-        fromToken: EthereumAddress(logOrderCreated.order.fromToken),
-        toToken: EthereumAddress(logOrderCreated.order.toToken),
+        fromToken: Address32.from(logOrderCreated.order.fromToken),
+        toToken: Address32.from(logOrderCreated.order.toToken),
         fromAmount: logOrderCreated.order.fromAmount.toString(),
         fillAmount: logOrderCreated.order.fillAmount.toString(),
         $dstChain: findChain(
@@ -107,8 +107,8 @@ export class SquidCoralPlugin implements BridgePlugin {
     if (logOrderFilled) {
       return LogOrderFilled.create(input.ctx, {
         orderHash: logOrderFilled.orderHash,
-        fromToken: EthereumAddress(logOrderFilled.order.fromToken),
-        toToken: EthereumAddress(logOrderFilled.order.toToken),
+        fromToken: Address32.from(logOrderFilled.order.fromToken),
+        toToken: Address32.from(logOrderFilled.order.toToken),
         fromAmount: logOrderFilled.order.fromAmount.toString(),
         fillAmount: logOrderFilled.order.fillAmount.toString(),
         $srcChain: findChain(
@@ -134,7 +134,12 @@ export class SquidCoralPlugin implements BridgePlugin {
     if (!orderCreated) return
 
     return [
-      Result.Transfer('squid-coral.Swap', {
+      Result.Message('squid-coral.Message', {
+        app: 'squid-coral',
+        srcEvent: orderCreated,
+        dstEvent: orderFilled,
+      }),
+      Result.Transfer('squid-coral.Transfer', {
         srcEvent: orderCreated,
         srcTokenAddress: orderCreated.args.fromToken,
         srcAmount: orderCreated.args.fromAmount,

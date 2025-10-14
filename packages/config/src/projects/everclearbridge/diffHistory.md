@@ -1,3 +1,146 @@
+Generated with discovered.json: 0x5892675d2ae05ee0e93c0aa0c2ee8126b93ed6e7
+
+# Diff at Fri, 10 Oct 2025 09:59:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a91384a270a047b2514885e053feff1edc24f495 block: 1754908695
+- current timestamp: 1760090060
+
+## Description
+
+Upgrade, still many contracts unverified.
+
+## Watched changes
+
+```diff
+    contract HubGatewayV2 (everclear:0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa) {
+    +++ description: None
+      name:
+-        ""
++        "HubGatewayV2"
+      unverified:
+-        true
+      values.$implementation:
+-        "everclear:0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4"
++        "everclear:0xd8681612290EDD610E70f082Ef1015b25B597f5c"
+      values.$pastUpgrades.1:
++        ["2025-10-08T17:36:13.000Z","0x81dfc1c668cca1cb56cbe1f414057bdb8e5e041959802fed6584d5f7a0abfd21",["everclear:0xd8681612290EDD610E70f082Ef1015b25B597f5c"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.interchainSecurityModule:
++        "everclear:0xcdBE2995Af304e9c14dF5B0c3d7C9CCc63D7b8B3"
+      values.mailbox:
++        "everclear:0x7f50C5776722630a0024fAE05fDe8b47571D7B39"
+      values.owner:
++        "everclear:0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8"
+      values.receiver:
++        "everclear:0xa05A3380889115bf313f1Db9d5f335157Be4D816"
+      values.UPGRADE_INTERFACE_VERSION:
++        "5.0.0"
+      implementationNames.everclear:0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4:
+-        ""
+      implementationNames.everclear:0xd8681612290EDD610E70f082Ef1015b25B597f5c:
++        "HubGatewayV2"
+      template:
++        "everclearbridge/EverclearHubGateway"
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0xf6a49ba2bca4b5e8e2890b00f9d7641caf549b07f3d57a3678765b6b43daed33"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (everclear:0x001Fffde58224F8617C82bAf3E466a2dEBb8078E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (everclear:0x3a464f746D23Ab22155710f44dB16dcA53e0775E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (everclear:0x3C2b535a49c6827DF0b8e94467e6922c99E3c092)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OwnableMulticall (everclear:0x5c333d2284b36AeB1739C54dB2a729Fd15f80c35)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract InterchainAccountRouter (everclear:0x6FD739221F53F8dc1565F3aF830Cb687cfe5932D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OwnableMulticall (everclear:0x7a7716A400aA13B156317D683Ae2097db18B3E55)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Mailbox (everclear:0x7f50C5776722630a0024fAE05fDe8b47571D7B39)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (everclear:0xa3C641dF20C64E0D2a8a60147A4043DAab8ad896)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProtocolFee (everclear:0xC49aF4965264FA7BB6424CE37aA06773ad177224)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DomainRoutingIsm (everclear:0xcdBE2995Af304e9c14dF5B0c3d7C9CCc63D7b8B3)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../everclearbridge/.flat/DomainRoutingIsm.sol     | 2468 +++++++++++
+ .../HubGatewayV2}/ERC1967Proxy.p.sol               |    0
+ .../.flat/HubGatewayV2/HubGatewayV2.sol            | 1753 ++++++++
+ .../.flat/InterchainAccountRouter.sol              | 4312 ++++++++++++++++++++
+ .../everclearbridge/.flat/Mailbox/Mailbox.sol      | 1374 +++++++
+ .../Mailbox/TransparentUpgradeableProxy.p.sol      |  729 ++++
+ ...:0x5c333d2284b36AeB1739C54dB2a729Fd15f80c35.sol |  451 ++
+ .../OwnableMulticall.p.sol                         |  451 ++
+ .../OwnableMulticall.sol                           |  451 ++
+ .../projects/everclearbridge/.flat/ProtocolFee.sol |  842 ++++
+ .../projects/everclearbridge/.flat/ProxyAdmin.sol  |  147 +
+ 11 files changed, 12978 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754908695 (main branch discovery), not current.
+
+```diff
+    contract  (everclear:0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa) {
+    +++ description: None
+      name:
+-        "EverclearHubGateway"
++        ""
+    }
+```
+
 Generated with discovered.json: 0x2d891aef450faeea75229d6d77a791dbd6e0779d
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

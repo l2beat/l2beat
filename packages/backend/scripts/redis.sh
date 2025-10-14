@@ -6,7 +6,7 @@ NAME="${NAME:-local-redis}"
 PORT="${PORT:-6379}"
 # When using Podman, IMAGE needs to be overwrited like `IMAGE=docker://docker.io/library/redis:7.2-alpine`
 IMAGE="${IMAGE:-redis:7.2-alpine}"
-ROOT="${ROOT:-$(pwd)/redis}"
+ROOT="${ROOT:-$(pwd)/.redis}"
 TLS_DIR="$ROOT/tls"
 DATA_DIR="$ROOT/data"
 CONF="$ROOT/redis.conf"
@@ -59,8 +59,8 @@ start() {
   docker pull "$IMAGE" >/dev/null
 
   if docker ps -a --format '{{.Names}}' | grep -q "^${NAME}\$"; then
-    warn "Container '$NAME' already exists. Removing old container..."
-    docker rm -f "$NAME" >/dev/null || true
+    warn "Container '$NAME' already exists. Run '$0 restart' to restart"
+    return 0
   fi
 
   info "Starting Redis ($IMAGE) as '$NAME' on port $PORT..."
@@ -81,6 +81,8 @@ start() {
   echo "Test from host (requires redis-cli with TLS), for example:"
   echo "  redis-cli -p ${PORT} --tls --cacert \"$TLS_DIR/ca.crt\" -a \"${REDIS_PASSWORD}\" PING"
   echo "  redis-cli -p ${PORT} --tls --insecure  -a \"${REDIS_PASSWORD}\" -h localhost PING"
+  echo
+  echo "Redis-cli can be installed your package manager, eg. 'brew install redis' or 'sudo apt install redis-tools'"
 }
 
 stop() {
