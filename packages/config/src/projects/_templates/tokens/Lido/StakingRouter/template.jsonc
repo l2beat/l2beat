@@ -16,5 +16,10 @@
     "getStakingModuleNonce",
     "getStakingModules",
     "getStakingRewardsDistribution"
-  ]
+  ],
+  "fields": {
+    "accessControl": {
+      "handler": {"type": "accessControl"}
+    }
+  }
 }

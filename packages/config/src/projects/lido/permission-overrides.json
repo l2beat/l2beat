@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-10-10T05:38:22.883Z",
+  "lastModified": "2025-10-13T21:38:30.281Z",
   "contracts": {
     "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": {
       "functions": [
@@ -2154,172 +2154,1069 @@
         {
           "functionName": "submit",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Submits a new proposal that can execute a series of calls in the name of the governance, the proposal needs to be scheduled for execution.",
           "ownerDefinitions": [
             {
-              "path": "$self._timelockState.governance"
+              "path": "$self.getGovernance"
             }
           ],
-          "timestamp": "2025-10-10T05:14:06.516Z"
+          "timestamp": "2025-10-13T15:55:11.042Z"
         },
         {
           "functionName": "schedule",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Schedules a proposal for execution, the proposal can be executed once the schedule delay has passed, if it was not cancelled by the DAO.",
           "ownerDefinitions": [
             {
               "path": "$self.getGovernance"
             }
           ],
-          "timestamp": "2025-10-10T05:38:22.883Z"
+          "timestamp": "2025-10-13T15:57:50.281Z"
         },
         {
           "functionName": "cancelAllNonExecutedProposals",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Cancels all proposals that haven't been executed and prevents them from being executed in the future. The DualGovernance contract currently limits the calls to this function only to the state \"vetoSignalling\" or \"vetoSignallingDeactivation\", through a proposal.",
           "ownerDefinitions": [
             {
               "path": "$self.getGovernance"
             }
           ],
-          "timestamp": "2025-10-10T05:38:13.563Z"
+          "timestamp": "2025-10-11T19:49:17.099Z"
         },
         {
           "functionName": "setGovernance",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets the address of the governance contract in use. The governance contract can submit and schedule proposals.",
           "ownerDefinitions": [
             {
               "path": "$self.getAdminExecutor"
             }
           ],
-          "timestamp": "2025-10-10T05:37:12.933Z"
+          "timestamp": "2025-10-13T15:53:39.844Z"
         },
         {
           "functionName": "setAfterSubmitDelay",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets the delay period after a proposal is submitted before it can be scheduled for execution. The current delay is 72 hours and is capped at 720 hours.",
           "ownerDefinitions": [
             {
               "path": "$self.getAdminExecutor"
             }
           ],
-          "timestamp": "2025-10-10T05:37:28.728Z"
+          "timestamp": "2025-10-12T22:58:01.259Z"
         },
         {
           "functionName": "setAfterScheduleDelay",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets the delay that needs to pass once a proposal has been scheduled, before it can be executed. There is a hardcoded limit of 240 hours, the current delay is 24 hours.",
           "ownerDefinitions": [
             {
               "path": "$self.getAdminExecutor"
             }
           ],
-          "timestamp": "2025-10-10T05:37:31.937Z"
+          "timestamp": "2025-10-12T22:57:31.196Z"
         },
         {
           "functionName": "transferExecutorOwnership",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Transfers the ownership of the executor contract to a new address. The owner of the executor can execute any proposal through that contract, which given the current permission assignment could include any Lido governance proposal.",
           "ownerDefinitions": [
             {
               "path": "$self.getAdminExecutor"
             }
           ],
-          "timestamp": "2025-10-10T05:37:02.362Z"
+          "timestamp": "2025-10-13T15:56:50.620Z"
         },
         {
           "functionName": "setEmergencyProtectionActivationCommittee",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets the emergency activation committee, the committee with the right to activate the emergency mode.",
           "ownerDefinitions": [
             {
               "path": "$self.getAdminExecutor"
             }
           ],
-          "timestamp": "2025-10-10T05:37:20.649Z"
+          "timestamp": "2025-10-13T15:48:59.205Z"
         },
         {
           "functionName": "setEmergencyProtectionExecutionCommittee",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets the emergency protection execution committee. Once the emergency mode is enabled, this committee can execute any proposal.",
           "ownerDefinitions": [
             {
               "path": "$self.getAdminExecutor"
             }
           ],
-          "timestamp": "2025-10-10T05:37:15.440Z"
+          "timestamp": "2025-10-13T15:52:31.696Z"
         },
         {
           "functionName": "setEmergencyProtectionEndDate",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets the end date of the emergency protection. Past this date the emergency activation committee can no longer activate the emergency mode. The current date is June 20th, 2026.",
           "ownerDefinitions": [
             {
               "path": "$self.getAdminExecutor"
             }
           ],
-          "timestamp": "2025-10-10T05:36:50.770Z"
+          "timestamp": "2025-10-13T15:51:47.818Z"
         },
         {
           "functionName": "setEmergencyModeDuration",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets the duration of the emergency mode. The current duration is 30 days and the value is capped at 365 days.",
           "ownerDefinitions": [
             {
               "path": "$self.getAdminExecutor"
             }
           ],
-          "timestamp": "2025-10-10T05:37:23.534Z"
+          "timestamp": "2025-10-13T14:52:04.421Z"
         },
         {
           "functionName": "setEmergencyGovernance",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets the address of the emergency governance, this is the governance that may be activated by the emergency committee.",
           "ownerDefinitions": [
             {
               "path": "$self.getAdminExecutor"
             }
           ],
-          "timestamp": "2025-10-10T05:37:26.152Z"
+          "timestamp": "2025-10-13T14:50:43.297Z"
         },
         {
           "functionName": "activateEmergencyMode",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Function that activates the emergency mode. The emergency mode can only be activated once and before a set timestamp after which it expires. In the emergency mode, the committee can perform two actions: pass proposals (any), or disable de Dual Governance (and go back to the previous model). This mode is meant as a protection in case of an adversarial proposalthat would exploit a bug in the Dual Governance contracts.",
           "ownerDefinitions": [
             {
               "path": "$self.getEmergencyActivationCommittee"
             }
           ],
-          "timestamp": "2025-10-10T05:14:40.950Z"
+          "timestamp": "2025-10-11T19:45:14.208Z"
         },
         {
           "functionName": "emergencyExecute",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Executes any proposal if the activation mode is activated and the proposal is from the emergency committee.",
           "ownerDefinitions": [
             {
               "path": "$self.getEmergencyActivationCommittee"
             }
           ],
-          "timestamp": "2025-10-10T05:15:01.907Z"
+          "timestamp": "2025-10-11T19:50:16.145Z"
         },
         {
           "functionName": "deactivateEmergencyMode",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Cancels all pending proposals and deactivates the emergency mode. If the emergency mode duration delay has passed, anyone can call this function.",
           "ownerDefinitions": [
             {
               "path": "$self.getAdminExecutor"
             }
           ],
-          "timestamp": "2025-10-10T05:37:44.835Z"
+          "timestamp": "2025-10-13T16:00:38.071Z"
         },
         {
           "functionName": "emergencyReset",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Resets the system after it entered emergency mode. This cancels all proposals, deactivates emergency mode, and sets the emergency governance as acting governance.",
           "ownerDefinitions": [
             {
               "path": "$self.getEmergencyActivationCommittee"
             }
           ],
-          "timestamp": "2025-10-10T05:15:13.834Z"
+          "timestamp": "2025-10-13T15:59:04.614Z"
         },
         {
           "functionName": "setAdminExecutor",
           "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets a new address for the admin executor contract. The admin executor holds critical administrative permissions in the governance, and should always be grantedto an address subject to the governance process (a \"proposer\").",
           "ownerDefinitions": [
             {
               "path": "$self.getAdminExecutor"
             }
           ],
-          "timestamp": "2025-10-10T05:37:34.659Z"
+          "timestamp": "2025-10-12T22:49:52.073Z"
+        }
+      ]
+    },
+    "eth:0x553337946F2FAb8911774b20025fa776B76a7CcE": {
+      "functions": [
+        {
+          "functionName": "cancelAllPendingProposals",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Cancels all pending proposals that have not been executed.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.GOVERNANCE"
+            }
+          ],
+          "timestamp": "2025-10-13T16:04:25.946Z"
+        },
+        {
+          "functionName": "scheduleProposal",
+          "userClassification": "non-permissioned",
+          "checked": false,
+          "score": "unscored",
+          "description": "",
+          "ownerDefinitions": [],
+          "timestamp": "2025-10-13T16:05:46.937Z"
+        },
+        {
+          "functionName": "submitProposal",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Submits a transaction from the Lido governance to the timelock, this proposal can eventually be executed after the mandatory delays, if not cancelled.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.GOVERNANCE"
+            }
+          ],
+          "timestamp": "2025-10-13T16:05:49.260Z"
+        }
+      ]
+    },
+    "eth:0xf165148978Fa3cE74d76043f833463c340CFB704": {
+      "functions": [
+        {
+          "functionName": "changeSupportRequiredPct",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Changes the required percentage of \"yes\" votes for a proposal to pass. The number has to be greater or equal than the quorum and less than 100%.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].MODIFY_SUPPORT_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-13T17:19:40.265Z"
+        },
+        {
+          "functionName": "changeMinAcceptQuorumPct",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Changes the minimum quorum required for a proposal to pass. This is the percentage of \"yes\" votes in regard to the total voting power. The new value has to be less or equal than the support percentage.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].MODIFY_QUORUM_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-13T17:19:46.203Z"
+        },
+        {
+          "functionName": "unsafelyChangeVoteTime",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Changes the total duration of voting. This affects all existing unexecuted votes. The new value has to be greater than the objection time and will effectively change the main voting period. The main voting period is the time before objection during which users can vote \"yes\" or \"no\" for proposals. If the new time is smaller than the passed time on existing proposals this would fast forward the proposals to the objection or closed phase.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].UNSAFELY_MODIFY_VOTE_TIME_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-13T17:17:25.856Z"
+        },
+        {
+          "functionName": "unsafelyChangeObjectionPhaseTime",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Changes the duration of the objection phase. This affects all existing unexecuted votes and could be used to remove, fast forward, or extend the objection phase on existing and future proposals. The new value has to be less than the total vote time.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].UNSAFELY_MODIFY_VOTE_TIME_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-13T17:18:27.211Z"
+        },
+        {
+          "functionName": "newVote",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Creates a proposal with an associated execution script and description metadata. If the proposal is accepted the script will be executed and could perform any action that the Voting contract is allowed to do.\t",
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].CREATE_VOTES_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-13T17:20:33.618Z"
+        },
+        {
+          "functionName": "forward",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Similar to newVote but without any description metadata. This is meant to be called as a result of other governance processes or smart contracts.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-10-13T17:22:28.078Z"
+        }
+      ]
+    },
+    "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999": {
+      "functions": [
+        {
+          "functionName": "proxy__ossify",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Ossifies the proxy. This freezes the current implementation of the StakingRouter and effectively makes it non-upagreable by changing the proxy admin to the zero address.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-10-13T17:57:55.194Z"
+        },
+        {
+          "functionName": "proxy__changeAdmin",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Changes the proxy admin. The admin can update the entire implementation and logic of the StakingRouter.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-10-13T17:58:06.997Z"
+        },
+        {
+          "functionName": "proxy__upgradeTo",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Upgrades the implementation of the StakingRouter This can change the entire logic of the contract including change ownership of funds locked in the contract, if any.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-10-13T17:58:15.074Z"
+        },
+        {
+          "functionName": "proxy__upgradeToAndCall",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Upgrades the implementation of the StakingRouter (similarly to _proxy__upgradeTo _), and then calls a function in the new contract.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-10-13T17:58:24.292Z"
+        }
+      ]
+    },
+    "eth:0x226f9265CBC37231882b7409658C18bB7738173A": {
+      "functions": [
+        {
+          "functionName": "initialize",
+          "userClassification": "non-permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-10-13T18:15:13.890Z"
+        },
+        {
+          "functionName": "finalizeUpgrade_v3",
+          "userClassification": "non-permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-10-13T18:13:37.172Z"
+        },
+        {
+          "functionName": "addStakingModule",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Registers a staking module specifying a name, contract, fee settings, and limits on the shares and validators. The new module can receive ETH deposits. Adding a malicious staking modules could lead to the loss of vunds allocated to new deposits.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.STAKING_MODULE_MANAGE_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-13T18:12:48.954Z"
+        },
+        {
+          "functionName": "updateStakingModule",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Updates the settings of an existing Staking Module. This can change the fees or the limits set on deposits and staking shares.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.STAKING_MODULE_MANAGE_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-13T18:28:49.597Z"
+        },
+        {
+          "functionName": "updateTargetValidatorsLimits",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "For a specific node operator in a specific staking module, updates the limit of the validators that can be used for deposit.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.STAKING_MODULE_MANAGE_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-13T18:33:29.907Z"
+        },
+        {
+          "functionName": "reportRewardsMinted",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "medium-risk",
+          "description": "Reports rewards that have been minted and notifies each module of the rewards they received by calling a dedicated function in the respective module's contract.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.REPORT_REWARDS_MINTED_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-13T18:17:16.797Z"
+        },
+        {
+          "functionName": "updateExitedValidatorsCountByStakingModule",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Updates the total numbers of exited validators for each module. This is used to determine and confirm the number of active validators.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.REPORT_EXITED_VALIDATORS_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-13T18:18:25.351Z"
+        },
+        {
+          "functionName": "reportStakingModuleExitedValidatorsCountByNodeOperator",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "For a specific staking module, reports the total number of exited validators for each node operator.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.REPORT_EXITED_VALIDATORS_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-13T18:17:57.134Z"
+        },
+        {
+          "functionName": "unsafeSetExitedValidatorsCount",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Overrides the number of exited validators for a given node operator in a given staking module, without any safety check. This function cannot be called from the current AccountingOracle, but the Oracle could be upgraded to a version which can call this function if it isn't ossified.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.UNSAFE_SET_EXITED_VALIDATORS_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-13T18:20:41.752Z"
+        },
+        {
+          "functionName": "onValidatorsCountsByNodeOperatorReportingFinished",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Called when the reporting of exited and stuck validators is over. This function will call the different staking modules to update their data.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.REPORT_EXITED_VALIDATORS_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-13T18:16:32.806Z"
+        },
+        {
+          "functionName": "decreaseStakingModuleVettedKeysCountByNodeOperator",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Reduces the number of validators a specific node operator can run. This doesn't affect existing validators but may prevent the node operators to create new validators if it has reached the new limit count.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.STAKING_MODULE_UNVETTING_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-13T18:13:26.754Z"
+        },
+        {
+          "functionName": "setStakingModuleStatus",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "medium-risk",
+          "description": "Changes the status of a staking module. Modules may be Active, Paused, or Stopped. When Paused no more deposits can be added but the rewards are still distributed. If stopped no more deposits can be added and the rewards go to the protocol treasury instead.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.STAKING_MODULE_MANAGE_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-13T18:23:21.531Z"
+        },
+        {
+          "functionName": "setWithdrawalCredentials",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets the withdraw credentials of each module. The credentials are used to withdraw ETH on the Consensus Layer side. No address currently has the permission to change those credentials.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_WITHDRAWAL_CREDENTIALS_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-13T18:22:33.747Z"
+        },
+        {
+          "functionName": "reportValidatorExitDelay",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Handles tracking and penalization logic for a node operator who failed to exit their validator within the defined exit window. The information is simply forwarded to the staking module which contains the logic and possible penalties.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.REPORT_VALIDATOR_EXITING_STATUS_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-13T18:27:05.382Z"
+        },
+        {
+          "functionName": "onValidatorExitTriggered",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Handles the triggerable exit event for a set of validators. This function will forward the call to the corresponding staking module, different modules can interpret and treat the information differently.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.REPORT_VALIDATOR_EXIT_TRIGGERED_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-13T18:25:42.516Z"
+        },
+        {
+          "functionName": "deposit",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Deposits ETH to create validators in a given staking module. The staking module is specified by the Lido contract which is the only possible caller, and the underlaying staking module constract specifies the node operator public keys.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getLido"
+            }
+          ],
+          "timestamp": "2025-10-13T18:15:06.751Z"
+        },
+        {
+          "functionName": "grantRole",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Grants a role within the contract. Roles are used to handle the access control of all functions above. Granting a role to a malicious actor could put lead to the hijack of deposited funds.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-13T18:34:33.612Z"
+        },
+        {
+          "functionName": "revokeRole",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Revokes a role from a specific address.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-13T18:34:57.879Z"
+        }
+      ]
+    },
+    "eth:0x852deD011285fe67063a08005c71a85690503Cee": {
+      "functions": [
+        {
+          "functionName": "proxy__ossify",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Ossifies the proxy. This freezes the current implementation of the AccountingOracle and effectively makes it non-upagreable by changing the proxy admin to the zero address.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-10-13T18:40:30.872Z"
+        },
+        {
+          "functionName": "proxy__changeAdmin",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Changes the proxy admin. The admin can update the entire implementation and logic of the AccountingOracle.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-10-13T18:40:40.617Z"
+        },
+        {
+          "functionName": "proxy__upgradeTo",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Upgrades the implementation of the AccountingOracle This can change the entire logic of the contract including change ownership of funds locked in the contract, if any.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-10-13T18:40:51.410Z"
+        },
+        {
+          "functionName": "proxy__upgradeToAndCall",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Upgrades the implementation of the AccountingOracle (similarly to _proxy__upgradeTo _), and then calls a function in the new contract.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-10-13T18:40:58.090Z"
+        }
+      ]
+    },
+    "eth:0xE9906E543274cebcd335d2C560094089e9547e8d": {
+      "functions": [
+        {
+          "functionName": "initialize",
+          "userClassification": "non-permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-13T18:41:05.768Z"
+        },
+        {
+          "functionName": "initializeWithoutMigration",
+          "userClassification": "non-permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-13T18:41:07.230Z"
+        },
+        {
+          "functionName": "finalizeUpgrade_v2",
+          "userClassification": "non-permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-13T18:41:01.396Z"
+        },
+        {
+          "functionName": "finalizeUpgrade_v3",
+          "userClassification": "non-permissioned",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2025-10-13T18:41:01.997Z"
+        },
+        {
+          "functionName": "submitReportData",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Submits a report for a given reference slot on the beacon chain. This report includes information on the number of Lido validators on the consensus layer, their cumulative balance, exited validators, balance of the rewards and withdrawal vaults, and the simulated share rate (total ether / all shares emitted). This information is then processed and transmitted to other Lido contracts. It will influence how shares are rebased and whether validators will be exited/created in future slots. The report of wrong data could therefore lead to the loss of unclaimed yield or loss of user funds.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.SUBMIT_DATA_ROLE.members"
+            },
+            {
+              "path": "@getConsensusContract.getMembers.addresses"
+            }
+          ],
+          "timestamp": "2025-10-13T18:46:25.997Z"
+        },
+        {
+          "functionName": "submitReportExtraDataEmpty",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Informs that no extra data is submitted for the given slot.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.SUBMIT_DATA_ROLE.members"
+            },
+            {
+              "path": "@getConsensusContract.getMembers.addresses"
+            }
+          ],
+          "timestamp": "2025-10-13T18:47:03.041Z"
+        },
+        {
+          "functionName": "submitReportExtraDataList",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Submits extra data for a slot. This allows the consensus committee to compute the extra data asynchronously and report it later than the main report data. If the deadline has passed or the next report has started then no more extra data can be added for a slot.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.SUBMIT_DATA_ROLE.members"
+            },
+            {
+              "path": "@getConsensusContract.getMembers.addresses"
+            }
+          ],
+          "timestamp": "2025-10-13T18:47:25.923Z"
+        },
+        {
+          "functionName": "revokeRole",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Revokes a role for a specific address.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-13T18:50:23.193Z"
+        },
+        {
+          "functionName": "grantRole",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Grants a role within the contract to a specific address. There are roles to allow the management of the consensus contract or the right to submit data. None of these role are currently in use.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-13T18:49:54.780Z"
+        },
+        {
+          "functionName": "setConsensusContract",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets the consensus contract to use. The consensus contract is currently HashConsensus, it can decide who is a committee member and push the consensus proof to the AccountingOracle.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_CONSENSUS_CONTRACT_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-13T18:49:25.080Z"
+        },
+        {
+          "functionName": "setConsensusVersion",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets the current consensus version used. The version refers to a set of rules that the members must agree on when building the report.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_CONSENSUS_VERSION_ROLE"
+            }
+          ],
+          "timestamp": "2025-10-13T18:50:51.674Z"
+        },
+        {
+          "functionName": "submitConsensusReport",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Pushes the hash of the report built by the consensus committee. This ensures that the data reported and processed matches the consensus.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getConsensusContract"
+            }
+          ],
+          "timestamp": "2025-10-13T18:48:03.330Z"
+        },
+        {
+          "functionName": "discardConsensusReport",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Discards the report for the current slot. This can only be called when (all conditions met): a consensus was pushed, the processing hasn't started, the deadline is not expired, and there is no consensus to replace the current one. This may happen if a member changers their report, is moved from the set, or the quorum value gets increased.\t",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getConsensusContract"
+            }
+          ],
+          "timestamp": "2025-10-13T18:48:40.216Z"
+        }
+      ]
+    },
+    "eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E": {
+      "functions": [
+        {
+          "functionName": "setConfigProvider",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets the address of the config provider. The config provider holds critical parameters of the dual governance, such as delays, locking period, and support levels required for the dual governance functionality (veto from stETH holders).",
+          "ownerDefinitions": [
+            {
+              "path": "@TIMELOCK.getAdminExecutor"
+            }
+          ],
+          "timestamp": "2025-10-13T21:36:44.440Z"
+        },
+        {
+          "functionName": "setProposalsCanceller",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Updates the address of the proposals canceller authorized to cancel pending proposals. This is currently set to the DAO voting systems but could also be assigned to a contract with additional logic.",
+          "ownerDefinitions": [
+            {
+              "path": "@TIMELOCK.getAdminExecutor"
+            }
+          ],
+          "timestamp": "2025-10-13T21:26:38.634Z"
+        },
+        {
+          "functionName": "registerProposer",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Registers the proposerAccount address in the system as a valid proposer and associates it with the executor contract address. Currently the only proposer is the Lido Governance contract (Voting), associated with the current admin Executor contract.",
+          "ownerDefinitions": [
+            {
+              "path": "@TIMELOCK.getAdminExecutor"
+            }
+          ],
+          "timestamp": "2025-10-13T21:07:19.533Z"
+        },
+        {
+          "functionName": "setProposerExecutor",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Updates the executor contract associated with a given proposer. ",
+          "ownerDefinitions": [
+            {
+              "path": "@TIMELOCK.getAdminExecutor"
+            }
+          ],
+          "timestamp": "2025-10-13T21:25:36.202Z"
+        },
+        {
+          "functionName": "unregisterProposer",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Unregisters a proposer, a contract allowed to submit proposals.",
+          "ownerDefinitions": [
+            {
+              "path": "@TIMELOCK.getAdminExecutor"
+            }
+          ],
+          "timestamp": "2025-10-13T21:29:10.651Z"
+        },
+        {
+          "functionName": "addTiebreakerSealableWithdrawalBlocker",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Adds a unique address of a sealable contract that can be paused and may cause a Dual Governance tie (deadlock). A tie may occur when user withdrawal requests cannot be processed due to the paused state of a registered sealable withdrawal blocker while the Dual Governance system is in the RageQuit state. This contract could then be paused (sealed), by the reseal committee, and potentially unsealed by the tiebreaker committee.",
+          "ownerDefinitions": [
+            {
+              "path": "@TIMELOCK.getAdminExecutor"
+            }
+          ],
+          "timestamp": "2025-10-13T21:37:56.823Z"
+        },
+        {
+          "functionName": "removeTiebreakerSealableWithdrawalBlocker",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "low-risk",
+          "description": "Removes a previously registered sealableWithdrawalBlocker contract from the system. (see addTiebreakerSealableWithdrawalBlocker). \n\n",
+          "ownerDefinitions": [
+            {
+              "path": "@TIMELOCK.getAdminExecutor"
+            }
+          ],
+          "timestamp": "2025-10-13T21:38:30.281Z"
+        },
+        {
+          "functionName": "setTiebreakerCommittee",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets the address of the tie breaker committee. The committee can, in the unique condition of a deadlock in the governance process (stuck in rage quit mode):\n - Schedule any pending proposal for execution\n - Unpause (unseal) any sealable contract using \"tieBreakerResumeSealable\"\n\nThose can only be performed once the delay \"tiebreaker activation timeout\" has passed.",
+          "ownerDefinitions": [
+            {
+              "path": "@TIMELOCK.getAdminExecutor"
+            }
+          ],
+          "timestamp": "2025-10-13T21:16:56.564Z"
+        },
+        {
+          "functionName": "setTiebreakerActivationTimeout",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets the tiebreaker activatioin timeout. This is the delay before which the tiebreaker committee can perform any action, once it's activated.",
+          "ownerDefinitions": [
+            {
+              "path": "@TIMELOCK.getAdminExecutor"
+            }
+          ],
+          "timestamp": "2025-10-13T21:17:25.731Z"
+        },
+        {
+          "functionName": "setResealCommittee",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets the address of the reseal committee.\n\n",
+          "ownerDefinitions": [
+            {
+              "path": "@TIMELOCK.getAdminExecutor"
+            }
+          ],
+          "timestamp": "2025-10-13T21:24:39.204Z"
+        },
+        {
+          "functionName": "setResealManager",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Sets the address of the Reseal Manager contract.\n\n",
+          "ownerDefinitions": [
+            {
+              "path": "@TIMELOCK.getAdminExecutor"
+            }
+          ],
+          "timestamp": "2025-10-13T21:24:03.134Z"
+        },
+        {
+          "functionName": "tiebreakerScheduleProposal",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Allows the Tiebreaker committee to instruct the EmergencyProtectedTimelock singleton instance to schedule a submitted and non-cancelled proposal for execution. This can only be called if the governance is in deadlock and the mandatory timeout has passed since the activation of the tiebreaker committee.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getTiebreakerDetails.tiebreakerCommittee"
+            }
+          ],
+          "timestamp": "2025-10-13T21:19:15.499Z"
+        },
+        {
+          "functionName": "tiebreakerResumeSealable",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Allows the Tiebreaker committee to resume a paused sealable contract when the system is in a tie state.\n\n",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getTiebreakerDetails.tiebreakerCommittee"
+            }
+          ],
+          "timestamp": "2025-10-13T21:21:10.012Z"
+        },
+        {
+          "functionName": "resealSealable",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Allows the reseal committee to \"reseal\" (pause indefinitely) an instance of a sealable contract that is currently paused for a limited duration. This is done using the ResealManager contract.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getResealCommittee"
+            }
+          ],
+          "timestamp": "2025-10-13T21:22:44.448Z"
+        },
+        {
+          "functionName": "cancelAllPendingProposals",
+          "userClassification": "non-permissioned",
+          "score": "unscored",
+          "timestamp": "2025-10-13T21:23:58.863Z"
+        },
+        {
+          "functionName": "submitProposal",
+          "userClassification": "permissioned",
+          "checked": true,
+          "score": "high-risk",
+          "description": "Instructs the EmergencyProtectedTimelock singleton instance to register a new governance proposal. The proposal will be executed by an executor contract associated with the proposer address calling this function at the moment of submission. This starts a dynamic timelock on scheduling the proposal for execution.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.getProposers[0].account"
+            }
+          ],
+          "timestamp": "2025-10-13T21:31:42.769Z"
+        },
+        {
+          "functionName": "scheduleProposal",
+          "userClassification": "non-permissioned",
+          "score": "unscored",
+          "timestamp": "2025-10-13T21:31:13.236Z"
         }
       ]
     }

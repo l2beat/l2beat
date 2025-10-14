@@ -1,5 +1,12 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreMethods": ["getLastProcessingRefSlot"],
-  "ignoreInWatchMode": ["getConsensusReport", "getProcessingState"]
+  "ignoreInWatchMode": ["getConsensusReport", "getProcessingState"],
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    }
+  }
 }

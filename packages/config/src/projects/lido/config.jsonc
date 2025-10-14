@@ -27,6 +27,16 @@
         }
       }
     },
+    "eth:0x2e59A20f205bB85a89C53f1936454680651E618e": {
+      "fields": {
+        "acl": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb"
+          }
+        }
+      }
+    },
     "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84": {
       "fields": {
         "acl": {
