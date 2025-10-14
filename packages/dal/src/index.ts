@@ -9,3 +9,5 @@ export function makeQueryExecutor(db: Database, logger: Logger) {
   const cache = new Cache(redisUrl)
   return new QueryExecutor(db, logger, cache)
 }
+
+export { type SummedByTimestampTvsValuesRecord } from './queries/tvl/getSummedByTimestampTvsValuesQuery'

@@ -3,9 +3,9 @@ import { groupByBridgeTabs } from '~/pages/bridges/utils/groupByBridgeTabs'
 import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import { getScalingTab } from '~/server/features/scaling/getCommonScalingEntry'
 import {
-  getProjectsLatestTvsUsd,
-  type ProjectsLatestTvsUsd,
-} from '~/server/features/scaling/tvs/getLatestTvsUsd'
+  get7dTvsBreakdown,
+  type SevenDayTvsBreakdown,
+} from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { ps } from '~/server/projects'
 
 export async function getHotPages() {
@@ -28,7 +28,7 @@ export async function getHotPages() {
       ps.getProjects({
         select: ['ecosystemConfig'],
       }),
-      getProjectsLatestTvsUsd(),
+      get7dTvsBreakdown({ type: 'all' }),
     ])
 
   const groupedScaling = groupByScalingTabs(
@@ -86,10 +86,10 @@ export async function getHotPages() {
     ...ecosystemPaths,
   ]
 }
-function sortByTvs(latestValues: ProjectsLatestTvsUsd) {
+function sortByTvs(latestValues: SevenDayTvsBreakdown) {
   return (a: Project, b: Project) => {
-    const aValue = latestValues[a.id]
-    const bValue = latestValues[b.id]
+    const aValue = latestValues.projects[a.id]?.breakdown.total
+    const bValue = latestValues.projects[b.id]?.breakdown.total
     return (bValue ?? 0) - (aValue ?? 0)
   }
 }

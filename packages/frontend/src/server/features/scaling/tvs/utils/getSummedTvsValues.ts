@@ -1,4 +1,4 @@
-import type { SummedByTimestampTvsValuesRecord } from '@l2beat/dal/build/queries/tvl/getSummedByTimestampTvsValuesQuery'
+import type { SummedByTimestampTvsValuesRecord } from '@l2beat/dal'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import keyBy from 'lodash/keyBy'
 import { env } from '~/env'

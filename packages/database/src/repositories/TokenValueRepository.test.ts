@@ -1033,47 +1033,6 @@ describeDatabase(TokenValueRepository.name, (db) => {
         })
       },
     )
-
-    describe(
-      TokenValueRepository.prototype.getSummedAtTimestampPerProject.name,
-      () => {
-        it('returns summed values per project at a specific timestamp', async () => {
-          const result = await repository.getSummedAtTimestampPerProject(100)
-
-          expect(result).toEqualUnsorted([
-            {
-              project: 'ethereum',
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25, // a + b + c + d + e valueForProject
-            },
-            {
-              project: 'arbitrum',
-              value: 12000.25, // f valueForProject
-            },
-          ])
-        })
-
-        it('returns correct values for timestamp with different projects', async () => {
-          const result = await repository.getSummedAtTimestampPerProject(200)
-
-          expect(result).toEqualUnsorted([
-            {
-              project: 'ethereum',
-              value: 16000.25, // a valueForProject
-            },
-            {
-              project: 'arbitrum',
-              value: 8000.5 + 6400.5, // g + h valueForProject
-            },
-          ])
-        })
-
-        it('returns empty array when no data exists at timestamp', async () => {
-          const result = await repository.getSummedAtTimestampPerProject(999)
-
-          expect(result).toEqual([])
-        })
-      },
-    )
   })
 
   afterEach(async () => {
