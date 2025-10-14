@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xcbfc29fa937d377857fae980a187e431e3547923
+
+# Diff at Tue, 14 Oct 2025 10:04:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@996d6052605ea429f9e7d41fa369fcaf2b0ec2f4 block: 1753200107
+- current timestamp: 1753200107
+
+## Description
+
+Config: add escape verifier template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753200107 (main branch discovery), not current.
+
+```diff
+    contract PerpetualEscapeVerifier (eth:0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD) {
+    +++ description: Special verifier for the escape() function.
+      template:
++        "edgex/PerpetualEscapeVerifier"
+    }
+```
+
 Generated with discovered.json: 0x277a19392a6e121a29e4af652093bec0e7fceee5
 
 # Diff at Wed, 03 Sep 2025 15:52:07 GMT:

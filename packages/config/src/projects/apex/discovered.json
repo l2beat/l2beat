@@ -425,6 +425,7 @@
       "name": "PerpetualEscapeVerifier",
       "address": "eth:0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD",
       "type": "Contract",
+      "template": "edgex/PerpetualEscapeVerifier",
       "sourceHashes": [
         "0xb56ab8d20ca2ce7897c0448957f5ad2bb634a2019411b1cb0453afe5c86f4f5f"
       ],
@@ -1360,6 +1361,7 @@
     ]
   },
   "usedTemplates": {
+    "edgex/PerpetualEscapeVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "starkex/Committee": "0xea8d2e95c84337933f471b8c21505791bd94685784b7e5c407f5e7045403a683",
     "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb",
