@@ -576,6 +576,9 @@ importers:
       next-themes:
         specifier: ^0.3.0
         version: 0.3.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      node-cron:
+        specifier: ^4.2.1
+        version: 4.2.1
       react:
         specifier: 19.0.0
         version: 19.0.0
@@ -6203,6 +6206,10 @@ packages:
 
   node-buffer-encoding@1.0.2:
     resolution: {integrity: sha512-v2QFjf04xWb5Q7cyzbi8qEwe2vw2xJBXT7+pMOLA02+KJZlcJ/6syFYiH96ClXKfOG/kyBeysAuewJ7zfAUYKQ==}
+
+  node-cron@4.2.1:
+    resolution: {integrity: sha512-lgimEHPE/QDgFlywTd8yTR61ptugX3Qer29efeyWw2rv259HtGBNn1vZVmp8lB9uo9wC0t/AT4iGqXxia+CJFg==}
+    engines: {node: '>=6.0.0'}
 
   node-domexception@1.0.0:
     resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
@@ -13381,6 +13388,8 @@ snapshots:
   node-addon-api@7.1.1: {}
 
   node-buffer-encoding@1.0.2: {}
+
+  node-cron@4.2.1: {}
 
   node-domexception@1.0.0: {}
 
