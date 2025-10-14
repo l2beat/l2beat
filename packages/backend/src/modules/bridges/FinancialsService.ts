@@ -3,13 +3,13 @@ import type { BridgeTransferUpdate, Database } from '@l2beat/database'
 import { assertUnreachable, UnixTime, unique } from '@l2beat/shared-pure'
 import { TimeLoop } from '../../tools/TimeLoop'
 import { Address32 } from './plugins/types'
-import * as TokenDb from './TokenDb'
+import { DeployedTokenId, type ITokenDb, type PriceInfo } from './TokenDb'
 
 export class FinancialsService extends TimeLoop {
   constructor(
     private chains: { name: string; type: 'evm' }[],
     private db: Database,
-    private tokenDb: TokenDb.ITokenDb,
+    private tokenDb: ITokenDb,
     protected logger: Logger,
     intervalMs = 10_000,
   ) {
@@ -106,9 +106,9 @@ export class FinancialsService extends TimeLoop {
   private applyTokenUpdate(
     update: BridgeTransferUpdate,
     plugin: string,
-    id: TokenDb.DeployedTokenId,
+    id: DeployedTokenId,
     rawAmount: string | undefined,
-    priceInfos: TokenDb.PriceInfo,
+    priceInfos: PriceInfo,
     prices: Map<string, number | undefined>,
     prefix: 'src' | 'dst',
   ) {
@@ -140,9 +140,9 @@ export class FinancialsService extends TimeLoop {
 
   private calculateTokenUpdate(
     plugin: string,
-    id: TokenDb.DeployedTokenId,
+    id: DeployedTokenId,
     rawAmount: string | undefined,
-    priceInfos: TokenDb.PriceInfo,
+    priceInfos: PriceInfo,
     prices: Map<string, number | undefined>,
   ) {
     const priceInfo = priceInfos.get(id)
@@ -150,8 +150,8 @@ export class FinancialsService extends TimeLoop {
       this.logger.warn('Missing price info', {
         plugin,
         id,
-        chain: TokenDb.DeployedTokenId.chain(id),
-        token: TokenDb.DeployedTokenId.address(id),
+        chain: DeployedTokenId.chain(id),
+        token: DeployedTokenId.address(id),
       })
       return
     }
@@ -218,7 +218,7 @@ export class FinancialsService extends TimeLoop {
 
     switch (chainConfig.type) {
       case 'evm':
-        return TokenDb.DeployedTokenId.from(
+        return DeployedTokenId.from(
           chain,
           Address32.cropToEthereumAddress(Address32(address)),
         )
