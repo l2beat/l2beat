@@ -119,7 +119,7 @@ export function LogoGenerator() {
         {firstGroup.map((project) => (
           <img
             key={project.slug}
-            src={`https://fe-staging.l2beat.com/icons/${project.slug}.png`}
+            src={`https://fe-stag.l2beat.com/icons/${project.slug}.png`}
             alt={project.name}
             width={128}
             height={128}
@@ -137,7 +137,7 @@ export function LogoGenerator() {
           {secondGroup.map((project) => (
             <img
               key={project.slug}
-              src={`https://fe-staging.l2beat.com/icons/${project.slug}.png`}
+              src={`https://fe-stag.l2beat.com/icons/${project.slug}.png`}
               alt={project.name}
               width={128}
               height={128}
