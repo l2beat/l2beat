@@ -1,19 +1,19 @@
 import type { Database } from '@l2beat/database'
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-interface SummedByTimestampTvsValuesRecord {
-  value: number
-  timestamp: UnixTime
-  canonical: number
-  external: number
-  native: number
-  ether: number
-  stablecoin: number
-  btc: number
-  rwaRestricted: number
-  rwaPublic: number
-  other: number
-}
+export type SummedByTimestampTvsValuesRecord = [
+  timestamp: UnixTime,
+  value: number,
+  canonical: number,
+  external: number,
+  native: number,
+  ether: number,
+  stablecoin: number,
+  btc: number,
+  rwaRestricted: number,
+  rwaPublic: number,
+  other: number,
+]
 
 export async function getSummedByTimestampTvsValuesQuery(
   db: Database,
@@ -30,5 +30,17 @@ export async function getSummedByTimestampTvsValuesQuery(
     excludeAssociated,
   )
 
-  return tvsRecords
+  return tvsRecords.map((v) => [
+    v.timestamp,
+    v.value,
+    v.canonical,
+    v.external,
+    v.native,
+    v.ether,
+    v.stablecoin,
+    v.btc,
+    v.rwaRestricted,
+    v.rwaPublic,
+    v.other,
+  ])
 }

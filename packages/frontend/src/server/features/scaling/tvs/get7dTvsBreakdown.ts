@@ -68,106 +68,135 @@ export async function get7dTvsBreakdown(
   for (const [projectId, projectValues] of Object.entries(valuesByProject)) {
     const { all, withoutAssociated } = projectValues
 
-    const latestWithoutAssociated = withoutAssociated.at(-1)
-    const oldestWithoutAssociated = withoutAssociated.at(0)
-    const latestValue = all.at(-1)
-    const oldestValue = all.at(0)
+    const latestWithoutAssociatedRecord = withoutAssociated.at(-1)
+    const oldestWithoutAssociatedRecord = withoutAssociated.at(0)
+    const latestValueRecord = all.at(-1)
+    const oldestValueRecord = all.at(0)
 
     if (
-      !latestValue ||
-      !oldestValue ||
-      !latestWithoutAssociated ||
-      !oldestWithoutAssociated
+      !latestValueRecord ||
+      !oldestValueRecord ||
+      !latestWithoutAssociatedRecord ||
+      !oldestWithoutAssociatedRecord
     ) {
       continue
     }
 
+    const [
+      latestValue,
+      latestCanonical,
+      latestExternal,
+      latestNative,
+      latestEther,
+      latestStablecoin,
+      latestBtc,
+      _latestRwaRestricted,
+      _latestRwaPublic,
+      latestOther,
+      latestAssociated,
+    ] = latestValueRecord
+
+    const [
+      oldestValue,
+      oldestCanonical,
+      oldestExternal,
+      oldestNative,
+      oldestEther,
+      oldestStablecoin,
+      oldestBtc,
+      _oldestRwaRestricted,
+      _oldestRwaPublic,
+      oldestOther,
+      _oldestAssociated,
+    ] = oldestValueRecord
+
+    const [
+      latestWAValue,
+      latestWACanonical,
+      latestWAExternal,
+      latestWANative,
+      latestWAEther,
+      latestWAStablecoin,
+      latestWABtc,
+      _latestWARwaRestricted,
+      _latestWARwaPublic,
+      latestWAOther,
+      _latestWAAssociated,
+    ] = latestWithoutAssociatedRecord
+
+    const [
+      oldestWAValue,
+      oldestWACanonical,
+      oldestWAExternal,
+      oldestWANative,
+      oldestWAEther,
+      oldestWAStablecoin,
+      oldestWABtc,
+      _oldestWARwaRestricted,
+      _oldestWARwaPublic,
+      oldestWAOther,
+      _oldestWAAssociated,
+    ] = oldestWithoutAssociatedRecord
+
     projects[projectId] = {
       breakdown: {
-        total: latestValue.value,
-        native: latestValue.native,
-        canonical: latestValue.canonical,
-        external: latestValue.external,
-        ether: latestValue.ether,
-        stablecoin: latestValue.stablecoin,
-        btc: latestValue.btc,
-        other: latestValue.other,
+        total: latestValue,
+        native: latestNative,
+        canonical: latestCanonical,
+        external: latestExternal,
+        ether: latestEther,
+        stablecoin: latestStablecoin,
+        btc: latestBtc,
+        other: latestOther,
       },
       breakdown7d: {
-        total: oldestValue.value,
-        native: oldestValue.native,
-        canonical: oldestValue.canonical,
-        external: oldestValue.external,
-        ether: oldestValue.ether,
-        stablecoin: oldestValue.stablecoin,
-        btc: oldestValue.btc,
-        other: oldestValue.other,
+        total: oldestValue,
+        native: oldestNative,
+        canonical: oldestCanonical,
+        external: oldestExternal,
+        ether: oldestEther,
+        stablecoin: oldestStablecoin,
+        btc: oldestBtc,
+        other: oldestOther,
       },
       associated: {
-        total: latestValue.associated,
-        native: latestValue.native - latestWithoutAssociated.native,
-        canonical: latestValue.canonical - latestWithoutAssociated.canonical,
-        external: latestValue.external - latestWithoutAssociated.external,
-        ether: latestValue.ether - latestWithoutAssociated.ether,
-        stablecoin: latestValue.stablecoin - latestWithoutAssociated.stablecoin,
-        btc: latestValue.btc - latestWithoutAssociated.btc,
-        other: latestValue.other - latestWithoutAssociated.other,
+        total: latestAssociated,
+        native: latestNative - latestWANative,
+        canonical: latestCanonical - latestWACanonical,
+        external: latestExternal - latestWAExternal,
+        ether: latestEther - latestWAEther,
+        stablecoin: latestStablecoin - latestWAStablecoin,
+        btc: latestBtc - latestWABtc,
+        other: latestOther - latestWAOther,
       },
       change: {
-        total: calculatePercentageChange(latestValue.value, oldestValue.value),
-        native: calculatePercentageChange(
-          latestValue.native,
-          oldestValue.native,
-        ),
-        canonical: calculatePercentageChange(
-          latestValue.canonical,
-          oldestValue.canonical,
-        ),
-        external: calculatePercentageChange(
-          latestValue.external,
-          oldestValue.external,
-        ),
-        ether: calculatePercentageChange(latestValue.ether, oldestValue.ether),
+        total: calculatePercentageChange(latestValue, oldestValue),
+        native: calculatePercentageChange(latestNative, oldestNative),
+        canonical: calculatePercentageChange(latestCanonical, oldestCanonical),
+        external: calculatePercentageChange(latestExternal, oldestExternal),
+        ether: calculatePercentageChange(latestEther, oldestEther),
         stablecoin: calculatePercentageChange(
-          latestValue.stablecoin,
-          oldestValue.stablecoin,
+          latestStablecoin,
+          oldestStablecoin,
         ),
-        btc: calculatePercentageChange(latestValue.btc, oldestValue.btc),
-        other: calculatePercentageChange(latestValue.other, oldestValue.other),
+        btc: calculatePercentageChange(latestBtc, oldestBtc),
+        other: calculatePercentageChange(latestOther, oldestOther),
       },
       changeExcludingAssociated: {
-        total: calculatePercentageChange(
-          latestWithoutAssociated.value,
-          oldestWithoutAssociated.value,
-        ),
-        native: calculatePercentageChange(
-          latestWithoutAssociated.native,
-          oldestWithoutAssociated.native,
-        ),
+        total: calculatePercentageChange(latestWAValue, oldestWAValue),
+        native: calculatePercentageChange(latestWANative, oldestWANative),
         canonical: calculatePercentageChange(
-          latestWithoutAssociated.canonical,
-          oldestWithoutAssociated.canonical,
+          latestWACanonical,
+          oldestWACanonical,
         ),
-        external: calculatePercentageChange(
-          latestWithoutAssociated.external,
-          oldestWithoutAssociated.external,
-        ),
-        ether: calculatePercentageChange(
-          latestWithoutAssociated.ether,
-          oldestWithoutAssociated.ether,
-        ),
+        external: calculatePercentageChange(latestWAExternal, oldestWAExternal),
+        ether: calculatePercentageChange(latestWAEther, oldestWAEther),
         stablecoin: calculatePercentageChange(
-          latestWithoutAssociated.stablecoin,
-          oldestWithoutAssociated.stablecoin,
+          latestWAStablecoin,
+          oldestWAStablecoin,
         ),
-        btc: calculatePercentageChange(
-          latestWithoutAssociated.btc,
-          oldestWithoutAssociated.btc,
-        ),
-        other: calculatePercentageChange(
-          latestWithoutAssociated.other,
-          oldestWithoutAssociated.other,
-        ),
+        btc: calculatePercentageChange(latestWABtc, oldestWABtc),
+        other: calculatePercentageChange(latestWAOther, oldestWAOther),
       },
     }
   }

@@ -1,3 +1,4 @@
+import type { SummedByTimestampTvsValuesRecord } from '@l2beat/dal/build/queries/tvl/getSummedByTimestampTvsValuesQuery'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import keyBy from 'lodash/keyBy'
 import { env } from '~/env'
@@ -45,7 +46,7 @@ export async function getSummedTvsValues(
           },
           100,
         )
-      ).data
+      ).data.map(mapArrayToObject)
     : await db.tvsProjectValue.getSummedByTimestamp(
         projectIds,
         getType(forSummary, excludeAssociatedTokens),
@@ -89,4 +90,32 @@ function getType(forSummary: boolean, excludeAssociatedTokens: boolean) {
     return excludeAssociatedTokens ? 'PROJECT_WA' : 'PROJECT'
   }
   return excludeAssociatedTokens ? 'SUMMARY_WA' : 'SUMMARY'
+}
+
+function mapArrayToObject([
+  timestamp,
+  value,
+  canonical,
+  external,
+  native,
+  ether,
+  stablecoin,
+  btc,
+  rwaRestricted,
+  rwaPublic,
+  other,
+]: SummedByTimestampTvsValuesRecord) {
+  return {
+    timestamp,
+    value,
+    canonical,
+    external,
+    native,
+    ether,
+    stablecoin,
+    btc,
+    rwaRestricted,
+    rwaPublic,
+    other,
+  }
 }

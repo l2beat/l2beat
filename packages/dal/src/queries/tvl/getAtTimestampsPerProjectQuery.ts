@@ -9,19 +9,19 @@ type SummedByTimestampTvsPerProject = Record<
   }
 >
 
-interface SummedByTimestampTvsValuesRecord {
-  value: number
-  canonical: number
-  external: number
-  native: number
-  ether: number
-  stablecoin: number
-  btc: number
-  rwaRestricted: number
-  rwaPublic: number
-  other: number
-  associated: number
-}
+export type SummedByTimestampTvsValuesRecord = [
+  value: number,
+  canonical: number,
+  external: number,
+  native: number,
+  ether: number,
+  stablecoin: number,
+  btc: number,
+  rwaRestricted: number,
+  rwaPublic: number,
+  other: number,
+  associated: number,
+]
 
 export async function getAtTimestampsPerProjectQuery(
   db: Database,
@@ -69,34 +69,35 @@ export async function getAtTimestampsPerProjectQuery(
   return values
 }
 
-function mapValue(
-  v: SummedByTimestampTvsValuesRecord,
-): SummedByTimestampTvsValuesRecord {
-  return {
-    value: v.value,
-    canonical: v.canonical,
-    external: v.external,
-    native: v.native,
-    ether: v.ether,
-    stablecoin: v.stablecoin,
-    btc: v.btc,
-    rwaRestricted: v.rwaRestricted,
-    rwaPublic: v.rwaPublic,
-    other: v.other,
-    associated: v.associated,
-  }
+function mapValue(v: {
+  project: string
+  value: number
+  canonical: number
+  external: number
+  native: number
+  ether: number
+  stablecoin: number
+  btc: number
+  rwaRestricted: number
+  rwaPublic: number
+  other: number
+  associated: number
+}): SummedByTimestampTvsValuesRecord {
+  return [
+    v.value,
+    v.canonical,
+    v.external,
+    v.native,
+    v.ether,
+    v.stablecoin,
+    v.btc,
+    v.rwaRestricted,
+    v.rwaPublic,
+    v.other,
+    v.associated,
+  ]
 }
 
-const EMPTY_VALUE: SummedByTimestampTvsValuesRecord = {
-  value: 0,
-  canonical: 0,
-  external: 0,
-  native: 0,
-  ether: 0,
-  stablecoin: 0,
-  btc: 0,
-  rwaRestricted: 0,
-  rwaPublic: 0,
-  other: 0,
-  associated: 0,
-}
+const EMPTY_VALUE: SummedByTimestampTvsValuesRecord = [
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+]

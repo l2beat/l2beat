@@ -49,8 +49,8 @@ export async function getTvsLeaderboard(
     }
 
     projects[projectId] = {
-      tvs: latestValue.value,
-      change: calculatePercentageChange(latestValue.value, oldestValue.value),
+      tvs: latestValue[0],
+      change: calculatePercentageChange(latestValue[0], oldestValue[0]),
     }
   }
 
