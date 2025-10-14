@@ -251,12 +251,21 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
   const hasNoProofs = templateVars.reasonsForBeingOther?.some(
     (e) => e.label === REASON_FOR_BEING_OTHER.NO_PROOFS.label,
   )
-  const daBadge = templateVars.additionalBadges?.find((b) => b.type === 'DA')
 
   const l2BootloaderHash = templateVars.discovery.getContractValue<string>(
     templateVars.diamondContract.address,
     'getL2BootloaderBytecodeHash',
   )
+
+  const baseBadges = [
+    BADGES.Stack.ZKStack,
+    BADGES.Infra.ElasticChain,
+    BADGES.VM.EVM,
+  ]
+
+  if (!daProvider) {
+    baseBadges.push(BADGES.DA.EthereumBlobs)
+  }
 
   return {
     type: 'layer2',
@@ -264,15 +273,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',
     archivedAt: templateVars.archivedAt,
-    badges: mergeBadges(
-      [
-        BADGES.Stack.ZKStack,
-        BADGES.Infra.ElasticChain,
-        BADGES.VM.EVM,
-        daBadge ?? BADGES.DA.EthereumBlobs,
-      ],
-      templateVars.additionalBadges?.filter((b) => b.id !== daBadge?.id) ?? [],
-    ),
+    badges: mergeBadges(baseBadges, templateVars.additionalBadges ?? []),
     display: {
       purposes: templateVars.overridingPurposes ?? [
         'Universal',

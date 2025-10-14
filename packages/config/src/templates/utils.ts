@@ -11,13 +11,23 @@ import type {
 
 export function mergeBadges(inherentBadges: Badge[], definedBadges: Badge[]) {
   const allBadges = definedBadges.concat(inherentBadges)
-  const duplicatesAllowed = ['Other', 'VM', 'DA']
+  const typeDuplicatesAllowed = ['Other', 'VM', 'DA']
 
-  const [allowMultiple, deduplicateByType] = partition(allBadges, (badge) =>
-    duplicatesAllowed.includes(badge.type),
+  // by type
+  const duplicateBadges: Badge[] = []
+  const toBeUniqueBadges: Badge[] = []
+
+  for (const badge of allBadges) {
+    if (typeDuplicatesAllowed.includes(badge.type)) {
+      duplicateBadges.push(badge)
+    } else {
+      toBeUniqueBadges.push(badge)
+    }
+  }
+
+  return unionBy(toBeUniqueBadges, (badge) => badge.type).concat(
+    duplicateBadges,
   )
-
-  return unionBy(deduplicateByType, (badge) => badge.type).concat(allowMultiple)
 }
 
 export function mergePermissions(
@@ -88,22 +98,4 @@ export function asArray<T>(value: T | T[] | undefined): T[] {
 
 export function emptyArrayToUndefined<T>(arr: T[]): T[] | undefined {
   return arr.length === 0 ? undefined : arr
-}
-
-function partition<T>(
-  array: T[],
-  predicate: (value: T) => boolean,
-): [T[], T[]] {
-  const truthy: T[] = []
-  const falsy: T[] = []
-
-  for (const item of array) {
-    if (predicate(item)) {
-      truthy.push(item)
-    } else {
-      falsy.push(item)
-    }
-  }
-
-  return [truthy, falsy]
 }

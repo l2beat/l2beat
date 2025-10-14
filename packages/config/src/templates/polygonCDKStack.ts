@@ -163,10 +163,15 @@ export function polygonCDKStack(
   const hasNoProofs = templateVars.reasonsForBeingOther?.some(
     (e) => e.label === REASON_FOR_BEING_OTHER.NO_PROOFS.label,
   )
-  const daBadge = templateVars.additionalBadges?.find((b) => b.type === 'DA')
-  const additionalBadges = templateVars.additionalBadges?.filter(
-    (b) => b.id !== daBadge?.id,
-  )
+  const baseBadges = [
+    BADGES.Stack.CDKErigon,
+    BADGES.VM.EVM,
+    BADGES.Infra.Agglayer,
+  ]
+
+  if (!daProvider) {
+    baseBadges.push(BADGES.DA.EthereumBlobs)
+  }
 
   return {
     type: 'layer2',
@@ -426,15 +431,7 @@ The PolygonSecurityCouncil can expedite the upgrade process by declaring an emer
 
 Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rolupTypes and manage operational parameters and fees in the PolygonRollupManager directly. The local admin of a specific Layer 2 can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.`,
     milestones: templateVars.milestones,
-    badges: mergeBadges(
-      [
-        BADGES.Stack.CDKErigon,
-        BADGES.VM.EVM,
-        daBadge ?? BADGES.DA.EthereumCalldata,
-        BADGES.Infra.Agglayer,
-      ],
-      additionalBadges ?? [],
-    ),
+    badges: mergeBadges(baseBadges, templateVars.additionalBadges ?? []),
     customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     scopeOfAssessment: templateVars.scopeOfAssessment,
