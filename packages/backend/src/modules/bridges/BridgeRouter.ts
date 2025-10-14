@@ -146,7 +146,7 @@ export function createBridgeRouter(
     const transfers = await db.bridgeTransfer.getByType(params.type)
 
     ctx.body =
-      'durationMs,srcValueUsd,dstValueUsd,srcChain,srcTxHash,dstChain,dstTxHash\n' +
+      'durationSeconds,srcValueUsd,dstValueUsd,srcChain,srcTxHash,dstChain,dstTxHash\n' +
       transfers
         .map((t) =>
           [
