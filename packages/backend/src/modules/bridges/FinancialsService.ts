@@ -110,7 +110,6 @@ export class FinancialsService extends TimeLoop {
       }
       if (price !== undefined && amount !== undefined) {
         valueUsd = price * amount
-        logger.info('Value updated', { id, valueUsd })
       }
       return { abstractTokenId, price, amount, valueUsd }
     }
@@ -143,10 +142,6 @@ export class FinancialsService extends TimeLoop {
         return { id: t.transfer.messageId, update }
       })
 
-    this.logger.info('Transfers processed', {
-      transfers: updates.length,
-    })
-
     await this.db.transaction(async () => {
       await Promise.all(
         updates.map((u) =>
@@ -154,8 +149,12 @@ export class FinancialsService extends TimeLoop {
         ),
       )
     })
-    this.logger.info('Updated transfers saved in DB', {
+
+    this.logger.info('Transfers processed', {
       transfers: updates.length,
+      transfersWithUpdatedValue: updates.filter(
+        (u) => u.update.srcValueUsd || u.update.dstValueUsd,
+      ).length,
     })
   }
 }

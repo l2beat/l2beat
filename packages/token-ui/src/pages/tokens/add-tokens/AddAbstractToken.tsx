@@ -27,6 +27,7 @@ export function AddAbstractToken({
     resolver: validateResolver(AbstractTokenSchema),
     defaultValues: defaultValues ?? {
       id: generateRandomId(),
+      reviewed: true,
     },
   })
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
@@ -121,7 +122,6 @@ export function AddAbstractToken({
         coingeckoListingTimestamp: values.coingeckoListingTimestamp
           ? UnixTime.fromDate(new Date(values.coingeckoListingTimestamp))
           : null,
-        reviewed: false,
       },
     })
   }

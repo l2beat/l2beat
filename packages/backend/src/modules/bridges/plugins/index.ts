@@ -8,6 +8,7 @@ import { CircleGatewayPlugIn } from './circle-gateway'
 import { DeBridgePlugin } from './debridge'
 import { DeBridgeDlnPlugin } from './debridge-dln'
 import { HyperlanePlugIn } from './hyperlane'
+import { HyperlaneEcoPlugin } from './hyperlane-eco'
 import { HyperlaneHwrPlugin } from './hyperlane-hwr'
 import { HyperlaneMerklyTokenBridgePlugin } from './hyperlane-merkly-tokenbridge'
 import { LayerZeroV1Plugin } from './layerzero-v1'
@@ -59,6 +60,7 @@ export function createBridgePlugins(): BridgePlugin[] {
     new OpStackPlugin(),
     new HyperlaneMerklyTokenBridgePlugin(), // should be run before HyperlaneHWR
     new HyperlaneHwrPlugin(), // should be run before Hyperlane
+    new HyperlaneEcoPlugin(), // should be run before Hyperlane
     new HyperlanePlugIn(),
   ]
 }

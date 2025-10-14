@@ -725,21 +725,6 @@
     "messages": [],
     "transfers": []
   },
-  "stargate-debug": {
-    "txs": [
-      {
-        "chain": "arbitrum",
-        "tx": "0xb257d1d886fbd7b7edff122d369ff5567719f4f2566c4c0a1492a57c79eb5526"
-      },
-      {
-        "chain": "base",
-        "tx": "0xd9b1e59ed889335a82bae3643c2cc695e490c4dec1e3e2d638e5e2157d3dca28"
-      }
-    ],
-    "events": [],
-    "messages": [],
-    "transfers": []
-  },
   "oft": {
     // 3 oft transfers
     "txs": [
@@ -782,6 +767,93 @@
       {
         "chain": "optimism",
         "tx": "0xc9b2b9924a0507d56a8bd5b4566208d9c28678e0ca7318de614a3704a79bea31"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "cctpv1-debug": {
+    // should be 4 cctpv1 message and a couple other ones. somehow these are not correctly tracked in prod but work locally
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x48c77cfedbee0ab31da92f80e0e4f4f8dfce70af2e5fef3ceedc745271731100"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x2ed62eb30a3cf2f14271c2f326260fb075b55fc05fbe9ffe053315f46f316218"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xc90e5bdba18692abe5dff1bd14ea88e5ebcad4d2941dd79c722420f2fb7c8671"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x595eb76b9a979c11fc7a97b100430fd3f1dd466ff31d2f801989dbb44b6038fc"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x71b0cfd087f2a437cbbe101871bcf59f4a13e50c4de968afb8f933598a316be2"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xd7bc5d2879c1934c85fd625a5617e337c106654a13e2dbe3ddd445c44063a1ce"
+      },
+      {
+        "chain": "base",
+        "tx": "0x14eb8ea83c5b870d6c74654ab71afed261254c4aa76da2442984c8b7006bb25e"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x965f34ffda2c1f164fc6a485f92e7884ca50bdb219ae5f6fb89b148b38f8c6e3"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "stargate-debug": {
+    "txs": [
+      {
+        "chain": "optimism",
+        "tx": "0x5486e7ce1d6e0ef138dcb4a6b82ec06832b035141fc85184bf98c7a790cea268"
+      },
+      {
+        "chain": "base",
+        "tx": "0xe3d4a5bcdaeb683da03ef7bb73b6e3e110108c6de4c318551a203df6a8c73ef9"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "hyperlane-eco": {
+    // 3 msgs, 3 'transfers'/intent settlements
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xd4cd1b60d6d5751f419b95a0586c202769aa05951b6fe9ddb5132a1b1d74aa68"
+      },
+      {
+        "chain": "base",
+        "tx": "0xe9113abd9b70bdaeaec906aa89c8dab23c4212ac5717fbc0463467c336bbb375"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xa888a3621a61a8c022f8c5f119215d057f29298cbb4324d94c5a771f21fc881a"
+      },
+      {
+        "chain": "base",
+        "tx": "0xaa6331e50456f6458cc1406e73879fc55dad4b27a89af405bcd7e3dc32d350dd"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x6cce7e0eeecca07348fb1376a527beb980fcfe6593920bb88e4461e8cc974b10"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0xb797cbc61f80cd79d92a7e11ad8e74900c87ebeba2650f622424096798f7d0c9"
       }
     ],
     "events": [],
