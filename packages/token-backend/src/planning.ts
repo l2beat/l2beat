@@ -41,12 +41,17 @@ interface PlanningResultError {
 export async function generatePlan(
   db: TokenDatabase,
   intent: Intent,
-  meta?: {
-    email: string
+  opts?: {
+    skipLogs?: boolean
+    meta?: {
+      email: string
+    }
   },
 ): Promise<PlanningResult> {
   const logger = getLogger().for('generatePlan')
-  logger.info('Generating plan', { intent, meta })
+  if (!opts?.skipLogs) {
+    logger.info('Generating plan', { intent, meta: opts?.meta })
+  }
   let commands: Command[]
   try {
     switch (intent.type) {
@@ -82,7 +87,9 @@ export async function generatePlan(
     throw error
   }
 
-  logger.info('Plan generated', { commands, meta })
+  if (!opts?.skipLogs) {
+    logger.info('Plan generated', { commands, meta: opts?.meta })
+  }
   return {
     outcome: 'success',
     plan: {
