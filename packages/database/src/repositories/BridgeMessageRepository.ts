@@ -4,6 +4,7 @@ import { BaseRepository } from '../BaseRepository'
 import type { BridgeMessage } from '../kysely/generated/types'
 
 export interface BridgeMessageRecord {
+  plugin: string
   messageId: string
   type: string
   app: string
@@ -23,6 +24,7 @@ export interface BridgeMessageRecord {
 
 export function toRecord(row: Selectable<BridgeMessage>): BridgeMessageRecord {
   return {
+    plugin: row.plugin,
     messageId: row.messageId,
     type: row.type,
     app: row.app,
@@ -43,6 +45,7 @@ export function toRecord(row: Selectable<BridgeMessage>): BridgeMessageRecord {
 
 export function toRow(record: BridgeMessageRecord): Insertable<BridgeMessage> {
   return {
+    plugin: record.plugin,
     messageId: record.messageId,
     type: record.type,
     app: record.app,
@@ -73,8 +76,8 @@ export interface BridgeMessageStatsRecord {
 
 export interface BridgeMessageDetailedStatsRecord {
   type: string
-  sourceChain: string
-  destinationChain: string
+  srcChain: string
+  dstChain: string
   count: number
   medianDuration: number
 }
@@ -197,8 +200,8 @@ export class BridgeMessageRepository extends BaseRepository {
       assert(chain.srcChain && chain.dstChain)
       return {
         type: chain.type,
-        sourceChain: chain.srcChain,
-        destinationChain: chain.dstChain,
+        srcChain: chain.srcChain,
+        dstChain: chain.dstChain,
         count: Number(chain.count),
         medianDuration: Number(chain.medianDuration),
       }

@@ -50,6 +50,7 @@ import type {
   ProjectReviewStatus,
   ProjectRisk,
   ProjectScalingCapability,
+  ProjectScalingContractsZkProgramHash,
   ProjectScalingDa,
   ProjectScalingProofSystem,
   ProjectScalingPurpose,
@@ -83,12 +84,32 @@ export const CELESTIA_DA_PROVIDER: DAProvider = {
   badge: BADGES.DA.Celestia,
 }
 
-export const EIGENDA_DA_PROVIDER: DAProvider = {
-  layer: DA_LAYERS.EIGEN_DA,
-  riskView: RISK_VIEW.DATA_EIGENDA(false),
-  technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(false),
-  bridge: DA_BRIDGES.NONE,
-  badge: BADGES.DA.EigenDA,
+export function EIGENDA_DA_PROVIDER(
+  isUsingDACertVerifier: boolean,
+): (templateVars: OpStackConfigCommon) => DAProvider {
+  return (templateVars: OpStackConfigCommon) => {
+    const opStackDA = templateVars.discovery.getContractValue<{
+      isUsingEigenDA: string | boolean
+    }>('SystemConfig', 'opStackDA')
+
+    const eigenDAConfig = opStackDA.isUsingEigenDA
+    const eigenDACertVersion =
+      typeof eigenDAConfig === 'string' ? eigenDAConfig : 'v1'
+
+    return {
+      layer: DA_LAYERS.EIGEN_DA,
+      riskView: RISK_VIEW.DATA_EIGENDA(
+        isUsingDACertVerifier,
+        eigenDACertVersion,
+      ),
+      technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(
+        isUsingDACertVerifier,
+        eigenDACertVersion,
+      ),
+      bridge: DA_BRIDGES.NONE,
+      badge: BADGES.DA.EigenDA,
+    }
+  }
 }
 
 export const PRIVATE_DA_PROVIDER: DAProvider = {
@@ -132,7 +153,7 @@ interface OpStackConfigCommon {
   stateValidationImage?: string
   archivedAt?: UnixTime
   addedAt: UnixTime
-  daProvider?: DAProvider
+  daProvider?: DAProvider | ((templateVars: OpStackConfigCommon) => DAProvider)
   customDa?: ProjectCustomDa
   discovery: ProjectDiscovery
   additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
@@ -159,6 +180,7 @@ interface OpStackConfigCommon {
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   nonTemplateContractRisks?: ProjectRisk
+  nonTemplateZkProgramHashes?: ProjectScalingContractsZkProgramHash[]
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
@@ -385,6 +407,9 @@ function opStackCommon(
     contracts: {
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
       risks: nativeContractRisks,
+      zkProgramHashes:
+        templateVars.nonTemplateZkProgramHashes ??
+        getZkProgramHashes(templateVars),
     },
     milestones: templateVars.milestones ?? [],
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
@@ -545,6 +570,46 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
   }
 }
 
+function getZkProgramHashes(
+  templateVars: OpStackConfigCommon,
+): ProjectScalingContractsZkProgramHash[] {
+  const fraudProofType = getFraudProofType(templateVars)
+
+  switch (fraudProofType) {
+    case 'None':
+    case 'Permissioned':
+    case 'Permissionless':
+      return []
+    case 'Kailua': {
+      const kailuaProgramHash = templateVars.discovery.getContractValue<string>(
+        'KailuaTreasury',
+        'FPVM_IMAGE_ID',
+      )
+      const setBuilderProgramHash = templateVars.discovery.getContractValue<
+        string[]
+      >('RiscZeroSetVerifier', 'imageInfo')[0]
+      return [
+        ZK_PROGRAM_HASHES(kailuaProgramHash),
+        ZK_PROGRAM_HASHES(setBuilderProgramHash),
+      ]
+    }
+    case 'OpSuccinct': {
+      const opSuccinctProgramHashes = [
+        templateVars.discovery.getContractValue<string>(
+          'OPSuccinctL2OutputOracle',
+          'aggregationVkey',
+        ),
+        templateVars.discovery.getContractValue<string>(
+          'OPSuccinctL2OutputOracle',
+          'rangeVkeyCommitment',
+        ),
+      ]
+
+      return opSuccinctProgramHashes.map((el) => ZK_PROGRAM_HASHES(el))
+    }
+  }
+}
+
 function getStateValidation(
   templateVars: OpStackConfigCommon,
   explorerUrl: string | undefined,
@@ -702,10 +767,6 @@ function getStateValidation(
         'KailuaGame',
         'MAX_CLOCK_DURATION',
       )
-      const kailuaProgramHash = templateVars.discovery.getContractValue<string>(
-        'KailuaTreasury',
-        'FPVM_IMAGE_ID',
-      )
       return {
         categories: [
           {
@@ -785,23 +846,9 @@ The Kailua state validation system is primarily optimistically resolved, so no v
             ],
           },
         ],
-        zkProgramHashes: [ZK_PROGRAM_HASHES(kailuaProgramHash)],
       }
     }
     case 'OpSuccinct': {
-      const opSuccinctProgramHashes = []
-      opSuccinctProgramHashes.push(
-        templateVars.discovery.getContractValue<string>(
-          'OPSuccinctL2OutputOracle',
-          'aggregationVkey',
-        ),
-      )
-      opSuccinctProgramHashes.push(
-        templateVars.discovery.getContractValue<string>(
-          'OPSuccinctL2OutputOracle',
-          'rangeVkeyCommitment',
-        ),
-      )
       return {
         categories: [
           {
@@ -838,9 +885,6 @@ The Kailua state validation system is primarily optimistically resolved, so no v
             ],
           },
         ],
-        zkProgramHashes: opSuccinctProgramHashes.map((el) =>
-          ZK_PROGRAM_HASHES(el),
-        ),
       }
     }
   }
@@ -1411,9 +1455,15 @@ function getDAProvider(
     templateVars.discovery.getContractValue<{
       isUsingCelestia: boolean
     }>('SystemConfig', 'opStackDA').isUsingCelestia
-  const daProvider =
-    templateVars.daProvider ??
-    (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+
+  let daProvider: DAProvider | undefined
+  if (typeof templateVars.daProvider === 'function') {
+    daProvider = templateVars.daProvider(templateVars)
+  } else {
+    daProvider =
+      templateVars.daProvider ??
+      (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+  }
 
   if (daProvider === undefined) {
     assert(

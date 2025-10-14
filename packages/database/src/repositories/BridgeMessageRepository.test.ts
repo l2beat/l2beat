@@ -18,6 +18,7 @@ describeDatabase(BridgeMessageRepository.name, (database) => {
       const now = UnixTime.now()
       const records: BridgeMessageRecord[] = [
         {
+          plugin: 'plugin',
           messageId: 'msg1',
           type: 'bridge',
           app: 'arbitrum',
@@ -35,6 +36,7 @@ describeDatabase(BridgeMessageRepository.name, (database) => {
           dstEventId: 'event2',
         },
         {
+          plugin: 'plugin',
           messageId: 'msg2',
           type: 'bridge',
           app: 'optimism',
@@ -52,6 +54,7 @@ describeDatabase(BridgeMessageRepository.name, (database) => {
           dstEventId: 'event4',
         },
         {
+          plugin: 'plugin',
           messageId: 'msg3',
           type: 'bridge',
           app: 'polygon',
@@ -69,6 +72,7 @@ describeDatabase(BridgeMessageRepository.name, (database) => {
           dstEventId: 'event6',
         },
         {
+          plugin: 'plugin',
           messageId: 'msg4',
           type: 'swap',
           app: 'arbitrum',

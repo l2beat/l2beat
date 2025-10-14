@@ -138,6 +138,10 @@ export async function makeConfig(
     },
     da: flags.isEnabled('da') && (await getDaTrackingConfig(ps, env)),
     blockSync: {
+      delayFromTipInSeconds: env.integer(
+        ['BLOCK_SYNC_DELAY_FROM_TIP_IN_SECONDS'],
+        5 * 60,
+      ),
       ethereumWsUrl: env.optionalString(['ETHEREUM_WS_URL']),
     },
     anomalies: flags.isEnabled('anomalies') && {
@@ -167,6 +171,9 @@ export async function makeConfig(
       compare: {
         enabled: flags.isEnabled('bridges', 'compare'),
         intervalMs: env.optionalInteger(['BRIDGES_COMPARE_INTERVAL_MS']),
+      },
+      financials: {
+        enabled: flags.isEnabled('bridges', 'financials'),
       },
     },
     // Must be last

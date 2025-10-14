@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x77701f39a79a42731801e050830ad5e9af2641e7
+
+# Diff at Fri, 10 Oct 2025 09:41:22 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a91384a270a047b2514885e053feff1edc24f495 block: 1758107952
+- current timestamp: 1760089209
+
+## Description
+
+Removed member from multisig.
+
+## Watched changes
+
+```diff
+    contract GnosisSafeL2 (scr:0x2B2A8546Df3B23535fffd75B4e312f3C5c7B4351) {
+    +++ description: None
+      values.$members.0:
+-        "scr:0xd5A0f3DfCe7128B7119462F7aC912616bB05b593"
+      values.$members.2:
+-        "scr:0x226A1669cd60A43e53030fD0A482Ea566d3Dba8B"
++        "scr:0x558581b0345D986bA5bD6f04Efd27e2a5B991320"
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "2 of 2 (100%)"
+    }
+```
+
 Generated with discovered.json: 0x8c5145b3a51cff9ce4b7aabb4a4d79c959a861b5
 
 # Diff at Wed, 17 Sep 2025 11:26:24 GMT:

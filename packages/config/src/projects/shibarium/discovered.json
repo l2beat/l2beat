@@ -1,6 +1,6 @@
 {
   "name": "shibarium",
-  "timestamp": 1758802197,
+  "timestamp": 1759763659,
   "configHash": "0xedebc2935c0d4811bd1ac3aaaa305606e15365ed50d2b6584e71ae6c05ec90a1",
   "entries": [
     {
@@ -366,11 +366,12 @@
       ],
       "proxyType": "immutable",
       "description": "Contains logging and getter functions about staking.",
+      "ignoreInWatchMode": ["getAccountStateRoot"],
       "sinceTimestamp": 1691243831,
       "sinceBlock": 17849209,
       "values": {
         "$immutable": true,
-        "getAccountStateRoot": "0x3dc29b6164c27e66d74045cd8a4c879dc244fb7b9657783249f62e57da12042d",
+        "getAccountStateRoot": "0x76afb575e9c27e66d74045cd8a4c879dc244fb7b9657783249f62e57da12042d",
         "getStakerDetails": [
           [
             0,
@@ -384,6 +385,11 @@
         "isOwner": false,
         "owner": "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96",
         "registry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB"
+      },
+      "fieldMeta": {
+        "getAccountStateRoot": {
+          "description": "Merkle root of a tree of validator balances."
+        }
       },
       "implementationNames": {
         "eth:0x539964b3d225194717fb896D26c8b3E635b8A1aE": "StakingInfo"
@@ -508,18 +514,18 @@
         "CHECKPOINT_REWARD": "100000000000000000000",
         "checkPointBlockInterval": 1024,
         "checkpointRewardDelta": 0,
-        "currentEpoch": 29335,
+        "currentEpoch": 29488,
         "currentValidatorSetSize": 12,
-        "currentValidatorSetTotalStake": "15029873815057170817540935",
+        "currentValidatorSetTotalStake": "15049873815057170817540935",
         "delegationEnabled": true,
         "delegatorsReward": [
-          0,
-          "926270848340288654014",
-          "785381532545190954742",
-          "7663086306629128561"
+          "1813983130977956621280",
+          "1848577348723041452170",
+          "1469289175869880663921",
+          "465099122579313636019"
         ],
         "dynasty": 30,
-        "epoch": 29335,
+        "epoch": 29488,
         "eventsHub": "eth:0x12185669Dac70749f717247971E0B8819b2e472e",
         "extensionCode": "eth:0x17174796E0eF24330aed565c87Ba5e85431DE19e",
         "getRegistry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
@@ -546,7 +552,7 @@
         "registry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
         "replacementCoolDown": 29342,
         "rewardDecreasePerCheckpoint": 0,
-        "rewardPerStake": "1714658261846162209914304",
+        "rewardPerStake": "1738190020607201009369031",
         "rootChain": "eth:0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9",
         "signerUpdateLimit": 100,
         "token": "eth:0x9813037ee2218799597d83D4a5B6F3b6778218d9",
@@ -556,7 +562,7 @@
         "totalStaked": "119999000000000000000000",
         "validatorShareFactory": "eth:0x6113E0FDBe8EAE2e95F4a35cB0a6530c518881fD",
         "validatorState": {
-          "amount": "15029873815057170817540935",
+          "amount": "15049873815057170817540935",
           "stakerCount": 12
         },
         "validatorThreshold": 15,
@@ -1066,7 +1072,7 @@
       "sinceTimestamp": 1691243771,
       "sinceBlock": 17849204,
       "values": {
-        "_nextHeaderBlock": 293350000,
+        "_nextHeaderBlock": 294850000,
         "$immutable": false,
         "$implementation": "eth:0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "CHAINID": 109,
@@ -1075,8 +1081,8 @@
           "_registry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
           "_heimdallId": "heimdall-109"
         },
-        "currentHeaderBlock": 293340000,
-        "getLastChildBlock": 13041180,
+        "currentHeaderBlock": 294840000,
+        "getLastChildBlock": 13442588,
         "heimdallId": "0x2d1b61c7cbff527a84da0d1da4e5ba94d46c39894530664ecfb67e21036736f1",
         "implementation": "eth:0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "isOwner": false,
@@ -2000,12 +2006,12 @@
     "polygonposbridge/SlashingManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "polygonposbridge/StakeManager_shibarium": "0x7329e87dc01248c97bcd484854e12f63f0f6214f42d3f1fcf33884380f2ab892",
     "polygonposbridge/StakeManagerExtension_shibarium": "0xe60d3951cea911d74c13738cf122394571cb6bcd98f0a5549372b1b99a397a27",
-    "polygonposbridge/StakingInfo": "0x472b4e99f38353920f0adb960c096ef2b8db88cfed76d97db017fff0a6c925fa",
+    "polygonposbridge/StakingInfo": "0x829f5c8f53e24e460b0c9e3d62696df2e750bdef5977d52d9d9085c223fdb77b",
     "polygonposbridge/StakingNFT": "0xb548c6f269123f0c23a2463c83cf000cda1a984eeeeb354a9a2af803b5245488",
     "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd",
     "polygonposbridge/ValidatorRegistry": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23439960 },
+  "usedBlockNumbers": { "ethereum": 23519552 },
   "permissionsConfigHash": "0xcd1603836a398a3442f17ccb629e0bee50d6bc59ee640ba054730ed38cdc0b9c"
 }

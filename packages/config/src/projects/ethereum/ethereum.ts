@@ -156,6 +156,9 @@ This method allows ZK rollups to prove that the data used in their validity proo
         coingeckoId: 'ethereum',
       },
     },
+    validators: {
+      type: 'dynamic',
+    },
   },
   daBridge: {
     name: 'Enshrined Bridge',

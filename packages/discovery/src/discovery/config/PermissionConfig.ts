@@ -37,6 +37,7 @@ export const RolePermissionEntries = [
   'hotValidatorHyperliquid',
   'coldValidatorHyperliquid',
   'acrossPropose',
+  'validateLighter',
 ] as const
 
 export type Permission = v.infer<typeof Permission>

@@ -51,6 +51,7 @@ export const hyperliquid: Bridge = {
       bridges: ['https://app.hyperliquid.xyz/trade'],
       socialMedia: ['https://x.com/HyperliquidX'],
       documentation: ['https://hyperliquid.gitbook.io/hyperliquid-docs'],
+      repositories: ['https://github.com/hyperliquid-dex'],
     },
   },
   config: {

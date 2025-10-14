@@ -1,3 +1,180 @@
+Generated with discovered.json: 0x2180d807ab54110efef18edfdf6502a128a486dc
+
+# Diff at Fri, 10 Oct 2025 13:32:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f6cb63a25b2e49df3a03a7d6feda0ff694b76199 block: 1759764743
+- current timestamp: 1760095694
+
+## Description
+
+Some pools added.
+
+## Watched changes
+
+```diff
+    contract BurnMintTokenPool (eth:0x1689C22eD5435e49071CFc208D1Ac6F2A2274490) {
+    +++ description: None
+      values.getSupportedChains.15:
++        "7264351850409363825"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (eth:0x553636e52059B0339592f545D25a4C0A86E3a1Bc) {
+    +++ description: None
+      values.getSupportedChains.1:
++        "6433500567565415381"
+    }
+```
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.264:
++        "eth:0xC03F9E6c1C5F5D553C77781327640E0c7d30a73d"
+      values.poolsMap.eth:0xea17Df5Cf6D172224892B5477A16ACb111182478:
++        "eth:0xC03F9E6c1C5F5D553C77781327640E0c7d30a73d"
+    }
+```
+
+```diff
+    EOA  (eth:0xCA4784Af7eBe83A7eafeFD1c8f81d00425F366D9) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0xCA4784Af7eBe83A7eafeFD1c8f81d00425F366D9","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0xf0111fd9f919782291c0496bc970f29d2a292a6229464817e11301f3c98c3743","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0xD3bD7Db2B40DBEE54cA70a34921fde8A8D2f8BbB) {
+    +++ description: None
+      values.getSupportedChains.1:
++        "4627098889531055414"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (eth:0xF6403CF6E954a43699097322e0867C63d653C2D0) {
+    +++ description: None
+      values.getSupportedChains.1:
++        "6433500567565415381"
+      values.getSupportedChains.2:
++        "4051577828743386545"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xC03F9E6c1C5F5D553C77781327640E0c7d30a73d)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0xC03F9E6c1C5F5D553C77781327640E0c7d30a73d.sol | 1401 ++++++++++++++++++++
+ 1 file changed, 1401 insertions(+)
+```
+
+Generated with discovered.json: 0x4762a8fb7f3f61c4047256a00966686b67169f0b
+
+# Diff at Mon, 06 Oct 2025 15:35:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e58bd9f0913161b35e2a2c65f233464591d4f28b block: 1759406341
+- current timestamp: 1759764743
+
+## Description
+
+some pools added.
+
+## Watched changes
+
+```diff
+    contract LockReleaseTokenPool (eth:0x20B79D39Bd44dEee4F89B1e9d0e3b945fde06491) {
+    +++ description: None
+      values.getSupportedChains.1:
+-        "6433500567565415381"
+      values.getSupportedChains.2:
+-        "15971525489660198786"
+      values.getSupportedChains.2:
++        "15971525489660198786"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (eth:0x3E8Ac93aBbD46e5BD4C3641D942f61ed6D858529) {
+    +++ description: None
+      values.getRebalancer:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x697f6b0658B9f146701379eb5394a4BAe627c8B9"
+      values.getSupportedChains.0:
++        "11344663589394136015"
+      values.getSupportedChains.1:
++        "15971525489660198786"
+    }
+```
+
+```diff
+    contract SourceTokenPool (eth:0x44e77d8C6Bb9999B036a6F084005E48928d18C74) {
+    +++ description: None
+      values.getRebalancer:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x7B39B6b869869134b18d1fFA97bfbE4FE7fc701B"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (eth:0x639f35C5E212D61Fe14Bd5CD8b66aAe4df11a50c) {
+    +++ description: None
+      values.getSupportedChains.3:
++        "9335212494177455608"
+    }
+```
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.263:
++        "eth:0xED61F61FeEA87C8dd89a94548cDA24Bd684BfbB7"
+      values.poolsMap.eth:0x5c98060ec53eF50Ab97FefEdd93Ff32efa07f5ce:
++        "eth:0xED61F61FeEA87C8dd89a94548cDA24Bd684BfbB7"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x697f6b0658B9f146701379eb5394a4BAe627c8B9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    EOA  (eth:0x7B39B6b869869134b18d1fFA97bfbE4FE7fc701B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xED61F61FeEA87C8dd89a94548cDA24Bd684BfbB7)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0xED61F61FeEA87C8dd89a94548cDA24Bd684BfbB7.sol | 1615 ++++++++++++++++++++
+ .../src/projects/transporter/.flat/Safe/Safe.sol   | 1088 +++++++++++++
+ .../transporter/.flat/Safe/SafeProxy.p.sol         |   37 +
+ 3 files changed, 2740 insertions(+)
+```
+
 Generated with discovered.json: 0xc18a73d4b1d5bd7d9b3dcedaa8f530bf2f1d4ff6
 
 # Diff at Thu, 02 Oct 2025 12:10:01 GMT:

@@ -5,5 +5,11 @@
     "getValidatorContractAddress",
     "totalValidatorStake",
     "validatorNonce"
-  ]
+  ],
+  "ignoreInWatchMode": ["getAccountStateRoot"],
+  "fields": {
+    "getAccountStateRoot": {
+      "description": "Merkle root of a tree of validator balances."
+    }
+  }
 }

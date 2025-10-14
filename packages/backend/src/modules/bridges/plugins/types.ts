@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { type Branded, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { randomUUID } from 'crypto'
 import {
   type Abi,
@@ -11,17 +11,47 @@ import {
   parseAbi,
 } from 'viem'
 
+export type Address32 = Branded<string, 'Address32'>
+
+export function Address32(value: string) {
+  if (/^0x[a-f0-9]{64}$/.test(value) || value === 'native') {
+    return value as Address32
+  }
+  throw new Error('Invalid Bytes32Address')
+}
+
+Address32.from = function from(value: string | EthereumAddress) {
+  if (value === 'native') {
+    return value as Address32
+  }
+  if (/^0x[a-f0-9]*$/i.test(value) && value.length <= 66) {
+    return ('0x' + value.slice(2).toLowerCase().padStart(64, '0')) as Address32
+  }
+  throw new Error('Cannot create Bytes32Address')
+}
+
+Address32.cropToEthereumAddress = function cropToEthereumAddress(
+  value: Address32,
+) {
+  return EthereumAddress(`0x${value.slice(-40)}`)
+}
+
+Address32.ZERO = Address32.from('0x')
+Address32.NATIVE = Address32('native')
+
 export interface BridgeEventContext {
   timestamp: UnixTime
   chain: string
   blockNumber: number
   blockHash: string
   txHash: string
-  txTo?: EthereumAddress
+  value: string
+  txTo?: Address32
   logIndex: number
 }
 
 export interface BridgeEvent<T = unknown> {
+  plugin: string
   eventId: string
   type: string
   expiresAt: UnixTime
@@ -30,40 +60,28 @@ export interface BridgeEvent<T = unknown> {
 }
 
 export interface BridgeMessage {
+  plugin: string
   kind: 'BridgeMessage'
   app: string
   type: string
+  events: BridgeEvent[]
   src: BridgeEvent
   dst: BridgeEvent
 }
 
 export interface TransferSide {
   event: BridgeEvent
-  tokenAddress?: EthereumAddress | 'native'
-  tokenSymbol?: string
+  tokenAddress?: Address32
   tokenAmount?: string
 }
 
 export interface BridgeTransfer {
   kind: 'BridgeTransfer'
+  plugin: string
   type: string
   events: BridgeEvent[]
   src: TransferSide
   dst: TransferSide
-}
-
-export type TransferSideWithFinancials = TransferSide & {
-  financials?: {
-    valueUsd: number
-    price: number
-    amount: number
-    symbol: string
-  }
-}
-
-export type BridgeTransferWithFinancials = BridgeTransfer & {
-  src: TransferSideWithFinancials
-  dst: TransferSideWithFinancials
 }
 
 export function generateId(type: string) {
@@ -72,7 +90,7 @@ export function generateId(type: string) {
 
 export interface BridgeEventType<T> {
   type: string
-  create(ctx: BridgeEventContext, payload: T): BridgeEvent<T>
+  create(ctx: BridgeEventContext, payload: T): Omit<BridgeEvent<T>, 'plugin'>
   checkType(action: BridgeEvent): action is BridgeEvent<T>
 }
 
@@ -93,7 +111,10 @@ export function createBridgeEventType<T>(
 
   return {
     type,
-    create(ctx: BridgeEventContext, payload: T): BridgeEvent<T> {
+    create(
+      ctx: BridgeEventContext,
+      payload: T,
+    ): Omit<BridgeEvent<T>, 'plugin'> {
       return {
         eventId: generateId('evt'),
         type,
@@ -115,7 +136,10 @@ export interface LogToCapture {
   ctx: BridgeEventContext
 }
 
-export type MatchResult = (BridgeMessage | BridgeTransfer)[]
+export type MatchResult = (
+  | Omit<BridgeMessage, 'plugin'>
+  | Omit<BridgeTransfer, 'plugin'>
+)[]
 
 export type BridgeEventQuery<T> = Partial<T> & {
   ctx?: Partial<BridgeEventContext>
@@ -138,7 +162,10 @@ export interface BridgePlugin {
   name: string
   capture?: (
     input: LogToCapture,
-  ) => BridgeEvent | undefined | Promise<BridgeEvent | undefined>
+  ) =>
+    | Omit<BridgeEvent, 'plugin'>
+    | undefined
+    | Promise<Omit<BridgeEvent, 'plugin'> | undefined>
   matchTypes?: BridgeEventType<unknown>[]
   match?: (
     event: BridgeEvent,
@@ -193,14 +220,17 @@ export function createEventParser<T extends `event ${string}(${string}`>(
 
 export const Result = { Message, Transfer }
 
+interface BridgeMessageOptions {
+  app: string
+  srcEvent: BridgeEvent
+  dstEvent: BridgeEvent
+  extraEvents?: BridgeEvent[]
+}
+
 function Message(
   type: string,
-  options: {
-    app: string
-    srcEvent: BridgeEvent
-    dstEvent: BridgeEvent
-  },
-): BridgeMessage {
+  options: BridgeMessageOptions,
+): Omit<BridgeMessage, 'plugin'> {
   if (!/\w+\.\w+(\.\w+)?/.test(type)) {
     throw new Error(
       'BridgeMessage type must have the format: "protocol-name.MessageName" or "protocol-name.MessageName.app-name"',
@@ -212,18 +242,21 @@ function Message(
     app: options.app,
     src: options.srcEvent,
     dst: options.dstEvent,
+    events: [
+      options.srcEvent,
+      options.dstEvent,
+      ...(options.extraEvents ?? []),
+    ],
   }
 }
 
 export interface BridgeTransferOptions {
   srcEvent: BridgeEvent
-  srcTokenAddress?: EthereumAddress | 'native'
-  srcTokenSymbol?: string
+  srcTokenAddress?: Address32
   srcAmount?: string
 
   dstEvent: BridgeEvent
-  dstTokenAddress?: EthereumAddress | 'native'
-  dstTokenSymbol?: string
+  dstTokenAddress?: Address32
   dstAmount?: string
 
   extraEvents?: BridgeEvent[]
@@ -232,7 +265,7 @@ export interface BridgeTransferOptions {
 function Transfer(
   type: string,
   options: BridgeTransferOptions,
-): BridgeTransfer {
+): Omit<BridgeTransfer, 'plugin'> {
   if (!/\w+\.\w+(\.\w+)?/.test(type)) {
     throw new Error(
       'BridgeTransfer type must have the format: "app-name.Transfer" or "app-name.Transfer.app-name"',
@@ -249,13 +282,11 @@ function Transfer(
     src: {
       event: options.srcEvent,
       tokenAddress: options.srcTokenAddress,
-      tokenSymbol: options.srcTokenSymbol,
       tokenAmount: options.srcAmount,
     },
     dst: {
       event: options.dstEvent,
       tokenAddress: options.dstTokenAddress,
-      tokenSymbol: options.dstTokenSymbol,
       tokenAmount: options.dstAmount,
     },
   }

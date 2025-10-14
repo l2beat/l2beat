@@ -1,6 +1,6 @@
 {
   "name": "molten",
-  "timestamp": 1759481488,
+  "timestamp": 1760088316,
   "configHash": "0x1af79112dae4ba0e5f2adc17cf4c90dbeaf57f65b8e6a00bf74e3c32113154dd",
   "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
@@ -63,13 +63,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1867,
+        "firstUnresolvedNode": 1895,
         "inbox": "arb1:0x235000876bd58336C802B3546Fc0250f285fCc79",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 19564823,
-        "latestConfirmed": 1866,
-        "latestNodeCreated": 1892,
+        "latestConfirmed": 1894,
+        "latestNodeCreated": 1920,
         "loserStakeEscrow": "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B",
@@ -200,7 +200,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "batchCount": 99549,
+        "batchCount": 99987,
         "batchPosterManager": "arb1:0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738",
         "batchPosters": ["arb1:0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738"],
         "BLOBSTREAM": "arb1:0xa8973BDEf20fe4112C920582938EF2F022C911f5",
@@ -233,7 +233,7 @@
         "rollup": "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerVersion": "0x63",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 67123,
+        "totalDelayedMessagesRead": 67157,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -379,11 +379,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "arb1:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "arb1:0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738",
       "type": "EOA",
       "proxyType": "EOA",
@@ -498,6 +493,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "arb1:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "arb1:0x6329186d6e5a4A90c6c983871d1Fa49D9C673ce3",
       "type": "EOA",
       "proxyType": "EOA"
@@ -523,6 +523,11 @@
       "implementationNames": {
         "arb1:0x69523d25E25e5c78d828Df90459b75F189D40Cf7": "V3QuoteVerifier"
       }
+    },
+    {
+      "address": "arb1:0x6d393C8190eC02F9fdA2dcEE622D517925a22110",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Caldera Multisig 1",
@@ -648,8 +653,9 @@
         "$immutable": false,
         "$implementation": "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
+          "arb1:0xe5219fe14E2FD520Ff80be036790913053d1575d",
+          "arb1:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A",
           "arb1:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
-          "arb1:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675",
           "arb1:0xc4548687682246e5B6ee8f914635c9f47836eDFe",
           "arb1:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b",
           "arb1:0xEC114946E7213d113c9B9481028271B5E9e09371",
@@ -661,8 +667,8 @@
         "domainSeparator": "0xeb75286128f8b958bb9a8db0f4f446758af4c721059060ccbd44ff0cb027027e",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 87,
+        "multisigThreshold": "3 of 9 (33%)",
+        "nonce": 94,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1224,7 +1230,7 @@
         "allowedOutboxList": [
           "arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"
         ],
-        "delayedMessageCount": 67125,
+        "delayedMessageCount": 67157,
         "inboxHistory": [
           "arb1:0x235000876bd58336C802B3546Fc0250f285fCc79",
           "arb1:0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
@@ -1234,8 +1240,8 @@
         "outboxHistory": ["arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"],
         "rollup": "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerInbox": "arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2",
-        "sequencerMessageCount": 99549,
-        "sequencerReportedSubMessageCount": 90236776
+        "sequencerMessageCount": 99987,
+        "sequencerReportedSubMessageCount": 91712161
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1282,6 +1288,11 @@
       "implementationNames": {
         "arb1:0xe3b13e7b160aE4b799A7B3F9877316e717706291": "OneStepProver0"
       }
+    },
+    {
+      "address": "arb1:0xe5219fe14E2FD520Ff80be036790913053d1575d",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "arb1:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b",
@@ -1335,7 +1346,8 @@
           "arb1:0xe24FF762272787935B25b223978d51b0bfF8A39c",
           "arb1:0x5F96902EFD1338353B4469304DfF58958c9a220c",
           "arb1:0x2bB181c6D5c62D7DeFBD038EB3750eE85d792050",
-          "arb1:0x8bEc9EB22B6f60D64b0b62aeD9A715ab039Be623"
+          "arb1:0x8bEc9EB22B6f60D64b0b62aeD9A715ab039Be623",
+          "arb1:0x6d393C8190eC02F9fdA2dcEE622D517925a22110"
         ],
         "validEnclaveHashes": [
           "0x1b8a2dea9244fbc6465f287be7a0888fdee26dc7ed87d76a461da1696f9004c9",
@@ -2245,6 +2257,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 385581166 },
-  "permissionsConfigHash": "0xfebadec5266d1bec9bc870c89c35e3d0e1d9362b282993c2fd31940b76c3abca"
+  "usedBlockNumbers": { "arbitrum": 388012368 },
+  "permissionsConfigHash": "0x403e1cb1a2af0c141e6adda6eaecd6814b476e910b3ef9ff2a10da5618ad1979"
 }

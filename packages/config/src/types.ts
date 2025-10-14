@@ -558,7 +558,6 @@ export interface ProjectScalingStateValidation {
   description?: string
   categories: ProjectScalingStateValidationCategory[]
   proofVerification?: ProjectProofVerification
-  zkProgramHashes?: ProjectScalingStateValidationZkProgramHash[]
   isUnderReview?: boolean
 }
 
@@ -583,9 +582,9 @@ export interface ProjectScalingStateValidationCategory {
   isIncomplete?: boolean
 }
 
-export interface ProjectScalingStateValidationZkProgramHash {
+export interface ProjectScalingContractsZkProgramHash {
   hash: string
-  proverSystemProject: ProjectId
+  proverSystemProject?: ProjectId
   title: string
   description?: string
   programUrl?: string
@@ -612,6 +611,8 @@ export interface ProjectDaLayer {
   finality?: number
   dataAvailabilitySampling?: DataAvailabilitySampling
   economicSecurity?: DaEconomicSecurity
+  /** Config for getting the number of validators. Type: `static` means the number is fixed. Type: `dynamic` means we need to fetch it (has to be implemented in BE). */
+  validators?: DaValidators
   sovereignProjectsTrackingConfig?: SovereignProjectDaTrackingConfig[]
 }
 
@@ -685,6 +686,15 @@ export interface DaEconomicSecurity {
     coingeckoId: string
   }
 }
+
+export type DaValidators =
+  | {
+      type: 'static'
+      count: number
+    }
+  | {
+      type: 'dynamic'
+    }
 
 export interface ProjectDaBridge {
   name: string
@@ -1058,6 +1068,7 @@ export interface ProjectContracts {
   /** List of risks associated with the contracts */
   risks: ProjectRisk[]
   escrows?: ProjectEscrow[]
+  zkProgramHashes?: ProjectScalingContractsZkProgramHash[]
 }
 
 export interface ProjectContract {

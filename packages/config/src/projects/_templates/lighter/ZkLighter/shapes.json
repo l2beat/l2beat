@@ -1,0 +1,11 @@
+{
+  "ZkLighter.sol": {
+    "hash": "0xa9200f827141ae9be2188327085a679c20ed563bf9bb6e5e2fc895b99b2bd5b0",
+    "address": [
+      "eth:0x1D2624A65F8aaD1c4Bc406b4D2418ba577D218cb",
+      "eth:0x4194D3847a0239d59a87bC82C1870CBE1FA99db1"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 23495073
+  }
+}

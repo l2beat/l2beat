@@ -1,8 +1,10 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Link } from 'react-router-dom'
+import type { Command, Plan } from '@l2beat/token-backend'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
-import { type Command, type Plan, tokenService } from '~/mock/MockTokenService'
+import { api } from '~/react-query/trpc'
 import { assertUnreachable } from '~/utils/assertUnreachable'
+import { diff } from '~/utils/getDiff'
+import { getDeployedTokenDisplayId } from '~/utils/getDisplayId'
 import { ButtonWithSpinner } from './ButtonWithSpinner'
 import { Button } from './core/Button'
 import {
@@ -14,6 +16,7 @@ import {
   DialogTitle,
 } from './core/Dialog'
 import { Tooltip, TooltipContent, TooltipTrigger } from './core/Tooltip'
+import { Diff } from './Diff'
 
 export function PlanConfirmationDialog({
   plan,
@@ -24,49 +27,80 @@ export function PlanConfirmationDialog({
   setPlan: (plan: Plan | undefined) => void
   onSuccess?: () => void
 }) {
-  const queryClient = useQueryClient()
-  const { mutate: executePlan, isPending } = useMutation({
-    mutationFn: async (plan: Plan) => tokenService.execute(plan),
+  const utils = api.useUtils()
+  const navigate = useNavigate()
+
+  function invalidateAbstractTokenQueries() {
+    utils.tokens.getAllAbstractTokens.invalidate()
+    utils.tokens.getAllAbstractTokensWithDeployedTokens.invalidate()
+    utils.tokens.getAbstractById.invalidate()
+    utils.tokens.search.invalidate()
+  }
+
+  function invalidateDeployedTokenQueries() {
+    utils.tokens.getAllAbstractTokensWithDeployedTokens.invalidate()
+    utils.tokens.getAbstractById.invalidate()
+    utils.tokens.getDeployedByChainAndAddress.invalidate()
+    utils.tokens.search.invalidate()
+    utils.tokens.checkIfDeployedTokenExists.invalidate()
+  }
+
+  const { mutate: executePlan, isPending } = api.plan.execute.useMutation({
     onSuccess: () => {
-      onSuccess?.()
       if (!plan) return
+      onSuccess?.()
       switch (plan.intent.type) {
         case 'AddAbstractTokenIntent':
           toast.success(
             <span>
               Token added successfully.{' '}
               <Link
-                to={`/tokens/${plan.intent.abstractToken.id}`}
+                to={`/tokens/${plan.intent.record.id}`}
                 className="underline"
               >
                 View token
               </Link>
             </span>,
           )
-          queryClient.invalidateQueries({ queryKey: ['abstractTokens'] })
+          invalidateAbstractTokenQueries()
           break
         case 'AddDeployedTokenIntent':
           toast.success(
             <span>
               Token added successfully.{' '}
               <Link
-                to={`/tokens/${plan.intent.deployedToken.id}`}
+                to={`/tokens/${getDeployedTokenDisplayId(plan.intent.record)}`}
                 className="underline"
               >
                 View token
               </Link>
             </span>,
           )
-          queryClient.invalidateQueries({ queryKey: ['abstractTokens'] })
+          invalidateDeployedTokenQueries()
+          break
+        case 'DeleteAbstractTokenIntent':
+          toast.success('Abstract token deleted successfully')
+          invalidateAbstractTokenQueries()
+          navigate('/')
+          break
+        case 'DeleteDeployedTokenIntent':
+          toast.success('Deployed token deleted successfully')
+          invalidateDeployedTokenQueries()
+          navigate('/')
+          break
+        case 'UpdateAbstractTokenIntent':
+          toast.success('Abstract token updated successfully')
+          invalidateAbstractTokenQueries()
+          break
+        case 'UpdateDeployedTokenIntent':
+          toast.success('Deployed token updated successfully')
+          invalidateDeployedTokenQueries()
           break
         default:
           assertUnreachable(plan.intent)
       }
 
       setPlan(undefined)
-    },
-    onError: () => {
-      toast.error('Plan execution failed')
     },
   })
 
@@ -83,8 +117,8 @@ export function PlanConfirmationDialog({
             <div>
               This plan assumes the following actions will be taken:
               <ul className="list-inside list-decimal pl-4">
-                {plan?.commands.map((command) => (
-                  <CommandItem key={command.type} command={command} />
+                {plan?.commands.map((command, index) => (
+                  <CommandItem key={index} command={command} />
                 ))}
               </ul>
             </div>
@@ -116,7 +150,7 @@ function CommandItem({ command }: { command: Command }) {
               Abstract token
             </TooltipTrigger>
             <TooltipContent className="whitespace-pre">
-              {JSON.stringify(command.abstractToken, null, 2)}
+              {JSON.stringify(command.record, null, 2)}
             </TooltipContent>
           </Tooltip>{' '}
           will be added
@@ -130,12 +164,98 @@ function CommandItem({ command }: { command: Command }) {
               Deployed token
             </TooltipTrigger>
             <TooltipContent className="whitespace-pre">
-              {JSON.stringify(command.deployedToken, null, 2)}
+              {JSON.stringify(command.record, null, 2)}
             </TooltipContent>
           </Tooltip>{' '}
           will be added
         </li>
       )
+    case 'DeleteAbstractTokenCommand':
+      return (
+        <li>
+          <Tooltip>
+            <TooltipTrigger className="underline">
+              Abstract token
+            </TooltipTrigger>
+            <TooltipContent className="whitespace-pre">
+              {/* TODO: Fix this */}
+              {JSON.stringify(command, null, 2)}
+            </TooltipContent>
+          </Tooltip>{' '}
+          will be deleted
+        </li>
+      )
+    case 'DeleteDeployedTokenCommand':
+      return (
+        <li>
+          <Tooltip>
+            <TooltipTrigger className="underline">
+              Deployed token
+            </TooltipTrigger>
+            <TooltipContent className="whitespace-pre">
+              {/* TODO: Fix this */}
+              {JSON.stringify(command, null, 2)}
+            </TooltipContent>
+          </Tooltip>{' '}
+          will be deleted
+        </li>
+      )
+    case 'UpdateAbstractTokenCommand':
+      return (
+        <li>
+          <Tooltip>
+            <TooltipTrigger className="underline">
+              Abstract token
+            </TooltipTrigger>
+            <TooltipContent className="whitespace-pre">
+              {JSON.stringify(command.existing, null, 2)}
+            </TooltipContent>
+          </Tooltip>{' '}
+          will be{' '}
+          <Tooltip>
+            <TooltipTrigger className="underline">updated</TooltipTrigger>
+            <TooltipContent className="p-0">
+              <Diff
+                differences={diff(command.existing, {
+                  ...command.existing,
+                  ...command.update,
+                })}
+              />
+            </TooltipContent>
+          </Tooltip>
+        </li>
+      )
+    case 'UpdateDeployedTokenCommand':
+      // Would be nice to show the diff
+
+      return (
+        <li>
+          <Tooltip>
+            <TooltipTrigger className="underline">
+              Deployed token
+            </TooltipTrigger>
+            <TooltipContent className="whitespace-pre">
+              {JSON.stringify(command.existing, null, 2)}
+            </TooltipContent>
+          </Tooltip>{' '}
+          will be{' '}
+          <Tooltip>
+            <TooltipTrigger className="underline">updated</TooltipTrigger>
+            <TooltipContent className="p-0">
+              <Diff
+                differences={diff(command.existing, {
+                  ...command.existing,
+                  ...command.update,
+                })}
+              />
+            </TooltipContent>
+          </Tooltip>
+        </li>
+      )
+    case 'DeleteAllAbstractTokensCommand':
+      return <li>All abstract tokens will be deleted</li>
+    case 'DeleteAllDeployedTokensCommand':
+      return <li>All deployed tokens will be deleted</li>
     default:
       assertUnreachable(command)
   }

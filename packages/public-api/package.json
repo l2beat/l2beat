@@ -15,15 +15,21 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "^8.13.1",
+    "@l2beat/backend-tools": "workspace:*",
+    "@l2beat/database": "workspace:*",
     "@l2beat/validate": "workspace:*",
     "express": "^5.0.0",
-    "swagger-ui-express": "^5.0.1"
+    "lodash": "^4.17.21",
+    "swagger-ui-express": "^5.0.1",
+    "uuid": "11.1.0"
   },
   "devDependencies": {
     "@l2beat/config": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
     "@l2beat/typescript-config": "workspace:*",
     "@types/express": "^5.0.0",
+    "@types/lodash": "^4.17.4",
     "@types/swagger-ui-express": "^4.1.8"
   }
 }

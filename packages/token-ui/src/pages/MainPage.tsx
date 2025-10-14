@@ -1,30 +1,33 @@
-import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Badge } from '~/components/core/Badge'
+import { Button } from '~/components/core/Button'
 import {
   Card,
+  CardAction,
   CardContent,
   CardHeader,
   CardTitle,
 } from '~/components/core/Card'
 import { Separator } from '~/components/core/Separator'
+import { LoadingText } from '~/components/LoadingText'
 import { AppLayout } from '~/layouts/AppLayout'
-import { tokenService } from '~/mock/MockTokenService'
 import type { AbstractToken, DeployedToken } from '~/mock/types'
+import { api } from '~/react-query/trpc'
 import { cn } from '~/utils/cn'
+import { getDeployedTokenDisplayId } from '~/utils/getDisplayId'
+import { UnixTime } from '~/utils/UnixTime'
 
 export function MainPage() {
-  const { data, isLoading: isAbstractTokensLoading } = useQuery({
-    queryKey: ['abstractTokens', 'deployedTokens'],
-    queryFn: () => tokenService.getMainPageTokens(),
-  })
+  const { data, isLoading: isAbstractTokensLoading } =
+    api.tokens.getAllAbstractTokensWithDeployedTokens.useQuery()
+
   const [selectedAbstractToken, setSelectedAbstractToken] = useState<
     AbstractToken | undefined
   >(undefined)
   const [selectedDeployedToken, setSelectedDeployedToken] = useState<
     DeployedToken | undefined
   >(undefined)
-  console.log(data)
   return (
     <AppLayout>
       <div className="grid h-full grid-cols-2 gap-4">
@@ -35,9 +38,7 @@ export function MainPage() {
           <CardContent>
             <div className="flex flex-col gap-2">
               {isAbstractTokensLoading ? (
-                <span className="text-muted-foreground text-sm">
-                  Loading...
-                </span>
+                <LoadingText />
               ) : (
                 <>
                   {data?.abstractTokens.map((token) => (
@@ -68,10 +69,13 @@ export function MainPage() {
                       <div className="mt-1 ml-6 flex flex-col items-start gap-1">
                         {token.deployedTokens.map((deployedToken) => (
                           <button
-                            key={deployedToken.id}
+                            key={getDeployedTokenDisplayId(deployedToken)}
                             className={cn(
                               'w-full rounded-md p-2 text-left text-muted-foreground text-sm',
-                              selectedDeployedToken?.id === deployedToken.id &&
+                              selectedDeployedToken?.chain ===
+                                deployedToken.chain &&
+                                selectedDeployedToken?.address ===
+                                  deployedToken.address &&
                                 'bg-muted',
                             )}
                             onClick={() => {
@@ -93,10 +97,12 @@ export function MainPage() {
                     {data?.deployedWithoutAbstractTokens.map((token) => {
                       return (
                         <button
-                          key={token.id}
+                          key={getDeployedTokenDisplayId(token)}
                           className={cn(
                             'w-full rounded-md p-2 text-left text-muted-foreground text-sm',
-                            selectedDeployedToken?.id === token.id &&
+                            selectedDeployedToken?.chain === token.chain &&
+                              selectedDeployedToken?.address ===
+                                token.address &&
                               'bg-muted',
                           )}
                           onClick={() => {
@@ -118,6 +124,15 @@ export function MainPage() {
           <Card>
             <CardHeader>
               <CardTitle>Abstract Token</CardTitle>
+              {selectedAbstractToken && (
+                <CardAction>
+                  <Button asChild variant="outline">
+                    <Link to={`/tokens/${selectedAbstractToken.id}`}>
+                      Go to Token page
+                    </Link>
+                  </Button>
+                </CardAction>
+              )}
             </CardHeader>
             <CardContent>
               {selectedAbstractToken === undefined ? (
@@ -126,34 +141,51 @@ export function MainPage() {
                 </div>
               ) : (
                 <div className="flex flex-col gap-2">
-                  <ItemWithLabel label="ID" value={selectedAbstractToken.id} />
+                  <div className="grid grid-cols-3">
+                    <ItemWithLabel
+                      label="ID"
+                      value={selectedAbstractToken.id}
+                    />
+                    <ItemWithLabel
+                      label="Issuer"
+                      value={selectedAbstractToken.issuer}
+                    />
+                    <ItemWithLabel
+                      label="Symbol"
+                      value={selectedAbstractToken.symbol}
+                    />
+                  </div>
                   <ItemWithLabel
-                    label="Symbol"
-                    value={selectedAbstractToken.symbol}
+                    label="Coingecko ID"
+                    value={selectedAbstractToken.coingeckoId}
                   />
+
                   <ItemWithLabel
-                    label="Issuer"
-                    value={selectedAbstractToken.issuer}
+                    label="Icon URL"
+                    value={selectedAbstractToken.iconUrl}
+                  />
+
+                  <ItemWithLabel
+                    label="Coingecko Listing Timestamp"
+                    value={
+                      selectedAbstractToken.coingeckoListingTimestamp !== null
+                        ? UnixTime.toYYYYMMDD(
+                            selectedAbstractToken.coingeckoListingTimestamp,
+                          )
+                        : null
+                    }
                   />
                   <ItemWithLabel
                     label="Category"
                     value={selectedAbstractToken.category}
                   />
                   <ItemWithLabel
-                    label="Icon URL"
-                    value={selectedAbstractToken.iconUrl}
-                  />
-                  <ItemWithLabel
-                    label="Coingecko ID"
-                    value={selectedAbstractToken.coingeckoId}
-                  />
-                  <ItemWithLabel
-                    label="Coingecko Listing Timestamp"
-                    value={selectedAbstractToken.coingeckoListingTimestamp?.toISOString()}
-                  />
-                  <ItemWithLabel
                     label="Comment"
                     value={selectedAbstractToken.comment}
+                  />
+                  <ItemWithLabel
+                    label="Reviewed"
+                    value={selectedAbstractToken.reviewed ? 'Yes' : 'No'}
                   />
                 </div>
               )}
@@ -162,6 +194,17 @@ export function MainPage() {
           <Card>
             <CardHeader>
               <CardTitle>Deployed Token</CardTitle>
+              {selectedDeployedToken && (
+                <CardAction>
+                  <Button asChild variant="outline">
+                    <Link
+                      to={`/tokens/${selectedDeployedToken.chain}/${selectedDeployedToken.address}`}
+                    >
+                      Go to Token page
+                    </Link>
+                  </Button>
+                </CardAction>
+              )}
             </CardHeader>
             <CardContent>
               {selectedDeployedToken === undefined ? (
@@ -170,17 +213,25 @@ export function MainPage() {
                 </div>
               ) : (
                 <div className="flex flex-col gap-2">
+                  <div className="grid grid-cols-3">
+                    <ItemWithLabel
+                      label="Chain"
+                      value={selectedDeployedToken.chain}
+                    />
+                    <ItemWithLabel
+                      className="col-span-2"
+                      label="Address"
+                      value={selectedDeployedToken.address}
+                    />
+                  </div>
                   <ItemWithLabel
                     label="Symbol"
                     value={selectedDeployedToken.symbol}
                   />
+
                   <ItemWithLabel
-                    label="Chain"
-                    value={selectedDeployedToken.chain}
-                  />
-                  <ItemWithLabel
-                    label="Address"
-                    value={selectedDeployedToken.address}
+                    label="Abstract Token ID"
+                    value={selectedDeployedToken.abstractTokenId}
                   />
                   <ItemWithLabel
                     label="Decimals"
@@ -188,7 +239,9 @@ export function MainPage() {
                   />
                   <ItemWithLabel
                     label="Deployment Timestamp"
-                    value={selectedDeployedToken.deploymentTimestamp.toISOString()}
+                    value={UnixTime.toDate(
+                      selectedDeployedToken.deploymentTimestamp,
+                    ).toISOString()}
                   />
                   <ItemWithLabel
                     label="Comment"
@@ -207,12 +260,14 @@ export function MainPage() {
 function ItemWithLabel({
   label,
   value,
+  className,
 }: {
   label: string
-  value: string | undefined
+  value: string | null
+  className?: string
 }) {
   return (
-    <div>
+    <div className={className}>
       <span className="font-medium text-muted-foreground text-sm">{label}</span>
       {value ? (
         <p>{value}</p>

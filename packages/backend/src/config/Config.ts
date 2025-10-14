@@ -217,6 +217,9 @@ export interface BridgesConfig {
     enabled: boolean
     intervalMs?: number
   }
+  financials: {
+    enabled: boolean
+  }
 }
 
 export interface DaBeatConfig {
@@ -296,5 +299,6 @@ export interface DataAvailabilityTrackingConfig {
 }
 
 export interface BlockSyncModuleConfig {
+  delayFromTipInSeconds: number
   ethereumWsUrl?: string
 }

@@ -24,6 +24,7 @@ import {
 import { BADGES } from '../common/badges'
 import { PROOFS } from '../common/proofSystems'
 import { getStage } from '../common/stages/getStage'
+import { ZK_PROGRAM_HASHES } from '../common/zkProgramHashes'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
@@ -251,6 +252,11 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     (e) => e.label === REASON_FOR_BEING_OTHER.NO_PROOFS.label,
   )
   const daBadge = templateVars.additionalBadges?.find((b) => b.type === 'DA')
+
+  const l2BootloaderHash = templateVars.discovery.getContractValue<string>(
+    templateVars.diamondContract.address,
+    'getL2BootloaderBytecodeHash',
+  )
 
   return {
     type: 'layer2',
@@ -519,6 +525,7 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
           'EmergencyUpgradeBoard',
         ),
       ],
+      zkProgramHashes: [ZK_PROGRAM_HASHES(l2BootloaderHash)],
     },
     stateDerivation:
       daProvider !== undefined

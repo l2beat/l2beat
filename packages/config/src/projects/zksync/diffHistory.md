@@ -1,3 +1,25 @@
+Generated with discovered.json: 0x57db3e05b4808e8084a3e933a2bde465bbf78755
+
+# Diff at Tue, 07 Oct 2025 14:25:01 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@8565ff097fc0a7fe0355555b648b1799518c8f35 block: 1759759105
+- current timestamp: 1759847038
+
+## Description
+
+Removed old zksync validator.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01) {
+    +++ description: None
+      values.validators.0:
+-        "eth:0x01c3A1a6890A146aC187A019F9863B3Ab2BfF91e"
+    }
+```
+
 Generated with discovered.json: 0x9a8fb769f5cf9b0fee62d9a6191c69db9d3703f6
 
 # Diff at Mon, 06 Oct 2025 13:59:28 GMT:
