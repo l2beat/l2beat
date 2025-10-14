@@ -8,6 +8,7 @@ export const ethstorage: ScalingProject = underReviewL2({
   capability: 'universal',
   addedAt: UnixTime(1760437967),
   badges: [
+    BADGES.DA.EthereumBlobs,
     BADGES.Stack.OPStack,
     BADGES.VM.EVM,
   ],
