@@ -48,6 +48,7 @@ import { eclipse } from '../projects/eclipse/eclipse'
 import { edgeless } from '../projects/edgeless/edgeless'
 import { edgex } from '../projects/edgex/edgex'
 import { ethernity } from '../projects/ethernity/ethernity'
+import { ethstorage } from '../projects/ethstorage/ethstorage'
 import { everclear } from '../projects/everclear/everclear'
 import { facet } from '../projects/facet/facet'
 import { fhenix } from '../projects/fhenix/fhenix'
@@ -380,6 +381,7 @@ export const layer2s: ScalingProject[] = [
   polynomial,
   powerloom,
   prom,
+  ethstorage,
   publicgoodsnetwork,
   puffer,
   quarkchain,
