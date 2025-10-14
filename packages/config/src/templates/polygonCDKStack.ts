@@ -170,7 +170,7 @@ export function polygonCDKStack(
   ]
 
   if (!daProvider) {
-    baseBadges.push(BADGES.DA.EthereumBlobs)
+    baseBadges.push(BADGES.DA.EthereumCalldata)
   }
 
   return {
