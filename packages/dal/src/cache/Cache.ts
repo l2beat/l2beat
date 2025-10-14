@@ -31,7 +31,7 @@ export class Cache {
       .digest('hex')
       .slice(0, 12)
 
-    return `${query}::${packageHash}::${inputHash}}`
+    return `${query}::${packageHash}::${inputHash}`
   }
 
   async write(key: string, data: unknown, expires: number) {
