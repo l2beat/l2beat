@@ -35,7 +35,7 @@ export class QueryExecutor {
     if (cached) {
       const end = Date.now()
       this.logger.info(`Cache hit! Took ${end - start}ms`)
-      return cached as QueryResult<Q['name']>
+      return cached.data as QueryResult<Q['name']>
     }
 
     this.logger.info('Cache miss, querying DB...')
