@@ -13,7 +13,7 @@ export function addTvsRoutes(
   db: Database,
 ) {
   openapi.get(
-    '/tvs',
+    '/v1/tvs',
     {
       summary: 'Total Value Secured with ability to control the time range',
       tags: ['tvs'],
@@ -34,7 +34,7 @@ export function addTvsRoutes(
   )
 
   openapi.get(
-    '/tvs/:projectId',
+    '/v1/tvs/:projectId',
     {
       summary:
         'Total Value Secured for a specific project with ability to control the time range.',

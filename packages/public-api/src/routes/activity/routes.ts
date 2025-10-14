@@ -13,7 +13,7 @@ export function addActivityRoutes(
   db: Database,
 ) {
   openapi.get(
-    '/activity',
+    '/v1/activity',
     {
       summary: 'Activity data with ability to control the time range.',
       tags: ['activity'],
@@ -34,7 +34,7 @@ export function addActivityRoutes(
   )
 
   openapi.get(
-    '/activity/:projectId',
+    '/v1/activity/:projectId',
     {
       summary:
         'Activity data for a specific project with ability to control the time range.',
