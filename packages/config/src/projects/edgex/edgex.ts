@@ -100,7 +100,18 @@ export const edgex: ScalingProject = {
   stage: {
     stage: 'NotApplicable',
   },
+  chainConfig: {
+    name: 'apex',
+    chainId: undefined,
+    apis: [{ type: 'starkex', product: ['edgex'] }],
+  },
+  
   config: {
+    activityConfig: {
+      type: 'day',
+      sinceTimestamp: UnixTime(1720435943),
+      resyncLastDays: 7,
+    },
     // todo: I have not generated tokens becuase I forgot the command
     escrows: [
       discovery.getEscrowDetails({
@@ -110,7 +121,7 @@ export const edgex: ScalingProject = {
         tokens: ['USDT'],
       }),
     ],
-    // todo: activity config
+    
   },
   dataAvailability: {
     layer: DA_LAYERS.DAC,
@@ -149,8 +160,17 @@ export const edgex: ScalingProject = {
       ),
     ],
   },
-  // todo: I have not done anything for disco-diven permissions, but only starkware diamond is upgradeable
   permissions: generateDiscoveryDrivenPermissions([discovery]),
+  milestones: [
+    {
+      title: 'edgeX live on Mainnet',
+      date: '2024-08-03T00:00:00Z',
+      url: 'https://x.com/edgeX_exchange/status/1819614179760001039',
+      description:
+        'edgeX, a non-custodial decentralized exchange powered by StarkeX, is now live on Mainnet.',
+      type: 'general',
+    },
+  ],
   customDa: StarkexDAC({
     dac: {
       requiredMembers: dacConfig.requiredSignatures,
