@@ -27,18 +27,18 @@ export class QueryExecutor {
   ): Promise<Simplify<QueryResult<Q['name']>>> {
     const key = this.cache.generateKey(query.name, query.args)
 
-    this.logger.info('Checking cache', { key })
+    this.logger.info('Checking cache', { query, key })
 
     let start = Date.now()
 
     const cached = await this.cache.read(key)
     if (cached) {
       const end = Date.now()
-      this.logger.info('Cache hit', { duration: end - start })
+      this.logger.info('Cache hit', { query, duration: end - start })
       return cached.data as QueryResult<Q['name']>
     }
 
-    this.logger.info('Cache miss, querying DB...')
+    this.logger.info('Cache miss', { query })
 
     start = Date.now()
 
@@ -62,7 +62,7 @@ export class QueryExecutor {
     const result = await promise
 
     let end = Date.now()
-    this.logger.info('Received data from DB', { duration: end - start })
+    this.logger.info('Received data from DB', { query, duration: end - start })
 
     start = Date.now()
 
@@ -74,6 +74,7 @@ export class QueryExecutor {
 
     end = Date.now()
     this.logger.info('Wrote to cache', {
+      query,
       duration: end - start,
       expires: expires ?? DEFAULT_EXPIRATION,
     })
