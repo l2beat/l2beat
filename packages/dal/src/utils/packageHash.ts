@@ -1,7 +1,7 @@
 import { execSync } from 'child_process'
 import { createHash } from 'crypto'
-import { readdirSync, readFileSync, statSync } from 'fs'
-import { join, resolve } from 'path'
+import { readFileSync } from 'fs'
+import { resolve } from 'path'
 
 function sha256Hex(s: string) {
   return createHash('sha256').update(s).digest('hex')
@@ -30,7 +30,6 @@ function gitTreeHash(pkgDir: string): string {
 // 2) Hash the resolved dep graph for this workspace using pnpm
 //    We ask pnpm for the filtered dependency tree and hash name@version pairs deterministically.
 function depsHash(pkgNameOrFilter: string): string {
-  // --prod to ignore dev-only deps if they don't affect runtime/DAL
   const json = execSync(`pnpm ls --prod --json --filter "${pkgNameOrFilter}"`, {
     encoding: 'utf8',
   })
@@ -43,29 +42,6 @@ function depsHash(pkgNameOrFilter: string): string {
     .map((key) => gitTreeHash(key))
 
   return sha256Hex(depsHashes.join(':'))
-}
-
-// 3) Hash DAL migrations (or any SQL/schema files that influence queries)
-function dirContentHash(dir: string, exts: string[]): string {
-  const files: string[] = []
-  const walk = (d: string) => {
-    for (const name of readdirSync(d)) {
-      const p = join(d, name)
-      const st = statSync(p)
-      if (st.isDirectory()) {
-        walk(p)
-      } else if (exts.some((e) => p.endsWith(e))) files.push(p)
-    }
-  }
-  try {
-    walk(dir)
-  } catch {
-    return '' // migrations dir optional
-  }
-  files.sort()
-  const h = createHash('sha256')
-  for (const f of files) h.update(readFileSync(f))
-  return h.digest('hex')
 }
 
 function envHash(env: Record<string, unknown>) {
@@ -81,11 +57,10 @@ function envHash(env: Record<string, unknown>) {
 function buildCacheKey(opts: {
   pkgDir: string
   pnpmFilter: string
-  migrationsDir: string
   pnpmLockFile: string
   envs: Record<string, unknown>
 }) {
-  const { pkgDir, pnpmFilter, migrationsDir, envs, pnpmLockFile } = opts
+  const { pkgDir, pnpmFilter, envs, pnpmLockFile } = opts
   const lock = sha256Hex(readFileSync(resolve(pnpmLockFile), 'utf8')).slice(
     0,
     12,
@@ -93,16 +68,13 @@ function buildCacheKey(opts: {
   const dirty = gitDirtyHash().slice(0, 12)
   const tree = gitTreeHash(pkgDir).slice(0, 12)
   const deps = depsHash(pnpmFilter).slice(0, 12)
-  const mig = (
-    migrationsDir ? dirContentHash(migrationsDir, ['.sql']) : ''
-  ).slice(0, 12)
+
   const env = envHash(envs).slice(0, 12)
 
   const parts = [
     `dirty-${dirty}`,
     `src-${tree}`,
     `deps-${deps}`,
-    `mig-${mig}`,
     `env-${env}`,
     `lock-${lock}`,
   ]
@@ -113,7 +85,6 @@ export const getPackageHash = (env: Record<string, unknown>) =>
   buildCacheKey({
     pkgDir: 'packages/dal',
     pnpmFilter: '@l2beat/dal',
-    migrationsDir: '../database/prisma/migrations',
     pnpmLockFile: '../../pnpm-lock.yaml',
     envs: env,
   })
