@@ -413,6 +413,7 @@ model InteropTransfer {
   srcAmount          Float?  @db.Real
   srcPrice           Float?  @db.Real
   srcValueUsd        Float?  @db.Real
+  srcWasBurned       Boolean?
 
   dstTime         DateTime? @db.Timestamp(6)
   dstChain        String?   @db.VarChar(32)
@@ -426,6 +427,7 @@ model InteropTransfer {
   dstAmount          Float?  @db.Real
   dstPrice           Float?  @db.Real
   dstValueUsd        Float?  @db.Real
+  dstWasMinted       Boolean?
 
   isProcessed Boolean
 
