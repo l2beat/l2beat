@@ -1085,10 +1085,8 @@ export class ProjectDiscovery {
   ): Record<string, ProjectContract[]> {
     const eoaActors = this.getEoaActors()
     const reachableEntries = getReachableEntries(
-      this.references,
-      this.discoveries
-        .flatMap((discovery) => discovery.entries)
-        .map((e) => e.address),
+      this.discoveries.flatMap((discovery) => discovery.entries),
+      this.references.map((e) => e.address),
     )
     const contracts = reachableEntries
       .filter((entry) => entry.type === 'Contract')
