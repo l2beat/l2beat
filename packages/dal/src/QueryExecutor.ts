@@ -16,7 +16,7 @@ export class QueryExecutor {
   constructor(
     private readonly db: Database,
     private readonly logger: Logger,
-    private readonly cache: Cache,
+    private readonly cache: Cache | undefined,
   ) {
     this.logger = logger.for(this)
   }
@@ -25,6 +25,11 @@ export class QueryExecutor {
     query: Q,
     expires?: number,
   ): Promise<Simplify<QueryResult<Q['name']>>> {
+    if (!this.cache) {
+      return this.executeRawQuery(query) as Promise<
+        Simplify<QueryResult<Q['name']>>
+      >
+    }
     const key = this.cache.generateKey(query.name, query.args)
 
     this.logger.info('Checking cache', { query, key })
