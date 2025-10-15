@@ -171,14 +171,6 @@ export async function getEcosystemEntry(
     getApprovedOngoingAnomalies(),
     getBlobsData(liveProjects),
     getEcosystemToken(ecosystem, liveProjects),
-    helpers.tvs.chart.prefetch({
-      range: { type: '1y' },
-      excludeAssociatedTokens: false,
-      filter: {
-        type: 'projects',
-        projectIds: liveProjects.map((project) => project.id),
-      },
-    }),
     helpers.activity.chart.prefetch({
       range: { type: '1y' },
       filter: {

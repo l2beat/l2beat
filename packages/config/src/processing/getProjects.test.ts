@@ -633,14 +633,7 @@ describe('getProjects', () => {
   })
 
   describe('badges', () => {
-    const singularBadges = [
-      'Infra',
-      'RaaS',
-      'DA',
-      'Stack',
-      'Fork',
-      'L3ParentChain',
-    ]
+    const singularBadges = ['Infra', 'RaaS', 'Stack', 'Fork', 'L3ParentChain']
 
     for (const badge of singularBadges) {
       it(`has maximum one ${badge} badge`, () => {

@@ -7845,6 +7845,13 @@
   ],
   "katana": [
     {
+      "symbol": "BTCK",
+      "address": "0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
+      "category": "btc",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "symbol": "uSUI",
       "address": "0xb0505e5a99abd03d94a1169e638B78EDfEd26ea4",
       "coingeckoId": "wrapped-sui-universal",

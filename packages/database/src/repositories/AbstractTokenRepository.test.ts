@@ -1,9 +1,8 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeTokenDatabase } from '../test/tokenDatabase'
 import {
+  type AbstractTokenRecord,
   AbstractTokenRepository,
-  type AbstractTokenSelectable,
 } from './AbstractTokenRepository'
 
 describeTokenDatabase(AbstractTokenRepository.name, (db) => {
@@ -22,7 +21,7 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
         category: 'stablecoin',
         iconUrl: 'https://example.com/icon.png',
         coingeckoId: 'coin-1',
-        coingeckoListingTimestamp: UnixTime.toDate(10),
+        coingeckoListingTimestamp: 10,
         comment: 'some comment',
       })
 
@@ -44,7 +43,7 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
     })
   })
 
-  describe(AbstractTokenRepository.prototype.update.name, () => {
+  describe(AbstractTokenRepository.prototype.updateById.name, () => {
     it('updates record and returns number of affected rows', async () => {
       const record = abstractToken({
         id: 'TK0001',
@@ -53,13 +52,12 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
         category: 'stablecoin',
         iconUrl: 'https://example.com/icon.png',
         coingeckoId: 'coin-1',
-        coingeckoListingTimestamp: UnixTime.toDate(10),
+        coingeckoListingTimestamp: 10,
         comment: 'initial comment',
       })
       await repository.insert(record)
 
-      const updatedRows = await repository.update({
-        id: record.id,
+      const updatedRows = await repository.updateById(record.id, {
         issuer: 'updated issuer',
         symbol: 'UPDT',
         iconUrl: 'https://example.com/updated-icon.png',
@@ -95,17 +93,17 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
 })
 
 function abstractToken(
-  overrides: Partial<AbstractTokenSelectable> & { id: string },
-): AbstractTokenSelectable {
+  overrides: Partial<AbstractTokenRecord> & { id: string },
+): AbstractTokenRecord {
   return {
     id: overrides.id,
-    issuer: overrides.issuer,
+    issuer: overrides.issuer ?? null,
     symbol: overrides.symbol ?? 'TOKEN',
-    category: overrides.category ?? 'generic',
-    iconUrl: overrides.iconUrl,
-    coingeckoId: overrides.coingeckoId,
-    coingeckoListingTimestamp: overrides.coingeckoListingTimestamp,
-    comment: overrides.comment,
+    category: overrides.category ?? 'other',
+    iconUrl: overrides.iconUrl ?? null,
+    coingeckoId: overrides.coingeckoId ?? null,
+    coingeckoListingTimestamp: overrides.coingeckoListingTimestamp ?? null,
+    comment: overrides.comment ?? null,
     reviewed: false,
   }
 }

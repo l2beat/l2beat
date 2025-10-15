@@ -855,6 +855,7 @@
     "scr:0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34": "USDe Token",
     "scr:0x01f0a31698C4d065659b9bdC21B3610292a1c506": "Wrapped eETH Token",
     "katana:0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a": "AUSD Token",
+    "katana:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072": "Bitcoin on Katana Token",
     "katana:0x6C16E26013f2431e8B2e1Ba7067ECCcad0Db6C52": "Jito Staked SOL Token",
     "katana:0xecAc9C5F704e954931349Da37F60E39f515c11c1": "Lombard Staked Bitcoin Token",
     "katana:0x9B8Df6E244526ab5F6e6400d331DB28C8fdDdb55": "Solana (Universal) Token",

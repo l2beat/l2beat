@@ -1,3 +1,72 @@
+Generated with discovered.json: 0x8d571ada220380b5ec333a8ba93189e2cd2548db
+
+# Diff at Mon, 13 Oct 2025 13:31:11 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@5b33e816fad7a915f330c14dc7f9f9538772cd98 block: 1756724373
+- current timestamp: 1760362205
+
+## Description
+
+RewardAllStakersActionGenerator - minor changes, interfaces,
+https://disco.l2beat.com/diff/eth:0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE/eth:0x0903a99b35424069b31Ea690CA8BDaDcc02BE4E5
+
+TokenHopper - minor changes, utils functions,
+https://disco.l2beat.com/diff/eth:0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563/eth:0x3374D2E654FFBFEcd35D3F2Ac3e915B394DD7E7d
+
+
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract TokenHopper (eth:0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563)
+    +++ description: Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).
+```
+
+```diff
+    contract bEIGEN token (eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75) {
+    +++ description: The token backing EIGEN and used for intersubjective staking.
+      values.Minters.0:
+-        "eth:0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563"
++        "eth:0x3374D2E654FFBFEcd35D3F2Ac3e915B394DD7E7d"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RewardAllStakersActionGenerator (eth:0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE)
+    +++ description: Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers.
+```
+
+```diff
+-   Status: DELETED
+    contract EigenLayerTokenMultisig (eth:0xbb00DDa2832850a43840A3A86515E3Fe226865F2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RewardAllStakersActionGenerator (eth:0x0903a99b35424069b31Ea690CA8BDaDcc02BE4E5)
+    +++ description: Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers.
+```
+
+```diff
++   Status: CREATED
+    contract TokenHopper (eth:0x3374D2E654FFBFEcd35D3F2Ac3e915B394DD7E7d)
+    +++ description: Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => /dev/null                    | 953 ---------------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |  35 -
+ .../RewardAllStakersActionGenerator.sol            |  18 +-
+ .../{.flat@1756724373 => .flat}/TokenHopper.sol    | 183 ++--
+ 4 files changed, 125 insertions(+), 1064 deletions(-)
+```
+
 Generated with discovered.json: 0x4cc7d1b075a888a23dde882321ae1157a354dde1
 
 # Diff at Mon, 01 Sep 2025 12:27:13 GMT:

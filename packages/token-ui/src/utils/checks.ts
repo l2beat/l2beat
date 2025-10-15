@@ -3,12 +3,6 @@ export function minNumberCheck(minNumber: number) {
     value >= minNumber ? true : `Minimum number is ${minNumber}`
 }
 
-export function ethereumAddressCheck(value: string) {
-  return value.length === 42 && value.startsWith('0x')
-    ? true
-    : 'Invalid address'
-}
-
 export function minLengthCheck(minLength: number) {
   return (value: string) =>
     value.length >= minLength ? true : `Minimum length is ${minLength}`

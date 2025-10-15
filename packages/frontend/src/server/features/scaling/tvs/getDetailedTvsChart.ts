@@ -74,7 +74,10 @@ export async function getDetailedTvsChart({
     getSummedTvsValues(
       tvsProjects.map((p) => p.projectId),
       { type: range },
-      getType(forSummary, excludeAssociatedTokens),
+      {
+        forSummary,
+        excludeAssociatedTokens,
+      },
     ),
   ])
 
@@ -134,13 +137,6 @@ function getChartData(
     chart,
     syncedUntil,
   }
-}
-
-function getType(forSummary: boolean, excludeAssociatedTokens: boolean) {
-  if (!forSummary) {
-    return excludeAssociatedTokens ? 'PROJECT_WA' : 'PROJECT'
-  }
-  return excludeAssociatedTokens ? 'SUMMARY_WA' : 'SUMMARY'
 }
 
 function getMockDetailedTvsChartData({

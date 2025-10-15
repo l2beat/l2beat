@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "1inch DEX aggregator supporting RFQ fills, limit-order fills and direct DEX swaps.",
+  "ignoreMethods": ["timestampBelow", "timestampBelowAndNonceEquals"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "destroy the contract and rescue funds from it."
+        }
+      ]
+    }
+  }
+}

@@ -14,20 +14,30 @@ import {
 export type Address32 = Branded<string, 'Address32'>
 
 export function Address32(value: string) {
-  if (/^0x[a-f0-9]{64}$/.test(value)) {
+  if (/^0x[a-f0-9]{64}$/.test(value) || value === 'native') {
     return value as Address32
   }
   throw new Error('Invalid Bytes32Address')
 }
 
 Address32.from = function from(value: string | EthereumAddress) {
+  if (value === 'native') {
+    return value as Address32
+  }
   if (/^0x[a-f0-9]*$/i.test(value) && value.length <= 66) {
     return ('0x' + value.slice(2).toLowerCase().padStart(64, '0')) as Address32
   }
   throw new Error('Cannot create Bytes32Address')
 }
 
+Address32.cropToEthereumAddress = function cropToEthereumAddress(
+  value: Address32,
+) {
+  return EthereumAddress(`0x${value.slice(-40)}`)
+}
+
 Address32.ZERO = Address32.from('0x')
+Address32.NATIVE = Address32('native')
 
 export interface BridgeEventContext {
   timestamp: UnixTime
@@ -35,7 +45,8 @@ export interface BridgeEventContext {
   blockNumber: number
   blockHash: string
   txHash: string
-  txTo?: EthereumAddress
+  value: string
+  txTo?: Address32
   logIndex: number
 }
 
@@ -53,13 +64,14 @@ export interface BridgeMessage {
   kind: 'BridgeMessage'
   app: string
   type: string
+  events: BridgeEvent[]
   src: BridgeEvent
   dst: BridgeEvent
 }
 
 export interface TransferSide {
   event: BridgeEvent
-  tokenAddress?: Address32 | 'native'
+  tokenAddress?: Address32
   tokenAmount?: string
 }
 
@@ -208,13 +220,16 @@ export function createEventParser<T extends `event ${string}(${string}`>(
 
 export const Result = { Message, Transfer }
 
+interface BridgeMessageOptions {
+  app: string
+  srcEvent: BridgeEvent
+  dstEvent: BridgeEvent
+  extraEvents?: BridgeEvent[]
+}
+
 function Message(
   type: string,
-  options: {
-    app: string
-    srcEvent: BridgeEvent
-    dstEvent: BridgeEvent
-  },
+  options: BridgeMessageOptions,
 ): Omit<BridgeMessage, 'plugin'> {
   if (!/\w+\.\w+(\.\w+)?/.test(type)) {
     throw new Error(
@@ -227,16 +242,21 @@ function Message(
     app: options.app,
     src: options.srcEvent,
     dst: options.dstEvent,
+    events: [
+      options.srcEvent,
+      options.dstEvent,
+      ...(options.extraEvents ?? []),
+    ],
   }
 }
 
 export interface BridgeTransferOptions {
   srcEvent: BridgeEvent
-  srcTokenAddress?: Address32 | 'native'
+  srcTokenAddress?: Address32
   srcAmount?: string
 
   dstEvent: BridgeEvent
-  dstTokenAddress?: Address32 | 'native'
+  dstTokenAddress?: Address32
   dstAmount?: string
 
   extraEvents?: BridgeEvent[]

@@ -205,7 +205,10 @@ export interface AnomaliesConfig {
 export interface BridgesConfig {
   capture: {
     enabled: boolean
-    chains: string[]
+    chains: {
+      name: string
+      type: 'evm'
+    }[]
   }
   matching: boolean
   cleaner: boolean
@@ -216,6 +219,9 @@ export interface BridgesConfig {
   compare: {
     enabled: boolean
     intervalMs?: number
+  }
+  financials: {
+    enabled: boolean
   }
 }
 
@@ -296,5 +302,6 @@ export interface DataAvailabilityTrackingConfig {
 }
 
 export interface BlockSyncModuleConfig {
+  delayFromTipInSeconds: number
   ethereumWsUrl?: string
 }

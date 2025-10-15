@@ -1,6 +1,4 @@
 import type { Milestone } from '@l2beat/config'
-import type { DehydratedState } from '@tanstack/react-query'
-import { HydrationBoundary } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { ProjectAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/ProjectAssetCategoryTvsChart'
 import { ProjectBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ProjectBridgeTypeTvsChart'
@@ -35,7 +33,6 @@ import { TvsBreakdownSummaryBox } from './components/TvsBreakdownSummaryBox'
 import { ProjectTvsBreakdownTokenTable } from './components/tables/ProjectTvsBreakdownTokenTable'
 
 interface Props extends AppLayoutProps, ScalingProjectTvsBreakdown {
-  queryState: DehydratedState
   defaultRange: TvsChartRange
 }
 
@@ -46,59 +43,56 @@ export function ScalingProjectTvsBreakdownPage({
   entries,
   project7dData,
   milestones,
-  queryState,
   defaultRange,
   ...props
 }: Props) {
   return (
     <AppLayout {...props}>
-      <HydrationBoundary state={queryState}>
-        <SideNavLayout>
-          <TvsBreakdownPageHeader
-            title={project.name}
-            slug={project.slug}
-            icon={icon}
-            tvsBreakdownTimestamp={dataTimestamp}
-          />
-          <div
-            className="smooth-scroll group/section-wrapper md:space-y-6"
-            data-project-page={true}
-          >
-            <SelectedTokenContextProvider>
-              <PrimaryCard>
-                <TvsChartControlsContextProvider defaultRange={defaultRange}>
-                  <Controls projectId={project.id} />
-                  <ProjectBridgeTypeTvsChart
-                    project={project}
-                    milestones={milestones}
-                  />
-                  <ProjectAssetCategoryTvsChart
-                    project={project}
-                    milestones={milestones}
-                  />
-                </TvsChartControlsContextProvider>
-                <TvsChartControlsContextProvider defaultRange={defaultRange}>
-                  <InteractiveTokenChart
-                    entries={entries}
-                    project={project}
-                    milestones={milestones}
-                  />
-                </TvsChartControlsContextProvider>
-                <HorizontalSeparator className="my-4" />
-                <TvsBreakdownSummaryBox
-                  {...project7dData}
-                  warning={project.tvsInfo?.warnings[0]}
+      <SideNavLayout>
+        <TvsBreakdownPageHeader
+          title={project.name}
+          slug={project.slug}
+          icon={icon}
+          tvsBreakdownTimestamp={dataTimestamp}
+        />
+        <div
+          className="smooth-scroll group/section-wrapper md:space-y-6"
+          data-project-page={true}
+        >
+          <SelectedTokenContextProvider>
+            <PrimaryCard>
+              <TvsChartControlsContextProvider defaultRange={defaultRange}>
+                <Controls projectId={project.id} />
+                <ProjectBridgeTypeTvsChart
+                  project={project}
+                  milestones={milestones}
                 />
-              </PrimaryCard>
-              <TableFilterContextProvider>
-                <ProjectTvsBreakdownTokenTable entries={entries} />
-              </TableFilterContextProvider>
-            </SelectedTokenContextProvider>
-          </div>
-          <RequestTokenBox />
-          <ScrollToTopButton />
-        </SideNavLayout>
-      </HydrationBoundary>
+                <ProjectAssetCategoryTvsChart
+                  project={project}
+                  milestones={milestones}
+                />
+              </TvsChartControlsContextProvider>
+              <TvsChartControlsContextProvider defaultRange={defaultRange}>
+                <InteractiveTokenChart
+                  entries={entries}
+                  project={project}
+                  milestones={milestones}
+                />
+              </TvsChartControlsContextProvider>
+              <HorizontalSeparator className="my-4" />
+              <TvsBreakdownSummaryBox
+                {...project7dData}
+                warning={project.tvsInfo?.warnings[0]}
+              />
+            </PrimaryCard>
+            <TableFilterContextProvider>
+              <ProjectTvsBreakdownTokenTable entries={entries} />
+            </TableFilterContextProvider>
+          </SelectedTokenContextProvider>
+        </div>
+        <RequestTokenBox />
+        <ScrollToTopButton />
+      </SideNavLayout>
     </AppLayout>
   )
 }

@@ -40,6 +40,24 @@
     },
     {
       "mode": "auto",
+      "id": "katana-BTCK",
+      "priceId": "bitcoin-on-katana",
+      "symbol": "BTCK",
+      "name": "Bitcoin on Katana",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68287/large/btc.png?1755248096",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
+        "chain": "katana",
+        "decimals": 8,
+        "sinceTimestamp": 1755216000
+      },
+      "category": "btc",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "katana-cbBTC",
       "priceId": "coinbase-wrapped-btc",
       "symbol": "cbBTC",

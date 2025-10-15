@@ -1,24 +1,15 @@
-export type AbstractToken = {
-  id: string
-  issuer?: string
-  symbol: string
-  category: 'btc' | 'ether' | 'stablecoin' | 'other'
-  iconUrl?: string
-  coingeckoId?: string
-  coingeckoListingTimestamp?: Date
-  comment?: string
+import type {
+  AbstractTokenRecord,
+  DeployedTokenRecord,
+} from '@l2beat/token-backend'
+
+export type AbstractToken = AbstractTokenRecord
+
+export type AbstractTokenWithDeployedTokens = AbstractToken & {
+  deployedTokens: DeployedToken[]
 }
 
-export type DeployedToken = {
-  id: string
-  chain: string
-  address: string
-  abstractTokenId?: string
-  symbol: string
-  decimals: number
-  deploymentTimestamp: Date
-  comment?: string
-}
+export type DeployedToken = DeployedTokenRecord
 
 export type TokenConnection = {
   tokenFromId: string

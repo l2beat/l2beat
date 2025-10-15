@@ -5,8 +5,9 @@ Mayan Forwarder
 */
 
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { decodeFunctionData, parseAbi } from 'viem'
+import { decodeFunctionData, type Log, parseAbi } from 'viem'
 import {
+  Address32,
   type BridgePlugin,
   createBridgeEventType,
   createEventParser,
@@ -52,25 +53,6 @@ const MAYAN_PROTOCOLS = [
   },
 ]
 
-const abi = [
-  // mayanSwift 0xC38e4e6A15593f908255214653d3D947CA1c2338
-  'function createOrderWithToken(address,uint256,(bytes32 trader,bytes32 tokenOut,uint64 minAmountOut,uint64 gasDrop,uint64 cancelFee,uint64 refundFee,uint64 deadline,bytes32 dstAddress,uint16 destChainId,bytes32 referrerAddr,uint8 referrerBps,uint8 auctionMode,bytes32 random))',
-  'function createOrderWithEth((bytes32,bytes32,uint64,uint64,uint64,uint64,uint64,bytes32,uint16 destChainId,bytes32,uint8,uint8,bytes32))',
-  // mayanCircle 0x875d6d37EC55c8cF220B9E5080717549d8Aa8EcA
-  'function createOrder((address tokenIn,uint256 amountIn,uint64,bytes32,uint16 destChain,bytes32 tokenOut,uint64 minAmountOut,uint64,uint64,bytes32,uint8))',
-  'function bridgeWithFee(address tokenIn,uint256 amountIn,uint64 redeemFee,uint64 gasDrop,bytes32 destAddr,uint32 destDomain,uint8 payloadType,bytes customPayload) returns (uint64 sequence)', // 0x2072197f
-  'function bridgeWithLockedFee(address tokenIn,uint256 amountIn,uint64,uint256,uint32 destDomain,bytes32)',
-  // fastMCTP
-  'function createOrder(address,uint256,uint256,uint32,uint32,(uint8,bytes32,bytes32,uint64,uint64,uint64,uint64,uint64,bytes32,uint8))',
-  'function bridge(address tokenIn,uint256 amountIn,uint64,uint256,uint64,bytes32,uint32 destDomain,bytes32,uint8,uint8,uint32,bytes)',
-  // mayanSwap
-  'function swap((uint64,uint64,uint64),(bytes32,uint16,bytes32,bytes32,uint16,bytes32,bytes32),bytes32 tokenOutChainId,uint16 tokenOutChainId,(uint256,uint64,uint64,bool,uint64,bytes),address tokenIn,uint256 tokenIn)',
-  'function wrapAndSwapETH((uint64,uint64,uint64),(bytes32,uint16,bytes32,bytes32,uint16,bytes32,bytes32),bytes32 tokenOutAddr,uint16 tokenOutChainId,(uint256,uint64,uint64,bool,uint64,bytes))',
-  // mayanSwap2
-]
-
-const abiItems = parseAbi(abi)
-
 export const parseForwardedEth = createEventParser(
   'event ForwardedEth(address mayanProtocol, bytes protocolData)',
 )
@@ -79,95 +61,111 @@ export const parseForwardedERC20 = createEventParser(
   'event ForwardedERC20(address token, uint256 amount, address mayanProtocol, bytes protocolData)',
 )
 
-export const swapAndForwardedEth = createEventParser(
+export const parseSwapAndForwardedEth = createEventParser(
   'event SwapAndForwardedEth(uint256 amountIn, address swapProtocol, address middleToken, uint256 middleAmount, address mayanProtocol, bytes mayanData)',
 )
 
-export const swapAndForwardedERC20 = createEventParser(
+export const parseSwapAndForwardedERC20 = createEventParser(
   'event SwapAndForwardedERC20(address tokenIn, uint256 amountIn, address swapProtocol, address middleToken, uint256 middleAmount, address mayanProtocol, bytes mayanData)',
 )
 
-export const ForwardedEth = createBridgeEventType<{
+export const MayanForwarded = createBridgeEventType<{
   mayanProtocol: string
+  methodSignature: `0x${string}`
+  tokenIn: Address32
+  amountIn: string
+  tokenOut?: Address32
+  minAmountOut?: string
   $dstChain: string
-  protocolData: `0x${string}`
-}>('mayan-forwarder.ForwardedEth')
-
-export const ForwardedERC20 = createBridgeEventType<{
-  mayanProtocol: string
-  $dstChain: string
-  protocolData: `0x${string}`
-}>('mayan-forwarder.ForwardedERC20')
-
-export const SwapAndForwardedEth = createBridgeEventType<{
-  mayanProtocol: string
-  $dstChain: string
-  protocolData: `0x${string}`
-}>('mayan-forwarder.SwapAndForwardedEth')
-
-export const SwapAndForwardedERC20 = createBridgeEventType<{
-  mayanProtocol: string
-  $dstChain: string
-  protocolData: `0x${string}`
-}>('mayan-forwarder.SwapAndForwardedERC20')
+}>('mayan-forwarder.MayanForwarded')
 
 export class MayanForwarderPlugin implements BridgePlugin {
   name = 'mayan-forwarder'
 
-  capture(event: LogToCapture) {
-    const forwardedEth = parseForwardedEth(event.log, null)
+  capture(input: LogToCapture) {
+    const forwardedEth = parseForwardedEth(input.log, null)
     if (forwardedEth) {
       const decodedData = decodeProtocolData(forwardedEth.protocolData)
-      return ForwardedEth.create(event.ctx, {
+      if (!decodedData) return
+      return MayanForwarded.create(input.ctx, {
         mayanProtocol: decodeMayanProtocol(
-          event.ctx.chain,
+          input.ctx.chain,
           forwardedEth.mayanProtocol,
         ),
-        protocolData: forwardedEth.protocolData,
+        methodSignature: decodedData.methodSignature,
+        tokenIn: decodedData.tokenIn ?? Address32.NATIVE,
+        amountIn: decodedData.amountIn ?? input.ctx.value,
+        tokenOut: decodedData.tokenOut,
+        minAmountOut: decodedData.minAmountOut,
         $dstChain: decodedData.dstChain,
       })
     }
 
-    const forwardedERC20 = parseForwardedERC20(event.log, null)
+    const forwardedERC20 = parseForwardedERC20(input.log, null)
     if (forwardedERC20) {
       const decodedData = decodeProtocolData(forwardedERC20.protocolData)
-      return ForwardedERC20.create(event.ctx, {
+      if (!decodedData) return
+      return MayanForwarded.create(input.ctx, {
         mayanProtocol: decodeMayanProtocol(
-          event.ctx.chain,
+          input.ctx.chain,
           forwardedERC20.mayanProtocol,
         ),
-        protocolData: forwardedERC20.protocolData,
+        methodSignature: decodedData.methodSignature,
+        tokenIn: decodedData.tokenIn ?? Address32.from(forwardedERC20.token),
+        amountIn: decodedData.amountIn ?? forwardedERC20.amount.toString(),
+        tokenOut: decodedData.tokenOut,
+        minAmountOut: decodedData.minAmountOut,
         $dstChain: decodedData.dstChain,
       })
     }
 
-    const swapAndForwardedEthEvent = swapAndForwardedEth(event.log, null)
-    if (swapAndForwardedEthEvent) {
-      const decodedData = decodeProtocolData(swapAndForwardedEthEvent.mayanData)
-      return SwapAndForwardedEth.create(event.ctx, {
+    const swapAndForwardedEth = parseSwapAndForwardedEth(input.log, null)
+    if (swapAndForwardedEth) {
+      const decodedData = decodeProtocolData(swapAndForwardedEth.mayanData)
+      if (!decodedData) return
+      return MayanForwarded.create(input.ctx, {
         mayanProtocol: decodeMayanProtocol(
-          event.ctx.chain,
-          swapAndForwardedEthEvent.mayanProtocol,
+          input.ctx.chain,
+          swapAndForwardedEth.mayanProtocol,
         ),
-        protocolData: swapAndForwardedEthEvent.mayanData,
+        methodSignature: decodedData.methodSignature,
+        tokenIn: decodedData.tokenIn ?? Address32.ZERO,
+        amountIn: decodedData.amountIn ?? '0',
+        tokenOut: decodedData.tokenOut,
+        minAmountOut: decodedData.minAmountOut,
         $dstChain: decodedData.dstChain,
       })
     }
 
-    const swapAndForwardedERC20Event = swapAndForwardedERC20(event.log, null)
-    if (swapAndForwardedERC20Event) {
-      const decodedData = decodeProtocolData(
-        swapAndForwardedERC20Event.mayanData,
-      )
-      return SwapAndForwardedERC20.create(event.ctx, {
+    const swapAndForwardedERC20 = parseSwapAndForwardedERC20(input.log, null)
+    if (swapAndForwardedERC20) {
+      const decodedData = decodeProtocolData(swapAndForwardedERC20.mayanData)
+      if (!decodedData) return
+      return MayanForwarded.create(input.ctx, {
         mayanProtocol: decodeMayanProtocol(
-          event.ctx.chain,
-          swapAndForwardedERC20Event.mayanProtocol,
+          input.ctx.chain,
+          swapAndForwardedERC20.mayanProtocol,
         ),
-        protocolData: swapAndForwardedERC20Event.mayanData,
+        methodSignature: decodedData.methodSignature,
+        tokenIn: decodedData.tokenIn ?? Address32.ZERO,
+        amountIn: decodedData.amountIn ?? '0',
+        tokenOut: decodedData.tokenOut,
+        minAmountOut: decodedData.minAmountOut,
         $dstChain: decodedData.dstChain,
       })
     }
+  }
+}
+
+export function logToProtocolData(log: Log): DecodedData | undefined {
+  const parsed1 = parseForwardedEth(log, null) ?? parseForwardedERC20(log, null)
+  if (parsed1) {
+    return decodeProtocolData(parsed1.protocolData)
+  }
+  const parsed2 =
+    parseSwapAndForwardedERC20(log, null) ?? parseSwapAndForwardedEth(log, null)
+  if (parsed2) {
+    return decodeProtocolData(parsed2.mayanData)
   }
 }
 
@@ -185,59 +183,102 @@ function getChainFromWormholeId(wormholeId: number) {
   return findChain(WORMHOLE_NETWORKS, (x) => x.wormholeChainId, wormholeId)
 }
 
-type OrderInfo = {
-  trader: string
-  tokenOut: string
-  minAmountOut: bigint
-  gasDrop: bigint
-  cancelFee: bigint
-  refundFee: bigint
-  deadline: bigint
-  dstAddress: string
-  destChainId: number
-  referrerAddr: string
-  referrerBps: number
-  auctionMode: number
-  random: string
+const abiItems = parseAbi([
+  // mayanSwift 0xC38e4e6A15593f908255214653d3D947CA1c2338
+  'function createOrderWithToken(address tokenIn, uint256 amountIn, (bytes32 trader, bytes32 tokenOut, uint64 minAmountOut, uint64 gasDrop, uint64 cancelFee, uint64 refundFee, uint64 deadline, bytes32 dstAddress, uint16 destChainId, bytes32 referrerAddr, uint8 referrerBps, uint8 auctionMode, bytes32 random))',
+  'function createOrderWithEth((bytes32 trader, bytes32 tokenOut, uint64 minAmountOut, uint64 gasDrop, uint64 cancelFee, uint64 refundFee, uint64 deadline, bytes32 dstAddress, uint16 destChainId, bytes32 referrerAddr, uint8 referrerBps, uint8 auctionMode, bytes32 random))',
+  // mayanCircle 0x875d6d37EC55c8cF220B9E5080717549d8Aa8EcA
+  'function createOrder((address tokenIn, uint256 amountIn, uint64 _a, bytes32 _b, uint16 destChain, bytes32 tokenOut, uint64 minAmountOut, uint64 _c, uint64 _d, bytes32 _e, uint8 _f))',
+  'function bridgeWithFee(address tokenIn, uint256 amountIn, uint64 redeemFee, uint64 gasDrop, bytes32 destAddr, uint32 destDomain, uint8 payloadType, bytes customPayload) returns (uint64 sequence)', // 0x2072197f
+  'function bridgeWithLockedFee(address tokenIn, uint256 amountIn, uint64 gasDrop, uint256 redeemFee, uint32 destDomain, bytes32 destAddr)',
+  // fastMCTP 0xC1062b7C5Dc8E4b1Df9F200fe360cDc0eD6e7741
+  'function createOrder(address tokenIn, uint256 amountIn, uint256 circleMaxFee, uint32 destDomain, uint32 minFinalityThreshold, (uint8 payloadType, bytes32 destAddr, bytes32 tokenOut, uint64 amountOutMin, uint64 gasDrop, uint64 redeemFee, uint64 refundFee, uint64 deadline, bytes32 referrerAddr, uint8 referrerBps))',
+  'function bridge(address tokenIn, uint256 amountIn, uint64 redeemFee, uint256 circleMaxFee, uint64 gasDrop, bytes32 destAddr, uint32 destDomain, bytes32 referrerAddress, uint8 referrerBps, uint8 payloadType, uint32 minFinalityThreshold, bytes memory customPayload)',
+  // mayanSwap 0xBF5f3f65102aE745A48BD521d10BaB5BF02A9eF4
+  'function swap((uint64 swapFee, uint64 redeemFee, uint64 refundFee), (bytes32, uint16 mayanChainId, bytes32, bytes32 destAddr, uint16 destChainId, bytes32 referrer, bytes32 refundAddr), bytes32 tokenOutAddr, uint16 tokenOutChainId, (uint256 transferDeadline, uint64 swapDeadline, uint64 amountOutMin, bool unwrap, uint64 gasDrop, bytes customPayload), address tokenIn, uint256 amountIn)',
+  'function wrapAndSwapETH((uint64 swapFee, uint64 redeemFee, uint64 refundFee), (bytes32, uint16 mayanChainId, bytes32, bytes32 destAddr, uint16 destChainId, bytes32, bytes32), bytes32 tokenOutAddr, uint16 tokenOutChainId, (uint256 transferDeadline, uint64 swapDeadline, uint64 amountOutMin, bool unwrap, uint64 gasDrop, bytes customPayload))',
+  // mayanSwap2
+])
+
+interface DecodedData {
+  functionName: string
+  methodSignature: `0x${string}`
+  args: unknown
+  dstChain: string
+  tokenIn?: Address32
+  amountIn?: string
+  tokenOut?: Address32
+  minAmountOut?: string
 }
 
-function decodeProtocolData(data: `0x${string}`) {
-  const { functionName, args } = decodeFunctionData({
-    abi: abiItems,
-    data: data,
-  })
-  if (args) {
-    let dstChain = 'unknown'
-    switch (functionName) {
-      case 'createOrderWithToken':
-        dstChain = getChainFromWormholeId((args[2] as OrderInfo).destChainId)
-        break
-      case 'createOrderWithEth':
-        dstChain = getChainFromWormholeId(args[8] as number)
-        break
-      case 'createOrder':
-        dstChain = getChainFromWormholeId(args[4] as number)
-        break
-      case 'bridgeWithFee':
-        dstChain = getChainFromWormholeId(args[5] as number)
-        break
-      case 'bridgeWithLockedFee':
-        dstChain = getChainFromWormholeId(args[4] as number)
-        break
-      case 'bridge':
-        dstChain = getChainFromWormholeId(args[6] as number)
-        break
-      case 'swap':
-        dstChain = getChainFromWormholeId(args[3] as number)
-        break
-      case 'wrapAndSwapETH':
-        dstChain = getChainFromWormholeId(args[3] as number)
-        break
-      default:
-        dstChain = `unknown_from_function_${functionName}`
-        break
-    }
-    return { functionName, args, dstChain }
+function decodeProtocolData(data: `0x${string}`): DecodedData | undefined {
+  const decoded: DecodedData = {
+    functionName: 'unknown',
+    methodSignature: data.slice(0, 10) as `0x${string}`,
+    args: [],
+    dstChain: 'unknown',
   }
-  return { functionName: 'unknown', args: null, dstChain: 'unknown' }
+  let res
+  try {
+    res = decodeFunctionData({
+      abi: abiItems,
+      data: data,
+    })
+  } catch {
+    return undefined
+  }
+
+  decoded.functionName = res.functionName
+  decoded.args = res.args
+
+  if (res.functionName === 'createOrderWithToken') {
+    decoded.dstChain = getChainFromWormholeId(res.args[2].destChainId)
+    decoded.tokenIn = Address32.from(res.args[0])
+    decoded.amountIn = res.args[1].toString()
+    decoded.tokenOut = Address32.from(res.args[2].tokenOut)
+    decoded.minAmountOut = res.args[2].minAmountOut.toString()
+  } else if (res.functionName === 'createOrderWithEth') {
+    decoded.dstChain = getChainFromWormholeId(res.args[0].destChainId)
+    decoded.tokenIn = Address32.NATIVE
+    decoded.tokenOut = Address32.from(res.args[0].tokenOut)
+    decoded.minAmountOut = res.args[0].minAmountOut.toString()
+  } else if (res.functionName === 'createOrder') {
+    if (res.args.length === 1) {
+      decoded.dstChain = getChainFromWormholeId(res.args[0].destChain)
+      decoded.tokenIn = Address32.from(res.args[0].tokenIn)
+      decoded.amountIn = res.args[0].amountIn.toString()
+      decoded.tokenOut = Address32.from(res.args[0].tokenOut)
+      decoded.minAmountOut = res.args[0].minAmountOut.toString()
+    } else {
+      decoded.dstChain = getChainFromWormholeId(res.args[4])
+      decoded.tokenIn = Address32.from(res.args[0])
+      decoded.amountIn = res.args[1].toString()
+      decoded.tokenOut = Address32.from(res.args[5].tokenOut)
+      decoded.minAmountOut = res.args[5].amountOutMin.toString()
+    }
+  } else if (res.functionName === 'bridgeWithFee') {
+    decoded.dstChain = getChainFromWormholeId(res.args[5])
+    decoded.tokenIn = Address32.from(res.args[0])
+    decoded.amountIn = res.args[1].toString()
+  } else if (res.functionName === 'bridgeWithLockedFee') {
+    decoded.dstChain = getChainFromWormholeId(res.args[4])
+    decoded.tokenIn = Address32.from(res.args[0])
+    decoded.amountIn = res.args[1].toString()
+  } else if (res.functionName === 'bridge') {
+    decoded.dstChain = getChainFromWormholeId(res.args[6])
+    decoded.tokenIn = Address32.from(res.args[0])
+    decoded.amountIn = res.args[1].toString()
+  } else if (res.functionName === 'swap') {
+    decoded.dstChain = getChainFromWormholeId(res.args[3])
+    decoded.tokenIn = Address32.from(res.args[5])
+    decoded.amountIn = res.args[6].toString()
+    decoded.tokenOut = Address32.from(res.args[2])
+    decoded.minAmountOut = res.args[4].amountOutMin.toString()
+  } else if (res.functionName === 'wrapAndSwapETH') {
+    decoded.dstChain = getChainFromWormholeId(res.args[3])
+    decoded.tokenIn = Address32.NATIVE
+    decoded.tokenOut = Address32.from(res.args[2])
+    decoded.minAmountOut = res.args[4].amountOutMin.toString()
+  }
+  return decoded
 }

@@ -1,3 +1,5 @@
+import { HourlyIndexer } from '../../tools/HourlyIndexer'
+import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BridgeBlockProcessor } from './BridgeBlockProcessor'
 import { BridgeCleaner } from './BridgeCleaner'
@@ -6,13 +8,18 @@ import { BridgeMatcher } from './BridgeMatcher'
 import { createBridgeRouter } from './BridgeRouter'
 import { BridgeStore } from './BridgeStore'
 import { createBridgeComparePlugins } from './compare'
+import { FinancialsService } from './FinancialsService'
+import { InteropRecentPricesIndexer } from './InteropRecentPricesIndexer'
 import { createBridgePlugins } from './plugins'
+import { MockTokenDb } from './TokenDb'
 
 export function createBridgeModule({
   config,
   db,
   logger,
   blockProcessors,
+  clock,
+  providers,
 }: ModuleDependencies): ApplicationModule | undefined {
   if (!config.bridges) {
     logger.info('Bridges module disabled')
@@ -27,7 +34,7 @@ export function createBridgeModule({
   if (config.bridges.capture.enabled) {
     for (const chain of config.bridges.capture.chains) {
       const processor = new BridgeBlockProcessor(
-        chain,
+        chain.name,
         plugins,
         bridgeStore,
         logger,
@@ -41,7 +48,7 @@ export function createBridgeModule({
     bridgeStore,
     db,
     plugins,
-    config.bridges.capture.chains,
+    config.bridges.capture.chains.map((c) => c.name),
     logger,
   )
 
@@ -58,6 +65,23 @@ export function createBridgeModule({
 
   const bridgeCleaner = new BridgeCleaner(bridgeStore, db, logger)
 
+  const hourlyIndexer = new HourlyIndexer(logger, clock)
+  const recentPricesIndexer = new InteropRecentPricesIndexer({
+    db,
+    priceProvider: providers.price,
+    logger,
+    parents: [hourlyIndexer],
+    minHeight: 1,
+    indexerService: new IndexerService(db),
+  })
+  const tokenDb = new MockTokenDb()
+  const financialsService = new FinancialsService(
+    config.bridges.capture.chains,
+    db,
+    tokenDb,
+    logger,
+  )
+
   const start = async () => {
     logger = logger.for('BridgeModule')
     logger.info('Starting')
@@ -70,6 +94,11 @@ export function createBridgeModule({
     }
     if (config.bridges && config.bridges.cleaner) {
       bridgeCleaner.start()
+    }
+    if (config.bridges && config.bridges.financials.enabled) {
+      await hourlyIndexer.start()
+      await recentPricesIndexer.start()
+      financialsService.start()
     }
     logger.info('Started', {
       plugins: plugins.length,

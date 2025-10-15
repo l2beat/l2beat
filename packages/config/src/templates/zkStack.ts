@@ -24,6 +24,7 @@ import {
 import { BADGES } from '../common/badges'
 import { PROOFS } from '../common/proofSystems'
 import { getStage } from '../common/stages/getStage'
+import { ZK_PROGRAM_HASHES } from '../common/zkProgramHashes'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
@@ -251,21 +252,28 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     (e) => e.label === REASON_FOR_BEING_OTHER.NO_PROOFS.label,
   )
 
+  const l2BootloaderHash = templateVars.discovery.getContractValue<string>(
+    templateVars.diamondContract.address,
+    'getL2BootloaderBytecodeHash',
+  )
+
+  const baseBadges = [
+    BADGES.Stack.ZKStack,
+    BADGES.Infra.ElasticChain,
+    BADGES.VM.EVM,
+  ]
+
+  if (!daProvider) {
+    baseBadges.push(BADGES.DA.EthereumBlobs)
+  }
+
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
     addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',
     archivedAt: templateVars.archivedAt,
-    badges: mergeBadges(
-      [
-        BADGES.Stack.ZKStack,
-        BADGES.Infra.ElasticChain,
-        BADGES.VM.EVM,
-        BADGES.DA.EthereumBlobs,
-      ],
-      templateVars.additionalBadges ?? [],
-    ),
+    badges: mergeBadges(baseBadges, templateVars.additionalBadges ?? []),
     display: {
       purposes: templateVars.overridingPurposes ?? [
         'Universal',
@@ -518,6 +526,7 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
           'EmergencyUpgradeBoard',
         ),
       ],
+      zkProgramHashes: [ZK_PROGRAM_HASHES(l2BootloaderHash)],
     },
     stateDerivation:
       daProvider !== undefined
