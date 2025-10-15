@@ -2,22 +2,22 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
 import {
-  type BridgeTransferRecord,
-  BridgeTransferRepository,
-} from './BridgeTransferRepository'
+  type InteropTransferRecord,
+  InteropTransferRepository,
+} from './InteropTransferRepository'
 
-describeDatabase(BridgeTransferRepository.name, (db) => {
-  const repository = db.bridgeTransfer
+describeDatabase(InteropTransferRepository.name, (db) => {
+  const repository = db.interopTransfer
 
   beforeEach(async () => {
     await repository.deleteAll()
   })
 
-  describe(BridgeTransferRepository.prototype.insertMany.name, () => {
+  describe(InteropTransferRepository.prototype.insertMany.name, () => {
     it('adds new rows', async () => {
       const records = [
-        bridgeTransfer('plugin1', 'msg1', 'type1', UnixTime(100), 'a', 'b', 1),
-        bridgeTransfer('plugin2', 'msg2', 'type2', UnixTime(200), 'b', 'a', 2),
+        transfer('plugin1', 'msg1', 'type1', UnixTime(100), 'a', 'b', 1),
+        transfer('plugin2', 'msg2', 'type2', UnixTime(200), 'b', 'a', 2),
       ]
 
       const inserted = await repository.insertMany(records)
@@ -35,9 +35,7 @@ describeDatabase(BridgeTransferRepository.name, (db) => {
     it('performs batch insert when more than 1000 records', async () => {
       const records = []
       for (let i = 0; i < 1500; i++) {
-        records.push(
-          bridgeTransfer('plugin', `msg${i}`, 'deposit', UnixTime(i)),
-        )
+        records.push(transfer('plugin', `msg${i}`, 'deposit', UnixTime(i)))
       }
 
       const inserted = await repository.insertMany(records)
@@ -86,7 +84,7 @@ describeDatabase(BridgeTransferRepository.name, (db) => {
     })
 
     it('handles records with ethereum token addresses', async () => {
-      const record = bridgeTransfer(
+      const record = transfer(
         'plugin1',
         'msg1',
         'deposit',
@@ -107,10 +105,10 @@ describeDatabase(BridgeTransferRepository.name, (db) => {
     })
   })
 
-  describe(BridgeTransferRepository.prototype.getByType.name, () => {
+  describe(InteropTransferRepository.prototype.getByType.name, () => {
     beforeEach(async () => {
       await repository.insertMany([
-        bridgeTransfer(
+        transfer(
           'plugin1',
           'msg1',
           'deposit',
@@ -119,7 +117,7 @@ describeDatabase(BridgeTransferRepository.name, (db) => {
           'arbitrum',
           5000,
         ),
-        bridgeTransfer(
+        transfer(
           'plugin1',
           'msg2',
           'deposit',
@@ -128,7 +126,7 @@ describeDatabase(BridgeTransferRepository.name, (db) => {
           'optimism',
           6000,
         ),
-        bridgeTransfer(
+        transfer(
           'plugin2',
           'msg3',
           'withdraw',
@@ -137,7 +135,7 @@ describeDatabase(BridgeTransferRepository.name, (db) => {
           'ethereum',
           7000,
         ),
-        bridgeTransfer(
+        transfer(
           'plugin2',
           'msg4',
           'deposit',
@@ -209,13 +207,13 @@ describeDatabase(BridgeTransferRepository.name, (db) => {
     })
   })
 
-  describe(BridgeTransferRepository.prototype.deleteBefore.name, () => {
+  describe(InteropTransferRepository.prototype.deleteBefore.name, () => {
     it('deletes transfers before specified timestamp', async () => {
       await repository.insertMany([
-        bridgeTransfer('plugin1', 'msg1', 'deposit', UnixTime(100)),
-        bridgeTransfer('plugin1', 'msg2', 'deposit', UnixTime(200)),
-        bridgeTransfer('plugin1', 'msg3', 'withdraw', UnixTime(300)),
-        bridgeTransfer('plugin1', 'msg4', 'deposit', UnixTime(400)),
+        transfer('plugin1', 'msg1', 'deposit', UnixTime(100)),
+        transfer('plugin1', 'msg2', 'deposit', UnixTime(200)),
+        transfer('plugin1', 'msg3', 'withdraw', UnixTime(300)),
+        transfer('plugin1', 'msg4', 'deposit', UnixTime(400)),
       ])
 
       const deleted = await repository.deleteBefore(UnixTime(250))
@@ -231,21 +229,21 @@ describeDatabase(BridgeTransferRepository.name, (db) => {
     })
   })
 
-  describe(BridgeTransferRepository.prototype.getUnprocessed.name, () => {
+  describe(InteropTransferRepository.prototype.getUnprocessed.name, () => {
     it('returns only unprocessed transfers', async () => {
-      const unprocessedRecord1 = bridgeTransfer(
+      const unprocessedRecord1 = transfer(
         'plugin1',
         'msg1',
         'deposit',
         UnixTime(100),
       )
-      const unprocessedRecord2 = bridgeTransfer(
+      const unprocessedRecord2 = transfer(
         'plugin1',
         'msg2',
         'withdraw',
         UnixTime(200),
       )
-      const processedRecord = bridgeTransfer(
+      const processedRecord = transfer(
         'plugin2',
         'msg3',
         'deposit',
@@ -267,13 +265,13 @@ describeDatabase(BridgeTransferRepository.name, (db) => {
     })
 
     it('returns empty array when no unprocessed transfers exist', async () => {
-      const processedRecord1 = bridgeTransfer(
+      const processedRecord1 = transfer(
         'plugin1',
         'msg1',
         'deposit',
         UnixTime(100),
       )
-      const processedRecord2 = bridgeTransfer(
+      const processedRecord2 = transfer(
         'plugin1',
         'msg2',
         'withdraw',
@@ -296,9 +294,9 @@ describeDatabase(BridgeTransferRepository.name, (db) => {
     })
   })
 
-  describe(BridgeTransferRepository.prototype.updateFinancials.name, () => {
+  describe(InteropTransferRepository.prototype.updateFinancials.name, () => {
     it('updates financial data and marks transfer as processed', async () => {
-      const record = bridgeTransfer('plugin1', 'msg1', 'deposit', UnixTime(100))
+      const record = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
       record.srcAbstractTokenId = undefined
       record.srcPrice = undefined
       record.srcAmount = undefined
@@ -339,7 +337,7 @@ describeDatabase(BridgeTransferRepository.name, (db) => {
     })
 
     it('updates only provided fields', async () => {
-      const record = bridgeTransfer('plugin1', 'msg1', 'deposit', UnixTime(100))
+      const record = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
       record.srcAbstractTokenId = 'original-src'
       record.srcPrice = 1000.0
       record.dstAbstractTokenId = 'original-dst'
@@ -367,9 +365,9 @@ describeDatabase(BridgeTransferRepository.name, (db) => {
 
     it('does not affect other transfers', async () => {
       const records = [
-        bridgeTransfer('plugin1', 'msg1', 'deposit', UnixTime(100)),
-        bridgeTransfer('plugin1', 'msg2', 'withdraw', UnixTime(200)),
-        bridgeTransfer('plugin1', 'msg3', 'deposit', UnixTime(300)),
+        transfer('plugin1', 'msg1', 'deposit', UnixTime(100)),
+        transfer('plugin1', 'msg2', 'withdraw', UnixTime(200)),
+        transfer('plugin1', 'msg3', 'deposit', UnixTime(300)),
       ]
 
       await repository.insertMany(records)
@@ -398,7 +396,7 @@ describeDatabase(BridgeTransferRepository.name, (db) => {
     })
 
     it('handles non-existent message ID gracefully', async () => {
-      const record = bridgeTransfer('plugin1', 'msg1', 'deposit', UnixTime(100))
+      const record = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
       await repository.insertMany([record])
 
       const update = {
@@ -414,7 +412,7 @@ describeDatabase(BridgeTransferRepository.name, (db) => {
     })
 
     it('updates with empty update object', async () => {
-      const record = bridgeTransfer('plugin1', 'msg1', 'deposit', UnixTime(100))
+      const record = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
       await repository.insertMany([record])
 
       await repository.updateFinancials('msg1', {})
@@ -430,7 +428,7 @@ describeDatabase(BridgeTransferRepository.name, (db) => {
     })
 
     it('updates multiple financial fields at once', async () => {
-      const record = bridgeTransfer('plugin1', 'msg1', 'deposit', UnixTime(100))
+      const record = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
       await repository.insertMany([record])
 
       const comprehensiveUpdate = {
@@ -463,7 +461,7 @@ describeDatabase(BridgeTransferRepository.name, (db) => {
   })
 })
 
-function bridgeTransfer(
+function transfer(
   plugin: string,
   messageId: string,
   type: string,
@@ -471,7 +469,7 @@ function bridgeTransfer(
   srcChain?: string,
   dstChain?: string,
   duration?: number,
-): BridgeTransferRecord {
+): InteropTransferRecord {
   return {
     plugin,
     messageId,

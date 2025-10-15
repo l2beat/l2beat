@@ -3,7 +3,7 @@ import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropEvent } from '../kysely/generated/types'
 
-export interface BridgeEventRecord {
+export interface InteropEventRecord {
   plugin: string
   eventId: string
   type: string
@@ -21,7 +21,7 @@ export interface BridgeEventRecord {
   args: unknown
 }
 
-export function toRecord(row: Selectable<InteropEvent>): BridgeEventRecord {
+export function toRecord(row: Selectable<InteropEvent>): InteropEventRecord {
   return {
     plugin: row.plugin,
     eventId: row.eventId,
@@ -41,7 +41,7 @@ export function toRecord(row: Selectable<InteropEvent>): BridgeEventRecord {
   }
 }
 
-export function toRow(record: BridgeEventRecord): Insertable<InteropEvent> {
+export function toRow(record: InteropEventRecord): Insertable<InteropEvent> {
   return {
     plugin: record.plugin,
     eventId: record.eventId,
@@ -61,7 +61,7 @@ export function toRow(record: BridgeEventRecord): Insertable<InteropEvent> {
   }
 }
 
-export interface BridgeEventStatsRecord {
+export interface InteropEventStatsRecord {
   type: string
   count: number
   matched: number
@@ -70,8 +70,8 @@ export interface BridgeEventStatsRecord {
   unsupported: number
 }
 
-export class BridgeEventRepository extends BaseRepository {
-  async insertMany(records: BridgeEventRecord[]): Promise<number> {
+export class InteropEventRepository extends BaseRepository {
+  async insertMany(records: InteropEventRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
@@ -81,7 +81,7 @@ export class BridgeEventRepository extends BaseRepository {
     return rows.length
   }
 
-  async getUnmatched(): Promise<BridgeEventRecord[]> {
+  async getUnmatched(): Promise<InteropEventRecord[]> {
     const rows = await this.db
       .selectFrom('InteropEvent')
       .where('matched', '=', false)
@@ -92,7 +92,7 @@ export class BridgeEventRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getAll(): Promise<BridgeEventRecord[]> {
+  async getAll(): Promise<InteropEventRecord[]> {
     const rows = await this.db.selectFrom('InteropEvent').selectAll().execute()
 
     return rows.map(toRecord)
@@ -105,7 +105,7 @@ export class BridgeEventRepository extends BaseRepository {
       unsupported?: boolean
       oldCutoff?: UnixTime
     } = {},
-  ): Promise<BridgeEventRecord[]> {
+  ): Promise<InteropEventRecord[]> {
     let query = this.db.selectFrom('InteropEvent').where('type', '=', type)
 
     if (options.matched !== undefined) {
@@ -125,7 +125,7 @@ export class BridgeEventRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getStats(): Promise<BridgeEventStatsRecord[]> {
+  async getStats(): Promise<InteropEventStatsRecord[]> {
     const now = new Date()
     const twoHoursAgo = new Date(now.toISOString())
     twoHoursAgo.setUTCHours(twoHoursAgo.getUTCHours() - 2)
@@ -165,7 +165,7 @@ export class BridgeEventRepository extends BaseRepository {
     }))
   }
 
-  async getExpired(currentTime: UnixTime): Promise<BridgeEventRecord[]> {
+  async getExpired(currentTime: UnixTime): Promise<InteropEventRecord[]> {
     const rows = await this.db
       .selectFrom('InteropEvent')
       .where('expiresAt', '<=', UnixTime.toDate(currentTime))

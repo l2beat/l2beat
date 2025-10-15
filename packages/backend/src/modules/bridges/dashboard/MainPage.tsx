@@ -3,8 +3,8 @@ import type {
   BridgeMessageStatsRecord,
   BridgeTransfersStatsRecord,
 } from '@l2beat/database'
-import type { BridgeMessageDetailedStatsRecord } from '@l2beat/database/dist/repositories/BridgeMessageRepository'
-import type { BridgeTransfersDetailedStatsRecord } from '@l2beat/database/dist/repositories/BridgeTransferRepository'
+import type { BridgeMessageDetailedStatsRecord } from '@l2beat/database/dist/repositories/InteropMessageRepository'
+import type { BridgeTransfersDetailedStatsRecord } from '@l2beat/database/dist/repositories/InteropTransferRepository'
 import { formatSeconds } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'

@@ -2,32 +2,22 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
 import {
-  type BridgeEventRecord,
-  BridgeEventRepository,
-} from './BridgeEventRepository'
+  type InteropEventRecord,
+  InteropEventRepository,
+} from './InteropEventRepository'
 
-describeDatabase(BridgeEventRepository.name, (db) => {
-  const repository = db.bridgeEvent
+describeDatabase(InteropEventRepository.name, (db) => {
+  const repository = db.interopEvent
 
-  describe(BridgeEventRepository.prototype.insertMany.name, () => {
+  describe(InteropEventRepository.prototype.insertMany.name, () => {
     it('adds new rows', async () => {
       const records = [
-        bridgeEvent(
-          'plugin1',
-          'event1',
-          'deposit',
-          UnixTime(100),
-          UnixTime(200),
-          { args: { a: 1 } },
-        ),
-        bridgeEvent(
-          'plugin2',
-          'event2',
-          'withdraw',
-          UnixTime(150),
-          UnixTime(250),
-          { args: { a: 2 } },
-        ),
+        event('plugin1', 'event1', 'deposit', UnixTime(100), UnixTime(200), {
+          args: { a: 1 },
+        }),
+        event('plugin2', 'event2', 'withdraw', UnixTime(150), UnixTime(250), {
+          args: { a: 2 },
+        }),
       ]
 
       const inserted = await repository.insertMany(records)
@@ -46,7 +36,7 @@ describeDatabase(BridgeEventRepository.name, (db) => {
       const records = []
       for (let i = 0; i < 2500; i++) {
         records.push(
-          bridgeEvent(
+          event(
             'plugin',
             `event${i}`,
             'deposit',
@@ -61,7 +51,7 @@ describeDatabase(BridgeEventRepository.name, (db) => {
     })
 
     it('handles records with undefined txTo', async () => {
-      const record = bridgeEvent(
+      const record = event(
         'plugin1',
         'event1',
         'deposit',
@@ -78,53 +68,25 @@ describeDatabase(BridgeEventRepository.name, (db) => {
     })
   })
 
-  describe(BridgeEventRepository.prototype.getUnmatched.name, () => {
+  describe(InteropEventRepository.prototype.getUnmatched.name, () => {
     beforeEach(async () => {
       await repository.insertMany([
-        bridgeEvent(
-          'plugin1',
-          'event1',
-          'deposit',
-          UnixTime(100),
-          UnixTime(200),
-          {
-            matched: false,
-            unsupported: false,
-          },
-        ),
-        bridgeEvent(
-          'plugin1',
-          'event2',
-          'deposit',
-          UnixTime(150),
-          UnixTime(250),
-          {
-            matched: true,
-            unsupported: false,
-          },
-        ),
-        bridgeEvent(
-          'plugin1',
-          'event3',
-          'withdraw',
-          UnixTime(200),
-          UnixTime(300),
-          {
-            matched: false,
-            unsupported: true,
-          },
-        ),
-        bridgeEvent(
-          'plugin1',
-          'event4',
-          'deposit',
-          UnixTime(250),
-          UnixTime(350),
-          {
-            matched: false,
-            unsupported: false,
-          },
-        ),
+        event('plugin1', 'event1', 'deposit', UnixTime(100), UnixTime(200), {
+          matched: false,
+          unsupported: false,
+        }),
+        event('plugin1', 'event2', 'deposit', UnixTime(150), UnixTime(250), {
+          matched: true,
+          unsupported: false,
+        }),
+        event('plugin1', 'event3', 'withdraw', UnixTime(200), UnixTime(300), {
+          matched: false,
+          unsupported: true,
+        }),
+        event('plugin1', 'event4', 'deposit', UnixTime(250), UnixTime(350), {
+          matched: false,
+          unsupported: false,
+        }),
       ])
     })
 
@@ -140,53 +102,25 @@ describeDatabase(BridgeEventRepository.name, (db) => {
     })
   })
 
-  describe(BridgeEventRepository.prototype.getByType.name, () => {
+  describe(InteropEventRepository.prototype.getByType.name, () => {
     beforeEach(async () => {
       await repository.insertMany([
-        bridgeEvent(
-          'plugin1',
-          'event1',
-          'deposit',
-          UnixTime(100),
-          UnixTime(200),
-          {
-            matched: false,
-            unsupported: false,
-          },
-        ),
-        bridgeEvent(
-          'plugin1',
-          'event2',
-          'deposit',
-          UnixTime(200),
-          UnixTime(300),
-          {
-            matched: true,
-            unsupported: false,
-          },
-        ),
-        bridgeEvent(
-          'plugin2',
-          'event3',
-          'withdraw',
-          UnixTime(150),
-          UnixTime(250),
-          {
-            matched: false,
-            unsupported: true,
-          },
-        ),
-        bridgeEvent(
-          'plugin2',
-          'event4',
-          'deposit',
-          UnixTime(300),
-          UnixTime(400),
-          {
-            matched: false,
-            unsupported: false,
-          },
-        ),
+        event('plugin1', 'event1', 'deposit', UnixTime(100), UnixTime(200), {
+          matched: false,
+          unsupported: false,
+        }),
+        event('plugin1', 'event2', 'deposit', UnixTime(200), UnixTime(300), {
+          matched: true,
+          unsupported: false,
+        }),
+        event('plugin2', 'event3', 'withdraw', UnixTime(150), UnixTime(250), {
+          matched: false,
+          unsupported: true,
+        }),
+        event('plugin2', 'event4', 'deposit', UnixTime(300), UnixTime(400), {
+          matched: false,
+          unsupported: false,
+        }),
       ])
     })
 
@@ -249,37 +183,13 @@ describeDatabase(BridgeEventRepository.name, (db) => {
     })
   })
 
-  describe(BridgeEventRepository.prototype.getExpired.name, () => {
+  describe(InteropEventRepository.prototype.getExpired.name, () => {
     beforeEach(async () => {
       await repository.insertMany([
-        bridgeEvent(
-          'plugin1',
-          'event1',
-          'deposit',
-          UnixTime(100),
-          UnixTime(200),
-        ),
-        bridgeEvent(
-          'plugin1',
-          'event2',
-          'deposit',
-          UnixTime(150),
-          UnixTime(250),
-        ),
-        bridgeEvent(
-          'plugin1',
-          'event3',
-          'withdraw',
-          UnixTime(200),
-          UnixTime(300),
-        ),
-        bridgeEvent(
-          'plugin1',
-          'event4',
-          'deposit',
-          UnixTime(250),
-          UnixTime(400),
-        ),
+        event('plugin1', 'event1', 'deposit', UnixTime(100), UnixTime(200)),
+        event('plugin1', 'event2', 'deposit', UnixTime(150), UnixTime(250)),
+        event('plugin1', 'event3', 'withdraw', UnixTime(200), UnixTime(300)),
+        event('plugin1', 'event4', 'deposit', UnixTime(250), UnixTime(400)),
       ])
     })
 
@@ -301,39 +211,18 @@ describeDatabase(BridgeEventRepository.name, (db) => {
     })
   })
 
-  describe(BridgeEventRepository.prototype.updateMatched.name, () => {
+  describe(InteropEventRepository.prototype.updateMatched.name, () => {
     beforeEach(async () => {
       await repository.insertMany([
-        bridgeEvent(
-          'plugin1',
-          'event1',
-          'deposit',
-          UnixTime(100),
-          UnixTime(200),
-          {
-            matched: false,
-          },
-        ),
-        bridgeEvent(
-          'plugin1',
-          'event2',
-          'deposit',
-          UnixTime(150),
-          UnixTime(250),
-          {
-            matched: false,
-          },
-        ),
-        bridgeEvent(
-          'plugin1',
-          'event3',
-          'withdraw',
-          UnixTime(200),
-          UnixTime(300),
-          {
-            matched: false,
-          },
-        ),
+        event('plugin1', 'event1', 'deposit', UnixTime(100), UnixTime(200), {
+          matched: false,
+        }),
+        event('plugin1', 'event2', 'deposit', UnixTime(150), UnixTime(250), {
+          matched: false,
+        }),
+        event('plugin1', 'event3', 'withdraw', UnixTime(200), UnixTime(300), {
+          matched: false,
+        }),
       ])
     })
 
@@ -367,16 +256,9 @@ describeDatabase(BridgeEventRepository.name, (db) => {
         const eventId = `event${i}`
         eventIds.push(eventId)
         records.push(
-          bridgeEvent(
-            'plugin',
-            eventId,
-            'deposit',
-            UnixTime(i),
-            UnixTime(i + 100),
-            {
-              matched: false,
-            },
-          ),
+          event('plugin', eventId, 'deposit', UnixTime(i), UnixTime(i + 100), {
+            matched: false,
+          }),
         )
       }
 
@@ -390,39 +272,18 @@ describeDatabase(BridgeEventRepository.name, (db) => {
     })
   })
 
-  describe(BridgeEventRepository.prototype.updateUnsupported.name, () => {
+  describe(InteropEventRepository.prototype.updateUnsupported.name, () => {
     beforeEach(async () => {
       await repository.insertMany([
-        bridgeEvent(
-          'plugin1',
-          'event1',
-          'deposit',
-          UnixTime(100),
-          UnixTime(200),
-          {
-            unsupported: false,
-          },
-        ),
-        bridgeEvent(
-          'plugin1',
-          'event2',
-          'deposit',
-          UnixTime(150),
-          UnixTime(250),
-          {
-            unsupported: false,
-          },
-        ),
-        bridgeEvent(
-          'plugin1',
-          'event3',
-          'withdraw',
-          UnixTime(200),
-          UnixTime(300),
-          {
-            unsupported: false,
-          },
-        ),
+        event('plugin1', 'event1', 'deposit', UnixTime(100), UnixTime(200), {
+          unsupported: false,
+        }),
+        event('plugin1', 'event2', 'deposit', UnixTime(150), UnixTime(250), {
+          unsupported: false,
+        }),
+        event('plugin1', 'event3', 'withdraw', UnixTime(200), UnixTime(300), {
+          unsupported: false,
+        }),
       ])
     })
 
@@ -456,16 +317,9 @@ describeDatabase(BridgeEventRepository.name, (db) => {
         const eventId = `event${i}`
         eventIds.push(eventId)
         records.push(
-          bridgeEvent(
-            'plugin',
-            eventId,
-            'deposit',
-            UnixTime(i),
-            UnixTime(i + 100),
-            {
-              unsupported: false,
-            },
-          ),
+          event('plugin', eventId, 'deposit', UnixTime(i), UnixTime(i + 100), {
+            unsupported: false,
+          }),
         )
       }
 
@@ -479,37 +333,13 @@ describeDatabase(BridgeEventRepository.name, (db) => {
     })
   })
 
-  describe(BridgeEventRepository.prototype.deleteExpired.name, () => {
+  describe(InteropEventRepository.prototype.deleteExpired.name, () => {
     it('deletes events that have expired', async () => {
       await repository.insertMany([
-        bridgeEvent(
-          'plugin1',
-          'event1',
-          'deposit',
-          UnixTime(100),
-          UnixTime(200),
-        ),
-        bridgeEvent(
-          'plugin1',
-          'event2',
-          'deposit',
-          UnixTime(150),
-          UnixTime(250),
-        ),
-        bridgeEvent(
-          'plugin1',
-          'event3',
-          'withdraw',
-          UnixTime(200),
-          UnixTime(300),
-        ),
-        bridgeEvent(
-          'plugin1',
-          'event4',
-          'deposit',
-          UnixTime(250),
-          UnixTime(400),
-        ),
+        event('plugin1', 'event1', 'deposit', UnixTime(100), UnixTime(200)),
+        event('plugin1', 'event2', 'deposit', UnixTime(150), UnixTime(250)),
+        event('plugin1', 'event3', 'withdraw', UnixTime(200), UnixTime(300)),
+        event('plugin1', 'event4', 'deposit', UnixTime(250), UnixTime(400)),
       ])
 
       const deleted = await repository.deleteExpired(UnixTime(350))
@@ -523,20 +353,8 @@ describeDatabase(BridgeEventRepository.name, (db) => {
 
     it('returns 0 when no events are expired', async () => {
       await repository.insertMany([
-        bridgeEvent(
-          'plugin1',
-          'event1',
-          'deposit',
-          UnixTime(100),
-          UnixTime(200),
-        ),
-        bridgeEvent(
-          'plugin1',
-          'event2',
-          'deposit',
-          UnixTime(150),
-          UnixTime(250),
-        ),
+        event('plugin1', 'event1', 'deposit', UnixTime(100), UnixTime(200)),
+        event('plugin1', 'event2', 'deposit', UnixTime(150), UnixTime(250)),
       ])
 
       const deleted = await repository.deleteExpired(UnixTime(100))
@@ -553,14 +371,14 @@ describeDatabase(BridgeEventRepository.name, (db) => {
   })
 })
 
-function bridgeEvent(
+function event(
   plugin: string,
   eventId: string,
   type: string,
   timestamp: UnixTime,
   expiresAt: UnixTime,
-  overrides: Partial<BridgeEventRecord> = {},
-): BridgeEventRecord {
+  overrides: Partial<InteropEventRecord> = {},
+): InteropEventRecord {
   return {
     plugin,
     eventId,

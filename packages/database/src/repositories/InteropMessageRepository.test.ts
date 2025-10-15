@@ -2,25 +2,25 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
 import {
-  type BridgeMessageRecord,
-  BridgeMessageRepository,
-} from './BridgeMessageRepository'
+  type InteropMessageRecord,
+  InteropMessageRepository,
+} from './InteropMessageRepository'
 
-describeDatabase(BridgeMessageRepository.name, (database) => {
-  const repository = database.bridgeMessage
+describeDatabase(InteropMessageRepository.name, (database) => {
+  const repository = database.interopMessage
 
   beforeEach(async () => {
     await repository.deleteAll()
   })
 
-  describe(BridgeMessageRepository.prototype.getStats.name, () => {
+  describe(InteropMessageRepository.prototype.getStats.name, () => {
     it('returns stats grouped by message type with multiple known apps', async () => {
       const now = UnixTime.now()
-      const records: BridgeMessageRecord[] = [
+      const records: InteropMessageRecord[] = [
         {
           plugin: 'plugin',
           messageId: 'msg1',
-          type: 'bridge',
+          type: 'message',
           app: 'arbitrum',
           duration: 100,
           timestamp: now,
@@ -38,7 +38,7 @@ describeDatabase(BridgeMessageRepository.name, (database) => {
         {
           plugin: 'plugin',
           messageId: 'msg2',
-          type: 'bridge',
+          type: 'message',
           app: 'optimism',
           duration: 200,
           timestamp: now + UnixTime.HOUR,
@@ -56,7 +56,7 @@ describeDatabase(BridgeMessageRepository.name, (database) => {
         {
           plugin: 'plugin',
           messageId: 'msg3',
-          type: 'bridge',
+          type: 'message',
           app: 'polygon',
           duration: 150,
           timestamp: now + UnixTime.MINUTE * 30,
@@ -96,14 +96,14 @@ describeDatabase(BridgeMessageRepository.name, (database) => {
 
       expect(result).toHaveLength(2)
 
-      const bridgeStats = result.find((s) => s.type === 'bridge')
-      assert(bridgeStats)
+      const stats = result.find((s) => s.type === 'message')
+      assert(stats)
 
-      expect(bridgeStats.type).toEqual('bridge')
-      expect(bridgeStats.count).toEqual(3)
-      expect(bridgeStats.knownAppCount).toEqual(3)
-      expect(bridgeStats.medianDuration).toEqual(150)
-      expect(bridgeStats.knownApps).toEqualUnsorted([
+      expect(stats.type).toEqual('message')
+      expect(stats.count).toEqual(3)
+      expect(stats.knownAppCount).toEqual(3)
+      expect(stats.medianDuration).toEqual(150)
+      expect(stats.knownApps).toEqualUnsorted([
         'arbitrum',
         'optimism',
         'polygon',

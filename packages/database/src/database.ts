@@ -7,9 +7,6 @@ import { AggregatedLivenessRepository } from './repositories/AggregatedLivenessR
 import { AnomaliesRepository } from './repositories/AnomaliesRepository'
 import { AnomalyStatsRepository } from './repositories/AnomalyStatsRepository'
 import { BlobsRepository } from './repositories/BlobsRepository'
-import { BridgeEventRepository } from './repositories/BridgeEventRepository'
-import { BridgeMessageRepository } from './repositories/BridgeMessageRepository'
-import { BridgeTransferRepository } from './repositories/BridgeTransferRepository'
 import { CurrentPriceRepository } from './repositories/CurrentPriceRepository'
 import { DaBeatStatsRepository } from './repositories/DaBeatStatsRepository'
 import { DataAvailabilityRepository } from './repositories/DataAvailabilityRepository'
@@ -18,7 +15,10 @@ import { EcosystemTokenRepository } from './repositories/EcosystemTokenRepositor
 import { FlatSourcesRepository } from './repositories/FlatSourcesRepository'
 import { IndexerConfigurationRepository } from './repositories/IndexerConfigurationRepository'
 import { IndexerStateRepository } from './repositories/IndexerStateRepository'
+import { InteropEventRepository } from './repositories/InteropEventRepository'
+import { InteropMessageRepository } from './repositories/InteropMessageRepository'
 import { InteropRecentPricesRepository } from './repositories/InteropRecentPricesRepository'
+import { InteropTransferRepository } from './repositories/InteropTransferRepository'
 import { L2CostPriceRepository } from './repositories/L2CostPriceRepository'
 import { L2CostRepository } from './repositories/L2CostRepository'
 import { LivenessRepository } from './repositories/LivenessRepository'
@@ -51,10 +51,10 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
     activity: new ActivityRepository(db),
     // #endregion
 
-    // #region Bridges
-    bridgeEvent: new BridgeEventRepository(db),
-    bridgeMessage: new BridgeMessageRepository(db),
-    bridgeTransfer: new BridgeTransferRepository(db),
+    // #region Interop
+    interopEvent: new InteropEventRepository(db),
+    interopMessage: new InteropMessageRepository(db),
+    interopTransfer: new InteropTransferRepository(db),
     interopRecentPrices: new InteropRecentPricesRepository(db),
     // #endregion
 

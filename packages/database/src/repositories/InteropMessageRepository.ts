@@ -3,7 +3,7 @@ import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropMessage } from '../kysely/generated/types'
 
-export interface BridgeMessageRecord {
+export interface InteropMessageRecord {
   plugin: string
   messageId: string
   type: string
@@ -22,7 +22,9 @@ export interface BridgeMessageRecord {
   dstEventId: string | undefined
 }
 
-export function toRecord(row: Selectable<InteropMessage>): BridgeMessageRecord {
+export function toRecord(
+  row: Selectable<InteropMessage>,
+): InteropMessageRecord {
   return {
     plugin: row.plugin,
     messageId: row.messageId,
@@ -43,7 +45,9 @@ export function toRecord(row: Selectable<InteropMessage>): BridgeMessageRecord {
   }
 }
 
-export function toRow(record: BridgeMessageRecord): Insertable<InteropMessage> {
+export function toRow(
+  record: InteropMessageRecord,
+): Insertable<InteropMessage> {
   return {
     plugin: record.plugin,
     messageId: record.messageId,
@@ -66,7 +70,7 @@ export function toRow(record: BridgeMessageRecord): Insertable<InteropMessage> {
   }
 }
 
-export interface BridgeMessageStatsRecord {
+export interface InteropMessageStatsRecord {
   type: string
   count: number
   knownAppCount: number
@@ -74,7 +78,7 @@ export interface BridgeMessageStatsRecord {
   medianDuration: number
 }
 
-export interface BridgeMessageDetailedStatsRecord {
+export interface InteropMessageDetailedStatsRecord {
   type: string
   srcChain: string
   dstChain: string
@@ -82,8 +86,8 @@ export interface BridgeMessageDetailedStatsRecord {
   medianDuration: number
 }
 
-export class BridgeMessageRepository extends BaseRepository {
-  async insertMany(records: BridgeMessageRecord[]): Promise<number> {
+export class InteropMessageRepository extends BaseRepository {
+  async insertMany(records: InteropMessageRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
@@ -93,7 +97,7 @@ export class BridgeMessageRepository extends BaseRepository {
     return rows.length
   }
 
-  async getAll(): Promise<BridgeMessageRecord[]> {
+  async getAll(): Promise<InteropMessageRecord[]> {
     const rows = await this.db
       .selectFrom('InteropMessage')
       .selectAll()
@@ -108,7 +112,7 @@ export class BridgeMessageRepository extends BaseRepository {
       srcChain?: string
       dstChain?: string
     } = {},
-  ): Promise<BridgeMessageRecord[]> {
+  ): Promise<InteropMessageRecord[]> {
     let query = this.db.selectFrom('InteropMessage').where('type', '=', type)
 
     if (options.srcChain !== undefined) {
@@ -124,7 +128,7 @@ export class BridgeMessageRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getStats(): Promise<BridgeMessageStatsRecord[]> {
+  async getStats(): Promise<InteropMessageStatsRecord[]> {
     const overallStats = await this.db
       .selectFrom('InteropMessage')
       .select((eb) => [
@@ -168,7 +172,7 @@ export class BridgeMessageRepository extends BaseRepository {
 
   async getExistingItems(
     items: { srcTxHash: string; dstTxHash: string }[],
-  ): Promise<BridgeMessageRecord[]> {
+  ): Promise<InteropMessageRecord[]> {
     if (items.length === 0) return []
 
     const srcHashes = items.map((x) => x.srcTxHash.toLowerCase())
@@ -182,7 +186,7 @@ export class BridgeMessageRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getDetailedStats(): Promise<BridgeMessageDetailedStatsRecord[]> {
+  async getDetailedStats(): Promise<InteropMessageDetailedStatsRecord[]> {
     const chainStats = await this.db
       .selectFrom('InteropMessage')
       .select((eb) => [

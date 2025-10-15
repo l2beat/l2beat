@@ -3,7 +3,7 @@ import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropTransfer } from '../kysely/generated/types'
 
-export interface BridgeTransferRecord {
+export interface InteropTransferRecord {
   plugin: string
   messageId: string
   type: string
@@ -36,7 +36,7 @@ export interface BridgeTransferRecord {
   isProcessed: boolean
 }
 
-export interface BridgeTransferUpdate {
+export interface InteropTransferUpdate {
   srcAbstractTokenId?: string
   srcPrice?: number
   srcAmount?: number
@@ -49,7 +49,7 @@ export interface BridgeTransferUpdate {
 
 export function toRecord(
   row: Selectable<InteropTransfer>,
-): BridgeTransferRecord {
+): InteropTransferRecord {
   return {
     plugin: row.plugin,
     messageId: row.transferId,
@@ -85,7 +85,7 @@ export function toRecord(
 }
 
 export function toRow(
-  record: BridgeTransferRecord,
+  record: InteropTransferRecord,
 ): Insertable<InteropTransfer> {
   return {
     plugin: record.plugin,
@@ -121,7 +121,7 @@ export function toRow(
   }
 }
 
-export interface BridgeTransfersStatsRecord {
+export interface InteropTransfersStatsRecord {
   type: string
   count: number
   medianDuration: number
@@ -129,7 +129,7 @@ export interface BridgeTransfersStatsRecord {
   dstValueSum: number
 }
 
-export interface BridgeTransfersDetailedStatsRecord {
+export interface InteropTransfersDetailedStatsRecord {
   type: string
   srcChain: string
   dstChain: string
@@ -139,8 +139,8 @@ export interface BridgeTransfersDetailedStatsRecord {
   dstValueSum: number
 }
 
-export class BridgeTransferRepository extends BaseRepository {
-  async insertMany(records: BridgeTransferRecord[]): Promise<number> {
+export class InteropTransferRepository extends BaseRepository {
+  async insertMany(records: InteropTransferRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
@@ -150,7 +150,7 @@ export class BridgeTransferRepository extends BaseRepository {
     return rows.length
   }
 
-  async getAll(): Promise<BridgeTransferRecord[]> {
+  async getAll(): Promise<InteropTransferRecord[]> {
     const rows = await this.db
       .selectFrom('InteropTransfer')
       .selectAll()
@@ -165,7 +165,7 @@ export class BridgeTransferRepository extends BaseRepository {
       srcChain?: string
       dstChain?: string
     } = {},
-  ): Promise<BridgeTransferRecord[]> {
+  ): Promise<InteropTransferRecord[]> {
     let query = this.db.selectFrom('InteropTransfer').where('type', '=', type)
 
     if (options.srcChain !== undefined) {
@@ -193,7 +193,7 @@ export class BridgeTransferRepository extends BaseRepository {
 
   async updateFinancials(
     id: string,
-    update: BridgeTransferUpdate,
+    update: InteropTransferUpdate,
   ): Promise<void> {
     await this.db
       .updateTable('InteropTransfer')
@@ -202,7 +202,7 @@ export class BridgeTransferRepository extends BaseRepository {
       .execute()
   }
 
-  async getStats(): Promise<BridgeTransfersStatsRecord[]> {
+  async getStats(): Promise<InteropTransfersStatsRecord[]> {
     const overallStats = await this.db
       .selectFrom('InteropTransfer')
       .select((eb) => [
@@ -226,7 +226,7 @@ export class BridgeTransferRepository extends BaseRepository {
     }))
   }
 
-  async getDetailedStats(): Promise<BridgeTransfersDetailedStatsRecord[]> {
+  async getDetailedStats(): Promise<InteropTransfersDetailedStatsRecord[]> {
     const chainStats = await this.db
       .selectFrom('InteropTransfer')
       .select((eb) => [
@@ -261,7 +261,7 @@ export class BridgeTransferRepository extends BaseRepository {
 
   async getExistingItems(
     items: { srcTxHash: string; dstTxHash: string }[],
-  ): Promise<BridgeTransferRecord[]> {
+  ): Promise<InteropTransferRecord[]> {
     if (items.length === 0) return []
 
     const srcHashes = items.map((x) => x.srcTxHash.toLowerCase())
