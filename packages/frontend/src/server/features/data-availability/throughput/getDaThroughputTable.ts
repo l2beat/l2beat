@@ -69,8 +69,11 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
     sumByResolutionAndProject(daLayerValues, 'daily'),
     (v) => v.daLayer,
   )
+  const projectValuesWithoutSovereign = projectValues.filter(
+    (r) => !sovereignProjectsNamesMap.get(r.projectId as ProjectId),
+  )
   const groupedProjectValues = groupBy(
-    sumByResolutionAndProject(projectValues, 'daily'),
+    sumByResolutionAndProject(projectValuesWithoutSovereign, 'daily'),
     (v) => v.daLayer,
   )
   const onlyScalingDaLayerValues = Object.fromEntries(
