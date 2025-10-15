@@ -669,10 +669,24 @@ export class ProjectDiscovery {
       .filter((e) => e.type === 'Contract')
   }
 
+  getReachableContracts(): EntryParameters[] {
+    return getReachableEntries(
+      this.discoveries.flatMap((discovery) => discovery.entries),
+      this.references.map((e) => e.address),
+    ).filter((e) => e.type === 'Contract')
+  }
+
   getEoas(): EntryParameters[] {
     return this.discoveries
       .flatMap((discovery) => discovery.entries)
       .filter((e) => e.type === 'EOA')
+  }
+
+  getReachableEoas(): EntryParameters[] {
+    return getReachableEntries(
+      this.discoveries.flatMap((discovery) => discovery.entries),
+      this.references.map((e) => e.address),
+    ).filter((e) => e.type === 'EOA')
   }
 
   getContractsAndEoas(): EntryParameters[] {

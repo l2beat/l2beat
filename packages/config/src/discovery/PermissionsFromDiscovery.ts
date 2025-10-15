@@ -16,7 +16,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   constructor(private readonly projectDiscovery: ProjectDiscovery) {}
 
   getPermissionedContracts(): ChainSpecificAddress[] {
-    const contracts = this.projectDiscovery.getContracts()
+    const contracts = this.projectDiscovery.getReachableContracts()
 
     return [
       ...contracts.filter(
@@ -36,7 +36,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
 
   getPermissionedEoas(): ChainSpecificAddress[] {
     return this.projectDiscovery
-      .getEoas()
+      .getReachableEoas()
       .filter((e) => e.receivedPermissions !== undefined)
       .map((e) => e.address)
   }
