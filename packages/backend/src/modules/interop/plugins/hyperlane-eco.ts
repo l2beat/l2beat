@@ -8,10 +8,10 @@ import {
 } from './hyperlane'
 import {
   Address32,
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropEventDb,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   findChain,
   type LogToCapture,
@@ -35,18 +35,18 @@ const parseIntentProven = createEventParser(
   'event IntentProven(bytes32 indexed _hash, address indexed _claimant)',
 )
 
-const BatchSentDispatch = createBridgeEventType<{
+const BatchSentDispatch = createInteropEventType<{
   messageId: `0x${string}`
   $dstChain: string
 }>('hyperlane-eco.BatchSentDispatch')
 
-const IntentProvenProcess = createBridgeEventType<{
+const IntentProvenProcess = createInteropEventType<{
   messageId: `0x${string}`
   $srcChain: string
   recipient: Address32 // claimant
 }>('hyperlane-eco.IntentProvenProcess')
 
-export class HyperlaneEcoPlugin implements BridgePlugin {
+export class HyperlaneEcoPlugin implements InteropPlugin {
   name = 'hyperlane-eco'
 
   capture(input: LogToCapture) {
@@ -103,7 +103,7 @@ export class HyperlaneEcoPlugin implements BridgePlugin {
   }
 
   matchTypes = [IntentProvenProcess]
-  match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+  match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (!IntentProvenProcess.checkType(event)) return
 
     const batchSentDispatch = db.find(BatchSentDispatch, {

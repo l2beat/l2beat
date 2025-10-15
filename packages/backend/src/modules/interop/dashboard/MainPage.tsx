@@ -42,23 +42,23 @@ function EventsTable(props: { events: InteropEventStatsRecord[] }) {
             <tr>
               <td>{e.type}</td>
               <td>
-                <a href={`/bridges/events/all/${e.type}`}>{e.count}</a>
+                <a href={`/interop/events/all/${e.type}`}>{e.count}</a>
               </td>
               <td>
-                <a href={`/bridges/events/matched/${e.type}`}>{e.matched}</a>
+                <a href={`/interop/events/matched/${e.type}`}>{e.matched}</a>
               </td>
               <td>
-                <a href={`/bridges/events/unmatched/${e.type}`}>
+                <a href={`/interop/events/unmatched/${e.type}`}>
                   {e.unmatched}
                 </a>
               </td>
               <td>
-                <a href={`/bridges/events/old-unmatched/${e.type}`}>
+                <a href={`/interop/events/old-unmatched/${e.type}`}>
                   {e.oldUnmatched}
                 </a>
               </td>
               <td>
-                <a href={`/bridges/events/unsupported/${e.type}`}>
+                <a href={`/interop/events/unsupported/${e.type}`}>
                   {e.unsupported}
                 </a>
               </td>
@@ -173,7 +173,7 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
             <tr>
               <td>{t.type}</td>
               <td>
-                <a href={`/bridges/messages/${t.type}`}>{t.count}</a>
+                <a href={`/interop/messages/${t.type}`}>{t.count}</a>
               </td>
               <td data-order={t.medianDuration}>
                 {formatSeconds(t.medianDuration)}
@@ -207,7 +207,7 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
                     <td>
                       {srcDstCount && (
                         <a
-                          href={`/bridges/messages/${t.type}?srcChain=${n[0].name}&dstChain=${n[1].name}`}
+                          href={`/interop/messages/${t.type}?srcChain=${n[0].name}&dstChain=${n[1].name}`}
                         >
                           {srcDstCount}
                         </a>
@@ -219,7 +219,7 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
                     <td>
                       {dstSrcCount && (
                         <a
-                          href={`/bridges/messages/${t.type}?srcChain=${n[1].name}&dstChain=${n[0].name}`}
+                          href={`/interop/messages/${t.type}?srcChain=${n[1].name}&dstChain=${n[0].name}`}
                         >
                           {dstSrcCount}
                         </a>
@@ -284,7 +284,7 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
             <tr>
               <td>{t.type}</td>
               <td>
-                <a href={`/bridges/transfers/${t.type}`}>{t.count}</a>
+                <a href={`/interop/transfers/${t.type}`}>{t.count}</a>
               </td>
               <td data-order={t.medianDuration}>
                 {formatSeconds(t.medianDuration)}
@@ -314,7 +314,7 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
                     <td>
                       {
                         <a
-                          href={`/bridges/transfers/${t.type}?srcChain=${n[0].name}&dstChain=${n[1].name}`}
+                          href={`/interop/transfers/${t.type}?srcChain=${n[0].name}&dstChain=${n[1].name}`}
                         >
                           {forwardCount}
                         </a>
@@ -332,7 +332,7 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
                     <td>
                       {
                         <a
-                          href={`/bridges/transfers/${t.type}?srcChain=${n[1].name}&dstChain=${n[0].name}`}
+                          href={`/interop/transfers/${t.type}?srcChain=${n[1].name}&dstChain=${n[0].name}`}
                         >
                           {backwardCount}
                         </a>

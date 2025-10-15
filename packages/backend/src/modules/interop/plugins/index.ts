@@ -24,13 +24,13 @@ import { SquidCoralPlugin } from './squid-coral'
 import { StargatePlugin } from './stargate'
 import { StargateV2BusPlugin } from './stargate-v2-bus'
 import { StargateV2TaxiPlugin } from './stargate-v2-taxi'
-import type { BridgePlugin } from './types'
+import type { InteropPlugin } from './types'
 import { WormholePlugin } from './wormhole'
 import { WormholeNTTPlugin } from './wormhole-ntt'
 import { WormholeRelayerPlugin } from './wormhole-relayer'
 import { WormholeTokenBridgePlugin } from './wormhole-token-bridge'
 
-export function createBridgePlugins(): BridgePlugin[] {
+export function createInteropPlugins(): InteropPlugin[] {
   return [
     new SquidCoralPlugin(),
     new DeBridgePlugin(),

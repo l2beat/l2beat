@@ -5,18 +5,18 @@ import {
   StargateV2OFTSentBusRode,
 } from './stargate'
 import {
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
+  type InteropEvent,
+  type InteropEventDb,
+  type InteropPlugin,
   type MatchResult,
   Result,
 } from './types'
 
-export class StargateV2BusPlugin implements BridgePlugin {
+export class StargateV2BusPlugin implements InteropPlugin {
   name = 'stargate-v2-bus'
 
   matchTypes = [StargateV2BusDriven]
-  match(busDriven: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+  match(busDriven: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (!StargateV2BusDriven.checkType(busDriven)) return
 
     const packetSent = db.find(PacketSent, { guid: busDriven.args.guid })

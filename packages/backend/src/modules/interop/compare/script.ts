@@ -1,17 +1,17 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
 import { createDatabase } from '@l2beat/database'
 import { command, optional, positional, run, string } from 'cmd-ts'
-import { BridgeComparator } from '../BridgeComparator'
-import { createBridgeComparePlugins } from '.'
+import { InteropComparator } from '../InteropComparator'
+import { createInteropComparePlugins } from '.'
 
 const cmd = command({
-  name: 'bridges:compare',
+  name: 'interop:compare',
   args: {
     plugins: positional({ type: optional(string), displayName: 'plugins' }),
   },
   handler: async (args) => {
     const logger = Logger.INFO
-    let comparePlugins = createBridgeComparePlugins()
+    let comparePlugins = createInteropComparePlugins()
 
     if (args.plugins) {
       const configuredPlugins = args.plugins.split(',')
@@ -35,9 +35,9 @@ const cmd = command({
       keepAlive: false,
     })
 
-    const bridgeComparator = new BridgeComparator(db, comparePlugins, logger)
+    const comparator = new InteropComparator(db, comparePlugins, logger)
 
-    await bridgeComparator.run()
+    await comparator.run()
     await db.close()
   },
 })

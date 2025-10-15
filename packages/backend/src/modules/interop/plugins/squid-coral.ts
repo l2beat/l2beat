@@ -1,9 +1,9 @@
 import {
   Address32,
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropEventDb,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   defineNetworks,
   findChain,
@@ -65,7 +65,7 @@ export const SQUIDCORAL_NETWORKS = defineNetworks('squidcoral', [
   { chainId: '8453', chain: 'base' },
 ])
 
-export const LogOrderCreated = createBridgeEventType<{
+export const LogOrderCreated = createInteropEventType<{
   orderHash: `0x${string}`
   fromToken: Address32
   toToken: Address32
@@ -74,7 +74,7 @@ export const LogOrderCreated = createBridgeEventType<{
   $dstChain: string
 }>('squid-coral.LogOrderCreated')
 
-export const LogOrderFilled = createBridgeEventType<{
+export const LogOrderFilled = createInteropEventType<{
   orderHash: `0x${string}`
   fromToken: Address32
   toToken: Address32
@@ -83,7 +83,7 @@ export const LogOrderFilled = createBridgeEventType<{
   $srcChain: string
 }>('squid-coral.LogOrderFilled')
 
-export class SquidCoralPlugin implements BridgePlugin {
+export class SquidCoralPlugin implements InteropPlugin {
   name = 'squid-coral'
 
   capture(input: LogToCapture) {
@@ -125,7 +125,7 @@ export class SquidCoralPlugin implements BridgePlugin {
     2. Find LogOrderCreated on SRC with the same orderHash
   */
   matchTypes = [LogOrderFilled]
-  match(orderFilled: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+  match(orderFilled: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (!LogOrderFilled.checkType(orderFilled)) return
 
     const orderCreated = db.find(LogOrderCreated, {

@@ -2,11 +2,11 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { TimeLoop } from '../../tools/TimeLoop'
-import type { BridgeStore } from './BridgeStore'
+import type { InteropStore } from './InteropStore'
 
-export class BridgeCleaner extends TimeLoop {
+export class InteropCleaner extends TimeLoop {
   constructor(
-    private bridgeStore: BridgeStore,
+    private store: InteropStore,
     private db: Database,
     protected logger: Logger,
     intervalMs = 20 * 60 * 1000,
@@ -18,7 +18,7 @@ export class BridgeCleaner extends TimeLoop {
   async run() {
     const now = UnixTime.now()
 
-    const expiredEvents = await this.bridgeStore.deleteExpired(now)
+    const expiredEvents = await this.store.deleteExpired(now)
     const expiredMessages = await this.db.interopMessage.deleteBefore(
       now - 1 * UnixTime.DAY,
     )

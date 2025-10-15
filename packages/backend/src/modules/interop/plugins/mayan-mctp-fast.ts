@@ -3,10 +3,10 @@ import { CCTPv2MessageReceived, CCTPv2MessageSent } from './cctp'
 import { MayanForwarded } from './mayan-forwarder'
 import {
   Address32,
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropEventDb,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   findChain,
   type LogToCapture,
@@ -19,12 +19,12 @@ const parseOrderFulfilled = createEventParser(
   'event OrderFulfilled(uint32 sourceDomain, bytes32 sourceNonce, uint256 amount)',
 )
 
-export const OrderFulfilled = createBridgeEventType<{
+export const OrderFulfilled = createInteropEventType<{
   amount: string
   $srcChain: string
 }>('mayan-mctp-fast.OrderFulfilled')
 
-export class MayanMctpFastPlugin implements BridgePlugin {
+export class MayanMctpFastPlugin implements InteropPlugin {
   name = 'mayan-mctp-fast'
 
   capture(input: LogToCapture) {
@@ -44,8 +44,8 @@ export class MayanMctpFastPlugin implements BridgePlugin {
 
   matchTypes = [OrderFulfilled]
   match(
-    orderFulfilled: BridgeEvent,
-    db: BridgeEventDb,
+    orderFulfilled: InteropEvent,
+    db: InteropEventDb,
   ): MatchResult | undefined {
     if (!OrderFulfilled.checkType(orderFulfilled)) return
     // find MessageReceived with the same txHash as OrderFulfilled

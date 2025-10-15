@@ -1,10 +1,10 @@
 import { DEBRIDGE_NETWORKS } from './debridge'
 import {
   Address32,
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropEventDb,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   findChain,
   type LogToCapture,
@@ -74,7 +74,7 @@ const parseFulfilledOrder = createEventParser(
   'event FulfilledOrder((uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) order, bytes32 orderId, address sender, address unlockAuthority)',
 )
 
-export const LogCreatedOrder = createBridgeEventType<{
+export const LogCreatedOrder = createInteropEventType<{
   orderId: `0x${string}`
   fromToken: Address32
   toToken: Address32
@@ -83,7 +83,7 @@ export const LogCreatedOrder = createBridgeEventType<{
   $dstChain: string
 }>('debridge-dln.CreatedOrder')
 
-export const LogFulfilledOrder = createBridgeEventType<{
+export const LogFulfilledOrder = createInteropEventType<{
   orderId: `0x${string}`
   fromToken: Address32
   toToken: Address32
@@ -92,7 +92,7 @@ export const LogFulfilledOrder = createBridgeEventType<{
   $srcChain: string
 }>('debridge-dln.FulfilledOrder')
 
-export class DeBridgeDlnPlugin implements BridgePlugin {
+export class DeBridgeDlnPlugin implements InteropPlugin {
   name = 'debridge-dln'
 
   capture(input: LogToCapture) {
@@ -134,7 +134,7 @@ export class DeBridgeDlnPlugin implements BridgePlugin {
     2. Find LogOrderCreated on SRC with the same orderHash
   */
   matchTypes = [LogFulfilledOrder]
-  match(orderFilled: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+  match(orderFilled: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (!LogFulfilledOrder.checkType(orderFilled)) return
 
     const orderCreated = db.find(LogCreatedOrder, {

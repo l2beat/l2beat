@@ -2,22 +2,22 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Block, Log } from '@l2beat/shared-pure'
 import type { Log as ViemLog } from 'viem'
 import type { BlockProcessor } from '../types'
-import type { BridgeStore } from './BridgeStore'
+import type { InteropStore } from './InteropStore'
 import {
   Address32,
-  type BridgeEvent,
-  type BridgeEventContext,
-  type BridgePlugin,
+  type InteropEvent,
+  type InteropEventContext,
+  type InteropPlugin,
   type LogToCapture,
 } from './plugins/types'
 
-export class BridgeBlockProcessor implements BlockProcessor {
+export class InteropBlockProcessor implements BlockProcessor {
   lastProcessed: Block | undefined
 
   constructor(
     public chain: string,
-    private plugins: BridgePlugin[],
-    private bridgeStore: BridgeStore,
+    private plugins: InteropPlugin[],
+    private store: InteropStore,
     private logger: Logger,
   ) {
     this.logger = logger.for(this).tag({ chain, tag: chain })
@@ -26,7 +26,7 @@ export class BridgeBlockProcessor implements BlockProcessor {
   async processBlock(block: Block, logs: Log[]): Promise<void> {
     const toDecode = getLogsToDecode(this.chain, block, logs)
 
-    const events: BridgeEvent[] = []
+    const events: InteropEvent[] = []
     const pluginEventCounts: Record<string, number> = {}
 
     for (const logToDecode of toDecode) {
@@ -51,7 +51,7 @@ export class BridgeBlockProcessor implements BlockProcessor {
       }
     }
 
-    await this.bridgeStore.saveNewEvents(events)
+    await this.store.saveNewEvents(events)
     this.lastProcessed = block
 
     for (const [plugin, count] of Object.entries(pluginEventCounts)) {
@@ -78,7 +78,7 @@ function getLogsToDecode(chain: string, block: Block, logs: Log[]) {
   const contexts = block.transactions
     .filter((x) => !!x.hash) // TODO: why can this be missing!?
     .map(
-      (tx): Omit<BridgeEventContext, 'logIndex'> => ({
+      (tx): Omit<InteropEventContext, 'logIndex'> => ({
         timestamp: block.timestamp,
         chain,
         blockHash: block.hash,
@@ -96,7 +96,7 @@ function getLogsToDecode(chain: string, block: Block, logs: Log[]) {
     if (!tx) {
       continue
     }
-    const ctx: BridgeEventContext = { ...tx, logIndex: log.logIndex ?? -1 }
+    const ctx: InteropEventContext = { ...tx, logIndex: log.logIndex ?? -1 }
     toDecode.push({
       log,
       ctx,

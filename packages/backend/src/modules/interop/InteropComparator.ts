@@ -1,18 +1,18 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { TimeLoop } from '../../tools/TimeLoop'
-import type { BridgeComparePlugin, BridgeExternalItem } from './compare/types'
+import type { InteropComparePlugin, InteropExternalItem } from './compare/types'
 
-export class BridgeComparator extends TimeLoop {
+export class InteropComparator extends TimeLoop {
   private items: {
     plugin: string
-    type: BridgeComparePlugin['type']
-    item: BridgeExternalItem & { isLatest: boolean }
+    type: InteropComparePlugin['type']
+    item: InteropExternalItem & { isLatest: boolean }
   }[] = []
 
   constructor(
     private db: Database,
-    private plugins: BridgeComparePlugin[],
+    private plugins: InteropComparePlugin[],
     protected logger: Logger,
     intervalMs = 20 * 60_000,
   ) {

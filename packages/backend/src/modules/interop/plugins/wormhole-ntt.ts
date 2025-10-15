@@ -1,9 +1,9 @@
 /*
-This version of a plugin assumes that Wormhole Relayer is used. NTT token is burn/mint by sending 
+This version of a plugin assumes that Wormhole Relayer is used. NTT token is burn/mint by sending
 a transfer() call on SRC to NTT manager assosciated with a given token. On DST, NTT manager mints the token.
 There is one NTT manager per token.
 
-SRC: 
+SRC:
 - WormholeCore.LogMessagePublished
 - WormholeRelayer.RelayingInfo (not captured), but maybe it should as that would clear some Wormhole messages
 - WormholeTransceiver.SendTransceiver message
@@ -11,7 +11,7 @@ DST:
 - WormholeTransceiver.ReceivedRelayedMesssage
 - WormholeRelayer.Delivery
 
-Matching algorithm: 
+Matching algorithm:
 - starting from WormholeTransceiver.ReceivedRelayedMesssage on DST, extract digest
 - find on DST WormholeRelayer.Delivery with the same digest, extract sequenceId
 - find on SRC WormholeCore.LogMessagePublished and WormholeRelayer.SendEvent with the same sequenceId
@@ -27,12 +27,12 @@ Note that (TODO: )
 import { BinaryReader } from '../BinaryReader'
 import {
   Address32,
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   findChain,
+  type InteropEventDb,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -40,7 +40,7 @@ import {
 import { LogMessagePublished, WORMHOLE_NETWORKS } from './wormhole'
 import { Delivery } from './wormhole-relayer'
 
-/*     
+/*
 
 event SendTransceiverMessage(
         uint16 recipientChain, TransceiverStructs.TransceiverMessage message
@@ -77,20 +77,20 @@ const parseReceivedRelayedMessage = createEventParser(
   'event ReceivedRelayedMessage(bytes32 digest, uint16 emitterChainId, bytes32 emitterAddress)',
 )
 
-export const TransceiverMessage = createBridgeEventType<{
+export const TransceiverMessage = createInteropEventType<{
   sourceNttManagerAddress: string
   recipientNttManagerAddress: string
   nttManagerPayload: string
   $dstChain: string
 }>('wormhole-ntt.SendTransceiverMessage')
 
-export const ReceivedRelayedMessage = createBridgeEventType<{
+export const ReceivedRelayedMessage = createInteropEventType<{
   digest: `0x${string}`
   emitterAddress: string
   $srcChain: string
 }>('wormhole-ntt.ReceivedRelayedMessage')
 
-export class WormholeNTTPlugin implements BridgePlugin {
+export class WormholeNTTPlugin implements InteropPlugin {
   name = 'wormhole-ntt'
 
   capture(input: LogToCapture) {
@@ -123,7 +123,7 @@ export class WormholeNTTPlugin implements BridgePlugin {
   }
 
   matchTypes = [ReceivedRelayedMessage]
-  match(received: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+  match(received: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (ReceivedRelayedMessage.checkType(received)) {
       // find on DST WormholeRelayer.Delivery with the same digest, extract sequenceId
       const delivery = db.find(Delivery, {
@@ -138,12 +138,12 @@ export class WormholeNTTPlugin implements BridgePlugin {
       })
       if (!logMessagePublished) return
 
-      /* do we need Send event for anything ? 
+      /* do we need Send event for anything ?
       const sendEvent = db.find(SendEvent, {
         sequence: delivery.args.sequence,
         wormholeChainId: delivery.args.sourceChain,
       })
-      if (!sendEvent) return 
+      if (!sendEvent) return
       */
 
       const sentTransceiverMessage = db.find(TransceiverMessage, {
@@ -218,7 +218,7 @@ function decodeNTTManagerPayload(payload: string) {
   }
 }
 
-/* 
+/*
 
 On Source: 0xd8cec5a2163774b308d382442a59f3558f0e7d6ebf9817bc5953c27c3d98b671 (Arbitrum)
 
@@ -238,20 +238,20 @@ df3a6ffd486f79e5c283e37a75a6b5001e
 0000
 
 
-LogMessagePublished: 
+LogMessagePublished:
 0x01001e0000000000000000000000008d77ac62a6571a408e5c9655ff5de90d537c3045000000d99945ff10
 000000000000000000000000bc51f76178a56811fdfe95d3897e6ac2b11dbb62  // src NNT Manager
 000000000000000000000000bc51f76178a56811fdfe95d3897e6ac2b11dbb62  // dst NNT Manager
 0091
 
-00000000000000000000000000000000000000000000000000000000000007e6  // NTTManagerPayload 
+00000000000000000000000000000000000000000000000000000000000007e6  // NTTManagerPayload
 000000000000000000000000023fa838682c115c2cfba96ef3791cb5bd931fc7
 004f994e545408000000028a3d178c
 00000000000000000000000046777c76dbbe40fabb2aab99e33ce20058e76c59
 0000000000000000000000000f8d3248a3
 df3a6ffd486f79e5c283e37a75a6b5001e
 
-000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007a1200000000000000000000000000000000000000000000000000000000000117049001e0000000000000000000000000f8d3248a3df3a6ffd486f79e5c283e37a75a6b500000000000000000000000070b4a48f482956983d8c69d3ae18fe229888638d0000000000000000000000007a0a53847776f7e94cc35742971acb2217b0db810000000000000000000000008d77ac62a6571a408e5c9655ff5de90d537c304500 
+000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007a1200000000000000000000000000000000000000000000000000000000000117049001e0000000000000000000000000f8d3248a3df3a6ffd486f79e5c283e37a75a6b500000000000000000000000070b4a48f482956983d8c69d3ae18fe229888638d0000000000000000000000007a0a53847776f7e94cc35742971acb2217b0db810000000000000000000000008d77ac62a6571a408e5c9655ff5de90d537c304500
 
 SendTransceiverMessage.NTTManagerPayload:  (encodedPacked)
 0x

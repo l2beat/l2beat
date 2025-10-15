@@ -1,17 +1,17 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 import type {
-  BridgeEvent,
-  BridgeEventDb,
-  BridgeEventQuery,
-  BridgeEventType,
+  InteropEvent,
+  InteropEventDb,
+  InteropEventQuery,
+  InteropEventType,
 } from './plugins/types'
 
-export class InMemoryEventDb implements BridgeEventDb {
+export class InMemoryEventDb implements InteropEventDb {
   private indices = new Map<string, EventIndex>()
-  private eventsByType = new Map<string, BridgeEvent[]>()
+  private eventsByType = new Map<string, InteropEvent[]>()
   private count = 0
 
-  getEvents(type: string): BridgeEvent[] {
+  getEvents(type: string): InteropEvent[] {
     let array = this.eventsByType.get(type)
     if (!array) {
       array = []
@@ -28,7 +28,7 @@ export class InMemoryEventDb implements BridgeEventDb {
     return this.count
   }
 
-  addEvent(event: BridgeEvent) {
+  addEvent(event: InteropEvent) {
     this.count += 1
     this.getEvents(event.type).push(event)
     for (const index of this.indices.values()) {
@@ -44,7 +44,7 @@ export class InMemoryEventDb implements BridgeEventDb {
     this.removeWhere((e) => eventIds.has(e.eventId))
   }
 
-  private removeWhere(predicate: (event: BridgeEvent) => boolean) {
+  private removeWhere(predicate: (event: InteropEvent) => boolean) {
     const removedIds: string[] = []
     for (const array of this.eventsByType.values()) {
       for (let i = 0; i < array.length; i++) {
@@ -69,18 +69,18 @@ export class InMemoryEventDb implements BridgeEventDb {
   }
 
   find<T>(
-    type: BridgeEventType<T>,
-    query: BridgeEventQuery<T>,
-  ): BridgeEvent<T> | undefined {
+    type: InteropEventType<T>,
+    query: InteropEventQuery<T>,
+  ): InteropEvent<T> | undefined {
     return this.findAll(type, query)[0]
   }
 
   findAll<T>(
-    type: BridgeEventType<T>,
-    query: BridgeEventQuery<T>,
-  ): BridgeEvent<T>[] {
+    type: InteropEventType<T>,
+    query: InteropEventQuery<T>,
+  ): InteropEvent<T>[] {
     const index = this.getIndex(type, query)
-    const events = index.findEvents(query) as BridgeEvent<T>[]
+    const events = index.findEvents(query) as InteropEvent<T>[]
     if (events.length > 1) {
       if (query.sameTxAfter) {
         events.sort((a, b) => a.ctx.logIndex - b.ctx.logIndex)
@@ -91,7 +91,7 @@ export class InMemoryEventDb implements BridgeEventDb {
     return events
   }
 
-  private getIndex<T>(type: BridgeEventType<T>, query: BridgeEventQuery<T>) {
+  private getIndex<T>(type: InteropEventType<T>, query: InteropEventQuery<T>) {
     const indexKey = getIndexKey(type, query)
     let index = this.indices.get(indexKey)
     if (!index) {
@@ -121,8 +121,8 @@ export class InMemoryEventDb implements BridgeEventDb {
 }
 
 function getIndexKey(
-  type: BridgeEventType<unknown>,
-  query: BridgeEventQuery<unknown>,
+  type: InteropEventType<unknown>,
+  query: InteropEventQuery<unknown>,
 ) {
   let indexKey = type.type + '#'
   if (query.ctx?.txHash || query.sameTxAfter || query.sameTxBefore) {
@@ -145,7 +145,7 @@ function getIndexKey(
 }
 
 class EventIndex {
-  private buckets = new Map<string, BridgeEvent[]>()
+  private buckets = new Map<string, InteropEvent[]>()
   private eventKeys = new Map<string, string>()
 
   constructor(
@@ -154,7 +154,7 @@ class EventIndex {
     private ctxFields: string[],
   ) {}
 
-  findEvents(query: BridgeEventQuery<unknown>): BridgeEvent[] {
+  findEvents(query: InteropEventQuery<unknown>): InteropEvent[] {
     let eventKey = ''
     // biome-ignore lint/style/useForOf: speed
     for (let i = 0; i < this.fields.length; i++) {
@@ -177,7 +177,7 @@ class EventIndex {
     return array.filter((e) => matchesQuery(e, query))
   }
 
-  addEvent(event: BridgeEvent) {
+  addEvent(event: InteropEvent) {
     if (event.type !== this.eventType) {
       return
     }
@@ -216,8 +216,8 @@ class EventIndex {
 }
 
 function matchesQuery<T>(
-  event: BridgeEvent<T>,
-  query: BridgeEventQuery<T>,
+  event: InteropEvent<T>,
+  query: InteropEventQuery<T>,
 ): boolean {
   for (const key in query) {
     if (key === 'ctx') {

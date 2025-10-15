@@ -5,10 +5,10 @@ and minted (or released if the native token is bridged) on the destination chain
 import { EthereumAddress } from '@l2beat/shared-pure'
 import {
   Address32,
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropEventDb,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   defineNetworks,
   findChain,
@@ -85,14 +85,14 @@ export const DEBRIDGE_NETWORKS = defineNetworks('debridge', [
   { chainId: '8453', chain: 'base' },
 ])
 
-export const Sent = createBridgeEventType<{
+export const Sent = createInteropEventType<{
   submissionId: `0x${string}`
   debridgeId: `0x${string}`
   amount: string
   $dstChain: string
 }>('debridge.Sent')
 
-export const Claimed = createBridgeEventType<{
+export const Claimed = createInteropEventType<{
   submissionId: `0x${string}`
   debridgeId: `0x${string}`
   amount: string
@@ -100,7 +100,7 @@ export const Claimed = createBridgeEventType<{
   $srcChain: string
 }>('debridge.Claimed')
 
-export class DeBridgePlugin implements BridgePlugin {
+export class DeBridgePlugin implements InteropPlugin {
   name = 'debridge'
 
   capture(input: LogToCapture) {
@@ -141,7 +141,7 @@ export class DeBridgePlugin implements BridgePlugin {
     4. If amount > 0 create Transfer
   */
   matchTypes = [Claimed]
-  match(claimed: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+  match(claimed: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (!Claimed.checkType(claimed)) return
     const sent = db.find(Sent, {
       submissionId: claimed.args.submissionId,

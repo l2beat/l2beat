@@ -6,10 +6,10 @@ Note - here the transfer of USDC is via burn/mint, but mint on DST happens befor
 import { CCTP_NETWORKS } from './cctp'
 import {
   Address32,
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropEventDb,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   findChain,
   type LogToCapture,
@@ -25,21 +25,21 @@ const parseGatewayBurned = createEventParser(
   'event GatewayBurned(address indexed token, address indexed depositor, bytes32 indexed transferSpecHash, uint32 destinationDomain, bytes32 destinationRecipient, address signer, uint256 value, uint256 fee, uint256 fromAvailable, uint256 fromWithdrawing)',
 )
 
-export const AttestationUsed = createBridgeEventType<{
+export const AttestationUsed = createInteropEventType<{
   token: Address32
   transferSpecHash: `0x${string}`
   $dstChain: string
   value: string
 }>('circle-gateway.AttestationUsed')
 
-export const GatewayBurned = createBridgeEventType<{
+export const GatewayBurned = createInteropEventType<{
   token: Address32
   transferSpecHash: `0x${string}`
   $srcChain: string
   value: string
 }>('circle-gateway.GatewayBurned')
 
-export class CircleGatewayPlugIn implements BridgePlugin {
+export class CircleGatewayPlugIn implements InteropPlugin {
   name = 'circle-gateway'
 
   capture(input: LogToCapture) {
@@ -72,8 +72,8 @@ export class CircleGatewayPlugIn implements BridgePlugin {
 
   matchTypes = [GatewayBurned]
   match(
-    gatewayBurned: BridgeEvent,
-    db: BridgeEventDb,
+    gatewayBurned: InteropEvent,
+    db: InteropEventDb,
   ): MatchResult | undefined {
     if (GatewayBurned.checkType(gatewayBurned)) {
       const attestationUsed = db.find(AttestationUsed, {

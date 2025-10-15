@@ -1,10 +1,10 @@
-export interface BridgeComparePlugin {
+export interface InteropComparePlugin {
   name: string
   type: 'message' | 'transfer'
-  getExternalItems: () => Promise<BridgeExternalItem[]>
+  getExternalItems: () => Promise<InteropExternalItem[]>
 }
 
-export interface BridgeExternalItem {
+export interface InteropExternalItem {
   srcTxHash: string
   dstTxHash: string
 }

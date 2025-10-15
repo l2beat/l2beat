@@ -1,4 +1,4 @@
-/* 
+/*
 allbridge is a simple swap service that performs three steps:
  1. User deposist tokens and message (hash) is sent from SRC to DST
  2. On DST message is received
@@ -9,26 +9,26 @@ allbridge is a simple swap service that performs three steps:
  */
 
 import {
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   defineNetworks,
   findChain,
+  type InteropEventDb,
   type LogToCapture,
   type MatchResult,
   Result,
 } from './types'
 
-/* 
+/*
 event MessageSent(bytes32 indexed message)
 event TokensSent(uint256 amount, bytes32 recipient, uint256 destinationChainId, bytes32 receiveToken, uint256 nonce, uint8 messenger)
 event MessageReceived(bytes32 indexed message)
 event TokensReceived(uint256 amount, bytes32 recipient, uint256 nonce, uint8 messenger, bytes32 message)
 
 TODO: The main problem to solve here is that we don't have an info on a source token, we might need to track srcToken --> Vtoken swap via
-   SwappedToVUSD event. We also have SwappedFromVUSD on the destination but this does not really add any extra info. 
+   SwappedToVUSD event. We also have SwappedFromVUSD on the destination but this does not really add any extra info.
 */
 
 const parseMessageSent = createEventParser(
@@ -52,29 +52,29 @@ export const ALLBRDIGE_NETWORKS = defineNetworks('allbridge', [
   { allBridgeChainId: 9, chain: 'base' },
 ])
 
-export const MessageSent = createBridgeEventType<{
+export const MessageSent = createInteropEventType<{
   message: `0x${string}`
   $dstChain: string
 }>('allbridge.MessageSent')
 
-export const TokensSent = createBridgeEventType<{
+export const TokensSent = createInteropEventType<{
   amount: number
   receiveToken: `0x${string}`
   $dstChain: string
 }>('allbridge.TokensSent')
 
-export const MessageReceived = createBridgeEventType<{
+export const MessageReceived = createInteropEventType<{
   message: `0x${string}`
   $srcChain: string
 }>('allbridge.MessageReceived')
 
-export const TokensReceived = createBridgeEventType<{
+export const TokensReceived = createInteropEventType<{
   amount: number
   message: `0x${string}`
   $srcChain: string
 }>('allbridge.TokensReceived')
 
-export class AllbridgePlugIn implements BridgePlugin {
+export class AllbridgePlugIn implements InteropPlugin {
   name = 'allbridge'
 
   capture(input: LogToCapture) {
@@ -139,7 +139,7 @@ export class AllbridgePlugIn implements BridgePlugin {
   */
 
   matchTypes = [TokensReceived]
-  match(delivery: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+  match(delivery: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (TokensReceived.checkType(delivery)) {
       const messageReceived = db.find(MessageReceived, {
         message: delivery.args.message,

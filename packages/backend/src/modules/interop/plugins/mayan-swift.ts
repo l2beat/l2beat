@@ -1,5 +1,5 @@
 /*
-Mayan SWIFT Protocol. If used independently, it emits only OrderCreated event with order hash and there is no 
+Mayan SWIFT Protocol. If used independently, it emits only OrderCreated event with order hash and there is no
 information about the Order itself. However, when used with MayanForwarder contract, we can capture
 ForwardedETH or ForwardedERC20 event which contains order details and the destination chain info.
 
@@ -9,11 +9,11 @@ we would need to extract it from calldata (trace) - currently we don't do that.
 
 import { logToProtocolData, MayanForwarded } from './mayan-forwarder'
 import {
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
+  type InteropEventDb,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -25,16 +25,16 @@ const parseOrderFulfilled = createEventParser(
   'event OrderFulfilled(bytes32 key, uint64 sequence, uint256 netAmount)',
 )
 
-export const OrderCreated = createBridgeEventType<{
+export const OrderCreated = createInteropEventType<{
   key: string
   $dstChain: string
 }>('mayan-swift.OrderCreated')
 
-export const OrderFulfilled = createBridgeEventType<{
+export const OrderFulfilled = createInteropEventType<{
   key: string
 }>('mayan-swift.OrderFulfilled')
 
-export class MayanSwiftPlugin implements BridgePlugin {
+export class MayanSwiftPlugin implements InteropPlugin {
   name = 'mayan-swift'
 
   capture(input: LogToCapture) {
@@ -63,8 +63,8 @@ export class MayanSwiftPlugin implements BridgePlugin {
 
   matchTypes = [OrderFulfilled]
   match(
-    orderFulfilled: BridgeEvent,
-    db: BridgeEventDb,
+    orderFulfilled: InteropEvent,
+    db: InteropEventDb,
   ): MatchResult | undefined {
     if (!OrderFulfilled.checkType(orderFulfilled)) return
     const orderCreated = db.find(OrderCreated, {

@@ -7,10 +7,10 @@ This plugin handles all ITS tokens
 import { AXELAR_NETWORKS, ContractCall, ContractCallApproved } from './axelar'
 import {
   Address32,
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropEventDb,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   findChain,
   type LogToCapture,
@@ -51,14 +51,14 @@ const parseInterchainTransferReceived = createEventParser(
   'event InterchainTransferReceived(bytes32 indexed commandId, bytes32 indexed tokenId, string sourceChain, bytes sourceAddress, address indexed destinationAddress, uint256 amount, bytes32 dataHash)',
 )
 
-export const InterchainTransfer = createBridgeEventType<{
+export const InterchainTransfer = createInteropEventType<{
   tokenId: `0x${string}`
   amount: number
   tokenAddress: Address32
   $dstChain: string
 }>('axelar-its.InterchainTransfer')
 
-export const InterchainTransferReceived = createBridgeEventType<{
+export const InterchainTransferReceived = createInteropEventType<{
   commandId: `0x${string}`
   tokenId: `0x${string}`
   amount: number
@@ -66,7 +66,7 @@ export const InterchainTransferReceived = createBridgeEventType<{
   $srcChain: string
 }>('axelar-its.InterchainTransferReceived')
 
-export class AxelarITSPlugin implements BridgePlugin {
+export class AxelarITSPlugin implements InteropPlugin {
   name = 'axelar-its'
 
   capture(input: LogToCapture) {
@@ -121,8 +121,8 @@ export class AxelarITSPlugin implements BridgePlugin {
 
   matchTypes = [InterchainTransferReceived]
   match(
-    interchainTransferReceived: BridgeEvent,
-    db: BridgeEventDb,
+    interchainTransferReceived: InteropEvent,
+    db: InteropEventDb,
   ): MatchResult | undefined {
     if (InterchainTransferReceived.checkType(interchainTransferReceived)) {
       const contractCallApproved = db.find(ContractCallApproved, {

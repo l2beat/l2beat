@@ -5,22 +5,22 @@ import type {
   InteropTransferRecord,
 } from '@l2beat/database'
 import { TimeLoop } from '../../tools/TimeLoop'
-import type { BridgeStore } from './BridgeStore'
+import type { InteropStore } from './InteropStore'
 import {
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgeMessage,
-  type BridgePlugin,
-  type BridgeTransfer,
   generateId,
+  type InteropEvent,
+  type InteropEventDb,
+  type InteropMessage,
+  type InteropPlugin,
+  type InteropTransfer,
   type MatchResult,
 } from './plugins/types'
 
-export class BridgeMatcher extends TimeLoop {
+export class InteropMatcher extends TimeLoop {
   constructor(
-    private bridgeStore: BridgeStore,
+    private store: InteropStore,
     private db: Database,
-    private plugins: BridgePlugin[],
+    private plugins: InteropPlugin[],
     private supportedChains: string[],
     protected logger: Logger,
     intervalMs = 10_000,
@@ -31,10 +31,10 @@ export class BridgeMatcher extends TimeLoop {
 
   async run() {
     const result = await match(
-      this.bridgeStore,
-      (type) => this.bridgeStore.getEvents(type),
-      this.bridgeStore.getEventTypes(),
-      this.bridgeStore.getEventCount(),
+      this.store,
+      (type) => this.store.getEvents(type),
+      this.store.getEventTypes(),
+      this.store.getEventCount(),
       this.plugins,
       this.supportedChains,
       this.logger,
@@ -42,7 +42,7 @@ export class BridgeMatcher extends TimeLoop {
 
     await this.db.transaction(async () => {
       if (result.matchedIds.size > 0 || result.unsupportedIds.size > 0) {
-        await this.bridgeStore.updateMatchedAndUnsupported({
+        await this.store.updateMatchedAndUnsupported({
           matched: result.matchedIds,
           unsupported: result.unsupportedIds,
         })
@@ -63,11 +63,11 @@ export class BridgeMatcher extends TimeLoop {
 }
 
 export async function match(
-  db: BridgeEventDb,
-  getEvents: (type: string) => BridgeEvent[],
+  db: InteropEventDb,
+  getEvents: (type: string) => InteropEvent[],
   eventTypes: string[],
   count: number,
-  plugins: BridgePlugin[],
+  plugins: InteropPlugin[],
   supportedChains: string[],
   logger: Logger,
 ) {
@@ -80,8 +80,8 @@ export async function match(
 
   const matchedIds = new Set<string>()
   const unsupportedIds = new Set<string>()
-  const allMessages: BridgeMessage[] = []
-  const allTransfers: BridgeTransfer[] = []
+  const allMessages: InteropMessage[] = []
+  const allTransfers: InteropTransfer[] = []
 
   for (const plugin of plugins) {
     if (!plugin.matchTypes || !plugin.match) {
@@ -121,14 +121,14 @@ export async function match(
 
         matchedIds.add(event.eventId)
         for (const item of result) {
-          if (item.kind === 'BridgeMessage') {
+          if (item.kind === 'InteropMessage') {
             allMessages.push({ ...item, plugin: plugin.name })
             stats.messages++
             stats.matchedEvents += item.events.length
             for (const event of item.events) {
               matchedIds.add(event.eventId)
             }
-          } else if (item.kind === 'BridgeTransfer') {
+          } else if (item.kind === 'InteropTransfer') {
             allTransfers.push({ ...item, plugin: plugin.name })
             stats.transfers++
             stats.matchedEvents += item.events.length
@@ -191,7 +191,7 @@ export async function match(
   }
 }
 
-function toMessageRecord(message: BridgeMessage): InteropMessageRecord {
+function toMessageRecord(message: InteropMessage): InteropMessageRecord {
   return {
     plugin: message.plugin,
     messageId: generateId('M'),
@@ -217,7 +217,7 @@ function toMessageRecord(message: BridgeMessage): InteropMessageRecord {
   }
 }
 
-function toTransferRecord(transfer: BridgeTransfer): InteropTransferRecord {
+function toTransferRecord(transfer: InteropTransfer): InteropTransferRecord {
   return {
     plugin: transfer.plugin,
     messageId: generateId('T'),

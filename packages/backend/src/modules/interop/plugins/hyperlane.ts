@@ -1,9 +1,9 @@
 import { keccak256 } from 'viem'
 import {
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropEventDb,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   defineNetworks,
   findChain,
@@ -28,12 +28,12 @@ export const parseDispatchId = createEventParser(
   'event DispatchId(bytes32 indexed messageId)',
 )
 
-export const Dispatch = createBridgeEventType<{
+export const Dispatch = createInteropEventType<{
   messageId: `0x${string}`
   $dstChain: string
 }>('hyperlane.Dispatch')
 
-export const Process = createBridgeEventType<{
+export const Process = createInteropEventType<{
   messageId: `0x${string}`
   $srcChain: string
 }>('hyperlane.Process')
@@ -45,7 +45,7 @@ export const HYPERLANE_NETWORKS = defineNetworks('hyperlane', [
   { chain: 'optimism', chainId: 10 },
 ])
 
-export class HyperlanePlugIn implements BridgePlugin {
+export class HyperlanePlugIn implements InteropPlugin {
   name = 'hyperlane'
 
   capture(input: LogToCapture) {
@@ -80,7 +80,7 @@ export class HyperlanePlugIn implements BridgePlugin {
   }
 
   matchTypes = [Process]
-  match(delivery: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+  match(delivery: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (Process.checkType(delivery)) {
       const dispatch = db.find(Dispatch, {
         messageId: delivery.args.messageId,

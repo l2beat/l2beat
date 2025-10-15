@@ -1,9 +1,9 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropEventDb,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   defineNetworks,
   type LogToCapture,
@@ -15,7 +15,7 @@ const parseMessagePassed = createEventParser(
   'event MessagePassed(uint256 indexed nonce, address indexed sender, address indexed target, uint256 value, uint256 gasLimit, bytes data, bytes32 withdrawalHash)',
 )
 
-export const MessagePassed = createBridgeEventType<{
+export const MessagePassed = createInteropEventType<{
   chain: string
   withdrawalHash: string
 }>('opstack.MessagePassed', { ttl: 14 * UnixTime.DAY })
@@ -24,7 +24,7 @@ const parseWithdrawalFinalized = createEventParser(
   'event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)',
 )
 
-export const WithdrawalFinalized = createBridgeEventType<{
+export const WithdrawalFinalized = createInteropEventType<{
   chain: string
   withdrawalHash: string
 }>('opstack.WithdrawalFinalized')
@@ -41,7 +41,7 @@ const OPSTACK_NETWORKS = defineNetworks('opstack', [
   },
 ])
 
-export class OpStackPlugin implements BridgePlugin {
+export class OpStackPlugin implements InteropPlugin {
   name = 'opstack'
 
   capture(input: LogToCapture) {
@@ -76,8 +76,8 @@ export class OpStackPlugin implements BridgePlugin {
 
   matchTypes = [WithdrawalFinalized]
   match(
-    withdrawalFinalized: BridgeEvent,
-    db: BridgeEventDb,
+    withdrawalFinalized: InteropEvent,
+    db: InteropEventDb,
   ): MatchResult | undefined {
     if (!WithdrawalFinalized.checkType(withdrawalFinalized)) return
     const messagePassed = db.find(MessagePassed, {

@@ -3,15 +3,15 @@ import { BinaryReader } from '../BinaryReader'
 import { parseOFTReceived, parseOFTSent } from './layerzero-v2-ofts'
 import {
   Address32,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   defineNetworks,
   findChain,
   type LogToCapture,
 } from './types'
 
-export const StargateV2OFTSentBusRode = createBridgeEventType<{
+export const StargateV2OFTSentBusRode = createInteropEventType<{
   guid: string
   emitter: EthereumAddress
   token: string
@@ -25,7 +25,7 @@ export const StargateV2OFTSentBusRode = createBridgeEventType<{
   $dstChain: string
 }>('stargate-v2.OFTSentBus')
 
-export const StargateV2OFTSentTaxi = createBridgeEventType<{
+export const StargateV2OFTSentTaxi = createInteropEventType<{
   guid: string
   amountSentLD: string
   amountReceivedLD: string
@@ -33,7 +33,7 @@ export const StargateV2OFTSentTaxi = createBridgeEventType<{
   $dstChain: string
 }>('stargate-v2.OFTSentTaxi')
 
-export const StargateV2OFTReceived = createBridgeEventType<{
+export const StargateV2OFTReceived = createInteropEventType<{
   guid: string
   receiver: string
   emitter: EthereumAddress
@@ -47,7 +47,7 @@ export const StargateV2OFTReceived = createBridgeEventType<{
 const parseBusDriven = createEventParser(
   'event BusDriven(uint32 dstEid, uint72 startTicketId, uint8 numPassengers, bytes32 guid)',
 )
-export const StargateV2BusDriven = createBridgeEventType<{
+export const StargateV2BusDriven = createInteropEventType<{
   startTicketId: number
   numPassengers: number
   guid: string
@@ -163,7 +163,7 @@ const STARGATE_NETWORKS = defineNetworks('stargate', [
 const GUID_ZERO =
   '0x0000000000000000000000000000000000000000000000000000000000000000'
 
-export class StargatePlugin implements BridgePlugin {
+export class StargatePlugin implements InteropPlugin {
   name = 'stargate'
 
   capture(input: LogToCapture) {

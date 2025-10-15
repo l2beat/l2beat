@@ -9,10 +9,10 @@ import {
 } from './hyperlane'
 import {
   Address32,
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropEventDb,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   findChain,
   type LogToCapture,
@@ -34,7 +34,7 @@ const parseReceivedTransferRemote = createEventParser(
   'event ReceivedTransferRemote(uint32 indexed origin, bytes32 indexed recipient, uint256 amount)',
 )
 
-const HwrTransferSent = createBridgeEventType<{
+const HwrTransferSent = createInteropEventType<{
   messageId: `0x${string}`
   $dstChain: string
   destination: number
@@ -43,7 +43,7 @@ const HwrTransferSent = createBridgeEventType<{
   tokenAddress: Address32
 }>('hyperlane-hwr.TransferSent')
 
-const HwrTransferReceived = createBridgeEventType<{
+const HwrTransferReceived = createInteropEventType<{
   messageId: `0x${string}`
   $srcChain: string
   origin: number
@@ -52,7 +52,7 @@ const HwrTransferReceived = createBridgeEventType<{
   tokenAddress: Address32
 }>('hyperlane-hwr.TransferReceived')
 
-export class HyperlaneHwrPlugin implements BridgePlugin {
+export class HyperlaneHwrPlugin implements InteropPlugin {
   name = 'hyperlane-hwr'
 
   capture(input: LogToCapture) {
@@ -100,7 +100,7 @@ export class HyperlaneHwrPlugin implements BridgePlugin {
   }
 
   matchTypes = [HwrTransferReceived]
-  match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+  match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (!HwrTransferReceived.checkType(event)) return
 
     const hwrSent = db.find(HwrTransferSent, {

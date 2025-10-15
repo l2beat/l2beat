@@ -9,10 +9,10 @@ import {
 } from './layerzero-v2'
 import {
   Address32,
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropEventDb,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   findChain,
   type LogToCapture,
@@ -27,7 +27,7 @@ export const parseOFTReceived = createEventParser(
   'event OFTReceived(bytes32 indexed guid, uint32 srcEid, address indexed toAddress, uint256 amountReceivedLD)',
 )
 
-const OFTSentPacketSent = createBridgeEventType<{
+const OFTSentPacketSent = createInteropEventType<{
   $dstChain: string
   guid: string
   amountSentLD: number
@@ -35,14 +35,14 @@ const OFTSentPacketSent = createBridgeEventType<{
   tokenAddress: Address32
 }>('layerzero-v2.PacketOFTSent')
 
-const OFTReceivedPacketDelivered = createBridgeEventType<{
+const OFTReceivedPacketDelivered = createInteropEventType<{
   $srcChain: string
   guid: string
   amountReceivedLD: number
   tokenAddress: Address32
 }>('layerzero-v2.PacketOFTDelivered')
 
-export class LayerZeroV2OFTsPlugin implements BridgePlugin {
+export class LayerZeroV2OFTsPlugin implements InteropPlugin {
   name = 'layerzero-v2-ofts'
 
   capture(input: LogToCapture) {
@@ -119,8 +119,8 @@ export class LayerZeroV2OFTsPlugin implements BridgePlugin {
 
   matchTypes = [OFTReceivedPacketDelivered]
   match(
-    oftReceivedPacketDelivered: BridgeEvent,
-    db: BridgeEventDb,
+    oftReceivedPacketDelivered: InteropEvent,
+    db: InteropEventDb,
   ): MatchResult | undefined {
     if (!OFTReceivedPacketDelivered.checkType(oftReceivedPacketDelivered))
       return

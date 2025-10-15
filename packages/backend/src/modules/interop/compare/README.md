@@ -8,11 +8,11 @@ INTEROP_DB_URL
 ```
 2. Run compare script from backend folder
 ```bash
-pnpm bridges:compare
+pnpm interop:compare
 ```
 - there is a possibility to specify comma-separated list of plugins
 ```bash
-pnpm bridges:compare across,stargate
+pnpm interop:compare across,stargate
 ```
 3. The script will
 - fetch data to compare from external providers

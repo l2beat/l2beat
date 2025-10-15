@@ -2,10 +2,10 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { Hash256 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { BridgeComparator } from './BridgeComparator'
+import { InteropComparator } from './InteropComparator'
 
-describe(BridgeComparator.name, () => {
-  describe(BridgeComparator.prototype.run.name, () => {
+describe(InteropComparator.name, () => {
+  describe(InteropComparator.prototype.run.name, () => {
     it('fetches data and compares', async () => {
       const known = [
         { srcTxHash: Hash256.random(), dstTxHash: Hash256.random() },
@@ -57,7 +57,7 @@ describe(BridgeComparator.name, () => {
       //@ts-ignore
       logger.for = () => logger
 
-      const comparator = new BridgeComparator(db, plugins, logger)
+      const comparator = new InteropComparator(db, plugins, logger)
 
       await comparator.run()
       await comparator.run()

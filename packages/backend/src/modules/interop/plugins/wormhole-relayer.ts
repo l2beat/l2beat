@@ -1,4 +1,4 @@
-/* Wormhole Relayer is auxiliary contract for apps using WormholeCore not wanting to have their own relayer. 
+/* Wormhole Relayer is auxiliary contract for apps using WormholeCore not wanting to have their own relayer.
 
 On SRC it emits SendEvent with useless info - hence it's ignored and Wormhole Core LogMessagePublished is used instead.
 On DST it emits Delivery event which is used to match with LogMessagePublished on SRC.
@@ -6,12 +6,12 @@ On DST it emits Delivery event which is used to match with LogMessagePublished o
 */
 
 import {
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   findChain,
+  type InteropEventDb,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -28,7 +28,7 @@ const parseSendEvent = createEventParser(
 )
 */
 
-export const Delivery = createBridgeEventType<{
+export const Delivery = createInteropEventType<{
   recipientContract: string
   sourceChain: number
   sequence: string
@@ -36,12 +36,12 @@ export const Delivery = createBridgeEventType<{
   $srcChain: string
 }>('wormhole-relayer.Delivery')
 
-export const SendEvent = createBridgeEventType<{
+export const SendEvent = createInteropEventType<{
   sequence: string
   $dstChain: string
 }>('wormhole-relayer.SendEvent')
 
-export class WormholeRelayerPlugin implements BridgePlugin {
+export class WormholeRelayerPlugin implements InteropPlugin {
   name = 'wormhole-relayer'
 
   capture(input: LogToCapture) {
@@ -71,7 +71,7 @@ export class WormholeRelayerPlugin implements BridgePlugin {
   }
 
   matchTypes = [Delivery]
-  match(delivery: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+  match(delivery: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (Delivery.checkType(delivery)) {
       const logMessagePublished = db.find(LogMessagePublished, {
         sequence: delivery.args.sequence,

@@ -1,24 +1,24 @@
-/* 
+/*
 CCIP is a messaging and token transfer protocol. This plugin matches messages. Further
-research is required regarding message delivery - in this version only message execution is matched. 
+research is required regarding message delivery - in this version only message execution is matched.
 The dst chain on SRC must be determined by the contract address that emitted the event as separate
 contracts are set up for every SRC-DST pair on each chain
 */
 
 import { EthereumAddress } from '@l2beat/shared-pure'
 import {
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   defineNetworks,
+  type InteropEventDb,
   type LogToCapture,
   type MatchResult,
   Result,
 } from './types'
 
-/* 
+/*
  event CCIPSendRequested(Internal.EVM2EVMMessage message);
 
    /// @notice The cross chain message that gets committed to EVM chains.
@@ -61,12 +61,12 @@ const parseExecutionStateChanged = createEventParser(
   'event ExecutionStateChanged(uint64 indexed sequenceNumber, bytes32 indexed messageId, uint8 state, bytes returnData)',
 )
 
-export const CCIPSendRequested = createBridgeEventType<{
+export const CCIPSendRequested = createInteropEventType<{
   messageId: `0x${string}`
   $dstChain: string
 }>('ccip.CCIPSendRequested')
 
-export const ExecutionStateChanged = createBridgeEventType<{
+export const ExecutionStateChanged = createInteropEventType<{
   messageId: `0x${string}`
   state: number
   $srcChain: string
@@ -115,7 +115,7 @@ const CCIP_NETWORKS = defineNetworks<CcipNetwork>('ccip', [
   },
 ])
 
-export class CCIPPlugIn implements BridgePlugin {
+export class CCIPPlugIn implements InteropPlugin {
   name = 'ccip'
 
   capture(input: LogToCapture) {
@@ -151,7 +151,7 @@ export class CCIPPlugIn implements BridgePlugin {
   // TODO: match transfer
 
   matchTypes = [ExecutionStateChanged]
-  match(delivery: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+  match(delivery: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (ExecutionStateChanged.checkType(delivery)) {
       const ccipSendRequested = db.find(CCIPSendRequested, {
         messageId: delivery.args.messageId,

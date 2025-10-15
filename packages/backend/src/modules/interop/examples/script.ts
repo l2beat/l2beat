@@ -6,15 +6,15 @@ import { boolean, command, flag, positional, run, string } from 'cmd-ts'
 import { readFileSync } from 'fs'
 import { type ParseError, parse } from 'jsonc-parser'
 import { join } from 'path'
-import { logToViemLog } from '../BridgeBlockProcessor'
-import { match } from '../BridgeMatcher'
 import { InMemoryEventDb } from '../InMemoryEventDb'
-import { createBridgePlugins } from '../plugins'
+import { logToViemLog } from '../InteropBlockProcessor'
+import { match } from '../InteropMatcher'
+import { createInteropPlugins } from '../plugins'
 import {
   Address32,
-  type BridgeEvent,
-  type BridgeMessage,
-  type BridgeTransfer,
+  type InteropEvent,
+  type InteropMessage,
+  type InteropTransfer,
 } from '../plugins/types'
 
 export function readJsonc(path: string): JSON {
@@ -43,7 +43,7 @@ const Example = v.object({
 })
 
 const cmd = command({
-  name: 'bridges:example',
+  name: 'interop:example',
   args: {
     name: positional({ type: string, displayName: 'name' }),
     simple: flag({ type: boolean, long: 'simple' }),
@@ -93,9 +93,9 @@ const cmd = command({
 })
 
 interface RunResult {
-  events: BridgeEvent[]
-  messages: BridgeMessage[]
-  transfers: BridgeTransfer[]
+  events: InteropEvent[]
+  messages: InteropMessage[]
+  transfers: InteropTransfer[]
 }
 
 async function runExample(example: Example): Promise<RunResult> {
@@ -118,9 +118,9 @@ async function runExample(example: Example): Promise<RunResult> {
     }
   })
 
-  const plugins = createBridgePlugins()
+  const plugins = createInteropPlugins()
 
-  const events: BridgeEvent[] = []
+  const events: InteropEvent[] = []
   for (const chain of chains) {
     const tx = await chain.rpc.getTransaction(chain.txHash)
     assert(tx.blockNumber)

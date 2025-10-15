@@ -6,10 +6,10 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { solidityKeccak256 } from 'ethers/lib/utils'
 import { BinaryReader } from '../BinaryReader'
 import {
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropEventDb,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   defineNetworks,
   findChain,
@@ -26,12 +26,12 @@ const parsePacketDelivered = createEventParser(
   'event PacketDelivered((uint32 srcEid,bytes32 sender, uint64 nonce) origin, address receiver)',
 )
 
-export const PacketSent = createBridgeEventType<{
+export const PacketSent = createInteropEventType<{
   $dstChain: string
   guid: string
 }>('layerzero-v1.PacketSent')
 
-export const PacketDelivered = createBridgeEventType<{
+export const PacketDelivered = createInteropEventType<{
   $srcChain: string
   guid: string
 }>('layerzero-v1.PacketDelivered')
@@ -60,7 +60,7 @@ const LAYERZERO_NETWORKS = defineNetworks('layerzero', [
   },
 ])
 
-export class LayerZeroV1Plugin implements BridgePlugin {
+export class LayerZeroV1Plugin implements InteropPlugin {
   name = 'layerzero-v1'
 
   capture(input: LogToCapture) {
@@ -108,8 +108,8 @@ export class LayerZeroV1Plugin implements BridgePlugin {
 
   matchTypes = [PacketDelivered]
   match(
-    packetDelivered: BridgeEvent,
-    db: BridgeEventDb,
+    packetDelivered: InteropEvent,
+    db: InteropEventDb,
   ): MatchResult | undefined {
     if (!PacketDelivered.checkType(packetDelivered)) return
     const packetSent = db.find(PacketSent, { guid: packetDelivered.args.guid })

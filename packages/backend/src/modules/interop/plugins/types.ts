@@ -39,7 +39,7 @@ Address32.cropToEthereumAddress = function cropToEthereumAddress(
 Address32.ZERO = Address32.from('0x')
 Address32.NATIVE = Address32('native')
 
-export interface BridgeEventContext {
+export interface InteropEventContext {
   timestamp: UnixTime
   chain: string
   blockNumber: number
@@ -50,36 +50,36 @@ export interface BridgeEventContext {
   logIndex: number
 }
 
-export interface BridgeEvent<T = unknown> {
+export interface InteropEvent<T = unknown> {
   plugin: string
   eventId: string
   type: string
   expiresAt: UnixTime
-  ctx: BridgeEventContext
+  ctx: InteropEventContext
   args: T
 }
 
-export interface BridgeMessage {
+export interface InteropMessage {
   plugin: string
-  kind: 'BridgeMessage'
+  kind: 'InteropMessage'
   app: string
   type: string
-  events: BridgeEvent[]
-  src: BridgeEvent
-  dst: BridgeEvent
+  events: InteropEvent[]
+  src: InteropEvent
+  dst: InteropEvent
 }
 
 export interface TransferSide {
-  event: BridgeEvent
+  event: InteropEvent
   tokenAddress?: Address32
   tokenAmount?: string
 }
 
-export interface BridgeTransfer {
-  kind: 'BridgeTransfer'
+export interface InteropTransfer {
+  kind: 'InteropTransfer'
   plugin: string
   type: string
-  events: BridgeEvent[]
+  events: InteropEvent[]
   src: TransferSide
   dst: TransferSide
 }
@@ -88,23 +88,23 @@ export function generateId(type: string) {
   return `${type}-${randomUUID()}`
 }
 
-export interface BridgeEventType<T> {
+export interface InteropEventType<T> {
   type: string
-  create(ctx: BridgeEventContext, payload: T): Omit<BridgeEvent<T>, 'plugin'>
-  checkType(action: BridgeEvent): action is BridgeEvent<T>
+  create(ctx: InteropEventContext, payload: T): Omit<InteropEvent<T>, 'plugin'>
+  checkType(action: InteropEvent): action is InteropEvent<T>
 }
 
-export function createBridgeEventType<T>(
+export function createInteropEventType<T>(
   type: string,
   options?: { ttl?: number },
-): BridgeEventType<T> {
+): InteropEventType<T> {
   if (!/\w+\.\w+/.test(type)) {
     throw new Error(
-      'BridgeEventType must have the format: "protocol-name.EventName"',
+      'InteropEventType must have the format: "protocol-name.EventName"',
     )
   }
   if (type.length > 64) {
-    throw new Error('BridgeEventType cannot be longer than 64')
+    throw new Error('InteropEventType cannot be longer than 64')
   }
 
   const ttl = options?.ttl ?? UnixTime.DAY
@@ -112,9 +112,9 @@ export function createBridgeEventType<T>(
   return {
     type,
     create(
-      ctx: BridgeEventContext,
+      ctx: InteropEventContext,
       payload: T,
-    ): Omit<BridgeEvent<T>, 'plugin'> {
+    ): Omit<InteropEvent<T>, 'plugin'> {
       return {
         eventId: generateId('evt'),
         type,
@@ -124,7 +124,7 @@ export function createBridgeEventType<T>(
         args: JSON.parse(JSON.stringify(payload)),
       }
     },
-    checkType(action: BridgeEvent): action is BridgeEvent<T> {
+    checkType(action: InteropEvent): action is InteropEvent<T> {
       return action.type === type
     },
   }
@@ -133,43 +133,43 @@ export function createBridgeEventType<T>(
 export interface LogToCapture {
   log: Log
   txLogs: Log[]
-  ctx: BridgeEventContext
+  ctx: InteropEventContext
 }
 
 export type MatchResult = (
-  | Omit<BridgeMessage, 'plugin'>
-  | Omit<BridgeTransfer, 'plugin'>
+  | Omit<InteropMessage, 'plugin'>
+  | Omit<InteropTransfer, 'plugin'>
 )[]
 
-export type BridgeEventQuery<T> = Partial<T> & {
-  ctx?: Partial<BridgeEventContext>
-  sameTxBefore?: BridgeEvent
-  sameTxAfter?: BridgeEvent
+export type InteropEventQuery<T> = Partial<T> & {
+  ctx?: Partial<InteropEventContext>
+  sameTxBefore?: InteropEvent
+  sameTxAfter?: InteropEvent
 }
 
-export interface BridgeEventDb {
+export interface InteropEventDb {
   find<T>(
-    type: BridgeEventType<T>,
-    query: BridgeEventQuery<T>,
-  ): BridgeEvent<T> | undefined
+    type: InteropEventType<T>,
+    query: InteropEventQuery<T>,
+  ): InteropEvent<T> | undefined
   findAll<T>(
-    type: BridgeEventType<T>,
-    query: BridgeEventQuery<T>,
-  ): BridgeEvent<T>[]
+    type: InteropEventType<T>,
+    query: InteropEventQuery<T>,
+  ): InteropEvent<T>[]
 }
 
-export interface BridgePlugin {
+export interface InteropPlugin {
   name: string
   capture?: (
     input: LogToCapture,
   ) =>
-    | Omit<BridgeEvent, 'plugin'>
+    | Omit<InteropEvent, 'plugin'>
     | undefined
-    | Promise<Omit<BridgeEvent, 'plugin'> | undefined>
-  matchTypes?: BridgeEventType<unknown>[]
+    | Promise<Omit<InteropEvent, 'plugin'> | undefined>
+  matchTypes?: InteropEventType<unknown>[]
   match?: (
-    event: BridgeEvent,
-    db: BridgeEventDb,
+    event: InteropEvent,
+    db: InteropEventDb,
   ) => MatchResult | undefined | Promise<MatchResult | undefined>
 }
 
@@ -220,24 +220,24 @@ export function createEventParser<T extends `event ${string}(${string}`>(
 
 export const Result = { Message, Transfer }
 
-interface BridgeMessageOptions {
+interface InteropMessageOptions {
   app: string
-  srcEvent: BridgeEvent
-  dstEvent: BridgeEvent
-  extraEvents?: BridgeEvent[]
+  srcEvent: InteropEvent
+  dstEvent: InteropEvent
+  extraEvents?: InteropEvent[]
 }
 
 function Message(
   type: string,
-  options: BridgeMessageOptions,
-): Omit<BridgeMessage, 'plugin'> {
+  options: InteropMessageOptions,
+): Omit<InteropMessage, 'plugin'> {
   if (!/\w+\.\w+(\.\w+)?/.test(type)) {
     throw new Error(
-      'BridgeMessage type must have the format: "protocol-name.MessageName" or "protocol-name.MessageName.app-name"',
+      'InteropMessage type must have the format: "protocol-name.MessageName" or "protocol-name.MessageName.app-name"',
     )
   }
   return {
-    kind: 'BridgeMessage',
+    kind: 'InteropMessage',
     type,
     app: options.app,
     src: options.srcEvent,
@@ -250,29 +250,29 @@ function Message(
   }
 }
 
-export interface BridgeTransferOptions {
-  srcEvent: BridgeEvent
+export interface InteropTransferOptions {
+  srcEvent: InteropEvent
   srcTokenAddress?: Address32
   srcAmount?: string
 
-  dstEvent: BridgeEvent
+  dstEvent: InteropEvent
   dstTokenAddress?: Address32
   dstAmount?: string
 
-  extraEvents?: BridgeEvent[]
+  extraEvents?: InteropEvent[]
 }
 
 function Transfer(
   type: string,
-  options: BridgeTransferOptions,
-): Omit<BridgeTransfer, 'plugin'> {
+  options: InteropTransferOptions,
+): Omit<InteropTransfer, 'plugin'> {
   if (!/\w+\.\w+(\.\w+)?/.test(type)) {
     throw new Error(
-      'BridgeTransfer type must have the format: "app-name.Transfer" or "app-name.Transfer.app-name"',
+      'InteropTransfer type must have the format: "app-name.Transfer" or "app-name.Transfer.app-name"',
     )
   }
   return {
-    kind: 'BridgeTransfer',
+    kind: 'InteropTransfer',
     type,
     events: [
       options.srcEvent,

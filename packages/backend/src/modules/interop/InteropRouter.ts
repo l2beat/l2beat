@@ -2,21 +2,21 @@ import Router from '@koa/router'
 import type { Database } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import type { BridgesConfig } from '../../config/Config'
-import type { BridgeBlockProcessor } from './BridgeBlockProcessor'
+import type { InteropConfig } from '../../config/Config'
 import { renderEventsPage } from './dashboard/EventsPage'
 import { renderMainPage } from './dashboard/MainPage'
 import { renderMessagesPage } from './dashboard/MessagesPage'
 import { renderTransfersPage } from './dashboard/TransfersPage'
+import type { InteropBlockProcessor } from './InteropBlockProcessor'
 
-export function createBridgeRouter(
+export function createInteropRouter(
   db: Database,
-  config: BridgesConfig,
-  processors: BridgeBlockProcessor[],
+  config: InteropConfig,
+  processors: InteropBlockProcessor[],
 ) {
   const router = new Router()
 
-  router.get('/bridges', async (ctx) => {
+  router.get('/interop', async (ctx) => {
     const events = await db.interopEvent.getStats()
     const messages = await getMessagesStats(db)
     const transfers = await getTransfersStats(db)
@@ -30,7 +30,7 @@ export function createBridgeRouter(
     })
   })
 
-  router.get('/bridges.json', async (ctx) => {
+  router.get('/interop.json', async (ctx) => {
     const events = await db.interopEvent.getStats()
     const messages = await db.interopMessage.getStats()
     ctx.body = { events, messages }
@@ -48,7 +48,7 @@ export function createBridgeRouter(
     type: v.string(),
   })
 
-  router.get('/bridges/events/:kind/:type', async (ctx) => {
+  router.get('/interop/events/:kind/:type', async (ctx) => {
     const params = Params.validate(ctx.params)
     const status = getProcessorsStatus(processors)
 
@@ -105,7 +105,7 @@ export function createBridgeRouter(
     }
   })
 
-  router.get('/bridges/messages/:type', async (ctx) => {
+  router.get('/interop/messages/:type', async (ctx) => {
     const params = v.object({ type: v.string() }).validate(ctx.params)
     const query = v
       .object({
@@ -125,7 +125,7 @@ export function createBridgeRouter(
     })
   })
 
-  router.get('/bridges/transfers/:type', async (ctx) => {
+  router.get('/interop/transfers/:type', async (ctx) => {
     const params = v.object({ type: v.string() }).validate(ctx.params)
     const query = v
       .object({
@@ -149,7 +149,7 @@ export function createBridgeRouter(
   return router
 }
 
-function getProcessorsStatus(processors: BridgeBlockProcessor[]) {
+function getProcessorsStatus(processors: InteropBlockProcessor[]) {
   return processors.flatMap((p) =>
     p.lastProcessed
       ? [

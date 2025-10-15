@@ -78,7 +78,7 @@ export function DataTablePage(props: DataTablePageProps) {
       <body>
         {props.showHome && (
           <div>
-            <a href="/bridges">← Back to Home</a>
+            <a href="/interop">← Back to Home</a>
           </div>
         )}
 

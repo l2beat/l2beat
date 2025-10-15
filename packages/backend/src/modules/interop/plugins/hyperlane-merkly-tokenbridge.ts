@@ -3,10 +3,10 @@ import { Dispatch, Process } from './hyperlane'
 import { findDispatchMessageId, parseSentTransferRemote } from './hyperlane-hwr'
 import {
   Address32,
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropEventDb,
+  type InteropPlugin,
+  createInteropEventType,
   defineNetworks,
   findChain,
   type LogToCapture,
@@ -45,7 +45,7 @@ const MERKLY_TOKENBRIDGE_NETWORKS = defineNetworks(
   ],
 )
 
-export const HwrTransferSentMerkly = createBridgeEventType<{
+export const HwrTransferSentMerkly = createInteropEventType<{
   messageId: `0x${string}`
   $dstChain: string
   destination: number
@@ -54,7 +54,7 @@ export const HwrTransferSentMerkly = createBridgeEventType<{
   tokenAddress: Address32
 }>('hyperlane-merkly-tokenbridge.TransferSent')
 
-export class HyperlaneMerklyTokenBridgePlugin implements BridgePlugin {
+export class HyperlaneMerklyTokenBridgePlugin implements InteropPlugin {
   name = 'hyperlane-merkly-tokenbridge'
 
   capture(input: LogToCapture) {
@@ -88,7 +88,7 @@ export class HyperlaneMerklyTokenBridgePlugin implements BridgePlugin {
   }
 
   matchTypes = [Process]
-  match(process: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+  match(process: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (Process.checkType(process)) {
       const hwrSentMerkly = db.find(HwrTransferSentMerkly, {
         messageId: process.args.messageId,

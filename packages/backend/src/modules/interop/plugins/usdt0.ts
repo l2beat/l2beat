@@ -2,10 +2,10 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { PacketDelivered, PacketSent } from './layerzero-v2'
 import {
   Address32,
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropEventDb,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   defineNetworks,
   type LogToCapture,
@@ -22,14 +22,14 @@ const parseOFTReceived = createEventParser(
   'event OFTReceived(bytes32 indexed guid, uint32 srcEid, address indexed toAddress, uint256 amountReceivedLD)',
 )
 
-export const Usdt0OFTSent = createBridgeEventType<{
+export const Usdt0OFTSent = createInteropEventType<{
   guid: string
   amountSentLD: number
   amountReceivedLD: number
   tokenAddress: Address32
 }>('usdt0.OFTSent')
 
-export const Usdt0OFTReceived = createBridgeEventType<{
+export const Usdt0OFTReceived = createInteropEventType<{
   guid: string
   amountReceivedLD: number
   tokenAddress: Address32
@@ -73,7 +73,7 @@ const USDT0_NETWORKS = defineNetworks('usdt0', [
   },
 ])
 
-export class Usdt0Plugin implements BridgePlugin {
+export class Usdt0Plugin implements InteropPlugin {
   name = 'usdt0'
 
   capture(input: LogToCapture) {
@@ -101,7 +101,7 @@ export class Usdt0Plugin implements BridgePlugin {
   }
 
   matchTypes = [Usdt0OFTReceived]
-  match(oftReceived: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+  match(oftReceived: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (!Usdt0OFTReceived.checkType(oftReceived)) return
 
     const oftSent = db.find(Usdt0OFTSent, { guid: oftReceived.args.guid })

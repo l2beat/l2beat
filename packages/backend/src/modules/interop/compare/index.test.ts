@@ -1,8 +1,8 @@
 import { assert } from '@l2beat/shared-pure'
-import { createBridgeComparePlugins } from '.'
+import { createInteropComparePlugins } from '.'
 
 describe('Compare Plugins', () => {
-  const plugins = createBridgeComparePlugins()
+  const plugins = createInteropComparePlugins()
 
   describe('every plugin name is unique', () => {
     const known = new Set<string>()

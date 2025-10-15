@@ -8,7 +8,7 @@ V2 MessageSent Format for TokenMessenger V2:
 - recipient: bytes32 (address padded to 32 bytes). // 0x00000000000000000000000028b5a0e9c621a5badaa536219b3a228c8168cf5d
 - destinationCaller: bytes32 (address padded to 32 bytes) // 0x000000000000000000000000047669ebb4ec165d2bd5e78706e9aede04bf095a
 - minFinalityThreshold: uint32 (the minimum finality threshold the sender is willing to accept).  // 1000
-- finalityThresholdExecuted: uint32 (the finality threshold that was actually executed, set to 0 in the Sent message). // 0 
+- finalityThresholdExecuted: uint32 (the finality threshold that was actually executed, set to 0 in the Sent message). // 0
 - messageBody: bytes (the actual message payload, e.g., a BurnMessage)
     - version: uint32
     - burnToken: bytes32
@@ -35,8 +35,8 @@ V2 ReceiveMessage Format for TokenMessenger V2:
     - amount: uint256
     - messageSender: bytes32
     - maxFee: uint256
-    - feeExecuted: uint256                
-    - expirationBlock: uint256             
+    - feeExecuted: uint256
+    - expirationBlock: uint256
     - hookData: bytes (optional data for the receiving app)
 
 Matching logic:
@@ -52,13 +52,13 @@ import { solidityKeccak256 } from 'ethers/lib/utils'
 import { BinaryReader } from '../BinaryReader'
 import {
   Address32,
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   defineNetworks,
   findChain,
+  type InteropEventDb,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -86,19 +86,19 @@ const parseV2MessageReceived = createEventParser(
   'event MessageReceived(address indexed caller, uint32 sourceDomain, bytes32 indexed nonce, bytes32 sender, uint32 indexed finalityThresholdExecuted, bytes messageBody)',
 )
 
-export const CCTPv1MessageSent = createBridgeEventType<{
+export const CCTPv1MessageSent = createInteropEventType<{
   messageBody: string
   $dstChain: string
 }>('cctp-v1.MessageSent')
 
-export const CCTPv1MessageReceived = createBridgeEventType<{
+export const CCTPv1MessageReceived = createInteropEventType<{
   caller: EthereumAddress
   $srcChain: string
   nonce: number
   messageBody: string
 }>('cctp-v1.MessageReceived')
 
-export const CCTPv2MessageSent = createBridgeEventType<{
+export const CCTPv2MessageSent = createInteropEventType<{
   fast: boolean
   app?: string
   hookData?: string
@@ -108,7 +108,7 @@ export const CCTPv2MessageSent = createBridgeEventType<{
   $dstChain: string
 }>('cctp-v2.MessageSent')
 
-export const CCTPv2MessageReceived = createBridgeEventType<{
+export const CCTPv2MessageReceived = createInteropEventType<{
   app?: string
   hookData?: string
   caller: EthereumAddress
@@ -119,7 +119,7 @@ export const CCTPv2MessageReceived = createBridgeEventType<{
   messageHash: string
 }>('cctp-v2.MessageReceived')
 
-export class CCTPPlugin implements BridgePlugin {
+export class CCTPPlugin implements InteropPlugin {
   name = 'cctp'
 
   capture(input: LogToCapture) {
@@ -206,8 +206,8 @@ export class CCTPPlugin implements BridgePlugin {
 
   matchTypes = [CCTPv1MessageReceived, CCTPv2MessageReceived]
   match(
-    messageReceived: BridgeEvent,
-    db: BridgeEventDb,
+    messageReceived: InteropEvent,
+    db: InteropEventDb,
   ): MatchResult | undefined {
     if (CCTPv1MessageReceived.checkType(messageReceived)) {
       const messageSent = db.find(CCTPv1MessageSent, {

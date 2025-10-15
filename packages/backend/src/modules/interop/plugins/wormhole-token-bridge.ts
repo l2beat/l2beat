@@ -1,8 +1,8 @@
 import {
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropEventDb,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   findChain,
   type LogToCapture,
@@ -15,14 +15,14 @@ const parseLogTransferRedeemed = createEventParser(
   'event TransferRedeemed(uint16 indexed emitterChainId, bytes32 indexed emitterAddress,uint64 indexed sequence)',
 )
 
-export const TransferRedeemed = createBridgeEventType<{
+export const TransferRedeemed = createInteropEventType<{
   sequence: string
   $srcChain: string
   srcWormholeChainId: number
   sender: string
 }>('wormhole.LogTransferRedeemed')
 
-export class WormholeTokenBridgePlugin implements BridgePlugin {
+export class WormholeTokenBridgePlugin implements InteropPlugin {
   name = 'wormhole-token-bridge'
 
   capture(input: LogToCapture) {
@@ -43,8 +43,8 @@ export class WormholeTokenBridgePlugin implements BridgePlugin {
 
   matchTypes = [TransferRedeemed]
   match(
-    transferRedeemed: BridgeEvent,
-    db: BridgeEventDb,
+    transferRedeemed: InteropEvent,
+    db: InteropEventDb,
   ): MatchResult | undefined {
     if (TransferRedeemed.checkType(transferRedeemed)) {
       // TODO: we should match by sequence + emitter/sender address (wormhole proto), not assume there is only one emitter per chain of LogMessagePublished

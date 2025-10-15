@@ -8,8 +8,8 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { decodeFunctionData, type Log, parseAbi } from 'viem'
 import {
   Address32,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   findChain,
   type LogToCapture,
@@ -69,7 +69,7 @@ export const parseSwapAndForwardedERC20 = createEventParser(
   'event SwapAndForwardedERC20(address tokenIn, uint256 amountIn, address swapProtocol, address middleToken, uint256 middleAmount, address mayanProtocol, bytes mayanData)',
 )
 
-export const MayanForwarded = createBridgeEventType<{
+export const MayanForwarded = createInteropEventType<{
   mayanProtocol: string
   methodSignature: `0x${string}`
   tokenIn: Address32
@@ -79,7 +79,7 @@ export const MayanForwarded = createBridgeEventType<{
   $dstChain: string
 }>('mayan-forwarder.MayanForwarded')
 
-export class MayanForwarderPlugin implements BridgePlugin {
+export class MayanForwarderPlugin implements InteropPlugin {
   name = 'mayan-forwarder'
 
   capture(input: LogToCapture) {

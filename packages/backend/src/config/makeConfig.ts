@@ -151,7 +151,7 @@ export async function makeConfig(
         60 * 60, // 1 hour
       ),
     },
-    bridges: flags.isEnabled('bridges') && {
+    interop: flags.isEnabled('bridges') && {
       capture: {
         enabled: flags.isEnabled('bridges', 'capture'),
         chains: [

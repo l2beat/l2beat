@@ -1,7 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import {
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   defineNetworks,
   type LogToCapture,
@@ -59,14 +59,14 @@ export const WORMHOLE_NETWORKS = defineNetworks('wormhole', [
   // { wormholeChainId: 57, chain: 'xrpl-evm' },
 ])
 
-export const LogMessagePublished = createBridgeEventType<{
+export const LogMessagePublished = createInteropEventType<{
   payload: `0x${string}`
   sequence: string
   wormholeChainId: number
   sender: EthereumAddress
 }>('wormhole.LogMessagePublished')
 
-export class WormholePlugin implements BridgePlugin {
+export class WormholePlugin implements InteropPlugin {
   name = 'wormhole'
 
   capture(input: LogToCapture) {

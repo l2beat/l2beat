@@ -77,7 +77,7 @@ function EventsPageLayout(props: {
       showHome={true}
       tables={[
         {
-          title: `Bridge Events: ${props.events[0]?.type ?? ''}`,
+          title: `Interop Events: ${props.events[0]?.type ?? ''}`,
           table: eventsTable,
           tableId: 'events',
           dataTableOptions: dataTableOptions,

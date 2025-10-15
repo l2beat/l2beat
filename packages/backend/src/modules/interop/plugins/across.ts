@@ -1,13 +1,13 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import {
   Address32,
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropPlugin,
   createEventParser,
+  createInteropEventType,
   defineNetworks,
   findChain,
+  type InteropEventDb,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -16,7 +16,7 @@ import {
 const parseFundsDeposited = createEventParser(
   'event FundsDeposited(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 indexed destinationChainId, uint256 indexed depositId, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 indexed depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes message)',
 )
-export const AcrossFundsDeposited = createBridgeEventType<{
+export const AcrossFundsDeposited = createInteropEventType<{
   $dstChain: string
   originChainId: number
   destinationChainId: number
@@ -32,7 +32,7 @@ const parseFilledV3Relay = createEventParser(
   'event FilledV3Relay(address inputToken, address outputToken, uint256 inputAmount, uint256 outputAmount, uint256 repaymentChainId, uint256 indexed originChainId, uint32 indexed depositId, uint32 fillDeadline, uint32 exclusivityDeadline, address exclusiveRelayer, address indexed relayer, address depositor, address recipient, bytes message, (address updatedRecipient, bytes updatedMessage, uint256 updatedOutputAmount, uint8 fillType) relayExecutionInfo)',
 )
 // For both V3 and V4 event capturing
-export const AcrossFilledRelay = createBridgeEventType<{
+export const AcrossFilledRelay = createInteropEventType<{
   $srcChain: string
   originChainId: number
   depositId: string
@@ -83,7 +83,7 @@ const ACROSS_NETWORKS = defineNetworks('across', [
   },
 ])
 
-export class AcrossPlugin implements BridgePlugin {
+export class AcrossPlugin implements InteropPlugin {
   name = 'across'
 
   capture(input: LogToCapture) {
@@ -138,7 +138,7 @@ export class AcrossPlugin implements BridgePlugin {
   }
 
   matchTypes = [AcrossFilledRelay]
-  match(filledRelay: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+  match(filledRelay: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (!AcrossFilledRelay.checkType(filledRelay)) return
 
     const fundsDeposited = db.find(AcrossFundsDeposited, {

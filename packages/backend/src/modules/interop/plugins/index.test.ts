@@ -1,11 +1,11 @@
 import { ProjectService } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
-import { createBridgePlugins } from '.'
+import { createInteropPlugins } from '.'
 import { definedNetworks } from './types'
 
 describe('Interop Plugins', async () => {
   const chainNames = new Set<string>()
-  const plugins = createBridgePlugins()
+  const plugins = createInteropPlugins()
 
   before(async () => {
     const ps = new ProjectService()

@@ -10,13 +10,13 @@ For general message passing:
 
 import { EthereumAddress } from '@l2beat/shared-pure'
 import {
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   defineNetworks,
   findChain,
+  type InteropEventDb,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -56,14 +56,14 @@ export const AXELAR_NETWORKS = defineNetworks('axelar', [
   { axelarChainName: 'optimism', chain: 'optimism' },
 ])
 
-export const ContractCall = createBridgeEventType<{
+export const ContractCall = createInteropEventType<{
   sender: EthereumAddress
   destinationContractAddress: string
   payloadHash: `0x${string}`
   $dstChain: string
 }>('axelar.ContractCall')
 
-export const ContractCallWithToken = createBridgeEventType<{
+export const ContractCallWithToken = createInteropEventType<{
   sender: EthereumAddress
   destinationContractAddress: string
   payloadHash: `0x${string}`
@@ -72,7 +72,7 @@ export const ContractCallWithToken = createBridgeEventType<{
   $dstChain: string
 }>('axelar.ContractCallWithToken')
 
-export const ContractCallApproved = createBridgeEventType<{
+export const ContractCallApproved = createInteropEventType<{
   commandId: string
   sourceAddress: string
   contractAddress: EthereumAddress
@@ -81,7 +81,7 @@ export const ContractCallApproved = createBridgeEventType<{
   $srcChain: string
 }>('axelar.ContractCallApproved')
 
-export const ContractCallApprovedWithMint = createBridgeEventType<{
+export const ContractCallApprovedWithMint = createInteropEventType<{
   commandId: string
   sourceAddress: string
   contractAddress: EthereumAddress
@@ -92,11 +92,11 @@ export const ContractCallApprovedWithMint = createBridgeEventType<{
   $srcChain: string
 }>('axelar.ContractCallApprovedWithMint')
 
-export const ContractCallExecuted = createBridgeEventType<{
+export const ContractCallExecuted = createInteropEventType<{
   commandId: string
 }>('axelar.ContractCallExecuted')
 
-export class AxelarPlugin implements BridgePlugin {
+export class AxelarPlugin implements InteropPlugin {
   name = 'axelar'
 
   capture(input: LogToCapture) {
@@ -179,17 +179,17 @@ export class AxelarPlugin implements BridgePlugin {
   }
 
   /* Match algorithm:
-  
+
   1. Start with contractCallExecuted on DST chain
   2. Find corresponding contractCallApproved or contractCallApprovedWithMint on DST chain using commandId
   3. Find corresponding contractCall or contractCallWithToken on SRC chain using payloadHash and srcTxHash
-  
+
   */
 
   matchTypes = [ContractCallExecuted]
   match(
-    contractCallExecuted: BridgeEvent,
-    db: BridgeEventDb,
+    contractCallExecuted: InteropEvent,
+    db: InteropEventDb,
   ): MatchResult | undefined {
     if (ContractCallExecuted.checkType(contractCallExecuted)) {
       const contractCallApproved = db.find(ContractCallApproved, {

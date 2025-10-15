@@ -1,9 +1,9 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
-  createBridgeEventType,
+  type InteropEvent,
+  type InteropEventDb,
+  type InteropPlugin,
+  createInteropEventType,
   createEventParser,
   defineNetworks,
   type LogToCapture,
@@ -15,7 +15,7 @@ const parseL2ToL1Tx = createEventParser(
   'event L2ToL1Tx(address caller, address indexed destination, uint256 indexed hash, uint256 indexed position, uint256 arbBlockNum, uint256 ethBlockNum, uint256 timestamp, uint256 callvalue, bytes data)',
 )
 
-export const L2ToL1Tx = createBridgeEventType<{
+export const L2ToL1Tx = createInteropEventType<{
   chain: string
   position: number
 }>('orbitstack.L2ToL1Tx', { ttl: 14 * UnixTime.DAY })
@@ -24,7 +24,7 @@ const parseOutBoxTransactionExecuted = createEventParser(
   'event OutBoxTransactionExecuted(address indexed to, address indexed l2Sender, uint256 indexed zero, uint256 transactionIndex)',
 )
 
-export const OutBoxTransactionExecuted = createBridgeEventType<{
+export const OutBoxTransactionExecuted = createInteropEventType<{
   chain: string
   position: number
 }>('orbitstack.OutBoxTransactionExecuted')
@@ -37,7 +37,7 @@ const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
   },
 ])
 
-export class OrbitStackPlugin implements BridgePlugin {
+export class OrbitStackPlugin implements InteropPlugin {
   name = 'orbitstack'
 
   capture(input: LogToCapture) {
@@ -72,8 +72,8 @@ export class OrbitStackPlugin implements BridgePlugin {
 
   matchTypes = [OutBoxTransactionExecuted]
   match(
-    outBoxTransactionExecuted: BridgeEvent,
-    db: BridgeEventDb,
+    outBoxTransactionExecuted: InteropEvent,
+    db: InteropEventDb,
   ): MatchResult | undefined {
     if (!OutBoxTransactionExecuted.checkType(outBoxTransactionExecuted)) return
 

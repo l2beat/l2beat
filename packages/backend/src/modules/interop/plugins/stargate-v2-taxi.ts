@@ -1,18 +1,18 @@
 import { PacketDelivered, PacketSent } from './layerzero-v2'
 import { StargateV2OFTReceived, StargateV2OFTSentTaxi } from './stargate'
 import {
-  type BridgeEvent,
-  type BridgeEventDb,
-  type BridgePlugin,
+  type InteropEvent,
+  type InteropEventDb,
+  type InteropPlugin,
   type MatchResult,
   Result,
 } from './types'
 
-export class StargateV2TaxiPlugin implements BridgePlugin {
+export class StargateV2TaxiPlugin implements InteropPlugin {
   name = 'stargate-v2-taxi'
 
   matchTypes = [StargateV2OFTSentTaxi]
-  match(event: BridgeEvent, db: BridgeEventDb): MatchResult | undefined {
+  match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (!StargateV2OFTSentTaxi.checkType(event)) return
 
     const oftReceived = db.find(StargateV2OFTReceived, {
