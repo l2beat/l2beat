@@ -1,0 +1,36 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Manages the list of validators and the network governor.",
+  "ignoreRelatives": ["usdc"],
+  "fields": {
+    "networkGovernor": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage validators, update the address that manages the insurance fund, and update the treasury address that collects fees from markets."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "validators": {
+      "handler": {
+        "type": "event",
+        "select": "validatorAddress",
+        "add": {
+          "event": "ValidatorStatusUpdate",
+          "where": ["=", "#isActive", true]
+        },
+        "remove": {
+          "event": "ValidatorStatusUpdate",
+          "where": ["!=", "#isActive", true]
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches."
+        }
+      ]
+    }
+  }
+}

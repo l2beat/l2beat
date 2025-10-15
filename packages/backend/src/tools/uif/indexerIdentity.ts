@@ -7,6 +7,7 @@ export const INDEXER_NAMES = {
   DA2: 'da_indexer_v2',
   BLOB: 'blob_indexer',
   ECOSYSTEM_TOKEN: 'ecosystem_token_indexer',
+  INTEROP_RECENT_PRICES: 'interop_recent_prices_indexer',
   // TVS
   TVS_BLOCK_TIMESTAMP: 'tvs_block_timestamp_indexer',
   TVS_CHAIN_AMOUNT: 'tvs_chain_amount_indexer',

@@ -2,10 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "lumia",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": [
-    "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B",
-    "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
-  ],
+  "initialAddresses": ["eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B"],
   "names": { "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B": "Validium" },
   "sharedModules": ["shared-polygon-cdk"]
 }

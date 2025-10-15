@@ -4,6 +4,7 @@ import type {
   BridgeTransferRecord,
   Database,
 } from '@l2beat/database'
+import { TimeLoop } from '../../tools/TimeLoop'
 import type { BridgeStore } from './BridgeStore'
 import {
   type BridgeEvent,
@@ -11,44 +12,24 @@ import {
   type BridgeMessage,
   type BridgePlugin,
   type BridgeTransfer,
-  type BridgeTransferWithFinancials,
   generateId,
   type MatchResult,
 } from './plugins/types'
 
-export class BridgeMatcher {
-  private running = false
-
+export class BridgeMatcher extends TimeLoop {
   constructor(
     private bridgeStore: BridgeStore,
     private db: Database,
     private plugins: BridgePlugin[],
     private supportedChains: string[],
-    private logger: Logger,
-    private intervalMs = 10_000,
+    protected logger: Logger,
+    intervalMs = 10_000,
   ) {
+    super({ intervalMs })
     this.logger = logger.for(this)
   }
 
-  start() {
-    const runMatching = async () => {
-      if (this.running) {
-        return
-      }
-      this.running = true
-      try {
-        await this.doMatching()
-      } catch (e) {
-        this.logger.error(e)
-      }
-      this.running = false
-    }
-    setInterval(runMatching, this.intervalMs)
-    runMatching()
-    this.logger.info('Started')
-  }
-
-  async doMatching() {
+  async run() {
     const result = await match(
       this.bridgeStore,
       (type) => this.bridgeStore.getEvents(type),
@@ -66,12 +47,17 @@ export class BridgeMatcher {
           unsupported: result.unsupportedIds,
         })
       }
-      await this.db.bridgeMessage.insertMany(
+      const messages = await this.db.bridgeMessage.insertMany(
         result.messages.map(toMessageRecord),
       )
-      await this.db.bridgeTransfer.insertMany(
+      const transfers = await this.db.bridgeTransfer.insertMany(
         result.transfers.map(toTransferRecord),
       )
+
+      this.logger.info('Matching results saved', {
+        messages,
+        transfers,
+      })
     })
   }
 }
@@ -122,7 +108,12 @@ export async function match(
         try {
           result = await plugin.match?.(event, db)
         } catch (e) {
-          logger.error(e, { project: plugin.name })
+          logger.error('Matching failed', e, {
+            plugin: plugin.name,
+            eventId: event.eventId,
+            eventType: event.type,
+            eventTxHash: event.ctx.txHash,
+          })
         }
         if (!result) {
           continue
@@ -132,16 +123,17 @@ export async function match(
         for (const item of result) {
           if (item.kind === 'BridgeMessage') {
             allMessages.push({ ...item, plugin: plugin.name })
-            matchedIds.add(item.dst.eventId)
-            matchedIds.add(item.src.eventId)
             stats.messages++
-            stats.matchedEvents += 2
+            stats.matchedEvents += item.events.length
+            for (const event of item.events) {
+              matchedIds.add(event.eventId)
+            }
           } else if (item.kind === 'BridgeTransfer') {
             allTransfers.push({ ...item, plugin: plugin.name })
             stats.transfers++
             stats.matchedEvents += item.events.length
-            for (const transferEvent of item.events) {
-              matchedIds.add(transferEvent.eventId)
+            for (const event of item.events) {
+              matchedIds.add(event.eventId)
             }
           }
         }
@@ -225,9 +217,7 @@ function toMessageRecord(message: BridgeMessage): BridgeMessageRecord {
   }
 }
 
-function toTransferRecord(
-  transfer: BridgeTransferWithFinancials,
-): BridgeTransferRecord {
+function toTransferRecord(transfer: BridgeTransfer): BridgeTransferRecord {
   return {
     plugin: transfer.plugin,
     messageId: generateId('T'),
@@ -249,10 +239,11 @@ function toTransferRecord(
 
     srcTokenAddress: transfer.src.tokenAddress,
     srcRawAmount: transfer.src.tokenAmount,
-    srcSymbol: transfer.src.financials?.symbol,
-    srcAmount: transfer.src.financials?.amount,
-    srcPrice: transfer.src.financials?.price,
-    srcValueUsd: transfer.src.financials?.valueUsd,
+    srcSymbol: undefined,
+    srcAbstractTokenId: undefined,
+    srcAmount: undefined,
+    srcPrice: undefined,
+    srcValueUsd: undefined,
 
     dstChain: transfer.dst.event.ctx.chain,
     dstTime: transfer.dst.event.ctx.timestamp,
@@ -262,9 +253,12 @@ function toTransferRecord(
 
     dstTokenAddress: transfer.dst.tokenAddress,
     dstRawAmount: transfer.dst.tokenAmount,
-    dstSymbol: transfer.dst.financials?.symbol,
-    dstAmount: transfer.dst.financials?.amount,
-    dstPrice: transfer.dst.financials?.price,
-    dstValueUsd: transfer.dst.financials?.valueUsd,
+    dstSymbol: undefined,
+    dstAbstractTokenId: undefined,
+    dstAmount: undefined,
+    dstPrice: undefined,
+    dstValueUsd: undefined,
+
+    isProcessed: false,
   }
 }

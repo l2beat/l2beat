@@ -1,0 +1,13 @@
+{
+  "rewrites": [
+    {
+      "source": "/trpc/:match*",
+      "destination": "https://tokens-backend-d2fc44b94836.herokuapp.com/trpc/:match*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "trailingSlash": false
+}

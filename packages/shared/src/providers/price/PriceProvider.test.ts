@@ -157,4 +157,42 @@ describe(PriceProvider.name, () => {
       expect(result).toEqual(expected)
     })
   })
+
+  describe(PriceProvider.prototype.getAllCoingeckoIds.name, () => {
+    it('delegates to CoingeckoQueryService', async () => {
+      const expectedResult = [
+        'bitcoin',
+        'ethereum',
+        'tether',
+        'binancecoin',
+      ].map(CoingeckoId)
+
+      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+        getAllCoingeckoIds: mockFn().resolvesToOnce(expectedResult),
+      })
+
+      const provider = new PriceProvider(coingeckoQueryService)
+
+      const result = await provider.getAllCoingeckoIds()
+
+      expect(
+        coingeckoQueryService.getAllCoingeckoIds,
+      ).toHaveBeenOnlyCalledWith()
+      expect(result).toEqual(expectedResult)
+    })
+
+    it('propagates errors from CoingeckoQueryService', async () => {
+      const error = new Error('Failed to fetch coin list')
+
+      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+        getAllCoingeckoIds: mockFn().rejectsWithOnce(error),
+      })
+
+      const provider = new PriceProvider(coingeckoQueryService)
+
+      await expect(provider.getAllCoingeckoIds()).toBeRejectedWith(
+        'Failed to fetch coin list',
+      )
+    })
+  })
 })

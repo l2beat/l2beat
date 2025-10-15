@@ -17,6 +17,8 @@ export const animechain: ScalingProject = upcomingL3({
     links: {
       websites: ['https://anime.xyz/'],
       socialMedia: ['https://x.com/animecoin'],
+      documentation: ['https://animechain.dev'],
+      bridges: ['https://animechain.dev/app'],
     },
   },
   ecosystemInfo: {

@@ -1,6 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { BinaryReader } from '../BinaryReader'
 import {
+  Address32,
   type BridgeEvent,
   type BridgeEventDb,
   type BridgePlugin,
@@ -20,8 +20,8 @@ export const AcrossFundsDeposited = createBridgeEventType<{
   $dstChain: string
   originChainId: number
   destinationChainId: number
-  depositId: number
-  tokenAddress: EthereumAddress
+  depositId: string
+  tokenAddress: Address32
   amount: string
 }>('across.FundsDeposited')
 
@@ -35,8 +35,8 @@ const parseFilledV3Relay = createEventParser(
 export const AcrossFilledRelay = createBridgeEventType<{
   $srcChain: string
   originChainId: number
-  depositId: number
-  tokenAddress: EthereumAddress
+  depositId: string
+  tokenAddress: Address32
   amount: string
 }>('across.FilledRelay')
 
@@ -100,10 +100,8 @@ export class AcrossPlugin implements BridgePlugin {
         ),
         originChainId: network.chainId,
         destinationChainId: Number(fundsDeposited.destinationChainId),
-        depositId: Number(fundsDeposited.depositId),
-        tokenAddress: EthereumAddress(
-          new BinaryReader(fundsDeposited.inputToken).readAddress(),
-        ),
+        depositId: fundsDeposited.depositId.toString(),
+        tokenAddress: Address32.from(fundsDeposited.inputToken),
         amount: fundsDeposited.inputAmount.toString(),
       })
     }
@@ -117,10 +115,8 @@ export class AcrossPlugin implements BridgePlugin {
           Number(filledRelay.originChainId),
         ),
         originChainId: Number(filledRelay.originChainId),
-        depositId: Number(filledRelay.depositId),
-        tokenAddress: EthereumAddress(
-          new BinaryReader(filledRelay.outputToken).readAddress(),
-        ),
+        depositId: filledRelay.depositId.toString(),
+        tokenAddress: Address32.from(filledRelay.outputToken),
         amount: filledRelay.outputAmount.toString(),
       })
     }
@@ -134,8 +130,8 @@ export class AcrossPlugin implements BridgePlugin {
           Number(filledV3Relay.originChainId),
         ),
         originChainId: Number(filledV3Relay.originChainId),
-        depositId: Number(filledV3Relay.depositId),
-        tokenAddress: EthereumAddress(filledV3Relay.outputToken),
+        depositId: filledV3Relay.depositId.toString(),
+        tokenAddress: Address32.from(filledV3Relay.outputToken),
         amount: filledV3Relay.outputAmount.toString(),
       })
     }

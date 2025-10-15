@@ -117,8 +117,10 @@ export const zircuit: ScalingProject = opStackL2({
   isNodeAvailable: 'UnderReview',
   stateValidation: {
     categories: [ZIRCUIT_STATE_VALIDATION],
-    zkProgramHashes: zircuitProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
   },
+  nonTemplateZkProgramHashes: zircuitProgramHashes.map((el) =>
+    ZK_PROGRAM_HASHES(el),
+  ),
   activityConfig: {
     // zircuit does not have a system transaction in every block but in every 5th/6th, so we do not subtract those and overcount
     type: 'block',

@@ -44,7 +44,7 @@ const parseContractCallExecuted = createEventParser(
 
 export const AXELAR_NETWORKS = defineNetworks('axelar', [
   { axelarChainName: 'Ethereum', chain: 'ethereum' },
-  { axelarChainName: 'arbitrum', chain: 'arbitrum' },
+  { axelarChainName: 'Arbitrum', chain: 'arbitrum' },
   { axelarChainName: 'Avalanche', chain: 'avalanche' },
   { axelarChainName: 'base', chain: 'base' },
   { axelarChainName: 'mantle', chain: 'mantle' },
@@ -178,47 +178,63 @@ export class AxelarPlugin implements BridgePlugin {
     }
   }
 
-  matchTypes = [ContractCallApproved, ContractCallApprovedWithMint]
+  /* Match algorithm:
+  
+  1. Start with contractCallExecuted on DST chain
+  2. Find corresponding contractCallApproved or contractCallApprovedWithMint on DST chain using commandId
+  3. Find corresponding contractCall or contractCallWithToken on SRC chain using payloadHash and srcTxHash
+  
+  */
+
+  matchTypes = [ContractCallExecuted]
   match(
-    contractCallApproved: BridgeEvent,
+    contractCallExecuted: BridgeEvent,
     db: BridgeEventDb,
   ): MatchResult | undefined {
-    if (ContractCallApproved.checkType(contractCallApproved)) {
-      const contractCall = db.find(ContractCall, {
-        ctx: {
-          txHash: contractCallApproved.args.srcTxHash, // TODO: this may not be enough but event index is also available
-        },
+    if (ContractCallExecuted.checkType(contractCallExecuted)) {
+      const contractCallApproved = db.find(ContractCallApproved, {
+        commandId: contractCallExecuted.args.commandId,
       })
-      if (!contractCall) return
-      return [
-        Result.Message('axelar.ContractCallMessage', {
-          app: 'unknown',
-          srcEvent: contractCall,
-          dstEvent: contractCallApproved,
-        }),
-      ]
-    }
+      if (contractCallApproved) {
+        const contractCall = db.find(ContractCall, {
+          ctx: {
+            txHash: contractCallApproved.args.srcTxHash, // TODO: this may not be enough but event index is also available
+          },
+        })
+        if (!contractCall) return
+        return [
+          Result.Message('axelar.ContractCallMessage', {
+            app: 'unknown',
+            srcEvent: contractCall,
+            dstEvent: contractCallExecuted,
+          }),
+        ]
+      }
 
-    if (ContractCallApprovedWithMint.checkType(contractCallApproved)) {
+      const contractCallApprovedWithMint = db.find(
+        ContractCallApprovedWithMint,
+        {
+          commandId: contractCallExecuted.args.commandId,
+        },
+      )
+      if (!contractCallApprovedWithMint) return
+
       const contractCallWithToken = db.find(ContractCallWithToken, {
         ctx: {
-          txHash: contractCallApproved.args.srcTxHash, // TODO: this may not be enough but event index is also available
+          txHash: contractCallApprovedWithMint.args.srcTxHash, // TODO: this may not be enough but event index is also available
         },
       })
       if (!contractCallWithToken) return
-      const contractCallExecuted = db.find(ContractCallExecuted, {
-        commandId: contractCallApproved.args.commandId,
-      })
-      if (!contractCallExecuted) return
       return [
         Result.Message('axelar.ContractCallWithTokenMessage', {
           app: 'axelar-gateway',
           srcEvent: contractCallWithToken,
-          dstEvent: contractCallApproved,
+          dstEvent: contractCallExecuted,
         }),
         Result.Transfer('axelar-gateway.Transfer', {
           srcEvent: contractCallWithToken,
-          srcTokenSymbol: contractCallWithToken.args.symbol,
+          // TODO: mapping. See axelar-its
+          // symbol: contractCallWithToken.args.symbol,
           srcAmount: contractCallWithToken.args.amount.toString(),
           dstEvent: contractCallExecuted,
         }),

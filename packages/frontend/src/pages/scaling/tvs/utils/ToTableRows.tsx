@@ -13,9 +13,12 @@ export function toTableRows({
       tvs: {
         ...project.tvs,
         data: project.tvs.data && {
-          total: project.tvs.data.breakdown.total,
           breakdown: {
             ...project?.tvs.data.breakdown,
+            total: excludeAssociatedTokens
+              ? project.tvs.data.breakdown.total -
+                project.tvs.data.associated.total
+              : project.tvs.data.breakdown.total,
             external: excludeAssociatedTokens
               ? project.tvs.data.breakdown.external -
                 project.tvs.data.associated.external

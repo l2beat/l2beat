@@ -159,7 +159,8 @@ export async function getScalingProjectEntry(
     activitySection,
     costsSection,
     dataPostedSection,
-    stateValidationSection,
+    zkCatalogProjects,
+    allProjectsWithContracts,
   ] = await Promise.all([
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
@@ -167,11 +168,16 @@ export async function getScalingProjectEntry(
     getTokensForProject(project),
     getLiveness(project.id),
     getContractUtils(),
-    getScalingTvsSection(helpers, project),
+    getScalingTvsSection(project),
     getActivitySection(helpers, project),
     getCostsSection(helpers, project),
     getDataPostedSection(helpers, project, daSolutions),
-    getStateValidationSection(project),
+    ps.getProjects({
+      select: ['zkCatalogInfo'],
+    }),
+    ps.getProjects({
+      select: ['contracts'],
+    }),
   ])
 
   const projectLiveness = liveness[project.id]
@@ -246,6 +252,10 @@ export async function getScalingProjectEntry(
   const withdrawalsSection = getWithdrawalsSection(project)
   const sequencingSection = getSequencingSection(project)
   const operatorSection = getOperatorSection(project)
+  const stateValidationSection = getStateValidationSection(
+    project,
+    zkCatalogProjects,
+  )
 
   const common = {
     type: project.scalingInfo.layer,
@@ -648,6 +658,8 @@ export async function getScalingProjectEntry(
     },
     contractUtils,
     projectsChangeReport,
+    zkCatalogProjects,
+    allProjectsWithContracts,
   )
   if (contractsSection) {
     sections.push({

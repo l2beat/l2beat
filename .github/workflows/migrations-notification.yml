@@ -2,7 +2,7 @@ name: Notify about migration PR merge
 
 on:
   pull_request:
-    types: [enqueued, closed]
+    types: [enqueued]
 
 jobs:
   notify-migration-pr-closed:
@@ -26,8 +26,9 @@ jobs:
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_NOTIFICATION_WEBHOOK }}
           PR_URL: ${{ github.event.pull_request.html_url }}
+          MIGRATIONS_URL: https://github.com/l2beat/l2beat/actions/workflows/db.yml
         run: |
           curl -sS \
             -H "Content-Type: application/json" \
-            -d "{\"content\": \"Pull Request with DB migrations has been merged/closed: $PR_URL\"}" \
+            -d "{\"content\": \"Pull Request with DB migrations has been merged/closed: $PR_URL. You can find migration workflow status after it's merged under $MIGRATIONS_URL\"}" \
             "${DISCORD_WEBHOOK_URL}"
