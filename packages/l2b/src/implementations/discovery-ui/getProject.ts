@@ -42,11 +42,10 @@ export function getProject(
   }))
 
   const referencedEntries = getReachableEntries(
-    discovery.entries,
     data
       .flatMap((x) => x.discovery.entries)
-      .filter((e) => e.type !== 'Reference')
-      .map((e) => e.address),
+      .filter((e) => e.type !== 'Reference'),
+    discovery.entries.map((e) => e.address),
   ).map((x) => x.address)
 
   const response: ApiProjectResponse = { entries: [] }
