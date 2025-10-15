@@ -5,11 +5,11 @@ import 'monaco-editor/esm/vs/editor/edcore.main'
 import 'monaco-editor/esm/vs/language/json/monaco.contribution'
 
 import type { editor } from 'monaco-editor/esm/vs/editor/editor.api'
+import { LineSelector } from './code/extensions/lineSelector'
 import { jsonDiagnostics } from './languages/json'
 import * as solidity from './languages/solidity'
 import type { EditorFile } from './store'
 import { theme } from './theme'
-import { LineSelector } from './code/extensions/lineSelector'
 
 let initialized = false
 

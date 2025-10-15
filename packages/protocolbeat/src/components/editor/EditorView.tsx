@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { CodeView } from './CodeView'
+import { useCodeSettings } from './code/hooks/useCodeSettings'
 import { EditorFileTabs } from './EditorFileTabs'
 import type { EditorCallbacks } from './editor'
 import { type EditorFile, type Range, useCodeStore } from './store'
-import { useCodeSettings } from './code/hooks/useCodeSettings'
 
 type Props = {
   editorId: string
