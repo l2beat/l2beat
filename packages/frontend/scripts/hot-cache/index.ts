@@ -1,10 +1,7 @@
 import '../../src/dotenv'
-
-import { env } from '~/env'
 import { hotCacheFns } from './hotCacheFns'
 
 async function main() {
-  console.log(env)
   await Promise.all(
     Object.entries(hotCacheFns).map(async ([key, fn]) => {
       console.time(key)
