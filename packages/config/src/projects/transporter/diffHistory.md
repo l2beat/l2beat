@@ -1,3 +1,105 @@
+Generated with discovered.json: 0xa156f974e5773f24ad47840c10643ce6beafaeb2
+
+# Diff at Wed, 15 Oct 2025 13:54:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3b2c8898ebe0c61228f50617e2de65973094dd39 block: 1760095694
+- current timestamp: 1760536103
+
+## Description
+
+pools added.
+
+## Watched changes
+
+```diff
+    contract UpgradeableLockReleaseTokenPool (eth:0x06179f7C1be40863405f374E7f5F8806c728660A) {
+    +++ description: None
+      values.getSupportedChains.5:
++        "9335212494177455608"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0x1689C22eD5435e49071CFc208D1Ac6F2A2274490) {
+    +++ description: None
+      values.getSupportedChains.16:
++        "1923510103922296319"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (eth:0x1B7492C3bD23A4aDB448710e4275FF14A5288932) {
+    +++ description: None
+      values.getSupportedChains.14:
++        "9335212494177455608"
+      values.getSupportedChains.15:
++        "18164309074156128038"
+    }
+```
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.265:
++        "eth:0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6"
+      values.pools.266:
++        "eth:0xFf3633c00CADAac2C881638D59dF3714a9d59E33"
+      values.pools.267:
++        "eth:0xdEC1532Abf3c2329026B5B26eE0Ea6c5c07a6c9b"
+      values.poolsMap.eth:0x18084fbA666a33d37592fA2633fD49a74DD93a88:
++        "eth:0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6"
+      values.poolsMap.eth:0xFc209EeBA3D744aA741cc5C2A73Ebf9C977B5F82:
++        "eth:0xFf3633c00CADAac2C881638D59dF3714a9d59E33"
+      values.poolsMap.eth:0x0ba12138c55A7828b3fA1F9ef002fABdCB8996ae:
++        "eth:0xdEC1532Abf3c2329026B5B26eE0Ea6c5c07a6c9b"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0xC03F9E6c1C5F5D553C77781327640E0c7d30a73d) {
+    +++ description: None
+      values.getSupportedChains.0:
++        "124615329519749607"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPoolUpgradeable (eth:0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x9F6e831c8F8939DC0C830C6e492e7cEf4f9C2F5f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xdEC1532Abf3c2329026B5B26eE0Ea6c5c07a6c9b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xFf3633c00CADAac2C881638D59dF3714a9d59E33)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0xFf3633c00CADAac2C881638D59dF3714a9d59E33.sol | 1615 ++++++++++++++
+ ...:0xdEC1532Abf3c2329026B5B26eE0Ea6c5c07a6c9b.sol | 1615 ++++++++++++++
+ .../GnosisSafe.sol                                 |  953 +++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../LockReleaseTokenPoolUpgradeable.sol            | 2215 ++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++++++
+ 6 files changed, 7162 insertions(+)
+```
+
 Generated with discovered.json: 0x2180d807ab54110efef18edfdf6502a128a486dc
 
 # Diff at Fri, 10 Oct 2025 13:32:23 GMT:
