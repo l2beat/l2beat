@@ -2309,6 +2309,31 @@
       "proxyType": "EOA"
     },
     {
+      "name": "GateSeal",
+      "address": "eth:0xA6BC802fAa064414AA62117B4a53D27fFfF741F1",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xb3ab659870cff0a086082fa6fc937c759a5709a5c748dcb4bea88945715f56b6"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1757671307,
+      "sinceBlock": 23346253,
+      "values": {
+        "$immutable": true,
+        "get_expiry_timestamp": 1789207187,
+        "get_seal_duration_seconds": 1209600,
+        "get_sealables": [
+          "eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B",
+          "eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e"
+        ],
+        "get_sealing_committee": "eth:0x8772E3a2D86B9347A2688f9bc1808A6d8917760C",
+        "is_expired": false
+      },
+      "implementationNames": {
+        "eth:0xA6BC802fAa064414AA62117B4a53D27fFfF741F1": "GateSeal"
+      }
+    },
+    {
       "name": "CSStrikes",
       "address": "eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f",
       "type": "Contract",
@@ -3543,6 +3568,7 @@
       "name": "TriggerableWithdrawalsGateway",
       "address": "eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B",
       "type": "Contract",
+      "template": "lido-v2/TriggerableWithdrawalsGateway",
       "sourceHashes": [
         "0x6e0f1e9ab2993ef59e29bff788073adafb044d30f822762a9085b18062c36002"
       ],
@@ -3551,6 +3577,30 @@
       "sinceBlock": 23346245,
       "values": {
         "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]
+          },
+          "ADD_FULL_WITHDRAWAL_REQUEST_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C",
+              "eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e"
+            ]
+          },
+          "PAUSE_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0xA6BC802fAa064414AA62117B4a53D27fFfF741F1",
+              "eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"
+            ]
+          },
+          "RESUME_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"]
+          }
+        },
         "ADD_FULL_WITHDRAWAL_REQUEST_ROLE": "0x15fac8ba7fe8dd5344b88c1915452ce66976f270d1cd793c3b0ab579cecd33c0",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getExitRequestLimitFullInfo": {
@@ -6390,6 +6440,16 @@
       "event RecoverToVault(address indexed vault, address indexed token, uint256 amount)",
       "event ContractVersionSet(uint256 version)"
     ],
+    "eth:0xA6BC802fAa064414AA62117B4a53D27fFfF741F1": [
+      "event Sealed(address gate_seal, address sealed_by, uint256 sealed_for, address sealable, uint256 sealed_at)",
+      "constructor(address _sealing_committee, uint256 _seal_duration_seconds, address[] _sealables, uint256 _expiry_timestamp)",
+      "function get_sealing_committee() view returns (address)",
+      "function get_seal_duration_seconds() view returns (uint256)",
+      "function get_sealables() view returns (address[])",
+      "function get_expiry_timestamp() view returns (uint256)",
+      "function is_expired() view returns (bool)",
+      "function seal(address[] _sealables)"
+    ],
     "eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f": [
       "constructor(address implementation_, address admin_, bytes data_)",
       "error AddressEmptyCode(address target)",
@@ -8105,6 +8165,7 @@
     "lido-v2/TiebreakerCoreCommittee": "0xea30e6d9e569822706f78f9d87ca4389b0f8ca4724c9240b9374be70baa20d76",
     "lido-v2/TiebreakerSubCommittee": "0xea30e6d9e569822706f78f9d87ca4389b0f8ca4724c9240b9374be70baa20d76",
     "lido-v2/TimelockedGovernance": "0x420e7058beccda9213a7d203a9a194e7a8f4728522cc3d76acfad7abb7d5eb0c",
+    "lido-v2/TriggerableWithdrawalsGateway": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384",
     "tokens/Lido/AccountingOracle": "0xa737574a3429dc849fdc7c42c42a4ea3d16eec8a301ff248b28a3f95daa2de87",
     "tokens/Lido/ACL": "0x5e8fb58e5938caadf8fabd19853d88dd0f4dc32b536d084bca146be6087c1942",
     "tokens/Lido/Burner": "0xf6c8cf6cb60ea799f5de86286c9080914905458749bb49c535b87e53b5a0247d",
@@ -8129,5 +8190,5 @@
     "tokens/Lido/wstETH": "0x9b708a05879c062566a96f737bd9998af0ceda3a51a54456a93cd24fd4c4dfdf"
   },
   "usedBlockNumbers": { "ethereum": 23575089 },
-  "permissionsConfigHash": "0x8754f8d24d800302af2cd48d2601257426624dbd69030023a9d7bc32f1772f09"
+  "permissionsConfigHash": "0x07e807018c6dd914447f24916d09cbfac32fa39c721f80be28f37130e09a71f4"
 }

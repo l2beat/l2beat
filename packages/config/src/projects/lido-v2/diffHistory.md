@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xcd43329b877107b793e792c33c7418ac198725d5
+Generated with discovered.json: 0x65cf29f2a9bad046093e5bb6b854a0f9f22a3412
 
-# Diff at Tue, 14 Oct 2025 09:38:01 GMT:
+# Diff at Wed, 15 Oct 2025 08:55:21 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - current timestamp: 1760434597
@@ -218,6 +218,12 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract ImmutableDualGovernanceConfigProvider (eth:0xa1692Af6FDfdD1030E4E9c4Bc429986FA64CB5EF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GateSeal (eth:0xA6BC802fAa064414AA62117B4a53D27fFfF741F1)
     +++ description: None
 ```
 
