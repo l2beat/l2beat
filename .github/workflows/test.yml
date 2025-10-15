@@ -43,7 +43,7 @@ jobs:
         run: curl https://cli-assets.heroku.com/install.sh | sh
           
       - name: Pull frontend configuration
-        run: heroku config -a l2beat-frontend-prod --shell > .env
+        run: heroku config -a l2beat-website-prod --shell > .env
         working-directory: packages/frontend
       
       - name: Fill PORT variable
