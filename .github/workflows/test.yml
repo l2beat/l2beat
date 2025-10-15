@@ -1,0 +1,54 @@
+name: CI
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - main
+  merge_group:
+
+jobs:
+  cache-warmup:
+    name: Run cache warmup
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+      TURBO_REMOTE_CACHE_UPLOAD_TIMEOUT: 10
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+      
+      - name: Install turbo
+        run: pnpm add -g turbo
+      
+      - name: Prune package
+        run: turbo prune --docker @l2beat/frontend
+
+      - name: Install dependencies
+        run: cd out/full && pnpm install
+
+      - name: Build frontend dependencies
+        run: cd out/full && pnpm build:dependencies:frontend
+
+      - name: Run hot cache
+        run: cd out/full/packages/frontend && pnpm hot-cache
+        env:
+          DATABASE_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
+          REDIS_URL: ${{ secrets.REDIS_URL_FE_PROD }}
