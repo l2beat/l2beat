@@ -6,8 +6,7 @@
   "types": "build/index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "build": "tsc -p tsconfig.build.json && pnpm run packageHash",
-    "packageHash": "node -r esbuild-register scripts/packageHash/index.ts",
+    "build": "tsc -p tsconfig.build.json && pnpm precompute:package-hash",
     "clean": "rm -rf build",
     "format:fix": "biome format --write .",
     "format": "biome format .",
@@ -16,7 +15,8 @@
     "test": "mocha",
     "typecheck": "tsc --noEmit",
     "build:dependencies": "cd ../.. && pnpm build:dependencies:dal",
-    "watch:dependencies": "cd ../.. && pnpm watch:dependencies:dal"
+    "watch:dependencies": "cd ../.. && pnpm watch:dependencies:dal",
+    "precompute:package-hash": "ts-node scripts/precomputePackageHash.ts"
   },
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",

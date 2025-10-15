@@ -77,6 +77,21 @@ function ChangedDetectedDropdown({
           {project.changes.diff.map((d, index) => {
             return (
               <p style={{ marginTop: '8px' }} key={index}>
+                {d.type !== undefined && (
+                  <>
+                    <span
+                      style={{
+                        background:
+                          d.type === 'created' ? '#033a16' : '#67060c',
+                        color: d.type === 'created' ? '#87e29a' : '#d1b9b3',
+                      }}
+                    >
+                      {d.type === 'created' ? '+' : '-'} Status:{' '}
+                      {d.type.toUpperCase()}
+                    </span>
+                    <br />
+                  </>
+                )}
                 <span style={{ fontWeight: 'bold' }}>
                   {d.name} - {d.address.toString()}
                 </span>

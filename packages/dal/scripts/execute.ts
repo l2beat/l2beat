@@ -3,6 +3,7 @@ import { ProjectService } from '@l2beat/config'
 import { createDatabase } from '@l2beat/database'
 import { Cache } from '../src/cache/Cache'
 import { QueryExecutor } from '../src/QueryExecutor'
+import { getPackageHash } from '../src/utils/packageHash'
 
 main().catch((err) => console.error(err))
 
@@ -68,7 +69,10 @@ export function getDb() {
 export function getCache() {
   const env = getEnv()
   const redisUrl = env.string('REDIS_URL')
-  return new Cache(redisUrl)
+  const packageHash = getPackageHash({
+    redisUrl,
+  })
+  return new Cache(redisUrl, packageHash)
 }
 
 export function getLogger() {
