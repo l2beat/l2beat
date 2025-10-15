@@ -1,7 +1,7 @@
 export class AdaptiveTimePredictor {
   private durations: number[] = []
   private ewma: number | null = null
-  private variance: number = 0
+  private variance = 0
   private readonly alpha: number = 0.3
   private readonly maxHistory: number = 20
 
@@ -62,10 +62,10 @@ export class AdaptiveTimePredictor {
     const recentWindow = Math.min(5, n)
     const recent = this.durations.slice(-recentWindow)
 
-    let sumX = 0,
-      sumY = 0,
-      sumXY = 0,
-      sumXX = 0
+    let sumX = 0
+    let sumY = 0
+    let sumXY = 0
+    let sumXX = 0
 
     recent.forEach((duration, index) => {
       sumX += index
