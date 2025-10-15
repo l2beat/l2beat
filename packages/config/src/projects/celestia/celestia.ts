@@ -186,6 +186,17 @@ export const celestia: BaseProject = {
         ],
       },
       {
+        projectId: ProjectId('camp'),
+        name: 'Camp',
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 6459709,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAB7AAAAAAAAAeQ=',
+          },
+        ],
+      },
+      {
         projectId: ProjectId('civitia'),
         name: 'Civitia',
         daTrackingConfig: [
