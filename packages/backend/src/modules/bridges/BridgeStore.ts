@@ -1,4 +1,4 @@
-import type { BridgeEventRecord, Database } from '@l2beat/database'
+import type { Database, InteropEventRecord } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
 import { InMemoryEventDb } from './InMemoryEventDb'
 import {
@@ -15,7 +15,7 @@ export class BridgeStore implements BridgeEventDb {
   constructor(private db: Database) {}
 
   async start() {
-    const records = await this.db.bridgeEvent.getUnmatched()
+    const records = await this.db.interopEvent.getUnmatched()
     for (const record of records) {
       const event = fromDbRecord(record)
       this.eventDb.addEvent(event)
@@ -27,7 +27,7 @@ export class BridgeStore implements BridgeEventDb {
       this.eventDb.addEvent(event)
     }
     const records = events.map((e) => toDbRecord(e))
-    await this.db.bridgeEvent.insertMany(records)
+    await this.db.interopEvent.insertMany(records)
   }
 
   async updateMatchedAndUnsupported({
@@ -40,8 +40,8 @@ export class BridgeStore implements BridgeEventDb {
     const all = new Set([...matched, ...unsupported])
     this.eventDb.removeEvents(all)
     await this.db.transaction(async () => {
-      await this.db.bridgeEvent.updateMatched(Array.from(matched))
-      await this.db.bridgeEvent.updateUnsupported(Array.from(unsupported))
+      await this.db.interopEvent.updateMatched(Array.from(matched))
+      await this.db.interopEvent.updateUnsupported(Array.from(unsupported))
     })
   }
 
@@ -73,11 +73,11 @@ export class BridgeStore implements BridgeEventDb {
 
   async deleteExpired(now: UnixTime) {
     this.eventDb.removeExpired(now)
-    return await this.db.bridgeEvent.deleteExpired(now)
+    return await this.db.interopEvent.deleteExpired(now)
   }
 }
 
-function fromDbRecord(record: BridgeEventRecord): BridgeEvent {
+function fromDbRecord(record: InteropEventRecord): BridgeEvent {
   return {
     plugin: record.plugin,
     eventId: record.eventId,
@@ -97,7 +97,7 @@ function fromDbRecord(record: BridgeEventRecord): BridgeEvent {
   }
 }
 
-function toDbRecord(event: BridgeEvent): BridgeEventRecord {
+function toDbRecord(event: BridgeEvent): InteropEventRecord {
   return {
     plugin: event.plugin,
     eventId: event.eventId,

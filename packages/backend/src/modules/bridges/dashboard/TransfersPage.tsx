@@ -1,4 +1,4 @@
-import type { BridgeTransferRecord } from '@l2beat/database'
+import type { InteropTransferRecord } from '@l2beat/database'
 import { EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
@@ -11,7 +11,7 @@ import {
 } from './ProcessorsStatusTable'
 
 function TransfersTable(props: {
-  transfers: BridgeTransferRecord[]
+  transfers: InteropTransferRecord[]
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   return (
@@ -116,7 +116,7 @@ function TransfersTable(props: {
 }
 
 function TransfersPageLayout(props: {
-  transfers: BridgeTransferRecord[]
+  transfers: InteropTransferRecord[]
   getExplorerUrl: (chain: string) => string | undefined
   status: ProcessorsStatus[]
 }) {
@@ -149,7 +149,7 @@ function TransfersPageLayout(props: {
 }
 
 export function renderTransfersPage(props: {
-  transfers: BridgeTransferRecord[]
+  transfers: InteropTransferRecord[]
   getExplorerUrl: (chain: string) => string | undefined
   status: ProcessorsStatus[]
 }) {

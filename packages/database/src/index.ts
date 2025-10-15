@@ -34,11 +34,13 @@ export type {
   InteropEventStatsRecord,
 } from './repositories/InteropEventRepository'
 export type {
+  InteropMessageDetailedStatsRecord,
   InteropMessageRecord,
   InteropMessageStatsRecord,
 } from './repositories/InteropMessageRepository'
 export type {
   InteropTransferRecord,
+  InteropTransfersDetailedStatsRecord,
   InteropTransfersStatsRecord,
   InteropTransferUpdate,
 } from './repositories/InteropTransferRepository'

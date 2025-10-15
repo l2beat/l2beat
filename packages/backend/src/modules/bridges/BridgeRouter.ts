@@ -17,7 +17,7 @@ export function createBridgeRouter(
   const router = new Router()
 
   router.get('/bridges', async (ctx) => {
-    const events = await db.bridgeEvent.getStats()
+    const events = await db.interopEvent.getStats()
     const messages = await getMessagesStats(db)
     const transfers = await getTransfersStats(db)
     const status = getProcessorsStatus(processors)
@@ -31,8 +31,8 @@ export function createBridgeRouter(
   })
 
   router.get('/bridges.json', async (ctx) => {
-    const events = await db.bridgeEvent.getStats()
-    const messages = await db.bridgeMessage.getStats()
+    const events = await db.interopEvent.getStats()
+    const messages = await db.interopMessage.getStats()
     ctx.body = { events, messages }
   })
 
@@ -53,7 +53,7 @@ export function createBridgeRouter(
     const status = getProcessorsStatus(processors)
 
     if (params.kind === 'unmatched') {
-      const events = await db.bridgeEvent.getByType(params.type, {
+      const events = await db.interopEvent.getByType(params.type, {
         matched: false,
         unsupported: false,
       })
@@ -63,7 +63,7 @@ export function createBridgeRouter(
         status,
       })
     } else if (params.kind === 'unsupported') {
-      const events = await db.bridgeEvent.getByType(params.type, {
+      const events = await db.interopEvent.getByType(params.type, {
         unsupported: true,
       })
       ctx.body = renderEventsPage({
@@ -72,7 +72,7 @@ export function createBridgeRouter(
         status,
       })
     } else if (params.kind === 'matched') {
-      const events = await db.bridgeEvent.getByType(params.type, {
+      const events = await db.interopEvent.getByType(params.type, {
         matched: true,
       })
       ctx.body = renderEventsPage({
@@ -85,7 +85,7 @@ export function createBridgeRouter(
       const cutoffTime = new Date(now.toISOString())
       cutoffTime.setUTCHours(cutoffTime.getUTCHours() - 2)
 
-      const events = await db.bridgeEvent.getByType(params.type, {
+      const events = await db.interopEvent.getByType(params.type, {
         matched: false,
         unsupported: false,
         oldCutoff: UnixTime.fromDate(cutoffTime),
@@ -96,7 +96,7 @@ export function createBridgeRouter(
         status,
       })
     } else if (params.kind === 'all') {
-      const events = await db.bridgeEvent.getByType(params.type)
+      const events = await db.interopEvent.getByType(params.type)
       ctx.body = renderEventsPage({
         events,
         getExplorerUrl: config.dashboard.getExplorerUrl,
@@ -114,7 +114,7 @@ export function createBridgeRouter(
       })
       .validate(ctx.query)
     const status = getProcessorsStatus(processors)
-    const messages = await db.bridgeMessage.getByType(params.type, {
+    const messages = await db.interopMessage.getByType(params.type, {
       srcChain: query.srcChain,
       dstChain: query.dstChain,
     })
@@ -135,7 +135,7 @@ export function createBridgeRouter(
       .validate(ctx.query)
     const status = getProcessorsStatus(processors)
 
-    const transfers = await db.bridgeTransfer.getByType(params.type, {
+    const transfers = await db.interopTransfer.getByType(params.type, {
       srcChain: query.srcChain,
       dstChain: query.dstChain,
     })
@@ -164,8 +164,8 @@ function getProcessorsStatus(processors: BridgeBlockProcessor[]) {
 }
 
 async function getMessagesStats(db: Database) {
-  const stats = await db.bridgeMessage.getStats()
-  const detailedStats = await db.bridgeMessage.getDetailedStats()
+  const stats = await db.interopMessage.getStats()
+  const detailedStats = await db.interopMessage.getDetailedStats()
 
   return stats.map((overall) => ({
     type: overall.type,
@@ -189,8 +189,8 @@ async function getMessagesStats(db: Database) {
 }
 
 async function getTransfersStats(db: Database) {
-  const stats = await db.bridgeTransfer.getStats()
-  const detailedStats = await db.bridgeTransfer.getDetailedStats()
+  const stats = await db.interopTransfer.getStats()
+  const detailedStats = await db.interopTransfer.getDetailedStats()
 
   return stats.map((overall) => ({
     type: overall.type,

@@ -1,8 +1,8 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type {
-  BridgeMessageRecord,
-  BridgeTransferRecord,
   Database,
+  InteropMessageRecord,
+  InteropTransferRecord,
 } from '@l2beat/database'
 import { TimeLoop } from '../../tools/TimeLoop'
 import type { BridgeStore } from './BridgeStore'
@@ -47,10 +47,10 @@ export class BridgeMatcher extends TimeLoop {
           unsupported: result.unsupportedIds,
         })
       }
-      const messages = await this.db.bridgeMessage.insertMany(
+      const messages = await this.db.interopMessage.insertMany(
         result.messages.map(toMessageRecord),
       )
-      const transfers = await this.db.bridgeTransfer.insertMany(
+      const transfers = await this.db.interopTransfer.insertMany(
         result.transfers.map(toTransferRecord),
       )
 
@@ -191,7 +191,7 @@ export async function match(
   }
 }
 
-function toMessageRecord(message: BridgeMessage): BridgeMessageRecord {
+function toMessageRecord(message: BridgeMessage): InteropMessageRecord {
   return {
     plugin: message.plugin,
     messageId: generateId('M'),
@@ -217,7 +217,7 @@ function toMessageRecord(message: BridgeMessage): BridgeMessageRecord {
   }
 }
 
-function toTransferRecord(transfer: BridgeTransfer): BridgeTransferRecord {
+function toTransferRecord(transfer: BridgeTransfer): InteropTransferRecord {
   return {
     plugin: transfer.plugin,
     messageId: generateId('T'),

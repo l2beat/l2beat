@@ -1,4 +1,4 @@
-import type { BridgeEventRecord } from '@l2beat/database'
+import type { InteropEventRecord } from '@l2beat/database'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { DataTablePage } from './DataTablePage'
@@ -8,7 +8,7 @@ import {
 } from './ProcessorsStatusTable'
 
 function EventsTable(props: {
-  events: BridgeEventRecord[]
+  events: InteropEventRecord[]
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   return (
@@ -56,7 +56,7 @@ function EventsTable(props: {
 }
 
 function EventsPageLayout(props: {
-  events: BridgeEventRecord[]
+  events: InteropEventRecord[]
   getExplorerUrl: (chain: string) => string | undefined
   status: ProcessorsStatus[]
 }) {
@@ -89,7 +89,7 @@ function EventsPageLayout(props: {
 }
 
 export function renderEventsPage(props: {
-  events: BridgeEventRecord[]
+  events: InteropEventRecord[]
   getExplorerUrl: (chain: string) => string | undefined
   status: ProcessorsStatus[]
 }) {

@@ -1,10 +1,10 @@
 import type {
-  BridgeEventStatsRecord,
-  BridgeMessageStatsRecord,
-  BridgeTransfersStatsRecord,
+  InteropEventStatsRecord,
+  InteropMessageDetailedStatsRecord,
+  InteropMessageStatsRecord,
+  InteropTransfersDetailedStatsRecord,
+  InteropTransfersStatsRecord,
 } from '@l2beat/database'
-import type { BridgeMessageDetailedStatsRecord } from '@l2beat/database/dist/repositories/InteropMessageRepository'
-import type { BridgeTransfersDetailedStatsRecord } from '@l2beat/database/dist/repositories/InteropTransferRepository'
 import { formatSeconds } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
@@ -15,15 +15,15 @@ import {
   ProcessorsStatusTable,
 } from './ProcessorsStatusTable'
 
-type MessageStats = BridgeMessageStatsRecord & {
-  chains: BridgeMessageDetailedStatsRecord[]
+type MessageStats = InteropMessageStatsRecord & {
+  chains: InteropMessageDetailedStatsRecord[]
 }
 
-type TransferStats = BridgeTransfersStatsRecord & {
-  chains: BridgeTransfersDetailedStatsRecord[]
+type TransferStats = InteropTransfersStatsRecord & {
+  chains: InteropTransfersDetailedStatsRecord[]
 }
 
-function EventsTable(props: { events: BridgeEventStatsRecord[] }) {
+function EventsTable(props: { events: InteropEventStatsRecord[] }) {
   return (
     <table id="eventsTable" className="display">
       <thead>
@@ -359,7 +359,7 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
 }
 
 function MainPageLayout(props: {
-  events: BridgeEventStatsRecord[]
+  events: InteropEventStatsRecord[]
   messages: MessageStats[]
   transfers: TransferStats[]
   status: ProcessorsStatus[]
@@ -427,7 +427,7 @@ function MainPageLayout(props: {
 }
 
 export function renderMainPage(props: {
-  events: BridgeEventStatsRecord[]
+  events: InteropEventStatsRecord[]
   messages: MessageStats[]
   transfers: TransferStats[]
   status: ProcessorsStatus[]

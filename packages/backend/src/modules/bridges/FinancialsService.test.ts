@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { BridgeTransferUpdate, Database } from '@l2beat/database'
+import type { Database, InteropTransferUpdate } from '@l2beat/database'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { FinancialsService } from './FinancialsService'
@@ -12,10 +12,10 @@ describe(FinancialsService.name, () => {
       const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
         hasAnyPrices: mockFn().resolvesTo(false),
       })
-      const bridgeTransfer = mockObject<Database['bridgeTransfer']>({
+      const interopTransfer = mockObject<Database['interopTransfer']>({
         getUnprocessed: mockFn().resolvesTo([]),
       })
-      const db = mockObject<Database>({ interopRecentPrices, bridgeTransfer })
+      const db = mockObject<Database>({ interopRecentPrices, interopTransfer })
       const tokenDb = mockObject<ITokenDb>({ getPriceInfo: mockFn() })
       const service = new FinancialsService(
         [],
@@ -28,7 +28,7 @@ describe(FinancialsService.name, () => {
       await service.run()
 
       expect(interopRecentPrices.hasAnyPrices).toHaveBeenCalledTimes(1)
-      expect(bridgeTransfer.getUnprocessed).not.toHaveBeenCalled()
+      expect(interopTransfer.getUnprocessed).not.toHaveBeenCalled()
       expect(tokenDb.getPriceInfo).not.toHaveBeenCalled()
     })
 
@@ -36,12 +36,12 @@ describe(FinancialsService.name, () => {
       const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
         hasAnyPrices: mockFn().resolvesTo(true),
       })
-      const bridgeTransfer = mockObject<Database['bridgeTransfer']>({
+      const interopTransfer = mockObject<Database['interopTransfer']>({
         getUnprocessed: mockFn().resolvesTo([]),
       })
       const db = mockObject<Database>({
         interopRecentPrices,
-        bridgeTransfer,
+        interopTransfer,
       })
 
       const tokenDb = mockObject<ITokenDb>({
@@ -59,7 +59,7 @@ describe(FinancialsService.name, () => {
       await service.run()
 
       expect(interopRecentPrices.hasAnyPrices).toHaveBeenCalledTimes(1)
-      expect(bridgeTransfer.getUnprocessed).toHaveBeenCalledTimes(1)
+      expect(interopTransfer.getUnprocessed).toHaveBeenCalledTimes(1)
       expect(tokenDb.getPriceInfo).not.toHaveBeenCalled()
     })
 
@@ -151,14 +151,14 @@ describe(FinancialsService.name, () => {
         hasAnyPrices: mockFn().resolvesTo(true),
         getClosestPrices: mockFn().resolvesTo(pricesMap),
       })
-      const bridgeTransfer = mockObject<Database['bridgeTransfer']>({
+      const interopTransfer = mockObject<Database['interopTransfer']>({
         getUnprocessed: mockFn().resolvesTo(mockTransfers),
         updateFinancials: mockFn().resolvesTo(undefined),
       })
       const transaction = mockFn(async (fn: any) => await fn())
       const db = mockObject<Database>({
         interopRecentPrices,
-        bridgeTransfer,
+        interopTransfer,
         transaction,
       })
 
@@ -181,7 +181,7 @@ describe(FinancialsService.name, () => {
       await service.run()
 
       expect(interopRecentPrices.hasAnyPrices).toHaveBeenCalledTimes(1)
-      expect(bridgeTransfer.getUnprocessed).toHaveBeenCalledTimes(1)
+      expect(interopTransfer.getUnprocessed).toHaveBeenCalledTimes(1)
 
       expect(tokenDb.getPriceInfo).toHaveBeenCalledWith([
         srcToken1,
@@ -197,9 +197,9 @@ describe(FinancialsService.name, () => {
         UnixTime.DAY,
       )
 
-      expect(bridgeTransfer.updateFinancials).toHaveBeenCalledTimes(3)
+      expect(interopTransfer.updateFinancials).toHaveBeenCalledTimes(3)
 
-      const firstUpdate: BridgeTransferUpdate = {
+      const firstUpdate: InteropTransferUpdate = {
         srcAbstractTokenId: AbstractTokenId('123456:ethereum:ETH'),
         srcAmount: 1,
         srcPrice: 3000,
@@ -209,20 +209,20 @@ describe(FinancialsService.name, () => {
         dstPrice: 1.5,
         dstValueUsd: 3,
       }
-      expect(bridgeTransfer.updateFinancials).toHaveBeenCalledWith(
+      expect(interopTransfer.updateFinancials).toHaveBeenCalledWith(
         'msg1',
         firstUpdate,
       )
 
-      expect(bridgeTransfer.updateFinancials).toHaveBeenCalledWith('msg2', {})
+      expect(interopTransfer.updateFinancials).toHaveBeenCalledWith('msg2', {})
 
-      const thirdUpdate: BridgeTransferUpdate = {
+      const thirdUpdate: InteropTransferUpdate = {
         dstAbstractTokenId: AbstractTokenId('222222:ethereum:TOKEN'),
         dstAmount: 200000000000,
         dstPrice: 50,
         dstValueUsd: 10000000000000,
       }
-      expect(bridgeTransfer.updateFinancials).toHaveBeenCalledWith(
+      expect(interopTransfer.updateFinancials).toHaveBeenCalledWith(
         'msg3',
         thirdUpdate,
       )
@@ -257,14 +257,14 @@ describe(FinancialsService.name, () => {
         hasAnyPrices: mockFn().resolvesTo(true),
         getClosestPrices: mockFn().resolvesTo(new Map()),
       })
-      const bridgeTransfer = mockObject<Database['bridgeTransfer']>({
+      const interopTransfer = mockObject<Database['interopTransfer']>({
         getUnprocessed: mockFn().resolvesTo(mockTransfers),
         updateFinancials: mockFn().resolvesTo(undefined),
       })
       const transaction = mockFn(async (fn: any) => await fn())
       const db = mockObject<Database>({
         interopRecentPrices,
-        bridgeTransfer,
+        interopTransfer,
         transaction,
       })
 
@@ -307,7 +307,7 @@ describe(FinancialsService.name, () => {
       })
 
       // Should still update with empty financials
-      expect(bridgeTransfer.updateFinancials).toHaveBeenCalledWith('msg1', {})
+      expect(interopTransfer.updateFinancials).toHaveBeenCalledWith('msg1', {})
     })
   })
 })

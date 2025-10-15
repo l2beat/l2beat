@@ -87,13 +87,13 @@ export class BridgeComparator extends TimeLoop {
   }
 
   private async getExistingItems() {
-    const messages = await this.db.bridgeMessage.getExistingItems(
+    const messages = await this.db.interopMessage.getExistingItems(
       this.items
         .filter((i) => i.type === 'message')
         .map((i) => ({ ...i.item })),
     )
 
-    const transfers = await this.db.bridgeTransfer.getExistingItems(
+    const transfers = await this.db.interopTransfer.getExistingItems(
       this.items
         .filter((i) => i.type === 'transfer')
         .map((i) => ({ ...i.item })),

@@ -19,10 +19,10 @@ export class BridgeCleaner extends TimeLoop {
     const now = UnixTime.now()
 
     const expiredEvents = await this.bridgeStore.deleteExpired(now)
-    const expiredMessages = await this.db.bridgeMessage.deleteBefore(
+    const expiredMessages = await this.db.interopMessage.deleteBefore(
       now - 1 * UnixTime.DAY,
     )
-    const expiredTransfers = await this.db.bridgeTransfer.deleteBefore(
+    const expiredTransfers = await this.db.interopTransfer.deleteBefore(
       now - 1 * UnixTime.DAY,
     )
     const expiredPrices = await this.db.interopRecentPrices.deleteBefore(

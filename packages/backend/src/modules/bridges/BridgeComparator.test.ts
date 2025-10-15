@@ -36,17 +36,17 @@ describe(BridgeComparator.name, () => {
         },
       ]
 
-      const bridgeMessage = mockObject<Database['bridgeMessage']>({
+      const interopMessage = mockObject<Database['interopMessage']>({
         getExistingItems: mockFn().resolvesTo([known[0]]),
       })
 
-      const bridgeTransfer = mockObject<Database['bridgeTransfer']>({
+      const interopTransfer = mockObject<Database['interopTransfer']>({
         getExistingItems: mockFn().resolvesTo([known[1]]),
       })
 
       const db = mockObject<Database>({
-        bridgeMessage,
-        bridgeTransfer,
+        interopMessage,
+        interopTransfer,
       })
 
       const logger = mockObject<Logger>({
@@ -64,8 +64,8 @@ describe(BridgeComparator.name, () => {
 
       expect(plugins[0].getExternalItems).toHaveBeenCalledTimes(2)
       expect(plugins[1].getExternalItems).toHaveBeenCalledTimes(2)
-      expect(bridgeMessage.getExistingItems).toHaveBeenCalledTimes(2)
-      expect(bridgeTransfer.getExistingItems).toHaveBeenCalledTimes(2)
+      expect(interopMessage.getExistingItems).toHaveBeenCalledTimes(2)
+      expect(interopTransfer.getExistingItems).toHaveBeenCalledTimes(2)
 
       expect(logger.warn).toHaveBeenNthCalledWith(1, 'Missing item skipped', {
         plugin: 'plugin1',

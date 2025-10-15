@@ -1,4 +1,4 @@
-import type { BridgeMessageRecord } from '@l2beat/database'
+import type { InteropMessageRecord } from '@l2beat/database'
 import { formatSeconds } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
@@ -9,7 +9,7 @@ import {
 } from './ProcessorsStatusTable'
 
 function MessagesTable(props: {
-  messages: BridgeMessageRecord[]
+  messages: InteropMessageRecord[]
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   return (
@@ -72,7 +72,7 @@ function MessagesTable(props: {
 }
 
 function MessagesPageLayout(props: {
-  messages: BridgeMessageRecord[]
+  messages: InteropMessageRecord[]
   getExplorerUrl: (chain: string) => string | undefined
   status: ProcessorsStatus[]
 }) {
@@ -105,7 +105,7 @@ function MessagesPageLayout(props: {
 }
 
 export function renderMessagesPage(props: {
-  messages: BridgeMessageRecord[]
+  messages: InteropMessageRecord[]
   getExplorerUrl: (chain: string) => string | undefined
   status: ProcessorsStatus[]
 }) {

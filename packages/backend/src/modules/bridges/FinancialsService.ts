@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { BridgeTransferUpdate, Database } from '@l2beat/database'
+import type { Database, InteropTransferUpdate } from '@l2beat/database'
 import { assertUnreachable, UnixTime, unique } from '@l2beat/shared-pure'
 import { TimeLoop } from '../../tools/TimeLoop'
 import { Address32 } from './plugins/types'
@@ -25,7 +25,7 @@ export class FinancialsService extends TimeLoop {
     }
 
     // TODO: consider adding index to isProcessed
-    const unprocessed = (await this.db.bridgeTransfer.getUnprocessed()).map(
+    const unprocessed = (await this.db.interopTransfer.getUnprocessed()).map(
       (u) => ({
         transfer: u,
         srcId: this.toDeployedId(u.srcChain, u.srcTokenAddress),
@@ -59,9 +59,9 @@ export class FinancialsService extends TimeLoop {
       UnixTime.DAY,
     )
 
-    const updates: { id: string; update: BridgeTransferUpdate }[] =
+    const updates: { id: string; update: InteropTransferUpdate }[] =
       unprocessed.map((t) => {
-        const update: BridgeTransferUpdate = {}
+        const update: InteropTransferUpdate = {}
         if (t.srcId) {
           this.applyTokenUpdate(
             update,
@@ -90,7 +90,7 @@ export class FinancialsService extends TimeLoop {
     await this.db.transaction(async () => {
       await Promise.all(
         updates.map((u) =>
-          this.db.bridgeTransfer.updateFinancials(u.id, u.update),
+          this.db.interopTransfer.updateFinancials(u.id, u.update),
         ),
       )
     })
@@ -104,7 +104,7 @@ export class FinancialsService extends TimeLoop {
   }
 
   private applyTokenUpdate(
-    update: BridgeTransferUpdate,
+    update: InteropTransferUpdate,
     plugin: string,
     id: DeployedTokenId,
     rawAmount: string | undefined,
