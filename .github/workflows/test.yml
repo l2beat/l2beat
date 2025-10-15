@@ -34,21 +34,15 @@ jobs:
         with:
           node-version: 22
           cache: 'pnpm'
-      
-      - name: Install turbo
-        run: pnpm add -g turbo
-      
-      - name: Prune package
-        run: turbo prune --docker @l2beat/frontend
 
       - name: Install dependencies
-        run: cd out/full && pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Build frontend dependencies
-        run: cd out/full && pnpm build:dependencies:frontend
+        run: pnpm build:dependencies:frontend
 
       - name: Run hot cache
-        run: cd out/full/packages/frontend && pnpm hot-cache
+        run: cd packages/frontend && pnpm hot-cache
         env:
           DATABASE_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
           REDIS_URL: ${{ secrets.REDIS_URL_FE_PROD }}
