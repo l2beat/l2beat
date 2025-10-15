@@ -1,7 +1,7 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { EntryParameters, ReceivedPermission } from '../output/types'
-import { mapToReferenceNodes } from './getReferencedEntries'
+import { mapToReferenceNodes } from './reachable'
 
 function createMockEntry2(
   address: ChainSpecificAddress,
