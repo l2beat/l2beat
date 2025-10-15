@@ -16,9 +16,12 @@ const TurboOutputSchema = v.object({
 })
 
 function getPackageHash() {
-  const output = execSync('turbo run build --dry=json --filter=@l2beat/dal', {
-    stdio: 'pipe',
-  })
+  const output = execSync(
+    'pnpm turbo run build --dry=json --filter=@l2beat/dal',
+    {
+      stdio: 'pipe',
+    },
+  )
   const json = JSON.parse(output.toString())
 
   const validated = TurboOutputSchema.parse(json)
