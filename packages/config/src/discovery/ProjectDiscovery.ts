@@ -49,7 +49,6 @@ import {
 const paths = getDiscoveryPaths()
 
 export class ProjectDiscovery {
-  private readonly references: EntryParameters[]
   private readonly discoveries: DiscoveryOutput[]
   private readonly reachableEntries: EntryParameters[]
   private eoaIDMap: Record<string, string> = {}
@@ -61,7 +60,8 @@ export class ProjectDiscovery {
   ) {
     try {
       this.discoveries = configReader.readDiscoveryWithReferences(projectName)
-      this.references = [...this.discoveries[0].entries] // always the base discovery
+      const entrypoints = [...this.discoveries[0].entries].map((e) => e.address) // always the base discovery
+
       // Removing Reference entries because otherwise we get duplicates
       // and incomplete data.
       // TODO: refactor this whole logic around depenent projects and
@@ -70,11 +70,10 @@ export class ProjectDiscovery {
 
       this.reachableEntries = getReachableEntries(
         this.discoveries.flatMap((discovery) => discovery.entries),
-        this.references.map((e) => e.address),
+        entrypoints,
       )
     } catch {
       this.discoveries = []
-      this.references = []
       this.reachableEntries = []
     }
 
@@ -1106,11 +1105,8 @@ export class ProjectDiscovery {
     chainsToIgnore: string[] = [],
   ): Record<string, ProjectContract[]> {
     const eoaActors = this.getEoaActors()
-    const reachableEntries = getReachableEntries(
-      this.discoveries.flatMap((discovery) => discovery.entries),
-      this.references.map((e) => e.address),
-    )
-    const contracts = reachableEntries
+
+    const contracts = this.reachableEntries
       .filter((entry) => entry.type === 'Contract')
       .filter((contract) => contract.category?.priority !== -1)
       .sort((a, b) => {

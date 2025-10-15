@@ -35,7 +35,10 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   }
 
   getPermissionedEoas(): ChainSpecificAddress[] {
-    return this.projectDiscovery.getReachableEoas().map((e) => e.address)
+    return this.projectDiscovery
+      .getReachableEoas()
+      .filter((e) => e.receivedPermissions !== undefined)
+      .map((e) => e.address)
   }
 
   describeUpgradePermissions(contractOrEoa: EntryParameters) {
