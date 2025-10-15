@@ -1,5 +1,5 @@
 import type { ProjectContract, ProjectService } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { OpenApi } from '../../OpenApi'
 import { GenericErrorResponse } from '../../types'
@@ -7,7 +7,7 @@ import { ContractSchema, DetailedProjectSchema, ProjectSchema } from './types'
 
 export function addProjectsRoutes(openapi: OpenApi, ps: ProjectService) {
   openapi.get(
-    '/projects',
+    '/v1/projects',
     {
       summary: 'List all projects',
       tags: ['projects'],
@@ -28,7 +28,7 @@ export function addProjectsRoutes(openapi: OpenApi, ps: ProjectService) {
   )
 
   openapi.get(
-    '/project/:projectId',
+    '/v1/project/:projectId',
     {
       summary: 'Get a project by ID',
       tags: ['projects'],
@@ -84,7 +84,7 @@ export function addProjectsRoutes(openapi: OpenApi, ps: ProjectService) {
   )
 
   openapi.get(
-    '/project/:projectId/contracts',
+    '/v1/project/:projectId/contracts',
     {
       summary: ' List of contracts associated with the project and the chains',
       tags: ['projects'],
@@ -116,11 +116,16 @@ export function addProjectsRoutes(openapi: OpenApi, ps: ProjectService) {
 
       const contracts = Object.entries(project.contracts.addresses).flatMap(
         ([chain, contracts]) =>
-          contracts.map((contract: ProjectContract) => ({
-            name: contract.name,
-            contractAddress: contract.address,
-            chain: chain,
-          })),
+          contracts.map((contract: ProjectContract) => {
+            const chainSpecificAddress = ChainSpecificAddress(contract.address)
+
+            return {
+              name: contract.name,
+              contractAddress:
+                ChainSpecificAddress.address(chainSpecificAddress),
+              chain: chain,
+            }
+          }),
       )
 
       res.json(contracts)

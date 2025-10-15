@@ -52,7 +52,7 @@ export const xterio: ScalingProject = opStackL2({
   },
   addedAt: UnixTime(1714996778), // 2024-05-06T11:59:38Z
   discovery,
-  additionalBadges: [BADGES.DA.CustomDA, BADGES.RaaS.AltLayer],
+  additionalBadges: [BADGES.RaaS.AltLayer],
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,

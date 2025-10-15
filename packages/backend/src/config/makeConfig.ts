@@ -154,9 +154,12 @@ export async function makeConfig(
     bridges: flags.isEnabled('bridges') && {
       capture: {
         enabled: flags.isEnabled('bridges', 'capture'),
-        chains: ['ethereum', 'arbitrum', 'base', 'optimism'].filter((c) =>
-          flags.isEnabled('bridges', 'capture', c),
-        ),
+        chains: [
+          { name: 'ethereum', type: 'evm' as const },
+          { name: 'arbitrum', type: 'evm' as const },
+          { name: 'base', type: 'evm' as const },
+          { name: 'optimism', type: 'evm' as const },
+        ].filter((c) => flags.isEnabled('bridges', 'capture', c.name)),
       },
       matching: flags.isEnabled('bridges', 'matching'),
       cleaner: flags.isEnabled('bridges', 'cleaner'),

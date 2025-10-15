@@ -17,7 +17,13 @@ describe(FinancialsService.name, () => {
       })
       const db = mockObject<Database>({ interopRecentPrices, bridgeTransfer })
       const tokenDb = mockObject<ITokenDb>({ getPriceInfo: mockFn() })
-      const service = new FinancialsService(db, tokenDb, Logger.SILENT, 1000)
+      const service = new FinancialsService(
+        [],
+        db,
+        tokenDb,
+        Logger.SILENT,
+        1000,
+      )
 
       await service.run()
 
@@ -42,7 +48,13 @@ describe(FinancialsService.name, () => {
         getPriceInfo: mockFn(),
       })
 
-      const service = new FinancialsService(db, tokenDb, Logger.SILENT, 1000)
+      const service = new FinancialsService(
+        [],
+        db,
+        tokenDb,
+        Logger.SILENT,
+        1000,
+      )
 
       await service.run()
 
@@ -154,22 +166,22 @@ describe(FinancialsService.name, () => {
         getPriceInfo: mockFn().resolvesTo(priceInfoMap),
       })
 
-      const logger = mockObject<Logger>({
-        info: mockFn().returns(undefined),
-        warn: mockFn().returns(undefined),
-      })
-      //@ts-ignore
-      logger.for = () => logger
-
-      const service = new FinancialsService(db, tokenDb, logger, 1000)
+      const service = new FinancialsService(
+        [
+          { name: 'ethereum', type: 'evm' as const },
+          { name: 'arbitrum', type: 'evm' as const },
+          { name: 'base', type: 'evm' as const },
+        ],
+        db,
+        tokenDb,
+        Logger.SILENT,
+        1000,
+      )
 
       await service.run()
 
       expect(interopRecentPrices.hasAnyPrices).toHaveBeenCalledTimes(1)
       expect(bridgeTransfer.getUnprocessed).toHaveBeenCalledTimes(1)
-      expect(logger.info).toHaveBeenCalledWith('Processing transfers', {
-        transfers: 3,
-      })
 
       expect(tokenDb.getPriceInfo).toHaveBeenCalledWith([
         srcToken1,
@@ -202,16 +214,7 @@ describe(FinancialsService.name, () => {
         firstUpdate,
       )
 
-      const secondUpdate: BridgeTransferUpdate = {
-        dstAbstractTokenId: AbstractTokenId('fedcba:base:BASE'),
-        dstAmount: undefined,
-        dstPrice: undefined,
-        dstValueUsd: undefined,
-      }
-      expect(bridgeTransfer.updateFinancials).toHaveBeenCalledWith(
-        'msg2',
-        secondUpdate,
-      )
+      expect(bridgeTransfer.updateFinancials).toHaveBeenCalledWith('msg2', {})
 
       const thirdUpdate: BridgeTransferUpdate = {
         dstAbstractTokenId: AbstractTokenId('222222:ethereum:TOKEN'),
@@ -222,14 +225,6 @@ describe(FinancialsService.name, () => {
       expect(bridgeTransfer.updateFinancials).toHaveBeenCalledWith(
         'msg3',
         thirdUpdate,
-      )
-
-      expect(logger.info).toHaveBeenCalledWith('Transfers processed', {
-        transfers: 3,
-      })
-      expect(logger.info).toHaveBeenCalledWith(
-        'Updated transfers saved in DB',
-        { transfers: 3 },
       )
 
       expect(transaction).toHaveBeenCalledTimes(1)
@@ -247,6 +242,7 @@ describe(FinancialsService.name, () => {
 
       const mockTransfers = [
         {
+          plugin: 'plugin',
           messageId: 'msg1',
           srcChain: 'ethereum',
           srcTokenAddress: Address32.from(DeployedTokenId.address(srcToken1)),
@@ -284,32 +280,34 @@ describe(FinancialsService.name, () => {
       //@ts-ignore
       logger.for = () => logger
 
-      const service = new FinancialsService(db, tokenDb, logger, 1000)
+      const service = new FinancialsService(
+        [
+          { name: 'ethereum', type: 'evm' as const },
+          { name: 'arbitrum', type: 'evm' as const },
+        ],
+        db,
+        tokenDb,
+        logger,
+        1000,
+      )
 
       await service.run()
 
       expect(logger.warn).toHaveBeenCalledWith('Missing price info', {
+        plugin: 'plugin',
         id: srcToken1,
+        chain: DeployedTokenId.chain(srcToken1),
+        token: DeployedTokenId.address(srcToken1),
       })
       expect(logger.warn).toHaveBeenCalledWith('Missing price info', {
+        plugin: 'plugin',
         id: dstToken1,
+        chain: DeployedTokenId.chain(dstToken1),
+        token: DeployedTokenId.address(dstToken1),
       })
 
       // Should still update with empty financials
-      const expectedUpdate: BridgeTransferUpdate = {
-        srcAbstractTokenId: undefined,
-        srcAmount: undefined,
-        srcPrice: undefined,
-        srcValueUsd: undefined,
-        dstAbstractTokenId: undefined,
-        dstAmount: undefined,
-        dstPrice: undefined,
-        dstValueUsd: undefined,
-      }
-      expect(bridgeTransfer.updateFinancials).toHaveBeenCalledWith(
-        'msg1',
-        expectedUpdate,
-      )
+      expect(bridgeTransfer.updateFinancials).toHaveBeenCalledWith('msg1', {})
     })
   })
 })

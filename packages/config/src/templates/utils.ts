@@ -9,16 +9,25 @@ import type {
   ReferenceLink,
 } from '../types'
 
-export function mergeBadges(
-  inherentBadges: Badge[],
-  definedBadges: Badge[],
-): Badge[] {
-  const all = definedBadges.concat(inherentBadges)
-  const allowDuplicates = all.filter(
-    (b) => b.type === 'Other' || b.type === 'VM',
-  ) // do not dedup badges of type 'Other' and 'VM' (multiVM)
-  const rest = all.filter((b) => b.type !== 'Other' && b.type !== 'VM')
-  return unionBy<Badge>(rest, (b) => b.type).concat(allowDuplicates)
+export function mergeBadges(inherentBadges: Badge[], definedBadges: Badge[]) {
+  const allBadges = definedBadges.concat(inherentBadges)
+  const typeDuplicatesAllowed = ['Other', 'VM', 'DA']
+
+  // by type
+  const duplicateBadges: Badge[] = []
+  const toBeUniqueBadges: Badge[] = []
+
+  for (const badge of allBadges) {
+    if (typeDuplicatesAllowed.includes(badge.type)) {
+      duplicateBadges.push(badge)
+    } else {
+      toBeUniqueBadges.push(badge)
+    }
+  }
+
+  return unionBy(toBeUniqueBadges, (badge) => badge.type).concat(
+    duplicateBadges,
+  )
 }
 
 export function mergePermissions(
