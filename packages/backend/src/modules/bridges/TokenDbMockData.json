@@ -277,6 +277,11 @@
           "chain": "zksyncera",
           "address": "0x493257fD37EDB34451f62EDf8D2a0C418852bA4C",
           "decimals": 6
+        },
+        {
+          "chain": "base",
+          "address": "0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2",
+          "decimals": 6
         }
       ]
     },
@@ -372,6 +377,16 @@
           "chain": "zksyncera",
           "address": "0x4B9eb6c0b6ea15176BBF62841C6B2A8a398cb656",
           "decimals": 18
+        },
+        {
+          "chain": "arbitrum",
+          "address": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+          "decimals": 18
+        },
+        {
+          "chain": "base",
+          "address": "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
+          "decimals": 18
         }
       ]
     },
@@ -407,6 +422,16 @@
           "chain": "worldchain",
           "address": "0x7077C71B4AF70737a08287E279B717Dcf64fdC57",
           "decimals": 18
+        },
+        {
+          "chain": "arbitrum",
+          "address": "0xCF934E2402A5e072928a39a956964eb8F2B5B79C",
+          "decimals": 18
+        },
+        {
+          "chain": "base",
+          "address": "0xd652C5425aea2Afd5fb142e120FeCf79e18fafc3",
+          "decimals": 18
         }
       ]
     },
@@ -431,6 +456,11 @@
         {
           "chain": "polygon",
           "address": "0x9a71012B13CA4d3D0Cdc72A177DF3ef03b0E76A3",
+          "decimals": 18
+        },
+        {
+          "chain": "arbitrum",
+          "address": "0x040d1EdC9569d4Bab2D15287Dc5A4F10F56a56B8",
           "decimals": 18
         }
       ]
@@ -502,6 +532,11 @@
           "chain": "worldchain",
           "address": "0x2cFc85d8E48F8EAB294be644d9E25C3030863003",
           "decimals": 18
+        },
+        {
+          "chain": "ethereum",
+          "address": "0x163f8C2467924be0ae7B5347228CABF260318753",
+          "decimals": 18
         }
       ]
     },
@@ -547,6 +582,11 @@
           "chain": "optimism",
           "address": "0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4",
           "decimals": 18
+        },
+        {
+          "chain": "ethereum",
+          "address": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
+          "decimals": 18
         }
       ]
     },
@@ -560,6 +600,16 @@
       "deployed": [
         {
           "chain": "optimism",
+          "address": "0x4e107a0000DB66f0E9Fd2039288Bf811dD1f9c74",
+          "decimals": 18
+        },
+        {
+          "chain": "base",
+          "address": "0x4e107a0000DB66f0E9Fd2039288Bf811dD1f9c74",
+          "decimals": 18
+        },
+        {
+          "chain": "ethereum",
           "address": "0x4e107a0000DB66f0E9Fd2039288Bf811dD1f9c74",
           "decimals": 18
         }
