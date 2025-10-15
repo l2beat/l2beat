@@ -4,6 +4,7 @@ import '../../src/dotenv'
 
 import type { Request } from 'express'
 import { getBridgesSummaryData } from '~/pages/bridges/summary/getBridgesSummaryData'
+import { getScalingTvsData } from '~/pages/scaling/tvs/getScalingTvsData'
 import type { ICache } from '~/server/cache/ICache'
 import { manifest } from '~/utils/Manifest'
 
@@ -36,6 +37,17 @@ export const hotCacheFns: Record<string, () => Promise<unknown>> = {
       {
         originalUrl: '/scaling/summary',
       } as Request,
+      manifest,
+      cache,
+    ),
+  scalingTvs: () =>
+    getScalingTvsData(
+      {
+        query: {
+          tab: 'rollups',
+        },
+        originalUrl: '/scaling/tvs',
+      } as Request<unknown, unknown, unknown, { tab: 'rollups' }>,
       manifest,
       cache,
     ),
