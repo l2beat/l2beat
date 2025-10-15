@@ -1,7 +1,7 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { EntryParameters, ReceivedPermission } from '../output/types'
-import { mapToReferenceNodes } from './reachable'
+import { getReachableEntries, mapToReferenceNodes } from './reachable'
 
 function createMockEntry(
   address: ChainSpecificAddress,
@@ -153,5 +153,294 @@ describe(mapToReferenceNodes.name, () => {
         references: [],
       },
     ])
+  })
+})
+
+describe(getReachableEntries.name, () => {
+  it('should return everything but entry E', () => {
+    // Base
+    const entryA = createMockEntry(ADDRESSES.A, { ref: ADDRESSES.C })
+    const entryB = createMockEntry(ADDRESSES.B, { ref: ADDRESSES.C })
+    // Shared
+    const entryC = createMockEntry(ADDRESSES.C, { ref: ADDRESSES.D })
+    const entryD = createMockEntry(ADDRESSES.D)
+    // Not reachable
+    const entryE = createMockEntry(ADDRESSES.E)
+
+    const entries = [entryA, entryB, entryC, entryD, entryE]
+    const entrypoints = [entryA.address, entryB.address]
+
+    const result = getReachableEntries(entries, entrypoints)
+    expect(result).toEqual([entryA, entryB, entryC, entryD])
+  })
+
+  /*
+   * Single node test case - simplest possible scenario
+   *
+   *    ┌───┐
+   *    │ A │ (entrypoint)
+   *    └───┘
+   *
+   * Expected: Only A should be returned
+   */
+  it('should handle single node with no references', () => {
+    const entryA = createMockEntry(ADDRESSES.A)
+    const entries = [entryA]
+    const entrypoints = [entryA.address]
+
+    const result = getReachableEntries(entries, entrypoints)
+    expect(result).toEqual([entryA])
+  })
+
+  /*
+   * Simple linear chain test case
+   *
+   *    ┌───┐ ref  ┌───┐ ref  ┌───┐
+   *    │ A ├─────►│ B ├─────►│ C │
+   *    └───┘      └───┘      └───┘
+   *      ▲
+   *   entrypoint
+   *
+   * Expected: A, B, C should all be returned
+   */
+  it('should handle simple linear chain', () => {
+    const entryA = createMockEntry(ADDRESSES.A, { ref: ADDRESSES.B })
+    const entryB = createMockEntry(ADDRESSES.B, { ref: ADDRESSES.C })
+    const entryC = createMockEntry(ADDRESSES.C)
+
+    const entries = [entryA, entryB, entryC]
+    const entrypoints = [entryA.address]
+
+    const result = getReachableEntries(entries, entrypoints)
+    expect(result).toEqual([entryA, entryB, entryC])
+  })
+
+  /*
+   * Diamond pattern test case
+   *
+   *         ┌───┐
+   *    ┌───►│ B │
+   *    │    └─┬─┘
+   *    │      │
+   *  ┌─┴─┐    │ ref
+   *  │ A │    │
+   *  └─┬─┘    │
+   *    │      │
+   *    │    ┌─▼─┐
+   *    └───►│ C │
+   *         └─┬─┘
+   *           │
+   *           │ ref
+   *           ▼
+   *         ┌───┐
+   *         │ D │
+   *         └───┘
+   *    ▲
+   *   entrypoint
+   *
+   * Expected: A, B, C, D should all be returned
+   */
+  it('should handle diamond pattern with convergence', () => {
+    const entryA = createMockEntry(ADDRESSES.A, {
+      refs: [ADDRESSES.B, ADDRESSES.C],
+    })
+    const entryB = createMockEntry(ADDRESSES.B, { ref: ADDRESSES.D })
+    const entryC = createMockEntry(ADDRESSES.C, { ref: ADDRESSES.D })
+    const entryD = createMockEntry(ADDRESSES.D)
+
+    const entries = [entryA, entryB, entryC, entryD]
+    const entrypoints = [entryA.address]
+
+    const result = getReachableEntries(entries, entrypoints)
+    expect(result).toEqual([entryA, entryB, entryC, entryD])
+  })
+
+  /*
+   * Circular reference test case
+   *
+   *    ┌───┐ ref  ┌───┐ ref  ┌───┐
+   *    │ A ├─────►│ B ├─────►│ C │
+   *    └─▲─┘      └───┘      └─┬─┘
+   *      │                     │
+   *      └────────────────────┘
+   *               ref
+   *      ▲
+   *   entrypoint
+   *
+   * Expected: A, B, C should all be returned (no infinite loop)
+   */
+  it('should handle circular references without infinite loop', () => {
+    const entryA = createMockEntry(ADDRESSES.A, { ref: ADDRESSES.B })
+    const entryB = createMockEntry(ADDRESSES.B, { ref: ADDRESSES.C })
+    const entryC = createMockEntry(ADDRESSES.C, { ref: ADDRESSES.A })
+
+    const entries = [entryA, entryB, entryC]
+    const entrypoints = [entryA.address]
+
+    const result = getReachableEntries(entries, entrypoints)
+    expect(result).toEqual([entryA, entryB, entryC])
+  })
+
+  /*
+   * Multiple disconnected entrypoints test case
+   *
+   *    ┌───┐ ref  ┌───┐     ┌───┐ ref  ┌───┐
+   *    │ A ├─────►│ B │     │ C ├─────►│ D │
+   *    └───┘      └───┘     └───┘      └───┘
+   *      ▲                    ▲
+   *   entrypoint          entrypoint
+   *
+   *                 ┌───┐ (isolated)
+   *                 │ E │
+   *                 └───┘
+   *
+   * Expected: A, B, C, D should be returned (E is isolated)
+   */
+  it('should handle multiple disconnected entrypoints', () => {
+    const entryA = createMockEntry(ADDRESSES.A, { ref: ADDRESSES.B })
+    const entryB = createMockEntry(ADDRESSES.B)
+    const entryC = createMockEntry(ADDRESSES.C, { ref: ADDRESSES.D })
+    const entryD = createMockEntry(ADDRESSES.D)
+    const entryE = createMockEntry(ADDRESSES.E) // isolated
+
+    const entries = [entryA, entryB, entryC, entryD, entryE]
+    const entrypoints = [entryA.address, entryC.address]
+
+    const result = getReachableEntries(entries, entrypoints)
+    expect(result).toEqual([entryA, entryB, entryC, entryD])
+  })
+
+  /*
+   * Complex permissions chain test case
+   *
+   *    ┌───┐ permission ┌───┐ ref  ┌───┐
+   *    │ A ├───────────►│ B ├─────►│ C │
+   *    └───┘  (upgrade) └─┬─┘      └───┘
+   *      ▲                │
+   *   entrypoint          │ permission
+   *                       │ (act)
+   *                       ▼
+   *                     ┌───┐ ref  ┌───┐
+   *                     │ D ├─────►│ E │
+   *                     └───┘      └───┘
+   *
+   * Expected: A, B, C, D, E should all be returned
+   */
+  it('should handle complex permissions chain', () => {
+    const entryA = createMockEntry(ADDRESSES.A)
+    const entryB = createMockEntry(
+      ADDRESSES.B,
+      { ref: ADDRESSES.C },
+      {
+        receivedPermissions: [{ permission: 'upgrade', from: ADDRESSES.A }],
+      },
+    )
+    const entryC = createMockEntry(ADDRESSES.C)
+    const entryD = createMockEntry(
+      ADDRESSES.D,
+      { ref: ADDRESSES.E },
+      {
+        receivedPermissions: [{ permission: 'act', from: ADDRESSES.B }],
+      },
+    )
+    const entryE = createMockEntry(ADDRESSES.E)
+
+    const entries = [entryA, entryB, entryC, entryD, entryE]
+    const entrypoints = [entryA.address]
+
+    const result = getReachableEntries(entries, entrypoints)
+    expect(result).toEqual([entryA, entryB, entryC, entryD, entryE])
+  })
+
+  /*
+   * Star pattern test case - central hub with multiple spokes
+   *
+   *         ┌───┐
+   *         │ B │
+   *         └─▲─┘
+   *           │ ref
+   *    ┌───┐  │  ┌───┐
+   *    │ A ├──┼─►│ C │
+   *    └───┘  │  └───┘
+   *      ▲    │
+   *   entrypoint
+   *           │ ref
+   *         ┌─▼─┐
+   *         │ D │
+   *         └─┬─┘
+   *           │ ref
+   *           ▼
+   *         ┌───┐
+   *         │ E │
+   *         └───┘
+   *
+   * Expected: A, B, C, D, E should all be returned
+   */
+  it('should handle star pattern with central hub', () => {
+    const entryA = createMockEntry(ADDRESSES.A, {
+      refs: [ADDRESSES.B, ADDRESSES.C, ADDRESSES.D],
+    })
+    const entryB = createMockEntry(ADDRESSES.B)
+    const entryC = createMockEntry(ADDRESSES.C)
+    const entryD = createMockEntry(ADDRESSES.D, { ref: ADDRESSES.E })
+    const entryE = createMockEntry(ADDRESSES.E)
+
+    const entries = [entryA, entryB, entryC, entryD, entryE]
+    const entrypoints = [entryA.address]
+
+    const result = getReachableEntries(entries, entrypoints)
+    expect(result).toEqual([entryA, entryB, entryC, entryD, entryE])
+  })
+
+  /*
+   * Isolated nodes test case - nodes unreachable from entrypoints
+   *
+   *    ┌───┐ ref  ┌───┐     ┌───┐ ref  ┌───┐
+   *    │ A ├─────►│ B │     │ C ├─────►│ D │ (isolated)
+   *    └───┘      └───┘     └───┘      └───┘
+   *      ▲
+   *   entrypoint
+   *
+   *                 ┌───┐ (isolated)
+   *                 │ E │
+   *                 └───┘
+   *
+   * Expected: Only A, B should be returned (C, D, E are isolated)
+   */
+  it('should exclude isolated nodes unreachable from entrypoints', () => {
+    const entryA = createMockEntry(ADDRESSES.A, { ref: ADDRESSES.B })
+    const entryB = createMockEntry(ADDRESSES.B)
+    const entryC = createMockEntry(ADDRESSES.C, { ref: ADDRESSES.D }) // isolated chain
+    const entryD = createMockEntry(ADDRESSES.D)
+    const entryE = createMockEntry(ADDRESSES.E) // isolated single node
+
+    const entries = [entryA, entryB, entryC, entryD, entryE]
+    const entrypoints = [entryA.address]
+
+    const result = getReachableEntries(entries, entrypoints)
+    expect(result).toEqual([entryA, entryB])
+  })
+
+  /*
+   * Empty entrypoints test case
+   *
+   *    ┌───┐ ref  ┌───┐ ref  ┌───┐
+   *    │ A ├─────►│ B ├─────►│ C │
+   *    └───┘      └───┘      └───┘
+   *
+   *    No entrypoints specified
+   *
+   * Expected: Empty array (nothing is reachable)
+   */
+  it('should return empty array when no entrypoints specified', () => {
+    const entryA = createMockEntry(ADDRESSES.A, { ref: ADDRESSES.B })
+    const entryB = createMockEntry(ADDRESSES.B, { ref: ADDRESSES.C })
+    const entryC = createMockEntry(ADDRESSES.C)
+
+    const entries = [entryA, entryB, entryC]
+    const entrypoints: ChainSpecificAddress[] = []
+
+    const result = getReachableEntries(entries, entrypoints)
+    expect(result).toEqual([])
   })
 })
