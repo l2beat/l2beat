@@ -419,7 +419,7 @@ model InteropTransfer {
   // across = false
   // oft = true || false
   // cctp = true
-  srcWasBurned       Boolean
+  srcWasBurned       Boolean?
 
   dstTime         DateTime? @db.Timestamp(6)
   dstChain        String?   @db.VarChar(32)
@@ -439,7 +439,7 @@ model InteropTransfer {
   // across = false
   // oft = true || false
   // cctp = true
-  dstWasMinted       Boolean
+  dstWasMinted       Boolean?
 
   isProcessed Boolean
 
