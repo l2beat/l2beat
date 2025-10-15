@@ -1,93 +1,95 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
+import uniq from 'lodash/uniq'
 import type { EntryParameters } from '../output/types'
 import { toAddressArray } from './extractors'
 
 type ReferenceNode = {
-  entry: EntryParameters
-  references: Set<ChainSpecificAddress>
+  address: ChainSpecificAddress
+  references: ChainSpecificAddress[]
 }
 
-export function getReferencedEntries(
-  references: EntryParameters[],
+// Convert discovery entries into a simple graph nodes
+// with connections to all referenced nodes (directly
+// or due to the issued permissions).
+// See the test file for graphical example.
+export function mapToReferenceNodes(
   entries: EntryParameters[],
-): EntryParameters[] {
-  const nodes = new Map<ChainSpecificAddress, ReferenceNode>()
-  const referencedEntries = new Set<ChainSpecificAddress>()
-
-  function addEntry(entry: EntryParameters) {
-    if (nodes.has(entry.address)) {
-      throw new Error(`Duplicate entry address: ${entry.address}`)
-    }
-
-    nodes.set(entry.address, {
-      entry,
-      references: new Set(),
-    })
-  }
-
-  function getEntry(address: ChainSpecificAddress): ReferenceNode | null {
-    const node = nodes.get(address)
-
-    return node ?? null
-  }
-
-  function addReference(from: ChainSpecificAddress, to: ChainSpecificAddress) {
-    const fromEntry = getEntry(from)
-    if (fromEntry) {
-      fromEntry.references.add(to)
-    }
-  }
+): ReferenceNode[] {
+  // Entries have *received permissions*, but we need
+  // *issued permissions* for correct **direction**.
+  // Gather those:
+  const issuedPermissions: Record<
+    ChainSpecificAddress,
+    Set<ChainSpecificAddress>
+  > = {}
 
   for (const entry of entries) {
-    addEntry(entry)
-  }
-
-  for (const entry of entries) {
-    const referencedAddresses = extractAddressesFromValues(entry)
-    const referencedAddressesFromPermissions =
-      extractAddressesFromPermissions(entry)
-
-    for (const referencedAddress of referencedAddresses) {
-      addReference(entry.address, referencedAddress)
-    }
-
-    for (const referencedAddress of referencedAddressesFromPermissions) {
-      addReference(entry.address, referencedAddress)
-    }
-  }
-
-  function collectReferences(entry: EntryParameters) {
-    if (referencedEntries.has(entry.address)) {
-      return
-    }
-
-    referencedEntries.add(entry.address)
-    const node = getEntry(entry.address)
-
-    if (!node) {
-      return
-    }
-
-    for (const refAddress of node.references) {
-      const refNode = getEntry(refAddress)
-
-      if (refNode) {
-        collectReferences(refNode.entry)
+    const addresses = extractDirectPermissions(entry)
+    for (const address of addresses) {
+      const value = issuedPermissions[address]
+      if (value) {
+        value.add(entry.address)
+      } else {
+        issuedPermissions[address] = new Set([entry.address])
       }
     }
   }
 
-  for (const ref of references) {
-    const node = getEntry(ref.address)
+  // Return nodes with direct references in correct (forward) direction
+  return entries.map((entry) => ({
+    address: entry.address,
+    references: uniq([
+      // from fields:
+      ...extractAddressesFromValues(entry),
+      // from issued permissions:
+      ...(issuedPermissions[entry.address] ?? []),
+    ]),
+  }))
+}
 
-    if (node) {
-      collectReferences(node.entry)
+// Traverse the graph and return all addresses
+// that are reachable from initial entrypoints
+export function getReachableAddresses(
+  nodes: ReferenceNode[],
+  entrypoints: ChainSpecificAddress[],
+): ChainSpecificAddress[] {
+  const nodeByAddress: Record<ChainSpecificAddress, ReferenceNode> = {}
+  nodes.forEach((node) => (nodeByAddress[node.address] = node))
+
+  const visited = new Set<ChainSpecificAddress>()
+
+  function visit(address: ChainSpecificAddress) {
+    if (visited.has(address)) {
+      return
+    }
+    visited.add(address)
+
+    const node = nodeByAddress[address]
+    if (!node) {
+      // It's possible to reference nodes that don't exist
+      // e.g. due to "ignoreDiscovery" flag, etc.
+      return
+    }
+    for (const ref of node.references) {
+      visit(ref)
     }
   }
 
-  return Array.from(referencedEntries).flatMap(
-    (address) => getEntry(address)?.entry ?? [],
+  entrypoints.forEach(visit)
+  return Array.from(visited)
+}
+
+export function getReachableEntries(
+  entries: EntryParameters[],
+  entrypoints: ChainSpecificAddress[],
+): EntryParameters[] {
+  const asReferenceNodes = mapToReferenceNodes(entries)
+  const reachableAddresses = getReachableAddresses(
+    asReferenceNodes,
+    entrypoints,
   )
+  const reachableSet = new Set(reachableAddresses)
+  return entries.filter((e) => reachableSet.has(e.address))
 }
 
 function extractAddressesFromValues(
@@ -102,25 +104,16 @@ function extractAddressesFromValues(
   return addresses
 }
 
-function extractAddressesFromPermissions(
+function extractDirectPermissions(
   entry: EntryParameters,
 ): ChainSpecificAddress[] {
-  const addresses: ChainSpecificAddress[] = []
-
   const permissions = [
-    ...(entry.receivedPermissions ?? []),
+    // We're only interested in direct connections
+    ...(entry.receivedPermissions ?? []).filter(
+      (p) => (p.via ?? []).length === 0,
+    ),
     ...(entry.directlyReceivedPermissions ?? []),
   ]
 
-  for (const permission of permissions) {
-    addresses.push(permission.from)
-
-    if (permission.via) {
-      for (const via of permission.via) {
-        addresses.push(via.address)
-      }
-    }
-  }
-
-  return addresses
+  return permissions.map((p) => p.from)
 }

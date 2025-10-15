@@ -7,7 +7,7 @@ import type {
 import {
   ConfigReader,
   getDiscoveryPaths,
-  getReferencedEntries,
+  getReachableEntries,
   RolePermissionEntries,
 } from '@l2beat/discovery'
 import {
@@ -1084,11 +1084,13 @@ export class ProjectDiscovery {
     chainsToIgnore: string[] = [],
   ): Record<string, ProjectContract[]> {
     const eoaActors = this.getEoaActors()
-    const referencedEntries = getReferencedEntries(
+    const reachableEntries = getReachableEntries(
       this.references,
-      this.discoveries.flatMap((discovery) => discovery.entries),
+      this.discoveries
+        .flatMap((discovery) => discovery.entries)
+        .map((e) => e.address),
     )
-    const contracts = referencedEntries
+    const contracts = reachableEntries
       .filter((entry) => entry.type === 'Contract')
       .filter((contract) => contract.category?.priority !== -1)
       .sort((a, b) => {

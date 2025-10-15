@@ -4,7 +4,7 @@ import {
   type DiscoveryOutput,
   type EntryParameters,
   get$Implementations,
-  getReferencedEntries,
+  getReachableEntries,
   getShapeFromOutputEntry,
   makeEntryColorConfig,
   makeEntryStructureConfig,
@@ -41,11 +41,12 @@ export function getProject(
     config: configReader.readConfig(discovery.name),
   }))
 
-  const referencedEntries = getReferencedEntries(
+  const referencedEntries = getReachableEntries(
     discovery.entries,
     data
       .flatMap((x) => x.discovery.entries)
-      .filter((e) => e.type !== 'Reference'),
+      .filter((e) => e.type !== 'Reference')
+      .map((e) => e.address),
   ).map((x) => x.address)
 
   const response: ApiProjectResponse = { entries: [] }
