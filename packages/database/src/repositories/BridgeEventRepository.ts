@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
-import type { BridgeEvent } from '../kysely/generated/types'
+import type { InteropEvent } from '../kysely/generated/types'
 
 export interface BridgeEventRecord {
   plugin: string
@@ -21,7 +21,7 @@ export interface BridgeEventRecord {
   args: unknown
 }
 
-export function toRecord(row: Selectable<BridgeEvent>): BridgeEventRecord {
+export function toRecord(row: Selectable<InteropEvent>): BridgeEventRecord {
   return {
     plugin: row.plugin,
     eventId: row.eventId,
@@ -32,16 +32,16 @@ export function toRecord(row: Selectable<BridgeEvent>): BridgeEventRecord {
     blockNumber: row.blockNumber,
     blockHash: row.blockHash,
     txHash: row.txHash,
-    value: row.value,
+    value: row.value ?? '', //TODO: make optional
     txTo: row.txTo ?? undefined,
-    logIndex: row.logIndex,
+    logIndex: row.logIndex ?? -1, // TODO: make optional
     matched: row.matched,
     unsupported: row.unsupported,
     args: row.args,
   }
 }
 
-export function toRow(record: BridgeEventRecord): Insertable<BridgeEvent> {
+export function toRow(record: BridgeEventRecord): Insertable<InteropEvent> {
   return {
     plugin: record.plugin,
     eventId: record.eventId,
@@ -76,14 +76,14 @@ export class BridgeEventRepository extends BaseRepository {
 
     const rows = records.map(toRow)
     await this.batch(rows, 2_000, async (batch) => {
-      await this.db.insertInto('BridgeEvent').values(batch).execute()
+      await this.db.insertInto('InteropEvent').values(batch).execute()
     })
     return rows.length
   }
 
   async getUnmatched(): Promise<BridgeEventRecord[]> {
     const rows = await this.db
-      .selectFrom('BridgeEvent')
+      .selectFrom('InteropEvent')
       .where('matched', '=', false)
       .where('unsupported', '=', false)
       .selectAll()
@@ -93,7 +93,7 @@ export class BridgeEventRepository extends BaseRepository {
   }
 
   async getAll(): Promise<BridgeEventRecord[]> {
-    const rows = await this.db.selectFrom('BridgeEvent').selectAll().execute()
+    const rows = await this.db.selectFrom('InteropEvent').selectAll().execute()
 
     return rows.map(toRecord)
   }
@@ -106,7 +106,7 @@ export class BridgeEventRepository extends BaseRepository {
       oldCutoff?: UnixTime
     } = {},
   ): Promise<BridgeEventRecord[]> {
-    let query = this.db.selectFrom('BridgeEvent').where('type', '=', type)
+    let query = this.db.selectFrom('InteropEvent').where('type', '=', type)
 
     if (options.matched !== undefined) {
       query = query.where('matched', '=', options.matched)
@@ -131,7 +131,7 @@ export class BridgeEventRepository extends BaseRepository {
     twoHoursAgo.setUTCHours(twoHoursAgo.getUTCHours() - 2)
 
     const rows = await this.db
-      .selectFrom('BridgeEvent')
+      .selectFrom('InteropEvent')
       .select((eb) => [
         'type',
         eb.fn.countAll().as('count'),
@@ -167,7 +167,7 @@ export class BridgeEventRepository extends BaseRepository {
 
   async getExpired(currentTime: UnixTime): Promise<BridgeEventRecord[]> {
     const rows = await this.db
-      .selectFrom('BridgeEvent')
+      .selectFrom('InteropEvent')
       .where('expiresAt', '<=', UnixTime.toDate(currentTime))
       .selectAll()
       .execute()
@@ -179,7 +179,7 @@ export class BridgeEventRepository extends BaseRepository {
     if (eventIds.length === 0) return
     await this.batch(eventIds, 2_000, async (batch) => {
       await this.db
-        .updateTable('BridgeEvent')
+        .updateTable('InteropEvent')
         .set({ matched: true })
         .where('eventId', 'in', batch)
         .execute()
@@ -190,7 +190,7 @@ export class BridgeEventRepository extends BaseRepository {
     if (eventIds.length === 0) return
     await this.batch(eventIds, 2_000, async (batch) => {
       await this.db
-        .updateTable('BridgeEvent')
+        .updateTable('InteropEvent')
         .set({ unsupported: true })
         .where('eventId', 'in', batch)
         .execute()
@@ -199,14 +199,14 @@ export class BridgeEventRepository extends BaseRepository {
 
   async deleteExpired(currentTime: UnixTime): Promise<number> {
     const result = await this.db
-      .deleteFrom('BridgeEvent')
+      .deleteFrom('InteropEvent')
       .where('expiresAt', '<=', UnixTime.toDate(currentTime))
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db.deleteFrom('BridgeEvent').executeTakeFirst()
+    const result = await this.db.deleteFrom('InteropEvent').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }

@@ -92,7 +92,7 @@ export function MonitorApp() {
 
         return (
           <div
-            key={`${entry.projectId}-${entry.chain}-${entry.timestamp}`}
+            key={`${entry.projectId}-${entry.timestamp}`}
             className="flex gap-2"
           >
             <Message
@@ -101,8 +101,7 @@ export function MonitorApp() {
               title={
                 <>
                   Detected changes on{' '}
-                  <span className="font-bold">{entry.projectId}</span> on{' '}
-                  <span className="font-bold">{entry.chain}</span>
+                  <span className="font-bold">{entry.projectId}</span>
                 </>
               }
               content={diffPreviews}

@@ -25,7 +25,7 @@ import type { ProjectChanges } from '../../projects-change-report/getProjectsCha
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
-import { getProjectsLatestTvsUsd } from '../tvs/getLatestTvsUsd'
+import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { compareTvs } from '../tvs/utils/compareTvs'
 
 export async function getScalingDaEntries() {
@@ -38,7 +38,7 @@ export async function getScalingDaEntries() {
     zkCatalogProjects,
     projectsEconomicSecurity,
   ] = await Promise.all([
-    getProjectsLatestTvsUsd(),
+    get7dTvsBreakdown({ type: 'layer2' }),
     getProjectsChangeReport(),
     ps.getProjects({
       select: ['statuses', 'scalingInfo', 'scalingDa', 'display'],
@@ -78,7 +78,7 @@ export async function getScalingDaEntries() {
         risks,
         daLayers,
         projectsChangeReport.getChanges(project.id),
-        tvs[project.id],
+        tvs.projects[project.id]?.breakdown.total,
         zkCatalogProjects,
       )
     })

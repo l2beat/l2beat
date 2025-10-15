@@ -65,18 +65,30 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
   const [daLayerValues, projectValues] = partition(values, (v) =>
     daLayerIds.includes(v.projectId),
   )
+  // Grouped DA layer values
   const groupedDaLayerValues = groupBy(
     sumByResolutionAndProject(daLayerValues, 'daily'),
     (v) => v.daLayer,
   )
+  // Grouped all projects values
   const groupedProjectValues = groupBy(
     sumByResolutionAndProject(projectValues, 'daily'),
+    (v) => v.daLayer,
+  )
+  // Grouped all scaling only projects values
+  const groupedScalingOnlyValues = groupBy(
+    sumByResolutionAndProject(
+      projectValues.filter(
+        (v) => !sovereignProjectsNamesMap.has(v.projectId as ProjectId),
+      ),
+      'daily',
+    ),
     (v) => v.daLayer,
   )
   const onlyScalingDaLayerValues = Object.fromEntries(
     daLayerIds.map((daLayer) => [
       daLayer,
-      sumByTimestamp(daLayer, groupedProjectValues),
+      sumByTimestamp(daLayer, groupedScalingOnlyValues),
     ]),
   )
 

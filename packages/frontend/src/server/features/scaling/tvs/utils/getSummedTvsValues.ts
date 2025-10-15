@@ -1,11 +1,10 @@
-import {
-  type ProjectId,
-  type ProjectValueType,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import type { SummedByTimestampTvsValuesRecord } from '@l2beat/dal'
+import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import keyBy from 'lodash/keyBy'
+import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
+import { queryExecutor } from '~/server/queryExecutor'
 import { getTimestampedValuesRange } from '~/utils/range/range'
 import { isTvsSynced } from './isTvsSynced'
 import type { TvsChartRange } from './range'
@@ -21,13 +20,15 @@ export type SummedTvsValues = {
   stablecoin: number | null
   btc: number | null
   other: number | null
-  associated: number | null
 }
 
 export async function getSummedTvsValues(
   projectIds: ProjectId[],
   range: { type: TvsChartRange } | { type: 'custom'; from: number; to: number },
-  type?: ProjectValueType,
+  {
+    forSummary,
+    excludeAssociatedTokens,
+  }: { forSummary: boolean; excludeAssociatedTokens: boolean },
 ): Promise<SummedTvsValues[]> {
   const db = getDb()
   const resolution = rangeToResolution(range)
@@ -36,64 +37,21 @@ export async function getSummedTvsValues(
     offset: -UnixTime.HOUR - 15 * UnixTime.MINUTE,
   })
 
-  const [latest, valueRecords] = await Promise.all([
-    db.tvsProjectValue.getLatestValues(type ?? 'SUMMARY', projectIds),
-    db.tvsProjectValue.getSummedByTimestamp(projectIds, type ?? 'SUMMARY', [
-      from,
-      to,
-    ]),
-  ])
-
-  const latestTimestamp = latest.at(-1)?.timestamp
-  if (!latestTimestamp || valueRecords.length === 0) {
-    return []
-  }
-  const delayedRecords = latest.filter((v) => v.timestamp < latestTimestamp)
-
-  if (delayedRecords.length > 0) {
-    for (const record of valueRecords) {
-      const delayedRecordsForTimestamp = delayedRecords.filter(
-        (v) => v.timestamp < record.timestamp,
+  const valueRecords = env.REDIS_URL
+    ? (
+        await queryExecutor.execute({
+          name: 'getSummedByTimestampTvsValuesQuery',
+          args: [projectIds, [from, to], forSummary, excludeAssociatedTokens],
+        })
+      ).map(mapArrayToObject)
+    : await db.tvsProjectValue.getSummedByTimestamp(
+        projectIds,
+        getType(forSummary, excludeAssociatedTokens),
+        [from, to],
       )
-      if (delayedRecordsForTimestamp.length > 0) {
-        record.value += delayedRecordsForTimestamp.reduce(
-          (acc, curr) => acc + curr.value,
-          0,
-        )
-        record.canonical += delayedRecordsForTimestamp.reduce(
-          (acc, curr) => acc + curr.canonical,
-          0,
-        )
-        record.external += delayedRecordsForTimestamp.reduce(
-          (acc, curr) => acc + curr.external,
-          0,
-        )
-        record.native += delayedRecordsForTimestamp.reduce(
-          (acc, curr) => acc + curr.native,
-          0,
-        )
-        record.ether += delayedRecordsForTimestamp.reduce(
-          (acc, curr) => acc + curr.ether,
-          0,
-        )
-        record.stablecoin += delayedRecordsForTimestamp.reduce(
-          (acc, curr) => acc + curr.stablecoin,
-          0,
-        )
-        record.btc += delayedRecordsForTimestamp.reduce(
-          (acc, curr) => acc + curr.btc,
-          0,
-        )
-        record.other += delayedRecordsForTimestamp.reduce(
-          (acc, curr) => acc + curr.other,
-          0,
-        )
-        record.associated += delayedRecordsForTimestamp.reduce(
-          (acc, curr) => acc + curr.associated,
-          0,
-        )
-      }
-    }
+
+  if (valueRecords.length === 0) {
+    return []
   }
 
   const timestamps = valueRecords.map((v) => v.timestamp)
@@ -117,10 +75,44 @@ export async function getSummedTvsValues(
         ether: null,
         stablecoin: null,
         other: null,
-        associated: null,
         btc: null,
       }
     }
     return record
   })
+}
+
+function getType(forSummary: boolean, excludeAssociatedTokens: boolean) {
+  if (!forSummary) {
+    return excludeAssociatedTokens ? 'PROJECT_WA' : 'PROJECT'
+  }
+  return excludeAssociatedTokens ? 'SUMMARY_WA' : 'SUMMARY'
+}
+
+function mapArrayToObject([
+  timestamp,
+  value,
+  canonical,
+  external,
+  native,
+  ether,
+  stablecoin,
+  btc,
+  rwaRestricted,
+  rwaPublic,
+  other,
+]: SummedByTimestampTvsValuesRecord) {
+  return {
+    timestamp,
+    value,
+    canonical,
+    external,
+    native,
+    ether,
+    stablecoin,
+    btc,
+    rwaRestricted,
+    rwaPublic,
+    other,
+  }
 }

@@ -45,10 +45,10 @@ export class OpStackPlugin implements BridgePlugin {
   name = 'opstack'
 
   capture(input: LogToCapture) {
-    const network = OPSTACK_NETWORKS.find((n) => n.chain === input.ctx.chain)
-    if (!network) return
-
     if (input.ctx.chain === 'ethereum') {
+      const network = OPSTACK_NETWORKS.find(
+        (n) => n.optimismPortal === EthereumAddress(input.log.address),
+      )
       if (!network) return
       const withdrawalFinalized = parseWithdrawalFinalized(input.log, [
         network.optimismPortal,
@@ -60,6 +60,8 @@ export class OpStackPlugin implements BridgePlugin {
         })
       }
     } else {
+      const network = OPSTACK_NETWORKS.find((n) => n.chain === input.ctx.chain)
+      if (!network) return
       const messagePassed = parseMessagePassed(input.log, [
         network.l2ToL1MessagePasser,
       ])
