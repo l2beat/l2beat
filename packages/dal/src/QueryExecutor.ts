@@ -32,18 +32,29 @@ export class QueryExecutor {
     }
     const key = this.cache.generateKey(query.name, query.args)
 
-    this.logger.info('Checking cache', { query, key })
+    this.logger.info('Checking cache', {
+      name: query.name,
+      params: JSON.stringify(query.args),
+      key,
+    })
 
     let start = Date.now()
 
     const cached = await this.cache.read(key)
     if (cached) {
       const end = Date.now()
-      this.logger.info('Cache hit', { query, duration: end - start })
+      this.logger.info('Cache hit', {
+        name: query.name,
+        params: JSON.stringify(query.args),
+        duration: end - start,
+      })
       return cached.data as QueryResult<Q['name']>
     }
 
-    this.logger.info('Cache miss', { query })
+    this.logger.info('Cache miss', {
+      name: query.name,
+      params: JSON.stringify(query.args),
+    })
 
     start = Date.now()
 
@@ -67,7 +78,11 @@ export class QueryExecutor {
     const result = await promise
 
     let end = Date.now()
-    this.logger.info('Received data from DB', { query, duration: end - start })
+    this.logger.info('Received data from DB', {
+      name: query.name,
+      params: JSON.stringify(query.args),
+      duration: end - start,
+    })
 
     start = Date.now()
 
@@ -79,7 +94,8 @@ export class QueryExecutor {
 
     end = Date.now()
     this.logger.info('Wrote to cache', {
-      query,
+      name: query.name,
+      params: JSON.stringify(query.args),
       duration: end - start,
       expires: expires ?? DEFAULT_EXPIRATION,
     })
@@ -91,7 +107,7 @@ export class QueryExecutor {
   ): Promise<QueryResult<N>> {
     const fn = queries[query.name] as (
       db: Database,
-      ...args: DropFirst<Parameters<(typeof queries)[N]>>
+      ...params: DropFirst<Parameters<(typeof queries)[N]>>
       // biome-ignore lint/suspicious/noExplicitAny: need any here
     ) => any
 
