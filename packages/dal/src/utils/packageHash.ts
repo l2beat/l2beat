@@ -1,32 +1,7 @@
-import { v } from '@l2beat/validate'
-import { execSync } from 'child_process'
-import { hashJson } from '../../../shared/build'
+import { readFileSync } from 'fs'
+import path from 'path'
 
-const TaskSchema = v.object({
-  hash: v.string(),
-})
-
-const TurboOutputSchema = v.object({
-  globalCacheInputs: v.object({
-    hashOfExternalDependencies: v.string(),
-    hashOfInternalDependencies: v.string(),
-  }),
-  packages: v.array(v.literal('@l2beat/dal')),
-  tasks: v.array(TaskSchema),
-})
-
-function getPackageHash() {
-  const output = execSync(
-    'pnpm turbo run build --dry=json --filter=@l2beat/dal',
-    {
-      stdio: 'pipe',
-    },
-  )
-  const json = JSON.parse(output.toString())
-
-  const validated = TurboOutputSchema.parse(json)
-
-  return hashJson(validated)
-}
-
-export const packageHash = getPackageHash().slice(0, 12)
+export const packageHash = readFileSync(
+  path.join(__dirname, '../packageHash.txt'),
+  'utf8',
+)
