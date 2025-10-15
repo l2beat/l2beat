@@ -68,14 +68,24 @@ function dirContentHash(dir: string, exts: string[]): string {
   return h.digest('hex')
 }
 
+function envHash(env: Record<string, unknown>) {
+  const sortedEnv = Object.keys(env)
+    .sort()
+    .reduce<Record<string, unknown>>((acc, key) => {
+      acc[key] = env[key]
+      return acc
+    }, {})
+  return sha256Hex(JSON.stringify(sortedEnv)).slice(0, 12)
+}
+
 function buildCacheKey(opts: {
   pkgDir: string
   pnpmFilter: string
   migrationsDir: string
   pnpmLockFile: string
-  env: Record<string, unknown>
+  envs: Record<string, unknown>
 }) {
-  const { pkgDir, pnpmFilter, migrationsDir, env, pnpmLockFile } = opts
+  const { pkgDir, pnpmFilter, migrationsDir, envs, pnpmLockFile } = opts
   const lock = sha256Hex(readFileSync(resolve(pnpmLockFile), 'utf8')).slice(
     0,
     12,
@@ -86,14 +96,14 @@ function buildCacheKey(opts: {
   const mig = (
     migrationsDir ? dirContentHash(migrationsDir, ['.sql']) : ''
   ).slice(0, 12)
-  const envHash = sha256Hex(JSON.stringify(env)).slice(0, 12)
+  const env = envHash(envs).slice(0, 12)
 
   const parts = [
     `dirty-${dirty}`,
     `src-${tree}`,
     `deps-${deps}`,
     `mig-${mig}`,
-    `env-${envHash}`,
+    `env-${env}`,
     `lock-${lock}`,
   ]
   return parts.join(':')
@@ -105,5 +115,5 @@ export const getPackageHash = (env: Record<string, unknown>) =>
     pnpmFilter: '@l2beat/dal',
     migrationsDir: '../database/prisma/migrations',
     pnpmLockFile: '../../pnpm-lock.yaml',
-    env,
+    envs: env,
   })
