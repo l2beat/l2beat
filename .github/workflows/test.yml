@@ -53,7 +53,9 @@ jobs:
         working-directory: packages/frontend
 
       - name: Build frontend dependencies
-        run: pnpm build:dependencies:frontend
+        run: pnpm build:dependencies
+        working-directory: packages/frontend
 
       - name: Run hot cache
-        run: cd packages/frontend && pnpm hot-cache
+        run: pnpm hot-cache
+        working-directory: packages/frontend
