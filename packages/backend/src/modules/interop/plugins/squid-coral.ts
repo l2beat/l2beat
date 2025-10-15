@@ -1,12 +1,12 @@
 import {
   Address32,
+  createEventParser,
+  createInteropEventType,
+  defineNetworks,
+  findChain,
   type InteropEvent,
   type InteropEventDb,
   type InteropPlugin,
-  createInteropEventType,
-  createEventParser,
-  defineNetworks,
-  findChain,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -125,7 +125,10 @@ export class SquidCoralPlugin implements InteropPlugin {
     2. Find LogOrderCreated on SRC with the same orderHash
   */
   matchTypes = [LogOrderFilled]
-  match(orderFilled: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+  match(
+    orderFilled: InteropEvent,
+    db: InteropEventDb,
+  ): MatchResult | undefined {
     if (!LogOrderFilled.checkType(orderFilled)) return
 
     const orderCreated = db.find(LogOrderCreated, {

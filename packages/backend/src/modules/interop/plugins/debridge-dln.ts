@@ -1,12 +1,12 @@
 import { DEBRIDGE_NETWORKS } from './debridge'
 import {
   Address32,
+  createEventParser,
+  createInteropEventType,
+  findChain,
   type InteropEvent,
   type InteropEventDb,
   type InteropPlugin,
-  createInteropEventType,
-  createEventParser,
-  findChain,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -134,7 +134,10 @@ export class DeBridgeDlnPlugin implements InteropPlugin {
     2. Find LogOrderCreated on SRC with the same orderHash
   */
   matchTypes = [LogFulfilledOrder]
-  match(orderFilled: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+  match(
+    orderFilled: InteropEvent,
+    db: InteropEventDb,
+  ): MatchResult | undefined {
     if (!LogFulfilledOrder.checkType(orderFilled)) return
 
     const orderCreated = db.find(LogCreatedOrder, {

@@ -27,12 +27,12 @@ Note that (TODO: )
 import { BinaryReader } from '../BinaryReader'
 import {
   Address32,
-  type InteropEvent,
-  type InteropPlugin,
-  createInteropEventType,
   createEventParser,
+  createInteropEventType,
   findChain,
+  type InteropEvent,
   type InteropEventDb,
+  type InteropPlugin,
   type LogToCapture,
   type MatchResult,
   Result,

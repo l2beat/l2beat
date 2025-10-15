@@ -7,12 +7,12 @@ contracts are set up for every SRC-DST pair on each chain
 
 import { EthereumAddress } from '@l2beat/shared-pure'
 import {
-  type InteropEvent,
-  type InteropPlugin,
-  createInteropEventType,
   createEventParser,
+  createInteropEventType,
   defineNetworks,
+  type InteropEvent,
   type InteropEventDb,
+  type InteropPlugin,
   type LogToCapture,
   type MatchResult,
   Result,

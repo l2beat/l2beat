@@ -10,13 +10,13 @@ For general message passing:
 
 import { EthereumAddress } from '@l2beat/shared-pure'
 import {
-  type InteropEvent,
-  type InteropPlugin,
-  createInteropEventType,
   createEventParser,
+  createInteropEventType,
   defineNetworks,
   findChain,
+  type InteropEvent,
   type InteropEventDb,
+  type InteropPlugin,
   type LogToCapture,
   type MatchResult,
   Result,

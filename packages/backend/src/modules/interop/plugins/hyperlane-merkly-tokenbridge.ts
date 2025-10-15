@@ -3,12 +3,12 @@ import { Dispatch, Process } from './hyperlane'
 import { findDispatchMessageId, parseSentTransferRemote } from './hyperlane-hwr'
 import {
   Address32,
-  type InteropEvent,
-  type InteropEventDb,
-  type InteropPlugin,
   createInteropEventType,
   defineNetworks,
   findChain,
+  type InteropEvent,
+  type InteropEventDb,
+  type InteropPlugin,
   type LogToCapture,
   type MatchResult,
   Result,

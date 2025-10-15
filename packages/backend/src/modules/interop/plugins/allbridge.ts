@@ -9,13 +9,13 @@ allbridge is a simple swap service that performs three steps:
  */
 
 import {
-  type InteropEvent,
-  type InteropPlugin,
-  createInteropEventType,
   createEventParser,
+  createInteropEventType,
   defineNetworks,
   findChain,
+  type InteropEvent,
   type InteropEventDb,
+  type InteropPlugin,
   type LogToCapture,
   type MatchResult,
   Result,

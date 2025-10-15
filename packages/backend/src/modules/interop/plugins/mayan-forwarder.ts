@@ -8,10 +8,10 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { decodeFunctionData, type Log, parseAbi } from 'viem'
 import {
   Address32,
-  type InteropPlugin,
-  createInteropEventType,
   createEventParser,
+  createInteropEventType,
   findChain,
+  type InteropPlugin,
   type LogToCapture,
 } from './types'
 import { WORMHOLE_NETWORKS } from './wormhole'

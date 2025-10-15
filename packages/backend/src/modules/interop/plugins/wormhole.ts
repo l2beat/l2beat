@@ -1,9 +1,9 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import {
-  type InteropPlugin,
-  createInteropEventType,
   createEventParser,
+  createInteropEventType,
   defineNetworks,
+  type InteropPlugin,
   type LogToCapture,
 } from './types'
 

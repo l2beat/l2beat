@@ -6,12 +6,12 @@ Note - here the transfer of USDC is via burn/mint, but mint on DST happens befor
 import { CCTP_NETWORKS } from './cctp'
 import {
   Address32,
+  createEventParser,
+  createInteropEventType,
+  findChain,
   type InteropEvent,
   type InteropEventDb,
   type InteropPlugin,
-  createInteropEventType,
-  createEventParser,
-  findChain,
   type LogToCapture,
   type MatchResult,
   Result,

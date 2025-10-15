@@ -1,10 +1,10 @@
 import {
+  createEventParser,
+  createInteropEventType,
+  findChain,
   type InteropEvent,
   type InteropEventDb,
   type InteropPlugin,
-  createInteropEventType,
-  createEventParser,
-  findChain,
   type LogToCapture,
   type MatchResult,
   Result,

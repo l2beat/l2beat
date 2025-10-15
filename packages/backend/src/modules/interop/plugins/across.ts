@@ -1,13 +1,13 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import {
   Address32,
-  type InteropEvent,
-  type InteropPlugin,
   createEventParser,
   createInteropEventType,
   defineNetworks,
   findChain,
+  type InteropEvent,
   type InteropEventDb,
+  type InteropPlugin,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -138,7 +138,10 @@ export class AcrossPlugin implements InteropPlugin {
   }
 
   matchTypes = [AcrossFilledRelay]
-  match(filledRelay: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+  match(
+    filledRelay: InteropEvent,
+    db: InteropEventDb,
+  ): MatchResult | undefined {
     if (!AcrossFilledRelay.checkType(filledRelay)) return
 
     const fundsDeposited = db.find(AcrossFundsDeposited, {

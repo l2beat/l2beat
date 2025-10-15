@@ -2,13 +2,13 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { solidityKeccak256 } from 'ethers/lib/utils'
 import { BinaryReader } from '../BinaryReader'
 import {
+  createEventParser,
+  createInteropEventType,
+  defineNetworks,
+  findChain,
   type InteropEvent,
   type InteropEventDb,
   type InteropPlugin,
-  createInteropEventType,
-  createEventParser,
-  defineNetworks,
-  findChain,
   type LogToCapture,
   type MatchResult,
   Result,

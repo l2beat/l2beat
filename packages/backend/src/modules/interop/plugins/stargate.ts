@@ -3,11 +3,11 @@ import { BinaryReader } from '../BinaryReader'
 import { parseOFTReceived, parseOFTSent } from './layerzero-v2-ofts'
 import {
   Address32,
-  type InteropPlugin,
-  createInteropEventType,
   createEventParser,
+  createInteropEventType,
   defineNetworks,
   findChain,
+  type InteropPlugin,
   type LogToCapture,
 } from './types'
 

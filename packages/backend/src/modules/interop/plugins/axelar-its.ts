@@ -7,12 +7,12 @@ This plugin handles all ITS tokens
 import { AXELAR_NETWORKS, ContractCall, ContractCallApproved } from './axelar'
 import {
   Address32,
+  createEventParser,
+  createInteropEventType,
+  findChain,
   type InteropEvent,
   type InteropEventDb,
   type InteropPlugin,
-  createInteropEventType,
-  createEventParser,
-  findChain,
   type LogToCapture,
   type MatchResult,
   Result,

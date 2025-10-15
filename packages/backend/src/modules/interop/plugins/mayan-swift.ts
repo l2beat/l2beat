@@ -9,11 +9,11 @@ we would need to extract it from calldata (trace) - currently we don't do that.
 
 import { logToProtocolData, MayanForwarded } from './mayan-forwarder'
 import {
-  type InteropEvent,
-  type InteropPlugin,
-  createInteropEventType,
   createEventParser,
+  createInteropEventType,
+  type InteropEvent,
   type InteropEventDb,
+  type InteropPlugin,
   type LogToCapture,
   type MatchResult,
   Result,

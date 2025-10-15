@@ -6,12 +6,12 @@ On DST it emits Delivery event which is used to match with LogMessagePublished o
 */
 
 import {
-  type InteropEvent,
-  type InteropPlugin,
-  createInteropEventType,
   createEventParser,
+  createInteropEventType,
   findChain,
+  type InteropEvent,
   type InteropEventDb,
+  type InteropPlugin,
   type LogToCapture,
   type MatchResult,
   Result,

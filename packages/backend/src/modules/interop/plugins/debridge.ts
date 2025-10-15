@@ -5,13 +5,13 @@ and minted (or released if the native token is bridged) on the destination chain
 import { EthereumAddress } from '@l2beat/shared-pure'
 import {
   Address32,
+  createEventParser,
+  createInteropEventType,
+  defineNetworks,
+  findChain,
   type InteropEvent,
   type InteropEventDb,
   type InteropPlugin,
-  createInteropEventType,
-  createEventParser,
-  defineNetworks,
-  findChain,
   type LogToCapture,
   type MatchResult,
   Result,

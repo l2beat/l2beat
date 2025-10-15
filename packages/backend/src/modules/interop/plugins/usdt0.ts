@@ -2,12 +2,12 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { PacketDelivered, PacketSent } from './layerzero-v2'
 import {
   Address32,
+  createEventParser,
+  createInteropEventType,
+  defineNetworks,
   type InteropEvent,
   type InteropEventDb,
   type InteropPlugin,
-  createInteropEventType,
-  createEventParser,
-  defineNetworks,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -101,7 +101,10 @@ export class Usdt0Plugin implements InteropPlugin {
   }
 
   matchTypes = [Usdt0OFTReceived]
-  match(oftReceived: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+  match(
+    oftReceived: InteropEvent,
+    db: InteropEventDb,
+  ): MatchResult | undefined {
     if (!Usdt0OFTReceived.checkType(oftReceived)) return
 
     const oftSent = db.find(Usdt0OFTSent, { guid: oftReceived.args.guid })

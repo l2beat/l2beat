@@ -1,11 +1,11 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
+  createEventParser,
+  createInteropEventType,
+  defineNetworks,
   type InteropEvent,
   type InteropEventDb,
   type InteropPlugin,
-  createInteropEventType,
-  createEventParser,
-  defineNetworks,
   type LogToCapture,
   type MatchResult,
   Result,
