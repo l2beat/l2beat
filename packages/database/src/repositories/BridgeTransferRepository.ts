@@ -1,7 +1,7 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
-import type { BridgeTransfer } from '../kysely/generated/types'
+import type { InteropTransfer } from '../kysely/generated/types'
 
 export interface BridgeTransferRecord {
   plugin: string
@@ -16,8 +16,8 @@ export interface BridgeTransferRecord {
   srcEventId: string | undefined
   srcTokenAddress: string | undefined
   srcRawAmount: string | undefined
-  srcSymbol: string | undefined
   srcAbstractTokenId: string | undefined
+  srcSymbol: string | undefined
   srcAmount: number | undefined
   srcPrice: number | undefined
   srcValueUsd: number | undefined
@@ -28,12 +28,12 @@ export interface BridgeTransferRecord {
   dstEventId: string | undefined
   dstTokenAddress: string | undefined
   dstRawAmount: string | undefined
-  dstSymbol: string | undefined
   dstAbstractTokenId: string | undefined
+  dstSymbol: string | undefined
   dstAmount: number | undefined
   dstPrice: number | undefined
   dstValueUsd: number | undefined
-  isProcessed?: boolean
+  isProcessed: boolean
 }
 
 export interface BridgeTransferUpdate {
@@ -48,11 +48,11 @@ export interface BridgeTransferUpdate {
 }
 
 export function toRecord(
-  row: Selectable<BridgeTransfer>,
+  row: Selectable<InteropTransfer>,
 ): BridgeTransferRecord {
   return {
     plugin: row.plugin,
-    messageId: row.messageId,
+    messageId: row.transferId,
     type: row.type,
     duration: row.duration ?? undefined,
     timestamp: UnixTime.fromDate(row.timestamp),
@@ -63,8 +63,8 @@ export function toRecord(
     srcEventId: row.srcEventId ?? undefined,
     srcTokenAddress: row.srcTokenAddress ?? undefined,
     srcRawAmount: row.srcRawAmount ?? undefined,
-    srcSymbol: row.srcSymbol ?? undefined,
     srcAbstractTokenId: row.srcAbstractTokenId ?? undefined,
+    srcSymbol: undefined,
     srcAmount: row.srcAmount ?? undefined,
     srcPrice: row.srcPrice ?? undefined,
     srcValueUsd: row.srcValueUsd ?? undefined,
@@ -75,8 +75,8 @@ export function toRecord(
     dstEventId: row.dstEventId ?? undefined,
     dstTokenAddress: row.dstTokenAddress ?? undefined,
     dstRawAmount: row.dstRawAmount ?? undefined,
-    dstSymbol: row.dstSymbol ?? undefined,
     dstAbstractTokenId: row.dstAbstractTokenId ?? undefined,
+    dstSymbol: undefined,
     dstAmount: row.dstAmount ?? undefined,
     dstPrice: row.dstPrice ?? undefined,
     dstValueUsd: row.dstValueUsd ?? undefined,
@@ -86,10 +86,10 @@ export function toRecord(
 
 export function toRow(
   record: BridgeTransferRecord,
-): Insertable<BridgeTransfer> {
+): Insertable<InteropTransfer> {
   return {
     plugin: record.plugin,
-    messageId: record.messageId,
+    transferId: record.messageId,
     type: record.type,
     duration: record.duration,
     timestamp: UnixTime.toDate(record.timestamp),
@@ -101,7 +101,6 @@ export function toRow(
     srcEventId: record.srcEventId,
     srcTokenAddress: record.srcTokenAddress,
     srcRawAmount: record.srcRawAmount,
-    srcSymbol: record.srcSymbol,
     srcAbstractTokenId: record.srcAbstractTokenId,
     srcAmount: record.srcAmount,
     srcPrice: record.srcPrice,
@@ -114,7 +113,6 @@ export function toRow(
     dstEventId: record.dstEventId,
     dstTokenAddress: record.dstTokenAddress,
     dstRawAmount: record.dstRawAmount,
-    dstSymbol: record.dstSymbol,
     dstAbstractTokenId: record.dstAbstractTokenId,
     dstAmount: record.dstAmount,
     dstPrice: record.dstPrice,
@@ -147,14 +145,14 @@ export class BridgeTransferRepository extends BaseRepository {
 
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
-      await this.db.insertInto('BridgeTransfer').values(batch).execute()
+      await this.db.insertInto('InteropTransfer').values(batch).execute()
     })
     return rows.length
   }
 
   async getAll(): Promise<BridgeTransferRecord[]> {
     const rows = await this.db
-      .selectFrom('BridgeTransfer')
+      .selectFrom('InteropTransfer')
       .selectAll()
       .execute()
 
@@ -168,7 +166,7 @@ export class BridgeTransferRepository extends BaseRepository {
       dstChain?: string
     } = {},
   ): Promise<BridgeTransferRecord[]> {
-    let query = this.db.selectFrom('BridgeTransfer').where('type', '=', type)
+    let query = this.db.selectFrom('InteropTransfer').where('type', '=', type)
 
     if (options.srcChain !== undefined) {
       query = query.where('srcChain', '=', options.srcChain)
@@ -185,7 +183,7 @@ export class BridgeTransferRepository extends BaseRepository {
 
   async getUnprocessed() {
     const rows = await this.db
-      .selectFrom('BridgeTransfer')
+      .selectFrom('InteropTransfer')
       .where('isProcessed', '=', false)
       .selectAll()
       .execute()
@@ -198,15 +196,15 @@ export class BridgeTransferRepository extends BaseRepository {
     update: BridgeTransferUpdate,
   ): Promise<void> {
     await this.db
-      .updateTable('BridgeTransfer')
+      .updateTable('InteropTransfer')
       .set({ ...update, isProcessed: true })
-      .where('messageId', '=', id) // Should be renamed to transferId
+      .where('transferId', '=', id)
       .execute()
   }
 
   async getStats(): Promise<BridgeTransfersStatsRecord[]> {
     const overallStats = await this.db
-      .selectFrom('BridgeTransfer')
+      .selectFrom('InteropTransfer')
       .select((eb) => [
         'type',
         eb.fn.countAll().as('count'),
@@ -230,7 +228,7 @@ export class BridgeTransferRepository extends BaseRepository {
 
   async getDetailedStats(): Promise<BridgeTransfersDetailedStatsRecord[]> {
     const chainStats = await this.db
-      .selectFrom('BridgeTransfer')
+      .selectFrom('InteropTransfer')
       .select((eb) => [
         'type',
         'srcChain',
@@ -269,7 +267,7 @@ export class BridgeTransferRepository extends BaseRepository {
     const srcHashes = items.map((x) => x.srcTxHash.toLowerCase())
     const dstHashes = items.map((x) => x.dstTxHash.toLowerCase())
     const rows = await this.db
-      .selectFrom('BridgeTransfer')
+      .selectFrom('InteropTransfer')
       .selectAll()
       .where('srcTxHash', 'in', srcHashes)
       .where('dstTxHash', 'in', dstHashes)
@@ -279,14 +277,16 @@ export class BridgeTransferRepository extends BaseRepository {
 
   async deleteBefore(timestamp: UnixTime): Promise<number> {
     const result = await this.db
-      .deleteFrom('BridgeTransfer')
+      .deleteFrom('InteropTransfer')
       .where('timestamp', '<', UnixTime.toDate(timestamp))
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db.deleteFrom('BridgeTransfer').executeTakeFirst()
+    const result = await this.db
+      .deleteFrom('InteropTransfer')
+      .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }
