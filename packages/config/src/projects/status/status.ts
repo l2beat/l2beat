@@ -19,6 +19,7 @@ export const status: ScalingProject = upcomingL2({
       documentation: ['https://docs.status.network/'],
       repositories: ['https://github.com/status-im'],
       socialMedia: ['https://x.com/StatusL2'],
+      explorers: ['https://sepoliascan.status.network'],
     },
   },
   proofSystem: {
