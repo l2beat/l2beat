@@ -96,7 +96,7 @@ function buildCacheKey(opts: {
     `env-${envHash}`,
     `lock-${lock}`,
   ]
-  return sha256Hex(parts.join(':')).slice(0, 12)
+  return parts.join(':')
 }
 
 export const getPackageHash = (env: Record<string, unknown>) =>
