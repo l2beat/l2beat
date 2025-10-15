@@ -55,6 +55,3 @@ jobs:
 
       - name: Run hot cache
         run: cd packages/frontend && pnpm hot-cache
-        env:
-          DATABASE_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
-          REDIS_URL: ${{ secrets.REDIS_URL_FE_PROD }}
