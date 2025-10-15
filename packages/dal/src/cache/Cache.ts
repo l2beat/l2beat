@@ -9,8 +9,12 @@ export interface CacheItem<T = unknown> {
 }
 
 export class Cache {
-  private client: RedisClientType
-  constructor(redisUrl: string) {
+  private client: RedisClientType | undefined
+  private connectionPromise: Promise<RedisClientType> | undefined
+  constructor(redisUrl: string | undefined) {
+    if (!redisUrl) {
+      return
+    }
     this.client = createClient({
       url: redisUrl,
       socket: {
@@ -27,10 +31,11 @@ export class Cache {
       .digest('hex')
       .slice(0, 12)
 
-    return `${query}::${packageHash}::${inputHash}}`
+    return `${query}::${packageHash}::${inputHash}`
   }
 
   async write(key: string, data: unknown, expires: number) {
+    if (!this.client) return
     const item: CacheItem = {
       data,
       timestamp: UnixTime.now(),
@@ -43,6 +48,8 @@ export class Cache {
   }
 
   async read<T>(key: string): Promise<CacheItem<T> | undefined> {
+    if (!this.client) return
+
     await this.connect()
     const data = await this.client.get(key)
     if (!data) {
@@ -56,8 +63,10 @@ export class Cache {
   }
 
   private async connect() {
-    // opening a connection takes significant time so it's better to keep it open
-    if (this.client.isReady) return
-    await this.client.connect()
+    if (!this.client || this.client.isReady) return
+
+    // Reuse the same connection promise for all concurrent requests
+    this.connectionPromise ??= this.client.connect()
+    await this.connectionPromise
   }
 }

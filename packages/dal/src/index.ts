@@ -5,7 +5,9 @@ import { QueryExecutor } from './QueryExecutor'
 
 export function makeQueryExecutor(db: Database, logger: Logger) {
   const env = getEnv()
-  const redisUrl = env.string('REDIS_URL')
+  const redisUrl = env.optionalString('REDIS_URL')
   const cache = new Cache(redisUrl)
   return new QueryExecutor(db, logger, cache)
 }
+
+export { type SummedByTimestampTvsValuesRecord } from './queries/tvl/getSummedByTimestampTvsValuesQuery'

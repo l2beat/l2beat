@@ -168,7 +168,7 @@ export async function getScalingProjectEntry(
     getTokensForProject(project),
     getLiveness(project.id),
     getContractUtils(),
-    getScalingTvsSection(helpers, project),
+    getScalingTvsSection(project),
     getActivitySection(helpers, project),
     getCostsSection(helpers, project),
     getDataPostedSection(helpers, project, daSolutions),

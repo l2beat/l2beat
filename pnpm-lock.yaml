@@ -315,10 +315,16 @@ importers:
       '@types/redis':
         specifier: ^4.0.11
         version: 4.0.11
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       redis:
         specifier: ^4.7.0
         version: 4.7.0
     devDependencies:
+      '@types/lodash':
+        specifier: ^4.17.4
+        version: 4.17.13
       '@types/mocha':
         specifier: ^10.0.6
         version: 10.0.9
@@ -459,6 +465,9 @@ importers:
       '@l2beat/config':
         specifier: workspace:*
         version: link:../config
+      '@l2beat/dal':
+        specifier: workspace:*
+        version: link:../dal
       '@l2beat/database':
         specifier: workspace:*
         version: link:../database
