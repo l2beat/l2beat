@@ -9,6 +9,7 @@ import { jsonDiagnostics } from './languages/json'
 import * as solidity from './languages/solidity'
 import type { EditorFile } from './store'
 import { theme } from './theme'
+import { LineSelector } from './code/extensions/lineSelector'
 
 let initialized = false
 
@@ -17,6 +18,7 @@ export type EditorSupportedLanguage = 'solidity' | 'json'
 export type EditorCallbacks = {
   onSave?: (content: string) => string
   onChange?: (content: string) => void
+  onLoad?: (content: string) => void
 }
 
 export class Editor {
@@ -30,6 +32,9 @@ export class Editor {
 
   private onSaveCallback: ((content: string) => string) | null = null
   private onChangeCallback: ((content: string) => void) | null = null
+  private onLoadCallback: ((content: string) => void) | null = null
+
+  public lineSelector: LineSelector
 
   constructor(element: HTMLElement) {
     if (!initialized) {
@@ -72,6 +77,16 @@ export class Editor {
         this.onChangeCallback(value)
       }
     })
+
+    this.editor.onDidChangeModel((e) => {
+      if (e.oldModelUrl == null && this.onLoadCallback) {
+        const value = this.editor.getModel()?.getValue() ?? ''
+        this.onLoadCallback(value)
+      }
+    })
+
+    this.lineSelector = new LineSelector(this.editor)
+    this.lineSelector.init()
   }
 
   private createUri(file: EditorFile) {
@@ -101,6 +116,10 @@ export class Editor {
 
   onChange(onChangeCallback: (content: string) => void) {
     this.onChangeCallback = onChangeCallback
+  }
+
+  onLoad(onLoadCallback: (content: string) => void) {
+    this.onLoadCallback = onLoadCallback
   }
 
   private getOrCreateFileModel(file: EditorFile) {
