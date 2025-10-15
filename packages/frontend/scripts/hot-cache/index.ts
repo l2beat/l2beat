@@ -1,3 +1,5 @@
+import '../../src/dotenv'
+
 import { env } from '~/env'
 import { hotCacheFns } from './hotCacheFns'
 
