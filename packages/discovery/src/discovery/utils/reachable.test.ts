@@ -443,4 +443,58 @@ describe(getReachableEntries.name, () => {
     const result = getReachableEntries(entries, entrypoints)
     expect(result).toEqual([])
   })
+
+  /*
+   * Complex permissions with isolated nodes test case
+   *
+   *    ┌───┐ permission ┌───┐ ref  ┌───┐
+   *    │ A ├───────────►│ B ├─────►│ C │
+   *    └───┘  (upgrade) └─┬─┘      └───┘
+   *      ▲                │
+   *   entrypoint          │ directPermission
+   *                       │ (act)
+   *                       ▼
+   *                     ┌───┐
+   *                     │ D │
+   *                     └───┘
+   *
+   *    ISOLATED NODES:
+   *    ┌───┐ permission ┌───┐     ┌───┐ ref  ┌───┐
+   *    │ E ├───────────►│ F │     │ G ├─────►│ ? │ (missing node)
+   *    └───┘  (member)  └───┘     └───┘      └───┘
+   *
+   * Expected: A, B, C, D should be returned (E, F, G are isolated)
+   */
+  it('should handle complex permissions with isolated nodes', () => {
+    const entryA = createMockEntry(ADDRESSES.A)
+    const entryB = createMockEntry(
+      ADDRESSES.B,
+      { ref: ADDRESSES.C },
+      {
+        receivedPermissions: [{ permission: 'upgrade', from: ADDRESSES.A }],
+        directlyReceivedPermissions: [{ permission: 'act', from: ADDRESSES.A }],
+      },
+    )
+    const entryC = createMockEntry(ADDRESSES.C)
+    const entryD = createMockEntry(ADDRESSES.D, undefined, {
+      directlyReceivedPermissions: [{ permission: 'act', from: ADDRESSES.B }],
+    })
+
+    // Isolated nodes
+    const entryE = createMockEntry(ADDRESSES.E) // isolated issuer
+    const entryF = createMockEntry(ADDRESSES.F, undefined, {
+      receivedPermissions: [{ permission: 'member', from: ADDRESSES.E }],
+    })
+    const entryG = createMockEntry(ADDRESSES.G, {
+      ref: ChainSpecificAddress(
+        'eth:0x9999999999999999999999999999999999999999',
+      ), // missing node
+    })
+
+    const entries = [entryA, entryB, entryC, entryD, entryE, entryF, entryG]
+    const entrypoints = [entryA.address]
+
+    const result = getReachableEntries(entries, entrypoints)
+    expect(result).toEqual([entryA, entryB, entryC, entryD])
+  })
 })
