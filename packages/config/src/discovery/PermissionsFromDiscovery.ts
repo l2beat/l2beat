@@ -35,17 +35,15 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   }
 
   getPermissionedEoas(): ChainSpecificAddress[] {
-    return this.projectDiscovery
-      .getReachableEoas()
-      .filter((e) => e.receivedPermissions !== undefined)
-      .map((e) => e.address)
+    return this.projectDiscovery.getReachableEoas().map((e) => e.address)
   }
 
   describeUpgradePermissions(contractOrEoa: EntryParameters) {
     // Formatting follows: https://docs.l2beat.com/l2b_specs/permissions.html
 
     const upgradePermissions = (contractOrEoa.receivedPermissions ?? []).filter(
-      (p) => p.permission === 'upgrade',
+      (p) =>
+        p.permission === 'upgrade' && this.projectDiscovery.isReachable(p.from),
     )
 
     const groupedByTotalDelays = groupBy(
@@ -86,7 +84,11 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
 
     const interactPermissions = (
       contractOrEoa.receivedPermissions ?? []
-    ).filter((p) => p.permission === 'interact')
+    ).filter(
+      (p) =>
+        p.permission === 'interact' &&
+        this.projectDiscovery.isReachable(p.from),
+    )
 
     const groupedByGiver = groupBy(interactPermissions, (p) => p.from)
 
@@ -121,7 +123,11 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
       'member',
     ] satisfies ReceivedPermission['permission'][]
     const legacyPermissions = (contractOrEoa.receivedPermissions ?? [])
-      .filter((p) => !excludedPermissions.includes(p.permission))
+      .filter(
+        (p) =>
+          !excludedPermissions.includes(p.permission) &&
+          this.projectDiscovery.isReachable(p.from),
+      )
       .map((p) => {
         const prefix = UltimatePermissionToPrefix[p.permission]
         const via = this.formatPermissionVia(p)
@@ -210,7 +216,11 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
           ...p,
         }))
       })
-      .filter((receivedPermission) => receivedPermission.from === fromAddress)
+      .filter(
+        (receivedPermission) =>
+          receivedPermission.from === fromAddress &&
+          this.projectDiscovery.isReachable(receivedPermission.from),
+      )
   }
 
   getUpgradableBy(

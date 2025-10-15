@@ -51,6 +51,7 @@ const paths = getDiscoveryPaths()
 export class ProjectDiscovery {
   private readonly references: EntryParameters[]
   private readonly discoveries: DiscoveryOutput[]
+  private readonly reachableEntries: EntryParameters[]
   private eoaIDMap: Record<string, string> = {}
   private permissionRegistry: PermissionRegistry
 
@@ -61,16 +62,21 @@ export class ProjectDiscovery {
     try {
       this.discoveries = configReader.readDiscoveryWithReferences(projectName)
       this.references = [...this.discoveries[0].entries] // always the base discovery
+      // Removing Reference entries because otherwise we get duplicates
+      // and incomplete data.
+      // TODO: refactor this whole logic around depenent projects and
+      // references to entrypoints to make it cleaner
+      this.discoveries.forEach((d) => removeReferences(d))
+
+      this.reachableEntries = getReachableEntries(
+        this.discoveries.flatMap((discovery) => discovery.entries),
+        this.references.map((e) => e.address),
+      )
     } catch {
       this.discoveries = []
       this.references = []
+      this.reachableEntries = []
     }
-
-    // Removing Reference entries because otherwise we get duplicates
-    // and incomplete data.
-    // TODO: refactor this whole logic around depenent projects and
-    // references to entrypoints to make it cleaner
-    this.discoveries.forEach((d) => removeReferences(d))
 
     this.permissionRegistry = new PermissionsFromDiscovery(this)
   }
@@ -308,6 +314,10 @@ export class ProjectDiscovery {
     )
 
     return contract
+  }
+
+  isReachable(address: ChainSpecificAddress): boolean {
+    return this.reachableEntries.some((e) => e.address === address)
   }
 
   hasContract(identifier: string): boolean {
@@ -642,6 +652,10 @@ export class ProjectDiscovery {
     return this.discoveries.flatMap((discovery) => discovery.entries)
   }
 
+  getReachableEntries(): EntryParameters[] {
+    return this.reachableEntries
+  }
+
   getPrefixedContracts(): {
     [chainSpecificAddress: string]: EntryParameters
   } {
@@ -670,10 +684,7 @@ export class ProjectDiscovery {
   }
 
   getReachableContracts(): EntryParameters[] {
-    return getReachableEntries(
-      this.discoveries.flatMap((discovery) => discovery.entries),
-      this.references.map((e) => e.address),
-    ).filter((e) => e.type === 'Contract')
+    return this.reachableEntries.filter((e) => e.type === 'Contract')
   }
 
   getEoas(): EntryParameters[] {
@@ -683,10 +694,7 @@ export class ProjectDiscovery {
   }
 
   getReachableEoas(): EntryParameters[] {
-    return getReachableEntries(
-      this.discoveries.flatMap((discovery) => discovery.entries),
-      this.references.map((e) => e.address),
-    ).filter((e) => e.type === 'EOA')
+    return this.reachableEntries.filter((e) => e.type === 'EOA')
   }
 
   getContractsAndEoas(): EntryParameters[] {
