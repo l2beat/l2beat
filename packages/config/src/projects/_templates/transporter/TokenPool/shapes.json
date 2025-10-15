@@ -191,5 +191,11 @@
     "address": "eth:0xC03F9E6c1C5F5D553C77781327640E0c7d30a73d",
     "chain": "ethereum",
     "blockNumber": 23547033
+  },
+  "LockReleaseTokenPoolUpgradeable.sol": {
+    "hash": "0xb47b62660c92c8d6d2ad18cbc951b0f13df71372af3bdf622946860cf5bf8100",
+    "address": "eth:0x7Ff02bb686658f2d55f28fDF45286f9499beb9a5",
+    "chain": "ethereum",
+    "blockNumber": 23583487
   }
 }
