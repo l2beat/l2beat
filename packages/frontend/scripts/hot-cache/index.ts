@@ -1,3 +1,4 @@
+import '../../src/dotenv'
 import { hotCacheFns } from './hotCacheFns'
 
 async function main() {
