@@ -406,9 +406,6 @@ model InteropTransfer {
   srcTxHash       String?   @db.VarChar(66)
   srcLogIndex     Int?
   srcEventId      String?   @db.VarChar(40)
-  // across = token from event
-  // oft = token from event || adapter
-  // cctp = always usdc
   srcTokenAddress String?   @db.VarChar(66)
   srcRawAmount    Decimal?  @db.Decimal(80, 0)
 
@@ -416,9 +413,6 @@ model InteropTransfer {
   srcAmount          Float?  @db.Real
   srcPrice           Float?  @db.Real
   srcValueUsd        Float?  @db.Real
-  // across = false
-  // oft = true || false
-  // cctp = true
   srcWasBurned       Boolean?
 
   dstTime         DateTime? @db.Timestamp(6)
@@ -426,9 +420,6 @@ model InteropTransfer {
   dstTxHash       String?   @db.VarChar(66)
   dstLogIndex     Int?
   dstEventId      String?   @db.VarChar(40)
-  // across = token from event
-  // oft = token from event || adapter
-  // cctp = always usdc
   dstTokenAddress String?   @db.VarChar(66)
   dstRawAmount    Decimal?  @db.Decimal(80, 0)
 
@@ -436,9 +427,6 @@ model InteropTransfer {
   dstAmount          Float?  @db.Real
   dstPrice           Float?  @db.Real
   dstValueUsd        Float?  @db.Real
-  // across = false
-  // oft = true || false
-  // cctp = true
   dstWasMinted       Boolean?
 
   isProcessed Boolean
