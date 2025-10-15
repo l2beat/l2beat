@@ -1,7 +1,7 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
-import type { BridgeMessage } from '../kysely/generated/types'
+import type { InteropMessage } from '../kysely/generated/types'
 
 export interface BridgeMessageRecord {
   plugin: string
@@ -22,7 +22,7 @@ export interface BridgeMessageRecord {
   dstEventId: string | undefined
 }
 
-export function toRecord(row: Selectable<BridgeMessage>): BridgeMessageRecord {
+export function toRecord(row: Selectable<InteropMessage>): BridgeMessageRecord {
   return {
     plugin: row.plugin,
     messageId: row.messageId,
@@ -43,7 +43,7 @@ export function toRecord(row: Selectable<BridgeMessage>): BridgeMessageRecord {
   }
 }
 
-export function toRow(record: BridgeMessageRecord): Insertable<BridgeMessage> {
+export function toRow(record: BridgeMessageRecord): Insertable<InteropMessage> {
   return {
     plugin: record.plugin,
     messageId: record.messageId,
@@ -88,13 +88,16 @@ export class BridgeMessageRepository extends BaseRepository {
 
     const rows = records.map(toRow)
     await this.batch(rows, 2_000, async (batch) => {
-      await this.db.insertInto('BridgeMessage').values(batch).execute()
+      await this.db.insertInto('InteropMessage').values(batch).execute()
     })
     return rows.length
   }
 
   async getAll(): Promise<BridgeMessageRecord[]> {
-    const rows = await this.db.selectFrom('BridgeMessage').selectAll().execute()
+    const rows = await this.db
+      .selectFrom('InteropMessage')
+      .selectAll()
+      .execute()
 
     return rows.map(toRecord)
   }
@@ -106,7 +109,7 @@ export class BridgeMessageRepository extends BaseRepository {
       dstChain?: string
     } = {},
   ): Promise<BridgeMessageRecord[]> {
-    let query = this.db.selectFrom('BridgeMessage').where('type', '=', type)
+    let query = this.db.selectFrom('InteropMessage').where('type', '=', type)
 
     if (options.srcChain !== undefined) {
       query = query.where('srcChain', '=', options.srcChain)
@@ -123,7 +126,7 @@ export class BridgeMessageRepository extends BaseRepository {
 
   async getStats(): Promise<BridgeMessageStatsRecord[]> {
     const overallStats = await this.db
-      .selectFrom('BridgeMessage')
+      .selectFrom('InteropMessage')
       .select((eb) => [
         'type',
         eb.fn.countAll().as('count'),
@@ -171,7 +174,7 @@ export class BridgeMessageRepository extends BaseRepository {
     const srcHashes = items.map((x) => x.srcTxHash.toLowerCase())
     const dstHashes = items.map((x) => x.dstTxHash.toLowerCase())
     const rows = await this.db
-      .selectFrom('BridgeMessage')
+      .selectFrom('InteropMessage')
       .selectAll()
       .where('srcTxHash', 'in', srcHashes)
       .where('dstTxHash', 'in', dstHashes)
@@ -181,7 +184,7 @@ export class BridgeMessageRepository extends BaseRepository {
 
   async getDetailedStats(): Promise<BridgeMessageDetailedStatsRecord[]> {
     const chainStats = await this.db
-      .selectFrom('BridgeMessage')
+      .selectFrom('InteropMessage')
       .select((eb) => [
         'type',
         'srcChain',
@@ -210,14 +213,14 @@ export class BridgeMessageRepository extends BaseRepository {
 
   async deleteBefore(timestamp: UnixTime): Promise<number> {
     const result = await this.db
-      .deleteFrom('BridgeMessage')
+      .deleteFrom('InteropMessage')
       .where('timestamp', '<', UnixTime.toDate(timestamp))
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db.deleteFrom('BridgeMessage').executeTakeFirst()
+    const result = await this.db.deleteFrom('InteropMessage').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }
