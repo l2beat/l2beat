@@ -6,7 +6,8 @@
   "types": "build/index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json && pnpm run packageHash",
+    "packageHash": "node -r esbuild-register scripts/packageHash/index.ts",
     "clean": "rm -rf build",
     "format:fix": "biome format --write .",
     "format": "biome format .",
