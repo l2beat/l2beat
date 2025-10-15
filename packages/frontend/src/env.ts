@@ -91,7 +91,7 @@ function createEnv(): Env {
   const parsed = isClient ? ClientEnv.parse(env) : ServerEnv.parse(env)
   return new Proxy<Env>(parsed as Env, {
     get(target, key, receiver) {
-      if (!Reflect.has(SERVER_CONFIG, key)) {
+      if (!Reflect.has(SERVER_CONFIG, key) && key !== 'toJSON') {
         throw new Error(`Accessing invalid env: ${key.toString()}`)
       }
 

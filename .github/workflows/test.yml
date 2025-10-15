@@ -42,7 +42,7 @@ jobs:
         run: turbo prune --docker @l2beat/frontend
 
       - name: Install dependencies
-        run: cd out/full && pnpm install
+        run: cd out/full && pnpm install --frozen-lockfile
 
       - name: Build frontend dependencies
         run: cd out/full && pnpm build:dependencies:frontend
