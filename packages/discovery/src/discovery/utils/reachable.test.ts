@@ -3,7 +3,7 @@ import { expect } from 'earl'
 import type { EntryParameters, ReceivedPermission } from '../output/types'
 import { mapToReferenceNodes } from './reachable'
 
-function createMockEntry2(
+function createMockEntry(
   address: ChainSpecificAddress,
   values?: Record<string, any>,
   other?: {
@@ -69,7 +69,7 @@ describe(mapToReferenceNodes.name, () => {
    *
    *  Remember, that in discovery, we have "receivedPermissions",
    *  not "issuedPermission", so the arrow is reversed.
-   * 
+   *
    *  Btw, notice that G has two permissions, one direct and one indirect:
    *
    *  G: {
@@ -78,10 +78,10 @@ describe(mapToReferenceNodes.name, () => {
    *  }
    */
   it('correctly converts entries into graph with correct references', () => {
-    const entryA = createMockEntry2(ADDRESSES.A, { ref: ADDRESSES.B })
-    const entryB = createMockEntry2(ADDRESSES.B, { ref: ADDRESSES.D })
-    const entryC = createMockEntry2(ADDRESSES.C, { ref: ADDRESSES.D })
-    const entryD = createMockEntry2(
+    const entryA = createMockEntry(ADDRESSES.A, { ref: ADDRESSES.B })
+    const entryB = createMockEntry(ADDRESSES.B, { ref: ADDRESSES.D })
+    const entryC = createMockEntry(ADDRESSES.C, { ref: ADDRESSES.D })
+    const entryD = createMockEntry(
       ADDRESSES.D,
       { ref: ADDRESSES.E },
       {
@@ -93,8 +93,8 @@ describe(mapToReferenceNodes.name, () => {
         ],
       },
     )
-    const entryE = createMockEntry2(ADDRESSES.E)
-    const entryF = createMockEntry2(
+    const entryE = createMockEntry(ADDRESSES.E)
+    const entryF = createMockEntry(
       ADDRESSES.F,
       {},
       {
@@ -103,7 +103,7 @@ describe(mapToReferenceNodes.name, () => {
         ],
       },
     )
-    const entryG = createMockEntry2(
+    const entryG = createMockEntry(
       ADDRESSES.G,
       {},
       {
