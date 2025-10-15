@@ -1,6 +1,6 @@
 {
   "name": "apechain",
-  "timestamp": 1760529119,
+  "timestamp": 1760536483,
   "configHash": "0x18d2a648590449b2753808bbbf9b9481e9e09e07d8536752e2abafaf23d49309",
   "entries": [
     {
@@ -131,10 +131,13 @@
       "name": "CertManager",
       "address": "arb1:0x27CA506AC6567Ef79d364b56cf4dE9C4141d803A",
       "type": "Contract",
+      "template": "espresso/Sequencing",
       "sourceHashes": [
         "0xe2fe482c8972a84ccf0c6bb6c2b0d3540f1fcf9b21bb5ec08a14cd11659e3e9d"
       ],
       "proxyType": "immutable",
+      "description": "The CertManager is used for anchoring TEE attestation keys to a trusted Certificate Authority (CA).",
+      "ignoreInWatchMode": [""],
       "sinceTimestamp": 1757537025,
       "sinceBlock": 377796004,
       "values": {
@@ -325,13 +328,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 9560,
+        "firstUnresolvedNode": 9562,
         "inbox": "arb1:0x1B98e4ED82Ee1a91A65a38C690e2266364064D15",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 20628667,
-        "latestConfirmed": 9559,
-        "latestNodeCreated": 9711,
+        "latestConfirmed": 9561,
+        "latestNodeCreated": 9713,
         "loserStakeEscrow": "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF",
@@ -519,6 +522,11 @@
       }
     },
     {
+      "address": "arb1:0x5254e65b4835abf4669f0f838EFfDCb07Ede5F7E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OneStepProverMemory",
       "address": "arb1:0x550B7B23Ed78BA25B3aBCBb290ADf1190aC28E19",
       "type": "Contract",
@@ -620,8 +628,8 @@
         "outboxHistory": ["arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF"],
         "rollup": "arb1:0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
         "sequencerInbox": "arb1:0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C",
-        "sequencerMessageCount": 57812,
-        "sequencerReportedSubMessageCount": 25046749
+        "sequencerMessageCount": 57818,
+        "sequencerReportedSubMessageCount": 25049794
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -814,7 +822,8 @@
         "registeredSigners": [
           "arb1:0xC4872A3587C7937b11e6D4c0B0b0174F4b29c8D7",
           "arb1:0xf7BE303e415DD245F685eA0CF6d1dE4B002703B0",
-          "arb1:0x9173d4E736A1625400a8711E08A5d9C20A7c9131"
+          "arb1:0x9173d4E736A1625400a8711E08A5d9C20A7c9131",
+          "arb1:0x5254e65b4835abf4669f0f838EFfDCb07Ede5F7E"
         ],
         "TIMESTAMP_KEY": "0x4ebf727c48eac2c66272456b06a885c5cc03e54d140f63b63b6fd10c1227958e",
         "USER_DATA_KEY": "0x5e4ea5393e4327b3014bc32f2264336b0d1ee84a4cfd197c8ad7e1e16829a16a",
@@ -948,7 +957,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 57812,
+        "batchCount": 57818,
         "batchPosterManager": "arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B",
         "batchPosters": ["arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B"],
         "bridge": "arb1:0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
@@ -1798,6 +1807,7 @@
     ]
   },
   "usedTemplates": {
+    "espresso/Sequencing": "0x1b79cd76afba6e347d811f429fd36c08ddc9eb88b43d39abeeb230e6bd576105",
     "espresso/Sequencing/EspressoNitroTEEVerifier": "0xcfbcf143ae6576f201097bd2db629a4fbdc20ae286e1555faf44db61111d2eab",
     "espresso/Sequencing/EspressoSGXTEEVerifier": "0x62bb42822457b8146a3651a1d679d850d8a71b735dea0dd125493dd81cf1c23e",
     "espresso/Sequencing/EspressoTEEVerifier_gateway": "0x7d9c15aef19b3644fef05d35c978c01dce14e16ba55e9fd3c6326394607401e3",
@@ -1819,6 +1829,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 389778887 },
-  "permissionsConfigHash": "0xeddcbe55e6c8e8dd03f54fd83b27b1ad19fe4a2c216f9548c1dfccb3b925a5d5"
+  "usedBlockNumbers": { "arbitrum": 389808247 },
+  "permissionsConfigHash": "0x287f5406f8eedad166fe2e359a94f2ecd795fed8d1a8a178af77e3d67bf3486c"
 }

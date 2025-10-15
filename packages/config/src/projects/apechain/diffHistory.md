@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x793ff06b7331aadf50077e168d2cee4084470dab
+Generated with discovered.json: 0xa71104f33477ee5c1f146fb48c0bd83cb801dd6e
 
-# Diff at Wed, 15 Oct 2025 11:53:19 GMT:
+# Diff at Wed, 15 Oct 2025 13:55:49 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@e6369d132630f14e783254ffb9e866e883328b9b block: 1750247636
-- current timestamp: 1760529119
+- current timestamp: 1760536483
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Apechain now uses Espresso sequencer.
 
 ## Watched changes
 
@@ -67,7 +67,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract CertManager (arb1:0x27CA506AC6567Ef79d364b56cf4dE9C4141d803A)
-    +++ description: None
+    +++ description: The CertManager is used for anchoring TEE attestation keys to a trusted Certificate Authority (CA).
 ```
 
 ```diff
