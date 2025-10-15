@@ -1,6 +1,6 @@
 {
   "name": "apechain",
-  "timestamp": 1760536483,
+  "timestamp": 1760538265,
   "configHash": "0x18d2a648590449b2753808bbbf9b9481e9e09e07d8536752e2abafaf23d49309",
   "entries": [
     {
@@ -628,8 +628,8 @@
         "outboxHistory": ["arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF"],
         "rollup": "arb1:0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
         "sequencerInbox": "arb1:0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C",
-        "sequencerMessageCount": 57818,
-        "sequencerReportedSubMessageCount": 25049794
+        "sequencerMessageCount": 57820,
+        "sequencerReportedSubMessageCount": 25050744
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -957,7 +957,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 57818,
+        "batchCount": 57820,
         "batchPosterManager": "arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B",
         "batchPosters": ["arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B"],
         "bridge": "arb1:0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
@@ -1829,6 +1829,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 389808247 },
+  "usedBlockNumbers": { "arbitrum": 389815516 },
   "permissionsConfigHash": "0x287f5406f8eedad166fe2e359a94f2ecd795fed8d1a8a178af77e3d67bf3486c"
 }
