@@ -1,3 +1,81 @@
+Generated with discovered.json: 0x11bb1f4b555d9aaa761fd0ecfe4fbe295af48f85
+
+# Diff at Wed, 15 Oct 2025 13:47:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3b2c8898ebe0c61228f50617e2de65973094dd39 block: 1760090060
+- current timestamp: 1760535562
+
+## Description
+
+config: remove everclear contracts
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1760090060 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract  (everclear:0x001Fffde58224F8617C82bAf3E466a2dEBb8078E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (everclear:0x3a464f746D23Ab22155710f44dB16dcA53e0775E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (everclear:0x3C2b535a49c6827DF0b8e94467e6922c99E3c092)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OwnableMulticall (everclear:0x5c333d2284b36AeB1739C54dB2a729Fd15f80c35)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract InterchainAccountRouter (everclear:0x6FD739221F53F8dc1565F3aF830Cb687cfe5932D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OwnableMulticall (everclear:0x7a7716A400aA13B156317D683Ae2097db18B3E55)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Mailbox (everclear:0x7f50C5776722630a0024fAE05fDe8b47571D7B39)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (everclear:0xa3C641dF20C64E0D2a8a60147A4043DAab8ad896)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProtocolFee (everclear:0xC49aF4965264FA7BB6424CE37aA06773ad177224)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DomainRoutingIsm (everclear:0xcdBE2995Af304e9c14dF5B0c3d7C9CCc63D7b8B3)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x5892675d2ae05ee0e93c0aa0c2ee8126b93ed6e7
 
 # Diff at Fri, 10 Oct 2025 09:59:13 GMT:
