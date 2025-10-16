@@ -141,6 +141,7 @@ function Controls({ projectId }: { projectId: string }) {
     filter: { type: 'projects', projectIds: [projectId] },
     range,
     excludeAssociatedTokens: false,
+    includeRwaRestrictedTokens: false,
   })
 
   const chartRange = useMemo(

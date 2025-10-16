@@ -218,16 +218,13 @@ export async function getScalingProjectEntry(
             },
             warning: project.tvsInfo.warnings[0],
             tokens: {
-              breakdown: {
-                ...tvsProjectStats.breakdown,
-                associated: tvsProjectStats.associated.total,
-              },
+              breakdown: tvsProjectStats.breakdown,
               warnings: compact([
                 tvsProjectStats &&
                   tvsProjectStats.breakdown.total > 0 &&
                   getAssociatedTokenWarning({
                     associatedRatio:
-                      tvsProjectStats.associated.total /
+                      tvsProjectStats.breakdown.associated /
                       tvsProjectStats.breakdown.total,
                     name: project.name,
                     associatedTokens: project.tvsInfo.associatedTokens,

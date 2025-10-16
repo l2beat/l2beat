@@ -92,6 +92,7 @@ async function getQueryState(
     },
     range: '1y',
     excludeAssociatedTokens: false,
+    includeRwaRestrictedTokens: false,
   })
   return helpers.dehydrate()
 }

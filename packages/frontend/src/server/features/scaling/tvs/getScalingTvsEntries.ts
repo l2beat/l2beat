@@ -42,7 +42,6 @@ export async function getScalingTvsEntries() {
 
 export interface ScalingTvsEntry extends CommonScalingEntry {
   tvs: {
-    data: ProjectSevenDayTvsBreakdown | undefined
     associatedTokens: ProjectAssociatedToken[]
     warnings: WarningWithSentiment[]
   }
@@ -57,7 +56,7 @@ function getScalingTvsEntry(
   const associatedTokenWarning =
     data?.breakdown && data.breakdown.total > 0
       ? getAssociatedTokenWarning({
-          associatedRatio: data.associated.total / data.breakdown.total,
+          associatedRatio: data.breakdown.associated / data.breakdown.total,
           name: project.name,
           associatedTokens: project.tvsInfo?.associatedTokens ?? [],
         })
@@ -66,7 +65,6 @@ function getScalingTvsEntry(
   return {
     ...getCommonScalingEntry({ project, changes }),
     tvs: {
-      data,
       associatedTokens: project.tvsInfo.associatedTokens,
       warnings: compact([
         ...project.tvsInfo.warnings,

@@ -3,7 +3,9 @@ import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
+import { useScalingRwaRestrictedTokensContext } from '~/pages/scaling/components/ScalingRwaRestrictedTokensContext'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
+import { api } from '~/trpc/React'
 import { useScalingAssociatedTokensContext } from '../../../components/ScalingAssociatedTokensContext'
 import { toTableRows } from '../../utils/ToTableRows'
 import { getScalingTvsColumns } from './columns'
@@ -20,15 +22,24 @@ export function ScalingTvsTable({
   ignoreUnderReviewIcon,
 }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
+  const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { sorting, setSorting } = useTableSorting()
+
+  const { data: sevenDayBreakdown } = api.tvs.sevenDayBreakdown.useQuery({
+    projectIds: entries.map((e) => e.id),
+    type: 'projects',
+    excludeAssociatedTokens,
+    includeRwaRestrictedTokens,
+  })
 
   const data = useMemo(
     () =>
       toTableRows({
         projects: entries,
         excludeAssociatedTokens,
+        sevenDayBreakdown,
       }),
-    [entries, excludeAssociatedTokens],
+    [entries, excludeAssociatedTokens, sevenDayBreakdown],
   )
 
   const columns = useMemo(

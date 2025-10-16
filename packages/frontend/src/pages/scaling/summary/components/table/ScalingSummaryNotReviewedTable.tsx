@@ -4,7 +4,9 @@ import { BasicTable } from '~/components/table/BasicTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import { useScalingAssociatedTokensContext } from '~/pages/scaling/components/ScalingAssociatedTokensContext'
+import { useScalingRwaRestrictedTokensContext } from '~/pages/scaling/components/ScalingRwaRestrictedTokensContext'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
+import { api } from '~/trpc/React'
 import { toTableRows } from '../../utils/toTableRows'
 import { scalingSummaryNotReviewedColumns } from './columns'
 
@@ -14,15 +16,24 @@ interface Props {
 
 export function ScalingSummaryNotReviewedTable({ entries }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
+  const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { sorting, setSorting } = useTableSorting()
+
+  const { data } = api.tvs.sevenDayBreakdown.useQuery({
+    projectIds: entries.map((e) => e.id),
+    type: 'projects',
+    excludeAssociatedTokens,
+    includeRwaRestrictedTokens,
+  })
 
   const tableEntries = useMemo(
     () =>
       toTableRows({
         projects: entries,
         excludeAssociatedTokens,
+        sevenDayBreakdown: data,
       }),
-    [entries, excludeAssociatedTokens],
+    [entries, excludeAssociatedTokens, data],
   )
 
   const table = useTable({

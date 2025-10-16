@@ -136,12 +136,11 @@ export async function getBridgesProjectEntry(
         ? {
             tokenBreakdown: {
               ...tvsProjectStats.breakdown,
-              associated: tvsProjectStats.associated.total,
               warnings: compact([
                 tvsProjectStats.breakdown.total > 0 &&
                   getAssociatedTokenWarning({
                     associatedRatio:
-                      tvsProjectStats.associated.total /
+                      tvsProjectStats.breakdown.associated /
                       tvsProjectStats.breakdown.total,
                     name: project.name,
                     associatedTokens: project.tvsInfo.associatedTokens,
