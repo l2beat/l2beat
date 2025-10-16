@@ -77,6 +77,7 @@ interface TvsData {
         associated: number
         btc: number
         other: number
+        rwaPublic: number
       }
     | undefined
   change: number | undefined
