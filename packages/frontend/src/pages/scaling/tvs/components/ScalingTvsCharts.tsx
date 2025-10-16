@@ -124,21 +124,39 @@ function getStats(
         number | null,
         number | null,
         number | null,
+        number | null,
+        number | null,
       ][]
     | undefined,
 ) {
   const pointsWithData = data?.filter(
-    ([_, __, native, canonical, external, ether, stablecoin, btc, other]) =>
+    ([
+      _,
+      __,
+      native,
+      canonical,
+      external,
+      ether,
+      stablecoin,
+      btc,
+      other,
+      rwaRestricted,
+      rwaPublic,
+    ]) =>
       native !== null &&
       canonical !== null &&
       external !== null &&
       ether !== null &&
       stablecoin !== null &&
       btc !== null &&
-      other !== null,
+      other !== null &&
+      rwaRestricted !== null &&
+      rwaPublic !== null,
   ) as [
     number,
     number | null,
+    number,
+    number,
     number,
     number,
     number,

@@ -59,6 +59,16 @@ export const assetCategoryTvsChartMeta = {
     color: 'var(--chart-yellow-lime)',
     indicatorType: { shape: 'square' },
   },
+  rwaRestricted: {
+    label: 'RWA Restricted',
+    color: 'var(--color-n-pink-850)',
+    indicatorType: { shape: 'square' },
+  },
+  rwaPublic: {
+    label: 'RWA Public',
+    color: 'var(--color-n-fuchsia-750)',
+    indicatorType: { shape: 'square' },
+  },
 } satisfies ChartMeta
 
 export function AssetCategoryTvsChart({
@@ -91,6 +101,24 @@ export function AssetCategoryTvsChart({
     >
       <AreaChart data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
+        <Area
+          dataKey="rwaPublic"
+          hide={!dataKeys.includes('rwaPublic')}
+          fill={assetCategoryTvsChartMeta.rwaPublic.color}
+          fillOpacity={1}
+          strokeWidth={0}
+          stackId={dataKeys.length === 1 ? undefined : 'a'}
+          isAnimationActive={false}
+        />
+        <Area
+          dataKey="rwaRestricted"
+          hide={!dataKeys.includes('rwaRestricted')}
+          fill={assetCategoryTvsChartMeta.rwaRestricted.color}
+          fillOpacity={1}
+          strokeWidth={0}
+          stackId={dataKeys.length === 1 ? undefined : 'a'}
+          isAnimationActive={false}
+        />
         <Area
           dataKey="other"
           hide={!dataKeys.includes('other')}

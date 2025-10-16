@@ -35,6 +35,8 @@ type DetailedTvsChartDataPoint = [
   stablecoins: number | null,
   bitcoin: number | null,
   other: number | null,
+  rwaRestricted: number | null,
+  rwaPublic: number | null,
 ]
 
 export type DetailedTvsChartData = {
@@ -111,6 +113,8 @@ function getChartData(
         null,
         null,
         null,
+        null,
+        null,
       ] as const)
       continue
     }
@@ -128,6 +132,8 @@ function getChartData(
       value.stablecoin,
       value.btc,
       value.other,
+      value.rwaRestricted,
+      value.rwaPublic,
     ] as const)
 
     syncedUntil = value.timestamp
@@ -148,7 +154,19 @@ function getMockDetailedTvsChartData({
 
   return {
     chart: timestamps.map((timestamp) => {
-      return [timestamp, 3000, 2000, 1000, 1200, 1000, 1000, 1000, 1000]
+      return [
+        timestamp,
+        3000,
+        2000,
+        1000,
+        1200,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+      ]
     }),
     syncedUntil: timestamps[timestamps.length - 1] ?? 0,
   }

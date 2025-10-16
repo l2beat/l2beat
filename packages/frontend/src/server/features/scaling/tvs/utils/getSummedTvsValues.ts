@@ -20,6 +20,8 @@ export type SummedTvsValues = {
   stablecoin: number | null
   btc: number | null
   other: number | null
+  rwaRestricted: number | null
+  rwaPublic: number | null
 }
 
 export async function getSummedTvsValues(
@@ -76,6 +78,8 @@ export async function getSummedTvsValues(
         stablecoin: null,
         other: null,
         btc: null,
+        rwaRestricted: null,
+        rwaPublic: null,
       }
     }
     return record

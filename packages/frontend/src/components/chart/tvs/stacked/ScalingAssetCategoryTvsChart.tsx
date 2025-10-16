@@ -34,7 +34,19 @@ export function ScalingAssetCategoryTvsChart({
   const chartData = useMemo(
     () =>
       data?.chart.map(
-        ([timestamp, ethPrice, _, __, ___, ether, stablecoin, btc, other]) => {
+        ([
+          timestamp,
+          ethPrice,
+          _,
+          __,
+          ___,
+          ether,
+          stablecoin,
+          btc,
+          other,
+          rwaRestricted,
+          rwaPublic,
+        ]) => {
           const divider = unit === 'usd' ? 1 : ethPrice
           return {
             timestamp,
@@ -53,6 +65,14 @@ export function ScalingAssetCategoryTvsChart({
             other:
               other !== null && divider !== null && divider !== 0
                 ? other / divider
+                : null,
+            rwaRestricted:
+              rwaRestricted !== null && divider !== null && divider !== 0
+                ? rwaRestricted / divider
+                : null,
+            rwaPublic:
+              rwaPublic !== null && divider !== null && divider !== 0
+                ? rwaPublic / divider
                 : null,
           }
         },
