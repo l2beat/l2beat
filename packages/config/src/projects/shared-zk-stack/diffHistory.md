@@ -8,7 +8,8 @@ Generated with discovered.json: 0xb782433a65de2f48294bba4d3695806a45390e7c
 
 ## Description
 
-ZIP-12 V29 'Interop Messaging' Upgrade - enables interop for Gateway chains, of which there is only one.
+### ZIP-12 V29 'Interop Messaging' Upgrade
+enables interop for Gateway chains, of which there is only one.
 
 Bridgehub - https://disco.l2beat.com/diff/eth:0x08A98B1048Fb61E9Fff7d7d98305aC6286Ae9F32/eth:0xc89423b4909080fB8F8A43dF5E1C27001e55C24B
 - move chain asset handling (for chain migrations) to a separate contract: [ChainAssetHandler](https://flat.l2beat.com/address/eth:0xaa180C70126f751C164465638770B865965A744B)
