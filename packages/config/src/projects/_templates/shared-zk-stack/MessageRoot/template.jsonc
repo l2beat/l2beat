@@ -6,7 +6,8 @@
     "chainIndex",
     "chainIndexToId",
     "chainRegistered",
-    "l2BridgeAddress"
+    "l2BridgeAddress",
+    "historicalRoot"
   ],
   "ignoreInWatchMode": ["sharedTree", "getAggregatedRoot"]
 }

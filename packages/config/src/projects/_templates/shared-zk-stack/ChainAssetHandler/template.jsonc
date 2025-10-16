@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Specialized contract for managing chain assets, i.e. chain migrations.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        { "type": "interact", "description": "pause, resume chain migrations." }
+      ]
+    },
+    "migrationPaused": { "severity": "HIGH" },
+    "paused": {
+      "severity": "LOW",
+      "description": "this 'paused' is unrelated to migrations and only used for initialization."
+    },
+    "migrations": {
+      "description": "zk chain migrations that were started",
+      "severity": "HIGH",
+      "handler": { "type": "event", "add": { "event": "MigrationStarted" } }
+    }
+  }
+}
