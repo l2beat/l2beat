@@ -8,19 +8,24 @@ import type { ChartProject } from '~/components/core/chart/Chart'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { TokenCombobox } from '~/components/TokenCombobox'
+import { IncludeRwaRestrictedTokensCheckbox } from '~/pages/scaling/components/IncludeRwaRestrictedTokensCheckbox'
+import {
+  ScalingRwaRestrictedTokensContextProvider,
+  useScalingRwaRestrictedTokensContext,
+} from '~/pages/scaling/components/ScalingRwaRestrictedTokensContext'
 import { TvsBreakdownSummaryBox } from '~/pages/scaling/project/tvs-breakdown/components/TvsBreakdownSummaryBox'
 import type { ProjectSevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
-import { cn } from '~/utils/cn'
-import { TvsChartControls } from '../../chart/tvs/TvsChartControls'
+import { TvsChartControls } from '../../../chart/tvs/TvsChartControls'
 import {
   TvsChartControlsContextProvider,
   useTvsChartControlsContext,
-} from '../../chart/tvs/TvsChartControlsContext'
-import { ProjectSection } from './ProjectSection'
-import type { ProjectSectionProps } from './types'
+} from '../../../chart/tvs/TvsChartControlsContext'
+import { ProjectSection } from '../ProjectSection'
+import type { ProjectSectionProps } from '../types'
+import { TvsBreakdownButton } from './TvsBreakdownButton'
 
 export interface ScalingTvsSectionProps extends ProjectSectionProps {
   id: 'tvs'
@@ -58,61 +63,70 @@ export function ScalingTvsSection({
         )
       }
     >
-      <TvsChartControlsContextProvider defaultRange={defaultRange}>
-        <Controls projectId={project.id} />
-        <ProjectBridgeTypeTvsChart project={project} milestones={milestones} />
-        <ProjectAssetCategoryTvsChart
-          project={project}
-          milestones={milestones}
-        />
-      </TvsChartControlsContextProvider>
-      <TvsChartControlsContextProvider defaultRange={defaultRange}>
-        <TokenCombobox
-          tokens={tokens ?? []}
-          value={selectedToken}
-          setValue={setSelectedToken}
-        />
-
-        {selectedToken && (
-          <>
-            <TokenControls
-              token={selectedToken}
-              projectId={project.id}
-              className="mt-2"
-            />
-            <ProjectTokenChart
-              project={project}
-              milestones={milestones}
-              token={selectedToken}
-            />
-            <TokenSummaryBox token={selectedToken} />
-          </>
-        )}
-      </TvsChartControlsContextProvider>
-      {tvsProjectStats && (
-        <>
-          <HorizontalSeparator className="my-4" />
-          <TvsBreakdownSummaryBox
-            {...tvsProjectStats}
-            warning={tvsInfo?.warnings[0]}
+      <ScalingRwaRestrictedTokensContextProvider>
+        <TvsChartControlsContextProvider defaultRange={defaultRange}>
+          <Controls projectId={project.id} />
+          <ProjectBridgeTypeTvsChart
+            project={project}
+            milestones={milestones}
           />
-          {tvsBreakdownUrl && (
-            <div className="mt-3 w-full md:hidden">
-              <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
+          <ProjectAssetCategoryTvsChart
+            project={project}
+            milestones={milestones}
+          />
+          <div className="flex justify-between">
+            <div>
+              <TokenCombobox
+                tokens={tokens ?? []}
+                value={selectedToken}
+                setValue={setSelectedToken}
+              />
+              {selectedToken && (
+                <>
+                  <TokenControls
+                    token={selectedToken}
+                    projectId={project.id}
+                    className="mt-2"
+                  />
+                  <ProjectTokenChart
+                    project={project}
+                    milestones={milestones}
+                    token={selectedToken}
+                  />
+                  <TokenSummaryBox token={selectedToken} />
+                </>
+              )}
             </div>
+            <IncludeRwaRestrictedTokensCheckbox />
+          </div>
+          {tvsProjectStats && (
+            <>
+              <HorizontalSeparator className="my-4" />
+              <TvsBreakdownSummaryBox
+                {...tvsProjectStats}
+                warning={tvsInfo?.warnings[0]}
+              />
+              {tvsBreakdownUrl && (
+                <div className="mt-3 w-full md:hidden">
+                  <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
+                </div>
+              )}
+            </>
           )}
-        </>
-      )}
+        </TvsChartControlsContextProvider>
+      </ScalingRwaRestrictedTokensContextProvider>
     </ProjectSection>
   )
 }
 
 function Controls({ projectId }: { projectId: string }) {
   const { range, unit, setUnit, setRange } = useTvsChartControlsContext()
+  const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { data } = api.tvs.detailedChart.useQuery({
     filter: { type: 'projects', projectIds: [projectId] },
     range,
     excludeAssociatedTokens: false,
+    includeRwaRestrictedTokens,
   })
 
   const chartRange = useMemo(
@@ -166,27 +180,5 @@ function TokenControls({
         setValue: setRange,
       }}
     />
-  )
-}
-
-export function TvsBreakdownButton({
-  tvsBreakdownUrl,
-  className,
-}: {
-  tvsBreakdownUrl: string
-  className?: string
-}) {
-  return (
-    <a
-      href={tvsBreakdownUrl}
-      className={cn(
-        'font-bold text-primary text-xs leading-none md:text-white',
-        'flex w-full justify-center rounded-md border border-brand bg-transparent from-purple-100 to-pink-100 p-3 md:mt-0 md:w-fit md:border-0 md:bg-linear-to-r md:py-2',
-        'ring-brand ring-offset-1 ring-offset-background focus:outline-none focus:ring-2',
-        className,
-      )}
-    >
-      View TVS breakdown
-    </a>
   )
 }

@@ -13,7 +13,7 @@ interface Props {
   unit: ChartUnit
   filter: TvsProjectFilter
   excludeAssociatedTokens: boolean
-  excludeRwaRestrictedTokens: boolean
+  includeRwaRestrictedTokens: boolean
 }
 
 export function ScalingBridgeTypeTvsChart({
@@ -22,7 +22,7 @@ export function ScalingBridgeTypeTvsChart({
   filter,
   range,
   excludeAssociatedTokens,
-  excludeRwaRestrictedTokens,
+  includeRwaRestrictedTokens,
 }: Props) {
   const { tokenBridgeTypeDataKeys, tokenBridgeTypeToggleDataKey } =
     useScalingTvsDataKeys()
@@ -31,7 +31,7 @@ export function ScalingBridgeTypeTvsChart({
     range,
     excludeAssociatedTokens,
     filter,
-    excludeRwaRestrictedTokens,
+    includeRwaRestrictedTokens,
   })
 
   const chartData = useMemo(

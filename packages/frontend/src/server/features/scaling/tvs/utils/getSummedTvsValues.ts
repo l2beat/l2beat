@@ -30,11 +30,11 @@ export async function getSummedTvsValues(
   {
     forSummary,
     excludeAssociatedTokens,
-    excludeRwaRestrictedTokens,
+    includeRwaRestrictedTokens,
   }: {
     forSummary: boolean
     excludeAssociatedTokens: boolean
-    excludeRwaRestrictedTokens: boolean
+    includeRwaRestrictedTokens: boolean
   },
 ): Promise<SummedTvsValues[]> {
   const db = getDb()
@@ -53,7 +53,7 @@ export async function getSummedTvsValues(
             [from, to],
             forSummary,
             excludeAssociatedTokens,
-            excludeRwaRestrictedTokens,
+            includeRwaRestrictedTokens,
           ],
         })
       ).map(mapArrayToObject)

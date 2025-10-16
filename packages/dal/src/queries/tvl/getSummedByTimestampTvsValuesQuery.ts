@@ -21,7 +21,7 @@ export async function getSummedByTimestampTvsValuesQuery(
   range: [number | null, number],
   forSummary: boolean,
   excludeAssociated: boolean,
-  excludeRwaRestricted: boolean,
+  includeRwaRestrictedTokens: boolean,
 ): Promise<SummedByTimestampTvsValuesRecord[]> {
   const tvsRecords = await db.tvsTokenValue.getSummedByTimestampByProjects(
     projectIds,
@@ -29,7 +29,7 @@ export async function getSummedByTimestampTvsValuesQuery(
     range[1],
     forSummary,
     excludeAssociated,
-    excludeRwaRestricted,
+    includeRwaRestrictedTokens,
   )
 
   return tvsRecords.map((v) => [

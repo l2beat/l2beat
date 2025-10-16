@@ -14,7 +14,7 @@ import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/proje
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import { ExcludeAssociatedTokensCheckbox } from '../../components/ExcludeAssociatedTokensCheckbox'
-import { ExcludeRwaRestrictedTokensCheckbox } from '../../components/ExcludeRwaRestrictedTokensCheckbox'
+import { IncludeRwaRestrictedTokensCheckbox } from '../../components/IncludeRwaRestrictedTokensCheckbox'
 import { useScalingAssociatedTokensContext } from '../../components/ScalingAssociatedTokensContext'
 import { useScalingRwaRestrictedTokensContext } from '../../components/ScalingRwaRestrictedTokensContext'
 import { ChartTabs } from '../../summary/components/ChartTabs'
@@ -27,7 +27,7 @@ interface Props {
 
 export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
-  const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
+  const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { state: filters } = useTableFilterContext()
   const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
   const [unit, setUnit] = useState<ChartUnit>('usd')
@@ -48,7 +48,7 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
     range: timeRange,
     excludeAssociatedTokens,
     filter,
-    excludeRwaRestrictedTokens,
+    includeRwaRestrictedTokens,
   })
 
   const chartRange = getChartRange(
@@ -64,7 +64,7 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
       filter={filter}
       range={timeRange}
       excludeAssociatedTokens={excludeAssociatedTokens}
-      excludeRwaRestrictedTokens={excludeRwaRestrictedTokens}
+      includeRwaRestrictedTokens={includeRwaRestrictedTokens}
       milestones={milestones}
     />
   )
@@ -75,7 +75,7 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
       filter={filter}
       range={timeRange}
       excludeAssociatedTokens={excludeAssociatedTokens}
-      excludeRwaRestrictedTokens={excludeRwaRestrictedTokens}
+      includeRwaRestrictedTokens={includeRwaRestrictedTokens}
       milestones={milestones}
     />
   )
@@ -101,7 +101,7 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
         <TvsChartUnitControls unit={unit} setUnit={setUnit}>
           <div className="flex flex-wrap items-center gap-1">
             <ExcludeAssociatedTokensCheckbox />
-            <ExcludeRwaRestrictedTokensCheckbox />
+            <IncludeRwaRestrictedTokensCheckbox />
           </div>
         </TvsChartUnitControls>
         <TvsChartTimeRangeControls
