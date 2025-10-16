@@ -1,6 +1,0 @@
-{
-  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
-  "name": "ethstorage",
-  "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["eth:0xf0193d6E8fc186e77b6E63af4151db07524f6a7A"]
-}

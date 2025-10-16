@@ -8,6 +8,7 @@ import { IconEoaPermissioned } from '../icons/IconEoaPermissioned'
 import { IconMultisig } from '../icons/IconMultisig'
 import { IconTimelock } from '../icons/IconTimelock'
 import { IconToken } from '../icons/IconToken'
+import { IconUntemplatized } from '../icons/IconUntemplatized'
 
 export function AddressIcon(props: {
   type: ApiAddressType
@@ -21,6 +22,7 @@ export function AddressIcon(props: {
     Multisig: IconMultisig,
     Timelock: IconTimelock,
     Diamond: IconDiamond,
+    Untemplatized: IconUntemplatized,
     Contract: IconContract,
     Unknown: IconContractUnverified,
   }[props.type]

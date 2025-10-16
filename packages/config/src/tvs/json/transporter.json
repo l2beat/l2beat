@@ -892,6 +892,14 @@
             "escrowAddress": "0x3717cfE20cFf65A995F144ae4FBE78Ccf47790D4",
             "decimals": 18,
             "sinceTimestamp": 1759084091
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xBB0E17EF65F82Ab018d8EDd776e8DD940327B28b",
+            "chain": "ethereum",
+            "escrowAddress": "0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6",
+            "decimals": 18,
+            "sinceTimestamp": 1755382439
           }
         ]
       },
@@ -1789,6 +1797,14 @@
             "escrowAddress": "0x3717cfE20cFf65A995F144ae4FBE78Ccf47790D4",
             "decimals": 18,
             "sinceTimestamp": 1759084091
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x9813037ee2218799597d83D4a5B6F3b6778218d9",
+            "chain": "ethereum",
+            "escrowAddress": "0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6",
+            "decimals": 18,
+            "sinceTimestamp": 1755382439
           }
         ]
       },
@@ -2686,6 +2702,14 @@
             "escrowAddress": "0x3717cfE20cFf65A995F144ae4FBE78Ccf47790D4",
             "decimals": 18,
             "sinceTimestamp": 1759084091
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x5F64Ab1544D28732F0A24F4713c2C8ec0dA089f0",
+            "chain": "ethereum",
+            "escrowAddress": "0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6",
+            "decimals": 18,
+            "sinceTimestamp": 1755382439
           }
         ]
       },
@@ -3583,6 +3607,14 @@
             "escrowAddress": "0x3717cfE20cFf65A995F144ae4FBE78Ccf47790D4",
             "decimals": 18,
             "sinceTimestamp": 1759084091
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+            "chain": "ethereum",
+            "escrowAddress": "0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6",
+            "decimals": 18,
+            "sinceTimestamp": 1755382439
           }
         ]
       },
@@ -4480,6 +4512,14 @@
             "escrowAddress": "0x3717cfE20cFf65A995F144ae4FBE78Ccf47790D4",
             "decimals": 18,
             "sinceTimestamp": 1759084091
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7420B4b9a0110cdC71fB720908340C03F9Bc03EC",
+            "chain": "ethereum",
+            "escrowAddress": "0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6",
+            "decimals": 18,
+            "sinceTimestamp": 1755382439
           }
         ]
       },
@@ -5377,6 +5417,14 @@
             "escrowAddress": "0x3717cfE20cFf65A995F144ae4FBE78Ccf47790D4",
             "decimals": 18,
             "sinceTimestamp": 1759084091
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x27C70Cd1946795B66be9d954418546998b546634",
+            "chain": "ethereum",
+            "escrowAddress": "0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6",
+            "decimals": 18,
+            "sinceTimestamp": 1755382439
           }
         ]
       },
@@ -6274,6 +6322,14 @@
             "escrowAddress": "0x3717cfE20cFf65A995F144ae4FBE78Ccf47790D4",
             "decimals": 18,
             "sinceTimestamp": 1759084091
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+            "chain": "ethereum",
+            "escrowAddress": "0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6",
+            "decimals": 18,
+            "sinceTimestamp": 1755382439
           }
         ]
       },
@@ -7171,6 +7227,14 @@
             "escrowAddress": "0x3717cfE20cFf65A995F144ae4FBE78Ccf47790D4",
             "decimals": 18,
             "sinceTimestamp": 1759084091
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549",
+            "chain": "ethereum",
+            "escrowAddress": "0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6",
+            "decimals": 18,
+            "sinceTimestamp": 1755382439
           }
         ]
       },
@@ -8068,6 +8132,14 @@
             "escrowAddress": "0x3717cfE20cFf65A995F144ae4FBE78Ccf47790D4",
             "decimals": 9,
             "sinceTimestamp": 1759084091
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x64aa3364F17a4D01c6f1751Fd97C2BD3D7e7f1D5",
+            "chain": "ethereum",
+            "escrowAddress": "0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6",
+            "decimals": 9,
+            "sinceTimestamp": 1755382439
           }
         ]
       },
@@ -8965,6 +9037,14 @@
             "escrowAddress": "0x3717cfE20cFf65A995F144ae4FBE78Ccf47790D4",
             "decimals": 18,
             "sinceTimestamp": 1759084091
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xD9A442856C234a39a81a089C06451EBAa4306a72",
+            "chain": "ethereum",
+            "escrowAddress": "0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6",
+            "decimals": 18,
+            "sinceTimestamp": 1755382439
           }
         ]
       },
@@ -9862,6 +9942,14 @@
             "escrowAddress": "0x3717cfE20cFf65A995F144ae4FBE78Ccf47790D4",
             "decimals": 18,
             "sinceTimestamp": 1759084091
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xae78736Cd615f374D3085123A210448E74Fc6393",
+            "chain": "ethereum",
+            "escrowAddress": "0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6",
+            "decimals": 18,
+            "sinceTimestamp": 1755382439
           }
         ]
       },
@@ -10759,6 +10847,14 @@
             "escrowAddress": "0x3717cfE20cFf65A995F144ae4FBE78Ccf47790D4",
             "decimals": 18,
             "sinceTimestamp": 1759084091
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
+            "chain": "ethereum",
+            "escrowAddress": "0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6",
+            "decimals": 18,
+            "sinceTimestamp": 1755382439
           }
         ]
       },
@@ -11656,6 +11752,14 @@
             "escrowAddress": "0x3717cfE20cFf65A995F144ae4FBE78Ccf47790D4",
             "decimals": 18,
             "sinceTimestamp": 1759084091
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+            "chain": "ethereum",
+            "escrowAddress": "0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6",
+            "decimals": 18,
+            "sinceTimestamp": 1755382439
           }
         ]
       },
@@ -12553,6 +12657,14 @@
             "escrowAddress": "0x3717cfE20cFf65A995F144ae4FBE78Ccf47790D4",
             "decimals": 18,
             "sinceTimestamp": 1759084091
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x996d67AA9b37df96428ad3608cb21352BF1FDB90",
+            "chain": "ethereum",
+            "escrowAddress": "0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6",
+            "decimals": 18,
+            "sinceTimestamp": 1755382439
           }
         ]
       },
@@ -13450,6 +13562,14 @@
             "escrowAddress": "0x3717cfE20cFf65A995F144ae4FBE78Ccf47790D4",
             "decimals": 18,
             "sinceTimestamp": 1759084091
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6e5970DBd6fc7eb1f29C6D2eDF2bC4c36124C0C1",
+            "chain": "ethereum",
+            "escrowAddress": "0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6",
+            "decimals": 18,
+            "sinceTimestamp": 1755382439
           }
         ]
       },
@@ -14347,6 +14467,14 @@
             "escrowAddress": "0x3717cfE20cFf65A995F144ae4FBE78Ccf47790D4",
             "decimals": 6,
             "sinceTimestamp": 1759084091
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "chain": "ethereum",
+            "escrowAddress": "0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6",
+            "decimals": 6,
+            "sinceTimestamp": 1755382439
           }
         ]
       },
@@ -15244,6 +15372,14 @@
             "escrowAddress": "0x3717cfE20cFf65A995F144ae4FBE78Ccf47790D4",
             "decimals": 18,
             "sinceTimestamp": 1759084091
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xC4441c2BE5d8fA8126822B9929CA0b81Ea0DE38E",
+            "chain": "ethereum",
+            "escrowAddress": "0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6",
+            "decimals": 18,
+            "sinceTimestamp": 1755382439
           }
         ]
       },
@@ -16141,6 +16277,14 @@
             "escrowAddress": "0x3717cfE20cFf65A995F144ae4FBE78Ccf47790D4",
             "decimals": 8,
             "sinceTimestamp": 1759084091
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+            "chain": "ethereum",
+            "escrowAddress": "0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6",
+            "decimals": 8,
+            "sinceTimestamp": 1755382439
           }
         ]
       },
@@ -17038,6 +17182,14 @@
             "escrowAddress": "0x3717cfE20cFf65A995F144ae4FBE78Ccf47790D4",
             "decimals": 18,
             "sinceTimestamp": 1759084091
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+            "chain": "ethereum",
+            "escrowAddress": "0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6",
+            "decimals": 18,
+            "sinceTimestamp": 1755382439
           }
         ]
       },
@@ -17935,6 +18087,14 @@
             "escrowAddress": "0x3717cfE20cFf65A995F144ae4FBE78Ccf47790D4",
             "decimals": 18,
             "sinceTimestamp": 1759084091
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x163f8C2467924be0ae7B5347228CABF260318753",
+            "chain": "ethereum",
+            "escrowAddress": "0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6",
+            "decimals": 18,
+            "sinceTimestamp": 1755382439
           }
         ]
       },
@@ -18832,6 +18992,14 @@
             "escrowAddress": "0x3717cfE20cFf65A995F144ae4FBE78Ccf47790D4",
             "decimals": 18,
             "sinceTimestamp": 1759084091
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6",
+            "decimals": 18,
+            "sinceTimestamp": 1755382439
           }
         ]
       },
@@ -19729,6 +19897,14 @@
             "escrowAddress": "0x3717cfE20cFf65A995F144ae4FBE78Ccf47790D4",
             "decimals": 18,
             "sinceTimestamp": 1759084091
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x25f8087EAD173b73D6e8B84329989A8eEA16CF73",
+            "chain": "ethereum",
+            "escrowAddress": "0x03E342731c08FDDc34cFb43E91cB3a7e424ee0F6",
+            "decimals": 18,
+            "sinceTimestamp": 1755382439
           }
         ]
       },
