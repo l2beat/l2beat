@@ -3,10 +3,7 @@ import groupBy from 'lodash/groupBy'
 
 type SummedByTimestampTvsPerProject = Record<
   string,
-  {
-    all: SummedByTimestampTvsValuesRecord[]
-    withoutAssociated: SummedByTimestampTvsValuesRecord[]
-  }
+  SummedByTimestampTvsValuesRecord[]
 >
 
 export type SummedByTimestampTvsValuesRecord = [
@@ -27,43 +24,26 @@ export async function getAtTimestampsPerProjectQuery(
   db: Database,
   oldestTimestamp: number,
   latestTimestamp: number,
-  skipWithoutAssociated?: boolean,
+  excludeAssociated: boolean,
+  includeRwaRestrictedTokens: boolean,
   cutOffTimestamp?: number,
 ): Promise<SummedByTimestampTvsPerProject> {
-  const [all, withoutAssociated] = await Promise.all([
-    db.tvsTokenValue.getSummedAtTimestampsByProjects(
-      oldestTimestamp,
-      latestTimestamp,
-      false,
-      cutOffTimestamp,
-    ),
-    skipWithoutAssociated
-      ? undefined
-      : db.tvsTokenValue.getSummedAtTimestampsByProjects(
-          oldestTimestamp,
-          latestTimestamp,
-          true,
-          cutOffTimestamp,
-        ),
-  ])
+  const allValues = await db.tvsTokenValue.getSummedAtTimestampsByProjects(
+    oldestTimestamp,
+    latestTimestamp,
+    excludeAssociated,
+    includeRwaRestrictedTokens,
+    cutOffTimestamp,
+  )
 
-  const allValuesByProject = groupBy(all, (v) => v.project)
-  const withoutAssociatedValuesByProject = groupBy(
-    withoutAssociated,
+  const allValuesByProject = groupBy(
+    allValues.sort((a, b) => a.timestamp - b.timestamp),
     (v) => v.project,
   )
 
   const values: SummedByTimestampTvsPerProject = {}
   for (const [project, allValues] of Object.entries(allValuesByProject)) {
-    const withoutAssociatedValues = withoutAssociatedValuesByProject[project]
-    values[project] = {
-      all: allValues.sort((a, b) => a.timestamp - b.timestamp).map(mapValue),
-      withoutAssociated: withoutAssociatedValues
-        ? withoutAssociatedValues
-            .sort((a, b) => a.timestamp - b.timestamp)
-            .map(mapValue)
-        : [EMPTY_VALUE, EMPTY_VALUE],
-    }
+    values[project] = allValues.map(mapValue)
   }
 
   return values
@@ -97,7 +77,3 @@ function mapValue(v: {
     v.associated,
   ]
 }
-
-const EMPTY_VALUE: SummedByTimestampTvsValuesRecord = [
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-]

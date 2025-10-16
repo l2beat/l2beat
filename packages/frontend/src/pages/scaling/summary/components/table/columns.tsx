@@ -87,7 +87,7 @@ export const scalingSummaryColumns = [
             associatedTokens={value.associatedTokens}
             tvsWarnings={value.warnings}
             breakdown={value.breakdown}
-            change={value.change}
+            change={value.change?.total}
           />
         )
       },
