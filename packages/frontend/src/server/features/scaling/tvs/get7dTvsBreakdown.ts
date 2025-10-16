@@ -42,7 +42,15 @@ const TvsAdditionalProps = {
 
 export const TvsBreakdownProjectFilter = v.union([
   v.object({
-    type: v.enum(['all', 'layer2', 'bridge']),
+    type: v.enum([
+      'all',
+      'layer2',
+      'bridge',
+      'rollups',
+      'validiumsAndOptimiums',
+      'others',
+      'notReviewed',
+    ]),
     ...TvsAdditionalProps,
   }),
   v.object({
@@ -189,6 +197,26 @@ function createTvsBreakdownProjectFilter(
       return () => true
     case 'layer2':
       return (project) => !!project.scalingInfo
+    case 'notReviewed':
+      return (project) => project.statuses.reviewStatus === 'initialReview'
+    case 'rollups':
+      return (project) =>
+        !!project.scalingInfo &&
+        (project.scalingInfo.type === 'Optimistic Rollup' ||
+          project.scalingInfo.type === 'ZK Rollup') &&
+        !(project.statuses.reviewStatus === 'initialReview')
+    case 'validiumsAndOptimiums':
+      return (project) =>
+        !!project.scalingInfo &&
+        (project.scalingInfo.type === 'Validium' ||
+          project.scalingInfo.type === 'Optimium' ||
+          project.scalingInfo.type === 'Plasma') &&
+        !(project.statuses.reviewStatus === 'initialReview')
+    case 'others':
+      return (project) =>
+        !!project.scalingInfo &&
+        project.scalingInfo.type === 'Other' &&
+        !(project.statuses.reviewStatus === 'initialReview')
     case 'bridge':
       return (project) => !!project.isBridge
   }

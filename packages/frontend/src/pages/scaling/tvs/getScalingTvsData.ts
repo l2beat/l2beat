@@ -86,13 +86,20 @@ async function getQueryState(
     return helpers.dehydrate()
   }
 
-  await helpers.tvs.detailedChart.prefetch({
-    filter: {
+  await Promise.all([
+    helpers.tvs.detailedChart.prefetch({
+      filter: {
+        type: tab,
+      },
+      range: '1y',
+      excludeAssociatedTokens: false,
+      includeRwaRestrictedTokens: false,
+    }),
+    helpers.tvs.sevenDayBreakdown.prefetch({
       type: tab,
-    },
-    range: '1y',
-    excludeAssociatedTokens: false,
-    includeRwaRestrictedTokens: false,
-  })
+      excludeAssociatedTokens: false,
+      includeRwaRestrictedTokens: false,
+    }),
+  ])
   return helpers.dehydrate()
 }

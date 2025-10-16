@@ -20,8 +20,7 @@ export function ScalingSummaryRollupsTable({ entries }: Props) {
   const { sorting, setSorting } = useTableSorting()
 
   const { data } = api.tvs.sevenDayBreakdown.useQuery({
-    projectIds: entries.map((e) => e.id),
-    type: 'projects',
+    type: 'rollups',
     excludeAssociatedTokens,
     includeRwaRestrictedTokens,
   })

@@ -11,12 +11,14 @@ import { toTableRows } from '../../utils/ToTableRows'
 import { getScalingTvsColumns } from './columns'
 
 interface Props {
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed'
   entries: ScalingTvsEntry[]
   breakdownType: 'bridgeType' | 'assetCategory'
   ignoreUnderReviewIcon?: boolean
 }
 
 export function ScalingTvsTable({
+  tab,
   entries,
   breakdownType,
   ignoreUnderReviewIcon,
@@ -26,8 +28,7 @@ export function ScalingTvsTable({
   const { sorting, setSorting } = useTableSorting()
 
   const { data: sevenDayBreakdown } = api.tvs.sevenDayBreakdown.useQuery({
-    projectIds: entries.map((e) => e.id),
-    type: 'projects',
+    type: tab,
     excludeAssociatedTokens,
     includeRwaRestrictedTokens,
   })
