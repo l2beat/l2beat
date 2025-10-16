@@ -15,7 +15,7 @@ export const debridge: Bridge = {
     slug: 'debridge',
     category: 'Token Bridge',
     links: {
-      websites: ['http://debridge.com'],
+      websites: ['https://debridge.com'],
       documentation: ['https://docs.debridge.com'],
       repositories: ['https://github.com/debridge-finance'],
       explorers: ['https://explorer.debridge.com'],
