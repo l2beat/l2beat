@@ -21,7 +21,7 @@ export class QueryExecutor {
   ) {
     this.logger = logger.for(this)
     if (ci) {
-      this.logger.tag({ tag: 'ci' })
+      this.logger = this.logger.tag({ tag: 'ci' })
     }
   }
 

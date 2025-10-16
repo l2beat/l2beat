@@ -13,7 +13,6 @@ type Options = {
 }
 
 export function makeQueryExecutor({ redisUrl, db, logger, env, ci }: Options) {
-  console.log('Received CI:', ci)
   let cache: Cache | undefined
   if (redisUrl) {
     const packageHash = getPackageHash(env)
