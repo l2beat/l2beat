@@ -112,6 +112,7 @@ describe(AddressAnalyzer.name, () => {
               constructorArguments: '',
               files: { 'Foo.sol': 'contract Test { function foo() {} }' },
               remappings: [],
+              libraries: {},
             },
           },
           {
@@ -126,6 +127,7 @@ describe(AddressAnalyzer.name, () => {
               constructorArguments: '',
               files: { 'Bar.sol': 'contract Test { function bar() {} }' },
               remappings: [],
+              libraries: {},
             },
           },
         ],
@@ -228,6 +230,7 @@ describe(AddressAnalyzer.name, () => {
               constructorArguments: '',
               files: { 'Foo.sol': 'contract Test { function foo() {} }' },
               remappings: [],
+              libraries: {},
             },
           },
           {
@@ -242,6 +245,7 @@ describe(AddressAnalyzer.name, () => {
               files: {},
               remappings: [],
               solidityVersion: '0.8.0',
+              libraries: {},
             },
           },
         ],
@@ -345,6 +349,7 @@ describe(AddressAnalyzer.name, () => {
               constructorArguments: '',
               files: { 'Foo.sol': 'contract Test { function foo() {} }' },
               remappings: [],
+              libraries: {},
             },
           },
           {
@@ -359,6 +364,7 @@ describe(AddressAnalyzer.name, () => {
               constructorArguments: '',
               files: { 'Bar.sol': 'contract Test { function bar() {} }' },
               remappings: [],
+              libraries: {},
             },
           },
         ],
