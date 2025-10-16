@@ -859,5 +859,25 @@
     "events": [],
     "messages": [],
     "transfers": []
+  },
+  "oneinch-fusion-plus": {
+    // one crosschain tx, one orphaned escrow creation
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xb4cb0fc6b26ae28df893552638f747055f6a223cee01b17b29bfa20dd4c251fa"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x9819f6178c8dc03acde6259ecd4199cc3407bf546e4df849cdb4bc4e476a2fcf"
+      },
+      {
+        "chain": "base",
+        "tx": "0x2745a60ccdfddb2e92251813d86450fe821f997de702edad1c72c37ac6a64ec1"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
   }
 }

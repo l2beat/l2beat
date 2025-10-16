@@ -1,3 +1,4 @@
+import { OneinchFusionPlusPlugin } from './1inchfusionplus'
 import { AcrossPlugin } from './across'
 import { AllbridgePlugIn } from './allbridge'
 import { AxelarPlugin } from './axelar'
@@ -62,5 +63,6 @@ export function createInteropPlugins(): InteropPlugin[] {
     new HyperlaneHwrPlugin(), // should be run before Hyperlane
     new HyperlaneEcoPlugin(), // should be run before Hyperlane
     new HyperlanePlugIn(),
+    new OneinchFusionPlusPlugin(),
   ]
 }
