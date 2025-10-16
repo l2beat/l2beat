@@ -58,24 +58,28 @@ export class ProjectDiscovery {
     public readonly projectName: string,
     public readonly configReader = new ConfigReader(paths.discovery),
   ) {
+    // TODO: Legacy behavior - we blindly create new ProjectDiscovery instances in tests
     try {
       this.discoveries = configReader.readDiscoveryWithReferences(projectName)
-      const entrypoints = [...this.discoveries[0].entries].map((e) => e.address) // always the base discovery
-
-      // Removing Reference entries because otherwise we get duplicates
-      // and incomplete data.
-      // TODO: refactor this whole logic around depenent projects and
-      // references to entrypoints to make it cleaner
-      this.discoveries.forEach((d) => removeReferences(d))
-
-      this.reachableEntries = getReachableEntries(
-        this.discoveries.flatMap((discovery) => discovery.entries),
-        entrypoints,
-      )
     } catch {
       this.discoveries = []
-      this.reachableEntries = []
     }
+
+    // always the base discovery
+    const entrypoints = [...(this.discoveries.at(0)?.entries ?? [])].map(
+      (e) => e.address,
+    )
+
+    // Removing Reference entries because otherwise we get duplicates
+    // and incomplete data.
+    // TODO: refactor this whole logic around depenent projects and
+    // references to entrypoints to make it cleaner
+    this.discoveries.forEach((d) => removeReferences(d))
+
+    this.reachableEntries = getReachableEntries(
+      this.discoveries.flatMap((discovery) => discovery.entries),
+      entrypoints,
+    )
 
     this.permissionRegistry = new PermissionsFromDiscovery(this)
   }
