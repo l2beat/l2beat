@@ -339,7 +339,6 @@ export async function getScalingProjectEntry(
         tvsBreakdownUrl: `/scaling/projects/${project.slug}/tvs-breakdown`,
         milestones: sortedMilestones,
         tokens,
-        tvsProjectStats,
         tvsInfo: project.tvsInfo,
         project,
         ...scalingTvsSection,
