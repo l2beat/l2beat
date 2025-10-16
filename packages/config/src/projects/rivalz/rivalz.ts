@@ -24,6 +24,7 @@ export const rivalz: ScalingProject = upcomingL3({
         'https://discord.com/invite/rivalzai',
         'https://t.me/+1yVzpdr6hxphYmQx',
       ],
+      repositories: ['https://github.com/Rivalz-ai'],
     },
   },
   ecosystemInfo: {
