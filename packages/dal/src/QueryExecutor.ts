@@ -17,7 +17,7 @@ export class QueryExecutor {
     private readonly db: Database,
     private readonly logger: Logger,
     private readonly cache: Cache | undefined,
-    ci: boolean,
+    ci?: boolean,
   ) {
     this.logger = logger.for(this)
     if (ci) {
