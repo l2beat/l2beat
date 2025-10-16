@@ -66,6 +66,7 @@ export interface ContractSource {
   constructorArguments: string
   files: Record<string, string>
   remappings: string[]
+  libraries: Record<string, EthereumAddress>
 }
 
 export interface IEtherscanClient {
