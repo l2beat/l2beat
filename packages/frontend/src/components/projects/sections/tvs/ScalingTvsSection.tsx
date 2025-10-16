@@ -74,30 +74,30 @@ export function ScalingTvsSection({
             project={project}
             milestones={milestones}
           />
-          <div className="flex justify-between">
-            <div>
+          <div>
+            <div className="flex flex-wrap justify-between gap-1">
               <TokenCombobox
                 tokens={tokens ?? []}
                 value={selectedToken}
                 setValue={setSelectedToken}
               />
-              {selectedToken && (
-                <>
-                  <TokenControls
-                    token={selectedToken}
-                    projectId={project.id}
-                    className="mt-2"
-                  />
-                  <ProjectTokenChart
-                    project={project}
-                    milestones={milestones}
-                    token={selectedToken}
-                  />
-                  <TokenSummaryBox token={selectedToken} />
-                </>
-              )}
+              <IncludeRwaRestrictedTokensCheckbox />
             </div>
-            <IncludeRwaRestrictedTokensCheckbox />
+            {selectedToken && (
+              <>
+                <TokenControls
+                  token={selectedToken}
+                  projectId={project.id}
+                  className="mt-2"
+                />
+                <ProjectTokenChart
+                  project={project}
+                  milestones={milestones}
+                  token={selectedToken}
+                />
+                <TokenSummaryBox token={selectedToken} />
+              </>
+            )}
           </div>
           {tvsProjectStats && (
             <>
