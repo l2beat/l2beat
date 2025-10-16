@@ -1,7 +1,7 @@
 import type { Milestone, ProjectTvsInfo } from '@l2beat/config'
-import { useState } from 'react'
 import { ProjectAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/ProjectAssetCategoryTvsChart'
 import { ProjectBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ProjectBridgeTypeTvsChart'
+import { SelectedTokenContextProvider } from '~/components/chart/tvs/token/SelectedTokenContext'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ScalingRwaRestrictedTokensContextProvider } from '~/pages/scaling/components/ScalingRwaRestrictedTokensContext'
 import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
@@ -34,9 +34,6 @@ export function ScalingTvsSection({
   defaultRange,
   ...sectionProps
 }: ScalingTvsSectionProps) {
-  const [selectedToken, setSelectedToken] = useState<ProjectToken | undefined>(
-    undefined,
-  )
   return (
     <ProjectSection
       {...sectionProps}
@@ -51,32 +48,26 @@ export function ScalingTvsSection({
     >
       <ScalingRwaRestrictedTokensContextProvider>
         <TvsChartControlsContextProvider defaultRange={defaultRange}>
-          <ChartControls projectId={project.id} />
-          <ProjectBridgeTypeTvsChart
-            project={project}
-            milestones={milestones}
-          />
-          <ProjectAssetCategoryTvsChart
-            project={project}
-            milestones={milestones}
-          />
-          <div>
-            <TokensControls
-              tokens={tokens}
-              selectedToken={selectedToken}
-              setSelectedToken={setSelectedToken}
-            />
-            <TokenChart
-              token={selectedToken}
+          <SelectedTokenContextProvider>
+            <ChartControls projectId={project.id} />
+            <ProjectBridgeTypeTvsChart
               project={project}
               milestones={milestones}
             />
-          </div>
-          <TvsProjectStats
-            projectId={project.id}
-            tvsBreakdownUrl={tvsBreakdownUrl}
-            tvsInfo={tvsInfo}
-          />
+            <ProjectAssetCategoryTvsChart
+              project={project}
+              milestones={milestones}
+            />
+            <div>
+              <TokensControls tokens={tokens} />
+              <TokenChart project={project} milestones={milestones} />
+            </div>
+            <TvsProjectStats
+              projectId={project.id}
+              tvsBreakdownUrl={tvsBreakdownUrl}
+              tvsInfo={tvsInfo}
+            />
+          </SelectedTokenContextProvider>
         </TvsChartControlsContextProvider>
       </ScalingRwaRestrictedTokensContextProvider>
     </ProjectSection>

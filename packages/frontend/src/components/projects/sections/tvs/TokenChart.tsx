@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 import { TvsChartControls } from '~/components/chart/tvs/TvsChartControls'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
 import { ProjectTokenChart } from '~/components/chart/tvs/token/ProjectTokenChart'
+import { useSelectedTokenContext } from '~/components/chart/tvs/token/SelectedTokenContext'
 import { TokenSummaryBox } from '~/components/chart/tvs/token/TokenSummaryBox'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
@@ -10,30 +11,30 @@ import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getToken
 import { api } from '~/trpc/React'
 
 export function TokenChart({
-  token,
   project,
   milestones,
 }: {
-  token: ProjectToken | undefined
   project: ChartProject
   milestones: Milestone[]
 }) {
-  if (!token) {
+  const { selectedToken } = useSelectedTokenContext()
+  if (!selectedToken) {
     return null
   }
+
   return (
     <>
       <TokenChartControls
-        token={token}
+        token={selectedToken}
         projectId={project.id}
         className="mt-2"
       />
       <ProjectTokenChart
         project={project}
         milestones={milestones}
-        token={token}
+        token={selectedToken}
       />
-      <TokenSummaryBox token={token} />
+      <TokenSummaryBox token={selectedToken} />
     </>
   )
 }
