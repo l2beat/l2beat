@@ -72,6 +72,7 @@ export const getScalingTvsColumns = (
                         stablecoin: data.breakdown.stablecoin,
                         btc: data.breakdown.btc,
                         other: data.breakdown.other,
+                        rwaPublic: data.breakdown.rwaPublic,
                       }
                 }
                 change={data.change.total}

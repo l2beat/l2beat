@@ -97,6 +97,7 @@ export interface ProjectScalingEntry {
           associated: number
           btc: number
           other: number
+          rwaPublic: number
         }
         warnings: WarningWithSentiment[]
         associatedTokens: ProjectAssociatedToken[]

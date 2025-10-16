@@ -27,6 +27,7 @@ interface TotalCellProps {
         associated: number
         btc: number
         other: number
+        rwaPublic: number
       }
     | undefined
   associatedTokens: ProjectAssociatedToken[]
@@ -98,6 +99,7 @@ export function TotalCellWithTokenBreakdown(props: TotalCellProps) {
               stablecoin={props.breakdown.stablecoin}
               btc={props.breakdown.btc}
               other={props.breakdown.other}
+              rwaPublic={props.breakdown.rwaPublic}
               className="h-[3px] w-[180px]"
             />
           </div>
@@ -111,6 +113,7 @@ export function TotalCellWithTokenBreakdown(props: TotalCellProps) {
           stablecoin={props.breakdown.stablecoin}
           btc={props.breakdown.btc}
           other={props.breakdown.other}
+          rwaPublic={props.breakdown.rwaPublic}
           tvsWarnings={tvsWarnings}
           associatedTokens={props.associatedTokens}
         />
