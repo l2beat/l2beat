@@ -47,8 +47,9 @@ export function ScalingTvsTable({
       getScalingTvsColumns({
         ignoreUnderReviewIcon,
         breakdownType,
+        includeRwaRestrictedTokens,
       }),
-    [breakdownType, ignoreUnderReviewIcon],
+    [breakdownType, ignoreUnderReviewIcon, includeRwaRestrictedTokens],
   )
 
   const table = useTable({

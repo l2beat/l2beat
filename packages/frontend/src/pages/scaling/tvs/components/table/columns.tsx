@@ -1,6 +1,7 @@
 import type { TvsToken } from '@l2beat/config'
 import { createColumnHelper } from '@tanstack/react-table'
 import capitalize from 'lodash/capitalize'
+import compact from 'lodash/compact'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { getFilterSearchParams } from '~/components/table/filters/utils/getFilterSearchParams'
 import type { CommonProjectColumnsOptions } from '~/components/table/utils/common-project-columns/CommonProjectColumns'
@@ -17,6 +18,7 @@ const columnHelper = createColumnHelper<ScalingTvsTableRow>()
 export const getScalingTvsColumns = (
   opts: CommonProjectColumnsOptions & {
     breakdownType: 'bridgeType' | 'assetCategory'
+    includeRwaRestrictedTokens: boolean
   },
 ) => [
   ...getScalingCommonProjectColumns(
@@ -89,7 +91,7 @@ export const getScalingTvsColumns = (
   }),
   ...(opts?.breakdownType === 'bridgeType'
     ? tokenBridgeTypeColumns
-    : tokenAssetCategoryColumns),
+    : getTokenAssetCategoryColumns(opts)),
 ]
 
 const tokenBridgeTypeColumns = [
@@ -154,66 +156,106 @@ const tokenBridgeTypeColumns = [
   }),
 ]
 
-const tokenAssetCategoryColumns = [
-  columnHelper.accessor('tvs.data.breakdown.ether', {
-    id: 'ether',
-    header: 'ETH & derivatives',
-    cell: (ctx) => (
-      <BreakdownCell row={ctx.row.original} dataKey="ether" type="category" />
-    ),
-    sortUndefined: 'last',
-    meta: {
-      cellClassName: 'w-[40%]',
-      align: 'right',
-      headClassName: getColumnHeaderUnderline('before:bg-chart-ethereum'),
-    },
-  }),
-  columnHelper.accessor('tvs.data.breakdown.stablecoin', {
-    id: 'stablecoins',
-    header: 'Stablecoins',
-    cell: (ctx) => (
-      <BreakdownCell
-        row={ctx.row.original}
-        dataKey="stablecoin"
-        type="category"
-      />
-    ),
-    sortUndefined: 'last',
-    meta: {
-      cellClassName: 'w-[10%]',
-      align: 'right',
-      headClassName: getColumnHeaderUnderline('before:bg-chart-teal'),
-    },
-  }),
-  columnHelper.accessor('tvs.data.breakdown.btc', {
-    id: 'btc',
-    header: 'BTC & derivatives',
-    cell: (ctx) => (
-      <BreakdownCell row={ctx.row.original} dataKey="btc" type="category" />
-    ),
-    sortUndefined: 'last',
-    meta: {
-      cellClassName: 'w-[40%]',
-      align: 'right',
-      headClassName: getColumnHeaderUnderline('before:bg-chart-orange'),
-    },
-  }),
-  columnHelper.accessor('tvs.data.breakdown.other', {
-    id: 'other',
-    header: 'Other',
-    cell: (ctx) => (
-      <BreakdownCell row={ctx.row.original} dataKey="other" type="category" />
-    ),
-    sortUndefined: 'last',
-    meta: {
-      cellClassName: 'w-[10%] ',
-      align: 'right',
-      headClassName: getColumnHeaderUnderline(
-        'before:bg-chart-yellow-lime last:pr-3',
+const getTokenAssetCategoryColumns = (opts: {
+  includeRwaRestrictedTokens: boolean
+}) =>
+  compact([
+    columnHelper.accessor('tvs.data.breakdown.ether', {
+      id: 'ether',
+      header: 'ETH & derivatives',
+      cell: (ctx) => (
+        <BreakdownCell row={ctx.row.original} dataKey="ether" type="category" />
       ),
-    },
-  }),
-]
+      sortUndefined: 'last',
+      meta: {
+        cellClassName: 'w-[40%]',
+        align: 'right',
+        headClassName: getColumnHeaderUnderline('before:bg-chart-ethereum'),
+      },
+    }),
+    columnHelper.accessor('tvs.data.breakdown.stablecoin', {
+      id: 'stablecoins',
+      header: 'Stablecoins',
+      cell: (ctx) => (
+        <BreakdownCell
+          row={ctx.row.original}
+          dataKey="stablecoin"
+          type="category"
+        />
+      ),
+      sortUndefined: 'last',
+      meta: {
+        cellClassName: 'w-[10%]',
+        align: 'right',
+        headClassName: getColumnHeaderUnderline('before:bg-chart-teal'),
+      },
+    }),
+    columnHelper.accessor('tvs.data.breakdown.btc', {
+      id: 'btc',
+      header: 'BTC & derivatives',
+      cell: (ctx) => (
+        <BreakdownCell row={ctx.row.original} dataKey="btc" type="category" />
+      ),
+      sortUndefined: 'last',
+      meta: {
+        cellClassName: 'w-[40%]',
+        align: 'right',
+        headClassName: getColumnHeaderUnderline('before:bg-chart-orange'),
+      },
+    }),
+    columnHelper.accessor('tvs.data.breakdown.other', {
+      id: 'other',
+      header: 'Other',
+      cell: (ctx) => (
+        <BreakdownCell row={ctx.row.original} dataKey="other" type="category" />
+      ),
+      sortUndefined: 'last',
+      meta: {
+        cellClassName: 'w-[10%] ',
+        align: 'right',
+        headClassName: getColumnHeaderUnderline('before:bg-chart-yellow-lime'),
+      },
+    }),
+    columnHelper.accessor('tvs.data.breakdown.rwaPublic', {
+      id: 'rwaPublic',
+      header: 'RWA Public',
+      cell: (ctx) => (
+        <BreakdownCell
+          row={ctx.row.original}
+          dataKey="rwaPublic"
+          type="category"
+        />
+      ),
+      sortUndefined: 'last',
+      meta: {
+        cellClassName: 'w-[10%] ',
+        align: 'right',
+        headClassName: getColumnHeaderUnderline(
+          'before:bg-n-fuchsia-750 last:pr-3',
+        ),
+      },
+    }),
+    opts.includeRwaRestrictedTokens &&
+      columnHelper.accessor('tvs.data.breakdown.rwaRestricted', {
+        id: 'rwaRestricted',
+        header: 'RWA Restricted',
+        cell: (ctx) => (
+          <BreakdownCell
+            row={ctx.row.original}
+            dataKey="rwaRestricted"
+            type="category"
+          />
+        ),
+        sortUndefined: 'last',
+        meta: {
+          cellClassName: 'w-[10%] ',
+          align: 'right',
+          headClassName: getColumnHeaderUnderline(
+            'before:bg-n-pink-850 last:pr-3',
+          ),
+        },
+      }),
+  ])
 
 function BreakdownCell({
   row,
@@ -221,9 +263,7 @@ function BreakdownCell({
   type,
 }: {
   row: ScalingTvsTableRow
-  dataKey:
-    | Exclude<TvsToken['category'], 'rwaRestricted' | 'rwaPublic'>
-    | TvsToken['source']
+  dataKey: TvsToken['category'] | TvsToken['source']
   type: 'bridgingType' | 'category'
 }) {
   const data = row.tvs.data
@@ -253,16 +293,14 @@ function BreakdownCell({
   )
 }
 
-function dataKeyToFilter(
-  dataKey:
-    | Exclude<TvsToken['category'], 'rwaRestricted' | 'rwaPublic'>
-    | TvsToken['source'],
-) {
+function dataKeyToFilter(dataKey: TvsToken['category'] | TvsToken['source']) {
   switch (dataKey) {
     case 'ether':
     case 'btc':
     case 'stablecoin':
     case 'other':
+    case 'rwaPublic':
+    case 'rwaRestricted':
       return categoryToLabel(dataKey)
     default:
       return capitalize(dataKey)
