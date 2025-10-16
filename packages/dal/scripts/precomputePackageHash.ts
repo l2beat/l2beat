@@ -3,30 +3,25 @@ import { createHash } from 'crypto'
 import { readFileSync, writeFileSync } from 'fs'
 import path, { resolve } from 'path'
 
-const src = gitTreeHash('packages/dal').slice(0, 12)
-const deps = depsHash('@l2beat/dal').slice(0, 12)
-const lock = sha256Hex(
-  readFileSync(resolve('../../pnpm-lock.yaml'), 'utf8'),
-).slice(0, 12)
-writeFileSync(
-  path.join(__dirname, '../build/package-hash.txt'),
-  `src-${src}:deps-${deps}:lock-${lock}`,
-  'utf8',
-)
+const outputPath = path.join(__dirname, '../build/package-hash.txt')
+main()
+
+function main() {
+  try {
+    const src = gitTreeHash('packages/dal').slice(0, 12)
+    const deps = depsHash('@l2beat/dal').slice(0, 12)
+    const lock = sha256Hex(
+      readFileSync(resolve('../../pnpm-lock.yaml'), 'utf8'),
+    ).slice(0, 12)
+    writeFileSync(outputPath, `src-${src}:deps-${deps}:lock-${lock}`, 'utf8')
+  } catch (err) {
+    console.error(err)
+    writeFileSync(outputPath, 'error', 'utf8')
+  }
+}
 
 function sha256Hex(s: string) {
   return createHash('sha256').update(s).digest('hex')
-}
-
-export function gitDirtyHash(): string {
-  try {
-    // Get diff of unstaged + staged changes
-    const diff = execSync('git diff HEAD', { encoding: 'utf8' })
-    if (!diff.trim()) return ''
-    return sha256Hex(diff)
-  } catch {
-    return ''
-  }
 }
 
 // 1) Hash only THIS workspace's tracked files (fast & precise)
