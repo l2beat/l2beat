@@ -5,7 +5,7 @@ import path, { resolve } from 'path'
 
 const outputPath = path.join(__dirname, '../build/package-hash.txt')
 main()
-
+console.log('test')
 function main() {
   try {
     const src = gitTreeHash('packages/dal').slice(0, 12)
