@@ -1,3 +1,57 @@
+Generated with discovered.json: 0xd14a6223b928bb22bfb028fc3f2f413dda188e55
+
+# Diff at Tue, 16 Sep 2025 14:35:10 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@788220608af88f1041aa4ba3b574ca2667bb6047 block: 1752073781
+- current timestamp: 1752073781
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752073781 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (oeth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGateway (oeth:0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGatewayMultisig (oeth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (scr:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGateway (scr:0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGatewayMultisig (scr:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xf20d5273ed3d8acc81301b254d511eb1e45f7b66
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
@@ -775,7 +829,7 @@ Generated with discovered.json: 0xb59b2ef6eee3de7fd6b0df7f032bd08e3c5cbecc
 # Diff at Wed, 09 Jul 2025 15:09:45 GMT:
 
 - chain: optimism
-- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - current block number: 138237502
 
 ## Description
@@ -807,7 +861,7 @@ Generated with discovered.json: 0x2e479474899967d49527a59e6d7377a328fbd831
 # Diff at Wed, 09 Jul 2025 15:09:45 GMT:
 
 - chain: scroll
-- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - current block number: 17075744
 
 ## Description
@@ -839,7 +893,7 @@ Generated with discovered.json: 0xf1dce07804a55aad970287fc3171c5bd520dfd7d
 # Diff at Wed, 09 Jul 2025 15:09:45 GMT:
 
 - chain: ethereum
-- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - current block number: 22882427
 
 ## Description
@@ -871,7 +925,7 @@ Generated with discovered.json: 0x63d398eb8a2ea6b5174fa6f966573a5d5e68e1a7
 # Diff at Wed, 09 Jul 2025 15:09:44 GMT:
 
 - chain: arbitrum
-- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - current block number: 355918538
 
 ## Description
@@ -903,7 +957,7 @@ Generated with discovered.json: 0x7f3c2df6d36e193f00ca6ea9429550704a2cd0eb
 # Diff at Wed, 09 Jul 2025 15:09:44 GMT:
 
 - chain: base
-- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - current block number: 32642215
 
 ## Description

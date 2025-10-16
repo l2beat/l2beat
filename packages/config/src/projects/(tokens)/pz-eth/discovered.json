@@ -1,12 +1,13 @@
 {
   "name": "pz-eth",
-  "timestamp": 1753693907,
-  "configHash": "0x4dfb1ec6a3984e20848a2e24ef8ce5409b10dcbbb1e389fbe8d229745141eda8",
+  "timestamp": 1759764256,
+  "configHash": "0x9bb84d1693661924cc8c838cbd488ae8b0b7f223b7026d6416cf8f74b70ba273",
   "entries": [
     {
-      "name": "MultiVault",
+      "name": "Renzo Restaked LST  Token",
       "address": "eth:0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811",
       "type": "Contract",
+      "template": "tokens/RenzoRestakedLST",
       "sourceHashes": [
         "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
         "0xdf0f0eb6be5581f33b6bdf19907308ff38c72febf850dcb99646c05ab48746d9"
@@ -70,9 +71,9 @@
         "depositWhitelist": false,
         "eigenLayerAdapter": "eth:0x0000000000000000000000000000000000000000",
         "erc4626Adapter": "eth:0x0000000000000000000000000000000000000000",
-        "farmCount": 0,
-        "farmIdAt": [],
-        "farmIds": [],
+        "farmCount": 1,
+        "farmIdAt": [0],
+        "farmIds": [0],
         "limit": "80000000024518790233583",
         "name": "Renzo Restaked LST ",
         "REBALANCE_ROLE": "0x2c09deb013d6a86a9063c95b5e2b10937d1128a3937347eb7e00408ed9fb1a9c",
@@ -87,13 +88,18 @@
             0,
             "eth:0xa88e91cEF50b792f9449e2D4C699b6B3CcE1D19F",
             "eth:0x87283edb0F12E7cd0eD3E18baEab20AaF43b5f6e"
+          ],
+          [
+            0,
+            "eth:0x388b844870761ad3D6643C3754d00bB50F2A25f5",
+            "eth:0xC2886FbAa5fe0713aC68441B20C2f2d8665b6598"
           ]
         ],
-        "subvaultsCount": 1,
+        "subvaultsCount": 2,
         "symbioticAdapter": "eth:0x99D02C680f33ee693a2fa6bCf77DC8654313ecFe",
         "symbol": "pzETH",
-        "totalAssets": "10544910436405361016812",
-        "totalSupply": "10544910433173505429274",
+        "totalAssets": "8047069421658650625731",
+        "totalSupply": "8046600560700448851461",
         "withdrawalPause": false,
         "withdrawalStrategy": "eth:0x3aA61E6196fb3eb1170E578ad924898624f54ad6"
       },
@@ -251,7 +257,9 @@
       "event Upgraded(address indexed implementation)"
     ]
   },
-  "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 23016671 },
-  "permissionsConfigHash": "0xbf114edc6af3389d5f7f3b26d336ff9cea7f92b840f3b415fdd459adc0891132"
+  "usedTemplates": {
+    "tokens/RenzoRestakedLST": "0x82933430eac16a95ae7215d2317647eab809b59acc2b4aa8d3d0fe1b91f801f9"
+  },
+  "usedBlockNumbers": { "ethereum": 23519601 },
+  "permissionsConfigHash": "0x8fe74906d593c4911ea19ee28d0f5efffbe5f9a931ad789212dd625cfba1d1ad"
 }

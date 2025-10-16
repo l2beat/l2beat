@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x11c0bdd9dbd16a50a0557764279e125a4a625b59
+
+# Diff at Fri, 26 Sep 2025 12:45:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec4b16fd723bf2a8625a616c4b3a1119ce79fb29 block: 1758286565
+- current timestamp: 1758286565
+
+## Description
+
+add new celestia nitro wasmmoduleroot
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758286565 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (base:0x58E3fe88b1E8a7e2D578000aCD9C6d5989FE9e09) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d:
++        "Celestia Nitro ArbOS v40 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0xcecf04bd09756c8e0f53452c8872cc5cb74aa62b
+
+# Diff at Fri, 19 Sep 2025 12:57:31 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a930e518d214c15603feeda62e2a483dbd2454e0 block: 1750247929
+- current timestamp: 1758286565
+
+## Description
+
+Multisig key rotation.
+
+## Watched changes
+
+```diff
+    contract AlchemyMultisig2 (base:0x871e290d5447b958131F6d44f915F10032436ee6) {
+    +++ description: None
+      values.$members.1:
+-        "base:0xCA730AFfb87935E70E5889418C731eb196237476"
++        "base:0xa3353Ae4458F663f1F888705b044269bd30cd110"
+    }
+```
+
 Generated with discovered.json: 0x893bf11417866f58cc87a3e93fc0ffa37252c803
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

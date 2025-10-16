@@ -173,7 +173,7 @@ export const polygonpos: ScalingProject = {
       {
         type: 'rpc',
         url: 'https://polygon.llamarpc.com',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       { type: 'etherscan', chainId },
       { type: 'blockscoutV2', url: 'https://polygon.blockscout.com/api/v2' },

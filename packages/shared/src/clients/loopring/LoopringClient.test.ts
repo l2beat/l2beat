@@ -16,6 +16,7 @@ describe(LoopringClient.name, () => {
       const result = await degateClient.getBlockWithTransactions(42)
       expect(result).toEqual({
         hash: '10',
+        logsBloom: 'UNSUPPORTED',
         number: 10,
         timestamp: 1,
         transactions: [{ type: 'foo' }],

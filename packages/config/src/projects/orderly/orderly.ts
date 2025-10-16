@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -8,6 +8,10 @@ import { CELESTIA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('orderly')
 
 export const orderly: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: false,
+  },
   addedAt: UnixTime(1707309065), // 2024-02-07T12:31:05Z
   daProvider: CELESTIA_DA_PROVIDER,
   additionalBadges: [BADGES.RaaS.Conduit],
@@ -31,6 +35,7 @@ export const orderly: ScalingProject = opStackL2({
       documentation: [
         'https://orderly.network/docs/build-on-evm/building-on-evm',
       ],
+      repositories: ['https://github.com/OrderlyNetwork'],
       explorers: ['https://explorer.orderly.network/'],
       socialMedia: [
         'https://twitter.com/OrderlyNetwork',
@@ -123,7 +128,7 @@ export const orderly: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.orderly.network',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

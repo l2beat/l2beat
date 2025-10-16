@@ -1,7 +1,7 @@
 {
   "name": "zircuit",
-  "timestamp": 1756451851,
-  "configHash": "0x335dfb9b7b7711cae062fc91fdca32c18eac8dbc1c0956696e168916a65c718a",
+  "timestamp": 1759756433,
+  "configHash": "0xa721fd52d401a16b9fbcadc5ade3f759ae184f4a9e202f3f14da01d3d1fa0a64",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -78,8 +78,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 312784,
-          "prevBlockNum": 23245140
+          "prevBoughtGas": 100000,
+          "prevBlockNum": 23518302
         },
         "paused": false,
         "resolverRegistry": "eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E",
@@ -126,7 +126,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639446",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639635",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -639,7 +639,7 @@
         "0x409b9567c50661b673c0f84e9b8ed470f1ca48bc04fb1c8d09f8cac545e82cf8"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h. Additionally, users can 'escape' their funds after 30d of no state updates by supplying merkle proofs or using a resolver.",
+      "description": "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h. Additionally, users can 'escape' their funds after 1mo of no state updates by supplying merkle proofs or using a resolver.",
       "ignoreInWatchMode": [
         "latestBlockNumber",
         "latestOutputIndex",
@@ -702,12 +702,12 @@
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
         "l2ChainId": 48900,
-        "latestBlockNumber": 18254392,
-        "latestOutputIndex": 32918,
+        "latestBlockNumber": 19906279,
+        "latestOutputIndex": 33864,
         "latestOutputProposedV2": 32836,
-        "latestOutputProposedV3": 32918,
-        "nextBlockNumber": 18254393,
-        "nextOutputIndex": 32919,
+        "latestOutputProposedV3": 33864,
+        "nextBlockNumber": 19906280,
+        "nextOutputIndex": 33865,
         "owner": "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "proposer": "eth:0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
@@ -718,7 +718,7 @@
         "startingTimestamp": 1719935831,
         "superchainConfig": "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
         "timeLimitOutputRootSubmissionSeconds": 2592000,
-        "timeLimitOutputRootSubmissionSecondsFmt": "30d",
+        "timeLimitOutputRootSubmissionSecondsFmt": "1mo",
         "verifierV2": "eth:0xC25D093D3A3f58952252D2e763BEAF2559dc9737",
         "verifierV3": "eth:0xf35A4088eA0231C44B9DB52D25c0E9E2fEe31f67",
         "version": "3.0.0",
@@ -1125,6 +1125,7 @@
       "description": "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain. This version though also contains a storage slot for `depositExclusions`.",
       "ignoreInWatchMode": [
         "basefee",
+        "blobBaseFee",
         "hash",
         "number",
         "timestamp",
@@ -1141,21 +1142,21 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 624805720,
+        "basefee": 982648640,
         "baseFeeScalar": 1368,
         "batcherHash": "0x000000000000000000000000af1e4f6a47af647f87c0ec814d8032c4a4bff145",
-        "blobBaseFee": 1,
+        "blobBaseFee": 11,
         "blobBaseFeeScalar": 810949,
         "depositExclusions": "0x",
         "DEPOSITOR_ACCOUNT": "zircuit:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0xce35c1ab11166cae4d3f4f8cbf50ab566fa94badb398e9bc917d0ec1f637ab7f",
+        "hash": "0x5bebb05090f1ab59eca28a3a98f16285052abffb5d2626c6e06fbef6afcfa20d",
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 23245235,
+        "number": 23518953,
         "operatorFeeConstant": 23225000000,
         "operatorFeeScalar": 4200000000,
-        "sequenceNumber": 2,
-        "timestamp": 1756451843,
+        "sequenceNumber": 5,
+        "timestamp": 1759756403,
         "version": "1.3.0"
       },
       "implementationNames": {
@@ -2026,7 +2027,7 @@
     "lido/L1ERC20TokenBridge": "0x1dbfb76725d8a5de94df533062c2232ad27f9bd9988b137706333c26e2ffc4d7",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
-    "opstack/Layer2/L1Block_depositExclusions": "0x0dc9fa32452642b8d19e27a9a1e5e227852608d9a1b6fa9f532ff7dc53c77219",
+    "opstack/Layer2/L1Block_depositExclusions": "0xb30fc0927b540f3268ac3fa4e2cd159149792010b6d7b337b6cc53b2da677dfb",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "opstack/zircuit/L1StandardBridge": "0x2f9c34737989113306a892abba83353771734bbf57cae7245088154cbf90be77",
@@ -2038,6 +2039,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 23245235, "zircuit": 18257818 },
+  "usedBlockNumbers": { "ethereum": 23518955, "zircuit": 19910109 },
   "permissionsConfigHash": "0xe02e2dd058fdb1f985e68753f52ca88a0f125d28226e3acd442c4ee402c1939c"
 }

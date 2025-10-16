@@ -25,7 +25,7 @@ export const educhain: ScalingProject = orbitStackL3({
       'EDU Chain is a Layer 3 on Arbitrum, built on the Orbit stack. It is designed to onboard real-world educational economies to the blockchain and establish an innovative "Learn Own Earn" model for education.',
     links: {
       websites: ['https://educhain.xyz/'],
-      bridges: ['https://bridge.gelato.network/bridge/edu-chain'],
+      bridges: ['https://bridge.educhain.xyz/'],
       documentation: [
         'https://userdocs.opencampus.xyz/edu-chain/introduction',
         'https://devdocs.opencampus.xyz/open-campus',
@@ -35,6 +35,9 @@ export const educhain: ScalingProject = orbitStackL3({
       socialMedia: [
         'https://x.com/educhain_xyz',
         'https://medium.com/edu-chain',
+        'https://youtube.com/@OpenCampusxyz',
+        'https://t.me/OpenCampusTG',
+        'https://linkedin.com/company/opencampus-xyz',
       ],
     },
   },
@@ -47,7 +50,7 @@ export const educhain: ScalingProject = orbitStackL3({
       {
         type: 'rpc',
         url: 'https://rpc.edu-chain.raas.gelato.cloud',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
     gasTokens: ['EDU'],

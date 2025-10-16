@@ -274,10 +274,23 @@ export function DATA_AVAIL(isUsingVector: boolean): TableReadyValue {
   }
 }
 
-export function DATA_EIGENDA(isUsingServiceManager: boolean): TableReadyValue {
-  const additional = isUsingServiceManager
-    ? ' Sequencer transaction data roots are checked against the ServiceManager DA bridge data roots, signed off by EigenDA operators.'
-    : ' Sequencer transaction data roots are not checked against the ServiceManager DA bridge data roots onchain.'
+export function DATA_EIGENDA(
+  isUsingDACertVerifier: boolean,
+  eigenDACertVersion: string,
+): TableReadyValue {
+  let additional: string
+
+  if (eigenDACertVersion === 'v1') {
+    additional = isUsingDACertVerifier
+      ? ' Sequencer transaction data roots are checked against the ServiceManager DA bridge data roots, signed off by EigenDA operators.'
+      : ' Sequencer transaction data roots are not checked against the ServiceManager DA bridge data roots onchain.'
+  } else {
+    // v2 and v3 both use EigenDA v2
+    additional = isUsingDACertVerifier
+      ? ' The sequencer is publishing data to EigenDA v2. Sequencer transaction data roots are checked against the DACert Verifier data roots, signed off by EigenDA operators.'
+      : ' The sequencer is publishing data to EigenDA v2. Sequencer transaction data roots are not checked against the DACert Verifier onchain.'
+  }
+
   return {
     value: 'External',
     description:
@@ -292,6 +305,20 @@ export const DATA_POS: TableReadyValue = {
   description:
     'Data is guaranteed to be available by an external proof of stake network of validators. On Ethereum, DA is attested via signed block headers.',
   sentiment: 'warning',
+}
+
+export function DATA_ESPRESSO(isUsingLightClient: boolean): TableReadyValue {
+  const additional = isUsingLightClient
+    ? ' Sequencer tx roots are checked against the HotShot light client bridge data roots, signed off by Espresso validators.'
+    : ' Sequencer tx roots are not checked against the HotShot light client bridge data roots onchain, but L2 nodes can verify data availability by running an Espresso node.'
+  return {
+    value: 'External',
+    description:
+      'Proof construction and state derivation fully rely on data that is posted on Espresso.' +
+      additional,
+    sentiment: isUsingLightClient ? 'warning' : 'bad',
+    orderHint: isUsingLightClient ? 0 : Number.NEGATIVE_INFINITY,
+  }
 }
 
 // bridges
@@ -407,7 +434,7 @@ export function SEQUENCER_FORCE_VIA_L1(delay?: number): TableReadyValue {
     delay !== undefined ? ' for more than ' + formatSeconds(delay) : ''
   return {
     value: 'Force via L1',
-    description: `Users can force the sequencer to include a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for ${delayString}, users can use the exit hatch to withdraw their funds.`,
+    description: `Users can force the sequencer to include a transaction by submitting a request through L1. If the sequencer censors or is down for ${delayString}, users can use the exit hatch to withdraw their funds.`,
     sentiment: 'good',
     orderHint: delay,
   }
@@ -495,12 +522,20 @@ export const PROPOSER_WHITELIST_GOVERNANCE: TableReadyValue = {
   orderHint: Number.NEGATIVE_INFINITY,
 }
 
-export const PROPOSER_WHITELIST_SECURITY_COUNCIL: TableReadyValue = {
-  value: 'Security Council minority',
-  description:
-    'Only the whitelisted proposer can update state roots on L1, so in the event of failure the withdrawals are frozen. The Security Council minority can be alerted to enforce censorship resistance because they are a permissioned Operator.',
-  sentiment: 'warning',
-  orderHint: Number.NEGATIVE_INFINITY,
+export function PROPOSER_WHITELIST_SECURITY_COUNCIL(
+  config?: 'METIS',
+): TableReadyValue {
+  const description =
+    config === 'METIS'
+      ? 'Only the whitelisted proposer can update state roots on L1, so in the event of failure the withdrawals are frozen. The Security Council minority can be alerted to enforce censorship resistance because they own the proposer registry, controlling the active whitelisted proposer.'
+      : 'Only the whitelisted proposer can update state roots on L1, so in the event of failure the withdrawals are frozen. The Security Council minority can be alerted to enforce censorship resistance because they are a permissioned Operator.'
+
+  return {
+    value: 'Security Council minority',
+    description,
+    sentiment: 'warning',
+    orderHint: Number.NEGATIVE_INFINITY,
+  }
 }
 
 export const PROPOSER_USE_ESCAPE_HATCH_ZK: TableReadyValue = {
@@ -770,6 +805,7 @@ export const RISK_VIEW = {
   DATA_AVAIL,
   DATA_EIGENDA,
   DATA_POS,
+  DATA_ESPRESSO,
 
   // validatedBy
   VALIDATED_BY_ETHEREUM,
@@ -818,33 +854,35 @@ export const RISK_VIEW = {
   UNDER_REVIEW_RISK,
 }
 
-export function pickWorseRisk(
-  a: TableReadyValue,
-  b: TableReadyValue,
-): TableReadyValue {
-  const sentimentValue: Record<Sentiment, number> = {
-    good: 0,
-    neutral: 1,
-    warning: 2,
-    bad: 3,
-    UnderReview: 4,
-  }
+const SENTIMENT_VALUE: Record<Sentiment, number> = {
+  good: 0,
+  neutral: 1,
+  warning: 2,
+  bad: 3,
+  UnderReview: 4,
+}
 
-  const aVal = sentimentValue[a.sentiment ?? 'neutral']
-  const bVal = sentimentValue[b.sentiment ?? 'neutral']
+// This is a comparison function to be used in "sort"
+// -1 means `a` is *more* risky
+// 1 means `b` is *more* risky`
+export function compareRisk(a: TableReadyValue, b: TableReadyValue): -1 | 1 {
+  const aVal = SENTIMENT_VALUE[a.sentiment ?? 'neutral']
+  const bVal = SENTIMENT_VALUE[b.sentiment ?? 'neutral']
+  const RESULT_A = -1
+  const RESULT_B = 1
+
   if (aVal === bVal) {
     assert(
       a.orderHint !== undefined && b.orderHint !== undefined,
       'Unable to pick worse risk without a defining metric',
     )
-    return a.orderHint < b.orderHint ? a : b
+    return a.orderHint < b.orderHint ? RESULT_A : RESULT_B
   }
-  if (aVal > bVal) {
-    return a
-  }
-
-  return b
+  return aVal > bVal ? RESULT_A : RESULT_B
 }
+
+export const pickWorseRisk = (a: TableReadyValue, b: TableReadyValue) =>
+  compareRisk(a, b) === -1 ? a : b
 
 export function sumRisk(
   a: TableReadyValue,

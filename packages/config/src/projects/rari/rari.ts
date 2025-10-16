@@ -67,7 +67,7 @@ export const rari: ScalingProject = orbitStackL3({
       {
         type: 'rpc',
         url: 'https://mainnet.rpc.rarichain.org/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       { type: 'blockscout', url: 'https://rari.calderaexplorer.xyz/api' },
       { type: 'blockscoutV2', url: 'https://rari.calderaexplorer.xyz/api/v2' },

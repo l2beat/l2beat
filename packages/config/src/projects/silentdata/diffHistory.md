@@ -1,3 +1,139 @@
+Generated with discovered.json: 0xcf5bd8fcd8c49c1bd60fc2cb2eb9b85abcf6d375
+
+# Diff at Thu, 02 Oct 2025 12:26:28 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@bc66d9d4f7a557c1ee6b24a9705fc6b59b44a47b block: 1756971267
+- current timestamp: 1759407917
+
+## Description
+
+Deployed Safe at address (which probably was pre-computed).
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x61E7D85244Db59e0c03D8C82A0c8ABA78BcBa6Af) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "gnosis safe"
+      name:
++        "Safe"
+      template:
++        "GnosisSafe"
+      sourceHashes:
++        ["0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5","0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"]
+      sinceTimestamp:
++        1759223651
+      sinceBlock:
++        23474844
+      values:
++        {"$immutable":false,"$implementation":"eth:0x41675C099F32341bf84BFc5382aF534df5C7461a","$members":["eth:0xD02AB52D1C7CF31E3f72A007d969D5b80ad113D0","eth:0xf5280A5Ae8c9C8B97B624c8eb4B34B55aBe30e33","eth:0x486792B2D74545C1Aa3614ca0415025983a2f9Dc","eth:0xb9B3e5Aa67136790F1c4980683f39f16eE26E548","eth:0xf95d55523149E37F9ADa9A4828B1f77cA0339830"],"$threshold":2,"domainSeparator":"0x43cb652102be3238c78e02ed9b8e1e665312dbddff7b1f4f98c5c6e59c2f0a67","getChainId":1,"GnosisSafe_modules":[],"multisigThreshold":"2 of 5 (40%)","nonce":1,"VERSION":"1.4.1"}
+      implementationNames:
++        {"eth:0x61E7D85244Db59e0c03D8C82A0c8ABA78BcBa6Af":"SafeProxy","eth:0x41675C099F32341bf84BFc5382aF534df5C7461a":"Safe"}
+    }
+```
+
+```diff
+    contract Safe (eth:0x90f72cB63E608dD6c63793b7d90804963b478ccd) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "gnosis safe"
+      name:
++        "Safe"
+      template:
++        "GnosisSafe"
+      sourceHashes:
++        ["0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5","0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"]
+      sinceTimestamp:
++        1759224011
+      sinceBlock:
++        23474874
+      values:
++        {"$immutable":false,"$implementation":"eth:0x41675C099F32341bf84BFc5382aF534df5C7461a","$members":["eth:0xD02AB52D1C7CF31E3f72A007d969D5b80ad113D0","eth:0xf5280A5Ae8c9C8B97B624c8eb4B34B55aBe30e33","eth:0x486792B2D74545C1Aa3614ca0415025983a2f9Dc","eth:0xb9B3e5Aa67136790F1c4980683f39f16eE26E548","eth:0xf95d55523149E37F9ADa9A4828B1f77cA0339830"],"$threshold":2,"domainSeparator":"0xa03fc76cde0d43f928a1476d0f54dce561b638263bf06ae6ab9fb81a07c849fa","getChainId":1,"GnosisSafe_modules":[],"multisigThreshold":"2 of 5 (40%)","nonce":1,"VERSION":"1.4.1"}
+      implementationNames:
++        {"eth:0x90f72cB63E608dD6c63793b7d90804963b478ccd":"SafeProxy","eth:0x41675C099F32341bf84BFc5382aF534df5C7461a":"Safe"}
+    }
+```
+
+```diff
+    contract Safe (eth:0xE512f69D8aEed75c737190F4dB84687FBa7C5e88) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "gnosis safe"
+      controlsMajorityOfUpgradePermissions:
+-        true
+      name:
++        "Safe"
+      template:
++        "GnosisSafe"
+      sourceHashes:
++        ["0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5","0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"]
+      sinceTimestamp:
++        1759223963
+      sinceBlock:
++        23474870
+      values:
++        {"$immutable":false,"$implementation":"eth:0x41675C099F32341bf84BFc5382aF534df5C7461a","$members":["eth:0xD02AB52D1C7CF31E3f72A007d969D5b80ad113D0","eth:0xf5280A5Ae8c9C8B97B624c8eb4B34B55aBe30e33","eth:0x486792B2D74545C1Aa3614ca0415025983a2f9Dc","eth:0xb9B3e5Aa67136790F1c4980683f39f16eE26E548","eth:0xf95d55523149E37F9ADa9A4828B1f77cA0339830"],"$threshold":2,"domainSeparator":"0xee66177d4fcb8445b816cf77dd0262ff9f7b298578a68f07d40ac6b075a2f8b0","getChainId":1,"GnosisSafe_modules":[],"multisigThreshold":"2 of 5 (40%)","nonce":1,"VERSION":"1.4.1"}
+      implementationNames:
++        {"eth:0xE512f69D8aEed75c737190F4dB84687FBa7C5e88":"SafeProxy","eth:0x41675C099F32341bf84BFc5382aF534df5C7461a":"Safe"}
+    }
+```
+
+## Source code changes
+
+```diff
+.../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ .../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ .../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ 6 files changed, 3375 insertions(+)
+```
+
+Generated with discovered.json: 0xebdfeb48fd47c010a80df79dc9a14edefbadab9d
+
+# Diff at Mon, 15 Sep 2025 09:50:48 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@37882e40cb6029f3a2ae2bb177048e3e846b833d block: 1756971267
+- current timestamp: 1756971267
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756971267 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x139Cf05B34D0EC49D3BFB9704EC4cEbA6ae95dD1) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.gameImpls.2:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.gameImpls.3:
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x0d448f8b121efd5c2c043d4f0a3cdfab442f0d56
 
 # Diff at Thu, 04 Sep 2025 07:35:35 GMT:

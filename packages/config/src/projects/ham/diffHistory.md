@@ -1,3 +1,58 @@
+Generated with discovered.json: 0x4c9dfd5b9ece45ea5241b0b49f0b9fbe39d9cea0
+
+# Diff at Fri, 26 Sep 2025 08:36:04 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@331e0b266e6f6c50461cccad15ef48f094014214 block: 1757661456
+- current timestamp: 1758875696
+
+## Description
+
+Caldera multisig threshold change.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 2 (base:0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d) {
+    +++ description: None
+      values.$members.0:
++        "base:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0"
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "2 of 6 (33%)"
+    }
+```
+
+Generated with discovered.json: 0x06fbaba841c97c8c0c392fe95c6d7f422c18a442
+
+# Diff at Fri, 12 Sep 2025 07:18:56 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@b19dd572d1bb478c9bacfee5598e38f6eee363a0 block: 1747293411
+- current timestamp: 1757661456
+
+## Description
+
+multisig change.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 2 (base:0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d) {
+    +++ description: None
+      values.$members.0:
++        "base:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675"
+      values.$members.1:
++        "base:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b"
+      values.$members.0:
+-        "base:0xD61640d06dC7A61C46d9515680b4DDd2AC51E9A9"
++        "base:0xc4548687682246e5B6ee8f914635c9f47836eDFe"
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "2 of 5 (40%)"
+    }
+```
+
 Generated with discovered.json: 0xf223dee19e28fcd1a32e4d57c3e1c614860a12c3
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

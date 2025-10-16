@@ -2,6 +2,7 @@ import {
   ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
+  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
@@ -45,9 +46,13 @@ const daResolveWindow = formatSeconds(
 )
 
 export const xterio: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: false,
+  },
   addedAt: UnixTime(1714996778), // 2024-05-06T11:59:38Z
   discovery,
-  additionalBadges: [BADGES.DA.CustomDA, BADGES.RaaS.AltLayer],
+  additionalBadges: [BADGES.RaaS.AltLayer],
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -90,7 +95,7 @@ export const xterio: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://xterio-eth.alt.technology/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

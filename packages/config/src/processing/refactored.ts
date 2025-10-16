@@ -6,10 +6,12 @@ import { bsc } from '../projects/bsc/bsc'
 import { celestia } from '../projects/celestia/celestia'
 import { eigenda } from '../projects/eigenda/eigenda'
 import { espresso } from '../projects/espresso/espresso'
+import { espressoprover } from '../projects/espressoprover/espressoprover'
 import { ethereum } from '../projects/ethereum/ethereum'
 import { gateway } from '../projects/gateway/gateway'
 import { gnosis } from '../projects/gnosis/gnosis'
 import { intmaxprover } from '../projects/intmaxprover/intmaxprover'
+import { lighterprover } from '../projects/lighterprover/lighterprover'
 import { lineaprover } from '../projects/lineaprover/lineaprover'
 import { loopringprover } from '../projects/loopringprover/loopringprover'
 import { memo } from '../projects/memo/memo'
@@ -24,6 +26,7 @@ import { sp1 } from '../projects/sp1/sp1'
 import { sp1blobstream } from '../projects/sp1blobstream/sp1blobstream'
 import { sp1vector } from '../projects/sp1vector/sp1vector'
 import { stone } from '../projects/stone/stone'
+import { teeBridge } from '../projects/tee-bridge/tee-bridge'
 import { vector } from '../projects/vector/vector'
 import { worldcoinsemaphore } from '../projects/worldcoinsemaphore/worldcoinsemaphore'
 import { worldcoinsmtb } from '../projects/worldcoinsmtb/worldcoinsmtb'
@@ -54,6 +57,8 @@ export const refactored: BaseProject[] = [
   zksyncprover,
   intmaxprover,
   aztecv1prover,
+  espressoprover,
+  lighterprover,
   // da-beat
   ethereum,
   avail,
@@ -62,6 +67,7 @@ export const refactored: BaseProject[] = [
   blobstream,
   near,
   espresso,
+  teeBridge,
   eigenda,
   memo,
   // chains

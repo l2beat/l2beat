@@ -133,10 +133,25 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
       economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
     },
+    validators: {
+      type: 'static',
+      count: 100,
+    },
   },
   daBridge: {
     name: 'HotShot Light Client',
     daLayer: ProjectId('espresso'),
+    relayerType: {
+      value: 'Permissioned',
+      sentiment: 'warning',
+      description:
+        'Only whitelisted relayers can post attestations to this bridge.',
+    },
+    validationType: {
+      value: 'Validity Proof',
+      description:
+        'The DA attestation requires onchain SNARK proof verification to be accepted by the bridge. Operators signatures and their corresponding stake are verified as part of the proof.',
+    },
     technology: {
       description: `
       ## Architecture

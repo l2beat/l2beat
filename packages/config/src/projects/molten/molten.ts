@@ -30,7 +30,7 @@ export const molten: ScalingProject = orbitStackL3({
       explorers: ['https://molten.calderaexplorer.xyz'],
       socialMedia: [
         'https://x.com/moltenl3',
-        'https://discord.gg/moltennetwork',
+        'https://discord.com/invite/YACsZnuqC9',
         'https://mirror.xyz/unidexexchange.eth',
         'https://t.me/unidexfinance',
       ],
@@ -49,7 +49,7 @@ export const molten: ScalingProject = orbitStackL3({
       {
         type: 'rpc',
         url: 'https://molten.calderachain.xyz/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
     gasTokens: ['MOLTEN'],

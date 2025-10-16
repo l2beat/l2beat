@@ -1,7 +1,7 @@
 {
   "name": "l3x",
   "timestamp": 1734957965,
-  "configHash": "0x537ef008e5ec7a8cb46f935319a8a1ef2536583403fdc6f27b5e3329b91425d3",
+  "configHash": "0x46ca5c0d2b15287aa53d3fc97636815b3e733c4fc0807bff76a44fcef83f6678",
   "entries": [
     {
       "name": "Outbox",
@@ -718,7 +718,8 @@
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
-            "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot"
+            "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
+            "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
           }
         }
       ],

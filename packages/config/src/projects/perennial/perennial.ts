@@ -48,7 +48,7 @@ export const perennial: ScalingProject = underReviewL3({
       {
         type: 'rpc',
         url: 'https://rpc.perennial.foundation',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

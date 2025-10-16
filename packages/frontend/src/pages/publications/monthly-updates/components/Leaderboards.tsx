@@ -12,32 +12,52 @@ interface Props {
 export function Leaderboards({ tvsLeaderboard, activityLeaderboard }: Props) {
   return (
     <div className="mb-8 grid gap-3 md:grid-cols-2">
-      <PrimaryCard className="rounded-lg! border border-divider">
-        <div className="mb-3 font-bold text-xl">Top TVS Gainers</div>
-        <div className="space-y-1">
-          {tvsLeaderboard.gainers.map((item) => (
-            <LeaderboardTvsItem key={item.slug} item={item} />
-          ))}
+      <PrimaryCard className="grid grid-rows-2 rounded-lg! border border-divider">
+        <div>
+          <div className="mb-3 font-bold text-xl">Top TVS Gainers</div>
+          <div className="space-y-1">
+            {tvsLeaderboard.gainers.map((item) => (
+              <LeaderboardTvsItem key={item.slug} item={item} />
+            ))}
+            {tvsLeaderboard.gainers.length === 0 && (
+              <div className="text-left font-semibold text-secondary text-xs">
+                No projects showed a positive <br /> percentage change this
+                month.
+              </div>
+            )}
+          </div>
         </div>
-        <div className="mt-6 mb-3 font-bold text-xl">Top TVS Leaders</div>
-        <div className="space-y-1">
-          {tvsLeaderboard.leaders.map((item) => (
-            <LeaderboardTvsItem key={item.slug} item={item} />
-          ))}
+        <div>
+          <div className="mt-3 mb-3 font-bold text-xl">Top TVS Leaders</div>
+          <div className="space-y-1">
+            {tvsLeaderboard.leaders.map((item) => (
+              <LeaderboardTvsItem key={item.slug} item={item} />
+            ))}
+          </div>
         </div>
       </PrimaryCard>
-      <PrimaryCard className="rounded-lg! border border-divider">
-        <div className="mb-3 font-bold text-xl">Top UOPS Gainers</div>
-        <div className="space-y-1">
-          {activityLeaderboard.gainers.map((item) => (
-            <LeaderboardActivityItem key={item.slug} item={item} />
-          ))}
+      <PrimaryCard className="grid grid-rows-2 rounded-lg! border border-divider">
+        <div>
+          <div className="mb-3 font-bold text-xl">Top UOPS Gainers</div>
+          <div className="space-y-1">
+            {activityLeaderboard.gainers.map((item) => (
+              <LeaderboardActivityItem key={item.slug} item={item} />
+            ))}
+            {activityLeaderboard.gainers.length === 0 && (
+              <div className="text-left font-semibold text-secondary text-xs">
+                No projects showed a positive <br /> percentage change this
+                month.
+              </div>
+            )}
+          </div>
         </div>
-        <div className="mt-6 mb-3 font-bold text-xl">Top UOPS Leaders</div>
-        <div className="space-y-1">
-          {activityLeaderboard.leaders.map((item) => (
-            <LeaderboardActivityItem key={item.slug} item={item} />
-          ))}
+        <div>
+          <div className="mt-3 mb-3 font-bold text-xl">Top UOPS Leaders</div>
+          <div className="space-y-1">
+            {activityLeaderboard.leaders.map((item) => (
+              <LeaderboardActivityItem key={item.slug} item={item} />
+            ))}
+          </div>
         </div>
       </PrimaryCard>
     </div>

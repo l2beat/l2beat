@@ -39,7 +39,7 @@ export const blockfit: ScalingProject = underReviewL3({
       {
         type: 'rpc',
         url: 'https://rpc.blockfitscan.io',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

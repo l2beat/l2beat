@@ -1,4 +1,159 @@
-Generated with discovered.json: 0xfaca6b2f551543e7a86e7efd115c1e334d59cb2e
+Generated with discovered.json: 0xc1b81a0a14d5e427fc96af48de8b15e1ed2c8128
+
+# Diff at Thu, 16 Oct 2025 08:51:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@88fac19bbe6dc3868d941d9cb093cb5181d8344a block: 1759757522
+- current timestamp: 1760603825
+
+## Description
+
+minor upgrade of the L1ERC20Bridge for v29 compatibility
+https://disco.l2beat.com/diff/eth:0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142/eth:0x6ed98623e0B51be68748aB5091Aa891Adb883e13
+
+for the v29 upgrade to shared contracts refer to [Shared Rollup Updates](../shared-zk-stack/diffHistory.md#zip-12-v29-interop-messaging-upgrade) for details.
+
+## Watched changes
+
+```diff
+    contract L1ERC20Bridge (eth:0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063) {
+    +++ description: Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.
+      sourceHashes.1:
+-        "0xa470a4cd272abd74efdef01a347542477159dba5fc965b47dca90736ae6f42db"
++        "0x06c15368f64705eeb39a91543201cca750ade72c506049ef974548a8c85481f2"
+      values.$implementation:
+-        "eth:0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142"
++        "eth:0x6ed98623e0B51be68748aB5091Aa891Adb883e13"
+      values.$pastUpgrades.10:
++        ["2025-10-15T09:09:11.000Z","0xa022a2ce09b145eb5d0c4342b3f3583e79b66ee7205ab986322be819f277ba83",["eth:0x6ed98623e0B51be68748aB5091Aa891Adb883e13"]]
+      values.$upgradeCount:
+-        10
++        11
+      implementationNames.eth:0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142:
+-        "L1ERC20Bridge"
+      implementationNames.eth:0x6ed98623e0B51be68748aB5091Aa891Adb883e13:
++        "L1ERC20Bridge"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1GenesisUpgrade (gateway:0x540E6ED9FC06dFCbf0a38Dcc7Ed7Ea3F56C551de)
+    +++ description: Diamond implementation code to initialize new ZK chains. Used to set their chainID.
+```
+
+```diff
+    contract ChainTypeManager (gateway:0x912B84EEEEBeca74d307b9a2b09c68332aa5426C) {
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,29,2.
+      sourceHashes.1:
+-        "0x5462a6c55c6e9f2d98c21f2588b2b9a4de1dc41ba0c10906f8965e21849a3a52"
++        "0xee0ad6dd34008989477a03f84eca5083a1cb79b46c01c850617d62c7b406c4ba"
+      description:
+-        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,28,1."
++        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,29,2."
+      values.$implementation:
+-        "gateway:0x6655933e34d8FD8f6d2CC7d5175bFC06112B7474"
++        "gateway:0xE169B1AF9C39c97861f91D7C3009E093A681F568"
+      values.$pastUpgrades.2:
++        ["2025-10-15T09:26:53.000Z","0x99ccfbcc9c20ff996decae7e65699200acde9905a700532b4253aa02056194f3",["gateway:0xE169B1AF9C39c97861f91D7C3009E093A681F568"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.getSemverProtocolVersion.1:
+-        28
++        29
+      values.getSemverProtocolVersion.2:
+-        1
++        2
+      values.initialCutHash:
+-        "0xd3891c3aee249d0a86bba7198ac35ffc02c7e54e8db6fdd3bd5ae43ea8cd5d06"
++        "0xa45cb9645f08f62fa6383c2a863147b1093d45348c756f8c80d53492ffff2a5c"
+      values.initialForceDeploymentHash:
+-        "0xed1057fbf858575d7348c4f2c82dd034534c62d97d0ac1d46f98ed197403f3d9"
++        "0xad3fb7f31b114db9c3bce490d6ff173ee5bb075efddae0bd6ed01432f5c09860"
+      values.l1GenesisUpgrade:
+-        "gateway:0x540E6ED9FC06dFCbf0a38Dcc7Ed7Ea3F56C551de"
++        "gateway:0x67b069aB0c634B03427ca284F701BE92d84d78ad"
+      values.protocolVersion:
+-        120259084289
++        124554051586
+      values.storedBatchZero:
+-        "0x9629612e3685846dc5056347758c0f8286fc877383c762aa17b1411758a582d8"
++        "0x94ea55f176a52a81ad3c45b49c6230fa0732968e6a5b067c5e678b280d5155d7"
+      values.validatorTimelockPostV29:
++        "gateway:0xe279aF77D3C1685022641ffE1b9b538c5eA0Ae24"
+      implementationNames.gateway:0x6655933e34d8FD8f6d2CC7d5175bFC06112B7474:
+-        "ChainTypeManager"
+      implementationNames.gateway:0xE169B1AF9C39c97861f91D7C3009E093A681F568:
++        "ChainTypeManager"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1GenesisUpgrade (gateway:0x67b069aB0c634B03427ca284F701BE92d84d78ad)
+    +++ description: Diamond implementation code to initialize new ZK chains. Used to set their chainID.
+```
+
+## Source code changes
+
+```diff
+.../ChainTypeManager/ChainTypeManager.sol          | 74 +++++++++++++++++-----
+ .../L1ERC20Bridge/L1ERC20Bridge.sol                | 12 ++--
+ .../L1GenesisUpgrade.sol                           | 34 ++++++----
+ 3 files changed, 86 insertions(+), 34 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759757522 (main branch discovery), not current.
+
+```diff
+    contract Bridgehub (gateway:0x0000000000000000000000000000000000010002) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
+      values.migrations:
+-        []
+      fieldMeta.migrationPaused:
+-        {"severity":"HIGH","description":"If false, chains can migrate to whitelisted settlement layers."}
+      fieldMeta.migrations:
+-        {"severity":"HIGH","description":"zk chain migrations that were started"}
+    }
+```
+
+Generated with discovered.json: 0xf9f77c75b0f86fdfd7c6d210a0c160830df4f8fd
+
+# Diff at Mon, 06 Oct 2025 13:33:08 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@af10d4e90bc0f1be21a0242f8327fccf9a01f37a block: 1754308257
+- current timestamp: 1759757522
+
+## Description
+
+Rotated zkStack validator on Gateway.
+
+## Watched changes
+
+```diff
+    EOA  (gateway:0x30066439887C0a509Cb38E45c9262E6924a29BbD) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"validateZkStack","from":"gateway:0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa","role":".validatorsVTL"}
+    }
+```
+
+```diff
+    contract ZKsyncValidatorTimelock (gateway:0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
+      values.validatorsVTL.1:
+-        "gateway:0x30066439887C0a509Cb38E45c9262E6924a29BbD"
++        "gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"
+    }
+```
+
+Generated with discovered.json: 0xa243bfb8148f49107c3bb6d07602d52ced772019
 
 # Diff at Wed, 03 Sep 2025 15:52:21 GMT:
 

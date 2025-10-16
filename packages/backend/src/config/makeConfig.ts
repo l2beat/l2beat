@@ -7,6 +7,7 @@ import { FeatureFlags } from './FeatureFlags'
 import { getActivityConfig } from './features/activity'
 import { getDaTrackingConfig } from './features/da'
 import { getDaBeatConfig } from './features/dabeat'
+import { getEcosystemsConfig } from './features/ecosystemToken'
 import { getTrackedTxsConfig } from './features/trackedTxs'
 import { getTvsConfig } from './features/tvs'
 import { getUpdateMonitorConfig } from './features/updateMonitor'
@@ -109,6 +110,7 @@ export async function makeConfig(
     trackedTxsConfig:
       flags.isEnabled('tracked-txs') &&
       (await getTrackedTxsConfig(ps, env, flags)),
+
     activity:
       flags.isEnabled('activity') && (await getActivityConfig(ps, env, flags)),
     verifiers: flags.isEnabled('verifiers') && (await getVerifiersConfig(ps)),
@@ -123,6 +125,8 @@ export async function makeConfig(
     flatSourceModuleEnabled: flags.isEnabled('flatSourcesModule'),
     chains: chains.map((x) => ({ name: x.name, chainId: x.chainId })),
     daBeat: flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, env)),
+    ecosystems:
+      flags.isEnabled('ecosystems') && (await getEcosystemsConfig(ps)),
     chainConfig: await getChainConfig(ps, env),
     beaconApi: {
       url: env.optionalString(['ETHEREUM_BEACON_API_URL']),
@@ -134,6 +138,10 @@ export async function makeConfig(
     },
     da: flags.isEnabled('da') && (await getDaTrackingConfig(ps, env)),
     blockSync: {
+      delayFromTipInSeconds: env.integer(
+        ['BLOCK_SYNC_DELAY_FROM_TIP_IN_SECONDS'],
+        5 * 60,
+      ),
       ethereumWsUrl: env.optionalString(['ETHEREUM_WS_URL']),
     },
     anomalies: flags.isEnabled('anomalies') && {
@@ -143,7 +151,34 @@ export async function makeConfig(
         60 * 60, // 1 hour
       ),
     },
-    bridgesEnabled: flags.isEnabled('bridges'),
+    interop: flags.isEnabled('interop') && {
+      capture: {
+        enabled: flags.isEnabled('interop', 'capture'),
+        chains: [
+          { name: 'ethereum', type: 'evm' as const },
+          { name: 'arbitrum', type: 'evm' as const },
+          { name: 'base', type: 'evm' as const },
+          { name: 'optimism', type: 'evm' as const },
+        ].filter((c) => flags.isEnabled('interop', 'capture', c.name)),
+      },
+      matching: flags.isEnabled('interop', 'matching'),
+      cleaner: flags.isEnabled('interop', 'cleaner'),
+      dashboard: {
+        enabled: flags.isEnabled('interop', 'dashboard'),
+        getExplorerUrl: (chain: string) => {
+          const c = chains.find((cc) => cc.name === chain)
+
+          return c?.explorerUrl
+        },
+      },
+      compare: {
+        enabled: flags.isEnabled('interop', 'compare'),
+        intervalMs: env.optionalInteger(['INTEROP_COMPARE_INTERVAL_MS']),
+      },
+      financials: {
+        enabled: flags.isEnabled('interop', 'financials'),
+      },
+    },
     // Must be last
     flags: flags.getResolved(),
   }

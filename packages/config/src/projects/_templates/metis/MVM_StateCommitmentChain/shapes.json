@@ -8,5 +8,16 @@
     "hash": "0xc9988c7d5840913f9a08b776cd81c6474c41bcb476822f537b3763d33f8e30e3",
     "address": "eth:0x49A4D7ae835eA21c919B363fa88614b61d7985E7",
     "blockNumber": 23019103
+  },
+  "MVM_StateCommitmentChain_SCmin": {
+    "hash": "0x0e8553402b55057406811a803b14c4778f42fcf02523b10e695ec073a98202a9",
+    "address": "eth:0x9334EE2D4CEAe693D4D6aAc8371043bcCEECDCe1",
+    "blockNumber": 23340890
+  },
+  "StateCommitmentChain_proposerRegistry": {
+    "hash": "0xa42c85a235f67f88b193b516224025a8c54c8fc5a0204c0f7b4fc0202b70eed0",
+    "address": "eth:0xA738573Ec0FD7959BfA60Aaa8a23Fe7BEC6c4Bd7",
+    "chain": "ethereum",
+    "blockNumber": 23417732
   }
 }

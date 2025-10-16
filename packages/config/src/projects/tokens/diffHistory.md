@@ -1,3 +1,655 @@
+Generated with discovered.json: 0xa580ce65af310668ee81ae6cd4bc2e630f58603d
+
+# Diff at Mon, 06 Oct 2025 15:12:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e58bd9f0913161b35e2a2c65f233464591d4f28b block: 1758803109
+- current timestamp: 1759761526
+
+## Description
+
+Lido- v3 upgrades (support for L1-triggerable withdrwawals)
+- NodeOperatorsRegistry v4: https://disco.l2beat.com/diff/eth:0x1770044a38402e3CfCa2Fcfa0C84a093c9B42135/eth:0x6828b023e737f96B168aCd0b5c6351971a4F81aE
+- ValidatorsExitBusOracle v2: https://disco.l2beat.com/diff/eth:0xA89Ea51FddE660f67d1850e03C9c9862d33Bc42c/eth:0x905A211eD6830Cfc95643f0bE2ff64E7f3bf9b94
+- CSFeeOravle v2: https://disco.l2beat.com/diff/eth:0x919ac5C6c62B6ef7B05cF05070080525a7B0381E/eth:0xe0B234f99E413E27D9Bc31aBba9A49A3e570Da97
+- CSAccounting: https://disco.l2beat.com/diff/eth:0x71FCD2a6F38B644641B0F46c345Ea03Daabf2758/eth:0x6f09d2426c7405C5546413e6059F884D2D03f449
+- AccountingOracle: https://disco.l2beat.com/diff/eth:0x0e65898527E77210fB0133D00dd4C0E86Dc29bC7/eth:0xE9906E543274cebcd335d2C560094089e9547e8d
+- CSFeeDistributor: https://disco.l2beat.com/diff/eth:0x17Fc610ecbbAc3f99751b3B2aAc1bA2b22E444f0/eth:0x5DCF7cF7c6645E9E822a379dF046a8b0390251A1
+- StakingRouter: https://disco.l2beat.com/diff/eth:0x89eDa99C0551d4320b56F82DDE8dF2f8D2eF81aA/eth:0x226f9265CBC37231882b7409658C18bB7738173A
+- CSModule: https://disco.l2beat.com/diff/eth:0x8daEa53b17a629918CDFAB785C5c74077c1D895B/eth:0x1eB6d4da13ca9566c17F526aE0715325d7a07665
+
+## Watched changes
+
+```diff
+    contract ValidatorsExitBusOracle (eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xba2e8ff1fb232454e73ee740f5c151763047d29a9c660b33be8926930334a768"
++        "0xe4c526720601a291e152819a6b6a28a60b7aa74dfc163dcdda0848713449d95d"
+      values.$implementation:
+-        "eth:0xA89Ea51FddE660f67d1850e03C9c9862d33Bc42c"
++        "eth:0x905A211eD6830Cfc95643f0bE2ff64E7f3bf9b94"
+      values.$pastUpgrades.2:
++        ["2025-10-02T15:52:47.000Z","0xfff774d519ec1afd4358d4858672578437e815dc1652245a2ffb7bde1bfff2ad",["eth:0x905A211eD6830Cfc95643f0bE2ff64E7f3bf9b94"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.getConsensusVersion:
+-        3
++        4
+      values.getContractVersion:
+-        1
++        2
+      values.proxy__getImplementation:
+-        "eth:0xA89Ea51FddE660f67d1850e03C9c9862d33Bc42c"
++        "eth:0x905A211eD6830Cfc95643f0bE2ff64E7f3bf9b94"
+      values.EXIT_REQUEST_LIMIT_MANAGER_ROLE:
++        "0x9c616dd118785b2e2fccf45a4ff151a335ff7b6a84cd1c4d7fd9f97f39ea9342"
+      values.EXIT_TYPE:
++        2
+      values.getExitRequestLimitFullInfo:
++        {"maxExitRequestsLimit":11200,"exitsPerFrame":1,"frameDurationInSec":48,"prevExitRequestsLimit":11200,"currentExitRequestsLimit":11200}
+      values.getMaxValidatorsPerReport:
++        600
+      values.SUBMIT_REPORT_HASH_ROLE:
++        "0x22ebb4dbafb72948800c1e1afa1688772a1a4cfc54d5ebfcec8163b1139c082e"
+      implementationNames.eth:0xA89Ea51FddE660f67d1850e03C9c9862d33Bc42c:
+-        "ValidatorsExitBusOracle"
+      implementationNames.eth:0x905A211eD6830Cfc95643f0bE2ff64E7f3bf9b94:
++        "ValidatorsExitBusOracle"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract CSEarlyAdoption (eth:0x3D5148ad93e2ae5DedD1f7A8B3C19E7F67F90c0E)
+    +++ description: None
+```
+
+```diff
+    contract Lido Dao Agent (eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c) {
+    +++ description: Custom role-based operations entrypoint for Lido.
+      receivedPermissions.0:
++        {"permission":"upgrade","from":"eth:0x06cd61045f958A209a0f8D746e103eCc625f4193","role":"admin"}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428","role":"admin"}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f","role":"admin"}
+    }
+```
+
+```diff
+    contract CSFeeOracle (eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xeac43c3fd7eae13460161196e3255017b4296896629f70133974d9e26bd2b742"
++        "0xe9044668de5a790902b6bfed112ac2d764965db11a13b730c985ceff09edff4d"
+      values.$implementation:
+-        "eth:0x919ac5C6c62B6ef7B05cF05070080525a7B0381E"
++        "eth:0xe0B234f99E413E27D9Bc31aBba9A49A3e570Da97"
+      values.$pastUpgrades.1:
++        ["2025-10-02T15:52:47.000Z","0xfff774d519ec1afd4358d4858672578437e815dc1652245a2ffb7bde1bfff2ad",["eth:0xe0B234f99E413E27D9Bc31aBba9A49A3e570Da97"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.avgPerfLeewayBP:
+-        500
+      values.CONTRACT_MANAGER_ROLE:
+-        "0x8135f02737a6b32709c1f229001b55183df0d6abcb3022e8bae091ad43fd9e6d"
+      values.feeDistributor:
+-        "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0"
+      values.getConsensusVersion:
+-        2
++        3
+      values.getContractVersion:
+-        1
++        2
+      values.proxy__getImplementation:
+-        "eth:0x919ac5C6c62B6ef7B05cF05070080525a7B0381E"
++        "eth:0xe0B234f99E413E27D9Bc31aBba9A49A3e570Da97"
+      values.FEE_DISTRIBUTOR:
++        "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0"
+      values.STRIKES:
++        "eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f"
+      implementationNames.eth:0x919ac5C6c62B6ef7B05cF05070080525a7B0381E:
+-        "CSFeeOracle"
+      implementationNames.eth:0xe0B234f99E413E27D9Bc31aBba9A49A3e570Da97:
++        "CSFeeOracle"
+    }
+```
+
+```diff
+    contract CSAccounting (eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xc45cf7de845f22be0dadd18370faa3a228bdaa579f0c450f4459acbef0c91c05"
++        "0xa3793b129329502d6009f7a85359b308a4c6469ce911caf16b24083bdc712519"
+      values.$implementation:
+-        "eth:0x71FCD2a6F38B644641B0F46c345Ea03Daabf2758"
++        "eth:0x6f09d2426c7405C5546413e6059F884D2D03f449"
+      values.$pastUpgrades.1:
++        ["2025-10-02T15:52:47.000Z","0xfff774d519ec1afd4358d4858672578437e815dc1652245a2ffb7bde1bfff2ad",["eth:0x6f09d2426c7405C5546413e6059F884D2D03f449"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.ACCOUNTING_MANAGER_ROLE:
+-        "0x40579467dba486691cc62fd8536d22c6d4dc9cdc7bc716ef2518422aa554c098"
+      values.CSM:
+-        "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F"
+      values.MAX_BOND_LOCK_RETENTION_PERIOD:
+-        31536000
+      values.MAX_CURVE_LENGTH:
+-        10
++        100
+      values.MIN_BOND_LOCK_RETENTION_PERIOD:
+-        2419200
+      values.proxy__getImplementation:
+-        "eth:0x71FCD2a6F38B644641B0F46c345Ea03Daabf2758"
++        "eth:0x6f09d2426c7405C5546413e6059F884D2D03f449"
+      values.RESET_BOND_CURVE_ROLE:
+-        "0xb5dffea014b759c493d63b1edaceb942631d6468998125e1b4fe427c99082134"
+      values.FEE_DISTRIBUTOR:
++        "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0"
+      values.getBondLockPeriod:
++        4838400
+      values.getCurvesCount:
++        3
+      values.getInitializedVersion:
++        2
+      values.MAX_BOND_LOCK_PERIOD:
++        31536000
+      values.MIN_BOND_LOCK_PERIOD:
++        2419200
+      values.MODULE:
++        "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F"
+      implementationNames.eth:0x71FCD2a6F38B644641B0F46c345Ea03Daabf2758:
+-        "CSAccounting"
+      implementationNames.eth:0x6f09d2426c7405C5546413e6059F884D2D03f449:
++        "CSAccounting"
+    }
+```
+
+```diff
+    contract NodeOperatorsRegistry (eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x3cbd0a87fa76b571f664c2e9d40dc8c24a1b88642270b2ebf0247128c866a937"
++        "0x7e3615bebdb8e2033c00916316355965e076187f136311105c57e4ab8eed8911"
+      values.$implementation:
+-        "eth:0x1770044a38402e3CfCa2Fcfa0C84a093c9B42135"
++        "eth:0x6828b023e737f96B168aCd0b5c6351971a4F81aE"
+      values.getContractVersion:
+-        3
++        4
+      values.getStuckPenaltyDelay:
+-        432000
++        0
+      values.implementation:
+-        "eth:0x1770044a38402e3CfCa2Fcfa0C84a093c9B42135"
++        "eth:0x6828b023e737f96B168aCd0b5c6351971a4F81aE"
+      values.exitPenaltyCutoffTimestamp:
++        1759074767
+      implementationNames.eth:0x1770044a38402e3CfCa2Fcfa0C84a093c9B42135:
+-        "NodeOperatorsRegistry"
+      implementationNames.eth:0x6828b023e737f96B168aCd0b5c6351971a4F81aE:
++        "NodeOperatorsRegistry"
+    }
+```
+
+```diff
+    contract AccountingOracle (eth:0x852deD011285fe67063a08005c71a85690503Cee) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x8eb8fe1367a0eb2d485632fc86c4e0eea79ee0a2dd3f72a2982a622b3c62f1ba"
++        "0x90b97d1cb45e9893fa400657a6d60368adbd83c194db38ea948219e3cab9fb7b"
+      values.$implementation:
+-        "eth:0x0e65898527E77210fB0133D00dd4C0E86Dc29bC7"
++        "eth:0xE9906E543274cebcd335d2C560094089e9547e8d"
+      values.$pastUpgrades.3:
++        ["2025-10-02T15:52:47.000Z","0xfff774d519ec1afd4358d4858672578437e815dc1652245a2ffb7bde1bfff2ad",["eth:0xE9906E543274cebcd335d2C560094089e9547e8d"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.getConsensusVersion:
+-        3
++        4
+      values.getContractVersion:
+-        2
++        3
+      values.proxy__getImplementation:
+-        "eth:0x0e65898527E77210fB0133D00dd4C0E86Dc29bC7"
++        "eth:0xE9906E543274cebcd335d2C560094089e9547e8d"
+      implementationNames.eth:0x0e65898527E77210fB0133D00dd4C0E86Dc29bC7:
+-        "AccountingOracle"
+      implementationNames.eth:0xE9906E543274cebcd335d2C560094089e9547e8d:
++        "AccountingOracle"
+    }
+```
+
+```diff
+    contract NodeOperatorsRegistry (eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x3cbd0a87fa76b571f664c2e9d40dc8c24a1b88642270b2ebf0247128c866a937"
++        "0x7e3615bebdb8e2033c00916316355965e076187f136311105c57e4ab8eed8911"
+      values.$implementation:
+-        "eth:0x1770044a38402e3CfCa2Fcfa0C84a093c9B42135"
++        "eth:0x6828b023e737f96B168aCd0b5c6351971a4F81aE"
+      values.getContractVersion:
+-        3
++        4
+      values.getStuckPenaltyDelay:
+-        432000
++        0
+      values.implementation:
+-        "eth:0x1770044a38402e3CfCa2Fcfa0C84a093c9B42135"
++        "eth:0x6828b023e737f96B168aCd0b5c6351971a4F81aE"
+      values.exitPenaltyCutoffTimestamp:
++        1759074767
+      implementationNames.eth:0x1770044a38402e3CfCa2Fcfa0C84a093c9B42135:
+-        "NodeOperatorsRegistry"
+      implementationNames.eth:0x6828b023e737f96B168aCd0b5c6351971a4F81aE:
++        "NodeOperatorsRegistry"
+    }
+```
+
+```diff
+    contract WithdrawalVault (eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xfed378d959d7c0807be954e4650d7b087554f356d30c10c652058ea4ef14c0ca"
++        "0x02a7455341d351b5cf754695894d7496179272403e2b811db5202057c6373cad"
+      values.$implementation:
+-        "eth:0xCC52f17756C04bBa7E377716d7062fC36D7f69Fd"
++        "eth:0x7D2BAa6094E1C4B60Da4cbAF4A77C3f4694fD53D"
+      values.$pastUpgrades.1:
++        ["2025-10-02T15:52:47.000Z","0xfff774d519ec1afd4358d4858672578437e815dc1652245a2ffb7bde1bfff2ad",["eth:0x7D2BAa6094E1C4B60Da4cbAF4A77C3f4694fD53D"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.getContractVersion:
+-        1
++        2
+      values.implementation:
+-        "eth:0xCC52f17756C04bBa7E377716d7062fC36D7f69Fd"
++        "eth:0x7D2BAa6094E1C4B60Da4cbAF4A77C3f4694fD53D"
+      values.getWithdrawalRequestFee:
++        1
+      values.TRIGGERABLE_WITHDRAWALS_GATEWAY:
++        "eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B"
+      values.WITHDRAWAL_REQUEST:
++        "eth:0x00000961Ef480Eb55e80D19ad83579A64c007002"
+      implementationNames.eth:0xCC52f17756C04bBa7E377716d7062fC36D7f69Fd:
+-        "WithdrawalVault"
+      implementationNames.eth:0x7D2BAa6094E1C4B60Da4cbAF4A77C3f4694fD53D:
++        "WithdrawalVault"
+    }
+```
+
+```diff
+    contract LidoLocator (eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x69f924232e2916fff05aa3d4f0cbd7fd46005b8747ebacff3ac5e16761107735"
++        "0xd9bec8b380e332257d788916e194c7e66df309019cb2e5a19afa74e31d6a1890"
+      values.$implementation:
+-        "eth:0x3ABc4764f0237923d52056CFba7E9AEBf87113D3"
++        "eth:0x2C298963FB763f74765829722a1ebe0784f4F5Cf"
+      values.$pastUpgrades.8:
++        ["2025-10-02T15:52:47.000Z","0xfff774d519ec1afd4358d4858672578437e815dc1652245a2ffb7bde1bfff2ad",["eth:0x2C298963FB763f74765829722a1ebe0784f4F5Cf"]]
+      values.$upgradeCount:
+-        8
++        9
+      values.proxy__getImplementation:
+-        "eth:0x3ABc4764f0237923d52056CFba7E9AEBf87113D3"
++        "eth:0x2C298963FB763f74765829722a1ebe0784f4F5Cf"
+      values.triggerableWithdrawalsGateway:
++        "eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B"
+      values.validatorExitDelayVerifier:
++        "eth:0xbDb567672c867DB533119C2dcD4FB9d8b44EC82f"
+      implementationNames.eth:0x3ABc4764f0237923d52056CFba7E9AEBf87113D3:
+-        "LidoLocator"
+      implementationNames.eth:0x2C298963FB763f74765829722a1ebe0784f4F5Cf:
++        "LidoLocator"
+    }
+```
+
+```diff
+    contract CSFeeDistributor (eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd5604f959d89ec8d8a68b4679f1ac04a3e991d52f605de25f20be7f57a4e669b"
++        "0x881e365358bb714cd1d4c59279039f33010f934835d0bd8406443a9bb43c5b9f"
+      values.$implementation:
+-        "eth:0x17Fc610ecbbAc3f99751b3B2aAc1bA2b22E444f0"
++        "eth:0x5DCF7cF7c6645E9E822a379dF046a8b0390251A1"
+      values.$pastUpgrades.1:
++        ["2025-10-02T15:52:47.000Z","0xfff774d519ec1afd4358d4858672578437e815dc1652245a2ffb7bde1bfff2ad",["eth:0x5DCF7cF7c6645E9E822a379dF046a8b0390251A1"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.proxy__getImplementation:
+-        "eth:0x17Fc610ecbbAc3f99751b3B2aAc1bA2b22E444f0"
++        "eth:0x5DCF7cF7c6645E9E822a379dF046a8b0390251A1"
+      values.distributionDataHistoryCount:
++        0
+      values.getInitializedVersion:
++        2
+      values.rebateRecipient:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      implementationNames.eth:0x17Fc610ecbbAc3f99751b3B2aAc1bA2b22E444f0:
+-        "CSFeeDistributor"
+      implementationNames.eth:0x5DCF7cF7c6645E9E822a379dF046a8b0390251A1:
++        "CSFeeDistributor"
+    }
+```
+
+```diff
+    contract CSModule (eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xf761c7555657701beab5f35f2637465a03482c146dd8566d2fe486a66b790f82"
++        "0xde753d771c3a4dc27e58e529b2dfd70871547d49e71ecd3478353ec02e995aa8"
+      values.$implementation:
+-        "eth:0x8daEa53b17a629918CDFAB785C5c74077c1D895B"
++        "eth:0x1eB6d4da13ca9566c17F526aE0715325d7a07665"
+      values.$pastUpgrades.1:
++        ["2025-10-02T15:52:47.000Z","0xfff774d519ec1afd4358d4858672578437e815dc1652245a2ffb7bde1bfff2ad",["eth:0x1eB6d4da13ca9566c17F526aE0715325d7a07665"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.earlyAdoption:
+-        "eth:0x3D5148ad93e2ae5DedD1f7A8B3C19E7F67F90c0E"
+      values.EL_REWARDS_STEALING_FINE:
+-        "100000000000000000"
+      values.INITIAL_SLASHING_PENALTY:
+-        "1000000000000000000"
+      values.keyRemovalCharge:
+-        0
+      values.MAX_KEY_REMOVAL_CHARGE:
+-        "100000000000000000"
+      values.MAX_SIGNING_KEYS_PER_OPERATOR_BEFORE_PUBLIC_RELEASE:
+-        12
+      values.MODULE_MANAGER_ROLE:
+-        "0x79dfcec784e591aafcf60db7db7b029a5c8b12aac4afd4e8c4eb740430405fa6"
+      values.proxy__getImplementation:
+-        "eth:0x8daEa53b17a629918CDFAB785C5c74077c1D895B"
++        "eth:0x1eB6d4da13ca9566c17F526aE0715325d7a07665"
+      values.publicRelease:
+-        true
+      values.ACCOUNTING:
++        "eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da"
+      values.CREATE_NODE_OPERATOR_ROLE:
++        "0xc72a21b38830f4d6418a239e17db78b945cc7cfee674bac97fd596eaf0438478"
+      values.DEPOSIT_SIZE:
++        "32000000000000000000"
+      values.EXIT_PENALTIES:
++        "eth:0x06cd61045f958A209a0f8D746e103eCc625f4193"
+      values.FEE_DISTRIBUTOR:
++        "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0"
+      values.getInitializedVersion:
++        2
+      values.PARAMETERS_REGISTRY:
++        "eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428"
+      values.QUEUE_LEGACY_PRIORITY:
++        4
+      values.QUEUE_LOWEST_PRIORITY:
++        5
+      implementationNames.eth:0x8daEa53b17a629918CDFAB785C5c74077c1D895B:
+-        "CSModule"
+      implementationNames.eth:0x1eB6d4da13ca9566c17F526aE0715325d7a07665:
++        "CSModule"
+    }
+```
+
+```diff
+    contract StakingRouter (eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x503f0f420b9a496d2931807c8c9c7b3bae8e03c9d66fd0c046c0cee08657b365"
++        "0xfff62cfc156b3379b99f876fed184d721dcaa8f2c185eb5267d7f0609085e688"
+      values.$implementation:
+-        "eth:0x89eDa99C0551d4320b56F82DDE8dF2f8D2eF81aA"
++        "eth:0x226f9265CBC37231882b7409658C18bB7738173A"
+      values.$pastUpgrades.3:
++        ["2025-10-02T15:52:47.000Z","0xfff774d519ec1afd4358d4858672578437e815dc1652245a2ffb7bde1bfff2ad",["eth:0x226f9265CBC37231882b7409658C18bB7738173A"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.getContractVersion:
+-        2
++        3
+      values.proxy__getImplementation:
+-        "eth:0x89eDa99C0551d4320b56F82DDE8dF2f8D2eF81aA"
++        "eth:0x226f9265CBC37231882b7409658C18bB7738173A"
+      values.REPORT_VALIDATOR_EXIT_TRIGGERED_ROLE:
++        "0x0766e72e5c008b3df8129fb356d9176eef8544f6241e078b7d61aff604f8812b"
+      values.REPORT_VALIDATOR_EXITING_STATUS_ROLE:
++        "0xbe1bd143a0dde8a867d58aab054bfdb25250951665c4570e39abc3b3de3c2d6c"
+      implementationNames.eth:0x89eDa99C0551d4320b56F82DDE8dF2f8D2eF81aA:
+-        "StakingRouter"
+      implementationNames.eth:0x226f9265CBC37231882b7409658C18bB7738173A:
++        "StakingRouter"
+    }
+```
+
+```diff
+    contract DepositSecurityModule (eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD) {
+    +++ description: None
+      values.getGuardians.2:
+-        "eth:0x14D5d5B71E048d2D75a39FfC5B407e3a3AB6F314"
++        "eth:0xd4EF84b638B334699bcf5AF4B0410B8CCD71943f"
+      values.getGuardians.5:
+-        "eth:0xd4EF84b638B334699bcf5AF4B0410B8CCD71943f"
++        "eth:0x6d22aE126eB2c37F67a1391B37FF4f2863e61389"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x00000961Ef480Eb55e80D19ad83579A64c007002)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x000F3df6D732807Ef1319fB7B8bB8522d0Beac02)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CSExitPenalties (eth:0x06cd61045f958A209a0f8D746e103eCc625f4193)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CSParametersRegistry (eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CSStrikes (eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorExitDelayVerifier (eth:0xbDb567672c867DB533119C2dcD4FB9d8b44EC82f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CSEjector (eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TriggerableWithdrawalsGateway (eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../AccountingOracle/AccountingOracle.sol          |  102 +-
+ .../CSAccounting/CSAccounting.sol                  | 2530 +++++++--------
+ .../CSEarlyAdoption.sol => /dev/null               |  299 --
+ .../src/projects/tokens/.flat/CSEjector.sol        | 1776 +++++++++++
+ .../.flat/CSExitPenalties/CSExitPenalties.sol      | 1830 +++++++++++
+ .../.flat/CSExitPenalties/OssifiableProxy.p.sol    |  619 ++++
+ .../CSFeeDistributor/CSFeeDistributor.sol          |  377 ++-
+ .../CSFeeOracle/CSFeeOracle.sol                    |  311 +-
+ .../CSModule/CSModule.sol                          | 3001 ++++++++++--------
+ .../CSParametersRegistry/CSParametersRegistry.sol  | 3348 ++++++++++++++++++++
+ .../CSParametersRegistry/OssifiableProxy.p.sol     |  619 ++++
+ .../projects/tokens/.flat/CSStrikes/CSStrikes.sol  | 1489 +++++++++
+ .../tokens/.flat/CSStrikes/OssifiableProxy.p.sol   |  619 ++++
+ .../LidoLocator/LidoLocator.sol                    |    6 +
+ .../NodeOperatorsRegistry.sol                      |  504 ++-
+ .../NodeOperatorsRegistry.sol                      |  504 ++-
+ .../StakingRouter/StakingRouter.sol                |  253 +-
+ .../tokens/.flat/TriggerableWithdrawalsGateway.sol | 1291 ++++++++
+ .../tokens/.flat/ValidatorExitDelayVerifier.sol    |  667 ++++
+ .../ValidatorsExitBusOracle.sol                    | 1121 +++++--
+ .../WithdrawalVault/WithdrawalVault.sol            |  146 +-
+ 21 files changed, 17155 insertions(+), 4257 deletions(-)
+```
+
+Generated with discovered.json: 0x452b93407e604d63d147c7c6b2e6f1f89138f0d8
+
+# Diff at Thu, 25 Sep 2025 12:26:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0baa1255a33ce1a02b431265f21e07fd28f2de49 block: 1758619454
+- current timestamp: 1758803109
+
+## Description
+
+ms change.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (arb1:0x7843225BA488cf780A4Fe2c842B5dc2aBCf8A03e) {
+    +++ description: None
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 6 (33%)"
++        "3 of 6 (50%)"
+    }
+```
+
+Generated with discovered.json: 0xc06eba1ecdc676e37f47ecbc90e11756afc416ee
+
+# Diff at Tue, 23 Sep 2025 09:25:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9a796f3fca0d6345ed73136526bf67003edbb829 block: 1758527427
+- current timestamp: 1758619454
+
+## Description
+
+ms changes.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (base:0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971) {
+    +++ description: None
+      values.$members.0:
++        "base:0x17aBc3F085fb4B7eAf5002785DE22867f964D273"
+      values.$members.4:
+-        "base:0x244df059d103347a054487Da7f8D42d52Cb29A55"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (base:0x92A19381444A001d62cE67BaFF066fA1111d7202) {
+    +++ description: None
+      values.$members.6:
+-        "base:0x244df059d103347a054487Da7f8D42d52Cb29A55"
++        "base:0x17aBc3F085fb4B7eAf5002785DE22867f964D273"
+    }
+```
+
+Generated with discovered.json: 0xd8ca3f0fd6307fe942b7b37c0210bb0636f9da59
+
+# Diff at Mon, 22 Sep 2025 07:51:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3aa102df1ae0b60ff981cfe12b1d0c919b4c2704 block: 1755691670
+- current timestamp: 1758527427
+
+## Description
+
+blacklister for USDC swapped.
+
+## Watched changes
+
+```diff
+    contract USD Coin Token (base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913) {
+    +++ description: None
+      values.blacklister:
+-        "base:0x4d15e70518A20Fc8828b5C3853f32e35238d0b77"
++        "base:0x1f2e3A640175d20ac31ed523B6733B977173E277"
+    }
+```
+
+Generated with discovered.json: 0xa89a357e0618d26a34840d542d8fcd13e06c0341
+
+# Diff at Mon, 15 Sep 2025 10:45:07 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@42f2c01145ca4aa65fcdb5fd60aca707e3b4fd2c block: 1755691670
+- current timestamp: 1755691670
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755691670 (main branch discovery), not current.
+
+```diff
+    reference  (eth:0x59232aC80E6d403b6381393e52f4665ECA328558) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Reference"
+      proxyType:
+-        "EOA"
+      targetType:
++        "EOA"
+      targetProject:
++        "shared-sharp-verifier"
+    }
+```
+
+```diff
+    reference  (eth:0x955B978F3ee7818dA71fA25c676062E6BC462Fec) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Reference"
+      proxyType:
+-        "EOA"
+      targetType:
++        "EOA"
+      targetProject:
++        "shared-sharp-verifier"
+    }
+```
+
 Generated with discovered.json: 0xce61b0d19b16d86f9a3f366456284766713fb26d
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

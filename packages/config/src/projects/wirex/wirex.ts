@@ -32,7 +32,7 @@ const rollupModuleContract = discovery.getContract('Validium')
 
 export const wirex: ScalingProject = polygonCDKStack({
   addedAt: UnixTime(1720180654), // 2024-07-05T11:57:34Z
-  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gateway],
+  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Zeeve],
   additionalPurposes: ['Payments'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
@@ -66,7 +66,7 @@ export const wirex: ScalingProject = polygonCDKStack({
       {
         type: 'rpc',
         url: 'https://rpc.wirexpaychain.com',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },
@@ -97,7 +97,7 @@ export const wirex: ScalingProject = polygonCDKStack({
         {
           title:
             'PolygonValidiumStorageMigration.sol - Etherscan source code, sequenceBatchesValidium function',
-          url: 'https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code#F1#L126',
+          url: 'https://etherscan.io/address/0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F#code#F1#L91',
         },
       ],
     },

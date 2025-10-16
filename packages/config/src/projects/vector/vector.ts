@@ -5,11 +5,17 @@ import {
   DaUpgradeabilityRisk,
 } from '../../common'
 import { linkByDA } from '../../common/linkByDA'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 
 const discovery = new ProjectDiscovery('vector')
+
+const vectorProgramHash = discovery.getContractValue<string>(
+  'Vector',
+  'vectorXProgramVkey',
+)
 
 export const vector: BaseProject = {
   id: ProjectId('vector'),
@@ -65,6 +71,18 @@ export const vector: BaseProject = {
   daBridge: {
     name: 'Vector',
     daLayer: ProjectId('avail'),
+    relayerType: {
+      value: 'Permissioned',
+      sentiment: 'warning',
+      description:
+        'Only whitelisted relayers can post attestations to this bridge.',
+    },
+    validationType: {
+      value: 'Validity Proof',
+      description:
+        'The DA attestation requires onchain SNARK proof verification to be accepted by the bridge. Operators signatures and their corresponding stake are verified as part of the proof.',
+      zkCatalogId: ProjectId('sp1'),
+    },
     technology: {
       description: `
 ## Architecture
@@ -122,6 +140,7 @@ By default, Vector on Ethereum is updated by the Succinct operator at a cadence 
         text: 'the bridge contract is frozen by the Guardian (AvailMultisig).',
       },
     ],
+    zkProgramHashes: [ZK_PROGRAM_HASHES(vectorProgramHash)],
   },
   permissions: discovery.getDiscoveredPermissions(),
   milestones: [

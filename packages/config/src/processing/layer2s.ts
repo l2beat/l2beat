@@ -1,6 +1,7 @@
 import { HOMEPAGE_MILESTONES } from '../global/milestones'
 import type { ScalingProject } from '../internalTypes'
 import { abstract } from '../projects/abstract/abstract'
+import { adi } from '../projects/adi/adi'
 import { aevo } from '../projects/aevo/aevo'
 import { airas } from '../projects/airas/airas'
 import { alephzero } from '../projects/alephzero/alephzero'
@@ -18,6 +19,7 @@ import { aztec } from '../projects/aztec/aztec'
 import { aztecV2 } from '../projects/aztec-v2/aztec-v2'
 import { aztecconnect } from '../projects/aztecconnect/aztecconnect'
 import { base } from '../projects/base/base'
+import { billions } from '../projects/billions/billions'
 import { blast } from '../projects/blast/blast'
 import { bob } from '../projects/bob/bob'
 import { bobanetwork } from '../projects/bobanetwork/bobanetwork'
@@ -44,6 +46,7 @@ import { dydx } from '../projects/dydx/dydx'
 import { ebichain } from '../projects/ebichain/ebichain'
 import { eclipse } from '../projects/eclipse/eclipse'
 import { edgeless } from '../projects/edgeless/edgeless'
+import { edgex } from '../projects/edgex/edgex'
 import { ethernity } from '../projects/ethernity/ethernity'
 import { everclear } from '../projects/everclear/everclear'
 import { facet } from '../projects/facet/facet'
@@ -60,7 +63,9 @@ import { fuse } from '../projects/fuse/fuse'
 import { galxegravity } from '../projects/galxegravity/galxegravity'
 import { gameswift } from '../projects/gameswift/gameswift'
 import { gasp } from '../projects/gasp/gasp'
+import { gateLayer } from '../projects/gate-layer/gate-layer'
 import { genlayer } from '../projects/genlayer/genlayer'
+import { giwa } from '../projects/giwa/giwa'
 import { gluon } from '../projects/gluon/gluon'
 import { gmnetwork } from '../projects/gmnetwork/gmnetwork'
 import { gpt } from '../projects/gpt/gpt'
@@ -94,6 +99,7 @@ import { layer2financezk } from '../projects/layer2financezk/layer2financezk'
 import { layerai } from '../projects/layerai/layerai'
 import { lens } from '../projects/lens/lens'
 import { liftchain } from '../projects/liftchain/liftchain'
+import { lighter } from '../projects/lighter/lighter'
 import { lightlink } from '../projects/lightlink/lightlink'
 import { linea } from '../projects/linea/linea'
 import { lisk } from '../projects/lisk/lisk'
@@ -140,10 +146,10 @@ import { phala } from '../projects/phala/phala'
 import { plumenetwork } from '../projects/plumenetwork/plumenetwork'
 import { polygonpos } from '../projects/polygon-pos/polygon-pos'
 import { polygonmiden } from '../projects/polygonmiden/polygonmiden'
-import { polygonpos2 } from '../projects/polygonpos2/polygonpos2'
 import { polygonzkevm } from '../projects/polygonzkevm/polygonzkevm'
 import { polynomial } from '../projects/polynomial/polynomial'
 import { powerloom } from '../projects/powerloom/powerloom'
+import { primechain } from '../projects/primechain/primechain'
 import { prom } from '../projects/prom/prom'
 import { publicgoodsnetwork } from '../projects/publicgoodsnetwork/publicgoodsnetwork'
 import { puffer } from '../projects/puffer/puffer'
@@ -159,6 +165,7 @@ import { redstone } from '../projects/redstone/redstone'
 import { reya } from '../projects/reya/reya'
 import { rise } from '../projects/rise/rise'
 import { river } from '../projects/river/river'
+import { roninNetwork } from '../projects/ronin-network/ronin-network'
 import { rss3 } from '../projects/rss3/rss3'
 import { rufus } from '../projects/rufus/rufus'
 import { scroll } from '../projects/scroll/scroll'
@@ -201,6 +208,7 @@ import { thanos } from '../projects/thanos/thanos'
 import { thebinaryholdings } from '../projects/thebinaryholdings/thebinaryholdings'
 import { treasure } from '../projects/treasure/treasure'
 import { tusima } from '../projects/tusima/tusima'
+import { umi } from '../projects/umi/umi'
 import { unichain } from '../projects/unichain/unichain'
 import { wilderworld } from '../projects/wilderworld/wilderworld'
 import { wirex } from '../projects/wirex/wirex'
@@ -216,7 +224,6 @@ import { zeronetwork } from '../projects/zeronetwork/zeronetwork'
 import { zircuit } from '../projects/zircuit/zircuit'
 import { zkcandy } from '../projects/zkcandy/zkcandy'
 import { zkfair } from '../projects/zkfair/zkfair'
-import { zklighter } from '../projects/zklighter/zklighter'
 import { zkspace } from '../projects/zkspace/zkspace'
 import { zkswap } from '../projects/zkswap/zkswap'
 import { zkswap2 } from '../projects/zkswap2/zkswap2'
@@ -230,6 +237,7 @@ export const layer2s: ScalingProject[] = [
   airas,
   alephzero,
   alienx,
+  adi,
   allo,
   ancient,
   apex,
@@ -241,11 +249,13 @@ export const layer2s: ScalingProject[] = [
   automata,
   aztecconnect,
   aztec,
+  primechain,
   aztecV2,
   base,
   blast,
   bob,
   bobanetwork,
+  billions,
   canvasconnect,
   capx,
   cartesiprthoneypot,
@@ -267,6 +277,7 @@ export const layer2s: ScalingProject[] = [
   ebichain,
   eclipse,
   edgeless,
+  edgex,
   ethernity,
   everclear,
   facet,
@@ -284,6 +295,7 @@ export const layer2s: ScalingProject[] = [
   gameswift,
   gasp,
   genlayer,
+  giwa,
   gluon,
   gmnetwork,
   gpt,
@@ -318,6 +330,7 @@ export const layer2s: ScalingProject[] = [
   lens,
   liftchain,
   lightlink,
+  lighter,
   linea,
   lisk,
   litecoinvm,
@@ -363,7 +376,6 @@ export const layer2s: ScalingProject[] = [
   plumenetwork,
   polygonmiden,
   polygonpos,
-  polygonpos2,
   polygonzkevm,
   polynomial,
   powerloom,
@@ -377,6 +389,8 @@ export const layer2s: ScalingProject[] = [
   rayls,
   real,
   reddioex,
+  roninNetwork,
+  gateLayer,
   reddiozkvm,
   redstone,
   reya,
@@ -426,6 +440,7 @@ export const layer2s: ScalingProject[] = [
   thebinaryholdings,
   treasure,
   tusima,
+  umi,
   unichain,
   wirex,
   witness,
@@ -441,7 +456,6 @@ export const layer2s: ScalingProject[] = [
   zircuit,
   zkcandy,
   zkfair,
-  zklighter,
   zkspace,
   zkswap,
   zkswap2,

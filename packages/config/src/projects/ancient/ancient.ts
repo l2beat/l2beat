@@ -14,7 +14,7 @@ const upgradeability = {
 export const ancient: ScalingProject = opStackL2({
   addedAt: UnixTime(1695904849), // 2023-09-28T12:40:49Z
   daProvider: CELESTIA_DA_PROVIDER,
-  additionalBadges: [BADGES.DA.Celestia, BADGES.RaaS.Conduit],
+  additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
   discovery,
   associatedTokens: ['A8'],
@@ -50,7 +50,7 @@ export const ancient: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.ancient8.gg/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

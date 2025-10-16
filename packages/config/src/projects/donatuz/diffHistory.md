@@ -1,4 +1,54 @@
-Generated with discovered.json: 0xf5300ecfe86996957a48f9d9eb4ad013ac484ea4
+Generated with discovered.json: 0x974bdfa0ee2c93923e17c8ce6837d0c7924ddd14
+
+# Diff at Fri, 03 Oct 2025 08:50:48 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@e647409961cd173771dcfcaeb808991c99e73911 block: 1755014032
+- current timestamp: 1759481381
+
+## Description
+
+Member removed from multisig.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 3 (base:0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104) {
+    +++ description: None
+      values.$members.2:
+-        "base:0x860e06Fe384D1A3340111e7D142E02642178c053"
+      values.$members.3:
+-        "base:0x50930d652266EF4127FA3A1906B7Cb9951076628"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 9 (44%)"
+      receivedPermissions.2:
+-        {"permission":"interact","from":"base:0x5416B7421c42B9218B29f688C47a46020c23cF0d","description":"set and change address mappings.","role":".owner","via":[{"address":"base:0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15"}]}
+      receivedPermissions.4:
+-        {"permission":"upgrade","from":"base:0x4A2b7478B9646c06C3517E6f06e1232684143C00","role":"admin","via":[{"address":"base:0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15"}]}
+      receivedPermissions.5:
+-        {"permission":"upgrade","from":"base:0x88dBaaeCDa265241a1BABe4A0ce69ad4957da8a2","role":"admin","via":[{"address":"base:0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15"}]}
+      receivedPermissions.6:
+-        {"permission":"upgrade","from":"base:0xa096dD38362bd2cE3C696474329989960722A7Fd","role":"admin","via":[{"address":"base:0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15"}]}
+      receivedPermissions.7:
+-        {"permission":"upgrade","from":"base:0xb765Df9d2925a82678F4B7bc60eF5294c1604514","role":"admin","via":[{"address":"base:0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15"}]}
+      receivedPermissions.8:
+-        {"permission":"upgrade","from":"base:0xBbea8Cc549702F67cc082d2cAA9842Ba3767536B","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","role":".$admin","via":[{"address":"base:0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15"}]}
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"base:0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15","role":".owner"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (base:0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15) {
+    +++ description: None
+      values.owner:
+-        "base:0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"
++        "base:0xb02b6c8e9970D7Fd54a000a95AC4fBAA3bb11288"
+    }
+```
+
+Generated with discovered.json: 0xc588d22316830de661abc248028acb8be078ab2a
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
 

@@ -6,7 +6,22 @@
     "eth:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
     "eth:0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
     "eth:0x1A9da0aedA630dDf2748a453BF6d92560762D914",
-    "eth:0xaE4d46bD9117Cb017C5185844699c51107cB28a9"
+    "eth:0xaE4d46bD9117Cb017C5185844699c51107cB28a9",
+    // from Lib_PredeployAddresses
+    "metis-andromeda:0x4200000000000000000000000000000000000000",
+    "metis-andromeda:0x4200000000000000000000000000000000000001",
+    "metis-andromeda:0x4200000000000000000000000000000000000002",
+    "metis-andromeda:0x4200000000000000000000000000000000000005",
+    "metis-andromeda:0x4200000000000000000000000000000000000007",
+    "metis-andromeda:0x4200000000000000000000000000000000000008",
+    "metis-andromeda:0x4200000000000000000000000000000000000009",
+    "metis-andromeda:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
+    "metis-andromeda:0x420000000000000000000000000000000000000A",
+    "metis-andromeda:0x4200000000000000000000000000000000000010",
+    "metis-andromeda:0x4200000000000000000000000000000000000011",
+    "metis-andromeda:0x4200000000000000000000000000000000000012",
+    // "metis-andromeda:0x4200000000000000000000000000000000000013",
+    "metis-andromeda:0x420000000000000000000000000000000000000F"
   ],
   "names": {
     "eth:0x38473Feb3A6366757A249dB2cA4fBB2C663416B7": "ChainStorageContainer-CTC-batches",
@@ -15,6 +30,7 @@
     "eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6": "StateCommitmentChain",
     "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21": "Metis Multisig",
     "eth:0xbf1752DE62d825aF0634F514226F881a449874b6": "Metis Security Council",
+    "eth:0xAd07701EE9348d2B9e7De061883C10574c543279": "Metis Security Council Minority",
     "eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e": "Metis Token",
     "eth:0xD54c868362C2098E0E46F12E7D924C6A332952Dd": "LockingPool",
     "eth:0x918778e825747a892b17C66fe7D24C618262867d": "Lib_AddressManager",
@@ -59,6 +75,15 @@
         "getThreshold": { "severity": "HIGH", "type": "PERMISSION" }
       }
     },
+    "metis-andromeda:0x420000000000000000000000000000000000000A": {
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    "metis-andromeda:0x420000000000000000000000000000000000000F": {
+      "ignoreInWatchMode": ["gasPrice"]
+    },
+    "metis-andromeda:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000": {
+      "ignoreInWatchMode": ["totalSupply"]
+    },
     // Unused contracts
     "eth:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a": {
       "ignoreDiscovery": true
@@ -68,6 +93,9 @@
     },
     "eth:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0": {
       "ignoreDiscovery": true
+    },
+    "eth:0x420000000000000000000000000000000000000F": {
+      "ignoreInWatchMode": ["gasPrice"]
     }
   }
 }

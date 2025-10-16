@@ -1,5 +1,6 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
+import { CssVariables } from '~/components/CssVariables'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { WhyAmIHereNotice } from '~/components/countdowns/other-migration/WhyAmIHereNotice'
 import { StageOneRequirementsChangeNotice } from '~/components/countdowns/stage-one-requirements-change/StageOneRequirementsChangeNotice'
@@ -38,22 +39,25 @@ export function ScalingProjectPage({
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <SideNavLayout childrenWrapperClassName="md:pt-0">
+          {projectEntry.colors?.project && (
+            <CssVariables
+              variables={{
+                'project-primary': projectEntry.colors.project?.primary,
+                'project-secondary': projectEntry.colors.project?.secondary,
+              }}
+            />
+          )}
+          {projectEntry.colors?.ecosystem && (
+            <CssVariables
+              variables={{
+                'ecosystem-primary': projectEntry.colors.ecosystem?.primary,
+                'ecosystem-secondary': projectEntry.colors.ecosystem?.secondary,
+              }}
+            />
+          )}
           <div
             className="smooth-scroll group/section-wrapper relative z-0 max-md:bg-surface-primary"
             data-project-page
-            style={
-              projectEntry.colors
-                ? ({
-                    '--project-primary': projectEntry.colors.project?.primary,
-                    '--project-secondary':
-                      projectEntry.colors.project?.secondary,
-                    '--ecosystem-primary':
-                      projectEntry.colors.ecosystem?.primary,
-                    '--ecosystem-secondary':
-                      projectEntry.colors.ecosystem?.secondary,
-                  } as React.CSSProperties)
-                : undefined
-            }
             data-has-colors={
               !!projectEntry.colors?.project || !!projectEntry.colors?.ecosystem
             }

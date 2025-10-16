@@ -5,7 +5,7 @@
   "main": "./build/data.json",
   "types": "./index.d.ts",
   "scripts": {
-    "build": "./scripts/build.sh",
+    "build": "tsc -p tsconfig.build.json",
     "build:dependencies": "cd ../.. && pnpm build:dependencies:backend",
     "watch:dependencies": "cd ../.. && pnpm watch:dependencies:backend",
     "build:config": "cd ../config && pnpm build",
@@ -34,9 +34,8 @@
     "tvs:calculate-ids": "ts-node ./scripts/tvs/calculate-ids.ts",
     "tvs:translate-id": "ts-node ./scripts/tvs/translate-id.ts",
     "anomalies": "ts-node ./scripts/anomalies/anomalies.ts",
-    "bridges:cli": "ts-node ./scripts/bridges/cli.ts",
-    "bridges:cli-stats": "ts-node ./scripts/bridges/cli-stats.ts",
-    "bridges:example": "ts-node ./src/modules/bridges/examples/script.ts"
+    "interop:example": "ts-node ./src/modules/interop/examples/script.ts",
+    "interop:compare": "ts-node ./src/modules/interop/compare/script.ts"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.13.1",
@@ -50,7 +49,6 @@
     "@l2beat/shared-pure": "workspace:*",
     "@l2beat/uif": "workspace:*",
     "@l2beat/validate": "workspace:*",
-    "@polkadot/api": "^12.4.2",
     "@types/ws": "^8.18.1",
     "basic-auth": "^2.0.1",
     "chalk": "^4.1.2",
@@ -68,8 +66,6 @@
     "react-dom": "^19.0.0",
     "redis": "^4.7.0",
     "source-map-support": "^0.5.21",
-    "stream-chain": "^2.2.5",
-    "stream-json": "^1.8.0",
     "uuid": "^9.0.1",
     "viem": "^2.31.6",
     "ws": "^8.18.2"
@@ -86,11 +82,10 @@
     "@types/node-fetch": "^2.6.2",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
-    "@types/stream-chain": "^2.1.0",
-    "@types/stream-json": "^1.7.7",
     "@types/supertest": "^2.0.12",
     "@types/uuid": "^9.0.8",
     "cmd-ts": "^0.13.0",
+    "jsonc-parser": "^3.2.0",
     "supertest": "^6.2.3",
     "ts-node-dev": "^2.0.0"
   }

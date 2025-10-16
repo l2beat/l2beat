@@ -11,7 +11,7 @@ import {
   ClientCore,
   type ClientCoreDependencies as ClientCoreDependencies,
 } from '../ClientCore'
-import type { BlockClient } from '../types'
+import type { BlockClient, LogsClient } from '../types'
 import type { MulticallV3Client } from './multicall/MulticallV3Client'
 import {
   type CallParameters,
@@ -42,7 +42,7 @@ type Param =
   | boolean
   | Record<string, string | string[] | string[][]>
 
-export class RpcClient extends ClientCore implements BlockClient {
+export class RpcClient extends ClientCore implements BlockClient, LogsClient {
   multicallClient?: MulticallV3Client
 
   constructor(private readonly $: Dependencies) {
@@ -290,7 +290,7 @@ export class RpcClient extends ClientCore implements BlockClient {
         jsonrpc: '2.0',
       }),
       redirect: 'follow',
-      timeout: 5_000, // Most RPCs respond in ~2s during regular conditions
+      timeout: 10_000,
     })
   }
 
@@ -308,7 +308,7 @@ export class RpcClient extends ClientCore implements BlockClient {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(queries),
       redirect: 'follow',
-      timeout: 5_000, // Most RPCs respond in ~2s during regular conditions
+      timeout: 10_000, // Most RPCs respond in ~2s during regular conditions
     })
 
     const results = new Map(

@@ -1,3 +1,660 @@
+Generated with discovered.json: 0x20d82b00a2a06e6877637412a4d82c2c341c0916
+
+# Diff at Wed, 15 Oct 2025 14:11:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3b2c8898ebe0c61228f50617e2de65973094dd39 block: 1759763659
+- current timestamp: 1760536727
+
+## Description
+
+WithdrawalManager upgrade with support for blacklisting.
+
+## Watched changes
+
+```diff
+    contract WithdrawalManager (eth:0x5F683665ca87dbC3D1358913da80e3C71c328Fb0) {
+    +++ description: Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager. It has blacklisting support.
+      template:
+-        "polygonposbridge/WithdrawManager"
++        "shibarium/WithdrawManager"
+      sourceHashes.1:
+-        "0xda0990aeeb22bcf3c867d4f398d00bd7d2f15aef3add8c60800711185b34a09c"
++        "0xcdde166e8888dfe4fae172f6008fe3fbc0bcb1db2e5be1ca6519f3eff028ba7b"
+      description:
+-        "Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager."
++        "Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager. It has blacklisting support."
+      values.$implementation:
+-        "eth:0xA5E0bD9dc1F1d55e53ca87496731aE6B768094D3"
++        "eth:0xD12B1d5f28736cE0Bfd9330F5595d3fFE6e01A97"
+      values.HALF_EXIT_PERIOD:
+-        864000
++        302400
+      values.implementation:
+-        "eth:0xA5E0bD9dc1F1d55e53ca87496731aE6B768094D3"
++        "eth:0xD12B1d5f28736cE0Bfd9330F5595d3fFE6e01A97"
+      implementationNames.eth:0xA5E0bD9dc1F1d55e53ca87496731aE6B768094D3:
+-        "WithdrawManager"
+      implementationNames.eth:0xD12B1d5f28736cE0Bfd9330F5595d3fFE6e01A97:
++        "WithdrawManager"
+    }
+```
+
+```diff
+    EOA  (eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96) {
+    +++ description: None
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x5F683665ca87dbC3D1358913da80e3C71c328Fb0","description":"manage critical config values like the exit period and the blacklist.","role":".owner"}
+    }
+```
+
+## Source code changes
+
+```diff
+.../WithdrawalManager/WithdrawManager.sol          | 67 +++++++++++++++++++---
+ 1 file changed, 59 insertions(+), 8 deletions(-)
+```
+
+Generated with discovered.json: 0x6f9ba0ab84c084ca12fcde474716e18e54bfddc5
+
+# Diff at Mon, 06 Oct 2025 15:21:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e58bd9f0913161b35e2a2c65f233464591d4f28b block: 1758802197
+- current timestamp: 1759763659
+
+## Description
+
+AccountStateRoot change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758802197 (main branch discovery), not current.
+
+```diff
+    contract StakingInfo (eth:0x539964b3d225194717fb896D26c8b3E635b8A1aE) {
+    +++ description: Contains logging and getter functions about staking.
+      fieldMeta:
++        {"getAccountStateRoot":{"description":"Merkle root of a tree of validator balances."}}
+    }
+```
+
+Generated with discovered.json: 0xa1d125af6e4cf4ade4902c1381c65681e339fa12
+
+# Diff at Thu, 25 Sep 2025 12:24:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0baa1255a33ce1a02b431265f21e07fd28f2de49 block: 1757911207
+- current timestamp: 1758802197
+
+## Description
+
+stakeManager upgrade. here is the diff to the non-reverting stakeManager before the hack: https://disco.l2beat.com/diff/eth:0x1be79AED4088A55f5ED249a14f777758d9F888c6/eth:0x269C0ebb7a39995dB531Ccd61D015e431530b87A
+
+the main addition is the blacklist. the reverts from the interim implementation have been removed.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064) {
+    +++ description: Main configuration contract to manage stakers and their voting power and validate checkpoint signatures. After the shibarium hack, this contract also includes a validator blacklist managed by eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06.
+      template:
+-        "polygonposbridge/StakeManager_shibarium_revert"
++        "polygonposbridge/StakeManager_shibarium"
+      sourceHashes.1:
+-        "0x9394ab61559718a01471ac508777c2be71a11c31bd14a7c7b5dc14ee61efbd3b"
++        "0xe2522e34d47444e7e217e066534ccc56536e24f4f582f8585897230965360291"
+      description:
+-        "Main configuration contract to manage stakers and their voting power and validate checkpoint signatures. This version of the contract has most critical validator management functions blocked (`transferFunds`, `unstakeClaim`, `withdrawDelegatorsReward`, `_transferToken`, `_transferTokenFrom`) and 'rescue' functions added after the shibarium hack."
++        "Main configuration contract to manage stakers and their voting power and validate checkpoint signatures. After the shibarium hack, this contract also includes a validator blacklist managed by eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06."
+      values.$implementation:
+-        "eth:0x94e5C17983cf1631e7135C33CF0e6206FF995207"
++        "eth:0x269C0ebb7a39995dB531Ccd61D015e431530b87A"
+      values.$pastUpgrades.5:
++        ["2025-09-24T19:46:35.000Z","0xa214ba95a5640e38fdbae0e1e9fb12b38fea89906efa333f37ae2f65d56bfd7c",["eth:0x269C0ebb7a39995dB531Ccd61D015e431530b87A"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.auctionPeriod:
+-        0
++        7
+      values.dynasty:
+-        1
++        30
+      values.implementation:
+-        "eth:0x94e5C17983cf1631e7135C33CF0e6206FF995207"
++        "eth:0x269C0ebb7a39995dB531Ccd61D015e431530b87A"
+      values.replacementCoolDown:
+-        13608
++        29342
+      values.rescuer:
+-        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      values.WITHDRAWAL_DELAY:
+-        1
++        30
+      values.withdrawalDelay:
+-        1
++        30
+      implementationNames.eth:0x94e5C17983cf1631e7135C33CF0e6206FF995207:
+-        "StakeManager"
+      implementationNames.eth:0x269C0ebb7a39995dB531Ccd61D015e431530b87A:
++        "StakeManager"
+    }
+```
+
+```diff
+    EOA  (eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96) {
+    +++ description: None
+      receivedPermissions.4.via:
++        [{"address":"eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06"}]
+      receivedPermissions.4.role:
+-        ".rescuer"
++        ".governance"
+      receivedPermissions.4.description:
+-        "can move any ERC20 tokens out of the contract."
++        "can manage the validator blacklist and change other critical settings related to staking."
+      receivedPermissions.5.description:
+-        "can replace all validators."
++        "can replace all validators and change the root chain address."
+    }
+```
+
+```diff
+    contract Governance (eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06) {
+    +++ description: Simple contract that allows the owner to call an `update` function on arbitrary contracts.
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064","description":"can manage the validator blacklist and change other critical settings related to staking.","role":".governance"}]
+    }
+```
+
+```diff
+    contract Registry (eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB) {
+    +++ description: Maintains the addresses of the contracts used in the system.
+      values.getValidatorShareAddress:
+-        "eth:0xe99f1001c8afD34AcF0CEd6aD33137DeE8D81dE6"
++        "eth:0xaB8FB5E1A9777f2A98E86004980A4fCdcd655a04"
+    }
+```
+
+## Source code changes
+
+```diff
+.../StakeManager/StakeManager.sol                  | 612 ++++++---------------
+ 1 file changed, 179 insertions(+), 433 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757911207 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06","role":".owner"}]
+    }
+```
+
+Generated with discovered.json: 0x39091287b079e101e36e1e36c984b610497bbeb1
+
+# Diff at Mon, 15 Sep 2025 11:00:30 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@6c1c52a7c5bf7afb46c533c8458204a4d9ae2a5f block: 1757661357
+- current timestamp: 1757911207
+
+## Description
+
+Shibarium hack upgrades and changes
+
+malicious root finalized (10/12 validators signed):
+- https://x.com/TikkalaResearch/status/1966610862149665126
+- https://app.blocksec.com/explorer/tx/eth/0x50228355eaf263320eed31c1d700acd0294b658a04b3d4313c9f8cb739accda9
+
+StakeManager upgrade after [the shibarium hack](https://x.com/buzzdefi0x/status/1966658844517421132).
+- transferFunds, unstakeClaim, withdrawDelegatorsReward, _transferToken, _transferTokenFrom: added reverts
+- rescueBone() added: allows a hardcoded address to move ERC-20s out of the contract (permission added)
+- [diff](https://disco.l2beat.com/diff/eth:0x1be79AED4088A55f5ED249a14f777758d9F888c6/eth:0x94e5C17983cf1631e7135C33CF0e6206FF995207)
+
+Owner/permission changes:
+- [unverified manager](https://etherscan.io/address/0xda9CE7617EcFfDeC55c860A651611ef273a3D1dB) removed (was not part of the hack, seems to have been some ccip adapter: https://app.blocksec.com/explorer/tx/eth/0x3a45b367cd3ca13dc77ef8859110a0d84571db8326ac82909d6eac414972acc9)
+- one EOA has been replaced by another one (0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96) for most system contracts apart from predicates
+
+Config change:
+- WithdrawalManager.HALF_EXIT_PERIOD: 1 -> 864000
+
+still EOA governed of course.
+
+## Watched changes
+
+```diff
+    contract ERC1155Predicate (eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8) {
+    +++ description: None
+      values.$admin:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      values.defaultAdminAC.0:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      values.proxyOwner:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665) {
+    +++ description: None
+      values.$admin:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      values.defaultAdminAC.0:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      values.proxyOwner:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+    }
+```
+
+```diff
+    contract RootChainManager (eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82) {
+    +++ description: Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router.
+      values.$admin:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      values.proxyOwner:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      receivedPermissions.2:
+-        {"permission":"interact","from":"eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa","description":"move any tokens to or from the escrow.","role":".managersAC"}
+    }
+```
+
+```diff
+    contract EventsHub (eth:0x12185669Dac70749f717247971E0B8819b2e472e) {
+    +++ description: None
+      values.$admin:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      values.owner:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+    }
+```
+
+```diff
+    contract StakeManagerExtension (eth:0x17174796E0eF24330aed565c87Ba5e85431DE19e) {
+    +++ description: Contract primarily used to check whether a validator is whitelisted or not. It also provides the ability to update the validator registry address.
+      values.owner:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+    }
+```
+
+```diff
+    contract StateSender (eth:0x3a122785bC4d951D132B2CAD31FC187D6DC7A21C) {
+    +++ description: Smart contract allowing whitelisted addresses to send messages to contracts on the child chain.
+      values.owner:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+    }
+```
+
+```diff
+    contract StakingInfo (eth:0x539964b3d225194717fb896D26c8b3E635b8A1aE) {
+    +++ description: Contains logging and getter functions about staking.
+      values.getAccountStateRoot:
+-        "0x76afb575e9c27e66d74045cd8a4c879dc244fb7b9657783249f62e57da12042d"
++        "0x3dc29b6164c27e66d74045cd8a4c879dc244fb7b9657783249f62e57da12042d"
+      values.owner:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+    }
+```
+
+```diff
+    contract ValidatorRegistry (eth:0x53D63B9523Ab13399e2071BB4056bbc7Bf98e6A6) {
+    +++ description: Defines the whitelist of validators that can stake and therefore participate in the PoS consensus protocol.
+      values.owner:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+    }
+```
+
+```diff
+    contract WithdrawalManager (eth:0x5F683665ca87dbC3D1358913da80e3C71c328Fb0) {
+    +++ description: Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager.
+      values.HALF_EXIT_PERIOD:
+-        1
++        864000
+      values.owner:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+    }
+```
+
+```diff
+    contract StakeManager (eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064) {
+    +++ description: Main configuration contract to manage stakers and their voting power and validate checkpoint signatures. This version of the contract has most critical validator management functions blocked (`transferFunds`, `unstakeClaim`, `withdrawDelegatorsReward`, `_transferToken`, `_transferTokenFrom`) and 'rescue' functions added after the shibarium hack.
+      template:
+-        "polygonposbridge/StakeManager_shibarium"
++        "polygonposbridge/StakeManager_shibarium_revert"
+      sourceHashes.1:
+-        "0x315e4278520bf097047cc2be4371ac60125bba1043fa4e97e7054988fe3ba503"
++        "0x9394ab61559718a01471ac508777c2be71a11c31bd14a7c7b5dc14ee61efbd3b"
+      values.$admin:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      values.$implementation:
+-        "eth:0x1be79AED4088A55f5ED249a14f777758d9F888c6"
++        "eth:0x94e5C17983cf1631e7135C33CF0e6206FF995207"
+      values.$pastUpgrades.2:
++        ["2025-09-12T23:15:11.000Z","0xd279065a7d358769b5ad90287789af79eadc3575d56c97f69ffe723e42da2ee6",["eth:0xA56607Ef5C9713cA667730E9Dbb61156B64d26D6"]]
+      values.$pastUpgrades.3:
++        ["2025-09-13T00:57:35.000Z","0x474dad78a461d4a14303b22644ee0187662be48801886610b267f828cf1e163e",["eth:0xb9aFe620ba061d37b1C1A785B48e6b691fFdd580"]]
+      values.$pastUpgrades.4:
++        ["2025-09-13T06:40:11.000Z","0xb29de7fcedb239478107bc733122b48e0b61a6b9c65dee54284eff1c20f5ebf3",["eth:0x94e5C17983cf1631e7135C33CF0e6206FF995207"]]
+      values.$upgradeCount:
+-        2
++        5
+      values.implementation:
+-        "eth:0x1be79AED4088A55f5ED249a14f777758d9F888c6"
++        "eth:0x94e5C17983cf1631e7135C33CF0e6206FF995207"
+      values.owner:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      values.rescuer:
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      implementationNames.eth:0x1be79AED4088A55f5ED249a14f777758d9F888c6:
+-        "StakeManager"
+      implementationNames.eth:0x94e5C17983cf1631e7135C33CF0e6206FF995207:
++        "StakeManager"
+      description:
++        "Main configuration contract to manage stakers and their voting power and validate checkpoint signatures. This version of the contract has most critical validator management functions blocked (`transferFunds`, `unstakeClaim`, `withdrawDelegatorsReward`, `_transferToken`, `_transferTokenFrom`) and 'rescue' functions added after the shibarium hack."
+    }
+```
+
+```diff
+    contract ERC20Predicate (eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa) {
+    +++ description: None
+      values.$admin:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      values.accessControl.MANAGER_ROLE.members.1:
+-        "eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"
+      values.accessControl.MANAGER_ROLE.members.2:
+-        "eth:0xda9CE7617EcFfDeC55c860A651611ef273a3D1dB"
+      values.defaultAdminAC.0:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      values.managersAC.1:
+-        "eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"
+      values.managersAC.2:
+-        "eth:0xda9CE7617EcFfDeC55c860A651611ef273a3D1dB"
+      values.proxyOwner:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+    }
+```
+
+```diff
+    EOA  (eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+      receivedPermissions.2:
+-        {"permission":"interact","from":"eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+      receivedPermissions.4:
+-        {"permission":"interact","from":"eth:0x17174796E0eF24330aed565c87Ba5e85431DE19e","description":"can update the validator registry address used to check whitelist inclusion.","role":".owner"}
+      receivedPermissions.5:
+-        {"permission":"interact","from":"eth:0x53D63B9523Ab13399e2071BB4056bbc7Bf98e6A6","description":"can update the whitelist of validators","role":".owner"}
+      receivedPermissions.6:
+-        {"permission":"interact","from":"eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064","description":"can replace all validators.","role":".owner"}
+      receivedPermissions.7:
+-        {"permission":"interact","from":"eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+      receivedPermissions.9:
+-        {"permission":"interact","from":"eth:0x885fcE983b6a01633f764325B8c3c5D31032C995","description":"can update the root chain it references.","role":".owner"}
+      receivedPermissions.10:
+-        {"permission":"interact","from":"eth:0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce","description":"can update how much of the slashed funds go to the proposer and reporter.","role":".owner"}
+      receivedPermissions.11:
+-        {"permission":"interact","from":"eth:0x98C831cFB18852f7deB3E3a970e907475b49730f","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+      receivedPermissions.13:
+-        {"permission":"interact","from":"eth:0xc3897302aB4B42931cB4857050Fa60f53B775870","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+      receivedPermissions.15:
+-        {"permission":"interact","from":"eth:0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9","description":"can delete arbitrary checkpoints.","role":".owner"}
+      receivedPermissions.16:
+-        {"permission":"upgrade","from":"eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8","role":"admin"}
+      receivedPermissions.17:
+-        {"permission":"upgrade","from":"eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665","role":"admin"}
+      receivedPermissions.18:
+-        {"permission":"upgrade","from":"eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82","role":"admin"}
+      receivedPermissions.19:
+-        {"permission":"upgrade","from":"eth:0x12185669Dac70749f717247971E0B8819b2e472e","role":"admin"}
+      receivedPermissions.20:
+-        {"permission":"upgrade","from":"eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064","role":"admin"}
+      receivedPermissions.21:
+-        {"permission":"upgrade","from":"eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa","role":"admin"}
+      receivedPermissions.22:
+-        {"permission":"upgrade","from":"eth:0x98C831cFB18852f7deB3E3a970e907475b49730f","role":"admin"}
+      receivedPermissions.23:
+-        {"permission":"upgrade","from":"eth:0xc3897302aB4B42931cB4857050Fa60f53B775870","role":"admin"}
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    contract DepositManager (eth:0x885fcE983b6a01633f764325B8c3c5D31032C995) {
+    +++ description: Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.
+      values.owner:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+    }
+```
+
+```diff
+    contract SlashingManager (eth:0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce) {
+    +++ description: Contract that allows the consensus supermajority to slash validators.
+      values.owner:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+    }
+```
+
+```diff
+    contract ERC721Predicate (eth:0x98C831cFB18852f7deB3E3a970e907475b49730f) {
+    +++ description: None
+      values.$admin:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      values.defaultAdminAC.0:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      values.proxyOwner:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+    }
+```
+
+```diff
+    contract EtherPredicate (eth:0xc3897302aB4B42931cB4857050Fa60f53B775870) {
+    +++ description: None
+      values.$admin:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      values.defaultAdminAC.0:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+      values.proxyOwner:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+    }
+```
+
+```diff
+    contract Governance (eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06) {
+    +++ description: Simple contract that allows the owner to call an `update` function on arbitrary contracts.
+      values.owner:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+    }
+```
+
+```diff
+    contract RootChain (eth:0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9) {
+    +++ description: Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.
+      values.owner:
+-        "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"
++        "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract managerContract (eth:0xda9CE7617EcFfDeC55c860A651611ef273a3D1dB)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xabe77b505efd6106cf24a8a40a783d5c4e02526f
+
+# Diff at Fri, 12 Sep 2025 08:16:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2848a07919ddccf9d9ca1c6779dbcc184bdeb3b3 block: 1745483963
+- current timestamp: 1757661357
+
+## Description
+
+Add a new unverified contract as manager for the ERC20 escrow (can steal).
+
+## Watched changes
+
+```diff
+    contract ERC20Predicate (eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa) {
+    +++ description: None
+      values.accessControl.MANAGER_ROLE.members.2:
++        "eth:0xda9CE7617EcFfDeC55c860A651611ef273a3D1dB"
+      values.managersAC.2:
++        "eth:0xda9CE7617EcFfDeC55c860A651611ef273a3D1dB"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract managerContract (eth:0xda9CE7617EcFfDeC55c860A651611ef273a3D1dB)
+    +++ description: None
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1745483963 (main branch discovery), not current.
+
+```diff
+    contract ERC1155Predicate (eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8) {
+    +++ description: None
+      values.defaultAdminAC:
++        ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"]
+      values.managersAC:
++        ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004","eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"]
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665) {
+    +++ description: None
+      values.defaultAdminAC:
++        ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"]
+      values.managersAC:
++        ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004","eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"]
+    }
+```
+
+```diff
+    contract RootChainManager (eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82) {
+    +++ description: Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router.
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8","description":"move any tokens to or from the escrow.","role":".managersAC"},{"permission":"interact","from":"eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665","description":"move any tokens to or from the escrow.","role":".managersAC"},{"permission":"interact","from":"eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa","description":"move any tokens to or from the escrow.","role":".managersAC"},{"permission":"interact","from":"eth:0x98C831cFB18852f7deB3E3a970e907475b49730f","description":"move any tokens to or from the escrow.","role":".managersAC"},{"permission":"interact","from":"eth:0xc3897302aB4B42931cB4857050Fa60f53B775870","description":"move any tokens to or from the escrow.","role":".managersAC"}]
+    }
+```
+
+```diff
+    contract ERC20Predicate (eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa) {
+    +++ description: None
+      values.defaultAdminAC:
++        ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"]
+      values.managersAC:
++        ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004","eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"]
+    }
+```
+
+```diff
+    EOA  (eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8","description":"move any tokens to or from the escrow.","role":".managersAC"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665","description":"move any tokens to or from the escrow.","role":".managersAC"}
+      receivedPermissions.7:
++        {"permission":"interact","from":"eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+      receivedPermissions.8:
++        {"permission":"interact","from":"eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa","description":"move any tokens to or from the escrow.","role":".managersAC"}
+      receivedPermissions.11:
++        {"permission":"interact","from":"eth:0x98C831cFB18852f7deB3E3a970e907475b49730f","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+      receivedPermissions.12:
++        {"permission":"interact","from":"eth:0x98C831cFB18852f7deB3E3a970e907475b49730f","description":"move any tokens to or from the escrow.","role":".managersAC"}
+      receivedPermissions.13:
++        {"permission":"interact","from":"eth:0xc3897302aB4B42931cB4857050Fa60f53B775870","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+      receivedPermissions.14:
++        {"permission":"interact","from":"eth:0xc3897302aB4B42931cB4857050Fa60f53B775870","description":"move any tokens to or from the escrow.","role":".managersAC"}
+    }
+```
+
+```diff
+    contract ERC721Predicate (eth:0x98C831cFB18852f7deB3E3a970e907475b49730f) {
+    +++ description: None
+      values.defaultAdminAC:
++        ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"]
+      values.managersAC:
++        ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004","eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"]
+    }
+```
+
+```diff
+    contract EtherPredicate (eth:0xc3897302aB4B42931cB4857050Fa60f53B775870) {
+    +++ description: None
+      values.defaultAdminAC:
++        ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004"]
+      values.managersAC:
++        ["eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004","eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"]
+    }
+```
+
 Generated with discovered.json: 0xa871f72d29a4a64bb4699f3d0a82396d451455e2
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

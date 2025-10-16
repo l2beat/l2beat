@@ -2,7 +2,7 @@ import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { TokenMetadata } from '../kysely/generated/types'
 
-type TokenCategory =
+export type TokenCategory =
   | 'ether'
   | 'stablecoin'
   | 'btc'
@@ -10,7 +10,7 @@ type TokenCategory =
   | 'rwaPublic'
   | 'other'
 
-type TokenSource = 'canonical' | 'external' | 'native'
+export type TokenSource = 'canonical' | 'external' | 'native'
 
 export interface TokenMetadataRecord {
   projectId: string

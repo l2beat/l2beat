@@ -1,3 +1,310 @@
+Generated with discovered.json: 0x55b32044ebd850568f757d8965b323b8b37b1ae5
+
+# Diff at Wed, 08 Oct 2025 07:42:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@36fbb0e5eb9fa07c58f97370d929eaabfcd6c5ff block: 1759239729
+- current timestamp: 1759909174
+
+## Description
+
+Proposal 23: encrypted emergency proposal.
+'proposal is neither to fix a bug nor time-critical' - sc chat.
+
+verification of the calldata is pending.
+
+## Watched changes
+
+```diff
+    contract EmergencyMultisig (eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
++++ description: The total count of encrypted emergency proposals created.
+      values.proposalCount:
+-        23
++        24
+    }
+```
+
+Generated with discovered.json: 0xd05faca832046b1c1d0640225e033e34a4cccf9d
+
+# Diff at Tue, 30 Sep 2025 14:26:28 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@8b1e8b6b8628030e60b22b7773a337689b280854 block: 1758523605
+- current timestamp: 1759239729
+
+## Description
+
+Config-related changes: added tracking for trusted zk program hashes for SP1 and Risc0 verifiers.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758523605 (main branch discovery), not current.
+
+```diff
+    contract Risc0VerifierGateway (eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE) {
+    +++ description: Entry contract to verify batches using RISC Zero.
++++ description: Image IDs (i.e. program digest) of Risc0 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedImages:
++        ["0x49c8f13fdfbec7c03fc8516ef7d32d8fa43fa4f495d62e9ff6bf63710df402d4","0x052010a130f9957a9d218a173242070c47af1c5d2c3ccae1d8e8d85ce6c7d78e","0x1f28744f3b199dd31cfe84ee45bf6a7c9e4b7e8f7e888bb47889bba0237e00ff","0x0a0488e485692dd711b60258bd799099f8d1e6776cb96ede88c9fecfcc9b7e7c","0xa41db9223051c1a6b046829dc372eab4989ff0a3e027c360d8c906d831ca60d4","0xa3f175713dc988430192dfd9a6c49ea111e389e2c008428eedd5f38648094404","0xe9aec1d30d25da1ccfc02a81c4b71f32e0a6f675dff4ce01fe4bd5f96ff320bd","0xee950d20e2483b9b6b859272feaea2dd84cea8a9cfdf1af8834df6b75c3d715e"]
+      fieldMeta:
++        {"trustedImages":{"severity":"HIGH","description":"Image IDs (i.e. program digest) of Risc0 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them."}}
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9) {
+    +++ description: Entry contract to verify batches using SP1.
++++ description: Program hashes of SP1 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains program hash data within them.
++++ severity: HIGH
+      values.trustedPrograms:
++        ["0x00380861a3c05aa16421c66921e7b952005ddad5b91b81e56d1a5f92a88db099","0x1c0430d17016a8590438cd241e7b952002eed6ad646e07955a34bf25288db099","0x00745853e47349fb2ddb364dae473e099c19890da8c786490da83066a0959689","0x3a2c29f21cd27ecb3b66c9b56473e09960cc486d231e19241b5060cd20959689","0x34712aed5061bce303b4bae32d3edafc05a1b9ec04c6d1d84dedc5ab28e8fe98","0x0068e255db4186f38c1da5d71ad3edafc0b4373d8131b47626f6e2d5a8e8fe98","0x43645b1b5d225d4539e38da910e3ba2a4d8d8dfc457a10d26a03d3cf1fb969be","0x0086c8b63774897515cf1c6d490e3ba2a9b1b1bf915e8434b501e9e79fb969be","0x0040b6021bbe547fc651492bcc4eea12eaaa9b0a60086439206e27495ec6d6c3","0x205b010d6f951ff14a29257944eea12e5554d853002190e440dc4e925ec6d6c3","0x00b14510cec97d3449eb84b814be2f4b5dae3eb56528d6bb65e1aa8226f2bed3","0x58a28867325f4d123d7097024be2f4b56d71f5ab14a35aed4bc3550426f2bed3"]
+      fieldMeta:
++        {"trustedPrograms":{"severity":"HIGH","description":"Program hashes of SP1 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains program hash data within them."}}
+    }
+```
+
+Generated with discovered.json: 0x4831d3cceba0daa71cc689f23f9d7c40332b0fd4
+
+# Diff at Mon, 22 Sep 2025 07:47:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3aa102df1ae0b60ff981cfe12b1d0c919b4c2704 block: 1758287100
+- current timestamp: 1758523605
+
+## Description
+
+New operator (proposer/preconfer) registered.
+
+config: act permissions for the dao controllers and minor description changes.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 4 operators registered.
+      description:
+-        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered."
++        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 4 operators registered."
+      values.registeredOperators.3:
++        {"proposer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74","sequencer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"}
+      values.registeredOperatorsCount:
+-        3
++        4
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758287100 (main branch discovery), not current.
+
+```diff
+    contract TaikoDAOController (eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) {
+    +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      description:
+-        "Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum."
++        "Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum."
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261","description":"can update the program being verified","role":".owner"},{"permission":"interact","from":"eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a","description":"can update the contract address for a given name","role":".owner"},{"permission":"interact","from":"eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE","description":"can update the program being verified","role":".owner"},{"permission":"interact","from":"eth:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782","description":"can add new instances without a DCAP attestation","role":".owner"},{"permission":"interact","from":"eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","description":"can update the program being verified","role":".owner"},{"permission":"interact","from":"eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e","description":"can update the contract address for a given name","role":".owner"},{"permission":"interact","from":"eth:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136","description":"can add new instances without a DCAP attestation","role":".owner"},{"permission":"interact","from":"eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9","description":"can update the program being verified","role":".owner"},{"permission":"interact","from":"eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","description":"can update the contract address for a given name","role":".owner"},{"permission":"upgrade","from":"eth:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03","role":"admin"},{"permission":"upgrade","from":"eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","role":"admin"},{"permission":"upgrade","from":"eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261","role":"admin"},{"permission":"upgrade","from":"eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800","role":"admin"},{"permission":"upgrade","from":"eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a","role":"admin"},{"permission":"upgrade","from":"eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE","role":"admin"},{"permission":"upgrade","from":"eth:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782","role":"admin"},{"permission":"upgrade","from":"eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","role":"admin"},{"permission":"upgrade","from":"eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e","role":"admin"},{"permission":"upgrade","from":"eth:0x91f67118DD47d502B1f0C354D0611997B022f29E","role":"admin"},{"permission":"upgrade","from":"eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","role":"admin"},{"permission":"upgrade","from":"eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C","role":"admin"},{"permission":"upgrade","from":"eth:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136","role":"admin"},{"permission":"upgrade","from":"eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72","role":"admin"},{"permission":"upgrade","from":"eth:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1","role":"admin"},{"permission":"upgrade","from":"eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9","role":"admin"},{"permission":"upgrade","from":"eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a","role":"admin"},{"permission":"upgrade","from":"eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC","role":"admin"},{"permission":"upgrade","from":"eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","role":"admin"},{"permission":"upgrade","from":"eth:0xFD019460881e6EeC632258222393d5821029b2ac","role":"admin"}]
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261","description":"can update the program being verified","role":".owner"},{"permission":"interact","from":"eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a","description":"can update the contract address for a given name","role":".owner"},{"permission":"interact","from":"eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE","description":"can update the program being verified","role":".owner"},{"permission":"interact","from":"eth:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782","description":"can add new instances without a DCAP attestation","role":".owner"},{"permission":"interact","from":"eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","description":"can update the program being verified","role":".owner"},{"permission":"interact","from":"eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e","description":"can update the contract address for a given name","role":".owner"},{"permission":"interact","from":"eth:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136","description":"can add new instances without a DCAP attestation","role":".owner"},{"permission":"interact","from":"eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9","description":"can update the program being verified","role":".owner"},{"permission":"interact","from":"eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","description":"can update the contract address for a given name","role":".owner"},{"permission":"upgrade","from":"eth:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03","role":"admin"},{"permission":"upgrade","from":"eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","role":"admin"},{"permission":"upgrade","from":"eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261","role":"admin"},{"permission":"upgrade","from":"eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800","role":"admin"},{"permission":"upgrade","from":"eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a","role":"admin"},{"permission":"upgrade","from":"eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE","role":"admin"},{"permission":"upgrade","from":"eth:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782","role":"admin"},{"permission":"upgrade","from":"eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","role":"admin"},{"permission":"upgrade","from":"eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e","role":"admin"},{"permission":"upgrade","from":"eth:0x91f67118DD47d502B1f0C354D0611997B022f29E","role":"admin"},{"permission":"upgrade","from":"eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","role":"admin"},{"permission":"upgrade","from":"eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C","role":"admin"},{"permission":"upgrade","from":"eth:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136","role":"admin"},{"permission":"upgrade","from":"eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72","role":"admin"},{"permission":"upgrade","from":"eth:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1","role":"admin"},{"permission":"upgrade","from":"eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9","role":"admin"},{"permission":"upgrade","from":"eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a","role":"admin"},{"permission":"upgrade","from":"eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC","role":"admin"},{"permission":"upgrade","from":"eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","role":"admin"},{"permission":"upgrade","from":"eth:0xFD019460881e6EeC632258222393d5821029b2ac","role":"admin"}]
+    }
+```
+
+```diff
+    contract DAO (eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261) {
+    +++ description: The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.
+      description:
+-        "The main contract of the Aragon-based DAO governance framework."
++        "The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here."
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261","description":"can update the program being verified","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a","description":"can update the contract address for a given name","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE","description":"can update the program being verified","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782","description":"can add new instances without a DCAP attestation","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","description":"can update the program being verified","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e","description":"can update the contract address for a given name","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136","description":"can add new instances without a DCAP attestation","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.7:
++        {"permission":"interact","from":"eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9","description":"can update the program being verified","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.8:
++        {"permission":"interact","from":"eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","description":"can update the contract address for a given name","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"eth:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.13:
++        {"permission":"upgrade","from":"eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"eth:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.17:
++        {"permission":"upgrade","from":"eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.18:
++        {"permission":"upgrade","from":"eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.19:
++        {"permission":"upgrade","from":"eth:0x91f67118DD47d502B1f0C354D0611997B022f29E","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.20:
++        {"permission":"upgrade","from":"eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.21:
++        {"permission":"upgrade","from":"eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.22:
++        {"permission":"upgrade","from":"eth:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.23:
++        {"permission":"upgrade","from":"eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.24:
++        {"permission":"upgrade","from":"eth:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.25:
++        {"permission":"upgrade","from":"eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.26:
++        {"permission":"upgrade","from":"eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.27:
++        {"permission":"upgrade","from":"eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.28:
++        {"permission":"upgrade","from":"eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.30:
++        {"permission":"upgrade","from":"eth:0xFD019460881e6EeC632258222393d5821029b2ac","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a","role":".owner"},{"permission":"act","from":"eth:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3","role":".owner"}]
+    }
+```
+
+```diff
+    contract TaikoDAOController (eth:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3) {
+    +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      description:
+-        "Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum."
++        "Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum."
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered.
+      description:
+-        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 3 operators registered."
++        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered."
+    }
+```
+
+Generated with discovered.json: 0x2fa73466d32cff274d9726c8d9ac42cc706f3567
+
+# Diff at Fri, 19 Sep 2025 13:06:41 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a930e518d214c15603feeda62e2a483dbd2454e0 block: 1758110316
+- current timestamp: 1758287100
+
+## Description
+
+One preconfirmer deregistered.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 3 operators registered.
+      description:
+-        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered."
++        "Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 3 operators registered."
+      values.registeredOperators.3:
+-        {"proposer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74","sequencer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"}
+      values.registeredOperatorsCount:
+-        4
++        3
+    }
+```
+
+Generated with discovered.json: 0x42f636e3dfaf48d1a9640e215b6c9c04e4943780
+
+# Diff at Wed, 17 Sep 2025 12:00:17 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@597af358c0b75d4111ec7b5f25233424c734e04d block: 1757403234
+- current timestamp: 1758110316
+
+## Description
+
+Removed and then added back a preconf operator. As the result the list is reordered.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered.
+      values.registeredOperators.1:
+-        {"proposer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74","sequencer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"}
+      values.registeredOperators.3:
++        {"proposer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74","sequencer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"}
+    }
+```
+
+Generated with discovered.json: 0xcf9453f3f3efc755bf71b0d92039c78b84a29b5c
+
+# Diff at Tue, 09 Sep 2025 07:35:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@395d7487e1620571da9defc848ebbef6daf736b9 block: 1757344306
+- current timestamp: 1757403234
+
+## Description
+
+move of preconfWhitelist gov to the DAO.
+
+the single non-DAO-governed contract left is ProverSet, so the migration seems to be complete.
+
+## Watched changes
+
+```diff
+    contract TaikoDAOController (eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) {
+    +++ description: Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      receivedPermissions.28:
++        {"permission":"upgrade","from":"eth:0xFD019460881e6EeC632258222393d5821029b2ac","role":"admin"}
+    }
+```
+
+```diff
+    contract Taiko Multisig (eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0xFD019460881e6EeC632258222393d5821029b2ac","role":"admin"}]
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contract that contains the whitelist for addresses allowed to propose (pre-confirmation) batches. There are currently 4 operators registered.
+      values.$admin:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+    }
+```
+
 Generated with discovered.json: 0x4bee562ef15ee71396aeac9381097512e04af8bd
 
 # Diff at Mon, 08 Sep 2025 15:13:18 GMT:

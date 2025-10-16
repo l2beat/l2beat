@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('popboss')
 
 export const popboss: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1710836229), // 2024-03-19T08:17:09Z
+  archivedAt: UnixTime(1759835040),
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
   hostChain: 'arbitrum',
@@ -29,6 +30,7 @@ export const popboss: ScalingProject = orbitStackL3({
       'Proof of Play Boss is a gaming-focused L3 settling on Arbitrum using the Orbit Stack and AnyTrust DA. It is the second L3 built by Proof of Play.',
     links: {
       websites: ['https://proofofplay.com/'],
+      documentation: ['https://docs.proofofplay.com/introduction'],
       bridges: [
         'https://bridge.arbitrum.io/?destinationChain=pop-boss&sourceChain=arbitrum-one',
         'https://piratenation.game/',

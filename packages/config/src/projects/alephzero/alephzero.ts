@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('alephzero')
 
 export const alephzero: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1723420800), // 2024-08-12T00:00:00Z
+  archivedAt: UnixTime(1758278706),
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['Privacy'],
@@ -39,7 +40,7 @@ export const alephzero: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.alephzero.raas.gelato.cloud',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
     gasTokens: ['AZERO'],

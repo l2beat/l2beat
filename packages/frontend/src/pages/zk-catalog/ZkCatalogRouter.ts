@@ -5,8 +5,9 @@ import type { RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
 import type { Manifest } from '../../utils/Manifest'
 import { getZkCatalogV1Data } from './v1/getZkCatalogV1Data'
-import { getZkCatalogProjectData } from './v1/project/getZkCatalogProjectData'
+import { getZkCatalogV1ProjectData } from './v1/project/getZkCatalogV1ProjectData'
 import { getZkCatalogData } from './v2/getZkCatalogData'
+import { getZkCatalogProjectData } from './v2/project/getZkCatalogProjectData'
 
 export function createZkCatalogRouter(
   manifest: Manifest,
@@ -31,7 +32,7 @@ export function createZkCatalogRouter(
   })
 
   router.get(
-    '/zk-catalog/:slug',
+    '/zk-catalog/v1/:slug',
     validateRoute({
       params: v.object({ slug: v.string() }),
     }),
@@ -39,6 +40,30 @@ export function createZkCatalogRouter(
       const data = await cache.get(
         {
           key: ['zk-catalog', 'v1', 'projects', req.params.slug],
+          ttl: 5 * 60,
+          staleWhileRevalidate: 25 * 60,
+        },
+        () =>
+          getZkCatalogV1ProjectData(manifest, req.params.slug, req.originalUrl),
+      )
+      if (!data) {
+        res.status(404).send('Not found')
+        return
+      }
+      const html = render(data, req.originalUrl)
+      res.status(200).send(html)
+    },
+  )
+
+  router.get(
+    '/zk-catalog/:slug',
+    validateRoute({
+      params: v.object({ slug: v.string() }),
+    }),
+    async (req, res) => {
+      const data = await cache.get(
+        {
+          key: ['zk-catalog', 'v2', 'projects', req.params.slug],
           ttl: 5 * 60,
           staleWhileRevalidate: 25 * 60,
         },

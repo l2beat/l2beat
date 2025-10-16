@@ -1,18 +1,8 @@
 {
   "name": "oevnetwork",
-  "timestamp": 1755010019,
-  "configHash": "0x2149d5c87bcd8a716bf08bae3c5e7344ef420945d32964a48fd78894050fc83c",
+  "timestamp": 1759830313,
+  "configHash": "0xb89e0c9eadf081d79513a8e995cf3ed4d715432d946c8ae3b514c76615b6100f",
   "entries": [
-    {
-      "address": "eth:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x15D5fF2dEc328a1cF3D64413caaBdcE29bff050A",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
     {
       "name": "OneStepProverMath",
       "address": "eth:0x171c845f3229D6625bcdBcfB39BF53Fe15D2E4de",
@@ -95,7 +85,7 @@
           "eth:0x3401eafd7Ceb84265B2cC4252155e12B446E7c57"
         ],
         "allowedOutboxList": ["eth:0xe4F99a0734C87C298d73C161F54874225E416997"],
-        "delayedMessageCount": 2808,
+        "delayedMessageCount": 3111,
         "inboxHistory": [
           "eth:0x7EF9d2fe20307165599101e93Ea05b04d46Af159",
           "eth:0x3401eafd7Ceb84265B2cC4252155e12B446E7c57"
@@ -103,8 +93,8 @@
         "outboxHistory": ["eth:0xe4F99a0734C87C298d73C161F54874225E416997"],
         "rollup": "eth:0x3AAfe635FCfA0E5C19C9368ab5eb384277836006",
         "sequencerInbox": "eth:0xD5dD6114a5DC6d1352C0EE47Cbed6a1807F079c7",
-        "sequencerMessageCount": 2557,
-        "sequencerReportedSubMessageCount": 45293
+        "sequencerMessageCount": 2857,
+        "sequencerReportedSubMessageCount": 50350
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -253,31 +243,26 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A",
+          "eth:0xe5219fe14E2FD520Ff80be036790913053d1575d",
+          "eth:0xEC114946E7213d113c9B9481028271B5E9e09371",
+          "eth:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
           "eth:0xc4548687682246e5B6ee8f914635c9f47836eDFe",
-          "eth:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675",
           "eth:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b",
-          "eth:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",
-          "eth:0x356000Cec4fC967f8FC372381D983426760A0391",
-          "eth:0xbf853295743511e8DC5F03809d209C33fC136d24",
-          "eth:0x15D5fF2dEc328a1cF3D64413caaBdcE29bff050A"
+          "eth:0x356000Cec4fC967f8FC372381D983426760A0391"
         ],
         "$threshold": 4,
         "domainSeparator": "0xd91194ba8cca06b67a77df9ba8745b666c7af26af03b914ede155b940b307d6b",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 24,
+        "nonce": 37,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
         "eth:0x2bf43034b9559643e986A2fE3cE015a18247b904": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
-    },
-    {
-      "address": "eth:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "RollupEventInbox",
@@ -371,13 +356,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1016,
+        "firstUnresolvedNode": 1127,
         "inbox": "eth:0x7EF9d2fe20307165599101e93Ea05b04d46Af159",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 19882033,
-        "latestConfirmed": 1015,
-        "latestNodeCreated": 1028,
+        "latestConfirmed": 1126,
+        "latestNodeCreated": 1139,
         "loserStakeEscrow": "eth:0xAe2032b4bfB56B70d48B314A71e0462346c122b0",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xe4F99a0734C87C298d73C161F54874225E416997",
@@ -452,7 +437,8 @@
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
-            "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot"
+            "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
+            "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
           }
         }
       ],
@@ -567,6 +553,11 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "eth:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Inbox",
       "address": "eth:0x7EF9d2fe20307165599101e93Ea05b04d46Af159",
       "type": "Contract",
@@ -624,6 +615,11 @@
       "implementationNames": {
         "eth:0x8C07c8F36764962C43eb9A6D50426C652185c51D": "OneStepProverMemory"
       }
+    },
+    {
+      "address": "eth:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "OneStepProver0",
@@ -704,11 +700,6 @@
       }
     },
     {
-      "address": "eth:0xbf853295743511e8DC5F03809d209C33fC136d24",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xc4548687682246e5B6ee8f914635c9f47836eDFe",
       "type": "EOA",
       "proxyType": "EOA"
@@ -761,7 +752,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 2557,
+        "batchCount": 2857,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": ["eth:0x23b6bFACe63BFa288783b8344574c75b78FaEd59"],
         "bridge": "eth:0x2403Dd9dFa12255Be8f42bc1e644733c9b2d10Dd",
@@ -791,7 +782,7 @@
         "rollup": "eth:0x3AAfe635FCfA0E5C19C9368ab5eb384277836006",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 2807,
+        "totalDelayedMessagesRead": 3110,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -870,7 +861,17 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "eth:0xe5219fe14E2FD520Ff80be036790913053d1575d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xEC114946E7213d113c9B9481028271B5E9e09371",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -1510,6 +1511,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23125654 },
-  "permissionsConfigHash": "0x95dbb70b02713dab9a2157d38f96a1f9eeb886309bafd7174c7f61ca18df34a9"
+  "usedBlockNumbers": { "ethereum": 23525067 },
+  "permissionsConfigHash": "0x53673caa1b08f42a12a7d6c0999d1a66698cebb90084e45fe68b23a4745372d3"
 }

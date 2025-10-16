@@ -1,4 +1,97 @@
-Generated with discovered.json: 0x993c2123b0e434047923252eef9db5f9396d7a98
+Generated with discovered.json: 0x3cf5cac2707937e431a15a31d28d734f5b43ad5e
+
+# Diff at Wed, 01 Oct 2025 08:10:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9f609056a8f06eef9834f5c4c91fc201125d2c49 block: 1756816147
+- current timestamp: 1759305296
+
+## Description
+
+add SolvBTC and LBTC canonical escrows. Both have EOA admins and unverified manager contracts.
+
+## Watched changes
+
+```diff
+    contract LBTCBridge (eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e) {
+    +++ description: Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "StarkWare proxy"
+      template:
++        "starknet/StarknetMultiBridge"
+      sourceHashes:
++        ["0xef5bec9147a21f62b18b6320b8177ab928b4200dbdd747833b23522450ec899c","0x066d78e6d7d8dd603e76a970521e74980c0853d848c55f014c7867ecac8be211"]
+      description:
++        "Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually."
+      sinceTimestamp:
++        1757941367
+      sinceBlock:
++        23368649
+      values:
++        {"$admin":"eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b","$immutable":false,"$implementation":"eth:0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff","$pastUpgrades":[["2025-09-15T13:04:11.000Z","0x503782544b4f41c5e38d13ba7e96e5dd4fb597abb7a595a7da2af8ddfaface58",["eth:0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff"]]],"$upgradeCount":1,"accessControl":{"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"GOVERNANCE_ADMIN":{"adminRole":"GOVERNANCE_ADMIN","members":["eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b"]},"APP_GOVERNOR":{"adminRole":"APP_ROLE_ADMIN","members":["eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b"]},"APP_ROLE_ADMIN":{"adminRole":"GOVERNANCE_ADMIN","members":["eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b"]},"OPERATOR":{"adminRole":"APP_ROLE_ADMIN","members":[]},"TOKEN_ADMIN":{"adminRole":"APP_ROLE_ADMIN","members":[]},"UPGRADE_GOVERNOR":{"adminRole":"GOVERNANCE_ADMIN","members":["eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b"]},"SECURITY_ADMIN":{"adminRole":"SECURITY_ADMIN","members":["eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b"]},"SECURITY_AGENT":{"adminRole":"SECURITY_ADMIN","members":[]}},"depositorAddress":"eth:0x0000000000000000000000000000000000000000","ENABLE_WINDOW_DURATION_SLOT":"0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738","estimateDepositFeeWei":100000000000000,"estimateEnrollmentFeeWei":500000000000000,"getEnableWindowDuration":1209600,"getL2Bridge":"1006984797796401530522902660195363957599813882384074600431497176526924418741","getUpgradeActivationDelay":0,"govAdminAC":["eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b"],"identify":"StarkWare_StarknetTokenBridge_2.0_6","implementation":"eth:0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff","isFrozen":false,"isNotFinalized":true,"l2TokenContract":"eth:0x4A1FC43dB8074646D4D2a0A9E6Fa5272685A0eb5","manager":"eth:0xf76b8bCC076cAb358C351F1DBDFeBDA799BD89dE","MAX_UPGRADE_DELAY":15552000,"maxDeposit":"115792089237316195423570985008687907853269984665640564039457584007913129639935","maxTotalTokenBalance":{},"messagingContract":"eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4","PROXY_VERSION":"5.1.0","secAdminAC":["eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b"],"secAgentAC":[],"StarkWareProxy_upgradeDelay":0,"UPGRADE_DELAY_SLOT":"0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f","withdrawalLimitStatus":[],"withdrawLimitPct":5}
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"maxTotalTokenBalance":{"description":"The maximum total escrow balance per token (can limit deposits) is listed here if modified."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."}}
+      implementationNames:
++        {"eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e":"ProxyV5","eth:0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff":"StarknetTokenBridge"}
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    EOA  (eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e","description":"disable the withdrawal limit and manage the security agent role that can enable it.","role":".secAdminAC"},{"permission":"interact","from":"eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e","description":"manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.","role":".govAdminAC"},{"permission":"upgrade","from":"eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e","role":".$admin"}]
+    }
+```
+
+## Source code changes
+
+```diff
+.../starknet/.flat/LBTCBridge/ProxyV5.p.sol        | 1057 ++++++++++++
+ .../.flat/LBTCBridge/StarknetTokenBridge.sol       | 1718 ++++++++++++++++++++
+ 2 files changed, 2775 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756816147 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10","description":"disable the withdrawal limit and manage the security agent role that can enable it.","role":".secAdminAC"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10","description":"manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.","role":".govAdminAC"}
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10","role":".$admin"}
+    }
+```
+
+```diff
+    contract MultiBridge (eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb) {
+    +++ description: Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually.
+      description:
+-        "Starkware Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually."
++        "Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually."
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SolvBTCBridge (eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10)
+    +++ description: Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually.
+```
+
+Generated with discovered.json: 0x5045a707576613c35908232fb85e42d33ed030f8
 
 # Diff at Wed, 03 Sep 2025 15:52:17 GMT:
 

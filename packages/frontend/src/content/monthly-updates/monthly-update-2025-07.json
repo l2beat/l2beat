@@ -3,6 +3,7 @@
   "startDate": "2025-07-01",
   "endDate": "2025-07-31",
   "publishedOn": "2025-08-01",
+  "description": "Discover the key highlights from July, from protocol upgrades to ecosystem growth and more",
   "updates": [
     {
       "type": "ecosystem",
@@ -92,6 +93,7 @@
     {
       "type": "data-availability",
       "daLayerId": "eigenda",
+      "name": "EigenLayer",
       "news": [
         {
           "title": "Redistribution is Live on the Mainnet ",

@@ -9,11 +9,7 @@ const discovery = new ProjectDiscovery('b3')
 
 export const b3: ScalingProject = opStackL3({
   addedAt: UnixTime(1722376845),
-  additionalBadges: [
-    BADGES.DA.Celestia,
-    BADGES.RaaS.Caldera,
-    BADGES.L3ParentChain.Base,
-  ],
+  additionalBadges: [BADGES.RaaS.Caldera, BADGES.L3ParentChain.Base],
   daProvider: CELESTIA_DA_PROVIDER,
   hostChain: 'base',
   discovery,
@@ -33,7 +29,7 @@ export const b3: ScalingProject = opStackL3({
       bridges: ['https://bridge.b3.fun/'],
       documentation: ['https://docs.b3.fun/'],
       explorers: ['https://explorer.b3.fun/'],
-      repositories: [],
+      repositories: ['https://github.com/b3-fun/'],
       socialMedia: [
         'https://x.com/b3dotfun',
         'https://discord.com/invite/b3dotfun',

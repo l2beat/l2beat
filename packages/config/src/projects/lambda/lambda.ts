@@ -60,7 +60,7 @@ export const lambda: ScalingProject = opStackL2({
       // },
     ],
     apis: [
-      { type: 'rpc', url: 'https://nrpc.lambda.im', callsPerMinute: 1500 },
+      { type: 'rpc', url: 'https://nrpc.lambda.im', callsPerMinute: 300 },
       { type: 'blockscout', url: 'https://scan.lambda.im/api' },
       { type: 'blockscoutV2', url: 'https://scan.lambda.im/api/v2' },
     ],

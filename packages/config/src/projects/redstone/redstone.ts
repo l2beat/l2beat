@@ -1,4 +1,4 @@
-import { formatSeconds, UnixTime } from '@l2beat/shared-pure'
+import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_LAYERS,
   DaCommitteeSecurityRisk,
@@ -29,6 +29,10 @@ const daResolveWindow = formatSeconds(
 )
 
 export const redstone: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: false,
+  },
   addedAt: UnixTime(1714996778), // 2024-05-06T11:59:38Z
   discovery,
   additionalPurposes: ['Gaming'],
@@ -69,7 +73,7 @@ export const redstone: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.redstonechain.com',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

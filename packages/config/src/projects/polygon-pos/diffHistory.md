@@ -1,3 +1,194 @@
+Generated with discovered.json: 0xe7b626b2f9d27577913c9f9cb54219f89afc27e7
+
+# Diff at Wed, 15 Oct 2025 13:58:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3b2c8898ebe0c61228f50617e2de65973094dd39 block: 1758802148
+- current timestamp: 1760536617
+
+## Description
+
+vali added.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        104
++        105
+    }
+```
+
+Generated with discovered.json: 0x49ed7d8c357d21f671e8bf9ece413ba47a849914
+
+# Diff at Mon, 06 Oct 2025 15:22:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e58bd9f0913161b35e2a2c65f233464591d4f28b block: 1758802148
+- current timestamp: 1758802148
+
+## Description
+
+Config: added description to field.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758802148 (main branch discovery), not current.
+
+```diff
+    contract StakingInfo (eth:0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B) {
+    +++ description: Contains logging and getter functions about staking.
+      fieldMeta:
++        {"getAccountStateRoot":{"description":"Merkle root of a tree of validator balances."}}
+    }
+```
+
+Generated with discovered.json: 0x1a5d5e8b88e09d9975dd7355e5bf1dca560883ec
+
+# Diff at Thu, 25 Sep 2025 12:25:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0baa1255a33ce1a02b431265f21e07fd28f2de49 block: 1758537508
+- current timestamp: 1758802148
+
+## Description
+
+vali removed.
+
+config: added act permission in the governance contract.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        105
++        104
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758537508 (main branch discovery), not current.
+
+```diff
+    contract Timelock (eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48","role":".owner"}]
+    }
+```
+
+Generated with discovered.json: 0xfb40664525cb27185abc3bad0e3b1a144ee517e0
+
+# Diff at Mon, 22 Sep 2025 10:39:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3aa102df1ae0b60ff981cfe12b1d0c919b4c2704 block: 1756995439
+- current timestamp: 1758537508
+
+## Description
+
+one vali added.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        104
++        105
+    }
+```
+
+Generated with discovered.json: 0x7993b8a3ba77e6aa11b73897afbddcd8326397a7
+
+# Diff at Fri, 12 Sep 2025 08:17:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2848a07919ddccf9d9ca1c6779dbcc184bdeb3b3 block: 1756995439
+- current timestamp: 1756995439
+
+## Description
+
+Config: add polygonpos predicate access control permissions.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756995439 (main branch discovery), not current.
+
+```diff
+    contract ERC1155Predicate (eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f) {
+    +++ description: None
+      values.defaultAdminAC:
++        ["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+      values.managersAC:
++        ["eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]
+    }
+```
+
+```diff
+    contract ERC20Predicate (eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf) {
+    +++ description: None
+      values.defaultAdminAC:
++        ["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+      values.managersAC:
++        ["eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]
+    }
+```
+
+```diff
+    contract EtherPredicate (eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30) {
+    +++ description: None
+      values.defaultAdminAC:
++        ["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+      values.managersAC:
++        ["eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7) {
+    +++ description: None
+      values.defaultAdminAC:
++        ["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+      values.managersAC:
++        ["eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]
+    }
+```
+
+```diff
+    contract RootChainManager (eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f","description":"move any tokens to or from the escrow.","role":".managersAC"},{"permission":"interact","from":"eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf","description":"move any tokens to or from the escrow.","role":".managersAC"},{"permission":"interact","from":"eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30","description":"move any tokens to or from the escrow.","role":".managersAC"},{"permission":"interact","from":"eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7","description":"move any tokens to or from the escrow.","role":".managersAC"}]
+    }
+```
+
+```diff
+    contract PolygonMultisig (eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+    }
+```
+
 Generated with discovered.json: 0x64ed115d330b7770ecb5e0b48e454e8407721ead
 
 # Diff at Thu, 04 Sep 2025 14:18:29 GMT:

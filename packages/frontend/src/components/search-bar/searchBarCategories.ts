@@ -11,6 +11,9 @@ export const searchBarCategories = {
   zkCatalog: {
     name: 'ZK Catalog',
   },
+  ecosystems: {
+    name: 'Ecosystems',
+  },
   other: {
     name: 'Other',
   },

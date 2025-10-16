@@ -3,7 +3,6 @@ import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
-import { env } from '~/env'
 import {
   getEthereumDaProjectSections,
   getRegularDaProjectSections,
@@ -16,11 +15,13 @@ import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
+import { getLiveness } from '../../scaling/liveness/getLiveness'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 import { getProjectIcon } from '../../utils/getProjectIcon'
 import { getDaLayerRisks } from '../utils/getDaLayerRisks'
 import { getDaProjectsTvs, pickTvsForProjects } from '../utils/getDaProjectsTvs'
 import { getDaProjectEconomicSecurity } from './utils/getDaProjectEconomicSecurity'
+import { getDaProjectValidators } from './utils/getDaProjectValidators'
 
 interface CommonDaProjectPageEntry {
   name: string
@@ -66,6 +67,8 @@ export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
     durationStorage: number | undefined
     maxThroughputPerSecond: number | undefined
     usedIn: UsedInProjectWithIcon[]
+    ongoingAnomaly?: 'single' | 'multiple'
+    numberOfValidators: number | undefined
   }
   sections: ProjectDetailsSection[]
   discoUiHref?: string
@@ -85,6 +88,7 @@ export interface EthereumDaProjectPageEntry extends CommonDaProjectPageEntry {
       title: string
       description: string
     }
+    numberOfValidators: number | undefined
   }
   sections: ProjectDetailsSection[]
 }
@@ -100,7 +104,14 @@ export async function getDaProjectEntry(
   const bridges = (
     await ps.getProjects({
       select: ['daBridge', 'display', 'statuses'],
-      optional: ['permissions', 'contracts', 'discoveryInfo'],
+      optional: [
+        'permissions',
+        'contracts',
+        'discoveryInfo',
+        'trackedTxsConfig',
+        'livenessConfig',
+        'archivedAt',
+      ],
     })
   ).filter((x) => x.daBridge.daLayer === layer.id)
 
@@ -117,12 +128,25 @@ export async function getDaProjectEntry(
     bridges.flatMap((x) => x.daBridge.usedIn),
   )
 
-  const [economicSecurity, tvsPerProject, projectsChangeReport] =
-    await Promise.all([
-      getDaProjectEconomicSecurity(layer.daLayer.economicSecurity),
-      getDaProjectsTvs(allUsedIn.map((x) => x.id)),
-      getProjectsChangeReport(),
-    ])
+  const [
+    economicSecurity,
+    tvsPerProject,
+    projectsChangeReport,
+    liveness,
+    validators,
+  ] = await Promise.all([
+    getDaProjectEconomicSecurity(layer.id, layer.daLayer.economicSecurity),
+    getDaProjectsTvs(allUsedIn.map((x) => x.id)),
+    getProjectsChangeReport(),
+    selected ? getLiveness() : undefined,
+    getDaProjectValidators(layer.id, layer.daLayer.validators),
+  ])
+
+  const projectLiveness =
+    selected && liveness ? liveness[selected.id] : undefined
+  const ongoingAnomalies = projectLiveness?.anomalies.filter(
+    (a) => a.end === undefined,
+  )
 
   const layerTvs = tvsPerProject.reduce((acc, value) => acc + value.tvs, 0)
 
@@ -136,7 +160,7 @@ export async function getDaProjectEntry(
   )
 
   const sections = await getRegularDaProjectSections({
-    layer: layer,
+    layer,
     bridge: selected,
     isVerified: true,
     projectsChangeReport,
@@ -159,7 +183,7 @@ export async function getDaProjectEntry(
     isUnderReview: !!layer.statuses.reviewStatus,
     isUpcoming: layer.isUpcoming ?? false,
     archivedAt: layer.archivedAt,
-    colors: env.CLIENT_SIDE_PARTNERS ? layer.colors : undefined,
+    colors: layer.colors,
     selectedBridge: {
       name: selected?.daBridge.name ?? 'No DA Bridge',
       slug: selected?.slug ?? 'no-bridge',
@@ -183,7 +207,7 @@ export async function getDaProjectEntry(
         .map((x) => ({
           ...x,
           icon: getProjectIcon(x.slug),
-          href: `/scaling/projects/${x.slug}`,
+          url: `/scaling/projects/${x.slug}`,
         })),
     })),
     header: {
@@ -206,8 +230,16 @@ export async function getDaProjectEntry(
         .map((x) => ({
           ...x,
           icon: getProjectIcon(x.slug),
-          href: `/scaling/projects/${x.slug}`,
+          url: `/scaling/projects/${x.slug}`,
         })),
+      ongoingAnomaly: ongoingAnomalies
+        ? ongoingAnomalies.length === 0
+          ? undefined
+          : ongoingAnomalies.length === 1
+            ? 'single'
+            : 'multiple'
+        : undefined,
+      numberOfValidators: validators,
     },
     sections,
     projectVariants: bridges.map((bridge) => ({
@@ -230,7 +262,7 @@ export async function getDaProjectEntry(
       usedIn: layer.daLayer.usedWithoutBridgeIn.map((x) => ({
         ...x,
         icon: getProjectIcon(x.slug),
-        href: `/scaling/projects/${x.slug}`,
+        url: `/scaling/projects/${x.slug}`,
       })),
     })
     result.projectVariants?.unshift({
@@ -257,18 +289,20 @@ export async function getEthereumDaProjectEntry(
     bridge.daBridge.risks,
   )
 
-  const [economicSecurity, tvsPerProject, sections] = await Promise.all([
-    getDaProjectEconomicSecurity(layer.daLayer.economicSecurity),
-    getDaProjectsTvs(bridge.daBridge.usedIn.map((x) => x.id)),
-    getEthereumDaProjectSections({
-      layer,
-      bridge,
-      isVerified: true,
-      layerGrissiniValues,
-      bridgeGrissiniValues,
-      helpers,
-    }),
-  ])
+  const [economicSecurity, tvsPerProject, sections, validators] =
+    await Promise.all([
+      getDaProjectEconomicSecurity(layer.id, layer.daLayer.economicSecurity),
+      getDaProjectsTvs(bridge.daBridge.usedIn.map((x) => x.id)),
+      getEthereumDaProjectSections({
+        layer,
+        bridge,
+        isVerified: true,
+        layerGrissiniValues,
+        bridgeGrissiniValues,
+        helpers,
+      }),
+      getDaProjectValidators(layer.id, layer.daLayer.validators),
+    ])
 
   const layerTvs = tvsPerProject.reduce((acc, value) => acc + value.tvs, 0)
 
@@ -279,7 +313,7 @@ export async function getEthereumDaProjectEntry(
     .map((x) => ({
       ...x,
       icon: getProjectIcon(x.slug),
-      href: `/scaling/projects/${x.slug}`,
+      url: `/scaling/projects/${x.slug}`,
     }))
 
   const latestThroughput = layer.daLayer.throughput
@@ -314,6 +348,7 @@ export async function getEthereumDaProjectEntry(
         title: bridge.daBridge.name,
         description: bridge.daBridge.risks.callout ?? '',
       },
+      numberOfValidators: validators,
     },
     sections,
   }

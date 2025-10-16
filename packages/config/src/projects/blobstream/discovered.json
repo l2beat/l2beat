@@ -1,7 +1,7 @@
 {
   "name": "blobstream",
-  "timestamp": 1752069683,
-  "configHash": "0xc8ef46cbbf6e0b7340780c5d21ebd280396fa760d148257a73171bfadf9858d6",
+  "timestamp": 1760005725,
+  "configHash": "0xa4dde3c595d937778789dfb41ad249360843ffede0b61ceb8e8d340bc60c6011",
   "sharedModules": ["shared-sp1"],
   "entries": [
     {
@@ -118,7 +118,7 @@
       ]
     },
     {
-      "name": "Blobstream",
+      "name": "ArbitrumBlobstream",
       "address": "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
       "type": "Contract",
       "template": "succinct/SP1Blobstream",
@@ -182,13 +182,13 @@
         "isRelayer1Approved": false,
         "isRelayer2Approved": true,
         "isRelayer3Approved": true,
-        "latestBlock": 6360000,
+        "latestBlock": 7913600,
         "nextHeaderFunctionId_depcrecated": "0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef",
         "relayers": [
           "arb1:0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
           "arb1:0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC"
         ],
-        "state_proofNonce": 12492,
+        "state_proofNonce": 14433,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "verifier": "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "1.1.0"
@@ -312,7 +312,7 @@
       ]
     },
     {
-      "name": "Blobstream",
+      "name": "BaseBlobstream",
       "address": "base:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
       "type": "Contract",
       "template": "succinct/SP1Blobstream",
@@ -376,13 +376,13 @@
         "isRelayer1Approved": false,
         "isRelayer2Approved": true,
         "isRelayer3Approved": true,
-        "latestBlock": 6360000,
+        "latestBlock": 7913600,
         "nextHeaderFunctionId_depcrecated": "0x2ce8ca4f509cb09415b5a6ca6afa265571dac0b9f6ddb46f487e017fec71cf25",
         "relayers": [
           "base:0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
           "base:0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC"
         ],
-        "state_proofNonce": 12491,
+        "state_proofNonce": 14432,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "verifier": "base:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "1.1.0"
@@ -438,7 +438,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Blobstream",
+      "name": "EthereumBlobstream",
       "address": "eth:0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
       "type": "Contract",
       "template": "succinct/SP1Blobstream",
@@ -497,13 +497,13 @@
         "isRelayer1Approved": false,
         "isRelayer2Approved": true,
         "isRelayer3Approved": true,
-        "latestBlock": 6360000,
+        "latestBlock": 7913600,
         "nextHeaderFunctionId_depcrecated": "0xf7ab2ac6f5ccf2da79050efcc0dbdb06d5ae05a332f58076aeac7fc8c73811fe",
         "relayers": [
           "eth:0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
           "eth:0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC"
         ],
-        "state_proofNonce": 6689,
+        "state_proofNonce": 8630,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "verifier": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "1.1.0"
@@ -927,9 +927,9 @@
     "succinct/SP1Blobstream": "0x3660212a9fcb00242154458e4a67cfeada6645ad8cefe00e557c1f624ac8ec71"
   },
   "usedBlockNumbers": {
-    "base": 32640168,
-    "ethereum": 22882089,
-    "arbitrum": 355902117
+    "arbitrum": 387681508,
+    "base": 36608189,
+    "ethereum": 23539583
   },
-  "permissionsConfigHash": "0x5a541dcb65801853ce6ea4af75affb5f42e80374ae6a9a45a382da1490de41e3"
+  "permissionsConfigHash": "0xd510f9eb996956c3ed3cdfc3e38ab7e71a1ed4143d208969cd18515aedb3e34b"
 }

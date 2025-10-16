@@ -92,7 +92,7 @@ export const witness: ScalingProject = polygonCDKStack({
       {
         type: 'rpc',
         url: 'https://witnesschain-sequencer.eu-north-2.gateway.fm/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

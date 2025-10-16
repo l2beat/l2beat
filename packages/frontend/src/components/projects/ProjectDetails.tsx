@@ -13,17 +13,20 @@ import { LivenessSection } from './sections/LivenessSection'
 import { MarkdownSection } from './sections/MarkdownSection'
 import { MilestonesAndIncidentsSection } from './sections/MilestonesAndIncidentsSection'
 import { PermissionsSection } from './sections/permissions/PermissionsSection'
+import { ProgramHashesSection } from './sections/program-hashes/ProgramHashesSection'
 import { RiskAnalysisSection } from './sections/RiskAnalysisSection'
 import { RiskSummarySection } from './sections/RiskSummarySection'
 import { ScalingTvsSection } from './sections/ScalingTvsSection'
 import { SequencingSection } from './sections/SequencingSection'
 import { StageSection } from './sections/StageSection'
 import { StateDerivationSection } from './sections/StateDerivationSection'
-import { StateValidationSection } from './sections/StateValidationSection'
+import { StateValidationSection } from './sections/state-validation/StateValidationSection'
 import { TechnologyChoicesSection } from './sections/TechnologyChoicesSection'
+import { TrustedSetupSection } from './sections/TrustedSetupsSection'
 import { ThroughputSection } from './sections/throughput/ThroughputSection'
 import type { ProjectDetailsSection } from './sections/types'
 import { UpcomingDisclaimer } from './sections/UpcomingDisclaimer'
+import { VerifiersSection } from './sections/VerifiersSection'
 
 interface ProjectDetailsProps {
   nested?: boolean
@@ -178,7 +181,30 @@ export function ProjectDetails(props: ProjectDetailsProps) {
                 {...item.props}
               />
             )
-
+          case 'ProgramHashesSection':
+            return (
+              <ProgramHashesSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'TrustedSetupSection':
+            return (
+              <TrustedSetupSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'VerifiersSection':
+            return (
+              <VerifiersSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
           case 'MarkdownSection':
             return (
               <MarkdownSection

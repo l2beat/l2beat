@@ -33,9 +33,10 @@ export const hyperlane: Bridge = {
     category: 'Token Bridge',
     links: {
       websites: ['https://hyperlane.xyz/'],
-      bridges: ['https://usenexus.org/'],
+      bridges: ['https://nexus.hyperlane.xyz/'],
       repositories: ['https://github.com/hyperlane-xyz'],
       documentation: ['https://docs.hyperlane.xyz/'],
+      explorers: ['https://explorer.hyperlane.xyz/'],
       socialMedia: [
         'https://x.com/hyperlane',
         'https://discord.com/invite/VK9ZUy3aTV',

@@ -1,5 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -11,6 +12,11 @@ const omnipaused =
 const warningText = omnipaused
   ? 'The Omni part of Gnosis Bridge is currently paused.'
   : undefined
+
+const heliosProgramHash = discovery.getContractValue<string>(
+  'SP1Helios',
+  'heliosProgramVkey',
+)
 
 export const omni: Bridge = {
   type: 'bridge',
@@ -168,9 +174,10 @@ export const omni: Bridge = {
     },
   ],
   contracts: {
-    addresses: discovery.getDiscoveredContracts(['gnosis']),
+    addresses: discovery.getDiscoveredContracts(),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    zkProgramHashes: [ZK_PROGRAM_HASHES(heliosProgramHash)],
   },
-  permissions: discovery.getDiscoveredPermissions(['gnosis']),
+  permissions: discovery.getDiscoveredPermissions(),
   discoveryInfo: getDiscoveryInfo([discovery]),
 }

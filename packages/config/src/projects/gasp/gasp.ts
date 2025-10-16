@@ -17,7 +17,7 @@ export const gasp: ScalingProject = underReviewL2({
       bridges: ['https://app.gasp.xyz/'],
       documentation: ['https://docs.gasp.xyz/'],
       explorers: [],
-      repositories: [],
+      repositories: ['https://github.com/gasp-xyz'],
       socialMedia: [
         'https://x.com/gasp_xyz',
         'https://discord.com/invite/gasp-xyz',

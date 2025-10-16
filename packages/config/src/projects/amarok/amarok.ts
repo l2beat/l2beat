@@ -35,10 +35,14 @@ export const amarok: Bridge = {
     category: 'Liquidity Network',
     links: {
       bridges: ['https://bridge.connext.network/', 'https://connextscan.io/'],
-      websites: ['https://blog.connext.network/'],
+      websites: ['https://connext.network/'],
       documentation: ['https://docs.connext.network/'],
+      explorers: ['https://explorer.everclear.org/intents'],
       repositories: ['https://github.com/connext/monorepo'],
-      socialMedia: ['https://x.com/EverclearOrg', 'https://discord.gg/connext'],
+      socialMedia: [
+        'https://x.com/EverclearOrg',
+        'https://discord.com/invite/everclear',
+      ],
     },
   },
   milestones: [

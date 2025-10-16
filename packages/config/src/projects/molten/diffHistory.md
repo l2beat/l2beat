@@ -1,3 +1,109 @@
+Generated with discovered.json: 0x597c9d2e4d2b5753e17c1d392af4a0e56efa2865
+
+# Diff at Fri, 10 Oct 2025 09:26:23 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a91384a270a047b2514885e053feff1edc24f495 block: 1759481488
+- current timestamp: 1760088316
+
+## Description
+
+Member added to multisig.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 1 (arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0xe5219fe14E2FD520Ff80be036790913053d1575d"
+      values.$members.1:
++        "arb1:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A"
+      values.$members.1:
+-        "arb1:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675"
+      values.multisigThreshold:
+-        "3 of 8 (38%)"
++        "3 of 9 (33%)"
+    }
+```
+
+Generated with discovered.json: 0x1188a90b6de329813fab02a17e6e0d46d030ca5b
+
+# Diff at Fri, 03 Oct 2025 08:53:19 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@e647409961cd173771dcfcaeb808991c99e73911 block: 1758032604
+- current timestamp: 1759481488
+
+## Description
+
+Member added to multisig.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 1 (arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0"
+      values.multisigThreshold:
+-        "3 of 7 (43%)"
++        "3 of 8 (38%)"
+    }
+```
+
+Generated with discovered.json: 0xf426898b56268f658456288a40772be7c42bac0c
+
+# Diff at Fri, 26 Sep 2025 12:56:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec4b16fd723bf2a8625a616c4b3a1119ce79fb29 block: 1758032604
+- current timestamp: 1758032604
+
+## Description
+
+add new celestia nitro wasmmoduleroot
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758032604 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d:
++        "Celestia Nitro ArbOS v40 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x97be92e2c95c8e1b2869dcb8a587d003dab64881
+
+# Diff at Fri, 12 Sep 2025 13:19:30 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@cf33a7bb38a6cf939eaca36418ac718201c99e46 block: 1753200985
+- current timestamp: 1757683093
+
+## Description
+
+Updated mr_enclave value of TEE (hash of code, data, config).
+
+## Watched changes
+
+```diff
+    contract EspressoNitroTEEVerifier (arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5) {
+    +++ description: Verifies attestations of an AWS Nitro TEE.
++++ severity: HIGH
+      values.validEnclaveHashes.0:
++        "0x1c3ae8f1497acbbf16ed7a4ef443e1b07661a61ddb0eba88fa0bc99d11a2087d"
++++ severity: HIGH
+      values.validEnclaveHashes.1:
++        "0x9eb3d53ae19ac862d456ee169c8de9f310a97e29079c38daf4c676ba4608cbd0"
+    }
+```
+
 Generated with discovered.json: 0x63890f1546b824e31c96bdc7696a17d40d828a7f
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

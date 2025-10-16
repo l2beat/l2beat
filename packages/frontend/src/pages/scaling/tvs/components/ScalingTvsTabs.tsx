@@ -139,6 +139,7 @@ export function ScalingTvsTabs(props: Props) {
                 entries={entries.notReviewed}
                 breakdownType={breakdownType}
                 setBreakdownType={setBreakdownType}
+                ignoreUnderReviewIcon
               />
             </DirectoryTabsContent>
           </TableSortingProvider>
@@ -152,10 +153,12 @@ function BreakdownTypeTabs({
   entries,
   breakdownType,
   setBreakdownType,
+  ignoreUnderReviewIcon,
 }: {
   entries: ScalingTvsEntry[]
   breakdownType: 'bridgeType' | 'assetCategory'
   setBreakdownType: (value: 'bridgeType' | 'assetCategory') => void
+  ignoreUnderReviewIcon?: boolean
 }) {
   return (
     <Tabs
@@ -170,10 +173,18 @@ function BreakdownTypeTabs({
         <TabsTrigger value="assetCategory">By asset category</TabsTrigger>
       </TabsList>
       <TabsContent value="bridgeType">
-        <ScalingTvsTable entries={entries} breakdownType={breakdownType} />
+        <ScalingTvsTable
+          entries={entries}
+          breakdownType={breakdownType}
+          ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+        />
       </TabsContent>
       <TabsContent value="assetCategory">
-        <ScalingTvsTable entries={entries} breakdownType={breakdownType} />
+        <ScalingTvsTable
+          entries={entries}
+          breakdownType={breakdownType}
+          ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+        />
       </TabsContent>
     </Tabs>
   )

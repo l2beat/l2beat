@@ -1,7 +1,7 @@
 {
   "name": "stack",
-  "timestamp": 1756804792,
-  "configHash": "0x9066a9d71294288d3d2a83862bf43a3eedc1ce502eeac3a76f2498bf6684edff",
+  "timestamp": 1759481403,
+  "configHash": "0xacdd1fb8d5ecdc4c69d89790d78f621d90b3a24910260aff10fd7a596c2ef920",
   "entries": [
     {
       "address": "base:0x000000000000000000000000000000000000dEaD",
@@ -108,11 +108,6 @@
     },
     {
       "address": "base:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "base:0x50930d652266EF4127FA3A1906B7Cb9951076628",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -370,7 +365,6 @@
         "$members": [
           "base:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
           "base:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
-          "base:0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "base:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "base:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "base:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
@@ -383,8 +377,8 @@
         "domainSeparator": "0x4fb7ea8ecabb8e9a869e85ce3babbe085732a2a3b9a239f476713291832d96f2",
         "getChainId": 8453,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 42,
+        "multisigThreshold": "4 of 9 (44%)",
+        "nonce": 48,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -802,6 +796,6 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "base": 35007722 },
-  "permissionsConfigHash": "0xa5efe5dad6bc6bdebf53d0e20ae5edeec462d34d0bba7188bc6336d6b143ed28"
+  "usedBlockNumbers": { "base": 36346028 },
+  "permissionsConfigHash": "0xef9f39622ff065b774e908efc991463582c2d251a9fc410871a627f36a51b55d"
 }

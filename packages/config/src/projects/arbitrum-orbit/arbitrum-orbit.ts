@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { CoingeckoId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import type { BaseProject } from '../../types'
 
@@ -17,8 +17,14 @@ export const arbitrumOrbit: BaseProject = {
     badges: [BADGES.Stack.Orbit],
   },
   colors: {
-    primary: '#12AAFF',
-    secondary: '#12AAFF',
+    primary: {
+      light: '#12AAFF',
+      dark: '#33BFFF',
+    },
+    secondary: {
+      light: '#12AAFF',
+      dark: '#0A6EA3',
+    },
   },
   milestones: [
     {
@@ -39,6 +45,7 @@ export const arbitrumOrbit: BaseProject = {
     },
   ],
   ecosystemConfig: {
+    startedAt: UnixTime.fromDate(new Date('2023-03-16')),
     links: {
       buildOn:
         'https://docs.arbitrum.io/launch-orbit-chain/a-gentle-introduction',
@@ -48,8 +55,7 @@ export const arbitrumOrbit: BaseProject = {
       governanceProposals: 'https://www.tally.xyz/gov/arbitrum/proposals',
     },
     token: {
-      tokenId: 'arbitrum-ARB-1',
-      projectId: ProjectId('arbitrum'),
+      coingeckoId: CoingeckoId('arbitrum'),
       description:
         'ARB is the governance token for the Arbitrum Orbit ecosystem. It is used for voting on protocol upgrades, treasury allocations, and other governance decisions across the Orbit network of Arbitrum chains.',
     },

@@ -52,7 +52,20 @@ export interface ApiTemplateFileResponse {
   criteria?: string
 }
 
+export interface ApiConfigFileResponse {
+  config: string
+}
+
 export type ApiCreateShapeResponse =
+  | {
+      success: true
+    }
+  | {
+      success: false
+      error: string
+    }
+
+export type ApiCreateConfigFileResponse =
   | {
       success: true
     }
@@ -69,6 +82,7 @@ export type ApiAddressType =
   | 'Multisig'
   | 'Diamond'
   | 'Timelock'
+  | 'Untemplatized'
   | 'Contract'
   | 'Unknown'
 

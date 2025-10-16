@@ -1,4 +1,5 @@
 import { v } from '@l2beat/validate'
+import { useCallback } from 'react'
 
 export const PlausibleEvents = v.object({
   switchChanged: v.object({ name: v.string(), value: v.string() }),
@@ -7,8 +8,13 @@ export const PlausibleEvents = v.object({
   directoryTabsChanged: v.object({ value: v.string() }),
   tabsChanged: v.object({ name: v.string(), value: v.string() }),
   searchBarProjectSelected: v.object({ name: v.string() }),
+  searchBarSearched: v.object({ value: v.string() }),
   uopsExplorerSelected: v.undefined().optional(),
   trustedSetupFrameworkSelected: v.undefined().optional(),
+  whatsNewClicked: v.object({
+    device: v.enum(['desktop', 'mobile']),
+    action: v.enum(['open', 'close']),
+  }),
 
   // Filters
   filtersOpened: v.undefined().optional(),
@@ -34,9 +40,11 @@ type Plausible = {
 }
 
 export function useTracking(): { track: Plausible } {
+  const track: Plausible = useCallback((event, ...args) => {
+    window.plausible?.(event, ...args)
+  }, [])
+
   return {
-    track: (event, ...args) => {
-      window.plausible?.(event, ...args)
-    },
+    track,
   }
 }

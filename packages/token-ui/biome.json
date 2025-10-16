@@ -1,0 +1,39 @@
+{
+  "$schema": "node_modules/@biomejs/biome/configuration_schema.json",
+  "root": false,
+  "extends": ["../../../biome.json"],
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "a11y": {},
+      "complexity": {
+        "noUselessFragments": "error"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "error",
+        "useHookAtTopLevel": "error",
+        "noChildrenProp": "error",
+        "noVoidElementsWithChildren": "error",
+        "useJsxKeyInIterable": "error"
+      },
+      "suspicious": {
+        "noDuplicateJsxProps": "error"
+      },
+      "style": {
+        "useFragmentSyntax": "error",
+        "useAsConstAssertion": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useSelfClosingElements": "error",
+        "useSingleVarDeclarator": "error",
+        "noUnusedTemplateLiteral": "error",
+        "useNumberNamespace": "error",
+        "noInferrableTypes": "error",
+        "noUselessElse": "error"
+      },
+      "security": {
+        "noBlankTarget": "error"
+      }
+    }
+  }
+}

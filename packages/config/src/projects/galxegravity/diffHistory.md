@@ -1,4 +1,55 @@
-Generated with discovered.json: 0x82c0972f085edbd3e068b8be817a114d4796d6fd
+Generated with discovered.json: 0x79ad1db1bfd211a048bf54728d743e18b1e5b504
+
+# Diff at Fri, 03 Oct 2025 08:41:37 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@e647409961cd173771dcfcaeb808991c99e73911 block: 1756214657
+- current timestamp: 1759480830
+
+## Description
+
+Member removed from multisig.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 10 (40%)"
+    }
+```
+
+Generated with discovered.json: 0xb5d713c7e8f947eaab77b7c9dfbbe09520025f89
+
+# Diff at Fri, 26 Sep 2025 12:45:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec4b16fd723bf2a8625a616c4b3a1119ce79fb29 block: 1756214657
+- current timestamp: 1756214657
+
+## Description
+
+add new celestia nitro wasmmoduleroot
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756214657 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0xf993AF239770932A0EDaB88B6A5ba3708Bd58239) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d:
++        "Celestia Nitro ArbOS v40 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x6de041b671dad9afc4bff26504db81e53d756680
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
 

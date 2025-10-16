@@ -1,3 +1,4 @@
+import { Env, getEnv } from '@l2beat/backend-tools'
 import type { Indexer } from '@l2beat/uif'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
@@ -19,6 +20,7 @@ export function createBlockSyncModule({
     return
   }
 
+  const env = getEnv()
   logger = logger.tag({ feature: 'blockSync', module: 'blockSync' })
 
   const indexerService = new IndexerService(db)
@@ -40,6 +42,7 @@ export function createBlockSyncModule({
             providers.block.getBlockProvider(chain),
             chain,
             logger,
+            config.blockSync.delayFromTipInSeconds,
           )
 
     const blockIndexer = new BlockIndexer({
@@ -48,10 +51,11 @@ export function createBlockSyncModule({
       parents: [blockNumberIndexer],
       blockProcessors: blockProcessors.filter((x) => x.chain === chain),
       source: chain,
-      mode: 'CONTINUOUS',
       blockProvider: providers.block.getBlockProvider(chain),
       logsProvider: providers.logs.getLogsProvider(chain),
       indexerService,
+      batchSize:
+        env.optionalInteger(Env.key(chain, 'BLOCKSYNC_BATCH_SIZE')) ?? 50,
     })
 
     indexers.push(blockNumberIndexer)

@@ -1,8 +1,7 @@
 {
   "name": "paradex",
-  "timestamp": 1755516515,
-  "configHash": "0x8c208b7a2d1fb7bbc6221d55e7e73d17cb0c0f10f7a894c01bc1a656505c5637",
-  "sharedModules": ["shared-sharp-verifier"],
+  "timestamp": 1758110896,
+  "configHash": "0x2355d6070866b102d6b6c0802b0020e6778c73885f386d3138203ca53924e2b0",
   "entries": [
     {
       "name": "Paradex Multisig",
@@ -82,6 +81,11 @@
     },
     {
       "address": "eth:0x661B48092a5af3F8d5B551D66f5B3F639deD3155",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x721e0A5e09A6e0Bf9641193a4D82901607837Df9",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -206,7 +210,7 @@
         "l2TokenContract": "eth:0x311d3706Ce8A7d337Bcb67Cd53b0ED7b019C6353",
         "manager": "eth:0x0000000000000000000000000000000000000000",
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalBalance": 100000000000000,
+        "maxTotalBalance": 175000000000000,
         "messagingContract": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
@@ -325,7 +329,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 12805,
+        "l1ToL2MessageNonce": 14518,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": ["eth:0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
@@ -342,9 +346,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "2691563392940478202945393906712259340886422196571134939731825844315275912847",
-        "stateBlockNumber": 848948,
-        "stateRoot": "1318675032595120459359295293891681897756767012032911515251712617201339156267",
+        "stateBlockHash": "944867323996414037353703935744699865121254370407817445675310761451249475315",
+        "stateBlockNumber": 906437,
+        "stateRoot": "2065146848183465666352624602170198085194904033545202455251730433449453643492",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -447,6 +451,7 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0x721e0A5e09A6e0Bf9641193a4D82901607837Df9",
           "eth:0xdaA9c7160E33d7c5C7D292f452c074Ec60f5C199",
           "eth:0xfF206f46453A9dd8e1664532788f4987c15B937d",
           "eth:0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512",
@@ -457,8 +462,8 @@
         "domainSeparator": "0x79153287c895edf58c6e5294023273405c02b4865dae9e64742d80f476d9b88d",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 27,
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 31,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -771,6 +776,6 @@
     "starknet/Starknet": "0x94ec7824dea8f420d9b02624ccb3fee6ea169600cf6665c49d0c82cbc2651cc3",
     "starknet/StarknetERC20Bridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6"
   },
-  "usedBlockNumbers": { "ethereum": 23167648 },
-  "permissionsConfigHash": "0x654d2ab54bee8967a2baf88310cd725120a2b836958b4855014e43cdcad5c519"
+  "usedBlockNumbers": { "ethereum": 23382702 },
+  "permissionsConfigHash": "0xe48bc150113b314e4e3aa01199ed7afb61cfcb6600d4efe05130f061e5d78db2"
 }

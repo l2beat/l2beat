@@ -9,11 +9,10 @@ permissions:
 jobs:
   config-diff:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
-      SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -45,9 +44,10 @@ jobs:
         id: publish
         if: steps.diff.outputs.has_changes != '1'
         run: |
-          DOMAIN="https://pr-${{ github.event.pull_request.number }}-l2beat.surge.sh"
-          pnpx surge --project /tmp/compare/out --domain "$DOMAIN"
-          echo "domain=$DOMAIN" >> $GITHUB_OUTPUT
+          URL="https://config-diff.l2beat.com/upload/pr-${{ github.event.pull_request.number }}/"
+          curl -u "${{ secrets.CONFIG_DIFF_AUTH }}" -X MKCOL $URL
+          curl -u "${{ secrets.CONFIG_DIFF_AUTH }}" -T /tmp/compare/out/index.html $URL/index.html
+          echo "domain=$URL" >> $GITHUB_OUTPUT
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2

@@ -1,3 +1,172 @@
+Generated with discovered.json: 0x6f5374cebcca68542e8446dd49a735c303f1202b
+
+# Diff at Wed, 08 Oct 2025 13:03:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@36fbb0e5eb9fa07c58f97370d929eaabfcd6c5ff block: 1759758020
+- current timestamp: 1759928430
+
+## Description
+
+transactions **scheduled**:
+
+rollupmanager: https://disco.l2beat.com/diff/eth:0x42B9fF0644741e3353162678596e7D6aA6a13240/eth:0x15cAF18dEd768e3620E0f656221Bf6B400ad2618
+- PolygonRollupManager -> AgglayerManager
+- rollupAdmin -> aggchainManager
+- multisig interface added
+- v 1.0
+
+AggLayerGateway: https://disco.l2beat.com/diff/eth:0x7bB0e8f1950722694929dB392abA805AAc6e9346/eth:0xD062B7f9fbB89bdA59262E77015C34a27Dc9aB49
+- integrated multisig functionality added, initialized to 1/1
+
+Shared bridge: https://disco.l2beat.com/diff/eth:0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b/eth:0x66E0120e3c965552a89AcC37b03f762624baC5Ad
+- minimal changes, formatting, merkle tree calcs
+
+GER: https://disco.l2beat.com/diff/eth:0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48/eth:0x7F1655d9d570167B2a3FfD1Ef809D3Fdd74427C5
+
+two new rolluptypes added:
+13: AggchainFEP
+14: AggchainECDSAMultisig (PP)
+
+katana upgraded to type 13: https://disco.l2beat.com/diff/eth:0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682/eth:0x9532A2F35fc9B18BD4FE8315D9C5B1C1Cf6Ac660
+
+pessimistic chains upgraded to type 14: xlayer, lumia, zchain, okto, billions net, forknet, haust
+example diff: https://disco.l2beat.com/diff/eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B/eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21
+
+new pessimistic key added `0x000055f14384bdb5bb092fd7e5152ec31856321c5a30306ab95836bdf5cdb639` for identifier `0x00000008`
+
+the main change seems to be that the pure pessimistic state transitions can now be signed by an onchain multisig instead of an EOA and their onchain management is improved.
+but the actual permissions will be easier to figure out as soon as the system is deployed.
+
+## Watched changes
+
+```diff
+    contract Timelock (eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      values.scheduledTransactionsDecoded.35:
++        {"target":"eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgrade","inputs":{"proxy":"eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","implementation":"eth:0x15cAF18dEd768e3620E0f656221Bf6B400ad2618"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+      values.scheduledTransactionsDecoded.36:
++        {"target":"eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgradeAndCall","inputs":{"proxy":"eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3","implementation":"eth:0xD062B7f9fbB89bdA59262E77015C34a27Dc9aB49","data":{"multisigRole":"eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","signersToAdd":[["eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF","test"]],"newThreshold":1}},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+      values.scheduledTransactionsDecoded.37:
++        {"target":"eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgrade","inputs":{"proxy":"eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","implementation":"eth:0x66E0120e3c965552a89AcC37b03f762624baC5Ad"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+      values.scheduledTransactionsDecoded.38:
++        {"target":"eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgrade","inputs":{"proxy":"eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb","implementation":"eth:0x7F1655d9d570167B2a3FfD1Ef809D3Fdd74427C5"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+      values.scheduledTransactionsDecoded.39:
++        {"target":"eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"addNewRollupType","inputs":{"consensusImplementation":"eth:0x9532A2F35fc9B18BD4FE8315D9C5B1C1Cf6Ac660","verifier":"eth:0x0000000000000000000000000000000000000000","forkID":0,"rollupVerifierType":2,"genesis":"0x0000000000000000000000000000000000000000000000000000000000000000","description":"Type: AggchainFEP","programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+      values.scheduledTransactionsDecoded.40:
++        {"target":"eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"addNewRollupType","inputs":{"consensusImplementation":"eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21","verifier":"eth:0x0000000000000000000000000000000000000000","forkID":0,"rollupVerifierType":2,"genesis":"0x0000000000000000000000000000000000000000000000000000000000000000","description":"Type: AggchainECDSAMultisig","programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+      values.scheduledTransactionsDecoded.41:
++        {"target":"eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"updateRollup","inputs":{"rollupContract":"eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666","newRollupTypeID":13,"upgradeData":"0x96a4f546"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+      values.scheduledTransactionsDecoded.42:
++        {"target":"eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"updateRollup","inputs":{"rollupContract":"eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507","newRollupTypeID":14,"upgradeData":"0x06e76665"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+      values.scheduledTransactionsDecoded.43:
++        {"target":"eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"updateRollup","inputs":{"rollupContract":"eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B","newRollupTypeID":14,"upgradeData":"0x06e76665"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+      values.scheduledTransactionsDecoded.44:
++        {"target":"eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"updateRollup","inputs":{"rollupContract":"eth:0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7","newRollupTypeID":14,"upgradeData":"0x06e76665"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+      values.scheduledTransactionsDecoded.45:
++        {"target":"eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"updateRollup","inputs":{"rollupContract":"eth:0x7449449460b5B732A9754CA3d9A7916122A9190d","newRollupTypeID":14,"upgradeData":"0x06e76665"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+      values.scheduledTransactionsDecoded.46:
++        {"target":"eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"updateRollup","inputs":{"rollupContract":"eth:0x88404dD30A96AD25A765d733429Cf83138c7f8f4","newRollupTypeID":14,"upgradeData":"0x06e76665"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+      values.scheduledTransactionsDecoded.47:
++        {"target":"eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"updateRollup","inputs":{"rollupContract":"eth:0xC427E3Edc8ae4BD2698cbef251E06b83175f9dec","newRollupTypeID":14,"upgradeData":"0x06e76665"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+      values.scheduledTransactionsDecoded.48:
++        {"target":"eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"updateRollup","inputs":{"rollupContract":"eth:0xaf6a4CDe41B9C7FCe858E1B875765cdEDB8f84c8","newRollupTypeID":14,"upgradeData":"0x06e76665"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+      values.scheduledTransactionsDecoded.49:
++        {"target":"eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"updateRollup","inputs":{"rollupContract":"eth:0x2f3d687e02dbe83B6cDaE02aeb66C0e8E69CcA4b","newRollupTypeID":14,"upgradeData":"0x06e76665"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+      values.scheduledTransactionsDecoded.50:
++        {"target":"eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"updateRollup","inputs":{"rollupContract":"eth:0xaD83Cd3e5A725546daDC5A25088c5c098d320Ca8","newRollupTypeID":14,"upgradeData":"0x06e76665"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+      values.scheduledTransactionsDecoded.51:
++        {"target":"eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3","value":"0","function":"addPessimisticVKeyRoute","inputs":{"pessimisticVKeySelector":"0x00000008","verifier":"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459","pessimisticVKey":"0x000055f14384bdb5bb092fd7e5152ec31856321c5a30306ab95836bdf5cdb639"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+    }
+```
+
+Generated with discovered.json: 0x0b02c38d5d5dc34f339e8f809a9ca496e03e3f09
+
+# Diff at Mon, 06 Oct 2025 13:42:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e58bd9f0913161b35e2a2c65f233464591d4f28b block: 1758619032
+- current timestamp: 1759758020
+
+## Description
+
+Lumia switches to pessimistic consensus, moving to OTHERS for now (same programVKey as XLayer).
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.9:
++        7
+      values.rollupsDataV2.6.programVKey:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+      values.rollupsDataV2.6.rollupVerifierType:
+-        0
++        1
+      values.rollupsDataV2.6.rollupTypeID:
+-        7
++        11
+      values.rollupsDataV2.6.verifier:
+-        "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
++        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+    }
+```
+
+Generated with discovered.json: 0x7aa00babb57afc42173ba0d6fae39dcba90ef42f
+
+# Diff at Tue, 23 Sep 2025 09:18:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9a796f3fca0d6345ed73136526bf67003edbb829 block: 1757403523
+- current timestamp: 1758619032
+
+## Description
+
+wirex upgrade to standard contracts (see also wirex diff history).
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      values.rollupsDataV2.7.rollupTypeID:
+-        4
++        7
+      values.rollupsDataV2.7.forkID:
+-        9
++        12
+      values.rollupsDataV2.7.verifier:
+-        "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+    }
+```
+
+Generated with discovered.json: 0xc9f5b144cc506d0066234d4d87fb19c397e36e0d
+
+# Diff at Tue, 09 Sep 2025 07:40:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@395d7487e1620571da9defc848ebbef6daf736b9 block: 1757064266
+- current timestamp: 1757403523
+
+## Description
+
+haust (pessimistic) is sending proofs.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.8:
++        23
+    }
+```
+
 Generated with discovered.json: 0x17a9bf37efd559368b0efb86447b3f069a72b64f
 
 # Diff at Fri, 05 Sep 2025 09:26:35 GMT:

@@ -49,7 +49,7 @@ export function MonthlyUpdateActivityChart({
     return {
       projects: {
         label: 'UOPS',
-        color: 'var(--project-primary, var(--ecosystem-primary))',
+        color: 'var(--project-primary)',
         indicatorType: {
           shape: 'line',
         },
@@ -86,7 +86,7 @@ export function MonthlyUpdateActivityChart({
             data: compact([
               {
                 dataKey: 'projects',
-                stroke: 'var(--project-primary, var(--ecosystem-primary))',
+                stroke: 'var(--project-primary)',
                 fill: `url(#${id})`,
               },
             ]),
@@ -105,9 +105,8 @@ export function MonthlyUpdateActivityChart({
             <CustomFillGradientDef
               id={id}
               colors={{
-                primary: 'var(--project-primary, var(--ecosystem-primary))',
-                secondary:
-                  'var(--project-secondary, var(--ecosystem-secondary))',
+                primary: 'var(--project-primary)',
+                secondary: 'var(--project-secondary)',
               }}
             />
           </defs>

@@ -30,6 +30,7 @@ export const wonder: ScalingProject = zkStackL2({
       documentation: ['https://docs.wonderchain.org'],
       explorers: ['https://explorer.mainnet.wonderchain.org'],
       socialMedia: ['https://x.com/WonderFiLabs'],
+      repositories: ['https://github.com/wonderfi-labs'],
     },
   },
   ecosystemInfo: {
@@ -44,7 +45,7 @@ export const wonder: ScalingProject = zkStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.mainnet.wonderchain.org',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

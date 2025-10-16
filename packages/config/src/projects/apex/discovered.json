@@ -1,8 +1,7 @@
 {
   "name": "apex",
   "timestamp": 1753200107,
-  "configHash": "0x642e49ddb0c8e5eefa09cc191ac32ce8751b09caba6315d2967a61c3aa2b0e3a",
-  "sharedModules": ["shared-sharp-verifier"],
+  "configHash": "0xd2c30f9d07f7c4b690528ad36d158f86a69e23af70e92157ff60ddc031adcdc0",
   "entries": [
     {
       "address": "eth:0x0cbb676d12745948f75aF3A172cb7E4A4f8546e8",
@@ -171,13 +170,13 @@
         {
           "permission": "interact",
           "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
+          "description": "manage supported tokens.",
           "role": ".tokenAdmins"
         },
         {
           "permission": "interact",
           "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
+          "description": "manage supported tokens.",
           "role": ".tokenAdmins"
         },
         {
@@ -426,6 +425,7 @@
       "name": "PerpetualEscapeVerifier",
       "address": "eth:0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD",
       "type": "Contract",
+      "template": "edgex/PerpetualEscapeVerifier",
       "sourceHashes": [
         "0xb56ab8d20ca2ce7897c0448957f5ad2bb634a2019411b1cb0453afe5c86f4f5f"
       ],
@@ -1361,11 +1361,12 @@
     ]
   },
   "usedTemplates": {
+    "edgex/PerpetualEscapeVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "starkex/Committee": "0xea8d2e95c84337933f471b8c21505791bd94685784b7e5c407f5e7045403a683",
     "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb",
     "starkex/StarkPerpetual": "0x2c320b80005728ab66e5a80a93fb2a160ce7cd11e884bbe1e399562c8b0c52d6"
   },
   "usedBlockNumbers": { "ethereum": 22975778 },
-  "permissionsConfigHash": "0x51d0c069f3a382afcd94612deb8d8dfd39375c1676565b3c1e9d03f380ccc9ea"
+  "permissionsConfigHash": "0xab89baaf22c3f23669a66dac9bed4ea968196c4f58d4ec78c38314a584ee0010"
 }

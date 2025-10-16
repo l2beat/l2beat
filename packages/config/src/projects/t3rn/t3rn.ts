@@ -26,6 +26,7 @@ export const t3rn: ScalingProject = underReviewL3({
       bridges: ['https://bridge.t3rn.io/'],
       documentation: ['https://docs.t3rn.io/'],
       explorers: ['https://explorer.t3rn.io/'],
+      repositories: ['https://github.com/t3rn'],
       socialMedia: ['https://x.com/t3rn_io', 'https://github.com/t3rn/t3rn'],
     },
   },
@@ -41,7 +42,7 @@ export const t3rn: ScalingProject = underReviewL3({
       {
         type: 'rpc',
         url: 'https://rpc.t3rn.io/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

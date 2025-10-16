@@ -3139,6 +3139,20 @@
       "supply": "zero"
     },
     {
+      "name": "Linea",
+      "coingeckoId": "linea",
+      "address": "0x1789e0043623282D5DCc7F213d703C6D8BAfBB04",
+      "symbol": "LINEA",
+      "decimals": 18,
+      "deploymentTimestamp": 1753892339,
+      "coingeckoListingTimestamp": 1757548800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68507/large/linea-logo.jpeg?1756025484",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Liquid Staked ETH",
       "coingeckoId": "liquid-staked-ethereum",
       "address": "0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549",
@@ -4379,7 +4393,7 @@
       "deploymentTimestamp": 1698224783,
       "coingeckoListingTimestamp": 1698192000,
       "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/32440/large/polygon.png?1698233684",
+      "iconUrl": "/images/custom-tokens/polygon-ecosystem-token.png",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -6908,7 +6922,7 @@
       "deploymentTimestamp": 1650979836,
       "coingeckoListingTimestamp": 1653955200,
       "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/25244/large/Optimism.png?1696524385",
+      "iconUrl": "/images/custom-tokens/optimism.png",
       "chainId": 10,
       "source": "native",
       "supply": "circulatingSupply"
@@ -7303,6 +7317,28 @@
       "supply": "zero"
     },
     {
+      "name": "HYPE",
+      "coingeckoId": "hyperliquid",
+      "address": "0x15D0e0c55a3E7eE67152aD7E89acf164253Ff68d",
+      "symbol": "HYPE",
+      "decimals": 18,
+      "deploymentTimestamp": 1754494758,
+      "coingeckoListingTimestamp": 1732838400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50882/large/hyperliquid.jpg?1729431300",
+      "chainId": 130,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
       "name": "KelpDao Restaked ETH",
       "coingeckoId": "kelp-dao-restaked-eth",
       "address": "0xc3eACf0612346366Db554C991D7858716db09f58",
@@ -7494,6 +7530,28 @@
           {
             "name": "Layer Zero v2 OFT",
             "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wrapped SOL",
+      "coingeckoId": "solana",
+      "address": "0xbdE8A5331E8Ac4831cf8ea9e42e229219EafaB97",
+      "symbol": "SOL",
+      "decimals": 9,
+      "deploymentTimestamp": 1754451932,
+      "coingeckoListingTimestamp": 1586563200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/4128/large/solana.png?1718769756",
+      "chainId": 130,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole Token Bridge",
+            "slug": "portal"
           }
         ]
       }
@@ -15084,7 +15142,7 @@
     },
     {
       "name": "AUSD",
-      "coingeckoId": "agora-ausd-katana",
+      "coingeckoId": "agora-dollar",
       "address": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
       "symbol": "AUSD",
       "decimals": 6,
@@ -15092,6 +15150,20 @@
       "coingeckoListingTimestamp": 1751587200,
       "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/67047/large/ausd.png?1751587801",
+      "chainId": 747474,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Bitcoin on Katana",
+      "coingeckoId": "bitcoin-on-katana",
+      "address": "0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
+      "symbol": "BTCK",
+      "decimals": 8,
+      "deploymentTimestamp": 1750956714,
+      "coingeckoListingTimestamp": 1755216000,
+      "category": "btc",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68287/large/btc.png?1755248096",
       "chainId": 747474,
       "source": "native",
       "supply": "totalSupply"

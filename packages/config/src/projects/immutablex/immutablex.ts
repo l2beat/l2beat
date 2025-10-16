@@ -16,6 +16,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatDelay } from '../../common/formatDelays'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getCommittee,
@@ -51,6 +52,11 @@ const requiredHonestMembersPercentage = (
     committeePermission.accounts.length) *
   100
 ).toFixed(0)
+
+const immutablexProgramHash = discovery.getContractValue<string>(
+  'GpsFactRegistryAdapter',
+  'programHash',
+)
 
 export const immutablex: ScalingProject = {
   type: 'layer2',
@@ -156,6 +162,7 @@ export const immutablex: ScalingProject = {
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
+    zkProgramHashes: [ZK_PROGRAM_HASHES(immutablexProgramHash)],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

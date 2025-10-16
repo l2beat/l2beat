@@ -8,5 +8,10 @@
     "hash": "0xb1264cdbc9eb25c5d5f9542dc05d942009b4443379d97b246c66b11e2319215f",
     "address": "oeth:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010",
     "blockNumber": 134041720
+  },
+  "L2StandardBridge_metis": {
+    "hash": "0xec15e64d5345789159e9fb658ab69ff8946319ab8a657844e6e64be92a01f0d5",
+    "address": "metis-andromeda:0x4200000000000000000000000000000000000010",
+    "blockNumber": 21196848
   }
 }

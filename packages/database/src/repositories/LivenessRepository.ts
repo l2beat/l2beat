@@ -31,40 +31,6 @@ export class LivenessRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByConfigurationIdSince(
-    configurationIds: TrackedTxId[],
-    since: UnixTime,
-  ): Promise<LivenessRecord[]> {
-    if (configurationIds.length === 0) return []
-
-    const rows = await this.db
-      .selectFrom('Liveness')
-      .selectAll()
-      .where('configurationId', 'in', configurationIds)
-      .where('timestamp', '>=', UnixTime.toDate(since))
-      .distinctOn(['timestamp', 'configurationId'])
-      .orderBy('timestamp', 'desc')
-      .execute()
-    return rows.map(toRecord)
-  }
-
-  async getByConfigurationIdUpTo(
-    configurationIds: TrackedTxId[],
-    to: UnixTime,
-  ): Promise<LivenessRecord[]> {
-    if (configurationIds.length === 0) return []
-
-    const rows = await this.db
-      .selectFrom('Liveness')
-      .selectAll()
-      .where('configurationId', 'in', configurationIds)
-      .where('timestamp', '<', UnixTime.toDate(to))
-      .distinctOn(['timestamp', 'configurationId'])
-      .orderBy('timestamp', 'desc')
-      .execute()
-    return rows.map(toRecord)
-  }
-
   async getByConfigurationIdWithinTimeRange(
     configurationIds: string[],
     from: UnixTime,
@@ -79,8 +45,6 @@ export class LivenessRepository extends BaseRepository {
       .where('configurationId', 'in', configurationIds)
       .where('timestamp', '>=', UnixTime.toDate(from))
       .where('timestamp', '<', UnixTime.toDate(to))
-      .distinctOn(['timestamp', 'configurationId'])
-      .orderBy('timestamp', 'desc')
       .execute()
     return rows.map(toRecord)
   }
@@ -122,8 +86,6 @@ export class LivenessRepository extends BaseRepository {
         .where('configurationId', 'in', configurationIds)
         .where('timestamp', '>=', UnixTime.toDate(from))
         .where('timestamp', '<', UnixTime.toDate(to))
-        .distinctOn(['timestamp', 'configurationId'])
-        .orderBy('timestamp', 'desc')
         .execute(),
     ])
 

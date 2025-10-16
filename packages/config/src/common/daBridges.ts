@@ -56,6 +56,22 @@ const PLASMA: DaProjectTableValue = {
     'Data is not posted to Ethereum but to a plasma chain. There is a guarantee that if data is unavailable you can still exit using latest available state root.',
 }
 
+const TEE_BRIDGE: DaProjectTableValue = {
+  value: 'TEE Bridge',
+  sentiment: 'bad',
+  description:
+    'The TEE Bridge is used to attest to the data availability on the DA layer by using a program running in a Trusted Execution Environment (TEE).',
+  projectId: ProjectId('tee-bridge'),
+}
+
+const HOTSHOT_LIGHT_CLIENT: DaProjectTableValue = {
+  value: 'HotShot Light Client',
+  sentiment: 'warning',
+  description:
+    'The HotShot Light Client is used to attest to the data availability on Espresso.',
+  projectId: ProjectId('espresso'),
+}
+
 function DAC_MEMBERS({
   requiredSignatures,
   membersCount,
@@ -111,4 +127,6 @@ export const DA_BRIDGES = {
   STAKED_OPERATORS,
   SELF_ATTESTED_INTMAX,
   PLASMA,
+  TEE_BRIDGE,
+  HOTSHOT_LIGHT_CLIENT,
 }

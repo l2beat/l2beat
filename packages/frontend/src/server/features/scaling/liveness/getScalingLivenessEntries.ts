@@ -13,7 +13,7 @@ import type { ProjectsChangeReport } from '../../projects-change-report/getProje
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
-import { getProjectsLatestTvsUsd } from '../tvs/getLatestTvsUsd'
+import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { compareTvs } from '../tvs/utils/compareTvs'
 import { getLiveness } from './getLiveness'
 import type { LivenessAnomaly, LivenessProject } from './types'
@@ -27,7 +27,7 @@ import {
 export async function getScalingLivenessEntries() {
   const [tvs, projectsChangeReport, liveness, projects, zkCatalogProjects] =
     await Promise.all([
-      getProjectsLatestTvsUsd(),
+      get7dTvsBreakdown({ type: 'layer2' }),
       getProjectsChangeReport(),
       getLiveness(),
       ps.getProjects({
@@ -53,7 +53,7 @@ export async function getScalingLivenessEntries() {
         project,
         projectsChangeReport,
         liveness[project.id.toString()],
-        tvs[project.id],
+        tvs.projects[project.id]?.breakdown.total,
         zkCatalogProjects,
       ),
     )
@@ -70,7 +70,7 @@ export interface ScalingLivenessEntry extends CommonScalingEntry {
   data: LivenessData
   explanation: string | undefined
   anomalies: LivenessAnomaly[]
-  dataAvailabilityMode: TableReadyValue | undefined
+  dataAvailabilityMode: TableReadyValue[] | undefined
   hasTrackedContractsChanged: boolean
   tvsOrder: number
 }
@@ -118,13 +118,13 @@ function getScalingLivenessEntry(
     data,
     explanation: project.livenessInfo?.explanation,
     anomalies: liveness.anomalies,
-    dataAvailabilityMode: project.scalingDa?.mode,
+    dataAvailabilityMode: project.scalingDa?.map((da) => da.mode),
     tvsOrder: tvs ?? -1,
     hasTrackedContractsChanged,
   }
 }
 
-function getLowestSyncedUntil(liveness: LivenessProject): UnixTime {
+export function getLowestSyncedUntil(liveness: LivenessProject): UnixTime {
   let lowestSyncedUntil = UnixTime.now()
 
   for (const subtype of TrackedTxsConfigSubtypeValues) {

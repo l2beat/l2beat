@@ -1,4 +1,55 @@
-Generated with discovered.json: 0x7b26f2123f33a11889c4862fc18d2939053d8887
+Generated with discovered.json: 0x71c2f25f376cbf93fafd2f48a557a8366f415daf
+
+# Diff at Sun, 12 Oct 2025 22:14:34 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@be19e15e05865ff8c557a70a542cd8d359ce8e39 block: 1729850135
+- current timestamp: 1760307209
+
+## Description
+
+Changed batcher and proposer.
+
+L2OutputOracle — same code, implementation upgraded to change PROPOSER  
+https://disco.l2beat.com/diff/eth:0x5Fe6BFbb2C2c78c0baF0bFbb86420903E2E9f8a5/eth:0xc451292a72a4bA2B34c4295c7Df58cE7d45F5d30
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x80e73D6BfC73c567032304C3891a06c2d9954d09) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.batcherHash:
+-        "eth:0x0244f7204b9c554306053Cc557e14D6Cbd40a33C"
++        "eth:0xC180574374b8FdE9C5b40E0d5D34946b228b7316"
+    }
+```
+
+```diff
+    contract L2OutputOracle (eth:0xE6f24d2C32B3109B18ed33cF08eFb490b1e09C10) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$implementation:
+-        "eth:0x5Fe6BFbb2C2c78c0baF0bFbb86420903E2E9f8a5"
++        "eth:0xc451292a72a4bA2B34c4295c7Df58cE7d45F5d30"
+      values.$pastUpgrades.1:
++        ["2025-10-09T08:59:47.000Z","0xef115941c77982c1142c03cdc3e41e8060a6c169d64deadd1d4eee73248cd353",["eth:0xc451292a72a4bA2B34c4295c7Df58cE7d45F5d30"]]
+      values.$upgradeCount:
+-        1
++        2
++++ severity: HIGH
+      values.proposer:
+-        "eth:0x0016b6bacD56a0D1DaFdA52d06B7eFe65AA0816a"
++        "eth:0xa5CB506D2de132006204183E2f1869575cA646Bd"
+      values.PROPOSER:
+-        "eth:0x0016b6bacD56a0D1DaFdA52d06B7eFe65AA0816a"
++        "eth:0xa5CB506D2de132006204183E2f1869575cA646Bd"
+      implementationNames.eth:0x5Fe6BFbb2C2c78c0baF0bFbb86420903E2E9f8a5:
+-        "L2OutputOracle"
+      implementationNames.eth:0xc451292a72a4bA2B34c4295c7Df58cE7d45F5d30:
++        "L2OutputOracle"
+    }
+```
+
+Generated with discovered.json: 0xc8f395d7ff246190799de791de2b1b4814af7ace
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
 

@@ -4,7 +4,7 @@ import { env } from '~/env'
 import { InMemoryCache } from './InMemoryCache'
 
 describe(InMemoryCache.name, () => {
-  let DEPLOYMENT_ENV: 'preview' | 'production' | undefined
+  let DEPLOYMENT_ENV: 'preview' | 'staging' | 'production' | undefined
 
   before(() => {
     DEPLOYMENT_ENV = env.DEPLOYMENT_ENV

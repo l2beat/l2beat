@@ -21,20 +21,22 @@ export const mantapacific: ScalingProject = opStackL2({
     description:
       'Manta Pacific is an Optimium empowering EVM-native zero-knowledge (ZK) applications and general dapps.',
     links: {
-      websites: ['https://pacific.manta.network/'],
+      websites: ['https://manta.network/'],
       bridges: ['https://pacific-bridge.manta.network/'],
       documentation: ['https://docs.manta.network/'],
       explorers: [
         'https://pacific-explorer.manta.network/',
-        'https://169.routescan.io/',
+        'https://manta.socialscan.io/',
       ],
       repositories: ['https://github.com/Manta-Network'],
       socialMedia: [
         'https://discord.gg/mantanetwork',
         'https://twitter.com/MantaNetwork',
-        'https://medium.com/@mantanetwork',
+        'https://mantanetwork.medium.com/',
+        'https://t.me/mantanetworkofficial',
       ],
     },
+    architectureImage: 'mantapacific',
   },
   activityConfig: {
     type: 'block',
@@ -72,7 +74,7 @@ export const mantapacific: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://pacific-rpc.manta.network/http',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       { type: 'blockscout', url: 'https://pacific-explorer.manta.network/api' },
     ],
@@ -88,5 +90,5 @@ export const mantapacific: ScalingProject = opStackL2({
       type: 'general',
     },
   ],
-  additionalBadges: [BADGES.DA.Celestia, BADGES.RaaS.Caldera],
+  additionalBadges: [BADGES.RaaS.Caldera],
 })

@@ -1,4 +1,34 @@
-Generated with discovered.json: 0xd229e4de3bec5dc9eeb359e94a531edd59ed4683
+Generated with discovered.json: 0xeee1cb88f407f80dd40d299d898e0fb049e169aa
+
+# Diff at Mon, 06 Oct 2025 13:15:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e58bd9f0913161b35e2a2c65f233464591d4f28b block: 1758795594
+- current timestamp: 1759756433
+
+## Description
+
+Config: formatSeconds change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758795594 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h. Additionally, users can 'escape' their funds after 1mo of no state updates by supplying merkle proofs or using a resolver.
+      description:
+-        "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h. Additionally, users can 'escape' their funds after 30d of no state updates by supplying merkle proofs or using a resolver."
++        "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h. Additionally, users can 'escape' their funds after 1mo of no state updates by supplying merkle proofs or using a resolver."
+      values.timeLimitOutputRootSubmissionSecondsFmt:
+-        "30d"
++        "1mo"
+    }
+```
+
+Generated with discovered.json: 0xf4401355c7bb0c0970ef5845c5d4e6f282b0c898
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
 

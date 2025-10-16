@@ -14,6 +14,7 @@ import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import { cn } from '~/utils/cn'
 import type { VerificationStatus } from '~/utils/project/contracts-and-permissions/toVerificationStatus'
+import { type PastUpgradesData, PastUpgradesDialog } from './PastUpgradesDialog'
 import type { Participant } from './permissions/Participants'
 import { ParticipantsEntry } from './permissions/Participants'
 import { UpgradeConsiderations } from './permissions/UpgradeConsiderations'
@@ -22,6 +23,7 @@ import { UsedInProjectEntry } from './permissions/UsedInProject'
 import { ReferenceList } from './ReferenceList'
 
 export interface TechnologyContract {
+  id: string
   name: string
   addresses: TechnologyContractAddress[]
   admins: TechnologyContractAddress[]
@@ -34,6 +36,7 @@ export interface TechnologyContract {
   upgradeConsiderations?: string
   references: ReferenceLink[]
   impactfulChange: boolean
+  pastUpgrades?: PastUpgradesData
 }
 
 export interface TechnologyContractAddress {
@@ -71,7 +74,7 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
         <>
           <div className="flex flex-wrap items-center gap-x-2 text-paragraph-15 md:text-paragraph-16">
             <strong
-              id={contract.name}
+              id={contract.id}
               className="word-break-word scroll-mt-14 md:scroll-mt-10"
             >
               {contract.name}
@@ -103,6 +106,10 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
               </HighlightableLink>
             ))}
           </div>
+          {contract.pastUpgrades?.upgrades &&
+            contract.pastUpgrades.upgrades.length > 0 && (
+              <PastUpgradesDialog pastUpgrades={contract.pastUpgrades} />
+            )}
           {contract.description && (
             <Markdown className="word-break-word mt-2 text-paragraph-15 md:text-paragraph-16">
               {contract.description}
@@ -116,7 +123,7 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
                   <a
                     key={entry.name}
                     className={linkVariants()}
-                    href={`#${entry.name}`}
+                    href={`#${entry.id ?? entry.name}`}
                   >
                     {`${entry.name} with ${entry.delay} delay`}
                   </a>

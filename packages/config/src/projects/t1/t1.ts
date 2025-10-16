@@ -21,6 +21,7 @@ export const t1: ScalingProject = upcomingL2({
         'https://x.com/t1protocol',
         'https://discord.com/invite/nbvyXZHgke',
       ],
+      bridges: ['https://t1protocol.com/bridge'],
     },
   },
   proofSystem: {

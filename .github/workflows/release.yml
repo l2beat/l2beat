@@ -9,6 +9,7 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       # Give the default GITHUB_TOKEN write permission to commit and push the changed files back to the repository.
       contents: write

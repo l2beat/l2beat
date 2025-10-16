@@ -1,3 +1,83 @@
+Generated with discovered.json: 0x4f1e60233f231ad10c803244fd349661d0a29522
+
+# Diff at Tue, 30 Sep 2025 16:39:37 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c66a02d28b2467edd595f8a8468988549dd6d3cf block: 1757326876
+- current timestamp: 1759250312
+
+## Description
+
+Operator fee decrease, multisig key rotation.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.operatorFeeConstant:
+-        45000000000000
++        15000000000000
+    }
+```
+
+```diff
+    contract Bob Multisig 1 (eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628"
++        "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757326876 (main branch discovery), not current.
+
+```diff
+    contract KailuaTreasury (eth:0x0e4152204995877DF34BD26d6dab78baf9393Ae2) {
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 1mo.
+      description:
+-        "Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 30d."
++        "Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 1mo."
+      values.vanguardAdvantageFmt:
+-        "30d"
++        "1mo"
+    }
+```
+
+Generated with discovered.json: 0x4a53fe1d5dab613b7c3e899566488a5bf3bc6145
+
+# Diff at Mon, 15 Sep 2025 09:50:20 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@37882e40cb6029f3a2ae2bb177048e3e846b833d block: 1757326876
+- current timestamp: 1757326876
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757326876 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.gameImpls.2:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.gameImpls.3:
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x3f37f2651510da90fad2308d2b2c13c7f8389cf4
 
 # Diff at Mon, 08 Sep 2025 10:22:22 GMT:

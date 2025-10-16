@@ -2,11 +2,14 @@ import type { Project } from '@l2beat/config'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
+import { getLiveness } from '~/server/features/scaling/liveness/getLiveness'
+import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
+import { getLivenessSection } from '~/utils/project/liveness/getLivenessSection'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/toTechnologyRisk'
 import { getDaProjectRiskSummarySection } from './getDaProjectRiskSummarySection'
 import { getDaThroughputSection } from './getDaThroughputSection'
@@ -17,7 +20,14 @@ type RegularDetailsParams = {
     'milestones' | 'isUpcoming'
   >
   bridge:
-    | Project<'daBridge' | 'display', 'contracts' | 'permissions'>
+    | Project<
+        'daBridge' | 'display',
+        | 'contracts'
+        | 'permissions'
+        | 'trackedTxsConfig'
+        | 'livenessConfig'
+        | 'archivedAt'
+      >
     | undefined
   isVerified: boolean
   projectsChangeReport: ProjectsChangeReport
@@ -35,10 +45,25 @@ export async function getRegularDaProjectSections({
   bridgeGrissiniValues,
   helpers,
 }: RegularDetailsParams) {
-  const [contractUtils, throughputSection] = await Promise.all([
+  const [
+    contractUtils,
+    throughputSection,
+    liveness,
+    allProjectsWithContracts,
+    zkCatalogProjects,
+  ] = await Promise.all([
     getContractUtils(),
     getDaThroughputSection(helpers, layer),
+    bridge ? getLiveness(bridge.id) : undefined,
+    ps.getProjects({
+      select: ['contracts'],
+    }),
+    ps.getProjects({
+      select: ['zkCatalogInfo'],
+    }),
   ])
+
+  const projectLiveness = bridge ? liveness?.[bridge.id] : undefined
 
   const permissionsSection =
     bridge?.permissions &&
@@ -64,6 +89,8 @@ export async function getRegularDaProjectSections({
       },
       contractUtils,
       projectsChangeReport,
+      zkCatalogProjects,
+      allProjectsWithContracts,
     )
 
   const riskSummarySection = getDaProjectRiskSummarySection(
@@ -99,6 +126,30 @@ export async function getRegularDaProjectSections({
   })
 
   const daBridgeItems: ProjectDetailsSection[] = []
+
+  const livenessSection = bridge
+    ? await getLivenessSection(
+        helpers,
+        bridge,
+        projectLiveness,
+        projectsChangeReport.projects[bridge.id],
+      )
+    : undefined
+
+  if (livenessSection && bridge) {
+    daBridgeItems.push({
+      type: 'LivenessSection',
+      props: {
+        milestones: [],
+        project: bridge,
+        ...livenessSection,
+        id: 'da-bridge-liveness',
+        title: 'Liveness',
+        hideSubtypeSwitch: true,
+        isForDaBridge: true,
+      },
+    })
+  }
 
   daBridgeItems.push({
     type: 'GrissiniRiskAnalysisSection',

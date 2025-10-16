@@ -1,3 +1,154 @@
+Generated with discovered.json: 0x01744352da0fc56d51e0a24c28ba58a7031b3b98
+
+# Diff at Fri, 03 Oct 2025 09:06:04 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@e647409961cd173771dcfcaeb808991c99e73911 block: 1759157870
+- current timestamp: 1759482296
+
+## Description
+
+Period format change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759157870 (main branch discovery), not current.
+
+```diff
+    contract LivenessModule (eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
+    +++ description: used to remove members inactive for 3mo 8d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+      description:
+-        "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig"
++        "used to remove members inactive for 3mo 8d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig"
+      values.livenessInterval:
+-        "98d"
++        "3mo 8d"
+    }
+```
+
+```diff
+    contract LivenessGuard (eth:0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.
+      receivedPermissions.0.description:
+-        "can remove members of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 98d."
++        "can remove members of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 3mo 8d."
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      values.pauseExpiryFmt:
+-        "91d 6h"
++        "3mo 1d"
+    }
+```
+
+Generated with discovered.json: 0x6decf12b6b7914110b56f8ae6904c83a8f67383b
+
+# Diff at Mon, 29 Sep 2025 14:58:54 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c66a02d28b2467edd595f8a8468988549dd6d3cf block: 1758287214
+- current timestamp: 1759157870
+
+## Description
+
+Gas limit increase.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        70000000
++        80000000
+    }
+```
+
+Generated with discovered.json: 0xb65455706e7528250815c4cb190288c5487c0760
+
+# Diff at Fri, 19 Sep 2025 13:07:59 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a930e518d214c15603feeda62e2a483dbd2454e0 block: 1757939471
+- current timestamp: 1758287214
+
+## Description
+
+Multisig key rotation.
+
+## Watched changes
+
+```diff
+    contract Alchemy Multisig 1 (eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xCA730AFfb87935E70E5889418C731eb196237476"
++        "eth:0xa3353Ae4458F663f1F888705b044269bd30cd110"
+    }
+```
+
+Generated with discovered.json: 0x31ad5e167e7816cc47887137eb1d5bd429f41fe0
+
+# Diff at Mon, 15 Sep 2025 12:32:21 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@823103e23195ea5382f353da97a0232ffda42a10 block: 1757342364
+- current timestamp: 1757939471
+
+## Description
+
+Gas limit increase.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        50000000
++        70000000
+    }
+```
+
+Generated with discovered.json: 0xc8c16e8502d847a7e6a9f40338b7d6ed4ddcec75
+
+# Diff at Mon, 15 Sep 2025 09:50:59 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@37882e40cb6029f3a2ae2bb177048e3e846b833d block: 1757342364
+- current timestamp: 1757342364
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757342364 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x069c4c579671f8c120b1327a73217D01Ea2EC5ea) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.gameImpls.2:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.gameImpls.3:
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xcbec4e3fdc837aa5c892db56860599af069c5e2d
 
 # Diff at Mon, 08 Sep 2025 14:40:31 GMT:

@@ -1,4 +1,153 @@
-Generated with discovered.json: 0xb11c45c3d91e7c75789331a80a06bd07a84c08be
+Generated with discovered.json: 0xdf0a6975baa5a9b16816931d5ad3529a5dbd2f96
+
+# Diff at Mon, 13 Oct 2025 06:48:37 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@fe3c735ad76bcc6ebcc73f187993a692bfbc0eba block: 1759756767
+- current timestamp: 1759756767
+
+## Description
+
+Removed zkProver verifier from Lumia disco to clean up zk catalog entry.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759756767 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Verifier (eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+Generated with discovered.json: 0x97721b53fcc0be160f72335781f4f61e9d5e4897
+
+# Diff at Mon, 06 Oct 2025 13:20:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e58bd9f0913161b35e2a2c65f233464591d4f28b block: 1753192367
+- current timestamp: 1759756767
+
+## Description
+
+Lumia switches to pessimistic consensus, moving to OTHERS for now (same programVKey as XLayer).
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x258862dec9a77db57b398c441390783293E2a7A1) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8","description":"manage the members of the data availability committee and the threshold for valid commitments.","role":".owner"}
+      receivedPermissions.1.description:
+-        "set core system parameters like the trusted sequencer and manage forced transactions/batches."
++        "set the trusted sequencer address."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonDataCommittee (eth:0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8)
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+```
+
+```diff
+    EOA  (eth:0x8F2D2Da3044B0A1ea54Ee26F7fe376cD9ec4393F) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "must provide a signature for each pessimistic proof, attesting to a valid state transition."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    contract Validium (eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B) {
+    +++ description: System contract defining the prism logic. It only enforces bridge accounting (pessimistic) proofs and is otherwise kept minimal as the layer 2 state transitions are not proven.
+      template:
+-        "polygon-cdk/PolygonZkEVM"
++        "polygon-cdk/PolygonPessimisticConsensus"
+      sourceHashes.1:
+-        "0x78d1eb2b96633fb1f594ef672a3791fa85a077fe0cf415ef79d93bc9a2aebd9c"
++        "0x555aef5e938f2211fc99363d15a2fcb7a9dc24ee5154f0d6be32a136d7dfbdf7"
+      description:
+-        "The main system contract defining the prism Layer 2 logic. Entry point for sequencing batches."
++        "System contract defining the prism logic. It only enforces bridge accounting (pessimistic) proofs and is otherwise kept minimal as the layer 2 state transitions are not proven."
+      values.$implementation:
+-        "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
++        "eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B"
+      values.$pastUpgrades.2:
++        ["2025-10-02T11:35:35.000Z","0x4a9633f61bf7eacf4cfffefccc1e8a561fdaacfbed6470573463e28304b3906d",["eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.calculatePolPerForceBatch:
+-        0
+      values.dataAvailabilityProtocol:
+-        "eth:0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8"
+      values.GLOBAL_EXIT_ROOT_MANAGER_L2:
+-        "eth:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA"
+      values.INITIALIZE_TX_BRIDGE_LIST_LEN_LEN:
+-        249
+      values.INITIALIZE_TX_BRIDGE_PARAMS:
+-        "0x80808401c9c38094"
+      values.INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS:
+-        "0x80b9"
+      values.INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS_EMPTY_METADATA:
+-        "0x80b8"
+      values.INITIALIZE_TX_CONSTANT_BYTES:
+-        32
+      values.INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA:
+-        31
+      values.INITIALIZE_TX_DATA_LEN_EMPTY_METADATA:
+-        228
+      values.INITIALIZE_TX_EFFECTIVE_PERCENTAGE:
+-        "0xff"
+      values.isSequenceWithDataAvailabilityAllowed:
+-        false
+      values.SIGNATURE_INITIALIZE_TX_R:
+-        "0x00000000000000000000000000000000000000000000000000000005ca1ab1e0"
+      values.SIGNATURE_INITIALIZE_TX_S:
+-        "0x000000000000000000000000000000000000000000000000000000005ca1ab1e"
+      values.SIGNATURE_INITIALIZE_TX_V:
+-        27
+      values.TIMESTAMP_RANGE:
+-        36
++++ description: 0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)
+      values.CONSENSUS_TYPE:
++        0
+      values.getConsensusHash:
++        "0x2740986d6807b549ead363c0f4a6bb7b2d8b0a1c7bff3c1adac5274fb4efc14d"
+      fieldMeta.CONSENSUS_TYPE:
++        {"description":"0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)"}
+      implementationNames.eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F:
+-        "PolygonValidiumEtrog"
+      implementationNames.eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B:
++        "PolygonPessimisticConsensus"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (eth:0xb3F294dAEd917b33FFcC687DFfB8Cd77565FF54a)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../PolygonDataCommittee.sol => /dev/null          | 1254 ------------
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  695 -------
+ .../.flat@1753192367/ProxyAdmin.sol => /dev/null   |  147 --
+ .../.flat/Validium/PolygonPessimisticConsensus.sol |  845 +++++++++
+ .../Validium/PolygonValidiumEtrog.sol => /dev/null | 1996 --------------------
+ 5 files changed, 845 insertions(+), 4092 deletions(-)
+```
+
+Generated with discovered.json: 0x037af9c3e105150d47af2235a297d621e98c8dee
 
 # Diff at Wed, 03 Sep 2025 15:51:53 GMT:
 

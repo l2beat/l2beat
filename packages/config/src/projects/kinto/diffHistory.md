@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x1b18376d8b4d4f2de9dd7e54b7acddf3131bdafa
+
+# Diff at Fri, 26 Sep 2025 12:48:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec4b16fd723bf2a8625a616c4b3a1119ce79fb29 block: 1756898514
+- current timestamp: 1756898514
+
+## Description
+
+THIS DISCO WAS ARCHIVED: Kinto [sweeped all assets from the canonical bridge](https://etherscan.io/tx/0x3221f37f97d57bc47be2e17fe2be020d7fafbb22876a2ccb454ad586dec70c09) and [some socket vaults](https://app.blocksec.com/explorer/tx/eth/0x8fd5333f84e754ab23b3f973bebb2a669a767ec7b281fe7cd6f98a96aecb7cec), which were transfered to different Multisigs / EOAs. CVR frontend is up.
+No rediscovery was possible because the Kinto rpc is already down.
+
+Older update:
+add new celestia nitro wasmmoduleroot
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756898514 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d:
++        "Celestia Nitro ArbOS v40 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0x30e30174675f17935aae9f2e9d6eecea42855c62
 
 # Diff at Wed, 03 Sep 2025 11:23:13 GMT:

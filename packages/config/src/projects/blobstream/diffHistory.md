@@ -1,4 +1,49 @@
-Generated with discovered.json: 0x8717d08fca3eaf23ee0ac13fc456d17b510fd9da
+Generated with discovered.json: 0x3abffe99ba179e39c8eaca69f25dda0842c9f1f2
+
+# Diff at Thu, 09 Oct 2025 10:29:48 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@12129139e90294e347d7674255aee38ca0aef941 block: 1752069683
+- current timestamp: 1760005725
+
+## Description
+
+Change in config: renamed Blobstream contracts on different chains to correctly fetch program hashes from different chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752069683 (main branch discovery), not current.
+
+```diff
+    contract ArbitrumBlobstream (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      name:
+-        "Blobstream"
++        "ArbitrumBlobstream"
+    }
+```
+
+```diff
+    contract BaseBlobstream (base:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      name:
+-        "Blobstream"
++        "BaseBlobstream"
+    }
+```
+
+```diff
+    contract EthereumBlobstream (eth:0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      name:
+-        "Blobstream"
++        "EthereumBlobstream"
+    }
+```
+
+Generated with discovered.json: 0x51067f2912e433dd919eeea316306a9a22f7fc73
 
 # Diff at Wed, 03 Sep 2025 15:52:13 GMT:
 
@@ -633,7 +678,7 @@ Generated with discovered.json: 0x86e04d0f154d1a3fed8857314ba4feb9a7679626
 # Diff at Wed, 09 Jul 2025 15:10:15 GMT:
 
 - chain: ethereum
-- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - comparing to: main@b0f260a09a1907b9753f327752a82a61cb1f520e block: 22780026
 - current block number: 22882089
 
@@ -670,7 +715,7 @@ Generated with discovered.json: 0x0373f823e23888e4d7442a0deacdbab5dbd61cfd
 # Diff at Wed, 09 Jul 2025 15:10:14 GMT:
 
 - chain: arbitrum
-- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - comparing to: main@b0f260a09a1907b9753f327752a82a61cb1f520e block: 350984309
 - current block number: 355902087
 
@@ -707,7 +752,7 @@ Generated with discovered.json: 0x6f436f97d7d078850e7e8e1550d9a94cbab13314
 # Diff at Wed, 09 Jul 2025 15:10:14 GMT:
 
 - chain: base
-- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - comparing to: main@b0f260a09a1907b9753f327752a82a61cb1f520e block: 32023954
 - current block number: 32640167
 

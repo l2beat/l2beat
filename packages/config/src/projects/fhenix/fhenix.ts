@@ -16,6 +16,7 @@ export const fhenix: ScalingProject = upcomingL2({
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://fhenix.io/'],
+      bridges: ['https://bridge.helium.fhenix.zone'],
       documentation: ['https://cofhe-docs.fhenix.zone/'],
       repositories: ['https://github.com/orgs/FhenixProtocol/'],
       socialMedia: [

@@ -31,6 +31,7 @@
                     "new Arbitrum proxy",
                     "call implementation proxy",
                     "zkSync Lite proxy",
+                    "zkLighter proxy",
                     "zkSpace proxy",
                     "Eternal Storage proxy",
                     "Polygon Extension proxy",
@@ -90,6 +91,7 @@
                                 "hotValidatorHyperliquid",
                                 "coldValidatorHyperliquid",
                                 "acrossPropose",
+                                "validateLighter",
                                 "member",
                                 "act",
                                 "interact",
@@ -672,6 +674,15 @@
                               "mintingWithPermit": { "type": "boolean" }
                             },
                             "required": ["type"]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": { "const": "eventTrace" },
+                              "event": { "type": "string" },
+                              "function": { "type": "string" }
+                            },
+                            "required": ["type", "event", "function"]
                           }
                         ]
                       },
@@ -766,7 +777,7 @@
               "type": "object",
               "properties": {
                 "name": { "type": "string" },
-                "type": { "type": "string" },
+                "type": { "enum": ["Contract", "EOA"] },
                 "project": { "type": "string" },
                 "isLegacy": { "type": "boolean" }
               },

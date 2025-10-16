@@ -7,6 +7,7 @@ export const onchain: ScalingProject = underReviewL3({
   id: 'onchain',
   capability: 'universal',
   addedAt: UnixTime(1737469446), // 2025-01-21T14:24:03+00:00
+  archivedAt: UnixTime(1758284309),
   hostChain: ProjectId('base'),
   badges: [
     BADGES.RaaS.Conduit,
@@ -24,7 +25,7 @@ export const onchain: ScalingProject = underReviewL3({
     purposes: ['Gaming', 'Social'],
     links: {
       websites: ['https://onchaincoin.io/', 'https://portal.onchaincoin.io/'],
-      bridges: ['https://onchaingate.io/', 'https://t.me/onchaincoin_bot'],
+      bridges: ['https://t.me/onchaincoin_bot'],
       explorers: ['https://explorer.onchainpoints.xyz/'],
       socialMedia: [
         'https://x.com/onchaincoin',
@@ -45,7 +46,7 @@ export const onchain: ScalingProject = underReviewL3({
       {
         type: 'rpc',
         url: 'https://rpc.onchainpoints.xyz',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

@@ -10,10 +10,14 @@ const discovery = new ProjectDiscovery('celo')
 const chainId = 42220
 
 export const celo: ScalingProject = opStackL2({
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    isPartOfSuperchain: false,
+  },
   capability: 'universal',
   addedAt: UnixTime(1718876598), // '2024-06-20T09:43:18Z'
-  additionalBadges: [BADGES.Other.MigratedFromL1, BADGES.DA.EigenDA],
-  daProvider: EIGENDA_DA_PROVIDER,
+  additionalBadges: [BADGES.Other.MigratedFromL1],
+  daProvider: EIGENDA_DA_PROVIDER(false),
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,

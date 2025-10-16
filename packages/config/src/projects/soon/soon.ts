@@ -10,8 +10,8 @@ const discovery = new ProjectDiscovery('soon')
 export const soon: ScalingProject = opStackL2({
   addedAt: UnixTime(1726836904), // 2024-09-20T12:55:04Z
   discovery,
-  daProvider: EIGENDA_DA_PROVIDER,
-  additionalBadges: [BADGES.DA.EigenDA, BADGES.VM.SolanaVM],
+  daProvider: EIGENDA_DA_PROVIDER(false),
+  additionalBadges: [BADGES.VM.SolanaVM],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
@@ -63,7 +63,7 @@ export const soon: ScalingProject = opStackL2({
       {
         type: 'svm-rpc',
         url: 'https://rpc.mainnet.soo.network/rpc',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

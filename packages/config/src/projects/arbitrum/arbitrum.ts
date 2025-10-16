@@ -183,7 +183,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://arb1.arbitrum.io/rpc',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
       { type: 'etherscan', chainId },
       { type: 'blockscoutV2', url: 'https://arbitrum.blockscout.com/api/v2' },
@@ -196,6 +196,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
     l1TimelockDelay,
     treasuryTimelockDelay,
     l2TreasuryQuorumPercent,
+    challengeGracePeriodSeconds,
   ),
   nonTemplateContractRisks: [
     CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
@@ -339,6 +340,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
         l1TimelockDelay,
         challengeWindow * assumedBlockTime,
         l2TimelockDelay,
+        challengeGracePeriodSeconds,
       ),
     ],
   },

@@ -93,8 +93,9 @@ export const scalingSummaryColumns = [
       },
       meta: {
         align: 'right',
+        cellClassName: 'pl-3',
         tooltip:
-          'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens.',
+          'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7D ago.',
       },
     },
   ),
@@ -121,7 +122,8 @@ export const scalingSummaryColumns = [
     sortUndefined: 'last',
     meta: {
       align: 'right',
-      tooltip: 'User operations per second averaged over the past day.',
+      tooltip:
+        'User operations per second averaged over the past day, shown together with a percentage changed compared to 7D ago.',
     },
   }),
 ]
@@ -131,7 +133,7 @@ export const scalingSummaryValidiumAndOptimiumsColumns = [
   columnHelper.display({
     header: 'DA Layer',
     cell: (ctx) => {
-      const latestValue = ctx.row.original.dataAvailability
+      const latestValue = ctx.row.original.dataAvailability?.[0]
       if (!latestValue) {
         return <NoDataBadge />
       }
@@ -147,6 +149,24 @@ export const scalingSummaryValidiumAndOptimiumsColumns = [
           href={`/scaling/data-availability?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
         />
       )
+    },
+    meta: {
+      cellClassName: 'pl-3',
+      additionalRows: (ctx) => {
+        return (
+          ctx.row.original.dataAvailability?.slice(1).map((da) => (
+            <TableValueCell
+              key={da.layer.value}
+              value={{
+                ...da.layer,
+                secondLine:
+                  da.bridge.value === 'None' ? 'No bridge' : da.bridge.value,
+              }}
+              href={`/scaling/data-availability?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+            />
+          )) ?? []
+        )
+      },
     },
   }),
   ...scalingSummaryColumns.slice(6),
@@ -172,6 +192,9 @@ export const scalingSummaryOthersColumns = [
                 </Badge>
               </TooltipTrigger>
               <TooltipContent>
+                {reason.explanation && (
+                  <p className="mb-0.5">{reason.explanation}</p>
+                )}
                 <p>{reason.description}</p>
               </TooltipContent>
             </Tooltip>

@@ -64,7 +64,7 @@ export const kroma: ScalingProject = {
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     redWarning:
-      'Kroma will shut down on June 30, 2025. Users must withdraw their funds before that date. After this date, funds retrieval is not guaranteed. See [announcement](https://x.com/kroma_network/status/1936692354603520198) for details.',
+      'Kroma shut down on June 30, 2025. After this date, funds retrieval is not guaranteed. See [announcement](https://x.com/kroma_network/status/1936692354603520198) for details.',
     name: 'Kroma',
     slug: 'kroma',
     description:
@@ -112,7 +112,7 @@ export const kroma: ScalingProject = {
     multicallContracts: [],
     sinceTimestamp: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
     apis: [
-      { type: 'rpc', url: 'https://api.kroma.network', callsPerMinute: 1500 },
+      { type: 'rpc', url: 'https://api.kroma.network', callsPerMinute: 300 },
       { type: 'etherscan', chainId },
     ],
   },

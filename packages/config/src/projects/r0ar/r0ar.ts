@@ -27,12 +27,13 @@ export const r0ar: ScalingProject = opStackL2({
       documentation: [],
       explorers: ['https://r0arscan.io/'],
       socialMedia: ['https://x.com/th3r0ar', 'https://t.me/r0ar_community'],
+      repositories: ['https://github.com/R0AR-Foundation'],
     },
   },
   chainConfig: {
     name: 'r0ar',
     chainId: 193939,
-    apis: [{ type: 'rpc', url: 'https://rpc-r0ar.io/', callsPerMinute: 1500 }],
+    apis: [{ type: 'rpc', url: 'https://rpc-r0ar.io/', callsPerMinute: 300 }],
   },
   activityConfig: {
     type: 'block',

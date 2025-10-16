@@ -6,7 +6,7 @@ import {
   type DiscoveryDiff,
   type DiscoveryOutput,
   diffDiscovery,
-  hashJsonStable,
+  generateStructureHash,
 } from '@l2beat/discovery'
 import { hashJson, sortObjectByKeys } from '@l2beat/shared'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
@@ -34,6 +34,7 @@ export class UpdateMonitor {
     private readonly discoveryOutputCache: DiscoveryOutputCache,
     private readonly logger: Logger,
     private readonly runOnStart: boolean,
+    private readonly disabledProjects: string[] = [],
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
@@ -66,8 +67,19 @@ export class UpdateMonitor {
       updateTargetDate: targetDateIso,
     })
 
-    const projects = this.configReader.readAllDiscoveredProjects()
-    for (const project of projects) {
+    const allProjects = this.configReader.readAllDiscoveredProjects()
+    const enabledProjects = allProjects.filter(
+      (project) => !this.disabledProjects.includes(project),
+    )
+
+    this.logger.info('Processing projects', {
+      total: allProjects.length,
+      enabled: enabledProjects.length,
+      disabled: this.disabledProjects.length,
+      disabledProjects: this.disabledProjects,
+    })
+
+    for (const project of enabledProjects) {
       await this.updateProject(this.runner, project, timestamp)
       await this.updateDiffer?.runForProject(project, timestamp)
     }
@@ -194,15 +206,7 @@ export class UpdateMonitor {
         timestamp,
         blockNumber: 0,
         discovery,
-        configHash: hashJsonStable(projectConfig.structure),
-      })
-
-      const chainUpdateEnd = UnixTime.now()
-      this.logger.info('Per-chain project update finished', {
-        project,
-        start: chainUpdateStart,
-        end: chainUpdateEnd,
-        duration: chainUpdateEnd - chainUpdateStart,
+        configHash: generateStructureHash(projectConfig.structure),
       })
     } catch (error) {
       errorCount.inc()
@@ -263,7 +267,8 @@ export class UpdateMonitor {
     const flatSourceTimestamp = flatSourceEntry?.timestamp ?? 0
     const onDiskDiscoveryChanged = diskDiscovery.timestamp > flatSourceTimestamp
     const onDiskConfigChanged =
-      databaseEntry?.configHash !== hashJsonStable(projectConfig.structure)
+      databaseEntry?.configHash !==
+      generateStructureHash(projectConfig.structure)
 
     let previousDiscovery: DiscoveryOutput
 

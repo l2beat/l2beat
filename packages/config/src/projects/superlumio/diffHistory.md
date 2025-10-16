@@ -1,3 +1,193 @@
+Generated with discovered.json: 0x5c77af62a2501597dcdb31663189ba0e67804bd4
+
+# Diff at Tue, 07 Oct 2025 09:46:42 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@5e88ba37ad7744f9d7831779a58849b5d00ec673 block: 1759480990
+- current timestamp: 1759830334
+
+## Description
+
+Changed proxy owner to EOA, now has EOA controls majority of permissions flag.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x4380709Fc7fd626ad17a63A1819F39A82978E3BF) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x9cF613c19371eFf26c94c0d4F62197d2C0ab60bc","description":"set and change address mappings.","role":".owner","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"eth:0x0225304877a2C700f8f03BC50344467FCf8271BF","role":"admin","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0x6c10d7e5750b21729Eb863Cf89E5b48850E6d97D","role":"admin","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"eth:0x9bF59F099d4306B52C7624c90B6d5FD75ab8513b","role":"admin","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"eth:0x9C93982cb4861311179aE216d1B7fD61232DE1f0","role":"admin","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"eth:0xccc6Fc5B866D34a7A4C40455a3cCfaa0cbFc145B","role":"admin","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"eth:0xdB5C6b73CB1c5875995a42D64C250BF8BC69a8bc","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","role":".$admin","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"eth:0xEe136B6087070d35D98b1bb1B33C3a00D907F0c1","role":"admin","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"eth:0xf8f9625a95b8fCbED76d1De537B71035997E44c8","role":"admin","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"eth:0xFb252d6199AEfeE6938a1c57213AAd96ecD2650c","role":"admin","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
+      controlsMajorityOfUpgradePermissions:
++        true
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9","role":".owner"}]
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"interact","from":"eth:0x9cF613c19371eFf26c94c0d4F62197d2C0ab60bc","description":"set and change address mappings.","role":".owner","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
+      receivedPermissions.4:
+-        {"permission":"upgrade","from":"eth:0x0225304877a2C700f8f03BC50344467FCf8271BF","role":"admin","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
+      receivedPermissions.6:
+-        {"permission":"upgrade","from":"eth:0x6c10d7e5750b21729Eb863Cf89E5b48850E6d97D","role":"admin","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
+      receivedPermissions.7:
+-        {"permission":"upgrade","from":"eth:0x9bF59F099d4306B52C7624c90B6d5FD75ab8513b","role":"admin","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
+      receivedPermissions.8:
+-        {"permission":"upgrade","from":"eth:0x9C93982cb4861311179aE216d1B7fD61232DE1f0","role":"admin","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
+      receivedPermissions.9:
+-        {"permission":"upgrade","from":"eth:0xccc6Fc5B866D34a7A4C40455a3cCfaa0cbFc145B","role":"admin","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
+      receivedPermissions.10:
+-        {"permission":"upgrade","from":"eth:0xdB5C6b73CB1c5875995a42D64C250BF8BC69a8bc","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","role":".$admin","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
+      receivedPermissions.11:
+-        {"permission":"upgrade","from":"eth:0xEe136B6087070d35D98b1bb1B33C3a00D907F0c1","role":"admin","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
+      receivedPermissions.12:
+-        {"permission":"upgrade","from":"eth:0xf8f9625a95b8fCbED76d1De537B71035997E44c8","role":"admin","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
+      receivedPermissions.13:
+-        {"permission":"upgrade","from":"eth:0xFb252d6199AEfeE6938a1c57213AAd96ecD2650c","role":"admin","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
+      directlyReceivedPermissions.0:
+-        {"permission":"act","from":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9","role":".owner"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9) {
+    +++ description: None
+      values.owner:
+-        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "eth:0x4380709Fc7fd626ad17a63A1819F39A82978E3BF"
+    }
+```
+
+Generated with discovered.json: 0x1b18974457e72fa8963b4fd405af511688e9cbd0
+
+# Diff at Fri, 03 Oct 2025 08:44:28 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@e647409961cd173771dcfcaeb808991c99e73911 block: 1758699366
+- current timestamp: 1759480990
+
+## Description
+
+Member removed from multisig.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 10 (40%)"
+    }
+```
+
+Generated with discovered.json: 0x51dbc16e2a5d7496a4fe29de4c2e9fc83d719aea
+
+# Diff at Wed, 24 Sep 2025 07:37:15 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@d7323b1d7fcd47448cd95a9f8ee7b4214e04c807 block: 1757661588
+- current timestamp: 1758699366
+
+## Description
+
+system config owner moved from conduit msig to EOA.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.4:
+-        {"permission":"interact","from":"eth:0xFb252d6199AEfeE6938a1c57213AAd96ecD2650c","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","role":".owner"}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xFb252d6199AEfeE6938a1c57213AAd96ecD2650c) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.owner:
+-        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "eth:0x4380709Fc7fd626ad17a63A1819F39A82978E3BF"
+    }
+```
+
+Generated with discovered.json: 0x707383f9a9a9af29e548d71ced465652a4747be0
+
+# Diff at Mon, 15 Sep 2025 09:50:55 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@37882e40cb6029f3a2ae2bb177048e3e846b833d block: 1757661588
+- current timestamp: 1757661588
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757661588 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0xEe136B6087070d35D98b1bb1B33C3a00D907F0c1) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.gameImpls.2:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.gameImpls.3:
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0xb4f3e55a7975b8e5eead1914bc76217112f4f406
+
+# Diff at Fri, 12 Sep 2025 07:20:54 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@b19dd572d1bb478c9bacfee5598e38f6eee363a0 block: 1756214657
+- current timestamp: 1757661588
+
+## Description
+
+gas fees increase.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0xFb252d6199AEfeE6938a1c57213AAd96ecD2650c) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.basefeeScalar:
+-        684000
++        3420000
+    }
+```
+
 Generated with discovered.json: 0x11fe1d2bc5deb9838e6abc3637c74bed010540d6
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

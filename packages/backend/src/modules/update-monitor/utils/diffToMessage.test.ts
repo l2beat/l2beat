@@ -91,7 +91,7 @@ describe('Discord message formatting', () => {
 
       const expected = [
         `***${name}*** | detected changes\n`,
-        wrapItalic('This is a shared module, used by the following projects:'),
+        wrapItalic('This module is referenced by the following projects:'),
         ' ',
         wrapBoldAndItalic('system1, system2.'),
         discoveryDiffToMarkdown(diff),

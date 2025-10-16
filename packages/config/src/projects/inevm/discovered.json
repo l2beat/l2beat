@@ -1,7 +1,7 @@
 {
   "name": "inevm",
-  "timestamp": 1753200951,
-  "configHash": "0xae499eeba83efb3be379ffe97a2dffd452a1bc4bf93c7c9f8d2d903ca6bafb2f",
+  "timestamp": 1760088296,
+  "configHash": "0xf3c0b2ddd8b93967c01dba12e5ceab75f2b064e3cb203019afe3ab5d9a61bdfa",
   "entries": [
     {
       "name": "CustomGateway",
@@ -165,7 +165,7 @@
         "allowedOutboxList": [
           "arb1:0x38Cb5EfbCb3e8783abbBb00210522586e79Ea1D8"
         ],
-        "delayedMessageCount": 8662,
+        "delayedMessageCount": 8710,
         "inboxHistory": [
           "arb1:0x1c37A831e405e2F3dd76eb8C9ecE483370D53AfE",
           "arb1:0xBB769cAfc77b8Eadbcdeb8FAAE7369F9df244754"
@@ -175,8 +175,8 @@
         "outboxHistory": ["arb1:0x38Cb5EfbCb3e8783abbBb00210522586e79Ea1D8"],
         "rollup": "arb1:0x60A85a4C9F8Bdb92FAaFdb4eC98Ce4F4173e213A",
         "sequencerInbox": "arb1:0x51a68C63669109BED585347B847c23DcA1cF9713",
-        "sequencerMessageCount": 14153,
-        "sequencerReportedSubMessageCount": 2436626
+        "sequencerMessageCount": 16060,
+        "sequencerReportedSubMessageCount": 2548089
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -201,11 +201,6 @@
         "arb1:0x487c44f484dbD5e7163D2FCE47fa1a5780446b46": "ERC20Bridge"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "address": "arb1:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Caldera",
@@ -312,7 +307,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 14153,
+        "batchCount": 16060,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": ["arb1:0x7dA2598c1AfCA5Cb0149904Cd55C7b08647e091a"],
         "bridge": "arb1:0x2Bb27ECb6531B8978E1aFe0288C2cbC6505Ff5b7",
@@ -342,7 +337,7 @@
         "rollup": "arb1:0x60A85a4C9F8Bdb92FAaFdb4eC98Ce4F4173e213A",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 8662,
+        "totalDelayedMessagesRead": 8710,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -411,13 +406,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 13092,
+        "firstUnresolvedNode": 14979,
         "inbox": "arb1:0x1c37A831e405e2F3dd76eb8C9ecE483370D53AfE",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 18938095,
-        "latestConfirmed": 13091,
-        "latestNodeCreated": 13241,
+        "latestConfirmed": 14978,
+        "latestNodeCreated": 15129,
         "loserStakeEscrow": "arb1:0xB2a5970fB30dc34AD65c914db855766ea62f1f41",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0x38Cb5EfbCb3e8783abbBb00210522586e79Ea1D8",
@@ -492,11 +487,17 @@
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
-            "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot"
+            "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
+            "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
           }
         }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "arb1:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "UpgradeExecutor",
@@ -720,7 +721,9 @@
         "$immutable": false,
         "$implementation": "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
-          "arb1:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675",
+          "arb1:0xe5219fe14E2FD520Ff80be036790913053d1575d",
+          "arb1:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A",
+          "arb1:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
           "arb1:0xc4548687682246e5B6ee8f914635c9f47836eDFe",
           "arb1:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b",
           "arb1:0xEC114946E7213d113c9B9481028271B5E9e09371",
@@ -732,8 +735,8 @@
         "domainSeparator": "0xeb75286128f8b958bb9a8db0f4f446758af4c721059060ccbd44ff0cb027027e",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 82,
+        "multisigThreshold": "3 of 9 (33%)",
+        "nonce": 94,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -816,6 +819,11 @@
         "arb1:0xa8Ae2ed62A978e2108a1C7CBfdb43a5CBfdd2aD0": "ChallengeManager"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "arb1:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "arb1:0xA3C66A73f98b6b9Ea0Ab3c2904e61D5499201ac7",
@@ -978,6 +986,11 @@
       "implementationNames": {
         "arb1:0xDAa72c39422ad709DDd609e12E75A13267474347": "ProxyAdmin"
       }
+    },
+    {
+      "address": "arb1:0xe5219fe14E2FD520Ff80be036790913053d1575d",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "arb1:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b",
@@ -1812,6 +1825,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 360432096 },
-  "permissionsConfigHash": "0x23ca0047aab82549041a3f9724a03c5c63ad448bcfd9d068db0d538f19d8e3fd"
+  "usedBlockNumbers": { "arbitrum": 388012288 },
+  "permissionsConfigHash": "0x7791cc0093320b9ec01f9d4557ee09b8b082e2988aef45930cb5b3b4272708ad"
 }

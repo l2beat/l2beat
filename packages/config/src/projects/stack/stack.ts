@@ -12,11 +12,7 @@ export const stack: ScalingProject = opStackL3({
   archivedAt: UnixTime(1744629590), // 2025-04-14T11:20:00.000Z
   hostChain: 'base',
   discovery,
-  additionalBadges: [
-    BADGES.DA.Celestia,
-    BADGES.L3ParentChain.Base,
-    BADGES.RaaS.Conduit,
-  ],
+  additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Conduit],
   additionalPurposes: ['Social'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -48,7 +44,7 @@ export const stack: ScalingProject = opStackL3({
       {
         type: 'rpc',
         url: 'https://rpc.stack.so',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

@@ -1,3 +1,63 @@
+Generated with discovered.json: 0x77701f39a79a42731801e050830ad5e9af2641e7
+
+# Diff at Fri, 10 Oct 2025 09:41:22 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a91384a270a047b2514885e053feff1edc24f495 block: 1758107952
+- current timestamp: 1760089209
+
+## Description
+
+Removed member from multisig.
+
+## Watched changes
+
+```diff
+    contract GnosisSafeL2 (scr:0x2B2A8546Df3B23535fffd75B4e312f3C5c7B4351) {
+    +++ description: None
+      values.$members.0:
+-        "scr:0xd5A0f3DfCe7128B7119462F7aC912616bB05b593"
+      values.$members.2:
+-        "scr:0x226A1669cd60A43e53030fD0A482Ea566d3Dba8B"
++        "scr:0x558581b0345D986bA5bD6f04Efd27e2a5B991320"
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "2 of 2 (100%)"
+    }
+```
+
+Generated with discovered.json: 0x8c5145b3a51cff9ce4b7aabb4a4d79c959a861b5
+
+# Diff at Wed, 17 Sep 2025 11:26:24 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@826dd36404e9c33731dc0255e96251d8d8999c20 block: 1756895025
+- current timestamp: 1758107952
+
+## Description
+
+Decoded function names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756895025 (main branch discovery), not current.
+
+```diff
+    contract ScrollOwner (scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.0xaa5e9334:
+-        ["ops-fast"]
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.0xc63b9e2d:
+-        ["ops-fast"]
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.setPenaltyThreshold(uint256):
++        ["ops-fast"]
+      values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.setPenaltyFactor(uint256):
++        ["ops-fast"]
+    }
+```
+
 Generated with discovered.json: 0x9c61971f9b4fd3a9f43779411130e6feb88165fa
 
 # Diff at Wed, 03 Sep 2025 10:26:23 GMT:

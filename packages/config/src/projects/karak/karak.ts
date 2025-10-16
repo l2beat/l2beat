@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('karak')
 export const karak: ScalingProject = opStackL2({
   addedAt: UnixTime(1687459278), // 2023-06-22T18:41:18Z
   daProvider: CELESTIA_DA_PROVIDER,
-  additionalBadges: [BADGES.DA.Celestia, BADGES.RaaS.Caldera],
+  additionalBadges: [BADGES.RaaS.Caldera],
   discovery,
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -37,7 +37,7 @@ export const karak: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.karak.network/',
-        callsPerMinute: 1500,
+        callsPerMinute: 300,
       },
     ],
   },

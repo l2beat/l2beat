@@ -1,4 +1,5 @@
 import type {
+  Project,
   ProjectContract,
   ProjectContracts,
   ProjectEscrow,
@@ -14,6 +15,8 @@ import type { TechnologyContract } from '../../../components/projects/sections/C
 import type { ContractsSectionProps } from '../../../components/projects/sections/contracts/ContractsSection'
 import { toTechnologyRisk } from '../risk-summary/toTechnologyRisk'
 import type { ContractUtils } from './getContractUtils'
+import { getPastUpgradesData } from './getPastUpgradesData'
+import { getZkProgramHashes } from './getZkProgramHashes'
 import { toVerificationStatus } from './toVerificationStatus'
 
 type ProjectParams = {
@@ -34,6 +37,8 @@ export function getContractsSection(
   projectParams: ProjectParams,
   contractUtils: ContractUtils,
   projectsChangeReport: ProjectsChangeReport,
+  zkCatalogProjects: Project<'zkCatalogInfo'>[],
+  allProjects: Project<'contracts'>[],
 ): ContractsSection | undefined {
   if (!projectParams.contracts) {
     return undefined
@@ -92,6 +97,11 @@ export function getContractsSection(
       projectParams.architectureImage ?? projectParams.slug,
     ),
     isUnderReview: projectParams.isUnderReview,
+    zkProgramHashes: getZkProgramHashes(
+      projectParams.contracts.zkProgramHashes,
+      zkCatalogProjects,
+      allProjects,
+    ),
   }
 }
 
@@ -216,6 +226,7 @@ function makeTechnologyContract(
   )
 
   return {
+    id: item.name,
     name: item.name,
     addresses,
     admins,
@@ -226,6 +237,7 @@ function makeTechnologyContract(
     impactfulChange,
     upgradeableBy: item.upgradableBy,
     upgradeConsiderations: item.upgradeConsiderations,
+    pastUpgrades: getPastUpgradesData(item.pastUpgrades, explorerUrl),
   }
 }
 

@@ -1,3 +1,104 @@
+Generated with discovered.json: 0xf19721cb662eadad3195972b90fe7be85c7dff4d
+
+# Diff at Thu, 02 Oct 2025 07:20:27 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@b1cfb9bd1821e27488215e4364f565cfd7d54c2e block: 1758286666
+- current timestamp: 1759389559
+
+## Description
+
+Period format change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758286666 (main branch discovery), not current.
+
+```diff
+    contract LivenessModule (eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
+    +++ description: used to remove members inactive for 3mo 8d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+      description:
+-        "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig"
++        "used to remove members inactive for 3mo 8d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig"
+      values.livenessInterval:
+-        "98d"
++        "3mo 8d"
+    }
+```
+
+```diff
+    contract LivenessGuard (eth:0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.
+      receivedPermissions.0.description:
+-        "can remove members of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 98d."
++        "can remove members of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 3mo 8d."
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      values.pauseExpiryFmt:
+-        "91d 6h"
++        "3mo 1d"
+    }
+```
+
+Generated with discovered.json: 0x86dfb4df731f28f59c29a279b7810053110d3d5e
+
+# Diff at Fri, 19 Sep 2025 12:58:50 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a930e518d214c15603feeda62e2a483dbd2454e0 block: 1755507657
+- current timestamp: 1758286666
+
+## Description
+
+Multisig key rotation.
+
+## Watched changes
+
+```diff
+    contract Alchemy Multisig 1 (eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xCA730AFfb87935E70E5889418C731eb196237476"
++        "eth:0xa3353Ae4458F663f1F888705b044269bd30cd110"
+    }
+```
+
+Generated with discovered.json: 0x4f6a0dabc0739db9b017b4fd58216c8d93667c67
+
+# Diff at Mon, 15 Sep 2025 09:50:32 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@37882e40cb6029f3a2ae2bb177048e3e846b833d block: 1755507657
+- current timestamp: 1755507657
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755507657 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0xde9FDA9C499bA1C0168AC083acF5BEc5cC67fA76) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.gameImpls.2:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.gameImpls.3:
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x8f5f83ace6cdce5c0b072edbf00a45a17a98532b
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

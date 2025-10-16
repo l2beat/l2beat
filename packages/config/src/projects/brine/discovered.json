@@ -1,8 +1,7 @@
 {
   "name": "brine",
   "timestamp": 1741185671,
-  "configHash": "0x8d1d8c0afa2fc75385db0e597230e43eec6154fd418a4bdd5a8e930b1b192c80",
-  "sharedModules": ["shared-sharp-verifier"],
+  "configHash": "0xa097295aab2304b01b73630fe55e3daa7c7cce3f4f8476116a7971215fab733d",
   "entries": [
     {
       "name": "StarkExchange",

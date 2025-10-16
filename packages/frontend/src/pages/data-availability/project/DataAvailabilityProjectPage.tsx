@@ -1,5 +1,6 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
+import { CssVariables } from '~/components/CssVariables'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
@@ -38,16 +39,16 @@ export function DataAvailabilityProjectPage({
           <div
             className="smooth-scroll group/section-wrapper relative z-0 max-md:bg-surface-primary"
             data-project-page
-            style={
-              entry.colors
-                ? ({
-                    '--project-primary': entry.colors.primary,
-                    '--project-secondary': entry.colors.secondary,
-                  } as React.CSSProperties)
-                : undefined
-            }
             data-has-colors={!!entry.colors}
           >
+            {entry.colors && (
+              <CssVariables
+                variables={{
+                  'project-primary': entry.colors.primary,
+                  'project-secondary': entry.colors.secondary,
+                }}
+              />
+            )}
             <div className="-z-1 -translate-y-2/5 fixed h-[1440px] w-[900px] translate-x-1/5 rotate-[30deg] bg-radial-[ellipse_closest-side_at_center] from-branding-primary via-25% via-branding-secondary to-transparent max-md:hidden" />
 
             {!isNavigationEmpty && (
@@ -58,7 +59,15 @@ export function DataAvailabilityProjectPage({
             <div className="relative z-0 max-md:bg-surface-primary">
               <div className="-z-1 absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-branding-primary/75 to-surface-primary md:hidden" />
               <div className="pt-6 max-md:px-4 lg:w-[calc(100%-196px)] lg:pt-4">
-                <ProjectHeader project={entry} />
+                <ProjectHeader
+                  project={entry}
+                  ongoingAnomaly={
+                    entry.entryType === 'common'
+                      ? entry.header.ongoingAnomaly
+                      : undefined
+                  }
+                  livenessSectionHref="#da-bridge-liveness"
+                />
                 <ProjectSummaryBars
                   project={{
                     archivedAt: entry.archivedAt,

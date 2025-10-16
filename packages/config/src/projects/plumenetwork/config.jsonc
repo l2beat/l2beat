@@ -6,6 +6,7 @@
     "eth:0x35381f63091926750F43b2A7401B083263aDEF83", // bridge
     "eth:0xE2C902BC61296531e556962ffC81A082b82f5F28" // ERC20Gateway
   ],
+  "sharedModules": ["shared-sp1", "blobstream"],
   "names": {
     "eth:0x35381f63091926750F43b2A7401B083263aDEF83": "Bridge"
   }

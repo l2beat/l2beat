@@ -1,5 +1,6 @@
 import { type Logger, RateLimiter } from '@l2beat/backend-tools'
 import {
+  AvailWsClient,
   BeaconChainClient,
   type BlockClient,
   BlockIndexerClient,
@@ -11,6 +12,7 @@ import {
   type LogsClient,
   LoopringClient,
   MulticallV3Client,
+  NearClient,
   PolkadotRpcClient,
   RpcClient,
   StarkexClient,
@@ -33,12 +35,15 @@ export interface Clients {
   coingecko: CoingeckoClient
   beacon: BeaconChainClient | undefined
   celestia: CelestiaRpcClient | undefined
+  celestiaDaBeat: CelestiaRpcClient | undefined
   avail: PolkadotRpcClient | undefined
+  availWs: AvailWsClient | undefined
   eigen: EigenApiClient | undefined
   getRpcClient: (chain: string) => RpcClient
   getStarknetClient: (chain: string) => StarknetClient
   rpcClients: RpcClient[]
   starknetClients: StarknetClient[]
+  near: NearClient | undefined
 }
 
 export function initClients(config: Config, logger: Logger): Clients {
@@ -50,7 +55,10 @@ export function initClients(config: Config, logger: Logger): Clients {
   let ethereumClient: RpcClient | undefined
   let beaconChainClient: BeaconChainClient | undefined
   let celestia: CelestiaRpcClient | undefined
+  let celestiaDaBeat: CelestiaRpcClient | undefined
   let avail: PolkadotRpcClient | undefined
+  let availWs: AvailWsClient | undefined
+  let near: NearClient | undefined
   let eigen: EigenApiClient | undefined
 
   const starknetClients: StarknetClient[] = []
@@ -257,6 +265,26 @@ export function initClients(config: Config, logger: Logger): Clients {
     })
   }
 
+  if (config.daBeat) {
+    near = new NearClient({
+      sourceName: 'near',
+      nearApiUrl: config.daBeat.nearRpcUrl,
+      http,
+      retryStrategy: 'RELIABLE',
+      logger,
+      callsPerMinute: 100,
+    })
+    celestiaDaBeat = new CelestiaRpcClient({
+      callsPerMinute: config.daBeat.celestiaCallsPerMinute,
+      url: config.daBeat.celestiaApiUrl,
+      retryStrategy: 'RELIABLE',
+      sourceName: 'celestia',
+      logger,
+      http,
+    })
+    availWs = new AvailWsClient(config.daBeat.availWsUrl)
+  }
+
   const getRpcClient = (chain: string) => {
     const client = rpcClients.find((r) => r.chain === chain)
     assert(client, `${chain}: Client not found`)
@@ -280,8 +308,11 @@ export function initClients(config: Config, logger: Logger): Clients {
     coingecko: coingeckoClient,
     beacon: beaconChainClient,
     celestia,
+    celestiaDaBeat,
     eigen,
     avail,
+    availWs,
+    near,
     getStarknetClient,
     getRpcClient,
     rpcClients,

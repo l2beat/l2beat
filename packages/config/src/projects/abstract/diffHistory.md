@@ -1,4 +1,27 @@
-Generated with discovered.json: 0xdf1529115015724dc99f97ed0af565240b846b51
+Generated with discovered.json: 0x5f76981481b5c9c3b883c7dc46d83bc1715a540e
+
+# Diff at Thu, 02 Oct 2025 10:08:26 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b23cca5eaec9eb1fac489dca92defc845d56598a block: 1755156245
+- current timestamp: 1759399643
+
+## Description
+
+Multisig rotation.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x325407EEC948b97429068AF0cd8A8D95F06315a4) {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x45CC620803974f13a0f1A11517685581FF098000"
++        "eth:0xFa700392b4B2223356401eDb1AA51665CC4bD9A4"
+    }
+```
+
+Generated with discovered.json: 0x0224b142d3a4aba7e13b084073cf96646823280d
 
 # Diff at Wed, 03 Sep 2025 15:51:48 GMT:
 

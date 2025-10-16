@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs'
+import type { Logger } from '@l2beat/backend-tools'
 import compression from 'compression'
 import timeout from 'connect-timeout'
 import express from 'express'
@@ -16,15 +17,14 @@ import { createLegacyPathsRouter } from './routers/LegacyPathsRouter'
 import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
 import { createPlausibleRouter } from './routers/PlausibleRouter'
 import { createTrpcRouter } from './routers/TrpcRouter'
-import { getLogger } from './utils/logger'
 
 const isProduction = process.env.NODE_ENV === 'production'
 const port = process.env.PORT ?? 3000
 
 const template = getTemplate(manifest)
 
-export function createServer() {
-  const logger = getLogger().for('HTTP Server')
+export function createServer(logger: Logger) {
+  logger = logger.for('HTTP Server')
 
   const app = express()
   if (isProduction) {
@@ -65,8 +65,13 @@ export function createServer() {
   }
 
   const server = app.listen(port, () => {
+    const url = isProduction
+      ? `Server running on port ${port}`
+      : `http://localhost:${port}`
+
     logger.info('Started', {
       port,
+      url,
     })
   })
 

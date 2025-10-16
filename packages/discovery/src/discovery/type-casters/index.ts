@@ -1,5 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
 import type { BaseTypeCaster } from './BaseTypeCaster'
+import { Bytes32ToString } from './Bytes32ToString'
 import { ChainPrefix } from './ChainPrefix'
 import { FormatSeconds } from './FormatSeconds'
 import { GreaterThan } from './GreaterThan'
@@ -8,6 +9,7 @@ import { TimeSince } from './TimeSince'
 import { Undecimal } from './Undecimal'
 
 export const TypeConverters = {
+  Bytes32ToString,
   FormatSeconds,
   Undecimal,
   Mapping,

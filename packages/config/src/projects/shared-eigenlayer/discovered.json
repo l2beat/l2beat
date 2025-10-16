@@ -1,12 +1,38 @@
 {
   "name": "shared-eigenlayer",
-  "timestamp": 1756724373,
-  "configHash": "0xfff147ff2a79294afde6a06be0def3da92777c461ebf2547aac557ebce5c73c3",
+  "timestamp": 1760362205,
+  "configHash": "0xfadeb4c6b73d340a36060899a8a4ded9ff49157e996da28176aacec2382bfdda",
   "entries": [
     {
       "address": "eth:0x00000000000000000000000000000000000E16E4",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "RewardAllStakersActionGenerator",
+      "address": "eth:0x0903a99b35424069b31Ea690CA8BDaDcc02BE4E5",
+      "type": "Contract",
+      "template": "eigenlayer/RewardAllStakersActionGenerator",
+      "sourceHashes": [
+        "0x060b369fcc81cf09031a86a111ba96ebc53cafbc076a91a3ef81ca49e33030a6"
+      ],
+      "proxyType": "immutable",
+      "description": "Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers.",
+      "sinceTimestamp": 1758900299,
+      "sinceBlock": 23448068,
+      "values": {
+        "$immutable": true,
+        "amounts": ["1346839922406590295857988", "1010129941804942721893491"],
+        "bEIGEN": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
+        "CALCULATION_INTERVAL_SECONDS": 604800,
+        "EIGEN": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+        "firstSubmissionStartTimestamp": 1759968000,
+        "firstSubmissionTriggerCutoff": 0,
+        "rewardsCoordinator": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda"
+      },
+      "implementationNames": {
+        "eth:0x0903a99b35424069b31Ea690CA8BDaDcc02BE4E5": "RewardAllStakersActionGenerator"
+      }
     },
     {
       "name": "StrategiesBeacon",
@@ -27,48 +53,6 @@
       },
       "implementationNames": {
         "eth:0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9": "UpgradeableBeacon"
-      }
-    },
-    {
-      "name": "TokenHopper",
-      "address": "eth:0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563",
-      "type": "Contract",
-      "template": "eigenlayer/TokenHopper",
-      "sourceHashes": [
-        "0x7a33b4c0c58212ece91ddbb1006f31ba22a346c26b7b89555d88d72b195aec84"
-      ],
-      "proxyType": "immutable",
-      "description": "Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).",
-      "ignoreInWatchMode": ["latestPress", "canPress"],
-      "sinceTimestamp": 1727895695,
-      "sinceBlock": 20879772,
-      "values": {
-        "$immutable": true,
-        "canPress": false,
-        "getHopperConfiguration": {
-          "token": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
-          "startTime": 1727308800,
-          "cooldownSeconds": 604800,
-          "actionGenerator": "eth:0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE",
-          "doesExpire": false,
-          "expirationTimestamp": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
-        },
-        "isExpired": false,
-        "latestPress": 1756343099,
-        "owner": "eth:0xbb00DDa2832850a43840A3A86515E3Fe226865F2"
-      },
-      "fieldMeta": {
-        "latestPress": {
-          "severity": "LOW",
-          "description": "Timestamp of the latest press. A button-press makes a call (calldata and cooldown are defined by the owner). Anyone can press the button at the defined time intervals."
-        },
-        "getHopperConfiguration": {
-          "severity": "LOW",
-          "description": "Current configuration of the TokenHopper, like calldata executed at each button-press (actionGenerator), target (token) and cooldownSeconds."
-        }
-      },
-      "implementationNames": {
-        "eth:0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563": "TokenHopper"
       }
     },
     {
@@ -202,11 +186,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x1e6892dd9A25248daBEce4AF5363EeD1A732ac3F",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "PermissionController",
       "address": "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5",
       "type": "Contract",
@@ -248,9 +227,46 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x30dd80F21aD9222Ce8f33b429fC0Fe25655Fe88a",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "name": "TokenHopper",
+      "address": "eth:0x3374D2E654FFBFEcd35D3F2Ac3e915B394DD7E7d",
+      "type": "Contract",
+      "template": "eigenlayer/TokenHopper",
+      "sourceHashes": [
+        "0x0e98440c17913dd9185047677c3f37d403aabbbc5a2709c5df4e0bc3c2e3ed7d"
+      ],
+      "proxyType": "immutable",
+      "description": "Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).",
+      "ignoreInWatchMode": ["latestPress", "canPress"],
+      "sinceTimestamp": 1758900299,
+      "sinceBlock": 23448068,
+      "values": {
+        "$immutable": true,
+        "canPress": false,
+        "getHopperConfiguration": {
+          "token": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+          "startTime": 1759968000,
+          "cooldownSeconds": 604800,
+          "actionGenerator": "eth:0x0903a99b35424069b31Ea690CA8BDaDcc02BE4E5",
+          "doesExpire": false,
+          "expirationTimestamp": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+        },
+        "isExpired": false,
+        "latestPress": 1759968119,
+        "owner": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "latestPress": {
+          "severity": "LOW",
+          "description": "Timestamp of the latest press. A button-press makes a call (calldata and cooldown are defined by the owner). Anyone can press the button at the defined time intervals."
+        },
+        "getHopperConfiguration": {
+          "severity": "LOW",
+          "description": "Current configuration of the TokenHopper, like calldata executed at each button-press (actionGenerator), target (token) and cooldownSeconds."
+        }
+      },
+      "implementationNames": {
+        "eth:0x3374D2E654FFBFEcd35D3F2Ac3e915B394DD7E7d": "TokenHopper"
+      }
     },
     {
       "address": "eth:0x33E816008E7bc7798A73d0eaa640CC24f34d1626",
@@ -304,7 +320,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 27,
+        "nonce": 28,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -608,7 +624,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 14,
+        "nonce": 15,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -768,11 +784,6 @@
     },
     {
       "address": "eth:0x6DD76040589433cc4Fc14e49db02592a25c0eC70",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x6ea7a8542045af8DD4ae10B1d1F285255cF63Ebc",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1016,11 +1027,11 @@
           "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "extensions": []
         },
-        "Minters": ["eth:0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563"],
+        "Minters": ["eth:0x3374D2E654FFBFEcd35D3F2Ac3e915B394DD7E7d"],
         "name": "Backing Eigen",
         "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "symbol": "bEIGEN",
-        "totalSupply": "1744454796558241769230769289",
+        "totalSupply": "1753248868992778917633136158",
         "transferRestrictionsDisabledAfter": 0
       },
       "fieldMeta": {
@@ -1236,7 +1247,7 @@
         "delegationManager": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "eigenPodBeacon": "eth:0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 33991,
+        "numPods": 34183,
         "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
@@ -1348,37 +1359,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x985145F0f4dACe1387b856191C3574381B9DE524",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "RewardAllStakersActionGenerator",
-      "address": "eth:0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE",
-      "type": "Contract",
-      "template": "eigenlayer/RewardAllStakersActionGenerator",
-      "sourceHashes": [
-        "0x519834dae9f17d3adac32cfef3f2d1e84185152157b8e20a0ff5837d33eb423a"
-      ],
-      "proxyType": "immutable",
-      "description": "Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers.",
-      "sinceTimestamp": 1727895359,
-      "sinceBlock": 20879744,
-      "values": {
-        "$immutable": true,
-        "amounts": ["321855128516280769230770", "965565385548842307692308"],
-        "bEIGEN": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
-        "CALCULATION_INTERVAL_SECONDS": 604800,
-        "EIGEN": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
-        "firstSubmissionStartTimestamp": 1723680000,
-        "firstSubmissionTriggerCutoff": 1727913600,
-        "rewardsCoordinator": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda"
-      },
-      "implementationNames": {
-        "eth:0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE": "RewardAllStakersActionGenerator"
-      }
-    },
-    {
       "address": "eth:0x9b2C61521AF4AB9f4BE25297838F72a56462B578",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1432,7 +1412,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "426145802284078551513792860",
+        "totalShares": "461076954683359631866280796",
         "underlyingToken": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
         "version": "1.5.0"
       },
@@ -1491,43 +1471,6 @@
       },
       "implementationNames": {
         "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806": "PauserRegistry"
-      }
-    },
-    {
-      "name": "EigenLayerTokenMultisig",
-      "address": "eth:0xbb00DDa2832850a43840A3A86515E3Fe226865F2",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1697498675,
-      "sinceBlock": 18366203,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "eth:0xc13Ce61C12C0eF93b4165400491A719918Af1c6c",
-          "eth:0x6ea7a8542045af8DD4ae10B1d1F285255cF63Ebc",
-          "eth:0x985145F0f4dACe1387b856191C3574381B9DE524",
-          "eth:0xD21dBFe4bfAd1222A12b4F39286EEe6201d5d68E",
-          "eth:0x30dd80F21aD9222Ce8f33b429fC0Fe25655Fe88a",
-          "eth:0x1e6892dd9A25248daBEce4AF5363EeD1A732ac3F"
-        ],
-        "$threshold": 4,
-        "domainSeparator": "0x1402d1fac147648503e0981151b32afe3fec9a5207c84371b09867cbdc7a67a2",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 85,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "eth:0xbb00DDa2832850a43840A3A86515E3Fe226865F2": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
@@ -1735,7 +1678,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 75,
+        "nonce": 79,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1808,22 +1751,12 @@
       }
     },
     {
-      "address": "eth:0xc13Ce61C12C0eF93b4165400491A719918Af1c6c",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xc5280E368648b0e192b355c7d8330593bA7af700",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "eth:0xC6F9BDEEdEf78c2Cd146cdA31C82F76ca14A2927",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xD21dBFe4bfAd1222A12b4F39286EEe6201d5d68E",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1972,7 +1905,7 @@
         "name": "Eigen",
         "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "symbol": "EIGEN",
-        "totalSupply": "1744454796558241769230769289",
+        "totalSupply": "1753248868992778917633136158",
         "transferRestrictionsDisabledAfter": 0,
         "version": "1.6.0"
       },
@@ -2194,6 +2127,18 @@
     }
   ],
   "abis": {
+    "eth:0x0903a99b35424069b31Ea690CA8BDaDcc02BE4E5": [
+      "constructor(address _rewardsCoordinator, uint32 _firstSubmissionStartTimestamp, uint256 _firstSubmissionTriggerCutoff, uint256[2] _amounts, tuple(address strategy, uint96 multiplier)[][2] _strategiesAndMultipliers, address _bEIGEN, address _EIGEN)",
+      "function CALCULATION_INTERVAL_SECONDS() view returns (uint32)",
+      "function EIGEN() view returns (address)",
+      "function amounts(uint256) view returns (uint256)",
+      "function bEIGEN() view returns (address)",
+      "function firstSubmissionStartTimestamp() view returns (uint32)",
+      "function firstSubmissionTriggerCutoff() view returns (uint256)",
+      "function generateHopperActions(address hopper, address) view returns (tuple(address target, bytes callData)[])",
+      "function rewardsCoordinator() view returns (address)",
+      "function strategiesAndMultipliers(uint256, uint256) view returns (address strategy, uint96 multiplier)"
+    ],
     "eth:0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9": [
       "constructor(address implementation_)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -2203,22 +2148,6 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)",
       "function upgradeTo(address newImplementation)"
-    ],
-    "eth:0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563": [
-      "constructor(tuple(address token, uint256 startTime, uint256 cooldownSeconds, address actionGenerator, bool doesExpire, uint256 expirationTimestamp) config, address initialOwner)",
-      "event ButtonPressed(address indexed caller, uint256 newCooldownHorizon)",
-      "event FundsRetrieved(uint256 amount)",
-      "event HopperLoaded(tuple(address token, uint256 startTime, uint256 cooldownSeconds, address actionGenerator, bool doesExpire, uint256 expirationTimestamp) config)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function canPress() view returns (bool)",
-      "function getHopperConfiguration() view returns (tuple(address token, uint256 startTime, uint256 cooldownSeconds, address actionGenerator, bool doesExpire, uint256 expirationTimestamp))",
-      "function isExpired() view returns (bool)",
-      "function latestPress() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pressButton()",
-      "function renounceOwnership()",
-      "function retrieveFunds()",
-      "function transferOwnership(address newOwner)"
     ],
     "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -2336,6 +2265,22 @@
       "function unwrap(uint256 amount)",
       "function version() view returns (string)",
       "function wrap(uint256 amount)"
+    ],
+    "eth:0x3374D2E654FFBFEcd35D3F2Ac3e915B394DD7E7d": [
+      "constructor(tuple(address token, uint256 startTime, uint256 cooldownSeconds, address actionGenerator, bool doesExpire, uint256 expirationTimestamp) config, address initialOwner)",
+      "event ButtonPressed(address indexed caller, uint256 newCooldownHorizon)",
+      "event FundsRetrieved(uint256 amount)",
+      "event HopperLoaded(tuple(address token, uint256 startTime, uint256 cooldownSeconds, address actionGenerator, bool doesExpire, uint256 expirationTimestamp) config)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function canPress() view returns (bool)",
+      "function getHopperConfiguration() view returns (tuple(address token, uint256 startTime, uint256 cooldownSeconds, address actionGenerator, bool doesExpire, uint256 expirationTimestamp))",
+      "function isExpired() view returns (bool)",
+      "function latestPress() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pressButton()",
+      "function renounceOwnership()",
+      "function retrieveFunds()",
+      "function transferOwnership(address newOwner)"
     ],
     "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111": [
       "constructor(address _singleton)"
@@ -2832,18 +2777,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE": [
-      "constructor(address _rewardsCoordinator, uint32 _firstSubmissionStartTimestamp, uint256 _firstSubmissionTriggerCutoff, uint256[2] _amounts, tuple(address strategy, uint96 multiplier)[][2] _strategiesAndMultipliers, address _bEIGEN, address _EIGEN)",
-      "function CALCULATION_INTERVAL_SECONDS() view returns (uint32)",
-      "function EIGEN() view returns (address)",
-      "function amounts(uint256) view returns (uint256)",
-      "function bEIGEN() view returns (address)",
-      "function firstSubmissionStartTimestamp() view returns (uint32)",
-      "function firstSubmissionTriggerCutoff() view returns (uint256)",
-      "function generateHopperActions(address hopper, address) view returns (tuple(address target, bytes callData)[])",
-      "function rewardsCoordinator() view returns (address)",
-      "function strategiesAndMultipliers(uint256, uint256) view returns (address strategy, uint96 multiplier)"
-    ],
     "eth:0xA396D855D70e1A1ec1A0199ADB9845096683B6A2": [
       "constructor(address _delegation, address _pauserRegistry, string _version)",
       "error CurrentlyPaused()",
@@ -3033,9 +2966,6 @@
       "function setIsPauser(address newPauser, bool canPause)",
       "function setUnpauser(address newUnpauser)",
       "function unpauser() view returns (address)"
-    ],
-    "eth:0xbb00DDa2832850a43840A3A86515E3Fe226865F2": [
-      "constructor(address _singleton)"
     ],
     "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90": [
       "constructor(address _singleton)"
@@ -3459,6 +3389,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23267842 },
-  "permissionsConfigHash": "0xcfa377361d44087910caada935ab419f3e244a8236f7c9f5579e119de97e3d30"
+  "usedBlockNumbers": { "ethereum": 23569095 },
+  "permissionsConfigHash": "0x5e6ff7146313899d346c1b3f7af9436104b1056abf0802e281e65ac437f85c2f"
 }

@@ -13,6 +13,7 @@ import isEmpty from 'lodash/isEmpty'
 import unionBy from 'lodash/unionBy'
 import {
   CONTRACTS,
+  compareRisk,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
@@ -68,7 +69,12 @@ import {
   generateDiscoveryDrivenPermissions,
 } from './generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from './getDiscoveryInfo'
-import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
+import {
+  asArray,
+  explorerReferences,
+  mergeBadges,
+  safeGetImplementation,
+} from './utils'
 
 type DAProvider = ProjectScalingDa & {
   riskViewDA: TableReadyValue
@@ -166,7 +172,7 @@ interface OrbitStackConfigCommon {
   /** Configure to enable custom DA tracking e.g. project that switched DA */
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
-  proofSystemInactive?: boolean
+  celestiaProofSystemInactive?: boolean
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -209,6 +215,7 @@ export function getNitroGovernance(
   l1TimelockDelay: number,
   treasuryTimelockDelay: number,
   l2TreasuryQuorumPercent: number,
+  challengeGracePeriodSeconds: number,
 ): string {
   return `
 All critical system smart contracts are upgradeable (can be arbitrarily changed). This permission is governed by the Arbitrum Decentralized Autonomous Organization (DAO)
@@ -227,7 +234,7 @@ CoreGovernor-enforced ${l2CoreQuorumPercent}% threshold of the votable tokens. T
     l2TimelockDelay,
   )} delay and then sends it to the Outbox contract on Ethereum. This incurs another delay (the challenge period) of ${formatSeconds(
     challengeWindowSeconds,
-  )}.
+  )}, which is extended by an additional ${formatSeconds(challengeGracePeriodSeconds)} if the top-level assertion has been challenged.
 When that has passed, the L1 Timelock delays for additional ${formatSeconds(
     l1TimelockDelay,
   )}. Both timelocks serve as delays during which the transparent transaction contents can be audited,
@@ -321,6 +328,7 @@ function defaultStateValidation(
 const wmrValidForBlobstream = [
   '0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287',
   '0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3',
+  '0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d',
 ]
 
 // TODO: Add blobstream delay when timelock is enabled
@@ -366,17 +374,14 @@ function orbitStackCommon(
   )
   const isUsingValidBlobstreamWmr =
     wmrValidForBlobstream.includes(wasmModuleRoot)
-  const daProvider = getDAProvider(type, templateVars, explorerUrl, hostChainDA)
 
-  const isUsingEspressoSequencer =
-    templateVars.discovery.getContractValueOrUndefined<string>(
-      'SequencerInbox',
-      'espressoTEEVerifier',
-    ) !== undefined &&
-    templateVars.discovery.getContractValue<string>(
-      'SequencerInbox',
-      'espressoTEEVerifier',
-    ) !== EthereumAddress.ZERO
+  const daProviders = getDAProviders(
+    type,
+    templateVars,
+    explorerUrl,
+    hostChainDA,
+  )
+  assert(daProviders.length > 0)
 
   const blockNumberOpcodeTimeSeconds =
     templateVars.blockNumberOpcodeTimeSeconds ?? 12
@@ -428,8 +433,15 @@ function orbitStackCommon(
   //     'validatorWhitelistDisabled',
   //   )
 
-  const automaticBadges = [BADGES.Stack.Orbit, BADGES.VM.EVM, daProvider.badge]
+  const automaticBadges = [
+    BADGES.Stack.Orbit,
+    BADGES.VM.EVM,
+    ...daProviders.map((p) => p.badge),
+  ]
 
+  const isUsingEspressoSequencer = daProviders.some(
+    (p) => p.layer === DA_LAYERS.ESPRESSO,
+  )
   if (isUsingEspressoSequencer) {
     automaticBadges.push(BADGES.Other.EspressoPreconfs)
   }
@@ -481,7 +493,7 @@ function orbitStackCommon(
     proofSystem:
       templateVars.nonTemplateProofSystem ??
       (hasNoProofs ? undefined : { type: 'Optimistic' }),
-    riskView: getRiskView(templateVars, daProvider, isPostBoLD),
+    riskView: getRiskView(templateVars, daProviders, isPostBoLD),
     stage: computedStage(templateVars),
     config: {
       associatedTokens: templateVars.associatedTokens,
@@ -566,7 +578,7 @@ function orbitStackCommon(
         })(),
       dataAvailability:
         templateVars.nonTemplateTechnology?.dataAvailability ??
-        daProvider.technology,
+        daProviders.map((p) => p.technology),
       operator: templateVars.nonTemplateTechnology?.operator ?? {
         ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
@@ -690,7 +702,7 @@ function orbitStackCommon(
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
     customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
-    dataAvailability: extractDA(daProvider),
+    dataAvailability: extractDAs(daProviders),
     scopeOfAssessment: templateVars.scopeOfAssessment,
     discoveryInfo: getDiscoveryInfo(allDiscoveries),
   }
@@ -880,6 +892,14 @@ function postsToEthereum(templateVars: OrbitStackConfigCommon): boolean {
   return sequencerVersion === '0x00'
 }
 
+function postsToDAC(templateVars: OrbitStackConfigCommon): boolean {
+  const sequencerVersion = templateVars.discovery.getContractValue<string>(
+    'SequencerInbox',
+    'sequencerVersion',
+  )
+  return sequencerVersion === '0x88'
+}
+
 function ifPostsToEthereum<T>(
   templateVars: OrbitStackConfigCommon,
   value: T,
@@ -895,7 +915,7 @@ function ifPostsToEthereum<T>(
 
 function getRiskView(
   templateVars: OrbitStackConfigCommon,
-  daProvider: DAProvider,
+  daProviders: DAProvider[],
   isPostBoLD = false,
 ): ProjectScalingRiskView {
   const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
@@ -925,6 +945,11 @@ function getRiskView(
       'RollupProxy',
       'validatorWhitelistDisabled',
     )
+
+  const theLeastRiskyDaProvider = daProviders.sort((dap1, dap2) =>
+    compareRisk(dap2.riskViewDA, dap1.riskViewDA),
+  )[0]
+  assert(theLeastRiskyDaProvider)
 
   return {
     stateValidation:
@@ -977,10 +1002,10 @@ function getRiskView(
       })(),
     dataAvailability:
       templateVars.nonTemplateRiskView?.dataAvailability ??
-      daProvider.riskViewDA,
+      theLeastRiskyDaProvider.riskViewDA,
     exitWindow:
       templateVars.nonTemplateRiskView?.exitWindow ??
-      daProvider.riskViewExitWindow,
+      theLeastRiskyDaProvider.riskViewExitWindow,
     sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
       secondLine: formatDelay(selfSequencingDelaySeconds),
@@ -1012,12 +1037,13 @@ function getRiskView(
   }
 }
 
-function getDAProvider(
+function getDAProviders(
   type: ScalingProject['type'],
   templateVars: OrbitStackConfigCommon,
   explorerUrl: string | undefined,
   hostChainDA?: DAProvider,
-): DAProvider {
+): DAProvider[] {
+  const result: DAProvider[] = []
   const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
     templateVars.discovery,
   )
@@ -1033,41 +1059,47 @@ function getDAProvider(
       ) ??
       false
 
-    return {
-      layer:
-        (hostChainDA?.layer ?? usesBlobs)
-          ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
-          : DA_LAYERS.ETH_CALLDATA,
-      bridge: hostChainDA?.layer ?? DA_BRIDGES.ENSHRINED,
-      mode: hostChainDA?.layer ?? DA_MODES.TRANSACTION_DATA_COMPRESSED,
-      badge:
-        hostChainDA?.badge ??
-        (usesBlobs ? BADGES.DA.EthereumBlobs : BADGES.DA.EthereumCalldata),
-      riskViewDA:
-        type === 'layer2'
-          ? RISK_VIEW.DATA_ON_CHAIN
-          : RISK_VIEW.DATA_ON_CHAIN_L3,
-      riskViewExitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
-      technology: {
-        ...(usesBlobs
-          ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
-          : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL),
-        references: [
-          {
-            title:
-              'Sequencing followed by deterministic execution - Arbitrum documentation',
-            url: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
-          },
-          ...explorerReferences(explorerUrl, [
+    // Return and don't even check for other DAs
+    return [
+      {
+        layer:
+          (hostChainDA?.layer ?? usesBlobs)
+            ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
+            : DA_LAYERS.ETH_CALLDATA,
+        bridge: hostChainDA?.layer ?? DA_BRIDGES.ENSHRINED,
+        mode: hostChainDA?.layer ?? DA_MODES.TRANSACTION_DATA_COMPRESSED,
+        badge:
+          hostChainDA?.badge ??
+          (usesBlobs ? BADGES.DA.EthereumBlobs : BADGES.DA.EthereumCalldata),
+        riskViewDA:
+          type === 'layer2'
+            ? RISK_VIEW.DATA_ON_CHAIN
+            : RISK_VIEW.DATA_ON_CHAIN_L3,
+        riskViewExitWindow: RISK_VIEW.EXIT_WINDOW(
+          0,
+          selfSequencingDelaySeconds,
+        ),
+        technology: {
+          ...(usesBlobs
+            ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
+            : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL),
+          references: [
             {
               title:
-                'SequencerInbox.sol - source code, addSequencerL2BatchFromOrigin function',
-              address: safeGetImplementation(templateVars.sequencerInbox),
+                'Sequencing followed by deterministic execution - Arbitrum documentation',
+              url: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
             },
-          ]),
-        ],
+            ...explorerReferences(explorerUrl, [
+              {
+                title:
+                  'SequencerInbox.sol - source code, addSequencerL2BatchFromOrigin function',
+                address: safeGetImplementation(templateVars.sequencerInbox),
+              },
+            ]),
+          ],
+        },
       },
-    }
+    ]
   }
 
   const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
@@ -1079,8 +1111,8 @@ function getDAProvider(
     wmrValidForBlobstream.includes(wasmModuleRoot)
 
   if (isUsingValidBlobstreamWmr) {
-    if (templateVars.proofSystemInactive) {
-      return {
+    if (templateVars.celestiaProofSystemInactive) {
+      result.push({
         riskViewDA: RISK_VIEW.DATA_CELESTIA(false),
         riskViewExitWindow: RISK_VIEW.EXIT_WINDOW(
           0,
@@ -1091,27 +1123,65 @@ function getDAProvider(
         bridge: DA_BRIDGES.NONE,
         mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
         badge: BADGES.DA.Celestia,
-      }
-    }
-    return {
-      riskViewDA: RISK_VIEW.DATA_CELESTIA(true),
-      riskViewExitWindow: pickWorseRisk(
-        RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
-        RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
-      ),
-      technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(true),
-      layer: DA_LAYERS.CELESTIA,
-      bridge: DA_BRIDGES.BLOBSTREAM,
-      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-      badge: BADGES.DA.CelestiaBlobstream,
+      })
+    } else {
+      result.push({
+        riskViewDA: RISK_VIEW.DATA_CELESTIA(true),
+        riskViewExitWindow: pickWorseRisk(
+          RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+          RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
+        ),
+        technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(true),
+        layer: DA_LAYERS.CELESTIA,
+        bridge: DA_BRIDGES.BLOBSTREAM,
+        mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+        badge: BADGES.DA.CelestiaBlobstream,
+      })
     }
   }
+
+  const isUsingEspressoSequencer =
+    templateVars.discovery.getContractValueOrUndefined<string>(
+      'SequencerInbox',
+      'espressoTEEVerifier',
+    ) !== undefined &&
+    templateVars.discovery.getContractValue<string>(
+      'SequencerInbox',
+      'espressoTEEVerifier',
+    ) !== EthereumAddress.ZERO
+
+  const isUsingEspressonAndDac =
+    isUsingEspressoSequencer && postsToDAC(templateVars)
+
+  if (isUsingEspressoSequencer) {
+    const isUsingLightClient = false
+    result.push({
+      riskViewDA: RISK_VIEW.DATA_ESPRESSO(isUsingLightClient),
+      // TODO: when LightClient is used, modify what is added here
+      riskViewExitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+      technology:
+        TECHNOLOGY_DATA_AVAILABILITY.ESPRESSO_OFF_CHAIN(isUsingLightClient),
+      layer: DA_LAYERS.ESPRESSO,
+      bridge: isUsingLightClient
+        ? DA_BRIDGES.HOTSHOT_LIGHT_CLIENT
+        : DA_BRIDGES.NONE,
+      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+      badge: isUsingLightClient
+        ? BADGES.DA.EspressoHotShotLightClient
+        : BADGES.DA.Espresso,
+    })
+  }
+
+  if (result.length > 0 && !isUsingEspressonAndDac) {
+    return result
+  }
+
   const DAC = templateVars.discovery.getContractValue<{
     membersCount: number
     requiredSignatures: number
   }>('SequencerInbox', 'dacKeyset')
 
-  return {
+  result.push({
     riskViewDA: RISK_VIEW.DATA_EXTERNAL_DAC(DAC),
     riskViewExitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
     technology: TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN(DAC),
@@ -1119,7 +1189,8 @@ function getDAProvider(
     bridge: DA_BRIDGES.DAC_MEMBERS(DAC),
     mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
     badge: BADGES.DA.DAC,
-  }
+  })
+  return result
 }
 
 function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
@@ -1256,12 +1327,12 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
   ]
 }
 
-function extractDA(daProvider: DAProvider): ProjectScalingDa {
-  return {
+function extractDAs(daProviders: DAProvider[]): ProjectScalingDa[] {
+  return daProviders.map((daProvider) => ({
     layer: daProvider.layer,
     bridge: daProvider.bridge,
     mode: daProvider.mode,
-  }
+  }))
 }
 
 function computedStage(
@@ -1312,18 +1383,29 @@ function hostChainDAProvider(hostChain: ScalingProject): DAProvider {
     hostChain.technology?.dataAvailability !== undefined,
     'Host chain must have technology data availability',
   )
+
+  // Currently we don't support multiple-DAs on the host chain
+  const hostChainDAs = asArray(hostChain.dataAvailability)
+  const hostChainDaTechs = asArray(hostChain.technology.dataAvailability)
   assert(
-    hostChain.dataAvailability !== undefined,
-    'Host chain must have data availability',
+    hostChainDAs.length === 1 && hostChainDaTechs.length === 1,
+    'Only exactly one DA on the host chain is currently supported',
+  )
+  const hostDA = hostChainDAs[0]
+  assert(hostDA !== undefined, 'Host chain must have data availability')
+  const hostDaTech = hostChainDaTechs[0]
+  assert(
+    hostDaTech !== undefined,
+    'Host chain must have data availability technology assigned',
   )
 
   return {
-    layer: hostChain.dataAvailability.layer,
-    bridge: hostChain.dataAvailability.bridge,
-    mode: hostChain.dataAvailability.mode,
+    layer: hostDA.layer,
+    bridge: hostDA.bridge,
+    mode: hostDA.mode,
     riskViewDA: hostChain.riskView.dataAvailability,
     riskViewExitWindow: hostChain.riskView.exitWindow,
-    technology: hostChain.technology.dataAvailability,
+    technology: hostDaTech,
     badge: DABadge,
   }
 }

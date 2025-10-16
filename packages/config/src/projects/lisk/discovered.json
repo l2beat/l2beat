@@ -1,7 +1,7 @@
 {
   "name": "lisk",
-  "timestamp": 1755507657,
-  "configHash": "0x031aa1efdf9ef232be50303f7d511504c0af91e07d50979ab658382218887d40",
+  "timestamp": 1759250569,
+  "configHash": "0x2ed4e3c7eb0cba37de05b6302f7d34374120246157891ee50248f0bda0f8c24e",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -22,7 +22,7 @@
         "0x998654cb64c7fc216505bdb3322b20e7d7c95704005228ad1f878bc631c4af8d"
       ],
       "proxyType": "immutable",
-      "description": "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig",
+      "description": "used to remove members inactive for 3mo 8d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig",
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -36,7 +36,7 @@
         "$immutable": true,
         "fallbackOwner": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
         "livenessGuard": "eth:0x24424336F04440b1c28685a38303aC33C9D14a25",
-        "livenessInterval": "98d",
+        "livenessInterval": "3mo 8d",
         "minOwners": 8,
         "ownershipTransferredToFallback": false,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
@@ -339,17 +339,19 @@
         ],
         "$upgradeCount": 1,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 131,
+        "gameCount": 304,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x095102Ec7bea1c5f25090705b196a6EA2e6b64f6",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000"
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45",
-        "permissionedGamesTotal": 131,
+        "permissionedGamesTotal": 304,
         "version": "1.0.0"
       },
       "fieldMeta": {
@@ -381,7 +383,7 @@
         {
           "permission": "interact",
           "from": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
-          "description": "can remove members of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 98d.",
+          "description": "can remove members of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 3mo 8d.",
           "role": ".livenessGuard"
         }
       ],
@@ -471,7 +473,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 489262,
-          "prevBlockNum": 23166910
+          "prevBlockNum": 23476785
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -573,7 +575,7 @@
         ],
         "$upgradeCount": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292632726",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292633928",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1175,7 +1177,7 @@
         "initVersion": 2,
         "paused": false,
         "pauseExpiry": 7884000,
-        "pauseExpiryFmt": "91d 6h",
+        "pauseExpiryFmt": "3mo 1d",
         "proxyAdmin": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "version": "2.3.0"
@@ -1393,7 +1395,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 42,
+        "nonce": 44,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2726,7 +2728,7 @@
     "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
-    "opstack/DisputeGameFactory": "0xdec1700fd03bf991ef19b9aa3b5f992abf853de33e6ebae19b785a8d72b37356",
+    "opstack/DisputeGameFactory": "0xe9d9d84be84533dfde77d87e1af95889eb95f6bf254630733231f6789d4e48fe",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
@@ -2738,6 +2740,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23166914 },
-  "permissionsConfigHash": "0x0d6cb427103ae088e8a8d68f50d0b1cff56dbdee05a7de17984438a4cb92bfaa"
+  "usedBlockNumbers": { "ethereum": 23477070 },
+  "permissionsConfigHash": "0x73112e0f28697c223f05ae6d7623ee1f8559e504df4489d1b5458a1b67713e61"
 }

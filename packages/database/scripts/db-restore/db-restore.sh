@@ -2,13 +2,14 @@
 
 source .env
 
-FEATURES_NAMES=("da" "liveness" "tvs" "activity" "shared")
+FEATURES_NAMES=("da" "liveness" "tvs" "activity" "shared" "interop")
 FEATURES_TABLES=(
     "IndexerState IndexerConfiguration DataAvailability Blob"
     "IndexerState IndexerConfiguration Liveness"
     "IndexerState IndexerConfiguration TvsBlockTimestamp TvsPrice TvsAmount TokenValue ProjectValue"
     "IndexerState IndexerConfiguration Activity"
     "IndexerState IndexerConfiguration AnomalyStats RealTimeLiveness RealTimeAnomaly"
+    "IndexerState IndexerConfiguration InteropEvent InteropMessage InteropTransfer"
 )
 
 clear_tables() {

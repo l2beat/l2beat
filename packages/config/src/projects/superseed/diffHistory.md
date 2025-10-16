@@ -1,3 +1,58 @@
+Generated with discovered.json: 0x4f501aead84b4fc887bd822aab551fa77e5bee00
+
+# Diff at Fri, 03 Oct 2025 08:44:35 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@e647409961cd173771dcfcaeb808991c99e73911 block: 1756214657
+- current timestamp: 1759481008
+
+## Description
+
+Member removed from multisig.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 10 (40%)"
+    }
+```
+
+Generated with discovered.json: 0x33f0e612c0db8c785cc57628352cc64e67d9e1bd
+
+# Diff at Mon, 15 Sep 2025 09:50:55 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@37882e40cb6029f3a2ae2bb177048e3e846b833d block: 1756214657
+- current timestamp: 1756214657
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756214657 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x657c1b0e31FFc69A02B207Be20699bDFF938c7E7) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.gameImpls.2:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.gameImpls.3:
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x35791b06c3f5dab43cef4619d58e8ab95a2cd75b
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
