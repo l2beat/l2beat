@@ -168,7 +168,6 @@ const getTokenAssetCategoryColumns = (opts: {
       ),
       sortUndefined: 'last',
       meta: {
-        cellClassName: 'w-[40%]',
         align: 'right',
         headClassName: getColumnHeaderUnderline('before:bg-chart-ethereum'),
       },
@@ -185,7 +184,6 @@ const getTokenAssetCategoryColumns = (opts: {
       ),
       sortUndefined: 'last',
       meta: {
-        cellClassName: 'w-[10%]',
         align: 'right',
         headClassName: getColumnHeaderUnderline('before:bg-chart-teal'),
       },
@@ -198,7 +196,6 @@ const getTokenAssetCategoryColumns = (opts: {
       ),
       sortUndefined: 'last',
       meta: {
-        cellClassName: 'w-[40%]',
         align: 'right',
         headClassName: getColumnHeaderUnderline('before:bg-chart-orange'),
       },
@@ -211,7 +208,6 @@ const getTokenAssetCategoryColumns = (opts: {
       ),
       sortUndefined: 'last',
       meta: {
-        cellClassName: 'w-[10%] ',
         align: 'right',
         headClassName: getColumnHeaderUnderline('before:bg-chart-yellow-lime'),
       },
@@ -228,7 +224,6 @@ const getTokenAssetCategoryColumns = (opts: {
       ),
       sortUndefined: 'last',
       meta: {
-        cellClassName: 'w-[10%] ',
         align: 'right',
         headClassName: getColumnHeaderUnderline(
           'before:bg-n-fuchsia-750 last:pr-3',
@@ -248,7 +243,6 @@ const getTokenAssetCategoryColumns = (opts: {
         ),
         sortUndefined: 'last',
         meta: {
-          cellClassName: 'w-[10%] ',
           align: 'right',
           headClassName: getColumnHeaderUnderline(
             'before:bg-n-pink-850 last:pr-3',
