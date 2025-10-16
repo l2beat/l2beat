@@ -9,15 +9,17 @@ type Options = {
   env: Record<string, unknown>
   db: Database
   logger: Logger
+  ci: boolean
 }
 
-export function makeQueryExecutor({ redisUrl, db, logger, env }: Options) {
+export function makeQueryExecutor({ redisUrl, db, logger, env, ci }: Options) {
+  console.log('Received CI:', ci)
   let cache: Cache | undefined
   if (redisUrl) {
     const packageHash = getPackageHash(env)
     cache = new Cache(redisUrl, packageHash)
   }
-  return new QueryExecutor(db, logger, cache)
+  return new QueryExecutor(db, logger, cache, ci)
 }
 
 export { type SummedByTimestampTvsValuesRecord } from './queries/tvl/getSummedByTimestampTvsValuesQuery'
