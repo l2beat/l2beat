@@ -12,6 +12,7 @@ import type { ContractValue } from '../output/types'
 import type { IProvider } from '../provider/IProvider'
 import type { ProxyDetector } from '../proxies/ProxyDetector'
 import { getImplementationNames } from '../source/getDerivedName'
+import { getLibraries } from '../source/getLibraries'
 import type {
   PerContractSource,
   SourceCodeService,
@@ -24,7 +25,6 @@ import {
 import { codeIsEOA } from './codeIsEOA'
 import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
 import type { TemplateService } from './TemplateService'
-import { getLibraries } from '../source/getLibraries'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA | Reference
 
