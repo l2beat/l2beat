@@ -144,8 +144,12 @@ export class AcrossPlugin implements InteropPlugin {
   ): MatchResult | undefined {
     if (!AcrossFilledRelay.checkType(filledRelay)) return
 
+    const network = ACROSS_NETWORKS.find(
+      (n) => n.chain === filledRelay.ctx.chain,
+    )
     const fundsDeposited = db.find(AcrossFundsDeposited, {
       originChainId: filledRelay.args.originChainId,
+      destinationChainId: network ? network.chainId : undefined,
       depositId: filledRelay.args.depositId,
     })
     if (!fundsDeposited) return
