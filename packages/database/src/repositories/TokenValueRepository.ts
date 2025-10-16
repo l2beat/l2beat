@@ -226,6 +226,7 @@ export class TokenValueRepository extends BaseRepository {
     toInclusive: UnixTime | null,
     forSummary: boolean,
     excludeAssociated: boolean,
+    excludeRwaRestricted: boolean,
   ): Promise<
     {
       timestamp: UnixTime
@@ -274,6 +275,10 @@ export class TokenValueRepository extends BaseRepository {
 
     if (excludeAssociated) {
       query = query.where('TokenMetadata.isAssociated', '=', false)
+    }
+
+    if (excludeRwaRestricted) {
+      query = query.where('TokenMetadata.category', '!=', 'rwaRestricted')
     }
 
     const rows = await query.execute()

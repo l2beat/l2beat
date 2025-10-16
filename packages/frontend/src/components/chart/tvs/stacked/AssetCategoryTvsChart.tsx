@@ -36,6 +36,7 @@ interface Props {
   tickCount?: number
   className?: string
   project?: ChartProject
+  excludeRwaRestrictedTokens: boolean
 }
 
 export const assetCategoryTvsChartMeta = {
@@ -82,6 +83,7 @@ export function AssetCategoryTvsChart({
   dataKeys,
   toggleDataKey,
   project,
+  excludeRwaRestrictedTokens,
 }: Props) {
   // If only one data key is selected we want to change the domain
   // Having it from 0 to MAX does make sense for stacked chart (better comparison)
@@ -110,15 +112,17 @@ export function AssetCategoryTvsChart({
           stackId={dataKeys.length === 1 ? undefined : 'a'}
           isAnimationActive={false}
         />
-        <Area
-          dataKey="rwaRestricted"
-          hide={!dataKeys.includes('rwaRestricted')}
-          fill={assetCategoryTvsChartMeta.rwaRestricted.color}
-          fillOpacity={1}
-          strokeWidth={0}
-          stackId={dataKeys.length === 1 ? undefined : 'a'}
-          isAnimationActive={false}
-        />
+        {!excludeRwaRestrictedTokens && (
+          <Area
+            dataKey="rwaRestricted"
+            hide={!dataKeys.includes('rwaRestricted')}
+            fill={assetCategoryTvsChartMeta.rwaRestricted.color}
+            fillOpacity={1}
+            strokeWidth={0}
+            stackId={dataKeys.length === 1 ? undefined : 'a'}
+            isAnimationActive={false}
+          />
+        )}
         <Area
           dataKey="other"
           hide={!dataKeys.includes('other')}
