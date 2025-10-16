@@ -2523,12 +2523,12 @@
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L2AssetRouter": "0x135f3f175975582aabfd47f5af1c6b1c153fe6813d69cfb72d631ba725379300",
-    "shared-zk-stack/MessageRoot": "0x2c788525cb453dd86cf50fe9437ba488b1be3e698da9ccc0ae016598b93c48dd",
+    "shared-zk-stack/MessageRoot": "0xbff1ea54952301b3b5c9dd16fcb265471a173687870eb62ec88bb5ad5eb68d0a",
     "shared-zk-stack/PartialValidatorTimelock": "0xad56890aa1b84f78772b5886b726fe79be5da2152a9a65d5b67321bc69f41551",
     "shared-zk-stack/RelayedSLDAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/ServerNotifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "usedBlockNumbers": { "ethereum": 23589080, "gateway": 70994 },
+  "usedBlockNumbers": { "gateway": 70994, "ethereum": 23589080 },
   "permissionsConfigHash": "0xdd59cf08fb1ca12be154c6537c84743aa5c1928ce0f17eab61f411fbc8bd550e"
 }

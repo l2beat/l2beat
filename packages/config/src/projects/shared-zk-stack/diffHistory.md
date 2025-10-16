@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xb782433a65de2f48294bba4d3695806a45390e7c
+Generated with discovered.json: 0xa54977ac3168282658040f1c7f667d67529d9167
 
-# Diff at Thu, 16 Oct 2025 08:36:07 GMT:
+# Diff at Thu, 16 Oct 2025 08:50:29 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@88fac19bbe6dc3868d941d9cb093cb5181d8344a block: 1760369926
-- current timestamp: 1760596336
+- current timestamp: 1760604460
 
 ## Description
 
@@ -75,16 +75,12 @@ L1AssetRouter, L1Nullifier, CTMDeploymentTracker - https://disco.l2beat.com/diff
       values.$upgradeCount:
 -        2
 +        3
-      values.historicalRoot:
-+        ["0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"]
       values.L1_CHAIN_ID:
 +        1
       implementationNames.eth:0x382fb241396eA915108e7B7Ce1adE1322bA73aeE:
 -        "MessageRoot"
       implementationNames.eth:0x669ed5BB1377C917333e7d4223ce3419EE4099fD:
 +        "MessageRoot"
-      errors:
-+        {"historicalRoot":"Processing error occurred."}
     }
 ```
 

@@ -1,6 +1,6 @@
 {
   "name": "shared-zk-stack",
-  "timestamp": 1760596336,
+  "timestamp": 1760604460,
   "configHash": "0xcd0cbdf47aadf779551fa87c38178aa17096dd93343d956064727bfa4b1a3986",
   "entries": [
     {
@@ -908,17 +908,9 @@
         "getChainRoot": [
           "0x0000000000000000000000000000000000000000000000000000000000000000"
         ],
-        "historicalRoot": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
-        ],
         "L1_CHAIN_ID": 1,
         "sharedTree": { "_height": 5, "_leafNumber": 17 }
       },
-      "errors": { "historicalRoot": "Processing error occurred." },
       "implementationNames": {
         "eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD": "TransparentUpgradeableProxy",
         "eth:0x669ed5BB1377C917333e7d4223ce3419EE4099fD": "MessageRoot"
@@ -2620,7 +2612,7 @@
         },
         "BURNER_ADMIN_ROLE": "0xc8d1ad9d415224b751d781cc8214ccfe7c47716e13229475443f04f1ebddadc6",
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1760596335,
+        "clock": 1760604453,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -2726,7 +2718,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1760596335,
+        "clock": 1760604453,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -2859,7 +2851,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1760596335,
+        "clock": 1760604453,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -3127,7 +3119,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1760596335,
+        "clock": 1760604453,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -4528,7 +4520,7 @@
     "shared-zk-stack/L1GenesisUpgrade": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
     "shared-zk-stack/L1NativeTokenVault": "0x9bb3e98b90b9d1e113cc71a85d4137492755be55071e020952622ae30a2ed397",
     "shared-zk-stack/L1Nullifier": "0xffad2aec15a6d3fed0ca55cc600f9ee54a1148708bbb360b9b82a1a4c7c05416",
-    "shared-zk-stack/MessageRoot": "0x2c788525cb453dd86cf50fe9437ba488b1be3e698da9ccc0ae016598b93c48dd",
+    "shared-zk-stack/MessageRoot": "0xbff1ea54952301b3b5c9dd16fcb265471a173687870eb62ec88bb5ad5eb68d0a",
     "shared-zk-stack/ProtocolUpgradeHandler": "0x8aea3a24bbb610625e47a3a4b122ab03edc5836adb2cfec7e7d726f872498925",
     "shared-zk-stack/RollupDAManager": "0x22b0bd78735c1c2fcbfd46f139a45581a44353b1025dfe3a7fe0ef88699bfde2",
     "shared-zk-stack/RollupL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -4538,6 +4530,6 @@
     "shared-zk-stack/ZkGovernor": "0x0d0c5f1209dfd254e3b76edce6803b2c607f359320da39df8a032f146ab1c46c",
     "shared-zk-stack/ZkToken": "0x22bee2bab1c58cdc909e86d516e6fbb69aa52fedff617cb6adca6c14d4dc0cd4"
   },
-  "usedBlockNumbers": { "ethereum": 23588465, "zksync2": 65283411 },
+  "usedBlockNumbers": { "ethereum": 23589132, "zksync2": 65285026 },
   "permissionsConfigHash": "0x4f3de6aaa31b9a1e61d9d374e7fb83b2b3e3887a56a2de14cfe3d0a845224ed8"
 }
