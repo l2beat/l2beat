@@ -17,8 +17,12 @@ export class QueryExecutor {
     private readonly db: Database,
     private readonly logger: Logger,
     private readonly cache: Cache | undefined,
+    ci?: boolean,
   ) {
     this.logger = logger.for(this)
+    if (ci) {
+      this.logger = this.logger.tag({ tag: 'CI' })
+    }
   }
 
   async execute<Q extends Query>(
