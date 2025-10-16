@@ -632,6 +632,7 @@
   },
   "across": {
     "txs": [
+      // should contain one unmatched on base: 0x5760b35cd1041943443a1b1ffc499a2d7f48a3e07833676a8cd67821b9e6e5d6 and three matched
       {
         "chain": "base",
         "tx": "0x51e7eb66f9be23a409f85c94310fa2c80a71e4be02c5c3db767433063fc13b5b"
@@ -647,6 +648,18 @@
       {
         "chain": "base",
         "tx": "0xb02e7ee0dc9353b283c3fb9b38a03f729492312b40c7745d38645b7441a9b25e"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x2ff17c035ff21b2e66a10377d8108e17d9e1300e005d1876333e701a82c42164"
+      },
+      {
+        "chain": "base",
+        "tx": "0x5760b35cd1041943443a1b1ffc499a2d7f48a3e07833676a8cd67821b9e6e5d6"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x568625ffa55fab1293cbc321850c324da3899eb6df260283a309c2413d59ebef"
       }
     ],
     "events": [],
