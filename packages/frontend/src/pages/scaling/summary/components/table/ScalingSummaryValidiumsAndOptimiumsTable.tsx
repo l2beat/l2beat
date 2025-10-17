@@ -8,7 +8,7 @@ import { useScalingRwaRestrictedTokensContext } from '~/pages/scaling/components
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import { api } from '~/trpc/React'
 import { toTableRows } from '../../utils/toTableRows'
-import { scalingSummaryValidiumAndOptimiumsColumns } from './columns'
+import { getScalingSummaryValidiumAndOptimiumsColumns } from './columns'
 
 interface Props {
   entries: ScalingSummaryEntry[]
@@ -19,7 +19,7 @@ export function ScalingSummaryValidiumsAndOptimiumsTable({ entries }: Props) {
   const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { sorting, setSorting } = useTableSorting()
 
-  const { data } = api.tvs.sevenDayBreakdown.useQuery({
+  const { data, isLoading } = api.tvs.sevenDayBreakdown.useQuery({
     type: 'validiumsAndOptimiums',
     excludeAssociatedTokens,
     includeRwaRestrictedTokens,
@@ -37,7 +37,9 @@ export function ScalingSummaryValidiumsAndOptimiumsTable({ entries }: Props) {
 
   const table = useTable({
     data: tableEntries,
-    columns: scalingSummaryValidiumAndOptimiumsColumns,
+    columns: getScalingSummaryValidiumAndOptimiumsColumns({
+      isTvsLoading: isLoading,
+    }),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,

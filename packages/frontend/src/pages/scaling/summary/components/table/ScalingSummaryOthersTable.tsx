@@ -8,7 +8,7 @@ import { useScalingRwaRestrictedTokensContext } from '~/pages/scaling/components
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import { api } from '~/trpc/React'
 import { toTableRows } from '../../utils/toTableRows'
-import { scalingSummaryOthersColumns } from './columns'
+import { getScalingSummaryOthersColumns } from './columns'
 
 interface Props {
   entries: ScalingSummaryEntry[]
@@ -19,7 +19,7 @@ export function ScalingSummaryOthersTable({ entries }: Props) {
   const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { sorting, setSorting } = useTableSorting()
 
-  const { data } = api.tvs.sevenDayBreakdown.useQuery({
+  const { data, isLoading } = api.tvs.sevenDayBreakdown.useQuery({
     type: 'others',
     excludeAssociatedTokens,
     includeRwaRestrictedTokens,
@@ -37,7 +37,7 @@ export function ScalingSummaryOthersTable({ entries }: Props) {
 
   const table = useTable({
     data: tableEntries,
-    columns: scalingSummaryOthersColumns,
+    columns: getScalingSummaryOthersColumns({ isTvsLoading: isLoading }),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
