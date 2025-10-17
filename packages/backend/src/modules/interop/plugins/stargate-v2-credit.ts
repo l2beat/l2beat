@@ -71,22 +71,22 @@ export class StargateV2CreditPlugin implements InteropPlugin {
     if (!PacketDelivered.checkType(packetDelivered)) return
     const packetSent = db.find(PacketSent, { guid: packetDelivered.args.guid })
     if (!packetSent) return
+
+    // only checking same tx emitting here, so plugin should be as low as possible in the hierarchy
     const creditsSent = db.find(StargateV2CreditsSent, {
-      ctx: { txHash: packetSent.ctx.txHash },
-    }) // only checking same tx emitting here, so plugin should be as low as possible in the hierarchy
+      sameTxBefore: packetSent,
+    })
     const creditsReceived = db.find(StargateV2CreditsReceived, {
-      ctx: { txHash: packetDelivered.ctx.txHash },
+      sameTxBefore: packetDelivered,
     })
     if (!creditsSent || !creditsReceived) return
+
     return [
       Result.Message('layerzero-v2.Message', {
         app: 'stargate-v2-credit',
         srcEvent: packetSent,
         dstEvent: packetDelivered,
-      }),
-      Result.Transfer('stargate-v2-credit.Transfer', {
-        srcEvent: creditsSent,
-        dstEvent: creditsReceived,
+        extraEvents: [creditsSent, creditsReceived],
       }),
     ]
   }
