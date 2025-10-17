@@ -27,11 +27,12 @@ export function ScalingTvsTable({
   const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { sorting, setSorting } = useTableSorting()
 
-  const { data: sevenDayBreakdown } = api.tvs.sevenDayBreakdown.useQuery({
-    type: tab,
-    excludeAssociatedTokens,
-    includeRwaRestrictedTokens,
-  })
+  const { data: sevenDayBreakdown, isLoading: isTvsLoading } =
+    api.tvs.sevenDayBreakdown.useQuery({
+      type: tab,
+      excludeAssociatedTokens,
+      includeRwaRestrictedTokens,
+    })
 
   const data = useMemo(
     () =>
@@ -49,8 +50,14 @@ export function ScalingTvsTable({
         ignoreUnderReviewIcon,
         breakdownType,
         includeRwaRestrictedTokens,
+        isTvsLoading,
       }),
-    [breakdownType, ignoreUnderReviewIcon, includeRwaRestrictedTokens],
+    [
+      breakdownType,
+      ignoreUnderReviewIcon,
+      includeRwaRestrictedTokens,
+      isTvsLoading,
+    ],
   )
 
   const table = useTable({
