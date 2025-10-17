@@ -3,11 +3,13 @@ import {
   formatAsciiBorder,
   Hash160,
   type json,
+  notUndefined,
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { createHash } from 'crypto'
 import { existsSync, readdirSync, readFileSync } from 'fs'
 import merge from 'lodash/merge'
+import uniq from 'lodash/uniq'
 import path from 'path'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import type { DiscoveryOutput } from '../output/types'
@@ -89,6 +91,35 @@ export class ConfigReader {
     )
 
     return JSON.parse(contents) as unknown as DiscoveryOutput
+  }
+
+  readDiscoveryWithReferences(projectName: string): DiscoveryOutput[] {
+    const seen = new Set<string>()
+    return this._readDiscoveryWithReferences(projectName, seen)
+  }
+
+  private _readDiscoveryWithReferences(
+    projectName: string,
+    seen: Set<string>,
+  ): DiscoveryOutput[] {
+    if (seen.has(projectName)) {
+      return []
+    }
+
+    seen.add(projectName)
+
+    const discovery = this.readDiscovery(projectName)
+    const references = [
+      ...getReferencedProjects(discovery),
+      ...(discovery.sharedModules ?? []),
+    ]
+
+    return [
+      discovery,
+      ...references
+        .map((reference) => this._readDiscoveryWithReferences(reference, seen))
+        .flat(),
+    ]
   }
 
   readDiscoveryHash(projectName: string): Hash160 {
@@ -356,4 +387,13 @@ export class ConfigReader {
   }
 
   // #endregion
+}
+
+function getReferencedProjects(discovery: DiscoveryOutput): string[] {
+  return uniq(
+    discovery.entries
+      .map((e) => e.targetProject)
+      .filter(notUndefined)
+      .sort(),
+  )
 }
