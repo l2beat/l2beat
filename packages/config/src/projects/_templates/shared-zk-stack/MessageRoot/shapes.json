@@ -3,5 +3,11 @@
     "hash": "0x9fe7372b4f7ead74634ad13ce858c9a6242995f2a40facaa212e524a02b506a2",
     "address": "eth:0x19347Fb8eD3E8e35eb4a01c8B18Bd330194Cf0ad",
     "blockNumber": 22188285
+  },
+  "MessageRoot_v29": {
+    "hash": "0x515c1999e39bdd6435caf0c49791fcb515fb14c69a02e55dac0ff893f07bc6fe",
+    "address": "eth:0x669ed5BB1377C917333e7d4223ce3419EE4099fD",
+    "chain": "ethereum",
+    "blockNumber": 23588465
   }
 }

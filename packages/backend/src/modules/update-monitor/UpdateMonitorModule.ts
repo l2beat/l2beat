@@ -81,6 +81,7 @@ export function createUpdateMonitorModule({
     discoveryOutputCache,
     logger,
     !!config.updateMonitor.runOnStart,
+    config.updateMonitor.disabledProjects,
   )
 
   const updateMonitorController = new UpdateMonitorController(

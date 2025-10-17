@@ -84,7 +84,7 @@ export class StargateV2CreditPlugin implements InteropPlugin {
         srcEvent: packetSent,
         dstEvent: packetDelivered,
       }),
-      Result.Transfer('stargate-v2-credit', {
+      Result.Transfer('stargate-v2-credit.Transfer', {
         srcEvent: creditsSent,
         dstEvent: creditsReceived,
       }),
