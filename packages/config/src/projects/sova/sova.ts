@@ -22,6 +22,8 @@ export const sova: ScalingProject = upcomingL2({
         'https://t.me/+I54xZyHrNbUyYmMx',
         'https://discord.com/invite/sovabtc',
       ],
+      bridges: ['https://app.sova.io/bridge'],
+      repositories: ['https://github.com/SovaNetwork'],
     },
   },
   hasTestnet: true,
