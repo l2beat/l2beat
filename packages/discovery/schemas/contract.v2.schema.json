@@ -606,14 +606,6 @@
                   "function": { "type": "string" }
                 },
                 "required": ["type", "event", "function"]
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "type": { "const": "eigenDa" },
-                  "sequencerAddress": { "type": "string" }
-                },
-                "required": ["type", "sequencerAddress"]
               }
             ]
           },
