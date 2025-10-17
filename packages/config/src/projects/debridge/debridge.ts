@@ -15,10 +15,10 @@ export const debridge: Bridge = {
     slug: 'debridge',
     category: 'Token Bridge',
     links: {
-      websites: ['https://debridge.finance'],
-      documentation: ['https://docs.debridge.finance'],
+      websites: ['https://debridge.com'],
+      documentation: ['https://docs.debridge.com'],
       repositories: ['https://github.com/debridge-finance'],
-      explorers: ['https://explorer.debridge.finance'],
+      explorers: ['https://explorer.debridge.com'],
       socialMedia: [
         'https://twitter.com/deBridgeFinance',
         'https://discord.gg/debridge',
@@ -26,7 +26,7 @@ export const debridge: Bridge = {
         'https://reddit.com/r/debridge/',
         'https://linkedin.com/company/debridge-finance',
       ],
-      bridges: ['https://app.debridge.finance'],
+      bridges: ['https://app.debridge.com'],
     },
     description:
       'deBridge is an interoperability layer that enables messaging between various blockchains. For the typical token transfer, "deToken" is minted on the destination chain.',
