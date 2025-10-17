@@ -1,5 +1,6 @@
 import { sortBySeverity } from '@l2beat/discovery'
 import React, { type ReactNode } from 'react'
+import { getQuickAccess } from '../../utils/getQuickAccess'
 import type { DashboardProject } from '../props/getDashboardProjects'
 import { TableData } from './components/Components'
 import { Diff } from './components/Diff'
@@ -75,6 +76,7 @@ function ChangedDetectedDropdown({
             </span>
           )}
           {project.changes.diff.map((d, index) => {
+            const quickAccess = getQuickAccess(d)
             return (
               <p style={{ marginTop: '8px' }} key={index}>
                 {d.type !== undefined && (
@@ -97,6 +99,54 @@ function ChangedDetectedDropdown({
                 </span>
                 <br />
                 <span>{`+++ description: ${d.description ?? 'None'}`}</span>
+                {quickAccess.length > 0 && (
+                  <div style={{ marginTop: '12px', marginBottom: '8px' }}>
+                    <span
+                      style={{
+                        fontSize: '13px',
+                        fontWeight: '600',
+                        color: '#a0a0a0',
+                        marginBottom: '6px',
+                        display: 'block',
+                      }}
+                    >
+                      Quick Access:
+                    </span>
+                    {quickAccess.map((x, index2) => {
+                      return (
+                        <button
+                          key={index2}
+                          style={{
+                            marginLeft: '12px',
+                            marginRight: '6px',
+                            marginBottom: '4px',
+                            padding: '6px 12px',
+                            background: '#1a4d8f',
+                            border: '1px solid #2d6ab4',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            transition: 'background 0.2s',
+                          }}
+                        >
+                          <a
+                            href={x.link}
+                            target="_blank"
+                            rel="noreferrer"
+                            style={{
+                              color: '#ffffff',
+                              textDecoration: 'none',
+                              fontWeight: '500',
+                              fontSize: '14px',
+                            }}
+                          >
+                            {x.name}
+                          </a>
+                        </button>
+                      )
+                    })}
+                    <hr />
+                  </div>
+                )}
                 <ul>
                   {sortBySeverity(d.diff).map((x, index2) => {
                     return (
