@@ -19,6 +19,7 @@ export const singularityfinance: ScalingProject = upcomingL2({
         'https://t.me/Singularity_Fi',
         'https://x.com/Singularity_Fi',
       ],
+      repositories: ['https://github.com/Singularity-DAO'],
     },
   },
   proofSystem: {
