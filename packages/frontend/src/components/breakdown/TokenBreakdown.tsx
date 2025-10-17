@@ -36,8 +36,8 @@ export function TokenBreakdown(props: TokenBreakdownProps) {
     { value: props.stablecoin, className: 'dark:bg-teal-400 bg-teal-500' },
     { value: props.btc, className: 'bg-orange-400' },
     { value: props.other, className: 'bg-sky-600' },
-    { value: props.rwaPublic, className: 'bg-n-fuchsia-750' },
-    { value: props.rwaRestricted, className: 'bg-n-pink-850' },
+    { value: props.rwaPublic, className: 'bg-lime-650' },
+    { value: props.rwaRestricted, className: 'bg-pink-750' },
   ]
 
   return (

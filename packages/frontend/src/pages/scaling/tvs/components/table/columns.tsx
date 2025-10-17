@@ -261,9 +261,7 @@ const getTokenAssetCategoryColumns = (opts: {
       sortUndefined: 'last',
       meta: {
         align: 'right',
-        headClassName: getColumnHeaderUnderline(
-          'before:bg-n-fuchsia-750 last:pr-3',
-        ),
+        headClassName: getColumnHeaderUnderline('before:bg-lime-650 last:pr-3'),
       },
     }),
     opts.includeRwaRestrictedTokens &&
@@ -282,7 +280,7 @@ const getTokenAssetCategoryColumns = (opts: {
         meta: {
           align: 'right',
           headClassName: getColumnHeaderUnderline(
-            'before:bg-n-pink-850 last:pr-3',
+            'before:bg-pink-750 last:pr-3',
           ),
         },
       }),

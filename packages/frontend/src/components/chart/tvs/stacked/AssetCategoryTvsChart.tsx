@@ -62,12 +62,12 @@ export const assetCategoryTvsChartMeta = {
   },
   rwaPublic: {
     label: 'RWA Public',
-    color: 'var(--color-n-fuchsia-750)',
+    color: 'var(--color-lime-650)',
     indicatorType: { shape: 'square' },
   },
   rwaRestricted: {
     label: 'RWA Restricted',
-    color: 'var(--color-n-pink-850)',
+    color: 'var(--color-pink-750)',
     indicatorType: { shape: 'square' },
   },
 } satisfies ChartMeta
