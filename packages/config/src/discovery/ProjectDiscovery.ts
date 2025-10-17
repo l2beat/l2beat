@@ -7,7 +7,6 @@ import type {
 import {
   ConfigReader,
   getDiscoveryPaths,
-  getReachableEntries,
   RolePermissionEntries,
 } from '@l2beat/discovery'
 import {
@@ -66,9 +65,10 @@ export class ProjectDiscovery {
     }
 
     // always the base discovery
-    const entrypoints = [...(this.discoveries.at(0)?.entries ?? [])].map(
-      (e) => e.address,
-    )
+    // TODO: Uncomment me once cross-chain permissions are implemented
+    // const entrypoints = [...(this.discoveries.at(0)?.entries ?? [])].map(
+    //   (e) => e.address,
+    // )
 
     // Removing Reference entries because otherwise we get duplicates
     // and incomplete data.
@@ -76,9 +76,13 @@ export class ProjectDiscovery {
     // references to entrypoints to make it cleaner
     this.discoveries.forEach((d) => removeReferences(d))
 
-    this.reachableEntries = getReachableEntries(
-      this.discoveries.flatMap((discovery) => discovery.entries),
-      entrypoints,
+    // TODO: Uncomment me once cross-chain permissions are implemented
+    // this.reachableEntries = getReachableEntries(
+    //   this.discoveries.flatMap((discovery) => discovery.entries),
+    //   entrypoints,
+    // )
+    this.reachableEntries = this.discoveries.flatMap(
+      (discovery) => discovery.entries,
     )
 
     this.permissionRegistry = new PermissionsFromDiscovery(this)
