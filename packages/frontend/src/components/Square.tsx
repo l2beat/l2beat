@@ -22,6 +22,7 @@ const squareVariants = cva('shrink-0 rounded', {
       stable: 'bg-teal-500 dark:bg-teal-400',
       other: 'bg-sky-600',
       rwaPublic: 'bg-n-fuchsia-750',
+      rwaRestricted: 'bg-n-pink-850',
     },
     size: {
       small: 'size-3',

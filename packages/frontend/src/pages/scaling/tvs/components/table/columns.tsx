@@ -82,6 +82,7 @@ export const getScalingTvsColumns = (
                         btc: data.breakdown.btc,
                         other: data.breakdown.other,
                         rwaPublic: data.breakdown.rwaPublic,
+                        rwaRestricted: data.breakdown.rwaRestricted,
                       }
                 }
                 change={data.change.total}

@@ -59,6 +59,7 @@ export interface BridgesProjectEntry {
         btc: number
         other: number
         rwaPublic: number
+        rwaRestricted: number
         warnings: WarningWithSentiment[]
         associatedTokens: ProjectAssociatedToken[]
       }

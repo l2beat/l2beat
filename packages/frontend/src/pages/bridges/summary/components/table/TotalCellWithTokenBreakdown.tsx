@@ -28,6 +28,7 @@ interface TotalCellProps {
         btc: number
         other: number
         rwaPublic: number
+        rwaRestricted: number
       }
     | undefined
   associatedTokens: ProjectAssociatedToken[]
@@ -100,6 +101,7 @@ export function TotalCellWithTokenBreakdown(props: TotalCellProps) {
               btc={props.breakdown.btc}
               other={props.breakdown.other}
               rwaPublic={props.breakdown.rwaPublic}
+              rwaRestricted={props.breakdown.rwaRestricted}
               className="h-[3px] w-[180px]"
             />
           </div>
@@ -114,6 +116,7 @@ export function TotalCellWithTokenBreakdown(props: TotalCellProps) {
           btc={props.breakdown.btc}
           other={props.breakdown.other}
           rwaPublic={props.breakdown.rwaPublic}
+          rwaRestricted={props.breakdown.rwaRestricted}
           tvsWarnings={tvsWarnings}
           associatedTokens={props.associatedTokens}
         />

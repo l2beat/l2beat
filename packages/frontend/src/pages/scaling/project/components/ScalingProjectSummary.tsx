@@ -90,6 +90,9 @@ export function ProjectScalingSummary({ project }: Props) {
                       rwaPublic={
                         project.header.tvs?.tokens.breakdown?.rwaPublic ?? 0
                       }
+                      rwaRestricted={
+                        project.header.tvs?.tokens.breakdown?.rwaRestricted ?? 0
+                      }
                       className="h-1.5 w-full"
                     />
                     {hasTokenWarnings && (
@@ -114,6 +117,9 @@ export function ProjectScalingSummary({ project }: Props) {
                     other={project.header.tvs?.tokens.breakdown?.other ?? 0}
                     rwaPublic={
                       project.header.tvs?.tokens.breakdown?.rwaPublic ?? 0
+                    }
+                    rwaRestricted={
+                      project.header.tvs?.tokens.breakdown?.rwaRestricted ?? 0
                     }
                     associatedTokens={
                       project.header.tvs?.tokens.associatedTokens ?? []

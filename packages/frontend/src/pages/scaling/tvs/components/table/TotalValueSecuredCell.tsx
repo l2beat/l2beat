@@ -38,6 +38,7 @@ interface TotalValueSecuredCellProps {
         btc: number
         other: number
         rwaPublic: number
+        rwaRestricted: number
       }
   change: number
   tvsWarnings?: WarningWithSentiment[]
@@ -79,6 +80,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
                 btc={props.breakdown.btc}
                 other={props.breakdown.other}
                 rwaPublic={props.breakdown.rwaPublic}
+                rwaRestricted={props.breakdown.rwaRestricted}
                 className="h-[3px] w-[180px]"
               />
             )}
@@ -105,6 +107,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
             btc={props.breakdown.btc}
             other={props.breakdown.other}
             rwaPublic={props.breakdown.rwaPublic}
+            rwaRestricted={props.breakdown.rwaRestricted}
             associated={props.breakdown.associated}
             tvsWarnings={tvsWarnings}
             associatedTokens={props.associatedTokens ?? []}
