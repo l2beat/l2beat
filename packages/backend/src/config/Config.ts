@@ -52,7 +52,7 @@ export interface Config {
   readonly da: DataAvailabilityTrackingConfig | false
   readonly blockSync: BlockSyncModuleConfig
   readonly anomalies: AnomaliesConfig | false
-  readonly bridges: BridgesConfig | false
+  readonly interop: InteropConfig | false
 
   readonly flags: ResolvedFeatureFlag[]
 }
@@ -181,6 +181,7 @@ export interface UpdateMonitorConfig {
   readonly cacheUri: string
   readonly chains: DiscoveryChainConfig[]
   readonly disabledChains: string[]
+  readonly disabledProjects: string[]
   readonly discord: DiscordConfig | false
   readonly updateMessagesRetentionPeriodDays: number
 }
@@ -202,7 +203,7 @@ export interface AnomaliesConfig {
   readonly anomaliesMinDuration: number
 }
 
-export interface BridgesConfig {
+export interface InteropConfig {
   capture: {
     enabled: boolean
     chains: {
