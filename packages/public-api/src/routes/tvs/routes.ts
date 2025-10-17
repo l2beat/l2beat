@@ -1,7 +1,8 @@
 import type { ProjectService } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import type { InMemoryCache } from '../../cache/InMemoryCache'
 import type { OpenApi } from '../../OpenApi'
 import { GenericErrorResponse } from '../../types'
 import { getTvsData } from './getTvsData'
@@ -11,6 +12,7 @@ export function addTvsRoutes(
   openapi: OpenApi,
   ps: ProjectService,
   db: Database,
+  cache: InMemoryCache,
 ) {
   openapi.get(
     '/v1/tvs',
@@ -23,11 +25,20 @@ export function addTvsRoutes(
       result: TvsResultSchema,
     },
     async (req, res) => {
-      const { range } = req.query
+      const { range = '30d' } = req.query
 
-      const projectIds = await getTvsProjects(ps)
+      const data = await cache.get(
+        {
+          key: ['tvs', range],
+          ttl: 5 * UnixTime.MINUTE,
+          staleWhileRevalidate: 5 * UnixTime.MINUTE,
+        },
+        async () => {
+          const projectIds = await getTvsProjects(ps)
 
-      const data = await getTvsData(db, range ?? '30d', projectIds)
+          return getTvsData(db, range, projectIds)
+        },
+      )
 
       res.json(data)
     },
@@ -52,8 +63,7 @@ export function addTvsRoutes(
     },
     async (req, res) => {
       const { projectId } = req.params
-      const { range } = req.query
-
+      const { range = '30d' } = req.query
       const project = await ps.getProject({
         id: ProjectId(projectId),
         select: ['tvsConfig'],
@@ -66,7 +76,14 @@ export function addTvsRoutes(
         return
       }
 
-      const data = await getTvsData(db, range ?? '30d', [project.id])
+      const data = await cache.get(
+        {
+          key: ['tvs', projectId, range],
+          ttl: 5 * UnixTime.MINUTE,
+          staleWhileRevalidate: 5 * UnixTime.MINUTE,
+        },
+        () => getTvsData(db, range, [project.id]),
+      )
 
       res.json(data)
     },
