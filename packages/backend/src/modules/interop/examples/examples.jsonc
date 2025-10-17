@@ -826,21 +826,6 @@
     "messages": [],
     "transfers": []
   },
-  "stargate-debug": {
-    "txs": [
-      {
-        "chain": "optimism",
-        "tx": "0x5486e7ce1d6e0ef138dcb4a6b82ec06832b035141fc85184bf98c7a790cea268"
-      },
-      {
-        "chain": "base",
-        "tx": "0xe3d4a5bcdaeb683da03ef7bb73b6e3e110108c6de4c318551a203df6a8c73ef9"
-      }
-    ],
-    "events": [],
-    "messages": [],
-    "transfers": []
-  },
   "hyperlane-eco": {
     // 3 msgs, 3 'transfers'/intent settlements
     "txs": [
@@ -887,6 +872,46 @@
       {
         "chain": "base",
         "tx": "0x2745a60ccdfddb2e92251813d86450fe821f997de702edad1c72c37ac6a64ec1"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "stargate-creditmessaging": {
+    "txs": [
+      // one taxi, one credit tx (just message+app)
+      {
+        "chain": "optimism",
+        "tx": "0x5486e7ce1d6e0ef138dcb4a6b82ec06832b035141fc85184bf98c7a790cea268"
+      },
+      {
+        "chain": "base",
+        "tx": "0xe3d4a5bcdaeb683da03ef7bb73b6e3e110108c6de4c318551a203df6a8c73ef9"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x5ef2f2bd361246ce329c0a12c05e80812701838577828bb8c7216cc9bd9f6f77"
+      },
+      {
+        "chain": "base",
+        "tx": "0xc0dd44562c4db853104dc0fcfea462955635690de145a656f5db6468a9d092f3"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
+  "aori-settlement": {
+    "txs": [
+      // no transfer, just message+app
+      {
+        "chain": "base",
+        "tx": "0x82ea43567873ab55f00f85c9791d2d593e16b476be9e5d90542ad6808a4a903e"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x13361b4a8536efc49ee1f1f39bf2562ab663d1623bfffacf9586b7642902f09c"
       }
     ],
     "events": [],
