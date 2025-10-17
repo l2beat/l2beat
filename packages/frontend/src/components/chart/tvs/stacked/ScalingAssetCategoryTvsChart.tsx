@@ -69,13 +69,13 @@ export function ScalingAssetCategoryTvsChart({
               other !== null && divider !== null && divider !== 0
                 ? other / divider
                 : null,
-            rwaRestricted:
-              rwaRestricted !== null && divider !== null && divider !== 0
-                ? rwaRestricted / divider
-                : null,
             rwaPublic:
               rwaPublic !== null && divider !== null && divider !== 0
                 ? rwaPublic / divider
+                : null,
+            rwaRestricted:
+              rwaRestricted !== null && divider !== null && divider !== 0
+                ? rwaRestricted / divider
                 : null,
           }
         },
