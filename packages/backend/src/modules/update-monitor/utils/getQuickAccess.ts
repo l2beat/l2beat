@@ -49,18 +49,18 @@ function getImplementationQuickLinks(diff: DiscoveryDiff): QuickAccessData[] {
 }
 
 function getImplementationIndex(key: string): number | undefined {
-  const prefix = 'values.$implementation.';
-  
+  const prefix = 'values.$implementation.'
+
   if (!key.startsWith(prefix)) {
-    return undefined;
+    return undefined
   }
 
-  const indexStr = key.slice(prefix.length);
-  const index = Number(indexStr);
-  
-  return Number.isInteger(index) && indexStr === String(index) 
-    ? index 
-    : undefined;
+  const indexStr = key.slice(prefix.length)
+  const index = Number(indexStr)
+
+  return Number.isInteger(index) && indexStr === String(index)
+    ? index
+    : undefined
 }
 
 function trimCharacters(str: string, chars: string): string {
