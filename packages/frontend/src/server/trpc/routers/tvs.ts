@@ -3,6 +3,10 @@ import {
   getDetailedTvsChart,
 } from '~/server/features/scaling/tvs/getDetailedTvsChart'
 import {
+  EtherAndStablecoinsChartsDataParams,
+  getEtherAndStablecoinsCharts,
+} from '~/server/features/scaling/tvs/getEtherAndStablecoinsCharts'
+import {
   getRecategorisedTvsChart,
   RecategorisedTvsChartDataParams,
 } from '~/server/features/scaling/tvs/getRecategorisedTvsChartData'
@@ -23,6 +27,9 @@ export const tvsRouter = router({
   detailedChart: procedure
     .input(DetailedTvsChartDataParams)
     .query(({ input }) => getDetailedTvsChart(input)),
+  etherAndStablecoinsCharts: procedure
+    .input(EtherAndStablecoinsChartsDataParams)
+    .query(({ input }) => getEtherAndStablecoinsCharts(input)),
   recategorisedChart: procedure
     .input(RecategorisedTvsChartDataParams)
     .query(({ input }) => getRecategorisedTvsChart(input)),

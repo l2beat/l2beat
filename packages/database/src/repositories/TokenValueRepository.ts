@@ -104,6 +104,27 @@ export class TokenValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getByTokenIdsInTimeRange(
+    tokenIds: string[],
+    fromInclusive: UnixTime | null,
+    toInclusive: UnixTime,
+  ): Promise<TokenValueRecord[]> {
+    let query = this.db
+      .selectFrom('TokenValue')
+      .selectAll()
+      .where('tokenId', 'in', tokenIds)
+
+    if (fromInclusive) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+    }
+
+    const rows = await query
+      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
+      .orderBy('timestamp', 'asc')
+      .execute()
+    return rows.map(toRecord)
+  }
+
   async getByProjectAtOrBefore(
     project: string,
     timestamp: UnixTime,

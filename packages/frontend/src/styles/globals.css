@@ -76,6 +76,27 @@
   --chart-stacked-purple: #9576d1;
   --chart-stacked-blue: #3385ff;
 
+  --chart-ether-1: #a9bbff;
+  --chart-ether-2: #579dff;
+  --chart-ether-3: #6131f0;
+  --chart-ether-4: #5c6fff;
+  --chart-ether-5: #0034de;
+  --chart-ether-6: #99c0ff;
+  --chart-ether-7: #6e86ff;
+  --chart-ether-8: #8f5cff;
+  --chart-ether-9: #54c0ff;
+
+  --chart-stablecoin-1: #6fc3a0;
+  --chart-stablecoin-2: #99f0b5;
+  --chart-stablecoin-3: #49b6b6;
+  --chart-stablecoin-4: #b9e190;
+  --chart-stablecoin-5: #76de8e;
+  --chart-stablecoin-6: #d6fffc;
+  --chart-stablecoin-7: #5ad8cc;
+  --chart-stablecoin-8: #b4e6ae;
+  --chart-stablecoin-9: #9ffff0;
+  --chart-stablecoin-10: #67e0a8;
+
   /* Chart gradients */
 
   --chart-ethereum-fill-gradient: #3482f6;
