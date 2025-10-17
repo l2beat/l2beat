@@ -1432,7 +1432,7 @@
         "decimals": 18,
         "sinceTimestamp": 1596501090
       },
-      "category": "other",
+      "category": "rwaPublic",
       "source": "canonical",
       "isAssociated": false
     },

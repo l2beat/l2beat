@@ -851,6 +851,24 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-BENJI",
+      "priceId": "franklin-templeton-benji",
+      "symbol": "BENJI",
+      "name": "Franklin OnChain U.S. Government Money Fund",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66409/large/Benji_Logo.png?1749371083",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xB9e4765BCE2609bC1949592059B17Ea72fEe6C6A",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1750636800
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-BICO",
       "priceId": "biconomy",
       "symbol": "BICO",
@@ -1132,7 +1150,7 @@
         "decimals": 6,
         "sinceTimestamp": 1739318400
       },
-      "category": "other",
+      "category": "rwaRestricted",
       "source": "native",
       "isAssociated": false
     },
@@ -2993,7 +3011,7 @@
         "decimals": 5,
         "sinceTimestamp": 1729851160
       },
-      "category": "other",
+      "category": "rwaRestricted",
       "source": "native",
       "isAssociated": false
     },
@@ -3706,19 +3724,11 @@
       "priceId": "gala",
       "symbol": "GALA",
       "name": "Gala",
-      "iconUrl": "https://assets.coingecko.com/coins/images/12493/large/GALA-COINGECKO.png?1696512310",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12493/large/GALA_token_image_-_200PNG.png?1709725869",
       "amount": {
         "type": "calculation",
         "operator": "sum",
         "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x15D4c048F83bd7e37d49eA4C83a07267Ec4203dA",
-            "chain": "ethereum",
-            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
-            "decimals": 8,
-            "sinceTimestamp": 1623867835
-          },
           {
             "type": "balanceOfEscrow",
             "address": "0xd1d2Eb1B1e90B638588728b4130137D262C87cae",
@@ -3726,14 +3736,6 @@
             "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
             "decimals": 8,
             "sinceTimestamp": 1681915991
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x15D4c048F83bd7e37d49eA4C83a07267Ec4203dA",
-            "chain": "ethereum",
-            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-            "decimals": 8,
-            "sinceTimestamp": 1623784100
           },
           {
             "type": "balanceOfEscrow",
@@ -6015,7 +6017,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "rwaPublic",
       "source": "canonical",
       "isAssociated": false
     },
@@ -8356,6 +8358,24 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-TBILL",
+      "priceId": "openeden-tbill",
+      "symbol": "TBILL",
+      "name": "OpenEden T-Bills",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30576/large/OE_Logo_200x200_Transparent.png?1696529441",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xF84D28A8D28292842dD73D1c5F99476A80b6666A",
+        "chain": "arbitrum",
+        "decimals": 6,
+        "sinceTimestamp": 1707821187
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-tBTC-1",
       "priceId": "tbtc",
       "symbol": "tBTC",
@@ -9117,7 +9137,7 @@
         "decimals": 18,
         "sinceTimestamp": 1723057357
       },
-      "category": "other",
+      "category": "rwaPublic",
       "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
@@ -9169,7 +9189,7 @@
         "decimals": 5,
         "sinceTimestamp": 1729851183
       },
-      "category": "other",
+      "category": "rwaRestricted",
       "source": "native",
       "isAssociated": false
     },
@@ -9382,7 +9402,7 @@
       "priceId": "wormhole",
       "symbol": "W",
       "name": "Wormhole Token",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/35087/large/womrhole_logo_full_color_rgb_2000px_72ppi_fb766ac85a.png?1708688954",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35087/large/W_Token_%283%29.png?1758122686",
       "amount": {
         "type": "totalSupply",
         "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
@@ -9869,7 +9889,7 @@
           }
         ]
       },
-      "category": "other",
+      "category": "rwaPublic",
       "source": "canonical",
       "isAssociated": false
     },

@@ -599,6 +599,24 @@
     },
     {
       "mode": "auto",
+      "id": "mantle-USDY",
+      "priceId": "ondo-us-dollar-yield",
+      "symbol": "USDY",
+      "name": "Ondo U.S. Dollar Yield",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31700/large/usdy_%281%29.png?1696530524",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5bE26527e817998A7206475496fDE1E68957c5A6",
+        "chain": "mantle",
+        "decimals": 18,
+        "sinceTimestamp": 1699401600
+      },
+      "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "mantle-WBTC",
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",

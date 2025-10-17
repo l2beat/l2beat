@@ -1049,6 +1049,24 @@
     },
     {
       "mode": "auto",
+      "id": "polygonzkevm-PAXG",
+      "priceId": "pax-gold",
+      "symbol": "PAXG",
+      "name": "Paxos Gold",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9519/large/paxgold.png?1696509604",
+      "category": "rwaPublic",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x591C7115555D76D2790aa679673217Df33683780",
+        "chain": "polygonzkevm",
+        "decimals": 18,
+        "sinceTimestamp": 1679679015
+      }
+    },
+    {
+      "mode": "auto",
       "id": "polygonzkevm-PC",
       "priceId": "pentagon-chain",
       "symbol": "PC",
@@ -1667,7 +1685,7 @@
       "symbol": "XAUt",
       "name": "Tether Gold",
       "iconUrl": "https://assets.coingecko.com/coins/images/10481/large/Tether_Gold.png?1696510471",
-      "category": "other",
+      "category": "rwaPublic",
       "source": "canonical",
       "isAssociated": false,
       "amount": {
