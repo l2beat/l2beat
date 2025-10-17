@@ -10,7 +10,6 @@ export function ExcludeAssociatedTokensCheckbox() {
       name="excludeAssociatedTokens"
       checked={excludeAssociatedTokens}
       onCheckedChange={(checked) => setExcludeAssociatedTokens(!!checked)}
-      className="max-md:ml-4"
     >
       Exclude associated tokens
     </Checkbox>

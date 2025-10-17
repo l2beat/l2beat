@@ -81,21 +81,22 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
       }),
     columnHelper.accessor(
       (e) => {
-        return e.tvs?.breakdown?.total ?? 0
+        return e.tvsData?.breakdown.total ?? 0
       },
       {
         id: 'total',
         header: 'Total value secured',
         cell: (ctx) => {
           const value = ctx.row.original.tvs
+          const tvsData = ctx.row.original.tvsData
 
           return (
             <TotalCellWithTvsBreakdown
               href={`/scaling/tvs?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
               associatedTokens={value.associatedTokens}
               tvsWarnings={value.warnings}
-              breakdown={value.breakdown}
-              change={value.change}
+              breakdown={tvsData?.breakdown}
+              change={tvsData?.change.total}
             />
           )
         },

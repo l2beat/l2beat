@@ -41,6 +41,7 @@ export function MonthlyUpdateTvsChart({
       to,
     },
     excludeAssociatedTokens: false,
+    includeRwaRestrictedTokens: false,
     filter: {
       type: 'projects',
       projectIds: entries,

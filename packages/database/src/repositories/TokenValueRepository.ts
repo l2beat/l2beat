@@ -226,6 +226,7 @@ export class TokenValueRepository extends BaseRepository {
     toInclusive: UnixTime | null,
     forSummary: boolean,
     excludeAssociated: boolean,
+    includeRwaRestrictedTokens: boolean,
   ): Promise<
     {
       timestamp: UnixTime
@@ -276,6 +277,10 @@ export class TokenValueRepository extends BaseRepository {
       query = query.where('TokenMetadata.isAssociated', '=', false)
     }
 
+    if (!includeRwaRestrictedTokens) {
+      query = query.where('TokenMetadata.category', '!=', 'rwaRestricted')
+    }
+
     const rows = await query.execute()
 
     return rows.map((row) => ({
@@ -297,6 +302,7 @@ export class TokenValueRepository extends BaseRepository {
     oldestTimestamp: number,
     latestTimestamp: number,
     excludeAssociated: boolean,
+    includeRwaRestrictedTokens: boolean,
     cutOffTimestamp?: number,
   ): Promise<
     {
@@ -361,6 +367,10 @@ export class TokenValueRepository extends BaseRepository {
 
     if (excludeAssociated) {
       query = query.where('TokenMetadata.isAssociated', '=', false)
+    }
+
+    if (!includeRwaRestrictedTokens) {
+      query = query.where('TokenMetadata.category', '!=', 'rwaRestricted')
     }
 
     const rows = await query.execute()

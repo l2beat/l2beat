@@ -6,7 +6,6 @@ import { TvsChartHeader } from '~/components/chart/tvs/TvsChartHeader'
 import { TvsChartTimeRangeControls } from '~/components/chart/tvs/TvsChartTimeRangeControls'
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
 import type { ChartUnit } from '~/components/chart/types'
-import { Checkbox } from '~/components/core/Checkbox'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { useTableFilterContext } from '~/components/table/filters/TableFilterContext'
@@ -14,7 +13,10 @@ import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTv
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
+import { ExcludeAssociatedTokensCheckbox } from '../../components/ExcludeAssociatedTokensCheckbox'
+import { IncludeRwaRestrictedTokensCheckbox } from '../../components/IncludeRwaRestrictedTokensCheckbox'
 import { useScalingAssociatedTokensContext } from '../../components/ScalingAssociatedTokensContext'
+import { useScalingRwaRestrictedTokensContext } from '../../components/ScalingRwaRestrictedTokensContext'
 import { ChartTabs } from '../../summary/components/ChartTabs'
 
 interface Props {
@@ -24,9 +26,8 @@ interface Props {
 }
 
 export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
-  const { excludeAssociatedTokens, setExcludeAssociatedTokens } =
-    useScalingAssociatedTokensContext()
-
+  const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
+  const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { state: filters } = useTableFilterContext()
   const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
   const [unit, setUnit] = useState<ChartUnit>('usd')
@@ -47,6 +48,7 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
     range: timeRange,
     excludeAssociatedTokens,
     filter,
+    includeRwaRestrictedTokens,
   })
 
   const chartRange = getChartRange(
@@ -62,6 +64,7 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
       filter={filter}
       range={timeRange}
       excludeAssociatedTokens={excludeAssociatedTokens}
+      includeRwaRestrictedTokens={includeRwaRestrictedTokens}
       milestones={milestones}
     />
   )
@@ -72,6 +75,7 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
       filter={filter}
       range={timeRange}
       excludeAssociatedTokens={excludeAssociatedTokens}
+      includeRwaRestrictedTokens={includeRwaRestrictedTokens}
       milestones={milestones}
     />
   )
@@ -95,13 +99,10 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
       />
       <ChartControlsWrapper>
         <TvsChartUnitControls unit={unit} setUnit={setUnit}>
-          <Checkbox
-            name="excludeAssociatedTokens"
-            checked={excludeAssociatedTokens}
-            onCheckedChange={(checked) => setExcludeAssociatedTokens(!!checked)}
-          >
-            Exclude associated tokens
-          </Checkbox>
+          <div className="flex flex-wrap items-center gap-1">
+            <ExcludeAssociatedTokensCheckbox />
+            <IncludeRwaRestrictedTokensCheckbox />
+          </div>
         </TvsChartUnitControls>
         <TvsChartTimeRangeControls
           timeRange={timeRange}
@@ -124,21 +125,39 @@ function getStats(
         number | null,
         number | null,
         number | null,
+        number | null,
+        number | null,
       ][]
     | undefined,
 ) {
   const pointsWithData = data?.filter(
-    ([_, __, native, canonical, external, ether, stablecoin, btc, other]) =>
+    ([
+      _,
+      __,
+      native,
+      canonical,
+      external,
+      ether,
+      stablecoin,
+      btc,
+      other,
+      rwaRestricted,
+      rwaPublic,
+    ]) =>
       native !== null &&
       canonical !== null &&
       external !== null &&
       ether !== null &&
       stablecoin !== null &&
       btc !== null &&
-      other !== null,
+      other !== null &&
+      rwaRestricted !== null &&
+      rwaPublic !== null,
   ) as [
     number,
     number | null,
+    number,
+    number,
     number,
     number,
     number,

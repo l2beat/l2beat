@@ -11,6 +11,7 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { ScalingAssociatedTokensContextProvider } from '~/pages/scaling/components/ScalingAssociatedTokensContext'
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
+import { ScalingRwaRestrictedTokensContextProvider } from '../components/ScalingRwaRestrictedTokensContext'
 import { ChartTabs } from './components/ChartTabs'
 import { ScalingSummaryTables } from './components/ScalingSummaryTables'
 
@@ -43,11 +44,13 @@ export function ScalingSummaryPage({ entries, queryState, ...props }: Props) {
             <PrimaryCard>{activityChart}</PrimaryCard>
           </div>
           <ChartTabs className="lg:hidden" charts={[tvsChart, activityChart]} />
-          <ScalingAssociatedTokensContextProvider>
-            <TableFilterContextProvider>
-              <ScalingSummaryTables {...entries} />
-            </TableFilterContextProvider>
-          </ScalingAssociatedTokensContextProvider>
+          <ScalingRwaRestrictedTokensContextProvider>
+            <ScalingAssociatedTokensContextProvider>
+              <TableFilterContextProvider>
+                <ScalingSummaryTables {...entries} />
+              </TableFilterContextProvider>
+            </ScalingAssociatedTokensContextProvider>
+          </ScalingRwaRestrictedTokensContextProvider>
         </SideNavLayout>
       </HydrationBoundary>
     </AppLayout>

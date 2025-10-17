@@ -13,6 +13,7 @@ interface Props {
   range: TvsChartRange
   unit: ChartUnit
   excludeAssociatedTokens: boolean
+  includeRwaRestrictedTokens: boolean
 }
 
 export function ScalingAssetCategoryTvsChart({
@@ -21,6 +22,7 @@ export function ScalingAssetCategoryTvsChart({
   range,
   unit,
   excludeAssociatedTokens,
+  includeRwaRestrictedTokens,
 }: Props) {
   const { assetCategoryDataKeys, assetCategoryToggleDataKey } =
     useScalingTvsDataKeys()
@@ -29,12 +31,25 @@ export function ScalingAssetCategoryTvsChart({
     range,
     excludeAssociatedTokens,
     filter,
+    includeRwaRestrictedTokens,
   })
 
   const chartData = useMemo(
     () =>
       data?.chart.map(
-        ([timestamp, ethPrice, _, __, ___, ether, stablecoin, btc, other]) => {
+        ([
+          timestamp,
+          ethPrice,
+          _,
+          __,
+          ___,
+          ether,
+          stablecoin,
+          btc,
+          other,
+          rwaRestricted,
+          rwaPublic,
+        ]) => {
           const divider = unit === 'usd' ? 1 : ethPrice
           return {
             timestamp,
@@ -54,6 +69,14 @@ export function ScalingAssetCategoryTvsChart({
               other !== null && divider !== null && divider !== 0
                 ? other / divider
                 : null,
+            rwaPublic:
+              rwaPublic !== null && divider !== null && divider !== 0
+                ? rwaPublic / divider
+                : null,
+            rwaRestricted:
+              rwaRestricted !== null && divider !== null && divider !== 0
+                ? rwaRestricted / divider
+                : null,
           }
         },
       ),
@@ -69,6 +92,7 @@ export function ScalingAssetCategoryTvsChart({
       syncedUntil={data?.syncedUntil}
       dataKeys={assetCategoryDataKeys}
       toggleDataKey={assetCategoryToggleDataKey}
+      includeRwaRestrictedTokens={includeRwaRestrictedTokens}
     />
   )
 }

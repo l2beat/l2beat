@@ -26,6 +26,7 @@ export function ProjectTvsChart({ project, milestones, defaultRange }: Props) {
     range: { type: timeRange },
     filter: { type: 'projects', projectIds: [project.id] },
     excludeAssociatedTokens: false,
+    includeRwaRestrictedTokens: false,
   })
 
   const chartData: TvsChartDataPoint[] | undefined = data?.chart.map(

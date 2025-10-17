@@ -52,6 +52,7 @@ export function EcosystemsTvsChart({
       type: timeRange,
     },
     excludeAssociatedTokens: false,
+    includeRwaRestrictedTokens: false,
     filter: {
       type: 'projects',
       projectIds: entries.map((project) => project.id).toSorted(),

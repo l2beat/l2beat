@@ -11,6 +11,10 @@ export function categoryToLabel(category: TvsToken['category']) {
       return 'Stablecoins'
     case 'other':
       return 'Others'
+    case 'rwaPublic':
+      return 'RWA Public'
+    case 'rwaRestricted':
+      return 'RWA Restricted'
     default:
       return capitalize(category)
   }

@@ -6,12 +6,14 @@ interface Params {
   slug: string
   range: TvsChartRange
   excludeAssociatedTokens: boolean
+  includeRwaRestrictedTokens: boolean
 }
 
 export async function getScalingTvsProjectApiData({
   slug,
   range,
   excludeAssociatedTokens,
+  includeRwaRestrictedTokens,
 }: Params) {
   const project = await ps.getProject({
     slug,
@@ -29,6 +31,7 @@ export async function getScalingTvsProjectApiData({
     range: { type: range },
     filter: { type: 'projects', projectIds: [project.id] },
     excludeAssociatedTokens,
+    includeRwaRestrictedTokens,
   })
 
   const pointsWithData = data.chart.filter(
