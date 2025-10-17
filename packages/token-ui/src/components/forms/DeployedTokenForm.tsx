@@ -1,9 +1,8 @@
 import { v } from '@l2beat/validate'
-import { useQuery } from '@tanstack/react-query'
 import { ArrowRightIcon, CheckIcon, ChevronsUpDownIcon } from 'lucide-react'
 import type { SubmitHandler, UseFormReturn } from 'react-hook-form'
-import { Link } from 'react-router-dom'
-import { Button } from '~/components/core/Button'
+import { Link, useSearchParams } from 'react-router-dom'
+import { Button, buttonVariants } from '~/components/core/Button'
 import {
   Command,
   CommandEmpty,
@@ -28,21 +27,15 @@ import {
 } from '~/components/core/Popover'
 import { Spinner } from '~/components/core/Spinner'
 import { Textarea } from '~/components/core/TextArea'
-import { tokenService } from '~/mock/MockTokenService'
-import {
-  ethereumAddressCheck,
-  minLengthCheck,
-  minNumberCheck,
-} from '~/utils/checks'
+import { api } from '~/react-query/trpc'
+import { minLengthCheck, minNumberCheck } from '~/utils/checks'
 import { cn } from '~/utils/cn'
-import { getAbstractTokenDisplayId } from '~/utils/getAbstractTokenDisplayId'
-import { sanitize } from '~/utils/sanitize'
+import { getAbstractTokenDisplayId } from '~/utils/getDisplayId'
 
 export type DeployedTokenSchema = v.infer<typeof DeployedTokenSchema>
 export const DeployedTokenSchema = v.object({
-  id: v.string(),
   chain: v.string(),
-  address: v.string().check(ethereumAddressCheck),
+  address: v.string(),
   decimals: v.number().check(minNumberCheck(1)),
   symbol: v.string().check(minLengthCheck(1)),
   abstractTokenId: v.string().optional(),
@@ -66,21 +59,15 @@ export function DeployedTokenForm({
   }
   children: React.ReactNode
 }) {
-  const { data: chains, isLoading: areChainsLoading } = useQuery({
-    queryKey: ['chains'],
-    queryFn: () => tokenService.getChains(),
-  })
+  const [searchParams, setSearchParams] = useSearchParams()
+  const { data: chains, isLoading: areChainsLoading } =
+    api.chains.getAll.useQuery()
   const { data: abstractTokens, isLoading: areAbstractTokensLoading } =
-    useQuery({
-      queryKey: ['abstractTokens'],
-      queryFn: () => tokenService.getAbstractTokens(),
-    })
+    api.tokens.getAllAbstractTokens.useQuery()
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit((values) => onSubmit(sanitize(values)))}
-      >
+      <form onSubmit={form.handleSubmit((values) => onSubmit(values))}>
         <fieldset disabled={isFormDisabled} className="space-y-8">
           <div className="grid grid-cols-3 items-start gap-2">
             <FormField
@@ -259,6 +246,12 @@ export function DeployedTokenForm({
                                     abstractToken.id,
                                     { shouldDirty: true },
                                   )
+                                  setSearchParams({
+                                    ...Object.fromEntries(
+                                      searchParams.entries(),
+                                    ),
+                                    abstractTokenId: abstractToken.id,
+                                  })
                                 }}
                               >
                                 {getAbstractTokenDisplayId(abstractToken)}
@@ -277,11 +270,17 @@ export function DeployedTokenForm({
                       </Command>
                     </PopoverContent>
                   </Popover>
-                  <Button variant="outline" asChild className="shrink-0">
-                    <Link to={`/tokens/${field.value}`}>
-                      <ArrowRightIcon />
-                    </Link>
-                  </Button>
+
+                  <Link
+                    to={`/tokens/${field.value}`}
+                    aria-disabled={!field.value}
+                    className={buttonVariants({
+                      variant: 'outline',
+                      className: 'shrink-0',
+                    })}
+                  >
+                    <ArrowRightIcon />
+                  </Link>
                 </div>
                 <FormMessage />
               </FormItem>
@@ -295,7 +294,7 @@ export function DeployedTokenForm({
               <FormItem>
                 <FormLabel>Deployment Timestamp</FormLabel>
                 <FormControl>
-                  <Input type="date" {...field} />
+                  <Input type="datetime-local" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

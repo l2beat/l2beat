@@ -151,17 +151,20 @@ export async function makeConfig(
         60 * 60, // 1 hour
       ),
     },
-    bridges: flags.isEnabled('bridges') && {
+    interop: flags.isEnabled('interop') && {
       capture: {
-        enabled: flags.isEnabled('bridges', 'capture'),
-        chains: ['ethereum', 'arbitrum', 'base', 'optimism'].filter((c) =>
-          flags.isEnabled('bridges', 'capture', c),
-        ),
+        enabled: flags.isEnabled('interop', 'capture'),
+        chains: [
+          { name: 'ethereum', type: 'evm' as const },
+          { name: 'arbitrum', type: 'evm' as const },
+          { name: 'base', type: 'evm' as const },
+          { name: 'optimism', type: 'evm' as const },
+        ].filter((c) => flags.isEnabled('interop', 'capture', c.name)),
       },
-      matching: flags.isEnabled('bridges', 'matching'),
-      cleaner: flags.isEnabled('bridges', 'cleaner'),
+      matching: flags.isEnabled('interop', 'matching'),
+      cleaner: flags.isEnabled('interop', 'cleaner'),
       dashboard: {
-        enabled: flags.isEnabled('bridges', 'dashboard'),
+        enabled: flags.isEnabled('interop', 'dashboard'),
         getExplorerUrl: (chain: string) => {
           const c = chains.find((cc) => cc.name === chain)
 
@@ -169,8 +172,11 @@ export async function makeConfig(
         },
       },
       compare: {
-        enabled: flags.isEnabled('bridges', 'compare'),
-        intervalMs: env.optionalInteger(['BRIDGES_COMPARE_INTERVAL_MS']),
+        enabled: flags.isEnabled('interop', 'compare'),
+        intervalMs: env.optionalInteger(['INTEROP_COMPARE_INTERVAL_MS']),
+      },
+      financials: {
+        enabled: flags.isEnabled('interop', 'financials'),
       },
     },
     // Must be last

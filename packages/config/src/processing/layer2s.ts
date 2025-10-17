@@ -46,6 +46,7 @@ import { dydx } from '../projects/dydx/dydx'
 import { ebichain } from '../projects/ebichain/ebichain'
 import { eclipse } from '../projects/eclipse/eclipse'
 import { edgeless } from '../projects/edgeless/edgeless'
+import { edgex } from '../projects/edgex/edgex'
 import { ethernity } from '../projects/ethernity/ethernity'
 import { everclear } from '../projects/everclear/everclear'
 import { facet } from '../projects/facet/facet'
@@ -276,6 +277,7 @@ export const layer2s: ScalingProject[] = [
   ebichain,
   eclipse,
   edgeless,
+  edgex,
   ethernity,
   everclear,
   facet,

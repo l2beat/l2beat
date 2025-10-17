@@ -82,6 +82,7 @@ export type ApiAddressType =
   | 'Multisig'
   | 'Diamond'
   | 'Timelock'
+  | 'Untemplatized'
   | 'Contract'
   | 'Unknown'
 

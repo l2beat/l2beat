@@ -135,7 +135,7 @@ export function DACHALLENGES_DA_PROVIDER(
       nodeSourceLink,
     ),
     bridge: DA_BRIDGES.NONE_WITH_DA_CHALLENGES,
-    badge: BADGES.DA.DAC,
+    badge: BADGES.DA.CustomDA,
   }
 }
 
@@ -585,7 +585,13 @@ function getZkProgramHashes(
         'KailuaTreasury',
         'FPVM_IMAGE_ID',
       )
-      return [ZK_PROGRAM_HASHES(kailuaProgramHash)]
+      const setBuilderProgramHash = templateVars.discovery.getContractValue<
+        string[]
+      >('RiscZeroSetVerifier', 'imageInfo')[0]
+      return [
+        ZK_PROGRAM_HASHES(kailuaProgramHash),
+        ZK_PROGRAM_HASHES(setBuilderProgramHash),
+      ]
     }
     case 'OpSuccinct': {
       const opSuccinctProgramHashes = [

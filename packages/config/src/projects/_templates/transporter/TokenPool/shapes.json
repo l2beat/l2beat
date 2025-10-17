@@ -179,5 +179,23 @@
     "address": "eth:0xC8ADf2f51a35b0a9d8f74675b64c954Ca2Dcbc14",
     "chain": "ethereum",
     "blockNumber": 23383001
+  },
+  "BurnMintERC20.sol": {
+    "hash": "0xaad5fab64eb7b1f522906d4dea61cc4467e050fd6c8ab74e021332248e3d8d36",
+    "address": "eth:0xea17Df5Cf6D172224892B5477A16ACb111182478",
+    "chain": "ethereum",
+    "blockNumber": 23547033
+  },
+  "BurnMintTokenPool_v9": {
+    "hash": "0x0d500b634b888b3ac68c0c2752060ab040f1d34003f0c52a14d3429fb43ee310",
+    "address": "eth:0xC03F9E6c1C5F5D553C77781327640E0c7d30a73d",
+    "chain": "ethereum",
+    "blockNumber": 23547033
+  },
+  "LockReleaseTokenPoolUpgradeable.sol": {
+    "hash": "0xb47b62660c92c8d6d2ad18cbc951b0f13df71372af3bdf622946860cf5bf8100",
+    "address": "eth:0x7Ff02bb686658f2d55f28fDF45286f9499beb9a5",
+    "chain": "ethereum",
+    "blockNumber": 23583487
   }
 }

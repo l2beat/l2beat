@@ -12,12 +12,8 @@ export const donatuz: ScalingProject = opStackL3({
   archivedAt: UnixTime(1751896254), // 2025-07-07T13:50:54Z
   hostChain: 'base',
   discovery,
+  additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Conduit],
   daProvider: EIGENDA_DA_PROVIDER(false),
-  additionalBadges: [
-    BADGES.L3ParentChain.Base,
-    BADGES.DA.EigenDA,
-    BADGES.RaaS.Conduit,
-  ],
   additionalPurposes: ['Social'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,

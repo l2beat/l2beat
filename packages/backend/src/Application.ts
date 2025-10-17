@@ -6,11 +6,11 @@ import type { Config } from './config'
 import { initActivityModule } from './modules/activity/ActivityModule'
 import { createAnomaliesModule } from './modules/anomalies/AnomaliesModule'
 import { createBlockSyncModule } from './modules/block-sync/BlockSyncModule'
-import { createBridgeModule } from './modules/bridges/BridgeModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { initDataAvailabilityModule } from './modules/data-availability/DataAvailabilityModule'
 import { createEcosystemsModule } from './modules/ecosystems/EcosystemsModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
+import { createInteropModule } from './modules/interop/InteropModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { initTvsModule } from './modules/tvs/TvsModule'
@@ -67,7 +67,7 @@ export class Application {
       createDaBeatModule(deps),
       createEcosystemsModule(deps),
       createAnomaliesModule(deps),
-      createBridgeModule(deps),
+      createInteropModule(deps),
       createBlockSyncModule(deps),
     ]
 

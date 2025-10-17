@@ -1,11 +1,8 @@
 import { toJsonSchema as _toJsonSchema, v } from '@l2beat/validate'
 import type { ImpMeta, Validator } from '@l2beat/validate/dist/cjs/validate'
 import type { Application, Request, RequestHandler } from 'express'
-import { httpResponsesDescriptions } from './utils.ts/errorDescriptions'
-
-type XOR<T, U> =
-  | (T & { [K in keyof U]?: never })
-  | (U & { [K in keyof T]?: never })
+import { GenericErrorResponse } from './types'
+import { httpResponsesDescriptions } from './utils/errorDescriptions'
 
 // biome-ignore lint/suspicious/noExplicitAny: its fine
 interface OpenApiRouteOptions<P = any, O = any, Q = any, E = any> {
@@ -43,7 +40,7 @@ type OpenApiResponse = {
   }
 }
 
-type Tags = 'projects'
+type Tags = 'projects' | 'tvs' | 'activity'
 
 const BadRequestResponse = v
   .object({
@@ -60,7 +57,7 @@ interface Route {
   options: OpenApiRouteOptions
 }
 
-interface BaseOpenApiSchema {
+export interface BaseOpenApiSchema {
   openapi: '3.0.0'
   info: {
     title: string
@@ -68,6 +65,16 @@ interface BaseOpenApiSchema {
   }
   servers: { url: string }[]
   tags: { name: Tags; description: string }[]
+  components: {
+    securitySchemes: {
+      apiKeyAuth: {
+        type: 'apiKey'
+        in: 'query'
+        name: 'apiKey'
+      }
+    }
+  }
+  security: { apiKeyAuth: [] }[]
 }
 
 export class OpenApi {
@@ -81,7 +88,7 @@ export class OpenApi {
   get<TParams, TOutput, TQuery, TErrors>(
     path: string,
     options: OpenApiRouteOptions<TParams, TOutput, TQuery, TErrors>,
-    handler: RequestHandler<TParams, XOR<TOutput, TErrors>, unknown, TQuery>,
+    handler: RequestHandler<TParams, TOutput | TErrors, unknown, TQuery>,
   ) {
     this.routes.push({ path, method: 'get', options })
 
@@ -118,7 +125,7 @@ export class OpenApi {
       }
 
       return handler(
-        req as Request<TParams, XOR<TOutput, TErrors>, unknown, TQuery>,
+        req as Request<TParams, TOutput | TErrors, unknown, TQuery>,
         res,
         next,
       )
@@ -126,10 +133,14 @@ export class OpenApi {
   }
 
   getOpenApiSchema() {
+    const { components, ...rest } = this.baseSchema
     return {
-      ...this.baseSchema,
+      ...rest,
       paths: this.getPaths(),
-      components: this.getComponents(),
+      components: {
+        ...components,
+        ...this.getComponents(),
+      },
     }
   }
 
@@ -231,9 +242,10 @@ export class OpenApi {
     }
 
     // Add custom error responses if specified
-    for (const [statusCode, errorValidator] of Object.entries(
-      route.options.errors ?? {},
-    )) {
+    for (const [statusCode, errorValidator] of Object.entries({
+      401: GenericErrorResponse,
+      ...route.options.errors,
+    })) {
       const code = Number.parseInt(statusCode, 10)
       base[code] = {
         description:

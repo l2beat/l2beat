@@ -48,8 +48,8 @@ export const CoinsMarketResult = v.object({
   symbol: v.string(),
   name: v.string(),
   image: v.string(),
-  current_price: v.number(),
-  circulating_supply: v.number(),
+  current_price: v.union([v.number(), v.null()]),
+  circulating_supply: v.union([v.number(), v.null()]),
 })
 
 export const CoinsMarketResultData = v.array(CoinsMarketResult)

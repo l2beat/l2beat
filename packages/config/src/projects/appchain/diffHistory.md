@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xd5bdffbcd42074f185e7f82e73232292e166c43c
+
+# Diff at Wed, 15 Oct 2025 14:29:01 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@e6369d132630f14e783254ffb9e866e883328b9b block: 1759830301
+- current timestamp: 1760538476
+
+## Description
+
+Templatized CertManager.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759830301 (main branch discovery), not current.
+
+```diff
+    contract CertManager (eth:0x1Ff280d8B34E97E2CcA0bdb461F4bA2CF9b8E494) {
+    +++ description: The CertManager is used for anchoring TEE attestation keys to a trusted Certificate Authority (CA).
+      template:
++        "espresso/Sequencing"
+      description:
++        "The CertManager is used for anchoring TEE attestation keys to a trusted Certificate Authority (CA)."
+    }
+```
+
 Generated with discovered.json: 0xc6775cfa81760c17a8063e608737575bca3c3b15
 
 # Diff at Tue, 07 Oct 2025 09:46:09 GMT:

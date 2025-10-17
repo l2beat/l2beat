@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('aevo')
 
 export const aevo: ScalingProject = opStackL2({
   addedAt: UnixTime(1694090052), // 2023-09-07T12:34:12Z
-  additionalBadges: [BADGES.DA.EigenDA, BADGES.RaaS.Conduit],
+  additionalBadges: [BADGES.RaaS.Conduit],
   daProvider: EIGENDA_DA_PROVIDER(false),
   associatedTokens: ['AEVO'],
   discovery,

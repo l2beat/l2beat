@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "edgex",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0xC0a1a1e4AF873E9A37a0caC37F3aB81152432Cc5"]
+}

@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('river')
 
 export const river: ScalingProject = opStackL2({
   addedAt: UnixTime(1729867724), // 2024-10-25T17:48:44Z
-  additionalBadges: [BADGES.RaaS.Caldera, BADGES.DA.Celestia],
+  additionalBadges: [BADGES.RaaS.Caldera],
   discovery,
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,

@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CertManager",
+  "description": "The CertManager is used for anchoring TEE attestation keys to a trusted Certificate Authority (CA).",
+  "ignoreMethods": [""],
+  "ignoreInWatchMode": [""],
+  "ignoreRelatives": [""],
+  "fields": {}
+}

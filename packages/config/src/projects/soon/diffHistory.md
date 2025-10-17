@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x8fe276e39ec773b15a45601ff3dbf80c0be1587f
+Generated with discovered.json: 0x13965e8bf5b21c897264c4aa2c9ceefbea2ceca5
 
-# Diff at Thu, 09 Oct 2025 12:30:15 GMT:
+# Diff at Tue, 14 Oct 2025 10:17:00 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@23b54c3dbb81f5b38a658ec18b1e64574b91d70d block: 1759843609
-- current timestamp: 1760012949
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@ed4c0b131a4890ffd9886e9edafe28cdc6ce8d83 block: 1759843609
+- current timestamp: 1760436956
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Manually decoded commitment, turns out it's v3.
 
 ## Config/verification related changes
 

@@ -1,6 +1,6 @@
 {
   "name": "scroll",
-  "timestamp": 1758107952,
+  "timestamp": 1760089209,
   "configHash": "0xc55f65155f28177b711e34a8a919eeb5a637eaf56c006c3888e821d72709abe8",
   "entries": [
     {
@@ -994,11 +994,11 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1758101855,
+        "getFirstUnfinalizedMessageEnqueueTime": 1760086655,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 963347,
-        "nextUnfinalizedQueueIndex": 963339,
+        "nextCrossDomainMessageIndex": 965636,
+        "nextUnfinalizedQueueIndex": 965631,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -2076,14 +2076,14 @@
         "$upgradeCount": 8,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 388067,
+        "lastFinalizedBatchIndex": 439223,
         "layer2ChainId": 534352,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 388133,
-          "lastFinalizedBatchIndex": 388067,
-          "lastFinalizeTimestamp": 1758107783,
+          "lastCommittedBatchIndex": 439274,
+          "lastFinalizedBatchIndex": 439223,
+          "lastFinalizeTimestamp": 1760088995,
           "flags": 1,
           "reserved": 0
         },
@@ -2851,7 +2851,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 20394715397755,
+        "totalBridgedUSDC": 20402922714559,
         "withdrawPaused": false
       },
       "implementationNames": {
@@ -3551,11 +3551,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "scr:0x226A1669cd60A43e53030fD0A482Ea566d3Dba8B",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "scr:0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5",
       "type": "EOA",
       "proxyType": "EOA",
@@ -3687,16 +3682,15 @@
         "$immutable": false,
         "$implementation": "scr:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
-          "scr:0xd5A0f3DfCe7128B7119462F7aC912616bB05b593",
           "scr:0x1Da431d2D5ECA4Df735F69fB5ea10c8E630b8f50",
-          "scr:0x226A1669cd60A43e53030fD0A482Ea566d3Dba8B"
+          "scr:0x558581b0345D986bA5bD6f04Efd27e2a5B991320"
         ],
         "$threshold": 2,
         "domainSeparator": "0x4c95825f005b74d2e413c82507d0c8d6d574028f04fa9a9832cb397746ba234c",
         "getChainId": 534352,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 24,
+        "multisigThreshold": "2 of 2 (100%)",
+        "nonce": 26,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3908,14 +3902,19 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0x74f302b945dd598dc2c5a337f26346a61e4f52b2709b63564cb3617501c97f98",
+        "messageRoot": "0xa9bbb772d47bd87f8efb2bd1087583f0586654acb665d53c6b25fa532744b1e0",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 209902,
+        "nextMessageIndex": 211403,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
         "scr:0x5300000000000000000000000000000000000000": "L2MessageQueue"
       }
+    },
+    {
+      "address": "scr:0x558581b0345D986bA5bD6f04Efd27e2a5B991320",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "cts-Zellic",
@@ -4920,11 +4919,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "scr:0xd5A0f3DfCe7128B7119462F7aC912616bB05b593",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "scr:0xDD659911EcBD4458db07Ee7cDdeC79bf8F859AbC",
       "type": "EOA",
       "proxyType": "EOA"
@@ -5122,7 +5116,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 21,
+        "nonce": 22,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -7498,6 +7492,6 @@
     "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "scroll": 21440927, "ethereum": 23382457 },
-  "permissionsConfigHash": "0x38572e7ef44089f04e4f6ff13c9b6485f1fe1187ef9b2963df564d511a7e874f"
+  "usedBlockNumbers": { "ethereum": 23546494, "scroll": 22945593 },
+  "permissionsConfigHash": "0x325eb0d0599eff7bd617f8868c1a8f22a304ef33b8eb96a60a4cf0bbb845f0d5"
 }

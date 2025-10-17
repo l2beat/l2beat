@@ -1,9 +1,9 @@
 import { getEnv, LogFormatterPretty, Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import { createDatabase } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
 import { Cache } from '../src/cache/Cache'
 import { QueryExecutor } from '../src/QueryExecutor'
+import { getPackageHash } from '../src/utils/packageHash'
 
 main().catch((err) => console.error(err))
 
@@ -25,11 +25,8 @@ async function main() {
       10,
     )
 
-    const size = Buffer.byteLength(JSON.stringify(result.data), 'utf8')
+    const size = Buffer.byteLength(JSON.stringify(result), 'utf8')
     logger.info(`Data size: ${size / 1024} KB`)
-    logger.info(
-      `Data timestamp: ${UnixTime.toDate(result.timestamp).toISOString()}`,
-    )
   } catch (error) {
     logger.error('Error occurred while fetching TVS chart:', error)
   }
@@ -72,7 +69,10 @@ export function getDb() {
 export function getCache() {
   const env = getEnv()
   const redisUrl = env.string('REDIS_URL')
-  return new Cache(redisUrl)
+  const packageHash = getPackageHash({
+    redisUrl,
+  })
+  return new Cache(redisUrl, packageHash)
 }
 
 export function getLogger() {

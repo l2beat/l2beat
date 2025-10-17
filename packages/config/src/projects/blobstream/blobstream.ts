@@ -5,6 +5,7 @@ import {
   DaUpgradeabilityRisk,
 } from '../../common'
 import { linkByDA } from '../../common/linkByDA'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   generateDiscoveryDrivenContracts,
@@ -146,6 +147,7 @@ export const blobstream: BaseProject = {
         text: 'the bridge contract is frozen by the Guardian (BlobstreamMultisig).',
       },
     ],
+    zkProgramHashes: getBlobstreamVKeys().map((el) => ZK_PROGRAM_HASHES(el)),
   },
   milestones: [
     {
@@ -159,4 +161,30 @@ export const blobstream: BaseProject = {
   ],
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   discoveryInfo: getDiscoveryInfo([discovery]),
+}
+
+function getBlobstreamVKeys(): string[] {
+  const blobstreamProgramHashes = new Set<string>()
+
+  blobstreamProgramHashes.add(
+    discovery.getContractValue<string>(
+      'ArbitrumBlobstream',
+      'blobstreamProgramVkey',
+    ),
+  )
+
+  blobstreamProgramHashes.add(
+    discovery.getContractValue<string>(
+      'EthereumBlobstream',
+      'blobstreamProgramVkey',
+    ),
+  )
+
+  blobstreamProgramHashes.add(
+    discovery.getContractValue<string>(
+      'BaseBlobstream',
+      'blobstreamProgramVkey',
+    ),
+  )
+  return Array.from(blobstreamProgramHashes)
 }

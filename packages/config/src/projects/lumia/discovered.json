@@ -1,7 +1,7 @@
 {
   "name": "lumia",
   "timestamp": 1759756767,
-  "configHash": "0x6cd1bda43c49d9956297d571dbe4322f704447754ea8495bd05e15ba9d37ca92",
+  "configHash": "0x6ff367bd030c0fb3d31732fe069157934637ca9a56fc2ac3a391be7cf9cad3a6",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -125,24 +125,6 @@
         "eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B": "PolygonPessimisticConsensus"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "name": "Verifier",
-      "address": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
-      "type": "Contract",
-      "template": "polygon-cdk/Verifier",
-      "sourceHashes": [
-        "0xa0662ee6bc9d2b6e692a65e797b6edb54b3019696dc845d2c644f705bd8bb5be"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
-      "sinceTimestamp": 1729157663,
-      "sinceBlock": 20984421,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D": "FflonkVerifier_12"
-      },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
     }
   ],
   "abis": {
@@ -240,15 +222,11 @@
       "error FailedInnerCall()",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
-    ],
-    "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D": [
-      "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ]
   },
   "usedTemplates": {
-    "polygon-cdk/PolygonPessimisticConsensus": "0xe243e1961d0062de8984cb8f88f047117bb8998497751cfd58b4dcf414cd66b5",
-    "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "polygon-cdk/PolygonPessimisticConsensus": "0xe243e1961d0062de8984cb8f88f047117bb8998497751cfd58b4dcf414cd66b5"
   },
   "usedBlockNumbers": { "ethereum": 23518983 },
-  "permissionsConfigHash": "0x16511756807069f5f27cb3b6940680179bd173b31e0ff253a0ff64f65fbff7cb"
+  "permissionsConfigHash": "0x9d833d76ac506699c7a2fc103aa503582a1d6707a1dfd7b3893c599754071326"
 }
