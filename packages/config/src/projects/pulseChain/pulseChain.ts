@@ -36,6 +36,7 @@ export const pulseChain: Bridge = {
         'https://twitter.com/PulseChainCom',
         'https://t.me/PulseChainCom',
       ],
+      explorers: ['https://ipfs.scan.pulsechain.com'],
     },
   },
   config: {
