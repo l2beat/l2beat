@@ -901,5 +901,21 @@
     "events": [],
     "messages": [],
     "transfers": []
+  },
+  "aori-settlement": {
+    "txs": [
+      // one taxi, one credit tx
+      {
+        "chain": "base",
+        "tx": "0x82ea43567873ab55f00f85c9791d2d593e16b476be9e5d90542ad6808a4a903e"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x13361b4a8536efc49ee1f1f39bf2562ab663d1623bfffacf9586b7642902f09c"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
   }
 }
