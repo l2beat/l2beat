@@ -14,7 +14,7 @@ import {
   Result,
 } from './types'
 
-const AORI_NETWORKS = defineNetworks('layerzero', [
+const AORI_NETWORKS = defineNetworks('aori', [
   {
     chainId: 1,
     eid: 30101,

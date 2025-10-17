@@ -880,7 +880,7 @@
   },
   "stargate-creditmessaging": {
     "txs": [
-      // one taxi, one credit tx
+      // one taxi, one credit tx (just message+app)
       {
         "chain": "optimism",
         "tx": "0x5486e7ce1d6e0ef138dcb4a6b82ec06832b035141fc85184bf98c7a790cea268"
@@ -904,7 +904,7 @@
   },
   "aori-settlement": {
     "txs": [
-      // one taxi, one credit tx
+      // no transfer, just message+app
       {
         "chain": "base",
         "tx": "0x82ea43567873ab55f00f85c9791d2d593e16b476be9e5d90542ad6808a4a903e"
