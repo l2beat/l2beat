@@ -4,7 +4,6 @@ import {
   type DiscoveryOutput,
   type EntryParameters,
   get$Implementations,
-  getReachableEntries,
   getShapeFromOutputEntry,
   makeEntryColorConfig,
   makeEntryStructureConfig,
@@ -35,25 +34,25 @@ export function getProject(
   project: string,
 ): ApiProjectResponse {
   const discoveries = configReader.readDiscoveryWithReferences(project)
-  const discovery = discoveries[0]
+  // const discovery = discoveries[0]
   const data = discoveries.map((discovery) => ({
     discovery,
     config: configReader.readConfig(discovery.name),
   }))
 
-  const referencedEntries = getReachableEntries(
-    data
-      .flatMap((x) => x.discovery.entries)
-      .filter((e) => e.type !== 'Reference'),
-    discovery.entries.map((e) => e.address),
-  ).map((x) => x.address)
+  // const referencedEntries = getReachableEntries(
+  //   data
+  //     .flatMap((x) => x.discovery.entries)
+  //     .filter((e) => e.type !== 'Reference'),
+  //   discovery.entries.map((e) => e.address),
+  // ).map((x) => x.address)
 
   const response: ApiProjectResponse = { entries: [] }
   const meta = getMeta(data.map((x) => x.discovery))
   for (const { config, discovery } of data) {
     const contracts = discovery.entries
       .filter((e) => e.type === 'Contract')
-      .filter((e) => referencedEntries.includes(e.address))
+      // .filter((e) => referencedEntries.includes(e.address))
       .map((entry) => {
         const contractConfig = makeEntryStructureConfig(
           config.structure,
@@ -96,7 +95,7 @@ export function getProject(
       ),
       eoas: discovery.entries
         .filter((e) => e.type === 'EOA')
-        .filter((e) => referencedEntries.includes(e.address))
+        // .filter((e) => referencedEntries.includes(e.address))
         .filter(
           (x) =>
             ChainSpecificAddress.address(x.address) !== EthereumAddress.ZERO,
