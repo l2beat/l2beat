@@ -3,6 +3,7 @@ import { ProjectService } from '@l2beat/config'
 import { createDatabase } from '@l2beat/database'
 import express from 'express'
 import swaggerUi from 'swagger-ui-express'
+import { InMemoryCache } from './cache/InMemoryCache'
 import { getConfig } from './config'
 import { authMiddleware } from './middleware/authMiddleware'
 import { loggerMiddleware } from './middleware/loggerMiddleware'
@@ -11,7 +12,6 @@ import { addActivityRoutes } from './routes/activity/routes'
 import { addProjectsRoutes } from './routes/projects/routes'
 import { addTvsRoutes } from './routes/tvs/routes'
 import { createLogger } from './utils/logger/createLogger'
-import { InMemoryCache } from './cache/InMemoryCache'
 
 function main() {
   const env = getEnv()
