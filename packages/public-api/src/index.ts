@@ -11,6 +11,7 @@ import { addActivityRoutes } from './routes/activity/routes'
 import { addProjectsRoutes } from './routes/projects/routes'
 import { addTvsRoutes } from './routes/tvs/routes'
 import { createLogger } from './utils/logger/createLogger'
+import { InMemoryCache } from './cache/InMemoryCache'
 
 function main() {
   const env = getEnv()
@@ -54,6 +55,10 @@ function main() {
     },
     security: [{ apiKeyAuth: [] }],
   })
+  const cache = new InMemoryCache({
+    logger,
+    enabled: config.cacheEnabled,
+  })
 
   app.get('/', (_, res) => {
     res.redirect('/docs')
@@ -80,8 +85,8 @@ function main() {
   app.use(loggerMiddleware(logger))
 
   addProjectsRoutes(openapi, ps)
-  addTvsRoutes(openapi, ps, db)
-  addActivityRoutes(openapi, ps, db)
+  addTvsRoutes(openapi, ps, db, cache)
+  addActivityRoutes(openapi, ps, db, cache)
 
   app.listen(config.api.port, () => {
     console.log(`Example app listening on port ${config.api.port}`)
