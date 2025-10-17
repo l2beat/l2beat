@@ -35,6 +35,8 @@ export const satellite: Bridge = {
         'https://linkedin.com/company/axelarnetwork/',
         'https://t.me/axelarcommunity',
       ],
+      bridges: ['https://app.squidrouter.com'],
+      documentation: ['https://docs.squidrouter.com'],
     },
   },
   config: {
