@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
+    "@trpc/client": "^11.0.0-rc.446",
     "@types/express": "^5.0.0",
     "@types/mocha": "^10.0.6",
     "dotenv": "^17.2.3",
