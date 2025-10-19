@@ -3,7 +3,7 @@
 **Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
 **Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
 
-**Note**: This template is filled in by the `/speckit.plan` command. See `.specify/templates/commands/plan.md` for the execution workflow.
+**Note**: This template is filled in by the `/speckit.plan` command. See `.specify/scripts/bash/` for helper scripts used during planning.
 
 ## Summary
 
@@ -31,7 +31,11 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- TypeScript build passes: `npm run typecheck` and `npm run build`.
+- Formatting/Linting clean: `npm run format` and `npm run lint` have no changes/errors.
+- Testing discipline: Mocha + Earl unit tests cover new/changed behavior and `npm test` passes.
+- CLI coverage: If the feature introduces a user‑facing operation, expose it via `package.json` scripts.
+- Scope separation: Storage schemas/RPC details belong in the spec/tasks, not in this plan; link to the appropriate spec.
 
 ## Project Structure
 
@@ -102,4 +106,3 @@ directories captured above]
 |-----------|------------|-------------------------------------|
 | [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
 | [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
-
