@@ -21,6 +21,7 @@ description: "Task list template for feature implementation"
 - **Web app**: `backend/src/`, `frontend/src/`
 - **Mobile**: `api/src/`, `ios/src/` or `android/src/`
 - Paths shown below assume single project - adjust based on plan.md structure
+ - Monorepo isolation: Tasks MUST reference files strictly within this package directory. Do NOT read, search, or modify sibling packages or repository-root files. Cross-package use is only allowed via published, versioned dependencies listed in this package's `package.json`.
 
 <!-- 
   ============================================================================
@@ -246,6 +247,5 @@ With multiple developers:
 - Commit after each task or logical group
 - Stop at any checkpoint to validate story independently
 - Avoid: vague tasks, same file conflicts, cross-story dependencies that break independence
-
 
 

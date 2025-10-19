@@ -36,6 +36,7 @@
 - Testing discipline: Mocha + Earl unit tests cover new/changed behavior and `npm test` passes.
 - CLI coverage: If the feature introduces a user‑facing operation, expose it via `package.json` scripts.
 - Scope separation: Storage schemas/RPC details belong in the spec/tasks, not in this plan; link to the appropriate spec.
+ - Monorepo isolation: All research/edits MUST remain within this package directory; do not read or reference sibling packages or repository-root files, except via published dependencies declared in this package's `package.json`.
 
 ## Project Structure
 

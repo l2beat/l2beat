@@ -1,20 +1,17 @@
 <!--
 Sync Impact Report
-- Version change: N/A → 1.0.0
+- Version change: 1.0.0 → 1.1.0
 - Modified principles:
-  - PRINCIPLE_1_NAME → Simplicity Over Abstraction
-  - PRINCIPLE_2_NAME → TypeScript + Biome Tooling
-  - PRINCIPLE_3_NAME → Unit Tests with Mocha + Earl
-  - PRINCIPLE_4_NAME → CLI‑Oriented Operations
-  - PRINCIPLE_5_NAME → Scope Separation (Specs Own Domain Details)
-- Added sections: None
+  - Added: Monorepo Isolation & Package Independence
+- Added sections: Monorepo Isolation & Package Independence (new Core Principle)
 - Removed sections: None
 - Templates requiring updates:
-  - ✅ .specify/templates/plan-template.md (Constitution Check gates; removed broken reference)
-  - ✅ .specify/templates/spec-template.md (no change required)
-  - ✅ .specify/templates/tasks-template.md (no change required)
+  - ✅ .specify/templates/plan-template.md (added Monorepo isolation gate)
+  - ✅ .specify/templates/spec-template.md (added scope guard note)
+  - ✅ .specify/templates/tasks-template.md (clarified path conventions within package)
   - N/A .specify/templates/commands/*.md (directory not present)
-- Follow-up TODOs: None (RATIFICATION_DATE set as first adoption)
+- Follow-up TODOs:
+  - TODO(MONOREPO_EXCEPTIONS): Define any explicit exceptions, if ever allowed. Default: none.
 -->
 
 # @l2beat/eventdb Constitution
@@ -52,6 +49,20 @@ This constitution defines process and engineering standards. Domain specifics—
 including ClickHouse table schemas and RPC method details—BELONG in feature
 specifications and tasks, not here.
 
+### Monorepo Isolation & Package Independence
+Although this package lives inside a monorepo, it is fully independent. During
+all phases of work (research, planning, implementation, tests, scripts, reviews
+and tooling), contributors MUST NOT read, search, traverse, import from, copy
+from, or modify files outside this package directory. The ONLY permitted cross-
+package interactions are via published, versioned dependencies declared in this
+package's `package.json` and external services/APIs. Tools and scripts MUST
+operate strictly within this package directory.
+Rationale: Enforcing isolation prevents hidden coupling, keeps builds and
+reasoning local, and ensures reproducible results.
+Note: No exceptions are defined at this time. TODO(MONOREPO_EXCEPTIONS): If any
+explicit exceptions are ever allowed, they MUST be documented as a formal
+amendment to this constitution before work proceeds.
+
 ## Project Scope & Technology
 
 EventDB gathers historical and live events from EVM‑compatible chains and
@@ -88,4 +99,5 @@ Technology in use (derived from repository):
 - Compliance Review: `format`, `lint`, `typecheck`, `build`, and `test` MUST be
   clean on PRs. New user‑facing operations SHOULD be added as npm scripts.
 
-**Version**: 1.0.0 | **Ratified**: 2025-10-19 | **Last Amended**: 2025-10-19
+**Version**: 1.1.0 | **Ratified**: 2025-10-19 | **Last Amended**: 2025-10-19
+
