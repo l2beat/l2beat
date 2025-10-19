@@ -1,0 +1,41 @@
+{
+  "name": "@l2beat/eventdb",
+  "version": "0.1.0",
+  "private": true,
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": "./build/index.js",
+      "default": "./build/index.js"
+    }
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node build/server.js",
+    "dev:serve": "node -r esbuild-register src/server.ts",
+    "dev:sync": "node -r esbuild-register src/sync.ts",
+    "clean": "rm -rf build",
+    "format:fix": "biome format --write .",
+    "format": "biome format .",
+    "lint:fix": "biome check --formatter-enabled=false --write .",
+    "lint": "biome check --formatter-enabled=false .",
+    "test": "mocha",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*",
+    "@types/express": "^5.0.0",
+    "@types/mocha": "^10.0.6",
+    "dotenv": "^17.2.3",
+    "earl": "^1.1.0",
+    "mocha": "^10.2.0",
+    "ts-node-dev": "^2.0.0"
+  }
+}
