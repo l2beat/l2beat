@@ -45,7 +45,7 @@ const parseRelayedMessage = createEventParser(
   'event RelayedMessage(bytes32 indexed msgHash)',
 )
 
-// L1 event
+// L1 events: there are actually two events that need to be tracked.
 // TODO
 
 const OPSTACK_NETWORKS = defineNetworks('opstack', [
@@ -70,12 +70,13 @@ export class OpStackPlugin implements InteropPlugin {
   name = 'opstack'
 
   capture(input: LogToCapture) {
+    // get L1 side events
     if (input.ctx.chain === 'ethereum') {
       const network = OPSTACK_NETWORKS.find(
         (n) => n.optimismPortal === EthereumAddress(input.log.address),
       )
       if (!network) return
-      // check if this is an L2->L1 message (L1 side)
+      // check if this is an L2->*L1* message
       const withdrawalFinalized = parseWithdrawalFinalized(input.log, [
         network.optimismPortal,
       ])
@@ -85,12 +86,13 @@ export class OpStackPlugin implements InteropPlugin {
           withdrawalHash: withdrawalFinalized.withdrawalHash,
         })
       }
-      // otherwise check if this is an L1->L2 message (L1 side)
+      // otherwise check if this is an *L1*->L2 message
       // TODO
     } else {
+      // get L2 side events
       const network = OPSTACK_NETWORKS.find((n) => n.chain === input.ctx.chain)
       if (!network) return
-      // check if this is an L2->L1 message (L2 side)
+      // check if this is an *L2*->L1 message
       const messagePassed = parseMessagePassed(input.log, [
         network.l2ToL1MessagePasser,
       ])
@@ -100,7 +102,7 @@ export class OpStackPlugin implements InteropPlugin {
           withdrawalHash: messagePassed.withdrawalHash,
         })
       }
-      // otherwise check if this is an L1->L2 message (L2 side)
+      // otherwise check if this is an L1->*L2* message
       const relayedMessage = parseRelayedMessage(input.log, [
         network.l2CrossDomainMessenger,
       ])
