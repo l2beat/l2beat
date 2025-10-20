@@ -37,7 +37,7 @@ export function toRecord(row: Selectable<InteropEvent>): InteropEventRecord {
     logIndex: row.logIndex ?? -1, // TODO: make optional
     matched: row.matched,
     unsupported: row.unsupported,
-    args: row.args,
+    args: typeof row.args === 'string' ? JSON.parse(row.args) : row.args,
   }
 }
 
@@ -57,7 +57,7 @@ export function toRow(record: InteropEventRecord): Insertable<InteropEvent> {
     logIndex: record.logIndex,
     matched: record.matched,
     unsupported: record.unsupported,
-    args: record.args,
+    args: JSON.stringify(record.args),
   }
 }
 
