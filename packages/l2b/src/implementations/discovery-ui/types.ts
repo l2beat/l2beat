@@ -66,6 +66,7 @@ export interface ApiAddressEntry {
   referencedBy: ApiAddressReference[]
   address: ChainSpecificAddress
   chain: string
+  isReachable: boolean
 }
 
 export interface ApiAddressReference extends AddressFieldValue {
