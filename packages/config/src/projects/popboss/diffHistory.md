@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x262aa155f60148b9f286d5cef2d755d5664665a4
+Generated with discovered.json: 0xe00b4ada8cc2790f86aeb20257b517cb0b2abb13
 
-# Diff at Mon, 20 Oct 2025 15:34:48 GMT:
+# Diff at Mon, 20 Oct 2025 15:58:09 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@bfe80e92f67656ee716f7ab40cc8f3f9e92dc7d6 block: 1760089813
-- current timestamp: 1760974422
+- current timestamp: 1760975747
 
 ## Description
 
@@ -13,49 +13,16 @@ Upgrade to unverified Bridge contract. Project already archived.
 ## Watched changes
 
 ```diff
-    contract UpgradeExecutor (arb1:0x246bAB4F36095ABc74052Cc122c318298a9ef876) {
-    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
-      directlyReceivedPermissions.1:
--        {"permission":"interact","from":"arb1:0x330F8fEB25f3427cABA32446728C36ae67f2135b","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","role":".owner"}
-      directlyReceivedPermissions.2:
--        {"permission":"upgrade","from":"arb1:0x330F8fEB25f3427cABA32446728C36ae67f2135b","role":"admin"}
-    }
-```
-
-```diff
--   Status: DELETED
-    contract RollupProxy (arb1:0x330F8fEB25f3427cABA32446728C36ae67f2135b)
-    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
-```
-
-```diff
--   Status: DELETED
-    contract OneStepProverHostIo (arb1:0x33c1514Bf90e202d242C299b37C60f908aa206D4)
-    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
-```
-
-```diff
     contract ProxyAdmin (arb1:0x490C4c92Ea9FF02EE8277222C66afD80Bfb1b7c1) {
     +++ description: None
       directlyReceivedPermissions.2:
 -        {"permission":"upgrade","from":"arb1:0x6e988B94C12194A925D7802FE75891364C312477","role":"admin"}
-      directlyReceivedPermissions.3:
--        {"permission":"upgrade","from":"arb1:0x6eE94AD8057Fd7Ba4d47bb6278a261c8a9FD4E3f","role":"admin"}
-      directlyReceivedPermissions.4:
--        {"permission":"upgrade","from":"arb1:0xa4270256B160C3Ebec2d6914a906c7EC38D8d072","role":"admin"}
-      directlyReceivedPermissions.5:
--        {"permission":"upgrade","from":"arb1:0xEe30EfcaF812d10e1EFE25E9458f76a39DAD3239","role":"admin"}
-      directlyReceivedPermissions.6:
--        {"permission":"upgrade","from":"arb1:0xf3224F90c0A6138209a9EbaFd1971AD1E04eEb0D","role":"admin"}
     }
 ```
 
 ```diff
-    contract  (arb1:0x53D82686BC9827fEc03bcEe661B37b855A18EcA9) {
+    contract Bridge (arb1:0x53D82686BC9827fEc03bcEe661B37b855A18EcA9) {
     +++ description: None
-      name:
--        "Bridge"
-+        ""
       template:
 -        "orbitstack/Bridge"
       sourceHashes:
@@ -105,129 +72,33 @@ Upgrade to unverified Bridge contract. Project already archived.
 
 ```diff
 -   Status: DELETED
-    contract OneStepProver0 (arb1:0x54E0923782b701044444De5d8c3A45aC890b0881)
-    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
-```
-
-```diff
--   Status: DELETED
-    contract ValidatorUtils (arb1:0x6c21303F5986180B1394d2C89f3e883890E2867b)
-    +++ description: This contract implements view only utilities for validators.
-```
-
-```diff
--   Status: DELETED
     contract RollupEventInbox (arb1:0x6e988B94C12194A925D7802FE75891364C312477)
     +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
 ```
 
 ```diff
--   Status: DELETED
-    contract SequencerInbox (arb1:0x6eE94AD8057Fd7Ba4d47bb6278a261c8a9FD4E3f)
-    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
-```
-
-```diff
     contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
     +++ description: None
-      receivedPermissions.0:
--        {"permission":"interact","from":"arb1:0x330F8fEB25f3427cABA32446728C36ae67f2135b","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","role":".owner","via":[{"address":"arb1:0x246bAB4F36095ABc74052Cc122c318298a9ef876"}]}
-      receivedPermissions.2:
--        {"permission":"upgrade","from":"arb1:0x330F8fEB25f3427cABA32446728C36ae67f2135b","role":"admin","via":[{"address":"arb1:0x246bAB4F36095ABc74052Cc122c318298a9ef876"}]}
       receivedPermissions.4:
 -        {"permission":"upgrade","from":"arb1:0x6e988B94C12194A925D7802FE75891364C312477","role":"admin","via":[{"address":"arb1:0x490C4c92Ea9FF02EE8277222C66afD80Bfb1b7c1"},{"address":"arb1:0x246bAB4F36095ABc74052Cc122c318298a9ef876"}]}
-      receivedPermissions.5:
--        {"permission":"upgrade","from":"arb1:0x6eE94AD8057Fd7Ba4d47bb6278a261c8a9FD4E3f","role":"admin","via":[{"address":"arb1:0x490C4c92Ea9FF02EE8277222C66afD80Bfb1b7c1"},{"address":"arb1:0x246bAB4F36095ABc74052Cc122c318298a9ef876"}]}
-      receivedPermissions.6:
--        {"permission":"upgrade","from":"arb1:0xa4270256B160C3Ebec2d6914a906c7EC38D8d072","role":"admin","via":[{"address":"arb1:0x490C4c92Ea9FF02EE8277222C66afD80Bfb1b7c1"},{"address":"arb1:0x246bAB4F36095ABc74052Cc122c318298a9ef876"}]}
-      receivedPermissions.7:
--        {"permission":"upgrade","from":"arb1:0xEe30EfcaF812d10e1EFE25E9458f76a39DAD3239","role":"admin","via":[{"address":"arb1:0x490C4c92Ea9FF02EE8277222C66afD80Bfb1b7c1"},{"address":"arb1:0x246bAB4F36095ABc74052Cc122c318298a9ef876"}]}
-      receivedPermissions.8:
--        {"permission":"upgrade","from":"arb1:0xf3224F90c0A6138209a9EbaFd1971AD1E04eEb0D","role":"admin","via":[{"address":"arb1:0x490C4c92Ea9FF02EE8277222C66afD80Bfb1b7c1"},{"address":"arb1:0x246bAB4F36095ABc74052Cc122c318298a9ef876"}]}
     }
-```
-
-```diff
--   Status: DELETED
-    contract Outbox (arb1:0xa4270256B160C3Ebec2d6914a906c7EC38D8d072)
-    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
-```
-
-```diff
--   Status: DELETED
-    contract OneStepProofEntry (arb1:0xD89d54007079071cBA859127318b9F34eeB78049)
-    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
-```
-
-```diff
--   Status: DELETED
-    contract OneStepProverMath (arb1:0xE58a2dEb5718F9aAF2C1DdD0E366ED076D204cc4)
-    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
-```
-
-```diff
--   Status: DELETED
-    contract Inbox (arb1:0xEe30EfcaF812d10e1EFE25E9458f76a39DAD3239)
-    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
-```
-
-```diff
--   Status: DELETED
-    contract ChallengeManager (arb1:0xf3224F90c0A6138209a9EbaFd1971AD1E04eEb0D)
-    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
 ```
 
 ```diff
     EOA  (arb1:0xF57362969fe0d5fcaeB8a3Cf2d185eF39A5b3BD6) {
     +++ description: None
-      receivedPermissions.0:
--        {"permission":"interact","from":"arb1:0x330F8fEB25f3427cABA32446728C36ae67f2135b","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","role":".owner","via":[{"address":"arb1:0x246bAB4F36095ABc74052Cc122c318298a9ef876"}]}
-      receivedPermissions.2:
--        {"permission":"upgrade","from":"arb1:0x330F8fEB25f3427cABA32446728C36ae67f2135b","role":"admin","via":[{"address":"arb1:0x246bAB4F36095ABc74052Cc122c318298a9ef876"}]}
       receivedPermissions.4:
 -        {"permission":"upgrade","from":"arb1:0x6e988B94C12194A925D7802FE75891364C312477","role":"admin","via":[{"address":"arb1:0x490C4c92Ea9FF02EE8277222C66afD80Bfb1b7c1"},{"address":"arb1:0x246bAB4F36095ABc74052Cc122c318298a9ef876"}]}
-      receivedPermissions.5:
--        {"permission":"upgrade","from":"arb1:0x6eE94AD8057Fd7Ba4d47bb6278a261c8a9FD4E3f","role":"admin","via":[{"address":"arb1:0x490C4c92Ea9FF02EE8277222C66afD80Bfb1b7c1"},{"address":"arb1:0x246bAB4F36095ABc74052Cc122c318298a9ef876"}]}
-      receivedPermissions.6:
--        {"permission":"upgrade","from":"arb1:0xa4270256B160C3Ebec2d6914a906c7EC38D8d072","role":"admin","via":[{"address":"arb1:0x490C4c92Ea9FF02EE8277222C66afD80Bfb1b7c1"},{"address":"arb1:0x246bAB4F36095ABc74052Cc122c318298a9ef876"}]}
-      receivedPermissions.7:
--        {"permission":"upgrade","from":"arb1:0xEe30EfcaF812d10e1EFE25E9458f76a39DAD3239","role":"admin","via":[{"address":"arb1:0x490C4c92Ea9FF02EE8277222C66afD80Bfb1b7c1"},{"address":"arb1:0x246bAB4F36095ABc74052Cc122c318298a9ef876"}]}
-      receivedPermissions.8:
--        {"permission":"upgrade","from":"arb1:0xf3224F90c0A6138209a9EbaFd1971AD1E04eEb0D","role":"admin","via":[{"address":"arb1:0x490C4c92Ea9FF02EE8277222C66afD80Bfb1b7c1"},{"address":"arb1:0x246bAB4F36095ABc74052Cc122c318298a9ef876"}]}
     }
-```
-
-```diff
--   Status: DELETED
-    contract OneStepProverMemory (arb1:0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881)
-    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
 ```
 
 ## Source code changes
 
 ```diff
-.../Bridge/Bridge.sol => /dev/null                 |  733 -----
- .../ChallengeManager.sol => /dev/null              |  994 ------
- .../TransparentUpgradeableProxy.p.sol => /dev/null |  629 ----
- .../.flat@1760089813/Inbox/Inbox.sol => /dev/null  | 1329 --------
- .../TransparentUpgradeableProxy.p.sol => /dev/null |  629 ----
- .../OneStepProofEntry.sol => /dev/null             | 1314 --------
- .../OneStepProver0.sol => /dev/null                | 1637 ----------
- .../OneStepProverHostIo.sol => /dev/null           | 1860 -----------
- .../OneStepProverMath.sol => /dev/null             |  914 ------
- .../OneStepProverMemory.sol => /dev/null           | 1263 --------
- .../Outbox/Outbox.sol => /dev/null                 |  526 ----
- .../TransparentUpgradeableProxy.p.sol => /dev/null |  629 ----
- .../RollupEventInbox.sol => /dev/null              |  133 -
- .../TransparentUpgradeableProxy.p.sol => /dev/null |  629 ----
- .../RollupAdminLogic.1.sol => /dev/null            | 3096 ------------------
- .../RollupProxy/RollupProxy.p.sol => /dev/null     |  705 -----
- .../RollupProxy/RollupUserLogic.2.sol => /dev/null | 3272 --------------------
- .../SequencerInbox/SequencerInbox.sol => /dev/null | 1109 -------
- .../TransparentUpgradeableProxy.p.sol => /dev/null |  629 ----
- .../TransparentUpgradeableProxy.p.sol              |    0
- .../ValidatorUtils.sol => /dev/null                |  323 --
- 21 files changed, 22353 deletions(-)
+.../Bridge/Bridge.sol => /dev/null                 | 733 ---------------------
+ .../RollupEventInbox.sol => /dev/null              | 133 ----
+ .../TransparentUpgradeableProxy.p.sol => /dev/null | 629 ------------------
+ 3 files changed, 1495 deletions(-)
 ```
 
 Generated with discovered.json: 0xddc9ed9b0487eb44f3c88e5e3a49da4e8dd1bc8c

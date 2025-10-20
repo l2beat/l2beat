@@ -1,6 +1,6 @@
 {
   "name": "popapex",
-  "timestamp": 1760974129,
+  "timestamp": 1760975839,
   "configHash": "0x08a0b1b334305adea9dc891308ede3a40d868a48a1c6426022b4e94418bc6482",
   "entries": [
     {
@@ -30,7 +30,7 @@
       ]
     },
     {
-      "name": "",
+      "name": "Bridge",
       "address": "arb1:0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6",
       "type": "Contract",
       "unverified": true,
@@ -1843,6 +1843,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 391559693 },
-  "permissionsConfigHash": "0x48a1c20df4257c954b9d4bf28bd53bd4ed84aa3171283b51e93585ef625ec9cf"
+  "usedBlockNumbers": { "arbitrum": 391566533 },
+  "permissionsConfigHash": "0x2123c8f1d370c9e0a4ec42542c2cb46dd0f5268330da7959eca3f7d62faa2767"
 }

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x6f96722f954b5d1361be237036aeee666d111f62
+Generated with discovered.json: 0x2643400fbe745d77f1f26b8ea9ab3d24354ac0e6
 
-# Diff at Mon, 20 Oct 2025 15:30:55 GMT:
+# Diff at Mon, 20 Oct 2025 15:59:32 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@bfe80e92f67656ee716f7ab40cc8f3f9e92dc7d6 block: 1760089728
-- current timestamp: 1760974129
+- current timestamp: 1760975839
 
 ## Description
 
@@ -13,11 +13,8 @@ Upgrade to unverified Bridge contract. Project already archived.
 ## Watched changes
 
 ```diff
-    contract  (arb1:0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6) {
+    contract Bridge (arb1:0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6) {
     +++ description: None
-      name:
--        "Bridge"
-+        ""
       template:
 -        "orbitstack/Bridge"
       sourceHashes:
@@ -101,8 +98,7 @@ Upgrade to unverified Bridge contract. Project already archived.
 .../Bridge/Bridge.sol => /dev/null                 | 733 ---------------------
  .../RollupEventInbox.sol => /dev/null              | 133 ----
  .../TransparentUpgradeableProxy.p.sol => /dev/null | 629 ------------------
- .../TransparentUpgradeableProxy.p.sol              |   0
- 4 files changed, 1495 deletions(-)
+ 3 files changed, 1495 deletions(-)
 ```
 
 Generated with discovered.json: 0x0248ee1aca0df1f590b681bc48e556777716f911
