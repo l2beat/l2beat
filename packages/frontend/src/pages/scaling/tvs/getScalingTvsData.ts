@@ -95,7 +95,7 @@ async function getQueryState(
       excludeAssociatedTokens: false,
       includeRwaRestrictedTokens: false,
     }),
-    helpers.tvs.sevenDayBreakdown.prefetch({
+    helpers.tvs.table.prefetch({
       type: tab,
       excludeAssociatedTokens: false,
       includeRwaRestrictedTokens: false,

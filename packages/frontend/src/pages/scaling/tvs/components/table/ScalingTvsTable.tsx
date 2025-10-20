@@ -28,7 +28,7 @@ export function ScalingTvsTable({
   const { sorting, setSorting } = useTableSorting()
 
   const { data: sevenDayBreakdown, isLoading: isTvsLoading } =
-    api.tvs.sevenDayBreakdown.useQuery({
+    api.tvs.table.useQuery({
       type: tab,
       excludeAssociatedTokens,
       includeRwaRestrictedTokens,

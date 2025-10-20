@@ -15,7 +15,7 @@ export function TvsProjectStats({
   projectId: string
 }) {
   const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
-  const { data, isLoading } = api.tvs.sevenDayBreakdown.useQuery({
+  const { data, isLoading } = api.tvs.table.useQuery({
     type: 'projects',
     projectIds: [projectId],
     includeRwaRestrictedTokens,

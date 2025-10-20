@@ -33,7 +33,7 @@ export const tvsRouter = router({
   tokenChart: procedure
     .input(TokenTvsChartParams)
     .query(({ input }) => getTokenTvsChart(input)),
-  sevenDayBreakdown: procedure
+  table: procedure
     .input(TvsBreakdownProjectFilter)
     .query(({ input }) => get7dTvsBreakdown(input)),
 })

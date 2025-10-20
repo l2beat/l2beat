@@ -19,7 +19,7 @@ export function ScalingSummaryNotReviewedTable({ entries }: Props) {
   const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { sorting, setSorting } = useTableSorting()
 
-  const { data, isLoading } = api.tvs.sevenDayBreakdown.useQuery({
+  const { data, isLoading } = api.tvs.table.useQuery({
     type: 'notReviewed',
     excludeAssociatedTokens,
     includeRwaRestrictedTokens,
