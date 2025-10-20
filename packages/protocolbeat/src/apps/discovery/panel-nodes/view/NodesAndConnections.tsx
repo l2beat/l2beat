@@ -1,4 +1,4 @@
-import { usePanelStore } from '../../store/panel-store'
+import { useGlobalSettingsStore } from '../../store/global-settings-store'
 import { useStore } from '../store/store'
 import { Connection } from './Connection'
 import { NodeView } from './NodeView'
@@ -10,8 +10,8 @@ export function NodesAndConnections() {
   const enableDimming = useStore(
     ({ userPreferences }) => userPreferences.enableDimming,
   )
-  const markUnreachableEntries = usePanelStore(
-    ({ userSettings }) => userSettings.markUnreachableEntries,
+  const markUnreachableEntries = useGlobalSettingsStore(
+    (s) => s.markUnreachableEntries,
   )
   const visible = nodes.filter((n) => !hidden.includes(n.id))
 

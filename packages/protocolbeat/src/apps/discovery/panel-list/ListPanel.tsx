@@ -12,6 +12,7 @@ import { IconChevronRight } from '../../../icons/IconChevronRight'
 import { IconFolder } from '../../../icons/IconFolder'
 import { IconFolderOpened } from '../../../icons/IconFolderOpened'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
+import { useGlobalSettingsStore } from '../store/global-settings-store'
 import { usePanelStore } from '../store/panel-store'
 
 export function ListPanel() {
@@ -154,8 +155,8 @@ function ListItemContracts(props: {
 function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
   const isSelected = usePanelStore((state) => state.selected === entry.address)
   const select = usePanelStore((state) => state.select)
-  const markUnreachableEntries = usePanelStore(
-    ({ userSettings }) => userSettings.markUnreachableEntries,
+  const markUnreachableEntries = useGlobalSettingsStore(
+    (s) => s.markUnreachableEntries,
   )
   const isGrayedOut = markUnreachableEntries && !entry.isReachable
 

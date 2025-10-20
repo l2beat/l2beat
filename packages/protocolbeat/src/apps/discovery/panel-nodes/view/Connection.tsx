@@ -48,12 +48,12 @@ function toStrokeClass(
     return 'stroke-[3] stroke-autumn-300'
   }
 
-  if (props.isDimmed) {
-    return 'stroke-2 stroke-coffee-400/30'
+  if (props.isGrayedOut) {
+    return 'stroke-2 stroke-coffee-200/10'
   }
 
-  if (props.isGrayedOut) {
-    return 'stroke-2 stroke-black/50'
+  if (props.isDimmed) {
+    return 'stroke-2 stroke-coffee-400/30'
   }
 
   return 'stroke-2 stroke-coffee-400'
