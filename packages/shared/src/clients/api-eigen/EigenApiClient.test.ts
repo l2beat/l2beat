@@ -5,7 +5,7 @@ import type { HttpClient } from '../http/HttpClient'
 import { EigenApiClient } from './EigenApiClient'
 
 describe(EigenApiClient.name, () => {
-  describe(EigenApiClient.prototype.getMetrics.name, () => {
+  describe(EigenApiClient.prototype.getMetricsV1.name, () => {
     it('should get metrics with successful response', async () => {
       const mockResponse = {
         throughput: 12345678,
@@ -19,11 +19,11 @@ describe(EigenApiClient.name, () => {
       const from = 1640995200 // 2022-01-01 00:00:00 UTC
       const to = 1641081600 // 2022-01-02 00:00:00 UTC
 
-      const result = await client.getMetrics(from, to)
+      const result = await client.getMetricsV1(from, to)
 
       expect(result).toEqual(12345678)
       expect(http.fetch).toHaveBeenOnlyCalledWith(
-        'https://api.test.com/metrics?start=1640995200&end=1641081600',
+        'https://api.test.com/v1/metrics?start=1640995200&end=1641081600',
         {},
       )
     })
@@ -41,7 +41,47 @@ describe(EigenApiClient.name, () => {
       const from = 1640995200
       const to = 1641081600
 
-      await expect(client.getMetrics(from, to)).toBeRejected()
+      await expect(client.getMetricsV1(from, to)).toBeRejected()
+    })
+  })
+
+  describe(EigenApiClient.prototype.getMetricsV2.name, () => {
+    it('should get metrics with successful response', async () => {
+      const mockResponse = {
+        total_bytes_posted: 12345678,
+      }
+
+      const http = mockObject<HttpClient>({
+        fetch: async () => mockResponse,
+      })
+
+      const client = mockClient({ http })
+      const from = 1640995200 // 2022-01-01 00:00:00 UTC
+      const to = 1641081600 // 2022-01-02 00:00:00 UTC
+
+      const result = await client.getMetricsV2(from, to)
+
+      expect(result).toEqual(12345678)
+      expect(http.fetch).toHaveBeenOnlyCalledWith(
+        'https://api.test.com/v2/metrics/summary?start=1640995200&end=1641081600',
+        {},
+      )
+    })
+
+    it('should handle error response', async () => {
+      const mockErrorResponse = {
+        error: 'error message',
+      }
+
+      const http = mockObject<HttpClient>({
+        fetch: async () => mockErrorResponse,
+      })
+
+      const client = mockClient({ http })
+      const from = 1640995200
+      const to = 1641081600
+
+      await expect(client.getMetricsV2(from, to)).toBeRejected()
     })
   })
 
