@@ -1,6 +1,6 @@
 {
   "name": "celo",
-  "timestamp": 1759250495,
+  "timestamp": 1760973770,
   "configHash": "0x233391dc575aec1c6373568f5fc4beaa61aa5ba9e6cfb85c5ae995f6196a9e0b",
   "entries": [
     {
@@ -205,7 +205,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620326",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620426",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -673,7 +673,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 76,
+        "nonce": 84,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -817,7 +817,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 22,
+        "nonce": 28,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -837,6 +837,11 @@
     },
     {
       "address": "eth:0x652BC529E171847E2fFddCeA13567643C84ccB5f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1033,11 +1038,6 @@
       }
     },
     {
-      "address": "eth:0x7cB07FE039a92B3D784f284D919503A381BEC54f",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1088,7 +1088,7 @@
           "eth:0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
           "eth:0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
           "eth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
-          "eth:0x7cB07FE039a92B3D784f284D919503A381BEC54f",
+          "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02",
           "eth:0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
         ],
         "$threshold": 5,
@@ -1096,7 +1096,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 35,
+        "nonce": 43,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1689,7 +1689,7 @@
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 39,
+        "nonce": 46,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1742,15 +1742,15 @@
           ]
         ],
         "$upgradeCount": 4,
-        "balance": "999849305431040932825158896",
+        "balance": "999849303431040932825158896",
         "disputeGameFactory": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "disputeGameFinalityDelaySeconds": 302400,
         "guardian": "eth:0x6E226fa22e5F19363d231D3FA048aaBa73CC1f47",
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 516982,
-          "prevBlockNum": 23476067
+          "prevBoughtGas": 463628,
+          "prevBlockNum": 23617992
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2003,7 +2003,7 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 1505,
+        "gameCount": 1665,
         "gameImpls": [
           "eth:0xcc744008aD3306a716fED303b0A6eA5b5d0690a5",
           "eth:0x25c2e07A24a74F9FA54f7CA5ddAfedB2264a5d02",
@@ -2015,7 +2015,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x4092A77bAF58fef0309452cEaCb09221e556E112",
-        "permissionedGamesTotal": 1505,
+        "permissionedGamesTotal": 1665,
         "version": "1.0.1"
       },
       "fieldMeta": {
@@ -3052,6 +3052,6 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "tokens/CELO": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23477064 },
-  "permissionsConfigHash": "0x41f1eff94de4ca459d86bf569011991a3078d23b1556a865f8375ebc64ad6962"
+  "usedBlockNumbers": { "ethereum": 23619677 },
+  "permissionsConfigHash": "0xfb2b6941ded06c51b20ccfdf68c28c18938ef0c1b86ab2ba6baee6bc6ca9db45"
 }
