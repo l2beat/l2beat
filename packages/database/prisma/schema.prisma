@@ -409,10 +409,10 @@ model InteropTransfer {
   srcTokenAddress String?   @db.VarChar(66)
   srcRawAmount    Decimal?  @db.Decimal(80, 0)
 
-  srcAbstractTokenId String? @db.VarChar(66)
-  srcAmount          Float?  @db.Real
-  srcPrice           Float?  @db.Real
-  srcValueUsd        Float?  @db.Real
+  srcAbstractTokenId String?  @db.VarChar(66)
+  srcAmount          Float?   @db.Real
+  srcPrice           Float?   @db.Real
+  srcValueUsd        Float?   @db.Real
   srcWasBurned       Boolean?
 
   dstTime         DateTime? @db.Timestamp(6)
@@ -423,10 +423,10 @@ model InteropTransfer {
   dstTokenAddress String?   @db.VarChar(66)
   dstRawAmount    Decimal?  @db.Decimal(80, 0)
 
-  dstAbstractTokenId String? @db.VarChar(66)
-  dstAmount          Float?  @db.Real
-  dstPrice           Float?  @db.Real
-  dstValueUsd        Float?  @db.Real
+  dstAbstractTokenId String?  @db.VarChar(66)
+  dstAmount          Float?   @db.Real
+  dstPrice           Float?   @db.Real
+  dstValueUsd        Float?   @db.Real
   dstWasMinted       Boolean?
 
   isProcessed Boolean
@@ -510,4 +510,13 @@ model InteropRecentPrices {
 
   @@id([coingeckoId, timestamp])
   @@index([timestamp])
+}
+
+model InteropConfig {
+  key       String   @db.VarChar(64)
+  value     Json
+  createdAt DateTime @db.Timestamp(6)
+  updatedAt DateTime @db.Timestamp(6)
+
+  @@id([key])
 }
