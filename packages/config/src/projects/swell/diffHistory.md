@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x311f457a8977ab6d8c57c518d557134aa74a2691
+Generated with discovered.json: 0x4d986f9ac62875fc8c9b2c9fd14c13eb4e06a227
 
-# Diff at Mon, 20 Oct 2025 15:48:06 GMT:
+# Diff at Mon, 20 Oct 2025 15:37:49 GMT:
 
-- author: Luca Donno (<donnoh99@gmail.com>)
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@bfe80e92f67656ee716f7ab40cc8f3f9e92dc7d6 block: 1759389865
-- current timestamp: 1760975086
+- current timestamp: 1760974597
 
 ## Description
 
-Standard upgrade to known contracts.
+Upgrade to 16a protocol version. All contracts templatized.
 
 ## Watched changes
 

@@ -1,6 +1,6 @@
 {
   "name": "swell",
-  "timestamp": 1760975086,
+  "timestamp": 1760974597,
   "configHash": "0xeff0d898bc8f7ee71ab7f975d1c7c23c528de103afc98f98f6d0a84e7b1601b7",
   "entries": [
     {
@@ -1023,7 +1023,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 7772,
+        "permissionedGamesTotal": 7801,
         "proxyAdmin": "eth:0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "version": "1.2.0"
@@ -2740,6 +2740,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23619786 },
+  "usedBlockNumbers": { "ethereum": 23619746 },
   "permissionsConfigHash": "0x910befaaa0fedfbee27770777beaf391c0a8cefaddd740cf39be48a48af4acb8"
 }
