@@ -72,7 +72,7 @@ describe(EigenApiClient.name, () => {
       expect(result[2].customer_id).toEqual('project1')
 
       expect(http.fetchRaw).toHaveBeenOnlyCalledWith(
-        'https://project.test.com/stats/2022-01-01.json',
+        'https://project.test.com/v2/stats/2022-01-01.json',
         {},
       )
     })
