@@ -1,5 +1,5 @@
 import { AcrossComparePlugin } from './across'
 
-export function createInteropConfigPlugins() {
+export function createInteropComparePlugins() {
   return [new AcrossComparePlugin()]
 }

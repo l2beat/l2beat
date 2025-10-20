@@ -3,7 +3,7 @@ import type { Database } from '@l2beat/database'
 import type { RpcClient } from '@l2beat/shared'
 import { AcrossConfigPlugin } from './across'
 
-export function createInteropComparePlugins(
+export function createInteropConfigPlugins(
   chains: { id: number; name: string }[],
   db: Database,
   logger: Logger,
