@@ -70,7 +70,7 @@ describe(EigenDaLayerIndexer.name, () => {
       )
       const safeHeight = await updateCallback()
 
-      expect(eigenClient.getMetrics).toHaveBeenOnlyCalledWith(
+      expect(eigenClient.getMetricsV1).toHaveBeenOnlyCalledWith(
         expectedAdjustedFrom,
         expectedAdjustedTo - 1,
       )
@@ -111,7 +111,7 @@ describe(EigenDaLayerIndexer.name, () => {
       const updateCallback = await indexer.multiUpdate(from, to, configurations)
       await updateCallback()
 
-      expect(eigenClient.getMetrics).toHaveBeenOnlyCalledWith(
+      expect(eigenClient.getMetricsV1).toHaveBeenOnlyCalledWith(
         from, // Should remain the same since it's already at hour start
         from + UnixTime.HOUR - 1,
       )
@@ -133,7 +133,7 @@ describe(EigenDaLayerIndexer.name, () => {
 
       const result = await indexer.getDaLayerData(from, to)
 
-      expect(eigenClient.getMetrics).toHaveBeenOnlyCalledWith(from, to - 1)
+      expect(eigenClient.getMetricsV1).toHaveBeenOnlyCalledWith(from, to - 1)
 
       expect(result).toEqual({
         timestamp: UnixTime.toStartOf(from, 'hour'),
@@ -208,7 +208,7 @@ function mockIndexer($: {
   })
 
   const eigenClient = mockObject<EigenApiClient>({
-    getMetrics: mockFn().resolvesTo($.throughput ?? 1000000),
+    getMetricsV1: mockFn().resolvesTo($.throughput ?? 1000000),
   })
 
   const indexerService = mockObject<IndexerService>({

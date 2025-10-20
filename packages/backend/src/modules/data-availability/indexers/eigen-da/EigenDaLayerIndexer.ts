@@ -73,7 +73,7 @@ export class EigenDaLayerIndexer extends ManagedMultiIndexer<TimestampDaIndexedC
     from: number,
     to: number,
   ): Promise<DataAvailabilityRecord> {
-    const throughput = await this.$.eigenClient.getMetrics(from, to - 1)
+    const throughput = await this.$.eigenClient.getMetricsV1(from, to - 1)
     const totalSize = BigInt(Math.round(throughput * (to - 1 - from)))
     const configurationId = this.$.configurations.find(
       (c) => c.properties.projectId === this.daLayer,
