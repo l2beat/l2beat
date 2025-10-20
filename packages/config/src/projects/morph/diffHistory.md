@@ -1,3 +1,25 @@
+Generated with discovered.json: 0xe8a0de42ecea568478643af5de21834d1b89290c
+
+# Diff at Mon, 20 Oct 2025 15:26:52 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@bfe80e92f67656ee716f7ab40cc8f3f9e92dc7d6 block: 1758795850
+- current timestamp: 1760973938
+
+## Description
+
+New staker.
+
+## Watched changes
+
+```diff
+    contract L1Staking (eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7) {
+    +++ description: Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented).
+      values.getActiveStakers.3:
++        "eth:0x76F91869161dC4348230D5F60883Dd17462035f4"
+    }
+```
+
 Generated with discovered.json: 0xd9fb1807158ea919c9a3fa8989e2cdcc89960134
 
 # Diff at Thu, 25 Sep 2025 10:25:13 GMT:
