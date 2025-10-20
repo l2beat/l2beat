@@ -236,6 +236,14 @@ export const lighter: ScalingProject = {
   },
   milestones: [
     {
+      title: 'Lighter experiences 4.5h of downtime',
+      url: 'https://x.com/Lighter_xyz/status/1977252708533911614',
+      date: '2025-10-10T00:00:00Z',
+      description:
+        'Lighter experiences 4.5 hours of downtime due to DB growth issues.',
+      type: 'incident',
+    },
+    {
       title: 'Lighter launches public mainnet',
       url: 'https://x.com/Lighter_xyz/status/1973508660061180363',
       date: '2025-10-02T00:00:00Z',
