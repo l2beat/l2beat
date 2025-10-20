@@ -31,10 +31,6 @@
         }
       ]
     },
-    "migrationPaused": {
-      "description": "If false, chains can migrate to whitelisted settlement layers.",
-      "severity": "HIGH"
-    },
     "chainsCreated": {
       "description": "All new chains created go thorugh the central bridgehub and are stored here with their respective STMs.",
       "handler": {
@@ -52,14 +48,6 @@
         "select": ["isWhitelisted"],
         "groupBy": "chainId",
         "set": { "event": "SettlementLayerRegistered" }
-      }
-    },
-    "migrations": {
-      "description": "zk chain migrations that were started",
-      "severity": "HIGH",
-      "handler": {
-        "type": "event",
-        "add": { "event": "MigrationStarted" }
       }
     }
   }

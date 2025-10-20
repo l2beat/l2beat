@@ -150,12 +150,14 @@ This method allows ZK rollups to prove that the data used in their validity proo
       daLayer: EthereumDaLayerRisks.SelfVerify,
     },
     economicSecurity: {
-      name: 'Ethereum',
       token: {
         symbol: 'ETH',
         decimals: 18,
         coingeckoId: 'ethereum',
       },
+    },
+    validators: {
+      type: 'dynamic',
     },
   },
   daBridge: {

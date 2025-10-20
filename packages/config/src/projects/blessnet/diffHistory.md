@@ -1,3 +1,57 @@
+Generated with discovered.json: 0xb95a06273fc51099acdd50c5de02a447faedb8fc
+
+# Diff at Fri, 10 Oct 2025 09:25:56 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a91384a270a047b2514885e053feff1edc24f495 block: 1759481464
+- current timestamp: 1760088290
+
+## Description
+
+Member added to multisig.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 1 (arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0xe5219fe14E2FD520Ff80be036790913053d1575d"
+      values.$members.1:
++        "arb1:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A"
+      values.$members.1:
+-        "arb1:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675"
+      values.multisigThreshold:
+-        "3 of 8 (38%)"
++        "3 of 9 (33%)"
+    }
+```
+
+Generated with discovered.json: 0x0adb124d9c18435bcd56d19f8ea41c67c6b45469
+
+# Diff at Fri, 03 Oct 2025 08:52:14 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@e647409961cd173771dcfcaeb808991c99e73911 block: 1753200912
+- current timestamp: 1759481464
+
+## Description
+
+Member added to multisig.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 1 (arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0"
+      values.multisigThreshold:
+-        "3 of 7 (43%)"
++        "3 of 8 (38%)"
+    }
+```
+
 Generated with discovered.json: 0x46166d0c6b10e310503dcd6d9435ebb193ddcd67
 
 # Diff at Fri, 26 Sep 2025 12:45:02 GMT:

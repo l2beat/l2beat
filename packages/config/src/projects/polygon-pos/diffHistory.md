@@ -1,3 +1,52 @@
+Generated with discovered.json: 0xe7b626b2f9d27577913c9f9cb54219f89afc27e7
+
+# Diff at Wed, 15 Oct 2025 13:58:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3b2c8898ebe0c61228f50617e2de65973094dd39 block: 1758802148
+- current timestamp: 1760536617
+
+## Description
+
+vali added.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        104
++        105
+    }
+```
+
+Generated with discovered.json: 0x49ed7d8c357d21f671e8bf9ece413ba47a849914
+
+# Diff at Mon, 06 Oct 2025 15:22:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e58bd9f0913161b35e2a2c65f233464591d4f28b block: 1758802148
+- current timestamp: 1758802148
+
+## Description
+
+Config: added description to field.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758802148 (main branch discovery), not current.
+
+```diff
+    contract StakingInfo (eth:0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B) {
+    +++ description: Contains logging and getter functions about staking.
+      fieldMeta:
++        {"getAccountStateRoot":{"description":"Merkle root of a tree of validator balances."}}
+    }
+```
+
 Generated with discovered.json: 0x1a5d5e8b88e09d9975dd7355e5bf1dca560883ec
 
 # Diff at Thu, 25 Sep 2025 12:25:32 GMT:

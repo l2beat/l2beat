@@ -7,12 +7,21 @@
     "eth:0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
     "eth:0x1A9da0aedA630dDf2748a453BF6d92560762D914",
     "eth:0xaE4d46bD9117Cb017C5185844699c51107cB28a9",
-
+    // from Lib_PredeployAddresses
+    "metis-andromeda:0x4200000000000000000000000000000000000000",
+    "metis-andromeda:0x4200000000000000000000000000000000000001",
+    "metis-andromeda:0x4200000000000000000000000000000000000002",
+    "metis-andromeda:0x4200000000000000000000000000000000000005",
+    "metis-andromeda:0x4200000000000000000000000000000000000007",
+    "metis-andromeda:0x4200000000000000000000000000000000000008",
+    "metis-andromeda:0x4200000000000000000000000000000000000009",
+    "metis-andromeda:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
+    "metis-andromeda:0x420000000000000000000000000000000000000A",
     "metis-andromeda:0x4200000000000000000000000000000000000010",
     "metis-andromeda:0x4200000000000000000000000000000000000011",
     "metis-andromeda:0x4200000000000000000000000000000000000012",
-    "metis-andromeda:0x420000000000000000000000000000000000000F",
-    "metis-andromeda:0x4200000000000000000000000000000000000002"
+    // "metis-andromeda:0x4200000000000000000000000000000000000013",
+    "metis-andromeda:0x420000000000000000000000000000000000000F"
   ],
   "names": {
     "eth:0x38473Feb3A6366757A249dB2cA4fBB2C663416B7": "ChainStorageContainer-CTC-batches",
@@ -65,6 +74,15 @@
         "getOwners": { "severity": "LOW", "type": "PERMISSION" },
         "getThreshold": { "severity": "HIGH", "type": "PERMISSION" }
       }
+    },
+    "metis-andromeda:0x420000000000000000000000000000000000000A": {
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    "metis-andromeda:0x420000000000000000000000000000000000000F": {
+      "ignoreInWatchMode": ["gasPrice"]
+    },
+    "metis-andromeda:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000": {
+      "ignoreInWatchMode": ["totalSupply"]
     },
     // Unused contracts
     "eth:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a": {

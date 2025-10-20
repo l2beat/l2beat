@@ -9,7 +9,7 @@ FEATURES_TABLES=(
     "IndexerState IndexerConfiguration TvsBlockTimestamp TvsPrice TvsAmount TokenValue ProjectValue"
     "IndexerState IndexerConfiguration Activity"
     "IndexerState IndexerConfiguration AnomalyStats RealTimeLiveness RealTimeAnomaly"
-    "IndexerState IndexerConfiguration BridgeEvent BridgeMessage BridgeTransfer"
+    "IndexerState IndexerConfiguration InteropEvent InteropMessage InteropTransfer"
 )
 
 clear_tables() {

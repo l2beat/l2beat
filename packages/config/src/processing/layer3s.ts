@@ -32,6 +32,7 @@ import { huddle01 } from '../projects/huddle01/huddle01'
 import { hyperagi } from '../projects/hyperagi/hyperagi'
 import { inevm } from '../projects/inevm/inevm'
 import { intmax } from '../projects/intmax/intmax'
+import { intuition } from '../projects/intuition/intuition'
 import { jetstreamchain } from '../projects/jetstreamchain/jetstreamchain'
 import { l3x } from '../projects/l3x/l3x'
 import { lumiterra } from '../projects/lumiterra/lumiterra'
@@ -99,6 +100,7 @@ export const layer3s: ScalingProject[] = [
   inevm,
   jetstreamchain,
   intmax,
+  intuition,
   ham,
   henez,
   huddle01,

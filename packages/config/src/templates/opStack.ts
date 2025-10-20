@@ -27,6 +27,7 @@ import { EXPLORER_URLS } from '../common/explorerUrls'
 import { formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
+import { ZK_PROGRAM_HASHES } from '../common/zkProgramHashes'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
 import type {
@@ -49,6 +50,7 @@ import type {
   ProjectReviewStatus,
   ProjectRisk,
   ProjectScalingCapability,
+  ProjectScalingContractsZkProgramHash,
   ProjectScalingDa,
   ProjectScalingProofSystem,
   ProjectScalingPurpose,
@@ -82,12 +84,32 @@ export const CELESTIA_DA_PROVIDER: DAProvider = {
   badge: BADGES.DA.Celestia,
 }
 
-export const EIGENDA_DA_PROVIDER: DAProvider = {
-  layer: DA_LAYERS.EIGEN_DA,
-  riskView: RISK_VIEW.DATA_EIGENDA(false),
-  technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(false),
-  bridge: DA_BRIDGES.NONE,
-  badge: BADGES.DA.EigenDA,
+export function EIGENDA_DA_PROVIDER(
+  isUsingDACertVerifier: boolean,
+): (templateVars: OpStackConfigCommon) => DAProvider {
+  return (templateVars: OpStackConfigCommon) => {
+    const opStackDA = templateVars.discovery.getContractValue<{
+      isUsingEigenDA: string | boolean
+    }>('SystemConfig', 'opStackDA')
+
+    const eigenDAConfig = opStackDA.isUsingEigenDA
+    const eigenDACertVersion =
+      typeof eigenDAConfig === 'string' ? eigenDAConfig : 'v1'
+
+    return {
+      layer: DA_LAYERS.EIGEN_DA,
+      riskView: RISK_VIEW.DATA_EIGENDA(
+        isUsingDACertVerifier,
+        eigenDACertVersion,
+      ),
+      technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(
+        isUsingDACertVerifier,
+        eigenDACertVersion,
+      ),
+      bridge: DA_BRIDGES.NONE,
+      badge: BADGES.DA.EigenDA,
+    }
+  }
 }
 
 export const PRIVATE_DA_PROVIDER: DAProvider = {
@@ -113,7 +135,7 @@ export function DACHALLENGES_DA_PROVIDER(
       nodeSourceLink,
     ),
     bridge: DA_BRIDGES.NONE_WITH_DA_CHALLENGES,
-    badge: BADGES.DA.DAC,
+    badge: BADGES.DA.CustomDA,
   }
 }
 
@@ -131,7 +153,7 @@ interface OpStackConfigCommon {
   stateValidationImage?: string
   archivedAt?: UnixTime
   addedAt: UnixTime
-  daProvider?: DAProvider
+  daProvider?: DAProvider | ((templateVars: OpStackConfigCommon) => DAProvider)
   customDa?: ProjectCustomDa
   discovery: ProjectDiscovery
   additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
@@ -158,6 +180,7 @@ interface OpStackConfigCommon {
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   nonTemplateContractRisks?: ProjectRisk
+  nonTemplateZkProgramHashes?: ProjectScalingContractsZkProgramHash[]
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
@@ -384,6 +407,9 @@ function opStackCommon(
     contracts: {
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
       risks: nativeContractRisks,
+      zkProgramHashes:
+        templateVars.nonTemplateZkProgramHashes ??
+        getZkProgramHashes(templateVars),
     },
     milestones: templateVars.milestones ?? [],
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
@@ -541,6 +567,46 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
     hostChain: ProjectId(hostChain),
     display: { ...common.display, ...templateVars.display },
     stackedRiskView: templateVars.stackedRiskView ?? stackedRisk,
+  }
+}
+
+function getZkProgramHashes(
+  templateVars: OpStackConfigCommon,
+): ProjectScalingContractsZkProgramHash[] {
+  const fraudProofType = getFraudProofType(templateVars)
+
+  switch (fraudProofType) {
+    case 'None':
+    case 'Permissioned':
+    case 'Permissionless':
+      return []
+    case 'Kailua': {
+      const kailuaProgramHash = templateVars.discovery.getContractValue<string>(
+        'KailuaTreasury',
+        'FPVM_IMAGE_ID',
+      )
+      const setBuilderProgramHash = templateVars.discovery.getContractValue<
+        string[]
+      >('RiscZeroSetVerifier', 'imageInfo')[0]
+      return [
+        ZK_PROGRAM_HASHES(kailuaProgramHash),
+        ZK_PROGRAM_HASHES(setBuilderProgramHash),
+      ]
+    }
+    case 'OpSuccinct': {
+      const opSuccinctProgramHashes = [
+        templateVars.discovery.getContractValue<string>(
+          'OPSuccinctL2OutputOracle',
+          'aggregationVkey',
+        ),
+        templateVars.discovery.getContractValue<string>(
+          'OPSuccinctL2OutputOracle',
+          'rangeVkeyCommitment',
+        ),
+      ]
+
+      return opSuccinctProgramHashes.map((el) => ZK_PROGRAM_HASHES(el))
+    }
   }
 }
 
@@ -740,7 +806,7 @@ Proving any of the ${proposalOutputCount} intermediate state commitments in a pr
 A single remaining child in a tournament can be 'resolved' and will be finalized and usable for withdrawals after an execution delay of ${formatSeconds(disputeGameFinalityDelaySeconds)} (time for the Guardian to manually blacklist malicious state roots).`,
             references: [
               {
-                url: 'https://risc0.github.io/kailua/design.html#disputes',
+                url: 'https://docs.boundless.network/developers/kailua/how',
                 title: 'Disputes - Kailua Docs',
               },
             ],
@@ -1389,9 +1455,15 @@ function getDAProvider(
     templateVars.discovery.getContractValue<{
       isUsingCelestia: boolean
     }>('SystemConfig', 'opStackDA').isUsingCelestia
-  const daProvider =
-    templateVars.daProvider ??
-    (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+
+  let daProvider: DAProvider | undefined
+  if (typeof templateVars.daProvider === 'function') {
+    daProvider = templateVars.daProvider(templateVars)
+  } else {
+    daProvider =
+      templateVars.daProvider ??
+      (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+  }
 
   if (daProvider === undefined) {
     assert(

@@ -1,6 +1,6 @@
 {
   "name": "appchain",
-  "timestamp": 1759388912,
+  "timestamp": 1760538476,
   "configHash": "0xac9dc3368d73b5049c45c1640d1e9185206de29be1148eeaf9d9dc6dd9a6735b",
   "entries": [
     {
@@ -44,11 +44,6 @@
         "eth:0x74110Fb401469FEA31A10680e28c9C4c17aFdd36": "Inbox"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "address": "eth:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Outbox",
@@ -125,7 +120,7 @@
           "eth:0x269F6f6FC8177a5A8c475AE0e2487508634EC8Ed"
         ],
         "allowedOutboxList": ["eth:0x190C720892d0786BF75B77B4acD21c726ea8FDEd"],
-        "delayedMessageCount": 5479,
+        "delayedMessageCount": 5556,
         "inboxHistory": [
           "eth:0x010aDE5d8F9DC340531140802438798C189c36E0",
           "eth:0x269F6f6FC8177a5A8c475AE0e2487508634EC8Ed"
@@ -133,8 +128,8 @@
         "outboxHistory": ["eth:0x190C720892d0786BF75B77B4acD21c726ea8FDEd"],
         "rollup": "eth:0x28293c7855797B0441000EF144119727f3cBCA9B",
         "sequencerInbox": "eth:0x8045B2aa6b823CbA8f99ef3D3404F711619d3473",
-        "sequencerMessageCount": 2753,
-        "sequencerReportedSubMessageCount": 700226
+        "sequencerMessageCount": 2814,
+        "sequencerReportedSubMessageCount": 708012
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -164,10 +159,13 @@
       "name": "CertManager",
       "address": "eth:0x1Ff280d8B34E97E2CcA0bdb461F4bA2CF9b8E494",
       "type": "Contract",
+      "template": "espresso/Sequencing",
       "sourceHashes": [
         "0xe2fe482c8972a84ccf0c6bb6c2b0d3540f1fcf9b21bb5ec08a14cd11659e3e9d"
       ],
       "proxyType": "immutable",
+      "description": "The CertManager is used for anchoring TEE attestation keys to a trusted Certificate Authority (CA).",
+      "ignoreInWatchMode": [""],
       "sinceTimestamp": 1750699271,
       "sinceBlock": 22768583,
       "values": {
@@ -265,13 +263,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 614,
+        "firstUnresolvedNode": 621,
         "inbox": "eth:0x010aDE5d8F9DC340531140802438798C189c36E0",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21145825,
-        "latestConfirmed": 613,
-        "latestNodeCreated": 617,
+        "latestConfirmed": 620,
+        "latestNodeCreated": 623,
         "loserStakeEscrow": "eth:0x4fb280195D13e352CE8a9b9b0B41f3e3756066A4",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x190C720892d0786BF75B77B4acD21c726ea8FDEd",
@@ -464,28 +462,21 @@
           "eth:0xEC114946E7213d113c9B9481028271B5E9e09371",
           "eth:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
           "eth:0xc4548687682246e5B6ee8f914635c9f47836eDFe",
-          "eth:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675",
           "eth:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b",
-          "eth:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",
           "eth:0x356000Cec4fC967f8FC372381D983426760A0391"
         ],
         "$threshold": 4,
         "domainSeparator": "0xd91194ba8cca06b67a77df9ba8745b666c7af26af03b914ede155b940b307d6b",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 34,
+        "multisigThreshold": "4 of 7 (57%)",
+        "nonce": 43,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
         "eth:0x2bf43034b9559643e986A2fE3cE015a18247b904": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
-    },
-    {
-      "address": "eth:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Caldera",
@@ -637,7 +628,7 @@
           ]
         ],
         "$upgradeCount": 4,
-        "batchCount": 2753,
+        "batchCount": 2814,
         "batchPosterManager": "eth:0xC5dD640885cE582464e2fCa7b169581417822e6C",
         "batchPosters": ["eth:0xC5dD640885cE582464e2fCa7b169581417822e6C"],
         "bridge": "eth:0x19df42E085e2c3fC4497172E412057F54D9f013E",
@@ -668,7 +659,7 @@
         "rollup": "eth:0x28293c7855797B0441000EF144119727f3cBCA9B",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 5,
-        "totalDelayedMessagesRead": 5478,
+        "totalDelayedMessagesRead": 5555,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1803,6 +1794,7 @@
     ]
   },
   "usedTemplates": {
+    "espresso/Sequencing": "0x1b79cd76afba6e347d811f429fd36c08ddc9eb88b43d39abeeb230e6bd576105",
     "espresso/Sequencing/EspressoNitroTEEVerifier": "0xcfbcf143ae6576f201097bd2db629a4fbdc20ae286e1555faf44db61111d2eab",
     "espresso/Sequencing/EspressoSGXTEEVerifier": "0x62bb42822457b8146a3651a1d679d850d8a71b735dea0dd125493dd81cf1c23e",
     "espresso/Sequencing/EspressoTEEVerifier_gateway": "0x7d9c15aef19b3644fef05d35c978c01dce14e16ba55e9fd3c6326394607401e3",
@@ -1824,6 +1816,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23488513 },
-  "permissionsConfigHash": "0x417f3150467a1e80d0681bf050c1f6322f7dff9af24457feefaddb851310cbc9"
+  "usedBlockNumbers": { "ethereum": 23583683 },
+  "permissionsConfigHash": "0xf891c00c9d32dff8185f757d04d1548d49156cd5d0d6ccef997bcd79cc368824"
 }

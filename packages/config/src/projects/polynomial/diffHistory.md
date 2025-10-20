@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xf36896c2afb56684c428de0861196ff296bb1630
+
+# Diff at Wed, 15 Oct 2025 07:31:15 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@492b484b76961400bbb60fa56472491fa8240f3d block: 1759480952
+- current timestamp: 1760513403
+
+## Description
+
+increased gas limit.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x58b51fb9FeeD00DD846f91D265Eba3cdd855A413) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        40000000
++        50000000
+    }
+```
+
+Generated with discovered.json: 0x44eb9110a957c32bdc0323954ed2d347e3f1b5e2
+
+# Diff at Fri, 03 Oct 2025 08:43:42 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@e647409961cd173771dcfcaeb808991c99e73911 block: 1756214657
+- current timestamp: 1759480952
+
+## Description
+
+Member removed from multisig.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 10 (40%)"
+    }
+```
+
 Generated with discovered.json: 0x91fdea2aaf56e156543fe6ef4d4e4318aa6fc9cc
 
 # Diff at Mon, 15 Sep 2025 09:50:31 GMT:

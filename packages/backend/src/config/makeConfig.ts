@@ -138,6 +138,10 @@ export async function makeConfig(
     },
     da: flags.isEnabled('da') && (await getDaTrackingConfig(ps, env)),
     blockSync: {
+      delayFromTipInSeconds: env.integer(
+        ['BLOCK_SYNC_DELAY_FROM_TIP_IN_SECONDS'],
+        5 * 60,
+      ),
       ethereumWsUrl: env.optionalString(['ETHEREUM_WS_URL']),
     },
     anomalies: flags.isEnabled('anomalies') && {
@@ -147,22 +151,32 @@ export async function makeConfig(
         60 * 60, // 1 hour
       ),
     },
-    bridges: flags.isEnabled('bridges') && {
+    interop: flags.isEnabled('interop') && {
       capture: {
-        enabled: flags.isEnabled('bridges', 'capture'),
-        chains: ['ethereum', 'arbitrum', 'base', 'optimism'].filter((c) =>
-          flags.isEnabled('bridges', 'capture', c),
-        ),
+        enabled: flags.isEnabled('interop', 'capture'),
+        chains: [
+          { name: 'ethereum', type: 'evm' as const },
+          { name: 'arbitrum', type: 'evm' as const },
+          { name: 'base', type: 'evm' as const },
+          { name: 'optimism', type: 'evm' as const },
+        ].filter((c) => flags.isEnabled('interop', 'capture', c.name)),
       },
-      matching: flags.isEnabled('bridges', 'matching'),
-      cleaner: flags.isEnabled('bridges', 'cleaner'),
+      matching: flags.isEnabled('interop', 'matching'),
+      cleaner: flags.isEnabled('interop', 'cleaner'),
       dashboard: {
-        enabled: flags.isEnabled('bridges', 'dashboard'),
+        enabled: flags.isEnabled('interop', 'dashboard'),
         getExplorerUrl: (chain: string) => {
           const c = chains.find((cc) => cc.name === chain)
 
           return c?.explorerUrl
         },
+      },
+      compare: {
+        enabled: flags.isEnabled('interop', 'compare'),
+        intervalMs: env.optionalInteger(['INTEROP_COMPARE_INTERVAL_MS']),
+      },
+      financials: {
+        enabled: flags.isEnabled('interop', 'financials'),
       },
     },
     // Must be last

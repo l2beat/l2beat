@@ -265,6 +265,7 @@ model TokenValue {
   @@index([projectId])
   @@index([tokenId])
   @@index([projectId, tokenId, timestamp(sort: Desc)])
+  @@index([projectId, timestamp, tokenId, valueForProject, valueForSummary])
 }
 
 model TokenMetadata {
@@ -344,35 +345,44 @@ model SyncMetadata {
   @@index([feature, id])
 }
 
-model BridgeEvent {
-  eventId     String   @db.VarChar(40)
-  type        String   @db.VarChar(64)
-  expiresAt   DateTime @db.Timestamp(6)
-  timestamp   DateTime @db.Timestamp(6)
-  chain       String   @db.VarChar(32)
+model InteropEvent {
+  plugin    String   @db.VarChar(64)
+  eventId   String   @db.VarChar(40)
+  type      String   @db.VarChar(64)
+  expiresAt DateTime @db.Timestamp(6)
+  timestamp DateTime @db.Timestamp(6)
+
+  chain       String  @db.VarChar(32)
   blockNumber Int
-  blockHash   String   @db.VarChar(66)
-  txHash      String   @db.VarChar(66)
-  txTo        String?  @db.VarChar(42)
-  matched     Boolean
-  unsupported Boolean  @default(false)
-  logIndex    Int
+  txHash      String  @db.VarChar(66)
+  blockHash   String  @db.VarChar(66)
+  value       String? @db.VarChar(66)
+  txTo        String? @db.VarChar(66)
+  logIndex    Int?
   args        Json
+
+  matched     Boolean
+  unsupported Boolean
 
   @@id([eventId])
   @@index([type])
 }
 
-model BridgeMessage {
-  messageId   String    @db.VarChar(40)
-  type        String    @db.VarChar(64)
-  duration    Int?
-  timestamp   DateTime  @db.Timestamp(6)
+model InteropMessage {
+  plugin    String   @db.VarChar(64)
+  messageId String   @db.VarChar(40)
+  type      String   @db.VarChar(64)
+  timestamp DateTime @db.Timestamp(6)
+  app       String   @db.VarChar(64)
+
+  duration Int?
+
   srcTime     DateTime? @db.Timestamp(6)
   srcChain    String?   @db.VarChar(32)
   srcTxHash   String?   @db.VarChar(66)
   srcLogIndex Int?
   srcEventId  String?   @db.VarChar(40)
+
   dstTime     DateTime? @db.Timestamp(6)
   dstChain    String?   @db.VarChar(32)
   dstTxHash   String?   @db.VarChar(66)
@@ -383,39 +393,47 @@ model BridgeMessage {
   @@index([type])
 }
 
-model BridgeTransfer {
-  messageId   String    @db.VarChar(40)
-  type        String    @db.VarChar(64)
-  duration    Int?
-  timestamp   DateTime  @db.Timestamp(6)
-  srcTime     DateTime? @db.Timestamp(6)
-  srcChain    String?   @db.VarChar(32)
-  srcTxHash   String?   @db.VarChar(66)
-  srcLogIndex Int?
-  srcEventId  String?   @db.VarChar(40)
+model InteropTransfer {
+  plugin     String   @db.VarChar(64)
+  transferId String   @db.VarChar(40)
+  type       String   @db.VarChar(64)
+  timestamp  DateTime @db.Timestamp(6)
 
-  srcTokenAddress String?  @db.VarChar(42)
-  srcRawAmount    Decimal? @db.Decimal(80, 0)
-  srcSymbol       String?  @db.VarChar(10)
-  srcAmount       Float?   @db.Real
-  srcPrice        Float?   @db.Real
-  srcValueUsd     Float?   @db.Real
+  duration Int?
 
-  dstTime     DateTime? @db.Timestamp(6)
-  dstChain    String?   @db.VarChar(32)
-  dstTxHash   String?   @db.VarChar(66)
-  dstLogIndex Int?
-  dstEventId  String?   @db.VarChar(40)
+  srcTime         DateTime? @db.Timestamp(6)
+  srcChain        String?   @db.VarChar(32)
+  srcTxHash       String?   @db.VarChar(66)
+  srcLogIndex     Int?
+  srcEventId      String?   @db.VarChar(40)
+  srcTokenAddress String?   @db.VarChar(66)
+  srcRawAmount    Decimal?  @db.Decimal(80, 0)
 
-  dstTokenAddress String?  @db.VarChar(42)
-  dstRawAmount    Decimal? @db.Decimal(80, 0)
-  dstSymbol       String?  @db.VarChar(10)
-  dstAmount       Float?   @db.Real
-  dstPrice        Float?   @db.Real
-  dstValueUsd     Float?   @db.Real
+  srcAbstractTokenId String? @db.VarChar(66)
+  srcAmount          Float?  @db.Real
+  srcPrice           Float?  @db.Real
+  srcValueUsd        Float?  @db.Real
+  srcWasBurned       Boolean?
 
-  @@id([messageId])
+  dstTime         DateTime? @db.Timestamp(6)
+  dstChain        String?   @db.VarChar(32)
+  dstTxHash       String?   @db.VarChar(66)
+  dstLogIndex     Int?
+  dstEventId      String?   @db.VarChar(40)
+  dstTokenAddress String?   @db.VarChar(66)
+  dstRawAmount    Decimal?  @db.Decimal(80, 0)
+
+  dstAbstractTokenId String? @db.VarChar(66)
+  dstAmount          Float?  @db.Real
+  dstPrice           Float?  @db.Real
+  dstValueUsd        Float?  @db.Real
+  dstWasMinted       Boolean?
+
+  isProcessed Boolean
+
+  @@id([transferId])
   @@index([type])
+  @@index([isProcessed])
 }
 
 model EcosystemToken {
@@ -432,4 +450,64 @@ model EcosystemToken {
 
   @@id([projectId, coingeckoId, configurationId])
   @@index([projectId])
+}
+
+model AbstractToken {
+  id                        String    @db.Char(6)
+  issuer                    String?   @db.VarChar(255)
+  symbol                    String    @db.VarChar(255)
+  category                  String    @db.VarChar(255)
+  iconUrl                   String?   @db.VarChar(255)
+  coingeckoId               String?   @db.VarChar(255)
+  coingeckoListingTimestamp DateTime? @db.Timestamp(6)
+  comment                   String?   @db.Text
+  reviewed                  Boolean   @default(false)
+
+  deployedTokens DeployedToken[]
+
+  @@id([id])
+  @@unique([issuer, symbol])
+}
+
+model DeployedToken {
+  chain               String   @db.VarChar(32)
+  address             String   @db.VarChar(255)
+  abstractTokenId     String?  @db.Char(6)
+  symbol              String   @db.VarChar(255)
+  decimals            Int
+  deploymentTimestamp DateTime @db.Timestamp(6)
+  comment             String?  @db.Text
+
+  abstractToken   AbstractToken?    @relation(fields: [abstractTokenId], references: [id], onDelete: Restrict)
+  connectionsFrom TokenConnection[] @relation("TokenConnection_tokenFrom")
+  connectionsTo   TokenConnection[] @relation("TokenConnection_tokenTo")
+
+  @@id([chain, address])
+  @@index([abstractTokenId])
+}
+
+model TokenConnection {
+  tokenFromChain   String  @db.VarChar(32)
+  tokenFromAddress String  @db.VarChar(255)
+  tokenToChain     String  @db.VarChar(32)
+  tokenToAddress   String  @db.VarChar(255)
+  type             String  @db.VarChar(32)
+  params           Json?   @db.Json
+  comment          String? @db.Text
+
+  tokenFrom DeployedToken @relation("TokenConnection_tokenFrom", fields: [tokenFromChain, tokenFromAddress], references: [chain, address], onDelete: Restrict)
+  tokenTo   DeployedToken @relation("TokenConnection_tokenTo", fields: [tokenToChain, tokenToAddress], references: [chain, address], onDelete: Restrict)
+
+  @@id([tokenFromChain, tokenFromAddress, tokenToChain, tokenToAddress, type])
+  @@index([tokenFromChain, tokenFromAddress])
+  @@index([tokenToChain, tokenToAddress])
+}
+
+model InteropRecentPrices {
+  coingeckoId String   @db.VarChar(64)
+  timestamp   DateTime @db.Timestamp(6)
+  priceUsd    Float    @db.Real
+
+  @@id([coingeckoId, timestamp])
+  @@index([timestamp])
 }

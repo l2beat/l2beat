@@ -1,5 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BlockProvider } from '@l2beat/shared'
+import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer, RootIndexer } from '@l2beat/uif'
 
 export class BlockNumberIndexer extends RootIndexer {
@@ -9,6 +10,7 @@ export class BlockNumberIndexer extends RootIndexer {
     private readonly blockProvider: BlockProvider,
     chain: string,
     logger: Logger,
+    private delayFromTipInSeconds: number,
     private checkIntervalMs = 10_000,
   ) {
     super(logger.tag({ chain }), {
@@ -23,7 +25,9 @@ export class BlockNumberIndexer extends RootIndexer {
   }
 
   async tick(): Promise<number> {
-    const blockNumber = await this.blockProvider.getLatestBlockNumber()
+    const timestamp = UnixTime.now() - this.delayFromTipInSeconds
+    const blockNumber =
+      await this.blockProvider.getBlockNumberAtOrBefore(timestamp)
     if (blockNumber > this.blockHeight) {
       this.blockHeight = blockNumber
       this.logger.info('Advanced block number', { blockNumber })

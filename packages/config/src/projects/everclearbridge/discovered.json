@@ -1,7 +1,7 @@
 {
   "name": "everclearbridge",
-  "timestamp": 1754908695,
-  "configHash": "0xe84814adb0f62b614aa54e384f62f023d8b78fd7bfa661f6a7b64590f28ba486",
+  "timestamp": 1760535562,
+  "configHash": "0x6546bb5177ca12807ddea03f8b9cb3d4888f6fdb187f233b278a2415cf29f780",
   "entries": [
     {
       "name": "Permit2",
@@ -154,7 +154,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 58,
+        "nonce": 72,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -213,11 +213,11 @@
         "FILL_INTENT_FOR_SOLVER_TYPEHASH": "0xce47b2c080dbcd8e420dc92bcf58f25f73f2e008a3b34ac41b9d468d1fb45d5a",
         "fillQueue": { "first": 1, "last": 0 },
         "gateway": "eth:0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7",
-        "intentQueue": { "first": 13618, "last": 13617 },
+        "intentQueue": { "first": 21148, "last": 21147 },
         "lighthouse": "eth:0x38f188953f1E3afE83327C78AAeF72e0498da2C6",
         "messageGasLimit": 5000000,
         "messageReceiver": "eth:0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66",
-        "nonce": 13617,
+        "nonce": 21147,
         "owner": "eth:0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6",
         "paused": false,
         "PERMIT2": "eth:0x000000000022D473030F116dDEE9F6B43aC78BA3",
@@ -360,7 +360,7 @@
           "averageGasUnitsPerSettlement": 50000,
           "bufferDBPS": 10000
         },
-        "getCurrentEpoch": 229837,
+        "getCurrentEpoch": 253147,
         "hubGateway": "everclear:0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa",
         "initialized": false,
         "lighthouse": "everclear:0x38f188953f1E3afE83327C78AAeF72e0498da2C6",
@@ -433,7 +433,7 @@
         "getChainId": 25327,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 98,
+        "nonce": 116,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -457,28 +457,42 @@
       "proxyType": "EOA"
     },
     {
-      "name": "EverclearHubGateway",
+      "name": "HubGatewayV2",
       "address": "everclear:0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa",
       "type": "Contract",
-      "unverified": true,
+      "template": "everclearbridge/EverclearHubGateway",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0xf6a49ba2bca4b5e8e2890b00f9d7641caf549b07f3d57a3678765b6b43daed33"
+      ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1726461025,
       "sinceBlock": 388,
       "values": {
         "$admin": "everclear:0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8",
-        "$implementation": "everclear:0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4",
+        "$implementation": "everclear:0xd8681612290EDD610E70f082Ef1015b25B597f5c",
         "$pastUpgrades": [
           [
             "2024-09-16T04:30:25.000Z",
             "0x6bf5a1266b2dd70c619cb8817020d873e1e150e0437ce21875e44e7f653781f1",
             ["everclear:0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4"]
+          ],
+          [
+            "2025-10-08T17:36:13.000Z",
+            "0x81dfc1c668cca1cb56cbe1f414057bdb8e5e041959802fed6584d5f7a0abfd21",
+            ["everclear:0xd8681612290EDD610E70f082Ef1015b25B597f5c"]
           ]
         ],
-        "$upgradeCount": 1
+        "$upgradeCount": 2,
+        "interchainSecurityModule": "everclear:0xcdBE2995Af304e9c14dF5B0c3d7C9CCc63D7b8B3",
+        "mailbox": "everclear:0x7f50C5776722630a0024fAE05fDe8b47571D7B39",
+        "owner": "everclear:0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8",
+        "receiver": "everclear:0xa05A3380889115bf313f1Db9d5f335157Be4D816",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
         "everclear:0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa": "ERC1967Proxy",
-        "everclear:0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4": ""
+        "everclear:0xd8681612290EDD610E70f082Ef1015b25B597f5c": "HubGatewayV2"
       }
     }
   ],
@@ -1038,6 +1052,71 @@
     "everclear:0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8": [
       "constructor(address _singleton)"
     ],
+    "everclear:0xd8681612290EDD610E70f082Ef1015b25B597f5c": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error GasTank_CallFailed()",
+      "error GasTank_InsufficientFunds()",
+      "error GasTank_NotAuthorized()",
+      "error Gateway_Deprecated_SingletonMailbox()",
+      "error Gateway_Handle_InvalidOriginDomain()",
+      "error Gateway_Handle_InvalidSender()",
+      "error Gateway_Handle_NotCalledByMailbox()",
+      "error Gateway_Initialize_MismatchedArrays()",
+      "error Gateway_SendMessage_InsufficientBalance()",
+      "error Gateway_SendMessage_UnauthorizedCaller()",
+      "error Gateway_SendMessage_UnsuccessfulRebate()",
+      "error Gateway_ZeroAddress()",
+      "error HubGateway_Mailbox_InvalidOriginDomain(uint32 _chainId)",
+      "error HubGateway_RemoveGateway_GatewayAlreadyRemoved(uint32 _chainId)",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event ActiveMailboxUpdated(uint32 _origin, address _oldMailbox, address _newMailbox)",
+      "event ChainGatewayAdded(uint32 _chainId, bytes32 _gateway)",
+      "event ChainGatewayRemoved(uint32 _chainId, bytes32 _gateway)",
+      "event GasReceiverAuthorized(address indexed _address, bool _authorized)",
+      "event GasTankDeposited(address indexed _sender, uint256 _amount)",
+      "event GasTankSpent(uint256 indexed _amount)",
+      "event GasTankWithdrawn(address indexed _sender, uint256 _amount)",
+      "event Initialized(uint64 version)",
+      "event MailboxUpdated(address _oldMailbox, address _newMailbox)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event SecurityModuleUpdated(address _oldSecurityModule, address _newSecurityModule)",
+      "event Upgraded(address indexed implementation)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function activeMailbox(uint32 _origin) view returns (address _mailbox)",
+      "function authorizeGasReceiver(address _receiver, bool _authorized)",
+      "function chainGateways(uint32 _chainId) view returns (bytes32 _gateway)",
+      "function disableActiveMailbox(uint32 _origin)",
+      "function handle(uint32 _origin, bytes32 _sender, bytes _message) payable",
+      "function initialize(address[] _mailboxes, uint32[] _chainIds)",
+      "function interchainSecurityModule() view returns (address)",
+      "function isAuthorizedGasReceiver(address _address) view returns (bool)",
+      "function mailbox() view returns (address)",
+      "function mailboxes(uint32) view returns (address)",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function quoteMessage(uint32 _chainId, bytes _message, uint256 _gasLimit) view returns (uint256 _fee)",
+      "function receiver() view returns (address)",
+      "function removeChainGateway(uint32 _chainId)",
+      "function renounceOwnership()",
+      "function sendMessage(uint32 _chainId, bytes _message, uint256 _fee, uint256 _gasLimit) returns (bytes32 _messageId, uint256 _feeSpent)",
+      "function sendMessage(uint32 _chainId, bytes _message, uint256 _gasLimit) payable returns (bytes32 _messageId, uint256 _feeSpent)",
+      "function setChainGateway(uint32 _chainId, bytes32 _gateway)",
+      "function transferOwnership(address newOwner)",
+      "function updateActiveMailbox(uint32 _origin, address _newMailbox)",
+      "function updateMailbox(address _newMailbox)",
+      "function updateSecurityModule(address _newSecurityModule)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function withdrawGas(uint256 _amount)"
+    ],
     "everclear:0xe0F010e465f15dcD42098dF9b99F1038c11B3056": [
       "error AssetManager_SetTokenConfigs_FeesExceedsDenominator()",
       "error AssetManager_SetTokenConfigs_TickerHashMismatch()",
@@ -1284,8 +1363,9 @@
     ]
   },
   "usedTemplates": {
+    "everclearbridge/EverclearHubGateway": "0x7f95b098436a5c7082be25b752b0735f2a98d896415b75cefa4e7c0a4c270c74",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "everclear": 2176553, "ethereum": 23117260 },
-  "permissionsConfigHash": "0xb2a08bfe600cd501406e6f2a49b12a26efcaefedc30c2d503c88db9f16c82bd5"
+  "usedBlockNumbers": { "everclear": 2800596, "ethereum": 23583441 },
+  "permissionsConfigHash": "0xae2cfea5911cacbbe8d05d9507f1c11f65cc26dc8c22df13349e6eb8a413a665"
 }

@@ -17,6 +17,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -36,6 +37,14 @@ const MAX_CHALLENGE_SECS = discovery.getContractValue<number>(
 const proposerBond = discovery.getContractValue<number>(
   'Rollup',
   'PROPOSER_BOND',
+)
+
+const facetProgramHashes = []
+facetProgramHashes.push(
+  discovery.getContractValue<string>('Rollup', 'AGG_VKEY'),
+)
+facetProgramHashes.push(
+  discovery.getContractValue<string>('Rollup', 'RANGE_VKEY_COMMITMENT'),
 )
 
 export const facet: ScalingProject = {
@@ -100,7 +109,7 @@ export const facet: ScalingProject = {
     description:
       'Facet Bluebird is a based rollup built on OP-Succinct. It uses FCT as its native gas token, which is mintable by burning ETH on L1.',
     headerWarning:
-      'The vast majority of funds bridged to Facet are bridged through external non-canonical bridges. Note that external bridges may introduce additional trust assumptions and the bridge-related aspects of the Stage and risk rosette assessment on this page apply only to bridges using the same proof system as the canonical bridge. L2BEAT is working on a TVS and asset framework to assess the risks of individual tokens, you can follow the latest updates [here](https://forum.l2beat.com/t/assets-bridges-and-tvs/388).',
+      'The vast majority of funds bridged to Facet are via external, non-canonical bridges. This page’s Stage and risk rosette evaluate the rollup’s proof system and protocol-level mechanisms that secure L2 state (e.g., proofs, challenge/exit windows, censorship-escape/self-propose). External bridges do not necessarily inherit these exit properties unless their exits route through this proof path. Users should review each bridge’s trust assumptions. L2BEAT is working on a TVS and asset framework to assess the risks of individual tokens, you can follow the latest updates [here](https://forum.l2beat.com/t/assets-bridges-and-tvs/388).',
     purposes: ['Universal'],
     links: {
       websites: ['https://facet.org/'],
@@ -348,6 +357,7 @@ export const facet: ScalingProject = {
   contracts: {
     addresses: discovery.getDiscoveredContracts(),
     risks: [],
+    zkProgramHashes: facetProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   permissions: discovery.getDiscoveredPermissions(),
   chainConfig: {

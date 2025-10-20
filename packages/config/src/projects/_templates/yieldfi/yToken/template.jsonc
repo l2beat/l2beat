@@ -8,12 +8,19 @@
     "previewRedeem",
     "previewMint"
   ],
+  "ignoreInWatchMode": [
+    "exchangeRate",
+    "exchangeRateScaled",
+    "getUnvestedAmount",
+    "lastDistributionTimestamp",
+    "totalAssets",
+    "totalSupply",
+    "totAssets",
+    "vestingAmount"
+  ],
   "fields": {
     "$minters": {
-      "handler": {
-        "type": "YieldFiMinters",
-        "permissionlessMinting": true
-      }
+      "handler": { "type": "YieldFiMinters", "permissionlessMinting": true }
     }
   }
 }

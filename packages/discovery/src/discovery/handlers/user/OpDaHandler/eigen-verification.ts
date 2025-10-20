@@ -6,6 +6,7 @@ import {
   type EigenCommitment,
   EigenV1BlobInfo,
   EigenV2BlobInfo,
+  EigenV3BlobInfo,
 } from './eigen-types'
 
 export async function checkForEigenDA(
@@ -13,8 +14,8 @@ export async function checkForEigenDA(
   sequencerTxs: Transaction[],
 ) {
   const possibleCommitments = sequencerTxs
-    .map(({ input }) => extractCommitment(input))
-    .filter((c) => c !== undefined)
+    .map(({ input }) => decodeCommitment(input))
+    .filter((c) => c !== null)
 
   if (
     possibleCommitments.length === 0 ||
@@ -23,13 +24,21 @@ export async function checkForEigenDA(
     return false
   }
 
-  const v1Commitments = possibleCommitments.filter((c) => c.version === 'v1')
+  const v3Commitments = possibleCommitments.filter((c) => c.version === 'v3')
   const v2Commitments = possibleCommitments.filter((c) => c.version === 'v2')
+  const v1Commitments = possibleCommitments.filter((c) => c.version === 'v1')
 
-  const v1Verification = await verifyV1Commitments(provider, v1Commitments)
-  const v2Verification = verifyV2Commitments(v2Commitments)
+  if (verifyV3Commitments(v3Commitments)) {
+    return 'v3'
+  }
+  if (verifyV2Commitments(v2Commitments)) {
+    return 'v2'
+  }
+  if (await verifyV1Commitments(provider, v1Commitments)) {
+    return 'v1'
+  }
 
-  return v1Verification || v2Verification
+  return false
 }
 
 async function getConfirmedBatchHeaderHashes(
@@ -67,45 +76,6 @@ function extractBlobBatchHeaderHash(decoded: EigenV1BlobInfo): string {
   return blobBatchHeaderHash.toLowerCase()
 }
 
-// Some projects (yghm Mantle) prefixes commitment with some data
-// So we reduce until we find the commitment start point.
-function extractCommitment(input: string): EigenCommitment | undefined {
-  for (let i = 0; i < input.length; i++) {
-    const slice = input.slice(i, input.length)
-
-    const firstByte = slice.slice(0, 2)
-    const thirdByte = slice.slice(4, 6)
-
-    if (
-      firstByte === EIGEN_DA_CONSTANTS.COMMITMENT_FIRST_BYTE &&
-      thirdByte === EIGEN_DA_CONSTANTS.COMMITMENT_THIRD_BYTE
-    ) {
-      const commitment = slice.slice(6)
-      const commitmentVersionByte = commitment.slice(0, 2)
-
-      if (commitmentVersionByte === EIGEN_DA_CONSTANTS.VERSION_BYTE_V1) {
-        return {
-          body: commitment.slice(2),
-          version: 'v1',
-        }
-      }
-
-      if (commitmentVersionByte === EIGEN_DA_CONSTANTS.VERSION_BYTE_V2) {
-        return {
-          body: commitment.slice(2),
-          version: 'v2',
-        }
-      }
-
-      // legacy
-      return {
-        body: commitment,
-        version: 'v1',
-      }
-    }
-  }
-}
-
 async function verifyV1Commitments(
   provider: IProvider,
   v1Commitments: EigenCommitment[],
@@ -139,13 +109,22 @@ async function verifyV1Commitments(
 }
 
 function verifyV2Commitments(v2Commitments: EigenCommitment[]) {
-  return v2Commitments.every((input) => parseEigenV2(input.body) !== null)
+  return (
+    v2Commitments.length > 0 &&
+    v2Commitments.every((input) => parseEigenV2(input.body) !== null)
+  )
+}
+
+function verifyV3Commitments(v3Commitments: EigenCommitment[]) {
+  return (
+    v3Commitments.length > 0 &&
+    v3Commitments.every((input) => parseEigenV3(input.body) !== null)
+  )
 }
 
 function parseEigenV1(possibleCommitment: string): EigenV1BlobInfo | null {
   try {
     const rlp = RLP.decode('0x' + possibleCommitment)
-
     return EigenV1BlobInfo.parse(rlp)
   } catch {
     return null
@@ -155,9 +134,85 @@ function parseEigenV1(possibleCommitment: string): EigenV1BlobInfo | null {
 function parseEigenV2(possibleCommitment: string): EigenV2BlobInfo | null {
   try {
     const rlp = RLP.decode('0x' + possibleCommitment)
-
     return EigenV2BlobInfo.parse(rlp)
   } catch {
     return null
   }
+}
+
+function parseEigenV3(possibleCommitment: string): EigenV3BlobInfo | null {
+  try {
+    const rlp = RLP.decode('0x' + possibleCommitment)
+    return EigenV3BlobInfo.parse(rlp)
+  } catch {
+    return null
+  }
+}
+
+function classicExtractCommitment(input: string) {
+  const regex = /01[0-9a-f]{2}00(?:00|01|02)/
+
+  const match = regex.exec(input)
+
+  if (!match) {
+    return null
+  }
+
+  const idx = match.index + '00000000'.length
+
+  return input.slice(idx)
+}
+
+function customExtractCommitment(input: string) {
+  // pattern: 01 ?? (00|01|02) -- no version byte
+  const regex = /01[0-9a-f]{2}(?:00|01|02)/
+
+  const match = regex.exec(input)
+
+  if (!match) {
+    return null
+  }
+
+  const idx = match.index + '000000'.length
+
+  return input.slice(idx)
+}
+
+function decodeCommitment(input: string): EigenCommitment | null {
+  const clean = input.startsWith('0x') ? input.slice(2) : input
+  const commitment =
+    classicExtractCommitment(clean) ?? customExtractCommitment(clean)
+
+  if (!commitment) {
+    return null
+  }
+
+  const maybeV3 = parseEigenV3(commitment)
+
+  if (maybeV3) {
+    return {
+      version: 'v3',
+      body: commitment,
+    }
+  }
+
+  const maybeV2 = parseEigenV2(commitment)
+
+  if (maybeV2) {
+    return {
+      version: 'v2',
+      body: commitment,
+    }
+  }
+
+  const maybeV1 = parseEigenV1(commitment)
+
+  if (maybeV1) {
+    return {
+      version: 'v1',
+      body: commitment,
+    }
+  }
+
+  return null
 }

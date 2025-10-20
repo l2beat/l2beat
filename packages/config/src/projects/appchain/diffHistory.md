@@ -1,3 +1,58 @@
+Generated with discovered.json: 0xd5bdffbcd42074f185e7f82e73232292e166c43c
+
+# Diff at Wed, 15 Oct 2025 14:29:01 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@e6369d132630f14e783254ffb9e866e883328b9b block: 1759830301
+- current timestamp: 1760538476
+
+## Description
+
+Templatized CertManager.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759830301 (main branch discovery), not current.
+
+```diff
+    contract CertManager (eth:0x1Ff280d8B34E97E2CcA0bdb461F4bA2CF9b8E494) {
+    +++ description: The CertManager is used for anchoring TEE attestation keys to a trusted Certificate Authority (CA).
+      template:
++        "espresso/Sequencing"
+      description:
++        "The CertManager is used for anchoring TEE attestation keys to a trusted Certificate Authority (CA)."
+    }
+```
+
+Generated with discovered.json: 0xc6775cfa81760c17a8063e608737575bca3c3b15
+
+# Diff at Tue, 07 Oct 2025 09:46:09 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@5e88ba37ad7744f9d7831779a58849b5d00ec673 block: 1759388912
+- current timestamp: 1759830301
+
+## Description
+
+Two members removed from multisig.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675"
+      values.$members.7:
+-        "eth:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
+      values.multisigThreshold:
+-        "4 of 9 (44%)"
++        "4 of 7 (57%)"
+    }
+```
+
 Generated with discovered.json: 0xca2f5cd14b058741eb9945f283f2efa3ee7811eb
 
 # Diff at Thu, 02 Oct 2025 07:09:56 GMT:

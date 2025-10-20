@@ -18,6 +18,8 @@ export const iotex: ScalingProject = upcomingL2({
       documentation: ['https://docs.iotex.io/'],
       repositories: ['https://github.com/iotexproject'],
       socialMedia: ['https://x.com/iotex_io'],
+      bridges: ['https://bridge.iotex.io'],
+      explorers: ['https://iotexscan.io'],
     },
   },
   ecosystemInfo: {

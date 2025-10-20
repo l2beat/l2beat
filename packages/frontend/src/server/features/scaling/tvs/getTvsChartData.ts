@@ -82,11 +82,10 @@ export async function getTvsChart({
     getSummedTvsValues(
       tvsProjects.map((p) => p.projectId),
       range,
-      !forSummary
-        ? 'PROJECT'
-        : excludeAssociatedTokens
-          ? 'SUMMARY_WA'
-          : 'SUMMARY',
+      {
+        forSummary,
+        excludeAssociatedTokens,
+      },
     ),
   ])
 

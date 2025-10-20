@@ -151,6 +151,22 @@ jobs:
       - name: Build tx-decoder
         run: pnpm build:uops-dashboard
 
+  build-token-backend:
+    name: Build token-backend container image
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Build container
+        uses: docker/build-push-action@v5
+        with:
+          push: false
+          file: Dockerfile.token-backend
+          build-args: |
+            TURBO_TEAM=${{ vars.TURBO_TEAM }}
+            TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
+
   typecheck:
     name: Typecheck
     runs-on: ubuntu-latest

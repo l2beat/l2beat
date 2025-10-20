@@ -32,7 +32,7 @@ export const risc0: BaseProject = {
   },
   milestones: [
     {
-      title: 'rv32im circuit soundness vulnerability',
+      title: '[Disclosed vulnerability] rv32im circuit soundness vulnerability',
       url: 'https://x.com/RiscZero/status/1935404812146725042',
       date: '2025-06-18T00:00:00Z',
       description:
@@ -40,11 +40,20 @@ export const risc0: BaseProject = {
       type: 'incident',
     },
     {
-      title: 'Underconstrained division vulnerability',
+      title:
+        '[Disclosed vulnerability] Underconstrained division vulnerability',
       url: 'https://x.com/RiscZero/status/1952503598056882225',
       date: '2025-08-05T00:00:00Z',
       description:
         'Release of risc0-zkVM 2.2.0 with a fix of a signed integer division soundness vulnerability.',
+      type: 'incident',
+    },
+    {
+      title: '[Disclosed vulnerability] Critical malicious host vulnerability',
+      url: 'https://x.com/RiscZero/status/1973490104883990791',
+      date: '2025-10-02T00:00:00Z',
+      description:
+        'Release of risc0-zkvm versions 2.3.2 and 3.0.3 with a fix of critical vulnerability where a malicious host can write to an arbitrary memory location in the guest.',
       type: 'incident',
     },
   ],

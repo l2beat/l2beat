@@ -28,11 +28,17 @@ export function getUpdateMonitorConfig(
     ),
   ]
   const enabledChains = allChains.filter((chain) =>
-    flags.isEnabled('updateMonitor', chain),
+    flags.isEnabled('updateMonitor', 'chain', chain),
   )
   const disabledChains = allChains.filter(
-    (chain) => !flags.isEnabled('updateMonitor', chain),
+    (chain) => !flags.isEnabled('updateMonitor', 'chain', chain),
   )
+
+  const allProjects = configReader.readAllDiscoveredProjects()
+  const disabledProjects = allProjects.filter(
+    (project) => !flags.isEnabled('updateMonitor', 'project', project),
+  )
+
   return {
     configReader,
     paths,
@@ -45,6 +51,7 @@ export function getUpdateMonitorConfig(
       getChainDiscoveryConfig(env, chain, chains),
     ),
     disabledChains,
+    disabledProjects,
     cacheEnabled: env.optionalBoolean(['DISCOVERY_CACHE_ENABLED']),
     cacheUri: env.string(['DISCOVERY_CACHE_URI'], 'postgres'),
     updateMessagesRetentionPeriodDays: env.integer(

@@ -11,7 +11,8 @@
     "getCurveInfo",
     "getLockedBondInfo",
     "getUnbondedKeysCount",
-    "getUnbondedKeysCountToEject"
+    "getUnbondedKeysCountToEject",
+    "getClaimableBondShares"
   ],
   "ignoreInWatchMode": ["getBondLockRetentionPeriod", "totalBondShares"]
 }

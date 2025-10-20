@@ -52,7 +52,7 @@ export interface Config {
   readonly da: DataAvailabilityTrackingConfig | false
   readonly blockSync: BlockSyncModuleConfig
   readonly anomalies: AnomaliesConfig | false
-  readonly bridges: BridgesConfig | false
+  readonly interop: InteropConfig | false
 
   readonly flags: ResolvedFeatureFlag[]
 }
@@ -181,6 +181,7 @@ export interface UpdateMonitorConfig {
   readonly cacheUri: string
   readonly chains: DiscoveryChainConfig[]
   readonly disabledChains: string[]
+  readonly disabledProjects: string[]
   readonly discord: DiscordConfig | false
   readonly updateMessagesRetentionPeriodDays: number
 }
@@ -202,10 +203,13 @@ export interface AnomaliesConfig {
   readonly anomaliesMinDuration: number
 }
 
-export interface BridgesConfig {
+export interface InteropConfig {
   capture: {
     enabled: boolean
-    chains: string[]
+    chains: {
+      name: string
+      type: 'evm'
+    }[]
   }
   matching: boolean
   cleaner: boolean
@@ -213,16 +217,19 @@ export interface BridgesConfig {
     enabled: boolean
     getExplorerUrl: (chain: string) => string | undefined
   }
+  compare: {
+    enabled: boolean
+    intervalMs?: number
+  }
+  financials: {
+    enabled: boolean
+  }
 }
 
 export interface DaBeatConfig {
   readonly projectsForDaBeatStats: ProjectId[]
   /** Coingecko ids of tokens for economic security */
   readonly coingeckoIds: string[]
-  /** Names of the economic security types */
-  readonly types: string[]
-  readonly quicknodeApiUrl: string
-  readonly quicknodeCallsPerMinute: number
   readonly celestiaApiUrl: string
   readonly celestiaCallsPerMinute: number
   readonly nearRpcUrl: string
@@ -296,5 +303,6 @@ export interface DataAvailabilityTrackingConfig {
 }
 
 export interface BlockSyncModuleConfig {
+  delayFromTipInSeconds: number
   ethereumWsUrl?: string
 }

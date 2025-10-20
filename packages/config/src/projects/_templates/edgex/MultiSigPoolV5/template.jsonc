@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EdgeXDepositor",
+  "description": "A deposit wrapper that allows users to deposit arbitrary tokens to EdgeX. Tokens are swapped to USDT via 1inch and deposited to edgeX. This deposit wrapper also has fast withdrawal support using liquidity providers, but it seems deprecated in practice. Standard direct deposits and withdrawals of USDT at the StarkPerpetual contract are fully supported.",
+  "ignoreRelatives": ["USDT_ADDRESS", "FACT_ADDRESS"],
+  "fields": {
+    "signers": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "withdraw any funds from this deposit wrapper contract by reaching a threshold of 2 signers."
+        }
+      ]
+    }
+  }
+}

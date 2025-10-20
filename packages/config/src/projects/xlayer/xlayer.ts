@@ -7,6 +7,7 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
@@ -22,7 +23,7 @@ export const xlayer: ScalingProject = {
   addedAt: UnixTime(1713983341), // 2024-04-24T18:29:01Z
   badges: [BADGES.DA.CustomDA, BADGES.Infra.Agglayer],
   reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.SMALL_DAC,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
     REASON_FOR_BEING_OTHER.NO_PROOFS,
   ],
   proofSystem: undefined,
@@ -38,6 +39,8 @@ export const xlayer: ScalingProject = {
       ],
       explorers: ['https://okx.com/explorer/xlayer'],
       socialMedia: ['https://twitter.com/XLayerOfficial'],
+      bridges: ['https://web3.okx.com/xlayer/bridge'],
+      repositories: ['https://github.com/okx/xlayer-erigon'],
     },
     purposes: ['Universal'],
     stacks: ['Agglayer CDK'],
@@ -91,6 +94,37 @@ export const xlayer: ScalingProject = {
       },
     ],
   },
+  technology: {
+    otherConsiderations: [
+      {
+        name: 'Shared bridge and Pessimistic Proofs',
+        description:
+          "Polygon Agglayer uses a shared bridge escrow for Rollups, Validiums and external chains that opt in to participate in interoperability. Each participating chain needs to provide zk proofs to access any assets in the shared bridge. In addition to the full execution proofs that are used for the state validation of Rollups and Validiums, accounting proofs over the bridges state (Polygon calls them 'Pessimistic Proofs') are used by external chains ('cdk-sovereign' and aggchains). Using the SP1 zkVM by Succinct, projects without a full proof system on Ethereum or custom proof systems are able to share the bridge with the zkEVM Agglayer projects.",
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'the accounting proof system for the bridge (pessimistic proofs, SP1) is implemented incorrectly.',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'the operator manipulates the L2 state, which is not validated on Ethereum.',
+            isCritical: true,
+          },
+        ],
+        references: [
+          {
+            title: 'Pessimistic Proof - Polygon Knowledge Layer',
+            url: 'https://docs.polygon.technology/learn/agglayer/pessimistic_proof',
+          },
+          {
+            title:
+              'Etherscan: PolygonRollupManager.sol - verifyPessimisticTrustedAggregator() function',
+            url: 'https://etherscan.io/address/0x42B9fF0644741e3353162678596e7D6aA6a13240#code#F1#L1280',
+          },
+        ],
+      },
+    ],
+  },
   milestones: [
     {
       title: 'Migration to Pessimistic Proofs',
@@ -129,9 +163,22 @@ export const xlayer: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    zkProgramHashes: getPessimisticVKeys().map((el) => ZK_PROGRAM_HASHES(el)),
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   ecosystemInfo: {
     id: ProjectId('agglayer'),
   },
+}
+
+function getPessimisticVKeys(): string[] {
+  type ProgramHashDict = Record<string, Record<string, string>[]>
+  const pessimisticVKeyDict = discovery.getContractValue<ProgramHashDict>(
+    'AggLayerGateway',
+    'routes',
+  )
+  // Iterate over all selectors, each of the selectors could be used as it is set in calldata
+  return Object.values(pessimisticVKeyDict).flatMap((arr) =>
+    arr.map((el) => el['pessimisticVKey']),
+  )
 }
