@@ -53,7 +53,7 @@ export const getScalingTvsColumns = (
             if (opts?.isTvsLoading) {
               return (
                 <div className="flex justify-center">
-                  <Skeleton className="h-6 w-26" />
+                  <Skeleton className="h-6 w-45" />
                 </div>
               )
             }
@@ -299,8 +299,8 @@ function BreakdownCell({
 }) {
   if (isTvsLoading) {
     return (
-      <div className="flex justify-center">
-        <Skeleton className="h-6 w-26" />
+      <div className="flex justify-end">
+        <Skeleton className="h-6 w-full" />
       </div>
     )
   }

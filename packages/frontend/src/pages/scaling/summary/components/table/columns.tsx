@@ -88,7 +88,7 @@ export function getScalingSummaryColumns(opts?: ScalingSummaryColumnsOpts) {
           if (opts?.isTvsLoading) {
             return (
               <div className="flex justify-end">
-                <Skeleton className="h-6 w-30" />
+                <Skeleton className="h-6 w-45" />
               </div>
             )
           }

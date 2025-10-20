@@ -56,7 +56,10 @@ export function TvsBreakdownSummaryBox({
         tooltip="Total value secured displayed together with a percentage change compared to 7D ago."
       >
         {isLoading ? (
-          <Skeleton className="h-[42px] w-20 " />
+          <div className="flex items-end gap-3.5 lg:flex-col lg:items-center lg:gap-0.5">
+            <Skeleton className="h-6 w-24 " />
+            <Skeleton className="h-4 w-13 " />
+          </div>
         ) : (
           <ValueWithPercentageChange
             change={tvsData?.change.total}
@@ -177,7 +180,7 @@ interface StatsItemProps {
 }
 
 function StatItemContent(props: StatsItemProps) {
-  if (props.isLoading) return <Skeleton className="h-[20px] w-20 " />
+  if (props.isLoading) return <Skeleton className="h-[20px] w-32" />
   if (props.value === undefined) return <NoDataBadge />
 
   return (
