@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import type { DayProvider } from '../../../../providers/DayProviders'
+import type { DayProvider } from '../../../../providers/day/DayProviders'
 import { activityRecord } from '../../utils/aggregatePerDay.test'
 import { DayTxsCountService } from './DayTxsCountService'
 
@@ -8,7 +8,10 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
   it('should return txs count', async () => {
     const provider = mockProvider([2000, 3000])
 
-    const txsCountProvider = new DayTxsCountService(provider, ProjectId('a'))
+    const txsCountProvider = new DayTxsCountService({
+      provider,
+      projectId: ProjectId('a'),
+    })
 
     const start = 5 * UnixTime.DAY
     const end = 6 * UnixTime.DAY
@@ -32,7 +35,7 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
       ],
       latestTimestamp: end,
     })
-    expect(provider.getDailyCount).toHaveBeenCalledTimes(2)
+    expect(provider.getDailyTxs).toHaveBeenCalledTimes(2)
   })
 })
 
@@ -41,6 +44,6 @@ function mockProvider(counts: number[]) {
   counts.forEach((count) => mockGetDailyCount.resolvesToOnce(count))
 
   return mockObject<DayProvider>({
-    getDailyCount: mockGetDailyCount,
+    getDailyTxs: mockGetDailyCount,
   })
 }

@@ -120,6 +120,7 @@ export const immutablex: ScalingProject = {
       type: 'day',
       sinceTimestamp: UnixTime(1615389188),
       resyncLastDays: 7,
+      batchSize: 10,
     },
   },
   dataAvailability: {

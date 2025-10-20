@@ -81,6 +81,8 @@ export async function makeConfig(
           isReadonly,
         },
     coingeckoApiKey: env.string('COINGECKO_API_KEY'),
+    // TODO: maybe optional?
+    voyagerApiKey: env.string('VOYAGER_API_KEY'),
     api: {
       port: env.integer('PORT', isLocal ? 3001 : undefined),
       cache: {

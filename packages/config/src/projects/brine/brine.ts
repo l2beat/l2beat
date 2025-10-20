@@ -111,6 +111,7 @@ export const brine: ScalingProject = {
       type: 'day',
       sinceTimestamp: UnixTime(1657453320),
       resyncLastDays: 7,
+      batchSize: 10,
     },
   },
   dataAvailability: {
