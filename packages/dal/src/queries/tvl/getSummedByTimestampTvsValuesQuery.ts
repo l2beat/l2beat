@@ -27,9 +27,11 @@ export async function getSummedByTimestampTvsValuesQuery(
     projectIds,
     range[0],
     range[1],
-    forSummary,
-    excludeAssociated,
-    includeRwaRestrictedTokens,
+    {
+      forSummary,
+      excludeAssociated,
+      includeRwaRestrictedTokens,
+    },
   )
 
   return tvsRecords.map((v) => [

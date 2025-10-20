@@ -224,9 +224,11 @@ export class TokenValueRepository extends BaseRepository {
     projectIds: string[],
     fromInclusive: UnixTime | null,
     toInclusive: UnixTime | null,
-    forSummary: boolean,
-    excludeAssociated: boolean,
-    includeRwaRestrictedTokens: boolean,
+    opts: {
+      forSummary: boolean
+      excludeAssociated: boolean
+      includeRwaRestrictedTokens: boolean
+    },
   ): Promise<
     {
       timestamp: UnixTime
@@ -242,7 +244,7 @@ export class TokenValueRepository extends BaseRepository {
       other: number
     }[]
   > {
-    const valueField = forSummary ? 'valueForSummary' : 'valueForProject'
+    const valueField = opts.forSummary ? 'valueForSummary' : 'valueForProject'
 
     let query = this.db
       .selectFrom('TokenValue')
@@ -273,11 +275,11 @@ export class TokenValueRepository extends BaseRepository {
       query = query.where('timestamp', '<=', UnixTime.toDate(toInclusive))
     }
 
-    if (excludeAssociated) {
+    if (opts.excludeAssociated) {
       query = query.where('TokenMetadata.isAssociated', '=', false)
     }
 
-    if (!includeRwaRestrictedTokens) {
+    if (!opts.includeRwaRestrictedTokens) {
       query = query.where('TokenMetadata.category', '!=', 'rwaRestricted')
     }
 
@@ -301,9 +303,11 @@ export class TokenValueRepository extends BaseRepository {
   async getSummedAtTimestampsByProjects(
     oldestTimestamp: number,
     latestTimestamp: number,
-    excludeAssociated: boolean,
-    includeRwaRestrictedTokens: boolean,
-    cutOffTimestamp?: number,
+    opts: {
+      excludeAssociated: boolean
+      includeRwaRestrictedTokens: boolean
+      cutOffTimestamp?: number
+    },
   ): Promise<
     {
       timestamp: UnixTime
@@ -359,17 +363,17 @@ export class TokenValueRepository extends BaseRepository {
       .where(
         'timestamp',
         '>=',
-        cutOffTimestamp
-          ? UnixTime.toDate(cutOffTimestamp)
+        opts.cutOffTimestamp
+          ? UnixTime.toDate(opts.cutOffTimestamp)
           : sql<Date>`NOW() - INTERVAL '30 days'`,
       )
       .groupBy(['TokenValue.timestamp', 'TokenValue.projectId'])
 
-    if (excludeAssociated) {
+    if (opts.excludeAssociated) {
       query = query.where('TokenMetadata.isAssociated', '=', false)
     }
 
-    if (!includeRwaRestrictedTokens) {
+    if (!opts.includeRwaRestrictedTokens) {
       query = query.where('TokenMetadata.category', '!=', 'rwaRestricted')
     }
 

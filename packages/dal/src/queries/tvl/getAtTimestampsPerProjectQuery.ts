@@ -31,9 +31,11 @@ export async function getAtTimestampsPerProjectQuery(
   const allValues = await db.tvsTokenValue.getSummedAtTimestampsByProjects(
     oldestTimestamp,
     latestTimestamp,
-    excludeAssociated,
-    includeRwaRestrictedTokens,
-    cutOffTimestamp,
+    {
+      excludeAssociated,
+      includeRwaRestrictedTokens,
+      cutOffTimestamp,
+    },
   )
 
   const allValuesByProject = groupBy(
