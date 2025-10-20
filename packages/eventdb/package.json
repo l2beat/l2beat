@@ -28,7 +28,9 @@
     "test": "mocha",
     "typecheck": "tsc --noEmit"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@clickhouse/client": "^1.12.1"
+  },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
     "@types/express": "^5.0.0",
