@@ -1,5 +1,6 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
+import type { Database } from '@l2beat/database'
 import {
   type CallParameters,
   HttpClient,
@@ -13,18 +14,12 @@ import {
   type Hex,
   parseAbi,
 } from 'viem'
-import type { InteropConfigPlugin } from './types'
+import type { AcrossNetwork, InteropConfigPlugin } from './types'
 
 const abi = parseAbi([
   'function crossChainContracts(uint256) view returns (address adapter, address spokePool)',
 ])
 const HUB_POOL = EthereumAddress('0xc186fA914353c44b2E33eBE05f21846F1048bEda')
-
-export interface AcrossNetwork {
-  chainId: number
-  chain: string
-  spokePool: EthereumAddress
-}
 
 const OVERRIDES = [
   {
@@ -37,11 +32,12 @@ const OVERRIDES = [
   },
 ]
 
-export class AcrossConfigPlugin implements InteropConfigPlugin<AcrossNetwork> {
+export class AcrossConfigPlugin implements InteropConfigPlugin {
   name = 'across'
 
   constructor(
     private chains: { id: number; name: string }[],
+    private db: Database,
     private logger: Logger,
     private ethereumRpc: RpcClient,
   ) {}
