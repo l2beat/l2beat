@@ -1,4 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { utils } from 'ethers'
 import {
   createEventParser,
   createInteropEventType,
@@ -45,8 +46,42 @@ const parseRelayedMessage = createEventParser(
   'event RelayedMessage(bytes32 indexed msgHash)',
 )
 
-// L1 events: there are actually two events that need to be tracked.
-// TODO
+// L1 event: this will be a combination of two logs
+export const SentMessage = createInteropEventType<{
+  chain: string
+  msgHash: string
+}>('opstack.SentMessage')
+
+const parseSentMessage = createEventParser(
+  'event SentMessage(address indexed target, address sender, bytes message, uint256 messageNonce, uint256 gasLimit)',
+)
+const parseSentMessageExtension1 = createEventParser(
+  'event SentMessageExtension1(address indexed sender, uint256 value)',
+)
+
+// Interface for encoding the cross-domain message hash
+const relayMessageInterface = new utils.Interface([
+  'function relayMessage(uint256 _nonce, address _sender, address _target, uint256 _value, uint256 _gasLimit, bytes _data)',
+])
+
+function hashCrossDomainMessageV1(
+  nonce: bigint,
+  sender: string,
+  target: string,
+  value: bigint,
+  gasLimit: bigint,
+  data: string,
+): string {
+  const encoded = relayMessageInterface.encodeFunctionData('relayMessage', [
+    nonce,
+    sender,
+    target,
+    value,
+    gasLimit,
+    data,
+  ])
+  return utils.keccak256(encoded)
+}
 
 const OPSTACK_NETWORKS = defineNetworks('opstack', [
   {
@@ -72,10 +107,14 @@ export class OpStackPlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     // get L1 side events
     if (input.ctx.chain === 'ethereum') {
+      const logAddress = EthereumAddress(input.log.address)
       const network = OPSTACK_NETWORKS.find(
-        (n) => n.optimismPortal === EthereumAddress(input.log.address),
+        (n) =>
+          n.optimismPortal === logAddress ||
+          n.l1CrossDomainMessenger === logAddress,
       )
       if (!network) return
+
       // check if this is an L2->*L1* message
       const withdrawalFinalized = parseWithdrawalFinalized(input.log, [
         network.optimismPortal,
@@ -86,8 +125,36 @@ export class OpStackPlugin implements InteropPlugin {
           withdrawalHash: withdrawalFinalized.withdrawalHash,
         })
       }
-      // otherwise check if this is an *L1*->L2 message
-      // TODO
+
+      // check if this is an *L1*->L2 message
+      const sentMessage = parseSentMessage(input.log, [
+        network.l1CrossDomainMessenger,
+      ])
+      if (sentMessage) {
+        // see if we have SentMessageExtension1 event in the same tx
+        const nextLog = input.txLogs.find(
+          // biome-ignore lint/style/noNonNullAssertion: It's there
+          (x) => x.logIndex === input.log.logIndex! + 1,
+        )
+        const extension =
+          nextLog &&
+          parseSentMessageExtension1(nextLog, [network.l1CrossDomainMessenger])
+
+        // Calculate the message hash using the same method as the contract
+        const msgHash = hashCrossDomainMessageV1(
+          sentMessage.messageNonce,
+          sentMessage.sender,
+          sentMessage.target,
+          extension?.value ?? 0n,
+          sentMessage.gasLimit,
+          sentMessage.message,
+        )
+
+        return SentMessage.create(input.ctx, {
+          chain: network.chain,
+          msgHash,
+        })
+      }
     } else {
       // get L2 side events
       const network = OPSTACK_NETWORKS.find((n) => n.chain === input.ctx.chain)
@@ -115,24 +182,39 @@ export class OpStackPlugin implements InteropPlugin {
     }
   }
 
-  matchTypes = [WithdrawalFinalized]
+  matchTypes = [WithdrawalFinalized, RelayedMessage]
 
-  match(
-    withdrawalFinalized: InteropEvent,
-    db: InteropEventDb,
-  ): MatchResult | undefined {
-    if (!WithdrawalFinalized.checkType(withdrawalFinalized)) return
-    const messagePassed = db.find(MessagePassed, {
-      withdrawalHash: withdrawalFinalized.args.withdrawalHash,
-      chain: withdrawalFinalized.args.chain,
-    })
-    if (!messagePassed) return
-    return [
-      Result.Message('opstack.Message', {
-        app: 'unknown',
-        srcEvent: messagePassed,
-        dstEvent: withdrawalFinalized,
-      }),
-    ]
+  match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+    // Match L2->L1 withdrawals
+    if (WithdrawalFinalized.checkType(event)) {
+      const messagePassed = db.find(MessagePassed, {
+        withdrawalHash: event.args.withdrawalHash,
+        chain: event.args.chain,
+      })
+      if (!messagePassed) return
+      return [
+        Result.Message('opstack.L2ToL1Message', {
+          app: 'unknown',
+          srcEvent: messagePassed,
+          dstEvent: event,
+        }),
+      ]
+    }
+
+    // Match L1->L2 messages
+    if (RelayedMessage.checkType(event)) {
+      const sentMessage = db.find(SentMessage, {
+        msgHash: event.args.msgHash,
+        chain: event.args.chain,
+      })
+      if (!sentMessage) return
+      return [
+        Result.Message('opstack.L1ToL2Message', {
+          app: 'unknown',
+          srcEvent: sentMessage,
+          dstEvent: event,
+        }),
+      ]
+    }
   }
 }
