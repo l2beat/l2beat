@@ -1,19 +1,25 @@
 import { useQuery } from '@tanstack/react-query'
 import fuzzysort from 'fuzzysort'
-import { createRef, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  createRef,
+  useDeferredValue,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { getProjects } from '../../api/api'
 import type { ApiProjectEntry } from '../../api/types'
 import { ErrorState } from '../../components/ErrorState'
 import { Title } from '../../components/Title'
 import { IS_READONLY } from '../../config/readonly'
-import { useDebounce } from '../../hooks/useDebounce'
 import { IconStarEmpty } from '../../icons/IconStarEmpty'
 import { IconStarFull } from '../../icons/IconStarFull'
 
 export function HomePage() {
   const [search, setSearch] = useState('')
-  const debouncedSearch = useDebounce(search, 150)
+  const deferredSearch = useDeferredValue(search)
   const inputRef = useRef<HTMLInputElement>(null)
 
   // Autofocus the input when the component mounts
@@ -48,7 +54,7 @@ export function HomePage() {
             </Link>
           )}
         </div>
-        <AllProjects search={debouncedSearch} />
+        <AllProjects search={deferredSearch} />
       </div>
     </>
   )
@@ -292,8 +298,8 @@ function filterAndSortEntries(
       (e) => e._addressesString,
       (e) => e._contractNamesString,
     ],
-    threshold: -100,
-    limit: 20,
+    limit: 15,
+    threshold: 0.3,
   })
 
   return result.map((match) => match.obj)
@@ -402,8 +408,10 @@ function useFilteredProjects(
     return prepareEntries(entries)
   }, [entries])
 
+  const normalizedSearch = search.toLowerCase()
+
   return useMemo(
-    () => filterAndSortEntries(search, preparedEntries),
-    [search, preparedEntries],
+    () => filterAndSortEntries(normalizedSearch, preparedEntries),
+    [normalizedSearch, preparedEntries],
   )
 }
