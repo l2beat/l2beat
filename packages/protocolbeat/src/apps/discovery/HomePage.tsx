@@ -105,7 +105,8 @@ function AllProjects(props: { search: string }) {
   useEffect(() => {
     if (result.isSuccess) {
       const search = props.search.toLowerCase()
-      const filtered = result.data.filter((x) => matchesFilter(search, x))
+      const filtered = filterAndSortEntries(search, result.data)
+
       projectsRefs.current = Array(filtered.length)
         .fill(null)
         .map((_, i) => projectsRefs.current[i] || createRef<HTMLLIElement>())
@@ -120,7 +121,7 @@ function AllProjects(props: { search: string }) {
       if (!result.isSuccess) return
 
       const search = props.search.toLowerCase()
-      const filtered = result.data.filter((x) => matchesFilter(search, x))
+      const filtered = filterAndSortEntries(search, result.data)
       const favoriteList = filtered.filter((x) => favorites.includes(x.name))
       const otherList = filtered.filter((x) => !favorites.includes(x.name))
       const breakIndex = favoriteList.length
@@ -231,7 +232,7 @@ function AllProjects(props: { search: string }) {
   }
 
   const search = props.search.toLowerCase()
-  const filtered = result.data.filter((x) => matchesFilter(search, x))
+  const filtered = filterAndSortEntries(search, result.data)
   const favoriteList = filtered.filter((x) => favorites.includes(x.name))
   const otherList = filtered.filter((x) => !favorites.includes(x.name))
 
@@ -277,15 +278,86 @@ function AllProjects(props: { search: string }) {
   )
 }
 
-function matchesFilter(search: string, entry: ApiProjectEntry): boolean {
+function score(search: string, entry: ApiProjectEntry): number {
   if (search.startsWith('%')) {
-    return entry.contractNames.some((c) => c.includes(search.slice(1)))
+    const searchWithoutPrefix = search.slice(1)
+    const matchingContract = entry.contractNames.find((c) =>
+      c.toLowerCase().includes(searchWithoutPrefix),
+    )
+    if (!matchingContract) {
+      return 0
+    }
+
+    // Exact match - highest score
+    if (matchingContract.toLowerCase() === searchWithoutPrefix) {
+      return 100
+    }
+
+    // Prefix match - good
+    if (matchingContract.toLowerCase().startsWith(searchWithoutPrefix)) {
+      return 80
+    }
+    // Substring match - okay
+    return 60
   }
 
-  return (
-    entry.name.includes(search) ||
-    entry.addresses.some((a) => a.includes(search))
-  )
+  // Project name matching (highest priority)
+  const nameLower = entry.name.toLowerCase()
+
+  // Exact match - highest score
+  if (nameLower === search) {
+    return 1000
+  }
+
+  // Prefix match - good
+  if (nameLower.startsWith(search)) {
+    return 500 // e.g., "frax" matches "fraxtal"
+  }
+
+  // Substring match - okay
+  if (nameLower.includes(search)) {
+    return 300 // e.g., "zk" matches "shared-zk-stack"
+  }
+
+  // Address matching (lower priority, only for longer searches to avoid noise)
+  if (search.length >= 4) {
+    const matchingAddress = entry.addresses.find((a) =>
+      a.toLowerCase().includes(search),
+    )
+    if (!matchingAddress) {
+      return 0
+    }
+
+    // Exact match - highest score
+    if (matchingAddress.toLowerCase() === search) {
+      return 100
+    }
+
+    // Prefix match - good
+    if (matchingAddress.startsWith(search)) {
+      return 50
+    }
+
+    // Substring match - okay
+    return 30
+  }
+
+  return 0
+}
+
+function filterAndSortEntries(
+  search: string,
+  entries: ApiProjectEntry[],
+): ApiProjectEntry[] {
+  const scored = entries.map((entry) => ({
+    score: score(search, entry),
+    entry: entry,
+  }))
+  const sorted = scored
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => b.score - a.score)
+  const filtered = sorted.map(({ entry }) => entry)
+  return filtered
 }
 
 function ProjectList(props: {
