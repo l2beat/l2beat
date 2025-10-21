@@ -24,6 +24,22 @@ describeDatabase(InteropConfigRepository.name, (database) => {
 
       expect(result).toEqual(undefined)
     })
+
+    it('returns latest record when multiple records exist for the same key', async () => {
+      const earlierRecord = mockConfig('test-key', { version: 1 })
+      earlierRecord.timestamp = UnixTime.fromDate(new Date('2023-01-01'))
+
+      const laterRecord = mockConfig('test-key', { version: 2 })
+      laterRecord.timestamp = UnixTime.fromDate(new Date('2023-01-02'))
+
+      // Insert in reverse chronological order to test ordering
+      await repository.insert(laterRecord)
+      await repository.insert(earlierRecord)
+
+      const result = await repository.find('test-key')
+
+      expect(result).toEqual(laterRecord)
+    })
   })
 
   describe(InteropConfigRepository.prototype.insert.name, () => {
@@ -56,61 +72,78 @@ describeDatabase(InteropConfigRepository.name, (database) => {
     })
   })
 
-  describe(InteropConfigRepository.prototype.update.name, () => {
-    it('updates existing config value', async () => {
-      const originalRecord = mockConfig('update-key', { original: true })
-      await repository.insert(originalRecord)
+  describe(InteropConfigRepository.prototype.getAllLatest.name, () => {
+    it('returns empty array when no records exist', async () => {
+      const result = await repository.getAllLatest()
 
-      const newValue = { updated: true, timestamp: Date.now() }
-      const updatedAt = UnixTime.now()
-      await repository.update('update-key', { value: newValue, updatedAt })
-
-      const result = await repository.find('update-key')
-      expect(result).toEqual({
-        key: 'update-key',
-        value: newValue,
-        createdAt: originalRecord.createdAt,
-        updatedAt: updatedAt,
-      })
+      expect(result).toEqual([])
     })
 
-    it('updates only updatedAt timestamp', async () => {
-      const originalRecord = mockConfig('timestamp-key', { data: 'unchanged' })
-      await repository.insert(originalRecord)
+    it('returns single record when only one record exists', async () => {
+      const record = mockConfig('single-key', { value: 'test' })
+      await repository.insert(record)
 
-      const newUpdatedAt = UnixTime.now() + 3600
-      await repository.update('timestamp-key', { updatedAt: newUpdatedAt })
+      const result = await repository.getAllLatest()
 
-      const result = await repository.find('timestamp-key')
-      expect(result).toEqual({
-        key: 'timestamp-key',
-        value: { data: 'unchanged' },
-        createdAt: originalRecord.createdAt,
-        updatedAt: newUpdatedAt,
-      })
+      expect(result).toEqual([record])
     })
 
-    it('updates only value without changing timestamps', async () => {
-      const originalRecord = mockConfig('value-only-key', { old: 'value' })
-      await repository.insert(originalRecord)
+    it('returns latest record for each key', async () => {
+      // Insert multiple records for key1
+      const key1Old = mockConfig('key1', { version: 1 })
+      key1Old.timestamp = UnixTime.fromDate(new Date('2023-01-01'))
 
-      const newValue = { new: 'value', more: 'data' }
-      await repository.update('value-only-key', { value: newValue })
+      const key1Latest = mockConfig('key1', { version: 2 })
+      key1Latest.timestamp = UnixTime.fromDate(new Date('2023-01-03'))
 
-      const result = await repository.find('value-only-key')
-      expect(result).toEqual({
-        key: 'value-only-key',
-        value: newValue,
-        createdAt: originalRecord.createdAt,
-        updatedAt: originalRecord.updatedAt,
-      })
+      // Insert multiple records for key2
+      const key2Old = mockConfig('key2', { version: 1 })
+      key2Old.timestamp = UnixTime.fromDate(new Date('2023-01-02'))
+
+      const key2Latest = mockConfig('key2', { version: 2 })
+      key2Latest.timestamp = UnixTime.fromDate(new Date('2023-01-04'))
+
+      // Insert single record for key3
+      const key3Only = mockConfig('key3', { version: 1 })
+      key3Only.timestamp = UnixTime.fromDate(new Date('2023-01-01'))
+
+      // Insert in mixed order
+      await repository.insert(key1Old)
+      await repository.insert(key2Latest)
+      await repository.insert(key3Only)
+      await repository.insert(key2Old)
+      await repository.insert(key1Latest)
+
+      const result = await repository.getAllLatest()
+
+      // Should return only the latest records
+      expect(result).toHaveLength(3)
+
+      // Sort by key for consistent testing
+      const sortedResult = result.sort((a, b) => a.key.localeCompare(b.key))
+      expect(sortedResult[0]).toEqual(key1Latest) // key1
+      expect(sortedResult[1]).toEqual(key2Latest) // key2
+      expect(sortedResult[2]).toEqual(key3Only) // key3
     })
 
-    it('does not fail when updating non-existent key', async () => {
-      await repository.update('non-existent', { value: { test: true } })
+    it('handles records with same timestamp', async () => {
+      const timestamp = UnixTime.now()
+      const record1 = mockConfig('same-time-1', { value: 'first' })
+      record1.timestamp = timestamp
 
-      const result = await repository.find('non-existent')
-      expect(result).toEqual(undefined)
+      const record2 = mockConfig('same-time-2', { value: 'second' })
+      record2.timestamp = timestamp
+
+      await repository.insert(record1)
+      await repository.insert(record2)
+
+      const result = await repository.getAllLatest()
+
+      expect(result).toHaveLength(2)
+      expect(result.map((r) => r.key).sort()).toEqual([
+        'same-time-1',
+        'same-time-2',
+      ])
     })
   })
 
@@ -120,11 +153,9 @@ describeDatabase(InteropConfigRepository.name, (database) => {
 })
 
 function mockConfig(key: string, value: unknown): InteropConfigRecord {
-  const now = UnixTime.now()
   return {
     key,
     value,
-    createdAt: now,
-    updatedAt: now,
+    timestamp: UnixTime.now(),
   }
 }

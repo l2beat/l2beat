@@ -2,7 +2,7 @@ import Router from '@koa/router'
 import type { Database } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import type { InteropConfig } from '../../config/Config'
+import type { InteropFeatureConfig } from '../../config/Config'
 import { renderEventsPage } from './dashboard/EventsPage'
 import { renderMainPage } from './dashboard/MainPage'
 import { renderMessagesPage } from './dashboard/MessagesPage'
@@ -11,7 +11,7 @@ import type { InteropBlockProcessor } from './InteropBlockProcessor'
 
 export function createInteropRouter(
   db: Database,
-  config: InteropConfig,
+  config: InteropFeatureConfig,
   processors: InteropBlockProcessor[],
 ) {
   const router = new Router()

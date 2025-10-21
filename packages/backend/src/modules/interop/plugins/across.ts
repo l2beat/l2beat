@@ -1,9 +1,8 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import type { AcrossNetwork } from '../config/types'
 import {
   Address32,
   createEventParser,
   createInteropEventType,
-  defineNetworks,
   findChain,
   type InteropEvent,
   type InteropEventDb,
@@ -40,61 +39,23 @@ export const AcrossFilledRelay = createInteropEventType<{
   amount: string
 }>('across.FilledRelay')
 
-const ACROSS_NETWORKS = defineNetworks('across', [
-  {
-    chain: 'ethereum',
-    chainId: 1,
-    address: EthereumAddress('0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5'),
-  },
-  {
-    chain: 'arbitrum',
-    chainId: 42161,
-    address: EthereumAddress('0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A'),
-  },
-  {
-    chain: 'optimism',
-    chainId: 10,
-    address: EthereumAddress('0x6f26Bf09B1C792e3228e5467807a900A503c0281'),
-  },
-  {
-    chain: 'zksync2',
-    chainId: 324,
-    address: EthereumAddress('0xE0B015E54d54fc84a6cB9B666099c46adE9335FF'),
-  },
-  {
-    chain: 'base',
-    chainId: 8453,
-    address: EthereumAddress('0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64'),
-  },
-  {
-    chain: 'ink',
-    chainId: 57073,
-    address: EthereumAddress('0xeF684C38F94F48775959ECf2012D7E864ffb9dd4'),
-  },
-  {
-    chain: 'linea',
-    chainId: 59144,
-    address: EthereumAddress('0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75'),
-  },
-  {
-    chain: 'scroll',
-    chainId: 534352,
-    address: EthereumAddress('0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96'),
-  },
-])
-
 export class AcrossPlugin implements InteropPlugin {
   name = 'across'
+  config = 'across'
 
-  capture(input: LogToCapture) {
-    const network = ACROSS_NETWORKS.find((n) => n.chain === input.ctx.chain)
+  capture(input: LogToCapture, networks?: AcrossNetwork[]) {
+    if (!networks) {
+      return
+    }
+
+    const network = networks.find((n) => n.chain === input.ctx.chain)
     if (!network) return
 
-    const fundsDeposited = parseFundsDeposited(input.log, [network.address])
+    const fundsDeposited = parseFundsDeposited(input.log, [network.spokePool])
     if (fundsDeposited) {
       return AcrossFundsDeposited.create(input.ctx, {
         $dstChain: findChain(
-          ACROSS_NETWORKS,
+          networks,
           (x) => x.chainId,
           Number(fundsDeposited.destinationChainId),
         ),
@@ -106,11 +67,11 @@ export class AcrossPlugin implements InteropPlugin {
       })
     }
 
-    const filledRelay = parseFilledRelay(input.log, [network.address])
+    const filledRelay = parseFilledRelay(input.log, [network.spokePool])
     if (filledRelay) {
       return AcrossFilledRelay.create(input.ctx, {
         $srcChain: findChain(
-          ACROSS_NETWORKS,
+          networks,
           (x) => x.chainId,
           Number(filledRelay.originChainId),
         ),
@@ -121,11 +82,11 @@ export class AcrossPlugin implements InteropPlugin {
       })
     }
 
-    const filledV3Relay = parseFilledV3Relay(input.log, [network.address])
+    const filledV3Relay = parseFilledV3Relay(input.log, [network.spokePool])
     if (filledV3Relay) {
       return AcrossFilledRelay.create(input.ctx, {
         $srcChain: findChain(
-          ACROSS_NETWORKS,
+          networks,
           (x) => x.chainId,
           Number(filledV3Relay.originChainId),
         ),
@@ -141,12 +102,17 @@ export class AcrossPlugin implements InteropPlugin {
   match(
     filledRelay: InteropEvent,
     db: InteropEventDb,
+    networks?: AcrossNetwork[],
   ): MatchResult | undefined {
+    // TODO: instead of passing networks there the events Should
+    // have an info whether a chain is supported or not
+    if (networks === undefined) {
+      return
+    }
+
     if (!AcrossFilledRelay.checkType(filledRelay)) return
 
-    const network = ACROSS_NETWORKS.find(
-      (n) => n.chain === filledRelay.ctx.chain,
-    )
+    const network = networks.find((n) => n.chain === filledRelay.ctx.chain)
     const fundsDeposited = db.find(AcrossFundsDeposited, {
       originChainId: filledRelay.args.originChainId,
       destinationChainId: network ? network.chainId : undefined,

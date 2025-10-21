@@ -1,12 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
 import { TimeLoop } from '../../tools/TimeLoop'
 import type { InteropConfigPlugin } from './config/types'
+import type { InteropStore } from './InteropStore'
 
-export class InteropComparator extends TimeLoop {
+export class InteropConfigExtractor extends TimeLoop {
   constructor(
-    private db: Database,
+    private store: InteropStore,
     private plugins: InteropConfigPlugin[],
     protected logger: Logger,
     intervalMs = 20 * 60_000,
@@ -16,32 +15,37 @@ export class InteropComparator extends TimeLoop {
   }
 
   async run() {
-    await Promise.all(this.plugins.map(this.processPlugin))
+    await Promise.all(
+      this.plugins.map(async (plugin) => {
+        try {
+          await this.processPlugin(plugin)
+          this.logger.info('Config extracted', {
+            plugin: plugin.name,
+          })
+        } catch (error) {
+          this.logger.error('Failed to extract config', {
+            plugin: plugin.name,
+            error,
+          })
+        }
+      }),
+    )
   }
 
   async processPlugin(plugin: InteropConfigPlugin) {
     const latest = await plugin.getLatestConfig()
-    const previous = await this.db.interopConfig.find(plugin.name)
+    const previous = this.store.findConfig(plugin.name)
 
-    const config = plugin.generateNewConfig(previous?.value, latest)
+    const config = plugin.generateNewConfig(previous, latest)
 
-    if (config !== undefined) {
+    if (config === 'not-changed') {
       return
     }
 
-    const now = UnixTime.now()
-    if (previous === undefined) {
-      await this.db.interopConfig.insert({
-        key: plugin.name,
-        value: config,
-        createdAt: now,
-        updatedAt: now,
-      })
-    } else {
-      await this.db.interopConfig.update(plugin.name, {
-        value: config,
-        updatedAt: now,
-      })
-    }
+    this.logger.info('New config generated', {
+      plugin: plugin.name,
+    })
+
+    await this.store.saveConfig(plugin.name, config)
   }
 }

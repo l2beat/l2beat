@@ -170,6 +170,7 @@ async function runExample(example: Example): Promise<RunResult> {
     events.length,
     plugins,
     chains.map((x) => x.name),
+    (plugin: string) => [], // TODO: implement
     logger,
   )
 

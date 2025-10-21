@@ -1,11 +1,14 @@
+import { assert } from '@l2beat/shared-pure'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { createInteropComparePlugins } from './compare'
+import { createInteropConfigPlugins } from './config'
 import { FinancialsService } from './FinancialsService'
 import { InteropBlockProcessor } from './InteropBlockProcessor'
 import { InteropCleaner } from './InteropCleaner'
 import { InteropComparator } from './InteropComparator'
+import { InteropConfigExtractor } from './InteropConfigExtractor'
 import { InteropMatcher } from './InteropMatcher'
 import { InteropRecentPricesIndexer } from './InteropRecentPricesIndexer'
 import { createInteropRouter } from './InteropRouter'
@@ -29,6 +32,22 @@ export function createInteropModule({
 
   const plugins = createInteropPlugins()
   const interopStore = new InteropStore(db)
+
+  const ethereumRpc = providers.clients.rpcClients.find(
+    (c) => c.chain === 'ethereum',
+  )
+  assert(ethereumRpc)
+  const configPlugins = createInteropConfigPlugins(
+    config.interop.config.chains,
+    logger,
+    ethereumRpc,
+  )
+
+  const configExtractor = new InteropConfigExtractor(
+    interopStore,
+    configPlugins,
+    logger,
+  )
 
   const processors = []
   if (config.interop.capture.enabled) {
@@ -99,6 +118,9 @@ export function createInteropModule({
       await hourlyIndexer.start()
       await recentPricesIndexer.start()
       financialsService.start()
+    }
+    if (config.interop && config.interop.config.enabled) {
+      configExtractor.start()
     }
     logger.info('Started', {
       plugins: plugins.length,

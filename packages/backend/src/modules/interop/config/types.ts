@@ -2,14 +2,14 @@ import type { EthereumAddress } from '@l2beat/shared-pure'
 
 export interface InteropConfigPlugin {
   name: string
-  getLatestConfig: () => Promise<Configs>
+  getLatestConfig: () => Promise<InteropConfig>
   generateNewConfig: (
-    previous: Configs[] | undefined,
-    latest: Configs[],
-  ) => Configs[] | undefined
+    previous: InteropConfig | undefined,
+    latest: InteropConfig,
+  ) => InteropConfig | 'not-changed'
 }
 
-type Configs = AcrossNetwork[]
+export type InteropConfig = AcrossNetwork[]
 
 export interface AcrossNetwork {
   chainId: number

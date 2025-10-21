@@ -5,6 +5,7 @@ import type {
   InteropTransferRecord,
 } from '@l2beat/database'
 import { TimeLoop } from '../../tools/TimeLoop'
+import type { InteropConfig } from './config/types'
 import type { InteropStore } from './InteropStore'
 import {
   generateId,
@@ -37,6 +38,7 @@ export class InteropMatcher extends TimeLoop {
       this.store.getEventCount(),
       this.plugins,
       this.supportedChains,
+      (plugin) => this.store.findConfig(plugin),
       this.logger,
     )
 
@@ -69,6 +71,7 @@ export async function match(
   count: number,
   plugins: InteropPlugin[],
   supportedChains: string[],
+  findNetwork: (plugin: string) => InteropConfig | undefined,
   logger: Logger,
 ) {
   const start = Date.now()
@@ -106,7 +109,10 @@ export async function match(
         }
         let result: MatchResult | undefined
         try {
-          result = await plugin.match?.(event, db)
+          const n = plugin.configName
+            ? findNetwork(plugin.configName)
+            : undefined
+          result = await plugin.match?.(event, db, n)
         } catch (e) {
           logger.error('Matching failed', e, {
             plugin: plugin.name,

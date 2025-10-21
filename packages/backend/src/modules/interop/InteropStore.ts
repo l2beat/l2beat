@@ -1,5 +1,6 @@
 import type { Database, InteropEventRecord } from '@l2beat/database'
-import type { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
+import type { InteropConfig } from './config/types'
 import { InMemoryEventDb } from './InMemoryEventDb'
 import {
   Address32,
@@ -11,6 +12,7 @@ import {
 
 export class InteropStore implements InteropEventDb {
   private eventDb = new InMemoryEventDb()
+  private configs = new Map<string, InteropConfig>()
 
   constructor(private db: Database) {}
 
@@ -19,6 +21,10 @@ export class InteropStore implements InteropEventDb {
     for (const record of records) {
       const event = fromDbRecord(record)
       this.eventDb.addEvent(event)
+    }
+    const configs = await this.db.interopConfig.getAllLatest()
+    for (const config of configs) {
+      this.configs.set(config.key, config.value as InteropConfig)
     }
   }
 
@@ -69,6 +75,19 @@ export class InteropStore implements InteropEventDb {
     query: InteropEventQuery<T>,
   ): InteropEvent<T>[] {
     return this.eventDb.findAll(type, query)
+  }
+
+  async saveConfig(configName: string, value: InteropConfig) {
+    await this.db.interopConfig.insert({
+      key: configName,
+      value,
+      timestamp: UnixTime.now(),
+    })
+    this.configs.set(configName, value)
+  }
+
+  findConfig(configName: string): InteropConfig | undefined {
+    return this.configs.get(configName)
   }
 
   async deleteExpired(now: UnixTime) {
