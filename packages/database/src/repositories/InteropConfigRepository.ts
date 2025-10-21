@@ -37,10 +37,11 @@ export class InteropConfigRepository extends BaseRepository {
     return row ? toRecord(row) : undefined
   }
 
-  async getAllLatest(): Promise<InteropConfigRecord[]> {
+  async getAllNetworks(): Promise<InteropConfigRecord[]> {
     const rows = await this.db
       .selectFrom('InteropConfig as ic1')
       .selectAll()
+      .where('ic1.key', 'like', 'network::%')
       .where('ic1.timestamp', '=', (eb) =>
         eb
           .selectFrom('InteropConfig as ic2')

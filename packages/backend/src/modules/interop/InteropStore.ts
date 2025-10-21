@@ -22,7 +22,7 @@ export class InteropStore implements InteropEventDb {
       const event = fromDbRecord(record)
       this.eventDb.addEvent(event)
     }
-    const configs = await this.db.interopConfig.getAllLatest()
+    const configs = await this.db.interopConfig.getAllNetworks()
     for (const config of configs) {
       this.configs.set(config.key, config.value as InteropConfig)
     }
@@ -79,15 +79,15 @@ export class InteropStore implements InteropEventDb {
 
   async saveConfig(configName: string, value: InteropConfig) {
     await this.db.interopConfig.insert({
-      key: configName,
+      key: `networks::${configName}`,
       value,
       timestamp: UnixTime.now(),
     })
-    this.configs.set(configName, value)
+    this.configs.set(`networks::${configName}`, value)
   }
 
   findNetworks<T>(configName: string): T | undefined {
-    return this.configs.get(configName) as T | undefined
+    return this.configs.get(`networks::${configName}`) as T | undefined
   }
 
   async deleteExpired(now: UnixTime) {
