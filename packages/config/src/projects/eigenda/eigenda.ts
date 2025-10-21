@@ -326,17 +326,6 @@ export const eigenda: BaseProject = {
         ],
       },
       {
-        projectId: ProjectId('soon'),
-        name: 'SOON',
-        daTrackingConfig: [
-          {
-            type: 'eigen-da',
-            sinceTimestamp: 1753412400,
-            customerId: '0x420ad2641f22bf6f180c52d0b0566e7ec701c45a',
-          },
-        ],
-      },
-      {
         projectId: ProjectId('alchemy-production'),
         name: 'Alchemy Production',
         daTrackingConfig: [
