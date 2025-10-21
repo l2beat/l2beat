@@ -109,13 +109,12 @@ export const fuel: ScalingProject = {
         ],
         untilBlock: 22837254,
       },
-      // TODO: add as soon as we have their customerId
-      // {
-      //   type: 'eigen-da',
-      //   customerId: '',
-      //   daLayer: ProjectId('eigenda'),
-      //   sinceTimestamp: UnixTime(1751528219),
-      // },
+      {
+        type: 'eigen-da',
+        customerId: '0xea0337efc12e98ab118948da570c07691e8e4b37',
+        daLayer: ProjectId('eigenda'),
+        sinceTimestamp: UnixTime(1751526000),
+      },
     ],
     trackedTxs: [
       {
