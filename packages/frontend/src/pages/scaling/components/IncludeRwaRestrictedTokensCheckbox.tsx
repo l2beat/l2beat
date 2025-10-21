@@ -21,7 +21,9 @@ export function IncludeRwaRestrictedTokensCheckbox() {
         <div className="flex items-center gap-1">
           <div>Include restricted RWAs tokens</div>
           <TooltipTrigger asChild>
-            <InfoIcon />
+            <div className="flex size-4 items-center justify-center">
+              <InfoIcon className="size-3.5" />
+            </div>
           </TooltipTrigger>
         </div>
       </Checkbox>
