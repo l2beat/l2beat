@@ -1,7 +1,7 @@
 import type { Database, InteropEventRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import type { InteropConfig } from './config/types'
 import { InMemoryEventDb } from './InMemoryEventDb'
+import type { InteropNetworks } from './networks/types'
 import {
   Address32,
   type InteropEvent,
@@ -12,7 +12,7 @@ import {
 
 export class InteropStore implements InteropEventDb {
   private eventDb = new InMemoryEventDb()
-  private configs = new Map<string, InteropConfig>()
+  private networks = new Map<string, InteropNetworks>()
 
   constructor(private db: Database) {}
 
@@ -22,9 +22,9 @@ export class InteropStore implements InteropEventDb {
       const event = fromDbRecord(record)
       this.eventDb.addEvent(event)
     }
-    const configs = await this.db.interopConfig.getAllNetworks()
-    for (const config of configs) {
-      this.configs.set(config.key, config.value as InteropConfig)
+    const networks = await this.db.interopConfig.getLatestByPrefix('networks::')
+    for (const network of networks) {
+      this.networks.set(network.key, network.value as InteropNetworks)
     }
   }
 
@@ -77,17 +77,17 @@ export class InteropStore implements InteropEventDb {
     return this.eventDb.findAll(type, query)
   }
 
-  async saveConfig(configName: string, value: InteropConfig) {
+  async saveNetworks(key: string, value: InteropNetworks) {
     await this.db.interopConfig.insert({
-      key: `networks::${configName}`,
+      key: `networks::${key}`,
       value,
       timestamp: UnixTime.now(),
     })
-    this.configs.set(`networks::${configName}`, value)
+    this.networks.set(`networks::${key}`, value)
   }
 
   findNetworks<T>(configName: string): T | undefined {
-    return this.configs.get(`networks::${configName}`) as T | undefined
+    return this.networks.get(`networks::${configName}`) as T | undefined
   }
 
   async deleteExpired(now: UnixTime) {

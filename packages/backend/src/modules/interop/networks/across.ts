@@ -7,7 +7,11 @@ import {
   type Hex,
   parseAbi,
 } from 'viem'
-import type { AcrossNetwork, InteropConfig, InteropConfigPlugin } from './types'
+import type {
+  AcrossNetwork,
+  InteropNetworks,
+  InteropNetworksPlugin,
+} from './types'
 
 const abi = parseAbi([
   'function crossChainContracts(uint256) view returns (address adapter, address spokePool)',
@@ -25,7 +29,7 @@ const OVERRIDES = [
   },
 ]
 
-export class AcrossConfigPlugin implements InteropConfigPlugin {
+export class AcrossNetworksPlugin implements InteropNetworksPlugin {
   name = 'across'
 
   constructor(
@@ -34,7 +38,7 @@ export class AcrossConfigPlugin implements InteropConfigPlugin {
     private ethereumRpc: RpcClient,
   ) {}
 
-  async getLatestConfig(): Promise<AcrossNetwork[]> {
+  async getLatestNetworks(): Promise<AcrossNetwork[]> {
     const latest = await this.ethereumRpc.getLatestBlockNumber()
 
     const calls: CallParameters[] = []
@@ -79,9 +83,9 @@ export class AcrossConfigPlugin implements InteropConfigPlugin {
     return config
   }
 
-  generateNewConfig(
-    previous: InteropConfig | undefined,
-    latest: InteropConfig,
+  reconcileNetworks(
+    previous: InteropNetworks | undefined,
+    latest: InteropNetworks,
   ): AcrossNetwork[] | 'not-changed' {
     if (previous === undefined) {
       return latest

@@ -1,5 +1,5 @@
-import type { AcrossNetwork } from '../config/types'
 import type { InteropStore } from '../InteropStore'
+import type { AcrossNetwork } from '../networks/types'
 import {
   Address32,
   createEventParser,
@@ -50,6 +50,7 @@ export class AcrossPlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     const networks = this.store.findNetworks<AcrossNetwork[]>(this.networks)
     if (!networks) {
+      // TODO: what to do on cold start?
       return
     }
 

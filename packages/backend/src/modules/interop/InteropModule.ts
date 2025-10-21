@@ -3,16 +3,16 @@ import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { createInteropComparePlugins } from './compare'
-import { createInteropConfigPlugins } from './config'
 import { FinancialsService } from './FinancialsService'
 import { InteropBlockProcessor } from './InteropBlockProcessor'
 import { InteropCleaner } from './InteropCleaner'
 import { InteropComparator } from './InteropComparator'
-import { InteropConfigExtractor } from './InteropConfigExtractor'
 import { InteropMatcher } from './InteropMatcher'
+import { InteropNetworksUpdater } from './InteropNetworksUpdater'
 import { InteropRecentPricesIndexer } from './InteropRecentPricesIndexer'
 import { createInteropRouter } from './InteropRouter'
 import { InteropStore } from './InteropStore'
+import { createInteropNetworksPlugins } from './networks'
 import { createInteropPlugins } from './plugins'
 import { MockTokenDb } from './TokenDb'
 
@@ -37,13 +37,13 @@ export function createInteropModule({
     (c) => c.chain === 'ethereum',
   )
   assert(ethereumRpc)
-  const configPlugins = createInteropConfigPlugins(
+  const configPlugins = createInteropNetworksPlugins(
     config.interop.config.chains,
     logger,
     ethereumRpc,
   )
 
-  const configExtractor = new InteropConfigExtractor(
+  const configExtractor = new InteropNetworksUpdater(
     interopStore,
     configPlugins,
     logger,

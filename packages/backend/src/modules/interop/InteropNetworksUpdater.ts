@@ -1,12 +1,12 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { TimeLoop } from '../../tools/TimeLoop'
-import type { InteropConfig, InteropConfigPlugin } from './config/types'
 import type { InteropStore } from './InteropStore'
+import type { InteropNetworks, InteropNetworksPlugin } from './networks/types'
 
-export class InteropConfigExtractor extends TimeLoop {
+export class InteropNetworksUpdater extends TimeLoop {
   constructor(
     private store: InteropStore,
-    private plugins: InteropConfigPlugin[],
+    private plugins: InteropNetworksPlugin[],
     protected logger: Logger,
     intervalMs = 20 * 60_000,
   ) {
@@ -19,11 +19,11 @@ export class InteropConfigExtractor extends TimeLoop {
       this.plugins.map(async (plugin) => {
         try {
           await this.processPlugin(plugin)
-          this.logger.info('Config extracted', {
+          this.logger.info('Networks updated', {
             plugin: plugin.name,
           })
         } catch (error) {
-          this.logger.error('Failed to extract config', {
+          this.logger.error('Failed to update networks', {
             plugin: plugin.name,
             error,
           })
@@ -32,20 +32,20 @@ export class InteropConfigExtractor extends TimeLoop {
     )
   }
 
-  async processPlugin(plugin: InteropConfigPlugin) {
-    const latest = await plugin.getLatestConfig()
-    const previous = this.store.findNetworks<InteropConfig>(plugin.name)
+  async processPlugin(plugin: InteropNetworksPlugin) {
+    const latest = await plugin.getLatestNetworks()
+    const previous = this.store.findNetworks<InteropNetworks>(plugin.name)
 
-    const config = plugin.generateNewConfig(previous, latest)
+    const networks = plugin.reconcileNetworks(previous, latest)
 
-    if (config === 'not-changed') {
+    if (networks === 'not-changed') {
       return
     }
 
-    this.logger.info('New config generated', {
+    this.logger.info('New networks generated', {
       plugin: plugin.name,
     })
 
-    await this.store.saveConfig(plugin.name, config)
+    await this.store.saveNetworks(plugin.name, networks)
   }
 }
