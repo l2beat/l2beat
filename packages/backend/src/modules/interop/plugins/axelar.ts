@@ -207,6 +207,7 @@ export class AxelarPlugin implements InteropPlugin {
             app: 'unknown',
             srcEvent: contractCall,
             dstEvent: contractCallExecuted,
+            extraEvents: [contractCallApproved],
           }),
         ]
       }
@@ -230,6 +231,7 @@ export class AxelarPlugin implements InteropPlugin {
           app: 'axelar-gateway',
           srcEvent: contractCallWithToken,
           dstEvent: contractCallExecuted,
+          extraEvents: [contractCallApprovedWithMint],
         }),
         Result.Transfer('axelar-gateway.Transfer', {
           srcEvent: contractCallWithToken,
