@@ -6,6 +6,11 @@ export interface LoggerTransport {
   log(message: string): void
   warn(message: string): void
   error(message: string): void
+  /**
+   * Optional method to flush buffered logs.
+   * Should be called before the process exits to ensure all logs are sent.
+   */
+  flush?(): Promise<void>
 }
 
 export interface LogFormatter {
