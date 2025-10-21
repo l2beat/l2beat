@@ -109,10 +109,7 @@ export async function match(
         }
         let result: MatchResult | undefined
         try {
-          const n = plugin.configName
-            ? findNetwork(plugin.configName)
-            : undefined
-          result = await plugin.match?.(event, db, n)
+          result = await plugin.match?.(event, db)
         } catch (e) {
           logger.error('Matching failed', e, {
             plugin: plugin.name,

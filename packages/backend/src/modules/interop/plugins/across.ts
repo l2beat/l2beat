@@ -34,6 +34,7 @@ const parseFilledV3Relay = createEventParser(
 export const AcrossFilledRelay = createInteropEventType<{
   $srcChain: string
   originChainId: number
+  destinationChainId: number
   depositId: string
   tokenAddress: Address32
   amount: string
@@ -76,6 +77,7 @@ export class AcrossPlugin implements InteropPlugin {
           Number(filledRelay.originChainId),
         ),
         originChainId: Number(filledRelay.originChainId),
+        destinationChainId: network.chainId,
         depositId: filledRelay.depositId.toString(),
         tokenAddress: Address32.from(filledRelay.outputToken),
         amount: filledRelay.outputAmount.toString(),
@@ -91,6 +93,7 @@ export class AcrossPlugin implements InteropPlugin {
           Number(filledV3Relay.originChainId),
         ),
         originChainId: Number(filledV3Relay.originChainId),
+        destinationChainId: network.chainId,
         depositId: filledV3Relay.depositId.toString(),
         tokenAddress: Address32.from(filledV3Relay.outputToken),
         amount: filledV3Relay.outputAmount.toString(),
@@ -102,20 +105,12 @@ export class AcrossPlugin implements InteropPlugin {
   match(
     filledRelay: InteropEvent,
     db: InteropEventDb,
-    networks?: AcrossNetwork[],
   ): MatchResult | undefined {
-    // TODO: instead of passing networks there the events Should
-    // have an info whether a chain is supported or not
-    if (networks === undefined) {
-      return
-    }
-
     if (!AcrossFilledRelay.checkType(filledRelay)) return
 
-    const network = networks.find((n) => n.chain === filledRelay.ctx.chain)
     const fundsDeposited = db.find(AcrossFundsDeposited, {
       originChainId: filledRelay.args.originChainId,
-      destinationChainId: network ? network.chainId : undefined,
+      destinationChainId: filledRelay.args.destinationChainId,
       depositId: filledRelay.args.depositId,
     })
     if (!fundsDeposited) return

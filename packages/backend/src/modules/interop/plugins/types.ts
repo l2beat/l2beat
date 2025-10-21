@@ -173,7 +173,6 @@ export interface InteropPlugin {
   match?: (
     event: InteropEvent,
     db: InteropEventDb,
-    networks?: InteropConfig,
   ) => MatchResult | undefined | Promise<MatchResult | undefined>
   getNetworks?<T>(): Promise<T[] | undefined>
 }
