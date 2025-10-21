@@ -7,6 +7,7 @@ interface Params {
   type: TvsProjectFilterType
   projectIds: string[]
   excludeAssociatedTokens: boolean
+  includeRwaRestrictedTokens: boolean
 }
 
 export async function getScalingTvsApiData({
@@ -14,6 +15,7 @@ export async function getScalingTvsApiData({
   type,
   projectIds,
   excludeAssociatedTokens,
+  includeRwaRestrictedTokens,
 }: Params) {
   if (type === 'projects' && !projectIds) {
     return {
@@ -32,6 +34,7 @@ export async function getScalingTvsApiData({
           }
         : { type: type ?? 'layer2' },
     excludeAssociatedTokens,
+    includeRwaRestrictedTokens,
   })
 
   const pointsWithData = data.chart.filter(

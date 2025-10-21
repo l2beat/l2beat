@@ -642,8 +642,11 @@ describeDatabase(TokenValueRepository.name, (db) => {
             ['ethereum', 'arbitrum'],
             null,
             null,
-            false, // forSummary = false (use valueForProject)
-            false, // excludeAssociated = false
+            {
+              forSummary: false,
+              excludeAssociated: false,
+              includeRwaRestrictedTokens: true,
+            },
           )
 
           expect(result).toEqualUnsorted([
@@ -694,8 +697,11 @@ describeDatabase(TokenValueRepository.name, (db) => {
             ['ethereum', 'arbitrum'],
             null,
             null,
-            true, // forSummary = true (use valueForSummary)
-            false, // excludeAssociated = false
+            {
+              forSummary: true,
+              excludeAssociated: false,
+              includeRwaRestrictedTokens: true,
+            },
           )
 
           expect(result).toEqualUnsorted([
@@ -746,8 +752,11 @@ describeDatabase(TokenValueRepository.name, (db) => {
             ['ethereum', 'arbitrum'],
             UnixTime(200),
             null,
-            false,
-            false,
+            {
+              forSummary: false,
+              excludeAssociated: false,
+              includeRwaRestrictedTokens: true,
+            },
           )
 
           expect(result).toEqualUnsorted([
@@ -785,8 +794,11 @@ describeDatabase(TokenValueRepository.name, (db) => {
             ['ethereum', 'arbitrum'],
             null,
             UnixTime(200),
-            false,
-            false,
+            {
+              forSummary: false,
+              excludeAssociated: false,
+              includeRwaRestrictedTokens: true,
+            },
           )
 
           expect(result).toEqualUnsorted([
@@ -824,8 +836,11 @@ describeDatabase(TokenValueRepository.name, (db) => {
             ['ethereum', 'arbitrum'],
             UnixTime(100),
             UnixTime(100),
-            false,
-            true,
+            {
+              forSummary: false,
+              excludeAssociated: true,
+              includeRwaRestrictedTokens: true,
+            },
           )
 
           expect(result).toEqualUnsorted([
@@ -850,11 +865,45 @@ describeDatabase(TokenValueRepository.name, (db) => {
             ['non-existent'],
             null,
             null,
-            false,
-            false,
+            {
+              forSummary: false,
+              excludeAssociated: false,
+              includeRwaRestrictedTokens: true,
+            },
           )
 
           expect(result).toEqual([])
+        })
+
+        it('excludes rwaRestricted tokens when includeRwaRestrictedTokens is false', async () => {
+          const result = await repository.getSummedByTimestampByProjects(
+            ['ethereum', 'arbitrum'],
+            UnixTime(200),
+            UnixTime(200),
+            {
+              forSummary: false,
+              excludeAssociated: false,
+              includeRwaRestrictedTokens: false,
+            },
+          )
+
+          expect(result).toEqualUnsorted([
+            {
+              timestamp: UnixTime(200),
+              // Token 'a' (ethereum) + Token 'h' (arbitrum, rwaPublic)
+              // Token 'g' (arbitrum, rwaRestricted) should be excluded
+              value: 16000.25 + 6400.5, // 'a' + 'h'
+              canonical: 16000.25, // 'a'
+              external: 0, // 'g' was external but excluded
+              native: 6400.5, // 'h'
+              ether: 16000.25, // 'a'
+              stablecoin: 0,
+              btc: 0,
+              rwaRestricted: 0, // excluded
+              rwaPublic: 6400.5, // 'h'
+              other: 0,
+            },
+          ])
         })
       },
     )
@@ -871,8 +920,11 @@ describeDatabase(TokenValueRepository.name, (db) => {
           const result = await repository.getSummedAtTimestampsByProjects(
             100, // oldestTimestamp
             300, // latestTimestamp
-            false, // excludeAssociated
-            50, // cutOffTimestamp - allow test data
+            {
+              excludeAssociated: false,
+              includeRwaRestrictedTokens: true,
+              cutOffTimestamp: 50,
+            },
           )
 
           expect(result).toEqualUnsorted([
@@ -943,8 +995,11 @@ describeDatabase(TokenValueRepository.name, (db) => {
           const result = await repository.getSummedAtTimestampsByProjects(
             100, // oldestTimestamp
             100, // latestTimestamp (only timestamp 100)
-            true, // excludeAssociated
-            50, // cutOffTimestamp - allow test data
+            {
+              excludeAssociated: true,
+              includeRwaRestrictedTokens: true,
+              cutOffTimestamp: 50,
+            },
           )
 
           expect(result).toEqualUnsorted([
@@ -985,8 +1040,11 @@ describeDatabase(TokenValueRepository.name, (db) => {
           const result = await repository.getSummedAtTimestampsByProjects(
             400, // oldestTimestamp - no data at this timestamp
             500, // latestTimestamp - no data at this timestamp
-            false,
-            50, // cutOffTimestamp - allow test data
+            {
+              excludeAssociated: false,
+              includeRwaRestrictedTokens: true,
+              cutOffTimestamp: 50,
+            },
           )
 
           expect(result).toEqual([])
@@ -997,8 +1055,11 @@ describeDatabase(TokenValueRepository.name, (db) => {
           const result = await repository.getSummedAtTimestampsByProjects(
             200,
             200,
-            false,
-            50, // cutOffTimestamp - allow test data
+            {
+              excludeAssociated: false,
+              includeRwaRestrictedTokens: true,
+              cutOffTimestamp: 50,
+            },
           )
 
           const arbitrumResult = result.find((r) => r.project === 'arbitrum')
@@ -1022,14 +1083,43 @@ describeDatabase(TokenValueRepository.name, (db) => {
           const result = await repository.getSummedAtTimestampsByProjects(
             100,
             100,
-            false, // include associated
-            50, // cutOffTimestamp - allow test data
+            {
+              excludeAssociated: false,
+              includeRwaRestrictedTokens: true,
+              cutOffTimestamp: 50,
+            },
           )
 
           const ethereumResult = result.find((r) => r.project === 'ethereum')
           assert(ethereumResult)
 
           expect(ethereumResult.associated).toEqual(800.25) // token e
+        })
+
+        it('excludes rwaRestricted tokens when includeRwaRestrictedTokens is false', async () => {
+          const result = await repository.getSummedAtTimestampsByProjects(
+            200, // timestamp where we have rwaRestricted token 'g'
+            200,
+            {
+              excludeAssociated: false,
+              includeRwaRestrictedTokens: false,
+              cutOffTimestamp: 50,
+            },
+          )
+
+          const ethereumResult = result.find((r) => r.project === 'ethereum')
+          assert(ethereumResult)
+          expect(ethereumResult.value).toEqual(16000.25) // only token 'a'
+
+          const arbitrumResult = result.find((r) => r.project === 'arbitrum')
+          assert(arbitrumResult)
+
+          // Token 'g' (rwaRestricted) should be excluded, only 'h' (rwaPublic) should be included
+          expect(arbitrumResult.value).toEqual(6400.5) // only token 'h' (rwaPublic)
+          expect(arbitrumResult.external).toEqual(0) // token 'g' was external but excluded
+          expect(arbitrumResult.native).toEqual(6400.5) // token 'h' is native
+          expect(arbitrumResult.rwaRestricted).toEqual(0) // excluded
+          expect(arbitrumResult.rwaPublic).toEqual(6400.5) // token 'h'
         })
       },
     )

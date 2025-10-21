@@ -17,9 +17,7 @@ export interface SevenDayTvsBreakdown {
 export interface ProjectSevenDayTvsBreakdown {
   breakdown: BreakdownSplit
   breakdown7d: BreakdownSplit
-  associated: BreakdownSplit
   change: BreakdownSplit
-  changeExcludingAssociated: BreakdownSplit
 }
 
 interface BreakdownSplit {
@@ -31,32 +29,57 @@ interface BreakdownSplit {
   stablecoin: number
   btc: number
   other: number
+  rwaRestricted: number
+  rwaPublic: number
+  associated: number
 }
 
-// NOTE(radomski): Was a discriminatedUnion but l2beat/validate does not
-// support it yet. It's a performance issue.
-export const TvsBreakdownProjectFilter = v.union([
-  v.object({ type: v.enum(['all', 'layer2', 'bridge']) }),
-  v.object({ type: v.literal('projects'), projectIds: v.array(v.string()) }),
-])
+const TvsAdditionalProps = {
+  excludeAssociatedTokens: v.boolean().optional(),
+  includeRwaRestrictedTokens: v.boolean().optional(),
+  customTarget: v.number().optional(),
+}
 
+export const TvsBreakdownProjectFilter = v.union([
+  v.object({
+    type: v.enum([
+      'all',
+      'layer2',
+      'bridge',
+      'rollups',
+      'validiumsAndOptimiums',
+      'others',
+      'notReviewed',
+    ]),
+    ...TvsAdditionalProps,
+  }),
+  v.object({
+    type: v.literal('projects'),
+    projectIds: v.array(v.string()),
+    ...TvsAdditionalProps,
+  }),
+])
 type TvsBreakdownProjectFilter = v.infer<typeof TvsBreakdownProjectFilter>
 
 export async function get7dTvsBreakdown(
   props: TvsBreakdownProjectFilter,
-  customTarget?: UnixTime,
 ): Promise<SevenDayTvsBreakdown> {
   if (env.MOCK) {
     return getMockTvsBreakdownData()
   }
 
-  const target = customTarget ?? getTvsTargetTimestamp()
+  const target = props.customTarget ?? getTvsTargetTimestamp()
 
   const [tvsProjects, values] = await Promise.all([
     getTvsProjects(createTvsBreakdownProjectFilter(props)),
     queryExecutor.execute({
       name: 'getAtTimestampsPerProjectQuery',
-      args: [target - 7 * UnixTime.DAY, target],
+      args: [
+        target - 7 * UnixTime.DAY,
+        target,
+        props.excludeAssociatedTokens ?? false,
+        props.includeRwaRestrictedTokens ?? false,
+      ],
     }),
   ])
   const valuesByProject = pick(
@@ -66,19 +89,10 @@ export async function get7dTvsBreakdown(
 
   const projects: Record<string, ProjectSevenDayTvsBreakdown> = {}
   for (const [projectId, projectValues] of Object.entries(valuesByProject)) {
-    const { all, withoutAssociated } = projectValues
+    const latestValueRecord = projectValues.at(-1)
+    const oldestValueRecord = projectValues.at(0)
 
-    const latestWithoutAssociatedRecord = withoutAssociated.at(-1)
-    const oldestWithoutAssociatedRecord = withoutAssociated.at(0)
-    const latestValueRecord = all.at(-1)
-    const oldestValueRecord = all.at(0)
-
-    if (
-      !latestValueRecord ||
-      !oldestValueRecord ||
-      !latestWithoutAssociatedRecord ||
-      !oldestWithoutAssociatedRecord
-    ) {
+    if (!latestValueRecord || !oldestValueRecord) {
       continue
     }
 
@@ -90,8 +104,8 @@ export async function get7dTvsBreakdown(
       latestEther,
       latestStablecoin,
       latestBtc,
-      _latestRwaRestricted,
-      _latestRwaPublic,
+      latestRwaRestricted,
+      latestRwaPublic,
       latestOther,
       latestAssociated,
     ] = latestValueRecord
@@ -104,39 +118,11 @@ export async function get7dTvsBreakdown(
       oldestEther,
       oldestStablecoin,
       oldestBtc,
-      _oldestRwaRestricted,
-      _oldestRwaPublic,
+      oldestRwaRestricted,
+      oldestRwaPublic,
       oldestOther,
-      _oldestAssociated,
+      oldestAssociated,
     ] = oldestValueRecord
-
-    const [
-      latestWAValue,
-      latestWACanonical,
-      latestWAExternal,
-      latestWANative,
-      latestWAEther,
-      latestWAStablecoin,
-      latestWABtc,
-      _latestWARwaRestricted,
-      _latestWARwaPublic,
-      latestWAOther,
-      _latestWAAssociated,
-    ] = latestWithoutAssociatedRecord
-
-    const [
-      oldestWAValue,
-      oldestWACanonical,
-      oldestWAExternal,
-      oldestWANative,
-      oldestWAEther,
-      oldestWAStablecoin,
-      oldestWABtc,
-      _oldestWARwaRestricted,
-      _oldestWARwaPublic,
-      oldestWAOther,
-      _oldestWAAssociated,
-    ] = oldestWithoutAssociatedRecord
 
     projects[projectId] = {
       breakdown: {
@@ -148,6 +134,9 @@ export async function get7dTvsBreakdown(
         stablecoin: latestStablecoin,
         btc: latestBtc,
         other: latestOther,
+        rwaRestricted: latestRwaRestricted,
+        rwaPublic: latestRwaPublic,
+        associated: latestAssociated,
       },
       breakdown7d: {
         total: oldestValue,
@@ -158,16 +147,9 @@ export async function get7dTvsBreakdown(
         stablecoin: oldestStablecoin,
         btc: oldestBtc,
         other: oldestOther,
-      },
-      associated: {
-        total: latestAssociated,
-        native: latestNative - latestWANative,
-        canonical: latestCanonical - latestWACanonical,
-        external: latestExternal - latestWAExternal,
-        ether: latestEther - latestWAEther,
-        stablecoin: latestStablecoin - latestWAStablecoin,
-        btc: latestBtc - latestWABtc,
-        other: latestOther - latestWAOther,
+        rwaRestricted: oldestRwaRestricted,
+        rwaPublic: oldestRwaPublic,
+        associated: oldestAssociated,
       },
       change: {
         total: calculatePercentageChange(latestValue, oldestValue),
@@ -181,22 +163,15 @@ export async function get7dTvsBreakdown(
         ),
         btc: calculatePercentageChange(latestBtc, oldestBtc),
         other: calculatePercentageChange(latestOther, oldestOther),
-      },
-      changeExcludingAssociated: {
-        total: calculatePercentageChange(latestWAValue, oldestWAValue),
-        native: calculatePercentageChange(latestWANative, oldestWANative),
-        canonical: calculatePercentageChange(
-          latestWACanonical,
-          oldestWACanonical,
+        rwaRestricted: calculatePercentageChange(
+          latestRwaRestricted,
+          oldestRwaRestricted,
         ),
-        external: calculatePercentageChange(latestWAExternal, oldestWAExternal),
-        ether: calculatePercentageChange(latestWAEther, oldestWAEther),
-        stablecoin: calculatePercentageChange(
-          latestWAStablecoin,
-          oldestWAStablecoin,
+        rwaPublic: calculatePercentageChange(latestRwaPublic, oldestRwaPublic),
+        associated: calculatePercentageChange(
+          latestAssociated,
+          oldestAssociated,
         ),
-        btc: calculatePercentageChange(latestWABtc, oldestWABtc),
-        other: calculatePercentageChange(latestWAOther, oldestWAOther),
       },
     }
   }
@@ -222,6 +197,26 @@ function createTvsBreakdownProjectFilter(
       return () => true
     case 'layer2':
       return (project) => !!project.scalingInfo
+    case 'notReviewed':
+      return (project) => project.statuses.reviewStatus === 'initialReview'
+    case 'rollups':
+      return (project) =>
+        !!project.scalingInfo &&
+        (project.scalingInfo.type === 'Optimistic Rollup' ||
+          project.scalingInfo.type === 'ZK Rollup') &&
+        !(project.statuses.reviewStatus === 'initialReview')
+    case 'validiumsAndOptimiums':
+      return (project) =>
+        !!project.scalingInfo &&
+        (project.scalingInfo.type === 'Validium' ||
+          project.scalingInfo.type === 'Optimium' ||
+          project.scalingInfo.type === 'Plasma') &&
+        !(project.statuses.reviewStatus === 'initialReview')
+    case 'others':
+      return (project) =>
+        !!project.scalingInfo &&
+        project.scalingInfo.type === 'Other' &&
+        !(project.statuses.reviewStatus === 'initialReview')
     case 'bridge':
       return (project) => !!project.isBridge
   }
@@ -244,6 +239,9 @@ async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
             stablecoin: 30,
             btc: 4,
             other: 0,
+            rwaRestricted: 0,
+            rwaPublic: 0,
+            associated: 0,
           },
           breakdown7d: {
             total: 50,
@@ -254,16 +252,9 @@ async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
             stablecoin: 25,
             btc: 5,
             other: 0,
-          },
-          associated: {
-            total: 6,
-            native: 1,
-            canonical: 2,
-            external: 3,
-            ether: 0,
-            stablecoin: 0,
-            btc: 0,
-            other: 0,
+            rwaRestricted: 0,
+            rwaPublic: 0,
+            associated: 0,
           },
           change: {
             total: 0.4,
@@ -274,16 +265,9 @@ async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
             stablecoin: 0.25,
             btc: 0.25,
             other: 0.25,
-          },
-          changeExcludingAssociated: {
-            total: 0.3,
-            canonical: 0.4,
-            native: 0.15,
-            external: 0.15,
-            ether: 0.15,
-            stablecoin: 0.15,
-            btc: 0.15,
-            other: 0.15,
+            rwaRestricted: 0.25,
+            rwaPublic: 0.25,
+            associated: 0.25,
           },
         },
       ]),

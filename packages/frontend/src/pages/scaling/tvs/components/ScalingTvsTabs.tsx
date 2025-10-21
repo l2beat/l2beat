@@ -91,6 +91,7 @@ export function ScalingTvsTabs(props: Props) {
               />
               <HorizontalSeparator className="mt-4 mb-3" />
               <BreakdownTypeTabs
+                tab="rollups"
                 entries={entries.rollups}
                 breakdownType={breakdownType}
                 setBreakdownType={setBreakdownType}
@@ -110,6 +111,7 @@ export function ScalingTvsTabs(props: Props) {
               />
               <HorizontalSeparator className="mt-4 mb-3" />
               <BreakdownTypeTabs
+                tab="validiumsAndOptimiums"
                 entries={entries.validiumsAndOptimiums}
                 breakdownType={breakdownType}
                 setBreakdownType={setBreakdownType}
@@ -126,6 +128,7 @@ export function ScalingTvsTabs(props: Props) {
               />
               <HorizontalSeparator className="mt-4 mb-3" />
               <BreakdownTypeTabs
+                tab="others"
                 entries={entries.others}
                 breakdownType={breakdownType}
                 setBreakdownType={setBreakdownType}
@@ -136,6 +139,7 @@ export function ScalingTvsTabs(props: Props) {
             <DirectoryTabsContent value="notReviewed" className="pt-4 sm:pt-3">
               <NotReviewedInfo />
               <BreakdownTypeTabs
+                tab="notReviewed"
                 entries={entries.notReviewed}
                 breakdownType={breakdownType}
                 setBreakdownType={setBreakdownType}
@@ -150,11 +154,13 @@ export function ScalingTvsTabs(props: Props) {
 }
 
 function BreakdownTypeTabs({
+  tab,
   entries,
   breakdownType,
   setBreakdownType,
   ignoreUnderReviewIcon,
 }: {
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed'
   entries: ScalingTvsEntry[]
   breakdownType: 'bridgeType' | 'assetCategory'
   setBreakdownType: (value: 'bridgeType' | 'assetCategory') => void
@@ -174,6 +180,7 @@ function BreakdownTypeTabs({
       </TabsList>
       <TabsContent value="bridgeType">
         <ScalingTvsTable
+          tab={tab}
           entries={entries}
           breakdownType={breakdownType}
           ignoreUnderReviewIcon={ignoreUnderReviewIcon}
@@ -181,6 +188,7 @@ function BreakdownTypeTabs({
       </TabsContent>
       <TabsContent value="assetCategory">
         <ScalingTvsTable
+          tab={tab}
           entries={entries}
           breakdownType={breakdownType}
           ignoreUnderReviewIcon={ignoreUnderReviewIcon}

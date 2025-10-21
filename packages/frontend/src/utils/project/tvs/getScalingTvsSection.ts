@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
-import type { ScalingTvsSectionProps } from '~/components/projects/sections/ScalingTvsSection'
+import type { ScalingTvsSectionProps } from '~/components/projects/sections/tvs/ScalingTvsSection'
 import { checkIfTvsExist } from '~/server/features/scaling/tvs/utils/checkIfTvsExist'
 
 export async function getScalingTvsSection(
