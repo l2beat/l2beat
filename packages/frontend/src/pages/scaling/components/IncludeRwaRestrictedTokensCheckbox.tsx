@@ -19,7 +19,7 @@ export function IncludeRwaRestrictedTokensCheckbox() {
         onCheckedChange={(checked) => setIncludeRwaRestrictedTokens(!!checked)}
       >
         <div className="flex items-center gap-1">
-          <div>Include restricted RWAs tokens</div>
+          <div>Include restricted RWA tokens</div>
           <TooltipTrigger asChild>
             <div className="flex size-4 items-center justify-center">
               <InfoIcon className="size-3.5" />
