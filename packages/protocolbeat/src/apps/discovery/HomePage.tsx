@@ -1,16 +1,19 @@
 import { useQuery } from '@tanstack/react-query'
-import { createRef, useEffect, useRef, useState } from 'react'
+import fuzzysort from 'fuzzysort'
+import { createRef, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { getProjects } from '../../api/api'
 import type { ApiProjectEntry } from '../../api/types'
 import { ErrorState } from '../../components/ErrorState'
 import { Title } from '../../components/Title'
 import { IS_READONLY } from '../../config/readonly'
+import { useDebounce } from '../../hooks/useDebounce'
 import { IconStarEmpty } from '../../icons/IconStarEmpty'
 import { IconStarFull } from '../../icons/IconStarFull'
 
 export function HomePage() {
   const [search, setSearch] = useState('')
+  const debouncedSearch = useDebounce(search, 150)
   const inputRef = useRef<HTMLInputElement>(null)
 
   // Autofocus the input when the component mounts
@@ -45,7 +48,7 @@ export function HomePage() {
             </Link>
           )}
         </div>
-        <AllProjects search={search} />
+        <AllProjects search={debouncedSearch} />
       </div>
     </>
   )
@@ -102,31 +105,27 @@ function AllProjects(props: { search: string }) {
     }
   }, [selectedIndex, columnCount])
 
-  useEffect(() => {
-    if (result.isSuccess) {
-      const search = props.search.toLowerCase()
-      const filtered = filterAndSortEntries(search, result.data)
+  const filtered = useFilteredProjects(result.data, props.search)
 
-      projectsRefs.current = Array(filtered.length)
-        .fill(null)
-        .map((_, i) => projectsRefs.current[i] || createRef<HTMLLIElement>())
-        .filter(
-          (ref): ref is React.RefObject<HTMLLIElement> => ref !== undefined,
-        ) as Array<React.RefObject<HTMLLIElement>> // Add type assertion here
-    }
-  }, [result.isSuccess, props.search, favorites])
+  const { favoriteList, otherList } = useMemo(() => {
+    const favoriteList = filtered.filter((x) => favorites.includes(x.name))
+    const otherList = filtered.filter((x) => !favorites.includes(x.name))
+
+    return { favoriteList, otherList }
+  }, [filtered, favorites])
+
+  useEffect(() => {
+    projectsRefs.current = Array(filtered.length)
+      .fill(null)
+      .map((_, i) => projectsRefs.current[i] || createRef<HTMLLIElement>())
+      .filter(
+        (ref): ref is React.RefObject<HTMLLIElement> => ref !== undefined,
+      ) as Array<React.RefObject<HTMLLIElement>> // Add type assertion here
+  }, [filtered])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (!result.isSuccess) return
-
-      const search = props.search.toLowerCase()
-      const filtered = filterAndSortEntries(search, result.data)
-      const favoriteList = filtered.filter((x) => favorites.includes(x.name))
-      const otherList = filtered.filter((x) => !favorites.includes(x.name))
       const breakIndex = favoriteList.length
-
-      if (filtered.length === 0) return
 
       switch (e.key) {
         case 'ArrowDown': {
@@ -197,14 +196,7 @@ function AllProjects(props: { search: string }) {
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [
-    result.isSuccess,
-    props.search,
-    selectedIndex,
-    favorites,
-    columnCount,
-    navigate,
-  ])
+  }, [selectedIndex, favoriteList, otherList, columnCount, navigate, filtered])
 
   if (result.isPending) {
     return (
@@ -230,11 +222,6 @@ function AllProjects(props: { search: string }) {
       setFavorites([...favorites, project])
     }
   }
-
-  const search = props.search.toLowerCase()
-  const filtered = filterAndSortEntries(search, result.data)
-  const favoriteList = filtered.filter((x) => favorites.includes(x.name))
-  const otherList = filtered.filter((x) => !favorites.includes(x.name))
 
   if (filtered.length === 0) {
     return (
@@ -278,86 +265,38 @@ function AllProjects(props: { search: string }) {
   )
 }
 
-function score(search: string, entry: ApiProjectEntry): number {
-  if (search.startsWith('%')) {
-    const searchWithoutPrefix = search.slice(1)
-    const matchingContract = entry.contractNames.find((c) =>
-      c.toLowerCase().includes(searchWithoutPrefix),
-    )
-    if (!matchingContract) {
-      return 0
-    }
+type SearchReadyEntry = ApiProjectEntry & {
+  _addressesString: string
+  _contractNamesString: string
+}
 
-    // Exact match - highest score
-    if (matchingContract.toLowerCase() === searchWithoutPrefix) {
-      return 100
-    }
-
-    // Prefix match - good
-    if (matchingContract.toLowerCase().startsWith(searchWithoutPrefix)) {
-      return 80
-    }
-    // Substring match - okay
-    return 60
-  }
-
-  // Project name matching (highest priority)
-  const nameLower = entry.name.toLowerCase()
-
-  // Exact match - highest score
-  if (nameLower === search) {
-    return 1000
-  }
-
-  // Prefix match - good
-  if (nameLower.startsWith(search)) {
-    return 500 // e.g., "frax" matches "fraxtal"
-  }
-
-  // Substring match - okay
-  if (nameLower.includes(search)) {
-    return 300 // e.g., "zk" matches "shared-zk-stack"
-  }
-
-  // Address matching (lower priority, only for longer searches to avoid noise)
-  if (search.length >= 4) {
-    const matchingAddress = entry.addresses.find((a) =>
-      a.toLowerCase().includes(search),
-    )
-    if (!matchingAddress) {
-      return 0
-    }
-
-    // Exact match - highest score
-    if (matchingAddress.toLowerCase() === search) {
-      return 100
-    }
-
-    // Prefix match - good
-    if (matchingAddress.startsWith(search)) {
-      return 50
-    }
-
-    // Substring match - okay
-    return 30
-  }
-
-  return 0
+function prepareEntries(entries: ApiProjectEntry[]): SearchReadyEntry[] {
+  return entries.map((entry) => ({
+    ...entry,
+    _addressesString: entry.addresses.join(' '),
+    _contractNamesString: entry.contractNames.join(' '),
+  }))
 }
 
 function filterAndSortEntries(
   search: string,
-  entries: ApiProjectEntry[],
+  entries: SearchReadyEntry[],
 ): ApiProjectEntry[] {
-  const scored = entries.map((entry) => ({
-    score: score(search, entry),
-    entry: entry,
-  }))
-  const sorted = scored
-    .filter(({ score }) => score > 0)
-    .sort((a, b) => b.score - a.score)
-  const filtered = sorted.map(({ entry }) => entry)
-  return filtered
+  if (search.trim() === '') {
+    return entries
+  }
+
+  const result = fuzzysort.go(search, entries, {
+    keys: [
+      (e) => e.name,
+      (e) => e._addressesString,
+      (e) => e._contractNamesString,
+    ],
+    threshold: -100,
+    limit: 20,
+  })
+
+  return result.map((match) => match.obj)
 }
 
 function ProjectList(props: {
@@ -449,4 +388,22 @@ function ProjectListSkeleton(props: { amount: number }) {
 
 function randomWidth(min: number, max: number) {
   return Math.random() * (max - min) + min
+}
+
+function useFilteredProjects(
+  entries: ApiProjectEntry[] | undefined,
+  search: string,
+) {
+  const preparedEntries = useMemo(() => {
+    if (!entries) {
+      return []
+    }
+
+    return prepareEntries(entries)
+  }, [entries])
+
+  return useMemo(
+    () => filterAndSortEntries(search, preparedEntries),
+    [search, preparedEntries],
+  )
 }
