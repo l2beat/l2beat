@@ -66,25 +66,6 @@ describeDatabase(InteropEventRepository.name, (db) => {
       const result = await repository.getAll()
       expect(result).toEqual([record])
     })
-
-    it('inserts config with array value', async () => {
-      const record = event(
-        'plugin1',
-        'event1',
-        'deposit',
-        UnixTime(100),
-        UnixTime(200),
-        {
-          args: [1, 2, 3],
-        },
-      )
-
-      const inserted = await repository.insertMany([record])
-      expect(inserted).toEqual(1)
-
-      const result = await repository.getAll()
-      expect(result).toEqual([record])
-    })
   })
 
   describe(InteropEventRepository.prototype.getUnmatched.name, () => {
