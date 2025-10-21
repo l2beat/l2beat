@@ -44,7 +44,7 @@
     },
     "eth:0xa05A3380889115bf313f1Db9d5f335157Be4D816": {
       "ignoreMethods": ["proxiableUUID"],
-      "ignoreInWatchMode": ["intentQueue", "nonce"]
+      "ignoreInWatchMode": ["intentQueue", "nonce", "fillQueue"]
     }
   }
 }
