@@ -7,7 +7,7 @@ export async function getTvsChartQuery(
   projects: ProjectId[],
 ): Promise<BreakdownItem[]> {
   const tvs = await db.tvsTokenValue.getTvsChartBySource(projects)
-
+  console.log('some random coee change to change cache key')
   const breakdownMap = new Map<string, BreakdownItem>()
   for (const record of tvs) {
     let mapItem = breakdownMap.get(record.timestamp)
