@@ -1,6 +1,7 @@
 import { OneinchFusionPlusPlugin } from './1inchfusionplus'
 import { AcrossPlugin } from './across'
 import { AllbridgePlugIn } from './allbridge'
+import { AoriPlugin } from './aori'
 import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
 import { CCIPPlugIn } from './ccip'
@@ -24,7 +25,9 @@ import { OrbitStackPlugin } from './orbitstack'
 import { SquidCoralPlugin } from './squid-coral'
 import { StargatePlugin } from './stargate'
 import { StargateV2BusPlugin } from './stargate-v2-bus'
+import { StargateV2CreditPlugin } from './stargate-v2-credit'
 import { StargateV2TaxiPlugin } from './stargate-v2-taxi'
+import { SuperformPlugin } from './superform'
 import type { InteropPlugin } from './types'
 import { WormholePlugin } from './wormhole'
 import { WormholeNTTPlugin } from './wormhole-ntt'
@@ -48,6 +51,9 @@ export function createInteropPlugins(): InteropPlugin[] {
     new StargateV2TaxiPlugin(), // should be run before LayerZeroV2, ofts
     new LayerZeroV2OFTsPlugin(), // should be run before LayerZeroV2
     new LayerZeroV1Plugin(),
+    new AoriPlugin(), // should be run before LayerZeroV2
+    new SuperformPlugin(), // should be run before LayerZeroV2, after most LZ apps
+    new StargateV2CreditPlugin(), // should be run before LayerZeroV2, after stargate
     new LayerZeroV2Plugin(),
     new WormholeNTTPlugin(), // should be run before WormholeCore and WormholeRelayer
     new WormholeTokenBridgePlugin(), // should be run before Wormhole
