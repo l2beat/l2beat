@@ -7,6 +7,7 @@ export const creatorchain: ScalingProject = upcomingL2({
   capability: 'universal',
   hasTestnet: true,
   addedAt: UnixTime(1740170319),
+  archivedAt: UnixTime(1761013730),
   display: {
     name: 'Creator Chain',
     slug: 'creatorchain',
