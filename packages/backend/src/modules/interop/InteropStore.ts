@@ -86,8 +86,8 @@ export class InteropStore implements InteropEventDb {
     this.configs.set(configName, value)
   }
 
-  findConfig(configName: string): InteropConfig | undefined {
-    return this.configs.get(configName)
+  findNetworks<T>(configName: string): T | undefined {
+    return this.configs.get(configName) as T | undefined
   }
 
   async deleteExpired(now: UnixTime) {

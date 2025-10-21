@@ -30,8 +30,8 @@ export function createInteropModule({
   }
   logger = logger.tag({ feature: 'interop', module: 'interop' })
 
-  const plugins = createInteropPlugins()
   const interopStore = new InteropStore(db)
+  const plugins = createInteropPlugins(interopStore)
 
   const ethereumRpc = providers.clients.rpcClients.find(
     (c) => c.chain === 'ethereum',

@@ -1,4 +1,5 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
+import { createDatabase } from '@l2beat/database'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
@@ -9,6 +10,7 @@ import { join } from 'path'
 import { InMemoryEventDb } from '../InMemoryEventDb'
 import { logToViemLog } from '../InteropBlockProcessor'
 import { match } from '../InteropMatcher'
+import { InteropStore } from '../InteropStore'
 import { createInteropPlugins } from '../plugins'
 import {
   Address32,
@@ -118,7 +120,18 @@ async function runExample(example: Example): Promise<RunResult> {
     }
   })
 
-  const plugins = createInteropPlugins()
+  const db = createDatabase({
+    connectionString: getEnv().string('INTEROP_DB_URL'),
+    application_name: 'INTEROP-EXAMPLE-LOCAL',
+    ssl: { rejectUnauthorized: false },
+    min: 2,
+    max: 10,
+    keepAlive: false,
+  })
+
+  const interopStore = new InteropStore(db)
+
+  const plugins = createInteropPlugins(interopStore)
 
   const events: InteropEvent[] = []
   for (const chain of chains) {
@@ -170,7 +183,6 @@ async function runExample(example: Example): Promise<RunResult> {
     events.length,
     plugins,
     chains.map((x) => x.name),
-    (plugin: string) => [], // TODO: implement
     logger,
   )
 

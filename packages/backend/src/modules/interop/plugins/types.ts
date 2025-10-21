@@ -10,7 +10,6 @@ import {
   type ParseAbiItem,
   parseAbi,
 } from 'viem'
-import type { InteropConfig } from '../config/types'
 
 export type Address32 = Branded<string, 'Address32'>
 
@@ -161,10 +160,9 @@ export interface InteropEventDb {
 
 export interface InteropPlugin {
   name: string
-  configName?: string
+  networks?: string
   capture?: (
     input: LogToCapture,
-    networks?: InteropConfig,
   ) =>
     | Omit<InteropEvent, 'plugin'>
     | undefined
@@ -174,7 +172,6 @@ export interface InteropPlugin {
     event: InteropEvent,
     db: InteropEventDb,
   ) => MatchResult | undefined | Promise<MatchResult | undefined>
-  getNetworks?<T>(): Promise<T[] | undefined>
 }
 
 export type ParsedEvent<T extends Abi[number]> = DecodeEventLogReturnType<

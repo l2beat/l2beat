@@ -32,10 +32,7 @@ export class InteropBlockProcessor implements BlockProcessor {
     for (const logToDecode of toDecode) {
       for (const plugin of this.plugins) {
         try {
-          const networks = plugin.configName
-            ? this.store.findConfig(plugin.configName)
-            : undefined
-          const event = await plugin.capture?.(logToDecode, networks)
+          const event = await plugin.capture?.(logToDecode)
           if (event) {
             events.push({ ...event, plugin: plugin.name })
             pluginEventCounts[plugin.name] =

@@ -1,11 +1,13 @@
 import { ProjectService } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
+import { mockObject } from 'earl'
+import type { InteropStore } from '../InteropStore'
 import { createInteropPlugins } from '.'
 import { definedNetworks } from './types'
 
 describe('Interop Plugins', async () => {
   const chainNames = new Set<string>()
-  const plugins = createInteropPlugins()
+  const plugins = createInteropPlugins(mockObject<InteropStore>())
 
   before(async () => {
     const ps = new ProjectService()

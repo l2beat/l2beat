@@ -1,3 +1,4 @@
+import type { InteropStore } from '../InteropStore'
 import { OneinchFusionPlusPlugin } from './1inchfusionplus'
 import { AcrossPlugin } from './across'
 import { AllbridgePlugIn } from './allbridge'
@@ -31,7 +32,7 @@ import { WormholeNTTPlugin } from './wormhole-ntt'
 import { WormholeRelayerPlugin } from './wormhole-relayer'
 import { WormholeTokenBridgePlugin } from './wormhole-token-bridge'
 
-export function createInteropPlugins(): InteropPlugin[] {
+export function createInteropPlugins(store: InteropStore): InteropPlugin[] {
   return [
     new SquidCoralPlugin(),
     new DeBridgePlugin(),
@@ -56,7 +57,7 @@ export function createInteropPlugins(): InteropPlugin[] {
     new AllbridgePlugIn(),
     new AxelarITSPlugin(), // should be run before Axelar
     new AxelarPlugin(),
-    new AcrossPlugin(),
+    new AcrossPlugin(store),
     new OrbitStackPlugin(),
     new OpStackPlugin(),
     new HyperlaneMerklyTokenBridgePlugin(), // should be run before HyperlaneHWR

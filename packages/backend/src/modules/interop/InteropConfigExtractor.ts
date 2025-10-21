@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { TimeLoop } from '../../tools/TimeLoop'
-import type { InteropConfigPlugin } from './config/types'
+import type { InteropConfig, InteropConfigPlugin } from './config/types'
 import type { InteropStore } from './InteropStore'
 
 export class InteropConfigExtractor extends TimeLoop {
@@ -34,7 +34,7 @@ export class InteropConfigExtractor extends TimeLoop {
 
   async processPlugin(plugin: InteropConfigPlugin) {
     const latest = await plugin.getLatestConfig()
-    const previous = this.store.findConfig(plugin.name)
+    const previous = this.store.findNetworks<InteropConfig>(plugin.name)
 
     const config = plugin.generateNewConfig(previous, latest)
 
