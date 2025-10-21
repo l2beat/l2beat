@@ -93,5 +93,11 @@ async function getQueryState(
     range: '1y',
     excludeAssociatedTokens: false,
   })
+  await helpers.tvs.etherAndStablecoinsCharts.prefetch({
+    range: '1y',
+    filter: {
+      type: tab,
+    },
+  })
   return helpers.dehydrate()
 }

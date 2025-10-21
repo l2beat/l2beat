@@ -8,6 +8,7 @@ import { createServerPageRouter } from '../pages/ServerPageRouter'
 import { render } from '../ssr/ServerEntry'
 import type { RenderData } from '../ssr/types'
 import { type Manifest, manifest } from '../utils/Manifest'
+import { getEtherAndStablecoinsCharts } from './features/scaling/tvs/getEtherAndStablecoinsCharts'
 import { ErrorHandler } from './middlewares/ErrorHandler'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
 import { SafeSendHandler } from './middlewares/SafeSendHandler'
@@ -42,6 +43,16 @@ export function createServer(logger: Logger) {
   app.use(SafeSendHandler)
   app.use(MetricsMiddleware())
 
+  app.get('/test', async (_req, res) => {
+    const data = await getEtherAndStablecoinsCharts({
+      range: '7d',
+      filter: {
+        type: 'projects',
+        projectIds: ['arbitrum', 'optimism'],
+      },
+    })
+    res.status(200).set('Content-Type', 'application/json').json(data)
+  })
   app.use('/', createMigratedProjectsRouter())
   app.use('/', createLegacyPathsRouter())
   app.use('/api/trpc', createTrpcRouter())
