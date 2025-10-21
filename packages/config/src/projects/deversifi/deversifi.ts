@@ -113,6 +113,7 @@ export const deversifi: ScalingProject = {
       type: 'day',
       sinceTimestamp: UnixTime(1590491810),
       resyncLastDays: 7,
+      batchSize: 10,
     },
     // trackedTxs: [
     //   {
