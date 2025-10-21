@@ -10,8 +10,8 @@ interface DayProvidersClients {
 }
 
 export interface DayProvider {
-  getDailyTxs(from: number, to: number): Promise<Record<number, number>>
-  getDailyUops(from: number, to: number): Promise<Record<number, number>>
+  getDailyTxsCount(from: number, to: number): Promise<Record<number, number>>
+  getDailyUopsCount(from: number, to: number): Promise<Record<number, number>>
 }
 
 export class DayProviders {

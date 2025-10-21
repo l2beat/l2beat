@@ -4,7 +4,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import { StarkexDayProvider } from './StarkexDayProvider'
 
 describe(StarkexDayProvider.name, () => {
-  describe(StarkexDayProvider.prototype.getDailyTxs.name, () => {
+  describe(StarkexDayProvider.prototype.getDailyTxsCount.name, () => {
     it('fetches and aggregates daily txs for single product', async () => {
       const starkexClient = mockObject<StarkexClient>({
         getDailyCount: mockFn()
@@ -14,7 +14,7 @@ describe(StarkexDayProvider.name, () => {
       })
 
       const provider = new StarkexDayProvider(starkexClient, ['product1'])
-      const result = await provider.getDailyTxs(2, 4)
+      const result = await provider.getDailyTxsCount(2, 4)
 
       expect(result).toEqual({
         [2 * UnixTime.DAY]: 100,
@@ -54,7 +54,7 @@ describe(StarkexDayProvider.name, () => {
         'product1',
         'product2',
       ])
-      const result = await provider.getDailyTxs(2, 3)
+      const result = await provider.getDailyTxsCount(2, 3)
 
       expect(result).toEqual({
         [2 * UnixTime.DAY]: 150, // 100 + 50
@@ -69,7 +69,7 @@ describe(StarkexDayProvider.name, () => {
       })
 
       const provider = new StarkexDayProvider(starkexClient, ['product1'])
-      const result = await provider.getDailyTxs(5, 5)
+      const result = await provider.getDailyTxsCount(5, 5)
 
       expect(result).toEqual({
         [5 * UnixTime.DAY]: 100,
@@ -84,7 +84,7 @@ describe(StarkexDayProvider.name, () => {
       })
 
       const provider = new StarkexDayProvider(starkexClient, ['product1'])
-      const result = await provider.getDailyTxs(1, 2)
+      const result = await provider.getDailyTxsCount(1, 2)
 
       expect(result).toEqual({
         [1 * UnixTime.DAY]: 0,
@@ -105,7 +105,7 @@ describe(StarkexDayProvider.name, () => {
         'product2',
         'product3',
       ])
-      const result = await provider.getDailyTxs(1, 1)
+      const result = await provider.getDailyTxsCount(1, 1)
 
       expect(result).toEqual({
         [1 * UnixTime.DAY]: 600, // 100 + 200 + 300
@@ -128,7 +128,7 @@ describe(StarkexDayProvider.name, () => {
       })
 
       const provider = new StarkexDayProvider(starkexClient, ['p1', 'p2'])
-      const result = await provider.getDailyTxs(1, 3)
+      const result = await provider.getDailyTxsCount(1, 3)
 
       expect(result).toEqual({
         [1 * UnixTime.DAY]: 30, // 10 + 20
@@ -145,16 +145,16 @@ describe(StarkexDayProvider.name, () => {
 
       const provider = new StarkexDayProvider(starkexClient, ['product1'])
 
-      await expect(provider.getDailyTxs(1, 1)).toBeRejected()
+      await expect(provider.getDailyTxsCount(1, 1)).toBeRejected()
     })
   })
 
-  describe(StarkexDayProvider.prototype.getDailyUops.name, () => {
+  describe(StarkexDayProvider.prototype.getDailyUopsCount.name, () => {
     it('returns empty object (API does not expose this metric)', async () => {
       const starkexClient = mockObject<StarkexClient>({})
       const provider = new StarkexDayProvider(starkexClient, ['product1'])
 
-      const result = await provider.getDailyUops(1, 10)
+      const result = await provider.getDailyUopsCount(1, 10)
 
       expect(result).toEqual({})
     })
@@ -167,7 +167,7 @@ describe(StarkexDayProvider.name, () => {
       })
 
       const provider = new StarkexDayProvider(starkexClient, [])
-      const result = await provider.getDailyTxs(1, 2)
+      const result = await provider.getDailyTxsCount(1, 2)
 
       expect(result).toEqual({
         [1 * UnixTime.DAY]: 0,
@@ -183,7 +183,7 @@ describe(StarkexDayProvider.name, () => {
 
       const provider = new StarkexDayProvider(starkexClient, ['product1'])
       const largeDay = 1000000
-      const result = await provider.getDailyTxs(largeDay, largeDay)
+      const result = await provider.getDailyTxsCount(largeDay, largeDay)
 
       expect(result).toEqual({
         [largeDay * UnixTime.DAY]: 1000,
@@ -204,7 +204,7 @@ describe(StarkexDayProvider.name, () => {
       })
 
       const provider = new StarkexDayProvider(starkexClient, ['p1', 'p2', 'p3'])
-      await provider.getDailyTxs(1, 2)
+      await provider.getDailyTxsCount(1, 2)
 
       // Each day should process all products before moving to next day
       expect(calls).toEqual([

@@ -4,7 +4,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import { StarknetDayProvider } from './StarknetDayProvider'
 
 describe(StarknetDayProvider.name, () => {
-  describe(StarknetDayProvider.prototype.getDailyTxs.name, () => {
+  describe(StarknetDayProvider.prototype.getDailyTxsCount.name, () => {
     it('fetches and filters daily txs within range', async () => {
       const voyagerClient = mockObject<VoyagerClient>({
         getDailyTxs: mockFn().resolvesTo({
@@ -17,7 +17,7 @@ describe(StarknetDayProvider.name, () => {
       })
 
       const provider = new StarknetDayProvider(voyagerClient)
-      const result = await provider.getDailyTxs(2, 4)
+      const result = await provider.getDailyTxsCount(2, 4)
 
       expect(result).toEqual({
         [2 * UnixTime.DAY]: 200,
@@ -36,7 +36,7 @@ describe(StarknetDayProvider.name, () => {
       })
 
       const provider = new StarknetDayProvider(voyagerClient)
-      const result = await provider.getDailyTxs(5, 10)
+      const result = await provider.getDailyTxsCount(5, 10)
 
       expect(result).toEqual({})
     })
@@ -47,13 +47,13 @@ describe(StarknetDayProvider.name, () => {
       })
 
       const provider = new StarknetDayProvider(voyagerClient)
-      const result = await provider.getDailyTxs(1, 5)
+      const result = await provider.getDailyTxsCount(1, 5)
 
       expect(result).toEqual({})
     })
   })
 
-  describe(StarknetDayProvider.prototype.getDailyUops.name, () => {
+  describe(StarknetDayProvider.prototype.getDailyUopsCount.name, () => {
     it('fetches and filters daily uops within range', async () => {
       const voyagerClient = mockObject<VoyagerClient>({
         getDailyUops: mockFn().resolvesTo({
@@ -66,7 +66,7 @@ describe(StarknetDayProvider.name, () => {
       })
 
       const provider = new StarknetDayProvider(voyagerClient)
-      const result = await provider.getDailyUops(2, 4)
+      const result = await provider.getDailyUopsCount(2, 4)
 
       expect(result).toEqual({
         [2 * UnixTime.DAY]: 150,
@@ -85,7 +85,7 @@ describe(StarknetDayProvider.name, () => {
       })
 
       const provider = new StarknetDayProvider(voyagerClient)
-      const result = await provider.getDailyUops(5, 10)
+      const result = await provider.getDailyUopsCount(5, 10)
 
       expect(result).toEqual({})
     })
@@ -96,7 +96,7 @@ describe(StarknetDayProvider.name, () => {
       })
 
       const provider = new StarknetDayProvider(voyagerClient)
-      const result = await provider.getDailyUops(1, 5)
+      const result = await provider.getDailyUopsCount(1, 5)
 
       expect(result).toEqual({})
     })
@@ -112,7 +112,7 @@ describe(StarknetDayProvider.name, () => {
       })
 
       const provider = new StarknetDayProvider(voyagerClient)
-      const result = await provider.getDailyTxs(1, 1)
+      const result = await provider.getDailyTxsCount(1, 1)
 
       expect(result).toEqual({
         [1 * UnixTime.DAY]: 100,

@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
 import type { DayActivityIndexerDeps } from './types'
@@ -14,6 +14,11 @@ export class DayActivityIndexer extends ManagedChildIndexer {
       },
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
+
+    assert(
+      this.$.batchSize > this.$.uncertaintyBuffer,
+      'Batch size should be bigger than uncertainty buffer',
+    )
   }
 
   override async update(from: number, to: number): Promise<number> {
@@ -34,7 +39,7 @@ export class DayActivityIndexer extends ManagedChildIndexer {
       await this.$.db.syncMetadata.updateSyncedUntil(
         'activity',
         [this.$.projectId],
-        to * UnixTime.DAY,
+        adjustedTo * UnixTime.DAY,
       )
     })
 

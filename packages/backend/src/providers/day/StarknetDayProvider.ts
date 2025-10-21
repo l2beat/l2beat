@@ -5,7 +5,10 @@ import type { DayProvider } from './DayProviders'
 export class StarknetDayProvider implements DayProvider {
   constructor(private voyagerClient: VoyagerClient) {}
 
-  async getDailyTxs(from: number, to: number): Promise<Record<number, number>> {
+  async getDailyTxsCount(
+    from: number,
+    to: number,
+  ): Promise<Record<number, number>> {
     const dailyTxs = await this.voyagerClient.getDailyTxs()
 
     return Object.fromEntries(
@@ -17,7 +20,7 @@ export class StarknetDayProvider implements DayProvider {
     )
   }
 
-  async getDailyUops(
+  async getDailyUopsCount(
     from: number,
     to: number,
   ): Promise<Record<number, number>> {

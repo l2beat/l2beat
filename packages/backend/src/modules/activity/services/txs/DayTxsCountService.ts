@@ -18,8 +18,8 @@ export class DayTxsCountService {
     records: ActivityRecord[]
     latestTimestamp: number
   }> {
-    const dailyTxs = await this.$.provider.getDailyTxs(from, to)
-    const dailyUops = await this.$.provider.getDailyUops(from, to)
+    const dailyTxs = await this.$.provider.getDailyTxsCount(from, to)
+    const dailyUops = await this.$.provider.getDailyUopsCount(from, to)
 
     const latestTimestamp = Math.max(
       ...Object.keys(dailyTxs).map(Number),

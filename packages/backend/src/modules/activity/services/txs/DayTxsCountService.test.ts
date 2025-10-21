@@ -34,8 +34,8 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
       ],
       latestTimestamp: start * UnixTime.DAY,
     })
-    expect(provider.getDailyTxs).toHaveBeenOnlyCalledWith(start, end)
-    expect(provider.getDailyUops).toHaveBeenOnlyCalledWith(start, end)
+    expect(provider.getDailyTxsCount).toHaveBeenOnlyCalledWith(start, end)
+    expect(provider.getDailyUopsCount).toHaveBeenOnlyCalledWith(start, end)
   })
 
   it('should return txs count with uops', async () => {
@@ -161,7 +161,7 @@ function mockProvider(data: {
   uops: Record<number, number>
 }) {
   return mockObject<DayProvider>({
-    getDailyTxs: mockFn().resolvesTo(data.txs),
-    getDailyUops: mockFn().resolvesTo(data.uops),
+    getDailyTxsCount: mockFn().resolvesTo(data.txs),
+    getDailyUopsCount: mockFn().resolvesTo(data.uops),
   })
 }

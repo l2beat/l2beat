@@ -9,7 +9,10 @@ export class StarkexDayProvider implements DayProvider {
     private products: string[],
   ) {}
 
-  async getDailyTxs(from: number, to: number): Promise<Record<number, number>> {
+  async getDailyTxsCount(
+    from: number,
+    to: number,
+  ): Promise<Record<number, number>> {
     const queries = range(from, to + 1).map(async (day) => ({
       timestamp: day * UnixTime.DAY,
       count: await this.getTxCountForTimestamp(day),
@@ -27,7 +30,7 @@ export class StarkexDayProvider implements DayProvider {
     return counts.reduce((a, b) => a + b, 0)
   }
 
-  getDailyUops(_: number, __: number): Promise<Record<number, number>> {
+  getDailyUopsCount(_: number, __: number): Promise<Record<number, number>> {
     // API does not expose this metric
     return Promise.resolve({})
   }
