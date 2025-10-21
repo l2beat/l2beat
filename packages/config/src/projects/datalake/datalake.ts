@@ -6,6 +6,7 @@ export const datalake: ScalingProject = upcomingL3({
   id: 'datalake',
   capability: 'universal',
   addedAt: UnixTime(1738498515), // 2025-02-02T14:15:15Z
+  archivedAt: UnixTime(1761013730),
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'DataLake',
