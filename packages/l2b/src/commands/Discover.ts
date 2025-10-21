@@ -3,6 +3,7 @@ import {
   ConfigReader,
   DiscoverCommandArgs,
   type DiscoveryModuleConfig,
+  type EntryParameters,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
@@ -69,7 +70,7 @@ function logProjectsToDiscover(projects: string[], logger: Logger) {
 }
 
 function resolveProjects(projectQuery: string): string[] {
-  const entries = configReader.readAllDiscoveredProjects()
+  const entries = configReader.readAllConfiguredProjects()
 
   const isChainSpecificAddressPredicate =
     ChainSpecificAddress.check(projectQuery)
@@ -110,12 +111,11 @@ function addressPredicate(
   haystackProject: string,
 ): boolean {
   const address = EthereumAddress(needleAddress)
-  const discovery = configReader.readDiscovery(haystackProject)
+  const entries = getEntries(haystackProject)
 
   return (
-    discovery.entries.find(
-      (c) => ChainSpecificAddress.address(c.address) === address,
-    ) !== undefined
+    entries.find((c) => ChainSpecificAddress.address(c.address) === address) !==
+    undefined
   )
 }
 
@@ -124,7 +124,16 @@ function chainSpecificAddressPredicate(
   haystackProject: string,
 ): boolean {
   const address = ChainSpecificAddress(needleAddress)
-  const discovery = configReader.readDiscovery(haystackProject)
+  const entries = getEntries(haystackProject)
 
-  return discovery.entries.find((c) => c.address === address) !== undefined
+  return entries.find((c) => c.address === address) !== undefined
+}
+
+function getEntries(project: string): EntryParameters[] {
+  try {
+    const discovery = configReader.readDiscovery(project)
+    return discovery.entries
+  } catch {
+    return []
+  }
 }
