@@ -47,7 +47,11 @@ export function VerifiersSection({
   ...sectionProps
 }: VerifiersSectionProps) {
   return (
-    <ProjectSection {...sectionProps} as={as} className="space-y-6">
+    <ProjectSection
+      {...sectionProps}
+      as={as}
+      className="space-y-6 lg:max-w-[min(calc(100vw-472px),980px)]"
+    >
       <p className="text-paragraph-15 md:text-paragraph-16">
         List of different onchain verifiers for this proving system. Unique ID
         distinguishes differents deployments of the same verifier from different
