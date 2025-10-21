@@ -149,6 +149,17 @@ describe(StarkexDayProvider.name, () => {
     })
   })
 
+  describe(StarkexDayProvider.prototype.getDailyUops.name, () => {
+    it('returns empty object (API does not expose this metric)', async () => {
+      const starkexClient = mockObject<StarkexClient>({})
+      const provider = new StarkexDayProvider(starkexClient, ['product1'])
+
+      const result = await provider.getDailyUops(1, 10)
+
+      expect(result).toEqual({})
+    })
+  })
+
   describe('edge cases', () => {
     it('handles empty products array', async () => {
       const starkexClient = mockObject<StarkexClient>({

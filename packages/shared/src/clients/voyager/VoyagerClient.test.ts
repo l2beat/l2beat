@@ -10,9 +10,9 @@ describe(VoyagerClient.name, () => {
       const http = mockObject<HttpClient>({
         fetch: async () => ({
           items: [
-            { date: '2024-01-01', value: 1000 },
-            { date: '2024-01-02', value: 2000 },
-            { date: '2024-01-03', value: 3000 },
+            { date: '2024-01-01', value: '1000' },
+            { date: '2024-01-02', value: '2000' },
+            { date: '2024-01-03', value: '3000' },
           ],
         }),
       })
@@ -27,8 +27,8 @@ describe(VoyagerClient.name, () => {
       })
 
       expect(http.fetch).toHaveBeenCalledWith(
-        'https://voyager.online/api/daily-stats?metrics=user_operations_per_second&timerange=max',
-        { timeout: 10_000 },
+        'https://api.voyager.online/beta/daily-stats?metrics=user_operations_count&timerange=max',
+        { timeout: 10_000, headers: { 'x-api-key': 'test-api-key' } },
       )
     })
 
@@ -78,8 +78,8 @@ describe(VoyagerClient.name, () => {
       })
 
       expect(http.fetch).toHaveBeenCalledWith(
-        'https://voyager.online/api/daily-stats?metrics=transactions_per_second&timerange=max',
-        { timeout: 10_000 },
+        'https://api.voyager.online/beta/daily-stats?metrics=transactions_count&timerange=max',
+        { timeout: 10_000, headers: { 'x-api-key': 'test-api-key' } },
       )
     })
 
@@ -110,8 +110,8 @@ describe(VoyagerClient.name, () => {
       })
 
       expect(http.fetch).toHaveBeenCalledWith(
-        'https://voyager.online/api/test-endpoint?param1=value1&param2=value2',
-        { timeout: 10_000 },
+        'https://api.voyager.online/beta/test-endpoint?param1=value1&param2=value2',
+        { timeout: 10_000, headers: { 'x-api-key': 'test-api-key' } },
       )
     })
 
@@ -124,8 +124,8 @@ describe(VoyagerClient.name, () => {
       await client.query('/test-endpoint', {})
 
       expect(http.fetch).toHaveBeenCalledWith(
-        'https://voyager.online/api/test-endpoint',
-        { timeout: 10_000 },
+        'https://api.voyager.online/beta/test-endpoint',
+        { timeout: 10_000, headers: { 'x-api-key': 'test-api-key' } },
       )
     })
 
@@ -140,9 +140,25 @@ describe(VoyagerClient.name, () => {
       })
 
       expect(http.fetch).toHaveBeenCalledWith(
-        'https://voyager.online/api/test-endpoint?key=value+with+spaces',
-        { timeout: 10_000 },
+        'https://api.voyager.online/beta/test-endpoint?key=value+with+spaces',
+        { timeout: 10_000, headers: { 'x-api-key': 'test-api-key' } },
       )
+    })
+  })
+
+  describe(VoyagerClient.prototype.validateResponse.name, () => {
+    it('returns success for valid response', () => {
+      const client = mockClient({})
+      const result = client.validateResponse({ data: 'test' })
+
+      expect(result).toEqual({ success: true })
+    })
+
+    it('returns failure for error response', () => {
+      const client = mockClient({})
+      const result = client.validateResponse({ message: 'Error occurred' })
+
+      expect(result).toEqual({ success: false })
     })
   })
 })
