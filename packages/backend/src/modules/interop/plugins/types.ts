@@ -160,7 +160,6 @@ export interface InteropEventDb {
 
 export interface InteropPlugin {
   name: string
-  networks?: string
   capture?: (
     input: LogToCapture,
   ) =>

@@ -43,12 +43,11 @@ export const AcrossFilledRelay = createInteropEventType<{
 
 export class AcrossPlugin implements InteropPlugin {
   name = 'across'
-  networks = 'across'
 
   constructor(private store: InteropStore) {}
 
   capture(input: LogToCapture) {
-    const networks = this.store.findNetworks<AcrossNetwork[]>(this.networks)
+    const networks = this.store.findNetworks<AcrossNetwork[]>('across')
     if (!networks) {
       // TODO: what to do on cold start?
       return
