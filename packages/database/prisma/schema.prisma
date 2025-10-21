@@ -514,9 +514,8 @@ model InteropRecentPrices {
 
 model InteropConfig {
   key       String   @db.VarChar(64)
+  timestamp DateTime @db.Timestamp(6)
   value     String   @db.Text
-  createdAt DateTime @db.Timestamp(6)
-  updatedAt DateTime @db.Timestamp(6)
 
-  @@id([key])
+  @@id([key, timestamp])
 }
