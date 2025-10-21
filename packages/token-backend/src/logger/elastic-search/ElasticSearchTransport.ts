@@ -53,6 +53,14 @@ export class ElasticSearchTransport implements LoggerTransport {
     interval.unref()
   }
 
+  /**
+   * Manually flush all buffered logs to Elastic Search.
+   * This should be called before the process exits to ensure all logs are sent.
+   */
+  public async flush(): Promise<void> {
+    await this.flushLogs()
+  }
+
   private async flushLogs(): Promise<void> {
     if (!this.buffer.length) {
       return

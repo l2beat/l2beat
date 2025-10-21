@@ -269,6 +269,24 @@
     },
     {
       "mode": "auto",
+      "id": "base-BENJI",
+      "priceId": "franklin-templeton-benji",
+      "symbol": "BENJI",
+      "name": "Franklin OnChain U.S. Government Money Fund",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66409/large/Benji_Logo.png?1749371083",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x60CfC2b186a4CF647486e42c42B11cC6D571d1E4",
+        "chain": "base",
+        "decimals": 18,
+        "sinceTimestamp": 1750636800
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-BICO",
       "priceId": "biconomy",
       "symbol": "BICO",
@@ -419,8 +437,7 @@
         "chain": "ethereum",
         "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "decimals": 8,
-        "sinceTimestamp": 1726099200,
-        "untilTimestamp": 1746597600
+        "sinceTimestamp": 1726099200
       },
       "category": "btc",
       "source": "canonical",
@@ -1620,6 +1637,25 @@
     },
     {
       "mode": "auto",
+      "id": "base-LSK",
+      "priceId": "lisk",
+      "symbol": "LSK",
+      "name": "Lisk",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/385/large/Lisk_Symbol_-_Blue.png?1696501687",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6033F7f88332B8db6ad452B7C6D5bB643990aE3f",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18,
+        "sinceTimestamp": 1715865407
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-LUNA",
       "priceId": "luna-by-virtuals",
       "symbol": "LUNA",
@@ -2439,6 +2475,25 @@
       },
       "category": "other",
       "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-SHIB",
+      "priceId": "shiba-inu",
+      "symbol": "SHIB",
+      "name": "SHIBA INU",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11939/large/shiba.png?1696511800",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18,
+        "sinceTimestamp": 1686793895
+      },
+      "category": "other",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -3355,7 +3410,7 @@
       "priceId": "wormhole",
       "symbol": "W",
       "name": "Wormhole Token",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/35087/large/womrhole_logo_full_color_rgb_2000px_72ppi_fb766ac85a.png?1708688954",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35087/large/W_Token_%283%29.png?1758122686",
       "amount": {
         "type": "totalSupply",
         "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
@@ -3419,6 +3474,25 @@
           }
         ]
       }
+    },
+    {
+      "mode": "auto",
+      "id": "base-WBTC-2",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 8,
+        "sinceTimestamp": 1686793895
+      },
+      "category": "btc",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",

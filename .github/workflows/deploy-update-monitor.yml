@@ -17,6 +17,12 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+      - name: Set up Docker.io mirror
+        uses: docker/setup-buildx-action@v3
+        with:
+          buildkitd-config-inline: |
+            [registry."docker.io"]
+              mirrors = ["mirror.gcr.io"]
       - name: Install heroku CLI
         run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
       - name: Login to heroku container registry

@@ -9,6 +9,7 @@ const genesisTimestamp = UnixTime(1744817872) // 2025-04-16T17:00:00Z
 
 export const lachain: ScalingProject = zkStackL2({
   addedAt: UnixTime(1740072754), // 2025-01-20T17:32:34Z
+  archivedAt: UnixTime(1760947223),
   display: {
     name: 'LaChain',
     slug: 'lachain',

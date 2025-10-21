@@ -1,6 +1,5 @@
 import {
   type ConfigReader,
-  type ConfigRegistry,
   type ContractConfig,
   type DiscoveryOutput,
   type EntryParameters,
@@ -28,51 +27,32 @@ import type {
   Field,
   FieldValue,
 } from './types'
-import { getReferencedProjects } from './utils'
-
-interface ProjectData {
-  config: ConfigRegistry
-  discovery: DiscoveryOutput
-}
-
-function readProject(
-  project: string,
-  configReader: ConfigReader,
-  seen = new Set<string>(),
-): ProjectData[] {
-  const key = project
-
-  if (seen.has(key)) {
-    return []
-  }
-
-  seen.add(key)
-
-  try {
-    const discovery = configReader.readDiscovery(project)
-    const referencedProjects = getReferencedProjects(discovery)
-
-    return [
-      { config: configReader.readConfig(project), discovery },
-      ...referencedProjects.flatMap((p) => readProject(p, configReader, seen)),
-    ]
-  } catch {
-    return []
-  }
-}
 
 export function getProject(
   configReader: ConfigReader,
   templateService: TemplateService,
   project: string,
 ): ApiProjectResponse {
-  const data = readProject(project, configReader)
+  const discoveries = configReader.readDiscoveryWithReferences(project)
+  // const discovery = discoveries[0]
+  const data = discoveries.map((discovery) => ({
+    discovery,
+    config: configReader.readConfig(discovery.name),
+  }))
+
+  // const referencedEntries = getReachableEntries(
+  //   data
+  //     .flatMap((x) => x.discovery.entries)
+  //     .filter((e) => e.type !== 'Reference'),
+  //   discovery.entries.map((e) => e.address),
+  // ).map((x) => x.address)
 
   const response: ApiProjectResponse = { entries: [] }
   const meta = getMeta(data.map((x) => x.discovery))
   for (const { config, discovery } of data) {
     const contracts = discovery.entries
       .filter((e) => e.type === 'Contract')
+      // .filter((e) => referencedEntries.includes(e.address))
       .map((entry) => {
         const contractConfig = makeEntryStructureConfig(
           config.structure,
@@ -115,6 +95,7 @@ export function getProject(
       ),
       eoas: discovery.entries
         .filter((e) => e.type === 'EOA')
+        // .filter((e) => referencedEntries.includes(e.address))
         .filter(
           (x) =>
             ChainSpecificAddress.address(x.address) !== EthereumAddress.ZERO,

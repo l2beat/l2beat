@@ -61,6 +61,11 @@ async function getCachedData() {
     helpers.activity.chartStats.prefetch({
       filter: { type: 'withoutOthers' },
     }),
+    helpers.tvs.table.prefetch({
+      type: 'rollups',
+      excludeAssociatedTokens: false,
+      includeRwaRestrictedTokens: false,
+    }),
   ])
 
   return {

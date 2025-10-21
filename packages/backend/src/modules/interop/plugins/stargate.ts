@@ -59,7 +59,7 @@ const parseBusRode = createEventParser(
   'event BusRode(uint32 dstEid, uint72 ticketId, uint80 fare, bytes passenger)',
 )
 
-const STARGATE_NETWORKS = defineNetworks('stargate', [
+export const STARGATE_NETWORKS = defineNetworks('stargate', [
   {
     chain: 'ethereum',
     eid: 30101,

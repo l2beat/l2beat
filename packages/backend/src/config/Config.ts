@@ -181,6 +181,7 @@ export interface UpdateMonitorConfig {
   readonly cacheUri: string
   readonly chains: DiscoveryChainConfig[]
   readonly disabledChains: string[]
+  readonly disabledProjects: string[]
   readonly discord: DiscordConfig | false
   readonly updateMessagesRetentionPeriodDays: number
 }

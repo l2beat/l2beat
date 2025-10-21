@@ -22,7 +22,10 @@ import {
   getScalingSummaryEntry,
   type ScalingSummaryEntry,
 } from '../scaling/summary/getScalingSummaryEntries'
-import { get7dTvsBreakdown } from '../scaling/tvs/get7dTvsBreakdown'
+import {
+  get7dTvsBreakdown,
+  type ProjectSevenDayTvsBreakdown,
+} from '../scaling/tvs/get7dTvsBreakdown'
 import { compareTvs } from '../scaling/tvs/utils/compareTvs'
 import {
   getScalingUpcomingEntry,
@@ -100,6 +103,7 @@ export interface EcosystemEntry {
 export interface EcosystemProjectEntry extends ScalingSummaryEntry {
   ecosystemInfo: ProjectEcosystemInfo
   gasTokens?: string[]
+  tvsData: ProjectSevenDayTvsBreakdown | undefined
 }
 
 export async function getEcosystemEntry(
@@ -245,6 +249,7 @@ export async function getEcosystemEntry(
               (f) => !EXCLUDED_FILTERS.includes(f.id),
             ) ?? []),
           ]),
+          tvsData: tvs.projects[project.id.toString()],
         }
         return result
       })

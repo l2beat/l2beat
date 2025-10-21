@@ -19,6 +19,12 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+      - name: Set up Docker.io mirror
+        uses: docker/setup-buildx-action@v3
+        with:
+          buildkitd-config-inline: |
+            [registry."docker.io"]
+              mirrors = ["mirror.gcr.io"]
       - name: Build container
         uses: docker/build-push-action@v5
         with:
@@ -158,6 +164,12 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+      - name: Set up Docker.io mirror
+        uses: docker/setup-buildx-action@v3
+        with:
+          buildkitd-config-inline: |
+            [registry."docker.io"]
+              mirrors = ["mirror.gcr.io"]
       - name: Build container
         uses: docker/build-push-action@v5
         with:
@@ -207,7 +219,7 @@ jobs:
       CONFIG_ALCHEMY_API_KEY: ${{ secrets.CONFIG_ALCHEMY_API_KEY }}
     services:
       postgres:
-        image: postgres:15
+        image: mirror.gcr.io/postgres:15
         env:
           POSTGRES_PASSWORD: postgres
         options: >-

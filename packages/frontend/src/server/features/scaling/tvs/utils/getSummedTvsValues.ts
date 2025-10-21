@@ -20,6 +20,8 @@ export type SummedTvsValues = {
   stablecoin: number | null
   btc: number | null
   other: number | null
+  rwaRestricted: number | null
+  rwaPublic: number | null
 }
 
 export async function getSummedTvsValues(
@@ -28,7 +30,12 @@ export async function getSummedTvsValues(
   {
     forSummary,
     excludeAssociatedTokens,
-  }: { forSummary: boolean; excludeAssociatedTokens: boolean },
+    includeRwaRestrictedTokens,
+  }: {
+    forSummary: boolean
+    excludeAssociatedTokens: boolean
+    includeRwaRestrictedTokens: boolean
+  },
 ): Promise<SummedTvsValues[]> {
   const db = getDb()
   const resolution = rangeToResolution(range)
@@ -41,7 +48,13 @@ export async function getSummedTvsValues(
     ? (
         await queryExecutor.execute({
           name: 'getSummedByTimestampTvsValuesQuery',
-          args: [projectIds, [from, to], forSummary, excludeAssociatedTokens],
+          args: [
+            projectIds,
+            [from, to],
+            forSummary,
+            excludeAssociatedTokens,
+            includeRwaRestrictedTokens,
+          ],
         })
       ).map(mapArrayToObject)
     : await db.tvsProjectValue.getSummedByTimestamp(
@@ -76,6 +89,8 @@ export async function getSummedTvsValues(
         stablecoin: null,
         other: null,
         btc: null,
+        rwaRestricted: null,
+        rwaPublic: null,
       }
     }
     return record

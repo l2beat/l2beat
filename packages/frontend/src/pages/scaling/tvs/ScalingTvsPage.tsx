@@ -10,6 +10,7 @@ import { ScalingAssociatedTokensContextProvider } from '~/pages/scaling/componen
 import { ScalingTvsTabs } from '~/pages/scaling/tvs/components/ScalingTvsTabs'
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
+import { ScalingRwaRestrictedTokensContextProvider } from '../components/ScalingRwaRestrictedTokensContext'
 
 interface Props extends AppLayoutProps {
   entries: TabbedScalingEntries<ScalingTvsEntry>
@@ -29,9 +30,11 @@ export function ScalingTvsPage({
         <SideNavLayout>
           <MainPageHeader>Value Secured</MainPageHeader>
           <TableFilterContextProvider>
-            <ScalingAssociatedTokensContextProvider>
-              <ScalingTvsTabs {...entries} milestones={milestones} />
-            </ScalingAssociatedTokensContextProvider>
+            <ScalingRwaRestrictedTokensContextProvider>
+              <ScalingAssociatedTokensContextProvider>
+                <ScalingTvsTabs {...entries} milestones={milestones} />
+              </ScalingAssociatedTokensContextProvider>
+            </ScalingRwaRestrictedTokensContextProvider>
           </TableFilterContextProvider>
         </SideNavLayout>
       </HydrationBoundary>
