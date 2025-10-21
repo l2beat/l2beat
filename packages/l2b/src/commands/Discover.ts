@@ -69,12 +69,17 @@ function logProjectsToDiscover(projects: string[], logger: Logger) {
 }
 
 function resolveProjects(projectQuery: string): string[] {
-  const entries = configReader.readAllConfiguredProjects()
+  const entries = configReader.readAllDiscoveredProjects()
 
+  const isChainSpecificAddressPredicate =
+    ChainSpecificAddress.check(projectQuery)
   const isAddressPredicate = EthereumAddress.check(projectQuery)
-  const predicate: Predicate = isAddressPredicate
-    ? addressPredicate
-    : projectPredicate
+
+  const predicate: Predicate = isChainSpecificAddressPredicate
+    ? chainSpecificAddressPredicate
+    : isAddressPredicate
+      ? addressPredicate
+      : projectPredicate
 
   const matchingProjects: string[] = []
   for (const project of entries) {
@@ -112,4 +117,14 @@ function addressPredicate(
       (c) => ChainSpecificAddress.address(c.address) === address,
     ) !== undefined
   )
+}
+
+function chainSpecificAddressPredicate(
+  needleAddress: string,
+  haystackProject: string,
+): boolean {
+  const address = ChainSpecificAddress(needleAddress)
+  const discovery = configReader.readDiscovery(haystackProject)
+
+  return discovery.entries.find((c) => c.address === address) !== undefined
 }
