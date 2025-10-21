@@ -41,7 +41,7 @@ export const AcrossFilledRelay = createInteropEventType<{
 
 export class AcrossPlugin implements InteropPlugin {
   name = 'across'
-  config = 'across'
+  configName = 'across'
 
   capture(input: LogToCapture, networks?: AcrossNetwork[]) {
     if (!networks) {
