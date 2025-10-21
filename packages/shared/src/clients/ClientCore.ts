@@ -46,7 +46,7 @@ export abstract class ClientCore {
     } catch (error) {
       return await this.retryHandler.retry(
         () => this.rateLimiter.call(() => this._fetch(url, init)),
-        error,
+        { error, url, init },
       )
     }
   }
