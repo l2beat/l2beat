@@ -401,7 +401,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
         ],
       },
       {
-        projectId: ProjectId('Rooch Network'),
+        projectId: ProjectId('527d69c3'),
         name: 'Rooch Network',
         daTrackingConfig: [
           {
