@@ -175,17 +175,47 @@ export const eigenda: BaseProject = {
     
     ![EigenDA storing/retrieving](/images/da-layer-technology/eigenda/storing-retrieving.png#center)
 
+    ## Data Availability Certificates
+
+    EigenDA uses different certificate formats depending on the version, each with corresponding verifier contracts:
+
+    ### Certificate Types
+    - **V1 Certificates**: Used in EigenDA V1, verified through the EigenDAServiceManager contract via the confirmBatch() function. These certificates contain batch headers with KZG commitments and BLS aggregated signatures from operators.
+    
+    - **V2/V3 Certificates**: Used in EigenDA V2, which introduces significant architectural changes. The sequencer acts as the relayer and does not post batches to the service manager. Instead, certificates are verified through dedicated DACert Verifier contracts that correspond to different certificate versions.
+
+    ### EigenDA V2 Changes
+    In EigenDA V2, the architecture has evolved to improve efficiency:
+    - **Sequencer as Relayer**: The sequencer now acts as the relayer, eliminating the need to post batches to the service manager
+    - **Direct Certificate Verification**: Certificates are verified directly through version-specific DACert Verifier contracts
+    - **Improved Throughput**: The new architecture supports higher throughput by removing bottlenecks in the batch confirmation process
+
+    ### Certificate Verification Process
+    1. **Certificate Construction**: The EigenDA client constructs certificates from BlobStatusReply data received from the disperser
+    2. **Version Detection**: The certificate version is determined from the commitment structure
+    3. **Verifier Selection**: The appropriate DACert Verifier contract is selected based on the certificate version
+    4. **Onchain Verification**: The verifier contract's checkDACert function validates the certificate against operator signatures and stake thresholds
+
     ## L2 Data Availability
-    The Disperser collects the operators' signatures and submits them to the EigenDAServiceManager contract via the confirmBatch() function. This submission includes a call to the BLSRegistry contract to verify signatures and check whether the required quorum of operators' stake has been achieved.
+    The verification process differs between EigenDA versions:
+
+    **EigenDA V1**: The Disperser collects operators' signatures and submits them to the EigenDAServiceManager contract via the confirmBatch() function. This submission includes a call to the BLSRegistry contract to verify signatures and check whether the required quorum of operators' stake has been achieved.
+
+    **EigenDA V2**: Certificate verification is handled by dedicated DACert Verifier contracts. Each certificate version corresponds to a specific verifier that validates the certificate format and cryptographic proofs without requiring batch submissions to a central service manager.
+
     Threshold BLS signatures are not used. Instead, the threshold check is performed on the signers' total stake fetched by the StakeRegistry, and the stake threshold percentage to reach is provided in the batch header input data.
 
-    The EigenDARollupUtils.sol library's verifyBlob() function can then be used by L2s to verify that a data blob is included within a confirmed batch in the EigenDAServiceManager. 
-    This function is not used by the EigenDAServiceManager contract itself, but rather by L2 systems to prove inclusion of the blob in the EigenDAServiceManager contract, and that their trust assumptions (i.e., batch confirmation threshold) were as expected.
+    The EigenDARollupUtils.sol library's verifyBlob() function can then be used by L2s to verify that a data blob is included within a confirmed batch in the EigenDAServiceManager (V1) or through the appropriate DACert Verifier contract (V2/V3). 
+    This function is not used by the EigenDAServiceManager contract itself, but rather by L2 systems to prove inclusion of the blob and that their trust assumptions (i.e., batch confirmation threshold) were as expected.
   `,
       references: [
         {
           title: 'EigenDA - Documentation',
           url: 'https://docs.eigenda.xyz/overview',
+        },
+        {
+          title: 'EigenDA Integration Spec - Lifecycle Phases',
+          url: 'https://layr-labs.github.io/eigenda/integration/spec/5-lifecycle-phases.html#secure-dispersal',
         },
         {
           title: 'EigenDA Disperser - Source Code',
@@ -317,13 +347,13 @@ export const eigenda: BaseProject = {
     ],
   },
   daBridge: {
-    name: 'DACert Verifier (EigenDA V1)',
+    name: 'DACert Verifiers (EigenDA V1/V2)',
     daLayer: ProjectId('eigenda'),
     relayerType: {
       value: 'Permissioned',
       sentiment: 'warning',
       description:
-        'Only whitelisted relayers can post attestations to this bridge.',
+        'EigenDA V1 uses whitelisted relayers to post attestations to the ServiceManager bridge. EigenDA V2 uses the sequencer as relayer with direct certificate verification through DACert Verifier contracts, eliminating the need for separate permissioned relayers.',
     },
     validationType: {
       value: 'BLS Signature',
@@ -336,13 +366,28 @@ export const eigenda: BaseProject = {
 
 ![EigenDA architecture once stored](/images/da-bridge-technology/eigenda/architecture1.png#center)
 
+EigenDA operates with two distinct bridge architectures depending on the version:
+
+### EigenDA V1 Bridge Architecture
 The EigenDAServiceManager acts as a DA bridge smart contract verifying data availability claims from operators via signature verification.
 The checkSignatures() function checks that the signature of all signers plus non-signers is equal to the registered quorum aggregated public key from the BLS registry. The quorum aggregated public key gets updated every time an operator is registered.
 The bridge requires a threshold of signatures to be met before the data commitment is accepted. 
 To verify the threshold is met, the function takes the total stake at the reference block for the quorum from the StakeRegistry, and it subtracts the stake of non signers to get the signed stake.
 Finally, it checks that the signed stake over the total stake is more than the required stake threshold.
 
+### EigenDA V2 Bridge Architecture
+EigenDA V2 introduces a more efficient architecture where:
+- **Sequencer as Relayer**: The sequencer acts as the relayer, eliminating the need for separate permissioned relayers
+- **Direct Certificate Verification**: Multiple DACert Verifier contracts handle different certificate versions (V2, V3) without requiring batch submissions to the ServiceManager
+- **Version-Specific Verification**: Each certificate version has a corresponding verifier contract that validates the specific certificate format and cryptographic proofs
+- **Improved Scalability**: The removal of centralized batch confirmation bottlenecks allows for higher throughput
+
 ![EigenDA bridge architecture](/images/da-bridge-technology/eigenda/architecture2.png#center)
+
+## Certificate Verification Process
+The verification process varies by certificate version:
+- **V1 Certificates**: Verified through EigenDAServiceManager's confirmBatch() function
+- **V2/V3 Certificates**: Verified through dedicated DACert Verifier contracts using the checkDACert() function
 
 Although thresholds are not enforced onchain by the confirmBatch method, the minimum thresholds that the disperser would need to reach before relaying the batch commitment to Ethereum are set to ${quorum1Threshold}% of the registered stake for the ETH quorum and ${quorum2Threshold}% for the EIGEN token quorum. Meeting these dispersal thresholds allows the system to tolerate up to ${quorum1AdversaryThreshold}% (quorum 1) and ${quorum2AdversaryThreshold}% (quorum 2) of the total stake being adversarial, achieving this with approximately 4.5 data redundancy.  
 The quorum thresholds are set on the EigenDAServiceManager contract and can be changed by the contract owner.
@@ -352,6 +397,10 @@ Ejectors can eject maximum ${ejectableStakePercent}% of the total stake in a ${f
 An ejected operator can rejoin the quorum after ${formatSeconds(ejectionCooldown)}. 
     `,
       references: [
+        {
+          title: 'EigenDA Integration Spec - Lifecycle Phases',
+          url: 'https://layr-labs.github.io/eigenda/integration/spec/5-lifecycle-phases.html#secure-dispersal',
+        },
         {
           title: 'EigenDA Registry Coordinator - Etherscan',
           url: 'https://etherscan.io/address/0xdcabf0be991d4609096cce316df08d091356e03f',
