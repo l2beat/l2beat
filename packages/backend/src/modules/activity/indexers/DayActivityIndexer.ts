@@ -39,7 +39,8 @@ export class DayActivityIndexer extends ManagedChildIndexer {
       await this.$.db.syncMetadata.updateSyncedUntil(
         'activity',
         [this.$.projectId],
-        adjustedTo * UnixTime.DAY,
+        // Sync metadata stores exclusive end
+        adjustedTo * UnixTime.DAY + UnixTime.DAY,
       )
     })
 

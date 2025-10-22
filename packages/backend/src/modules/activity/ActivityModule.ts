@@ -130,6 +130,9 @@ export function initActivityModule({
 
       case 'day': {
         const dayTargetIndexer = new DayTargetIndexer(logger, clock, {
+          // We do not want to index today's data because it's not fully processed yet
+          // We want to process full previous day
+          offsetInDays: -1,
           onTick: async (targetTimestamp) => {
             if (!config.activity) {
               return
@@ -139,7 +142,7 @@ export function initActivityModule({
               {
                 feature: 'activity',
                 id: project.id,
-                target: targetTimestamp,
+                target: targetTimestamp + UnixTime.DAY,
               },
             ])
           },

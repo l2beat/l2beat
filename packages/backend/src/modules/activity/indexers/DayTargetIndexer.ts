@@ -8,6 +8,7 @@ export class DayTargetIndexer extends RootIndexer {
     logger: Logger,
     private readonly clock: Clock,
     private readonly options?: {
+      offsetInDays?: number
       onTick?: (targetTimestamp: number) => Promise<void>
     },
   ) {
@@ -20,7 +21,11 @@ export class DayTargetIndexer extends RootIndexer {
   }
 
   async tick(): Promise<number> {
-    const target = UnixTime.toStartOf(this.clock.getLastHour(), 'day')
+    const offsetInDays = this.options?.offsetInDays ?? 0
+    const target = UnixTime.toStartOf(
+      this.clock.getLastHour() + offsetInDays * UnixTime.DAY,
+      'day',
+    )
     const day = UnixTime.toDays(target)
 
     await this.options?.onTick?.(target)

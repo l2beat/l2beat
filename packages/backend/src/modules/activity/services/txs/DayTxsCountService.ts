@@ -27,7 +27,8 @@ export class DayTxsCountService {
     )
     assert(latestTimestamp, 'Latest timestamp is undefined')
 
-    const records: ActivityRecord[] = range(from, to).map((day) => {
+    // from and to are inclusive, so we need to add 1 to the end
+    const records: ActivityRecord[] = range(from, to + 1).map((day) => {
       const timestamp = day * UnixTime.DAY
       const count = dailyTxs[timestamp]
       assert(count !== undefined, 'Count is undefined')
