@@ -63,11 +63,8 @@ export function createInteropModule({
 
   const router = createInteropRouter(db, config.interop, processors)
 
-  const comparator = new InteropCompareLoop(
-    db,
-    plugins.comparePlugins,
-    logger,
-    config.interop.compare.intervalMs,
+  const comparators = plugins.comparePlugins.map(
+    (c) => new InteropCompareLoop(db, c, logger),
   )
 
   const cleaner = new InteropCleanerLoop(interopStore, db, logger)
@@ -97,7 +94,9 @@ export function createInteropModule({
       matcher.start()
     }
     if (config.interop && config.interop.compare.enabled) {
-      comparator.start()
+      for (const comparator of comparators) {
+        comparator.start()
+      }
     }
     if (config.interop && config.interop.cleaner) {
       cleaner.start()

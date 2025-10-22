@@ -175,7 +175,6 @@ export async function makeConfig(
       },
       compare: {
         enabled: flags.isEnabled('interop', 'compare'),
-        intervalMs: env.optionalInteger(['INTEROP_COMPARE_INTERVAL_MS']),
       },
       financials: {
         enabled: flags.isEnabled('interop', 'financials'),

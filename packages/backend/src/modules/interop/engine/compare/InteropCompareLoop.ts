@@ -4,7 +4,7 @@ import { TimeLoop } from '../../../../tools/TimeLoop'
 
 export interface InteropComparePlugin {
   name: string
-  type: 'message' | 'transfer'
+  intervalMs?: number
   getExternalItems: () => Promise<InteropExternalItem[]>
 }
 
@@ -14,19 +14,14 @@ export interface InteropExternalItem {
 }
 
 export class InteropCompareLoop extends TimeLoop {
-  private items: {
-    plugin: string
-    type: InteropComparePlugin['type']
-    item: InteropExternalItem & { isLatest: boolean }
-  }[] = []
+  private items: (InteropExternalItem & { isLatest: boolean })[] = []
 
   constructor(
     private db: Database,
-    private plugins: InteropComparePlugin[],
+    private plugin: InteropComparePlugin,
     protected logger: Logger,
-    intervalMs = 20 * 60_000,
   ) {
-    super({ intervalMs })
+    super({ intervalMs: plugin.intervalMs ?? 20 * 60_000 })
     this.logger = logger.for(this)
   }
 
@@ -36,33 +31,28 @@ export class InteropCompareLoop extends TimeLoop {
   }
 
   async fetchExternalItems() {
-    this.logger.info('Fetching items from external explorers...', {
-      plugins: this.plugins.map((p) => p.name),
+    this.logger.info('Fetching items from external explorer...', {
+      plugin: this.plugin.name,
     })
 
-    await Promise.all(
-      this.plugins.map(async (plugin) => {
-        try {
-          const pluginItems = (await plugin.getExternalItems()).map((i) => ({
-            plugin: plugin.name,
-            type: plugin.type,
-            item: { ...i, isLatest: true },
-          }))
+    try {
+      const latestItems = (await this.plugin.getExternalItems()).map((i) => ({
+        ...i,
+        isLatest: true,
+      }))
 
-          this.items.push(...pluginItems)
-        } catch (error) {
-          this.logger.warn(
-            `Fetching items for plugin ${plugin.name} failed`,
-            error,
-          )
-        }
-      }),
-    )
+      this.items.push(...latestItems)
+    } catch (error) {
+      this.logger.warn(
+        `Fetching items for plugin ${this.plugin.name} failed`,
+        error,
+      )
+    }
   }
 
   async compare() {
     this.logger.info('Comparing...', {
-      plugins: Array.from(new Set(this.items.map((i) => i.plugin)).keys()),
+      plugin: this.plugin.name,
       items: this.items.length,
     })
 
@@ -71,49 +61,44 @@ export class InteropCompareLoop extends TimeLoop {
     const skipped = []
     let missing = 0
 
-    for (const { plugin, type, item } of this.items) {
-      if (!existing[type].has(key(item))) {
+    for (const item of this.items) {
+      if (!existing.has(key(item))) {
         if (item.isLatest) {
-          skipped.push({ plugin, type, item })
-          this.logger.warn('Missing item skipped', { plugin, item })
+          skipped.push(item)
+          this.logger.warn('Missing item skipped', {
+            plugin: this.plugin.name,
+            item,
+          })
           continue
         }
         missing++
-        this.logger.warn('Missing item detected', { plugin, item })
+        this.logger.warn('Missing item detected', {
+          plugin: this.plugin.name,
+          item,
+        })
       }
     }
 
     this.logger.info('Compare finished', {
       externalItems: this.items.length,
-      databaseItems: existing.message.size + existing.transfer.size,
+      databaseItems: existing.size,
       missing,
       skipped: skipped.length,
     })
 
-    this.items = skipped.map((s) => ({
-      ...s,
-      item: { ...s.item, isLatest: false },
-    }))
+    this.items = skipped.map((s) => ({ ...s, isLatest: false }))
   }
 
   private async getExistingItems() {
-    const messages = await this.db.interopMessage.getExistingItems(
-      this.items
-        .filter((i) => i.type === 'message')
-        .map((i) => ({ ...i.item })),
-    )
+    const [messages, transfers] = await Promise.all([
+      await this.db.interopMessage.getExistingItems(this.items),
+      await this.db.interopTransfer.getExistingItems(this.items),
+    ])
 
-    const transfers = await this.db.interopTransfer.getExistingItems(
-      this.items
-        .filter((i) => i.type === 'transfer')
-        .map((i) => ({ ...i.item })),
-    )
-
-    const existing = {
-      message: new Set(messages.map((m) => key(m))),
-      transfer: new Set(transfers.map((t) => key(t))),
-    }
-    return existing
+    return new Set([
+      ...messages.map((m) => key(m)),
+      ...transfers.map((t) => key(t)),
+    ])
   }
 }
 

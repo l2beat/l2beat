@@ -220,7 +220,6 @@ export interface InteropFeatureConfig {
   }
   compare: {
     enabled: boolean
-    intervalMs?: number
   }
   financials: {
     enabled: boolean
