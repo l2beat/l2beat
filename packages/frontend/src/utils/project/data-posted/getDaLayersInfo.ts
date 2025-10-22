@@ -54,6 +54,6 @@ function getDaLayer(
   return {
     name: daLayer.name,
     logo: getProjectIcon(daLayer.slug),
-    href: `/data-availability/projects/${daLayer.slug}/no-bridge`,
+    href: `/data-availability/projects/${daLayer.slug}/${daLayer.slug === 'ethereum' ? 'ethereum' : 'no-bridge'}`,
   }
 }
