@@ -135,27 +135,32 @@ export class DiscoveryEngine {
 
           const chain = ChainSpecificAddress.longChain(address)
           const provider = await allProviders.get(chain, timestamp)
-          const analysis = await this.addressAnalyzer.analyze(
-            provider,
-            address,
-            makeEntryStructureConfig(config, address),
-            config.entrypoints,
-            templates,
-          )
-          resolved[address.toString()] = analysis
-          if (analysis.type === 'Contract') {
-            for (const [address, suggestedTemplates] of Object.entries(
-              analysis.relatives,
-            )) {
-              toAnalyze[address] = new Set([
-                ...(toAnalyze[address] ?? []),
-                ...suggestedTemplates,
-              ])
+          try {
+            const analysis = await this.addressAnalyzer.analyze(
+              provider,
+              address,
+              makeEntryStructureConfig(config, address),
+              config.entrypoints,
+              templates,
+            )
+            resolved[address.toString()] = analysis
+            if (analysis.type === 'Contract') {
+              for (const [address, suggestedTemplates] of Object.entries(
+                analysis.relatives,
+              )) {
+                toAnalyze[address] = new Set([
+                  ...(toAnalyze[address] ?? []),
+                  ...suggestedTemplates,
+                ])
+              }
             }
-          }
 
-          this.objectCount += 1
-          this.logObject(analysis, total)
+            this.objectCount += 1
+            this.logObject(analysis, total)
+          } catch (error) {
+            this.logAnalysisError(address, error)
+            throw error
+          }
         }),
       )
 
@@ -231,5 +236,15 @@ export class DiscoveryEngine {
         this.logger.error(error)
       }
     }
+  }
+
+  private logAnalysisError(
+    address: ChainSpecificAddress,
+    error: unknown,
+  ): void {
+    this.logger.error(`Error during entry analysis - ${address}`, {
+      address,
+      error,
+    })
   }
 }

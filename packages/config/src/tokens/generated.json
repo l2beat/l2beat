@@ -15092,6 +15092,56 @@
       }
     },
     {
+      "name": "Matrixdock Gold",
+      "coingeckoId": "matrixdock-gold",
+      "address": "0xA0C4F78A29ead4ABf6b7f5B3F0d05C0f3EAb8DDf",
+      "symbol": "XAUM",
+      "decimals": 18,
+      "deploymentTimestamp": 1745486446,
+      "coingeckoListingTimestamp": 1732838400,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51962/large/xaum_200px_logo_1x.png?1733560735",
+      "chainId": 98866,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mineral Vault I Security Token",
+      "coingeckoId": "mineral-vault-fund-i",
+      "address": "0x5107272921A750A20d492Fb41Acf0b770b09a624",
+      "symbol": "MNRL",
+      "decimals": 18,
+      "deploymentTimestamp": 1747929303,
+      "coingeckoListingTimestamp": 1750377600,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66290/large/mineral-vault.png?1749109942",
+      "chainId": 98866,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Plume Staked ETH",
+      "coingeckoId": "plume-staked-eth",
+      "address": "0x39d1F90eF89C52dDA276194E9a832b484ee45574",
+      "symbol": "pETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1743704762,
+      "coingeckoListingTimestamp": 1753228800,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/67514/large/peth.png?1753068541",
+      "chainId": 98866,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Plume USD",
       "coingeckoId": "plume-usd",
       "address": "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
@@ -15112,6 +15162,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "Super OETH",
+      "coingeckoId": "super-oeth",
+      "address": "0xFCbe50DbE43bF7E5C88C6F6Fb9ef432D4165406E",
+      "symbol": "superOETHp",
+      "decimals": 18,
+      "deploymentTimestamp": 1744991910,
+      "coingeckoListingTimestamp": 1724889600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39828/large/Super_OETH.png?1724208268",
+      "chainId": 98866,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "Superstate Crypto Carry Fund",

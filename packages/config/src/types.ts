@@ -917,6 +917,7 @@ export interface DayActivityConfig {
   type: 'day'
   sinceTimestamp: UnixTime
   resyncLastDays?: number
+  batchSize?: number
 }
 
 export interface ProjectLivenessInfo {
