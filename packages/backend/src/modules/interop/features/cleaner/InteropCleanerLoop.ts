@@ -1,8 +1,8 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { TimeLoop } from '../../tools/TimeLoop'
-import type { InteropEventStore } from './InteropEventStore'
+import { TimeLoop } from '../../../../tools/TimeLoop'
+import type { InteropEventStore } from '../capture/InteropEventStore'
 
 export class InteropCleanerLoop extends TimeLoop {
   constructor(

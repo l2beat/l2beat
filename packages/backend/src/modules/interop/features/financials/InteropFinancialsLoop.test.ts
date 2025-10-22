@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database, InteropTransferUpdate } from '@l2beat/database'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { Address32 } from '../plugins/types'
+import { Address32 } from '../../plugins/types'
 import { InteropFinancialsLoop } from './InteropFinancialsLoop'
 import { AbstractTokenId, DeployedTokenId, type ITokenDb } from './TokenDb'
 

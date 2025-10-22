@@ -3,7 +3,7 @@ import { ProjectService } from '@l2beat/config'
 import type { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { mockObject } from 'earl'
-import type { InteropConfigStore } from '../InteropConfigStore'
+import type { InteropConfigStore } from '../features/config/InteropConfigStore'
 import { createInteropPlugins } from './index'
 import { definedNetworks } from './types'
 

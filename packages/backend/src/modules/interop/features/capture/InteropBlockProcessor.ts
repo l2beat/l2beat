@@ -1,15 +1,15 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Block, Log } from '@l2beat/shared-pure'
 import type { Log as ViemLog } from 'viem'
-import type { BlockProcessor } from '../types'
-import type { InteropEventStore } from './InteropEventStore'
+import type { BlockProcessor } from '../../../types'
 import {
   Address32,
   type InteropEvent,
   type InteropEventContext,
   type InteropPlugin,
   type LogToCapture,
-} from './plugins/types'
+} from '../../plugins/types'
+import type { InteropEventStore } from './InteropEventStore'
 
 export class InteropBlockProcessor implements BlockProcessor {
   lastProcessed: Block | undefined

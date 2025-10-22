@@ -3,8 +3,8 @@ import type { Database } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import type { IndexerService } from '../../../tools/uif/IndexerService'
-import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
+import type { IndexerService } from '../../../../tools/uif/IndexerService'
+import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
 import { InteropRecentPricesIndexer } from './InteropRecentPricesIndexer'
 
 describe(InteropRecentPricesIndexer.name, () => {

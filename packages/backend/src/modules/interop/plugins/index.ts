@@ -1,11 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import type { InteropComparePlugin } from '../InteropCompareLoop'
+import type { InteropComparePlugin } from '../features/compare/InteropCompareLoop'
 import type {
   InteropConfigPlugin,
   InteropConfigStore,
-} from '../InteropConfigStore'
+} from '../features/config/InteropConfigStore'
 import { OneinchFusionPlusPlugin } from './1inchfusionplus'
 import { AcrossComparePlugin } from './across/across.compare'
 import { AcrossConfigPlugin } from './across/across.config'

@@ -12,7 +12,7 @@ import {
   defineConfig,
   type InteropConfigPlugin,
   type InteropConfigStore,
-} from '../../InteropConfigStore'
+} from '../../features/config/InteropConfigStore'
 
 export interface AcrossNetwork {
   chainId: number

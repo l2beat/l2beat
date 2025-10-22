@@ -6,7 +6,7 @@ import {
   defineConfig,
   type InteropConfigPlugin,
   type InteropConfigStore,
-} from '../../InteropConfigStore'
+} from '../../features/config/InteropConfigStore'
 
 export interface LayerZeroV2Network {
   chainId: number

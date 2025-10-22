@@ -1,4 +1,4 @@
-import type { InteropConfigStore } from '../../InteropConfigStore'
+import type { InteropConfigStore } from '../../features/config/InteropConfigStore'
 import {
   Address32,
   createEventParser,

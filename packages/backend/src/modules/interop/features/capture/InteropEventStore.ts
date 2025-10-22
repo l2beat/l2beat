@@ -1,13 +1,13 @@
 import type { Database, InteropEventRecord } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
-import { InMemoryEventDb } from './InMemoryEventDb'
 import {
   Address32,
   type InteropEvent,
   type InteropEventDb,
   type InteropEventQuery,
   type InteropEventType,
-} from './plugins/types'
+} from '../../plugins/types'
+import { InMemoryEventDb } from './InMemoryEventDb'
 
 export class InteropEventStore implements InteropEventDb {
   private eventDb = new InMemoryEventDb()
