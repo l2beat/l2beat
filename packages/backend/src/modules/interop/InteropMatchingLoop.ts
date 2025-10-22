@@ -5,7 +5,7 @@ import type {
   InteropTransferRecord,
 } from '@l2beat/database'
 import { TimeLoop } from '../../tools/TimeLoop'
-import type { InteropStore } from './InteropStore'
+import type { InteropEventStore } from './InteropEventStore'
 import {
   generateId,
   type InteropEvent,
@@ -16,9 +16,9 @@ import {
   type MatchResult,
 } from './plugins/types'
 
-export class InteropMatcher extends TimeLoop {
+export class InteropMatchingLoo extends TimeLoop {
   constructor(
-    private store: InteropStore,
+    private store: InteropEventStore,
     private db: Database,
     private plugins: InteropPlugin[],
     private supportedChains: string[],

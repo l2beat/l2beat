@@ -13,7 +13,7 @@ export interface InteropConfigPlugin {
   start(): void
 }
 
-export class InteropConfigs {
+export class InteropConfigStore {
   private networks = new Map<string, unknown>()
 
   constructor(private db: Database | undefined) {}

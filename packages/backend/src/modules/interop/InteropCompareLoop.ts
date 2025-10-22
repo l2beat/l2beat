@@ -1,12 +1,19 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { TimeLoop } from '../../tools/TimeLoop'
-import type {
-  InteropComparePlugin,
-  InteropExternalItem,
-} from './InteropCompare'
 
-export class InteropComparator extends TimeLoop {
+export interface InteropComparePlugin {
+  name: string
+  type: 'message' | 'transfer'
+  getExternalItems: () => Promise<InteropExternalItem[]>
+}
+
+export interface InteropExternalItem {
+  srcTxHash: string
+  dstTxHash: string
+}
+
+export class InteropCompareLoop extends TimeLoop {
   private items: {
     plugin: string
     type: InteropComparePlugin['type']

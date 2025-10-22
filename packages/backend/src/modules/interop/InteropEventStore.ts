@@ -9,7 +9,7 @@ import {
   type InteropEventType,
 } from './plugins/types'
 
-export class InteropStore implements InteropEventDb {
+export class InteropEventStore implements InteropEventDb {
   private eventDb = new InMemoryEventDb()
 
   constructor(private db: Database) {}

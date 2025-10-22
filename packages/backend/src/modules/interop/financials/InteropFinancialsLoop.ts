@@ -1,11 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, InteropTransferUpdate } from '@l2beat/database'
 import { assertUnreachable, UnixTime, unique } from '@l2beat/shared-pure'
-import { TimeLoop } from '../../tools/TimeLoop'
-import { Address32 } from './plugins/types'
+import { TimeLoop } from '../../../tools/TimeLoop'
+import { Address32 } from '../plugins/types'
 import { DeployedTokenId, type ITokenDb, type PriceInfo } from './TokenDb'
 
-export class FinancialsService extends TimeLoop {
+export class InteropFinancialsLoop extends TimeLoop {
   constructor(
     private chains: { name: string; type: 'evm' }[],
     private db: Database,

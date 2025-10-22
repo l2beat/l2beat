@@ -2,10 +2,10 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { Hash256 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { InteropComparator } from './InteropComparator'
+import { InteropCompareLoop } from './InteropCompareLoop'
 
-describe(InteropComparator.name, () => {
-  describe(InteropComparator.prototype.run.name, () => {
+describe(InteropCompareLoop.name, () => {
+  describe(InteropCompareLoop.prototype.run.name, () => {
     it('fetches data and compares', async () => {
       const known = [
         { srcTxHash: Hash256.random(), dstTxHash: Hash256.random() },
@@ -57,7 +57,7 @@ describe(InteropComparator.name, () => {
       //@ts-ignore
       logger.for = () => logger
 
-      const comparator = new InteropComparator(db, plugins, logger)
+      const comparator = new InteropCompareLoop(db, plugins, logger)
 
       await comparator.run()
       await comparator.run()

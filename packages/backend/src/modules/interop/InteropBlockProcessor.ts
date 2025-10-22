@@ -2,7 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Block, Log } from '@l2beat/shared-pure'
 import type { Log as ViemLog } from 'viem'
 import type { BlockProcessor } from '../types'
-import type { InteropStore } from './InteropStore'
+import type { InteropEventStore } from './InteropEventStore'
 import {
   Address32,
   type InteropEvent,
@@ -17,7 +17,7 @@ export class InteropBlockProcessor implements BlockProcessor {
   constructor(
     public chain: string,
     private plugins: InteropPlugin[],
-    private store: InteropStore,
+    private store: InteropEventStore,
     private logger: Logger,
   ) {
     this.logger = logger.for(this).tag({ chain, tag: chain })

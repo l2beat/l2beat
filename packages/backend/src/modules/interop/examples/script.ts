@@ -9,8 +9,8 @@ import { type ParseError, parse } from 'jsonc-parser'
 import { join } from 'path'
 import { InMemoryEventDb } from '../InMemoryEventDb'
 import { logToViemLog } from '../InteropBlockProcessor'
-import { InteropConfigs } from '../InteropConfigs'
-import { match } from '../InteropMatcher'
+import { InteropConfigStore } from '../InteropConfigStore'
+import { match } from '../InteropMatchingLoop'
 import { createInteropPlugins } from '../plugins'
 import {
   Address32,
@@ -152,7 +152,7 @@ async function runExample(example: Example): Promise<RunResult> {
 
   const plugins = createInteropPlugins({
     chains: pluginChains,
-    configs: new InteropConfigs(undefined),
+    configs: new InteropConfigStore(undefined),
     httpClient: new HttpClient(),
     logger,
     rpcClients,

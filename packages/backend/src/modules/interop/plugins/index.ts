@@ -1,8 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import type { InteropComparePlugin } from '../InteropCompare'
-import type { InteropConfigPlugin, InteropConfigs } from '../InteropConfigs'
+import type { InteropComparePlugin } from '../InteropCompareLoop'
+import type {
+  InteropConfigPlugin,
+  InteropConfigStore,
+} from '../InteropConfigStore'
 import { OneinchFusionPlusPlugin } from './1inchfusionplus'
 import { AcrossComparePlugin } from './across/across.compare'
 import { AcrossConfigPlugin } from './across/across.config'
@@ -50,7 +53,7 @@ export interface InteropPluginDependencies {
   httpClient: HttpClient
   rpcClients: RpcClient[]
   logger: Logger
-  configs: InteropConfigs
+  configs: InteropConfigStore
 }
 
 export function createInteropPlugins(

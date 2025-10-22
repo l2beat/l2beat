@@ -5,8 +5,8 @@ import { TimeLoop } from '../../../../tools/TimeLoop'
 import {
   defineConfig,
   type InteropConfigPlugin,
-  type InteropConfigs,
-} from '../../InteropConfigs'
+  type InteropConfigStore,
+} from '../../InteropConfigStore'
 
 export interface LayerZeroV2Network {
   chainId: number
@@ -51,7 +51,7 @@ export class LayerZeroConfigPlugin
 
   constructor(
     private chains: { id: number; name: string }[],
-    private configs: InteropConfigs,
+    private configs: InteropConfigStore,
     protected logger: Logger,
     private http: HttpClient,
     intervalMs = 10 * 60 * 1000,

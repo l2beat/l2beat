@@ -1,4 +1,4 @@
-import type { InteropConfigs } from '../../InteropConfigs'
+import type { InteropConfigStore } from '../../InteropConfigStore'
 import {
   Address32,
   createEventParser,
@@ -44,7 +44,7 @@ export const AcrossFilledRelay = createInteropEventType<{
 export class AcrossPlugin implements InteropPlugin {
   name = 'across'
 
-  constructor(private configs: InteropConfigs) {}
+  constructor(private configs: InteropConfigStore) {}
 
   capture(input: LogToCapture) {
     const networks = this.configs.get(AcrossConfig)

@@ -2,12 +2,12 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database, InteropTransferUpdate } from '@l2beat/database'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { FinancialsService } from './FinancialsService'
-import { Address32 } from './plugins/types'
+import { Address32 } from '../plugins/types'
+import { InteropFinancialsLoop } from './InteropFinancialsLoop'
 import { AbstractTokenId, DeployedTokenId, type ITokenDb } from './TokenDb'
 
-describe(FinancialsService.name, () => {
-  describe(FinancialsService.prototype.run.name, () => {
+describe(InteropFinancialsLoop.name, () => {
+  describe(InteropFinancialsLoop.prototype.run.name, () => {
     it('skips when hasAnyPrices === false', async () => {
       const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
         hasAnyPrices: mockFn().resolvesTo(false),
@@ -17,7 +17,7 @@ describe(FinancialsService.name, () => {
       })
       const db = mockObject<Database>({ interopRecentPrices, interopTransfer })
       const tokenDb = mockObject<ITokenDb>({ getPriceInfo: mockFn() })
-      const service = new FinancialsService(
+      const service = new InteropFinancialsLoop(
         [],
         db,
         tokenDb,
@@ -48,7 +48,7 @@ describe(FinancialsService.name, () => {
         getPriceInfo: mockFn(),
       })
 
-      const service = new FinancialsService(
+      const service = new InteropFinancialsLoop(
         [],
         db,
         tokenDb,
@@ -166,7 +166,7 @@ describe(FinancialsService.name, () => {
         getPriceInfo: mockFn().resolvesTo(priceInfoMap),
       })
 
-      const service = new FinancialsService(
+      const service = new InteropFinancialsLoop(
         [
           { name: 'ethereum', type: 'evm' as const },
           { name: 'arbitrum', type: 'evm' as const },
@@ -280,7 +280,7 @@ describe(FinancialsService.name, () => {
       //@ts-ignore
       logger.for = () => logger
 
-      const service = new FinancialsService(
+      const service = new InteropFinancialsLoop(
         [
           { name: 'ethereum', type: 'evm' as const },
           { name: 'arbitrum', type: 'evm' as const },

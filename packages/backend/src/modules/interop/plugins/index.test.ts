@@ -3,7 +3,7 @@ import { ProjectService } from '@l2beat/config'
 import type { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { mockObject } from 'earl'
-import type { InteropConfigs } from '../InteropConfigs'
+import type { InteropConfigStore } from '../InteropConfigStore'
 import { createInteropPlugins } from './index'
 import { definedNetworks } from './types'
 
@@ -11,7 +11,7 @@ describe('Interop Plugins', async () => {
   const chainNames = new Set<string>()
   const plugins = createInteropPlugins({
     chains: [],
-    configs: mockObject<InteropConfigs>(),
+    configs: mockObject<InteropConfigStore>(),
     httpClient: mockObject<HttpClient>(),
     logger: Logger.SILENT,
     rpcClients: [mockObject<RpcClient>({ chain: 'ethereum' })],

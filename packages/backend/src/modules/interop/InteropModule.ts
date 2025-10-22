@@ -2,17 +2,17 @@ import { HttpClient } from '@l2beat/shared'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
-import { FinancialsService } from './FinancialsService'
+import { createInteropRouter } from './dashboard/InteropRouter'
+import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
+import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
+import { MockTokenDb } from './financials/TokenDb'
 import { InteropBlockProcessor } from './InteropBlockProcessor'
-import { InteropCleaner } from './InteropCleaner'
-import { InteropComparator } from './InteropComparator'
-import { InteropConfigs } from './InteropConfigs'
-import { InteropMatcher } from './InteropMatcher'
-import { InteropRecentPricesIndexer } from './InteropRecentPricesIndexer'
-import { createInteropRouter } from './InteropRouter'
-import { InteropStore } from './InteropStore'
+import { InteropCleanerLoop } from './InteropCleanerLoop'
+import { InteropCompareLoop } from './InteropCompareLoop'
+import { InteropConfigStore } from './InteropConfigStore'
+import { InteropEventStore } from './InteropEventStore'
+import { InteropMatchingLoo } from './InteropMatchingLoop'
 import { createInteropPlugins } from './plugins'
-import { MockTokenDb } from './TokenDb'
 
 export function createInteropModule({
   config,
@@ -28,9 +28,9 @@ export function createInteropModule({
   }
   logger = logger.tag({ feature: 'interop', module: 'interop' })
 
-  const interopStore = new InteropStore(db)
+  const interopStore = new InteropEventStore(db)
 
-  const configs = new InteropConfigs(db)
+  const configs = new InteropConfigStore(db)
   const plugins = createInteropPlugins({
     configs,
     chains: config.interop.config.chains,
@@ -53,7 +53,7 @@ export function createInteropModule({
     }
   }
 
-  const matcher = new InteropMatcher(
+  const matcher = new InteropMatchingLoo(
     interopStore,
     db,
     plugins.eventPlugins,
@@ -63,14 +63,14 @@ export function createInteropModule({
 
   const router = createInteropRouter(db, config.interop, processors)
 
-  const comparator = new InteropComparator(
+  const comparator = new InteropCompareLoop(
     db,
     plugins.comparePlugins,
     logger,
     config.interop.compare.intervalMs,
   )
 
-  const cleaner = new InteropCleaner(interopStore, db, logger)
+  const cleaner = new InteropCleanerLoop(interopStore, db, logger)
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
   const recentPricesIndexer = new InteropRecentPricesIndexer({
@@ -82,7 +82,7 @@ export function createInteropModule({
     indexerService: new IndexerService(db),
   })
   const tokenDb = new MockTokenDb()
-  const financialsService = new FinancialsService(
+  const financialsService = new InteropFinancialsLoop(
     config.interop.capture.chains,
     db,
     tokenDb,

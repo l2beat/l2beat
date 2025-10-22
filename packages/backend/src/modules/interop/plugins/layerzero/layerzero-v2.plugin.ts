@@ -1,6 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { solidityKeccak256 } from 'ethers/lib/utils'
-import { BinaryReader } from '../../BinaryReader'
+import { BinaryReader } from '../../../../tools/BinaryReader'
 import {
   createEventParser,
   createInteropEventType,

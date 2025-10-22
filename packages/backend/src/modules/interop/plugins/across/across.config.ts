@@ -11,8 +11,8 @@ import { TimeLoop } from '../../../../tools/TimeLoop'
 import {
   defineConfig,
   type InteropConfigPlugin,
-  type InteropConfigs,
-} from '../../InteropConfigs'
+  type InteropConfigStore,
+} from '../../InteropConfigStore'
 
 export interface AcrossNetwork {
   chainId: number
@@ -48,7 +48,7 @@ export class AcrossConfigPlugin
     private chains: { id: number; name: string }[],
     protected logger: Logger,
     private ethereumRpc: RpcClient,
-    private configs: InteropConfigs,
+    private configs: InteropConfigStore,
     intervalMs = 20 * 60 * 1000,
   ) {
     super({ intervalMs })

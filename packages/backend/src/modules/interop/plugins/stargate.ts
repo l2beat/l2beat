@@ -1,5 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { BinaryReader } from '../BinaryReader'
+import { BinaryReader } from '../../../tools/BinaryReader'
 import {
   parseOFTReceived,
   parseOFTSent,

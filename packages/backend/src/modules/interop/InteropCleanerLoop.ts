@@ -2,11 +2,11 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { TimeLoop } from '../../tools/TimeLoop'
-import type { InteropStore } from './InteropStore'
+import type { InteropEventStore } from './InteropEventStore'
 
-export class InteropCleaner extends TimeLoop {
+export class InteropCleanerLoop extends TimeLoop {
   constructor(
-    private store: InteropStore,
+    private store: InteropEventStore,
     private db: Database,
     protected logger: Logger,
     intervalMs = 20 * 60 * 1000,
