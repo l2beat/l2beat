@@ -8,6 +8,7 @@ import { getActivityForProjectAndRange } from '../../scaling/activity/getActivit
 import { DataPostedTimeRange } from '../../scaling/data-posted/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { isThroughputSynced } from './isThroughputSynced'
+import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
 import { getThroughputRange, rangeToResolution } from './utils/range'
 
@@ -64,6 +65,17 @@ export async function getScalingProjectDaThroughputChart(
     resolution,
   )
 
+  const lastDataForLayers: Record<string, number> = {}
+  for (const layer of THROUGHPUT_ENABLED_DA_LAYERS) {
+    const lastValue = Object.entries(grouped).findLast(
+      ([_, values]) => values[layer] && values[layer] > 0,
+    )
+    if (lastValue) {
+      const [timestamp] = lastValue
+      lastDataForLayers[layer] = Number(timestamp)
+    }
+  }
+
   const expectedTo = getThroughputExpectedTimestamp(resolution)
   const adjustedTo = isThroughputSynced(syncedUntil, false)
     ? maxTimestamp
@@ -80,12 +92,17 @@ export async function getScalingProjectDaThroughputChart(
           .map(Number)
           .reduce((sum, val) => sum + val, 0)
       }
+      const getDaValue = (layer: string) => {
+        return lastDataForLayers[layer] && timestamp <= lastDataForLayers[layer]
+          ? (grouped[timestamp]?.[layer] ?? 0)
+          : null
+      }
       return [
         timestamp,
-        posted?.ethereum ?? null,
-        posted?.celestia ?? null,
-        posted?.avail ?? null,
-        posted?.eigenda ?? null,
+        getDaValue('ethereum'),
+        getDaValue('celestia'),
+        getDaValue('avail'),
+        getDaValue('eigenda'),
       ]
     },
   )
