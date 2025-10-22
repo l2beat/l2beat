@@ -112,6 +112,7 @@ export const sorare: ScalingProject = {
       sinceTimestamp: UnixTime(1626352527),
       resyncLastDays: 7,
       batchSize: 10,
+      dataSource: 'StarkEx Aggregations API',
     },
   },
   dataAvailability: {
