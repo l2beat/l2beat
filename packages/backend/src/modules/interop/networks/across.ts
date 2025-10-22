@@ -86,7 +86,7 @@ export class AcrossNetworksPlugin implements InteropNetworksPlugin {
   reconcileNetworks(
     previous: InteropNetworks | undefined,
     latest: InteropNetworks,
-  ): AcrossNetwork[] | 'not-changed' {
+  ): InteropNetworks | 'not-changed' {
     if (previous === undefined) {
       return latest
     }
@@ -104,8 +104,8 @@ export class AcrossNetworksPlugin implements InteropNetworksPlugin {
 
       if (
         prev.chainId !== curr.chainId ||
-        prev.chain !== curr.chain ||
-        prev.spokePool !== curr.spokePool
+        prev.chain !== curr.chain
+        // prev.spokePool !== curr.spokePool
       ) {
         return latest
       }

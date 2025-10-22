@@ -9,10 +9,18 @@ export interface InteropNetworksPlugin {
   ) => InteropNetworks | 'not-changed'
 }
 
-export type InteropNetworks = AcrossNetwork[]
+// TODO: resolve types
+export type InteropNetworks = AcrossNetwork[] | LayerZeroV2Networks[]
 
 export interface AcrossNetwork {
   chainId: number
   chain: string
   spokePool: EthereumAddress
+}
+
+export interface LayerZeroV2Networks {
+  chainId: number
+  eid: number
+  chain: string
+  endpointV2: string // fix issue with EthereumAddress
 }
