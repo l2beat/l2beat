@@ -14,6 +14,9 @@ export async function getActivityConfig(
   })
 
   return {
+    voyagerApiKey: flags.isEnabled('activity', 'starknet')
+      ? env.string('VOYAGER_API_KEY')
+      : undefined,
     projects: projects
       .filter((p) => flags.isEnabled('activity', p.id))
       .map((p) => ({
