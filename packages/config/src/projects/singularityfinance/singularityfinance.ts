@@ -15,6 +15,7 @@ export const singularityfinance: ScalingProject = upcomingL2({
     links: {
       websites: ['https://singularityfinance.ai'],
       documentation: ['https://docs.singularityfinance.ai'],
+      repositories: ['https://github.com/Singularity-DAO'],
       socialMedia: [
         'https://t.me/Singularity_Fi',
         'https://x.com/Singularity_Fi',
