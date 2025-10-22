@@ -126,8 +126,8 @@ export class AcrossConfigPlugin
 
       if (
         prev.chainId !== curr.chainId ||
-        prev.chain !== curr.chain
-        // prev.spokePool !== curr.spokePool
+        prev.chain !== curr.chain ||
+        prev.spokePool !== curr.spokePool
       ) {
         return latest
       }
