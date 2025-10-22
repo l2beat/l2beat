@@ -19,6 +19,7 @@ export const ethereal: ScalingProject = orbitStackL3({
     REASON_FOR_BEING_OTHER.SMALL_DAC,
   ],
   display: {
+    architectureImage: 'ethereal',
     name: 'Ethereal',
     slug: 'ethereal',
     description:
