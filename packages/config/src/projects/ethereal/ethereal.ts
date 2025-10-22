@@ -63,7 +63,7 @@ export const ethereal: ScalingProject = orbitStackL3({
     {
       title: 'Mainnet Alpha Launch',
       url: 'https://x.com/etherealdex/status/1980687756633448814',
-      date: '2024-05-20T00:00:00Z',
+      date: '2025-10-21T00:00:00Z',
       description: 'Ethereal launches its public Mainnet Alpha.',
       type: 'general',
     },

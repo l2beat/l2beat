@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x444c98f4f764101e0f29e8c13f7612646c3fef4a
+Generated with discovered.json: 0x38981589e68554c66993a2e5ae1eaf5d9cad124c
 
-# Diff at Wed, 22 Oct 2025 15:25:06 GMT:
+# Diff at Wed, 22 Oct 2025 16:02:26 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current timestamp: 1761144638
@@ -45,7 +45,7 @@ the wasmroot is not yet resolved because that would require global disco refresh
 
 ```diff
 +   Status: CREATED
-    contract SafeL2 (arb1:0x33Fbf4E75d54bBec0e432B6dc27bDEa0ca5DEdf9)
+    contract Ethereal Multisig (arb1:0x33Fbf4E75d54bBec0e432B6dc27bDEa0ca5DEdf9)
     +++ description: None
 ```
 

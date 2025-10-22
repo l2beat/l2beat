@@ -190,7 +190,7 @@
       }
     },
     {
-      "name": "SafeL2",
+      "name": "Ethereal Multisig",
       "address": "arb1:0x33Fbf4E75d54bBec0e432B6dc27bDEa0ca5DEdf9",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1691,5 +1691,5 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "arbitrum": 392241612 },
-  "permissionsConfigHash": "0x16fed65a8d50b9454478e6087a7cd9a6d3756d31262d60ec6e232cbef01a392c"
+  "permissionsConfigHash": "0x2db5006b91b6be49479e6024d03c08ba9b989c22a723bda1e9cbc7e6f0f5afbe"
 }
