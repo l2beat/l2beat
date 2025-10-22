@@ -125,7 +125,6 @@ export function DataPostedChart({
         })}
         <ChartTooltip
           content={<DataPostedCustomTooltip resolution={resolution} />}
-          filterNull={false}
         />
         <defs>
           <EthereumFillGradientDef id="ethereum-fill" />
@@ -152,7 +151,7 @@ function DataPostedCustomTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="flex w-40 flex-col sm:w-60">
+      <div className="flex w-50 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {formatRange(
             timestamp,

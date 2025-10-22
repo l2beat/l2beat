@@ -14,17 +14,18 @@ export async function getDataPostedSection(
     >
   | undefined
 > {
-  const daLayers = await ps.getProjects({
-    select: ['isDaLayer'],
-  })
-
   if (!project.daTrackingConfig) return undefined
 
   const range = project.archivedAt ? 'max' : '1y'
-  const data = await helpers.da.scalingProjectChart.fetch({
-    range,
-    projectId: project.id,
-  })
+  const [data, daLayers] = await Promise.all([
+    helpers.da.scalingProjectChart.fetch({
+      range,
+      projectId: project.id,
+    }),
+    ps.getProjects({
+      select: ['isDaLayer'],
+    }),
+  ])
   if (!data || data.chart.length === 0) return undefined
 
   const { currentDaLayers, pastDaLayers } = getDaLayersInfo(
