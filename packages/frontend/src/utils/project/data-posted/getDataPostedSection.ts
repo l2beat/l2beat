@@ -1,26 +1,27 @@
-import type { Project } from '@l2beat/config'
+import type { Project, ProjectDaTrackingConfig } from '@l2beat/config'
+import { notUndefined } from '@l2beat/shared-pure'
+import partition from 'lodash/partition'
+import uniqBy from 'lodash/uniqBy'
 import type { DataPostedSectionProps } from '~/components/projects/sections/data-posted/DataPostedSection'
-import type { DaSolution } from '~/server/features/scaling/project/getScalingDaSolutions'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
+import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 
 export async function getDataPostedSection(
   helpers: SsrHelpers,
   project: Project<never | 'scalingInfo', 'archivedAt' | 'daTrackingConfig'>,
-  daSolutions: DaSolution[] | undefined,
 ): Promise<
   | Pick<
       DataPostedSectionProps,
-      'defaultRange' | 'daLayer' | 'daTrackingConfig'
+      'defaultRange' | 'currentDaLayers' | 'pastDaLayers' | 'daTrackingConfig'
     >
   | undefined
 > {
-  const usedDaSolution = daSolutions?.find(
-    (daSolution) =>
-      project.daTrackingConfig &&
-      daSolution.layerId === project.daTrackingConfig[0]?.daLayer,
-  )
-  if (!project.daTrackingConfig || !usedDaSolution) return undefined
+  const daLayers = await ps.getProjects({
+    select: ['isDaLayer'],
+  })
+
+  if (!project.daTrackingConfig) return undefined
 
   const range = project.archivedAt ? 'max' : '1y'
   const data = await helpers.da.scalingProjectChart.fetch({
@@ -30,13 +31,37 @@ export async function getDataPostedSection(
 
   if (!data || data.chart.length === 0) return undefined
 
+  const [pastConfigs, currentConfigs] = partition(
+    project.daTrackingConfig,
+    (c) => (c.type === 'eigen-da' ? !!c.untilTimestamp : !!c.untilBlock),
+  )
+
+  // Remove duplicate da layers
+  const currentDaLayers = uniqBy(currentConfigs, (c) => c.daLayer)
+    .map((c) => getDaLayer(c, daLayers))
+    .filter(notUndefined)
+  const pastDaLayers = uniqBy(pastConfigs, (c) => c.daLayer)
+    .map((c) => getDaLayer(c, daLayers))
+    .filter(notUndefined)
+
   return {
-    daLayer: {
-      name: usedDaSolution.layerName,
-      logo: getProjectIcon(usedDaSolution.layerSlug),
-      href: `/data-availability/projects/${usedDaSolution.layerSlug}/${usedDaSolution.bridgeSlug ?? 'no-bridge'}`,
-    },
     defaultRange: range,
+    currentDaLayers,
+    pastDaLayers,
     daTrackingConfig: project.daTrackingConfig,
+  }
+}
+
+function getDaLayer(
+  config: ProjectDaTrackingConfig,
+  daLayers: Project<'isDaLayer'>[],
+) {
+  const daLayer = daLayers.find((d) => d.id === config.daLayer)
+  if (!daLayer) return undefined
+
+  return {
+    name: daLayer.name,
+    logo: getProjectIcon(daLayer.slug),
+    href: `/data-availability/projects/${daLayer.slug}/no-bridge}`,
   }
 }

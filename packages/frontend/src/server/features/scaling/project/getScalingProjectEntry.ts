@@ -173,7 +173,7 @@ export async function getScalingProjectEntry(
     getScalingTvsSection(project),
     getActivitySection(helpers, project),
     getCostsSection(helpers, project),
-    getDataPostedSection(helpers, project, daSolutions),
+    getDataPostedSection(helpers, project),
     ps.getProjects({
       select: ['zkCatalogInfo'],
     }),
