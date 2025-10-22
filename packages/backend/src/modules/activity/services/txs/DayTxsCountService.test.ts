@@ -17,7 +17,7 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
     })
 
     const start = 5
-    const end = 5
+    const end = 6
 
     const result = await txsCountProvider.getTxsCount(start, end)
 
@@ -50,7 +50,7 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
     })
 
     const start = 5
-    const end = 5
+    const end = 6
 
     const result = await txsCountProvider.getTxsCount(start, end)
 
@@ -81,7 +81,7 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
     })
 
     const start = 5
-    const end = 6
+    const end = 7
 
     const result = await txsCountProvider.getTxsCount(start, end)
 
@@ -97,14 +97,14 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
         ),
         activityRecord(
           'a',
-          end * UnixTime.DAY,
+          (start + 1) * UnixTime.DAY,
           3000,
           null,
-          end * UnixTime.DAY,
-          end * UnixTime.DAY + 1 * UnixTime.DAY - 1,
+          (start + 1) * UnixTime.DAY,
+          (start + 1) * UnixTime.DAY + 1 * UnixTime.DAY - 1,
         ),
       ],
-      latestTimestamp: end * UnixTime.DAY,
+      latestTimestamp: (start + 1) * UnixTime.DAY,
     })
   })
 
@@ -128,7 +128,7 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
     })
 
     const start = 5
-    const end = 7
+    const end = 8
 
     const result = await txsCountProvider.getTxsCount(start, end)
 
