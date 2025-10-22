@@ -88,7 +88,7 @@ describe(DayActivityIndexer.name, () => {
       expect(syncMetadataRepository.updateSyncedUntil).toHaveBeenCalledWith(
         'activity',
         ['a'],
-        10 * UnixTime.DAY,
+        10 * UnixTime.DAY + UnixTime.DAY,
       )
       expect(newSafeHeight).toEqual(10)
     })
