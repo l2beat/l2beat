@@ -12,8 +12,8 @@ describe(QueryExecutor.name, () => {
     const mockDb = mockObject<Database>({})
 
     it('should return cached data when cache hit occurs', async () => {
-      const cachedData: QueryResult<'getTvsChartQuery'> = [
-        { timestamp: 1234567890, value: 100 },
+      const cachedData: QueryResult<'getTestQuery'> = [
+        { projectId: ProjectId.ETHEREUM, timestamp: 1234567890, value: 100 },
       ]
       const mockCache = mockObject<Cache>({
         generateKey: mockFn().returns(testKey),
@@ -23,13 +23,13 @@ describe(QueryExecutor.name, () => {
 
       const queryExecutor = new QueryExecutor(mockDb, Logger.SILENT, mockCache)
       const query: Query = {
-        name: 'getTvsChartQuery',
+        name: 'getTestQuery',
         args: [[ProjectId.ETHEREUM]],
       }
 
       const result = await queryExecutor.execute(query)
 
-      expect(mockCache.generateKey).toHaveBeenCalledWith('getTvsChartQuery', [
+      expect(mockCache.generateKey).toHaveBeenCalledWith('getTestQuery', [
         [ProjectId.ETHEREUM],
       ])
       expect(mockCache.read).toHaveBeenCalledWith(testKey)
@@ -45,11 +45,11 @@ describe(QueryExecutor.name, () => {
 
       const queryExecutor = new QueryExecutor(mockDb, Logger.SILENT, mockCache)
       const query: Query = {
-        name: 'getTvsChartQuery',
+        name: 'getTestQuery',
         args: [[ProjectId.ETHEREUM]],
       }
-      const dbResult: QueryResult<'getTvsChartQuery'> = [
-        { timestamp: 1234567890, value: 100 },
+      const dbResult: QueryResult<'getTestQuery'> = [
+        { projectId: ProjectId.ETHEREUM, timestamp: 1234567890, value: 100 },
       ]
 
       const mockExecuteRawQuery = mockFn().resolvesTo(dbResult)
@@ -57,7 +57,7 @@ describe(QueryExecutor.name, () => {
 
       const result = await queryExecutor.execute(query, 120)
 
-      expect(mockCache.generateKey).toHaveBeenCalledWith('getTvsChartQuery', [
+      expect(mockCache.generateKey).toHaveBeenCalledWith('getTestQuery', [
         [ProjectId.ETHEREUM],
       ])
       expect(mockCache.read).toHaveBeenCalledWith(testKey)
@@ -79,7 +79,7 @@ describe(QueryExecutor.name, () => {
 
       const queryExecutor = new QueryExecutor(mockDb, Logger.SILENT, mockCache)
       const query: Query = {
-        name: 'getTvsChartQuery',
+        name: 'getTestQuery',
         args: [[ProjectId.ETHEREUM]],
       }
       const dbResult = { chart: [] }
@@ -105,7 +105,7 @@ describe(QueryExecutor.name, () => {
 
       const queryExecutor = new QueryExecutor(mockDb, Logger.SILENT, mockCache)
       const query: Query = {
-        name: 'getTvsChartQuery',
+        name: 'getTestQuery',
         args: [[ProjectId.ETHEREUM]],
       }
 
@@ -129,7 +129,7 @@ describe(QueryExecutor.name, () => {
 
       const queryExecutor = new QueryExecutor(mockDb, Logger.SILENT, mockCache)
       const query: Query = {
-        name: 'getTvsChartQuery',
+        name: 'getTestQuery',
         args: [[ProjectId.ETHEREUM]],
       }
 
@@ -150,14 +150,14 @@ describe(QueryExecutor.name, () => {
 
       const queryExecutor = new QueryExecutor(mockDb, Logger.SILENT, mockCache)
       const query: Query = {
-        name: 'getTvsChartQuery',
+        name: 'getTestQuery',
         args: [[ProjectId.ETHEREUM]],
       }
 
       await expect(queryExecutor.execute(query)).toBeRejectedWith(
         'Cache read failed',
       )
-      expect(mockCache.generateKey).toHaveBeenCalledWith('getTvsChartQuery', [
+      expect(mockCache.generateKey).toHaveBeenCalledWith('getTestQuery', [
         [ProjectId.ETHEREUM],
       ])
       expect(mockCache.read).toHaveBeenCalledWith(testKey)
@@ -170,14 +170,14 @@ describe(QueryExecutor.name, () => {
         write: mockFn().resolvesTo(undefined),
       })
       const queryExecutor = new QueryExecutor(mockDb, Logger.SILENT, mockCache)
-      const dbResult: QueryResult<'getTvsChartQuery'> = [
-        { timestamp: 1234567890, value: 100 },
+      const dbResult: QueryResult<'getTestQuery'> = [
+        { projectId: ProjectId.ETHEREUM, timestamp: 1234567890, value: 100 },
       ]
       const mockExecuteRawQuery = mockFn().resolvesTo(dbResult)
       queryExecutor.executeRawQuery = mockExecuteRawQuery
 
       const query: Query = {
-        name: 'getTvsChartQuery',
+        name: 'getTestQuery',
         args: [[ProjectId.ETHEREUM]],
       }
 
@@ -203,14 +203,14 @@ describe(QueryExecutor.name, () => {
 
       const queryExecutor = new QueryExecutor(mockDb, Logger.SILENT, mockCache)
       const query: Query = {
-        name: 'getTvsChartQuery',
+        name: 'getTestQuery',
         args: [[ProjectId.ETHEREUM]],
       }
-      const dbResult1: QueryResult<'getTvsChartQuery'> = [
-        { timestamp: 1234567890, value: 100 },
+      const dbResult1: QueryResult<'getTestQuery'> = [
+        { projectId: ProjectId.ETHEREUM, timestamp: 1234567890, value: 100 },
       ]
-      const dbResult2: QueryResult<'getTvsChartQuery'> = [
-        { timestamp: 1234567890, value: 200 },
+      const dbResult2: QueryResult<'getTestQuery'> = [
+        { projectId: ProjectId.ETHEREUM, timestamp: 1234567890, value: 200 },
       ]
 
       // Mock Date.now to control time
@@ -249,11 +249,11 @@ describe(QueryExecutor.name, () => {
 
       const queryExecutor = new QueryExecutor(mockDb, Logger.SILENT, mockCache)
       const query: Query = {
-        name: 'getTvsChartQuery',
+        name: 'getTestQuery',
         args: [[ProjectId.ETHEREUM]],
       }
-      const dbResult: QueryResult<'getTvsChartQuery'> = [
-        { timestamp: 1234567890, value: 100 },
+      const dbResult: QueryResult<'getTestQuery'> = [
+        { projectId: ProjectId.ETHEREUM, timestamp: 1234567890, value: 100 },
       ]
 
       const mockExecuteRawQuery = mockFn()
