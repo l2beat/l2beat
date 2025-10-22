@@ -111,7 +111,7 @@ const Transaction = v.object({
   stateChanges: v.array(StateChange).optional(),
 });
 
-export type GetRequestsResponse = v.infer<typeof GetRequestsResponse>
+export type GetRequestsResponse = v.infer<typeof GetRequestsResponse>;
 export const GetRequestsResponse = v.object({
   requests: v.array(
     v.object({
@@ -164,7 +164,7 @@ export const GetRequestsResponse = v.object({
       updatedAt: v.string(),
     })
   ),
-  continuation: v.string(),
+  continuation: v.string().optional(),
 });
 
 export class RelayApiClient {
@@ -183,5 +183,18 @@ export class RelayApiClient {
       {}
     );
     return GetRequestsResponse.parse(data);
+  }
+
+  async getAllRequests(options: GetRequestsOptions = {}) {
+    const result: GetRequestsResponse = {
+      requests: [],
+    };
+    let continuation = options.continuation;
+    do {
+      const res = await this.getRequests({ ...options, continuation });
+      result.requests.push(...res.requests);
+      continuation = res.continuation;
+    } while(continuation)
+    return result;
   }
 }
