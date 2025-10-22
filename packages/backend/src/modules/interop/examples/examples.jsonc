@@ -295,7 +295,32 @@
       "axelar.ContractCall",
       "axelar.ContractCallApproved"
     ],
-    "messages": ["axelar.ContractCallMessage.its"],
+    "messages": ["axelar.ContractCallMessage"],
+    "transfers": ["axelar-its.Transfer"]
+  },
+  "axelar-its-contractCall2": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xaf16e408aa37d68bed16216e517dcb18c93354c701e2091ae0d8791bd6682048"
+      },
+      {
+        "chain": "base",
+        "tx": "0xf60e41afa9d9f78d5400bbc0dc6773d2fa517b0782c1c0c25bdf721662b5741b"
+      },
+      {
+        "chain": "base",
+        "tx": "0x7823708dd874250ff77e7f18c28a95151513d55e45039e1d38ab5ca2656b12a1"
+      }
+    ],
+    "events": [
+      "axelar-its.InterchainTransfer",
+      "axelar-its.InterchainTransferReceived",
+      "axelar.ContractCallExecuted",
+      "axelar.ContractCall",
+      "axelar.ContractCallApproved"
+    ],
+    "messages": ["axelar.ContractCallMessage"],
     "transfers": ["axelar-its.Transfer"]
   },
   "axelar-contractCallWithMint2": {
