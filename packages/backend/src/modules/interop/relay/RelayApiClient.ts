@@ -1,26 +1,26 @@
-import { HttpClient } from "@l2beat/shared";
-import { v } from "@l2beat/validate";
+import type { HttpClient } from '@l2beat/shared'
+import { v } from '@l2beat/validate'
 
-const API_URL = "https://api.relay.link";
+const API_URL = 'https://api.relay.link'
 
 interface GetRequestsOptions {
-  limit?: number;
-  continuation?: string;
-  user?: string;
-  hash?: string;
-  originChainId?: number;
-  destinationChainId?: number;
-  privateChainsToInclude?: string;
-  id?: string;
-  orderId?: string;
-  startTimestamp?: number;
-  endTimestamp?: number;
-  startBlock?: number;
-  endBlock?: number;
-  chainId?: string;
-  referrer?: string;
-  sortBy?: "createdAt" | "updatedAt";
-  sortDirection?: "asc" | "desc";
+  limit?: number
+  continuation?: string
+  user?: string
+  hash?: string
+  originChainId?: number
+  destinationChainId?: number
+  privateChainsToInclude?: string
+  id?: string
+  orderId?: string
+  startTimestamp?: number
+  endTimestamp?: number
+  startBlock?: number
+  endBlock?: number
+  chainId?: string
+  referrer?: string
+  sortBy?: 'createdAt' | 'updatedAt'
+  sortDirection?: 'asc' | 'desc'
 }
 
 const CurrencyObject = v.object({
@@ -35,7 +35,7 @@ const CurrencyObject = v.object({
       verified: v.boolean().optional(),
     })
     .optional(),
-});
+})
 
 const AppFee = v.object({
   recipient: v.string().optional(),
@@ -43,7 +43,7 @@ const AppFee = v.object({
   amount: v.string().optional(),
   amountUsd: v.string().optional(),
   amountUsdCurrent: v.string().optional(),
-});
+})
 
 const CurrencyInOut = v.object({
   currency: CurrencyObject.optional(),
@@ -52,21 +52,21 @@ const CurrencyInOut = v.object({
   amountUsd: v.string().optional(),
   amountUsdCurrent: v.string().optional(),
   minimumAmount: v.string().optional(),
-});
+})
 
 const RouteSide = v.object({
   inputCurrency: CurrencyInOut.optional(),
   outputCurrency: CurrencyInOut.optional(),
   router: v.string().optional(),
   includedSwapSources: v.array(v.string()).optional(),
-});
+})
 
 const Fees = v.object({
   gas: v.string().optional(),
   fixed: v.string().optional(),
   price: v.string().optional(),
   gateway: v.string().optional(),
-});
+})
 
 const StateChange = v.object({
   change: v.object({
@@ -81,7 +81,7 @@ const StateChange = v.object({
     balanceDiff: v.string().optional(),
   }),
   address: v.string().optional(),
-});
+})
 
 const Transaction = v.object({
   fee: v.string().optional(),
@@ -109,9 +109,9 @@ const Transaction = v.object({
   type: v.string().optional(),
   block: v.number().optional(),
   stateChanges: v.array(StateChange).optional(),
-});
+})
 
-export type GetRequestsResponse = v.infer<typeof GetRequestsResponse>;
+export type GetRequestsResponse = v.infer<typeof GetRequestsResponse>
 export const GetRequestsResponse = v.object({
   requests: v.array(
     v.object({
@@ -162,39 +162,39 @@ export const GetRequestsResponse = v.object({
       referrer: v.string().optional(),
       createdAt: v.string(),
       updatedAt: v.string(),
-    })
+    }),
   ),
   continuation: v.string().optional(),
-});
+})
 
 export class RelayApiClient {
   constructor(private httpClient: HttpClient) {}
 
   async getRequests(options: GetRequestsOptions = {}) {
-    const queryParams: Record<string, string> = {};
+    const queryParams: Record<string, string> = {}
     for (const key in options) {
-      const value = options[key as keyof typeof options];
+      const value = options[key as keyof typeof options]
       if (value !== undefined) {
-        queryParams[key] = value.toString();
+        queryParams[key] = value.toString()
       }
     }
     const data = await this.httpClient.fetch(
       `${API_URL}/requests/v2?${new URLSearchParams(queryParams)}`,
-      {}
-    );
-    return GetRequestsResponse.parse(data);
+      {},
+    )
+    return GetRequestsResponse.parse(data)
   }
 
   async getAllRequests(options: GetRequestsOptions = {}) {
     const result: GetRequestsResponse = {
       requests: [],
-    };
-    let continuation = options.continuation;
+    }
+    let continuation = options.continuation
     do {
-      const res = await this.getRequests({ ...options, continuation });
-      result.requests.push(...res.requests);
-      continuation = res.continuation;
-    } while(continuation)
-    return result;
+      const res = await this.getRequests({ ...options, continuation })
+      result.requests.push(...res.requests)
+      continuation = res.continuation
+    } while (continuation)
+    return result
   }
 }
