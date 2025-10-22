@@ -314,6 +314,106 @@ export const eigenda: BaseProject = {
           },
         ],
       },
+      {
+        projectId: ProjectId('openledger'),
+        name: 'OpenLedger',
+        daTrackingConfig: [
+          {
+            type: 'eigen-da',
+            sinceTimestamp: 1752044400,
+            customerId: '0xe16fabeb99a6c098e4d7b4d442df0c827d5a6d26',
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('alchemy-production'),
+        name: 'Alchemy Production',
+        daTrackingConfig: [
+          {
+            type: 'eigen-da',
+            sinceTimestamp: 1753833600,
+            customerId: '0x3ba8c28a0209dea4d0502031f83d09a17a389fb0',
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('powerloom'),
+        name: 'Powerloom',
+        daTrackingConfig: [
+          {
+            type: 'eigen-da',
+            sinceTimestamp: 1754438400,
+            customerId: '0x00efb491755397ab8727ab45c4aef5fdcd3ecef8',
+          },
+        ],
+      },
+      // under review so it goes here for now
+      {
+        projectId: ProjectId('soon-base'),
+        name: 'SOON - Base',
+        daTrackingConfig: [
+          {
+            type: 'eigen-da',
+            sinceTimestamp: 1748934000,
+            customerId: '0xa11b7dea1592011c0055c62efb9566a845493003',
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('polymer'),
+        name: 'Polymer',
+        daTrackingConfig: [
+          {
+            type: 'eigen-da',
+            sinceTimestamp: 1731974400,
+            customerId: '0xf33f8cfea5857ebf248520cf6bc33640680ff83b',
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('crestal'),
+        name: 'Crestal',
+        daTrackingConfig: [
+          {
+            type: 'eigen-da',
+            sinceTimestamp: 1728399600,
+            customerId: '0x2659d4555e482ec4131a493def0770a922c75de3',
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('megaeth'),
+        name: 'MegaETH',
+        daTrackingConfig: [
+          {
+            type: 'eigen-da',
+            sinceTimestamp: 1722405600,
+            customerId: '0xcd1161b78f01da838ce0d42ec750891ec8708f1d',
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('conduit-2'),
+        name: 'Conduit',
+        daTrackingConfig: [
+          {
+            type: 'eigen-da',
+            sinceTimestamp: 1719266400,
+            customerId: '34.145.120.220',
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('conduit-3'),
+        name: 'Conduit',
+        daTrackingConfig: [
+          {
+            type: 'eigen-da',
+            sinceTimestamp: 1719262800,
+            customerId: '34.168.104.248',
+          },
+        ],
+      },
     ],
   },
   daBridge: {
