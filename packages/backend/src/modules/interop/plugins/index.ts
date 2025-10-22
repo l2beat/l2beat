@@ -22,6 +22,7 @@ import { MayanMctpFastPlugin } from './mayan-mctp-fast'
 import { MayanSwiftPlugin } from './mayan-swift'
 import { OpStackPlugin } from './opstack'
 import { OrbitStackPlugin } from './orbitstack'
+import { RelaySimplePlugIn } from './relay-simple'
 import { SquidCoralPlugin } from './squid-coral'
 import { StargatePlugin } from './stargate'
 import { StargateV2BusPlugin } from './stargate-v2-bus'
@@ -36,6 +37,7 @@ import { WormholeTokenBridgePlugin } from './wormhole-token-bridge'
 
 export function createInteropPlugins(): InteropPlugin[] {
   return [
+    new RelaySimplePlugIn(),
     new SquidCoralPlugin(),
     new DeBridgePlugin(),
     new DeBridgeDlnPlugin(),
