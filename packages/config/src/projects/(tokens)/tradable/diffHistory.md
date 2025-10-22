@@ -1,3 +1,174 @@
+Generated with discovered.json: 0xcef9f730bf5b7043add0b820d80d011a31827dc7
+
+# Diff at Tue, 07 Oct 2025 14:35:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8565ff097fc0a7fe0355555b648b1799518c8f35 block: 1755162744
+- current timestamp: 1755162744
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755162744 (main branch discovery), not current.
+
+```diff
+    contract Private Credit Direct Deal0000077 Token (zksync:0x18012CB9e1478EF458C8c996F99b8DcEcA60795c) {
+    +++ description: None
+      name:
+-        "Deal"
++        "Private Credit Direct Deal0000077 Token"
+    }
+```
+
+```diff
+    contract Private Credit Direct Deal0000019 Token (zksync:0x1F179A51Ab46252f469733DFcbD9115090A91f03) {
+    +++ description: None
+      name:
+-        "Deal"
++        "Private Credit Direct Deal0000019 Token"
+    }
+```
+
+```diff
+    contract Private Credit Direct Deal0000101 Token (zksync:0x3D19625Bb8E4B52Ac4ca28ecec2B5E243ae2EE81) {
+    +++ description: None
+      name:
+-        "Deal"
++        "Private Credit Direct Deal0000101 Token"
+    }
+```
+
+```diff
+    contract Private Credit Direct Deal0000113 Token (zksync:0x5556fE72eb021f97D39ba704f3674f1731e1AcC4) {
+    +++ description: None
+      name:
+-        "Deal"
++        "Private Credit Direct Deal0000113 Token"
+    }
+```
+
+```diff
+    contract Private Credit Direct Deal0000061 Token (zksync:0x5895024c953bee18D5F026bfcf6259bb2d79E12D) {
+    +++ description: None
+      name:
+-        "Deal"
++        "Private Credit Direct Deal0000061 Token"
+    }
+```
+
+```diff
+    contract Private Credit Direct Deal0000097 Token (zksync:0x5aBe0a2ead1357F70E73F5b60E227dF64A54ddD5) {
+    +++ description: None
+      name:
+-        "Deal"
++        "Private Credit Direct Deal0000097 Token"
+    }
+```
+
+```diff
+    contract Private Credit Direct Deal0000023 Token (zksync:0x5C8c39E167C604B036afd3FBB65426f9fe78Ce6d) {
+    +++ description: None
+      name:
+-        "Deal"
++        "Private Credit Direct Deal0000023 Token"
+    }
+```
+
+```diff
+    contract Private Credit Direct Deal0000033 Token (zksync:0x6FF4fAfD8D604614c704a5936D9146C0af19BD1E) {
+    +++ description: None
+      name:
+-        "Deal"
++        "Private Credit Direct Deal0000033 Token"
+    }
+```
+
+```diff
+    contract Private Credit Direct Deal0000037 Token (zksync:0x83547Ba6B1992F70aE7203dE4E95bB74B37cA3Ec) {
+    +++ description: None
+      name:
+-        "Deal"
++        "Private Credit Direct Deal0000037 Token"
+    }
+```
+
+```diff
+    contract Private Credit Direct Deal0000081 Token (zksync:0xA4b3dC5433EcAbDd1498cA7f3f4d890b185C0B0A) {
+    +++ description: None
+      name:
+-        "Deal"
++        "Private Credit Direct Deal0000081 Token"
+    }
+```
+
+```diff
+    contract Private Credit Direct Deal0000023 2 Token (zksync:0xAE0d8cad4cE522538AE34386c319C7ccD11FE428) {
+    +++ description: None
+      name:
+-        "Deal"
++        "Private Credit Direct Deal0000023 2 Token"
+    }
+```
+
+```diff
+    contract Private Credit Direct Deal0000027 Token (zksync:0xC629D9E3d1A4325DBfAff85D5a61Da956cc5e32b) {
+    +++ description: None
+      name:
+-        "Deal"
++        "Private Credit Direct Deal0000027 Token"
+    }
+```
+
+```diff
+    contract Private Credit Direct Deal0000015 Token (zksync:0xd8916e15D351DC728414e99A4883c72010eE11f8) {
+    +++ description: None
+      name:
+-        "Deal"
++        "Private Credit Direct Deal0000015 Token"
+    }
+```
+
+```diff
+    contract Private Credit Direct Deal0016245 Token (zksync:0xe3D53AdDadb3F87ADC38B4192171aAf5A07A3738) {
+    +++ description: None
+      name:
+-        "Deal"
++        "Private Credit Direct Deal0016245 Token"
+    }
+```
+
+```diff
+    contract Private Credit Direct Deal0000049 Token (zksync:0xe53dBcEf6F700536a912c51CAEa4D0E2bE2b1388) {
+    +++ description: None
+      name:
+-        "Deal"
++        "Private Credit Direct Deal0000049 Token"
+    }
+```
+
+```diff
+    contract Private Credit Direct Deal0000089 Token (zksync:0xfB3fCCdD38A96C3f769c62E578323f22c3BFCbEc) {
+    +++ description: None
+      name:
+-        "Deal"
++        "Private Credit Direct Deal0000089 Token"
+    }
+```
+
+```diff
+    contract Private Credit Direct Deal0000085 Token (zksync:0xfeAfDE23fb2364896C297c3Fa6628f04601a035b) {
+    +++ description: None
+      name:
+-        "Deal"
++        "Private Credit Direct Deal0000085 Token"
+    }
+```
+
 Generated with discovered.json: 0xd1b6aac68ca151c279b0a17476df3219f192733a
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

@@ -97,6 +97,8 @@ export interface ProjectScalingEntry {
           associated: number
           btc: number
           other: number
+          rwaPublic: number
+          rwaRestricted: number
         }
         warnings: WarningWithSentiment[]
         associatedTokens: ProjectAssociatedToken[]
@@ -139,7 +141,7 @@ export async function getScalingProjectEntry(
     | 'livenessInfo'
     | 'livenessConfig'
     | 'costsInfo'
-    | 'hasActivity'
+    | 'activityConfig'
     | 'colors'
     | 'ecosystemColors'
     | 'discoveryInfo'
@@ -218,16 +220,13 @@ export async function getScalingProjectEntry(
             },
             warning: project.tvsInfo.warnings[0],
             tokens: {
-              breakdown: {
-                ...tvsProjectStats.breakdown,
-                associated: tvsProjectStats.associated.total,
-              },
+              breakdown: tvsProjectStats.breakdown,
               warnings: compact([
                 tvsProjectStats &&
                   tvsProjectStats.breakdown.total > 0 &&
                   getAssociatedTokenWarning({
                     associatedRatio:
-                      tvsProjectStats.associated.total /
+                      tvsProjectStats.breakdown.associated /
                       tvsProjectStats.breakdown.total,
                     name: project.name,
                     associatedTokens: project.tvsInfo.associatedTokens,
@@ -342,7 +341,6 @@ export async function getScalingProjectEntry(
         tvsBreakdownUrl: `/scaling/projects/${project.slug}/tvs-breakdown`,
         milestones: sortedMilestones,
         tokens,
-        tvsProjectStats,
         tvsInfo: project.tvsInfo,
         project,
         ...scalingTvsSection,

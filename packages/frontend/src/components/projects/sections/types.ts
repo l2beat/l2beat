@@ -16,7 +16,6 @@ import type { PermissionsSectionProps } from './permissions/PermissionsSection'
 import type { ProgramHashesSectionProps } from './program-hashes/ProgramHashesSection'
 import type { RiskAnalysisSectionProps } from './RiskAnalysisSection'
 import type { RiskSummarySectionProps } from './RiskSummarySection'
-import type { ScalingTvsSectionProps } from './ScalingTvsSection'
 import type { SequencingSectionProps } from './SequencingSection'
 import type { StageSectionProps } from './StageSection'
 import type { StateDerivationSectionProps } from './StateDerivationSection'
@@ -24,6 +23,7 @@ import type { StateValidationSectionProps } from './state-validation/StateValida
 import type { TechnologyChoicesSectionProps } from './TechnologyChoicesSection'
 import type { TrustedSetupSectionProps } from './TrustedSetupsSection'
 import type { ThroughputSectionProps } from './throughput/ThroughputSection'
+import type { ScalingTvsSectionProps } from './tvs/ScalingTvsSection'
 import type { VerifiersSectionProps } from './VerifiersSection'
 
 type SectionId =

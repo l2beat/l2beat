@@ -1,34 +1,25 @@
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
+import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 
 export function toTableRows({
   projects,
+  sevenDayBreakdown,
   excludeAssociatedTokens,
 }: {
   projects: ScalingSummaryEntry[]
-  excludeAssociatedTokens?: boolean
+  sevenDayBreakdown: SevenDayTvsBreakdown | undefined
+  excludeAssociatedTokens: boolean
 }) {
   return projects.map((project) => {
+    const sevenDayBreakdownProject = sevenDayBreakdown?.projects[project.id]
     return {
       ...project,
       tvs: {
-        ...project.tvs,
+        associatedTokens: project.tvs.associatedTokens,
+        ...sevenDayBreakdownProject,
         warnings: excludeAssociatedTokens
           ? project.tvs.associatedTokensExcludedWarnings
           : project.tvs.warnings,
-        change: excludeAssociatedTokens
-          ? project.tvs.associatedTokensExcludedChange
-          : project.tvs.change,
-        breakdown: project?.tvs.breakdown
-          ? {
-              ...project.tvs.breakdown,
-              total: excludeAssociatedTokens
-                ? project.tvs.breakdown.total - project.tvs.breakdown.associated
-                : project.tvs.breakdown.total,
-              associated: excludeAssociatedTokens
-                ? 0
-                : project.tvs.breakdown.associated,
-            }
-          : undefined,
       },
     }
   })

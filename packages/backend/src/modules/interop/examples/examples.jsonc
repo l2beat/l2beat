@@ -601,6 +601,14 @@
       {
         "chain": "ethereum",
         "tx": "0xb8297be109a3c221a80169dd4f05de59213b2074e4f1e8b97a84cc961392a844"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xa7944b41bb9510b13163197ac873108aeb7b26a71569e9006ee08831ab4b3ccd"
+      },
+      {
+        "chain": "base",
+        "tx": "0x307d3fb030239e5bc1002980a743f34efe0a546e910765d69d752c5a0b7ceabf"
       }
     ]
   },

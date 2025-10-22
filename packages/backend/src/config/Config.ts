@@ -29,6 +29,7 @@ export interface Config {
   readonly metricsAuth: MetricsAuthConfig | false
   readonly database: DatabaseConfig
   readonly coingeckoApiKey: string
+  readonly voyagerApiKey: string
   readonly api: ApiConfig
   readonly health: HealthConfig
   readonly tvs: TvsConfig | false

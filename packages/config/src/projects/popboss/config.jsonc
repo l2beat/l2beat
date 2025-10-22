@@ -2,5 +2,13 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "popboss",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["arb1:0x53D82686BC9827fEc03bcEe661B37b855A18EcA9"]
+  "archived": true,
+  "initialAddresses": [
+    "arb1:0x53D82686BC9827fEc03bcEe661B37b855A18EcA9",
+    "arb1:0x330F8fEB25f3427cABA32446728C36ae67f2135b"
+  ],
+  "names": {
+    "arb1:0x53D82686BC9827fEc03bcEe661B37b855A18EcA9": "Bridge",
+    "arb1:0x330F8fEB25f3427cABA32446728C36ae67f2135b": "RollupProxy"
+  }
 }

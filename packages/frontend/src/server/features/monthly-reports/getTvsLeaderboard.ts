@@ -34,15 +34,15 @@ export async function getTvsLeaderboard(
       range.from,
       range.to,
       true,
+      false,
       range.from - 30 * UnixTime.DAY, // Cut off 30 days before the range
     ],
   })
 
   const projects: TvsLeaderboard['projects'] = {}
   for (const [projectId, values] of Object.entries(projectsValues)) {
-    const { all } = values
-    const oldestValue = all[0]
-    const latestValue = all.at(-1)
+    const oldestValue = values[0]
+    const latestValue = values.at(-1)
 
     if (!latestValue || !oldestValue) {
       continue

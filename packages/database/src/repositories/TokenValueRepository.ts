@@ -185,47 +185,15 @@ export class TokenValueRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
-  async getTvsChartBySource(projectIds: string[]): Promise<
-    {
-      timestamp: string
-      source: string
-      value: string | number | bigint
-    }[]
-  > {
-    const timePart = sql`${sql.ref('TokenValue.timestamp')}::time`
-
-    const rows = await this.db
-      .selectFrom('TokenValue')
-      .innerJoin('TokenMetadata', 'TokenValue.tokenId', 'TokenMetadata.tokenId')
-      .select([
-        'TokenValue.timestamp',
-        'TokenMetadata.source',
-        this.db.fn.sum('valueForSummary').as('value'),
-      ])
-      .where(timePart, '=', sql`'00:00:00'::time`)
-      .where(
-        'timestamp',
-        '>=',
-        UnixTime.toDate(UnixTime.now() - UnixTime.DAY * 365),
-      )
-      .where('TokenMetadata.projectId', 'in', projectIds)
-      .groupBy(['TokenValue.timestamp', 'TokenMetadata.source'])
-      .orderBy('TokenValue.timestamp', 'desc')
-      .execute()
-
-    return rows.map((row) => ({
-      timestamp: row.timestamp.toISOString(),
-      source: row.source,
-      value: row.value,
-    }))
-  }
-
   async getSummedByTimestampByProjects(
     projectIds: string[],
     fromInclusive: UnixTime | null,
     toInclusive: UnixTime | null,
-    forSummary: boolean,
-    excludeAssociated: boolean,
+    opts: {
+      forSummary: boolean
+      excludeAssociated: boolean
+      includeRwaRestrictedTokens: boolean
+    },
   ): Promise<
     {
       timestamp: UnixTime
@@ -241,7 +209,7 @@ export class TokenValueRepository extends BaseRepository {
       other: number
     }[]
   > {
-    const valueField = forSummary ? 'valueForSummary' : 'valueForProject'
+    const valueField = opts.forSummary ? 'valueForSummary' : 'valueForProject'
 
     let query = this.db
       .selectFrom('TokenValue')
@@ -272,8 +240,12 @@ export class TokenValueRepository extends BaseRepository {
       query = query.where('timestamp', '<=', UnixTime.toDate(toInclusive))
     }
 
-    if (excludeAssociated) {
+    if (opts.excludeAssociated) {
       query = query.where('TokenMetadata.isAssociated', '=', false)
+    }
+
+    if (!opts.includeRwaRestrictedTokens) {
+      query = query.where('TokenMetadata.category', '!=', 'rwaRestricted')
     }
 
     const rows = await query.execute()
@@ -296,8 +268,11 @@ export class TokenValueRepository extends BaseRepository {
   async getSummedAtTimestampsByProjects(
     oldestTimestamp: number,
     latestTimestamp: number,
-    excludeAssociated: boolean,
-    cutOffTimestamp?: number,
+    opts: {
+      excludeAssociated: boolean
+      includeRwaRestrictedTokens: boolean
+      cutOffTimestamp?: number
+    },
   ): Promise<
     {
       timestamp: UnixTime
@@ -353,14 +328,18 @@ export class TokenValueRepository extends BaseRepository {
       .where(
         'timestamp',
         '>=',
-        cutOffTimestamp
-          ? UnixTime.toDate(cutOffTimestamp)
+        opts.cutOffTimestamp
+          ? UnixTime.toDate(opts.cutOffTimestamp)
           : sql<Date>`NOW() - INTERVAL '30 days'`,
       )
       .groupBy(['TokenValue.timestamp', 'TokenValue.projectId'])
 
-    if (excludeAssociated) {
+    if (opts.excludeAssociated) {
       query = query.where('TokenMetadata.isAssociated', '=', false)
+    }
+
+    if (!opts.includeRwaRestrictedTokens) {
+      query = query.where('TokenMetadata.category', '!=', 'rwaRestricted')
     }
 
     const rows = await query.execute()
@@ -398,50 +377,6 @@ export class TokenValueRepository extends BaseRepository {
 
     const result = await query.executeTakeFirst()
     return result !== undefined
-  }
-
-  async getTvsTableBySource(
-    projectIds: string[],
-    depth: number,
-  ): Promise<
-    {
-      projectId: string
-      source: string
-      value: string | number | bigint
-    }[]
-  > {
-    const lt = this.db
-      .selectFrom('TokenValue')
-      .select(['tokenId', this.db.fn.max('timestamp').as('maxTimestamp')])
-      .where('projectId', 'in', projectIds)
-      .where('timestamp', '>=', UnixTime.toDate(depth))
-      .groupBy(['tokenId'])
-      .as('lt')
-
-    const rows = await this.db
-      .selectFrom('TokenMetadata')
-      .innerJoin(lt, 'lt.tokenId', 'TokenMetadata.tokenId')
-      .innerJoin('TokenValue', (join) =>
-        join
-          .onRef('TokenValue.tokenId', '=', 'TokenMetadata.tokenId')
-          .onRef('TokenValue.timestamp', '=', 'lt.maxTimestamp'),
-      )
-      .select([
-        'TokenMetadata.projectId',
-        'TokenMetadata.source',
-        this.db.fn.sum('TokenValue.valueForSummary').as('value'),
-      ])
-      .where('TokenMetadata.projectId', 'in', projectIds)
-      .where('timestamp', '>=', UnixTime.toDate(depth))
-      .groupBy(['TokenMetadata.projectId', 'TokenMetadata.source'])
-      .orderBy(['TokenMetadata.projectId', 'TokenMetadata.source'])
-      .execute()
-
-    return rows.map((row) => ({
-      projectId: row.projectId,
-      source: row.source,
-      value: row.value,
-    }))
   }
 }
 

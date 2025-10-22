@@ -284,7 +284,7 @@ function entryToLabel(entry: AnySearchBarEntry) {
     case 'da':
       return 'DA Layer'
     case 'zkCatalog':
-      return undefined
+      return 'ZK Project'
     case 'ecosystem':
       return 'Ecosystem'
     default:

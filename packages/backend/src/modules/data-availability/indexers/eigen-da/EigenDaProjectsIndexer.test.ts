@@ -52,7 +52,7 @@ describe(EigenDaProjectsIndexer.name, () => {
       const mockProjectData = [
         {
           customer_id: 'customer1',
-          datetime: UnixTime.fromDate(new Date('2025-05-31T00:00:00Z')),
+          datetime: UnixTime.fromDate(new Date('2025-08-31T00:00:00Z')),
           total_size_mb: 100,
         },
       ]
@@ -65,7 +65,7 @@ describe(EigenDaProjectsIndexer.name, () => {
         })
 
       // Set time to 01:00:00
-      const from = UnixTime.fromDate(new Date('2025-06-01T01:00:00Z'))
+      const from = UnixTime.fromDate(new Date('2025-09-01T01:00:00Z'))
       const expectedAdjustedFrom = UnixTime.toStartOf(from, 'hour')
       const expectedAdjustedTo = expectedAdjustedFrom + UnixTime.HOUR
 
@@ -76,9 +76,9 @@ describe(EigenDaProjectsIndexer.name, () => {
       )
       const safeHeight = await updateCallback()
 
-      // should ask for previous day
+      // should ask for start of the day
       expect(eigenClient.getByProjectData).toHaveBeenOnlyCalledWith(
-        UnixTime.toStartOf(expectedAdjustedTo, 'day') - UnixTime.DAY,
+        UnixTime.toStartOf(expectedAdjustedTo, 'day'),
       )
 
       expect(repository.upsertMany).toHaveBeenOnlyCalledWith([
@@ -263,7 +263,7 @@ describe(EigenDaProjectsIndexer.name, () => {
         projectData: [],
       })
 
-      // Use date before 2025-05-30 (first file date)
+      // Use date before 2025-08-01 (first file date)
       const earlyDate = UnixTime.fromDate(new Date('2025-01-01T02:00:00Z'))
       const to = earlyDate + UnixTime.DAY
 
@@ -271,11 +271,69 @@ describe(EigenDaProjectsIndexer.name, () => {
 
       // Should call with first file date instead of calculated date
       const firstFileDate = UnixTime.fromDate(
-        new Date('2025-05-30T00:00:00.000Z'),
+        new Date('2025-08-01T00:00:00.000Z'),
       )
       expect(eigenClient.getByProjectData).toHaveBeenOnlyCalledWith(
         firstFileDate,
       )
+    })
+
+    it('should aggregate records separately for different customers', async () => {
+      const configurations = [
+        createConfiguration('project1', DA_LAYER, 'customer1'),
+        createConfiguration('project2', DA_LAYER, 'customer2'),
+      ]
+
+      const startOfDay = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
+      const sameTimestamp = startOfDay + UnixTime.HOUR
+      const mockData = [
+        {
+          customer_id: 'customer1',
+          datetime: sameTimestamp,
+          total_size_mb: 100,
+        },
+        {
+          customer_id: 'customer1',
+          datetime: sameTimestamp,
+          total_size_mb: 50,
+        },
+        {
+          customer_id: 'customer2',
+          datetime: sameTimestamp,
+          total_size_mb: 200,
+        },
+        {
+          customer_id: 'customer2',
+          datetime: sameTimestamp,
+          total_size_mb: 150,
+        },
+      ]
+
+      const { indexer } = mockIndexer({
+        configurations,
+        daLayer: DA_LAYER,
+        projectData: mockData,
+      })
+
+      const to = startOfDay + UnixTime.DAY + 2 * UnixTime.HOUR
+      const result = await indexer.getByProjectData(to)
+
+      expect(result).toEqual([
+        {
+          timestamp: sameTimestamp,
+          totalSize: BigInt(Math.round((100 + 50) * 1024 * 1024)),
+          projectId: configurations[0].properties.projectId,
+          daLayer: DA_LAYER,
+          configurationId: configurations[0].id,
+        },
+        {
+          timestamp: sameTimestamp,
+          totalSize: BigInt(Math.round((200 + 150) * 1024 * 1024)),
+          projectId: configurations[1].properties.projectId,
+          daLayer: DA_LAYER,
+          configurationId: configurations[1].id,
+        },
+      ])
     })
   })
 

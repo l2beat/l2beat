@@ -1,6 +1,6 @@
 {
   "name": "morph",
-  "timestamp": 1758795850,
+  "timestamp": 1760973938,
   "configHash": "0xb1738f8f5e824117d5ba7e4607dc46a3e611677183d8e3a84a16916cf026bdab",
   "entries": [
     {
@@ -77,7 +77,8 @@
         "getActiveStakers": [
           "eth:0x6aB0E960911b50f6d14f249782ac12EC3E7584A0",
           "eth:0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80",
-          "eth:0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796"
+          "eth:0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796",
+          "eth:0x76F91869161dC4348230D5F60883Dd17462035f4"
         ],
         "getStakersFromBitmap": [
           ["eth:0x6aB0E960911b50f6d14f249782ac12EC3E7584A0"],
@@ -290,9 +291,9 @@
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-        "nextCrossDomainMessageIndex": 25066,
+        "nextCrossDomainMessageIndex": 25367,
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 25031,
+        "pendingQueueIndex": 25361,
         "ROLLUP_CONTRACT": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
@@ -648,8 +649,8 @@
         "finalizationPeriodSeconds": 172800,
         "inChallenge": false,
         "l1StakingContract": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-        "lastCommittedBatchIndex": 43541,
-        "lastFinalizedBatchIndex": 43459,
+        "lastCommittedBatchIndex": 44672,
+        "lastFinalizedBatchIndex": 44596,
         "LAYER_2_CHAIN_ID": 1,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
@@ -664,6 +665,19 @@
         "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60": "TransparentUpgradeableProxy",
         "eth:0x9C79e8F5d0fE910d84a6a0d4A03E8136d036eBec": "Rollup"
       }
+    },
+    {
+      "address": "eth:0x76F91869161dC4348230D5F60883Dd17462035f4",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "description": "Actors allowed to commit transaction batches and propose state roots",
+          "role": ".getActiveStakers"
+        }
+      ]
     },
     {
       "address": "eth:0x77B29534738E3F0F297d36635d7884965C7c8cE1",
@@ -806,7 +820,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 40,
+        "nonce": 41,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1011,7 +1025,7 @@
         "counterpart": "eth:0x5300000000000000000000000000000000000007",
         "feeVault": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "maxReplayTimes": 3,
-        "messageNonce": 25066,
+        "messageNonce": 25367,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false,
@@ -1727,6 +1741,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23439432 },
-  "permissionsConfigHash": "0x9d706040e6b6175e67963212b7359937379436850260ff96ef020bb55ce93388"
+  "usedBlockNumbers": { "ethereum": 23619691 },
+  "permissionsConfigHash": "0x4e9ba95357530bdd4c42d2f433513a7b510270b686f6fc74d2aab1fad78e7a95"
 }

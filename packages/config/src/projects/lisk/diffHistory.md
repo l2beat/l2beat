@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x29311b8fdf9e732b6b09f0da69faa3fccc564faa
+
+# Diff at Mon, 20 Oct 2025 15:26:02 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@bfe80e92f67656ee716f7ab40cc8f3f9e92dc7d6 block: 1759250569
+- current timestamp: 1760973885
+
+## Description
+
+OpFoundation multisig member rotation.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x7cB07FE039a92B3D784f284D919503A381BEC54f"
++        "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02"
+    }
+```
+
 Generated with discovered.json: 0xc8ae34ea301f01c93d448c8471675069b7302bf6
 
 # Diff at Tue, 30 Sep 2025 16:43:54 GMT:
