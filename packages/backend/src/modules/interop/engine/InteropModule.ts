@@ -1,18 +1,18 @@
 import { HttpClient } from '@l2beat/shared'
-import { HourlyIndexer } from '../../tools/HourlyIndexer'
-import { IndexerService } from '../../tools/uif/IndexerService'
-import type { ApplicationModule, ModuleDependencies } from '../types'
-import { InteropBlockProcessor } from './engine/capture/InteropBlockProcessor'
-import { InteropEventStore } from './engine/capture/InteropEventStore'
-import { InteropCleanerLoop } from './engine/cleaner/InteropCleanerLoop'
-import { InteropCompareLoop } from './engine/compare/InteropCompareLoop'
-import { InteropConfigStore } from './engine/config/InteropConfigStore'
-import { createInteropRouter } from './engine/dashboard/InteropRouter'
-import { InteropFinancialsLoop } from './engine/financials/InteropFinancialsLoop'
-import { InteropRecentPricesIndexer } from './engine/financials/InteropRecentPricesIndexer'
-import { MockTokenDb } from './engine/financials/TokenDb'
-import { InteropMatchingLoo } from './engine/match/InteropMatchingLoop'
-import { createInteropPlugins } from './plugins'
+import { HourlyIndexer } from '../../../tools/HourlyIndexer'
+import { IndexerService } from '../../../tools/uif/IndexerService'
+import type { ApplicationModule, ModuleDependencies } from '../../types'
+import { createInteropPlugins } from '../plugins'
+import { InteropBlockProcessor } from './capture/InteropBlockProcessor'
+import { InteropEventStore } from './capture/InteropEventStore'
+import { InteropCleanerLoop } from './cleaner/InteropCleanerLoop'
+import { InteropCompareLoop } from './compare/InteropCompareLoop'
+import { InteropConfigStore } from './config/InteropConfigStore'
+import { createInteropRouter } from './dashboard/InteropRouter'
+import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
+import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
+import { MockTokenDb } from './financials/TokenDb'
+import { InteropMatchingLoop } from './match/InteropMatchingLoop'
 
 export function createInteropModule({
   config,
@@ -53,7 +53,7 @@ export function createInteropModule({
     }
   }
 
-  const matcher = new InteropMatchingLoo(
+  const matcher = new InteropMatchingLoop(
     interopStore,
     db,
     plugins.eventPlugins,

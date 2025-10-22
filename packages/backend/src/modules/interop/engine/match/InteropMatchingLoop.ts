@@ -16,7 +16,7 @@ import {
 } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 
-export class InteropMatchingLoo extends TimeLoop {
+export class InteropMatchingLoop extends TimeLoop {
   constructor(
     private store: InteropEventStore,
     private db: Database,
