@@ -22,7 +22,10 @@ export type ScalingProjectDaThroughputChart = {
 }
 type ScalingProjectDaThroughputChartPoint = [
   timestamp: number,
-  value: number | null,
+  ethereum: number | null,
+  celestia: number | null,
+  avail: number | null,
+  eigenda: number | null,
 ]
 
 export const ScalingProjectDaThroughputChartParams = v.object({
@@ -71,11 +74,19 @@ export async function getScalingProjectDaThroughputChart(
   let total = 0
   const chart: ScalingProjectDaThroughputChartPoint[] = timestamps.map(
     (timestamp) => {
-      const posted = timestamp <= syncedUntil ? (grouped[timestamp] ?? 0) : null
-      if (posted !== null) {
-        total += posted
+      const posted = grouped[timestamp]
+      if (posted) {
+        total += Object.values(posted)
+          .map(Number)
+          .reduce((sum, val) => sum + val, 0)
       }
-      return [timestamp, posted]
+      return [
+        timestamp,
+        posted?.ethereum ?? null,
+        posted?.celestia ?? null,
+        posted?.avail ?? null,
+        posted?.eigenda ?? null,
+      ]
     },
   )
 
@@ -110,7 +121,7 @@ function groupByTimestamp(
 ) {
   let minTimestamp = Number.POSITIVE_INFINITY
   let maxTimestamp = Number.NEGATIVE_INFINITY
-  const result: Record<number, number> = {}
+  const result: Record<number, Record<string, number>> = {}
 
   const offset = UnixTime.toStartOf(
     UnixTime.now(),
@@ -134,10 +145,10 @@ function groupByTimestamp(
     )
     const value = record.totalSize
     if (!result[timestamp]) {
-      result[timestamp] = Number(value)
-    } else {
-      result[timestamp] += Number(value)
+      result[timestamp] = {}
     }
+    const currentDaLayerValue = result[timestamp][record.daLayer] ?? 0
+    result[timestamp][record.daLayer] = currentDaLayerValue + Number(value)
     minTimestamp = Math.min(minTimestamp, timestamp)
     maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
