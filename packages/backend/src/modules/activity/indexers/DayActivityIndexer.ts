@@ -21,9 +21,10 @@ export class DayActivityIndexer extends ManagedChildIndexer {
     )
   }
 
+  // FROM and TO are actually days passed since unix epoch, not timestamps cause its using DayTargetIndexer as parent
   override async update(from: number, to: number): Promise<number> {
     // starkex APIs are not stable and can change from the past. With this we make sure to scrape them again
-    const fromWithUncertainty = from - this.$.uncertaintyBuffer
+    const fromWithUncertainty = from - this.$.uncertaintyBuffer - 1
     const adjustedFrom = Math.max(this.$.minHeight, fromWithUncertainty)
 
     const fromWithBatchSize = adjustedFrom + this.$.batchSize
@@ -39,8 +40,7 @@ export class DayActivityIndexer extends ManagedChildIndexer {
       await this.$.db.syncMetadata.updateSyncedUntil(
         'activity',
         [this.$.projectId],
-        // Sync metadata stores exclusive end
-        adjustedTo * UnixTime.DAY + UnixTime.DAY,
+        adjustedTo * UnixTime.DAY,
       )
     })
 
