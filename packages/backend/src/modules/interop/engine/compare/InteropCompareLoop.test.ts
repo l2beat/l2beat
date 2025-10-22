@@ -16,25 +16,15 @@ describe(InteropCompareLoop.name, () => {
         { srcTxHash: Hash256.random(), dstTxHash: Hash256.random() },
       ]
 
-      const plugins = [
-        {
-          name: 'plugin1',
-          type: 'message' as const,
-          getExternalItems: mockFn()
-            // returns unknown in first run, which will get skipped
-            // in next run will be reported as missing
-            .resolvesToOnce([known[0], unknown[0]])
-            // this unknown will be only skipped because we run two times
-            .resolvesToOnce([unknown[1]]),
-        },
-        {
-          name: 'plugin2',
-          type: 'transfer' as const,
-          getExternalItems: mockFn()
-            .resolvesToOnce([known[1]])
-            .resolvesToOnce([]),
-        },
-      ]
+      const plugin = {
+        name: 'plugin',
+        getExternalItems: mockFn()
+          // returns unknown in first run, which will get skipped
+          // in next run will be reported as missing
+          .resolvesToOnce([known[0], unknown[0]])
+          // this unknown will be only skipped because we run two times
+          .resolvesToOnce([unknown[1]]),
+      }
 
       const interopMessage = mockObject<Database['interopMessage']>({
         getExistingItems: mockFn().resolvesTo([known[0]]),
@@ -57,32 +47,31 @@ describe(InteropCompareLoop.name, () => {
       //@ts-ignore
       logger.for = () => logger
 
-      const comparator = new InteropCompareLoop(db, plugins, logger)
+      const comparator = new InteropCompareLoop(db, plugin, logger)
 
       await comparator.run()
       await comparator.run()
 
-      expect(plugins[0].getExternalItems).toHaveBeenCalledTimes(2)
-      expect(plugins[1].getExternalItems).toHaveBeenCalledTimes(2)
+      expect(plugin.getExternalItems).toHaveBeenCalledTimes(2)
       expect(interopMessage.getExistingItems).toHaveBeenCalledTimes(2)
       expect(interopTransfer.getExistingItems).toHaveBeenCalledTimes(2)
 
       expect(logger.warn).toHaveBeenNthCalledWith(1, 'Missing item skipped', {
-        plugin: 'plugin1',
+        plugin: 'plugin',
         item: {
           ...unknown[0],
           isLatest: true,
         },
       })
       expect(logger.warn).toHaveBeenNthCalledWith(2, 'Missing item detected', {
-        plugin: 'plugin1',
+        plugin: 'plugin',
         item: {
           ...unknown[0],
           isLatest: false,
         },
       })
       expect(logger.warn).toHaveBeenNthCalledWith(3, 'Missing item skipped', {
-        plugin: 'plugin1',
+        plugin: 'plugin',
         item: {
           ...unknown[1],
           isLatest: true,
