@@ -127,7 +127,6 @@ export interface BaseProject {
   isDaLayer?: true
   isUpcoming?: true
   archivedAt?: UnixTime
-  hasActivity?: true
   hasTestnet?: true
 }
 
