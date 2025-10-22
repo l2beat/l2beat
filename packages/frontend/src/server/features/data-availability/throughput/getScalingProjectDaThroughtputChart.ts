@@ -65,14 +65,25 @@ export async function getScalingProjectDaThroughputChart(
     resolution,
   )
 
-  const lastDataForLayers: Record<string, number> = {}
+  const lastDataForLayers: Record<
+    string,
+    {
+      lastTimestamp: number
+      firstTimestamp: number
+    }
+  > = {}
   for (const layer of THROUGHPUT_ENABLED_DA_LAYERS) {
     const lastValue = Object.entries(grouped).findLast(
       ([_, values]) => values[layer] && values[layer] > 0,
     )
-    if (lastValue) {
-      const [timestamp] = lastValue
-      lastDataForLayers[layer] = Number(timestamp)
+    const firstValue = Object.entries(grouped).find(
+      ([_, values]) => values[layer] && values[layer] > 0,
+    )
+    if (lastValue && firstValue) {
+      lastDataForLayers[layer] = {
+        lastTimestamp: Number(lastValue[0]),
+        firstTimestamp: Number(firstValue[0]),
+      }
     }
   }
 
@@ -91,9 +102,12 @@ export async function getScalingProjectDaThroughputChart(
         total += Object.values(posted).reduce((sum, val) => sum + val, 0)
       }
       const getDaValue = (layer: string) => {
-        return lastDataForLayers[layer] && timestamp <= lastDataForLayers[layer]
-          ? (grouped[timestamp]?.[layer] ?? 0)
-          : null
+        const lastData = lastDataForLayers[layer]
+        const isBetween =
+          lastData &&
+          timestamp >= lastData.firstTimestamp &&
+          timestamp <= lastData.lastTimestamp
+        return isBetween ? (grouped[timestamp]?.[layer] ?? 0) : null
       }
       return [
         timestamp,
