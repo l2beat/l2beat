@@ -83,12 +83,8 @@ export function DataPostedSection({
         defaultRange={defaultRange}
         milestones={milestones}
       />
-      {currentDaLayers.some((daLayer) => daLayer.name !== 'EigenDA') && (
-        <>
-          <HorizontalSeparator className="my-4" />
-          <DataPostedTrackedTransactions daTrackingConfig={daTrackingConfig} />
-        </>
-      )}
+      <HorizontalSeparator className="my-4" />
+      <DataPostedTrackedTransactions daTrackingConfig={daTrackingConfig} />
     </ProjectSection>
   )
 }

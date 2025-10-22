@@ -1,6 +1,7 @@
 import type {
   BlockDaTrackingConfig,
   ProjectDaTrackingConfig,
+  TimestampDaTrackingConfig,
 } from '@l2beat/config'
 import { useState } from 'react'
 import { Badge } from '~/components/badge/Badge'
@@ -12,6 +13,7 @@ import {
 } from '~/components/core/Collapsible'
 import { EtherscanLink } from '~/components/EtherscanLink'
 import { ChevronIcon } from '~/icons/Chevron'
+import { formatTimestamp } from '~/utils/dates'
 
 export function DataPostedTrackedTransactions({
   daTrackingConfig,
@@ -28,16 +30,14 @@ export function DataPostedTrackedTransactions({
     return null
   }
 
-  const configsWithoutEigenDa = daTrackingConfig.filter(
-    (x) => x.type !== 'eigen-da',
-  )
-
   const transactions = showHistoricalTransactions
-    ? configsWithoutEigenDa
-    : configsWithoutEigenDa.filter((x) => !x.untilBlock)
+    ? daTrackingConfig
+    : daTrackingConfig.filter((x) =>
+        x.type === 'eigen-da' ? !x.untilTimestamp : !x.untilBlock,
+      )
 
-  const hasHistoricalTransactions = configsWithoutEigenDa.some(
-    (x) => x.untilBlock,
+  const hasHistoricalTransactions = daTrackingConfig.some((x) =>
+    x.type === 'eigen-da' ? !x.untilTimestamp : !x.untilBlock,
   )
 
   return (
@@ -80,15 +80,20 @@ function TransactionDetails({
   transaction,
   showHistoricalTransactions,
 }: {
-  transaction: BlockDaTrackingConfig
+  transaction: BlockDaTrackingConfig | TimestampDaTrackingConfig
   showHistoricalTransactions: boolean
 }) {
   return (
     <div className="mb-4">
       <div className="mb-2 flex justify-between max-lg:flex-col lg:gap-2">
         <div className="flex items-center gap-2">
+          {/* TODO: add name of each layer */}
           {showHistoricalTransactions ? (
-            transaction.untilBlock ? (
+            (
+              transaction.type === 'eigen-da'
+                ? transaction.untilTimestamp
+                : transaction.untilBlock
+            ) ? (
               <Badge type="gray" size="small">
                 Historical
               </Badge>
@@ -102,10 +107,27 @@ function TransactionDetails({
       </div>
 
       <div className="border-divider border-l-2 pl-3">
-        <p className="mb-1 text-secondary text-sm">
-          From: {transaction.sinceBlock} block - To:{' '}
-          {transaction.untilBlock ?? 'Now'}
-        </p>
+        {transaction.type === 'eigen-da' ? (
+          <p className="mb-1 text-secondary text-sm">
+            From:{' '}
+            {formatTimestamp(transaction.sinceTimestamp, {
+              mode: 'datetime',
+              longMonthName: false,
+            })}{' '}
+            - To:{' '}
+            {transaction.untilTimestamp
+              ? formatTimestamp(transaction.untilTimestamp, {
+                  mode: 'datetime',
+                  longMonthName: false,
+                })
+              : 'Now'}
+          </p>
+        ) : (
+          <p className="mb-1 text-secondary text-sm">
+            From: {transaction.sinceBlock} block - To:{' '}
+            {transaction.untilBlock ?? 'Now'}
+          </p>
+        )}
         {transaction.type === 'ethereum' && (
           <>
             <div className="mb-1 text-sm">
@@ -150,6 +172,13 @@ function TransactionDetails({
           <div className="mb-1 text-secondary text-sm">
             <span>App IDs: </span>
             <span>{transaction.appIds.join(', ')}</span>
+          </div>
+        )}
+
+        {transaction.type === 'eigen-da' && (
+          <div className="mb-1 text-secondary text-sm">
+            <span>Customer ID: </span>
+            <span className="wrap-break-word">{transaction.customerId}</span>
           </div>
         )}
       </div>
