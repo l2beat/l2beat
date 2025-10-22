@@ -1,5 +1,8 @@
 import { HttpClient } from '@l2beat/shared'
-import type { InteropComparePlugin, InteropExternalItem } from './types'
+import type {
+  InteropComparePlugin,
+  InteropExternalItem,
+} from '../../InteropCompare'
 
 export class AcrossComparePlugin implements InteropComparePlugin {
   name = 'across'

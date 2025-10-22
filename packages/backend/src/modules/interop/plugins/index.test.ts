@@ -1,13 +1,21 @@
+import { Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
+import type { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { mockObject } from 'earl'
-import type { InteropStore } from '../InteropStore'
-import { createInteropPlugins } from '.'
+import type { InteropConfigs } from '../InteropConfigs'
+import { createInteropPlugins } from './index'
 import { definedNetworks } from './types'
 
 describe('Interop Plugins', async () => {
   const chainNames = new Set<string>()
-  const plugins = createInteropPlugins(mockObject<InteropStore>())
+  const plugins = createInteropPlugins({
+    chains: [],
+    configs: mockObject<InteropConfigs>(),
+    httpClient: mockObject<HttpClient>(),
+    logger: Logger.SILENT,
+    rpcClients: [mockObject<RpcClient>({ chain: 'ethereum' })],
+  })
 
   before(async () => {
     const ps = new ProjectService()
@@ -20,7 +28,7 @@ describe('Interop Plugins', async () => {
   describe('every plugin name is unique', () => {
     const kwnon = new Set<string>()
 
-    for (const plugin of plugins) {
+    for (const plugin of plugins.eventPlugins) {
       it(plugin.name, () => {
         assert(
           !kwnon.has(plugin.name),
@@ -32,7 +40,7 @@ describe('Interop Plugins', async () => {
   })
 
   describe('matchTypes check', () => {
-    for (const plugin of plugins) {
+    for (const plugin of plugins.eventPlugins) {
       if (plugin.match) {
         it(plugin.name, () => {
           assert(plugin.matchTypes, `matchTypes missing for ${plugin.name}`)

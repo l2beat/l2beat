@@ -1,5 +1,4 @@
-import type { InteropStore } from '../InteropStore'
-import type { AcrossNetwork } from '../networks/types'
+import type { InteropConfigs } from '../../InteropConfigs'
 import {
   Address32,
   createEventParser,
@@ -11,7 +10,8 @@ import {
   type LogToCapture,
   type MatchResult,
   Result,
-} from './types'
+} from '../types'
+import { AcrossConfig } from './across.config'
 
 const parseFundsDeposited = createEventParser(
   'event FundsDeposited(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 indexed destinationChainId, uint256 indexed depositId, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 indexed depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes message)',
@@ -44,14 +44,11 @@ export const AcrossFilledRelay = createInteropEventType<{
 export class AcrossPlugin implements InteropPlugin {
   name = 'across'
 
-  constructor(private store: InteropStore) {}
+  constructor(private configs: InteropConfigs) {}
 
   capture(input: LogToCapture) {
-    const networks = this.store.findNetworks<AcrossNetwork[]>('across')
-    if (!networks) {
-      // TODO: what to do on cold start?
-      return
-    }
+    const networks = this.configs.get(AcrossConfig)
+    if (!networks) return
 
     const network = networks.find((n) => n.chain === input.ctx.chain)
     if (!network) return

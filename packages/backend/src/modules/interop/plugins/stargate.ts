@@ -1,6 +1,9 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { BinaryReader } from '../BinaryReader'
-import { parseOFTReceived, parseOFTSent } from './layerzero-v2-ofts'
+import {
+  parseOFTReceived,
+  parseOFTSent,
+} from './layerzero/layerzero-v2-ofts.plugin'
 import {
   Address32,
   createEventParser,

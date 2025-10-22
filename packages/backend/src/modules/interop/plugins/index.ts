@@ -1,6 +1,12 @@
-import type { InteropStore } from '../InteropStore'
+import type { Logger } from '@l2beat/backend-tools'
+import type { HttpClient, RpcClient } from '@l2beat/shared'
+import { assert } from '@l2beat/shared-pure'
+import type { InteropComparePlugin } from '../InteropCompare'
+import type { InteropConfigPlugin, InteropConfigs } from '../InteropConfigs'
 import { OneinchFusionPlusPlugin } from './1inchfusionplus'
-import { AcrossPlugin } from './across'
+import { AcrossComparePlugin } from './across/across.compare'
+import { AcrossConfigPlugin } from './across/across.config'
+import { AcrossPlugin } from './across/across.plugin'
 import { AllbridgePlugIn } from './allbridge'
 import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
@@ -13,9 +19,10 @@ import { HyperlanePlugIn } from './hyperlane'
 import { HyperlaneEcoPlugin } from './hyperlane-eco'
 import { HyperlaneHwrPlugin } from './hyperlane-hwr'
 import { HyperlaneMerklyTokenBridgePlugin } from './hyperlane-merkly-tokenbridge'
-import { LayerZeroV1Plugin } from './layerzero-v1'
-import { LayerZeroV2Plugin } from './layerzero-v2'
-import { LayerZeroV2OFTsPlugin } from './layerzero-v2-ofts'
+import { LayerZeroConfigPlugin } from './layerzero/layerzero.config'
+import { LayerZeroV1Plugin } from './layerzero/layerzero-v1.plugin'
+import { LayerZeroV2Plugin } from './layerzero/layerzero-v2.plugin'
+import { LayerZeroV2OFTsPlugin } from './layerzero/layerzero-v2-ofts.plugin'
 import { MayanForwarderPlugin } from './mayan-forwarder'
 import { MayanMctpPlugin } from './mayan-mctp'
 import { MayanMctpFastPlugin } from './mayan-mctp-fast'
@@ -32,38 +39,74 @@ import { WormholeNTTPlugin } from './wormhole-ntt'
 import { WormholeRelayerPlugin } from './wormhole-relayer'
 import { WormholeTokenBridgePlugin } from './wormhole-token-bridge'
 
-export function createInteropPlugins(store: InteropStore): InteropPlugin[] {
-  return [
-    new SquidCoralPlugin(),
-    new DeBridgePlugin(),
-    new DeBridgeDlnPlugin(),
-    new MayanForwarderPlugin(),
-    new CircleGatewayPlugIn(),
-    new CCIPPlugIn(),
-    new MayanSwiftPlugin(), // should be run before CCTP
-    new MayanMctpPlugin(), // should be run before CCTP
-    new MayanMctpFastPlugin(), // should be run before CCTP
-    new CCTPPlugin(),
-    new StargatePlugin(), // should be run before stargate bus/taxi, ofts
-    new StargateV2BusPlugin(), // should be run before LayerZeroV2, ofts
-    new StargateV2TaxiPlugin(), // should be run before LayerZeroV2, ofts
-    new LayerZeroV2OFTsPlugin(), // should be run before LayerZeroV2
-    new LayerZeroV1Plugin(),
-    new LayerZeroV2Plugin(),
-    new WormholeNTTPlugin(), // should be run before WormholeCore and WormholeRelayer
-    new WormholeTokenBridgePlugin(), // should be run before Wormhole
-    new WormholeRelayerPlugin(), // should be run before Wormhole
-    new WormholePlugin(),
-    new AllbridgePlugIn(),
-    new AxelarITSPlugin(), // should be run before Axelar
-    new AxelarPlugin(),
-    new AcrossPlugin(store),
-    new OrbitStackPlugin(),
-    new OpStackPlugin(),
-    new HyperlaneMerklyTokenBridgePlugin(), // should be run before HyperlaneHWR
-    new HyperlaneHwrPlugin(), // should be run before Hyperlane
-    new HyperlaneEcoPlugin(), // should be run before Hyperlane
-    new HyperlanePlugIn(),
-    new OneinchFusionPlusPlugin(),
-  ]
+export interface InteropPlugins {
+  comparePlugins: InteropComparePlugin[]
+  configPlugins: InteropConfigPlugin[]
+  eventPlugins: InteropPlugin[]
+}
+
+export interface InteropPluginDependencies {
+  chains: { name: string; id: number }[]
+  httpClient: HttpClient
+  rpcClients: RpcClient[]
+  logger: Logger
+  configs: InteropConfigs
+}
+
+export function createInteropPlugins(
+  deps: InteropPluginDependencies,
+): InteropPlugins {
+  const ethereumRpc = deps.rpcClients.find((c) => c.chain === 'ethereum')
+  assert(ethereumRpc)
+
+  return {
+    comparePlugins: [new AcrossComparePlugin()],
+    configPlugins: [
+      new AcrossConfigPlugin(
+        deps.chains,
+        deps.logger,
+        ethereumRpc,
+        deps.configs,
+      ),
+      new LayerZeroConfigPlugin(
+        deps.chains,
+        deps.configs,
+        deps.logger,
+        deps.httpClient,
+      ),
+    ],
+    eventPlugins: [
+      new SquidCoralPlugin(),
+      new DeBridgePlugin(),
+      new DeBridgeDlnPlugin(),
+      new MayanForwarderPlugin(),
+      new CircleGatewayPlugIn(),
+      new CCIPPlugIn(),
+      new MayanSwiftPlugin(), // should be run before CCTP
+      new MayanMctpPlugin(), // should be run before CCTP
+      new MayanMctpFastPlugin(), // should be run before CCTP
+      new CCTPPlugin(),
+      new StargatePlugin(), // should be run before stargate bus/taxi, ofts
+      new StargateV2BusPlugin(), // should be run before LayerZeroV2, ofts
+      new StargateV2TaxiPlugin(), // should be run before LayerZeroV2, ofts
+      new LayerZeroV2OFTsPlugin(), // should be run before LayerZeroV2
+      new LayerZeroV1Plugin(),
+      new LayerZeroV2Plugin(),
+      new WormholeNTTPlugin(), // should be run before WormholeCore and WormholeRelayer
+      new WormholeTokenBridgePlugin(), // should be run before Wormhole
+      new WormholeRelayerPlugin(), // should be run before Wormhole
+      new WormholePlugin(),
+      new AllbridgePlugIn(),
+      new AxelarITSPlugin(), // should be run before Axelar
+      new AxelarPlugin(),
+      new AcrossPlugin(deps.configs),
+      new OrbitStackPlugin(),
+      new OpStackPlugin(),
+      new HyperlaneMerklyTokenBridgePlugin(), // should be run before HyperlaneHWR
+      new HyperlaneHwrPlugin(), // should be run before Hyperlane
+      new HyperlaneEcoPlugin(), // should be run before Hyperlane
+      new HyperlanePlugIn(),
+      new OneinchFusionPlusPlugin(),
+    ],
+  }
 }

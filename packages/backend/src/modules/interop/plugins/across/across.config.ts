@@ -7,11 +7,20 @@ import {
   type Hex,
   parseAbi,
 } from 'viem'
-import type {
-  AcrossNetwork,
-  InteropNetworks,
-  InteropNetworksPlugin,
-} from './types'
+import { TimeLoop } from '../../../../tools/TimeLoop'
+import {
+  defineConfig,
+  type InteropConfigPlugin,
+  type InteropConfigs,
+} from '../../InteropConfigs'
+
+export interface AcrossNetwork {
+  chainId: number
+  chain: string
+  spokePool: EthereumAddress
+}
+
+export const AcrossConfig = defineConfig<AcrossNetwork[]>('across')
 
 const abi = parseAbi([
   'function crossChainContracts(uint256) view returns (address adapter, address spokePool)',
@@ -29,14 +38,30 @@ const OVERRIDES = [
   },
 ]
 
-export class AcrossNetworksPlugin implements InteropNetworksPlugin {
-  name = 'across'
+export class AcrossConfigPlugin
+  extends TimeLoop
+  implements InteropConfigPlugin
+{
+  provides = AcrossConfig
 
   constructor(
     private chains: { id: number; name: string }[],
-    private logger: Logger,
+    protected logger: Logger,
     private ethereumRpc: RpcClient,
-  ) {}
+    private configs: InteropConfigs,
+    intervalMs = 20 * 60 * 1000,
+  ) {
+    super({ intervalMs })
+  }
+
+  async run() {
+    const previous = this.configs.get(AcrossConfig)
+    const latest = await this.getLatestNetworks()
+    const reconciled = this.reconcileNetworks(previous, latest)
+    if (reconciled !== 'not-changed') {
+      await this.configs.set(AcrossConfig, reconciled)
+    }
+  }
 
   async getLatestNetworks(): Promise<AcrossNetwork[]> {
     const latest = await this.ethereumRpc.getLatestBlockNumber()
@@ -52,10 +77,7 @@ export class AcrossNetworksPlugin implements InteropNetworksPlugin {
         args: [BigInt(chain.id)],
       })
 
-      calls.push({
-        to: HUB_POOL,
-        data: Bytes.fromHex(data),
-      })
+      calls.push({ to: HUB_POOL, data: Bytes.fromHex(data) })
     }
 
     const result = await this.ethereumRpc.multicall(calls, latest)
@@ -84,9 +106,9 @@ export class AcrossNetworksPlugin implements InteropNetworksPlugin {
   }
 
   reconcileNetworks(
-    previous: InteropNetworks | undefined,
-    latest: InteropNetworks,
-  ): InteropNetworks | 'not-changed' {
+    previous: AcrossNetwork[] | undefined,
+    latest: AcrossNetwork[],
+  ): AcrossNetwork[] | 'not-changed' {
     if (previous === undefined) {
       return latest
     }

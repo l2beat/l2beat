@@ -1,6 +1,6 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
-import { createDatabase } from '@l2beat/database'
-import { HttpClient, RpcClient } from '@l2beat/shared'
+import { ProjectService } from '@l2beat/config'
+import { HttpClient, MulticallV3Client, RpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { boolean, command, flag, positional, run, string } from 'cmd-ts'
@@ -9,8 +9,8 @@ import { type ParseError, parse } from 'jsonc-parser'
 import { join } from 'path'
 import { InMemoryEventDb } from '../InMemoryEventDb'
 import { logToViemLog } from '../InteropBlockProcessor'
+import { InteropConfigs } from '../InteropConfigs'
 import { match } from '../InteropMatcher'
-import { InteropStore } from '../InteropStore'
 import { createInteropPlugins } from '../plugins'
 import {
   Address32,
@@ -33,15 +33,16 @@ export function readJsonc(path: string): JSON {
 
 type Example = v.infer<typeof Example>
 const Example = v.object({
+  loadConfigs: v.array(v.string()).optional(),
   txs: v.array(
     v.object({
       chain: v.string(),
       tx: v.string(),
     }),
   ),
-  events: v.array(v.string()),
-  messages: v.array(v.string()),
-  transfers: v.array(v.string()),
+  events: v.array(v.string()).optional(),
+  messages: v.array(v.string()).optional(),
+  transfers: v.array(v.string()).optional(),
 })
 
 const cmd = command({
@@ -105,33 +106,69 @@ async function runExample(example: Example): Promise<RunResult> {
   const http = new HttpClient()
   const env = getEnv()
 
+  const ps = new ProjectService()
+  const psChains = (await ps.getProjects({ select: ['chainConfig'] })).map(
+    (p) => p.chainConfig,
+  )
+  const pluginChains = psChains
+    .filter((c) => c.chainId !== undefined)
+    .map((c) => ({ name: c.name, id: c.chainId as number }))
+
+  const makeRpcClient = (chain: string) => {
+    let multicallClient: MulticallV3Client | undefined
+    const multicallConfig = psChains
+      .find((c) => c.name === chain)
+      ?.multicallContracts?.find((c) => c.version === '3')
+    if (multicallConfig) {
+      multicallClient = new MulticallV3Client(
+        multicallConfig.address,
+        multicallConfig.sinceBlock,
+        multicallConfig.batchSize,
+      )
+    }
+    return new RpcClient({
+      url: env.string(`${chain.toUpperCase()}_RPC_URL`),
+      sourceName: chain,
+      http,
+      logger,
+      callsPerMinute: 600,
+      retryStrategy: 'SCRIPT',
+      multicallClient,
+    })
+  }
+
   const chains = example.txs.map(({ chain, tx }) => {
     return {
       txHash: tx,
       name: chain,
-      rpc: new RpcClient({
-        url: env.string(`${chain.toUpperCase()}_RPC_URL`),
-        sourceName: chain,
-        http,
-        logger,
-        callsPerMinute: 600,
-        retryStrategy: 'SCRIPT',
-      }),
+      rpc: makeRpcClient(chain),
     }
   })
 
-  const db = createDatabase({
-    connectionString: getEnv().string('INTEROP_DB_URL'),
-    application_name: 'INTEROP-EXAMPLE-LOCAL',
-    ssl: { rejectUnauthorized: false },
-    min: 2,
-    max: 10,
-    keepAlive: false,
+  const rpcClients = chains.map((x) => x.rpc)
+  if (!rpcClients.some((x) => x.chain === 'ethereum')) {
+    rpcClients.push(makeRpcClient('ethereum'))
+  }
+
+  const plugins = createInteropPlugins({
+    chains: pluginChains,
+    configs: new InteropConfigs(undefined),
+    httpClient: new HttpClient(),
+    logger,
+    rpcClients,
   })
 
-  const interopStore = new InteropStore(db)
-
-  const plugins = createInteropPlugins(interopStore)
+  for (const key of example.loadConfigs ?? []) {
+    const plugin = plugins.configPlugins.find((x) => x.provides.key === key)
+    if (!plugin) {
+      throw new Error(`Cannot load config: ${key}`)
+    }
+    console.log('LOADING CONFIG:', key)
+    await plugin.run()
+  }
+  if (example.loadConfigs) {
+    console.log('CONFIGS LOADED\n')
+  }
 
   const events: InteropEvent[] = []
   for (const chain of chains) {
@@ -144,7 +181,7 @@ async function runExample(example: Example): Promise<RunResult> {
       .map(logToViemLog)
 
     for (const log of txLogs) {
-      for (const plugin of plugins) {
+      for (const plugin of plugins.eventPlugins) {
         if (!plugin.capture) {
           continue
         }
@@ -181,7 +218,7 @@ async function runExample(example: Example): Promise<RunResult> {
     (type) => events.filter((x) => x.type === type),
     [...new Set(events.map((x) => x.type))],
     events.length,
-    plugins,
+    plugins.eventPlugins,
     chains.map((x) => x.name),
     logger,
   )
@@ -200,19 +237,19 @@ function checkExample(
 ): boolean {
   const eventsOk = checkTyped(
     'Event   ',
-    [...example.events],
+    [...(example.events ?? [])],
     result.events,
     verbose,
   )
   const messagesOk = checkTyped(
     'Message ',
-    [...example.messages],
+    [...(example.messages ?? [])],
     result.messages,
     verbose,
   )
   const transfersOk = checkTyped(
     'Transfer',
-    [...example.transfers],
+    [...(example.transfers ?? [])],
     result.transfers,
     verbose,
   )

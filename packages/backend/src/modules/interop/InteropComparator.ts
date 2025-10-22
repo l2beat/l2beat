@@ -1,7 +1,10 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { TimeLoop } from '../../tools/TimeLoop'
-import type { InteropComparePlugin, InteropExternalItem } from './compare/types'
+import type {
+  InteropComparePlugin,
+  InteropExternalItem,
+} from './InteropCompare'
 
 export class InteropComparator extends TimeLoop {
   private items: {

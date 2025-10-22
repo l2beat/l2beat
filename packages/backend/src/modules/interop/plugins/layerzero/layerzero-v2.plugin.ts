@@ -1,10 +1,6 @@
-/* Note - as opposed to V2 where message events are emitted by the endpoint contract
-   in V1 they are emitted by send/receive library contracts.
-*/
-
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { solidityKeccak256 } from 'ethers/lib/utils'
-import { BinaryReader } from '../BinaryReader'
+import { BinaryReader } from '../../BinaryReader'
 import {
   createEventParser,
   createInteropEventType,
@@ -16,58 +12,61 @@ import {
   type LogToCapture,
   type MatchResult,
   Result,
-} from './types'
+} from '../types'
 
-const parsePacketSent = createEventParser(
-  'event PacketSent(bytes encodedPayload, bytes options, uint256 nativeFee, uint256 lzTokenFee)',
+export const parsePacketSent = createEventParser(
+  'event PacketSent(bytes encodedPayload, bytes options, address sendLibrary)',
 )
 
-const parsePacketDelivered = createEventParser(
+export const parsePacketDelivered = createEventParser(
   'event PacketDelivered((uint32 srcEid,bytes32 sender, uint64 nonce) origin, address receiver)',
 )
 
 export const PacketSent = createInteropEventType<{
   $dstChain: string
   guid: string
-}>('layerzero-v1.PacketSent')
+}>('layerzero-v2.PacketSent')
 
 export const PacketDelivered = createInteropEventType<{
   $srcChain: string
   guid: string
-}>('layerzero-v1.PacketDelivered')
+}>('layerzero-v2.PacketDelivered')
 
-const LAYERZERO_NETWORKS = defineNetworks('layerzero', [
+export const LAYERZERO_NETWORKS = defineNetworks('layerzero', [
   {
     chainId: 1,
-    eid: 101,
+    eid: 30101,
     chain: 'ethereum',
-    sendLib: EthereumAddress('0xD231084BfB234C107D3eE2b22F97F3346fDAF705'),
-    receiveLib: EthereumAddress('0x245B6e8FFE9ea5Fc301e32d16F66bD4C2123eEfC'),
+    address: EthereumAddress('0x1a44076050125825900e736c501f859c50fE728c'),
   },
   {
     chainId: 42161,
-    eid: 110,
+    eid: 30110,
     chain: 'arbitrum',
-    sendLib: EthereumAddress('0x5cDc927876031B4Ef910735225c425A7Fc8efed9'),
-    receiveLib: EthereumAddress('0xe4DD168822767C4342e54e6241f0b91DE0d3c241'),
+    address: EthereumAddress('0x1a44076050125825900e736c501f859c50fE728c'),
   },
   {
     chainId: 8453,
-    eid: 184,
+    eid: 30184,
     chain: 'base',
-    sendLib: EthereumAddress('0x9DB3714048B5499Ec65F807787897D3b3Aa70072'),
-    receiveLib: EthereumAddress('0x58D53a2d6a08B72a15137F3381d21b90638bd753'),
+    address: EthereumAddress('0x1a44076050125825900e736c501f859c50fE728c'),
+  },
+  {
+    chainId: 10,
+    eid: 30111,
+    chain: 'optimism',
+    address: EthereumAddress('0x1a44076050125825900e736c501f859c50fE728c'),
   },
 ])
 
-export class LayerZeroV1Plugin implements InteropPlugin {
-  name = 'layerzero-v1'
+export class LayerZeroV2Plugin implements InteropPlugin {
+  name = 'layerzero-v2'
 
   capture(input: LogToCapture) {
     const network = LAYERZERO_NETWORKS.find((x) => x.chain === input.ctx.chain)
     if (!network) return
 
-    const packetSent = parsePacketSent(input.log, [network.sendLib])
+    const packetSent = parsePacketSent(input.log, [network.address])
     if (packetSent) {
       const packet = decodePacket(packetSent.encodedPayload)
       if (!packet) return
@@ -86,9 +85,7 @@ export class LayerZeroV1Plugin implements InteropPlugin {
       return PacketSent.create(input.ctx, { $dstChain, guid })
     }
 
-    const packetDelivered = parsePacketDelivered(input.log, [
-      network.receiveLib,
-    ])
+    const packetDelivered = parsePacketDelivered(input.log, [network.address])
     if (packetDelivered) {
       const guid = createLayerZeroGuid(
         packetDelivered.origin.nonce,
@@ -115,7 +112,7 @@ export class LayerZeroV1Plugin implements InteropPlugin {
     const packetSent = db.find(PacketSent, { guid: packetDelivered.args.guid })
     if (!packetSent) return
     return [
-      Result.Message('layerzero-v1.Message', {
+      Result.Message('layerzero-v2.Message', {
         app: 'unknown',
         srcEvent: packetSent,
         dstEvent: packetDelivered,

@@ -1,18 +1,16 @@
-import { assert } from '@l2beat/shared-pure'
+import { HttpClient } from '@l2beat/shared'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
-import { createInteropComparePlugins } from './compare'
 import { FinancialsService } from './FinancialsService'
 import { InteropBlockProcessor } from './InteropBlockProcessor'
 import { InteropCleaner } from './InteropCleaner'
 import { InteropComparator } from './InteropComparator'
+import { InteropConfigs } from './InteropConfigs'
 import { InteropMatcher } from './InteropMatcher'
-import { InteropNetworksUpdater } from './InteropNetworksUpdater'
 import { InteropRecentPricesIndexer } from './InteropRecentPricesIndexer'
 import { createInteropRouter } from './InteropRouter'
 import { InteropStore } from './InteropStore'
-import { createInteropNetworksPlugins } from './networks'
 import { createInteropPlugins } from './plugins'
 import { MockTokenDb } from './TokenDb'
 
@@ -31,30 +29,22 @@ export function createInteropModule({
   logger = logger.tag({ feature: 'interop', module: 'interop' })
 
   const interopStore = new InteropStore(db)
-  const plugins = createInteropPlugins(interopStore)
 
-  const ethereumRpc = providers.clients.rpcClients.find(
-    (c) => c.chain === 'ethereum',
-  )
-  assert(ethereumRpc)
-  const configPlugins = createInteropNetworksPlugins(
-    config.interop.config.chains,
+  const configs = new InteropConfigs(db)
+  const plugins = createInteropPlugins({
+    configs,
+    chains: config.interop.config.chains,
+    httpClient: new HttpClient(),
     logger,
-    ethereumRpc,
-  )
-
-  const configExtractor = new InteropNetworksUpdater(
-    interopStore,
-    configPlugins,
-    logger,
-  )
+    rpcClients: providers.clients.rpcClients,
+  })
 
   const processors = []
   if (config.interop.capture.enabled) {
     for (const chain of config.interop.capture.chains) {
       const processor = new InteropBlockProcessor(
         chain.name,
-        plugins,
+        plugins.eventPlugins,
         interopStore,
         logger,
       )
@@ -66,18 +56,16 @@ export function createInteropModule({
   const matcher = new InteropMatcher(
     interopStore,
     db,
-    plugins,
+    plugins.eventPlugins,
     config.interop.capture.chains.map((c) => c.name),
     logger,
   )
 
   const router = createInteropRouter(db, config.interop, processors)
 
-  const comparePlugins = createInteropComparePlugins()
-
   const comparator = new InteropComparator(
     db,
-    comparePlugins,
+    plugins.comparePlugins,
     logger,
     config.interop.compare.intervalMs,
   )
@@ -120,10 +108,14 @@ export function createInteropModule({
       financialsService.start()
     }
     if (config.interop && config.interop.config.enabled) {
-      configExtractor.start()
+      for (const plugin of plugins.configPlugins) {
+        plugin.start()
+      }
     }
     logger.info('Started', {
-      plugins: plugins.length,
+      comparePlugins: plugins.comparePlugins.length,
+      configPlugins: plugins.configPlugins.length,
+      eventPlugins: plugins.eventPlugins.length,
     })
   }
 

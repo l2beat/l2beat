@@ -1,13 +1,4 @@
 import {
-  createLayerZeroGuid,
-  decodePacket,
-  LAYERZERO_NETWORKS,
-  PacketDelivered,
-  PacketSent,
-  parsePacketDelivered,
-  parsePacketSent,
-} from './layerzero-v2'
-import {
   Address32,
   createEventParser,
   createInteropEventType,
@@ -18,7 +9,16 @@ import {
   type LogToCapture,
   type MatchResult,
   Result,
-} from './types'
+} from '../types'
+import {
+  createLayerZeroGuid,
+  decodePacket,
+  LAYERZERO_NETWORKS,
+  PacketDelivered,
+  PacketSent,
+  parsePacketDelivered,
+  parsePacketSent,
+} from './layerzero-v2.plugin'
 
 export const parseOFTSent = createEventParser(
   'event OFTSent(bytes32 indexed guid, uint32 dstEid, address indexed fromAddress, uint256 amountSentLD, uint256 amountReceivedLD)',

@@ -1,10 +1,23 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
 import { v } from '@l2beat/validate'
-import type {
-  InteropNetworks,
-  InteropNetworksPlugin,
-  LayerZeroV2Networks,
-} from './types'
+import { TimeLoop } from '../../../../tools/TimeLoop'
+import {
+  defineConfig,
+  type InteropConfigPlugin,
+  type InteropConfigs,
+} from '../../InteropConfigs'
+
+export interface LayerZeroV2Network {
+  chainId: number
+  eid: number
+  chain: string
+  endpointV2: string // fix issue with EthereumAddress
+}
+
+export const LayerZeroConfig = defineConfig<{ v2: LayerZeroV2Network[] }>(
+  'layerzero',
+)
 
 const DOCS_URL = 'https://metadata.layerzero-api.com/v1/metadata/deployments'
 
@@ -30,21 +43,34 @@ const DocsResult = v.record(
 
 const OVERRIDES: { id: number; name: string }[] = [] //TODO: fill
 
-export class LayerZeroNetworksPlugin implements InteropNetworksPlugin {
-  name = 'layerzero'
+export class LayerZeroConfigPlugin
+  extends TimeLoop
+  implements InteropConfigPlugin
+{
+  provides = LayerZeroConfig
 
   constructor(
     private chains: { id: number; name: string }[],
+    private configs: InteropConfigs,
+    protected logger: Logger,
     private http: HttpClient,
-  ) {}
+    intervalMs = 10 * 60 * 1000,
+  ) {
+    super({ intervalMs })
+  }
 
-  async getLatestNetworks(): Promise<LayerZeroV2Networks[]> {
+  async run() {
+    const v2 = await this.getNetworks()
+    this.configs.set(LayerZeroConfig, { v2 })
+  }
+
+  async getNetworks(): Promise<LayerZeroV2Network[]> {
     const response = await this.http.fetch(DOCS_URL, { timeout: 10_000 })
     const docs = DocsResult.parse(response)
 
     const chains = [...this.chains, ...OVERRIDES]
 
-    const config: LayerZeroV2Networks[] = []
+    const config: LayerZeroV2Network[] = []
     for (const [_, value] of Object.entries(docs)) {
       if (
         value === undefined ||
@@ -73,13 +99,5 @@ export class LayerZeroNetworksPlugin implements InteropNetworksPlugin {
     }
 
     return config
-  }
-
-  reconcileNetworks(
-    previous: InteropNetworks | undefined,
-    latest: InteropNetworks,
-  ): InteropNetworks | 'not-changed' {
-    // TODO: do we need it per plugin?
-    return latest
   }
 }
