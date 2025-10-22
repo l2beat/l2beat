@@ -88,9 +88,7 @@ export async function getScalingProjectDaThroughputChart(
     (timestamp) => {
       const posted = grouped[timestamp]
       if (posted) {
-        total += Object.values(posted)
-          .map(Number)
-          .reduce((sum, val) => sum + val, 0)
+        total += Object.values(posted).reduce((sum, val) => sum + val, 0)
       }
       const getDaValue = (layer: string) => {
         return lastDataForLayers[layer] && timestamp <= lastDataForLayers[layer]
@@ -188,9 +186,12 @@ function getMockScalingProjectDaThroughputChart({
   let total = 0
   const chart: ScalingProjectDaThroughputChartPoint[] = timestamps.map(
     (timestamp) => {
-      const throughputValue = Math.random() * 900_000_000 + 90_000_000
-      total += throughputValue
-      return [timestamp, Math.round(throughputValue)]
+      const ethereum = Math.random() * 900_000_000 + 90_000_000
+      const celestia = Math.random() * 900_000_000 + 90_000_000
+      const avail = Math.random() * 900_000_000 + 90_000_000
+      const eigenda = Math.random() * 900_000_000 + 90_000_000
+      total += ethereum + celestia + avail + eigenda
+      return [timestamp, ethereum, celestia, avail, eigenda]
     },
   )
 
