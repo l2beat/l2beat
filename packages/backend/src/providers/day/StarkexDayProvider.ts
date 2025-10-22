@@ -13,7 +13,7 @@ export class StarkexDayProvider implements DayProvider {
     from: number,
     to: number,
   ): Promise<Record<number, number>> {
-    const queries = range(from, to + 1).map(async (day) => ({
+    const queries = range(from, to).map(async (day) => ({
       timestamp: day * UnixTime.DAY,
       count: await this.getTxCountForTimestamp(day),
     }))
