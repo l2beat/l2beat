@@ -114,6 +114,7 @@ export const deversifi: ScalingProject = {
       sinceTimestamp: UnixTime(1590491810),
       resyncLastDays: 7,
       batchSize: 10,
+      dataSource: 'StarkEx Aggregations API',
     },
     // trackedTxs: [
     //   {

@@ -598,6 +598,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
     activityConfig: {
       type: 'day',
       sinceTimestamp: UnixTime(1637020800),
+      dataSource: 'Voyager API',
     },
     daTracking: [
       {

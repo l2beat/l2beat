@@ -141,7 +141,7 @@ export async function getScalingProjectEntry(
     | 'livenessInfo'
     | 'livenessConfig'
     | 'costsInfo'
-    | 'hasActivity'
+    | 'activityConfig'
     | 'colors'
     | 'ecosystemColors'
     | 'discoveryInfo'
