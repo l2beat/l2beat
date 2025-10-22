@@ -1,6 +1,7 @@
 import { getEnv, LogFormatterPretty, Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import { createDatabase } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import { Cache } from '../src/cache/Cache'
 import { QueryExecutor } from '../src/QueryExecutor'
 import { getPackageHash } from '../src/utils/packageHash'
@@ -15,12 +16,13 @@ async function main() {
 
   const rollups = await getRollups()
   const queryExecutor = new QueryExecutor(db, logger, cache)
+  const to = UnixTime.toStartOf(UnixTime.now() - 1, 'hour')
 
   try {
     const result = await queryExecutor.execute(
       {
-        name: 'getTvsChartQuery',
-        args: [rollups],
+        name: 'getSummedByTimestampTvsValuesQuery',
+        args: [rollups, [to, to - UnixTime.DAY * 30], true, false, false],
       },
       10,
     )
