@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { ArrowRightIcon, CoinsIcon } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
 import { Button } from '~/components/core/Button'
@@ -27,7 +28,6 @@ import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractToken, DeployedToken } from '~/mock/types'
 import { api } from '~/react-query/trpc'
 import { getDeployedTokenDisplayId } from '~/utils/getDisplayId'
-import { UnixTime } from '~/utils/UnixTime'
 
 export function SearchPage() {
   const { search } = useParams()
