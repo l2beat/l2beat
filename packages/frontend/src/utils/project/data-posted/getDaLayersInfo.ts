@@ -10,32 +10,31 @@ export function getDaLayersInfo(
   currentDaLayers: DaLayerInfo[]
   pastDaLayers: DaLayerInfo[]
 } {
-  const [pastConfigs, currentConfigs] = partition(configs, (c) =>
-    c.type === 'eigen-da' ? !!c.untilTimestamp : !!c.untilBlock,
+  const daLayersMap = new Map<ProjectId, DaLayerInfo & { isActive: boolean }>()
+
+  for (const config of configs) {
+    const isActive =
+      config.type === 'eigen-da' ? !config.untilTimestamp : !config.untilBlock
+
+    const existingEntry = daLayersMap.get(config.daLayer)
+    if (!existingEntry) {
+      daLayersMap.set(config.daLayer, {
+        ...getDaLayer(config, daLayers),
+        isActive: !isActive,
+      })
+    } else {
+      existingEntry.isActive = existingEntry.isActive || !isActive
+    }
+  }
+
+  const [pastDaLayers, currentDaLayers] = partition(
+    Array.from(daLayersMap.values()),
+    (d) => d.isActive,
   )
 
-  const currentDaLayersMap = new Map<ProjectId, DaLayerInfo>()
-  const pastDaLayersMap = new Map<ProjectId, DaLayerInfo>()
-
-  for (const config of currentConfigs) {
-    const current = currentDaLayersMap.get(config.daLayer)
-    if (!current) {
-      currentDaLayersMap.set(config.daLayer, getDaLayer(config, daLayers))
-    }
-  }
-
-  for (const config of pastConfigs) {
-    const past = pastDaLayersMap.get(config.daLayer)
-    // if project has historical config but it is still used we dont want to show it in past da layers
-    const isCurrent = currentDaLayersMap.has(config.daLayer)
-    if (!past && !isCurrent) {
-      pastDaLayersMap.set(config.daLayer, getDaLayer(config, daLayers))
-    }
-  }
-
   return {
-    currentDaLayers: Array.from(currentDaLayersMap.values()),
-    pastDaLayers: Array.from(pastDaLayersMap.values()),
+    currentDaLayers,
+    pastDaLayers,
   }
 }
 
