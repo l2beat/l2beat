@@ -350,7 +350,7 @@ function impObject<T extends object>(
       return failType('object', value)
     }
     if (strict) {
-      for (const key in object) {
+      for (const key in value) {
         if (!(key in schema)) {
           return {
             success: false,

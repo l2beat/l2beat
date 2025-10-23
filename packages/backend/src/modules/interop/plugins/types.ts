@@ -20,6 +20,19 @@ export function Address32(value: string) {
   throw new Error('Invalid Bytes32Address')
 }
 
+Address32.fromOrUndefined = function fromOrUndefined(
+  value: string | undefined,
+) {
+  if (!value) {
+    return undefined
+  }
+  try {
+    return Address32.from(value)
+  } catch {
+    return undefined
+  }
+}
+
 Address32.from = function from(value: string | EthereumAddress) {
   if (value === 'native') {
     return value as Address32
