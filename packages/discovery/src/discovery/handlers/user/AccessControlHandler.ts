@@ -21,19 +21,11 @@ export const AccessControlHandlerDefinition = v.strictObject({
   ignoreRelative: v.boolean().optional(),
 })
 
-const legacyAbi = new utils.Interface([
+const abi = new utils.Interface([
   'event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)',
   'event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)',
   'event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)',
 ])
-
-const perChainAbi = new utils.Interface([
-  'event RoleGranted(address indexed chainAddress, bytes32 indexed role, address indexed account)',
-  'event RoleRevoked(address indexed chainAddress, bytes32 indexed role, address indexed account)',
-  'event RoleAdminChanged(address indexed chainAddress, bytes32 indexed role, bytes32 previousAdminRole, bytes32 newAdminRole)',
-])
-
-const abis = [legacyAbi, perChainAbi]
 
 const DEFAULT_ADMIN_ROLE_BYTES = '0x' + '0'.repeat(64)
 
@@ -106,12 +98,14 @@ export async function fetchAccessControl(
   provider: IProvider,
   address: ChainSpecificAddress,
 ): Promise<Record<string, AccessControlType>> {
-  const topics = abis.flatMap((abi) => [
-    abi.getEventTopic('RoleGranted'),
-    abi.getEventTopic('RoleRevoked'),
-    abi.getEventTopic('RoleAdminChanged'),
+  // TODO: (sz-piotr) Promise.all new provider
+  const logs = await provider.getLogs(address, [
+    [
+      abi.getEventTopic('RoleGranted'),
+      abi.getEventTopic('RoleRevoked'),
+      abi.getEventTopic('RoleAdminChanged'),
+    ],
   ])
-  const logs = await provider.getLogs(address, [topics])
 
   const roles: Record<
     string,
@@ -137,9 +131,6 @@ export async function fetchAccessControl(
 
   for (const log of logs) {
     const parsed = parseRoleLog(provider.chain, log)
-    if (!parsed) {
-      continue
-    }
     const role = getRole(parsed.role)
     if (parsed.type === 'RoleAdminChanged') {
       role.adminRole = parsed.adminRole
@@ -176,29 +167,21 @@ function parseRoleLog(
       readonly role: string
       readonly adminRole: string
       readonly account?: undefined
-    }
-  | undefined {
-  for (const abi of abis) {
-    try {
-      const event = abi.parseLog(log)
-      if (event.name === 'RoleGranted' || event.name === 'RoleRevoked') {
-        return {
-          type: event.name,
-          role: event.args.role as string,
-          account: ChainSpecificAddress.fromLong(
-            longChain,
-            event.args.account as string,
-          ),
-        } as const
-      }
-      return {
-        type: 'RoleAdminChanged',
-        role: event.args.role as string,
-        adminRole: event.args.newAdminRole as string,
-      } as const
-    } catch (e) {
-      // ignore and try next abi
-    }
+    } {
+  const event = abi.parseLog(log)
+  if (event.name === 'RoleGranted' || event.name === 'RoleRevoked') {
+    return {
+      type: event.name,
+      role: event.args.role as string,
+      account: ChainSpecificAddress.fromLong(
+        longChain,
+        event.args.account as string,
+      ),
+    } as const
   }
-  return undefined
+  return {
+    type: 'RoleAdminChanged',
+    role: event.args.role as string,
+    adminRole: event.args.newAdminRole as string,
+  } as const
 }

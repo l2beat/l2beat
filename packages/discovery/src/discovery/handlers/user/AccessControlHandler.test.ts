@@ -6,20 +6,14 @@ import type { IProvider } from '../../provider/IProvider'
 import { AccessControlHandler } from './AccessControlHandler'
 
 describe(AccessControlHandler.name, () => {
-  const legacyAbi = new utils.Interface([
+  const abi = new utils.Interface([
     'event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)',
     'event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)',
     'event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)',
   ])
 
-  const perChainAbi = new utils.Interface([
-    'event RoleGranted(address indexed chainAddress, bytes32 indexed role, address indexed account)',
-    'event RoleRevoked(address indexed chainAddress, bytes32 indexed role, address indexed account)',
-    'event RoleAdminChanged(address indexed chainAddress, bytes32 indexed role, bytes32 previousAdminRole, bytes32 newAdminRole)',
-  ])
-
   function RoleGranted(role: string, account: EthereumAddress): providers.Log {
-    return legacyAbi.encodeEventLog(legacyAbi.getEvent('RoleGranted'), [
+    return abi.encodeEventLog(abi.getEvent('RoleGranted'), [
       role,
       account,
       EthereumAddress.ZERO,
@@ -27,7 +21,7 @@ describe(AccessControlHandler.name, () => {
   }
 
   function RoleRevoked(role: string, account: EthereumAddress): providers.Log {
-    return legacyAbi.encodeEventLog(legacyAbi.getEvent('RoleRevoked'), [
+    return abi.encodeEventLog(abi.getEvent('RoleRevoked'), [
       role,
       account,
       EthereumAddress.ZERO,
@@ -35,7 +29,7 @@ describe(AccessControlHandler.name, () => {
   }
 
   function RoleAdminChanged(role: string, adminRole: string): providers.Log {
-    return legacyAbi.encodeEventLog(legacyAbi.getEvent('RoleAdminChanged'), [
+    return abi.encodeEventLog(abi.getEvent('RoleAdminChanged'), [
       role,
       '0x' + '0'.repeat(64),
       adminRole,
@@ -50,12 +44,9 @@ describe(AccessControlHandler.name, () => {
         expect(providedAddress).toEqual(address)
         expect(topics).toEqual([
           [
-            legacyAbi.getEventTopic('RoleGranted'),
-            legacyAbi.getEventTopic('RoleRevoked'),
-            legacyAbi.getEventTopic('RoleAdminChanged'),
-            perChainAbi.getEventTopic('RoleGranted'),
-            perChainAbi.getEventTopic('RoleRevoked'),
-            perChainAbi.getEventTopic('RoleAdminChanged'),
+            abi.getEventTopic('RoleGranted'),
+            abi.getEventTopic('RoleRevoked'),
+            abi.getEventTopic('RoleAdminChanged'),
           ],
         ])
         return []
@@ -152,97 +143,6 @@ describe(AccessControlHandler.name, () => {
         [GOBLIN_ROLE]: {
           adminRole: 'DEFAULT_ADMIN_ROLE',
           members: [Charlie.toString()],
-        },
-      },
-      ignoreRelative: undefined,
-    })
-  })
-
-  it('many logs from a per-chain access control', async () => {
-    function PerChainRoleGranted(
-      chainAddress: EthereumAddress,
-      role: string,
-      account: EthereumAddress,
-    ): providers.Log {
-      return perChainAbi.encodeEventLog(perChainAbi.getEvent('RoleGranted'), [
-        chainAddress,
-        role,
-        account,
-      ]) as providers.Log
-    }
-
-    function PerChainRoleAdminChanged(
-      chainAddress: EthereumAddress,
-      role: string,
-      adminRole: string,
-    ): providers.Log {
-      return perChainAbi.encodeEventLog(
-        perChainAbi.getEvent('RoleAdminChanged'),
-        [chainAddress, role, '0x' + '0'.repeat(64), adminRole],
-      ) as providers.Log
-    }
-
-    const COMMITTER_ROLE = utils.solidityKeccak256(['string'], ['COMMITTER_ROLE'])
-    const OPTIONAL_COMMITTER_ADMIN_ROLE = utils.solidityKeccak256(
-      ['string'],
-      ['OPTIONAL_COMMITTER_ADMIN_ROLE'],
-    )
-
-    const Alice = ChainSpecificAddress.random()
-    const Bob = ChainSpecificAddress.random()
-
-    const AliceRaw = ChainSpecificAddress.address(Alice)
-    const BobRaw = ChainSpecificAddress.address(Bob)
-
-    const address = ChainSpecificAddress.random()
-    const chainAddress = EthereumAddress.random()
-
-    const provider = mockObject<IProvider>({
-      chain: 'ethereum',
-      async getLogs() {
-        return [
-          PerChainRoleGranted(chainAddress, COMMITTER_ROLE, AliceRaw),
-          PerChainRoleGranted(chainAddress, COMMITTER_ROLE, BobRaw),
-          PerChainRoleAdminChanged(
-            chainAddress,
-            COMMITTER_ROLE,
-            OPTIONAL_COMMITTER_ADMIN_ROLE,
-          ),
-          PerChainRoleGranted(
-            chainAddress,
-            OPTIONAL_COMMITTER_ADMIN_ROLE,
-            AliceRaw,
-          ),
-        ]
-      },
-    })
-
-    const handler = new AccessControlHandler(
-      'someName',
-      {
-        type: 'accessControl',
-        roleNames: {
-          [COMMITTER_ROLE]: 'COMMITTER_ROLE',
-          [OPTIONAL_COMMITTER_ADMIN_ROLE]: 'OPTIONAL_COMMITTER_ADMIN_ROLE',
-        },
-      },
-      [],
-    )
-    const value = await handler.execute(provider, address)
-    expect(value).toEqual({
-      field: 'someName',
-      value: {
-        DEFAULT_ADMIN_ROLE: {
-          adminRole: 'DEFAULT_ADMIN_ROLE',
-          members: [],
-        },
-        COMMITTER_ROLE: {
-          adminRole: 'OPTIONAL_COMMITTER_ADMIN_ROLE',
-          members: [Alice.toString(), Bob.toString()],
-        },
-        OPTIONAL_COMMITTER_ADMIN_ROLE: {
-          adminRole: 'DEFAULT_ADMIN_ROLE',
-          members: [Alice.toString()],
         },
       },
       ignoreRelative: undefined,
