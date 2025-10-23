@@ -1,8 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
-import { getDb } from '~/server/database'
+import { queryExecutor } from '~/server/queryExecutor'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 
 export interface TvsLeaderboard {
@@ -29,18 +28,19 @@ export async function getTvsLeaderboard(
     return getMockTvsBreakdownData(props.projectIds)
   }
 
-  const db = getDb()
-  const values = await db.tvsProjectValue.getProjectValuesAtTimestamps(
-    range.from,
-    range.to,
-    ['PROJECT'],
-    props.projectIds,
-    range.from - 30 * UnixTime.DAY, // Cut off 30 days before the range
-  )
-  const valuesByProject = groupBy(values, (v) => v.project)
+  const projectsValues = await queryExecutor.execute({
+    name: 'getAtTimestampsPerProjectQuery',
+    args: [
+      range.from,
+      range.to,
+      true,
+      false,
+      range.from - 30 * UnixTime.DAY, // Cut off 30 days before the range
+    ],
+  })
 
   const projects: TvsLeaderboard['projects'] = {}
-  for (const [projectId, values] of Object.entries(valuesByProject)) {
+  for (const [projectId, values] of Object.entries(projectsValues)) {
     const oldestValue = values[0]
     const latestValue = values.at(-1)
 
@@ -49,8 +49,8 @@ export async function getTvsLeaderboard(
     }
 
     projects[projectId] = {
-      tvs: latestValue.value,
-      change: calculatePercentageChange(latestValue.value, oldestValue.value),
+      tvs: latestValue[0],
+      change: calculatePercentageChange(latestValue[0], oldestValue[0]),
     }
   }
 

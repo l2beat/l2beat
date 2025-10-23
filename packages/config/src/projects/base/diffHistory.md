@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x13de4c889c5a91e8f049d91cfe455ad0d95e5967
+
+# Diff at Mon, 20 Oct 2025 15:11:35 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@bfe80e92f67656ee716f7ab40cc8f3f9e92dc7d6 block: 1759995304
+- current timestamp: 1760973016
+
+## Description
+
+Optimism wallet for fee collection changed threshold 67%->60%.
+Op foundation multisig member change.
+
+## Watched changes
+
+```diff
+    contract GnosisSafeL2 (base:0x9c3631dDE5c8316bE5B7554B0CcD2631C15a9A05) {
+    +++ description: None
+      values.$members.0:
++        "base:0x23d85C88792454DcCffD460bC06C349A21aDb102"
+      values.$members.1:
++        "base:0x4d494C5F61b60752D3A10062276a0eFC22596151"
+      values.$members.0:
+-        "base:0x1084092Ac2f04c866806CF3d4a385Afa4F6A6C97"
++        "base:0xB2433A0C418Bda24a771489918EF3a7EBC57e24C"
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x7cB07FE039a92B3D784f284D919503A381BEC54f"
++        "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x7cB07FE039a92B3D784f284D919503A381BEC54f"
++        "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02"
+    }
+```
+
 Generated with discovered.json: 0x84ea2fbab6fbef39dab55b93251def51c24d9224
 
 # Diff at Thu, 09 Oct 2025 07:36:13 GMT:

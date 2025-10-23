@@ -169,6 +169,23 @@ export class Logger {
     }
   }
 
+  /**
+   * Flush all transports that support flushing.
+   * This should be called before the process exits to ensure all buffered logs are sent.
+   */
+  async flush(): Promise<void> {
+    const flushPromises = this.options.transports
+      .map((transportOptions) => {
+        const transport = transportOptions.transport
+        if ('flush' in transport && typeof transport.flush === 'function') {
+          return transport.flush()
+        }
+      })
+      .filter((promise) => promise !== undefined)
+
+    await Promise.all(flushPromises)
+  }
+
   private parseEntry(level: LogLevel, args: unknown[]): LogEntry {
     const parsed = parseLogArguments(args)
     return {

@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x13965e8bf5b21c897264c4aa2c9ceefbea2ceca5
+
+# Diff at Tue, 14 Oct 2025 10:17:00 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@ed4c0b131a4890ffd9886e9edafe28cdc6ce8d83 block: 1759843609
+- current timestamp: 1760436956
+
+## Description
+
+Manually decoded commitment, turns out it's v3.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759843609 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingEigenDA:
+-        "v1"
++        "v3"
+    }
+```
+
 Generated with discovered.json: 0x823a1e9b9d74f25fee76ebf3aa824d8ebb79876e
 
 # Diff at Tue, 07 Oct 2025 13:27:54 GMT:

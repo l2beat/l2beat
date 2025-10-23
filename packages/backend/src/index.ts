@@ -40,9 +40,8 @@ async function main() {
   } catch (e) {
     logger.critical('Failed to start the application', e)
 
-    // wait 10 seconds for the error to be reported
-    console.log('Waiting 10 seconds for the error to be reported')
-    await new Promise((resolve) => setTimeout(resolve, 10000))
+    // flush logs and wait for the error to be reported
+    await logger.flush()
 
     throw e
   }

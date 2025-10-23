@@ -13,8 +13,8 @@ import {
   rangeToResolution,
 } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
+import { ChartDataSourceInfo } from '../ChartDataSourceInfo'
 import { DaThroughputByProjectChart } from './DaThroughputByProjectChart'
-import { EigenDataSourceInfo } from './EigenDataSourceInfo'
 import { EthereumProjectsOnlyCheckbox } from './EthereumProjectsOnlyCheckbox'
 import {
   type ProjectChartDataWithConfiguredThroughput,
@@ -60,7 +60,9 @@ export function ThroughputSectionChart({
 
   return (
     <div>
-      {project.id === 'eigenda' && <EigenDataSourceInfo />}
+      {project.id === 'eigenda' && (
+        <ChartDataSourceInfo dataSource="API provided by EigenLayer" />
+      )}
       <div className="mt-2 space-y-1">
         <EthereumProjectsOnlyCheckbox
           name="projectThroughputIncludeScalingOnly"

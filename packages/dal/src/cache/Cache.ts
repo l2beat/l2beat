@@ -1,7 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import { createClient, type RedisClientType } from 'redis'
-import { packageHash } from '../utils/packageHash'
 
 export interface CacheItem<T = unknown> {
   data: T
@@ -10,7 +9,11 @@ export interface CacheItem<T = unknown> {
 
 export class Cache {
   private client: RedisClientType
-  constructor(redisUrl: string) {
+  private connectionPromise: Promise<RedisClientType> | undefined
+  constructor(
+    redisUrl: string,
+    private readonly packageHash: string,
+  ) {
     this.client = createClient({
       url: redisUrl,
       socket: {
@@ -27,7 +30,7 @@ export class Cache {
       .digest('hex')
       .slice(0, 12)
 
-    return `${query}::${packageHash}::${inputHash}}`
+    return `${query}:${this.packageHash}:input-${inputHash}`
   }
 
   async write(key: string, data: unknown, expires: number) {
@@ -56,8 +59,10 @@ export class Cache {
   }
 
   private async connect() {
-    // opening a connection takes significant time so it's better to keep it open
     if (this.client.isReady) return
-    await this.client.connect()
+
+    // Reuse the same connection promise for all concurrent requests
+    this.connectionPromise ??= this.client.connect()
+    await this.connectionPromise
   }
 }

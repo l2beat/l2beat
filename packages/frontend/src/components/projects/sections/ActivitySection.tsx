@@ -1,4 +1,5 @@
 import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
+import { ChartDataSourceInfo } from '~/components/chart/ChartDataSourceInfo'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { ProjectActivityChart } from '../../chart/activity/ProjectActivityChart'
@@ -11,6 +12,7 @@ export interface ActivitySectionProps extends ProjectSectionProps {
   milestones: Milestone[]
   category?: ProjectScalingCategory
   defaultRange: ActivityTimeRange
+  dataSource: string | undefined
 }
 
 export function ActivitySection({
@@ -18,10 +20,12 @@ export function ActivitySection({
   milestones,
   category,
   defaultRange,
+  dataSource,
   ...sectionProps
 }: ActivitySectionProps) {
   return (
     <ProjectSection {...sectionProps}>
+      {dataSource && <ChartDataSourceInfo dataSource={dataSource} />}
       <ProjectActivityChart
         milestones={milestones}
         project={project}

@@ -19,6 +19,7 @@ import {
   StarknetClient,
   type SvmBlockClient,
   SvmRpcClient,
+  VoyagerClient,
   ZksyncLiteClient,
 } from '@l2beat/shared'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
@@ -29,6 +30,7 @@ export interface Clients {
   logs: LogsClient[]
   svmBlock: SvmBlockClient[]
   indexer: BlockIndexerClient[]
+  voyager: VoyagerClient | undefined
   starkex: StarkexClient | undefined
   loopring: LoopringClient | undefined
   degate: LoopringClient | undefined
@@ -50,6 +52,7 @@ export function initClients(config: Config, logger: Logger): Clients {
   const http = new HttpClient()
 
   let starkexClient: StarkexClient | undefined
+  let voyagerClient: VoyagerClient | undefined
   let loopringClient: LoopringClient | undefined
   let degateClient: LoopringClient | undefined
   let ethereumClient: RpcClient | undefined
@@ -253,6 +256,17 @@ export function initClients(config: Config, logger: Logger): Clients {
     retryStrategy: 'RELIABLE',
   })
 
+  if (config.activity && config.activity.voyagerApiKey) {
+    voyagerClient = new VoyagerClient({
+      sourceName: 'voyager',
+      apiKey: config.activity?.voyagerApiKey,
+      http,
+      logger,
+      callsPerMinute: 100,
+      retryStrategy: 'RELIABLE',
+    })
+  }
+
   if (config.beaconApi.url) {
     beaconChainClient = new BeaconChainClient({
       sourceName: 'beaconApi',
@@ -317,5 +331,6 @@ export function initClients(config: Config, logger: Logger): Clients {
     getRpcClient,
     rpcClients,
     starknetClients,
+    voyager: voyagerClient,
   }
 }

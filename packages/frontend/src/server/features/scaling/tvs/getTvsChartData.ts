@@ -28,6 +28,7 @@ export const TvsChartDataParams = v.object({
   ]),
   filter: TvsProjectFilter,
   excludeAssociatedTokens: v.boolean(),
+  includeRwaRestrictedTokens: v.boolean(),
 })
 
 export type TvsChartDataParams = v.infer<typeof TvsChartDataParams>
@@ -56,12 +57,14 @@ export type TvsChartData = {
 export async function getTvsChart({
   range,
   excludeAssociatedTokens,
+  includeRwaRestrictedTokens,
   filter,
 }: TvsChartDataParams): Promise<TvsChartData> {
   if (env.MOCK) {
     return getMockTvsChartData({
       range,
       excludeAssociatedTokens,
+      includeRwaRestrictedTokens,
       filter,
     })
   }
@@ -82,11 +85,11 @@ export async function getTvsChart({
     getSummedTvsValues(
       tvsProjects.map((p) => p.projectId),
       range,
-      !forSummary
-        ? 'PROJECT'
-        : excludeAssociatedTokens
-          ? 'SUMMARY_WA'
-          : 'SUMMARY',
+      {
+        forSummary,
+        excludeAssociatedTokens,
+        includeRwaRestrictedTokens,
+      },
     ),
   ])
 

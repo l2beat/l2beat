@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('aevo')
 
 export const aevo: ScalingProject = opStackL2({
   addedAt: UnixTime(1694090052), // 2023-09-07T12:34:12Z
-  additionalBadges: [BADGES.DA.EigenDA, BADGES.RaaS.Conduit],
+  additionalBadges: [BADGES.RaaS.Conduit],
   daProvider: EIGENDA_DA_PROVIDER(false),
   associatedTokens: ['AEVO'],
   discovery,
@@ -68,6 +68,15 @@ export const aevo: ScalingProject = opStackL2({
     sinceBlock: 0, // Edge Case: config added @ DA Module start
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADBuw7+PjGs8=',
   },
+  // Uncomment once FE is ready
+  // nonTemplateDaTracking: [
+  //   {
+  //     type: 'eigen-da',
+  //     customerId: '0x24f0a3716805e8973bf48eb908d6d4a2f34af785',
+  //     daLayer: ProjectId('eigenda'),
+  //     sinceTimestamp: UnixTime(1753437600),
+  //   },
+  // ],
   genesisTimestamp: UnixTime(1679202395),
   isNodeAvailable: false,
   milestones: [

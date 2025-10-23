@@ -1,0 +1,8 @@
+{
+  "ERC20MigrationOutbox": {
+    "hash": "0x3e47e140ecb4bf6231922568ce24087b1c09dd2e6ce9ab48b7838363aa835f03",
+    "address": "arb1:0x3515ad5D3D904Cb2731A7d6E5DB9f35D6CAFEB14",
+    "chain": "arbitrum",
+    "blockNumber": 392241612
+  }
+}

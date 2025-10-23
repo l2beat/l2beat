@@ -18,6 +18,7 @@ import { rangeToResolution, TvsChartRange } from './utils/range'
 export const DetailedTvsChartDataParams = v.object({
   range: TvsChartRange,
   excludeAssociatedTokens: v.boolean(),
+  includeRwaRestrictedTokens: v.boolean(),
   filter: TvsProjectFilter,
 })
 
@@ -35,6 +36,8 @@ type DetailedTvsChartDataPoint = [
   stablecoins: number | null,
   bitcoin: number | null,
   other: number | null,
+  rwaRestricted: number | null,
+  rwaPublic: number | null,
 ]
 
 export type DetailedTvsChartData = {
@@ -48,12 +51,14 @@ export type DetailedTvsChartData = {
 export async function getDetailedTvsChart({
   range,
   excludeAssociatedTokens,
+  includeRwaRestrictedTokens,
   filter,
 }: DetailedTvsChartDataParams): Promise<DetailedTvsChartData> {
   if (env.MOCK) {
     return getMockDetailedTvsChartData({
       range,
       excludeAssociatedTokens,
+      includeRwaRestrictedTokens,
       filter,
     })
   }
@@ -74,7 +79,11 @@ export async function getDetailedTvsChart({
     getSummedTvsValues(
       tvsProjects.map((p) => p.projectId),
       { type: range },
-      getType(forSummary, excludeAssociatedTokens),
+      {
+        forSummary,
+        excludeAssociatedTokens,
+        includeRwaRestrictedTokens,
+      },
     ),
   ])
 
@@ -108,6 +117,8 @@ function getChartData(
         null,
         null,
         null,
+        null,
+        null,
       ] as const)
       continue
     }
@@ -125,6 +136,8 @@ function getChartData(
       value.stablecoin,
       value.btc,
       value.other,
+      value.rwaRestricted,
+      value.rwaPublic,
     ] as const)
 
     syncedUntil = value.timestamp
@@ -136,13 +149,6 @@ function getChartData(
   }
 }
 
-function getType(forSummary: boolean, excludeAssociatedTokens: boolean) {
-  if (!forSummary) {
-    return excludeAssociatedTokens ? 'PROJECT_WA' : 'PROJECT'
-  }
-  return excludeAssociatedTokens ? 'SUMMARY_WA' : 'SUMMARY'
-}
-
 function getMockDetailedTvsChartData({
   range,
 }: DetailedTvsChartDataParams): DetailedTvsChartData {
@@ -152,7 +158,19 @@ function getMockDetailedTvsChartData({
 
   return {
     chart: timestamps.map((timestamp) => {
-      return [timestamp, 3000, 2000, 1000, 1200, 1000, 1000, 1000, 1000]
+      return [
+        timestamp,
+        3000,
+        2000,
+        1000,
+        1200,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+      ]
     }),
     syncedUntil: timestamps[timestamps.length - 1] ?? 0,
   }

@@ -363,6 +363,7 @@
 
   --color-pink-100: #ff46c0;
   --color-pink-200: #db8bf7;
+  --color-pink-750: #bc4b51;
   --color-pink-800: #b94ddf;
   --color-pink-900: #ab3bd2;
   --color-n-pink-400: #fc49c2;
@@ -419,6 +420,8 @@
   --color-fuchsia-700: #860cb0;
 
   --color-n-cyan-600: #1c8ba4;
+
+  --color-lime-650: #61b143;
 
   --color-n-stone-200: #f0d8bd;
   --color-n-stone-900: #593522;

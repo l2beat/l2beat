@@ -138,8 +138,14 @@ export async function getActivityChart({
     const fallbackValue = isSynced ? 0 : null
 
     const entry = aggregatedEntries[timestamp]
-    if (!entry) {
-      return [timestamp, null, null, null, null]
+    if (!entry || !isSynced) {
+      return [
+        timestamp,
+        null,
+        entry?.ethereumCount ?? fallbackValue,
+        null,
+        entry?.ethereumUopsCount ?? fallbackValue,
+      ]
     }
 
     return [

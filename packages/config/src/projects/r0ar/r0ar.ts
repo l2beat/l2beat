@@ -27,6 +27,7 @@ export const r0ar: ScalingProject = opStackL2({
       documentation: [],
       explorers: ['https://r0arscan.io/'],
       socialMedia: ['https://x.com/th3r0ar', 'https://t.me/r0ar_community'],
+      repositories: ['https://github.com/R0AR-Foundation'],
     },
   },
   chainConfig: {
