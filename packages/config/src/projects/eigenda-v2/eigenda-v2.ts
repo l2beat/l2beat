@@ -45,15 +45,15 @@ export const eigendaV2: BaseProject = {
     name: 'DACert Verifier (EigenDA V2)',
     daLayer: ProjectId('eigenda'),
     relayerType: {
-      value: 'Permissioned',
+      value: 'SelfProposed',
       sentiment: 'good',
       description:
-        'EigenDA V2 uses the sequencer as relayer, eliminating the need for separate permissioned relayers. The sequencer directly submits certificates through DACert Verifier contracts.',
+      'In EigenDA V2 secure integrations, the rollup batcher includes the DA certificate on L1, no separate third-party relayer is required.',
     },
     validationType: {
       value: 'BLS Signature',
       description:
-        'EigenDA V2 certificates require onchain BLS signatures verification through dedicated DACert Verifier contracts. Each certificate version corresponds to a specific verifier that validates the certificate format and cryptographic proofs.',
+        'EigenDA V2 certificates require onchain BLS signatures verification through dedicated DACert Verifier contracts. Each certificate version corresponds to a specific verifier that validates the certificate format and proofs.',
     },
     usedIn: linkByDA({
       layer: ProjectId('eigenda'),
@@ -67,7 +67,7 @@ EigenDA V2 introduces a more efficient architecture where the L2 sequencer acts 
 
 ### Key Improvements
 - **Sequencer as Relayer**: The sequencer acts as the relayer, eliminating the need for separate permissioned relayers
-- **Direct Certificate Verification**: Multiple DACert Verifier contracts handle different certificate versions (V2, V3) without requiring batch submissions to the ServiceManager
+- **Direct Certificate Verification**: Multiple DACert Verifier contracts handle different certificate versions (V2, V3). These contracts read operator/state metadata via EigenDA and EigenLayer core contracts (incl. ServiceManager components) and verify signatures and stake thresholds.
 - **Version-Specific Verification**: Each certificate version has a corresponding verifier contract that validates the specific certificate format and cryptographic proofs
 
 ### Certificate Types and Verifiers
