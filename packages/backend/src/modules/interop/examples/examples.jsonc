@@ -362,6 +362,21 @@
     "messages": ["axelar.ContractCallWithTokenMessage"],
     "transfers": ["axelar-gateway.Transfer"]
   },
+  "relay-simple": {
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x880c61462d87a061b18a35ad585b120212d844b51222e0c9d5bc84aa1addf800"
+      },
+      {
+        "chain": "base",
+        "tx": "0xaa2a3bb58bf24c52642ed51653f84f87c28d818da9fe90921df959fd2b9c461c"
+      }
+    ],
+    "events": [],
+    "messages": [],
+    "transfers": []
+  },
   "squid-coral": {
     "txs": [
       {

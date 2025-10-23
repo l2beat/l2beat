@@ -33,6 +33,7 @@ import { MayanMctpFastPlugin } from './mayan-mctp-fast'
 import { MayanSwiftPlugin } from './mayan-swift'
 import { OpStackPlugin } from './opstack'
 import { OrbitStackPlugin } from './orbitstack'
+import { RelaySimplePlugIn } from './relay-simple'
 import { SquidCoralPlugin } from './squid-coral'
 import { StargatePlugin } from './stargate'
 import { StargateV2BusPlugin } from './stargate-v2-bus'
@@ -112,6 +113,7 @@ export function createInteropPlugins(
       new HyperlaneEcoPlugin(), // should be run before Hyperlane
       new HyperlanePlugIn(),
       new OneinchFusionPlusPlugin(),
+      new RelaySimplePlugIn(),
     ],
   }
 }
