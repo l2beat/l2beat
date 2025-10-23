@@ -5,16 +5,15 @@ import {
   DaUpgradeabilityRisk,
 } from '../../common'
 import { linkByDA } from '../../common/linkByDA'
-import type { BaseProject } from '../../types'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { BaseProject } from '../../types'
 
 const discovery = new ProjectDiscovery('eigenda')
 
 const totalNumberOfRegisteredOperators = discovery.getContractValue<string[]>(
-    'RegistryCoordinator',
-    'registeredOperators',
-  ).length
-
+  'RegistryCoordinator',
+  'registeredOperators',
+).length
 
 export const eigendaV2: BaseProject = {
   id: ProjectId('eigenda-v2'),
@@ -48,7 +47,7 @@ export const eigendaV2: BaseProject = {
       value: 'SelfProposed',
       sentiment: 'good',
       description:
-      'In EigenDA V2 secure integrations, the rollup batcher includes the DA certificate on L1, no separate third-party relayer is required.',
+        'In EigenDA V2 secure integrations, the rollup batcher includes the DA certificate on L1, no separate third-party relayer is required.',
     },
     validationType: {
       value: 'BLS Signature',
@@ -134,11 +133,11 @@ This architecture provides improved throughput and eliminates single points of f
       ],
     },
     risks: {
-    committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(
+      committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(
         'Permissioned',
         undefined,
         totalNumberOfRegisteredOperators,
-        ),
+      ),
       upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(0),
       relayerFailure: DaRelayerFailureRisk.SelfPropose,
     },
