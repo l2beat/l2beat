@@ -91,9 +91,9 @@ function fromDbRecord(record: InteropEventRecord): InteropEvent {
       logIndex: record.logIndex,
       timestamp: record.timestamp,
       txHash: record.txHash,
-      value: record.value,
+      txValue: record.value,
       txTo: record.txTo ? Address32.from(record.txTo) : undefined,
-      calldata: record.calldata,
+      txData: record.calldata,
     },
   }
 }
@@ -111,9 +111,9 @@ function toDbRecord(event: InteropEvent): InteropEventRecord {
     logIndex: event.ctx.logIndex,
     timestamp: event.ctx.timestamp,
     txHash: event.ctx.txHash,
-    value: event.ctx.value,
+    value: event.ctx.txValue,
     txTo: event.ctx.txTo,
-    calldata: event.ctx.calldata,
+    calldata: event.ctx.txData,
     matched: false,
     unsupported: false,
   }

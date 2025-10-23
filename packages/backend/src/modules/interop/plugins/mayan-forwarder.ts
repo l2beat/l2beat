@@ -94,7 +94,7 @@ export class MayanForwarderPlugin implements InteropPlugin {
         ),
         methodSignature: decodedData.methodSignature,
         tokenIn: decodedData.tokenIn ?? Address32.NATIVE,
-        amountIn: decodedData.amountIn ?? input.ctx.value,
+        amountIn: decodedData.amountIn ?? input.ctx.txValue,
         tokenOut: decodedData.tokenOut,
         minAmountOut: decodedData.minAmountOut,
         $dstChain: decodedData.dstChain,

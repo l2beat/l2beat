@@ -45,10 +45,10 @@ export interface InteropEventContext {
   blockNumber: number
   blockHash: string
   txHash: string
-  value: string
+  txValue: string
   txTo?: Address32
   logIndex: number
-  calldata: string
+  txData: string
 }
 
 export interface InteropEvent<T = unknown> {
