@@ -38,22 +38,14 @@ export function loggerMiddleware(logger: Logger) {
   }
 }
 
+const dummyUrl = 'https://api.l2beat.com'
 function getParamsWithoutApiKey(url: string) {
-  const [urlWithoutParams, ...queryParamsString] = url.split('?')
-  const params = queryParamsString.join('?').split('&')
-  const result: Record<string, string> = {}
-  for (const param of params) {
-    const [key, value] = param.split('=')
-    if (!key || !value) {
-      continue
-    }
-    if (key === 'apiKey') {
-      continue
-    }
-    result[key] = value
-  }
+  const urlObj = new URL(`${dummyUrl}${url}`)
+  urlObj.searchParams.delete('apiKey')
+  const queryParams = Object.fromEntries(urlObj.searchParams.entries())
+
   return {
-    url: urlWithoutParams,
-    queryParams: Object.keys(result).length > 0 ? result : undefined,
+    url: urlObj.pathname,
+    queryParams: Object.keys(queryParams).length > 0 ? queryParams : undefined,
   }
 }
