@@ -3,8 +3,8 @@
   "compilerOptions": {
     "lib": ["ESNext"],
     "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "noUncheckedIndexedAccess": false,
     "verbatimModuleSyntax": true,
     "outDir": "build/esm"
