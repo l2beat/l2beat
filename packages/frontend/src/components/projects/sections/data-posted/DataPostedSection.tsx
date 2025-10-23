@@ -23,7 +23,9 @@ export interface DataPostedSectionProps extends ProjectSectionProps {
   }[]
   milestones: Milestone[]
   defaultRange: DataPostedTimeRange
-  daTrackingConfig: ProjectDaTrackingConfig[]
+  daTrackingConfig: (ProjectDaTrackingConfig & {
+    daLayerName: string
+  })[]
 }
 
 export function DataPostedSection({

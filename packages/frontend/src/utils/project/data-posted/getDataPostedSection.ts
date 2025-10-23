@@ -1,4 +1,5 @@
 import type { Project } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import type { DataPostedSectionProps } from '~/components/projects/sections/data-posted/DataPostedSection'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
@@ -33,10 +34,19 @@ export async function getDataPostedSection(
     daLayers,
   )
 
+  const daTrackingConfig = project.daTrackingConfig.map((config) => {
+    const daLayer = daLayers.find((d) => d.id === config.daLayer)
+    assert(daLayer, 'Da layer not found')
+    return {
+      ...config,
+      daLayerName: daLayer.name,
+    }
+  })
+
   return {
     defaultRange: range,
     currentDaLayers,
     pastDaLayers,
-    daTrackingConfig: project.daTrackingConfig,
+    daTrackingConfig,
   }
 }

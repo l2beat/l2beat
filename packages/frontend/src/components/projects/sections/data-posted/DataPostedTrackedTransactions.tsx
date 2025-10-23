@@ -1,8 +1,3 @@
-import type {
-  BlockDaTrackingConfig,
-  ProjectDaTrackingConfig,
-  TimestampDaTrackingConfig,
-} from '@l2beat/config'
 import { useState } from 'react'
 import { Badge } from '~/components/badge/Badge'
 import { Checkbox } from '~/components/core/Checkbox'
@@ -14,11 +9,12 @@ import {
 import { EtherscanLink } from '~/components/EtherscanLink'
 import { ChevronIcon } from '~/icons/Chevron'
 import { formatTimestamp } from '~/utils/dates'
+import type { DataPostedSectionProps } from './DataPostedSection'
 
 export function DataPostedTrackedTransactions({
   daTrackingConfig,
 }: {
-  daTrackingConfig: ProjectDaTrackingConfig[]
+  daTrackingConfig: DataPostedSectionProps['daTrackingConfig']
 }) {
   const [showHistoricalTransactions, setShowHistoricalTransactions] =
     useState(false)
@@ -80,14 +76,13 @@ function TransactionDetails({
   transaction,
   showHistoricalTransactions,
 }: {
-  transaction: BlockDaTrackingConfig | TimestampDaTrackingConfig
+  transaction: DataPostedSectionProps['daTrackingConfig'][number]
   showHistoricalTransactions: boolean
 }) {
   return (
     <div className="mb-4">
       <div className="mb-2 flex justify-between max-lg:flex-col lg:gap-2">
         <div className="flex items-center gap-2">
-          {/* TODO: add name of each layer */}
           {showHistoricalTransactions ? (
             (
               transaction.type === 'eigen-da'
@@ -107,6 +102,9 @@ function TransactionDetails({
       </div>
 
       <div className="border-divider border-l-2 pl-3">
+        <p className="mb-1 text-secondary text-sm">
+          DA layer: {transaction.daLayerName}
+        </p>
         {transaction.type === 'eigen-da' ? (
           <p className="mb-1 text-secondary text-sm">
             From:{' '}
