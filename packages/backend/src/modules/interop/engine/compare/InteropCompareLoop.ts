@@ -22,7 +22,7 @@ export class InteropCompareLoop extends TimeLoop {
     protected logger: Logger,
   ) {
     super({ intervalMs: plugin.intervalMs ?? 20 * 60_000 })
-    this.logger = logger.for(this)
+    this.logger = logger.for(this).tag({ tag: plugin.name })
   }
 
   async run() {

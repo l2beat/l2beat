@@ -63,7 +63,7 @@ export function createInteropModule({
 
   const router = createInteropRouter(db, config.interop, processors)
 
-  const comparators = plugins.comparePlugins.map(
+  const compareLoops = plugins.comparePlugins.map(
     (c) => new InteropCompareLoop(db, c, logger),
   )
 
@@ -94,8 +94,8 @@ export function createInteropModule({
       matcher.start()
     }
     if (config.interop && config.interop.compare.enabled) {
-      for (const comparator of comparators) {
-        comparator.start()
+      for (const compareLoop of compareLoops) {
+        compareLoop.start()
       }
     }
     if (config.interop && config.interop.cleaner) {
@@ -107,8 +107,8 @@ export function createInteropModule({
       financialsService.start()
     }
     if (config.interop && config.interop.config.enabled) {
-      for (const plugin of plugins.configPlugins) {
-        plugin.start()
+      for (const configLoop of configLoops) {
+        configLoop.start()
       }
     }
     logger.info('Started', {

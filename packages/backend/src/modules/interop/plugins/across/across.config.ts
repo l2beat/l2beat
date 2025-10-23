@@ -13,10 +13,11 @@ import {
   type InteropConfigPlugin,
   type InteropConfigStore,
 } from '../../engine/config/InteropConfigStore'
+import { reconcileNetworks } from '../../engine/config/reconcileNetworks'
 
 export interface AcrossNetwork {
-  chainId: number
   chain: string
+  chainId: number
   spokePool: EthereumAddress
 }
 
@@ -46,20 +47,33 @@ export class AcrossConfigPlugin
 
   constructor(
     private chains: { id: number; name: string }[],
+    private store: InteropConfigStore,
     protected logger: Logger,
     private ethereumRpc: RpcClient,
-    private configs: InteropConfigStore,
-    intervalMs = 20 * 60 * 1000,
   ) {
-    super({ intervalMs })
+    super({ intervalMs: 20 * 60 * 1000 })
+    this.logger = logger.for(this).tag({ tag: this.provides.key })
   }
 
   async run() {
-    const previous = this.configs.get(AcrossConfig)
+    const previous = this.store.get(this.provides)
     const latest = await this.getLatestNetworks()
-    const reconciled = this.reconcileNetworks(previous, latest)
-    if (reconciled !== 'not-changed') {
-      await this.configs.set(AcrossConfig, reconciled)
+
+    const reconciled = reconcileNetworks(previous, latest)
+
+    if (reconciled.removed.length > 0) {
+      this.logger.error('Networks removed', {
+        plugin: this.provides.key,
+        removed: reconciled.removed,
+      })
+      return
+    }
+
+    if (reconciled.updated.length > 0) {
+      this.logger.info('Networks updated', {
+        plugin: this.provides.key,
+      })
+      this.store.set(this.provides, reconciled.updated)
     }
   }
 
@@ -82,7 +96,7 @@ export class AcrossConfigPlugin
 
     const result = await this.ethereumRpc.multicall(calls, latest)
 
-    const config: AcrossNetwork[] = []
+    const config = []
 
     for (const [i, r] of result.entries()) {
       if (!r.success) {
@@ -103,36 +117,5 @@ export class AcrossConfigPlugin
     }
 
     return config
-  }
-
-  reconcileNetworks(
-    previous: AcrossNetwork[] | undefined,
-    latest: AcrossNetwork[],
-  ): AcrossNetwork[] | 'not-changed' {
-    if (previous === undefined) {
-      return latest
-    }
-
-    if (previous.length !== latest.length) {
-      return latest
-    }
-
-    const sortedPrevious = [...previous].sort((a, b) => a.chainId - b.chainId)
-    const sortedLatest = [...latest].sort((a, b) => a.chainId - b.chainId)
-
-    for (let i = 0; i < sortedPrevious.length; i++) {
-      const prev = sortedPrevious[i]
-      const curr = sortedLatest[i]
-
-      if (
-        prev.chainId !== curr.chainId ||
-        prev.chain !== curr.chain ||
-        prev.spokePool !== curr.spokePool
-      ) {
-        return latest
-      }
-    }
-
-    return 'not-changed'
   }
 }

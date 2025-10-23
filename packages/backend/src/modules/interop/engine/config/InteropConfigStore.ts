@@ -9,8 +9,8 @@ export function defineConfig<T>(key: string): InteropConfig<T> {
 
 export interface InteropConfigPlugin {
   provides: InteropConfig<unknown>
-  run(): Promise<void>
-  start(): void
+  intervalMs?: number
+  run: () => Promise<void>
 }
 
 export class InteropConfigStore {
@@ -20,8 +20,7 @@ export class InteropConfigStore {
 
   async start() {
     if (!this.db) return
-    const networks =
-      await this.db?.interopConfig.getLatestByPrefix('networks::')
+    const networks = await this.db?.interopConfig.getAllLatest()
     for (const network of networks) {
       this.networks.set(network.key, network.value)
     }
@@ -32,14 +31,14 @@ export class InteropConfigStore {
     value: D['__type'],
   ): Promise<void> {
     await this.db?.interopConfig.insert({
-      key: `networks::${def.key}`,
+      key: def.key,
       value,
       timestamp: UnixTime.now(),
     })
-    this.networks.set(`networks::${def.key}`, value)
+    this.networks.set(def.key, value)
   }
 
   get<T>(def: InteropConfig<T>): T | undefined {
-    return this.networks.get(`networks::${def.key}`) as T | undefined
+    return this.networks.get(def.key) as T | undefined
   }
 }

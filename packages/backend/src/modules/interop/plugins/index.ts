@@ -67,9 +67,9 @@ export function createInteropPlugins(
     configPlugins: [
       new AcrossConfigPlugin(
         deps.chains,
+        deps.configs,
         deps.logger,
         ethereumRpc,
-        deps.configs,
       ),
       new LayerZeroConfigPlugin(
         deps.chains,

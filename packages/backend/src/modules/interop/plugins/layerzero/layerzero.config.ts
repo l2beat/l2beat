@@ -7,11 +7,12 @@ import {
   type InteropConfigPlugin,
   type InteropConfigStore,
 } from '../../engine/config/InteropConfigStore'
+import { reconcileNetworks } from '../../engine/config/reconcileNetworks'
 
 export interface LayerZeroV2Network {
+  chain: string
   chainId: number
   eid: number
-  chain: string
   endpointV2: string // fix issue with EthereumAddress
 }
 
@@ -51,26 +52,43 @@ export class LayerZeroConfigPlugin
 
   constructor(
     private chains: { id: number; name: string }[],
-    private configs: InteropConfigStore,
+    private store: InteropConfigStore,
     protected logger: Logger,
     private http: HttpClient,
-    intervalMs = 10 * 60 * 1000,
   ) {
-    super({ intervalMs })
+    super({ intervalMs: 20 * 60 * 1000 })
+    this.logger = logger.for(this)
   }
 
   async run() {
-    const v2 = await this.getNetworks()
-    this.configs.set(LayerZeroConfig, { v2 })
+    const previous = this.store.get(this.provides)
+    const latest = await this.getLatestNetworks()
+
+    const reconciled = reconcileNetworks(previous?.v2, latest.v2)
+
+    if (reconciled.removed.length > 0) {
+      this.logger.error('Networks removed', {
+        plugin: this.provides.key,
+        removed: reconciled.removed,
+      })
+      return
+    }
+
+    if (reconciled.updated.length > 0) {
+      this.logger.info('Networks updated', {
+        plugin: this.provides.key,
+      })
+      this.store.set(this.provides, { v2: reconciled.updated })
+    }
   }
 
-  async getNetworks(): Promise<LayerZeroV2Network[]> {
+  async getLatestNetworks(): Promise<{ v2: LayerZeroV2Network[] }> {
     const response = await this.http.fetch(DOCS_URL, { timeout: 10_000 })
     const docs = DocsResult.parse(response)
 
     const chains = [...this.chains, ...OVERRIDES]
 
-    const config: LayerZeroV2Network[] = []
+    const config = []
     for (const [_, value] of Object.entries(docs)) {
       if (
         value === undefined ||
@@ -89,15 +107,15 @@ export class LayerZeroConfigPlugin
         if (v2 && v2.eid && v2.endpointV2?.address) {
           // TODO: v1 is in the same endpoint, a plugin should return both? or two plugins?
           config.push({
+            chain: chain.name,
             chainId: chain.id,
             eid: Number(v2.eid),
-            chain: chain.name,
             endpointV2: v2.endpointV2.address,
           })
         }
       }
     }
 
-    return config
+    return { v2: config }
   }
 }

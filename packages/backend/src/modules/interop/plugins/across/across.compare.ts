@@ -6,7 +6,6 @@ import type {
 
 export class AcrossComparePlugin implements InteropComparePlugin {
   name = 'across'
-  type = 'transfer' as const
 
   async getExternalItems(): Promise<InteropExternalItem[]> {
     const http = new HttpClient()

@@ -72,7 +72,7 @@ describeDatabase(InteropConfigRepository.name, (database) => {
     })
   })
 
-  describe(InteropConfigRepository.prototype.getLatestByPrefix.name, () => {
+  describe(InteropConfigRepository.prototype.getAllLatest.name, () => {
     it('returns all configs matching empty prefix', async () => {
       const record1 = mockConfig('app.setting1', { value: 1 })
       const record2 = mockConfig('db.connection', { host: 'localhost' })
@@ -82,53 +82,27 @@ describeDatabase(InteropConfigRepository.name, (database) => {
       await repository.insert(record2)
       await repository.insert(record3)
 
-      const result = await repository.getLatestByPrefix('')
+      const result = await repository.getAllLatest()
 
       expect(result).toHaveLength(3)
       expect(result).toEqualUnsorted([record1, record2, record3])
     })
 
-    it('returns configs matching prefix', async () => {
-      const appRecord1 = mockConfig('app.setting1', { value: 1 })
-      const appRecord2 = mockConfig('app.setting2', { value: 2 })
-      const dbRecord = mockConfig('db.connection', { host: 'localhost' })
-      const cacheRecord = mockConfig('cache.ttl', 300)
-
-      await repository.insert(appRecord1)
-      await repository.insert(appRecord2)
-      await repository.insert(dbRecord)
-      await repository.insert(cacheRecord)
-
-      const result = await repository.getLatestByPrefix('app.')
-
-      expect(result).toHaveLength(2)
-      expect(result).toEqualUnsorted([appRecord1, appRecord2])
-    })
-
-    it('returns empty array when no configs match prefix', async () => {
-      const record = mockConfig('app.setting1', { value: 1 })
-      await repository.insert(record)
-
-      const result = await repository.getLatestByPrefix('nonexistent.')
-
-      expect(result).toEqual([])
-    })
-
     it('returns latest record for each key when multiple versions exist', async () => {
-      const olderRecord = mockConfig('app.setting', { version: 1 })
+      const olderRecord = mockConfig('setting', { version: 1 })
       olderRecord.timestamp = UnixTime.fromDate(new Date('2023-01-01'))
 
-      const newerRecord = mockConfig('app.setting', { version: 2 })
+      const newerRecord = mockConfig('setting', { version: 2 })
       newerRecord.timestamp = UnixTime.fromDate(new Date('2023-01-02'))
 
-      const otherRecord = mockConfig('app.other', { value: 'test' })
+      const otherRecord = mockConfig('other', { value: 'test' })
 
       // Insert in chronological order
       await repository.insert(olderRecord)
       await repository.insert(newerRecord)
       await repository.insert(otherRecord)
 
-      const result = await repository.getLatestByPrefix('app.')
+      const result = await repository.getAllLatest()
 
       expect(result).toHaveLength(2)
       expect(result).toEqualUnsorted([newerRecord, otherRecord])
