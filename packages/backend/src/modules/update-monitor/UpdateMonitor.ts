@@ -156,12 +156,10 @@ export class UpdateMonitor {
         return
       }
 
-      const runResult = await runner.discoverWithRetry(
+      const runResult = await runner.run(
         projectConfig,
         timestamp,
         this.logger,
-        undefined,
-        undefined,
         'useCurrentTimestamp', // for dependent discoveries
       )
 
@@ -281,12 +279,10 @@ export class UpdateMonitor {
       previousDiscovery = databaseEntry.discovery
     }
 
-    const runResult = await runner.discoverWithRetry(
+    const runResult = await runner.run(
       projectConfig,
       previousDiscovery.timestamp,
       this.logger,
-      undefined,
-      undefined,
       previousDiscovery.dependentDiscoveries,
     )
     const { discovery, flatSources } = runResult
