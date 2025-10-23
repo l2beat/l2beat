@@ -707,15 +707,23 @@
       "name": "L1VerifierFflonk",
       "address": "eth:0xD324a7c8556A059371B207fB96FD77bE24E2042c",
       "type": "Contract",
+      "template": "shared-zk-stack/L1VerifierFflonk",
       "sourceHashes": [
         "0xfa2f6dacae61a1115ee373883922baaaea3e9b5e2bd4746522faff0e9d0019e0"
       ],
       "proxyType": "immutable",
+      "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
       "sinceTimestamp": 1758718835,
       "sinceBlock": 23433057,
       "values": {
         "$immutable": true,
         "verificationKeyHash": "0x49eae0bf5c7ea580f4979b366e52b386adc5f42e2ce50fc1d3c4de9a86052bff"
+      },
+      "fieldMeta": {
+        "verificationKeyHash": {
+          "severity": "HIGH",
+          "description": "keccak256 hash of the verification keys."
+        }
       },
       "implementationNames": {
         "eth:0xD324a7c8556A059371B207fB96FD77bE24E2042c": "L1VerifierFflonk"
@@ -732,15 +740,23 @@
       "name": "L1VerifierPlonk",
       "address": "eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7",
       "type": "Contract",
+      "template": "shared-zk-stack/L1VerifierPlonk",
       "sourceHashes": [
         "0x20269ba58e717388e68842ab5a0b73b744856b4b1fb48d57ac7dce36d0c3c765"
       ],
       "proxyType": "immutable",
+      "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
       "sinceTimestamp": 1758616787,
       "sinceBlock": 23424592,
       "values": {
         "$immutable": true,
         "verificationKeyHash": "0x1ffc56111a5cfaf5db387f6a31408ad20217e9bc1f31f2f5c1bd38b0d6d7968b"
+      },
+      "fieldMeta": {
+        "verificationKeyHash": {
+          "severity": "HIGH",
+          "description": "keccak256 hash of the verification keys."
+        }
       },
       "implementationNames": {
         "eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7": "L1VerifierPlonk"
@@ -1064,6 +1080,11 @@
     },
     {
       "address": "gateway:0x8829AD80E425C646DAB305381ff105169FeEcE56",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1421,15 +1442,23 @@
       "name": "L1VerifierFflonk",
       "address": "gateway:0xD837976329d59057b27192f0cF6c8f357143670A",
       "type": "Contract",
+      "template": "shared-zk-stack/L1VerifierFflonk",
       "sourceHashes": [
         "0xfa2f6dacae61a1115ee373883922baaaea3e9b5e2bd4746522faff0e9d0019e0"
       ],
       "proxyType": "immutable",
+      "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
       "sinceTimestamp": 1758719832,
       "sinceBlock": 55134,
       "values": {
         "$immutable": true,
         "verificationKeyHash": "0x49eae0bf5c7ea580f4979b366e52b386adc5f42e2ce50fc1d3c4de9a86052bff"
+      },
+      "fieldMeta": {
+        "verificationKeyHash": {
+          "severity": "HIGH",
+          "description": "keccak256 hash of the verification keys."
+        }
       },
       "implementationNames": {
         "gateway:0xD837976329d59057b27192f0cF6c8f357143670A": "L1VerifierFflonk"
@@ -1471,6 +1500,26 @@
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": []
+          },
+          "PRECOMMITTER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"]
+          },
+          "COMMITTER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"]
+          },
+          "REVERTER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"]
+          },
+          "PROVER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"]
           }
         },
         "BRIDGE_HUB": "gateway:0x0000000000000000000000000000000000010002",
@@ -1560,15 +1609,23 @@
       "name": "L1VerifierPlonk",
       "address": "gateway:0xfA7c56B328bEb5deB9218f3a4b60ADc59Bb6Ad8d",
       "type": "Contract",
+      "template": "shared-zk-stack/L1VerifierPlonk",
       "sourceHashes": [
         "0x20269ba58e717388e68842ab5a0b73b744856b4b1fb48d57ac7dce36d0c3c765"
       ],
       "proxyType": "immutable",
+      "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
       "sinceTimestamp": 1758622413,
       "sinceBlock": 54331,
       "values": {
         "$immutable": true,
         "verificationKeyHash": "0x1ffc56111a5cfaf5db387f6a31408ad20217e9bc1f31f2f5c1bd38b0d6d7968b"
+      },
+      "fieldMeta": {
+        "verificationKeyHash": {
+          "severity": "HIGH",
+          "description": "keccak256 hash of the verification keys."
+        }
       },
       "implementationNames": {
         "gateway:0xfA7c56B328bEb5deB9218f3a4b60ADc59Bb6Ad8d": "L1VerifierPlonk"
@@ -2714,6 +2771,8 @@
     "shared-zk-stack/Diamond_NotSettlementLayer": "0x30b60445419f8d3893ba4eb0b4a8d04ad751d7ec8882a4a4ab5f7276c730ff8f",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1GenesisUpgrade": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
+    "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
+    "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L2AssetRouter": "0x135f3f175975582aabfd47f5af1c6b1c153fe6813d69cfb72d631ba725379300",
     "shared-zk-stack/MessageRoot": "0xbff1ea54952301b3b5c9dd16fcb265471a173687870eb62ec88bb5ad5eb68d0a",
     "shared-zk-stack/RelayedSLDAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -2722,5 +2781,5 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x9d573c1988d198e70eb06975613891c4cc26868934519ad0c4a6146566acafd7"
   },
   "usedBlockNumbers": { "gateway": 75862, "ethereum": 23638783 },
-  "permissionsConfigHash": "0x57307d27d71f0e1f826eb4d0a6062d34cb2cd9f7cdfdbb469bd80f41a395abdb"
+  "permissionsConfigHash": "0x96e1f0b2b5ec01cd68de87560c370287e484cda203daa2d7b7672a275f3499fc"
 }

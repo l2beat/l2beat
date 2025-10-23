@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xf01f5bdd0edc212769e80fa8dfe5a6cbfd98761f
+Generated with discovered.json: 0xf943e7a979342e17e82d097d3576db79301c2697
 
-# Diff at Thu, 23 Oct 2025 08:10:41 GMT:
+# Diff at Thu, 23 Oct 2025 09:39:00 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@286d17aa7adf75827eeb6b38ca50217e11ddcc23 block: 1760603825
@@ -13,6 +13,13 @@ v29.2 upgrade. see also [Shared ZK Stack Updates](../shared-zk-stack/diffHistory
 Diamond on Ethereum - https://disco.l2beat.com/diff/eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC/eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253
 - interop support for chains on Gateway (none currently)
 - interfaces for the new chain asset handler etc.
+
+ValidatorTimelock - https://disco.l2beat.com/diff/eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564/eth:0x6086051f93412F550C0820e76f0fbE85F64C7ef8
+- moved to custom accesscontrol setup (chainAdmin is hardcoded DEFAULT_ADMIN_ROLE, can manage all other roles)
+- support for preconfs
+- chainaddress instead of chainid
+- lots of updates that do not overly change how VTL worked in the past
+- exec delay 0 on gateway
 
 ## Watched changes
 
@@ -136,6 +143,14 @@ Diamond on Ethereum - https://disco.l2beat.com/diff/eth:0x431449e2a28A69122860A4
 -   Status: DELETED
     contract L1VerifierFflonk (gateway:0x3CFB3a80Af42cBE4d82C14301690A62D53e870a5)
     +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
+    EOA  (gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"validateZkStack","from":"gateway:0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa","role":".validatorsVTL"}]
+    }
 ```
 
 ```diff
@@ -279,13 +294,13 @@ Diamond on Ethereum - https://disco.l2beat.com/diff/eth:0x431449e2a28A69122860A4
 ```diff
 +   Status: CREATED
     contract L1VerifierFflonk (eth:0xD324a7c8556A059371B207fB96FD77bE24E2042c)
-    +++ description: None
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
 ```
 
 ```diff
 +   Status: CREATED
     contract L1VerifierPlonk (eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7)
-    +++ description: None
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
 ```
 
 ```diff
@@ -315,7 +330,7 @@ Diamond on Ethereum - https://disco.l2beat.com/diff/eth:0x431449e2a28A69122860A4
 ```diff
 +   Status: CREATED
     contract L1VerifierFflonk (gateway:0xD837976329d59057b27192f0cF6c8f357143670A)
-    +++ description: None
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
 ```
 
 ```diff
@@ -327,7 +342,7 @@ Diamond on Ethereum - https://disco.l2beat.com/diff/eth:0x431449e2a28A69122860A4
 ```diff
 +   Status: CREATED
     contract L1VerifierPlonk (gateway:0xfA7c56B328bEb5deB9218f3a4b60ADc59Bb6Ad8d)
-    +++ description: None
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
 ```
 
 ## Source code changes
