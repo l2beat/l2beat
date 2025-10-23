@@ -57,8 +57,14 @@ describe(CrossChainAccessControlHandler.name, () => {
     const Bob = ChainSpecificAddress.random()
     const Charlie = ChainSpecificAddress.random()
 
-    const Chain1 = ChainSpecificAddress.fromLong('ethereum', '0x' + '1'.repeat(40))
-    const Chain2 = ChainSpecificAddress.fromLong('ethereum', '0x' + '2'.repeat(40))
+    const Chain1 = ChainSpecificAddress.fromLong(
+      'ethereum',
+      '0x' + '1'.repeat(40),
+    )
+    const Chain2 = ChainSpecificAddress.fromLong(
+      'ethereum',
+      '0x' + '2'.repeat(40),
+    )
 
     const Chain1Raw = EthereumAddress.unsafe('0x' + '1'.repeat(40))
     const Chain2Raw = EthereumAddress.unsafe('0x' + '2'.repeat(40))
@@ -337,4 +343,3 @@ describe(CrossChainAccessControlHandler.name, () => {
     })
   })
 })
-
