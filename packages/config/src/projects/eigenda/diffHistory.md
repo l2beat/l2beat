@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x9090cb006621039ea871c7b4f017363990b67ad9
+
+# Diff at Thu, 23 Oct 2025 12:16:32 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@b6894dc3632e89b7e6ca11778d9b0f21fffc39e7 block: 1760089295
+- current timestamp: 1761221369
+
+## Description
+
+Added DACert v2 verifier and EigenDACertVerifierRouter.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1760089295 (main branch discovery), not current.
+
+```diff
+    contract EigenDAOperationsMultisig (eth:0x002721B4790d97dC140a049936aA710152Ba92D5) {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x8247EF5705d3345516286B72bFE6D690197C2E99) {
+    +++ description: None
+      directlyReceivedPermissions.4:
++        {"permission":"upgrade","from":"eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EigenDACertVerifierRouter (eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenDACertVerifier (eth:0xE1Ae45810A738F13e70Ac8966354d7D0feCF7BD6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OperatorStateRetriever (eth:0xEC35aa6521d23479318104E10B4aA216DBBE63Ce)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xe78f1b5f08f8584ec964474d87eb47a5659954ff
 
 # Diff at Fri, 10 Oct 2025 09:42:39 GMT:
