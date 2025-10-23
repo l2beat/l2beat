@@ -34,10 +34,10 @@ interface CostsChartDataPoint {
   blobs: number | null
   compute: number | null
   overhead: number | null
-  ethereum: number | null
-  celestia: number | null
-  avail: number | null
-  eigenda: number | null
+  ethereum?: number | null
+  celestia?: number | null
+  avail?: number | null
+  eigenda?: number | null
 }
 
 interface Props {
