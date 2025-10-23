@@ -8,7 +8,7 @@ Generated with discovered.json: 0xc5942ce55fc291e47306115ef287af6ee0764b1e
 
 ## Description
 
-msig change.
+msig change and higher gas limit.
 
 ## Watched changes
 
