@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x666cdcc9fd1195680bada9c851d59690eaa79a88
+Generated with discovered.json: 0x29143b2fc792e2964e762d8e54a0a001a901fe8e
 
-# Diff at Thu, 23 Oct 2025 11:38:21 GMT:
+# Diff at Thu, 23 Oct 2025 11:45:36 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@286d17aa7adf75827eeb6b38ca50217e11ddcc23 block: 1760603825
@@ -155,7 +155,7 @@ Verifier updates.
 
 ```diff
 -   Status: DELETED
-    contract ZKsyncValidatorTimelock (gateway:0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa)
+    contract ValidatorTimelock (gateway:0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa)
     +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
 ```
 
@@ -317,7 +317,7 @@ Verifier updates.
 
 ```diff
 +   Status: CREATED
-    contract ValidatorTimelock (gateway:0xe279aF77D3C1685022641ffE1b9b538c5eA0Ae24)
+    contract ZKsyncValidatorTimelock (gateway:0xe279aF77D3C1685022641ffE1b9b538c5eA0Ae24)
     +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
 ```
 
@@ -341,13 +341,13 @@ Verifier updates.
  ...:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7.sol | 1703 ++++++++++++++++++++
  ...0xfA7c56B328bEb5deB9218f3a4b60ADc59Bb6Ad8d.sol} |    8 +-
  .../src/projects/zksync2/.flat/RollupDAManager.sol |  173 ++
- .../TransparentUpgradeableProxy.p.sol              |  729 +++++++++
- .../.flat/ValidatorTimelock/ValidatorTimelock.sol  | 1679 +++++++++++++++++++
+ .../ValidatorTimelock.sol => /dev/null             |  504 ------
  .../ZKsync/AdminFacet.1.sol                        |   68 +-
  .../ZKsync/ExecutorFacet.4.sol                     |  437 +++--
  .../ZKsync/GettersFacet.2.sol                      |   43 +-
  .../ZKsync/MailboxFacet.3.sol                      | 1318 ++++++++-------
- .../ZKsyncValidatorTimelock.sol => /dev/null       |  504 ------
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++++++++
+ .../ZKsyncValidatorTimelock/ValidatorTimelock.sol  | 1679 +++++++++++++++++++
  18 files changed, 8436 insertions(+), 1912 deletions(-)
 ```
 
@@ -358,8 +358,11 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1760603825 (main branch discovery), not current.
 
 ```diff
-    contract ZKsyncValidatorTimelock (gateway:0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa) {
+    contract ValidatorTimelock (gateway:0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa) {
     +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
+      name:
+-        "ZKsyncValidatorTimelock"
++        "ValidatorTimelock"
       values.validatorsVTL:
 -        ["gateway:0xcA027Fa98cdce4515E76ECf8dfb4189B16eE72A2","gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"]
     }

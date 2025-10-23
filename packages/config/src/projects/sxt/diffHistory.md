@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xdc435cfe545e09d3f5ddb8feb87d6ff2b7657ced
+
+# Diff at Thu, 23 Oct 2025 11:51:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@286d17aa7adf75827eeb6b38ca50217e11ddcc23 block: 1753944351
+- current timestamp: 1753944351
+
+## Description
+
+Config: add da vali comment.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753944351 (main branch discovery), not current.
+
+```diff
+    contract zkVmDiamond (eth:0x742A28e22277945BBAAa34810393bf6e8512576C) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getDAValidatorPair.description:
++        "l1da, l2da"
+    }
+```
+
 Generated with discovered.json: 0xfd2adcd9fd7492acdc9382ae7ee22e6aa80c2052
 
 # Diff at Wed, 03 Sep 2025 15:51:42 GMT:

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x630c8a278898876761d184a8649a2db47cd7811f
+
+# Diff at Thu, 23 Oct 2025 11:51:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@286d17aa7adf75827eeb6b38ca50217e11ddcc23 block: 1759757379
+- current timestamp: 1759757379
+
+## Description
+
+Config: add da vali comment.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759757379 (main branch discovery), not current.
+
+```diff
+    contract ZeroNetworkZkEvm (eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getDAValidatorPair.description:
++        "l1da, l2da"
+    }
+```
+
 Generated with discovered.json: 0x1c2cbf55485875fc241f58cd07f1932601522d2d
 
 # Diff at Mon, 06 Oct 2025 13:30:42 GMT:

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xc77b82ef9cb0087216377bbfc475780091a1c746
+
+# Diff at Thu, 23 Oct 2025 11:51:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@286d17aa7adf75827eeb6b38ca50217e11ddcc23 block: 1761059926
+- current timestamp: 1761059926
+
+## Description
+
+Config: add da vali comment.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761059926 (main branch discovery), not current.
+
+```diff
+    contract Gateway (eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9) {
+    +++ description: The main contract defining the Gateway settlement layer. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. Bridging transactions that target L2s settling on the Gateway are routed through this contract and proofs are aggregated on L1. Data availability for rollups on the Gateway is provided by the Gateway operators sending the data together with Gateway data.. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      fieldMeta.getDAValidatorPair.description:
++        "l1da, l2da"
+    }
+```
+
 Generated with discovered.json: 0x61ce273baf85b046b7c6e86ed458766f3f1d1996
 
 # Diff at Tue, 21 Oct 2025 15:19:53 GMT:

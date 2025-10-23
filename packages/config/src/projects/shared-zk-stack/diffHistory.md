@@ -1,3 +1,49 @@
+Generated with discovered.json: 0x911f01758a2a21fc800fc0a3c89151c7cea94cf1
+
+# Diff at Thu, 23 Oct 2025 11:51:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@286d17aa7adf75827eeb6b38ca50217e11ddcc23 block: 1760604460
+- current timestamp: 1761220191
+
+## Description
+
+zk token proxy admin moved to new protocolupgradehandler l2 alias.
+
+Config: zksync v29 upgrade.
+
+## Watched changes
+
+```diff
+    contract EraChainAdminProxy (eth:0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.6:
++        {"_protocolVersion":124554051586,"_upgradeTimestamp":1761121800}
+    }
+```
+
+```diff
+    contract ZkTokenProxyAdmin (zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC) {
+    +++ description: None
+      values.owner:
+-        "zksync:0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8"
++        "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"
+    }
+```
+
+```diff
+    EOA ProtocolUpgradeHandler_l2Alias (zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","role":"admin","via":[{"address":"zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"}]}
+      controlsMajorityOfUpgradePermissions:
++        true
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC","role":".owner"}]
+    }
+```
+
 Generated with discovered.json: 0xa54977ac3168282658040f1c7f667d67529d9167
 
 # Diff at Thu, 16 Oct 2025 08:50:29 GMT:

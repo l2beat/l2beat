@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x4510e783c5d5a85c93a8a02970b0dd127ec309d6
+
+# Diff at Thu, 23 Oct 2025 11:51:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@286d17aa7adf75827eeb6b38ca50217e11ddcc23 block: 1757944442
+- current timestamp: 1757944442
+
+## Description
+
+Config: add da vali comment.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757944442 (main branch discovery), not current.
+
+```diff
+    contract LensZkEvm (eth:0xc29d04A93F893700015138E3E334eB828dAC3cef) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getDAValidatorPair.description:
++        "l1da, l2da"
+    }
+```
+
 Generated with discovered.json: 0x18c181a65e889625cbc1414020a6e7a0f3fe6daa
 
 # Diff at Wed, 03 Sep 2025 15:51:52 GMT:
