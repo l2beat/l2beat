@@ -61,6 +61,7 @@ const parseOrderFilled = createEventParser(
 
 export const SQUIDCORAL_NETWORKS = defineNetworks('squidcoral', [
   { chainId: '1', chain: 'ethereum' },
+  { chainId: '10', chain: 'optimism' },
   { chainId: '42161', chain: 'arbitrum' },
   { chainId: '8453', chain: 'base' },
 ])

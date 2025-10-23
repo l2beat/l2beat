@@ -29,6 +29,7 @@ export type { DiscoveryCacheRecord } from './repositories/DiscoveryCacheReposito
 export type { FlatSourcesRecord } from './repositories/FlatSourcesRepository'
 export type { IndexerConfigurationRecord } from './repositories/IndexerConfigurationRepository'
 export type { IndexerStateRecord } from './repositories/IndexerStateRepository'
+export type { InteropConfigRecord } from './repositories/InteropConfigRepository'
 export type {
   InteropEventRecord,
   InteropEventStatsRecord,

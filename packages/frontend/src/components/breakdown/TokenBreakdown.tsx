@@ -74,9 +74,9 @@ export function TokenBreakdownTooltipContent({
       variant: 'btc' as const,
     },
     { title: 'Other', value: other, variant: 'other' as const },
-    { title: 'RWA Public', value: rwaPublic, variant: 'rwaPublic' as const },
+    { title: 'Public RWAs', value: rwaPublic, variant: 'rwaPublic' as const },
     {
-      title: 'RWA Restricted',
+      title: 'Restricted RWAs',
       value: rwaRestricted,
       variant: 'rwaRestricted' as const,
     },

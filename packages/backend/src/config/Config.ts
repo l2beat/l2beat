@@ -52,7 +52,7 @@ export interface Config {
   readonly da: DataAvailabilityTrackingConfig | false
   readonly blockSync: BlockSyncModuleConfig
   readonly anomalies: AnomaliesConfig | false
-  readonly interop: InteropConfig | false
+  readonly interop: InteropFeatureConfig | false
 
   readonly flags: ResolvedFeatureFlag[]
 }
@@ -204,7 +204,7 @@ export interface AnomaliesConfig {
   readonly anomaliesMinDuration: number
 }
 
-export interface InteropConfig {
+export interface InteropFeatureConfig {
   capture: {
     enabled: boolean
     chains: {
@@ -220,10 +220,13 @@ export interface InteropConfig {
   }
   compare: {
     enabled: boolean
-    intervalMs?: number
   }
   financials: {
     enabled: boolean
+  }
+  config: {
+    enabled: boolean
+    chains: { id: number; name: string }[]
   }
 }
 
