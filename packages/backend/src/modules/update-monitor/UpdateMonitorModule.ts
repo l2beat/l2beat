@@ -76,7 +76,7 @@ export function createUpdateMonitorModule({
     count: config.updateMonitor.workerPool.count,
     timeoutPerTaskMs: config.updateMonitor.workerPool.timeoutPerTaskMs,
     timeoutPerRunMs: config.updateMonitor.workerPool.timeoutPerRunMs,
-    logger,
+    logger: logger.for('UpdateMonitor'),
   })
 
   const updateMonitor = new UpdateMonitor(
