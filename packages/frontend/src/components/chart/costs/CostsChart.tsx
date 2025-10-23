@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, ComposedChart, Line, YAxis } from 'recharts'
@@ -27,49 +27,6 @@ import { formatBytes } from '~/utils/number-format/formatBytes'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatNumber } from '~/utils/number-format/formatNumber'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from '../../../server/features/data-availability/throughput/utils/consts'
-
-const chartMeta = {
-  calldata: {
-    label: 'Calldata',
-    color: 'var(--chart-stacked-blue)',
-    indicatorType: { shape: 'square' },
-  },
-  blobs: {
-    label: 'Blobs',
-    color: 'var(--chart-stacked-yellow)',
-    indicatorType: { shape: 'square' },
-  },
-  compute: {
-    label: 'Compute',
-    color: 'var(--chart-stacked-pink)',
-    indicatorType: { shape: 'square' },
-  },
-  overhead: {
-    label: 'Overhead',
-    color: 'var(--chart-stacked-purple)',
-    indicatorType: { shape: 'square' },
-  },
-  ethereum: {
-    label: 'Data posted on Ethereum',
-    color: 'var(--chart-ethereum)',
-    indicatorType: { shape: 'line' as const },
-  },
-  celestia: {
-    label: 'Data posted on Celestia',
-    color: 'var(--chart-fuchsia)',
-    indicatorType: { shape: 'line' as const },
-  },
-  avail: {
-    label: 'Data posted on Avail',
-    color: 'var(--chart-sky)',
-    indicatorType: { shape: 'line' as const },
-  },
-  eigenda: {
-    label: 'Data posted on EigenDA',
-    color: 'var(--chart-lime)',
-    indicatorType: { shape: 'line' as const },
-  },
-} satisfies ChartMeta
 
 interface CostsChartDataPoint {
   timestamp: number
@@ -109,10 +66,15 @@ export function CostsChart({
   hasBlobs,
 }: Props) {
   const chartMeta = useMemo(() => {
-    const hasEthereum = data?.some((d) => d.ethereum !== null)
-    const hasCelestia = data?.some((d) => d.celestia !== null)
-    const hasAvail = data?.some((d) => d.avail !== null)
-    const hasEigenda = data?.some((d) => d.eigenda !== null)
+    const hasData = data?.reduce(
+      (acc, d) => ({
+        ethereum: acc.ethereum || d.ethereum !== null,
+        celestia: acc.celestia || d.celestia !== null,
+        avail: acc.avail || d.avail !== null,
+        eigenda: acc.eigenda || d.eigenda !== null,
+      }),
+      { ethereum: false, celestia: false, avail: false, eigenda: false },
+    )
     return {
       calldata: {
         label: 'Calldata',
@@ -138,7 +100,7 @@ export function CostsChart({
         color: 'var(--chart-stacked-purple)',
         indicatorType: { shape: 'square' },
       },
-      ...(hasEthereum
+      ...(hasData?.ethereum
         ? {
             ethereum: {
               label: 'Data posted on Ethereum',
@@ -147,7 +109,7 @@ export function CostsChart({
             },
           }
         : {}),
-      ...(hasCelestia
+      ...(hasData?.celestia
         ? {
             celestia: {
               label: 'Data posted on Celestia',
@@ -156,7 +118,7 @@ export function CostsChart({
             },
           }
         : {}),
-      ...(hasAvail
+      ...(hasData?.avail
         ? {
             avail: {
               label: 'Data posted on Avail',
@@ -165,7 +127,7 @@ export function CostsChart({
             },
           }
         : {}),
-      ...(hasEigenda
+      ...(hasData?.eigenda
         ? {
             eigenda: {
               label: 'Data posted on EigenDA',
@@ -324,7 +286,13 @@ export function CostsChart({
           syncedUntil,
         })}
         <ChartTooltip
-          content={<CustomTooltip unit={unit} resolution={resolution} />}
+          content={
+            <CustomTooltip
+              unit={unit}
+              resolution={resolution}
+              chartMeta={chartMeta}
+            />
+          }
         />
       </ComposedChart>
     </ChartContainer>
@@ -337,9 +305,11 @@ function CustomTooltip({
   label,
   unit,
   resolution,
+  chartMeta,
 }: TooltipProps<number, string> & {
   unit: CostsUnit
   resolution: CostsResolution
+  chartMeta: ChartMeta
 }) {
   if (!active || !payload || typeof label !== 'number') return null
 
@@ -389,6 +359,7 @@ function CustomTooltip({
           {actualPayload.map((entry) => {
             if (entry.type === 'none' || entry.hide) return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
+            assert(config, 'No config')
             return (
               <div
                 key={entry.name}
