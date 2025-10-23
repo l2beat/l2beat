@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xc5942ce55fc291e47306115ef287af6ee0764b1e
+
+# Diff at Thu, 23 Oct 2025 12:44:48 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@57d3f180a9197fcc582bfc2d2856eea99da824cc block: 1759482296
+- current timestamp: 1761223334
+
+## Description
+
+msig change.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        80000000
++        85000000
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x7cB07FE039a92B3D784f284D919503A381BEC54f"
++        "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02"
+    }
+```
+
 Generated with discovered.json: 0x01744352da0fc56d51e0a24c28ba58a7031b3b98
 
 # Diff at Fri, 03 Oct 2025 09:06:04 GMT:
