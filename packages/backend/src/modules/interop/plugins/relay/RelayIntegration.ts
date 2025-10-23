@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { TimeLoop } from '../../../tools/TimeLoop'
+import { TimeLoop } from '../../../../tools/TimeLoop'
 
 export class RelayIntegration extends TimeLoop {
   constructor(
