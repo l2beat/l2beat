@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xf943e7a979342e17e82d097d3576db79301c2697
+Generated with discovered.json: 0x666cdcc9fd1195680bada9c851d59690eaa79a88
 
-# Diff at Thu, 23 Oct 2025 09:39:00 GMT:
+# Diff at Thu, 23 Oct 2025 11:38:21 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@286d17aa7adf75827eeb6b38ca50217e11ddcc23 block: 1760603825
@@ -20,6 +20,8 @@ ValidatorTimelock - https://disco.l2beat.com/diff/eth:0x8c0Bfc04AdA21fd496c55B8C
 - chainaddress instead of chainid
 - lots of updates that do not overly change how VTL worked in the past
 - exec delay 0 on gateway
+
+Verifier updates.
 
 ## Watched changes
 
@@ -146,14 +148,6 @@ ValidatorTimelock - https://disco.l2beat.com/diff/eth:0x8c0Bfc04AdA21fd496c55B8C
 ```
 
 ```diff
-    EOA  (gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd) {
-    +++ description: None
-      receivedPermissions:
--        [{"permission":"validateZkStack","from":"gateway:0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa","role":".validatorsVTL"}]
-    }
-```
-
-```diff
 -   Status: DELETED
     contract L1VerifierPlonk (gateway:0x92A9Fd0E84354213D9c3d33128eDd6Ea55ee0717)
     +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
@@ -163,12 +157,6 @@ ValidatorTimelock - https://disco.l2beat.com/diff/eth:0x8c0Bfc04AdA21fd496c55B8C
 -   Status: DELETED
     contract ZKsyncValidatorTimelock (gateway:0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa)
     +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
-```
-
-```diff
--   Status: DELETED
-    contract PartialValidatorTimelock (gateway:0xcA027Fa98cdce4515E76ECf8dfb4189B16eE72A2)
-    +++ description: If registrered as a validator in the gateway:0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa, forwards calls to it, but restricted to `commit`- and `revertBatchesSharedBridge()`.
 ```
 
 ```diff
@@ -317,12 +305,6 @@ ValidatorTimelock - https://disco.l2beat.com/diff/eth:0x8c0Bfc04AdA21fd496c55B8C
 
 ```diff
 +   Status: CREATED
-    contract  (gateway:0x64E2AfcFE648201b2F4a749aF0B7229ecfa44281)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract DualVerifier (gateway:0xa99f11045E14d068088786CF6b61e8730817Cf52)
     +++ description: A router contract for verifiers. Routes verification requests to gateway:0xD837976329d59057b27192f0cF6c8f357143670A or gateway:0xfA7c56B328bEb5deB9218f3a4b60ADc59Bb6Ad8d depending on the supplied proof type.
 ```
@@ -358,7 +340,6 @@ ValidatorTimelock - https://disco.l2beat.com/diff/eth:0x8c0Bfc04AdA21fd496c55B8C
  ...0xD837976329d59057b27192f0cF6c8f357143670A.sol} |  101 +-
  ...:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7.sol | 1703 ++++++++++++++++++++
  ...0xfA7c56B328bEb5deB9218f3a4b60ADc59Bb6Ad8d.sol} |    8 +-
- .../PartialValidatorTimelock.sol => /dev/null      |  310 ----
  .../src/projects/zksync2/.flat/RollupDAManager.sol |  173 ++
  .../TransparentUpgradeableProxy.p.sol              |  729 +++++++++
  .../.flat/ValidatorTimelock/ValidatorTimelock.sol  | 1679 +++++++++++++++++++
@@ -367,7 +348,35 @@ ValidatorTimelock - https://disco.l2beat.com/diff/eth:0x8c0Bfc04AdA21fd496c55B8C
  .../ZKsync/GettersFacet.2.sol                      |   43 +-
  .../ZKsync/MailboxFacet.3.sol                      | 1318 ++++++++-------
  .../ZKsyncValidatorTimelock.sol => /dev/null       |  504 ------
- 19 files changed, 8436 insertions(+), 2222 deletions(-)
+ 18 files changed, 8436 insertions(+), 1912 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1760603825 (main branch discovery), not current.
+
+```diff
+    contract ZKsyncValidatorTimelock (gateway:0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
+      values.validatorsVTL:
+-        ["gateway:0xcA027Fa98cdce4515E76ECf8dfb4189B16eE72A2","gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PartialValidatorTimelock (gateway:0xcA027Fa98cdce4515E76ECf8dfb4189B16eE72A2)
+    +++ description: If registrered as a validator in the gateway:0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa, forwards calls to it, but restricted to `commit`- and `revertBatchesSharedBridge()`.
+```
+
+```diff
+    contract DiamondProxy (gateway:0xCE7CBd23193d029410b40e0fD8a79a5121f9250C) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      fieldMeta.getDAValidatorPair.description:
++        "l1da, l2da"
+    }
 ```
 
 Generated with discovered.json: 0xc1b81a0a14d5e427fc96af48de8b15e1ed2c8128

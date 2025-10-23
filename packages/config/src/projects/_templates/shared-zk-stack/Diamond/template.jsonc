@@ -94,6 +94,7 @@
       "edit": ["format", "UintPermrollupString"]
     },
     "getDAValidatorPair": {
+      "description": "l1da, l2da",
       "severity": "HIGH"
     },
     "getPendingAdmin": {
