@@ -1,5 +1,5 @@
 import type { Milestone, ProjectDaTrackingConfig } from '@l2beat/config'
-import { EigenDataSourceInfo } from '~/components/chart/data-availability/EigenDataSourceInfo'
+import { ChartDataSourceInfo } from '~/components/chart/ChartDataSourceInfo'
 import { ProjectDataPostedChart } from '~/components/chart/data-posted/ProjectDataPostedChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -78,7 +78,7 @@ export function DataPostedSection({
       </p>
       <HorizontalSeparator className="my-4" />
       {currentDaLayers.some((daLayer) => daLayer.name === 'EigenDA') && (
-        <EigenDataSourceInfo />
+        <ChartDataSourceInfo dataSource="API provided by EigenLayer" />
       )}
       <ProjectDataPostedChart
         project={project}

@@ -8,11 +8,11 @@ import {
 } from '~/components/core/Drawer'
 import { InfoIcon } from '~/icons/Info'
 
-export function EigenDataSourceInfo() {
+export function ChartDataSourceInfo({ dataSource }: { dataSource: string }) {
   return (
     <>
       <div className="font-medium text-2xs text-secondary max-sm:hidden">
-        Data source: API provided by EigenLayer
+        Data source: {dataSource}
       </div>
       <Drawer>
         <DrawerTrigger className="flex items-center gap-1 font-medium text-[13px] text-secondary sm:hidden">
@@ -25,7 +25,7 @@ export function EigenDataSourceInfo() {
               Data source
             </DrawerTitle>
             <DrawerDescription className="font-normal text-primary">
-              API provided by EigenLayer
+              {dataSource}
             </DrawerDescription>
           </DrawerHeader>
         </DrawerContent>

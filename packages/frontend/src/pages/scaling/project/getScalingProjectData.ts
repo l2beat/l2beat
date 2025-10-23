@@ -42,7 +42,7 @@ export async function getScalingProjectData(
       'discoveryInfo',
       'daTrackingConfig',
       'costsInfo',
-      'hasActivity',
+      'activityConfig',
     ],
   })
   if (!project) return undefined

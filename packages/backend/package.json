@@ -28,7 +28,7 @@
     "analyze-project": "ts-node --transpile-only scripts/analyzeProject.ts",
     "discover-tokens": "node -r esbuild-register scripts/discover-tokens",
     "db:inspect": "pnpm prisma studio",
-    "dev": "pnpm build:dependencies && pnpm start:dev",
+    "dev": "pnpm start:dev",
     "tvs:generate": "pnpm build:config && ts-node ./scripts/tvs/generate-config.ts",
     "tvs:execute": "pnpm build:config && ts-node ./scripts/tvs/execute.ts",
     "tvs:calculate-ids": "ts-node ./scripts/tvs/calculate-ids.ts",

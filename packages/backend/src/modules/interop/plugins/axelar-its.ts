@@ -1,10 +1,23 @@
 /* axelar Interchain Transfer Service (ITS) plugin
 
 This plugin handles all ITS tokens
+SRC: 
+- InterchainTransfer event
+- ContractCall event
+DST APPROVE:
+- ContractCallApproved event
+DST EXECUTE:
+- Gateway.ContractCallExecuted event
+- InterchainTransferReceived event
 
 */
 
-import { AXELAR_NETWORKS, ContractCall, ContractCallApproved } from './axelar'
+import {
+  AXELAR_NETWORKS,
+  ContractCall,
+  ContractCallApproved,
+  ContractCallExecuted,
+} from './axelar'
 import {
   Address32,
   createEventParser,
@@ -110,8 +123,9 @@ export class AxelarITSPlugin implements InteropPlugin {
 
   /* Matching algorithm:
     1. Start with InterchainTransferReceived on DST chain
-    2. Find AxelarGateway.ContractCallApproved on DST chain with the same commandId
-    3. Find AxelarGateway.ContractCall on SRC chain with the same txHash as in step 2
+    2. Find Gateway.ContractCallExecuted on DST chain with the same transaction
+    3. Find AxelarGateway.ContractCallApproved on DST chain with the same commandId3
+    4. Find AxelarGateway.ContractCall on SRC chain with the same txHash as in step 2
     4. Find InterchainTransfer on SRC chain with the same txHash as in step 3
     5. Return message and transfer results
   */
@@ -125,6 +139,11 @@ export class AxelarITSPlugin implements InteropPlugin {
     db: InteropEventDb,
   ): MatchResult | undefined {
     if (InterchainTransferReceived.checkType(interchainTransferReceived)) {
+      const contractCallExecuted = db.find(ContractCallExecuted, {
+        commandId: interchainTransferReceived.args.commandId,
+      })
+      if (!contractCallExecuted) return
+
       const contractCallApproved = db.find(ContractCallApproved, {
         commandId: interchainTransferReceived.args.commandId,
       })
@@ -146,6 +165,7 @@ export class AxelarITSPlugin implements InteropPlugin {
           app: 'axelar-its',
           srcEvent: contractCall,
           dstEvent: contractCallApproved,
+          extraEvents: [contractCallExecuted],
         }),
         Result.Transfer('axelar-its.Transfer', {
           srcEvent: interchainTransfer,
