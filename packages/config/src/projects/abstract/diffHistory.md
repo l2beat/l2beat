@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xea20bb96ca16afd1e0549c0ac71b5e5b6fd3f52e
+Generated with discovered.json: 0x005f175fa18926420478cbc5b608e5c39ec983c4
 
-# Diff at Thu, 23 Oct 2025 11:51:52 GMT:
+# Diff at Thu, 23 Oct 2025 11:56:03 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@286d17aa7adf75827eeb6b38ca50217e11ddcc23 block: 1759399643
-- current timestamp: 1759399643
+- current timestamp: 1761220486
 
 ## Description
 
@@ -21,6 +21,21 @@ discovery. Values are for block 1759399643 (main branch discovery), not current.
     +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
       fieldMeta.getDAValidatorPair.description:
 +        "l1da, l2da"
+    }
+```
+
+```diff
+    EOA  (eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-zk-stack"
+      proxyType:
++        "EOA"
     }
 ```
 
