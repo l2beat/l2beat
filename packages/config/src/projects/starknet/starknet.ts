@@ -249,7 +249,7 @@ export const starknet: ScalingProject = {
     apis: [
       {
         type: 'starknet',
-        url: 'https://starknet-mainnet.public.blastapi.io',
+        url: 'https://starknet-rpc.publicnode.com',
         callsPerMinute: 120,
       },
     ],
