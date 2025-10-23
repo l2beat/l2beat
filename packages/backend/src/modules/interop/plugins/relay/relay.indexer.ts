@@ -152,7 +152,6 @@ export class RelayIndexer extends ManagedChildIndexer {
 
     if (events.length > 0) {
       this.logger.info('Saved new events', { events: events.length })
-      console.log(events)
       this.interopEventStore.saveNewEvents(events)
     }
     return syncedTo
