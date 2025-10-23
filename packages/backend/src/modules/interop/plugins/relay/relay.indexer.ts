@@ -106,6 +106,10 @@ export class RelayIndexer extends ManagedChildIndexer {
       const dstTx = item.data.outTxs?.[0]
       const dstChain = this.getChainName(srcTx?.chainId)
 
+      if (srcChain === dstChain) {
+        continue
+      }
+
       function txToCtx(
         tx: typeof srcTx,
         chain: string,
