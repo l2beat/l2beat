@@ -14,7 +14,7 @@ import type { RelayApiClient } from './RelayApiClient'
 
 export class RelayRootIndexer extends RootIndexer {
   override initialize() {
-    setInterval(() => this.requestTick(), 1_000)
+    setInterval(() => this.requestTick(), 5_000)
     this.requestTick()
     return Promise.resolve(undefined)
   }
@@ -104,7 +104,7 @@ export class RelayIndexer extends ManagedChildIndexer {
       const srcChain = this.getChainName(srcTx?.chainId)
 
       const dstTx = item.data.outTxs?.[0]
-      const dstChain = this.getChainName(srcTx?.chainId)
+      const dstChain = this.getChainName(dstTx?.chainId)
 
       if (srcChain === dstChain) {
         continue
@@ -156,7 +156,7 @@ export class RelayIndexer extends ManagedChildIndexer {
 
     if (events.length > 0) {
       this.logger.info('Saved new events', { events: events.length })
-      this.interopEventStore.saveNewEvents(events)
+      await this.interopEventStore.saveNewEvents(events)
     }
     return syncedTo
   }
