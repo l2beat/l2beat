@@ -1,6 +1,6 @@
 {
   "name": "eigenda",
-  "timestamp": 1761221369,
+  "timestamp": 1761227361,
   "configHash": "0x2386a3632ff2eea6d7aedc3618e9cccf9151ba824228347d85ef378fba904fd9",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
@@ -639,11 +639,13 @@
       "name": "EigenDACertVerifierRouter",
       "address": "eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12",
       "type": "Contract",
+      "template": "eigenda/EigenDACertVerifierRouter",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0x74e8ba69f5e8defb4c133681950b646f84ffb58fd5e7173c13c1e10e020f7fea"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "A router contract for DA Certificate verifiers. Verifier routing depends on the certificate reference block number.",
       "sinceTimestamp": 1751656319,
       "sinceBlock": 22847862,
       "values": {
@@ -658,7 +660,18 @@
         ],
         "$upgradeCount": 1,
         "certVerifierABNs": [0],
+        "DAVerifiers": [
+          {
+            "activationBlockNumber": 0,
+            "certVerifier": "eth:0x61692e93b6B045c444e942A91EcD1527F23A3FB7"
+          }
+        ],
         "owner": "eth:0x002721B4790d97dC140a049936aA710152Ba92D5"
+      },
+      "fieldMeta": {
+        "DAVerifiers": {
+          "description": "The DA verifier contracts indexed by activation block number."
+        }
       },
       "implementationNames": {
         "eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12": "TransparentUpgradeableProxy",
@@ -833,6 +846,33 @@
       "address": "eth:0x5D9A6573206e5205702E4caD87DC61f4C2a1Ad04",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "EigenDACertVerifier",
+      "address": "eth:0x61692e93b6B045c444e942A91EcD1527F23A3FB7",
+      "type": "Contract",
+      "template": "eigenda/EigenDACertVerifier",
+      "sourceHashes": [
+        "0x89110242a58d5638684fdfe8778df04acaea95a903f7261783575fcef2b61fcd"
+      ],
+      "proxyType": "immutable",
+      "description": "A DA verifier contract for EigenDA V2 certificates. The verifier is used to verify the certificate against operator signatures and stake thresholds.",
+      "sinceTimestamp": 1749145139,
+      "sinceBlock": 22639950,
+      "values": {
+        "$immutable": true,
+        "certVersion": 3,
+        "eigenDASignatureVerifier": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+        "eigenDAThresholdRegistry": "eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
+        "quorumNumbersRequired": "0x0001",
+        "securityThresholds": {
+          "confirmationThreshold": 55,
+          "adversaryThreshold": 33
+        }
+      },
+      "implementationNames": {
+        "eth:0x61692e93b6B045c444e942A91EcD1527F23A3FB7": "EigenDACertVerifier"
+      }
     },
     {
       "address": "eth:0x68bbBD6c18B0bc1B563489A13a398345E9da23d0",
@@ -1029,7 +1069,7 @@
           "eth:0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
           "eth:0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
         ],
-        "batchId": 131681,
+        "batchId": 131695,
         "BLOCK_STALE_MEASURE": 300,
         "blsApkRegistry": "eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -1065,7 +1105,7 @@
         "stakeRegistry": "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 131681,
+        "taskNumber": 131695,
         "THRESHOLD_DENOMINATOR": 100
       },
       "fieldMeta": {
@@ -1350,10 +1390,12 @@
       "name": "EigenDACertVerifier",
       "address": "eth:0xE1Ae45810A738F13e70Ac8966354d7D0feCF7BD6",
       "type": "Contract",
+      "template": "eigenda/EigenDACertVerifier_Legacy",
       "sourceHashes": [
         "0x3f32e0b975cf311b07f50d7af9a8c48fb99b5968c12a2d151b2433216d62994b"
       ],
       "proxyType": "immutable",
+      "description": "A legacy DACert verifier contract. It is used to verify v2 DA certificates. New verifiers should use the new verifier router contract.",
       "sinceTimestamp": 1748903123,
       "sinceBlock": 22619945,
       "values": {
@@ -1717,6 +1759,16 @@
       "function registerBLSPublicKey(address operator, tuple(tuple(uint256 X, uint256 Y) pubkeyRegistrationSignature, tuple(uint256 X, uint256 Y) pubkeyG1, tuple(uint256[2] X, uint256[2] Y) pubkeyG2) params, tuple(uint256 X, uint256 Y) pubkeyRegistrationMessageHash) returns (bytes32 operatorId)",
       "function registerOperator(address operator, bytes quorumNumbers)",
       "function registryCoordinator() view returns (address)"
+    ],
+    "eth:0x61692e93b6B045c444e942A91EcD1527F23A3FB7": [
+      "constructor(address initEigenDAThresholdRegistry, address initEigenDASignatureVerifier, tuple(uint8 confirmationThreshold, uint8 adversaryThreshold) initSecurityThresholds, bytes initQuorumNumbersRequired)",
+      "error InvalidSecurityThresholds()",
+      "function certVersion() pure returns (uint8)",
+      "function checkDACert(bytes abiEncodedCert) view returns (uint8)",
+      "function eigenDASignatureVerifier() view returns (address)",
+      "function eigenDAThresholdRegistry() view returns (address)",
+      "function quorumNumbersRequired() view returns (bytes)",
+      "function securityThresholds() view returns (tuple(uint8 confirmationThreshold, uint8 adversaryThreshold))"
     ],
     "eth:0x62242213E6FA34E943844f9B3124150EFb9CB0dD": [
       "constructor()",
@@ -2083,6 +2135,9 @@
     ]
   },
   "usedTemplates": {
+    "eigenda/EigenDACertVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eigenda/EigenDACertVerifier_Legacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eigenda/EigenDACertVerifierRouter": "0xbf4b9e7411ab344f2636764539df0cae49a73d201eb66cfca0ec7f22c1ccd364",
     "eigenlayer/BLSApkRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/EigenDADisperserRegistry": "0x2c838fbf8c11140f540ad7325afadb6581a83d99e20b209772f8f4a52ff01ea4",
     "eigenlayer/EigenDAPauserRegistry": "0x650c2bb1c48c3b4074538696cc4c8cc5a1610e60b132f774c9b120c619c34086",
@@ -2098,6 +2153,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23640106 },
-  "permissionsConfigHash": "0x496af05b6eec46fa797f1440b4633fa0360a32ca070f741ce079601bf6de5dbd"
+  "usedBlockNumbers": { "ethereum": 23640604 },
+  "permissionsConfigHash": "0xab3f0f211741fa9ce8f402114c3ae0427e11c49abfccd9c4714a8da6029a69d2"
 }

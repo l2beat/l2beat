@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x9090cb006621039ea871c7b4f017363990b67ad9
+Generated with discovered.json: 0xe0a859d38e40a665add3667eb326321e359601e4
 
-# Diff at Thu, 23 Oct 2025 12:16:32 GMT:
+# Diff at Thu, 23 Oct 2025 13:50:27 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@b6894dc3632e89b7e6ca11778d9b0f21fffc39e7 block: 1760089295
-- current timestamp: 1761221369
+- current timestamp: 1761227361
 
 ## Description
 
@@ -35,13 +35,19 @@ discovery. Values are for block 1760089295 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract EigenDACertVerifierRouter (eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12)
-    +++ description: None
+    +++ description: A router contract for DA Certificate verifiers. Verifier routing depends on the certificate reference block number.
+```
+
+```diff
++   Status: CREATED
+    contract EigenDACertVerifier (eth:0x61692e93b6B045c444e942A91EcD1527F23A3FB7)
+    +++ description: A DA verifier contract for EigenDA V2 certificates. The verifier is used to verify the certificate against operator signatures and stake thresholds.
 ```
 
 ```diff
 +   Status: CREATED
     contract EigenDACertVerifier (eth:0xE1Ae45810A738F13e70Ac8966354d7D0feCF7BD6)
-    +++ description: None
+    +++ description: A legacy DACert verifier contract. It is used to verify v2 DA certificates. New verifiers should use the new verifier router contract.
 ```
 
 ```diff
