@@ -702,7 +702,7 @@ export interface ProjectDaBridge {
   risks: DaBridgeRisks
   usedIn: UsedInProject[]
   dac?: DacInfo
-  relayerType?: TableReadyValue<'Permissioned' | 'SelfProposed'>
+  relayerType?: TableReadyValue<'Permissioned' | 'SelfRelay'>
   validationType?: DaBridgeValidationType
 }
 
