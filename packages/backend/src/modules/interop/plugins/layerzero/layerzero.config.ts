@@ -1,5 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { TimeLoop } from '../../../../tools/TimeLoop'
 import {
@@ -13,15 +14,15 @@ export interface LayerZeroV1Network {
   chain: string
   chainId: number
   eid: number
-  sendLib: string // fix issue with EthereumAddress
-  receiveLib: string
+  sendLib: EthereumAddress
+  receiveLib: EthereumAddress
 }
 
 export interface LayerZeroV2Network {
   chain: string
   chainId: number
   eid: number
-  endpointV2: string // fix issue with EthereumAddress
+  endpointV2: EthereumAddress
 }
 
 export const LayerZeroV1Config =
@@ -182,12 +183,12 @@ export class LayerZeroConfigPlugin
             eid: Number(v1.eid),
             sendLib:
               typeof v1.sendUln301 === 'string'
-                ? v1.sendUln301
-                : v1.sendUln301.address,
+                ? EthereumAddress(v1.sendUln301)
+                : EthereumAddress(v1.sendUln301.address),
             receiveLib:
               typeof v1.receiveUln301 === 'string'
-                ? v1.receiveUln301
-                : v1.receiveUln301.address,
+                ? EthereumAddress(v1.receiveUln301)
+                : EthereumAddress(v1.receiveUln301.address),
           })
         }
 
@@ -199,8 +200,8 @@ export class LayerZeroConfigPlugin
             eid: Number(v2.eid),
             endpointV2:
               typeof v2.endpointV2 === 'string'
-                ? v2.endpointV2
-                : v2.endpointV2.address,
+                ? EthereumAddress(v2.endpointV2)
+                : EthereumAddress(v2.endpointV2.address),
           })
         }
       }

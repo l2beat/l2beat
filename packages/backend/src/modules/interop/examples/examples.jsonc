@@ -170,6 +170,7 @@
     "transfers": ["circle-gateway.Transfer"]
   },
   "layerzerov1": {
+    "loadConfigs": ["layerzero-v1", "layerzero-v2"],
     "txs": [
       {
         "chain": "arbitrum",
@@ -184,6 +185,7 @@
     "messages": ["layerzero-v1.Message"]
   },
   "layerzerov2": {
+    "loadConfigs": ["layerzero-v1", "layerzero-v2"],
     "txs": [
       {
         "chain": "arbitrum",
@@ -447,6 +449,7 @@
     ]
   },
   "stargatev2taxi": {
+    "loadConfigs": ["layerzero-v1", "layerzero-v2"],
     "txs": [
       {
         "chain": "arbitrum",
@@ -471,6 +474,7 @@
     ]
   },
   "stargatev2bus": {
+    "loadConfigs": ["layerzero-v1", "layerzero-v2"],
     // 1. bus with 2 passengers from Base to Ethereum
     // 2. bus with 1 passenger from Ethereum to Arbitrum
     "txs": [
@@ -505,6 +509,7 @@
     ]
   },
   "layerzeromix": {
+    "loadConfigs": ["layerzero-v1", "layerzero-v2"],
     // Messages:
     //   layerzero-v2.Message 5
     // Transfers:
@@ -567,6 +572,7 @@
     ]
   },
   "usdt0": {
+    "loadConfigs": ["layerzero-v1", "layerzero-v2"],
     "txs": [
       {
         "chain": "ethereum",
@@ -715,6 +721,7 @@
     ]
   },
   "oft": {
+    "loadConfigs": ["layerzero-v1", "layerzero-v2"],
     // 3 oft transfers
     "txs": [
       {
@@ -794,6 +801,7 @@
     ]
   },
   "stargate-debug": {
+    "loadConfigs": ["layerzero-v1", "layerzero-v2"],
     "txs": [
       {
         "chain": "optimism",
