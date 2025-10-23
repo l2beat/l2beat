@@ -24,7 +24,7 @@ Note that (TODO: )
 
 */
 
-import { BinaryReader } from '../BinaryReader'
+import { BinaryReader } from '../../../tools/BinaryReader'
 import {
   Address32,
   createEventParser,

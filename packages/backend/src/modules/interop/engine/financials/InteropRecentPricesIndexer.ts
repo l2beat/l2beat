@@ -2,11 +2,11 @@ import type { Database } from '@l2beat/database'
 import type { InteropRecentPricesRecord } from '@l2beat/database/dist/repositories/InteropRecentPricesRepository'
 import type { PriceProvider } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { INDEXER_NAMES } from '../../tools/uif/indexerIdentity'
+import { INDEXER_NAMES } from '../../../../tools/uif/indexerIdentity'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
-} from '../../tools/uif/ManagedChildIndexer'
+} from '../../../../tools/uif/ManagedChildIndexer'
 
 export interface Dependencies extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database

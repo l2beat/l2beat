@@ -1,4 +1,4 @@
-import { PacketDelivered, PacketSent } from './layerzero-v2'
+import { PacketDelivered, PacketSent } from './layerzero/layerzero-v2.plugin'
 import { StargateV2OFTReceived, StargateV2OFTSentTaxi } from './stargate'
 import {
   type InteropEvent,

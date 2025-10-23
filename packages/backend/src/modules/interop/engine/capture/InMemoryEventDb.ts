@@ -4,7 +4,7 @@ import type {
   InteropEventDb,
   InteropEventQuery,
   InteropEventType,
-} from './plugins/types'
+} from '../../plugins/types'
 
 export class InMemoryEventDb implements InteropEventDb {
   private indices = new Map<string, EventIndex>()

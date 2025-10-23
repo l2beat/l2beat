@@ -1,9 +1,11 @@
 import { HttpClient } from '@l2beat/shared'
-import type { InteropComparePlugin, InteropExternalItem } from './types'
+import type {
+  InteropComparePlugin,
+  InteropExternalItem,
+} from '../../engine/compare/InteropCompareLoop'
 
 export class AcrossComparePlugin implements InteropComparePlugin {
   name = 'across'
-  type = 'transfer' as const
 
   async getExternalItems(): Promise<InteropExternalItem[]> {
     const http = new HttpClient()
