@@ -15,6 +15,7 @@ export interface InteropEventRecord {
   txHash: string
   value: string
   txTo: string | undefined
+  calldata: string
   logIndex: number
   matched: boolean
   unsupported: boolean
@@ -34,6 +35,7 @@ export function toRecord(row: Selectable<InteropEvent>): InteropEventRecord {
     txHash: row.txHash,
     value: row.value ?? '', //TODO: make optional
     txTo: row.txTo ?? undefined,
+    calldata: row.calldata,
     logIndex: row.logIndex ?? -1, // TODO: make optional
     matched: row.matched,
     unsupported: row.unsupported,
@@ -52,6 +54,7 @@ export function toRow(record: InteropEventRecord): Insertable<InteropEvent> {
     blockNumber: record.blockNumber,
     blockHash: record.blockHash.toLowerCase(),
     txHash: record.txHash.toLowerCase(),
+    calldata: record.calldata,
     value: record.value,
     txTo: record.txTo ?? null,
     logIndex: record.logIndex,

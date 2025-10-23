@@ -196,8 +196,9 @@ async function runExample(example: Example): Promise<RunResult> {
             blockNumber: block.number,
             blockHash: block.hash,
             txHash: tx.hash,
-            value: tx.value,
+            txValue: tx.value,
             txTo: tx.to ? Address32.from(tx.to) : undefined,
+            txData: tx.data,
             logIndex: log.logIndex ?? -1,
           },
         })
