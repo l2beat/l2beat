@@ -73,7 +73,7 @@ export function DesktopProjectNavigation({
   }, [headerHeight])
 
   return (
-    <div className="sticky top-8 w-[172px] min-w-[172px]">
+    <div className="sticky top-8 w-[180px] min-w-[180px]">
       <div className="relative">
         <div
           ref={headerRef}
@@ -108,8 +108,10 @@ export function DesktopProjectNavigation({
                   router.push(value)
                 }}
               >
-                <SelectTrigger>
-                  <SelectValue />
+                <SelectTrigger className="max-w-[180px]">
+                  <div className="min-w-0 max-w-[124px] truncate">
+                    <SelectValue />
+                  </div>
                 </SelectTrigger>
                 <SelectContent>
                   {projectVariants.map((variant) => (
@@ -166,7 +168,7 @@ function ProjectNavigationList({
   return (
     <ScrollWithGradient
       className={cn(
-        'absolute top-0 flex w-[172px] min-w-[172px] flex-col gap-3 font-medium text-xs leading-none transition-[top] duration-300',
+        'absolute top-0 flex w-[180px] min-w-[180px] flex-col gap-3 font-medium text-xs leading-none transition-[top] duration-300',
         isUnderReview
           ? 'max-h-[calc(100vh-300px)]'
           : 'max-h-[calc(100vh-220px)]',
