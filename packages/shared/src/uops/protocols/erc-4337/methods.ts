@@ -298,6 +298,11 @@ export const ERC4337_methods: Method[] = [
       'function installValidation(bytes25 validationConfig, bytes4[] calldata selectors, bytes calldata installData, bytes[] calldata hooks)',
     ),
     ([, , installData]) => {
+      // installData is bytes calldata containing the installation payload
+      // It will be recursively decoded; target address is embedded within
+      if (!installData || installData === '0x') {
+        return []
+      }
       return [
         {
           type: 'recursive',
@@ -312,21 +317,34 @@ export const ERC4337_methods: Method[] = [
       'function executeComposable((address,uint256,bytes4,(uint8,bytes,(uint8,bytes)[])[],(uint8,bytes)[])[])',
     ),
     ([executions]) => {
-      // ComposableExecution struct:
-      // [0] address to
-      // [1] uint256 value
-      // [2] bytes4 functionSig (4-byte selector only, not full calldata)
-      // [3] InputParam[] inputParams (array of (fetcherType, paramData, constraints[]))
-      // [4] OutputParam[] outputParams (array of (fetcherType, paramData))
+      // ComposableExecution struct mapping:
+      // [0] address to          - target contract address
+      // [1] uint256 value       - ETH value to send
+      // [2] bytes4 functionSig  - 4-byte function selector (NOT full calldata)
+      // [3] InputParam[] inputParams - array of (fetcherType, paramData, constraints[])
+      // [4] OutputParam[] outputParams - array of (fetcherType, paramData)
       //
-      // Note: execution[2] is only the 4-byte function selector.
-      // Full calldata would require reconstructing from functionSig + encoded inputParams,
-      // but that's complex. For tracking purposes, we use the selector as a marker.
-      return executions.map((execution: any) => ({
-        type: 'recursive',
-        calldata: execution[2], // bytes4 functionSig (selector only)
-        to: execution[0], // address to
-      }))
+      // IMPORTANT: execution[2] is ONLY the 4-byte function selector, not full calldata.
+      // Full calldata reconstruction would require encoding inputParams, which is complex
+      // because fetcherType determines how paramData is used (RAW_BYTES vs STATIC_CALL).
+      // For tracking/analysis purposes, we use the selector as an identifier.
+      
+      if (!Array.isArray(executions)) {
+        return []
+      }
+      
+      return executions
+        .filter((execution: any) => execution && execution[0] && execution[2])
+        .map((execution: any) => {
+          const to = execution[0] 
+          const selector = execution[2] // bytes4 functionSig as hex string
+          
+          return {
+            type: 'recursive',
+            calldata: selector, // bytes4 functionSig (selector only)
+            to,
+          }
+        })
     },
   ),
 ]
