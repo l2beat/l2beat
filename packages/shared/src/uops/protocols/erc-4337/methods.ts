@@ -328,17 +328,25 @@ export const ERC4337_methods: Method[] = [
       // Full calldata reconstruction would require encoding inputParams, which is complex
       // because fetcherType determines how paramData is used (RAW_BYTES vs STATIC_CALL).
       // For tracking/analysis purposes, we use the selector as an identifier.
-      
+
       if (!Array.isArray(executions)) {
         return []
       }
-      
+
       return executions
-        .filter((execution: any) => execution && execution[0] && execution[2])
-        .map((execution: any) => {
-          const to = execution[0] 
+        .filter(
+          (
+            execution: unknown,
+          ): execution is [string, unknown, string, unknown, unknown] =>
+            Array.isArray(execution) &&
+            execution.length >= 3 &&
+            typeof execution[0] === 'string' &&
+            typeof execution[2] === 'string',
+        )
+        .map((execution) => {
+          const to = execution[0]
           const selector = execution[2] // bytes4 functionSig as hex string
-          
+
           return {
             type: 'recursive',
             calldata: selector, // bytes4 functionSig (selector only)
