@@ -312,10 +312,20 @@ export const ERC4337_methods: Method[] = [
       'function executeComposable((address,uint256,bytes4,(uint8,bytes,(uint8,bytes)[])[],(uint8,bytes)[])[])',
     ),
     ([executions]) => {
+      // ComposableExecution struct:
+      // [0] address to
+      // [1] uint256 value
+      // [2] bytes4 functionSig (4-byte selector only, not full calldata)
+      // [3] InputParam[] inputParams (array of (fetcherType, paramData, constraints[]))
+      // [4] OutputParam[] outputParams (array of (fetcherType, paramData))
+      //
+      // Note: execution[2] is only the 4-byte function selector.
+      // Full calldata would require reconstructing from functionSig + encoded inputParams,
+      // but that's complex. For tracking purposes, we use the selector as a marker.
       return executions.map((execution: any) => ({
         type: 'recursive',
-        calldata: execution[2], // functionSig is at index 2
-        to: execution[0], // to address is at index 0
+        calldata: execution[2], // bytes4 functionSig (selector only)
+        to: execution[0], // address to
       }))
     },
   ),
