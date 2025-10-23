@@ -198,6 +198,7 @@ async function runExample(example: Example): Promise<RunResult> {
             txHash: tx.hash,
             value: tx.value,
             txTo: tx.to ? Address32.from(tx.to) : undefined,
+            calldata: tx.data,
             logIndex: log.logIndex ?? -1,
           },
         })

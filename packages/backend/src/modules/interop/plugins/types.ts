@@ -48,6 +48,7 @@ export interface InteropEventContext {
   value: string
   txTo?: Address32
   logIndex: number
+  calldata: string
 }
 
 export interface InteropEvent<T = unknown> {

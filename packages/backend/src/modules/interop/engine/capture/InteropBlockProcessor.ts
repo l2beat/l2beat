@@ -88,6 +88,8 @@ function getLogsToDecode(chain: string, block: Block, logs: Log[]) {
         // biome-ignore lint/style/noNonNullAssertion: EVM tx should have it
         value: tx.value!,
         txTo: tx.to !== undefined ? Address32.from(tx.to) : undefined,
+        // biome-ignore lint/style/noNonNullAssertion: EVM tx should have it
+        calldata: tx.data! as string,
       }),
     )
 

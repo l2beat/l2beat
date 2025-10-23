@@ -93,6 +93,7 @@ function fromDbRecord(record: InteropEventRecord): InteropEvent {
       txHash: record.txHash,
       value: record.value,
       txTo: record.txTo ? Address32.from(record.txTo) : undefined,
+      calldata: record.calldata,
     },
   }
 }
@@ -112,6 +113,7 @@ function toDbRecord(event: InteropEvent): InteropEventRecord {
     txHash: event.ctx.txHash,
     value: event.ctx.value,
     txTo: event.ctx.txTo,
+    calldata: event.ctx.calldata,
     matched: false,
     unsupported: false,
   }

@@ -391,6 +391,7 @@ function event(
     txHash: `0x${eventId}txhash`,
     value: '0x111111',
     txTo: EthereumAddress.random(),
+    calldata: '0x',
     logIndex: 0,
     matched: false,
     unsupported: false,
