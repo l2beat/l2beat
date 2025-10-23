@@ -28,11 +28,10 @@ export function createInteropModule({
   }
   logger = logger.tag({ feature: 'interop', module: 'interop' })
 
-  const interopStore = new InteropEventStore(db)
-
-  const configs = new InteropConfigStore(db)
+  const eventStore = new InteropEventStore(db)
+  const configStore = new InteropConfigStore(db)
   const plugins = createInteropPlugins({
-    configs,
+    configs: configStore,
     chains: config.interop.config.chains,
     httpClient: new HttpClient(),
     logger,
@@ -45,7 +44,7 @@ export function createInteropModule({
       const processor = new InteropBlockProcessor(
         chain.name,
         plugins.eventPlugins,
-        interopStore,
+        eventStore,
         logger,
       )
       blockProcessors.push(processor)
@@ -54,7 +53,7 @@ export function createInteropModule({
   }
 
   const matcher = new InteropMatchingLoop(
-    interopStore,
+    eventStore,
     db,
     plugins.eventPlugins,
     config.interop.capture.chains.map((c) => c.name),
@@ -67,7 +66,7 @@ export function createInteropModule({
     (c) => new InteropCompareLoop(db, c, logger),
   )
 
-  const cleaner = new InteropCleanerLoop(interopStore, db, logger)
+  const cleaner = new InteropCleanerLoop(eventStore, db, logger)
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
   const recentPricesIndexer = new InteropRecentPricesIndexer({
@@ -90,7 +89,7 @@ export function createInteropModule({
     logger = logger.for('InteropModule')
     logger.info('Starting')
     if (config.interop && config.interop.matching) {
-      await interopStore.start()
+      await eventStore.start()
       matcher.start()
     }
     if (config.interop && config.interop.compare.enabled) {
@@ -107,6 +106,7 @@ export function createInteropModule({
       financialsService.start()
     }
     if (config.interop && config.interop.config.enabled) {
+      await configStore.start()
       for (const configLoop of plugins.configPlugins) {
         configLoop.start()
       }

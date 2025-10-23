@@ -35,7 +35,7 @@ async function main() {
 
   try {
     const config = await getConfig()
-    const app = new Application(config, logger)
+    const app = new Application(config, Logger.SILENT)
     await app.start()
   } catch (e) {
     logger.critical('Failed to start the application', e)

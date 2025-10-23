@@ -43,7 +43,7 @@ export class AcrossConfigPlugin
   extends TimeLoop
   implements InteropConfigPlugin
 {
-  provides = AcrossConfig
+  provides = [AcrossConfig]
 
   constructor(
     private chains: { id: number; name: string }[],
@@ -52,28 +52,29 @@ export class AcrossConfigPlugin
     private ethereumRpc: RpcClient,
   ) {
     super({ intervalMs: 20 * 60 * 1000 })
-    this.logger = logger.for(this).tag({ tag: this.provides.key })
+    this.logger = logger.for(this).tag({ tag: AcrossConfig.key })
   }
 
   async run() {
-    const previous = this.store.get(this.provides)
+    const previous = this.store.get(AcrossConfig)
     const latest = await this.getLatestNetworks()
 
     const reconciled = reconcileNetworks(previous, latest)
 
+    console.log(reconciled)
+
     if (reconciled.removed.length > 0) {
       this.logger.error('Networks removed', {
-        plugin: this.provides.key,
+        plugin: AcrossConfig.key,
         removed: reconciled.removed,
       })
-      return
     }
 
     if (reconciled.updated.length > 0) {
       this.logger.info('Networks updated', {
-        plugin: this.provides.key,
+        plugin: AcrossConfig.key,
       })
-      this.store.set(this.provides, reconciled.updated)
+      this.store.set(AcrossConfig, reconciled.updated)
     }
   }
 
