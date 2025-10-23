@@ -20,7 +20,7 @@ export const eigendaV2: BaseProject = {
   slug: 'eigenda-v2',
   name: 'EigenDA V2',
   shortName: 'EigenDA V2',
-  addedAt: UnixTime.fromDate(new Date('2025-07-30')),
+  addedAt: UnixTime.fromDate(new Date('2025-10-22')),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
@@ -44,7 +44,7 @@ export const eigendaV2: BaseProject = {
     name: 'DACert Verifier (EigenDA V2)',
     daLayer: ProjectId('eigenda'),
     relayerType: {
-      value: 'SelfProposed',
+      value: 'SelfRelay',
       sentiment: 'good',
       description:
         'In EigenDA V2 secure integrations, the rollup batcher includes the DA certificate on L1, no separate third-party relayer is required.',
