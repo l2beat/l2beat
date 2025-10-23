@@ -82,10 +82,16 @@ export class UpdateMonitor {
       disabledProjects: this.disabledProjects,
     })
 
-    const tasks = enabledProjects.map((project) => async () => {
-      await this.updateProject(this.runner, project, timestamp)
-      await this.updateDiffer?.runForProject(project, timestamp)
-    })
+    const tasks = enabledProjects.map((project) => ({
+      identity: {
+        id: project,
+        name: `Update project ${project}`,
+      },
+      job: async () => {
+        await this.updateProject(this.runner, project, timestamp)
+        await this.updateDiffer?.runForProject(project, timestamp)
+      },
+    }))
 
     const results = await this.workerPool.runInPool(tasks)
 
@@ -99,7 +105,9 @@ export class UpdateMonitor {
       updateTarget: timestamp,
       updateTargetDate: targetDateIso,
       timedOut: results.timedOut,
-      errors: results.errors.map((error) => error?.message),
+      successCount: results.results.length,
+      failedCount: results.errors.length,
+      totalCount: tasks.length,
     })
 
     const reminders = this.generateDailyReminder()

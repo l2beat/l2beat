@@ -14,7 +14,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { Clock } from '../../tools/Clock'
-import type { Task, WorkerPool } from './createWorkers'
+import type { WorkerPool } from './createWorkers'
 import { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import type { DiscoveryRunner } from './DiscoveryRunner'
 import type { UpdateDiffer } from './UpdateDiffer'
@@ -23,10 +23,27 @@ import type { UpdateNotifier } from './UpdateNotifier'
 
 const instantWorkerPool = mockObject<WorkerPool>({
   runInPool: mockFn(async (tasks) => {
-    await Promise.all(tasks.map(async (task: Task<void>) => await task()))
+    const results = []
+    const errors = []
+
+    for (const task of tasks) {
+      try {
+        const result = await task.job()
+        results.push({
+          identity: task.identity,
+          result,
+        })
+      } catch (error) {
+        errors.push({
+          identity: task.identity,
+          error: error instanceof Error ? error : new Error(String(error)),
+        })
+      }
+    }
+
     return {
-      results: [],
-      errors: [],
+      results,
+      errors,
       timedOut: false,
     }
   }),
