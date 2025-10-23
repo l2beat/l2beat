@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreMethods": ["getExchangeTokens", "proxiableUUID"],
   "ignoreRelatives": ["getAccountGlobalUsdToken"],
+  "description": "Main contract of the Ethereal DEX. Entrypoint for users to deposit and withdraw funds and for operators submit user actions.",
   "fields": {
     "isEmergencyPaused": { "severity": "HIGH" },
     "owner": {

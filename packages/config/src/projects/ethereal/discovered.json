@@ -1140,7 +1140,7 @@
         "0x06bfc09649a2d808ed13a12f95572720fa8ccd81e6d2c2206f879d4495257925"
       ],
       "proxyType": "immutable",
-      "description": "An OApp in the LayerZero protocol. It allows to mint the native token using the arbNativeTokenManager precombile on ArbOs. This means that the native token inherits all trust assumptions of the LayerZero security stack configured for this OApp and its crosschein peers, including minting and burning.",
+      "description": "An OApp in the LayerZero protocol. It allows to mint the native token using the arbNativeTokenManager precompile on ArbOs. This means that the native token inherits all trust assumptions of the LayerZero security stack configured for this OApp and its crosschein peers, including minting and burning.",
       "sinceTimestamp": 1759179850,
       "sinceBlock": 3896,
       "values": {
@@ -1298,6 +1298,7 @@
         "0xb6c692aef340a10d30bcd0a9edff8392fe5adf829a55d81be3c755b10d84868c"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Main contract of the Ethereal DEX. Entrypoint for users to deposit and withdraw funds and for operators submit user actions.",
       "sinceTimestamp": 1760534426,
       "sinceBlock": 18533,
       "values": {

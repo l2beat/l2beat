@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "An OApp in the LayerZero protocol. It allows to mint the native token using the arbNativeTokenManager precombile on ArbOs. This means that the native token inherits all trust assumptions of the LayerZero security stack configured for this OApp and its crosschein peers, including minting and burning.",
+  "description": "An OApp in the LayerZero protocol. It allows to mint the native token using the arbNativeTokenManager precompile on ArbOs. This means that the native token inherits all trust assumptions of the LayerZero security stack configured for this OApp and its crosschein peers, including minting and burning.",
   "ignoreRelatives": ["endpoint", "arbNativeTokenManager"],
   "fields": {
     "owner": {

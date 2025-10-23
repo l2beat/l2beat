@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x19c143913d0826f6e7c5783e81b2f6dd42e03122
+Generated with discovered.json: 0x2502db7e651b56a054870633e3dc8f71a8c1cf43
 
-# Diff at Thu, 23 Oct 2025 14:53:27 GMT:
+# Diff at Thu, 23 Oct 2025 15:11:46 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@59bab562d9522734bed50b73c362d354ad81ecd1 block: 1761144638
@@ -41,7 +41,7 @@ discovery. Values are for block 1761144638 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract OrbitNativeOFTAdapter (ethereal:0x80F981abC18A48CfdbDe5556F9B72e6a726F0FF3)
-    +++ description: An OApp in the LayerZero protocol. It allows to mint the native token using the arbNativeTokenManager precombile on ArbOs. This means that the native token inherits all trust assumptions of the LayerZero security stack configured for this OApp and its crosschein peers, including minting and burning.
+    +++ description: An OApp in the LayerZero protocol. It allows to mint the native token using the arbNativeTokenManager precompile on ArbOs. This means that the native token inherits all trust assumptions of the LayerZero security stack configured for this OApp and its crosschein peers, including minting and burning.
 ```
 
 ```diff
@@ -59,7 +59,7 @@ discovery. Values are for block 1761144638 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract ExchangeGateway (ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc)
-    +++ description: None
+    +++ description: Main contract of the Ethereal DEX. Entrypoint for users to deposit and withdraw funds and for operators submit user actions.
 ```
 
 ```diff
