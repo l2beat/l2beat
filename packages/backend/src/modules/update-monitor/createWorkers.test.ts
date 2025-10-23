@@ -21,8 +21,8 @@ describe('createWorkerPool', () => {
     it('executes all tasks successfully', async () => {
       const workerPool = createWorkerPool({
         count: 2,
-        timeoutPerTask: 1000,
-        timeoutPerRun: 5000,
+        timeoutPerTaskMs: 1000,
+        timeoutPerRunMs: 5000,
       })
 
       const tasks = [
@@ -43,8 +43,8 @@ describe('createWorkerPool', () => {
     it('handles empty task array', async () => {
       const workerPool = createWorkerPool({
         count: 2,
-        timeoutPerTask: 1000,
-        timeoutPerRun: 5000,
+        timeoutPerTaskMs: 1000,
+        timeoutPerRunMs: 5000,
       })
 
       const resultPromise = workerPool.runInPool([])
@@ -59,8 +59,8 @@ describe('createWorkerPool', () => {
     it('executes tasks with correct concurrency', async () => {
       const workerPool = createWorkerPool({
         count: 2,
-        timeoutPerTask: 1000,
-        timeoutPerRun: 5000,
+        timeoutPerTaskMs: 1000,
+        timeoutPerRunMs: 5000,
       })
 
       const executionOrder: number[] = []
@@ -83,8 +83,8 @@ describe('createWorkerPool', () => {
     it('captures errors without stopping other tasks', async () => {
       const workerPool = createWorkerPool({
         count: 2,
-        timeoutPerTask: 1000,
-        timeoutPerRun: 5000,
+        timeoutPerTaskMs: 1000,
+        timeoutPerRunMs: 5000,
       })
 
       const tasks = [
@@ -112,8 +112,8 @@ describe('createWorkerPool', () => {
     it('handles non-Error throws', async () => {
       const workerPool = createWorkerPool({
         count: 1,
-        timeoutPerTask: 1000,
-        timeoutPerRun: 5000,
+        timeoutPerTaskMs: 1000,
+        timeoutPerRunMs: 5000,
       })
 
       const tasks = [
@@ -137,8 +137,8 @@ describe('createWorkerPool', () => {
     it('times out individual slow tasks', async () => {
       const workerPool = createWorkerPool({
         count: 2,
-        timeoutPerTask: 100,
-        timeoutPerRun: 5000,
+        timeoutPerTaskMs: 100,
+        timeoutPerRunMs: 5000,
       })
 
       const tasks = [
@@ -167,8 +167,8 @@ describe('createWorkerPool', () => {
     it('does not timeout tasks that finish just in time', async () => {
       const workerPool = createWorkerPool({
         count: 1,
-        timeoutPerTask: 150,
-        timeoutPerRun: 5000,
+        timeoutPerTaskMs: 150,
+        timeoutPerRunMs: 5000,
       })
 
       const tasks = [
@@ -192,8 +192,8 @@ describe('createWorkerPool', () => {
     it('stops processing when run timeout is reached', async () => {
       const workerPool = createWorkerPool({
         count: 1,
-        timeoutPerTask: 1000,
-        timeoutPerRun: 200,
+        timeoutPerTaskMs: 1000,
+        timeoutPerRunMs: 200,
       })
 
       const tasks = Array.from({ length: 10 }, (_, i) => async () => {
@@ -214,8 +214,8 @@ describe('createWorkerPool', () => {
     it('completes all tasks if run finishes before timeout', async () => {
       const workerPool = createWorkerPool({
         count: 3,
-        timeoutPerTask: 1000,
-        timeoutPerRun: 1000,
+        timeoutPerTaskMs: 1000,
+        timeoutPerRunMs: 1000,
       })
 
       const tasks = Array.from({ length: 5 }, (_, i) => async () => {
@@ -242,8 +242,8 @@ describe('createWorkerPool', () => {
     it('processes tasks in order with single worker', async () => {
       const workerPool = createWorkerPool({
         count: 1,
-        timeoutPerTask: 1000,
-        timeoutPerRun: 5000,
+        timeoutPerTaskMs: 1000,
+        timeoutPerRunMs: 5000,
       })
 
       const executionOrder: number[] = []
@@ -263,8 +263,8 @@ describe('createWorkerPool', () => {
     it('processes tasks concurrently with multiple workers', async () => {
       const workerPool = createWorkerPool({
         count: 3,
-        timeoutPerTask: 1000,
-        timeoutPerRun: 5000,
+        timeoutPerTaskMs: 1000,
+        timeoutPerRunMs: 5000,
       })
 
       const startTimes: number[] = []
@@ -287,8 +287,8 @@ describe('createWorkerPool', () => {
     it('respects worker count limit', async () => {
       const workerPool = createWorkerPool({
         count: 2,
-        timeoutPerTask: 1000,
-        timeoutPerRun: 5000,
+        timeoutPerTaskMs: 1000,
+        timeoutPerRunMs: 5000,
       })
 
       let concurrentCount = 0
@@ -313,8 +313,8 @@ describe('createWorkerPool', () => {
     it('handles tasks that return undefined', async () => {
       const workerPool = createWorkerPool({
         count: 1,
-        timeoutPerTask: 1000,
-        timeoutPerRun: 5000,
+        timeoutPerTaskMs: 1000,
+        timeoutPerRunMs: 5000,
       })
 
       const tasks = [async () => undefined, async () => 'value']
@@ -333,8 +333,8 @@ describe('createWorkerPool', () => {
     it('handles tasks that return null', async () => {
       const workerPool = createWorkerPool({
         count: 1,
-        timeoutPerTask: 1000,
-        timeoutPerRun: 5000,
+        timeoutPerTaskMs: 1000,
+        timeoutPerRunMs: 5000,
       })
 
       const tasks = [async () => null]
@@ -351,8 +351,8 @@ describe('createWorkerPool', () => {
     it('handles mix of success, error, and timeout', async () => {
       const workerPool = createWorkerPool({
         count: 2,
-        timeoutPerTask: 100,
-        timeoutPerRun: 5000,
+        timeoutPerTaskMs: 100,
+        timeoutPerRunMs: 5000,
       })
 
       const tasks = [
@@ -387,8 +387,8 @@ describe('createWorkerPool', () => {
     it('handles different return types', async () => {
       const workerPool = createWorkerPool({
         count: 2,
-        timeoutPerTask: 1000,
-        timeoutPerRun: 5000,
+        timeoutPerTaskMs: 1000,
+        timeoutPerRunMs: 5000,
       })
 
       const numberTasks = [async () => 1, async () => 2, async () => 3]
@@ -405,8 +405,8 @@ describe('createWorkerPool', () => {
     it('handles complex object types', async () => {
       const workerPool = createWorkerPool({
         count: 1,
-        timeoutPerTask: 1000,
-        timeoutPerRun: 5000,
+        timeoutPerTaskMs: 1000,
+        timeoutPerRunMs: 5000,
       })
 
       type ComplexType = { id: string; data: number[] }

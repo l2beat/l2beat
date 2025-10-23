@@ -2,9 +2,9 @@ export type WorkerPoolSettings = {
   /** Number of concurrent workers */
   count: number
   /** Timeout per individual task in milliseconds */
-  timeoutPerTask: number
+  timeoutPerTaskMs: number
   /** Total timeout for all tasks in milliseconds */
-  timeoutPerRun: number
+  timeoutPerRunMs: number
 }
 
 export type Task<T> = () => Promise<T>
@@ -50,7 +50,7 @@ export function createWorkerPool(settings: WorkerPoolSettings): WorkerPool {
       setTimeout(() => {
         runTimeoutOccurred = true
         resolve()
-      }, settings.timeoutPerRun)
+      }, settings.timeoutPerRunMs)
     })
 
     let nextTaskIndex = 0
@@ -63,7 +63,7 @@ export function createWorkerPool(settings: WorkerPoolSettings): WorkerPool {
         const taskTimeoutPromise = new Promise<never>((_, reject) => {
           setTimeout(() => {
             reject(new Error('Task timeout'))
-          }, settings.timeoutPerTask)
+          }, settings.timeoutPerTaskMs)
         })
 
         try {

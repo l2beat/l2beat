@@ -73,9 +73,9 @@ export function createUpdateMonitorModule({
   )
 
   const workerPool = createWorkerPool({
-    count: 3,
-    timeoutPerTask: 30 * 1000, // 30 seconds per task
-    timeoutPerRun: 45 * 60 * 1000, // 45 minutes for all tasks
+    count: config.updateMonitor.workerPool.count,
+    timeoutPerTaskMs: config.updateMonitor.workerPool.timeoutPerTaskMs,
+    timeoutPerRunMs: config.updateMonitor.workerPool.timeoutPerRunMs,
   })
 
   const updateMonitor = new UpdateMonitor(
