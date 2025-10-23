@@ -52,7 +52,7 @@ export class RelaySimplePlugIn implements InteropPlugin {
           from: transfer.from,
           to: transfer.to,
           value: transfer.value.toString(),
-          requestId: input.log.data.slice(66, 98), // third 32 bytes of calldata
+          requestId: '0x' + input.ctx.txData.slice(138, 202), // third 32 bytes of calldata
         })
       }
 
@@ -64,7 +64,7 @@ export class RelaySimplePlugIn implements InteropPlugin {
           from: transfer.from,
           to: transfer.to,
           value: transfer.value.toString(),
-          requestId: input.log.data.slice(66, 98), // third 32 bytes of calldata
+          requestId: '0x' + input.ctx.txData.slice(138, 202), // third 32 bytes of calldata
         })
       }
     }
@@ -91,3 +91,5 @@ export class RelaySimplePlugIn implements InteropPlugin {
     }
   }
 }
+
+0xa9059cbb000000000000000000000000d23471b8407c4cf929ef053a5c8e1fa596cd68a800000000000000000000000000000000000000000000000000000000030ba5d7e54d89ccdab6e5d802ab09816ce90c9313a5d13d0fd605b5ec5c7637d30b52a9

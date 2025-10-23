@@ -113,6 +113,7 @@ export function createInteropPlugins(
       new HyperlaneEcoPlugin(), // should be run before Hyperlane
       new HyperlanePlugIn(),
       new OneinchFusionPlusPlugin(),
+      new RelaySimplePlugIn(),
     ],
   }
 }
