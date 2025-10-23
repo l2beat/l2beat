@@ -249,7 +249,7 @@ const getTokenAssetCategoryColumns = (opts: {
     }),
     columnHelper.accessor('tvs.data.breakdown.rwaPublic', {
       id: 'rwaPublic',
-      header: 'RWA Public',
+      header: 'Public RWAs',
       cell: (ctx) => (
         <BreakdownCell
           row={ctx.row.original}
@@ -267,7 +267,7 @@ const getTokenAssetCategoryColumns = (opts: {
     opts.includeRwaRestrictedTokens &&
       columnHelper.accessor('tvs.data.breakdown.rwaRestricted', {
         id: 'rwaRestricted',
-        header: 'RWA Restricted',
+        header: 'Restricted RWAs',
         cell: (ctx) => (
           <BreakdownCell
             row={ctx.row.original}
