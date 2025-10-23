@@ -107,7 +107,7 @@ export function createInteropModule({
       financialsService.start()
     }
     if (config.interop && config.interop.config.enabled) {
-      for (const configLoop of configLoops) {
+      for (const configLoop of plugins.configPlugins) {
         configLoop.start()
       }
     }

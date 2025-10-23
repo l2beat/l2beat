@@ -9,7 +9,6 @@ import { type ParseError, parse } from 'jsonc-parser'
 import { join } from 'path'
 import { InMemoryEventDb } from '../engine/capture/InMemoryEventDb'
 import { logToViemLog } from '../engine/capture/InteropBlockProcessor'
-import { InteropConfigLoop } from '../engine/config/InteropConfigLoop'
 import { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { match } from '../engine/match/InteropMatchingLoop'
 import { createInteropPlugins } from '../plugins'
@@ -167,7 +166,7 @@ async function runExample(example: Example): Promise<RunResult> {
       throw new Error(`Cannot load config: ${key}`)
     }
     console.log('LOADING CONFIG:', key)
-    await new InteropConfigLoop(plugin, logger).run()
+    await plugin.run()
   }
   if (example.loadConfigs) {
     console.log('CONFIGS LOADED\n')

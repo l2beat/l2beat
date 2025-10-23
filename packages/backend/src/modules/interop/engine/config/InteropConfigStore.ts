@@ -10,6 +10,7 @@ export function defineConfig<T>(key: string): InteropConfig<T> {
 export interface InteropConfigPlugin {
   provides: InteropConfig<unknown>
   intervalMs?: number
+  start: () => void
   run: () => Promise<void>
 }
 
