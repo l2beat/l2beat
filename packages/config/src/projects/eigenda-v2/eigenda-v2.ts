@@ -120,14 +120,6 @@ This architecture provides improved throughput and eliminates single points of f
         },
         {
           category: 'Funds can be frozen if',
-          text: 'the DACert Verifier contracts are paused or compromised.',
-        },
-        {
-          category: 'Funds can be lost if',
-          text: 'the certificate verification logic in the DACert Verifier contracts contains bugs or vulnerabilities.',
-        },
-        {
-          category: 'Funds can be frozen if',
           text: 'the EigenDACertVerifierRouter fails to provide correct verifier contract addresses.',
         },
       ],
