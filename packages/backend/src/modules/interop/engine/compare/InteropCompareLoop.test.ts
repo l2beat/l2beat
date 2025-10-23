@@ -46,6 +46,8 @@ describe(InteropCompareLoop.name, () => {
       })
       //@ts-ignore
       logger.for = () => logger
+      //@ts-ignore
+      logger.tag = () => logger
 
       const comparator = new InteropCompareLoop(db, plugin, logger)
 
