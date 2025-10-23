@@ -6,6 +6,7 @@ import type { ApplicationModule, ModuleDependencies } from '../types'
 import { UpdateMonitorController } from './api/UpdateMonitorController'
 import { createUpdateMonitorRouter } from './api/UpdateMonitorRouter'
 import { createDiscoveryRunner } from './createDiscoveryRunner'
+import { createWorkerPool } from './createWorkers'
 import { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import { UpdateDiffer } from './UpdateDiffer'
 import { UpdateMessagesService } from './UpdateMessagesService'
@@ -71,6 +72,12 @@ export function createUpdateMonitorModule({
     cacheUri,
   )
 
+  const workerPool = createWorkerPool({
+    count: 3,
+    timeoutPerTask: 30 * 1000, // 30 seconds per task
+    timeoutPerRun: 45 * 60 * 1000, // 45 minutes for all tasks
+  })
+
   const updateMonitor = new UpdateMonitor(
     runner,
     updateNotifier,
@@ -81,6 +88,7 @@ export function createUpdateMonitorModule({
     discoveryOutputCache,
     logger,
     !!config.updateMonitor.runOnStart,
+    workerPool,
     config.updateMonitor.disabledProjects,
   )
 

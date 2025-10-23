@@ -14,11 +14,23 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { Clock } from '../../tools/Clock'
+import type { Task, WorkerPool } from './createWorkers'
 import { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import type { DiscoveryRunner } from './DiscoveryRunner'
 import type { UpdateDiffer } from './UpdateDiffer'
 import { UpdateMonitor } from './UpdateMonitor'
 import type { UpdateNotifier } from './UpdateNotifier'
+
+const instantWorkerPool = mockObject<WorkerPool>({
+  runInPool: mockFn(async (tasks) => {
+    await Promise.all(tasks.map(async (task: Task<void>) => await task()))
+    return {
+      results: [],
+      errors: [],
+      timedOut: false,
+    }
+  }),
+})
 
 const PROJECT_A = 'project-a'
 const PROJECT_B = 'project-b'
@@ -114,7 +126,7 @@ describe(UpdateMonitor.name, () => {
   describe(UpdateMonitor.prototype.update.name, () => {
     it('iterates over runners and dispatches updates', async () => {
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        discoverWithRetry: mockFn().resolvesTo({
+        run: mockFn().resolvesTo({
           discovery: DISCOVERY_RESULT,
           flatSources: {},
         }),
@@ -152,12 +164,13 @@ describe(UpdateMonitor.name, () => {
         discoveryOutputCache,
         Logger.SILENT,
         false,
+        instantWorkerPool,
       )
 
       await updateMonitor.update(timestamp)
 
       // runs discovery for every project
-      expect(discoveryRunner.discoverWithRetry).toHaveBeenCalledTimes(2)
+      expect(discoveryRunner.run).toHaveBeenCalledTimes(2)
 
       expect(updateDiffer.runForProject).toHaveBeenCalledTimes(1)
 
@@ -183,7 +196,7 @@ describe(UpdateMonitor.name, () => {
       })
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        discoverWithRetry: mockFn()
+        run: mockFn()
           .resolvesToOnce({ discovery: discoveryA, flatSources: {} })
           .resolvesToOnce({ discovery: discoveryB, flatSources: {} }),
       })
@@ -205,6 +218,7 @@ describe(UpdateMonitor.name, () => {
         discoveryOutputCache,
         Logger.SILENT,
         false,
+        instantWorkerPool,
       )
 
       const result = await updateMonitor.getPreviousDiscovery(
@@ -231,7 +245,7 @@ describe(UpdateMonitor.name, () => {
       }
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        discoverWithRetry: mockFn().resolvesToOnce({
+        run: mockFn().resolvesToOnce({
           discovery: dbEntry.discovery,
           flatSources: {},
         }),
@@ -254,6 +268,7 @@ describe(UpdateMonitor.name, () => {
         discoveryOutputCache,
         Logger.SILENT,
         false,
+        instantWorkerPool,
       )
 
       const result = await updateMonitor.getPreviousDiscovery(
@@ -274,7 +289,7 @@ describe(UpdateMonitor.name, () => {
       }
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        discoverWithRetry: mockFn().resolvesToOnce({
+        run: mockFn().resolvesToOnce({
           discovery: committed,
           flatSources: {},
         }),
@@ -308,6 +323,7 @@ describe(UpdateMonitor.name, () => {
         discoveryOutputCache,
         Logger.SILENT,
         false,
+        instantWorkerPool,
       )
 
       const chain = 'ethereum'
@@ -343,7 +359,7 @@ describe(UpdateMonitor.name, () => {
       })
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        discoverWithRetry: async () => ({
+        run: async () => ({
           discovery: mockProject,
           flatSources: {},
         }),
@@ -360,8 +376,9 @@ describe(UpdateMonitor.name, () => {
         }),
         mockObject<Clock>(),
         discoveryOutputCache,
-        Logger.SILENT,
+        Logger.INFO,
         false,
+        instantWorkerPool,
       )
 
       await updateMonitor.getPreviousDiscovery(
@@ -369,13 +386,12 @@ describe(UpdateMonitor.name, () => {
         mockConfig(PROJECT_A),
       )
 
-      expect(discoveryRunner.discoverWithRetry).toHaveBeenCalledTimes(1)
-      expect(discoveryRunner.discoverWithRetry).toHaveBeenCalledWith(
+      expect(discoveryRunner.run).toHaveBeenCalledTimes(1)
+      expect(discoveryRunner.run).toHaveBeenNthCalledWith(
+        1,
         mockConfig(PROJECT_A),
         committed.timestamp,
-        LOGGER,
-        undefined,
-        undefined,
+        expect.anything(),
         undefined,
       )
     })
@@ -384,7 +400,7 @@ describe(UpdateMonitor.name, () => {
   describe(UpdateMonitor.prototype.generateDailyReminder.name, () => {
     it('does not cross-contaminate between chains', async () => {
       const runner = mockObject<DiscoveryRunner>({
-        discoverWithRetry: async () => {
+        run: async () => {
           return { discovery: DISCOVERY_RESULT_ARB_2, flatSources: {} }
         },
       })
@@ -423,6 +439,7 @@ describe(UpdateMonitor.name, () => {
         discoveryOutputCache,
         Logger.SILENT,
         false,
+        instantWorkerPool,
       )
 
       await updateMonitor.update(timestamp)
@@ -436,7 +453,7 @@ describe(UpdateMonitor.name, () => {
 
     it('generates the daily reminder for two different chains', async () => {
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        discoverWithRetry: mockFn().resolvesTo({
+        run: mockFn().resolvesTo({
           ethereum: {
             discovery: DISCOVERY_RESULT,
             flatSources: {},
@@ -476,6 +493,7 @@ describe(UpdateMonitor.name, () => {
         discoveryOutputCache,
         Logger.SILENT,
         false,
+        instantWorkerPool,
       )
 
       await updateMonitor.update(timestamp)
@@ -489,7 +507,7 @@ describe(UpdateMonitor.name, () => {
 
     it('does nothing for an empty cache', async () => {
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        discoverWithRetry: mockFn().resolvesTo({
+        run: mockFn().resolvesTo({
           ethereum: {
             discovery: DISCOVERY_RESULT,
             flatSources: {},
@@ -529,6 +547,7 @@ describe(UpdateMonitor.name, () => {
         discoveryOutputCache,
         Logger.SILENT,
         false,
+        instantWorkerPool,
       )
 
       await updateMonitor.update(timestamp)
@@ -571,5 +590,3 @@ function mockContract(name: string, address: EthereumAddress): EntryParameters {
 function mockConfig(name: string): ConfigRegistry {
   return new ConfigRegistry({ name, initialAddresses: [] })
 }
-
-const LOGGER = Logger.SILENT.for('UpdateMonitor')
