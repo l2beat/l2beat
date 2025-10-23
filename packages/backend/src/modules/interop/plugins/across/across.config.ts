@@ -61,8 +61,6 @@ export class AcrossConfigPlugin
 
     const reconciled = reconcileNetworks(previous, latest)
 
-    console.log(reconciled)
-
     if (reconciled.removed.length > 0) {
       this.logger.error('Networks removed', {
         plugin: AcrossConfig.key,

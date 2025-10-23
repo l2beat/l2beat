@@ -131,9 +131,6 @@ export class LayerZeroConfigPlugin
       })
       this.store.set(LayerZeroV2Config, reconciledV2.updated)
     }
-
-    console.log(reconciledV1)
-    console.log(reconciledV2)
   }
 
   async getLatestNetworks(): Promise<{
