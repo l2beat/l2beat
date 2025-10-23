@@ -86,6 +86,7 @@ export function createInteropPlugins(
       new MayanForwarderPlugin(),
       new CircleGatewayPlugIn(),
       new CCIPPlugIn(),
+      new CentriFugePlugin(),
       new MayanSwiftPlugin(), // should be run before CCTP
       new MayanMctpPlugin(), // should be run before CCTP
       new MayanMctpFastPlugin(), // should be run before CCTP
