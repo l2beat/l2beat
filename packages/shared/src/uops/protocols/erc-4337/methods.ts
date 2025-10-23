@@ -293,6 +293,32 @@ export const ERC4337_methods: Method[] = [
       }))
     },
   ),
+  defineMethod(
+    parseAbiItem(
+      'function installValidation(bytes25 validationConfig, bytes4[] calldata selectors, bytes calldata installData, bytes[] calldata hooks)',
+    ),
+    ([, , installData]) => {
+      return [
+        {
+          type: 'recursive',
+          calldata: installData,
+          to: 'unknown',
+        },
+      ]
+    },
+  ),
+  defineMethod(
+    parseAbiItem(
+      'function executeComposable((address,uint256,bytes4,(uint8,bytes,(uint8,bytes)[])[],(uint8,bytes)[])[])',
+    ),
+    ([executions]) => {
+      return executions.map((execution: any) => ({
+        type: 'recursive',
+        calldata: execution[2], // functionSig is at index 2
+        to: execution[0], // to address is at index 0
+      }))
+    },
+  ),
 ]
 
 function decodeCalldata(
