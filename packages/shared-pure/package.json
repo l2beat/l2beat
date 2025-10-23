@@ -9,9 +9,9 @@
   "types": "./build/types/index.d.ts",
   "exports": {
     ".": {
+      "types": "./build/types/index.d.ts",
       "import": "./build/esm/index.js",
-      "require": "./build/cjs/index.js",
-      "types": "./build/types/index.d.ts"
+      "require": "./build/cjs/index.js"
     }
   },
   "scripts": {
