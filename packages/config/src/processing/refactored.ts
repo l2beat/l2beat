@@ -5,6 +5,7 @@ import { boojum } from '../projects/boojum/boojum'
 import { bsc } from '../projects/bsc/bsc'
 import { celestia } from '../projects/celestia/celestia'
 import { eigenda } from '../projects/eigenda/eigenda'
+import { eigendaV2 } from '../projects/eigenda-v2/eigenda-v2'
 import { espresso } from '../projects/espresso/espresso'
 import { espressoprover } from '../projects/espressoprover/espressoprover'
 import { ethereum } from '../projects/ethereum/ethereum'
@@ -69,6 +70,7 @@ export const refactored: BaseProject[] = [
   espresso,
   teeBridge,
   eigenda,
+  eigendaV2,
   memo,
   // chains
   bsc,

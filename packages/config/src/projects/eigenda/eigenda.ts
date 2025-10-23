@@ -447,26 +447,24 @@ export const eigenda: BaseProject = {
     ],
   },
   daBridge: {
-    name: 'DACert Verifiers (EigenDA V1/V2)',
+    name: 'DACert Verifier (EigenDA V1)',
     daLayer: ProjectId('eigenda'),
     relayerType: {
       value: 'Permissioned',
       sentiment: 'warning',
       description:
-        'EigenDA V1 uses whitelisted relayers to post attestations to the ServiceManager bridge. EigenDA V2 uses the sequencer as relayer with direct certificate verification through DACert Verifier contracts, eliminating the need for separate permissioned relayers.',
+        'EigenDA V1 uses whitelisted relayers to post attestations to the ServiceManager bridge through the confirmBatch() function.',
     },
     validationType: {
       value: 'BLS Signature',
       description:
-        'The DA attestation requires onchain BLS signatures verification to be accepted by the bridge, and the total stake of signers is verified to have reached the required threshold.',
+        'EigenDA V1 attestations require onchain BLS signatures verification through the EigenDAServiceManager contract. The total stake of signers is verified to have reached the required threshold.',
     },
     technology: {
       description: `
 ## Architecture
 
 ![EigenDA architecture once stored](/images/da-bridge-technology/eigenda/architecture1.png#center)
-
-EigenDA operates with two distinct bridge architectures depending on the version:
 
 ### EigenDA V1 Bridge Architecture
 The EigenDAServiceManager acts as a DA bridge smart contract verifying data availability claims from operators via signature verification.
@@ -475,19 +473,10 @@ The bridge requires a threshold of signatures to be met before the data commitme
 To verify the threshold is met, the function takes the total stake at the reference block for the quorum from the StakeRegistry, and it subtracts the stake of non signers to get the signed stake.
 Finally, it checks that the signed stake over the total stake is more than the required stake threshold.
 
-### EigenDA V2 Bridge Architecture
-EigenDA V2 introduces a more efficient architecture where:
-- **Sequencer as Relayer**: The sequencer acts as the relayer, eliminating the need for separate permissioned relayers
-- **Direct Certificate Verification**: Multiple DACert Verifier contracts handle different certificate versions (V2, V3) without requiring batch submissions to the ServiceManager
-- **Version-Specific Verification**: Each certificate version has a corresponding verifier contract that validates the specific certificate format and cryptographic proofs
-- **Improved Scalability**: The removal of centralized batch confirmation bottlenecks allows for higher throughput
-
 ![EigenDA bridge architecture](/images/da-bridge-technology/eigenda/architecture2.png#center)
 
 ## Certificate Verification Process
-The verification process varies by certificate version:
-- **V1 Certificates**: Verified through EigenDAServiceManager's confirmBatch() function
-- **V2/V3 Certificates**: Verified through dedicated DACert Verifier contracts using the checkDACert() function
+V1 certificates are verified through EigenDAServiceManager's confirmBatch() function which validates BLS signatures and stake thresholds.
 
 Although thresholds are not enforced onchain by the confirmBatch method, the minimum thresholds that the disperser would need to reach before relaying the batch commitment to Ethereum are set to ${quorum1Threshold}% of the registered stake for the ETH quorum and ${quorum2Threshold}% for the EIGEN token quorum. Meeting these dispersal thresholds allows the system to tolerate up to ${quorum1AdversaryThreshold}% (quorum 1) and ${quorum2AdversaryThreshold}% (quorum 2) of the total stake being adversarial, achieving this with approximately 4.5 data redundancy.  
 The quorum thresholds are set on the EigenDAServiceManager contract and can be changed by the contract owner.
