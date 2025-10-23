@@ -6,6 +6,15 @@ import {
 } from '../../common'
 import { linkByDA } from '../../common/linkByDA'
 import type { BaseProject } from '../../types'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+
+const discovery = new ProjectDiscovery('eigenda')
+
+const totalNumberOfRegisteredOperators = discovery.getContractValue<string[]>(
+    'RegistryCoordinator',
+    'registeredOperators',
+  ).length
+
 
 export const eigendaV2: BaseProject = {
   id: ProjectId('eigenda-v2'),
@@ -126,13 +135,13 @@ This architecture provides improved throughput and eliminates single points of f
       ],
     },
     risks: {
-      committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(
+    committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(
         'Permissioned',
         undefined,
-        400, // max allowed operators (quorum 1 + quorum 2)
-      ),
+        totalNumberOfRegisteredOperators,
+        ),
       upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(0),
-      relayerFailure: DaRelayerFailureRisk.NoMechanism,
+      relayerFailure: DaRelayerFailureRisk.SelfPropose,
     },
   },
 }

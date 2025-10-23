@@ -475,9 +475,6 @@ Finally, it checks that the signed stake over the total stake is more than the r
 
 ![EigenDA bridge architecture](/images/da-bridge-technology/eigenda/architecture2.png#center)
 
-## Certificate Verification Process
-V1 certificates are verified through EigenDAServiceManager's confirmBatch() function which validates BLS signatures and stake thresholds.
-
 Although thresholds are not enforced onchain by the confirmBatch method, the minimum thresholds that the disperser would need to reach before relaying the batch commitment to Ethereum are set to ${quorum1Threshold}% of the registered stake for the ETH quorum and ${quorum2Threshold}% for the EIGEN token quorum. Meeting these dispersal thresholds allows the system to tolerate up to ${quorum1AdversaryThreshold}% (quorum 1) and ${quorum2AdversaryThreshold}% (quorum 2) of the total stake being adversarial, achieving this with approximately 4.5 data redundancy.  
 The quorum thresholds are set on the EigenDAServiceManager contract and can be changed by the contract owner.
 There is a maximum of ${operatorSetParamsQuorum1.maxOperatorCount} operators that can register for the ETH quorum and ${operatorSetParamsQuorum2.maxOperatorCount} for the EIGEN token quorum. Once the cap is reached, new operators must have 10% more weight than the lowest-weighted operator to join the active set. Entering the quorum is subject to the approval of the churn approver. Operators can be ejected from a quorum by the ejectors without delay should they violate the Service Legal Agreement (SLA). \n
