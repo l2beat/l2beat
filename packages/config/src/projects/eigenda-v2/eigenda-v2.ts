@@ -63,13 +63,12 @@ export const eigendaV2: BaseProject = {
       description: `
 ## EigenDA V2 Architecture
 
-EigenDA V2 introduces a more efficient bridge architecture that eliminates the bottlenecks present in V1:
+EigenDA V2 introduces a more efficient architecture where the L2 sequencer acts as the relayer, eliminating the need for separate permissioned relayers:
 
 ### Key Improvements
 - **Sequencer as Relayer**: The sequencer acts as the relayer, eliminating the need for separate permissioned relayers
 - **Direct Certificate Verification**: Multiple DACert Verifier contracts handle different certificate versions (V2, V3) without requiring batch submissions to the ServiceManager
 - **Version-Specific Verification**: Each certificate version has a corresponding verifier contract that validates the specific certificate format and cryptographic proofs
-- **Improved Scalability**: The removal of centralized batch confirmation bottlenecks allows for higher throughput
 
 ### Certificate Types and Verifiers
 EigenDA V2 supports multiple certificate formats:
@@ -97,7 +96,7 @@ Based on the [EigenDA Integration Spec](https://layr-labs.github.io/eigenda/inte
 EigenDA V2 uses the EigenDACertVerifierRouter to dynamically select the appropriate verifier contract:
 - The router maps certificate versions to their corresponding verifier contracts
 - This allows for seamless upgrades and support for multiple certificate formats
-- The client queries the router using the latest block number to get the most likely verifier for the reference block
+- The client queries the router using the latest block number to get the verifier for the reference block
 
 This architecture provides improved throughput and eliminates single points of failure while maintaining the same security guarantees as V1.
       `,
