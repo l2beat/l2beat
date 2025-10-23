@@ -1497,5 +1497,7 @@
   "static/meta-images/zk-catalog/projects/lighterprover/opengraph-image.png": "43f9d97612fee339df3da1f46cd63f36",
   "static/icons/edgex.png": "ab173734ad9178be43f677277cfffdfc",
   "static/meta-images/scaling/projects/edgex/opengraph-image.png": "c0b2588b1f5e6c6ae6ad86f0122b88ef",
-  "static/images/architecture/edgex.png": "7ac46b2f0dec519fc2ae693d120fac54"
+  "static/images/architecture/edgex.png": "7ac46b2f0dec519fc2ae693d120fac54",
+  "static/meta-images/publications/governance-review-73.png": "0ea005fdee03429b9df705ca432cbe73",
+  "static/images/architecture/ethereal.png": "360d85725bd64e162a95f1fd7e3514dc"
 }

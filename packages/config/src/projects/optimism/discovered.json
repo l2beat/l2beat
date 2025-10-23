@@ -525,7 +525,7 @@
       "values": {
         "$immutable": true,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "5d 22h",
+        "timeSinceLastL2beatInteraction": "6d",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -4852,6 +4852,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23619695, "optimism": 142687605 },
+  "usedBlockNumbers": { "optimism": 142687605, "ethereum": 23619695 },
   "permissionsConfigHash": "0x58993b20d5804e59ea925fa69a362780821ed75302e26c46815d2855c3e73591"
 }

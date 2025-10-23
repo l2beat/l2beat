@@ -68,6 +68,15 @@ export const aevo: ScalingProject = opStackL2({
     sinceBlock: 0, // Edge Case: config added @ DA Module start
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADBuw7+PjGs8=',
   },
+  // Uncomment once FE is ready
+  // nonTemplateDaTracking: [
+  //   {
+  //     type: 'eigen-da',
+  //     customerId: '0x24f0a3716805e8973bf48eb908d6d4a2f34af785',
+  //     daLayer: ProjectId('eigenda'),
+  //     sinceTimestamp: UnixTime(1753437600),
+  //   },
+  // ],
   genesisTimestamp: UnixTime(1679202395),
   isNodeAvailable: false,
   milestones: [

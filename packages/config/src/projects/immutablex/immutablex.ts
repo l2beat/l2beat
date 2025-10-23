@@ -121,6 +121,7 @@ export const immutablex: ScalingProject = {
       sinceTimestamp: UnixTime(1615389188),
       resyncLastDays: 7,
       batchSize: 10,
+      dataSource: 'StarkEx Aggregations API',
     },
   },
   dataAvailability: {

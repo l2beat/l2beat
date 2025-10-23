@@ -15,7 +15,7 @@ export class StarknetDayProvider implements DayProvider {
       Object.entries(dailyTxs).filter(
         ([timestamp]) =>
           Number(timestamp) >= from * UnixTime.DAY &&
-          Number(timestamp) <= to * UnixTime.DAY,
+          Number(timestamp) < to * UnixTime.DAY,
       ),
     )
   }
@@ -30,7 +30,7 @@ export class StarknetDayProvider implements DayProvider {
       Object.entries(dailyUops).filter(
         ([timestamp]) =>
           Number(timestamp) >= from * UnixTime.DAY &&
-          Number(timestamp) <= to * UnixTime.DAY,
+          Number(timestamp) < to * UnixTime.DAY,
       ),
     )
   }

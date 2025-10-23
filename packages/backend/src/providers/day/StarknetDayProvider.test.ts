@@ -5,7 +5,7 @@ import { StarknetDayProvider } from './StarknetDayProvider'
 
 describe(StarknetDayProvider.name, () => {
   describe(StarknetDayProvider.prototype.getDailyTxsCount.name, () => {
-    it('fetches and filters daily txs within range', async () => {
+    it('fetches and filters daily txs within range (from inclusive, to exclusive)', async () => {
       const voyagerClient = mockObject<VoyagerClient>({
         getDailyTxs: mockFn().resolvesTo({
           [1 * UnixTime.DAY]: 100,
@@ -17,7 +17,7 @@ describe(StarknetDayProvider.name, () => {
       })
 
       const provider = new StarknetDayProvider(voyagerClient)
-      const result = await provider.getDailyTxsCount(2, 4)
+      const result = await provider.getDailyTxsCount(2, 5)
 
       expect(result).toEqual({
         [2 * UnixTime.DAY]: 200,
@@ -54,7 +54,7 @@ describe(StarknetDayProvider.name, () => {
   })
 
   describe(StarknetDayProvider.prototype.getDailyUopsCount.name, () => {
-    it('fetches and filters daily uops within range', async () => {
+    it('fetches and filters daily uops within range (from inclusive, to exclusive)', async () => {
       const voyagerClient = mockObject<VoyagerClient>({
         getDailyUops: mockFn().resolvesTo({
           [1 * UnixTime.DAY]: 50,
@@ -66,7 +66,7 @@ describe(StarknetDayProvider.name, () => {
       })
 
       const provider = new StarknetDayProvider(voyagerClient)
-      const result = await provider.getDailyUopsCount(2, 4)
+      const result = await provider.getDailyUopsCount(2, 5)
 
       expect(result).toEqual({
         [2 * UnixTime.DAY]: 150,
@@ -114,9 +114,7 @@ describe(StarknetDayProvider.name, () => {
       const provider = new StarknetDayProvider(voyagerClient)
       const result = await provider.getDailyTxsCount(1, 1)
 
-      expect(result).toEqual({
-        [1 * UnixTime.DAY]: 100,
-      })
+      expect(result).toEqual({})
     })
   })
 })

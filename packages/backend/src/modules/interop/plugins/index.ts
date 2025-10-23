@@ -6,6 +6,7 @@ import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
 import { CCIPPlugIn } from './ccip'
 import { CCTPPlugin } from './cctp'
+import { CentriFugePlugin } from './centrifuge'
 import { CircleGatewayPlugIn } from './circle-gateway'
 import { DeBridgePlugin } from './debridge'
 import { DeBridgeDlnPlugin } from './debridge-dln'
@@ -42,6 +43,7 @@ export function createInteropPlugins(): InteropPlugin[] {
     new MayanForwarderPlugin(),
     new CircleGatewayPlugIn(),
     new CCIPPlugIn(),
+    new CentriFugePlugin(), // should be run before Wormhole and Axelar (uses both and who knows what else)
     new MayanSwiftPlugin(), // should be run before CCTP
     new MayanMctpPlugin(), // should be run before CCTP
     new MayanMctpFastPlugin(), // should be run before CCTP

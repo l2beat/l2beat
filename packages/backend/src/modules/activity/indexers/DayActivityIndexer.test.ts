@@ -45,8 +45,8 @@ describe(DayActivityIndexer.name, () => {
 
       const newSafeHeight = await indexer.update(50, 100)
 
-      expect(txsCountService.getTxsCount).toHaveBeenCalledWith(40, 90)
-      expect(newSafeHeight).toEqual(90)
+      expect(txsCountService.getTxsCount).toHaveBeenCalledWith(39, 89)
+      expect(newSafeHeight).toEqual(89)
     })
 
     it('gets blocks counts, saves to db and updates sync metadata', async () => {

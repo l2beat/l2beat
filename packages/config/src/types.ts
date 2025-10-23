@@ -127,7 +127,6 @@ export interface BaseProject {
   isDaLayer?: true
   isUpcoming?: true
   archivedAt?: UnixTime
-  hasActivity?: true
   hasTestnet?: true
 }
 
@@ -916,6 +915,8 @@ export type AdjustCount =
 export interface DayActivityConfig {
   type: 'day'
   sinceTimestamp: UnixTime
+  /** Source of the data, will be displayed in the UI */
+  dataSource: string
   resyncLastDays?: number
   batchSize?: number
 }

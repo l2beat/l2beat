@@ -112,6 +112,7 @@ export const brine: ScalingProject = {
       sinceTimestamp: UnixTime(1657453320),
       resyncLastDays: 7,
       batchSize: 10,
+      dataSource: 'StarkEx Aggregations API',
     },
   },
   dataAvailability: {

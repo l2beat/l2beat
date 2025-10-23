@@ -6,7 +6,7 @@ import { StarknetDayProvider } from './StarknetDayProvider'
 
 interface DayProvidersClients {
   starkex: StarkexClient | undefined
-  voyager: VoyagerClient
+  voyager: VoyagerClient | undefined
 }
 
 export interface DayProvider {
@@ -29,7 +29,9 @@ export class DayProviders {
         }
       }
     }
-    this.providers.set('starknet', new StarknetDayProvider(clients.voyager))
+    if (clients.voyager) {
+      this.providers.set('starknet', new StarknetDayProvider(clients.voyager))
+    }
   }
 
   getDayProvider(chain: string) {
