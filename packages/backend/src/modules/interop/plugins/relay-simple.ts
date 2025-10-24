@@ -9,6 +9,7 @@ calldata
 
 import { EthereumAddress } from '@l2beat/shared-pure'
 import {
+  Address32,
   createEventParser,
   createInteropEventType,
   type InteropEvent,
@@ -17,79 +18,111 @@ import {
   type LogToCapture,
   type MatchResult,
   Result,
+  type TxToCapture,
 } from './types'
 
 const parseTransfer = createEventParser(
   'event Transfer(address indexed from, address indexed to, uint256 value)',
 )
 
-export const RelayTransferOut = createInteropEventType<{
-  from: string
-  to: string
-  value: string
-  requestId?: string
-}>('relay-simple.TransferOut')
+export const TransferSrc = createInteropEventType<{
+  amount: string
+  tokenAddress: Address32
+  requestId: string
+}>('relay-simple.TransferSrc')
 
-export const RelayTransferIn = createInteropEventType<{
-  from: string
-  to: string
-  value: string
-  requestId?: string
-}>('relay-simple.TransferIn')
+export const TransferDst = createInteropEventType<{
+  amount: string
+  tokenAddress: Address32
+  requestId: string
+}>('relay-simple.TransferDst')
+
+const RelaySolver = EthereumAddress(
+  '0xf70da97812CB96acDF810712Aa562db8dfA3dbEF',
+)
+const RelaySolver32 = Address32.from(RelaySolver)
 
 export class RelaySimplePlugIn implements InteropPlugin {
   name = 'relay-simple'
 
+  captureTx(input: TxToCapture) {
+    if (input.tx.txTo === RelaySolver32) {
+      if (input.tx.txData.length === 2 + 64) {
+        return TransferSrc.create(input.tx, {
+          amount: input.tx.txValue.toString(),
+          tokenAddress: Address32.NATIVE,
+          requestId: input.tx.txData,
+        })
+      }
+    }
+
+    console.log('HELLO', input.tx.txFrom)
+    if (input.tx.txFrom === RelaySolver32) {
+      if (input.tx.txData.length === 2 + 64) {
+        return TransferDst.create(input.tx, {
+          amount: input.tx.txValue.toString(),
+          tokenAddress: Address32.NATIVE,
+          requestId: input.tx.txData,
+        })
+      }
+    }
+  }
+
   capture(input: LogToCapture) {
     const transfer = parseTransfer(input.log, null)
     if (transfer) {
-      if (
-        transfer.to ===
-        EthereumAddress('0xf70da97812CB96acDF810712Aa562db8dfA3dbEF')
-      ) {
-        console.log(input)
-        return RelayTransferOut.create(input.ctx, {
-          from: transfer.from,
-          to: transfer.to,
-          value: transfer.value.toString(),
-          requestId: '0x' + input.ctx.txData.slice(138, 202), // third 32 bytes of calldata
-        })
+      if (transfer.to === RelaySolver) {
+        if (input.ctx.txData.length === 2 + 8 + 64 * 3) {
+          return TransferSrc.create(input.ctx, {
+            amount: transfer.value.toString(),
+            tokenAddress: Address32.from(input.log.address),
+            requestId: '0x' + input.ctx.txData.slice(-64),
+          })
+        }
       }
 
-      if (
-        transfer.from ===
-        EthereumAddress('0xf70da97812CB96acDF810712Aa562db8dfA3dbEF')
-      ) {
-        return RelayTransferIn.create(input.ctx, {
-          from: transfer.from,
-          to: transfer.to,
-          value: transfer.value.toString(),
-          requestId: '0x' + input.ctx.txData.slice(138, 202), // third 32 bytes of calldata
-        })
+      if (transfer.from === RelaySolver) {
+        if (input.ctx.txData.length === 2 + 8 + 64 * 3) {
+          return TransferDst.create(input.ctx, {
+            amount: transfer.value.toString(),
+            tokenAddress: Address32.from(input.log.address),
+            requestId: '0x' + input.ctx.txData.slice(-64),
+          })
+        }
       }
     }
   }
 
-  matchTypes = [RelayTransferOut, RelayTransferIn]
+  matchTypes = [TransferSrc, TransferDst]
   match(
-    relayTransferIn: InteropEvent,
+    transferSrc: InteropEvent,
     db: InteropEventDb,
   ): MatchResult | undefined {
-    if (RelayTransferIn.checkType(relayTransferIn)) {
-      const relayTransferOut = db.find(RelayTransferOut, {
-        requestId: relayTransferIn.args.requestId,
+    if (TransferDst.checkType(transferSrc)) {
+      const transferDst = db.find(TransferSrc, {
+        requestId: transferSrc.args.requestId,
       })
-      if (relayTransferOut) {
-        return [
-          Result.Message('relay-simple.ERC20Transfer', {
-            app: 'unknown',
-            srcEvent: relayTransferOut,
-            dstEvent: relayTransferIn,
-          }),
-        ]
+      if (!transferDst) return
+
+      if (transferSrc.ctx.chain === transferDst.ctx.chain) {
+        return [Result.Ignore([transferSrc, transferDst])]
       }
+
+      return [
+        Result.Message('relay-simple.Message', {
+          app: 'relay-simple',
+          srcEvent: transferDst,
+          dstEvent: transferSrc,
+        }),
+        Result.Transfer('relay-simple.Transfer', {
+          srcEvent: transferDst,
+          srcAmount: transferDst.args.amount,
+          srcTokenAddress: transferDst.args.tokenAddress,
+          dstEvent: transferSrc,
+          dstAmount: transferSrc.args.amount,
+          dstTokenAddress: transferSrc.args.tokenAddress,
+        }),
+      ]
     }
   }
 }
-
-0xa9059cbb000000000000000000000000d23471b8407c4cf929ef053a5c8e1fa596cd68a800000000000000000000000000000000000000000000000000000000030ba5d7e54d89ccdab6e5d802ab09816ce90c9313a5d13d0fd605b5ec5c7637d30b52a9
