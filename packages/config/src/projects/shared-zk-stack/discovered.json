@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "timestamp": 1761220191,
-  "configHash": "0xe80ca1f523d5ef6758c2af38e0f6a8129fc76808c13cfdd950671048f377f135",
+  "configHash": "0x0b2002e9c8bdfd52c397d363aaf0efe18d222d68a79ada09dfb61c2d02a292d6",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -248,6 +248,7 @@
         "0x3423f941c413d4f07703ba62723b05600f2a33f8725e8d89a53194efb05f4086"
       ],
       "proxyType": "immutable",
+      "description": "A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.",
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -2050,7 +2051,7 @@
         {
           "permission": "interact",
           "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "description": "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration.",
+          "description": "set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration.",
           "role": ".owner"
         },
         {
@@ -2214,7 +2215,7 @@
         {
           "permission": "interact",
           "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "description": "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration.",
+          "description": "set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -4504,5 +4505,5 @@
     "shared-zk-stack/ZkToken": "0x22bee2bab1c58cdc909e86d516e6fbb69aa52fedff617cb6adca6c14d4dc0cd4"
   },
   "usedBlockNumbers": { "ethereum": 23640011, "zksync2": 65417106 },
-  "permissionsConfigHash": "0xd63eb2942e79a021708c4d06c6c8aad6bcda74dff8798f3602aae1cd5821d8ca"
+  "permissionsConfigHash": "0x05cdb07baa973d193849c0dbd86e9f9e84d65cb6bf4f65ec788b8993aaa08446"
 }

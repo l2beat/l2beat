@@ -1,7 +1,7 @@
 {
   "name": "zksync2",
-  "timestamp": 1761205323,
-  "configHash": "0x3064e42afa93b873ae35eb541b4bc9b8fc00bd36dc4197dd1b7033f930f5a89f",
+  "timestamp": 1761294991,
+  "configHash": "0x4d6bfcee7b0158ff6dc00b005447a210bdb446c7ecc62cd6e8be98125aea492c",
   "sharedModules": ["shared-zk-stack", "gateway"],
   "entries": [
     {
@@ -433,8 +433,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 12824,
-        "getPriorityTreeRoot": "0xeecd7993116b482bd8e1f4ea39d30d5207da4b21880e7a977dacecdc46ab92b3",
+        "getPriorityQueueSize": 12933,
+        "getPriorityTreeRoot": "0x90d0be6929ebc65e52d978463a6bd76407aa3ecb4f3fc3128f7a91c6300bf39d",
         "getPriorityTreeStartIndex": 3270719,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 124554051586,
@@ -448,7 +448,7 @@
         "getTotalBlocksCommitted": 501263,
         "getTotalBlocksExecuted": 501260,
         "getTotalBlocksVerified": 501263,
-        "getTotalPriorityTxs": 3291397,
+        "getTotalPriorityTxs": 3291506,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3",
         "getVerifierParams": {
@@ -557,29 +557,9 @@
     {
       "name": "DualVerifier",
       "address": "eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3",
-      "type": "Contract",
-      "template": "shared-zk-stack/DualVerifier",
-      "sourceHashes": [
-        "0x3053378d5ee24f71669b27b5b3cd0d74206379e6b43a9af084c2eb886712773e"
-      ],
-      "proxyType": "immutable",
-      "description": "A router contract for verifiers. Routes verification requests to eth:0xD324a7c8556A059371B207fB96FD77bE24E2042c or eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7 depending on the supplied proof type.",
-      "sinceTimestamp": 1758718847,
-      "sinceBlock": 23433058,
-      "values": {
-        "$immutable": true,
-        "FFLONK_VERIFIER": "eth:0xD324a7c8556A059371B207fB96FD77bE24E2042c",
-        "PLONK_VERIFIER": "eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7",
-        "verificationKeyHash": "0x1ffc56111a5cfaf5db387f6a31408ad20217e9bc1f31f2f5c1bd38b0d6d7968b"
-      },
-      "fieldMeta": {
-        "verificationKeyHash": {
-          "description": "Verification key hash for the PLONK verifier ONLY (backwards compatibility)."
-        }
-      },
-      "implementationNames": {
-        "eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3": "DualVerifier"
-      }
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "gateway"
     },
     {
       "name": "L1ERC20Bridge",
@@ -693,8 +673,8 @@
       "name": "ProxyAdmin",
       "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
       "type": "Reference",
-      "targetType": "Contract",
-      "targetProject": "shared-zk-stack"
+      "targetType": "Reference",
+      "targetProject": "gateway"
     },
     {
       "name": "ChainTypeManager",
@@ -704,32 +684,6 @@
       "targetProject": "gateway"
     },
     {
-      "name": "L1VerifierFflonk",
-      "address": "eth:0xD324a7c8556A059371B207fB96FD77bE24E2042c",
-      "type": "Contract",
-      "template": "shared-zk-stack/L1VerifierFflonk",
-      "sourceHashes": [
-        "0xfa2f6dacae61a1115ee373883922baaaea3e9b5e2bd4746522faff0e9d0019e0"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
-      "sinceTimestamp": 1758718835,
-      "sinceBlock": 23433057,
-      "values": {
-        "$immutable": true,
-        "verificationKeyHash": "0x49eae0bf5c7ea580f4979b366e52b386adc5f42e2ce50fc1d3c4de9a86052bff"
-      },
-      "fieldMeta": {
-        "verificationKeyHash": {
-          "severity": "HIGH",
-          "description": "keccak256 hash of the verification keys."
-        }
-      },
-      "implementationNames": {
-        "eth:0xD324a7c8556A059371B207fB96FD77bE24E2042c": "L1VerifierFflonk"
-      }
-    },
-    {
       "name": "L1Nullifier",
       "address": "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
       "type": "Reference",
@@ -737,43 +691,16 @@
       "targetProject": "shared-zk-stack"
     },
     {
-      "name": "L1VerifierPlonk",
-      "address": "eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7",
-      "type": "Contract",
-      "template": "shared-zk-stack/L1VerifierPlonk",
-      "sourceHashes": [
-        "0x20269ba58e717388e68842ab5a0b73b744856b4b1fb48d57ac7dce36d0c3c765"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
-      "sinceTimestamp": 1758616787,
-      "sinceBlock": 23424592,
-      "values": {
-        "$immutable": true,
-        "verificationKeyHash": "0x1ffc56111a5cfaf5db387f6a31408ad20217e9bc1f31f2f5c1bd38b0d6d7968b"
-      },
-      "fieldMeta": {
-        "verificationKeyHash": {
-          "severity": "HIGH",
-          "description": "keccak256 hash of the verification keys."
-        }
-      },
-      "implementationNames": {
-        "eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7": "L1VerifierPlonk"
-      }
-    },
-    {
       "name": "RollupDAManager",
       "address": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
       "type": "Reference",
-      "targetType": "Contract",
-      "targetProject": "shared-zk-stack"
+      "targetType": "Reference",
+      "targetProject": "gateway"
     },
     {
       "address": "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-zk-stack"
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Bridgehub",
@@ -868,7 +795,7 @@
         "$immutable": true,
         "BRIDGE_HUB": "gateway:0x0000000000000000000000000000000000010002",
         "chainCount": 2,
-        "getAggregatedRoot": "0x579c25662abb7202c8b0db3c6a305bc4ccd96407e49830ed01d818fc82e99d8a",
+        "getAggregatedRoot": "0x0eb0da7547b313d7ab5e0577ca457d232672bbd36fc6e356274904eea25f8270",
         "getChainRoot": [],
         "sharedTree": { "_height": 1, "_leafNumber": 2 }
       },
@@ -928,7 +855,7 @@
         {
           "permission": "interact",
           "from": "gateway:0xCE7CBd23193d029410b40e0fD8a79a5121f9250C",
-          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin"
         }
       ]
@@ -1338,7 +1265,7 @@
           "gateway:0x595b8C88B9e5f3a4c596C3e81BE6e11D53Bb9200",
           "gateway:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 3291393,
+        "getFirstUnprocessedPriorityTx": 3291503,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -1346,8 +1273,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "gateway:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 4,
-        "getPriorityTreeRoot": "0xeecd7993116b482bd8e1f4ea39d30d5207da4b21880e7a977dacecdc46ab92b3",
+        "getPriorityQueueSize": 3,
+        "getPriorityTreeRoot": "0x90d0be6929ebc65e52d978463a6bd76407aa3ecb4f3fc3128f7a91c6300bf39d",
         "getPriorityTreeStartIndex": 3270719,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 124554051586,
@@ -1355,13 +1282,13 @@
         "getRollupDAManager": "gateway:0x5E12D7E0bB68029afbeC83ccB9E8eDE6019ef073",
         "getSemverProtocolVersion": [0, 29, 2],
         "getSettlementLayer": "gateway:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 503399,
-        "getTotalBatchesExecuted": 503397,
-        "getTotalBatchesVerified": 503397,
-        "getTotalBlocksCommitted": 503399,
-        "getTotalBlocksExecuted": 503397,
-        "getTotalBlocksVerified": 503397,
-        "getTotalPriorityTxs": 3291397,
+        "getTotalBatchesCommitted": 503424,
+        "getTotalBatchesExecuted": 503423,
+        "getTotalBatchesVerified": 503423,
+        "getTotalBlocksCommitted": 503424,
+        "getTotalBlocksExecuted": 503423,
+        "getTotalBlocksVerified": 503423,
+        "getTotalPriorityTxs": 3291506,
         "getTransactionFilterer": "gateway:0x0000000000000000000000000000000000000000",
         "getVerifier": "gateway:0xa99f11045E14d068088786CF6b61e8730817Cf52",
         "getVerifierParams": {
@@ -1452,7 +1379,7 @@
       }
     },
     {
-      "name": "ZKsyncValidatorTimelock",
+      "name": "ValidatorTimelock",
       "address": "gateway:0xe279aF77D3C1685022641ffE1b9b538c5eA0Ae24",
       "type": "Contract",
       "template": "shared-zk-stack/ValidatorTimelock_post29",
@@ -1564,7 +1491,7 @@
         {
           "permission": "interact",
           "from": "gateway:0x0000000000000000000000000000000000010002",
-          "description": "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration.",
+          "description": "set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration.",
           "role": ".owner"
         },
         {
@@ -1917,16 +1844,6 @@
       "function proxy__upgradeTo(address newImplementation_)",
       "function proxy__upgradeToAndCall(address newImplementation_, bytes setupCalldata_, bool forceCall_)"
     ],
-    "eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3": [
-      "constructor(address _fflonkVerifier, address _plonkVerifier)",
-      "error EmptyProofLength()",
-      "error UnknownVerifierType()",
-      "function FFLONK_VERIFIER() view returns (address)",
-      "function PLONK_VERIFIER() view returns (address)",
-      "function verificationKeyHash() view returns (bytes32)",
-      "function verificationKeyHash(uint256 _verifierType) view returns (bytes32)",
-      "function verify(uint256[] _publicInputs, uint256[] _proof) view returns (bool)"
-    ],
     "eth:0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2019,14 +1936,6 @@
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function zkSync() view returns (address)"
-    ],
-    "eth:0xD324a7c8556A059371B207fB96FD77bE24E2042c": [
-      "function verificationKeyHash() pure returns (bytes32)",
-      "function verify(uint256[], uint256[]) view returns (bool)"
-    ],
-    "eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7": [
-      "function verificationKeyHash() pure returns (bytes32 vkHash)",
-      "function verify(uint256[], uint256[]) view returns (bool)"
     ],
     "gateway:0x0000000000000000000000000000000000010002": [
       "constructor(uint256 _l1ChainId, address _owner, uint256 _maxNumberOfZKChains)",
@@ -2787,6 +2696,6 @@
     "shared-zk-stack/ServerNotifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/ValidatorTimelock_post29": "0x6b83daae3459d63aeff3b894c47d96c0190d2aaccc58fd6243a417aa7e5ac3a3"
   },
-  "usedBlockNumbers": { "gateway": 75862, "ethereum": 23638783 },
-  "permissionsConfigHash": "0x957a5e7ad50c449bef689ff40a24d2dcfa268b0f90579986e61b9363bf06d22d"
+  "usedBlockNumbers": { "gateway": 76616, "ethereum": 23646174 },
+  "permissionsConfigHash": "0xe5c283776d76a4283ccb9f287492be668bdf9ba05373b58eaa861e92e4a0907f"
 }

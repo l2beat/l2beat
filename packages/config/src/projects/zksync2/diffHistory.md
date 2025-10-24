@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x29143b2fc792e2964e762d8e54a0a001a901fe8e
+Generated with discovered.json: 0x77a01a208bb1aa0561b8a3d35322a20b43e4a7df
 
-# Diff at Thu, 23 Oct 2025 11:45:36 GMT:
+# Diff at Fri, 24 Oct 2025 08:58:25 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@286d17aa7adf75827eeb6b38ca50217e11ddcc23 block: 1760603825
-- current timestamp: 1761205323
+- comparing to: main@11b074f59e0a769fa3d144569b93ef0f7ba1e44f block: 1760603825
+- current timestamp: 1761294991
 
 ## Description
 
@@ -24,6 +24,18 @@ ValidatorTimelock - https://disco.l2beat.com/diff/eth:0x8c0Bfc04AdA21fd496c55B8C
 Verifier updates.
 
 ## Watched changes
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (eth:0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (eth:0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
 
 ```diff
     contract ZKsync (eth:0x32400084C286CF3E17e7B677ea9583e60a000324) {
@@ -129,8 +141,8 @@ Verifier updates.
 
 ```diff
 -   Status: DELETED
-    reference DualVerifier (eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A)
-    +++ description: None
+    contract DualVerifier (eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911 or eth:0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6 depending on the supplied proof type.
 ```
 
 ```diff
@@ -275,20 +287,8 @@ Verifier updates.
 
 ```diff
 +   Status: CREATED
-    contract DualVerifier (eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3)
-    +++ description: A router contract for verifiers. Routes verification requests to eth:0xD324a7c8556A059371B207fB96FD77bE24E2042c or eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7 depending on the supplied proof type.
-```
-
-```diff
-+   Status: CREATED
-    contract L1VerifierFflonk (eth:0xD324a7c8556A059371B207fB96FD77bE24E2042c)
-    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
-```
-
-```diff
-+   Status: CREATED
-    contract L1VerifierPlonk (eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7)
-    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+    reference DualVerifier (eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3)
+    +++ description: None
 ```
 
 ```diff
@@ -317,7 +317,7 @@ Verifier updates.
 
 ```diff
 +   Status: CREATED
-    contract ZKsyncValidatorTimelock (gateway:0xe279aF77D3C1685022641ffE1b9b538c5eA0Ae24)
+    contract ValidatorTimelock (gateway:0xe279aF77D3C1685022641ffE1b9b538c5eA0Ae24)
     +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
 ```
 
@@ -334,21 +334,21 @@ Verifier updates.
  .../DiamondProxy/ExecutorFacet.4.sol               |  437 +++--
  .../DiamondProxy/GettersFacet.2.sol                |   43 +-
  .../DiamondProxy/MailboxFacet.3.sol                | 1318 ++++++++-------
- ...:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3.sol |   97 ++
- ...0xa99f11045E14d068088786CF6b61e8730817Cf52.sol} |    0
- ...:0xD324a7c8556A059371B207fB96FD77bE24E2042c.sol | 1622 +++++++++++++++++++
- ...0xD837976329d59057b27192f0cF6c8f357143670A.sol} |  101 +-
- ...:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7.sol | 1703 ++++++++++++++++++++
- ...0xfA7c56B328bEb5deB9218f3a4b60ADc59Bb6Ad8d.sol} |    8 +-
+ .../dev/null                                       |   97 --
+ .../DualVerifier.sol}                              |    0
+ .../dev/null                                       | 1605 ------------------
+ .../L1VerifierFflonk.sol}                          |  101 +-
+ .../dev/null                                       | 1703 --------------------
+ .../L1VerifierPlonk.sol}                           |    8 +-
  .../src/projects/zksync2/.flat/RollupDAManager.sol |  173 ++
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++++++++
+ .../.flat/ValidatorTimelock/ValidatorTimelock.sol  | 1679 +++++++++++++++++++
  .../ValidatorTimelock.sol => /dev/null             |  504 ------
  .../ZKsync/AdminFacet.1.sol                        |   68 +-
  .../ZKsync/ExecutorFacet.4.sol                     |  437 +++--
  .../ZKsync/GettersFacet.2.sol                      |   43 +-
  .../ZKsync/MailboxFacet.3.sol                      | 1318 ++++++++-------
- .../TransparentUpgradeableProxy.p.sol              |  729 +++++++++
- .../ZKsyncValidatorTimelock/ValidatorTimelock.sol  | 1679 +++++++++++++++++++
- 18 files changed, 8436 insertions(+), 1912 deletions(-)
+ 18 files changed, 5014 insertions(+), 5317 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -356,6 +356,71 @@ Verifier updates.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1760603825 (main branch discovery), not current.
+
+```diff
+    reference ProxyAdmin (eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      targetType:
+-        "Contract"
++        "Reference"
+      targetProject:
+-        "shared-zk-stack"
++        "gateway"
+    }
+```
+
+```diff
+    contract DualVerifier (eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A) {
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911 or eth:0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6 depending on the supplied proof type.
+      type:
+-        "Reference"
++        "Contract"
+      targetType:
+-        "Contract"
+      targetProject:
+-        "gateway"
+      template:
++        "shared-zk-stack/DualVerifier"
+      sourceHashes:
++        ["0x3053378d5ee24f71669b27b5b3cd0d74206379e6b43a9af084c2eb886712773e"]
+      proxyType:
++        "immutable"
+      description:
++        "A router contract for verifiers. Routes verification requests to eth:0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911 or eth:0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6 depending on the supplied proof type."
+      sinceTimestamp:
++        1754056487
+      sinceBlock:
++        23046660
+      values:
++        {"$immutable":true,"FFLONK_VERIFIER":"eth:0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911","PLONK_VERIFIER":"eth:0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6","verificationKeyHash":"0x64b347c642ea60114c98b3976124ea8a7e0bb778bd7e479aedc02f994486c8a1"}
+      fieldMeta:
++        {"verificationKeyHash":{"description":"Verification key hash for the PLONK verifier ONLY (backwards compatibility)."}}
+    }
+```
+
+```diff
+    EOA  (eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-zk-stack"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA EraChainAdminProxy_l2Alias (gateway:0x3E04Bd6a9056b39999f3883955E183F655346174) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+    }
+```
 
 ```diff
     contract ValidatorTimelock (gateway:0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa) {
@@ -380,6 +445,27 @@ discovery. Values are for block 1760603825 (main branch discovery), not current.
       fieldMeta.getDAValidatorPair.description:
 +        "l1da, l2da"
     }
+```
+
+```diff
+    EOA ProtocolUpgradeHandler_l2Alias (gateway:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration."
++        "set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration."
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (eth:0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (eth:0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
 ```
 
 Generated with discovered.json: 0xc1b81a0a14d5e427fc96af48de8b15e1ed2c8128
