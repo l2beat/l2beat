@@ -1,4 +1,3 @@
-import { Button } from '../../../components/Button'
 import { Checkbox } from '../../../components/Checkbox'
 import { Dialog } from '../../../components/Dialog'
 import { IconGear } from '../../../icons/IconGear'
@@ -13,10 +12,7 @@ export function SettingsDialog() {
   return (
     <Dialog.Root>
       <Dialog.Trigger>
-        <Button className="flex items-center gap-1 border-coffee-200">
-          <IconGear />
-          Settings
-        </Button>
+        <IconGear />
       </Dialog.Trigger>
       <Dialog.Body>
         <Dialog.Title className="m-0 font-medium text-lg">

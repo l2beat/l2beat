@@ -20,17 +20,17 @@ export function TopBar(props: { project: string }) {
         </Link>
         <p>{props.project}</p>
       </div>
-      <div className="-translate-x-1/2 absolute left-1/2">
+      <div className="-translate-x-1/2 absolute left-1/2 z-50">
         <Search />
       </div>
       <div className="hidden gap-2 md:flex">
         <SettingsDialog />
-        <div className="inline-flex items-center gap-0.5 border border-coffee-400 bg-coffee-800/30 p-0.5">
+        <div className="inline-flex items-center gap-0.5 border border-coffee-400 bg-coffee-800/30 p-1">
           {layouts.map((_, i) => (
             <button
               key={i}
               className={clsx(
-                'flex h-6 w-6 items-center justify-center font-medium text-xs transition-all duration-100',
+                'flex h-6 w-6 items-center justify-center font-medium text-xs transition-all duration-100 max-lg:size-5',
                 selectedLayout === i
                   ? 'bg-autumn-300 text-black shadow-sm'
                   : 'text-coffee-200 hover:bg-coffee-400/50 hover:text-coffee-100',
@@ -44,11 +44,11 @@ export function TopBar(props: { project: string }) {
         </div>
 
         <Button
-          className="hidden items-center border-coffee-200 text-sm md:flex"
+          className="hidden items-center border-coffee-200 text-sm max-lg:p-2 md:flex"
           onClick={() => addPanel()}
         >
           <IconPlus />
-          Add new panel
+          <span className="max-lg:hidden">Panel</span>
         </Button>
       </div>
     </div>
