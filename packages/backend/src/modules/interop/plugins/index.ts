@@ -95,9 +95,9 @@ export function createInteropPlugins(
       new StargatePlugin(), // should be run before stargate bus/taxi, ofts
       new StargateV2BusPlugin(), // should be run before LayerZeroV2, ofts
       new StargateV2TaxiPlugin(), // should be run before LayerZeroV2, ofts
-      new LayerZeroV2OFTsPlugin(), // should be run before LayerZeroV2
-      new LayerZeroV1Plugin(),
-      new LayerZeroV2Plugin(),
+      new LayerZeroV2OFTsPlugin(deps.configs), // should be run before LayerZeroV2
+      new LayerZeroV1Plugin(deps.configs),
+      new LayerZeroV2Plugin(deps.configs),
       new WormholeNTTPlugin(), // should be run before WormholeCore and WormholeRelayer
       new WormholeTokenBridgePlugin(), // should be run before Wormhole
       new WormholeRelayerPlugin(), // should be run before Wormhole

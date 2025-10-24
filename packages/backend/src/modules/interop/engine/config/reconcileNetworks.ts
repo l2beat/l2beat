@@ -13,13 +13,17 @@ export function reconcileNetworks<T extends { chain: string }>(
 
   const removed = []
   for (const previous of previousNetworks) {
-    if (!latestNetworks.find((ll) => ll.chain === previous.chain)) {
+    if (!latestNetworks.find((l) => l.chain === previous.chain)) {
       removed.push(previous)
     }
   }
 
   for (const latest of latestNetworks) {
-    const prev = previousNetworks.find((pp) => pp.chain === latest.chain)
+    const prev = previousNetworks.find((p) => p.chain === latest.chain)
+
+    if (!isEqual(latest, prev)) {
+      console.log(latest, prev)
+    }
 
     if (prev === undefined || !isEqual(latest, prev)) {
       return {
