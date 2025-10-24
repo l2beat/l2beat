@@ -1,6 +1,6 @@
 {
   "name": "gateway",
-  "timestamp": 1760603795,
+  "timestamp": 1761059926,
   "configHash": "0xc0c34d338320b0a190b57cc68df0a710ae7d9319c4624c6b1f5767bbbd157622",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -392,7 +392,7 @@
           "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "eth:0x64E2AfcFE648201b2F4a749aF0B7229ecfa44281"
         ],
-        "getFirstUnprocessedPriorityTx": 11995,
+        "getFirstUnprocessedPriorityTx": 12637,
         "getL2BootloaderBytecodeHash": "0x0100085f9382a7928dd83bfc529121827b5f29f18b9aa10d18aa68e1be7ddc35",
         "getL2DefaultAccountBytecodeHash": "0x010005f72e443c94460f4583fb38ef5d0c5cd9897021c41df840f91465c0392e",
         "getL2EvmEmulatorBytecodeHash": "0x01000d83e0329d9144ad041430fafcbc2b388e5434db8cb8a96e80157738a1da",
@@ -400,21 +400,21 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 8,
-        "getPriorityTreeRoot": "0xd864b0a03297afa8ac190de41410cf582d1a8039a1620bd299f62a0582aef12a",
+        "getPriorityQueueSize": 48,
+        "getPriorityTreeRoot": "0x171c09101e3efba04cb434948b8588ddea1bfbfbf70e924123dc6e1130a77edf",
         "getPriorityTreeStartIndex": 0,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 120259084289,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 28, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 1397,
-        "getTotalBatchesExecuted": 1396,
-        "getTotalBatchesVerified": 1397,
-        "getTotalBlocksCommitted": 1397,
-        "getTotalBlocksExecuted": 1396,
-        "getTotalBlocksVerified": 1397,
-        "getTotalPriorityTxs": 12003,
+        "getTotalBatchesCommitted": 1458,
+        "getTotalBatchesExecuted": 1458,
+        "getTotalBatchesVerified": 1458,
+        "getTotalBlocksCommitted": 1458,
+        "getTotalBlocksExecuted": 1458,
+        "getTotalBlocksVerified": 1458,
+        "getTotalPriorityTxs": 12685,
         "getTransactionFilterer": "eth:0x5540DE94485dB078025318428F813C5d88215823",
         "getVerifier": "eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A",
         "getVerifierParams": {
@@ -641,7 +641,8 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "tokenMultiplierSetter": "eth:0xFC0cB5F27C8d27E9Ddf76b8A0adA9806227bA6a9",
         "upgradeTimestamps": [
-          { "_protocolVersion": 120259084289, "_upgradeTimestamp": 0 }
+          { "_protocolVersion": 120259084289, "_upgradeTimestamp": 0 },
+          { "_protocolVersion": 124554051586, "_upgradeTimestamp": 1760949000 }
         ]
       },
       "fieldMeta": {
@@ -1078,6 +1079,6 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "usedBlockNumbers": { "gateway": 70993, "ethereum": 23589078 },
+  "usedBlockNumbers": { "gateway": 74667, "ethereum": 23626782 },
   "permissionsConfigHash": "0xdc3272d2455cd78cc0f2a434e312348e80692974c646d6c6061748973566daab"
 }

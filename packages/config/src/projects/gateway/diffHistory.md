@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x61ce273baf85b046b7c6e86ed458766f3f1d1996
+
+# Diff at Tue, 21 Oct 2025 15:19:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d52ad2c1af6ac3243376427c1aab587fd7b34800 block: 1760603795
+- current timestamp: 1761059926
+
+## Description
+
+upgrade scheduled.
+
+## Watched changes
+
+```diff
+    contract ChainAdminOwnable (eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3) {
+    +++ description: None
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.1:
++        {"_protocolVersion":124554051586,"_upgradeTimestamp":1760949000}
+    }
+```
+
 Generated with discovered.json: 0x871c3ad38d2c5cae67b269ec6fdf4c7698238eb2
 
 # Diff at Mon, 08 Sep 2025 14:38:19 GMT:

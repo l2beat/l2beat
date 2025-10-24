@@ -10,6 +10,7 @@ import {
 } from '@l2beat/discovery'
 import { hashJson, sortObjectByKeys } from '@l2beat/shared'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
+import shuffle from 'lodash/shuffle'
 import { Gauge } from 'prom-client'
 import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
@@ -68,7 +69,7 @@ export class UpdateMonitor {
     })
 
     const allProjects = this.configReader.readAllDiscoveredProjects()
-    const enabledProjects = allProjects.filter(
+    const enabledProjects = shuffle(allProjects).filter(
       (project) => !this.disabledProjects.includes(project),
     )
 

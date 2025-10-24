@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -11,7 +12,6 @@ import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { api } from '~/react-query/trpc'
 import { generateRandomString } from '~/utils/generateRandomString'
-import { UnixTime } from '~/utils/UnixTime'
 import { validateResolver } from '~/utils/validateResolver'
 
 function generateRandomId() {

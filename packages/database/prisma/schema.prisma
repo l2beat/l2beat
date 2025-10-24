@@ -358,6 +358,7 @@ model InteropEvent {
   blockHash   String  @db.VarChar(66)
   value       String? @db.VarChar(66)
   txTo        String? @db.VarChar(66)
+  calldata    String  @default("0x") @db.Text
   logIndex    Int?
   args        Json
 

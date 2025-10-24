@@ -7808,6 +7808,42 @@
   ],
   "plumenetwork": [
     {
+      "symbol": "superOETHp",
+      "address": "0xFCbe50DbE43bF7E5C88C6F6Fb9ef432D4165406E",
+      "category": "ether",
+      "source": "native",
+      "supply": "totalSupply" // custom/doublecount
+    },
+    {
+      "symbol": "pETH",
+      "address": "0x39d1F90eF89C52dDA276194E9a832b484ee45574",
+      "category": "ether",
+      "source": "native",
+      "supply": "totalSupply" // custom/doublecount
+    },
+    {
+      "symbol": "MNRL",
+      "address": "0x5107272921A750A20d492Fb41Acf0b770b09a624",
+      "category": "rwaRestricted", // reason: minting/transfer restrictions
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "XAUM",
+      "address": "0xA0C4F78A29ead4ABf6b7f5B3F0d05C0f3EAb8DDf",
+      "category": "rwaPublic", // reason: instant liquidity onchain and on L1
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "USCC",
       "address": "0x4c21b7577c8fe8b0b0669165ee7c8f67fa1454cf",
       "category": "rwaRestricted", // reason: whitelist
@@ -8052,6 +8088,24 @@
         "bridges": [
           {
             "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    }
+  ],
+  "ethereal": [
+    {
+      "symbol": "WUSDe",
+      "address": "0xB6fC4B1BFF391e5F6b4a3D2C7Bda1FeE3524692D",
+      "coingeckoId": "ethena-usde",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 (OrbitNativeOFT)",
             "slug": "layerzerov2oft"
           }
         ]

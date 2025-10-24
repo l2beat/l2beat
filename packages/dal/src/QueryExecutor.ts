@@ -2,7 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { Cache } from './cache/Cache'
 import { type Query, type QueryOf, type QueryResult, queries } from './queries'
-import type { DropFirst, Simplify } from './queries/types'
+import type { DropFirst } from './queries/types'
 
 const DEFAULT_EXPIRATION = 30 * 60 // 30 minutes
 const PROMISE_TIMEOUT = 30
@@ -28,11 +28,9 @@ export class QueryExecutor {
   async execute<Q extends Query>(
     query: Q,
     expires?: number,
-  ): Promise<Simplify<QueryResult<Q['name']>>> {
+  ): Promise<QueryResult<Q['name']>> {
     if (!this.cache) {
-      return this.executeRawQuery(query) as Promise<
-        Simplify<QueryResult<Q['name']>>
-      >
+      return this.executeRawQuery(query) as Promise<QueryResult<Q['name']>>
     }
     const key = this.cache.generateKey(query.name, query.args)
 
@@ -69,9 +67,7 @@ export class QueryExecutor {
       existingPromise.timestamp + PROMISE_TIMEOUT > start
     ) {
       this.logger.info('Reusing in-flight query')
-      return existingPromise.promise as Promise<
-        Simplify<QueryResult<Q['name']>>
-      >
+      return existingPromise.promise as Promise<QueryResult<Q['name']>>
     }
 
     const promise = this.executeRawQuery(query).finally(() => {

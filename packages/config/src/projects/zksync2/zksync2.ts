@@ -86,6 +86,19 @@ export const zksync2: ScalingProject = zkStackL2({
         '0x30066439887C0a509Cb38E45c9262E6924a29BbD',
       ],
     },
+    {
+      // tracks the gateway DA since only Era is on the gateway for now
+      // and Era data is relayed by the gateway validators
+      // TODO: differentiate others that move to gateway DA from zksync
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 23016895, // migration to Gateway
+      inbox: 'eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564',
+      sequencers: [
+        '0x14F19299476664665eDa17DBb7dA7e62E3253aa8',
+        '0x7d95f0B9D3383D58E39a75a67760aA2153D355A2',
+      ],
+    },
   ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

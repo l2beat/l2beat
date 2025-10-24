@@ -1,4 +1,4 @@
-import { BinaryReader } from '../BinaryReader'
+import { BinaryReader } from '../../../tools/BinaryReader'
 import { CCTPv2MessageReceived, CCTPv2MessageSent } from './cctp'
 import { MayanForwarded } from './mayan-forwarder'
 import {

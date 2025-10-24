@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { asciiProgressBar } from './asciiProgressBar'
+import { asciiProgressBar } from './asciiProgressBar.js'
 
 describe(asciiProgressBar.name, () => {
   it('should return a string', () => {

@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 
-import { UnixTime } from '../types'
-import { getHourlyTimestamps } from './getHourlyTimestamps'
+import { UnixTime } from '../types/UnixTime.js'
+import { getHourlyTimestamps } from './getHourlyTimestamps.js'
 
 describe(getHourlyTimestamps.name, () => {
   describe('hourly', () => {

@@ -1,7 +1,7 @@
 {
   "name": "everclearbridge",
-  "timestamp": 1760535562,
-  "configHash": "0x6546bb5177ca12807ddea03f8b9cb3d4888f6fdb187f233b278a2415cf29f780",
+  "timestamp": 1761059671,
+  "configHash": "0x0c6bdd0f8f6d5734aceb08581a26365f74d8a55eca4bddb3b646ccf89b7a9979",
   "entries": [
     {
       "name": "Permit2",
@@ -172,7 +172,7 @@
         "0x183579075859d89358960a3d0a89ae170c5b81c70cb81f7e4b72e5ff310afb7f"
       ],
       "proxyType": "EIP1967 proxy",
-      "ignoreInWatchMode": ["intentQueue", "nonce"],
+      "ignoreInWatchMode": ["intentQueue", "nonce", "fillQueue"],
       "sinceTimestamp": 1726462859,
       "sinceBlock": 20760959,
       "values": {
@@ -211,13 +211,13 @@
         "EVERCLEAR": 25327,
         "feeAdapter": "eth:0x15a7cA97D1ed168fB34a4055CEFa2E2f9Bdb6C75",
         "FILL_INTENT_FOR_SOLVER_TYPEHASH": "0xce47b2c080dbcd8e420dc92bcf58f25f73f2e008a3b34ac41b9d468d1fb45d5a",
-        "fillQueue": { "first": 1, "last": 0 },
+        "fillQueue": { "first": 18, "last": 17 },
         "gateway": "eth:0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7",
-        "intentQueue": { "first": 21148, "last": 21147 },
+        "intentQueue": { "first": 21525, "last": 21524 },
         "lighthouse": "eth:0x38f188953f1E3afE83327C78AAeF72e0498da2C6",
         "messageGasLimit": 5000000,
         "messageReceiver": "eth:0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66",
-        "nonce": 21147,
+        "nonce": 21524,
         "owner": "eth:0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6",
         "paused": false,
         "PERMIT2": "eth:0x000000000022D473030F116dDEE9F6B43aC78BA3",
@@ -360,7 +360,7 @@
           "averageGasUnitsPerSettlement": 50000,
           "bufferDBPS": 10000
         },
-        "getCurrentEpoch": 253147,
+        "getCurrentEpoch": 255312,
         "hubGateway": "everclear:0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa",
         "initialized": false,
         "lighthouse": "everclear:0x38f188953f1E3afE83327C78AAeF72e0498da2C6",
@@ -1366,6 +1366,6 @@
     "everclearbridge/EverclearHubGateway": "0x7f95b098436a5c7082be25b752b0735f2a98d896415b75cefa4e7c0a4c270c74",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "everclear": 2800596, "ethereum": 23583441 },
+  "usedBlockNumbers": { "everclear": 2881606, "ethereum": 23626761 },
   "permissionsConfigHash": "0xae2cfea5911cacbbe8d05d9507f1c11f65cc26dc8c22df13349e6eb8a413a665"
 }

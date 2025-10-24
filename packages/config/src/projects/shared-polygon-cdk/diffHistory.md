@@ -1,3 +1,65 @@
+Generated with discovered.json: 0x936dda873ce131239da663e5acf3b55d0a0d742f
+
+# Diff at Tue, 21 Oct 2025 15:30:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d52ad2c1af6ac3243376427c1aab587fd7b34800 block: 1759928430
+- current timestamp: 1761060538
+
+## Description
+
+2 new pessimistic chains added.
+
+| RollupID |             Name |                      Comments | GasToken |    ChainID | ForkID |       RollupTypeID |        VerifierType |
+|----------|------------------|-------------------------------|----------|------------|--------|--------------------|---------------------|
+|        1 |    polygon zkEVM |                               |      ETH |       1101 |     12 |      6 (zk rollup) | statetransition (0) |
+|        2 |      Astar zkEVM |                               |      ETH |       3776 |      9 |     4 (validiumV1) | statetransition (0) |
+|        3 |          X Layer |                               |   custom |        196 |     12 | 11 (pessimistic 3) |     pessimistic (1) |
+|        4 |      oev-network |                          dead |      ETH |       4913 |      9 |     4 (validiumV1) | statetransition (0) |
+|        5 |      gpt-mainnet |                          dead |   custom | 1511670449 |      9 |     4 (validiumV1) | statetransition (0) |
+|        6 |     witnesschain |                          dead |      ETH | 1702448187 |      9 |     4 (validiumV1) | statetransition (0) |
+|        7 |            prism |                     lumia.org |   custom |  994873017 |     12 | 11 (pessimistic 3) |     pessimistic (1) |
+|        8 |        pay-chain |             wirexpaychain.com |      ETH |      31415 |     12 |     7 (validiumV2) | statetransition (0) |
+|        9 |       silicon-zk |                       testnet |      ETH |  511252203 |      9 |     4 (validiumV1) | statetransition (0) |
+|       10 |       silicon-zk |                       mainnet |      ETH |       2355 |     12 |     7 (validiumV2) | statetransition (0) |
+|       11 |    haust-network |                       testnet |   custom |        999 |      9 |     4 (validiumV1) | statetransition (0) |
+|       12 |    haust-network |                      testnet? |   custom |        938 |      9 |     4 (validiumV1) | statetransition (0) |
+|       13 |           Ternoa |                               |   custom |     752025 |     12 |     7 (validiumV2) | statetransition (0) |
+|       14 |          Z Chain |                  cdk-sov test |   custom |       9369 |     12 | 11 (pessimistic 3) |     pessimistic (1) |
+|       15 |   Pentagon Games |                      testnet? |   custom |        623 |     12 |     7 (validiumV2) | statetransition (0) |
+|       16 |   Pentagon Games | pentagon.games/pentagon-chain |   custom |       3344 |     12 |     7 (validiumV2) | statetransition (0) |
+|       17 |             Okto |                        wallet |   custom |        801 |     12 | 11 (pessimistic 3) |     pessimistic (1) |
+|       18 | Billions Network |                               |      ETH |      45056 |     12 | 11 (pessimistic 3) |     pessimistic (1) |
+|       19 |             Okto |                               |      ETH |       8088 |     12 | 11 (pessimistic 3) |     pessimistic (1) |
+|       20 |           katana |              op stack cdk sov |      ETH |     747474 |      0 |   12 (aggchainFEP) |    algateway-pp (2) |
+|       21 |          forknet |                    Forknet.io |      ETH |        838 |     12 | 11 (pessimistic 3) |     pessimistic (1) |
+|       22 |          forknet |                      testnet? |      ETH |       8338 |     12 | 11 (pessimistic 3) |     pessimistic (1) |
+|       23 |    Haust Network |                      mainnet? |   custom |       3864 |     12 | 11 (pessimistic 3) |     pessimistic (1) |
+| added 24 |         Sentient |                               |   custom |       6767 |     12 | 11 (pessimistic 3) |     pessimistic (1) |
+| added 25 |   Canvas Connect |                               |   custom |       6360 |     12 | 11 (pessimistic 3) |     pessimistic (1) |
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.10:
++        24
+      values.rollupCount:
+-        23
++        25
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: LOW
+      values.rollupsDataV2.23:
++        {"rollupContract":"eth:0xEB7eeB10CC04447262715ddaF7C7B111141c2358","chainID":6767,"verifier":"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459","forkID":12,"rollupTypeID":11,"rollupVerifierType":1,"programVKey":"0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"}
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: LOW
+      values.rollupsDataV2.24:
++        {"rollupContract":"eth:0x7A7db0e6006827825ccfEA7eaA0d12979b6f9968","chainID":6360,"verifier":"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459","forkID":12,"rollupTypeID":11,"rollupVerifierType":1,"programVKey":"0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"}
+    }
+```
+
 Generated with discovered.json: 0x6f5374cebcca68542e8446dd49a735c303f1202b
 
 # Diff at Wed, 08 Oct 2025 13:03:29 GMT:

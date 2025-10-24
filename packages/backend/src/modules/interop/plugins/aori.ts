@@ -1,5 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { PacketDelivered, PacketSent } from './layerzero-v2'
+import { PacketDelivered, PacketSent } from './layerzero/layerzero-v2.plugin'
 import { STARGATE_NETWORKS } from './stargate'
 import {
   createEventParser,

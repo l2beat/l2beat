@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x3a8069ff03c91252a20b3252330644453ee4df94
+
+# Diff at Thu, 23 Oct 2025 12:40:57 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@57d3f180a9197fcc582bfc2d2856eea99da824cc block: 1759389586
+- current timestamp: 1761223131
+
+## Description
+
+msig change.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x7cB07FE039a92B3D784f284D919503A381BEC54f"
++        "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02"
+    }
+```
+
 Generated with discovered.json: 0xa8a035f31c253f854085a79bf7a7eb1fe2d05a68
 
 # Diff at Thu, 02 Oct 2025 07:24:36 GMT:

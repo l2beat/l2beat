@@ -1,6 +1,10 @@
 import { assert, type json, UnixTime } from '@l2beat/shared-pure'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
-import { GetByProjectDataSuccessSchema, GetMetricsSuccessSchema } from './types'
+import {
+  GetByProjectDataSuccessSchema,
+  GetMetricsV1SuccessSchema,
+  GetMetricsV2SuccessSchema,
+} from './types'
 
 interface Dependencies extends ClientCoreDependencies {
   url: string
@@ -12,20 +16,30 @@ export class EigenApiClient extends ClientCore {
     super($)
   }
 
-  async getMetrics(from: number, to: number): Promise<number> {
+  async getMetricsV1(from: number, to: number): Promise<number> {
     const response = await this.fetch(
-      `${this.$.url}/metrics?start=${from}&end=${to}`,
+      `${this.$.url}/v1/metrics?start=${from}&end=${to}`,
       {},
     )
-    const json = GetMetricsSuccessSchema.parse(response)
+    const json = GetMetricsV1SuccessSchema.parse(response)
 
     return json.throughput
+  }
+
+  async getMetricsV2(from: number, to: number): Promise<number> {
+    const response = await this.fetch(
+      `${this.$.url}/v2/metrics/summary?start=${from}&end=${to}`,
+      {},
+    )
+    const json = GetMetricsV2SuccessSchema.parse(response)
+
+    return json.total_bytes_posted
   }
 
   async getByProjectData(until: number) {
     const date = new Date(until * 1000).toISOString().split('T')[0]
     const response = await this.$.http.fetchRaw(
-      `${this.$.perProjectUrl}/stats/${date}.json`,
+      `${this.$.perProjectUrl}/v2/stats/${date}.json`,
       {},
     )
 
