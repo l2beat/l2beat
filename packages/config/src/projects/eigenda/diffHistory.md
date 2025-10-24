@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xe0a859d38e40a665add3667eb326321e359601e4
+Generated with discovered.json: 0xe624b01310ae6b9d258c0cc9695903ecafb609a2
 
-# Diff at Thu, 23 Oct 2025 13:50:27 GMT:
+# Diff at Fri, 24 Oct 2025 15:15:21 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@b6894dc3632e89b7e6ca11778d9b0f21fffc39e7 block: 1760089295
-- current timestamp: 1761227361
+- comparing to: main@a720737c74121cbdc668d748d3480f7618cd9599 block: 1760089295
+- current timestamp: 1761318853
 
 ## Description
 
@@ -53,7 +53,7 @@ discovery. Values are for block 1760089295 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract OperatorStateRetriever (eth:0xEC35aa6521d23479318104E10B4aA216DBBE63Ce)
-    +++ description: None
+    +++ description: A contract for retrieving AVS operators state (e.g., quorum bitmaps, ordered operator lists, stakes, sockets, signatures indices—at) at a given block directly from on-chain registries.
 ```
 
 Generated with discovered.json: 0xe78f1b5f08f8584ec964474d87eb47a5659954ff

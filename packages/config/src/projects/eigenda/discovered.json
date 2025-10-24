@@ -1,6 +1,6 @@
 {
   "name": "eigenda",
-  "timestamp": 1761227361,
+  "timestamp": 1761318853,
   "configHash": "0x2386a3632ff2eea6d7aedc3618e9cccf9151ba824228347d85ef378fba904fd9",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
@@ -398,7 +398,6 @@
           "0x960dc057a3b0c24385c25845f5eebe1fafcc4739a94351b4550cb0d0e53d3655",
           "0x43dda608c71270a62bb2ef064f4866902da95538e2d98d20be1a9b2a8142f2dd",
           "0xfcaffb0c80a3202d233f2b2b037a17528706afb73b1ac21194b3708177c8f301",
-          "0xc0cfa2a72cc4eb8e33a6a76fb2a5e4c89b5dc28151a0e072cdbb509abdfb7d82",
           "0xd91c7c8888da9062e48e92d20813dfa8ce7f581d327b36237040354c5159db0e",
           "0x442a057849f7fa68f8c34dc8b9475c6f8e50ee48b1f7e83e0229833761a7d6e3",
           "0xa7c993401ecdaacd73e1db1bc2072602f12a88c59f3ea03b138d9589bc5cd900",
@@ -1069,7 +1068,7 @@
           "eth:0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
           "eth:0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
         ],
-        "batchId": 131695,
+        "batchId": 131913,
         "BLOCK_STALE_MEASURE": 300,
         "blsApkRegistry": "eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -1105,7 +1104,7 @@
         "stakeRegistry": "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 131695,
+        "taskNumber": 131913,
         "THRESHOLD_DENOMINATOR": 100
       },
       "fieldMeta": {
@@ -1435,10 +1434,12 @@
       "name": "OperatorStateRetriever",
       "address": "eth:0xEC35aa6521d23479318104E10B4aA216DBBE63Ce",
       "type": "Contract",
+      "template": "eigenda/OperatorStateRetriever",
       "sourceHashes": [
         "0xb6add464cc4c22f315c05593100662fbaeb1033ac9cb9eb84d42cb5c4c6cc334"
       ],
       "proxyType": "immutable",
+      "description": "A contract for retrieving AVS operators state (e.g., quorum bitmaps, ordered operator lists, stakes, sockets, signatures indices—at) at a given block directly from on-chain registries.",
       "sinceTimestamp": 1748903123,
       "sinceBlock": 22619945,
       "values": { "$immutable": true },
@@ -2138,6 +2139,7 @@
     "eigenda/EigenDACertVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenda/EigenDACertVerifier_Legacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenda/EigenDACertVerifierRouter": "0xbf4b9e7411ab344f2636764539df0cae49a73d201eb66cfca0ec7f22c1ccd364",
+    "eigenda/OperatorStateRetriever": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/BLSApkRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/EigenDADisperserRegistry": "0x2c838fbf8c11140f540ad7325afadb6581a83d99e20b209772f8f4a52ff01ea4",
     "eigenlayer/EigenDAPauserRegistry": "0x650c2bb1c48c3b4074538696cc4c8cc5a1610e60b132f774c9b120c619c34086",
@@ -2153,6 +2155,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23640604 },
+  "usedBlockNumbers": { "ethereum": 23648148 },
   "permissionsConfigHash": "0xab3f0f211741fa9ce8f402114c3ae0427e11c49abfccd9c4714a8da6029a69d2"
 }
