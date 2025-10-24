@@ -19,10 +19,7 @@ export function DataPostedTrackedTransactions({
   const [showHistoricalTransactions, setShowHistoricalTransactions] =
     useState(false)
 
-  if (
-    !daTrackingConfig ||
-    daTrackingConfig.every((x) => x.type === 'eigen-da')
-  ) {
+  if (!daTrackingConfig) {
     return null
   }
 
