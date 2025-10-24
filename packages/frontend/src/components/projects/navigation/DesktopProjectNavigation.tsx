@@ -200,12 +200,12 @@ function ProjectNavigationList({
             <a
               href={`#${section.id}`}
               ref={selected ? currentMenuEntry : null}
-              className="group flex flex-row items-center gap-1.5"
+              className="group flex flex-row gap-1.5"
             >
               <NavigationListIndex index={i + 1} selected={selected} />
               <span
                 className={cn(
-                  'text-label-value-14 hover:text-primary',
+                  'mt-[3px] text-label-value-14 hover:text-primary',
                   selected ? 'text-primary' : 'text-secondary',
                 )}
               >
@@ -254,7 +254,7 @@ function NavigationSubsectionEntry(props: {
     <a
       key={props.id}
       href={`#${props.id}`}
-      className={cn('flex flex-row items-center ')}
+      className="group flex flex-row items-center"
     >
       <div className="flex flex-row gap-3">
         {/* Left side */}
@@ -267,7 +267,7 @@ function NavigationSubsectionEntry(props: {
         {/* Right side */}
         <div
           className={cn(
-            'flex-1 pb-3 transition-opacity hover:opacity-100',
+            'flex-1 pt-0.5 pb-2 transition-opacity hover:opacity-100 group-last:pb-0.5',
             !props.selected && 'opacity-60',
           )}
         >
