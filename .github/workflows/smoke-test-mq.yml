@@ -87,3 +87,28 @@ jobs:
       - name: Run production update monitor smoke test
         run: pnpm test:config
         working-directory: packages/backend
+
+      # L2BEAT TVS
+      - name: Pull staging l2beat TVS configuration
+        run: heroku config -a l2beat-tvs-staging --shell > .env
+        working-directory: packages/backend
+
+      - name: Fill PORT variable
+        run: echo "PORT=3000" >> .env
+        working-directory: packages/backend
+
+      - name: Run staging l2beat TVS smoke test
+        run: pnpm test:config
+        working-directory: packages/backend
+
+      - name: Pull production l2beat TVS configuration
+        run: heroku config -a l2beat-tvs-production --shell > .env
+        working-directory: packages/backend
+
+      - name: Fill PORT variable
+        run: echo "PORT=3000" >> .env
+        working-directory: packages/backend
+
+      - name: Run production l2beat TVS smoke test
+        run: pnpm test:config
+        working-directory: packages/backend
