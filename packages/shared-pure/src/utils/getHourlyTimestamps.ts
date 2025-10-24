@@ -1,4 +1,4 @@
-import { UnixTime } from '../types'
+import { UnixTime } from '../types/UnixTime.js'
 
 export function getHourlyTimestamps(from: UnixTime, to: UnixTime): UnixTime[] {
   if (from > to) throw new Error('FROM cannot be greater than TO')

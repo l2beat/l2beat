@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { UnixTime } from './UnixTime'
+import { UnixTime } from './UnixTime.js'
 
 describe(UnixTime.name, () => {
   it('represents time as seconds since Jan 01 1970', () => {

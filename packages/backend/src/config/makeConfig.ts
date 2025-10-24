@@ -173,10 +173,15 @@ export async function makeConfig(
       },
       compare: {
         enabled: flags.isEnabled('interop', 'compare'),
-        intervalMs: env.optionalInteger(['INTEROP_COMPARE_INTERVAL_MS']),
       },
       financials: {
         enabled: flags.isEnabled('interop', 'financials'),
+      },
+      config: {
+        enabled: flags.isEnabled('interop', 'config'),
+        chains: chains
+          .filter((c) => c.chainId !== undefined)
+          .map((c) => ({ id: c.chainId as number, name: c.name })),
       },
     },
     // Must be last

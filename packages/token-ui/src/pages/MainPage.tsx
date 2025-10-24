@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Badge } from '~/components/core/Badge'
@@ -16,7 +17,6 @@ import type { AbstractToken, DeployedToken } from '~/mock/types'
 import { api } from '~/react-query/trpc'
 import { cn } from '~/utils/cn'
 import { getDeployedTokenDisplayId } from '~/utils/getDisplayId'
-import { UnixTime } from '~/utils/UnixTime'
 
 export function MainPage() {
   const { data, isLoading: isAbstractTokensLoading } =

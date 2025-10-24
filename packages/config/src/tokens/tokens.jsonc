@@ -8093,5 +8093,23 @@
         ]
       }
     }
+  ],
+  "ethereal": [
+    {
+      "symbol": "WUSDe",
+      "address": "0xB6fC4B1BFF391e5F6b4a3D2C7Bda1FeE3524692D",
+      "coingeckoId": "ethena-usde",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 (OrbitNativeOFT)",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    }
   ]
 }
