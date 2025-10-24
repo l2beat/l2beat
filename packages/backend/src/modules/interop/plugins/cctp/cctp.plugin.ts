@@ -47,7 +47,7 @@ This has a problem that the same message sent twice will be identical, however c
 is set by Circle validators, it's hard to say how this can be solved by the matching logic only.
 */
 
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { solidityKeccak256 } from 'ethers/lib/utils'
 import { BinaryReader } from '../../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
@@ -119,6 +119,10 @@ export class CCTPPlugin implements InteropPlugin {
 
     const network = networks.find((n) => n.chain === input.ctx.chain)
     if (!network) return
+    assert(
+      network.messageTransmitter,
+      'We capture only chain with message transmitters',
+    )
 
     const messageSent = parseMessageSent(input.log, [
       network.messageTransmitter,

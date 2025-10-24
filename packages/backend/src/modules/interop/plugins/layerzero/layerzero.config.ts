@@ -20,9 +20,9 @@ export interface LayerZeroV1Network {
 
 export interface LayerZeroV2Network {
   chain: string
-  chainId: number
+  chainId?: number
   eid: number
-  endpointV2: EthereumAddress
+  endpointV2?: EthereumAddress
 }
 
 export const LayerZeroV1Config =
@@ -83,8 +83,6 @@ const OVERRIDES = {
     {
       eid: 30168,
       chain: 'solana',
-      chainId: -1,
-      endpointV2: EthereumAddress.ZERO,
     },
   ],
 }

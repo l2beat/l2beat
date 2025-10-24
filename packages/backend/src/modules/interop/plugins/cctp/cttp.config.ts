@@ -17,9 +17,9 @@ import { reconcileNetworks } from '../../engine/config/reconcileNetworks'
 
 export interface CCTPV2Network {
   chain: string
-  chainId: number
+  chainId?: number
   domain: number
-  messageTransmitter: EthereumAddress
+  messageTransmitter?: EthereumAddress
 }
 
 export const CCTPV2Config = defineConfig<CCTPV2Network[]>('cctp-v2')
@@ -30,11 +30,11 @@ const V2_MESSAGE_TRANSMITTER = EthereumAddress(
 )
 
 const OVERRIDES = [
-  { chain: 'solana', domain: 5, chainId: -1 },
-  { chain: 'sonic', domain: 13, chainId: -1 },
-  { chain: 'sei', domain: 16, chainId: -1 },
-  { chain: 'xdc', domain: 18, chainId: -1 },
-  { chain: 'hyperevm', domain: 19, chainId: -1 },
+  { chain: 'solana', domain: 5 },
+  { chain: 'sonic', domain: 13 },
+  { chain: 'sei', domain: 16 },
+  { chain: 'xdc', domain: 18 },
+  { chain: 'hyperevm', domain: 19 },
 ]
 
 export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
@@ -114,12 +114,6 @@ export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
     const results = await Promise.all(chainPromises)
     const cctpDomains = results.filter((result) => result !== undefined)
 
-    return [
-      ...cctpDomains,
-      ...OVERRIDES.map((o) => ({
-        ...o,
-        messageTransmitter: EthereumAddress.ZERO,
-      })),
-    ]
+    return [...cctpDomains, ...OVERRIDES]
   }
 }
