@@ -8,6 +8,7 @@ import { getActivityForProjectAndRange } from '../../scaling/activity/getActivit
 import { DataPostedTimeRange } from '../../scaling/data-posted/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { isThroughputSynced } from './isThroughputSynced'
+import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
 import { getThroughputRange, rangeToResolution } from './utils/range'
 
@@ -22,7 +23,10 @@ export type ScalingProjectDaThroughputChart = {
 }
 type ScalingProjectDaThroughputChartPoint = [
   timestamp: number,
-  value: number | null,
+  ethereum: number | null,
+  celestia: number | null,
+  avail: number | null,
+  eigenda: number | null,
 ]
 
 export const ScalingProjectDaThroughputChartParams = v.object({
@@ -61,6 +65,28 @@ export async function getScalingProjectDaThroughputChart(
     resolution,
   )
 
+  const lastDataForLayers: Record<
+    string,
+    {
+      lastTimestamp: number
+      firstTimestamp: number
+    }
+  > = {}
+  for (const layer of THROUGHPUT_ENABLED_DA_LAYERS) {
+    const lastValue = Object.entries(grouped).findLast(
+      ([_, values]) => values[layer] && values[layer] > 0,
+    )
+    const firstValue = Object.entries(grouped).find(
+      ([_, values]) => values[layer] && values[layer] > 0,
+    )
+    if (lastValue && firstValue) {
+      lastDataForLayers[layer] = {
+        lastTimestamp: Number(lastValue[0]),
+        firstTimestamp: Number(firstValue[0]),
+      }
+    }
+  }
+
   const expectedTo = getThroughputExpectedTimestamp(resolution)
   const adjustedTo = isThroughputSynced(syncedUntil, false)
     ? maxTimestamp
@@ -71,11 +97,25 @@ export async function getScalingProjectDaThroughputChart(
   let total = 0
   const chart: ScalingProjectDaThroughputChartPoint[] = timestamps.map(
     (timestamp) => {
-      const posted = timestamp <= syncedUntil ? (grouped[timestamp] ?? 0) : null
-      if (posted !== null) {
-        total += posted
+      const posted = grouped[timestamp]
+      if (posted) {
+        total += Object.values(posted).reduce((sum, val) => sum + val, 0)
       }
-      return [timestamp, posted]
+      const getDaValue = (layer: string) => {
+        const lastData = lastDataForLayers[layer]
+        const isBetween =
+          lastData &&
+          timestamp >= lastData.firstTimestamp &&
+          timestamp <= lastData.lastTimestamp
+        return isBetween ? (grouped[timestamp]?.[layer] ?? 0) : null
+      }
+      return [
+        timestamp,
+        getDaValue('ethereum'),
+        getDaValue('celestia'),
+        getDaValue('avail'),
+        getDaValue('eigenda'),
+      ]
     },
   )
 
@@ -110,7 +150,7 @@ function groupByTimestamp(
 ) {
   let minTimestamp = Number.POSITIVE_INFINITY
   let maxTimestamp = Number.NEGATIVE_INFINITY
-  const result: Record<number, number> = {}
+  const result: Record<number, Record<string, number>> = {}
 
   const offset = UnixTime.toStartOf(
     UnixTime.now(),
@@ -134,10 +174,10 @@ function groupByTimestamp(
     )
     const value = record.totalSize
     if (!result[timestamp]) {
-      result[timestamp] = Number(value)
-    } else {
-      result[timestamp] += Number(value)
+      result[timestamp] = {}
     }
+    const currentDaLayerValue = result[timestamp][record.daLayer] ?? 0
+    result[timestamp][record.daLayer] = currentDaLayerValue + Number(value)
     minTimestamp = Math.min(minTimestamp, timestamp)
     maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
@@ -160,9 +200,12 @@ function getMockScalingProjectDaThroughputChart({
   let total = 0
   const chart: ScalingProjectDaThroughputChartPoint[] = timestamps.map(
     (timestamp) => {
-      const throughputValue = Math.random() * 900_000_000 + 90_000_000
-      total += throughputValue
-      return [timestamp, Math.round(throughputValue)]
+      const ethereum = Math.random() * 900_000_000 + 90_000_000
+      const celestia = Math.random() * 900_000_000 + 90_000_000
+      const avail = Math.random() * 900_000_000 + 90_000_000
+      const eigenda = Math.random() * 900_000_000 + 90_000_000
+      total += ethereum + celestia + avail + eigenda
+      return [timestamp, ethereum, celestia, avail, eigenda]
     },
   )
 
