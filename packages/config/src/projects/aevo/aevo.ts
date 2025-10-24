@@ -63,7 +63,6 @@ export const aevo: ScalingProject = opStackL2({
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
   },
-  // Uncomment once FE is ready
   nonTemplateDaTracking: [
     {
       type: 'celestia',
