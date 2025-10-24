@@ -16,8 +16,7 @@ export const rpcUrl = option({
 
 export const chainName = option({
   type: optional(string),
-  description:
-    'Chain name (e.g., "ethereum", "arbitrum", "optimism"). Required for commands that use chain-specific addresses. See ChainSpecificAddress.ts for valid chain names.',
+  description: 'Chain whose configurations to use for explorer access',
   long: 'explorer-chain-name',
   short: 'c',
 })
