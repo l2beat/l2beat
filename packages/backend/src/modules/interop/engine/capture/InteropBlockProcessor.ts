@@ -4,11 +4,11 @@ import type { Log as ViemLog } from 'viem'
 import type { BlockProcessor } from '../../../types'
 import {
   Address32,
-  TxToCapture,
   type InteropEvent,
   type InteropEventContext,
   type InteropPlugin,
   type LogToCapture,
+  type TxToCapture,
 } from '../../plugins/types'
 import type { InteropEventStore } from './InteropEventStore'
 
@@ -120,10 +120,7 @@ function getItemsToCapture(chain: string, block: Block, logs: Log[]) {
   for (const tx of txs) {
     const txLogs = viemLogs.filter((log) => log.transactionHash === tx.txHash)
     for (const log of txLogs) {
-      logsToCapture.push({        log,
-        ctx: tx,
-        txLogs,
-      })
+      logsToCapture.push({ log, ctx: tx, txLogs })
     }
     txsToCapture.push({ tx, txLogs })
   }

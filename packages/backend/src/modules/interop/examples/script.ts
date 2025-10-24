@@ -219,9 +219,7 @@ async function runExample(example: Example): Promise<RunResult> {
         const event = plugin.capture({
           log: log,
           txLogs: txLogs,
-          ctx: {...ctx,
-            logIndex: log.logIndex ?? -1,
-          },
+          ctx: { ...ctx, logIndex: log.logIndex ?? -1 },
         })
         if (event) {
           events.push({ ...event, plugin: plugin.name })
