@@ -1,6 +1,6 @@
 {
   "name": "ink",
-  "timestamp": 1761222955,
+  "timestamp": 1761310677,
   "configHash": "0x8b834afc2d7634f97b8230111eb489afe4c13855fc85ee36ede6aa3f10ac255e",
   "entries": [
     {
@@ -169,7 +169,7 @@
         ],
         "$upgradeCount": 4,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 1285,
+        "gameCount": 1289,
         "gameImpls": [
           "eth:0x5F5BEa598Fdf8DF30d56808E8b793da8FC7f3028",
           "eth:0x5562D33B68fa20572FC58fA36aB19CCFeDD6eE8f",
@@ -182,7 +182,7 @@
         "initBonds": ["80000000000000000", "80000000000000000", 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 185,
+        "permissionedGamesTotal": 190,
         "proxyAdmin": "eth:0xd56045E68956FCe2576E680c95a4750cf8241f79",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "version": "1.2.0"
@@ -733,7 +733,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 23640011
+          "prevBlockNum": 23647435
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1130,7 +1130,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292633157",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292633190",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1873,12 +1873,12 @@
           ]
         ],
         "$upgradeCount": 2,
-        "anchorGame": "eth:0xe74C1bc74958BdcdBF86a411Db2B601782AAcAe4",
+        "anchorGame": "eth:0xadFa6bE70469799694cc017012DF48A31A03d808",
         "disputeGameFactory": "eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x4d595723d75c3dab52283c08dfbc7b8e90806a58ce4a0a07e15af21ce9e28614",
-          27111363
+          "0x36b9e22827dd7aa066fee017e8c8f826af2e10a7837a3d96e4834f10f78b7411",
+          27196889
         ],
         "initVersion": 1,
         "paused": false,
@@ -1978,7 +1978,7 @@
         "$upgradeCount": 1,
         "baseFee": 0,
         "baseFeeScalar": 4424,
-        "blobBaseFee": 2,
+        "blobBaseFee": 1,
         "blobBaseFeeScalar": 810831,
         "decimals": 6,
         "DECIMALS": 6,
@@ -1986,7 +1986,7 @@
         "isEcotone": true,
         "isFjord": true,
         "isIsthmus": true,
-        "l1BaseFee": 879979087,
+        "l1BaseFee": 314121503,
         "version": "1.4.0"
       },
       "implementationNames": {
@@ -2173,10 +2173,10 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 879979087,
+        "basefee": 314121503,
         "baseFeeScalar": 4424,
         "batcherHash": "0x000000000000000000000000500d7ea63cf2e501dadaa5feec1fc19fe2aa72ac",
-        "blobBaseFee": 2,
+        "blobBaseFee": 1,
         "blobBaseFeeScalar": 810831,
         "DEPOSITOR_ACCOUNT": "ink:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
         "gasPayingToken": {
@@ -2185,15 +2185,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xff4e69edc214c92e8c73af8bf2eb9caae9932a0230161844d3ff112b4d4c0a89",
+        "hash": "0x4ab019c568a8e7320fb768b8f80b16c44a215647a64be1a47b8dfcbc8e8ae0db",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 23640232,
+        "number": 23647467,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 3,
-        "timestamp": 1761222887,
+        "sequenceNumber": 6,
+        "timestamp": 1761310607,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -4181,6 +4181,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23640237, "ink": 27724544 },
+  "usedBlockNumbers": { "ink": 27812266, "ethereum": 23647472 },
   "permissionsConfigHash": "0xf77bba13ac8c4bb23414c9c592c146c747a0a88d7281e3bcf4fdc6f32ac5267f"
 }
