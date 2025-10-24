@@ -46,22 +46,22 @@ export function initDataAvailabilityModule({
     start: async () => {
       logger.info('Starting target indexers')
       await Promise.all(
-        targetIndexers.map(async (indexer) => {
+        targetIndexers.map((indexer) => {
           logger.info(
             `Starting ${indexer.constructor.name} for ${indexer.daLayer}`,
           )
-          await indexer.start()
+          return indexer.start()
         }),
       )
       logger.info('Target indexers started')
 
       logger.info('Starting DA indexers')
       await Promise.all(
-        daIndexers.map(async (indexer) => {
+        daIndexers.map((indexer) => {
           logger.info(
             `Starting ${indexer.constructor.name} for ${indexer.daLayer}`,
           )
-          await indexer.start()
+          return indexer.start()
         }),
       )
       logger.info('DA indexers started')
@@ -69,9 +69,9 @@ export function initDataAvailabilityModule({
       if (eigenIndexers.length > 0) {
         logger.info('Starting EigenDA indexer')
         await Promise.all(
-          eigenIndexers.map(async (indexer) => {
+          eigenIndexers.map((indexer) => {
             logger.info(`Starting ${indexer.constructor.name} for eigenda`)
-            await indexer.start()
+            return indexer.start()
           }),
         )
         logger.info('EigenDA indexer started')
