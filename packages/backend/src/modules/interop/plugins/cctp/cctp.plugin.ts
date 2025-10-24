@@ -49,12 +49,12 @@ is set by Circle validators, it's hard to say how this can be solved by the matc
 
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { solidityKeccak256 } from 'ethers/lib/utils'
-import { BinaryReader } from '../../../tools/BinaryReader'
+import { BinaryReader } from '../../../../tools/BinaryReader'
+import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import {
   Address32,
   createEventParser,
   createInteropEventType,
-  defineNetworks,
   findChain,
   type InteropEvent,
   type InteropEventDb,
@@ -62,19 +62,8 @@ import {
   type LogToCapture,
   type MatchResult,
   Result,
-} from './types'
-
-export const CCTP_NETWORKS = defineNetworks('cctp', [
-  { cctpdomain: 0, chain: 'ethereum' },
-  { cctpdomain: 1, chain: 'avalanche' },
-  { cctpdomain: 2, chain: 'optimism' },
-  { cctpdomain: 3, chain: 'arbitrum' },
-  // { cctpdomain: 5, chain: 'solana' },
-  { cctpdomain: 6, chain: 'base' },
-  { cctpdomain: 7, chain: 'polygonpos' },
-  { cctpdomain: 10, chain: 'unichain' },
-  { cctpdomain: 11, chain: 'linea' },
-])
+} from '../types'
+import { CCTPV2Config } from './cttp.config'
 
 const parseMessageSent = createEventParser('event MessageSent(bytes message)')
 
@@ -122,8 +111,19 @@ export const CCTPv2MessageReceived = createInteropEventType<{
 export class CCTPPlugin implements InteropPlugin {
   name = 'cctp'
 
+  constructor(private configs: InteropConfigStore) {}
+
   capture(input: LogToCapture) {
-    const messageSent = parseMessageSent(input.log, null)
+    const networks = this.configs.get(CCTPV2Config)
+    if (!networks) return
+
+    const network = networks.find((n) => n.chain === input.ctx.chain)
+    if (!network) return
+
+    const messageSent = parseMessageSent(input.log, [
+      network.messageTransmitter,
+      // TODO: v1 address
+    ])
     if (messageSent) {
       const version = decodeMessageVersion(messageSent.message)
       if (version === 0) {
@@ -132,8 +132,8 @@ export class CCTPPlugin implements InteropPlugin {
         return CCTPv1MessageSent.create(input.ctx, {
           messageBody: message.rawBody,
           $dstChain: findChain(
-            CCTP_NETWORKS,
-            (x) => x.cctpdomain,
+            networks,
+            (x) => x.domain,
             Number(message.destinationDomain),
           ),
         })
@@ -149,8 +149,8 @@ export class CCTPPlugin implements InteropPlugin {
           // https://developers.circle.com/cctp/technical-guide#messages-and-finality
           fast: message.minFinalityThreshold <= 1000,
           $dstChain: findChain(
-            CCTP_NETWORKS,
-            (x) => x.cctpdomain,
+            networks,
+            (x) => x.domain,
             Number(message.destinationDomain),
           ),
           app: burnMessage ? 'TokenMessengerV2' : undefined,
@@ -164,13 +164,14 @@ export class CCTPPlugin implements InteropPlugin {
       }
     }
 
+    // TODO: v1 address§
     const v1MessageReceived = parseV1MessageReceived(input.log, null)
     if (v1MessageReceived) {
       return CCTPv1MessageReceived.create(input.ctx, {
         caller: EthereumAddress(v1MessageReceived.caller),
         $srcChain: findChain(
-          CCTP_NETWORKS,
-          (x) => x.cctpdomain,
+          networks,
+          (x) => x.domain,
           Number(v1MessageReceived.sourceDomain),
         ),
         nonce: Number(v1MessageReceived.nonce),
@@ -178,7 +179,9 @@ export class CCTPPlugin implements InteropPlugin {
       })
     }
 
-    const v2MessageReceived = parseV2MessageReceived(input.log, null)
+    const v2MessageReceived = parseV2MessageReceived(input.log, [
+      network.messageTransmitter,
+    ])
     if (v2MessageReceived) {
       // TODO: also recipient is TokenBurnMessenger
 
@@ -190,8 +193,8 @@ export class CCTPPlugin implements InteropPlugin {
         hookData: burnMessage?.hookData,
         caller: EthereumAddress(v2MessageReceived.caller),
         $srcChain: findChain(
-          CCTP_NETWORKS,
-          (x) => x.cctpdomain,
+          networks,
+          (x) => x.domain,
           Number(v2MessageReceived.sourceDomain),
         ),
         nonce: Number(v2MessageReceived.nonce),

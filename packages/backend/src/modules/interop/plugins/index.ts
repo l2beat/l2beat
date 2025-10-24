@@ -14,7 +14,7 @@ import { AllbridgePlugIn } from './allbridge'
 import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
 import { CCIPPlugIn } from './ccip'
-import { CCTPPlugin } from './cctp'
+import { CCTPPlugin } from './cctp/cctp.plugin'
 import { CentriFugePlugin } from './centrifuge'
 import { CircleGatewayPlugIn } from './circle-gateway'
 import { DeBridgePlugin } from './debridge'
@@ -85,13 +85,13 @@ export function createInteropPlugins(
       new DeBridgePlugin(),
       new DeBridgeDlnPlugin(),
       new MayanForwarderPlugin(),
-      new CircleGatewayPlugIn(),
+      new CircleGatewayPlugIn(deps.configs),
       new CCIPPlugIn(),
       new CentriFugePlugin(),
       new MayanSwiftPlugin(), // should be run before CCTP
       new MayanMctpPlugin(), // should be run before CCTP
       new MayanMctpFastPlugin(), // should be run before CCTP
-      new CCTPPlugin(),
+      new CCTPPlugin(deps.configs),
       new StargatePlugin(), // should be run before stargate bus/taxi, ofts
       new StargateV2BusPlugin(), // should be run before LayerZeroV2, ofts
       new StargateV2TaxiPlugin(), // should be run before LayerZeroV2, ofts
