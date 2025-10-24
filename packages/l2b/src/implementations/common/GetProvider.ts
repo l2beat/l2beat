@@ -17,6 +17,7 @@ const UNKNOWN_CHAIN_NAME = 'UnknownChainName'
 export async function getProvider(
   rpcUrl: string,
   explorer?: ExplorerConfig,
+  chainName?: string,
 ): Promise<IProvider> {
   const httpClient = new HttpClient()
   const paths = getDiscoveryPaths()
@@ -24,9 +25,11 @@ export async function getProvider(
   mkdirSync(dirname(paths.cache), { recursive: true })
   const cache = new SQLiteCache(paths.cache)
 
+  const effectiveChainName = chainName ?? UNKNOWN_CHAIN_NAME
+
   const chainConfigs: DiscoveryChainConfig[] = [
     {
-      name: UNKNOWN_CHAIN_NAME,
+      name: effectiveChainName,
       rpcUrl,
       multicall: getMulticall3Config(Number.MAX_SAFE_INTEGER),
       explorer: explorer ?? {
@@ -45,6 +48,6 @@ export async function getProvider(
     Logger.SILENT,
   )
   const blockNumber =
-    await allProviders.getLatestBlockNumber(UNKNOWN_CHAIN_NAME)
-  return allProviders.getByBlockNumber(UNKNOWN_CHAIN_NAME, blockNumber)
+    await allProviders.getLatestBlockNumber(effectiveChainName)
+  return allProviders.getByBlockNumber(effectiveChainName, blockNumber)
 }

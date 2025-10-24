@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x43321955c9de59d7c376caf4c61ee0f68544c510
+
+# Diff at Fri, 24 Oct 2025 12:59:10 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@0713eeefaf9a5e5c65e5c8bacdd5c4941194faeb block: 1761222955
+- current timestamp: 1761310677
+
+## Description
+
+Fix previously misreported value by dwellir rpc and accidentally commited.
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.permissionedGamesTotal:
+-        185
++        190
+    }
+```
+
 Generated with discovered.json: 0x7d79aa81d1e63f77bb7af903c9b0a86b8681417c
 
 # Diff at Thu, 23 Oct 2025 12:37:13 GMT:
