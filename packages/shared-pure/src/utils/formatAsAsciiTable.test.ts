@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 import { expect } from 'earl'
 
-import { formatAsAsciiTable } from './formatAsAsciiTable'
+import { formatAsAsciiTable } from './formatAsAsciiTable.js'
 
 describe(formatAsAsciiTable.name, () => {
   it('should print a table', () => {

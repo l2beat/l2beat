@@ -7,7 +7,7 @@
 // WARNING: currently shortName is not verified against the list of chains
 
 import { validateAddress } from '@mradomski/tinyerc55'
-import { EthereumAddress } from './EthereumAddress'
+import { EthereumAddress } from './EthereumAddress.js'
 
 // NOTE(radomski): This is a little stupid. Ideally we would have a centralized
 // list of all chains with their short names. But currently I don't know how to achieve that.
