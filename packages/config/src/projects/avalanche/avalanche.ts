@@ -99,7 +99,12 @@ export const avalanche: Bridge = {
         version: '3',
       },
     ],
-    apis: [],
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://avalanche.drpc.org',
+      },
+    ],
   },
   riskView: {
     validatedBy: {

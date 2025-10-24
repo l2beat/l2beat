@@ -3,7 +3,8 @@ Circle Gateway plugin
 Note - here the transfer of USDC is via burn/mint, but mint on DST happens before burn on SRC.
 */
 
-import { CCTP_NETWORKS } from './cctp'
+import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
+import { CCTPV2Config } from './cctp/cttp.config'
 import {
   Address32,
   createEventParser,
@@ -42,28 +43,40 @@ export const GatewayBurned = createInteropEventType<{
 export class CircleGatewayPlugIn implements InteropPlugin {
   name = 'circle-gateway'
 
+  constructor(private configs: InteropConfigStore) {}
+
   capture(input: LogToCapture) {
-    const gatewayBurned = parseGatewayBurned(input.log, null)
+    const networks = this.configs.get(CCTPV2Config)
+    if (!networks) return
+
+    const network = networks.find((n) => n.chain === input.ctx.chain)
+    if (!network) return
+
+    const gatewayBurned = parseGatewayBurned(input.log, [
+      network.messageTransmitter,
+    ])
     if (gatewayBurned)
       return GatewayBurned.create(input.ctx, {
         token: Address32.from(gatewayBurned.token),
         transferSpecHash: gatewayBurned.transferSpecHash,
         $srcChain: findChain(
-          CCTP_NETWORKS,
-          (x) => x.cctpdomain,
+          networks,
+          (x) => x.domain,
           Number(gatewayBurned.destinationDomain), // yes, that's not a mistake
         ),
         value: gatewayBurned.value.toString(),
       })
 
-    const attestationUsed = parseAttestationUsed(input.log, null)
+    const attestationUsed = parseAttestationUsed(input.log, [
+      network.messageTransmitter,
+    ])
     if (attestationUsed)
       return AttestationUsed.create(input.ctx, {
         token: Address32.from(attestationUsed.token),
         transferSpecHash: attestationUsed.transferSpecHash,
         $dstChain: findChain(
-          CCTP_NETWORKS,
-          (x) => x.cctpdomain,
+          networks,
+          (x) => x.domain,
           Number(attestationUsed.sourceDomain), // yes, that's not a mistake
         ),
         value: attestationUsed.value.toString(),

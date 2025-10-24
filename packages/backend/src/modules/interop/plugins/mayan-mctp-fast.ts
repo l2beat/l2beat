@@ -1,5 +1,5 @@
 import { BinaryReader } from '../../../tools/BinaryReader'
-import { CCTPv2MessageReceived, CCTPv2MessageSent } from './cctp'
+import { CCTPv2MessageReceived, CCTPv2MessageSent } from './cctp/cctp.plugin'
 import { MayanForwarded } from './mayan-forwarder'
 import {
   Address32,
