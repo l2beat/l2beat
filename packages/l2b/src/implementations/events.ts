@@ -7,7 +7,6 @@ import {
 import {
   assert,
   ChainSpecificAddress,
-  type EthereumAddress,
   formatAsAsciiTable,
   Hash256,
   UnixTime,
