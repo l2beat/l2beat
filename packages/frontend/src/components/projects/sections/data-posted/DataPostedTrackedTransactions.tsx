@@ -30,7 +30,7 @@ export function DataPostedTrackedTransactions({
       )
 
   const hasHistoricalTransactions = daTrackingConfig.some((x) =>
-    x.type === 'eigen-da' ? !x.untilTimestamp : !x.untilBlock,
+    x.type === 'eigen-da' ? !!x.untilTimestamp : !!x.untilBlock,
   )
 
   return (
