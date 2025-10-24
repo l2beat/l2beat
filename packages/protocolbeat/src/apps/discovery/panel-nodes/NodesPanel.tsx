@@ -52,6 +52,12 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
   const preferences = useNodeStore((state) => state.userPreferences)
 
   useEffect(() => {
+    // Get current selection inside the effect to avoid dependency issues
+    const currentSelection = useNodeStore.getState().selected
+    const selectNodes = useNodeStore.getState().selectAndFocus
+
+    // Preserve current selection before clearing
+    const preservedSelection = [...currentSelection]
     clear()
     if (!data) {
       return
@@ -111,7 +117,19 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
       }
     }
     loadNodes(project, nodes)
-  }, [project, data, clear, loadNodes])
+
+    // Restore selection if the previously selected nodes still exist
+    if (preservedSelection.length > 0) {
+      const existingNodeIds = new Set(nodes.map(node => node.id))
+      const validSelection = preservedSelection.filter(id => existingNodeIds.has(id))
+      if (validSelection.length > 0) {
+        // Use setTimeout to ensure the nodes are fully loaded before selecting
+        setTimeout(() => {
+          selectNodes(...validSelection)
+        }, 0)
+      }
+    }
+  }, [project, data, clear, loadNodes, preferences.hideLargeArrays])
 }
 
 function useSynchronizeSelection() {
