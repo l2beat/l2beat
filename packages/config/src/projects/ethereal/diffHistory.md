@@ -1,3 +1,85 @@
+Generated with discovered.json: 0x2502db7e651b56a054870633e3dc8f71a8c1cf43
+
+# Diff at Thu, 23 Oct 2025 15:11:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@59bab562d9522734bed50b73c362d354ad81ecd1 block: 1761144638
+- current timestamp: 1761222332
+
+## Description
+
+add ethereal on ethereal disco incl the exchange contract. heavily EOA and layerzero-governed.
+
+this is the first orbit stack that uses the native OFT integration (uses a precompile to allow gas token mints on the L2).
+
+for TVS we are counting the wrapped USDe for now (covers >90% since the exchange only supports this token). in the future we will need a custom tvs adapter for such chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761144638 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract SafeL2 (ethereal:0x3F93bCc6201558aE2d7528a85575cF07679Bb50e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (ethereal:0x58a16791037dF85CCbc3A65DE5a8401Fd04C8aC8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CollateralManager (ethereal:0x638D6DaC0550f30f37aC5784260309Ac89302faA)
+    +++ description: Auxiliary contract of the ExchangeGateway.
+```
+
+```diff
++   Status: CREATED
+    contract OrbitNativeOFTAdapter (ethereal:0x80F981abC18A48CfdbDe5556F9B72e6a726F0FF3)
+    +++ description: An OApp in the LayerZero protocol. It allows to mint the native token using the arbNativeTokenManager precompile on ArbOs. This means that the native token inherits all trust assumptions of the LayerZero security stack configured for this OApp and its crosschein peers, including minting and burning.
+```
+
+```diff
++   Status: CREATED
+    contract ActionHandler (ethereal:0xA2308112941f9bc2843C41a971F56B3Ac6E2167a)
+    +++ description: Auxiliary contract of the ExchangeGateway.
+```
+
+```diff
++   Status: CREATED
+    contract PythLazer (ethereal:0xACeA761c27A909d4D3895128EBe6370FDE2dF481)
+    +++ description: Used to verify offchain signed oracle data.
+```
+
+```diff
++   Status: CREATED
+    contract ExchangeGateway (ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc)
+    +++ description: Main contract of the Ethereal DEX. Entrypoint for users to deposit and withdraw funds and for operators submit user actions.
+```
+
+```diff
++   Status: CREATED
+    contract ExchangeConfig (ethereal:0xC199cC890F61B847bec9cec4212C35b759A9fD38)
+    +++ description: Auxiliary contract of the ExchangeGateway.
+```
+
+```diff
++   Status: CREATED
+    contract PerpEngine (ethereal:0xCc0385301a10191b7ac633A64742a34F2e4cFB37)
+    +++ description: Auxiliary contract of the ExchangeGateway.
+```
+
+```diff
++   Status: CREATED
+    contract Liquidation (ethereal:0xF925Bf7d50abe2Abb21E832c81a6454D791Ad5c0)
+    +++ description: Auxiliary contract of the ExchangeGateway.
+```
+
 Generated with discovered.json: 0x38981589e68554c66993a2e5ae1eaf5d9cad124c
 
 # Diff at Wed, 22 Oct 2025 16:02:26 GMT:

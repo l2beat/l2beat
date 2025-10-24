@@ -160,16 +160,22 @@ async function runExample(example: Example): Promise<RunResult> {
     rpcClients,
   })
 
-  for (const key of example.loadConfigs ?? []) {
-    const plugin = plugins.configPlugins.find((x) => x.provides.key === key)
-    if (!plugin) {
-      throw new Error(`Cannot load config: ${key}`)
+  if (example.loadConfigs && example.loadConfigs.length > 0) {
+    for (const key of example.loadConfigs) {
+      const configsToLoad = plugins.configPlugins.filter((x) =>
+        x.provides.map((k) => k.key).includes(key),
+      )
+      if (configsToLoad.length !== example.loadConfigs.length) {
+        throw new Error(`Cannot load configs: ${key}`)
+      }
+      for (const config of configsToLoad) {
+        console.log('LOADING CONFIGS:', example.loadConfigs)
+        await config.run()
+      }
     }
-    console.log('LOADING CONFIG:', key)
-    await plugin.run()
-  }
-  if (example.loadConfigs) {
-    console.log('CONFIGS LOADED\n')
+    if (example.loadConfigs) {
+      console.log('CONFIGS LOADED\n')
+    }
   }
 
   const events: InteropEvent[] = []

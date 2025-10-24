@@ -1,6 +1,6 @@
 {
   "name": "unichain",
-  "timestamp": 1759502087,
+  "timestamp": 1761223312,
   "configHash": "0x80dd6ffffaf43b4a95a5265c353ddbe74c869d0be81a8fc84bc5ce0763130ac9",
   "entries": [
     {
@@ -210,7 +210,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 23497698
+          "prevBlockNum": 23640011
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -280,7 +280,7 @@
         "proxyAdminOwner": "eth:0x6d5B183F538ABB8572F5cD17109c617b994D5833",
         "symbol": "WETH",
         "systemConfig": "eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6",
-        "totalSupply": "1440000000000000000",
+        "totalSupply": "20080000000000000000",
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -400,12 +400,12 @@
           ]
         ],
         "$upgradeCount": 2,
-        "anchorGame": "eth:0x5D143CEdA14cAe6079c914e341808817a0fa3782",
+        "anchorGame": "eth:0xe14caD3c4A1711795F1df42627978cE6604383f0",
         "disputeGameFactory": "eth:0x2F12d621a16e2d3285929C9996f478508951dFe4",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xd382c4ca0dce2a5a27455405ab46c7c66c33b2ebe84b828039c6ec88ce4b3878",
-          28143697
+          "0x7d7ff522ac625206d78362004c95dcadd011650af7ddc8359c4bffe6cf58a4fc",
+          29868234
         ],
         "initVersion": 1,
         "paused": false,
@@ -475,7 +475,7 @@
         ],
         "$upgradeCount": 4,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 7883,
+        "gameCount": 8356,
         "gameImpls": [
           "eth:0x42891199E6abD6A346E26B7d187EF5657FDfF603",
           "eth:0x5581F65C63B8CCbBe4A06626C336531160E2D8B5",
@@ -488,7 +488,7 @@
         "initBonds": ["80000000000000000", "80000000000000000", 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0x6d5B183F538ABB8572F5cD17109c617b994D5833",
-        "permissionedGamesTotal": 1865,
+        "permissionedGamesTotal": 1837,
         "proxyAdmin": "eth:0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4",
         "proxyAdminOwner": "eth:0x6d5B183F538ABB8572F5cD17109c617b994D5833",
         "version": "1.2.0"
@@ -776,7 +776,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 79,
+        "nonce": 84,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1018,7 +1018,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 23,
+        "nonce": 28,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1033,6 +1033,11 @@
     },
     {
       "address": "eth:0x652BC529E171847E2fFddCeA13567643C84ccB5f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1301,11 +1306,6 @@
       }
     },
     {
-      "address": "eth:0x7cB07FE039a92B3D784f284D919503A381BEC54f",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x7D742aD88c6cE2D3dD1B4582b5180423b74cBc4c",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1424,7 +1424,7 @@
           "eth:0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
           "eth:0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
           "eth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
-          "eth:0x7cB07FE039a92B3D784f284D919503A381BEC54f",
+          "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02",
           "eth:0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
         ],
         "$threshold": 5,
@@ -1432,7 +1432,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 37,
+        "nonce": 43,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1626,7 +1626,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292647986",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292648940",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1676,7 +1676,7 @@
           "eth:0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
           "eth:0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
           "eth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
-          "eth:0x7cB07FE039a92B3D784f284D919503A381BEC54f",
+          "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02",
           "eth:0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
         ],
         "$threshold": 5,
@@ -1685,7 +1685,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 110,
+        "nonce": 111,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -1842,7 +1842,7 @@
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 41,
+        "nonce": 46,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2212,7 +2212,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "unichain:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622140",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622285",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2257,7 +2257,7 @@
         "$upgradeCount": 1,
         "baseFee": 0,
         "baseFeeScalar": 2000,
-        "blobBaseFee": 1,
+        "blobBaseFee": 4,
         "blobBaseFeeScalar": 900000,
         "decimals": 6,
         "DECIMALS": 6,
@@ -2265,7 +2265,7 @@
         "isEcotone": true,
         "isFjord": true,
         "isIsthmus": true,
-        "l1BaseFee": 825562322,
+        "l1BaseFee": 615243600,
         "version": "1.4.0"
       },
       "implementationNames": {
@@ -2452,10 +2452,10 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 825562322,
+        "basefee": 615243600,
         "baseFeeScalar": 2000,
         "batcherHash": "0x0000000000000000000000002f60a5184c63ca94f82a27100643dbabe4f3f7fd",
-        "blobBaseFee": 1,
+        "blobBaseFee": 4,
         "blobBaseFeeScalar": 900000,
         "DEPOSITOR_ACCOUNT": "unichain:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
         "gasPayingToken": {
@@ -2464,15 +2464,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xe835b60c50cd2383e8bc7dc3ae02aaba61b98f0fa9030fbd7376df4a57d3354a",
+        "hash": "0xe91710e575a89f6d03c6e452a4d737d44e77ca2f7d1843a195883e654cda9112",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 23497875,
+        "number": 23640262,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 2,
-        "timestamp": 1759502027,
+        "sequenceNumber": 9,
+        "timestamp": 1761223247,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -4879,6 +4879,6 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "unichain/L1Splitter": "0xf1512f595a0a8fc0981c747d8b7c7b4939bc3136849b90b2bbf68c4b236c93d7"
   },
-  "usedBlockNumbers": { "unichain": 28753728, "ethereum": 23497880 },
-  "permissionsConfigHash": "0xe9e617cb3a37644b9d503db9ae50f66300aaba71ddaa72ea0510fd152d484b75"
+  "usedBlockNumbers": { "ethereum": 23640267, "unichain": 30474953 },
+  "permissionsConfigHash": "0x897f6d32f25a8033cafc2dbe97fac93103f8a66bb150007192e18a817bc4c2a3"
 }
