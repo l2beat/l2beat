@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A legacy DACert verifier contract. It is used to verify v2 DA certificates. New verifiers should use the new verifier router contract."
+}
