@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x005f175fa18926420478cbc5b608e5c39ec983c4
+Generated with discovered.json: 0xba9f7eece7d1726202b6d3c42564ba4807802c05
 
-# Diff at Thu, 23 Oct 2025 11:56:03 GMT:
+# Diff at Fri, 24 Oct 2025 09:13:29 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@286d17aa7adf75827eeb6b38ca50217e11ddcc23 block: 1759399643
+- comparing to: main@11b074f59e0a769fa3d144569b93ef0f7ba1e44f block: 1759399643
 - current timestamp: 1761220486
 
 ## Description
@@ -21,6 +21,26 @@ discovery. Values are for block 1759399643 (main branch discovery), not current.
     +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
       fieldMeta.getDAValidatorPair.description:
 +        "l1da, l2da"
+    }
+```
+
+```diff
+    contract Abstract Multisig (eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+    }
+```
+
+```diff
+    contract ChainAdmin (eth:0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661) {
+    +++ description: A governance proxy that lets eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063 act through it.
+      directlyReceivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+      description:
++        "A governance proxy that lets eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063 act through it."
     }
 ```
 

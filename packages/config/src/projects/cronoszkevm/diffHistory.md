@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x000ea77982c7e71ed8b8fb510848a06a35761c30
+Generated with discovered.json: 0x17621192dff0515f4431de78462c7167080a61f3
 
-# Diff at Thu, 23 Oct 2025 11:51:53 GMT:
+# Diff at Fri, 24 Oct 2025 09:13:26 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@286d17aa7adf75827eeb6b38ca50217e11ddcc23 block: 1755787720
+- comparing to: main@11b074f59e0a769fa3d144569b93ef0f7ba1e44f block: 1755787720
 - current timestamp: 1755787720
 
 ## Description
@@ -17,10 +17,46 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1755787720 (main branch discovery), not current.
 
 ```diff
+    contract CronosChainAdminMultisig (eth:0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+    }
+```
+
+```diff
+    contract CronosZkEVMAdmin (eth:0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4) {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+    }
+```
+
+```diff
     contract CronosZkEvm (eth:0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) {
     +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
       fieldMeta.getDAValidatorPair.description:
 +        "l1da, l2da"
+    }
+```
+
+```diff
+    contract TxFiltererOwnerMultisig (eth:0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+    }
+```
+
+```diff
+    EOA  (eth:0xfD7a03Cdb68E6488F950108A4d24f15519b87339) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
     }
 ```
 

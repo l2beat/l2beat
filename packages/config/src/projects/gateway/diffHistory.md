@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x6129ec2482eb3c85af589ca4e9e283fe4a166cec
+Generated with discovered.json: 0x47d226337fdb0a1ac0c52df595a5911818e662a2
 
-# Diff at Fri, 24 Oct 2025 06:59:14 GMT:
+# Diff at Fri, 24 Oct 2025 09:13:33 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@59bab562d9522734bed50b73c362d354ad81ecd1 block: 1761059926
+- comparing to: main@11b074f59e0a769fa3d144569b93ef0f7ba1e44f block: 1761059926
 - current timestamp: 1761288563
 
 ## Description
@@ -221,6 +221,17 @@ discovery. Values are for block 1761059926 (main branch discovery), not current.
     +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
       values.validatorsVTL:
 -        ["eth:0x14F19299476664665eDa17DBb7dA7e62E3253aa8","eth:0x7d95f0B9D3383D58E39a75a67760aA2153D355A2"]
+    }
+```
+
+```diff
+    contract ChainAdminOwnable (eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3) {
+    +++ description: A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.
+      receivedPermissions.1.description:
+-        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+      description:
++        "A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it."
     }
 ```
 

@@ -730,6 +730,7 @@
         "0x52d297ca518abe8d71a6d8911487860414e682b1d0d1e7169c4151b619d55832"
       ],
       "proxyType": "immutable",
+      "description": "A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -740,7 +741,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
-          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin"
         },
         {
@@ -1251,5 +1252,5 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x6b83daae3459d63aeff3b894c47d96c0190d2aaccc58fd6243a417aa7e5ac3a3"
   },
   "usedBlockNumbers": { "gateway": 76562, "ethereum": 23645644 },
-  "permissionsConfigHash": "0xcd1491160ed03caef817612fe093fa52158e1958ec24d7ee6e0708df92ddc1b7"
+  "permissionsConfigHash": "0xed03a041b3120f7322ac625af9966c59719e71f0cd2f35218a2aa3680602966b"
 }

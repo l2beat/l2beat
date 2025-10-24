@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x76e1e0f62abe6717c12bacf56f60ca20ad2e2c8b
+Generated with discovered.json: 0x6241929c9bbe97b3a754ad4631b2fae5da8beb94
 
-# Diff at Thu, 23 Oct 2025 11:51:53 GMT:
+# Diff at Fri, 24 Oct 2025 09:13:42 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@286d17aa7adf75827eeb6b38ca50217e11ddcc23 block: 1753944481
+- comparing to: main@11b074f59e0a769fa3d144569b93ef0f7ba1e44f block: 1753944481
 - current timestamp: 1753944481
 
 ## Description
@@ -15,6 +15,26 @@ Config: add da vali comment.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1753944481 (main branch discovery), not current.
+
+```diff
+    contract Wonder Multisig (eth:0x4665ad531c35b02dE090E21FC57B69946434bf2b) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+    }
+```
+
+```diff
+    contract ChainAdmin (eth:0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6) {
+    +++ description: A governance proxy that lets eth:0x4665ad531c35b02dE090E21FC57B69946434bf2b act through it.
+      directlyReceivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+      description:
++        "A governance proxy that lets eth:0x4665ad531c35b02dE090E21FC57B69946434bf2b act through it."
+    }
+```
 
 ```diff
     contract zkVmDiamond (eth:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92) {

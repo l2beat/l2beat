@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xfd0a1b8f25d29b0b739f61e4b70994c8c447842a
+Generated with discovered.json: 0xd93df4e2e7d55bfbd16794f817b8a86813360f09
 
-# Diff at Thu, 23 Oct 2025 11:51:53 GMT:
+# Diff at Fri, 24 Oct 2025 09:13:39 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@286d17aa7adf75827eeb6b38ca50217e11ddcc23 block: 1757944236
+- comparing to: main@11b074f59e0a769fa3d144569b93ef0f7ba1e44f block: 1757944236
 - current timestamp: 1757944236
 
 ## Description
@@ -21,6 +21,26 @@ discovery. Values are for block 1757944236 (main branch discovery), not current.
     +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
       fieldMeta.getDAValidatorPair.description:
 +        "l1da, l2da"
+    }
+```
+
+```diff
+    contract SophonZkEvmAdmin (eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) {
+    +++ description: A governance proxy that lets eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1 act through it.
+      directlyReceivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+      description:
++        "A governance proxy that lets eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1 act through it."
+    }
+```
+
+```diff
+    contract SophonChainAdminMultisig (eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
     }
 ```
 

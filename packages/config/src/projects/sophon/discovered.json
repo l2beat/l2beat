@@ -717,11 +717,12 @@
         "0xefb240f5e06f5ffb38c7e98e9738ecf10381c49716281a3da9d5a1d17438eb4c"
       ],
       "proxyType": "immutable",
+      "description": "A governance proxy that lets eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1 act through it.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
-          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin"
         }
       ],
@@ -771,7 +772,7 @@
         {
           "permission": "interact",
           "from": "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
-          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin",
           "via": [
             { "address": "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3" }
@@ -1376,5 +1377,5 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
   "usedBlockNumbers": { "ethereum": 23368887 },
-  "permissionsConfigHash": "0xb3dad9239a2706b3d55c8221b00a0c2939555860de1f72f5712d765d400063fb"
+  "permissionsConfigHash": "0x43a5de4276ca1f3188ac7fc730072fc08f14d7de515a4ec30f8240209342d85f"
 }

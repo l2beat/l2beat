@@ -1379,7 +1379,7 @@
       }
     },
     {
-      "name": "ValidatorTimelock",
+      "name": "ZKsyncValidatorTimelock",
       "address": "gateway:0xe279aF77D3C1685022641ffE1b9b538c5eA0Ae24",
       "type": "Contract",
       "template": "shared-zk-stack/ValidatorTimelock_post29",
@@ -2697,5 +2697,5 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x6b83daae3459d63aeff3b894c47d96c0190d2aaccc58fd6243a417aa7e5ac3a3"
   },
   "usedBlockNumbers": { "gateway": 76616, "ethereum": 23646174 },
-  "permissionsConfigHash": "0xe5c283776d76a4283ccb9f287492be668bdf9ba05373b58eaa861e92e4a0907f"
+  "permissionsConfigHash": "0xa95e031157b422cce3b3804512fd92844ce27d705971835c09eefaaa7d1c6a2e"
 }

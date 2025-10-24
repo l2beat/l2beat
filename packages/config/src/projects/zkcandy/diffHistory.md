@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xf26779ea0d86089c706ff2d5b3f70fafa7802b89
+Generated with discovered.json: 0x3464c351e8131edaf9b74ff6111e69b39e3b8683
 
-# Diff at Thu, 23 Oct 2025 11:51:53 GMT:
+# Diff at Fri, 24 Oct 2025 09:13:43 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@286d17aa7adf75827eeb6b38ca50217e11ddcc23 block: 1756305077
+- comparing to: main@11b074f59e0a769fa3d144569b93ef0f7ba1e44f block: 1756305077
 - current timestamp: 1756305077
 
 ## Description
@@ -15,6 +15,26 @@ Config: add da vali comment.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1756305077 (main branch discovery), not current.
+
+```diff
+    contract zkCandyZkEvmAdmin (eth:0x309EfA797ec5cd324Cb473F141F95214F3a25ab2) {
+    +++ description: A governance proxy that lets eth:0x8eb156588D2FAD21dE0066BAA5BfDcd940695196 act through it.
+      directlyReceivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+      description:
++        "A governance proxy that lets eth:0x8eb156588D2FAD21dE0066BAA5BfDcd940695196 act through it."
+    }
+```
+
+```diff
+    contract zkCandy Multisig (eth:0x8eb156588D2FAD21dE0066BAA5BfDcd940695196) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+    }
+```
 
 ```diff
     contract zkCandyZkEvm (eth:0xF2704433d11842d15aa76BBF0E00407267a99C92) {

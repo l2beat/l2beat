@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x4510e783c5d5a85c93a8a02970b0dd127ec309d6
+Generated with discovered.json: 0x8f710b0d26bdcf64a8f3e6fd1477694c3dcb4e50
 
-# Diff at Thu, 23 Oct 2025 11:51:53 GMT:
+# Diff at Fri, 24 Oct 2025 09:13:32 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@286d17aa7adf75827eeb6b38ca50217e11ddcc23 block: 1757944442
+- comparing to: main@11b074f59e0a769fa3d144569b93ef0f7ba1e44f block: 1757944442
 - current timestamp: 1757944442
 
 ## Description
@@ -15,6 +15,26 @@ Config: add da vali comment.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1757944442 (main branch discovery), not current.
+
+```diff
+    contract Lens Multisig (eth:0x4968A0E4b025eD7d095753E54058377969b41abC) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+    }
+```
+
+```diff
+    contract LensZkEvmAdmin (eth:0x6bd8d33551077Ed281Cb047835a2aE4033eEc433) {
+    +++ description: A governance proxy that lets eth:0x4968A0E4b025eD7d095753E54058377969b41abC act through it.
+      directlyReceivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+      description:
++        "A governance proxy that lets eth:0x4968A0E4b025eD7d095753E54058377969b41abC act through it."
+    }
+```
 
 ```diff
     contract LensZkEvm (eth:0xc29d04A93F893700015138E3E334eB828dAC3cef) {
