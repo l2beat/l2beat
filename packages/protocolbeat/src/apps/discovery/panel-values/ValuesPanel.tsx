@@ -145,6 +145,16 @@ function Display({
             <p className="font-serif text-sm italic">{selected.description}</p>
           </WithHeadline>
         )}
+        {selected.isReachable && (
+          <WithHeadline headline="Reachable">
+            <p className="text-aux-teal">Yes</p>
+          </WithHeadline>
+        )}
+        {!selected.isReachable && (
+          <WithHeadline headline="Reachable">
+            <p className="text-coffee-200/40">No</p>
+          </WithHeadline>
+        )}
       </div>
       {'implementationNames' in selected && selected.implementationNames && (
         <Folder title="Implementation names" collapsed={true}>

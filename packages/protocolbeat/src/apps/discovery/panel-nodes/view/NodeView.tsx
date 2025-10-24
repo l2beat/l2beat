@@ -15,6 +15,7 @@ export interface NodeViewProps {
   node: Node
   selected: boolean
   isDimmed?: boolean
+  isGrayedOut?: boolean
 }
 
 export function NodeView(props: NodeViewProps) {
@@ -30,7 +31,8 @@ export function NodeView(props: NodeViewProps) {
         top: props.node.box.y,
         width: props.node.box.width,
         height: props.node.box.height,
-        opacity: props.isDimmed ? 0.3 : 1,
+        opacity: props.isGrayedOut ? 0.2 : props.isDimmed ? 0.3 : 1,
+        filter: props.isGrayedOut ? 'grayscale(100%)' : 'none',
       }}
       className={clsx(
         'absolute bg-black',

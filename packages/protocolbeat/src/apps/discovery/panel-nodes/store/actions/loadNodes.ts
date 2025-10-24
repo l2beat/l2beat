@@ -94,6 +94,7 @@ function idToUnknown(id: string): Node {
   return {
     id,
     address,
+    isReachable: false,
     isInitial: false,
     hasTemplate: false,
     addressType: 'Unknown',

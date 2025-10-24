@@ -10,9 +10,13 @@ interface Actions {
   highlight: (highlighted: readonly string[]) => void
 }
 
-export const usePanelStore = create<State & Actions>((set) => ({
+const INITIAL_STATE: State = {
   selected: undefined,
   highlighted: [],
+}
+
+export const usePanelStore = create<State & Actions>((set) => ({
+  ...INITIAL_STATE,
   select: (selected) => set(() => ({ selected })),
   highlight: (highlighted) => set(() => ({ highlighted })),
 }))

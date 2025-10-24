@@ -4,6 +4,7 @@ import {
   type DiscoveryOutput,
   type EntryParameters,
   get$Implementations,
+  getReachableEntries,
   getShapeFromOutputEntry,
   makeEntryColorConfig,
   makeEntryStructureConfig,
@@ -34,18 +35,18 @@ export function getProject(
   project: string,
 ): ApiProjectResponse {
   const discoveries = configReader.readDiscoveryWithReferences(project)
-  // const discovery = discoveries[0]
+  const discovery = discoveries[0]
   const data = discoveries.map((discovery) => ({
     discovery,
     config: configReader.readConfig(discovery.name),
   }))
 
-  // const referencedEntries = getReachableEntries(
-  //   data
-  //     .flatMap((x) => x.discovery.entries)
-  //     .filter((e) => e.type !== 'Reference'),
-  //   discovery.entries.map((e) => e.address),
-  // ).map((x) => x.address)
+  const reachableEntries = getReachableEntries(
+    data
+      .flatMap((x) => x.discovery.entries)
+      .filter((e) => e.type !== 'Reference'),
+    discovery.entries.map((e) => e.address),
+  ).map((x) => x.address)
 
   const response: ApiProjectResponse = { entries: [] }
   const meta = getMeta(data.map((x) => x.discovery))
@@ -81,9 +82,11 @@ export function getProject(
           contractColorConfig,
           discovery.abis,
           template,
+          reachableEntries,
         )
       })
       .sort(orderAddressEntries)
+
     const initialAddresses = config.structure.initialAddresses
     const chainInfo = {
       project: config.name,
@@ -95,7 +98,6 @@ export function getProject(
       ),
       eoas: discovery.entries
         .filter((e) => e.type === 'EOA')
-        // .filter((e) => referencedEntries.includes(e.address))
         .filter(
           (x) =>
             ChainSpecificAddress.address(x.address) !== EthereumAddress.ZERO,
@@ -110,11 +112,13 @@ export function getProject(
             referencedBy: [],
             address: x.address,
             chain: ChainSpecificAddress.longChain(x.address),
+            isReachable: reachableEntries.includes(x.address),
           }
         })
         .sort(orderAddressEntries),
       blockNumbers: discovery.usedBlockNumbers,
     } satisfies ApiProjectChain
+
     response.entries.push(chainInfo)
   }
   populateReferencedBy(response.entries)
@@ -173,6 +177,7 @@ function contractFromDiscovery(
   contractColorConfig: ColorContract,
   abis: DiscoveryOutput['abis'],
   template: ApiProjectContract['template'],
+  reachableEntries: ChainSpecificAddress[],
 ): ApiProjectContract {
   const getFieldInfo = (name: string): Omit<Field, 'name' | 'value'> => {
     const field = contractConfig.fields[name]
@@ -222,6 +227,7 @@ function contractFromDiscovery(
       entries: (abis[address] ?? []).map((e) => abiEntry(e)),
     })),
     implementationNames: contract.implementationNames,
+    isReachable: reachableEntries.includes(contract.address),
   }
 }
 

@@ -77,6 +77,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
         const node: Node = {
           id: contract.address,
           isInitial: initialAddresses.includes(contract.address),
+          isReachable: contract.isReachable,
           hasTemplate: contract.template !== undefined,
           name: contract.name ?? fallback,
           addressType: contract.type,
@@ -96,6 +97,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
         const node: Node = {
           id: eoa.address,
           isInitial: false,
+          isReachable: eoa.isReachable,
           hasTemplate: false,
           name: eoa.name ?? fallback,
           addressType: eoa.type,

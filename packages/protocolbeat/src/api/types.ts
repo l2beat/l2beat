@@ -94,6 +94,7 @@ export interface ApiAddressEntry {
   referencedBy: ApiAddressReference[]
   address: string
   chain: string
+  isReachable: boolean
 }
 
 export interface ApiAddressReference extends AddressFieldValue {
