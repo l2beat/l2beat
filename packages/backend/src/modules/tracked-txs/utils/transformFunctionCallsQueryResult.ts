@@ -11,7 +11,6 @@ import type {
   TrackedTxFunctionCallResult,
 } from '../types/model'
 import { calculateCalldataGasUsed } from './calculateCalldataGasUsed'
-import { isChainAddressMatching } from './isChainAddressMatching'
 import { isChainIdMatching } from './isChainIdMatching'
 import { isProgramHashProven } from './isProgramHashProven'
 
@@ -59,13 +58,9 @@ export function transformFunctionCallsQueryResult(
       isProgramHashProven(r, c.properties.params.programHashes),
     )
 
-    const filteredSharedBridgeCalls = matchingSharedBridgeCalls.filter((c) => {
-      const params = c.properties.params
-      if (params.chainAddress !== undefined) {
-        return isChainAddressMatching(r.input, params)
-      }
-      return isChainIdMatching(r.input, params)
-    })
+    const filteredSharedBridgeCalls = matchingSharedBridgeCalls.filter((c) =>
+      isChainIdMatching(r.input, c.properties.params),
+    )
 
     const results = [
       ...matchingCalls,

@@ -362,7 +362,6 @@ function toBackendTrackedTxsConfig(
               signature: config.query.functionSignature,
               selector: config.query.selector,
               chainId: config.query.chainId,
-              chainAddress: config.query.chainAddress,
             },
           }
         }

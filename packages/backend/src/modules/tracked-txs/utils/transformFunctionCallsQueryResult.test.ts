@@ -23,10 +23,6 @@ import {
   elasticChainSharedBridgeCommitBatchesInput,
   elasticChainSharedBridgeCommitBatchesSelector,
   elasticChainSharedBridgeCommitBatchesSignature,
-  elasticChainSharedBridgeExecuteBatchesPost29Input,
-  gatewaySharedBridgeChainAddress,
-  gatewaySharedBridgeExecuteBatchesSelector,
-  gatewaySharedBridgeExecuteBatchesSignature,
 } from '../../../test/sharedBridge'
 import type { Configuration } from '../../../tools/uif/multi/types'
 import type {
@@ -434,81 +430,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
     expect(result).toEqual(expected)
   })
 
-  it('includes only configurations where chain address matches', () => {
-    const sharedBridgeCalls = [
-      // Gateway config with correct chainAddress
-      mockSharedBridgeCall({
-        id: createTrackedTxId.random(),
-        projectId: ProjectId('project1'),
-        address: EthereumAddress.random(),
-        selector: gatewaySharedBridgeExecuteBatchesSelector,
-        formula: 'sharedBridge',
-        sinceTimestamp: SINCE_TIMESTAMP,
-        subtype: 'stateUpdates',
-        chainAddress: EthereumAddress(gatewaySharedBridgeChainAddress),
-        signature: gatewaySharedBridgeExecuteBatchesSignature,
-      }),
-      // Wrong chainAddress - should be filtered out
-      mockSharedBridgeCall({
-        id: createTrackedTxId.random(),
-        projectId: ProjectId('project2'),
-        address: EthereumAddress.random(),
-        selector: gatewaySharedBridgeExecuteBatchesSelector,
-        formula: 'sharedBridge',
-        sinceTimestamp: SINCE_TIMESTAMP,
-        subtype: 'stateUpdates',
-        chainAddress: EthereumAddress.random(),
-        signature: gatewaySharedBridgeExecuteBatchesSignature,
-      }),
-    ]
-
-    const queryResults: BigQueryFunctionCallResult[] = [
-      {
-        hash: txHashes[0],
-        to_address: sharedBridgeCalls[0].properties.params.address,
-        input: elasticChainSharedBridgeExecuteBatchesPost29Input,
-        block_number: block,
-        block_timestamp: timestamp,
-        gas_price: 10n,
-        receipt_gas_used: 100,
-        data_length: 100,
-        non_zero_bytes: 60,
-        receipt_blob_gas_price: null,
-        receipt_blob_gas_used: null,
-      },
-    ]
-
-    const expected: TrackedTxFunctionCallResult[] = [
-      {
-        formula: 'functionCall',
-        projectId: sharedBridgeCalls[0].properties.projectId,
-        type: sharedBridgeCalls[0].properties.type,
-        id: sharedBridgeCalls[0].id,
-        subtype: sharedBridgeCalls[0].properties.subtype,
-        hash: txHashes[0],
-        blockNumber: block,
-        blockTimestamp: timestamp,
-        toAddress: sharedBridgeCalls[0].properties.params.address,
-        input: elasticChainSharedBridgeExecuteBatchesPost29Input,
-        gasPrice: 10n,
-        receiptGasUsed: 100,
-        calldataGasUsed: 16 * 60 + 4 * (100 - 60),
-        dataLength: 100,
-        receiptBlobGasPrice: null,
-        receiptBlobGasUsed: null,
-      },
-    ]
-
-    const result = transformFunctionCallsQueryResult(
-      [],
-      [],
-      sharedBridgeCalls,
-      queryResults,
-    )
-
-    expect(result).toEqual(expected)
-  })
-
   it('should calculate calldata gas used correctly', () => {
     const functionCalls = [
       mockFunctionCall({
@@ -745,7 +666,6 @@ function mockSharedBridgeCall({
   sinceTimestamp,
   formula,
   chainId,
-  chainAddress,
   signature,
 }: {
   id: TrackedTxId
@@ -755,8 +675,7 @@ function mockSharedBridgeCall({
   selector: string
   sinceTimestamp: number
   formula: TrackedTxSharedBridgeConfig['formula']
-  chainId?: number
-  chainAddress?: EthereumAddress
+  chainId: number
   signature: `function ${string}`
 }): Configuration<
   TrackedTxConfigEntry & {
@@ -778,7 +697,6 @@ function mockSharedBridgeCall({
         address,
         selector,
         chainId,
-        chainAddress,
         signature,
       },
     },
