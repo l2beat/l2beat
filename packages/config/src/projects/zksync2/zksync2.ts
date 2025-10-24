@@ -161,15 +161,15 @@ export const zksync2: ScalingProject = zkStackL2({
   usesEthereumBlobs: true,
   nonTemplateTrackedTxs: [
     {
-      uses: [
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
+      uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
       query: {
         formula: 'sharedBridge',
-        chainAddress: EthereumAddress('0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9'), // gateway diamond on ethereum
+        chainAddress: EthereumAddress(
+          '0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9',
+        ), // gateway diamond on ethereum
         address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
         selector: '0x0b6db820',
-        functionSignature:  
+        functionSignature:
           'function precommitSharedBridge(address _chainAddress, uint256, bytes)',
         sinceTimestamp: UnixTime(1761146555),
       },
@@ -250,15 +250,15 @@ export const zksync2: ScalingProject = zkStackL2({
       },
     },
     {
-      uses: [
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
+      uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
       query: {
         formula: 'sharedBridge',
-        chainAddress: EthereumAddress('0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9'), // gateway diamond on ethereum
+        chainAddress: EthereumAddress(
+          '0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9',
+        ), // gateway diamond on ethereum
         address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
         selector: '0x0db9eb87',
-        functionSignature:  
+        functionSignature:
           'function commitBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: UnixTime(1761146555),
       },
@@ -378,10 +378,12 @@ export const zksync2: ScalingProject = zkStackL2({
       ],
       query: {
         formula: 'sharedBridge',
-        chainAddress: EthereumAddress('0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9'), // gateway diamond on ethereum
+        chainAddress: EthereumAddress(
+          '0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9',
+        ), // gateway diamond on ethereum
         address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
         selector: '0x9271e450',
-        functionSignature:  
+        functionSignature:
           'function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)',
         sinceTimestamp: UnixTime(1761146555),
       },
@@ -503,10 +505,12 @@ export const zksync2: ScalingProject = zkStackL2({
       ],
       query: {
         formula: 'sharedBridge',
-        chainAddress: EthereumAddress('0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9'), // gateway diamond on ethereum
+        chainAddress: EthereumAddress(
+          '0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9',
+        ), // gateway diamond on ethereum
         address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
         selector: '0xa085344d',
-        functionSignature:  
+        functionSignature:
           'function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: UnixTime(1761146555),
       },
