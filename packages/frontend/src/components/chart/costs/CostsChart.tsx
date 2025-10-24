@@ -1,6 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import isNil from 'lodash/isNil'
+import isNumber from 'lodash/isNumber'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, ComposedChart, Line, YAxis } from 'recharts'
@@ -69,10 +69,10 @@ export function CostsChart({
   const chartMeta = useMemo(() => {
     const hasData = data?.reduce(
       (acc, d) => ({
-        ethereum: acc.ethereum || !isNil(d.ethereum),
-        celestia: acc.celestia || !isNil(d.celestia),
-        avail: acc.avail || !isNil(d.avail),
-        eigenda: acc.eigenda || !isNil(d.eigenda),
+        ethereum: acc.ethereum || isNumber(d.ethereum),
+        celestia: acc.celestia || isNumber(d.celestia),
+        avail: acc.avail || isNumber(d.avail),
+        eigenda: acc.eigenda || isNumber(d.eigenda),
       }),
       { ethereum: false, celestia: false, avail: false, eigenda: false },
     )
