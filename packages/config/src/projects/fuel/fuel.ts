@@ -110,12 +110,12 @@ export const fuel: ScalingProject = {
         untilBlock: 22837254,
       },
       // Uncomment once FE is ready
-      // {
-      //   type: 'eigen-da',
-      //   customerId: '0xea0337efc12e98ab118948da570c07691e8e4b37',
-      //   daLayer: ProjectId('eigenda'),
-      //   sinceTimestamp: UnixTime(1751526000),
-      // },
+      {
+        type: 'eigen-da',
+        customerId: '0xea0337efc12e98ab118948da570c07691e8e4b37',
+        daLayer: ProjectId('eigenda'),
+        sinceTimestamp: UnixTime(1751526000),
+      },
     ],
     trackedTxs: [
       {

@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -63,20 +63,22 @@ export const aevo: ScalingProject = opStackL2({
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
   },
-  // we are still using this for historical data although they switched to EigenDA
-  celestiaDa: {
-    sinceBlock: 0, // Edge Case: config added @ DA Module start
-    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADBuw7+PjGs8=',
-  },
   // Uncomment once FE is ready
-  // nonTemplateDaTracking: [
-  //   {
-  //     type: 'eigen-da',
-  //     customerId: '0x24f0a3716805e8973bf48eb908d6d4a2f34af785',
-  //     daLayer: ProjectId('eigenda'),
-  //     sinceTimestamp: UnixTime(1753437600),
-  //   },
-  // ],
+  nonTemplateDaTracking: [
+    {
+      type: 'celestia',
+      daLayer: ProjectId('celestia'),
+      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADBuw7+PjGs8=',
+      sinceBlock: 0,
+      untilBlock: 3538077,
+    },
+    {
+      type: 'eigen-da',
+      customerId: '0x2dc71dbd1cf713e70f939346317bf93a2e62cfee',
+      daLayer: ProjectId('eigenda'),
+      sinceTimestamp: UnixTime(1753437600),
+    },
+  ],
   genesisTimestamp: UnixTime(1679202395),
   isNodeAvailable: false,
   milestones: [
