@@ -17,8 +17,10 @@ type ScalingActivityTableEntry = ScalingActivityEntry & {
   data:
     | {
         isSynced: boolean
-        change: number
-        pastDayCount: number
+        pastDayCount: {
+          value: number
+          change: number
+        }
         summedCount: number
         maxCount: {
           value: number
@@ -52,11 +54,11 @@ export const getScalingActivityColumns = (
       return (
         <SyncStatusWrapper isSynced={data.isSynced}>
           <ValueWithPercentageChange
-            change={data.change}
+            change={data.pastDayCount.change}
             className="font-medium"
             containerClassName="justify-end"
           >
-            {formatActivityCount(data.pastDayCount)}
+            {formatActivityCount(data.pastDayCount.value)}
           </ValueWithPercentageChange>
         </SyncStatusWrapper>
       )

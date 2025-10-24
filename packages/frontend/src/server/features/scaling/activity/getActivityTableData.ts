@@ -14,8 +14,10 @@ import { getActivityAdjustedTimestamp } from './utils/syncStatus'
 
 export type ActivityProjectTableData = {
   tps: {
-    change: number
-    pastDayCount: number
+    pastDayCount: {
+      value: number
+      change: number
+    }
     summedCount: number
     maxCount: {
       value: number
@@ -23,8 +25,10 @@ export type ActivityProjectTableData = {
     }
   }
   uops: {
-    change: number
-    pastDayCount: number
+    pastDayCount: {
+      value: number
+      change: number
+    }
     summedCount: number
     maxCount: {
       value: number
@@ -89,11 +93,13 @@ export async function getActivityTable(
         projectId,
         {
           tps: {
-            pastDayCount: countPerSecond(pastDayData?.count ?? 0),
-            change: calculatePercentageChange(
-              pastDayData?.count ?? 0,
-              sevenDaysAgoData?.count ?? 0,
-            ),
+            pastDayCount: {
+              value: countPerSecond(pastDayData?.count ?? 0),
+              change: calculatePercentageChange(
+                pastDayData?.count ?? 0,
+                sevenDaysAgoData?.count ?? 0,
+              ),
+            },
             summedCount: sumTpsCount(records),
             maxCount: {
               value: countPerSecond(maxCount.count),
@@ -101,14 +107,16 @@ export async function getActivityTable(
             },
           },
           uops: {
-            pastDayCount: countPerSecond(
-              pastDayData?.uopsCount ?? pastDayData?.count ?? 0,
-            ),
+            pastDayCount: {
+              value: countPerSecond(
+                pastDayData?.uopsCount ?? pastDayData?.count ?? 0,
+              ),
+              change: calculatePercentageChange(
+                pastDayData?.uopsCount ?? pastDayData?.count ?? 0,
+                sevenDaysAgoData?.uopsCount ?? sevenDaysAgoData?.count ?? 0,
+              ),
+            },
             summedCount: sumUopsCount(records),
-            change: calculatePercentageChange(
-              pastDayData?.uopsCount ?? pastDayData?.count ?? 0,
-              sevenDaysAgoData?.uopsCount ?? sevenDaysAgoData?.count ?? 0,
-            ),
             maxCount: {
               value: countPerSecond(maxCount.uopsCount),
               timestamp: maxCount.uopsTimestamp,
@@ -138,8 +146,10 @@ async function getMockActivityTableData(): Promise<ActivityTableData> {
       project.id,
       {
         tps: {
-          change: Math.random(),
-          pastDayCount: 19,
+          pastDayCount: {
+            value: 19,
+            change: Math.random(),
+          },
           summedCount: 1500,
           maxCount: {
             value: 30,
@@ -147,8 +157,10 @@ async function getMockActivityTableData(): Promise<ActivityTableData> {
           },
         },
         uops: {
-          change: Math.random(),
-          pastDayCount: 20,
+          pastDayCount: {
+            value: 20,
+            change: Math.random(),
+          },
           summedCount: 1550,
           maxCount: {
             value: 30,
