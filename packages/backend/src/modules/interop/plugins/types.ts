@@ -137,6 +137,11 @@ export interface LogToCapture {
   ctx: InteropEventContext
 }
 
+export interface TxToCapture {
+  tx: InteropEventContext
+  txLogs: Log[]
+}
+
 export type MatchResult = (
   | Omit<InteropMessage, 'plugin'>
   | Omit<InteropTransfer, 'plugin'>
@@ -166,7 +171,11 @@ export interface InteropPlugin {
   ) =>
     | Omit<InteropEvent, 'plugin'>
     | undefined
-    | Promise<Omit<InteropEvent, 'plugin'> | undefined>
+  captureTx?: (
+    input: TxToCapture,
+  ) =>
+    | Omit<InteropEvent, 'plugin'>
+    | undefined
   matchTypes?: InteropEventType<unknown>[]
   match?: (
     event: InteropEvent,

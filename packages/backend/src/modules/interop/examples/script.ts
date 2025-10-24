@@ -188,27 +188,41 @@ async function runExample(example: Example): Promise<RunResult> {
       .filter((l) => l.transactionHash === tx.hash)
       .map(logToViemLog)
 
+    const ctx = {
+      timestamp: block.timestamp,
+      chain: chain.name,
+      blockNumber: block.number,
+      blockHash: block.hash,
+      txHash: tx.hash,
+      txValue: tx.value,
+      txTo: tx.to ? Address32.from(tx.to) : undefined,
+      txData: tx.data,
+      logIndex: -1,
+    }
+
+    for (const plugin of plugins.eventPlugins) {
+      if (!plugin.captureTx) {
+        continue
+      }
+      const event = plugin.captureTx({ tx: ctx, txLogs })
+      if (event) {
+        events.push({ ...event, plugin: plugin.name })
+        break
+      }
+    }
+
     for (const log of txLogs) {
       for (const plugin of plugins.eventPlugins) {
         if (!plugin.capture) {
           continue
         }
-        const event = await plugin.capture({
+        const event = plugin.capture({
           log: log,
           txLogs: txLogs,
-          ctx: {
-            timestamp: block.timestamp,
-            chain: chain.name,
-            blockNumber: block.number,
-            blockHash: block.hash,
-            txHash: tx.hash,
-            txValue: tx.value,
-            txTo: tx.to ? Address32.from(tx.to) : undefined,
-            txData: tx.data,
+          ctx: {...ctx,
             logIndex: log.logIndex ?? -1,
           },
         })
-
         if (event) {
           events.push({ ...event, plugin: plugin.name })
           break
