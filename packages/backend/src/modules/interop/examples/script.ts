@@ -182,6 +182,7 @@ async function runExample(example: Example): Promise<RunResult> {
   for (const chain of chains) {
     const tx = await chain.rpc.getTransaction(chain.txHash)
     assert(tx.blockNumber)
+
     const block = await chain.rpc.getBlockWithTransactions(tx.blockNumber)
     const logs = await chain.rpc.getLogs(block.number, block.number)
     const txLogs = logs
@@ -196,6 +197,7 @@ async function runExample(example: Example): Promise<RunResult> {
       txHash: tx.hash,
       txValue: tx.value,
       txTo: tx.to ? Address32.from(tx.to) : undefined,
+      txFrom: tx.from ? Address32.from(tx.from) : undefined,
       txData: tx.data,
       logIndex: -1,
     }

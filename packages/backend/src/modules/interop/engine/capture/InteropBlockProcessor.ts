@@ -111,6 +111,7 @@ function getItemsToCapture(chain: string, block: Block, logs: Log[]) {
         // biome-ignore lint/style/noNonNullAssertion: EVM tx should have it
         txValue: tx.value!,
         txTo: tx.to !== undefined ? Address32.from(tx.to) : undefined,
+        txFrom: tx.from !== undefined ? Address32.from(tx.from) : undefined,
         // biome-ignore lint/style/noNonNullAssertion: EVM tx should have it
         txData: tx.data! as string,
         logIndex: -1,

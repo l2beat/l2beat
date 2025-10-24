@@ -47,6 +47,7 @@ export interface InteropEventContext {
   txHash: string
   txValue: string
   txTo?: Address32
+  txFrom?: Address32
   logIndex: number
   txData: string
 }
@@ -83,6 +84,11 @@ export interface InteropTransfer {
   events: InteropEvent[]
   src: TransferSide
   dst: TransferSide
+}
+
+export interface InteropIgnore {
+  kind: 'InteropIgnore'
+  events: InteropEvent[]
 }
 
 export function generateId(type: string) {
@@ -145,6 +151,7 @@ export interface TxToCapture {
 export type MatchResult = (
   | Omit<InteropMessage, 'plugin'>
   | Omit<InteropTransfer, 'plugin'>
+  | InteropIgnore
 )[]
 
 export type InteropEventQuery<T> = Partial<T> & {
@@ -220,13 +227,20 @@ export function createEventParser<T extends `event ${string}(${string}`>(
   }
 }
 
-export const Result = { Message, Transfer }
+export const Result = { Ignore, Message, Transfer }
 
 interface InteropMessageOptions {
   app: string
   srcEvent: InteropEvent
   dstEvent: InteropEvent
   extraEvents?: InteropEvent[]
+}
+
+function Ignore(events: InteropEvent[]): InteropIgnore {
+  return {
+    kind: 'InteropIgnore',
+    events,
+  }
 }
 
 function Message(
