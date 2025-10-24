@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "shared",
+  "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by {{executionDelay_fmt}}.",
+  "ignoreRelatives": ["accessControl"],
+  "fields": {
+    // the DEFAULT_ADMIN_ROLE is always the chainAdmin (defined by the bridgehub) and is not controlled by accesscontrol
+    "accessControl": {
+      "handler": { "type": "crossChainAccessControl" }
+    },
+    "executionDelay_fmt": {
+      "handler": { "type": "call", "method": "executionDelay", "args": [] },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "revertedBlocks": {
+      "handler": {
+        "type": "event",
+        "select": [
+          "totalBatchesCommitted",
+          "totalBatchesVerified",
+          "totalBatchesExecuted"
+        ],
+        "add": { "event": "BlocksRevert" }
+      }
+    }
+  }
+}

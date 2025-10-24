@@ -2,20 +2,15 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Simple registry for allowed DA address pairs for the 'rollup' data availability mode (can be permanently enforced with isPermanentRollup=true). Rollup DA address pairs (especially the L1 part) usually point to contracts that validate if data was made available on Ethereum.",
   "category": "shared",
+  "ignoreRelatives": ["daPairs"],
   "fields": {
     "daPairs": {
       "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": ["l1DAValidator", "l2DAValidator", "status"],
-        "add": {
-          "event": "DAPairUpdated",
-          "where": ["=", "#status", true]
-        },
-        "remove": {
-          "event": "DAPairUpdated",
-          "where": ["=", "#status", false]
-        }
+        "add": { "event": "DAPairUpdated", "where": ["=", "#status", true] },
+        "remove": { "event": "DAPairUpdated", "where": ["=", "#status", false] }
       }
     },
     "owner": {
