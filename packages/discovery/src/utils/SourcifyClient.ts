@@ -49,6 +49,7 @@ export class SourcifyClient implements IEtherscanClient {
         constructorArguments: '',
         files: {},
         remappings: [],
+        libraries: {},
       }
     }
 
@@ -71,6 +72,7 @@ export class SourcifyClient implements IEtherscanClient {
         result.creationBytecode.transformationValues?.constructorArguments ??
         '',
       remappings: result.compilation.compilerSettings.remappings ?? [],
+      libraries: {},
       files,
     }
   }
