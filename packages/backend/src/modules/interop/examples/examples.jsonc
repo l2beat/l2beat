@@ -843,6 +843,19 @@
       }
     ]
   },
+  "stargate-credit": {
+    "loadConfigs": ["layerzero-v2"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x340b269ab3a47b5c848fe7950213724607bcebc3c1707f5533d247046d02150c"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x649b18d55fedd2c18c90232df06734d898dc5fb3de0c618e95655d97ef424f6e"
+      }
+    ]
+  },
   "hyperlane-eco": {
     // 3 msgs, 3 'transfers'/intent settlements
     "txs": [
