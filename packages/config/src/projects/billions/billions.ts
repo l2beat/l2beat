@@ -17,6 +17,7 @@ export const billions: ScalingProject = upcomingL2({
       websites: ['https://billions.network/'],
       bridges: [],
       socialMedia: ['https://x.com/billions_ntwk'],
+      repositories: ['https://github.com/0xPolygonID'],
     },
   },
   ecosystemInfo: {
