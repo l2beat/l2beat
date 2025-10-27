@@ -101,7 +101,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         formula: 'sharedBridge',
         sinceTimestamp: SINCE_TIMESTAMP,
         subtype: 'batchSubmissions',
-        chainId: elasticChainSharedBridgeChainId,
+        firstParameter: elasticChainSharedBridgeChainId,
         signature: elasticChainSharedBridgeCommitBatchesSignature,
       }),
     ]
@@ -329,7 +329,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         formula: 'sharedBridge',
         sinceTimestamp: SINCE_TIMESTAMP,
         subtype: 'batchSubmissions',
-        chainId: elasticChainSharedBridgeChainId,
+        firstParameter: elasticChainSharedBridgeChainId,
         signature: elasticChainSharedBridgeCommitBatchesSignature,
       }),
       mockSharedBridgeCall({
@@ -340,7 +340,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         formula: 'sharedBridge',
         sinceTimestamp: SINCE_TIMESTAMP,
         subtype: 'batchSubmissions',
-        chainId: 1,
+        firstParameter: 1,
         signature: elasticChainSharedBridgeCommitBatchesSignature,
       }),
       mockSharedBridgeCall({
@@ -351,7 +351,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         formula: 'sharedBridge',
         sinceTimestamp: SINCE_TIMESTAMP,
         subtype: 'batchSubmissions',
-        chainId: agglayerSharedBridgeChainId,
+        firstParameter: agglayerSharedBridgeChainId,
         signature: agglayerSharedBridgeVerifyBatchesSignature,
       }),
     ]
@@ -445,7 +445,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         formula: 'sharedBridge',
         sinceTimestamp: SINCE_TIMESTAMP,
         subtype: 'stateUpdates',
-        chainAddress: EthereumAddress(gatewaySharedBridgeChainAddress),
+        firstParameter: EthereumAddress(gatewaySharedBridgeChainAddress),
         signature: elasticChainSharedBridgeExecuteBatchesPost29Signature,
       }),
       // Wrong chainAddress - should be filtered out
@@ -457,7 +457,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         formula: 'sharedBridge',
         sinceTimestamp: SINCE_TIMESTAMP,
         subtype: 'stateUpdates',
-        chainAddress: EthereumAddress.random(),
+        firstParameter: EthereumAddress.random(),
         signature: elasticChainSharedBridgeExecuteBatchesPost29Signature,
       }),
     ]
@@ -744,8 +744,7 @@ function mockSharedBridgeCall({
   selector,
   sinceTimestamp,
   formula,
-  chainId,
-  chainAddress,
+  firstParameter,
   signature,
 }: {
   id: TrackedTxId
@@ -755,8 +754,7 @@ function mockSharedBridgeCall({
   selector: string
   sinceTimestamp: number
   formula: TrackedTxSharedBridgeConfig['formula']
-  chainId?: number
-  chainAddress?: EthereumAddress
+  firstParameter: number | EthereumAddress
   signature: `function ${string}`
 }): Configuration<
   TrackedTxConfigEntry & {
@@ -777,8 +775,7 @@ function mockSharedBridgeCall({
         formula,
         address,
         selector,
-        chainId,
-        chainAddress,
+        firstParameter,
         signature,
       },
     },

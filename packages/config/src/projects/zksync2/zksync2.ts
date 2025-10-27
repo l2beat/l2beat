@@ -164,7 +164,7 @@ export const zksync2: ScalingProject = zkStackL2({
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
       query: {
         formula: 'sharedBridge',
-        chainAddress: EthereumAddress(
+        firstParameter: EthereumAddress(
           '0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9',
         ), // gateway diamond on ethereum
         address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
@@ -214,7 +214,7 @@ export const zksync2: ScalingProject = zkStackL2({
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
       query: {
         formula: 'sharedBridge',
-        chainId: 324,
+        firstParameter: 324,
         address: EthereumAddress('0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E'),
         selector: '0x6edd4f12',
         functionSignature:
@@ -227,7 +227,7 @@ export const zksync2: ScalingProject = zkStackL2({
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
       query: {
         formula: 'sharedBridge',
-        chainId: 324,
+        firstParameter: 324,
         address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
         selector: '0x98f81962',
         functionSignature:
@@ -240,7 +240,7 @@ export const zksync2: ScalingProject = zkStackL2({
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
       query: {
         formula: 'sharedBridge',
-        chainId: 9075,
+        firstParameter: 9075,
         address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
         selector: '0x98f81962',
         functionSignature:
@@ -253,7 +253,7 @@ export const zksync2: ScalingProject = zkStackL2({
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
       query: {
         formula: 'sharedBridge',
-        chainAddress: EthereumAddress(
+        firstParameter: EthereumAddress(
           '0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9',
         ), // gateway diamond on ethereum
         address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
@@ -330,7 +330,7 @@ export const zksync2: ScalingProject = zkStackL2({
       ],
       query: {
         formula: 'sharedBridge',
-        chainId: 324,
+        firstParameter: 324,
         address: EthereumAddress('0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E'),
         selector: '0xc37533bb',
         functionSignature:
@@ -346,7 +346,7 @@ export const zksync2: ScalingProject = zkStackL2({
       ],
       query: {
         formula: 'sharedBridge',
-        chainId: 324,
+        firstParameter: 324,
         address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
         selector: '0xe12a6137',
         functionSignature:
@@ -362,7 +362,7 @@ export const zksync2: ScalingProject = zkStackL2({
       ],
       query: {
         formula: 'sharedBridge',
-        chainId: 9075,
+        firstParameter: 9075,
         address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
         selector: '0xe12a6137',
         functionSignature:
@@ -378,7 +378,7 @@ export const zksync2: ScalingProject = zkStackL2({
       ],
       query: {
         formula: 'sharedBridge',
-        chainAddress: EthereumAddress(
+        firstParameter: EthereumAddress(
           '0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9',
         ), // gateway diamond on ethereum
         address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
@@ -455,7 +455,7 @@ export const zksync2: ScalingProject = zkStackL2({
       ],
       query: {
         formula: 'sharedBridge',
-        chainId: 324,
+        firstParameter: 324,
         address: EthereumAddress('0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E'),
         selector: '0x6f497ac6',
         functionSignature:
@@ -471,7 +471,7 @@ export const zksync2: ScalingProject = zkStackL2({
       ],
       query: {
         formula: 'sharedBridge',
-        chainId: 324,
+        firstParameter: 324,
         address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
         selector: '0xcf02827d',
         functionSignature:
@@ -489,7 +489,7 @@ export const zksync2: ScalingProject = zkStackL2({
       ],
       query: {
         formula: 'sharedBridge',
-        chainId: 9075,
+        firstParameter: 9075,
         address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
         selector: '0xcf02827d',
         functionSignature:
@@ -505,7 +505,7 @@ export const zksync2: ScalingProject = zkStackL2({
       ],
       query: {
         formula: 'sharedBridge',
-        chainAddress: EthereumAddress(
+        firstParameter: EthereumAddress(
           '0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9',
         ), // gateway diamond on ethereum
         address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),

@@ -231,8 +231,7 @@ interface SharpSubmission {
 
 interface SharedBridge {
   formula: 'sharedBridge'
-  chainId?: number
-  chainAddress?: EthereumAddress
+  firstParameter: number | EthereumAddress
   address: EthereumAddress
   selector: `0x${string}`
   functionSignature: `function ${string}`
