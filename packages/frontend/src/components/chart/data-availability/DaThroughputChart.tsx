@@ -48,6 +48,7 @@ export function DaThroughputChart() {
           includeScalingOnly={includeScalingOnly}
           syncStatus={chartData?.syncStatus}
           resolution={resolution}
+          range={range}
         />
       ) : (
         <DaAbsoluteThroughputChart
