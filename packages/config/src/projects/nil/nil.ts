@@ -19,8 +19,8 @@ export const nil: ScalingProject = upcomingL2({
       explorers: ['https://explore.nil.foundation'],
       repositories: ['https://github.com/nilfoundation'],
       socialMedia: [
-        'https://twitter.com/nil_foundation'
-        'https://t.me/nilfoundation'
+        'https://twitter.com/nil_foundation',
+        'https://t.me/nilfoundation',
       ],
     },
   },
