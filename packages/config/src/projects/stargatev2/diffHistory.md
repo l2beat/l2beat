@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xcc3d14637de92525f5e7b0661177d3fa2e3240b9
+
+# Diff at Mon, 27 Oct 2025 08:07:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e31499883253bb2b7c36fe0654ea187cfa3ca612 block: 1757665061
+- current timestamp: 1761552324
+
+## Description
+
+config: template matches.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757665061 (main branch discovery), not current.
+
+```diff
+    contract Stargate Verifier (eth:0x8FafAE7Dd957044088b3d0F67359C327c6200d18) {
+    +++ description: One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.
+      template:
++        "layerzero/DVN"
+    }
+```
+
+```diff
+    contract Nethermind Verifier (eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) {
+    +++ description: One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.
+      template:
++        "layerzero/DVN"
+    }
+```
+
 Generated with discovered.json: 0x97570472dad8f062e9d0927206df3adf9b8d996b
 
 # Diff at Fri, 12 Sep 2025 08:19:48 GMT:
