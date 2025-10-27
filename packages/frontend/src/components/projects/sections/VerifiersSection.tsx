@@ -151,7 +151,7 @@ function VerifierCollapsibleWithDetails({
                         Used in:
                       </span>
                       <ProjectsUsedIn
-                        noL2ClassName="text-label-value-12 font-medium text-secondary"
+                        noL2ClassName="text-label-value-14 font-medium text-secondary"
                         usedIn={deployment.projectsUsedIn}
                       />
                     </div>
