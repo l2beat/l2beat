@@ -78,7 +78,6 @@ export function createInteropModule({
     minHeight: 1,
     indexerService: new IndexerService(db),
   })
-  // const tokenDb = new MockTokenDb()
 
   const tokenDbClinet = getTokenDbClient({
     apiUrl: config.interop.financials.tokenDbApiUrl,
