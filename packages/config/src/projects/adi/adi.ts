@@ -18,7 +18,7 @@ export const adi: ScalingProject = upcomingL2({
       websites: ['https://adi.foundation/'],
       explorers: ['https://explorer.testnet.adifoundation.ai/'],
       repositories: ['https://github.com/orgs/ADI-Foundation-Labs/'],
-      bridges: ['https://bridge.testnet.adifoundation.ai/bridge'],
+      bridges: ['https://bridge.testnet.adifoundation.ai/'],
       documentation: ['https://adi-foundation.gitbook.io/adi-chain-documentation'],
       socialMedia: [
         'https://x.com/ADIChain_',
