@@ -92,7 +92,7 @@ export function createInteropPlugins(
       new CCTPPlugin(),
       new StargatePlugin(), // should be run before LayerZeroV2, ofts
       new LayerZeroV2OFTsPlugin(deps.configs), // should be run before LayerZeroV2
-      //new LayerZeroV1Plugin(deps.configs),
+      new LayerZeroV1Plugin(deps.configs),
       new LayerZeroV2Plugin(deps.configs),
       new WormholeNTTPlugin(), // should be run before WormholeCore and WormholeRelayer
       new WormholeTokenBridgePlugin(), // should be run before Wormhole

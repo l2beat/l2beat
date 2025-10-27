@@ -356,12 +356,16 @@ export class StargatePlugin implements InteropPlugin {
       ]
 
       for (const oftSentBusRode of oftSentBusRodeBatch) {
-        const matchedOftReceived = oftReceivedBatch.find(
-          (o) =>
-            o.args.receiver.toLowerCase() ===
-            oftSentBusRode.args.receiver.toLowerCase(),
+        const passengerReceiver = Address32.cropToEthereumAddress(
+          oftSentBusRode.args.receiver as Address32,
         )
-        if (!matchedOftReceived) return
+
+        const matchedIndex = oftReceivedBatch.findIndex(
+          (o) => o.args.receiver === passengerReceiver,
+        )
+        if (matchedIndex === -1) return
+
+        const [matchedOftReceived] = oftReceivedBatch.splice(matchedIndex, 1)
 
         result.push(
           Result.Transfer('stargate-v2-bus.Transfer', {
