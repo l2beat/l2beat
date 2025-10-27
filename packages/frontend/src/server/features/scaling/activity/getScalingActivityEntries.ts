@@ -66,7 +66,10 @@ interface ActivityData {
     value: number
     change: number
   }
-  summedCount: number
+  summedCount: {
+    value: number
+    change: number
+  }
   maxCount: {
     value: number
     timestamp: number

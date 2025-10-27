@@ -21,7 +21,10 @@ type ScalingActivityTableEntry = ScalingActivityEntry & {
           value: number
           change: number
         }
-        summedCount: number
+        summedCount: {
+          value: number
+          change: number
+        }
         maxCount: {
           value: number
           timestamp: number
@@ -102,7 +105,13 @@ export const getScalingActivityColumns = (
       }
       return (
         <SyncStatusWrapper isSynced={data.isSynced}>
-          <PrimaryValueCell>{formatInteger(data.summedCount)}</PrimaryValueCell>
+          <ValueWithPercentageChange
+            change={data.summedCount.change}
+            className="font-medium"
+            containerClassName="justify-end"
+          >
+            {formatInteger(data.summedCount.value)}
+          </ValueWithPercentageChange>
         </SyncStatusWrapper>
       )
     },

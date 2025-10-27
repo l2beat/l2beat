@@ -1,6 +1,7 @@
 import type { Project } from '@l2beat/config'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
+import partition from 'lodash/partition'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
@@ -12,29 +13,24 @@ import { getLastDayRatio } from './utils/getLastDayRatio'
 import { sumTpsCount, sumUopsCount } from './utils/sumActivityCount'
 import { getActivityAdjustedTimestamp } from './utils/syncStatus'
 
+interface MetricData {
+  pastDayCount: {
+    value: number
+    change: number
+  }
+  summedCount: {
+    value: number
+    change: number
+  }
+  maxCount: {
+    value: number
+    timestamp: number
+  }
+}
+
 export type ActivityProjectTableData = {
-  tps: {
-    pastDayCount: {
-      value: number
-      change: number
-    }
-    summedCount: number
-    maxCount: {
-      value: number
-      timestamp: number
-    }
-  }
-  uops: {
-    pastDayCount: {
-      value: number
-      change: number
-    }
-    summedCount: number
-    maxCount: {
-      value: number
-      timestamp: number
-    }
-  }
+  tps: MetricData
+  uops: MetricData
   ratio: number
   syncState: SyncState
 }
@@ -48,12 +44,14 @@ export async function getActivityTable(
   }
 
   const db = getDb()
-  const range = await getFullySyncedActivityRange({ type: '30d' })
+  const [from, to] = await getFullySyncedActivityRange({ type: '30d' })
+  assert(from !== null, 'its null')
   const [records, maxCounts, syncMetadataRecords] = await Promise.all([
     db.activity.getByProjectsAndTimeRange(
       [ProjectId.ETHEREUM, ...projects.map((p) => p.id)],
-      range,
+      [from - 30 * UnixTime.DAY, to],
     ),
+
     db.activity.getMaxCountsForProjects(),
     db.syncMetadata.getByFeatureAndIds('activity', [
       ProjectId.ETHEREUM,
@@ -61,7 +59,13 @@ export async function getActivityTable(
     ]),
   ])
 
-  const grouped = groupBy(records, (r) => r.projectId)
+  const [recentRecords, thirtyDaysAgoRecords] = partition(
+    records,
+    (r) => r.timestamp >= from,
+  )
+
+  const grouped = groupBy(recentRecords, (r) => r.projectId)
+  const thirtyDaysAgoGrouped = groupBy(thirtyDaysAgoRecords, (r) => r.projectId)
 
   const data = Object.fromEntries(
     Object.entries(grouped).map(([projectId, records]) => {
@@ -82,12 +86,15 @@ export async function getActivityTable(
         return [projectId, undefined]
       }
 
-      const syncState = getActivitySyncState(syncMetadata, range[1])
+      const syncState = getActivitySyncState(syncMetadata, to)
       const syncedUntil = getActivityAdjustedTimestamp(syncState.syncedUntil)
       const pastDayData = records.find((r) => r.timestamp === syncedUntil)
       const sevenDaysAgoData = records.find(
         (r) => r.timestamp === syncedUntil - 7 * UnixTime.DAY,
       )
+      const tpsCount = sumTpsCount(records)
+      const uopsCount = sumUopsCount(records)
+      const thirtyDaysAgoRecords = thirtyDaysAgoGrouped[projectId]
 
       return [
         projectId,
@@ -100,7 +107,13 @@ export async function getActivityTable(
                 sevenDaysAgoData?.count ?? 0,
               ),
             },
-            summedCount: sumTpsCount(records),
+            summedCount: {
+              value: tpsCount,
+              change: calculatePercentageChange(
+                tpsCount,
+                thirtyDaysAgoRecords ? sumTpsCount(thirtyDaysAgoRecords) : 0,
+              ),
+            },
             maxCount: {
               value: countPerSecond(maxCount.count),
               timestamp: maxCount.countTimestamp,
@@ -116,7 +129,13 @@ export async function getActivityTable(
                 sevenDaysAgoData?.uopsCount ?? sevenDaysAgoData?.count ?? 0,
               ),
             },
-            summedCount: sumUopsCount(records),
+            summedCount: {
+              value: uopsCount,
+              change: calculatePercentageChange(
+                uopsCount,
+                thirtyDaysAgoRecords ? sumUopsCount(thirtyDaysAgoRecords) : 0,
+              ),
+            },
             maxCount: {
               value: countPerSecond(maxCount.uopsCount),
               timestamp: maxCount.uopsTimestamp,
@@ -150,7 +169,10 @@ async function getMockActivityTableData(): Promise<ActivityTableData> {
             value: 19,
             change: Math.random(),
           },
-          summedCount: 1500,
+          summedCount: {
+            value: 1500,
+            change: Math.random(),
+          },
           maxCount: {
             value: 30,
             timestamp: UnixTime.now(),
@@ -161,7 +183,10 @@ async function getMockActivityTableData(): Promise<ActivityTableData> {
             value: 20,
             change: Math.random(),
           },
-          summedCount: 1550,
+          summedCount: {
+            value: 1550,
+            change: Math.random(),
+          },
           maxCount: {
             value: 30,
             timestamp: UnixTime.now() - 1 * UnixTime.DAY,
