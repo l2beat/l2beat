@@ -32,7 +32,7 @@ export const zkprover: BaseProject = {
     badges: [],
   },
   zkCatalogInfo: {
-    creator: 'Polygon Zero',
+    creator: 'Polygon Labs',
     techStack: {
       zkVM: [
         ZK_CATALOG_TAGS.STARK['PIL-STARK'],
