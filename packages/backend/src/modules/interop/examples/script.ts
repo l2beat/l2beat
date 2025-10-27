@@ -128,7 +128,7 @@ async function runExample(example: Example): Promise<RunResult> {
     }
     return new RpcClient({
       url: env.string(`${chain.toUpperCase()}_RPC_URL`),
-      sourceName: chain,
+      chain: chain,
       http,
       logger,
       callsPerMinute: 600,
