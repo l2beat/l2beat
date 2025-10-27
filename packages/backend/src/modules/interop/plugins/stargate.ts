@@ -1,5 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { BinaryReader } from '../../../tools/BinaryReader'
+import { PacketDelivered, PacketSent } from './layerzero/layerzero-v2.plugin'
 import {
   parseOFTReceived,
   parseOFTSent,
@@ -10,9 +11,18 @@ import {
   createInteropEventType,
   defineNetworks,
   findChain,
+  type InteropEvent,
+  type InteropEventDb,
+  type InteropEventType,
   type InteropPlugin,
   type LogToCapture,
+  type MatchResult,
+  Result,
 } from './types'
+
+type EventArgs<T extends InteropEventType<unknown>> =
+  T extends InteropEventType<infer R> ? R : never
+type EventOf<T extends InteropEventType<unknown>> = InteropEvent<EventArgs<T>>
 
 export const StargateV2OFTSentBusRode = createInteropEventType<{
   guid: string
@@ -60,6 +70,14 @@ export const StargateV2BusDriven = createInteropEventType<{
 
 const parseBusRode = createEventParser(
   'event BusRode(uint32 dstEid, uint72 ticketId, uint80 fare, bytes passenger)',
+)
+
+const parseCreditsSent = createEventParser(
+  'event CreditsSent(uint32 dstEid, (uint32 srcEid, uint64 amount)[] credits)',
+)
+
+const parseCreditsReceived = createEventParser(
+  'event CreditsReceived(uint32 srcEid, (uint32 srcEid, uint64 amount)[] credits)',
 )
 
 export const STARGATE_NETWORKS = defineNetworks('stargate', [
@@ -163,6 +181,14 @@ export const STARGATE_NETWORKS = defineNetworks('stargate', [
   },
 ])
 
+const StargateV2CreditsSent = createInteropEventType<{
+  $dstChain: string
+}>('stargate-v2-credit.CreditsSent')
+
+const StargateV2CreditsReceived = createInteropEventType<{
+  $srcChain: string
+}>('stargate-v2-credit.CreditsReceived')
+
 const GUID_ZERO =
   '0x0000000000000000000000000000000000000000000000000000000000000000'
 
@@ -255,6 +281,26 @@ export class StargatePlugin implements InteropPlugin {
       })
     }
 
+    const creditsSent = parseCreditsSent(input.log, poolAddresses)
+    if (creditsSent) {
+      const $dstChain = findChain(
+        STARGATE_NETWORKS,
+        (x) => x.eid,
+        creditsSent.dstEid,
+      )
+      return StargateV2CreditsSent.create(input.ctx, { $dstChain })
+    }
+
+    const creditsReceived = parseCreditsReceived(input.log, poolAddresses)
+    if (creditsReceived) {
+      const $srcChain = findChain(
+        STARGATE_NETWORKS,
+        (x) => x.eid,
+        creditsReceived.srcEid,
+      )
+      return StargateV2CreditsReceived.create(input.ctx, { $srcChain })
+    }
+
     const busDriven = parseBusDriven(input.log, [network.tokenMessaging])
     if (busDriven) {
       return StargateV2BusDriven.create(input.ctx, {
@@ -265,6 +311,117 @@ export class StargatePlugin implements InteropPlugin {
         $dstChain: findChain(STARGATE_NETWORKS, (x) => x.eid, busDriven.dstEid),
       })
     }
+  }
+
+  matchTypes = [PacketDelivered]
+  match(
+    packetDelivered: InteropEvent,
+    db: InteropEventDb,
+  ): MatchResult | undefined {
+    if (!PacketDelivered.checkType(packetDelivered)) return
+
+    const guid = packetDelivered.args.guid
+    const packetSent = db.find(PacketSent, { guid })
+    if (!packetSent) return
+
+    const busDriven = db.find(StargateV2BusDriven, { guid })
+    if (busDriven) {
+      const oftReceivedBatch = db.findAll(StargateV2OFTReceived, { guid })
+      if (oftReceivedBatch.length === 0) return
+
+      const token = oftReceivedBatch[0].args.token
+      const destinationEid = oftReceivedBatch[0].args.destinationEid
+      const oftSentBusRodeBatch: EventOf<typeof StargateV2OFTSentBusRode>[] = []
+
+      for (
+        let ticketId = busDriven.args.startTicketId;
+        ticketId < busDriven.args.startTicketId + busDriven.args.numPassengers;
+        ticketId++
+      ) {
+        const oftSentBusRode = db.find(StargateV2OFTSentBusRode, {
+          ticketId,
+          destinationEid,
+          token,
+        })
+        if (!oftSentBusRode) return
+        oftSentBusRodeBatch.push(oftSentBusRode)
+      }
+
+      const result: MatchResult = [
+        Result.Message('layerzero-v2.Message', {
+          app: 'stargate-v2-bus',
+          srcEvent: packetSent,
+          dstEvent: packetDelivered,
+        }),
+      ]
+
+      for (const oftSentBusRode of oftSentBusRodeBatch) {
+        const passengerReceiver = Address32.cropToEthereumAddress(
+          oftSentBusRode.args.receiver as Address32,
+        )
+
+        const matchedIndex = oftReceivedBatch.findIndex(
+          (o) => o.args.receiver === passengerReceiver,
+        )
+        if (matchedIndex === -1) return
+
+        const [matchedOftReceived] = oftReceivedBatch.splice(matchedIndex, 1)
+
+        result.push(
+          Result.Transfer('stargate-v2-bus.Transfer', {
+            srcEvent: oftSentBusRode,
+            srcTokenAddress: oftSentBusRode.args.tokenAddress,
+            srcAmount: oftSentBusRode.args.amountSentLD.toString(),
+            dstEvent: matchedOftReceived,
+            dstTokenAddress: matchedOftReceived.args.tokenAddress,
+            dstAmount: matchedOftReceived.args.amountReceivedLD.toString(),
+          }),
+        )
+      }
+
+      return result
+    }
+
+    const oftReceived = db.find(StargateV2OFTReceived, { guid })
+    if (oftReceived) {
+      const oftSentTaxi = db.find(StargateV2OFTSentTaxi, { guid })
+      if (!oftSentTaxi) return
+
+      return [
+        Result.Message('layerzero-v2.Message', {
+          app: 'stargate-v2-taxi',
+          srcEvent: packetSent,
+          dstEvent: packetDelivered,
+        }),
+        Result.Transfer('stargate-v2-taxi.Transfer', {
+          srcEvent: oftSentTaxi,
+          srcTokenAddress: oftSentTaxi.args.tokenAddress,
+          srcAmount: oftSentTaxi.args.amountSentLD.toString(),
+          dstEvent: oftReceived,
+          dstTokenAddress: oftReceived.args.tokenAddress,
+          dstAmount: oftReceived.args.amountReceivedLD.toString(),
+        }),
+      ]
+    }
+
+    const creditsSent = db.find(StargateV2CreditsSent, {
+      sameTxBefore: packetSent,
+    })
+    const creditsReceived = db.find(StargateV2CreditsReceived, {
+      sameTxBefore: packetDelivered,
+    })
+    if (creditsSent && creditsReceived) {
+      return [
+        Result.Message('layerzero-v2.Message', {
+          app: 'stargate-v2-credit',
+          srcEvent: packetSent,
+          dstEvent: packetDelivered,
+          extraEvents: [creditsSent, creditsReceived],
+        }),
+      ]
+    }
+
+    return
   }
 }
 
