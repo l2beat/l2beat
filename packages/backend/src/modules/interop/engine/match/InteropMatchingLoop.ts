@@ -135,6 +135,10 @@ export async function match(
             for (const event of item.events) {
               matchedIds.add(event.eventId)
             }
+          } else if (item.kind === 'InteropIgnore') {
+            for (const event of item.events) {
+              unsupportedIds.add(event.eventId)
+            }
           }
         }
       }

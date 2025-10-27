@@ -8,22 +8,22 @@ export function defineConfig<T>(key: string): InteropConfig<T> {
 }
 
 export interface InteropConfigPlugin {
-  provides: InteropConfig<unknown>
+  provides: InteropConfig<unknown>[]
   intervalMs?: number
   start: () => void
   run: () => Promise<void>
 }
 
 export class InteropConfigStore {
-  private networks = new Map<string, unknown>()
+  private configs = new Map<string, unknown>()
 
   constructor(private db: Database | undefined) {}
 
   async start() {
     if (!this.db) return
-    const networks = await this.db?.interopConfig.getAllLatest()
-    for (const network of networks) {
-      this.networks.set(network.key, network.value)
+    const configs = await this.db?.interopConfig.getAllLatest()
+    for (const config of configs) {
+      this.configs.set(config.key, config.value)
     }
   }
 
@@ -36,10 +36,10 @@ export class InteropConfigStore {
       value,
       timestamp: UnixTime.now(),
     })
-    this.networks.set(def.key, value)
+    this.configs.set(def.key, value)
   }
 
   get<T>(def: InteropConfig<T>): T | undefined {
-    return this.networks.get(def.key) as T | undefined
+    return this.configs.get(def.key) as T | undefined
   }
 }

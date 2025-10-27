@@ -64,7 +64,7 @@ export function ZkCatalogProjectPage({
                   />
                 </div>
               </div>
-              <div className="grid-cols-[1fr_172px] gap-x-6 lg:grid">
+              <div className="grid-cols-[minmax(0,_1fr)_172px] gap-x-6 lg:grid">
                 <div>
                   <ProjectZkCatalogSummary project={projectEntry} />
                   <HighlightableLinkContextProvider>

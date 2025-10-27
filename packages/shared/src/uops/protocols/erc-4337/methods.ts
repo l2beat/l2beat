@@ -293,6 +293,68 @@ export const ERC4337_methods: Method[] = [
       }))
     },
   ),
+  defineMethod(
+    parseAbiItem(
+      'function installValidation(bytes25 validationConfig, bytes4[] calldata selectors, bytes calldata installData, bytes[] calldata hooks)',
+    ),
+    ([, , installData]) => {
+      // installData is bytes calldata containing the installation payload
+      // It will be recursively decoded; target address is embedded within
+      if (!installData || installData === '0x') {
+        return []
+      }
+      return [
+        {
+          type: 'recursive',
+          calldata: installData,
+          to: 'unknown',
+        },
+      ]
+    },
+  ),
+  defineMethod(
+    parseAbiItem(
+      'function executeComposable((address,uint256,bytes4,(uint8,bytes,(uint8,bytes)[])[],(uint8,bytes)[])[])',
+    ),
+    ([executions]) => {
+      // ComposableExecution struct mapping:
+      // [0] address to          - target contract address
+      // [1] uint256 value       - ETH value to send
+      // [2] bytes4 functionSig  - 4-byte function selector (NOT full calldata)
+      // [3] InputParam[] inputParams - array of (fetcherType, paramData, constraints[])
+      // [4] OutputParam[] outputParams - array of (fetcherType, paramData)
+      //
+      // IMPORTANT: execution[2] is ONLY the 4-byte function selector, not full calldata.
+      // Full calldata reconstruction would require encoding inputParams, which is complex
+      // because fetcherType determines how paramData is used (RAW_BYTES vs STATIC_CALL).
+      // For tracking/analysis purposes, we use the selector as an identifier.
+
+      if (!Array.isArray(executions)) {
+        return []
+      }
+
+      return executions
+        .filter(
+          (
+            execution: unknown,
+          ): execution is [string, unknown, string, unknown, unknown] =>
+            Array.isArray(execution) &&
+            execution.length >= 3 &&
+            typeof execution[0] === 'string' &&
+            typeof execution[2] === 'string',
+        )
+        .map((execution) => {
+          const to = execution[0]
+          const selector = execution[2] // bytes4 functionSig as hex string
+
+          return {
+            type: 'recursive',
+            calldata: selector, // bytes4 functionSig (selector only)
+            to,
+          }
+        })
+    },
+  ),
 ]
 
 function decodeCalldata(

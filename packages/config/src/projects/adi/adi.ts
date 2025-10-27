@@ -6,6 +6,7 @@ export const adi: ScalingProject = upcomingL2({
   id: 'adi',
   capability: 'universal',
   addedAt: UnixTime(1759216045), // 2025-09-30
+  hasTestnet: true,
   display: {
     name: 'ADI Chain',
     slug: 'adi',
@@ -17,6 +18,10 @@ export const adi: ScalingProject = upcomingL2({
       websites: ['https://adi.foundation/'],
       explorers: ['https://explorer.testnet.adifoundation.ai/'],
       repositories: ['https://github.com/orgs/ADI-Foundation-Labs/'],
+      bridges: ['https://bridge.testnet.adifoundation.ai/'],
+      documentation: [
+        'https://adi-foundation.gitbook.io/adi-chain-documentation',
+      ],
       socialMedia: [
         'https://x.com/ADIChain_',
         'https://discord.com/invite/adi-foundation',

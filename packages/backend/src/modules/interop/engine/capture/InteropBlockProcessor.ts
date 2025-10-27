@@ -8,6 +8,7 @@ import {
   type InteropEventContext,
   type InteropPlugin,
   type LogToCapture,
+  type TxToCapture,
 } from '../../plugins/types'
 import type { InteropEventStore } from './InteropEventStore'
 
@@ -24,15 +25,35 @@ export class InteropBlockProcessor implements BlockProcessor {
   }
 
   async processBlock(block: Block, logs: Log[]): Promise<void> {
-    const toDecode = getLogsToDecode(this.chain, block, logs)
+    const toCapture = getItemsToCapture(this.chain, block, logs)
 
     const events: InteropEvent[] = []
     const pluginEventCounts: Record<string, number> = {}
 
-    for (const logToDecode of toDecode) {
+    for (const txToCapture of toCapture.txsToCapture) {
       for (const plugin of this.plugins) {
         try {
-          const event = await plugin.capture?.(logToDecode)
+          const event = plugin.captureTx?.(txToCapture)
+          if (event) {
+            events.push({ ...event, plugin: plugin.name })
+            pluginEventCounts[plugin.name] =
+              (pluginEventCounts[plugin.name] || 0) + 1
+            break
+          }
+        } catch (e) {
+          this.logger.error('Capture failed', e, {
+            plugin: plugin.name,
+            blockNumber: block.number,
+            tx: txToCapture.tx.txHash,
+          })
+        }
+      }
+    }
+
+    for (const logToDecode of toCapture.logsToCapture) {
+      for (const plugin of this.plugins) {
+        try {
+          const event = plugin.capture?.(logToDecode)
           if (event) {
             events.push({ ...event, plugin: plugin.name })
             pluginEventCounts[plugin.name] =
@@ -65,20 +86,22 @@ export class InteropBlockProcessor implements BlockProcessor {
     this.logger.info('Block processed', {
       chain: this.chain,
       blockNumber: block.number,
-      logs: toDecode.length,
+      txs: toCapture.txsToCapture.length,
+      logs: toCapture.logsToCapture.length,
       events: events.length,
     })
   }
 }
 
-function getLogsToDecode(chain: string, block: Block, logs: Log[]) {
-  const toDecode: LogToCapture[] = []
+function getItemsToCapture(chain: string, block: Block, logs: Log[]) {
+  const logsToCapture: LogToCapture[] = []
+  const txsToCapture: TxToCapture[] = []
   const viemLogs = logs.map(logToViemLog)
 
-  const contexts = block.transactions
+  const txs = block.transactions
     .filter((x) => !!x.hash) // TODO: why can this be missing!?
     .map(
-      (tx): Omit<InteropEventContext, 'logIndex'> => ({
+      (tx): InteropEventContext => ({
         timestamp: block.timestamp,
         chain,
         blockHash: block.hash,
@@ -88,25 +111,22 @@ function getLogsToDecode(chain: string, block: Block, logs: Log[]) {
         // biome-ignore lint/style/noNonNullAssertion: EVM tx should have it
         txValue: tx.value!,
         txTo: tx.to !== undefined ? Address32.from(tx.to) : undefined,
+        txFrom: tx.from !== undefined ? Address32.from(tx.from) : undefined,
         // biome-ignore lint/style/noNonNullAssertion: EVM tx should have it
         txData: tx.data! as string,
+        logIndex: -1,
       }),
     )
 
-  for (const log of viemLogs) {
-    const tx = contexts.find((x) => x.txHash === log.transactionHash)
-    if (!tx) {
-      continue
+  for (const tx of txs) {
+    const txLogs = viemLogs.filter((log) => log.transactionHash === tx.txHash)
+    for (const log of txLogs) {
+      logsToCapture.push({ log, ctx: tx, txLogs })
     }
-    const ctx: InteropEventContext = { ...tx, logIndex: log.logIndex ?? -1 }
-    toDecode.push({
-      log,
-      ctx,
-      txLogs: viemLogs.filter((x) => x.transactionHash === log.transactionHash),
-    })
+    txsToCapture.push({ tx, txLogs })
   }
 
-  return toDecode
+  return { txsToCapture, logsToCapture }
 }
 
 export function logToViemLog(log: Log): ViemLog {
