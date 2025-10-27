@@ -48,7 +48,7 @@ export const getScalingActivityColumns = (
     opts,
   ),
   columnHelper.accessor('data.pastDayCount', {
-    header: `Past day ${metric === 'uops' ? 'UOPS' : 'TPS'}`,
+    header: `Past day ${metric.toUpperCase()}`,
     cell: (ctx) => {
       const data = ctx.row.original.data
       if (!data) {
@@ -75,7 +75,7 @@ export const getScalingActivityColumns = (
     },
   }),
   columnHelper.accessor('data.maxCount.value', {
-    header: `Max ${metric === 'uops' ? 'UOPS' : 'TPS'}`,
+    header: `Max ${metric.toUpperCase()}`,
     sortUndefined: 'last',
     cell: (ctx) => {
       const data = ctx.row.original.data
@@ -94,6 +94,7 @@ export const getScalingActivityColumns = (
     meta: {
       align: 'right',
       hideIfNull: true,
+      tooltip: `Shows the maximum sustained ${metric.toUpperCase()}, calculated as an average over the count for a day.`,
     },
   }),
   columnHelper.accessor('data.summedCount', {
