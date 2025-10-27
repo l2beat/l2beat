@@ -274,7 +274,7 @@ export class LocalExecutor {
       http,
       logger: this.logger,
       retryStrategy: 'RELIABLE',
-      sourceName: chainConfig.name,
+      chain: chainConfig.name,
       callsPerMinute: callsPerMinute,
       multicallClient,
     })
