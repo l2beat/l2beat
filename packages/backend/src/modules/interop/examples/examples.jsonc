@@ -37,6 +37,26 @@
     "events": ["ccip.ExecutionStateChanged", "ccip.CCIPSendRequested"],
     "messages": ["ccip.Message"]
   },
+  "celer": {
+    "txs": [
+      {
+        "chain": "arbitrum", // IM
+        "tx": "0x2c3f1a655a15d77758fb4253e10572e6db9190ce9cf3a48264a78b28022919a3"
+      },
+      {
+        "chain": "arbitrum", // Executed
+        "tx": "0x6256f99519a3455a68baa3b671a79352ae5f721f36137f313e6107b2267b8ce6"
+      },
+      {
+        "chain": "ethereum", // Send
+        "tx": "0xff51fac268e039a5cc4026baa658c13a44046b6f7df15a647d1e4f8c73eaad64"
+      },
+      {
+        "chain": "ethereum", // Relay
+        "tx": "0x963f5203a729d35925faefe037504ab1ee7b12cda04d1a4b717817dca1af5f46"
+      }
+    ]
+  },
   "mayan-forwarder": {
     "txs": [
       {
