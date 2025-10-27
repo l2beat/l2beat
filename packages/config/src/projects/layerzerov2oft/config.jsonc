@@ -3,6 +3,7 @@
   "name": "layerzerov2oft",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
+    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd", // canary DVN
     "eth:0x1a44076050125825900e736c501f859c50fE728c",
     "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
     "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
