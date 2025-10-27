@@ -17,9 +17,14 @@ type ScalingActivityTableEntry = ScalingActivityEntry & {
   data:
     | {
         isSynced: boolean
-        change: number
-        pastDayCount: number
-        summedCount: number
+        pastDayCount: {
+          value: number
+          change: number
+        }
+        summedCount: {
+          value: number
+          change: number
+        }
         maxCount: {
           value: number
           timestamp: number
@@ -52,11 +57,11 @@ export const getScalingActivityColumns = (
       return (
         <SyncStatusWrapper isSynced={data.isSynced}>
           <ValueWithPercentageChange
-            change={data.change}
+            change={data.pastDayCount.change}
             className="font-medium"
             containerClassName="justify-end"
           >
-            {formatActivityCount(data.pastDayCount)}
+            {formatActivityCount(data.pastDayCount.value)}
           </ValueWithPercentageChange>
         </SyncStatusWrapper>
       )
@@ -100,7 +105,13 @@ export const getScalingActivityColumns = (
       }
       return (
         <SyncStatusWrapper isSynced={data.isSynced}>
-          <PrimaryValueCell>{formatInteger(data.summedCount)}</PrimaryValueCell>
+          <ValueWithPercentageChange
+            change={data.summedCount.change}
+            className="font-medium"
+            containerClassName="justify-end"
+          >
+            {formatInteger(data.summedCount.value)}
+          </ValueWithPercentageChange>
         </SyncStatusWrapper>
       )
     },

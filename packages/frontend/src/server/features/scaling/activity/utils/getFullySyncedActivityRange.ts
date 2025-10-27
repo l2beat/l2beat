@@ -25,6 +25,6 @@ export async function getFullySyncedActivityRange(
   const end = getActivityAdjustedTimestamp(target)
   const days = rangeToDays(range)
 
-  const start = days !== null ? end - days * UnixTime.DAY : null
+  const start = days !== null ? end - (days - 1) * UnixTime.DAY : null
   return [start, end]
 }
