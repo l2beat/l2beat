@@ -4,6 +4,10 @@ import { getContext } from '../context/context'
 
 export function loggerMiddleware(logger: Logger) {
   return (req: Request, res: Response, next: NextFunction) => {
+    if (req.headers['user-agent']?.includes('Cloudflare-Healthchecks')) {
+      return next()
+    }
+
     const context = getContext()
     const { queryParams, url } = getParamsWithoutApiKey(req.originalUrl)
     logger.info('Processing request', {
