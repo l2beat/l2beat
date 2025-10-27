@@ -45,7 +45,7 @@ export interface InteropEventContext {
   blockNumber: number
   blockHash: string
   txHash: string
-  txValue: string
+  txValue?: bigint
   txTo?: Address32
   txFrom?: Address32
   logIndex: number
