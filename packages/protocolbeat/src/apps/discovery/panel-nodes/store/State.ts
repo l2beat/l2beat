@@ -54,6 +54,7 @@ export interface Node {
   readonly color: number
   readonly hueShift: number
   readonly data: unknown
+  readonly isReachable: boolean
 }
 
 export interface Field {
