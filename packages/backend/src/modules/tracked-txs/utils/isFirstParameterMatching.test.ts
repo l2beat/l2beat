@@ -1,4 +1,5 @@
 import type { TrackedTxSharedBridgeConfig } from '@l2beat/shared'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import {
   agglayerSharedBridgeChainId,
@@ -8,9 +9,12 @@ import {
   elasticChainSharedBridgeCommitBatchesInput,
   elasticChainSharedBridgeCommitBatchesSignature,
   elasticChainSharedBridgeExecuteBatchesInput,
+  elasticChainSharedBridgeExecuteBatchesPost29Input,
+  elasticChainSharedBridgeExecuteBatchesPost29Signature,
   elasticChainSharedBridgeExecuteBatchesSignature,
   elasticChainSharedBridgeProveBatchesInput,
   elasticChainSharedBridgeProveBatchesSignature,
+  gatewaySharedBridgeChainAddress,
 } from '../../../test/sharedBridge'
 import { isFistParameterMatching } from './isFirstParameterMatching'
 
@@ -72,6 +76,36 @@ describe(isFistParameterMatching.name, () => {
       )
 
       expect(result).toEqual(true)
+    })
+  })
+
+  describe('Elastic Chain Shared Bridge (post v29)', () => {
+    it('executeBatches with correct chainAddress', () => {
+      const mockSharedBridgeConfig = mockObject<TrackedTxSharedBridgeConfig>({
+        firstParameter: EthereumAddress(gatewaySharedBridgeChainAddress),
+        signature: elasticChainSharedBridgeExecuteBatchesPost29Signature,
+      })
+
+      const result = isFistParameterMatching(
+        elasticChainSharedBridgeExecuteBatchesPost29Input,
+        mockSharedBridgeConfig,
+      )
+
+      expect(result).toEqual(true)
+    })
+
+    it('executeBatches with incorrect chainAddress', () => {
+      const mockSharedBridgeConfig = mockObject<TrackedTxSharedBridgeConfig>({
+        firstParameter: EthereumAddress.random(),
+        signature: elasticChainSharedBridgeExecuteBatchesPost29Signature,
+      })
+
+      const result = isFistParameterMatching(
+        elasticChainSharedBridgeExecuteBatchesPost29Input,
+        mockSharedBridgeConfig,
+      )
+
+      expect(result).toEqual(false)
     })
   })
 })
