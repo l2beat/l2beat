@@ -6,6 +6,7 @@ export const adi: ScalingProject = upcomingL2({
   id: 'adi',
   capability: 'universal',
   addedAt: UnixTime(1759216045), // 2025-09-30
+  hasTestnet: true,
   display: {
     name: 'ADI Chain',
     slug: 'adi',
