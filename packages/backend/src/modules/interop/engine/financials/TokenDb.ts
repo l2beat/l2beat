@@ -1,4 +1,5 @@
 import type { Branded } from '@l2beat/shared-pure'
+import type { TokenDbClient } from '@l2beat/token-backend'
 import mockData from './TokenDbMockData.json'
 
 export type AbstractTokenId = Branded<string, 'AbstractTokenId'>
@@ -12,7 +13,7 @@ AbstractTokenId.from = function from(
   issuer: string,
   symbol: string,
 ) {
-  return `${realId}:${issuer}:${symbol}`
+  return AbstractTokenId(`${realId}:${issuer}:${symbol}`)
 }
 
 AbstractTokenId.realId = function readId(id: AbstractTokenId) {
@@ -82,5 +83,36 @@ export class MockTokenDb implements ITokenDb {
       }
     }
     return out
+  }
+}
+
+export class CachingTokenDB implements ITokenDb {
+  constructor(private readonly tokenDbClient: TokenDbClient) {}
+
+  async getPriceInfo(deployedTokens: DeployedTokenId[]) {
+    const result: PriceInfo = new Map()
+
+    for (const t of deployedTokens) {
+      const tokenData =
+        await this.tokenDbClient.tokens.getByChainAndAddress.query({
+          chain: DeployedTokenId.chain(t),
+          address: DeployedTokenId.address(t),
+        })
+      const { deployed, abstract } = tokenData
+      if (!deployed || !abstract || !abstract.coingeckoId) {
+        continue
+      }
+
+      result.set(t, {
+        abstractId: AbstractTokenId.from(
+          abstract.id,
+          abstract.issuer ?? '',
+          abstract.symbol,
+        ),
+        coingeckoId: abstract.coingeckoId,
+        decimals: deployed.decimals,
+      })
+    }
+    return result
   }
 }

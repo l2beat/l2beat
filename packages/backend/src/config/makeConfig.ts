@@ -176,6 +176,8 @@ export async function makeConfig(
       },
       financials: {
         enabled: flags.isEnabled('interop', 'financials'),
+        tokenDbApiUrl: env.string('TOKEN_BACKEND_TRPC_URL'),
+        tokenDbAuthToken: env.optionalString('TOKEN_BACKEND_CF_TOKEN'),
       },
       config: {
         enabled: flags.isEnabled('interop', 'config'),

@@ -1,4 +1,5 @@
 import { HttpClient } from '@l2beat/shared'
+import { getTokenDbClient } from '@l2beat/token-backend'
 import { HourlyIndexer } from '../../../tools/HourlyIndexer'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../../types'
@@ -11,7 +12,7 @@ import { InteropConfigStore } from './config/InteropConfigStore'
 import { createInteropRouter } from './dashboard/InteropRouter'
 import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
 import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
-import { MockTokenDb } from './financials/TokenDb'
+import { CachingTokenDB } from './financials/TokenDb'
 import { InteropMatchingLoop } from './match/InteropMatchingLoop'
 
 export function createInteropModule({
@@ -77,7 +78,16 @@ export function createInteropModule({
     minHeight: 1,
     indexerService: new IndexerService(db),
   })
-  const tokenDb = new MockTokenDb()
+  // const tokenDb = new MockTokenDb()
+
+  const tokenDbClinet = getTokenDbClient({
+    apiUrl: config.interop.financials.tokenDbApiUrl,
+    authToken: config.interop.financials.tokenDbAuthToken,
+    callSource: 'interop',
+  })
+
+  const tokenDb = new CachingTokenDB(tokenDbClinet)
+
   const financialsService = new InteropFinancialsLoop(
     config.interop.capture.chains,
     db,

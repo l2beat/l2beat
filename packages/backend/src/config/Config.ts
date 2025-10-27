@@ -223,6 +223,8 @@ export interface InteropFeatureConfig {
   }
   financials: {
     enabled: boolean
+    tokenDbApiUrl: string
+    tokenDbAuthToken?: string
   }
   config: {
     enabled: boolean
