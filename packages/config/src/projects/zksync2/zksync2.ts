@@ -9,6 +9,7 @@ import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
+import { BADGES } from '../../common/badges'
 
 const discovery = new ProjectDiscovery('zksync2')
 const bridge = discovery.getContract('L1NativeTokenVault')
@@ -17,6 +18,7 @@ const chainId = 324
 
 export const zksync2: ScalingProject = zkStackL2({
   addedAt: UnixTime(1679616000), // 2023-03-24T00:00:00Z
+  additionalBadges: [BADGES.Other.Governance],
   discovery,
   display: {
     name: 'ZKsync Era',
