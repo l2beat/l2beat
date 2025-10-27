@@ -7,6 +7,7 @@ contracts are set up for every SRC-DST pair on each chain
 
 import { EthereumAddress } from '@l2beat/shared-pure'
 import {
+  Address32,
   createEventParser,
   createInteropEventType,
   defineNetworks,
@@ -64,6 +65,7 @@ const parseExecutionStateChanged = createEventParser(
 export const CCIPSendRequested = createInteropEventType<{
   messageId: `0x${string}`
   $dstChain: string
+  tokenAmounts: { token: Address32; amount: string }[]
 }>('ccip.CCIPSendRequested')
 
 export const ExecutionStateChanged = createInteropEventType<{
@@ -127,6 +129,10 @@ export class CCIPPlugIn implements InteropPlugin {
       const outboundLane = EthereumAddress(input.log.address)
       return CCIPSendRequested.create(input.ctx, {
         messageId: ccipSendRequested.message.messageId,
+        tokenAmounts: ccipSendRequested.message.tokenAmounts.map((ta) => ({
+          token: Address32.from(ta.token),
+          amount: ta.amount.toString(),
+        })),
         $dstChain:
           Object.entries(network.outboundLanes).find(
             ([_, address]) => address === outboundLane,
@@ -149,6 +155,7 @@ export class CCIPPlugIn implements InteropPlugin {
   }
 
   // TODO: match transfer
+  // TODO: If the token is USDC, transfer should not be double-counted
 
   matchTypes = [ExecutionStateChanged]
   match(delivery: InteropEvent, db: InteropEventDb): MatchResult | undefined {
@@ -158,14 +165,30 @@ export class CCIPPlugIn implements InteropPlugin {
       })
 
       if (!ccipSendRequested) return
+      console.log(ccipSendRequested.args.tokenAmounts)
       if (delivery.args.state !== 2) return
-      return [
+      // For each token in token amounts create add TRANSFER to the Result
+      const result: MatchResult = []
+      for (const tokenAmount of ccipSendRequested.args.tokenAmounts) {
+        result.push(
+          Result.Transfer('ccip.Transfer', {
+            srcEvent: ccipSendRequested,
+            dstEvent: delivery,
+            srcTokenAddress: tokenAmount.token,
+            srcAmount: tokenAmount.amount,
+            dstTokenAddress: tokenAmount.token,
+            dstAmount: tokenAmount.amount,
+          }),
+        )
+      }
+      result.push(
         Result.Message('ccip.Message', {
-          app: 'unknown', // TODO: match transfer
+          app: 'CCIP Token Transfer',
           srcEvent: ccipSendRequested,
           dstEvent: delivery,
         }),
-      ]
+      )
+      return result
     }
   }
 }
