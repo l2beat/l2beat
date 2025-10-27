@@ -36,8 +36,6 @@ import { OrbitStackPlugin } from './orbitstack'
 import { RelaySimplePlugIn } from './relay-simple'
 import { SquidCoralPlugin } from './squid-coral'
 import { StargatePlugin } from './stargate'
-import { StargateV2BusPlugin } from './stargate-v2-bus'
-import { StargateV2TaxiPlugin } from './stargate-v2-taxi'
 import type { InteropPlugin } from './types'
 import { WormholePlugin } from './wormhole'
 import { WormholeNTTPlugin } from './wormhole-ntt'
@@ -92,11 +90,9 @@ export function createInteropPlugins(
       new MayanMctpPlugin(), // should be run before CCTP
       new MayanMctpFastPlugin(), // should be run before CCTP
       new CCTPPlugin(),
-      new StargatePlugin(), // should be run before stargate bus/taxi, ofts
-      new StargateV2BusPlugin(), // should be run before LayerZeroV2, ofts
-      new StargateV2TaxiPlugin(), // should be run before LayerZeroV2, ofts
+      new StargatePlugin(), // should be run before LayerZeroV2, ofts
       new LayerZeroV2OFTsPlugin(deps.configs), // should be run before LayerZeroV2
-      new LayerZeroV1Plugin(deps.configs),
+      //new LayerZeroV1Plugin(deps.configs),
       new LayerZeroV2Plugin(deps.configs),
       new WormholeNTTPlugin(), // should be run before WormholeCore and WormholeRelayer
       new WormholeTokenBridgePlugin(), // should be run before Wormhole
