@@ -74,7 +74,7 @@ export interface InteropMessage {
 export interface TransferSide {
   event: InteropEvent
   tokenAddress?: Address32
-  tokenAmount?: string
+  tokenAmount?: bigint
 }
 
 export interface InteropTransfer {
@@ -269,11 +269,11 @@ function Message(
 export interface InteropTransferOptions {
   srcEvent: InteropEvent
   srcTokenAddress?: Address32
-  srcAmount?: string
+  srcAmount?: bigint
 
   dstEvent: InteropEvent
   dstTokenAddress?: Address32
-  dstAmount?: string
+  dstAmount?: bigint
 
   extraEvents?: InteropEvent[]
 }

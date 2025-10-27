@@ -2,14 +2,14 @@
 
 This is an experimental plugin for the RELAY protocol. It checks
 deposits to the solver on SRC and deposits from the solver on DST
-and matches them based on the additional requestId hidden in the 
+and matches them based on the additional requestId hidden in the
 calldata
 
 It also checks events from the following contracts:
 1. RelayReceiver - used in V1
 2. RelayDepository - used in V2
 
-On the destination chain it tries to capture direct transfers from 
+On the destination chain it tries to capture direct transfers from
 the Solver or via Router (which serves as a multicall facitlity for
 a Solver that, e.g. tries to buy an NFT on behalf of a user).
 */
@@ -200,10 +200,10 @@ export class RelaySimplePlugIn implements InteropPlugin {
         }),
         Result.Transfer('relay-simple.Transfer', {
           srcEvent: transferDst,
-          srcAmount: transferDst.args.amount,
+          srcAmount: BigInt(transferDst.args.amount),
           srcTokenAddress: transferDst.args.tokenAddress,
           dstEvent: transferSrc,
-          dstAmount: transferSrc.args.amount,
+          dstAmount: BigInt(transferSrc.args.amount),
           dstTokenAddress: transferSrc.args.tokenAddress,
         }),
       ]
