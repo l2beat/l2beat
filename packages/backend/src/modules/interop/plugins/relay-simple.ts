@@ -2,7 +2,7 @@
 
 This is an experimental plugin for the RELAY protocol. It checks
 deposits to the solver on SRC and deposits from the solver on DST
-and matches them based on the additional requestId hidden in the 
+and matches them based on the additional requestId hidden in the
 calldata
 
 */
@@ -56,7 +56,6 @@ export class RelaySimplePlugIn implements InteropPlugin {
       }
     }
 
-    console.log('HELLO', input.tx.txFrom)
     if (input.tx.txFrom === RelaySolver32) {
       if (input.tx.txData.length === 2 + 64) {
         return TransferDst.create(input.tx, {
