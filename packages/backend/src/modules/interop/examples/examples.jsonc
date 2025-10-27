@@ -20,8 +20,12 @@
       "allbridge.TokensSent",
       "allbridge.TokensReceived"
     ],
-    "messages": ["allbridge.Message.allbridgeswap"],
-    "transfers": ["allbridge.Transfer"]
+    "messages": [
+      "allbridge.Message.allbridgeswap"
+    ],
+    "transfers": [
+      "allbridge.Transfer"
+    ]
   },
   "ccip": {
     "txs": [
@@ -34,8 +38,13 @@
         "tx": "0x05e94651d51f379b1b5c56756b1908431b19d72e9dc05fef801d96c434866109"
       }
     ],
-    "events": ["ccip.ExecutionStateChanged", "ccip.CCIPSendRequested"],
-    "messages": ["ccip.Message"]
+    "events": [
+      "ccip.ExecutionStateChanged",
+      "ccip.CCIPSendRequested"
+    ],
+    "messages": [
+      "ccip.Message"
+    ]
   },
   "mayan-forwarder": {
     "txs": [
@@ -136,8 +145,13 @@
         "tx": "0xbed80fd46620bf9e83c5b993851200e1c0ac6e6f04c66963151ded1a7ac36bc3"
       }
     ],
-    "events": ["hyperlane.Dispatch", "hyperlane.Process"],
-    "messages": ["hyperlane.Message"]
+    "events": [
+      "hyperlane.Dispatch",
+      "hyperlane.Process"
+    ],
+    "messages": [
+      "hyperlane.Message"
+    ]
   },
   "mayan-swift": {
     "txs": [
@@ -166,11 +180,18 @@
       "circle-gateway.AttestationUsed",
       "circle-gateway.GatewayBurned"
     ],
-    "messages": ["circle-gateway.Message"],
-    "transfers": ["circle-gateway.Transfer"]
+    "messages": [
+      "circle-gateway.Message"
+    ],
+    "transfers": [
+      "circle-gateway.Transfer"
+    ]
   },
   "layerzerov1": {
-    "loadConfigs": ["layerzero-v1", "layerzero-v2"],
+    "loadConfigs": [
+      "layerzero-v1",
+      "layerzero-v2"
+    ],
     "txs": [
       {
         "chain": "arbitrum",
@@ -181,11 +202,19 @@
         "tx": "0x9644fa9892c2cad338fea622f3700598c38b34d3a89989a05c2df1cbceb60a10"
       }
     ],
-    "events": ["layerzero-v1.PacketSent", "layerzero-v1.PacketDelivered"],
-    "messages": ["layerzero-v1.Message"]
+    "events": [
+      "layerzero-v1.PacketSent",
+      "layerzero-v1.PacketDelivered"
+    ],
+    "messages": [
+      "layerzero-v1.Message"
+    ]
   },
   "layerzerov2": {
-    "loadConfigs": ["layerzero-v1", "layerzero-v2"],
+    "loadConfigs": [
+      "layerzero-v1",
+      "layerzero-v2"
+    ],
     "txs": [
       {
         "chain": "arbitrum",
@@ -262,8 +291,12 @@
       "axelar.ContractCall",
       "axelar.ContractCallApproved"
     ],
-    "messages": ["axelar.ContractCallMessage"],
-    "transfers": ["axelar-its.Transfer"]
+    "messages": [
+      "axelar.ContractCallMessage"
+    ],
+    "transfers": [
+      "axelar-its.Transfer"
+    ]
   },
   "axelar-its-contractCall2": {
     "txs": [
@@ -287,8 +320,12 @@
       "axelar.ContractCall",
       "axelar.ContractCallApproved"
     ],
-    "messages": ["axelar.ContractCallMessage"],
-    "transfers": ["axelar-its.Transfer"]
+    "messages": [
+      "axelar.ContractCallMessage"
+    ],
+    "transfers": [
+      "axelar-its.Transfer"
+    ]
   },
   "centrifuge": {
     "txs": [
@@ -316,8 +353,12 @@
       "axelar.ContractCall",
       "axelar.ContractCallApproved"
     ],
-    "messages": ["axelar.ContractCallMessage"],
-    "transfers": ["axelar-its.Transfer"]
+    "messages": [
+      "axelar.ContractCallMessage"
+    ],
+    "transfers": [
+      "axelar-its.Transfer"
+    ]
   },
   "axelar-contractCallWithMint2": {
     "txs": [
@@ -338,8 +379,12 @@
       "axelar.ContractCallWithToken",
       "axelar.ContractCallApprovedWithMint"
     ],
-    "messages": ["axelar.ContractCallWithTokenMessage"],
-    "transfers": ["axelar-gateway.Transfer"]
+    "messages": [
+      "axelar.ContractCallWithTokenMessage"
+    ],
+    "transfers": [
+      "axelar-gateway.Transfer"
+    ]
   },
   "axelar-contractCallWithMint": {
     "txs": [
@@ -361,8 +406,12 @@
       "axelar.ContractCallApprovedWithMint",
       "axelar.ContractCallExecuted"
     ],
-    "messages": ["axelar.ContractCallWithTokenMessage"],
-    "transfers": ["axelar-gateway.Transfer"]
+    "messages": [
+      "axelar.ContractCallWithTokenMessage"
+    ],
+    "transfers": [
+      "axelar-gateway.Transfer"
+    ]
   },
   "relay-simple": {
     "txs": [
@@ -375,9 +424,16 @@
         "tx": "0xaa2a3bb58bf24c52642ed51653f84f87c28d818da9fe90921df959fd2b9c461c"
       }
     ],
-    "events": ["relay-simple.TransferSrc", "relay-simple.TransferDst"],
-    "messages": ["relay-simple.Message"],
-    "transfers": ["relay-simple.Transfer"]
+    "events": [
+      "relay-simple.TransferSrc",
+      "relay-simple.TransferDst"
+    ],
+    "messages": [
+      "relay-simple.Message"
+    ],
+    "transfers": [
+      "relay-simple.Transfer"
+    ]
   },
   "relay-simple-tx": {
     "txs": [
@@ -390,9 +446,16 @@
         "tx": "0x0ccdffa428ef96f649771a822d72528e7c155d7949b5bcbd7984575850be2953"
       }
     ],
-    "events": ["relay-simple.TransferSrc", "relay-simple.TransferDst"],
-    "messages": ["relay-simple.Message"],
-    "transfers": ["relay-simple.Transfer"]
+    "events": [
+      "relay-simple.TransferSrc",
+      "relay-simple.TransferDst"
+    ],
+    "messages": [
+      "relay-simple.Message"
+    ],
+    "transfers": [
+      "relay-simple.Transfer"
+    ]
   },
   "squid-coral": {
     "txs": [
@@ -479,7 +542,10 @@
     ]
   },
   "stargatev2taxi": {
-    "loadConfigs": ["layerzero-v1", "layerzero-v2"],
+    "loadConfigs": [
+      "layerzero-v1",
+      "layerzero-v2"
+    ],
     "txs": [
       {
         "chain": "arbitrum",
@@ -504,7 +570,10 @@
     ]
   },
   "stargatev2bus": {
-    "loadConfigs": ["layerzero-v1", "layerzero-v2"],
+    "loadConfigs": [
+      "layerzero-v1",
+      "layerzero-v2"
+    ],
     // 1. bus with 2 passengers from Base to Ethereum
     // 2. bus with 1 passenger from Ethereum to Arbitrum
     "txs": [
@@ -539,7 +608,10 @@
     ]
   },
   "layerzeromix": {
-    "loadConfigs": ["layerzero-v1", "layerzero-v2"],
+    "loadConfigs": [
+      "layerzero-v1",
+      "layerzero-v2"
+    ],
     // Messages:
     //   layerzero-v2.Message 5
     // Transfers:
@@ -602,7 +674,10 @@
     ]
   },
   "usdt0": {
-    "loadConfigs": ["layerzero-v1", "layerzero-v2"],
+    "loadConfigs": [
+      "layerzero-v1",
+      "layerzero-v2"
+    ],
     "txs": [
       {
         "chain": "ethereum",
@@ -623,7 +698,9 @@
     ]
   },
   "across2": {
-    "loadConfigs": ["across"],
+    "loadConfigs": [
+      "across"
+    ],
     "txs": [
       {
         "chain": "ethereum",
@@ -636,7 +713,9 @@
     ]
   },
   "across1": {
-    "loadConfigs": ["across"],
+    "loadConfigs": [
+      "across"
+    ],
     "txs": [
       {
         "chain": "base",
@@ -649,7 +728,9 @@
     ]
   },
   "across": {
-    "loadConfigs": ["across"],
+    "loadConfigs": [
+      "across"
+    ],
     "txs": [
       // should contain one unmatched on base: 0x5760b35cd1041943443a1b1ffc499a2d7f48a3e07833676a8cd67821b9e6e5d6 and three matched
       {
@@ -684,6 +765,7 @@
   },
   "opstack": {
     "txs": [
+      // base related txs
       {
         "chain": "base",
         "tx": "0x1c6f06a6ce9e511d9a94eae6a8b047e143803ee7bace3a20bf31d2908dfc30b1"
@@ -699,6 +781,23 @@
       {
         "chain": "base",
         "tx": "0x307d3fb030239e5bc1002980a743f34efe0a546e910765d69d752c5a0b7ceabf"
+      },
+      // optimism related txs
+      {
+        "chain": "optimism",
+        "tx": "0x17155a2b8f3660594348882dec3025a0df670c0015b68b092aadfa765fab1687"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x365e200d99d5ada389d4723f80813a59d0ad85457b3f63075116d88a5957b0b3"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x1ecae1db47dac6f8fb06e99282592ece86922bbc0f953436397fee39a8fda5fc"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0xa31616cdccdebcf3d51b06a9d265707a1a8f50307d8eb3c337fb484316476f35"
       }
     ]
   },
@@ -751,7 +850,10 @@
     ]
   },
   "oft": {
-    "loadConfigs": ["layerzero-v1", "layerzero-v2"],
+    "loadConfigs": [
+      "layerzero-v1",
+      "layerzero-v2"
+    ],
     // 3 oft transfers
     "txs": [
       {
@@ -831,7 +933,10 @@
     ]
   },
   "stargate-debug": {
-    "loadConfigs": ["layerzero-v1", "layerzero-v2"],
+    "loadConfigs": [
+      "layerzero-v1",
+      "layerzero-v2"
+    ],
     "txs": [
       {
         "chain": "optimism",

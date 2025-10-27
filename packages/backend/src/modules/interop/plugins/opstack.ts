@@ -99,6 +99,21 @@ const OPSTACK_NETWORKS = defineNetworks('opstack', [
       '0x4200000000000000000000000000000000000007',
     ),
   },
+  {
+    chain: 'optimism',
+    l2ToL1MessagePasser: EthereumAddress(
+      '0x4200000000000000000000000000000000000016',
+    ),
+    optimismPortal: EthereumAddress(
+      '0xbEb5Fc579115071764c7423A4f12eDde41f106Ed',
+    ),
+    l1CrossDomainMessenger: EthereumAddress(
+      '0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1',
+    ),
+    l2CrossDomainMessenger: EthereumAddress(
+      '0x4200000000000000000000000000000000000007',
+    ),
+  }
 ])
 
 export class OpStackPlugin implements InteropPlugin {
