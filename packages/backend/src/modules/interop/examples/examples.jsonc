@@ -684,6 +684,7 @@
   },
   "opstack": {
     "txs": [
+      // base related txs
       {
         "chain": "base",
         "tx": "0x1c6f06a6ce9e511d9a94eae6a8b047e143803ee7bace3a20bf31d2908dfc30b1"
@@ -699,6 +700,23 @@
       {
         "chain": "base",
         "tx": "0x307d3fb030239e5bc1002980a743f34efe0a546e910765d69d752c5a0b7ceabf"
+      },
+      // optimism related txs
+      {
+        "chain": "optimism",
+        "tx": "0x17155a2b8f3660594348882dec3025a0df670c0015b68b092aadfa765fab1687"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x365e200d99d5ada389d4723f80813a59d0ad85457b3f63075116d88a5957b0b3"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x1ecae1db47dac6f8fb06e99282592ece86922bbc0f953436397fee39a8fda5fc"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0xa31616cdccdebcf3d51b06a9d265707a1a8f50307d8eb3c337fb484316476f35"
       }
     ]
   },
