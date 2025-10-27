@@ -119,6 +119,8 @@ export const getScalingActivityColumns = (
     meta: {
       align: 'right',
       hideIfNull: true,
+      tooltip:
+        'The total user operations over the past 30 days with a percentage change compared to the previous 30-day window.',
     },
   }),
   columnHelper.accessor('data.ratio', {
