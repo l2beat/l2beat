@@ -113,7 +113,7 @@ const OPSTACK_NETWORKS = defineNetworks('opstack', [
     l2CrossDomainMessenger: EthereumAddress(
       '0x4200000000000000000000000000000000000007',
     ),
-  }
+  },
 ])
 
 export class OpStackPlugin implements InteropPlugin {
