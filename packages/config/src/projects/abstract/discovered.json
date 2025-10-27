@@ -1,6 +1,6 @@
 {
   "name": "abstract",
-  "timestamp": 1759399643,
+  "timestamp": 1761220486,
   "configHash": "0xe7096aa813f27824f142188f4b6f0361617c125f78152a329c67958859561226",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -355,7 +355,7 @@
           "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 23705,
+        "getFirstUnprocessedPriorityTx": 24208,
         "getL2BootloaderBytecodeHash": "0x0100085f9382a7928dd83bfc529121827b5f29f18b9aa10d18aa68e1be7ddc35",
         "getL2DefaultAccountBytecodeHash": "0x010005f72e443c94460f4583fb38ef5d0c5cd9897021c41df840f91465c0392e",
         "getL2EvmEmulatorBytecodeHash": "0x01000d83e0329d9144ad041430fafcbc2b388e5434db8cb8a96e80157738a1da",
@@ -363,21 +363,21 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 5,
-        "getPriorityTreeRoot": "0x68aa4ee73ba8214db581abd60b14a7b25fedce4c2c9d5c07864c153cd6af2c05",
+        "getPriorityQueueSize": 3,
+        "getPriorityTreeRoot": "0xc9daa8f19e713ac36dea4e4891cd0ece098ef3333b841fe54739083c747e47a6",
         "getPriorityTreeStartIndex": 17183,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 120259084289,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 28, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 37892,
-        "getTotalBatchesExecuted": 37879,
-        "getTotalBatchesVerified": 37887,
-        "getTotalBlocksCommitted": 37892,
-        "getTotalBlocksExecuted": 37879,
-        "getTotalBlocksVerified": 37887,
-        "getTotalPriorityTxs": 23710,
+        "getTotalBatchesCommitted": 40142,
+        "getTotalBatchesExecuted": 40131,
+        "getTotalBatchesVerified": 40138,
+        "getTotalBlocksCommitted": 40142,
+        "getTotalBlocksExecuted": 40131,
+        "getTotalBlocksVerified": 40138,
+        "getTotalPriorityTxs": 24211,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A",
         "getVerifierParams": {
@@ -408,7 +408,10 @@
           "severity": "HIGH",
           "description": "true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract."
         },
-        "getDAValidatorPair": { "severity": "HIGH" },
+        "getDAValidatorPair": {
+          "severity": "HIGH",
+          "description": "l1da, l2da"
+        },
         "getPendingAdmin": { "severity": "HIGH" },
         "getPubdataPricingMode": {
           "severity": "HIGH",
@@ -564,7 +567,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 8,
+        "nonce": 11,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -599,7 +602,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 9,
+        "nonce": 11,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -684,7 +687,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 9,
+        "nonce": 11,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -707,7 +710,7 @@
         {
           "permission": "interact",
           "from": "eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9",
-          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin",
           "via": [
             { "address": "eth:0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661" }
@@ -798,11 +801,12 @@
         "0xefb240f5e06f5ffb38c7e98e9738ecf10381c49716281a3da9d5a1d17438eb4c"
       ],
       "proxyType": "immutable",
+      "description": "A governance proxy that lets eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063 act through it.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9",
-          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin"
         }
       ],
@@ -929,9 +933,8 @@
     },
     {
       "address": "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-zk-stack"
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xfBbBa4FbAA3A99bA842924d4c47C14d6d61D9615",
@@ -1376,6 +1379,6 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "usedBlockNumbers": { "ethereum": 23489400 },
-  "permissionsConfigHash": "0x780531ecaa621ea1391f83a2c2f58bff6bbb6c2300d9178ec5768aaeb540b43a"
+  "usedBlockNumbers": { "ethereum": 23640034 },
+  "permissionsConfigHash": "0x96fe369852853a0befb9b01793ac81e216a812be834732bd7f0a0844b8c7802d"
 }

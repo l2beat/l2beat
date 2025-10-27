@@ -62,6 +62,6 @@ export interface TrackedTxSharedBridgeConfig {
   address: EthereumAddress
   signature: `function ${string}`
   selector: string
-  /** Chain ID for Elastic Chain. Rollup ID for Agglayer */
-  chainId: number
+  /** First parameter of the function call. It is used to match the input to the config, by decoding the input and checking if the first parameter matches the expected value.*/
+  firstParameter: number | EthereumAddress
 }
