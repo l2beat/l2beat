@@ -6,10 +6,10 @@ import {
 } from '@l2beat/shared-pure'
 
 import { ESCROW } from '../../common'
+import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
-import { BADGES } from '../../common/badges'
 
 const discovery = new ProjectDiscovery('zksync2')
 const bridge = discovery.getContract('L1NativeTokenVault')
