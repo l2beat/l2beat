@@ -234,7 +234,7 @@ function NavigationListIndex(props: { index: number; selected: boolean }) {
   return (
     <div
       className={cn(
-        'flex size-5 shrink-0 items-center justify-center rounded text-center text-label-value-12',
+        'flex size-5 shrink-0 items-center justify-center rounded-lg text-center text-label-value-12',
         props.selected
           ? 'bg-linear-to-r from-purple-100 to-pink-100 text-white group-data-[has-colors=true]/section-wrapper:bg-[image:none] group-data-[has-colors=true]/section-wrapper:bg-branding-primary'
           : 'bg-surface-tertiary text-secondary group-hover:text-primary',
