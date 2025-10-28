@@ -5,7 +5,6 @@ import type {
   ProjectActivityConfig,
   TimestampDaTrackingConfig,
 } from '@l2beat/config'
-import type { LogEvent } from '@l2beat/database'
 import type {
   ConfigReader,
   DiscoveryChainConfig,
@@ -75,7 +74,7 @@ export interface DatabaseConfig {
       rejectUnauthorized?: boolean
     }
   }
-  readonly log?: (event: LogEvent) => void
+  readonly enableQueryLogging: boolean
   readonly requiredMajorVersion?: number
   readonly connectionPoolSize: {
     min: number
