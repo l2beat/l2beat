@@ -159,14 +159,16 @@ export class RelayIndexer extends ManagedChildIndexer {
       }
     }
 
-    const tracked = events.filter(e => this.trackedChains.includes(e.ctx.chain))
+    const tracked = events.filter((e) =>
+      this.trackedChains.includes(e.ctx.chain),
+    )
 
     if (tracked.length > 0) {
       this.logger.info('Saved new events', { events: tracked.length })
       await this.interopEventStore.saveNewEvents(tracked)
     }
 
-    console.log("UPDATE END", tracked.length, syncedTo)
+    console.log('UPDATE END', tracked.length, syncedTo)
     return syncedTo
   }
 
