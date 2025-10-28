@@ -81,8 +81,13 @@ const RelayRouter = EthereumAddress(
   '0xF5042e6ffaC5a625D4E7848e0b01373D8eB9e222',
 )
 
+const RelayApprovalProxy = EthereumAddress(
+  '0xBBbfD134E9b44BfB5123898BA36b01dE7ab93d98',
+)
+
 const RelaySolver32 = Address32.from(RelaySolver)
 const RelayRouter32 = Address32.from(RelayRouter)
+const RelayApprovalProxy32 = Address32.from(RelayApprovalProxy)
 
 export class RelaySimplePlugIn implements InteropPlugin {
   name = 'relay-simple'
@@ -115,6 +120,15 @@ export class RelaySimplePlugIn implements InteropPlugin {
         amount: input.tx.txValue?.toString(),
         tokenAddress: Address32.NATIVE,
         kind: 'relay router',
+        requestId: '0x' + input.tx.txData.slice(-64),
+      })
+    }
+
+    if (input.tx.txTo === RelayApprovalProxy32) {
+      return TransferDst.create(input.tx, {
+        amount: input.tx.txValue?.toString(),
+        tokenAddress: Address32.NATIVE,
+        kind: 'relay approval proxy',
         requestId: '0x' + input.tx.txData.slice(-64),
       })
     }
