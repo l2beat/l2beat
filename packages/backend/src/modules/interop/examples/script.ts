@@ -162,19 +162,14 @@ async function runExample(example: Example): Promise<RunResult> {
 
   if (example.loadConfigs && example.loadConfigs.length > 0) {
     for (const key of example.loadConfigs) {
-      const configsToLoad = plugins.configPlugins.filter((x) =>
+      const config = plugins.configPlugins.find((x) =>
         x.provides.map((k) => k.key).includes(key),
       )
-      if (configsToLoad.length !== example.loadConfigs.length) {
+      if (!config) {
         throw new Error(`Cannot load configs: ${key}`)
       }
-      for (const config of configsToLoad) {
-        console.log('LOADING CONFIGS:', example.loadConfigs)
-        await config.run()
-      }
-    }
-    if (example.loadConfigs) {
-      console.log('CONFIGS LOADED\n')
+      console.log('LOADING CONFIG:', key)
+      await config.run()
     }
   }
 
