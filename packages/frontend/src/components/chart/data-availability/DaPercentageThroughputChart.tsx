@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
-import { Bar, BarChart } from 'recharts'
+import { Area, Bar, ComposedChart } from 'recharts'
 import {
   ChartContainer,
   ChartLegend,
@@ -17,7 +17,10 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChart'
-import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
+import type {
+  DaThroughputResolution,
+  DaThroughputTimeRange,
+} from '~/server/features/data-availability/throughput/utils/range'
 import { formatRange } from '~/utils/dates'
 import { getDaChartMeta } from './meta'
 
@@ -27,6 +30,7 @@ interface Props {
   includeScalingOnly: boolean
   syncStatus?: Record<string, number>
   resolution: DaThroughputResolution
+  range: DaThroughputTimeRange
 }
 export function DaPercentageThroughputChart({
   data,
@@ -34,6 +38,7 @@ export function DaPercentageThroughputChart({
   includeScalingOnly,
   syncStatus,
   resolution,
+  range,
 }: Props) {
   const chartMeta = useMemo(() => getDaChartMeta({ shape: 'square' }), [])
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
@@ -89,6 +94,8 @@ export function DaPercentageThroughputChart({
 
   const syncedUntil = Math.max(...Object.values(syncStatus ?? {}))
 
+  const ChartElement = range === 'max' ? Area : Bar
+
   return (
     <ChartContainer
       data={chartData}
@@ -99,7 +106,7 @@ export function DaPercentageThroughputChart({
         onItemClick: toggleDataKey,
       }}
     >
-      <BarChart
+      <ComposedChart
         accessibilityLayer
         data={chartData}
         margin={{ top: 20 }}
@@ -110,21 +117,25 @@ export function DaPercentageThroughputChart({
           const actualKey = key as keyof typeof chartMeta
           const estimatedKey = `${actualKey}Estimated`
           return [
-            <Bar
+            <ChartElement
               key={actualKey}
               dataKey={actualKey}
               stackId="a"
               fill={chartMeta[actualKey].color}
+              fillOpacity={1}
               isAnimationActive={false}
               hide={!dataKeys.includes(actualKey)}
+              type="step"
             />,
-            <Bar
+            <ChartElement
               key={estimatedKey}
               dataKey={estimatedKey}
               stackId="a"
               fill={`url(#${estimatedKey}Fill)`}
+              fillOpacity={1}
               isAnimationActive={false}
               hide={!dataKeys.includes(actualKey)}
+              type="step"
             />,
           ]
         })}
@@ -164,7 +175,7 @@ export function DaPercentageThroughputChart({
             )
           })}
         </defs>
-      </BarChart>
+      </ComposedChart>
     </ChartContainer>
   )
 }

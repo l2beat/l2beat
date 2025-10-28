@@ -60,7 +60,7 @@ export class AllProviders {
         url: config.rpcUrl,
         retryStrategy: 'SCRIPT',
         callsPerMinute: 60,
-        sourceName: 'ethereum',
+        chain: 'ethereum',
         logger,
         http,
       })

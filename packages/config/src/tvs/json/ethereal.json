@@ -1,0 +1,32 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "ethereal",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "ethereal-WUSDe",
+      "priceId": "ethena-usde",
+      "symbol": "WUSDe",
+      "name": "Wrapped USDe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/usde.png?1733810059",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xB6fC4B1BFF391e5F6b4a3D2C7Bda1FeE3524692D",
+        "chain": "ethereal",
+        "decimals": 18,
+        "sinceTimestamp": 1760534427
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 (OrbitNativeOFT)",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    }
+  ]
+}

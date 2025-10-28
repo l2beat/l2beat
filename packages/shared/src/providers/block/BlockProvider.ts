@@ -26,7 +26,12 @@ export class BlockProvider {
     for (const [index, client] of this.clients.entries()) {
       try {
         const block = await client.getBlockWithTransactions(x)
-        assert(block.number === x, `Invalid response ${JSON.stringify(block)}`)
+        if (typeof x === 'number') {
+          assert(
+            block.number === x,
+            `Invalid response: expected block number ${x}, got ${block.number}`,
+          )
+        }
         return block
       } catch (error) {
         if (index === this.clients.length - 1) throw error

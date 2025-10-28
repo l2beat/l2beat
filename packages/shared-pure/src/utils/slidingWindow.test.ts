@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { slidingWindow } from './slidingWindow'
+import { slidingWindow } from './slidingWindow.js'
 
 describe(slidingWindow.name, () => {
   describe('Moving average size 3', () => {

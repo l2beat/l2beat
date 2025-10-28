@@ -606,6 +606,26 @@
                   "function": { "type": "string" }
                 },
                 "required": ["type", "event", "function"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "crossChainAccessControl" },
+                  "roleNames": {
+                    "type": "object",
+                    "propertyNames": { "type": "string" },
+                    "additionalProperties": { "type": "string" }
+                  },
+                  "chainAddressNames": {
+                    "type": "object",
+                    "propertyNames": { "type": "string" },
+                    "additionalProperties": { "type": "string" }
+                  },
+                  "pickRoleMembers": { "type": "string" },
+                  "pickChainAddress": { "type": "string" },
+                  "ignoreRelative": { "type": "boolean" }
+                },
+                "required": ["type"]
               }
             ]
           },

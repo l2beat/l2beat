@@ -19,6 +19,10 @@ import {
   elasticChainSharedBridgeCommitBatchesInput,
   elasticChainSharedBridgeCommitBatchesSelector,
   elasticChainSharedBridgeCommitBatchesSignature,
+  elasticChainSharedBridgeExecuteBatchesPost29Input,
+  elasticChainSharedBridgeExecuteBatchesPost29Selector,
+  elasticChainSharedBridgeExecuteBatchesPost29Signature,
+  gatewaySharedBridgeChainAddress,
 } from '../../test/sharedBridge'
 import type { Configuration } from '../../tools/uif/multi/types'
 import { TrackedTxsClient } from './TrackedTxsClient'
@@ -169,7 +173,7 @@ const CONFIGURATIONS = [
         formula: 'sharedBridge',
         address: EthereumAddress.random(),
         selector: elasticChainSharedBridgeCommitBatchesSelector,
-        chainId: elasticChainSharedBridgeChainId,
+        firstParameter: elasticChainSharedBridgeChainId,
         signature: elasticChainSharedBridgeCommitBatchesSignature,
       },
     },
@@ -191,8 +195,30 @@ const CONFIGURATIONS = [
         formula: 'sharedBridge',
         address: EthereumAddress.random(),
         selector: agglayerSharedBridgeVerifyBatchesSelector,
-        chainId: agglayerSharedBridgeChainId,
+        firstParameter: agglayerSharedBridgeChainId,
         signature: agglayerSharedBridgeVerifyBatchesSignature,
+      },
+    },
+  } as Configuration<
+    TrackedTxConfigEntry & { params: TrackedTxSharedBridgeConfig }
+  >,
+  {
+    id: '6',
+    hasData: true,
+    minHeight: 1,
+    maxHeight: 100,
+    properties: {
+      id: '6',
+      projectId: ProjectId('project1'),
+      type: 'l2costs',
+      subtype: 'stateUpdates',
+      sinceTimestamp: FROM,
+      params: {
+        formula: 'sharedBridge',
+        address: EthereumAddress.random(),
+        selector: elasticChainSharedBridgeExecuteBatchesPost29Selector,
+        firstParameter: EthereumAddress(gatewaySharedBridgeChainAddress),
+        signature: elasticChainSharedBridgeExecuteBatchesPost29Signature,
       },
     },
   } as Configuration<
@@ -282,6 +308,20 @@ const FUNCTIONS_RESPONSE = [
     receipt_blob_gas_used: 300,
     receipt_blob_gas_price: 3,
   },
+  {
+    hash: TX_HASH,
+    block_number: BLOCK,
+    block_timestamp: toBigQueryDate(FROM),
+    to_address: CONFIGURATIONS[5].properties.params.address,
+    gas_price: 1500,
+    receipt_gas_used: 200000,
+    input: elasticChainSharedBridgeExecuteBatchesPost29Input,
+    transaction_type: 3,
+    data_length: 0,
+    non_zero_bytes: 0,
+    receipt_blob_gas_used: 300,
+    receipt_blob_gas_price: 3,
+  },
 ]
 
 const parsedFunctionCalls = v
@@ -290,7 +330,7 @@ const parsedFunctionCalls = v
 const FUNCTIONS_RESULT = transformFunctionCallsQueryResult(
   [CONFIGURATIONS[1]],
   [CONFIGURATIONS[2]],
-  [CONFIGURATIONS[3], CONFIGURATIONS[4]],
+  [CONFIGURATIONS[3], CONFIGURATIONS[4], CONFIGURATIONS[5]],
   parsedFunctionCalls,
 )
 

@@ -1,3 +1,114 @@
+Generated with discovered.json: 0xc008adc5b17f6e58b0c674e8019adc306385d8a8
+
+# Diff at Mon, 27 Oct 2025 08:01:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e31499883253bb2b7c36fe0654ea187cfa3ca612 block: 1761060753
+- current timestamp: 1761551477
+
+## Description
+
+New pools, adjusted the template.
+
+## Watched changes
+
+```diff
+    contract BurnMintTokenPool (eth:0x1689C22eD5435e49071CFc208D1Ac6F2A2274490) {
+    +++ description: None
+      values.getSupportedChains.17:
++        "3016212468291539606"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (eth:0x1B7492C3bD23A4aDB448710e4275FF14A5288932) {
+    +++ description: None
+      values.getSupportedChains.16:
++        "17673274061779414707"
+      values.getSupportedChains.17:
++        "4426351306075016396"
+      values.getSupportedChains.18:
++        "5936861837188149645"
+      values.getSupportedChains.19:
++        "6473245816409426016"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x245cc372C84B3645Bf0Ffe6538620B04a217988B) {
+    +++ description: None
+      values.$members.4:
+-        "eth:0xa81636AaCE97783AAC45764B873793bE081dA592"
++        "eth:0xd8Eb6D9B93b6cbB39aBF62b719BbCCcd2b16F56b"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (eth:0x7EeeAd4571b12BC3e331E6Ce2D954E1528aC2921) {
+    +++ description: None
+      values.getSupportedChains.1:
++        "11344663589394136015"
+    }
+```
+
+```diff
+    contract Router (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.84:
++        {"sourceChainSelector":"2135107236357186872","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"}
+      values.offRamps.85:
++        {"sourceChainSelector":"3016212468291539606","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"}
+      values.onRamps.3016212468291539606:
+-        "eth:0xBA1Aa22D51692AA0D7746F996cBE657781653332"
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+      values.onRamps.2135107236357186872:
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LombardTokenPool (eth:0xac82d09D3BaE049C2119f5940ad517E6f1e9E453)
+    +++ description: None
+```
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.81:
+-        "eth:0xac82d09D3BaE049C2119f5940ad517E6f1e9E453"
++        "eth:0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7"
+      values.pools.271:
++        "eth:0x05eEe76f456C51Be0459EC1c0a78bf177B2c877C"
+      values.poolsMap.eth:0x8236a87084f8B84306f72007F36F2618A5634494:
+-        "eth:0xac82d09D3BaE049C2119f5940ad517E6f1e9E453"
++        "eth:0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7"
+      values.poolsMap.eth:0xb45ad160634c528Cc3D2926d9807104FA3157305:
++        "eth:0x05eEe76f456C51Be0459EC1c0a78bf177B2c877C"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x05eEe76f456C51Be0459EC1c0a78bf177B2c877C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LombardTokenPoolV2 (eth:0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0x05eEe76f456C51Be0459EC1c0a78bf177B2c877C.sol | 1744 ++++++++++++++++++
+ .../LombardTokenPool.sol => /dev/null              | 1145 ------------
+ .../transporter/.flat/LombardTokenPoolV2.sol       | 1943 ++++++++++++++++++++
+ 3 files changed, 3687 insertions(+), 1145 deletions(-)
+```
+
 Generated with discovered.json: 0x75cc81b3d09701ab23f937791d1c8e8924953b5f
 
 # Diff at Tue, 21 Oct 2025 15:36:12 GMT:

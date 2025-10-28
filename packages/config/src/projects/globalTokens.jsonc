@@ -864,6 +864,7 @@
     "katana:0x203A662b0BD271A6ed5a60EdFbd04bFce608FD36": "Vault Bridge USDC Token",
     "katana:0x62D6A123E8D19d06d68cf0d2294F9A3A0362c6b3": "Vault Bridge USDS Token",
     "katana:0x2DCa96907fde857dd3D816880A0df407eeB2D2F2": "Vault Bridge USDT Token",
-    "katana:0x0913DA6Da4b42f538B445599b46Bb4622342Cf52": "Vault Bridge WBTC Token"
+    "katana:0x0913DA6Da4b42f538B445599b46Bb4622342Cf52": "Vault Bridge WBTC Token",
+    "ethereal:0xB6fC4B1BFF391e5F6b4a3D2C7Bda1FeE3524692D": "Wrapped USDe Token"
   }
 }

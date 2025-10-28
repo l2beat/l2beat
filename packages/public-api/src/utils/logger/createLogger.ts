@@ -12,7 +12,10 @@ import {
   type ElasticSearchTransportOptions,
 } from './elastic-search/ElasticSearchTransport'
 
-export function createLogger(env: Env): Logger {
+export function createLogger(
+  env: Env,
+  opts?: { indexPrefix?: string },
+): Logger {
   const isLocal = env.optionalString('DEPLOYMENT_ENV') === undefined
 
   const loggerTransports: LoggerTransportOptions[] = [
@@ -30,7 +33,7 @@ export function createLogger(env: Env): Logger {
     const options: ElasticSearchTransportOptions = {
       node: env.string('ES_NODE'),
       apiKey: env.string('ES_API_KEY'),
-      indexPrefix: env.string('ES_INDEX_PREFIX'),
+      indexPrefix: opts?.indexPrefix ?? env.string('ES_INDEX_PREFIX'),
       flushInterval: env.optionalInteger('ES_FLUSH_INTERVAL'),
     }
 

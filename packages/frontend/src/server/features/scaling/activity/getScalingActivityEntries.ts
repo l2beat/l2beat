@@ -62,9 +62,14 @@ export interface ScalingActivityEntry extends CommonScalingEntry {
 }
 
 interface ActivityData {
-  change: number
-  pastDayCount: number
-  summedCount: number
+  pastDayCount: {
+    value: number
+    change: number
+  }
+  summedCount: {
+    value: number
+    change: number
+  }
   maxCount: {
     value: number
     timestamp: number

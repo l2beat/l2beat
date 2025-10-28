@@ -17,14 +17,12 @@ interface Props {
   milestones: Milestone[]
   project: ChartProject
   defaultRange: CostsTimeRange
-  hasPostedData: boolean
 }
 
 export function ProjectCostsChart({
   milestones,
   project,
   defaultRange,
-  hasPostedData,
 }: Props) {
   const [range, setRange] = useState<CostsTimeRange>(defaultRange)
   const [unit, setUnit] = useState<CostsUnit>('usd')
@@ -38,9 +36,6 @@ export function ProjectCostsChart({
     if (!data) {
       return undefined
     }
-
-    const lastDataPosted = data.chart.findLast((d) => d[13])
-    const allDataPostedSynced = data.chart.at(-1)?.[0] === lastDataPosted?.[0]
 
     return data.chart.map(
       ([
@@ -57,7 +52,10 @@ export function ProjectCostsChart({
         blobsGas,
         blobsEth,
         blobsUsd,
-        posted,
+        ethereum,
+        celestia,
+        avail,
+        eigenda,
       ]) => {
         return {
           timestamp,
@@ -81,14 +79,10 @@ export function ProjectCostsChart({
               : unit === 'eth'
                 ? overheadEth
                 : overheadGas,
-          posted,
-          estimatedPosted:
-            !allDataPostedSynced &&
-            lastDataPosted &&
-            timestamp <= data.syncedUntil &&
-            timestamp >= lastDataPosted[0]
-              ? (lastDataPosted[13] ?? null)
-              : null,
+          ethereum,
+          celestia,
+          avail,
+          eigenda,
         }
       },
     )
@@ -114,7 +108,6 @@ export function ProjectCostsChart({
         isLoading={isLoading}
         milestones={milestones}
         range={range}
-        hasPostedData={hasPostedData}
         hasBlobs={!!data?.hasBlobs}
         tickCount={4}
         className="mt-4 mb-3"

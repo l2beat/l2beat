@@ -1,3 +1,4 @@
+import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import {
   Address32,
   createEventParser,
@@ -10,10 +11,10 @@ import {
   type MatchResult,
   Result,
 } from '../types'
+import { LayerZeroV2Config } from './layerzero.config'
 import {
   createLayerZeroGuid,
   decodePacket,
-  LAYERZERO_NETWORKS,
   PacketDelivered,
   PacketSent,
   parsePacketDelivered,
@@ -45,8 +46,13 @@ const OFTReceivedPacketDelivered = createInteropEventType<{
 export class LayerZeroV2OFTsPlugin implements InteropPlugin {
   name = 'layerzero-v2-ofts'
 
+  constructor(private configs: InteropConfigStore) {}
+
   capture(input: LogToCapture) {
-    const network = LAYERZERO_NETWORKS.find((x) => x.chain === input.ctx.chain)
+    const networks = this.configs.get(LayerZeroV2Config)
+    if (!networks) return
+
+    const network = networks.find((x) => x.chain === input.ctx.chain)
     if (!network) return
 
     const oftSent = parseOFTSent(input.log, null)
@@ -56,7 +62,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
         (x) => x.logIndex === input.log.logIndex! - 1,
       )
       if (previousLog) {
-        const packetSent = parsePacketSent(previousLog, [network.address])
+        const packetSent = parsePacketSent(previousLog, [network.endpointV2])
         if (packetSent) {
           const packet = decodePacket(packetSent.encodedPayload)
           if (packet) {
@@ -68,7 +74,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
               packet.header.receiver,
             )
             const $dstChain = findChain(
-              LAYERZERO_NETWORKS,
+              networks,
               (x) => x.eid,
               packet.header.dstEid,
             )
@@ -91,7 +97,9 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
         (x) => x.logIndex === input.log.logIndex! + 1,
       )
       if (nextLog) {
-        const packetDelivered = parsePacketDelivered(nextLog, [network.address])
+        const packetDelivered = parsePacketDelivered(nextLog, [
+          network.endpointV2,
+        ])
         if (packetDelivered) {
           const guid = createLayerZeroGuid(
             packetDelivered.origin.nonce,
@@ -101,7 +109,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
             packetDelivered.receiver,
           )
           const $srcChain = findChain(
-            LAYERZERO_NETWORKS,
+            networks,
             (x) => x.eid,
             packetDelivered.origin.srcEid,
           )
@@ -144,10 +152,10 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
       }),
       Result.Transfer('oftv2.Transfer', {
         srcEvent: oftSentPacketSent,
-        srcAmount: oftSentPacketSent.args.amountSentLD.toString(),
+        srcAmount: BigInt(oftSentPacketSent.args.amountSentLD),
         srcTokenAddress: oftSentPacketSent.args.tokenAddress,
         dstEvent: oftReceivedPacketDelivered,
-        dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD.toString(),
+        dstAmount: BigInt(oftReceivedPacketDelivered.args.amountReceivedLD),
         // TODO: OFT log emitter is not always the token contract (needs effects)
         dstTokenAddress: oftReceivedPacketDelivered.args.tokenAddress,
       }),

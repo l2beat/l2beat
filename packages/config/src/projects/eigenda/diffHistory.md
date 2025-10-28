@@ -1,3 +1,61 @@
+Generated with discovered.json: 0xe624b01310ae6b9d258c0cc9695903ecafb609a2
+
+# Diff at Fri, 24 Oct 2025 15:15:21 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a720737c74121cbdc668d748d3480f7618cd9599 block: 1760089295
+- current timestamp: 1761318853
+
+## Description
+
+Added DACert v2 verifier and EigenDACertVerifierRouter.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1760089295 (main branch discovery), not current.
+
+```diff
+    contract EigenDAOperationsMultisig (eth:0x002721B4790d97dC140a049936aA710152Ba92D5) {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12","role":"admin","via":[{"address":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x8247EF5705d3345516286B72bFE6D690197C2E99) {
+    +++ description: None
+      directlyReceivedPermissions.4:
++        {"permission":"upgrade","from":"eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EigenDACertVerifierRouter (eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12)
+    +++ description: A router contract for DA Certificate verifiers. Verifier routing depends on the certificate reference block number.
+```
+
+```diff
++   Status: CREATED
+    contract EigenDACertVerifier (eth:0x61692e93b6B045c444e942A91EcD1527F23A3FB7)
+    +++ description: A DA verifier contract for EigenDA V2 certificates. The verifier is used to verify the certificate against operator signatures and stake thresholds.
+```
+
+```diff
++   Status: CREATED
+    contract EigenDACertVerifier (eth:0xE1Ae45810A738F13e70Ac8966354d7D0feCF7BD6)
+    +++ description: A legacy DACert verifier contract. It is used to verify v2 DA certificates. New verifiers should use the new verifier router contract.
+```
+
+```diff
++   Status: CREATED
+    contract OperatorStateRetriever (eth:0xEC35aa6521d23479318104E10B4aA216DBBE63Ce)
+    +++ description: A contract for retrieving AVS operators state (e.g., quorum bitmaps, ordered operator lists, stakes, sockets, signatures indices—at) at a given block directly from on-chain registries.
+```
+
 Generated with discovered.json: 0xe78f1b5f08f8584ec964474d87eb47a5659954ff
 
 # Diff at Fri, 10 Oct 2025 09:42:39 GMT:

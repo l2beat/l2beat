@@ -1,0 +1,32 @@
+{
+  "CollateralManager.sol": {
+    "hash": "0x9258c947756b825974889f3070e5a8764e1f1338f91f0955facc2537640ddee0",
+    "address": "ethereal:0x638D6DaC0550f30f37aC5784260309Ac89302faA",
+    "chain": "ethereal",
+    "blockNumber": 38804
+  },
+  "ExchangeConfig.sol": {
+    "hash": "0x9ffa8cb4f60c8030f1786fd22cc1e6f9903e82114fb4ae3f713c47f60178c0de",
+    "address": "ethereal:0xC199cC890F61B847bec9cec4212C35b759A9fD38",
+    "chain": "ethereal",
+    "blockNumber": 38804
+  },
+  "Liquidation.sol": {
+    "hash": "0x76ac18478de588227556d0042ac2ded1e13a53717454987046bd11e5fd1dac79",
+    "address": "ethereal:0xF925Bf7d50abe2Abb21E832c81a6454D791Ad5c0",
+    "chain": "ethereal",
+    "blockNumber": 38804
+  },
+  "PerpEngine.sol": {
+    "hash": "0xe74cf338ff299bbb081c4e688e1667a8480c8255cbed038eaeedddb3c5eb19af",
+    "address": "ethereal:0xCc0385301a10191b7ac633A64742a34F2e4cFB37",
+    "chain": "ethereal",
+    "blockNumber": 38804
+  },
+  "ActionHandler.sol": {
+    "hash": "0xc614b9dee3c41cf413bf0676ec92b8506b7cde4ddf0fcaa64ba535cd4db50653",
+    "address": "ethereal:0xA2308112941f9bc2843C41a971F56B3Ac6E2167a",
+    "chain": "ethereal",
+    "blockNumber": 38804
+  }
+}

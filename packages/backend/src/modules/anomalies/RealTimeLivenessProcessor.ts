@@ -20,7 +20,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { Config, TrackedTxsConfig } from '../../config/Config'
-import { isChainIdMatching } from '../tracked-txs/utils/isChainIdMatching'
+import { isFistParameterMatching } from '../tracked-txs/utils/isFirstParameterMatching'
 import { isProgramHashProven } from '../tracked-txs/utils/isProgramHashProven'
 import type { BlockProcessor } from '../types'
 import type { AnomalyNotifier } from './AnomalyNotifier'
@@ -106,7 +106,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
       )
 
       const filteredSharedBridgeCalls = matchingSharedBridgeCalls.filter((c) =>
-        isChainIdMatching(tx.data as string, c.params),
+        isFistParameterMatching(tx.data as string, c.params),
       )
 
       const results = [

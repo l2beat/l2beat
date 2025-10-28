@@ -15,6 +15,7 @@ import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
 import { CCIPPlugIn } from './ccip'
 import { CCTPPlugin } from './cctp'
+import { CelerPlugIn } from './celer'
 import { CentriFugePlugin } from './centrifuge'
 import { CircleGatewayPlugIn } from './circle-gateway'
 import { DeBridgePlugin } from './debridge'
@@ -31,13 +32,13 @@ import { MayanForwarderPlugin } from './mayan-forwarder'
 import { MayanMctpPlugin } from './mayan-mctp'
 import { MayanMctpFastPlugin } from './mayan-mctp-fast'
 import { MayanSwiftPlugin } from './mayan-swift'
-import { OpStackPlugin } from './opstack'
+import { OpStackPlugin } from './opstack/opstack'
+import { OpStackStandardBridgePlugin } from './opstack/opstack-standardbridge'
 import { OrbitStackPlugin } from './orbitstack'
 import { RelayPlugin } from './relay/relay.plugin'
+import { RelaySimplePlugIn } from './relay-simple'
 import { SquidCoralPlugin } from './squid-coral'
 import { StargatePlugin } from './stargate'
-import { StargateV2BusPlugin } from './stargate-v2-bus'
-import { StargateV2TaxiPlugin } from './stargate-v2-taxi'
 import type { InteropPlugin } from './types'
 import { WormholePlugin } from './wormhole'
 import { WormholeNTTPlugin } from './wormhole-ntt'
@@ -85,6 +86,7 @@ export function createInteropPlugins(
       new DeBridgePlugin(),
       new DeBridgeDlnPlugin(),
       new MayanForwarderPlugin(),
+      new CelerPlugIn(),
       new CircleGatewayPlugIn(),
       new CCIPPlugIn(),
       new CentriFugePlugin(),
@@ -92,12 +94,10 @@ export function createInteropPlugins(
       new MayanMctpPlugin(), // should be run before CCTP
       new MayanMctpFastPlugin(), // should be run before CCTP
       new CCTPPlugin(),
-      new StargatePlugin(), // should be run before stargate bus/taxi, ofts
-      new StargateV2BusPlugin(), // should be run before LayerZeroV2, ofts
-      new StargateV2TaxiPlugin(), // should be run before LayerZeroV2, ofts
-      new LayerZeroV2OFTsPlugin(), // should be run before LayerZeroV2
-      new LayerZeroV1Plugin(),
-      new LayerZeroV2Plugin(),
+      new StargatePlugin(), // should be run before LayerZeroV2, ofts
+      new LayerZeroV2OFTsPlugin(deps.configs), // should be run before LayerZeroV2
+      new LayerZeroV1Plugin(deps.configs),
+      new LayerZeroV2Plugin(deps.configs),
       new WormholeNTTPlugin(), // should be run before WormholeCore and WormholeRelayer
       new WormholeTokenBridgePlugin(), // should be run before Wormhole
       new WormholeRelayerPlugin(), // should be run before Wormhole
@@ -107,6 +107,7 @@ export function createInteropPlugins(
       new AxelarPlugin(),
       new AcrossPlugin(deps.configs),
       new OrbitStackPlugin(),
+      new OpStackStandardBridgePlugin(), // should be run before OpStack
       new OpStackPlugin(),
       new HyperlaneMerklyTokenBridgePlugin(), // should be run before HyperlaneHWR
       new HyperlaneHwrPlugin(), // should be run before Hyperlane
@@ -114,6 +115,7 @@ export function createInteropPlugins(
       new HyperlanePlugIn(),
       new OneinchFusionPlusPlugin(),
       new RelayPlugin(),
+      new RelaySimplePlugIn(),
     ],
   }
 }

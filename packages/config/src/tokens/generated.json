@@ -15872,6 +15872,28 @@
       }
     },
     {
+      "name": "Wrapped USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0xB6fC4B1BFF391e5F6b4a3D2C7Bda1FeE3524692D",
+      "symbol": "WUSDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1760534427,
+      "coingeckoListingTimestamp": 1702512000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/usde.png?1733810059",
+      "chainId": 5064014,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 (OrbitNativeOFT)",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Bridged USDC (Corn)",
       "coingeckoId": "usd-coin",
       "address": "0xDF0B24095e15044538866576754F3C964e902Ee6",

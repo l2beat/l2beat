@@ -2,13 +2,12 @@
    in V1 they are emitted by send/receive library contracts.
 */
 
-import { EthereumAddress } from '@l2beat/shared-pure'
 import { solidityKeccak256 } from 'ethers/lib/utils'
 import { BinaryReader } from '../../../../tools/BinaryReader'
+import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import {
   createEventParser,
   createInteropEventType,
-  defineNetworks,
   findChain,
   type InteropEvent,
   type InteropEventDb,
@@ -17,6 +16,7 @@ import {
   type MatchResult,
   Result,
 } from '../types'
+import { LayerZeroV1Config } from './layerzero.config'
 
 const parsePacketSent = createEventParser(
   'event PacketSent(bytes encodedPayload, bytes options, uint256 nativeFee, uint256 lzTokenFee)',
@@ -36,35 +36,16 @@ export const PacketDelivered = createInteropEventType<{
   guid: string
 }>('layerzero-v1.PacketDelivered')
 
-const LAYERZERO_NETWORKS = defineNetworks('layerzero', [
-  {
-    chainId: 1,
-    eid: 101,
-    chain: 'ethereum',
-    sendLib: EthereumAddress('0xD231084BfB234C107D3eE2b22F97F3346fDAF705'),
-    receiveLib: EthereumAddress('0x245B6e8FFE9ea5Fc301e32d16F66bD4C2123eEfC'),
-  },
-  {
-    chainId: 42161,
-    eid: 110,
-    chain: 'arbitrum',
-    sendLib: EthereumAddress('0x5cDc927876031B4Ef910735225c425A7Fc8efed9'),
-    receiveLib: EthereumAddress('0xe4DD168822767C4342e54e6241f0b91DE0d3c241'),
-  },
-  {
-    chainId: 8453,
-    eid: 184,
-    chain: 'base',
-    sendLib: EthereumAddress('0x9DB3714048B5499Ec65F807787897D3b3Aa70072'),
-    receiveLib: EthereumAddress('0x58D53a2d6a08B72a15137F3381d21b90638bd753'),
-  },
-])
-
 export class LayerZeroV1Plugin implements InteropPlugin {
   name = 'layerzero-v1'
 
+  constructor(private configs: InteropConfigStore) {}
+
   capture(input: LogToCapture) {
-    const network = LAYERZERO_NETWORKS.find((x) => x.chain === input.ctx.chain)
+    const networks = this.configs.get(LayerZeroV1Config)
+    if (!networks) return
+
+    const network = networks.find((x) => x.chain === input.ctx.chain)
     if (!network) return
 
     const packetSent = parsePacketSent(input.log, [network.sendLib])
@@ -78,11 +59,7 @@ export class LayerZeroV1Plugin implements InteropPlugin {
         packet.header.dstEid,
         packet.header.receiver,
       )
-      const $dstChain = findChain(
-        LAYERZERO_NETWORKS,
-        (x) => x.eid,
-        packet.header.dstEid,
-      )
+      const $dstChain = findChain(networks, (x) => x.eid, packet.header.dstEid)
       return PacketSent.create(input.ctx, { $dstChain, guid })
     }
 
@@ -98,7 +75,7 @@ export class LayerZeroV1Plugin implements InteropPlugin {
         packetDelivered.receiver,
       )
       const $srcChain = findChain(
-        LAYERZERO_NETWORKS,
+        networks,
         (x) => x.eid,
         packetDelivered.origin.srcEid,
       )
