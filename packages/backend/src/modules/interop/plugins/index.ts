@@ -97,8 +97,6 @@ export function createInteropPlugins(
       new CCTPV1Plugin(deps.configs),
       new CCTPV2Plugin(deps.configs),
       new StargatePlugin(), // should be run before stargate bus/taxi, ofts
-      new StargateV2BusPlugin(), // should be run before LayerZeroV2, ofts
-      new StargateV2TaxiPlugin(), // should be run before LayerZeroV2, ofts
       new LayerZeroV2OFTsPlugin(deps.configs), // should be run before LayerZeroV2
       new LayerZeroV1Plugin(deps.configs),
       new LayerZeroV2Plugin(deps.configs),
