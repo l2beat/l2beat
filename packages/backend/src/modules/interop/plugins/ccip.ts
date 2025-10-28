@@ -165,7 +165,6 @@ export class CCIPPlugIn implements InteropPlugin {
       })
 
       if (!ccipSendRequested) return
-      console.log(ccipSendRequested.args.tokenAmounts)
       if (delivery.args.state !== 2) return
       // For each token in token amounts create add TRANSFER to the Result
       const result: MatchResult = []
