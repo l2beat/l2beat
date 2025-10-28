@@ -15,7 +15,7 @@ export interface InteropTransferRecord {
   srcLogIndex: number | undefined
   srcEventId: string | undefined
   srcTokenAddress: string | undefined
-  srcRawAmount: string | undefined
+  srcRawAmount: bigint | undefined
   srcAbstractTokenId: string | undefined
   srcSymbol: string | undefined
   srcAmount: number | undefined
@@ -27,7 +27,7 @@ export interface InteropTransferRecord {
   dstLogIndex: number | undefined
   dstEventId: string | undefined
   dstTokenAddress: string | undefined
-  dstRawAmount: string | undefined
+  dstRawAmount: bigint | undefined
   dstAbstractTokenId: string | undefined
   dstSymbol: string | undefined
   dstAmount: number | undefined
@@ -62,7 +62,7 @@ export function toRecord(
     srcLogIndex: row.srcLogIndex ?? undefined,
     srcEventId: row.srcEventId ?? undefined,
     srcTokenAddress: row.srcTokenAddress ?? undefined,
-    srcRawAmount: row.srcRawAmount ?? undefined,
+    srcRawAmount: row.srcRawAmount ? BigInt(row.srcRawAmount) : undefined,
     srcAbstractTokenId: row.srcAbstractTokenId ?? undefined,
     srcSymbol: undefined,
     srcAmount: row.srcAmount ?? undefined,
@@ -74,7 +74,7 @@ export function toRecord(
     dstLogIndex: row.dstLogIndex ?? undefined,
     dstEventId: row.dstEventId ?? undefined,
     dstTokenAddress: row.dstTokenAddress ?? undefined,
-    dstRawAmount: row.dstRawAmount ?? undefined,
+    dstRawAmount: row.dstRawAmount ? BigInt(row.dstRawAmount) : undefined,
     dstAbstractTokenId: row.dstAbstractTokenId ?? undefined,
     dstSymbol: undefined,
     dstAmount: row.dstAmount ?? undefined,
@@ -100,7 +100,7 @@ export function toRow(
     srcLogIndex: record.srcLogIndex,
     srcEventId: record.srcEventId,
     srcTokenAddress: record.srcTokenAddress,
-    srcRawAmount: record.srcRawAmount,
+    srcRawAmount: record.srcRawAmount?.toString(),
     srcAbstractTokenId: record.srcAbstractTokenId,
     srcAmount: record.srcAmount,
     srcPrice: record.srcPrice,
@@ -112,7 +112,7 @@ export function toRow(
     dstLogIndex: record.dstLogIndex,
     dstEventId: record.dstEventId,
     dstTokenAddress: record.dstTokenAddress,
-    dstRawAmount: record.dstRawAmount,
+    dstRawAmount: record.dstRawAmount?.toString(),
     dstAbstractTokenId: record.dstAbstractTokenId,
     dstAmount: record.dstAmount,
     dstPrice: record.dstPrice,
