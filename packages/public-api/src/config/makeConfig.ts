@@ -20,7 +20,7 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
 
           min: 2,
           max: 10,
-          log: env.boolean('DATABASE_LOG_ENABLED')
+          log: env.boolean('DATABASE_LOG_ENABLED', false)
             ? makeDbLogger(env)
             : undefined,
         }
@@ -34,7 +34,7 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
 
           min: 20,
           max: env.integer('DATABASE_MAX_POOL_SIZE', 20),
-          log: env.boolean('DATABASE_LOG_ENABLED')
+          log: env.boolean('DATABASE_LOG_ENABLED', false)
             ? makeDbLogger(env)
             : undefined,
         },
