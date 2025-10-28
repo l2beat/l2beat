@@ -31,6 +31,7 @@ const V2_MESSAGE_TRANSMITTER = EthereumAddress(
 )
 
 // https://developers.circle.com/cctp/v1/evm-smart-contracts
+// V1 is an older version, we assume there wont any changes
 const OVERRIDES_V1 = [
   {
     chain: 'ethereum',
@@ -178,7 +179,7 @@ export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
           domain: decoded,
           messageTransmitter: V2_MESSAGE_TRANSMITTER,
         }
-      } catch (_) {
+      } catch {
         return
       }
     })
