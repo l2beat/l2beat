@@ -95,7 +95,7 @@ export class UpdateDiffer {
   ) {
     const implementationChanges = diff.filter((discoveryDiff) =>
       discoveryDiff.diff?.some(
-        (f) => f.key && f.key === 'values.$implementation',
+        (f) => f.key && f.key.startsWith('values.$implementation'),
       ),
     )
     const fieldHighSeverityChanges = diff.filter((discoveryDiff) =>

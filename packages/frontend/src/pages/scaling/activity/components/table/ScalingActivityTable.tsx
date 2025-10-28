@@ -67,7 +67,6 @@ function mapToTableEntry(entry: ScalingActivityEntry, metric: ActivityMetric) {
     data: entry.data
       ? {
           ...entry.data,
-          change: entry.data[metric].change,
           pastDayCount: entry.data[metric].pastDayCount,
           summedCount: entry.data[metric].summedCount,
           maxCount: entry.data[metric].maxCount,

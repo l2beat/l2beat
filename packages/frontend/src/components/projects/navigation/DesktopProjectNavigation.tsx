@@ -73,7 +73,7 @@ export function DesktopProjectNavigation({
   }, [headerHeight])
 
   return (
-    <div className="sticky top-8 w-[172px] min-w-[172px]">
+    <div className="sticky top-8 w-45 min-w-45">
       <div className="relative">
         <div
           ref={headerRef}
@@ -108,8 +108,10 @@ export function DesktopProjectNavigation({
                   router.push(value)
                 }}
               >
-                <SelectTrigger>
-                  <SelectValue />
+                <SelectTrigger className="max-w-45">
+                  <div className="min-w-0 max-w-31 truncate">
+                    <SelectValue />
+                  </div>
                 </SelectTrigger>
                 <SelectContent>
                   {projectVariants.map((variant) => (
@@ -166,7 +168,7 @@ function ProjectNavigationList({
   return (
     <ScrollWithGradient
       className={cn(
-        'absolute top-0 flex w-[172px] min-w-[172px] flex-col gap-3 font-medium text-xs leading-none transition-[top] duration-300',
+        'absolute top-0 flex w-45 min-w-45 flex-col gap-3 font-medium text-xs leading-none transition-[top] duration-300',
         isUnderReview
           ? 'max-h-[calc(100vh-300px)]'
           : 'max-h-[calc(100vh-220px)]',
@@ -198,12 +200,12 @@ function ProjectNavigationList({
             <a
               href={`#${section.id}`}
               ref={selected ? currentMenuEntry : null}
-              className="group flex flex-row items-center gap-1.5"
+              className="group flex flex-row gap-1.5"
             >
               <NavigationListIndex index={i + 1} selected={selected} />
               <span
                 className={cn(
-                  'text-label-value-14 hover:text-primary',
+                  'mt-[3px] text-label-value-14 hover:text-primary',
                   selected ? 'text-primary' : 'text-secondary',
                 )}
               >
@@ -232,7 +234,7 @@ function NavigationListIndex(props: { index: number; selected: boolean }) {
   return (
     <div
       className={cn(
-        'flex size-5 shrink-0 items-center justify-center rounded text-center text-label-value-12',
+        'flex size-5 shrink-0 items-center justify-center rounded-lg text-center text-label-value-12',
         props.selected
           ? 'bg-linear-to-r from-purple-100 to-pink-100 text-white group-data-[has-colors=true]/section-wrapper:bg-[image:none] group-data-[has-colors=true]/section-wrapper:bg-branding-primary'
           : 'bg-surface-tertiary text-secondary group-hover:text-primary',
@@ -252,7 +254,7 @@ function NavigationSubsectionEntry(props: {
     <a
       key={props.id}
       href={`#${props.id}`}
-      className={cn('flex flex-row items-center ')}
+      className="group flex flex-row items-center"
     >
       <div className="flex flex-row gap-3">
         {/* Left side */}
@@ -265,7 +267,7 @@ function NavigationSubsectionEntry(props: {
         {/* Right side */}
         <div
           className={cn(
-            'flex-1 pb-3 transition-opacity hover:opacity-100',
+            'flex-1 pt-0.5 pb-2 transition-opacity hover:opacity-100 group-last:pb-0.5',
             !props.selected && 'opacity-60',
           )}
         >

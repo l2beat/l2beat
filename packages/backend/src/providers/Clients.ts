@@ -95,7 +95,7 @@ export function initClients(config: Config, logger: Logger): Clients {
               )
             : undefined
           const rpcClient = new RpcClient({
-            sourceName: chain.name,
+            chain: chain.name,
             url: blockApi.url,
             http,
             callsPerMinute: blockApi.callsPerMinute,

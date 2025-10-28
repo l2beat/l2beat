@@ -1,3 +1,89 @@
+Generated with discovered.json: 0xca96b303a588e901da012a888fda90ac91477451
+
+# Diff at Fri, 24 Oct 2025 09:13:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@11b074f59e0a769fa3d144569b93ef0f7ba1e44f block: 1760604460
+- current timestamp: 1761220191
+
+## Description
+
+zk token proxy admin moved to new protocolupgradehandler l2 alias.
+
+Config: zksync v29 upgrade.
+
+## Watched changes
+
+```diff
+    contract EraChainAdminProxy (eth:0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.6:
++        {"_protocolVersion":124554051586,"_upgradeTimestamp":1761121800}
+    }
+```
+
+```diff
+    contract ZkTokenProxyAdmin (zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC) {
+    +++ description: None
+      values.owner:
+-        "zksync:0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8"
++        "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"
+    }
+```
+
+```diff
+    EOA ProtocolUpgradeHandler_l2Alias (zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","role":"admin","via":[{"address":"zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"}]}
+      controlsMajorityOfUpgradePermissions:
++        true
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC","role":".owner"}]
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1760604460 (main branch discovery), not current.
+
+```diff
+    contract EraChainAdminProxy (eth:0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.
+      description:
++        "A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it."
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      directlyReceivedPermissions.2.description:
+-        "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration."
++        "set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration."
+    }
+```
+
+```diff
+    contract EmergencyUpgradeBoard (eth:0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6) {
+    +++ description: A custom contract allowing a 3/3 of eth:0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+      receivedPermissions.0.description:
+-        "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration."
++        "set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration."
+    }
+```
+
+```diff
+    EOA  (zksync:0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8) {
+    +++ description: None
+      name:
+-        "ProtocolUpgradeHandler_l2Alias_deprecated"
+    }
+```
+
 Generated with discovered.json: 0xa54977ac3168282658040f1c7f667d67529d9167
 
 # Diff at Thu, 16 Oct 2025 08:50:29 GMT:
