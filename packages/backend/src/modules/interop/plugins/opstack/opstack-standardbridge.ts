@@ -421,10 +421,10 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
         }),
         Result.Transfer('opstack-standardbridge.L2ToL1Transfer', {
           srcEvent: erc20BridgeInitiated,
-          srcAmount: erc20BridgeInitiated.args.amount,
+          srcAmount: BigInt(erc20BridgeInitiated.args.amount),
           srcTokenAddress: erc20BridgeInitiated.args.localToken,
           dstEvent: event,
-          dstAmount: event.args.amount,
+          dstAmount: BigInt(event.args.amount),
           dstTokenAddress: event.args.localToken,
         }),
       ]
@@ -458,10 +458,10 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
         }),
         Result.Transfer('opstack-standardbridge.L2ToL1Transfer', {
           srcEvent: ethBridgeInitiated,
-          srcAmount: ethBridgeInitiated.args.amount,
+          srcAmount: BigInt(ethBridgeInitiated.args.amount),
           srcTokenAddress: Address32.ZERO,
           dstEvent: event,
-          dstAmount: event.args.amount,
+          dstAmount: BigInt(event.args.amount),
           dstTokenAddress: Address32.ZERO,
         }),
       ]
@@ -495,10 +495,10 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
         }),
         Result.Transfer('opstack-standardbridge.L1ToL2Transfer', {
           srcEvent: erc20DepositInitiated,
-          srcAmount: erc20DepositInitiated.args.amount,
+          srcAmount:  BigInt(erc20DepositInitiated.args.amount),
           srcTokenAddress: erc20DepositInitiated.args.localToken,
           dstEvent: event,
-          dstAmount: event.args.amount,
+          dstAmount: BigInt(event.args.amount),
           dstTokenAddress: event.args.localToken,
         }),
       ]
@@ -532,10 +532,10 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
         }),
         Result.Transfer('opstack-standardbridge.L1ToL2Transfer', {
           srcEvent: ethBridgeInitiated,
-          srcAmount: ethBridgeInitiated.args.amount,
+          srcAmount: BigInt(ethBridgeInitiated.args.amount),
           srcTokenAddress: Address32.ZERO,
           dstEvent: event,
-          dstAmount: event.args.amount,
+          dstAmount: BigInt(event.args.amount),
           dstTokenAddress: Address32.ZERO,
         }),
       ]
