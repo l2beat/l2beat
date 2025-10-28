@@ -7,7 +7,7 @@ export const earnm: ScalingProject = underReviewL3({
   id: ProjectId('earnm'),
   hostChain: ProjectId('arbitrum'),
   capability: 'universal',
-  addedAt: UnixTime(1761662460), 
+  addedAt: UnixTime(1761662460),
   display: {
     name: 'Earnm',
     slug: 'earnm',
