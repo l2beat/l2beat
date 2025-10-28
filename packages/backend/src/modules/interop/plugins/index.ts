@@ -14,7 +14,10 @@ import { AllbridgePlugIn } from './allbridge'
 import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
 import { CCIPPlugIn } from './ccip'
-import { CCTPPlugin } from './cctp'
+import { CCTPConfigPlugin } from './cctp/cctp.config'
+import { CCTPV1Plugin } from './cctp/cctp-v1.plugin'
+import { CCTPV2Plugin } from './cctp/cctp-v2.plugin'
+import { CelerPlugIn } from './celer'
 import { CentriFugePlugin } from './centrifuge'
 import { CircleGatewayPlugIn } from './circle-gateway'
 import { DeBridgePlugin } from './debridge'
@@ -31,8 +34,10 @@ import { MayanForwarderPlugin } from './mayan-forwarder'
 import { MayanMctpPlugin } from './mayan-mctp'
 import { MayanMctpFastPlugin } from './mayan-mctp-fast'
 import { MayanSwiftPlugin } from './mayan-swift'
-import { OpStackPlugin } from './opstack'
+import { OpStackPlugin } from './opstack/opstack'
+import { OpStackStandardBridgePlugin } from './opstack/opstack-standardbridge'
 import { OrbitStackPlugin } from './orbitstack'
+import { RelayPlugin } from './relay/relay.plugin'
 import { RelaySimplePlugIn } from './relay-simple'
 import { SquidCoralPlugin } from './squid-coral'
 import { StargatePlugin } from './stargate'
@@ -61,6 +66,7 @@ export function createInteropPlugins(
 ): InteropPlugins {
   const ethereumRpc = deps.rpcClients.find((c) => c.chain === 'ethereum')
   assert(ethereumRpc)
+  const rpcs = new Map(deps.rpcClients.map((r) => [r.chain, r]))
 
   return {
     comparePlugins: [new AcrossComparePlugin()],
@@ -77,20 +83,23 @@ export function createInteropPlugins(
         deps.logger,
         deps.httpClient,
       ),
+      new CCTPConfigPlugin(deps.chains, deps.configs, deps.logger, rpcs),
     ],
     eventPlugins: [
       new SquidCoralPlugin(),
       new DeBridgePlugin(),
       new DeBridgeDlnPlugin(),
       new MayanForwarderPlugin(),
-      new CircleGatewayPlugIn(),
+      new CircleGatewayPlugIn(deps.configs),
+      new CelerPlugIn(),
       new CCIPPlugIn(),
       new CentriFugePlugin(),
       new MayanSwiftPlugin(), // should be run before CCTP
       new MayanMctpPlugin(), // should be run before CCTP
       new MayanMctpFastPlugin(), // should be run before CCTP
-      new CCTPPlugin(),
-      new StargatePlugin(), // should be run before LayerZeroV2, ofts
+      new CCTPV1Plugin(deps.configs),
+      new CCTPV2Plugin(deps.configs),
+      new StargatePlugin(), // should be run before stargate bus/taxi, ofts
       new LayerZeroV2OFTsPlugin(deps.configs), // should be run before LayerZeroV2
       new LayerZeroV1Plugin(deps.configs),
       new LayerZeroV2Plugin(deps.configs),
@@ -103,12 +112,14 @@ export function createInteropPlugins(
       new AxelarPlugin(),
       new AcrossPlugin(deps.configs),
       new OrbitStackPlugin(),
+      new OpStackStandardBridgePlugin(), // should be run before OpStack
       new OpStackPlugin(),
       new HyperlaneMerklyTokenBridgePlugin(), // should be run before HyperlaneHWR
       new HyperlaneHwrPlugin(), // should be run before Hyperlane
       new HyperlaneEcoPlugin(), // should be run before Hyperlane
       new HyperlanePlugIn(),
       new OneinchFusionPlusPlugin(),
+      new RelayPlugin(),
       new RelaySimplePlugIn(),
     ],
   }

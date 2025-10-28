@@ -2,14 +2,14 @@
 
 This is an experimental plugin for the RELAY protocol. It checks
 deposits to the solver on SRC and deposits from the solver on DST
-and matches them based on the additional requestId hidden in the 
+and matches them based on the additional requestId hidden in the
 calldata
 
 It also checks events from the following contracts:
 1. RelayReceiver - used in V1
 2. RelayDepository - used in V2
 
-On the destination chain it tries to capture direct transfers from 
+On the destination chain it tries to capture direct transfers from
 the Solver or via Router (which serves as a multicall facitlity for
 a Solver that, e.g. tries to buy an NFT on behalf of a user).
 */
@@ -45,14 +45,14 @@ const parseRelayERC20Deposit = createEventParser(
 )
 
 export const TransferSrc = createInteropEventType<{
-  amount: string
+  amount?: string
   tokenAddress: Address32
   kind: string
   requestId: string
 }>('relay-simple.TransferSrc')
 
 export const TransferDst = createInteropEventType<{
-  amount: string
+  amount?: string
   tokenAddress: Address32
   kind: string
   requestId: string
@@ -91,7 +91,7 @@ export class RelaySimplePlugIn implements InteropPlugin {
     if (input.tx.txTo === RelaySolver32) {
       if (input.tx.txData.length === 2 + 64) {
         return TransferSrc.create(input.tx, {
-          amount: input.tx.txValue.toString(),
+          amount: input.tx.txValue?.toString(),
           tokenAddress: Address32.NATIVE,
           kind: 'direct transfer',
           requestId: input.tx.txData,
@@ -102,7 +102,7 @@ export class RelaySimplePlugIn implements InteropPlugin {
     if (input.tx.txFrom === RelaySolver32) {
       if (input.tx.txData.length === 2 + 64) {
         return TransferDst.create(input.tx, {
-          amount: input.tx.txValue.toString(),
+          amount: input.tx.txValue?.toString(),
           tokenAddress: Address32.NATIVE,
           kind: 'direct transfer',
           requestId: input.tx.txData,
@@ -112,7 +112,7 @@ export class RelaySimplePlugIn implements InteropPlugin {
 
     if (input.tx.txTo === RelayRouter32) {
       return TransferDst.create(input.tx, {
-        amount: input.tx.txValue.toString(),
+        amount: input.tx.txValue?.toString(),
         tokenAddress: Address32.NATIVE,
         kind: 'relay router',
         requestId: '0x' + input.tx.txData.slice(-64),
@@ -149,7 +149,7 @@ export class RelaySimplePlugIn implements InteropPlugin {
     const fundsForwardedWithData = parseFundsForwardedWithData(input.log, null)
     if (fundsForwardedWithData) {
       return TransferSrc.create(input.ctx, {
-        amount: input.ctx.txValue.toString(),
+        amount: input.ctx.txValue?.toString(),
         tokenAddress: Address32.NATIVE,
         kind: 'funds forwarded',
         requestId: fundsForwardedWithData.data.slice(0, 2 + 64),
@@ -200,10 +200,14 @@ export class RelaySimplePlugIn implements InteropPlugin {
         }),
         Result.Transfer('relay-simple.Transfer', {
           srcEvent: transferDst,
-          srcAmount: transferDst.args.amount,
+          srcAmount: transferDst.args.amount
+            ? BigInt(transferDst.args.amount)
+            : undefined,
           srcTokenAddress: transferDst.args.tokenAddress,
           dstEvent: transferSrc,
-          dstAmount: transferSrc.args.amount,
+          dstAmount: transferSrc.args.amount
+            ? BigInt(transferSrc.args.amount)
+            : undefined,
           dstTokenAddress: transferSrc.args.tokenAddress,
         }),
       ]

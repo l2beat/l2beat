@@ -154,10 +154,10 @@ export class DeBridgeDlnPlugin implements InteropPlugin {
       Result.Transfer('debridge-dln.Transfer', {
         srcEvent: orderCreated,
         srcTokenAddress: orderCreated.args.fromToken,
-        srcAmount: orderCreated.args.fromAmount,
+        srcAmount: BigInt(orderCreated.args.fromAmount),
         dstEvent: orderFilled,
         dstTokenAddress: orderFilled.args.toToken,
-        dstAmount: orderFilled.args.fillAmount,
+        dstAmount: BigInt(orderFilled.args.fillAmount),
       }),
     ]
   }

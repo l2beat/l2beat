@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import {
   Address32,
@@ -54,6 +55,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
 
     const network = networks.find((x) => x.chain === input.ctx.chain)
     if (!network) return
+    assert(network.endpointV2, 'We capture only chains with endpoints')
 
     const oftSent = parseOFTSent(input.log, null)
     if (oftSent) {
@@ -152,10 +154,10 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
       }),
       Result.Transfer('oftv2.Transfer', {
         srcEvent: oftSentPacketSent,
-        srcAmount: oftSentPacketSent.args.amountSentLD.toString(),
+        srcAmount: BigInt(oftSentPacketSent.args.amountSentLD),
         srcTokenAddress: oftSentPacketSent.args.tokenAddress,
         dstEvent: oftReceivedPacketDelivered,
-        dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD.toString(),
+        dstAmount: BigInt(oftReceivedPacketDelivered.args.amountReceivedLD),
         // TODO: OFT log emitter is not always the token contract (needs effects)
         dstTokenAddress: oftReceivedPacketDelivered.args.tokenAddress,
       }),

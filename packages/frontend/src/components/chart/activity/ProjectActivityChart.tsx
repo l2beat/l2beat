@@ -148,6 +148,7 @@ export function ProjectActivityChart({
         </ChartStatsItem>
         <ChartStatsItem
           label={`Max. ${metric === 'tps' ? 'TPS' : 'UOPS'}`}
+          tooltip={`Shows the maximum sustained ${metric === 'uops' ? 'UOPS' : 'TPS'}, calculated as an average over the count for a day.`}
           className="max-md:h-7"
           isLoading={isLoading}
         >

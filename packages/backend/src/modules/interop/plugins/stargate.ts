@@ -371,10 +371,10 @@ export class StargatePlugin implements InteropPlugin {
           Result.Transfer('stargate-v2-bus.Transfer', {
             srcEvent: oftSentBusRode,
             srcTokenAddress: oftSentBusRode.args.tokenAddress,
-            srcAmount: oftSentBusRode.args.amountSentLD.toString(),
+            srcAmount: BigInt(oftSentBusRode.args.amountSentLD),
             dstEvent: matchedOftReceived,
             dstTokenAddress: matchedOftReceived.args.tokenAddress,
-            dstAmount: matchedOftReceived.args.amountReceivedLD.toString(),
+            dstAmount: BigInt(matchedOftReceived.args.amountReceivedLD),
           }),
         )
       }
@@ -396,10 +396,10 @@ export class StargatePlugin implements InteropPlugin {
         Result.Transfer('stargate-v2-taxi.Transfer', {
           srcEvent: oftSentTaxi,
           srcTokenAddress: oftSentTaxi.args.tokenAddress,
-          srcAmount: oftSentTaxi.args.amountSentLD.toString(),
+          srcAmount: BigInt(oftSentTaxi.args.amountSentLD),
           dstEvent: oftReceived,
           dstTokenAddress: oftReceived.args.tokenAddress,
-          dstAmount: oftReceived.args.amountReceivedLD.toString(),
+          dstAmount: BigInt(oftReceived.args.amountReceivedLD),
         }),
       ]
     }
