@@ -57,7 +57,7 @@ export const earnm: ScalingProject = underReviewL3({
     {
       address: EthereumAddress('0xA9F4ee72439afC704db48dc049CbFb7E914aD300'),
       sinceTimestamp: UnixTime(1745356800),
-      tokens: ['ETH'],
+      tokens: '*',
       chain: 'arbitrum',
     },
     {
