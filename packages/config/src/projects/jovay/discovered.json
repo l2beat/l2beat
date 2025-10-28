@@ -1,0 +1,61 @@
+{
+  "name": "jovay",
+  "timestamp": 1761665371,
+  "configHash": "0x6012a271dc7923a66a4146b28d8fc6902fbf024aae76179911143d303b30c66e",
+  "entries": [
+    {
+      "name": "Escrow",
+      "address": "eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1758377315,
+      "sinceBlock": 23404772,
+      "values": {
+        "$admin": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b",
+        "$implementation": "eth:0x376df788aFc6E801b24fC6C0fa6b53637A947ae7",
+        "$pastUpgrades": [
+          [
+            "2025-09-20T14:08:35.000Z",
+            "0x27da4e3d9243ad68db7b84842815c2928e6c216e685644216f6d4efd76a4a2ca",
+            ["eth:0x376df788aFc6E801b24fC6C0fa6b53637A947ae7"]
+          ],
+          [
+            "2025-09-24T08:41:11.000Z",
+            "0xaff5b64efe3035f43b1aeb399bb86c1709bdd11b65ffabfe773a0ea4a1c90c03",
+            ["eth:0x376df788aFc6E801b24fC6C0fa6b53637A947ae7"]
+          ]
+        ],
+        "$upgradeCount": 2
+      },
+      "implementationNames": {
+        "eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1": "",
+        "eth:0x376df788aFc6E801b24fC6C0fa6b53637A947ae7": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1758377243,
+      "sinceBlock": 23404766,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b": ""
+      }
+    }
+  ],
+  "abis": {},
+  "usedTemplates": {},
+  "usedBlockNumbers": { "ethereum": 23676818 },
+  "permissionsConfigHash": "0x3c38e64dab65c9a5ec9fd42a0ad911ad622eafbff4d42bed54614c5e675af69b"
+}

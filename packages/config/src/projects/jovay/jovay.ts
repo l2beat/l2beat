@@ -33,6 +33,8 @@ export const jovay: ScalingProject = underReviewL2({
   chainConfig: {
     name: 'jovay',
     chainId: 5734951,
+    explorerUrl: 'https://explorer.jovay.io/l2',
+    gasTokens: ['ETH'],
     apis: [
       {
         type: 'rpc',
