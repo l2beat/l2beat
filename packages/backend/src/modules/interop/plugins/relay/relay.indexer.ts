@@ -125,7 +125,7 @@ export class RelayIndexer extends ManagedChildIndexer {
           timestamp: tx?.timestamp ?? timestamp,
           txData: tx?.data?.data ?? '0x',
           txHash: tx?.hash ?? zeroHash,
-          txValue: tx?.data?.value ?? '0',
+          txValue: tx?.data?.value ? BigInt(tx.data.value) : 0n,
           txTo: tx?.data?.to ? Address32.from(tx.data.to) : undefined,
         }
       }
