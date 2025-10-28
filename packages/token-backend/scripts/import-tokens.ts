@@ -13,10 +13,14 @@ const AbstractToken = v.object({
   coingeckoId: v.string().optional(),
   coingeckoListingTimestamp: v.number().optional(),
   reviewed: v.boolean().optional(),
-  deployedTokens: v.array(v.object({
-    chain: v.string(),
-    address: v.string()
-  })).optional()
+  deployedTokens: v
+    .array(
+      v.object({
+        chain: v.string(),
+        address: v.string(),
+      }),
+    )
+    .optional(),
 })
 
 const DeployedToken = v.object({
@@ -25,7 +29,7 @@ const DeployedToken = v.object({
   decimals: v.number(),
   symbol: v.string(),
   deploymentTimestamp: v.number(),
-  comment: v.string().optional()
+  comment: v.string().optional(),
 })
 
 const TokenConnection = v.object({
@@ -39,7 +43,7 @@ const TokenConnection = v.object({
   }),
   type: v.string(),
   params: v.string().optional(),
-  comment: v.string().optional()
+  comment: v.string().optional(),
 })
 
 type TokenImportFile = v.infer<typeof TokenImportFile>
@@ -47,9 +51,17 @@ const TokenImportFile = v.array(
   v.object({
     abstract: v.array(AbstractToken),
     deployed: v.array(DeployedToken),
-    connections: v.array(TokenConnection)
+    connections: v.array(TokenConnection),
   }),
 )
+
+type CallFn = <T>(
+  address: string,
+  abi: string, // | utils.FunctionFragment,
+  args: unknown[],
+) => Promise<T | undefined>
+
+type CallFnProvider = (chain: string) => CallFn
 
 function main() {
   const apiUrl = process.env['TOKEN_BACKEND_TRPC_URL']
