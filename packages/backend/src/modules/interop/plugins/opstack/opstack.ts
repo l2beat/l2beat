@@ -10,7 +10,7 @@ import {
   type LogToCapture,
   type MatchResult,
   Result,
-} from './types'
+} from '../types'
 
 // == L2->L1 messages, all of them. ==
 
@@ -20,7 +20,7 @@ export const MessagePassed = createInteropEventType<{
   withdrawalHash: string
 }>('opstack.MessagePassed', { ttl: 14 * UnixTime.DAY }) // needs to go through the challenge period
 
-const parseMessagePassed = createEventParser(
+export const parseMessagePassed = createEventParser(
   'event MessagePassed(uint256 indexed nonce, address indexed sender, address indexed target, uint256 value, uint256 gasLimit, bytes data, bytes32 withdrawalHash)',
 )
 
@@ -30,7 +30,7 @@ export const WithdrawalFinalized = createInteropEventType<{
   withdrawalHash: string
 }>('opstack.WithdrawalFinalized')
 
-const parseWithdrawalFinalized = createEventParser(
+export const parseWithdrawalFinalized = createEventParser(
   'event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)',
 )
 
@@ -42,7 +42,7 @@ export const RelayedMessage = createInteropEventType<{
   msgHash: string
 }>('opstack.RelayedMessage')
 
-const parseRelayedMessage = createEventParser(
+export const parseRelayedMessage = createEventParser(
   'event RelayedMessage(bytes32 indexed msgHash)',
 )
 
@@ -52,10 +52,10 @@ export const SentMessage = createInteropEventType<{
   msgHash: string
 }>('opstack.SentMessage')
 
-const parseSentMessage = createEventParser(
+export const parseSentMessage = createEventParser(
   'event SentMessage(address indexed target, address sender, bytes message, uint256 messageNonce, uint256 gasLimit)',
 )
-const parseSentMessageExtension1 = createEventParser(
+export const parseSentMessageExtension1 = createEventParser(
   'event SentMessageExtension1(address indexed sender, uint256 value)',
 )
 
@@ -64,7 +64,7 @@ const relayMessageInterface = new utils.Interface([
   'function relayMessage(uint256 _nonce, address _sender, address _target, uint256 _value, uint256 _gasLimit, bytes _data)',
 ])
 
-function hashCrossDomainMessageV1(
+export function hashCrossDomainMessageV1(
   nonce: bigint,
   sender: string,
   target: string,
@@ -83,7 +83,7 @@ function hashCrossDomainMessageV1(
   return utils.keccak256(encoded)
 }
 
-const OPSTACK_NETWORKS = defineNetworks('opstack', [
+export const OPSTACK_NETWORKS = defineNetworks('opstack', [
   {
     chain: 'base',
     l2ToL1MessagePasser: EthereumAddress(
@@ -97,6 +97,12 @@ const OPSTACK_NETWORKS = defineNetworks('opstack', [
     ),
     l2CrossDomainMessenger: EthereumAddress(
       '0x4200000000000000000000000000000000000007',
+    ),
+    l1StandardBridge: EthereumAddress(
+      '0x3154Cf16ccdb4C6d922629664174b904d80F2C35',
+    ),
+    l2StandardBridge: EthereumAddress(
+      '0x4200000000000000000000000000000000000010',
     ),
   },
   {
@@ -112,6 +118,12 @@ const OPSTACK_NETWORKS = defineNetworks('opstack', [
     ),
     l2CrossDomainMessenger: EthereumAddress(
       '0x4200000000000000000000000000000000000007',
+    ),
+    l1StandardBridge: EthereumAddress(
+      '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
+    ),
+    l2StandardBridge: EthereumAddress(
+      '0x4200000000000000000000000000000000000010',
     ),
   },
 ])
