@@ -162,10 +162,10 @@ export class CelerPlugIn implements InteropPlugin {
         Result.Transfer('celer.BridgeTransfer', {
           srcEvent: sent,
           srcTokenAddress: sent.args.token,
-          srcAmount: sent.args.amount,
+          srcAmount: BigInt(sent.args.amount),
           dstEvent: delivery,
           dstTokenAddress: delivery.args.token,
-          dstAmount: delivery.args.amount,
+          dstAmount: BigInt(delivery.args.amount),
         }),
       ]
     }
