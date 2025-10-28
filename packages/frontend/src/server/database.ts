@@ -89,6 +89,7 @@ function makeDbLogger() {
       logger.error('Query failed', {
         durationMs: event.queryDurationMillis,
         error: event.error,
+        source: 'frontend',
         sql: compiledToSqlQuery(event.query),
         ...(env.NODE_ENV === 'production'
           ? {
@@ -100,6 +101,7 @@ function makeDbLogger() {
     } else {
       logger.info('Query executed', {
         durationMs: event.queryDurationMillis,
+        source: 'frontend',
         sql: compiledToSqlQuery(event.query),
         ...(env.NODE_ENV === 'production'
           ? {
