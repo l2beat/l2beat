@@ -186,6 +186,7 @@ describe(InteropFinancialsLoop.name, () => {
       expect(tokenDb.getPriceInfo).toHaveBeenCalledWith([
         srcToken1,
         dstToken1,
+        DeployedTokenId('ethereum+native'),
         dstToken2,
         dstToken3,
       ])
