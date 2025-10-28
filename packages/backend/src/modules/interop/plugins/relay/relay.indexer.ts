@@ -14,7 +14,7 @@ import type { RelayApiClient } from './RelayApiClient'
 
 export class RelayRootIndexer extends RootIndexer {
   override initialize() {
-    setInterval(() => this.requestTick(), 5_000)
+    setInterval(() => this.requestTick(), 1_000)
     this.requestTick()
     return Promise.resolve(undefined)
   }
@@ -41,6 +41,7 @@ export const TokenReceived = createInteropEventType<{
 export class RelayIndexer extends ManagedChildIndexer {
   constructor(
     private chains: { id: number; name: string }[],
+    private trackedChains: string[],
     private relayApiClient: RelayApiClient,
     private interopEventStore: InteropEventStore,
     parent: RelayRootIndexer,
@@ -90,6 +91,10 @@ export class RelayIndexer extends ManagedChildIndexer {
       to,
       UnixTime.fromDate(new Date(last.updatedAt)) - 1,
     )
+    if (syncedTo < from) {
+      // TODO: allow not progressing
+      throw new Error('No entries')
+    }
 
     const events: InteropEvent[] = []
 
@@ -154,10 +159,14 @@ export class RelayIndexer extends ManagedChildIndexer {
       }
     }
 
-    if (events.length > 0) {
-      this.logger.info('Saved new events', { events: events.length })
-      await this.interopEventStore.saveNewEvents(events)
+    const tracked = events.filter(e => this.trackedChains.includes(e.ctx.chain))
+
+    if (tracked.length > 0) {
+      this.logger.info('Saved new events', { events: tracked.length })
+      await this.interopEventStore.saveNewEvents(tracked)
     }
+
+    console.log("UPDATE END", tracked.length, syncedTo)
     return syncedTo
   }
 

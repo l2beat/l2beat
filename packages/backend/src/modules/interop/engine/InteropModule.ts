@@ -92,6 +92,7 @@ export function createInteropModule({
   const relayRootIndexer = new RelayRootIndexer(logger)
   const relayIndexer = new RelayIndexer(
     config.interop.config.chains,
+    config.interop.capture.chains.map((c) => c.name),
     relayApiClient,
     eventStore,
     relayRootIndexer,
