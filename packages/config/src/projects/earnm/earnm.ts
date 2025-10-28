@@ -1,13 +1,13 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../../common/badges'
+import type { ScalingProject } from '../../internalTypes'
 import { underReviewL3 } from '../../templates/underReview'
 
 export const earnm: ScalingProject = underReviewL3({
   id: ProjectId('earnm'),
   hostChain: ProjectId('arbitrum'),
   capability: 'universal',
-  addedAt: UnixTime(1745356800), // 2025-04-22
+  addedAt: UnixTime(1761662460), 
   display: {
     name: 'Earnm',
     slug: 'earnm',
