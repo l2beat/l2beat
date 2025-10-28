@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x7c0e6e0807d92c6750d0ea2e5d95503ec8bd06ff
+Generated with discovered.json: 0xac98f88364a1c40d012658e2b735764af961a42c
 
-# Diff at Thu, 16 Oct 2025 08:56:26 GMT:
+# Diff at Tue, 28 Oct 2025 09:57:24 GMT:
 
-- author: Luca Donno (<donnoh99@gmail.com>)
-- current timestamp: 1760601934
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- current timestamp: 1761645351
 
 ## Description
 
@@ -32,6 +32,12 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract CSExitPenalties (eth:0x06cd61045f958A209a0f8D746e103eCc625f4193)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x08637515E85A4633E23dfc7861e2A9f53af640f7)
     +++ description: None
 ```
 
@@ -104,6 +110,12 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract TimelockedGovernance (eth:0x553337946F2FAb8911774b20025fa776B76a7CcE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SetNodeOperatorRewardAddresses (eth:0x589e298964b9181D9938B84bB034C3BB9024E2C0)
     +++ description: None
 ```
 
@@ -344,6 +356,12 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract HashConsensus (eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SetVettedValidatorsLimits (eth:0xD75778b855886Fc5e1eA7D6bFADA9EB68b35C19D)
     +++ description: None
 ```
 
