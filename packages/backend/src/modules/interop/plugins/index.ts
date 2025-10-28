@@ -15,6 +15,7 @@ import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
 import { CCIPPlugIn } from './ccip'
 import { CCTPPlugin } from './cctp'
+import { CelerPlugIn } from './celer'
 import { CentriFugePlugin } from './centrifuge'
 import { CircleGatewayPlugIn } from './circle-gateway'
 import { DeBridgePlugin } from './debridge'
@@ -84,6 +85,7 @@ export function createInteropPlugins(
       new DeBridgePlugin(),
       new DeBridgeDlnPlugin(),
       new MayanForwarderPlugin(),
+      new CelerPlugIn(),
       new CircleGatewayPlugIn(),
       new CCIPPlugIn(),
       new CentriFugePlugin(),
