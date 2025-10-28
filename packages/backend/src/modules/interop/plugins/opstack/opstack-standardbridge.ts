@@ -495,7 +495,7 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
         }),
         Result.Transfer('opstack-standardbridge.L1ToL2Transfer', {
           srcEvent: erc20DepositInitiated,
-          srcAmount:  BigInt(erc20DepositInitiated.args.amount),
+          srcAmount: BigInt(erc20DepositInitiated.args.amount),
           srcTokenAddress: erc20DepositInitiated.args.localToken,
           dstEvent: event,
           dstAmount: BigInt(event.args.amount),
