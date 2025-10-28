@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x5185cf613a03f1b8682b445d84ca58147d2dbe47
+
+# Diff at Tue, 28 Oct 2025 09:19:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@090e135db1084f4a9678d6bf1cb0ff5e854903ea block: 1761288563
+- current timestamp: 1761643087
+
+## Description
+
+abstract operators added (we might want to remove the full accesscontrol from the template).
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.accessControl.eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9:
++        {"PRECOMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807","eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"]},"COMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807","eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"]},"REVERTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807","eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"]},"PROVER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807","eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"]},"EXECUTOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807","eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"]}}
+      values.accessControl.eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3:
++        {"PRECOMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA","eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"]},"COMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA","eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"]},"REVERTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA","eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"]},"PROVER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA","eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"]},"EXECUTOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA","eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"]}}
+    }
+```
+
 Generated with discovered.json: 0x47d226337fdb0a1ac0c52df595a5911818e662a2
 
 # Diff at Fri, 24 Oct 2025 09:13:33 GMT:
