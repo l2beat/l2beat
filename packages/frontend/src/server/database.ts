@@ -82,7 +82,7 @@ function pool() {
 function makeDbLogger() {
   const indexPrefix =
     env.DEPLOYMENT_ENV === 'staging' ? 'database-staging' : 'database-prod'
-  const logger = createLogger({ indexPrefix }).for('Database')
+  const logger = createLogger({ indexPrefix })
 
   return (event: LogEvent) => {
     if (event.level === 'error') {

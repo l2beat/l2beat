@@ -210,7 +210,7 @@ function makeDatabaseLogger(env: Env) {
     env.optionalString('DEPLOYMENT_ENV') === 'staging'
       ? 'database-staging'
       : 'database-prod'
-  const logger = createLogger(env, { indexPrefix }).for('Database')
+  const logger = createLogger(env, { indexPrefix })
 
   return (event: LogEvent) => {
     if (event.level === 'error') {
