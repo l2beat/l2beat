@@ -47,14 +47,13 @@ This has a problem that the same message sent twice will be identical, however c
 is set by Circle validators, it's hard to say how this can be solved by the matching logic only.
 */
 
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { solidityKeccak256 } from 'ethers/lib/utils'
-import { BinaryReader } from '../../../tools/BinaryReader'
+import { BinaryReader } from '../../../../tools/BinaryReader'
+import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
-  defineNetworks,
   findChain,
   type InteropEvent,
   type InteropEventDb,
@@ -62,28 +61,13 @@ import {
   type LogToCapture,
   type MatchResult,
   Result,
-} from './types'
-
-export const CCTP_NETWORKS = defineNetworks('cctp', [
-  { cctpdomain: 0, chain: 'ethereum' },
-  { cctpdomain: 1, chain: 'avalanche' },
-  { cctpdomain: 2, chain: 'optimism' },
-  { cctpdomain: 3, chain: 'arbitrum' },
-  // { cctpdomain: 5, chain: 'solana' },
-  { cctpdomain: 6, chain: 'base' },
-  { cctpdomain: 7, chain: 'polygonpos' },
-  { cctpdomain: 10, chain: 'unichain' },
-  { cctpdomain: 11, chain: 'linea' },
-])
+} from '../types'
+import { CCTPV1Config } from './cctp.config'
 
 const parseMessageSent = createEventParser('event MessageSent(bytes message)')
 
 const parseV1MessageReceived = createEventParser(
   'event MessageReceived(address indexed caller, uint32 sourceDomain, uint64 indexed nonce, bytes32 sender, bytes messageBody)',
-)
-
-const parseV2MessageReceived = createEventParser(
-  'event MessageReceived(address indexed caller, uint32 sourceDomain, bytes32 indexed nonce, bytes32 sender, uint32 indexed finalityThresholdExecuted, bytes messageBody)',
 )
 
 export const CCTPv1MessageSent = createInteropEventType<{
@@ -98,32 +82,25 @@ export const CCTPv1MessageReceived = createInteropEventType<{
   messageBody: string
 }>('cctp-v1.MessageReceived')
 
-export const CCTPv2MessageSent = createInteropEventType<{
-  fast: boolean
-  app?: string
-  hookData?: string
-  amount?: string
-  tokenAddress?: Address32
-  messageHash: string
-  $dstChain: string
-}>('cctp-v2.MessageSent')
+export class CCTPV1Plugin implements InteropPlugin {
+  name = 'cctp-v1'
 
-export const CCTPv2MessageReceived = createInteropEventType<{
-  app?: string
-  hookData?: string
-  caller: EthereumAddress
-  $srcChain: string
-  nonce: number
-  sender: EthereumAddress
-  finalityThresholdExecuted: number
-  messageHash: string
-}>('cctp-v2.MessageReceived')
-
-export class CCTPPlugin implements InteropPlugin {
-  name = 'cctp'
+  constructor(private configs: InteropConfigStore) {}
 
   capture(input: LogToCapture) {
-    const messageSent = parseMessageSent(input.log, null)
+    const networks = this.configs.get(CCTPV1Config)
+    if (!networks) return
+
+    const network = networks.find((n) => n.chain === input.ctx.chain)
+    if (!network) return
+    assert(
+      network.messageTransmitter,
+      'We capture only chain with message transmitters',
+    )
+
+    const messageSent = parseMessageSent(input.log, [
+      network.messageTransmitter,
+    ])
     if (messageSent) {
       const version = decodeMessageVersion(messageSent.message)
       if (version === 0) {
@@ -132,79 +109,32 @@ export class CCTPPlugin implements InteropPlugin {
         return CCTPv1MessageSent.create(input.ctx, {
           messageBody: message.rawBody,
           $dstChain: findChain(
-            CCTP_NETWORKS,
-            (x) => x.cctpdomain,
+            networks,
+            (x) => x.domain,
             Number(message.destinationDomain),
           ),
-        })
-      }
-
-      if (version === 1) {
-        const message = decodeV2Message(messageSent.message)
-
-        if (!message) return
-        const burnMessage = decodeBurnMessage(message.messageBody)
-
-        return CCTPv2MessageSent.create(input.ctx, {
-          // https://developers.circle.com/cctp/technical-guide#messages-and-finality
-          fast: message.minFinalityThreshold <= 1000,
-          $dstChain: findChain(
-            CCTP_NETWORKS,
-            (x) => x.cctpdomain,
-            Number(message.destinationDomain),
-          ),
-          app: burnMessage ? 'TokenMessengerV2' : undefined,
-          hookData: burnMessage?.hookData,
-          amount: burnMessage?.amount.toString(),
-          tokenAddress: burnMessage
-            ? Address32.from(burnMessage.burnToken)
-            : Address32.ZERO,
-          messageHash: hashBurnMessage(message.messageBody),
         })
       }
     }
 
-    const v1MessageReceived = parseV1MessageReceived(input.log, null)
+    const v1MessageReceived = parseV1MessageReceived(input.log, [
+      network.messageTransmitter,
+    ])
     if (v1MessageReceived) {
       return CCTPv1MessageReceived.create(input.ctx, {
         caller: EthereumAddress(v1MessageReceived.caller),
         $srcChain: findChain(
-          CCTP_NETWORKS,
-          (x) => x.cctpdomain,
+          networks,
+          (x) => x.domain,
           Number(v1MessageReceived.sourceDomain),
         ),
         nonce: Number(v1MessageReceived.nonce),
         messageBody: v1MessageReceived.messageBody,
       })
     }
-
-    const v2MessageReceived = parseV2MessageReceived(input.log, null)
-    if (v2MessageReceived) {
-      // TODO: also recipient is TokenBurnMessenger
-
-      if (!v2MessageReceived) return
-      const burnMessage = decodeBurnMessage(v2MessageReceived.messageBody)
-
-      return CCTPv2MessageReceived.create(input.ctx, {
-        app: burnMessage ? 'TokenMessengerV2' : undefined,
-        hookData: burnMessage?.hookData,
-        caller: EthereumAddress(v2MessageReceived.caller),
-        $srcChain: findChain(
-          CCTP_NETWORKS,
-          (x) => x.cctpdomain,
-          Number(v2MessageReceived.sourceDomain),
-        ),
-        nonce: Number(v2MessageReceived.nonce),
-        sender: EthereumAddress(`0x${v2MessageReceived.sender.slice(-40)}`),
-        finalityThresholdExecuted: Number(
-          v2MessageReceived.finalityThresholdExecuted,
-        ),
-        messageHash: hashBurnMessage(v2MessageReceived.messageBody),
-      })
-    }
   }
 
-  matchTypes = [CCTPv1MessageReceived, CCTPv2MessageReceived]
+  matchTypes = [CCTPv1MessageReceived]
   match(
     messageReceived: InteropEvent,
     db: InteropEventDb,
@@ -220,23 +150,6 @@ export class CCTPPlugin implements InteropPlugin {
           srcEvent: messageSent,
           dstEvent: messageReceived,
         }),
-      ]
-    }
-
-    if (CCTPv2MessageReceived.checkType(messageReceived)) {
-      const messageSent = db.find(CCTPv2MessageSent, {
-        messageHash: messageReceived.args.messageHash,
-      })
-      if (!messageSent) return
-      return [
-        Result.Message(
-          messageSent.args.fast ? 'cctp-v2.FastMessage' : 'cctp-v2.SlowMessage',
-          {
-            app: 'unknown',
-            srcEvent: messageSent,
-            dstEvent: messageReceived,
-          },
-        ),
       ]
     }
   }

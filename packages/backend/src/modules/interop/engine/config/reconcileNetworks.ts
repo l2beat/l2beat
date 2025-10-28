@@ -21,10 +21,6 @@ export function reconcileNetworks<T extends { chain: string }>(
   for (const latest of latestNetworks) {
     const prev = previousNetworks.find((p) => p.chain === latest.chain)
 
-    if (!isEqual(latest, prev)) {
-      console.log(latest, prev)
-    }
-
     if (prev === undefined || !isEqual(latest, prev)) {
       return {
         removed: removed.map((r) => r.chain),
