@@ -1,5 +1,3 @@
-import type { LogEvent } from '@l2beat/database'
-
 export interface Config {
   readonly database: DatabaseConfig
   readonly api: ApiConfig
@@ -20,7 +18,6 @@ export interface DatabaseConfig {
   }
   min: number
   max: number
-  log: ((event: LogEvent) => void) | undefined
 }
 
 export interface AuthConfig {

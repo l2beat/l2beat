@@ -1,6 +1,4 @@
 import type { Env } from '@l2beat/backend-tools'
-import { compiledToSqlQuery, type LogEvent } from '@l2beat/database'
-import { createLogger } from '../utils/logger/createLogger'
 import type { Config } from './Config'
 
 interface MakeConfigOptions {
@@ -20,9 +18,6 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
 
           min: 2,
           max: 10,
-          log: env.boolean('DATABASE_LOG_ENABLED', false)
-            ? makeDbLogger(env)
-            : undefined,
         }
       : {
           connectionString: env.string(
@@ -34,9 +29,6 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
 
           min: 20,
           max: env.integer('DATABASE_MAX_POOL_SIZE', 20),
-          log: env.boolean('DATABASE_LOG_ENABLED', false)
-            ? makeDbLogger(env)
-            : undefined,
         },
     api: {
       port: env.integer('PORT', 3000),
@@ -61,38 +53,5 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
       !env.boolean('DISABLE_CACHE', false)
         ? true
         : false,
-  }
-}
-
-function makeDbLogger(env: Env) {
-  const logger = createLogger(env, { indexPrefix: 'database-prod' })
-
-  return (event: LogEvent) => {
-    if (event.level === 'error') {
-      logger.error('Query failed', {
-        durationMs: event.queryDurationMillis,
-        error: event.error,
-        source: 'public-api',
-        sql: compiledToSqlQuery(event.query),
-        ...(env.string('NODE_ENV') === 'production'
-          ? {
-              sqlTemplate: event.query.sql,
-              parameters: event.query.parameters,
-            }
-          : {}),
-      })
-    } else {
-      logger.info('Query executed', {
-        durationMs: event.queryDurationMillis,
-        source: 'public-api',
-        sql: compiledToSqlQuery(event.query),
-        ...(env.string('NODE_ENV') === 'production'
-          ? {
-              sqlTemplate: event.query.sql,
-              parameters: event.query.parameters,
-            }
-          : {}),
-      })
-    }
   }
 }
