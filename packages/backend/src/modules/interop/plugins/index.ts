@@ -35,6 +35,7 @@ import { MayanSwiftPlugin } from './mayan-swift'
 import { OpStackPlugin } from './opstack/opstack'
 import { OpStackStandardBridgePlugin } from './opstack/opstack-standardbridge'
 import { OrbitStackPlugin } from './orbitstack'
+import { RelayPlugin } from './relay/relay.plugin'
 import { RelaySimplePlugIn } from './relay-simple'
 import { SquidCoralPlugin } from './squid-coral'
 import { StargatePlugin } from './stargate'
@@ -113,6 +114,7 @@ export function createInteropPlugins(
       new HyperlaneEcoPlugin(), // should be run before Hyperlane
       new HyperlanePlugIn(),
       new OneinchFusionPlusPlugin(),
+      new RelayPlugin(),
       new RelaySimplePlugIn(),
     ],
   }
