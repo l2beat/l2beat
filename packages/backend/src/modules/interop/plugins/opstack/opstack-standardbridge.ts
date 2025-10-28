@@ -459,10 +459,10 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
         Result.Transfer('opstack-standardbridge.L2ToL1Transfer', {
           srcEvent: ethBridgeInitiated,
           srcAmount: BigInt(ethBridgeInitiated.args.amount),
-          srcTokenAddress: Address32.ZERO,
+          srcTokenAddress: Address32.NATIVE,
           dstEvent: event,
           dstAmount: BigInt(event.args.amount),
-          dstTokenAddress: Address32.ZERO,
+          dstTokenAddress: Address32.NATIVE,
         }),
       ]
     }
@@ -533,10 +533,10 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
         Result.Transfer('opstack-standardbridge.L1ToL2Transfer', {
           srcEvent: ethBridgeInitiated,
           srcAmount: BigInt(ethBridgeInitiated.args.amount),
-          srcTokenAddress: Address32.ZERO,
+          srcTokenAddress: Address32.NATIVE,
           dstEvent: event,
           dstAmount: BigInt(event.args.amount),
-          dstTokenAddress: Address32.ZERO,
+          dstTokenAddress: Address32.NATIVE,
         }),
       ]
     }
