@@ -20,6 +20,11 @@ export function getLogger(): Logger {
     return logger
   }
 
+  logger = createLogger()
+  return logger
+}
+
+export function createLogger(opts?: { indexPrefix?: string }): Logger {
   const isLocal = env.NODE_ENV !== 'production'
 
   const loggerTransports: LoggerTransportOptions[] = [
@@ -42,7 +47,7 @@ export function getLogger(): Logger {
     const options: ElasticSearchTransportOptions = {
       node: env.ES_NODE,
       apiKey: env.ES_API_KEY,
-      indexPrefix: env.ES_INDEX_PREFIX,
+      indexPrefix: opts?.indexPrefix ?? env.ES_INDEX_PREFIX,
       flushInterval: env.ES_FLUSH_INTERVAL,
     }
 
@@ -56,7 +61,6 @@ export function getLogger(): Logger {
     logLevel: env.LOG_LEVEL,
     utc: isLocal ? false : true,
     transports: loggerTransports,
-    // TODO: make this configurable
     metricsEnabled: false,
   }
 

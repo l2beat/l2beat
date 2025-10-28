@@ -1,6 +1,8 @@
 import type { Env } from '@l2beat/backend-tools'
 import { type ChainConfig, ProjectService } from '@l2beat/config'
+import { compiledToSqlQuery, type LogEvent } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
+import { createLogger } from '../tools/createLogger'
 import type { Config } from './Config'
 import { getChainConfig } from './chain/getChainConfig'
 import { FeatureFlags } from './FeatureFlags'
@@ -58,7 +60,9 @@ export async function makeConfig(
               ? { rejectUnauthorized: false }
               : undefined,
           },
-          enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
+          log: env.boolean('ENABLE_QUERY_LOGGING', false)
+            ? makeDatabaseLogger(env)
+            : undefined,
           connectionPoolSize: {
             // defaults used by knex
             min: 2,
@@ -67,7 +71,9 @@ export async function makeConfig(
           isReadonly,
         }
       : {
-          enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
+          log: env.boolean('ENABLE_QUERY_LOGGING', false)
+            ? makeDatabaseLogger(env)
+            : undefined,
           connection: {
             connectionString: env.string('DATABASE_URL'),
             application_name: env.string('DATABASE_APP_NAME', 'BE-PROD'),
@@ -197,4 +203,39 @@ function getEthereumMinTimestamp(chains: ChainConfig[]) {
     throw new Error('Missing minBlockTimestamp for ethereum')
   }
   return minBlockTimestamp
+}
+
+function makeDatabaseLogger(env: Env) {
+  const indexPrefix =
+    env.optionalString('DEPLOYMENT_ENV') === 'staging'
+      ? 'database-staging'
+      : 'database-prod'
+  const logger = createLogger(env, { indexPrefix }).for('Database')
+
+  return (event: LogEvent) => {
+    if (event.level === 'error') {
+      logger.error('Query failed', {
+        durationMs: event.queryDurationMillis,
+        error: event.error,
+        sql: compiledToSqlQuery(event.query),
+        ...(env.optionalString('NODE_ENV') === 'production'
+          ? {
+              sqlTemplate: event.query.sql,
+              parameters: event.query.parameters,
+            }
+          : {}),
+      })
+    } else {
+      logger.info('Query executed', {
+        durationMs: event.queryDurationMillis,
+        sql: compiledToSqlQuery(event.query),
+        ...(env.optionalString('NODE_ENV') === 'production'
+          ? {
+              sqlTemplate: event.query.sql,
+              parameters: event.query.parameters,
+            }
+          : {}),
+      })
+    }
+  }
 }

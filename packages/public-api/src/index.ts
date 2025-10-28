@@ -1,6 +1,10 @@
-import { getEnv } from '@l2beat/backend-tools'
+import { type Env, getEnv } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
-import { createDatabase } from '@l2beat/database'
+import {
+  compiledToSqlQuery,
+  createDatabase,
+  type LogEvent,
+} from '@l2beat/database'
 import express from 'express'
 import swaggerUi from 'swagger-ui-express'
 import { InMemoryCache } from './cache/InMemoryCache'
@@ -16,7 +20,10 @@ import { createLogger } from './utils/logger/createLogger'
 function main() {
   const env = getEnv()
   const config = getConfig(env)
-  const db = createDatabase(config.database)
+  const db = createDatabase({
+    ...config.database,
+    log: env.boolean('DATABASE_LOG_ENABLED') ? makeDbLogger(env) : undefined,
+  })
   const logger = createLogger(env)
 
   const ps = new ProjectService()
@@ -94,3 +101,36 @@ function main() {
 }
 
 main()
+
+function makeDbLogger(env: Env) {
+  const logger = createLogger(env, { indexPrefix: 'database-prod' }).for(
+    'Database',
+  )
+
+  return (event: LogEvent) => {
+    if (event.level === 'error') {
+      logger.error('Query failed', {
+        durationMs: event.queryDurationMillis,
+        error: event.error,
+        sql: compiledToSqlQuery(event.query),
+        ...(env.string('NODE_ENV') === 'production'
+          ? {
+              sqlTemplate: event.query.sql,
+              parameters: event.query.parameters,
+            }
+          : {}),
+      })
+    } else {
+      logger.info('Query executed', {
+        durationMs: event.queryDurationMillis,
+        sql: compiledToSqlQuery(event.query),
+        ...(env.string('NODE_ENV') === 'production'
+          ? {
+              sqlTemplate: event.query.sql,
+              parameters: event.query.parameters,
+            }
+          : {}),
+      })
+    }
+  }
+}

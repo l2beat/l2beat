@@ -1,3 +1,4 @@
+export type { LogEvent } from 'kysely'
 export { createDatabase, type Database } from './database'
 export { type Transaction } from './kysely'
 export { createTokenDatabase, type TokenDatabase } from './tokenDatabase'
