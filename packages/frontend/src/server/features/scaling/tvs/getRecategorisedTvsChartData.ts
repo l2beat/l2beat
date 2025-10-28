@@ -72,9 +72,33 @@ export async function getRecategorisedTvsChart({
 
   const [rollupValues, validiumAndOptimiumsValues, othersValues] =
     await Promise.all([
-      getSummedTvsValues(rollups, { type: range }, 'SUMMARY'),
-      getSummedTvsValues(validiumsAndOptimiums, { type: range }, 'SUMMARY'),
-      getSummedTvsValues(others, { type: range }, 'SUMMARY'),
+      getSummedTvsValues(
+        rollups,
+        { type: range },
+        {
+          forSummary: true,
+          excludeAssociatedTokens: false,
+          includeRwaRestrictedTokens: false,
+        },
+      ),
+      getSummedTvsValues(
+        validiumsAndOptimiums,
+        { type: range },
+        {
+          forSummary: true,
+          excludeAssociatedTokens: false,
+          includeRwaRestrictedTokens: false,
+        },
+      ),
+      getSummedTvsValues(
+        others,
+        { type: range },
+        {
+          forSummary: true,
+          excludeAssociatedTokens: false,
+          includeRwaRestrictedTokens: false,
+        },
+      ),
     ])
 
   const chart = getChartData(

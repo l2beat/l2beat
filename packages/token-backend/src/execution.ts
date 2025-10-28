@@ -3,6 +3,7 @@ import type { TokenDatabase } from '@l2beat/database'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import type { Command } from './commands'
 import type { Intent } from './intents'
+import { getLogger } from './logger'
 import { generatePlan, type Plan } from './planning'
 
 export type PlanExecutionResult = PlanExecutionSuccess | PlanExecutionError
@@ -19,17 +20,32 @@ interface PlanExecutionSuccess {
 export function executePlan(
   db: TokenDatabase,
   plan: Plan,
+  meta?: {
+    email: string
+  },
 ): Promise<PlanExecutionResult> {
+  const logger = getLogger().for('executePlan')
+  logger.info('Executing plan', { plan, meta })
   return db.transaction(
     async (): Promise<PlanExecutionResult> => {
-      const planRegeneration = await generatePlan(db, plan.intent)
+      const planRegeneration = await generatePlan(db, plan.intent, {
+        skipLogs: true,
+      })
       if (planRegeneration.outcome === 'error') {
+        logger.error('Plan is no longer valid', {
+          error: planRegeneration.error,
+          meta,
+        })
         return {
           outcome: 'error',
           error: `Plan is no longer valid: ${planRegeneration.error}`,
         }
       }
       if (!isDeepStrictEqual(planRegeneration.plan, plan)) {
+        logger.error(
+          'Plan is no longer valid due to recent changes to the database',
+          { meta },
+        )
         return {
           outcome: 'error',
           error:
@@ -39,7 +55,9 @@ export function executePlan(
 
       for (const command of plan.commands) {
         await executeCommand(db, command)
+        logger.info('Command executed', { command, meta })
       }
+      logger.info('Plan executed', { plan, meta })
       return {
         outcome: 'success',
       }
@@ -59,6 +77,9 @@ export function executePlan(
 export async function planAndExecute(
   db: TokenDatabase,
   intent: Intent,
+  meta?: {
+    email: string
+  },
 ): Promise<void> {
   await db.transaction(async () => {
     const planningResult = await generatePlan(db, intent)

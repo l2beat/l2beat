@@ -1,3 +1,55 @@
+Generated with discovered.json: 0xedda32d6f1824e709edfba134c2bc9c3e03d8177
+
+# Diff at Mon, 27 Oct 2025 18:10:04 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e90d561a3c749c64b7c47b2495a9f71414e93dd2 block: 1760976189
+- current timestamp: 1761588534
+
+## Description
+
+program update.
+
+## Watched changes
+
+```diff
+    contract Hibachi (arb1:0x0E9C1a3AA696299E38b00a8144Bf6dc16C1F5400) {
+    +++ description: Main contract handling deposits, withdrawals and state updates.
+      values.stateUpdateProgramImageId:
+-        "0x5e5029174e9f99b7beff5facf19cd9c663cea713547dca3ce0aeaaf82102268a"
++        "0x7957ea2b84588fbc8c743a7dd77b1f39a0bc35132ee7fd5ecba3ec31f6705f57"
+      values.stateUpdateProgramVKey:
+-        "0x001bc283c6d7353ee47a2b61c3e469448e2be664d5a87fed8b7606319c2561e1"
++        "0x009d8e651bdf75e655eeafd0b6941cebe37f03e41d3f65b60a5ccb4003c446e6"
+    }
+```
+
+Generated with discovered.json: 0xa1fe9de07ab13bf5241112eadf9a426708033e42
+
+# Diff at Mon, 20 Oct 2025 16:04:19 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@bfe80e92f67656ee716f7ab40cc8f3f9e92dc7d6 block: 1758703543
+- current timestamp: 1760976189
+
+## Description
+
+program update.
+
+## Watched changes
+
+```diff
+    contract Hibachi (arb1:0x0E9C1a3AA696299E38b00a8144Bf6dc16C1F5400) {
+    +++ description: Main contract handling deposits, withdrawals and state updates.
+      values.stateUpdateProgramImageId:
+-        "0xe67ae11c6b1408e9c51c070704d7e19eb6dd0dfe91cdc00759834d516bb4d180"
++        "0x5e5029174e9f99b7beff5facf19cd9c663cea713547dca3ce0aeaaf82102268a"
+      values.stateUpdateProgramVKey:
+-        "0x00a03342ba849be32311d27782f9979f4873f95feba8edcaf5bdbecc68fe9274"
++        "0x001bc283c6d7353ee47a2b61c3e469448e2be664d5a87fed8b7606319c2561e1"
+    }
+```
+
 Generated with discovered.json: 0x9c909e60aae4b3a9e45364fcfd05dab12622f478
 
 # Diff at Wed, 24 Sep 2025 08:46:47 GMT:

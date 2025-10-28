@@ -20,9 +20,6 @@ export async function getVerifiersSection(
   for (const verifier of project.zkCatalogInfo.verifierHashes) {
     const key = `${verifier.proofSystem.type}-${verifier.proofSystem.id}`
     const proofSystemVerifiers = byProofSystem[key]
-    const projectsUsedIn = verifier.knownDeployments.flatMap((d) =>
-      contractUtils.getUsedIn(project.id, d.chain, d.address),
-    )
 
     const attesters = verifier.attesters?.map((attester) => ({
       ...attester,
@@ -37,8 +34,11 @@ export async function getVerifiersSection(
           ? `${explorerUrl}/address/${d.address}#code`
           : undefined,
         address: d.address,
+        projectsUsedIn: contractUtils.getUsedIn(project.id, d.chain, d.address),
       }
     })
+
+    const projectsUsedIn = knownDeployments.flatMap((d) => d.projectsUsedIn)
 
     if (!proofSystemVerifiers) {
       byProofSystem[key] = {

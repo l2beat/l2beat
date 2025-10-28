@@ -97,7 +97,7 @@ export function ScalingProjectPage({
                   />
                 </div>
               </div>
-              <div className="grid-cols-[1fr_172px] gap-x-6 lg:grid">
+              <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
                 <div>
                   <ProjectScalingSummary project={projectEntry} />
 

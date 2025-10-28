@@ -1156,28 +1156,14 @@
       "priceId": "gala",
       "symbol": "GALA",
       "name": "Gala",
-      "iconUrl": "https://assets.coingecko.com/coins/images/12493/large/GALA-COINGECKO.png?1696512310",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12493/large/GALA_token_image_-_200PNG.png?1709725869",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x15D4c048F83bd7e37d49eA4C83a07267Ec4203dA",
-            "chain": "ethereum",
-            "escrowAddress": "0xeBE58381406D2c9BC9F68f541D503bA4F1A29fDF",
-            "decimals": 8,
-            "sinceTimestamp": 1655360907
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xd1d2Eb1B1e90B638588728b4130137D262C87cae",
-            "chain": "ethereum",
-            "escrowAddress": "0xeBE58381406D2c9BC9F68f541D503bA4F1A29fDF",
-            "decimals": 8,
-            "sinceTimestamp": 1681915991
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "0xd1d2Eb1B1e90B638588728b4130137D262C87cae",
+        "chain": "ethereum",
+        "escrowAddress": "0xeBE58381406D2c9BC9F68f541D503bA4F1A29fDF",
+        "decimals": 8,
+        "sinceTimestamp": 1681915991
       },
       "category": "other",
       "source": "canonical",

@@ -127,7 +127,6 @@ export interface BaseProject {
   isDaLayer?: true
   isUpcoming?: true
   archivedAt?: UnixTime
-  hasActivity?: true
   hasTestnet?: true
 }
 
@@ -703,7 +702,7 @@ export interface ProjectDaBridge {
   risks: DaBridgeRisks
   usedIn: UsedInProject[]
   dac?: DacInfo
-  relayerType?: TableReadyValue<'Permissioned'>
+  relayerType?: TableReadyValue<'Permissioned' | 'SelfRelay'>
   validationType?: DaBridgeValidationType
 }
 
@@ -916,7 +915,10 @@ export type AdjustCount =
 export interface DayActivityConfig {
   type: 'day'
   sinceTimestamp: UnixTime
+  /** Source of the data, will be displayed in the UI */
+  dataSource: string
   resyncLastDays?: number
+  batchSize?: number
 }
 
 export interface ProjectLivenessInfo {

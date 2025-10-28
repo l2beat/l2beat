@@ -31,7 +31,7 @@ export class ChainService {
       case 'rpc': {
         this.client = new RpcClient({
           url: chain.blockchainApi.url,
-          sourceName: chain.id,
+          chain: chain.id,
           http,
           callsPerMinute: chain.blockchainApi.callsPerMinute ?? 100,
           logger: Logger.SILENT,

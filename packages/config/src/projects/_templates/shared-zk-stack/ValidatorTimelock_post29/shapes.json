@@ -1,0 +1,8 @@
+{
+  "ValidatorTimelock": {
+    "hash": "0x1331a809e6d864cad7a57d9b2e1ae6cc5dcc4b3fd344e9cbe0551ce2b879c01d",
+    "address": "gateway:0x717CAC5204650f10b713A06E230829FCC841425e",
+    "chain": "gateway",
+    "blockNumber": 75862
+  }
+}

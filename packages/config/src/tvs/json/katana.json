@@ -236,7 +236,7 @@
       "symbol": "PAXG",
       "name": "Paxos Gold",
       "iconUrl": "https://assets.coingecko.com/coins/images/9519/large/paxgold.png?1696509604",
-      "category": "other",
+      "category": "rwaPublic",
       "source": "canonical",
       "isAssociated": false,
       "amount": {

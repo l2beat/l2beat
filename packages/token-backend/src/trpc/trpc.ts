@@ -9,7 +9,9 @@ export const createTRPCContext = (opts: { headers: Headers }) => {
   }
 }
 
-const t = initTRPC.context<typeof createTRPCContext>().create({
+type Context = Awaited<ReturnType<typeof createTRPCContext>>
+
+const t = initTRPC.context<Context>().create({
   transformer: {
     serialize: JSON.stringify,
     deserialize: JSON.parse,
@@ -45,7 +47,11 @@ const publicProcedure = t.procedure
 export const protectedProcedure = publicProcedure.use(async (opts) => {
   const auth = config.auth
   if (auth === false) {
-    return opts.next()
+    return opts.next({
+      ctx: {
+        email: 'dev@l2beat.com',
+      },
+    })
   }
   const headers = opts.ctx.headers
   const cookie = headers.get('cookie')

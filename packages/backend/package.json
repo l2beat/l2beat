@@ -28,16 +28,14 @@
     "analyze-project": "ts-node --transpile-only scripts/analyzeProject.ts",
     "discover-tokens": "node -r esbuild-register scripts/discover-tokens",
     "db:inspect": "pnpm prisma studio",
-    "dev": "pnpm build:dependencies && pnpm start:dev",
+    "dev": "pnpm start:dev",
     "tvs:generate": "pnpm build:config && ts-node ./scripts/tvs/generate-config.ts",
     "tvs:execute": "pnpm build:config && ts-node ./scripts/tvs/execute.ts",
     "tvs:calculate-ids": "ts-node ./scripts/tvs/calculate-ids.ts",
     "tvs:translate-id": "ts-node ./scripts/tvs/translate-id.ts",
     "anomalies": "ts-node ./scripts/anomalies/anomalies.ts",
-    "bridges:cli": "ts-node ./scripts/bridges/cli.ts",
-    "bridges:cli-stats": "ts-node ./scripts/bridges/cli-stats.ts",
-    "bridges:example": "ts-node ./src/modules/bridges/examples/script.ts",
-    "bridges:compare": "ts-node ./src/modules/bridges/compare/script.ts"
+    "interop:example": "ts-node ./src/modules/interop/examples/script.ts",
+    "interop:compare": "ts-node ./src/modules/interop/compare/script.ts"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.13.1",

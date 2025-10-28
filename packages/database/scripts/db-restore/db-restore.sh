@@ -4,12 +4,12 @@ source .env
 
 FEATURES_NAMES=("da" "liveness" "tvs" "activity" "shared" "interop")
 FEATURES_TABLES=(
-    "IndexerState IndexerConfiguration DataAvailability Blob"
-    "IndexerState IndexerConfiguration Liveness"
-    "IndexerState IndexerConfiguration TvsBlockTimestamp TvsPrice TvsAmount TokenValue ProjectValue"
-    "IndexerState IndexerConfiguration Activity"
+    "IndexerState IndexerConfiguration DataAvailability Blob SyncMetadata"
+    "IndexerState IndexerConfiguration"
+    "IndexerState IndexerConfiguration TvsBlockTimestamp TvsPrice TvsAmount TokenValue ProjectValue SyncMetadata"
+    "IndexerState IndexerConfiguration Activity SyncMetadata"
     "IndexerState IndexerConfiguration AnomalyStats RealTimeLiveness RealTimeAnomaly"
-    "IndexerState IndexerConfiguration BridgeEvent BridgeMessage BridgeTransfer"
+    "IndexerState IndexerConfiguration InteropEvent InteropMessage InteropTransfer"
 )
 
 clear_tables() {

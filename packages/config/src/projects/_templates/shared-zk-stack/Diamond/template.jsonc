@@ -40,7 +40,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
         }
       ]
     },
@@ -94,6 +94,7 @@
       "edit": ["format", "UintPermrollupString"]
     },
     "getDAValidatorPair": {
+      "description": "l1da, l2da",
       "severity": "HIGH"
     },
     "getPendingAdmin": {

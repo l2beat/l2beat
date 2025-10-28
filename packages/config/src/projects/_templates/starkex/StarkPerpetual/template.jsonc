@@ -30,17 +30,9 @@
       "description": "Permissioned to upgrade the proxy implementations and access all `onlyGovernance` restricted functions in the various implementation contracts.",
       "severity": "HIGH",
       "permissions": [
-        {
-          "type": "upgrade",
-          "delay": "{{getUpgradeActivationDelay}}"
-        },
-        {
-          "type": "governStarknet"
-        },
-        {
-          "type": "interact",
-          "description": "manage the token admin role."
-        }
+        { "type": "upgrade", "delay": "{{getUpgradeActivationDelay}}" },
+        { "type": "governStarknet" },
+        { "type": "interact", "description": "manage the token admin role." }
       ]
     },
     "isFinalized": {
@@ -51,18 +43,11 @@
       "handler": {
         "type": "event",
         "select": "tokenAdmin",
-        "add": {
-          "event": "LogTokenAdminAdded"
-        },
-        "remove": {
-          "event": "LogTokenAdminRemoved"
-        }
+        "add": { "event": "LogTokenAdminAdded" },
+        "remove": { "event": "LogTokenAdminRemoved" }
       },
       "permissions": [
-        {
-          "type": "interact",
-          "description": "Can regsiter new tokens for deposits and withdrawals."
-        }
+        { "type": "interact", "description": "manage supported tokens." }
       ]
     },
     "DEPOSIT_CANCEL_DELAY": {
@@ -78,11 +63,7 @@
       "permissions": [{ "type": "operateStarknet" }]
     },
     "escapeVerifier": {
-      "handler": {
-        "type": "storage",
-        "slot": 4,
-        "returnType": "address"
-      }
+      "handler": { "type": "storage", "slot": 4, "returnType": "address" }
     }
   }
 }

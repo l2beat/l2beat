@@ -38,6 +38,7 @@ const SERVER_CONFIG = {
     .check((v) => !!new URL(v))
     .default('https://cloudflare-eth.com'),
   MOCK: coerceBoolean.default(false),
+  REDIS_URL: z.string().optional(),
   CRON_SECRET: z.string().optional(),
   EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
   EXCLUDED_TVS_PROJECTS: stringArray.optional(),
@@ -90,7 +91,7 @@ function createEnv(): Env {
   const parsed = isClient ? ClientEnv.parse(env) : ServerEnv.parse(env)
   return new Proxy<Env>(parsed as Env, {
     get(target, key, receiver) {
-      if (!Reflect.has(SERVER_CONFIG, key)) {
+      if (!Reflect.has(SERVER_CONFIG, key) && key !== 'toJSON') {
         throw new Error(`Accessing invalid env: ${key.toString()}`)
       }
 
@@ -117,6 +118,7 @@ function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
     HEROKU_APP_NAME: process.env.HEROKU_APP_NAME,
     DEPLOYMENT_ENV: process.env.DEPLOYMENT_ENV,
     CRON_SECRET: process.env.CRON_SECRET,
+    REDIS_URL: process.env.REDIS_URL,
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
     EXCLUDED_TVS_PROJECTS: process.env.EXCLUDED_TVS_PROJECTS,
     ES_ENABLED: process.env.ES_ENABLED,
@@ -130,6 +132,6 @@ function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
     CLIENT_SIDE_PLAUSIBLE_DOMAIN: process.env.CLIENT_SIDE_PLAUSIBLE_DOMAIN,
     CLIENT_SIDE_PLAUSIBLE_ENABLED: process.env.CLIENT_SIDE_PLAUSIBLE_ENABLED,
     CLIENT_SIDE_SHOW_HIRING_BADGE: process.env.FEATURE_FLAG_HIRING,
-    CLIENT_SIDE_PROGRAM_HASHES: process.env.FEATURE_FLAG_PROGRAM_HASHES,
+    CLIENT_SIDE_PROGRAM_HASHES: process.env.CLIENT_SIDE_PROGRAM_HASHES,
   }
 }

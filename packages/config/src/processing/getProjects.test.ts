@@ -5,6 +5,7 @@ import {
   type TrackedTxTransferConfig,
 } from '@l2beat/shared'
 import { assert, EthereumAddress, type ProjectId } from '@l2beat/shared-pure'
+import chalk from 'chalk'
 import { expect } from 'earl'
 import { existsSync } from 'fs'
 import { asArray } from '../templates/utils'
@@ -226,7 +227,7 @@ describe('getProjects', () => {
 
         const contracts = project.contracts?.addresses ?? {}
         for (const [chain, perChain] of Object.entries(contracts)) {
-          for (const [i, contract] of perChain.entries()) {
+          for (const contract of perChain) {
             it(`contract [${chain}:${contract.address}] name isn't empty`, () => {
               assert(
                 contract.name.trim().length > 0,
@@ -241,13 +242,24 @@ describe('getProjects', () => {
             const actorIds = all.map((a) => a.id)
 
             if (upgradableBy) {
-              it(`contracts[${project.id}][${chain}][${contract.name ?? contract.address.toString()} (${i})].upgradableBy is valid \n ${actorIds} | \n${upgradableBy.map((a) => a.name)}`, () => {
+              it('contracts.upgradableBy is valid', () => {
                 const expectedToContain = upgradableBy.map(
                   (a) => a.id ?? a.name,
                 )
 
                 for (const expected of expectedToContain) {
-                  expect(actorIds).toInclude(expected)
+                  const message = [
+                    '',
+                    chalk.red('ERROR:'),
+                    `Contract ${contract.name} (${contract.address}) in project ${chalk.blue(project.id)} is marked as upgradable by an actor named ${chalk.magenta(expected)}.`,
+                    `But the actor ${chalk.magenta(expected)} does not exist in the list of actors!`,
+                    '',
+                    `${chalk.cyan('Current actors')}: ${all.map((a) => a.name).join(', ')}`,
+                    '',
+                    `${chalk.green('POSSIBLE FIX')}: check if the actor is not marked as spam`,
+                  ].join('\n')
+
+                  assert(actorIds.includes(expected), message)
                 }
               })
             }
@@ -548,21 +560,6 @@ describe('getProjects', () => {
       }
     })
 
-    describe('every project has no multiple daLayers configured for tracking (not supported on FE)', () => {
-      for (const project of projects) {
-        if (project.daTrackingConfig) {
-          const usedDaLayers = new Set<ProjectId>()
-          it(project.id, () => {
-            assert(project.daTrackingConfig) // type issue
-            for (const config of project.daTrackingConfig) {
-              usedDaLayers.add(config.daLayer)
-            }
-            expect(usedDaLayers.size).toEqual(1)
-          })
-        }
-      }
-    })
-
     describe('every appId is unique for Avail projects', () => {
       const appIds = new Map<string, string>()
       for (const project of projects) {
@@ -633,14 +630,7 @@ describe('getProjects', () => {
   })
 
   describe('badges', () => {
-    const singularBadges = [
-      'Infra',
-      'RaaS',
-      'DA',
-      'Stack',
-      'Fork',
-      'L3ParentChain',
-    ]
+    const singularBadges = ['Infra', 'RaaS', 'Stack', 'Fork', 'L3ParentChain']
 
     for (const badge of singularBadges) {
       it(`has maximum one ${badge} badge`, () => {

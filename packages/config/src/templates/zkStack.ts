@@ -257,21 +257,23 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     'getL2BootloaderBytecodeHash',
   )
 
+  const baseBadges = [
+    BADGES.Stack.ZKStack,
+    BADGES.Infra.ElasticChain,
+    BADGES.VM.EVM,
+  ]
+
+  if (!daProvider) {
+    baseBadges.push(BADGES.DA.EthereumBlobs)
+  }
+
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
     addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',
     archivedAt: templateVars.archivedAt,
-    badges: mergeBadges(
-      [
-        BADGES.Stack.ZKStack,
-        BADGES.Infra.ElasticChain,
-        BADGES.VM.EVM,
-        BADGES.DA.EthereumBlobs,
-      ],
-      templateVars.additionalBadges ?? [],
-    ),
+    badges: mergeBadges(baseBadges, templateVars.additionalBadges ?? []),
     display: {
       purposes: templateVars.overridingPurposes ?? [
         'Universal',

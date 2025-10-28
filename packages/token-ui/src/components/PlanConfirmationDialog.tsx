@@ -1,9 +1,10 @@
+import { assertUnreachable } from '@l2beat/shared-pure'
 import type { Command, Plan } from '@l2beat/token-backend'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { api } from '~/react-query/trpc'
-import { assertUnreachable } from '~/utils/assertUnreachable'
 import { diff } from '~/utils/getDiff'
+import { getDeployedTokenDisplayId } from '~/utils/getDisplayId'
 import { ButtonWithSpinner } from './ButtonWithSpinner'
 import { Button } from './core/Button'
 import {
@@ -32,13 +33,14 @@ export function PlanConfirmationDialog({
   function invalidateAbstractTokenQueries() {
     utils.tokens.getAllAbstractTokens.invalidate()
     utils.tokens.getAllAbstractTokensWithDeployedTokens.invalidate()
-    utils.tokens.getById.invalidate()
+    utils.tokens.getAbstractById.invalidate()
     utils.tokens.search.invalidate()
   }
 
   function invalidateDeployedTokenQueries() {
     utils.tokens.getAllAbstractTokensWithDeployedTokens.invalidate()
-    utils.tokens.getById.invalidate()
+    utils.tokens.getAbstractById.invalidate()
+    utils.tokens.getDeployedByChainAndAddress.invalidate()
     utils.tokens.search.invalidate()
     utils.tokens.checkIfDeployedTokenExists.invalidate()
   }
@@ -67,7 +69,7 @@ export function PlanConfirmationDialog({
             <span>
               Token added successfully.{' '}
               <Link
-                to={`/tokens/${plan.intent.record.chain}+${plan.intent.record.address}`}
+                to={`/tokens/${getDeployedTokenDisplayId(plan.intent.record)}`}
                 className="underline"
               >
                 View token

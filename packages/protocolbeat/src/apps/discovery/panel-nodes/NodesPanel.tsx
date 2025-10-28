@@ -83,6 +83,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
         const node: Node = {
           id: contract.address,
           isInitial: initialAddresses.includes(contract.address),
+          isReachable: contract.isReachable,
           hasTemplate: contract.template !== undefined,
           name: contract.name ?? fallback,
           addressType: contract.type,
@@ -102,6 +103,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
         const node: Node = {
           id: eoa.address,
           isInitial: false,
+          isReachable: eoa.isReachable,
           hasTemplate: false,
           name: eoa.name ?? fallback,
           addressType: eoa.type,
@@ -190,12 +192,15 @@ function getNodeFields(
 
   if (value.type === 'object') {
     return value.values.flatMap(([key, value]) =>
-      getNodeFields(
-        `${path}.${extractFieldValue(key)}`,
-        value,
-        bannedKeys,
-        bannedValues,
-      ),
+      [
+        getNodeFields(
+          `${path}.${extractFieldValue(key)}`,
+          value,
+          bannedKeys,
+          bannedValues,
+        ),
+        getNodeFields(`${path}.#key`, key, bannedKeys, bannedValues),
+      ].flat(),
     )
   }
   if (value.type === 'array') {
@@ -228,6 +233,8 @@ function extractFieldValue(value: FieldValue): string {
       return value.value
     case 'address':
       return value.address
+    case 'number':
+      return value.value
     default:
       return ''
   }

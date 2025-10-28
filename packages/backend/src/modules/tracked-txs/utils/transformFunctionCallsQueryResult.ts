@@ -11,7 +11,7 @@ import type {
   TrackedTxFunctionCallResult,
 } from '../types/model'
 import { calculateCalldataGasUsed } from './calculateCalldataGasUsed'
-import { isChainIdMatching } from './isChainIdMatching'
+import { isFistParameterMatching } from './isFirstParameterMatching'
 import { isProgramHashProven } from './isProgramHashProven'
 
 export function transformFunctionCallsQueryResult(
@@ -59,7 +59,7 @@ export function transformFunctionCallsQueryResult(
     )
 
     const filteredSharedBridgeCalls = matchingSharedBridgeCalls.filter((c) =>
-      isChainIdMatching(r.input, c.properties.params),
+      isFistParameterMatching(r.input, c.properties.params),
     )
 
     const results = [

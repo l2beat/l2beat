@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Badge } from '~/components/core/Badge'
@@ -10,11 +11,12 @@ import {
   CardTitle,
 } from '~/components/core/Card'
 import { Separator } from '~/components/core/Separator'
+import { LoadingText } from '~/components/LoadingText'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractToken, DeployedToken } from '~/mock/types'
 import { api } from '~/react-query/trpc'
 import { cn } from '~/utils/cn'
-import { UnixTime } from '~/utils/UnixTime'
+import { getDeployedTokenDisplayId } from '~/utils/getDisplayId'
 
 export function MainPage() {
   const { data, isLoading: isAbstractTokensLoading } =
@@ -36,9 +38,7 @@ export function MainPage() {
           <CardContent>
             <div className="flex flex-col gap-2">
               {isAbstractTokensLoading ? (
-                <span className="text-muted-foreground text-sm">
-                  Loading...
-                </span>
+                <LoadingText />
               ) : (
                 <>
                   {data?.abstractTokens.map((token) => (
@@ -69,7 +69,7 @@ export function MainPage() {
                       <div className="mt-1 ml-6 flex flex-col items-start gap-1">
                         {token.deployedTokens.map((deployedToken) => (
                           <button
-                            key={`${deployedToken.chain}+${deployedToken.address}`}
+                            key={getDeployedTokenDisplayId(deployedToken)}
                             className={cn(
                               'w-full rounded-md p-2 text-left text-muted-foreground text-sm',
                               selectedDeployedToken?.chain ===
@@ -97,7 +97,7 @@ export function MainPage() {
                     {data?.deployedWithoutAbstractTokens.map((token) => {
                       return (
                         <button
-                          key={`${token.chain}+${token.address}`}
+                          key={getDeployedTokenDisplayId(token)}
                           className={cn(
                             'w-full rounded-md p-2 text-left text-muted-foreground text-sm',
                             selectedDeployedToken?.chain === token.chain &&
@@ -183,6 +183,10 @@ export function MainPage() {
                     label="Comment"
                     value={selectedAbstractToken.comment}
                   />
+                  <ItemWithLabel
+                    label="Reviewed"
+                    value={selectedAbstractToken.reviewed ? 'Yes' : 'No'}
+                  />
                 </div>
               )}
             </CardContent>
@@ -194,7 +198,7 @@ export function MainPage() {
                 <CardAction>
                   <Button asChild variant="outline">
                     <Link
-                      to={`/tokens/${selectedDeployedToken.chain}+${selectedDeployedToken.address}`}
+                      to={`/tokens/${selectedDeployedToken.chain}/${selectedDeployedToken.address}`}
                     >
                       Go to Token page
                     </Link>
@@ -235,9 +239,9 @@ export function MainPage() {
                   />
                   <ItemWithLabel
                     label="Deployment Timestamp"
-                    value={UnixTime.toYYYYMMDD(
+                    value={UnixTime.toDate(
                       selectedDeployedToken.deploymentTimestamp,
-                    )}
+                    ).toISOString()}
                   />
                   <ItemWithLabel
                     label="Comment"

@@ -1,7 +1,7 @@
 import { v } from '@l2beat/validate'
 import { expect, mockFn, mockObject } from 'earl'
 import type { Application, Request, Response } from 'express'
-import { OpenApi } from './OpenApi'
+import { type BaseOpenApiSchema, OpenApi } from './OpenApi'
 
 describe(OpenApi.name, () => {
   describe('route registration', () => {
@@ -225,6 +225,7 @@ describe(OpenApi.name, () => {
         ],
         paths: expect.a(Object),
         components: expect.a(Object),
+        security: [{ apiKeyAuth: [] }],
       })
     })
 
@@ -253,6 +254,7 @@ describe(OpenApi.name, () => {
           parameters: [],
           responses: {
             200: expect.a(Object),
+            401: expect.a(Object),
           },
         },
       })
@@ -362,6 +364,7 @@ describe(OpenApi.name, () => {
 
       expect(responses).toEqual({
         200: expect.a(Object),
+        401: expect.a(Object),
         400: {
           description: expect.a(String),
           content: {
@@ -397,7 +400,7 @@ describe(OpenApi.name, () => {
       const schema = openapi.getOpenApiSchema()
       const responses = schema.paths['/test/{id}']?.get?.responses
 
-      expect(Object.keys(responses ?? {})).toEqual(['200', '404'])
+      expect(Object.keys(responses ?? {})).toEqual(['200', '401', '404'])
       expect(responses?.[404]).toEqual({
         description: expect.a(String),
         content: {
@@ -539,6 +542,7 @@ describe(OpenApi.name, () => {
         parameters: [],
         responses: {
           200: expect.a(Object),
+          401: expect.a(Object),
         },
       })
     })
@@ -607,7 +611,7 @@ function getRouteHandler(app: Application) {
   return calls[calls.length - 1]?.args[1]
 }
 
-const baseSchema = {
+const baseSchema: BaseOpenApiSchema = {
   openapi: '3.0.0' as const,
   info: {
     title: 'L2BEAT API',
@@ -621,4 +625,14 @@ const baseSchema = {
         'Endpoints for listing projects and retrieving detailed information about individual projects.',
     },
   ],
+  components: {
+    securitySchemes: {
+      apiKeyAuth: {
+        type: 'apiKey',
+        in: 'query',
+        name: 'apiKey',
+      },
+    },
+  },
+  security: [{ apiKeyAuth: [] }],
 }

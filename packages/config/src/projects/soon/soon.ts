@@ -11,7 +11,7 @@ export const soon: ScalingProject = opStackL2({
   addedAt: UnixTime(1726836904), // 2024-09-20T12:55:04Z
   discovery,
   daProvider: EIGENDA_DA_PROVIDER(false),
-  additionalBadges: [BADGES.DA.EigenDA, BADGES.VM.SolanaVM],
+  additionalBadges: [BADGES.VM.SolanaVM],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
@@ -75,6 +75,12 @@ export const soon: ScalingProject = opStackL2({
       customerId: '0x52ebeea8a7dcaaa17ee398b9f9b01dfa64db63ae',
       daLayer: ProjectId('eigenda'),
       sinceTimestamp: UnixTime(1735822800),
+    },
+    {
+      type: 'eigen-da',
+      daLayer: ProjectId('eigenda'),
+      sinceTimestamp: UnixTime(1753412400),
+      customerId: '0x420ad2641f22bf6f180c52d0b0566e7ec701c45a',
     },
   ],
 })

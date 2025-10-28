@@ -20,12 +20,38 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
           max: 10,
         }
       : {
-          connectionString: env.string('DATABASE_URL'),
+          connectionString: env.string(
+            'PUBLIC_API_URL',
+            env.optionalString('DATABASE_URL'),
+          ),
           application_name: env.string('DATABASE_APP_NAME', options.name),
           ssl: { rejectUnauthorized: false },
 
           min: 20,
           max: env.integer('DATABASE_MAX_POOL_SIZE', 20),
         },
+    api: {
+      port: env.integer('PORT', 3000),
+    },
+    auth: options.isLocal
+      ? false
+      : {
+          apiKeys: {
+            l2beat: env.string('API_KEY_L2BEAT'),
+            optimism: env.string('API_KEY_OPTIMISM'),
+            arbitrum: env.string('API_KEY_ARBITRUM'),
+            agglayer: env.string('API_KEY_AGGLAYER'),
+            theElasticNetwork: env.string('API_KEY_THE_ELASTIC_NETWORK'),
+          },
+        },
+    openapi: {
+      url: env.string('BACKEND_URL', 'http://localhost:3000'),
+    },
+    cacheEnabled:
+      (env.optionalString('DEPLOYMENT_ENV') === 'production' ||
+        env.optionalString('DEPLOYMENT_ENV') === 'staging') &&
+      !env.boolean('DISABLE_CACHE', false)
+        ? true
+        : false,
   }
 }

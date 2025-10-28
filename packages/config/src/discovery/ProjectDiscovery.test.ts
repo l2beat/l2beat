@@ -12,7 +12,7 @@ describe(ProjectDiscovery.name, () => {
   const projectName = 'ExampleProject'
   const configReader = mockObject<ConfigReader>({
     readConfig: (projectName: string) => mockConfig(projectName),
-    readDiscovery: () => discoveredJsonStub,
+    readDiscoveryWithReferences: () => [discoveredJsonStub],
   })
 
   const discovery = new ProjectDiscovery(projectName, configReader)
@@ -125,10 +125,12 @@ describe(ProjectDiscovery.name, () => {
     it('should return empty arrays when no EOAs have permissions', () => {
       const configReaderEmpty = mockObject<ConfigReader>({
         readConfig: (projectName: string) => mockConfig(projectName),
-        readDiscovery: () => ({
-          ...discoveredJsonStub,
-          entries: discoveredJsonStub.entries.filter((e) => e.type !== 'EOA'),
-        }),
+        readDiscoveryWithReferences: () => [
+          {
+            ...discoveredJsonStub,
+            entries: discoveredJsonStub.entries.filter((e) => e.type !== 'EOA'),
+          },
+        ],
       })
       const discoveryEmpty = new ProjectDiscovery(
         'EmptyProject',
@@ -147,36 +149,38 @@ describe(ProjectDiscovery.name, () => {
     it('should handle single EOA with permissions', () => {
       const configReaderSingle = mockObject<ConfigReader>({
         readConfig: (projectName: string) => mockConfig(projectName),
-        readDiscovery: () => ({
-          ...discoveredJsonStub,
-          entries: [
-            ...discoveredJsonStub.entries.filter((e) => e.type !== 'EOA'),
-            {
-              type: 'Contract',
-              name: 'TestContract',
-              address: ChainSpecificAddress(
-                'eth:0x2222222222222222222222222222222222222222',
-              ),
-              category: { name: 'Test', priority: 1 },
-            },
-            {
-              type: 'EOA',
-              name: 'TestEOA',
-              address: ChainSpecificAddress(
-                'eth:0x1111111111111111111111111111111111111111',
-              ),
-              receivedPermissions: [
-                {
-                  permission: 'upgrade',
-                  from: ChainSpecificAddress(
-                    'eth:0x2222222222222222222222222222222222222222',
-                  ),
-                },
-              ],
-              category: { name: 'Test', priority: 1 },
-            },
-          ],
-        }),
+        readDiscoveryWithReferences: () => [
+          {
+            ...discoveredJsonStub,
+            entries: [
+              ...discoveredJsonStub.entries.filter((e) => e.type !== 'EOA'),
+              {
+                type: 'Contract',
+                name: 'TestContract',
+                address: ChainSpecificAddress(
+                  'eth:0x2222222222222222222222222222222222222222',
+                ),
+                category: { name: 'Test', priority: 1 },
+              },
+              {
+                type: 'EOA',
+                name: 'TestEOA',
+                address: ChainSpecificAddress(
+                  'eth:0x1111111111111111111111111111111111111111',
+                ),
+                receivedPermissions: [
+                  {
+                    permission: 'upgrade',
+                    from: ChainSpecificAddress(
+                      'eth:0x2222222222222222222222222222222222222222',
+                    ),
+                  },
+                ],
+                category: { name: 'Test', priority: 1 },
+              },
+            ],
+          },
+        ],
       })
       const discoverySingle = new ProjectDiscovery(
         'SingleProject',
@@ -195,76 +199,78 @@ describe(ProjectDiscovery.name, () => {
     it('should group EOAs with same description but different chains', () => {
       const configReaderMultiChain = mockObject<ConfigReader>({
         readConfig: (projectName: string) => mockConfig(projectName),
-        readDiscovery: () => ({
-          ...discoveredJsonStub,
-          entries: [
-            ...discoveredJsonStub.entries.filter((e) => e.type !== 'EOA'),
-            {
-              type: 'Contract',
-              name: 'MultiSigContract',
-              address: ChainSpecificAddress(
-                'eth:0x3333333333333333333333333333333333333333',
-              ),
-              category: { name: 'Test', priority: 1 },
-            },
-            {
-              type: 'Contract',
-              name: 'MultiSigContract',
-              address: ChainSpecificAddress(
-                'arb1:0x3333333333333333333333333333333333333333',
-              ),
-              category: { name: 'Test', priority: 1 },
-            },
-            {
-              type: 'EOA',
-              name: 'MultiSigMember1',
-              address: ChainSpecificAddress(
-                'eth:0x1111111111111111111111111111111111111111',
-              ),
-              receivedPermissions: [
-                {
-                  permission: 'upgrade',
-                  from: ChainSpecificAddress(
-                    'eth:0x3333333333333333333333333333333333333333',
-                  ),
-                },
-              ],
-              category: { name: 'Test', priority: 1 },
-            },
-            {
-              type: 'EOA',
-              name: 'MultiSigMember2',
-              address: ChainSpecificAddress(
-                'arb1:0x2222222222222222222222222222222222222222',
-              ),
-              receivedPermissions: [
-                {
-                  permission: 'upgrade',
-                  from: ChainSpecificAddress(
-                    'arb1:0x3333333333333333333333333333333333333333',
-                  ),
-                },
-              ],
-              category: { name: 'Test', priority: 1 },
-            },
-            {
-              type: 'EOA',
-              name: 'MultiSigMember3',
-              address: ChainSpecificAddress(
-                'eth:0x4444444444444444444444444444444444444444',
-              ),
-              receivedPermissions: [
-                {
-                  permission: 'upgrade',
-                  from: ChainSpecificAddress(
-                    'eth:0x3333333333333333333333333333333333333333',
-                  ),
-                },
-              ],
-              category: { name: 'Test', priority: 1 },
-            },
-          ],
-        }),
+        readDiscoveryWithReferences: () => [
+          {
+            ...discoveredJsonStub,
+            entries: [
+              ...discoveredJsonStub.entries.filter((e) => e.type !== 'EOA'),
+              {
+                type: 'Contract',
+                name: 'MultiSigContract',
+                address: ChainSpecificAddress(
+                  'eth:0x3333333333333333333333333333333333333333',
+                ),
+                category: { name: 'Test', priority: 1 },
+              },
+              {
+                type: 'Contract',
+                name: 'MultiSigContract',
+                address: ChainSpecificAddress(
+                  'arb1:0x3333333333333333333333333333333333333333',
+                ),
+                category: { name: 'Test', priority: 1 },
+              },
+              {
+                type: 'EOA',
+                name: 'MultiSigMember1',
+                address: ChainSpecificAddress(
+                  'eth:0x1111111111111111111111111111111111111111',
+                ),
+                receivedPermissions: [
+                  {
+                    permission: 'upgrade',
+                    from: ChainSpecificAddress(
+                      'eth:0x3333333333333333333333333333333333333333',
+                    ),
+                  },
+                ],
+                category: { name: 'Test', priority: 1 },
+              },
+              {
+                type: 'EOA',
+                name: 'MultiSigMember2',
+                address: ChainSpecificAddress(
+                  'arb1:0x2222222222222222222222222222222222222222',
+                ),
+                receivedPermissions: [
+                  {
+                    permission: 'upgrade',
+                    from: ChainSpecificAddress(
+                      'arb1:0x3333333333333333333333333333333333333333',
+                    ),
+                  },
+                ],
+                category: { name: 'Test', priority: 1 },
+              },
+              {
+                type: 'EOA',
+                name: 'MultiSigMember3',
+                address: ChainSpecificAddress(
+                  'eth:0x4444444444444444444444444444444444444444',
+                ),
+                receivedPermissions: [
+                  {
+                    permission: 'upgrade',
+                    from: ChainSpecificAddress(
+                      'eth:0x3333333333333333333333333333333333333333',
+                    ),
+                  },
+                ],
+                category: { name: 'Test', priority: 1 },
+              },
+            ],
+          },
+        ],
       })
       const discoveryMultiChain = new ProjectDiscovery(
         'MultiChainProject',

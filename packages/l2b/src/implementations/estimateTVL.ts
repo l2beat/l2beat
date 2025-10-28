@@ -62,7 +62,7 @@ export async function estimateTVL(rpcUrl: string, address: EthereumAddress) {
     if (marketData) {
       value = calculateValue(
         entry.balance,
-        marketData.current_price,
+        marketData.current_price ?? 0,
         entry.decimals,
       )
     }

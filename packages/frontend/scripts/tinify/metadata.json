@@ -1494,5 +1494,11 @@
   "static/meta-images/scaling/projects/intuition/opengraph-image.png": "fcb1046a25f7e1b08c98811ec4fa9390",
   "static/meta-images/publications/governance-review-72.png": "485faf85ece1e4c2cd9bd71bf428f462",
   "static/icons/lighterprover.png": "fe6ccd8714654e4c7dec57ea70045838",
-  "static/meta-images/zk-catalog/projects/lighterprover/opengraph-image.png": "43f9d97612fee339df3da1f46cd63f36"
+  "static/meta-images/zk-catalog/projects/lighterprover/opengraph-image.png": "43f9d97612fee339df3da1f46cd63f36",
+  "static/icons/edgex.png": "ab173734ad9178be43f677277cfffdfc",
+  "static/meta-images/scaling/projects/edgex/opengraph-image.png": "c0b2588b1f5e6c6ae6ad86f0122b88ef",
+  "static/images/architecture/edgex.png": "7ac46b2f0dec519fc2ae693d120fac54",
+  "static/meta-images/publications/governance-review-73.png": "0ea005fdee03429b9df705ca432cbe73",
+  "static/images/architecture/ethereal.png": "360d85725bd64e162a95f1fd7e3514dc",
+  "static/icons/eigenda-v2.png": "e2e46805ed07bd1ef0d136e6262cb8cf"
 }

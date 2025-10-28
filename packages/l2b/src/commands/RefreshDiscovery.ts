@@ -85,6 +85,7 @@ export const RefreshDiscovery = command({
         args.excludeProjects ? !args.excludeProjects.includes(project) : true,
       )
       .flatMap((project) => configReader.readConfig(project))
+      .filter((config) => config.archived !== true)
 
     const toRefresh: { config: ConfigRegistry; reason: string }[] = []
     let foundFrom = false

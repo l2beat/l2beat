@@ -146,6 +146,13 @@ const zkProgramHashes: Record<
     proverSystemProject: ProjectId('risc0'),
     verificationStatus: 'notVerified',
   },
+  '0x70909b25db0db00f1d4b4016aeb876f53568a3e5a8e6397cb562d79947a02cc9': {
+    title: 'Set builder program',
+    description:
+      'Recursively verifies a Merkle tree of zk proofs at once, identified by a Merkle Mountain Range root.',
+    proverSystemProject: ProjectId('risc0'),
+    verificationStatus: 'notVerified',
+  },
   '760308386675154762009993173725077399730170358078020153308029499928875469870':
     {
       title: 'Aggregation program for Stone prover',
@@ -224,6 +231,14 @@ const zkProgramHashes: Record<
     verificationStatus: 'notVerified',
   },
   '0x0100088580465d88420e6369230ee94a32ff356dbcdd407a4be49fc8009b2a81': {
+    title: 'Boojum L2 Bootloader program',
+    description:
+      'EraVM program that proves the correct execution of a batch of ZK Stack L2 blocks.',
+    proverSystemProject: ProjectId('boojum'),
+    verificationStatus: 'notVerified',
+  },
+  // v29 upgrade, added by basti without knowing what he is doing https://www.tally.xyz/gov/zksync/proposal/40562439712311128665286075271414168289029475306445402072499591795343687723101?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f
+  '0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6': {
     title: 'Boojum L2 Bootloader program',
     description:
       'EraVM program that proves the correct execution of a batch of ZK Stack L2 blocks.',

@@ -114,6 +114,8 @@ export const myria: ScalingProject = {
       type: 'day',
       sinceTimestamp: UnixTime(1659542607),
       resyncLastDays: 7,
+      batchSize: 10,
+      dataSource: 'StarkEx Aggregations API',
     },
   },
   dataAvailability: {
