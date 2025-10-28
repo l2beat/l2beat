@@ -17,7 +17,6 @@ import { CCIPPlugIn } from './ccip'
 import { CCTPConfigPlugin } from './cctp/cctp.config'
 import { CCTPV1Plugin } from './cctp/cctp-v1.plugin'
 import { CCTPV2Plugin } from './cctp/cctp-v2.plugin'
-import { CCTPPlugin } from './cctp'
 import { CelerPlugIn } from './celer'
 import { CentriFugePlugin } from './centrifuge'
 import { CircleGatewayPlugIn } from './circle-gateway'
@@ -93,7 +92,6 @@ export function createInteropPlugins(
       new MayanForwarderPlugin(),
       new CircleGatewayPlugIn(deps.configs),
       new CelerPlugIn(),
-      new CircleGatewayPlugIn(),
       new CCIPPlugIn(),
       new CentriFugePlugin(),
       new MayanSwiftPlugin(), // should be run before CCTP
