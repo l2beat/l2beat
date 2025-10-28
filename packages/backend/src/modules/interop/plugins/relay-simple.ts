@@ -123,16 +123,15 @@ export class RelaySimplePlugIn implements InteropPlugin {
   capture(input: LogToCapture) {
     const transfer = parseTransfer(input.log, null)
     if (transfer) {
-      if (
-        transfer.to ===
-        EthereumAddress('0xf70da97812CB96acDF810712Aa562db8dfA3dbEF')
-      ) {
-        return RelayTransferOut.create(input.ctx, {
-          from: transfer.from,
-          to: transfer.to,
-          value: transfer.value.toString(),
-          requestId: '0x' + input.ctx.txData.slice(138, 202), // third 32 bytes of calldata
-        })
+      if (transfer.to === RelaySolver) {
+        if (input.ctx.txData.length === 2 + 8 + 64 * 3) {
+          return TransferSrc.create(input.ctx, {
+            amount: transfer.value.toString(),
+            tokenAddress: Address32.from(input.log.address),
+            kind: 'direct ERC20 transfer',
+            requestId: '0x' + input.ctx.txData.slice(-64),
+          })
+        }
       }
 
       if (transfer.from === RelaySolver) {
