@@ -161,4 +161,7 @@ export const grvt: ScalingProject = zkStackL2({
       type: 'general',
     },
   ],
+  proofSystemTimestamps: {
+    sinceTimestamp: UnixTime(1734649200),
+  },
 })

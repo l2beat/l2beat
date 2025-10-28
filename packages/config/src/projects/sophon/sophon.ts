@@ -288,4 +288,7 @@ export const sophon: ScalingProject = zkStackL2({
       type: 'general',
     },
   ],
+  proofSystemTimestamps: {
+    sinceTimestamp: UnixTime(1734476400),
+  },
 })
