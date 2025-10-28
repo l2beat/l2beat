@@ -1,20 +1,8 @@
-import {
-  type Env,
-  getEnv,
-  LogFormatterEcs,
-  LogFormatterJson,
-  LogFormatterPretty,
-  Logger,
-  type LoggerOptions,
-  type LoggerTransportOptions,
-} from '@l2beat/backend-tools'
+import { getEnv } from '@l2beat/backend-tools'
 import apm from 'elastic-apm-node'
 import { Application } from './Application'
 import { getConfig } from './config'
-import {
-  ElasticSearchTransport,
-  type ElasticSearchTransportOptions,
-} from './peripherals/elastic-search/ElasticSearchTransport'
+import { createLogger } from './tools/createLogger'
 
 main().catch(() => {
   process.exit(1)
@@ -45,42 +33,4 @@ async function main() {
 
     throw e
   }
-}
-
-function createLogger(env: Env): Logger {
-  const isLocal = env.optionalString('DEPLOYMENT_ENV') === undefined
-
-  const loggerTransports: LoggerTransportOptions[] = [
-    {
-      transport: console,
-      formatter: isLocal ? new LogFormatterPretty() : new LogFormatterJson(),
-    },
-  ]
-
-  // Elastic Search logging
-  const esEnabled = env.optionalBoolean('ES_ENABLED') ?? false
-
-  if (esEnabled) {
-    console.log('Elastic Search logging enabled')
-    const options: ElasticSearchTransportOptions = {
-      node: env.string('ES_NODE'),
-      apiKey: env.string('ES_API_KEY'),
-      indexPrefix: env.string('ES_INDEX_PREFIX'),
-      flushInterval: env.optionalInteger('ES_FLUSH_INTERVAL'),
-    }
-
-    loggerTransports.push({
-      transport: new ElasticSearchTransport(options),
-      formatter: new LogFormatterEcs(),
-    })
-  }
-
-  const options: Partial<LoggerOptions> = {
-    logLevel: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
-    utc: isLocal ? false : true,
-    transports: loggerTransports,
-    metricsEnabled: env.boolean('CLIENT_METRICS_ENABLED', esEnabled),
-  }
-
-  return new Logger(options)
 }

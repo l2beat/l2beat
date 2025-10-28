@@ -10,7 +10,7 @@ import {
 import {
   ElasticSearchTransport,
   type ElasticSearchTransportOptions,
-} from './elastic-search/ElasticSearchTransport'
+} from '../peripherals/elastic-search/ElasticSearchTransport'
 
 export function createLogger(
   env: Env,

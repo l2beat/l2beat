@@ -1,8 +1,9 @@
-import type { Database } from '@l2beat/database'
+import '../dotenv'
+
+import type { Database, LogEvent } from '@l2beat/database'
 import { compiledToSqlQuery, createDatabase } from '@l2beat/database'
-import type { LogEvent } from 'kysely'
 import { env } from '~/env'
-import { getLogger } from './utils/logger'
+import { createLogger } from './utils/logger'
 
 let db: Database | undefined
 
@@ -14,7 +15,7 @@ export function getDb() {
           connectionString: env.DATABASE_URL,
           ssl: ssl(),
           ...pool(),
-          log: env.DATABASE_LOG_ENABLED ? makeLogger() : undefined,
+          log: env.DATABASE_LOG_ENABLED ? makeDbLogger() : undefined,
         })
       : createThrowingProxy()
   }
@@ -78,14 +79,17 @@ function pool() {
   }
 }
 
-function makeLogger() {
-  const logger = getLogger().for('Database')
+function makeDbLogger() {
+  const indexPrefix =
+    env.DEPLOYMENT_ENV === 'staging' ? 'database-staging' : 'database-prod'
+  const logger = createLogger({ indexPrefix })
 
   return (event: LogEvent) => {
     if (event.level === 'error') {
       logger.error('Query failed', {
         durationMs: event.queryDurationMillis,
         error: event.error,
+        source: 'frontend',
         sql: compiledToSqlQuery(event.query),
         ...(env.NODE_ENV === 'production'
           ? {
@@ -97,6 +101,7 @@ function makeLogger() {
     } else {
       logger.info('Query executed', {
         durationMs: event.queryDurationMillis,
+        source: 'frontend',
         sql: compiledToSqlQuery(event.query),
         ...(env.NODE_ENV === 'production'
           ? {
