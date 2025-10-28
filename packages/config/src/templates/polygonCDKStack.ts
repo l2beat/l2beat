@@ -112,6 +112,10 @@ export interface PolygonCDKStackConfig {
   }
   /** Configure to enable custom DA tracking e.g. project that switched DA */
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
+  proofSystemTimestamps?: {
+    sinceTimestamp: UnixTime
+    untilTimestamp?: UnixTime
+  }
 }
 
 export function polygonCDKStack(
@@ -201,7 +205,18 @@ export function polygonCDKStack(
       templateVars.nonTemplateProofSystem ??
       (hasNoProofs
         ? undefined
-        : { type: 'Validity', zkCatalogId: ProjectId('zkprover') }),
+        : {
+            type: 'Validity',
+            zkCatalogProject: [
+              {
+                id: ProjectId('zkprover'),
+                sinceTimestamp:
+                  templateVars.proofSystemTimestamps?.sinceTimestamp ?? 0,
+                untilTimestamp:
+                  templateVars.proofSystemTimestamps?.untilTimestamp,
+              },
+            ],
+          }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: templateVars.nonTemplateEscrows,

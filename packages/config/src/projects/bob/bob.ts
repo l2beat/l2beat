@@ -71,7 +71,12 @@ export const bob: ScalingProject = opStackL2({
   nonTemplateProofSystem: {
     type: 'Optimistic',
     name: 'OP Kailua',
-    zkCatalogId: ProjectId('risc0'),
+    zkCatalogProject: [
+      {
+        id: ProjectId('risc0'),
+        sinceTimestamp: UnixTime(1752703200),
+      },
+    ],
     challengeProtocol: 'Single-step',
   },
   chainConfig: {

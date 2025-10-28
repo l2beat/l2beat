@@ -87,7 +87,12 @@ export const sorare: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('stone'),
+    zkCatalogProject: [
+      {
+        id: ProjectId('stone'),
+        sinceTimestamp: UnixTime(1627250400),
+      },
+    ],
   },
   stage: {
     stage: 'NotApplicable',

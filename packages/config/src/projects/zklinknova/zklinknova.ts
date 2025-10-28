@@ -109,7 +109,12 @@ export const zklinknova: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('boojum'),
+    zkCatalogProject: [
+      {
+        id: ProjectId('boojum'),
+        sinceTimestamp: UnixTime(1709217961),
+      },
+    ],
   },
   chainConfig: {
     name: 'zklinknova',

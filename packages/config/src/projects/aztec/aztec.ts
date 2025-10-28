@@ -75,7 +75,12 @@ export const aztec: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('aztecv1prover'),
+    zkCatalogProject: [
+      {
+        id: ProjectId('aztecv1prover'),
+        sinceTimestamp: UnixTime(1615762800),
+      },
+    ],
   },
   config: {
     escrows: [

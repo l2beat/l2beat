@@ -94,7 +94,12 @@ export const immutablex: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('stone'),
+    zkCatalogProject: [
+      {
+        id: ProjectId('stone'),
+        sinceTimestamp: UnixTime(1617832800),
+      },
+    ],
   },
   stage: {
     stage: 'NotApplicable',

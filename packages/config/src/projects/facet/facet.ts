@@ -73,7 +73,12 @@ export const facet: ScalingProject = {
   },
   proofSystem: {
     type: 'Optimistic',
-    zkCatalogId: ProjectId('sp1'),
+    zkCatalogProject: [
+      {
+        id: ProjectId('sp1'),
+        sinceTimestamp: UnixTime(1751407200),
+      },
+    ],
     challengeProtocol: 'Single-step',
   },
   stage: getStage(
