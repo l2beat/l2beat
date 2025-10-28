@@ -103,7 +103,7 @@ export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
     private rpcs: Map<string, RpcClient>,
   ) {
     super({ intervalMs: 20 * 60 * 1000 })
-    this.logger = logger.for(this).tag({ tag: CCTPV2Config.key })
+    this.logger = logger.for(this).tag({ tag: 'cctp' })
   }
 
   async run() {
@@ -140,7 +140,7 @@ export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
       this.logger.info('Networks updated', {
         plugin: CCTPV2Config.key,
       })
-      this.store.set(CCTPV1Config, reconciledV2.updated)
+      this.store.set(CCTPV2Config, reconciledV2.updated)
     }
   }
 

@@ -5,7 +5,7 @@ Note - here the transfer of USDC is via burn/mint, but mint on DST happens befor
 
 import { assert } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
-import { CCTPV2Config } from './cctp/cttp.config'
+import { CCTPV2Config } from './cctp/cctp.config'
 import {
   Address32,
   createEventParser,

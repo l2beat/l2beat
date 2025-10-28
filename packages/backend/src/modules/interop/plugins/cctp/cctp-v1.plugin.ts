@@ -62,7 +62,7 @@ import {
   type MatchResult,
   Result,
 } from '../types'
-import { CCTPV1Config } from './cttp.config'
+import { CCTPV1Config } from './cctp.config'
 
 const parseMessageSent = createEventParser('event MessageSent(bytes message)')
 
