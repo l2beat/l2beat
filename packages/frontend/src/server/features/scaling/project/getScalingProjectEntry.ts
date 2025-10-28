@@ -32,8 +32,8 @@ import { getDataAvailabilitySection } from '~/utils/project/technology/getDataAv
 import { getOperatorSection } from '~/utils/project/technology/getOperatorSection'
 import { getOtherConsiderationsSection } from '~/utils/project/technology/getOtherConsiderationsSection'
 import { getSequencingSection } from '~/utils/project/technology/getSequencingSection'
-import { getStateValidationSection } from '~/utils/project/technology/getStateValidationSection'
 import { getWithdrawalsSection } from '~/utils/project/technology/getWithdrawalsSection'
+import { getStateValidationSection } from '~/utils/project/technology/state-validation/getStateValidationSection'
 import { getScalingTvsSection } from '~/utils/project/tvs/getScalingTvsSection'
 import {
   getUnderReviewStatus,
@@ -163,10 +163,11 @@ export async function getScalingProjectEntry(
     dataPostedSection,
     zkCatalogProjects,
     allProjectsWithContracts,
+    allProjects,
   ] = await Promise.all([
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
-    get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
+    get7dTvsBreakdown({ type: 'layer2' }),
     getTokensForProject(project),
     getLiveness(project.id),
     getContractUtils(),
@@ -179,6 +180,9 @@ export async function getScalingProjectEntry(
     }),
     ps.getProjects({
       select: ['contracts'],
+    }),
+    ps.getProjects({
+      optional: ['daBridge', 'isBridge', 'isScaling', 'isDaLayer'],
     }),
   ])
 
@@ -254,6 +258,9 @@ export async function getScalingProjectEntry(
   const stateValidationSection = getStateValidationSection(
     project,
     zkCatalogProjects,
+    contractUtils,
+    tvsStats,
+    allProjects,
   )
 
   const common = {
