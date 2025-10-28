@@ -2,7 +2,7 @@
 
 This is an experimental plugin for the RELAY protocol. It checks
 deposits to the solver on SRC and deposits from the solver on DST
-and matches them based on the additional requestId hidden in the 
+and matches them based on the additional requestId hidden in the
 calldata
 
 */
@@ -47,7 +47,6 @@ export class RelaySimplePlugIn implements InteropPlugin {
         transfer.to ===
         EthereumAddress('0xf70da97812CB96acDF810712Aa562db8dfA3dbEF')
       ) {
-        console.log(input)
         return RelayTransferOut.create(input.ctx, {
           from: transfer.from,
           to: transfer.to,

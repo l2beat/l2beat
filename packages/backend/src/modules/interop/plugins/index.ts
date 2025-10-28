@@ -16,6 +16,7 @@ import { AxelarITSPlugin } from './axelar-its'
 import { CCIPPlugIn } from './ccip'
 import { CCTPV1Plugin } from './cctp/cctp-v1.plugin'
 import { CCTPV2Plugin } from './cctp/cctp-v2.plugin'
+import { CCTPConfigPlugin } from './cctp/cttp.config'
 import { CentriFugePlugin } from './centrifuge'
 import { CircleGatewayPlugIn } from './circle-gateway'
 import { DeBridgePlugin } from './debridge'
@@ -64,6 +65,7 @@ export function createInteropPlugins(
 ): InteropPlugins {
   const ethereumRpc = deps.rpcClients.find((c) => c.chain === 'ethereum')
   assert(ethereumRpc)
+  const rpcs = new Map(deps.rpcClients.map((r) => [r.chain, r]))
 
   return {
     comparePlugins: [new AcrossComparePlugin()],
@@ -80,6 +82,7 @@ export function createInteropPlugins(
         deps.logger,
         deps.httpClient,
       ),
+      new CCTPConfigPlugin(deps.chains, deps.configs, deps.logger, rpcs),
     ],
     eventPlugins: [
       new SquidCoralPlugin(),
