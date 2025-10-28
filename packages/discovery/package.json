@@ -14,9 +14,9 @@
       "require": "./dist/index.js"
     },
     "./schemas": {
-      "import": "./dist/schemas/schemas.js",
-      "types": "./dist/schemas/schemas.d.ts",
-      "require": "./dist/schemas/schemas.js"
+      "import": "./dist/index.schemas.js",
+      "types": "./dist/index.schemas.d.ts",
+      "require": "./dist/index.schemas.js"
     }
   },
   "scripts": {
@@ -34,14 +34,15 @@
   },
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",
-    "@l2beat/validate": "workspace:*",
     "@l2beat/shared": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
+    "@l2beat/validate": "workspace:*",
     "@mradomski/fast-solidity-parser": "0.1.6",
     "bignumber.js": "^9.1.2",
     "chalk": "^4.1.2",
     "clingo-wasm": "0.3.2",
     "cmd-ts": "^0.13.0",
+    "comment-json": "^4.4.1",
     "ethers": "^5.7.2",
     "jsonc-parser": "^3.2.0",
     "lodash": "^4.17.21",

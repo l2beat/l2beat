@@ -23,7 +23,7 @@ export const FieldConfigSchema = v.object({
 })
 export type FieldConfigSchema = v.infer<typeof FieldConfigSchema>
 
-const ContractConfigSchema = v.object({
+export const ContractConfigSchema = v.object({
   ..._StructureContract,
   ..._ColorContract,
   ..._ContractPermission,
