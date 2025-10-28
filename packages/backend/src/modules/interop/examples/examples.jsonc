@@ -172,6 +172,7 @@
     ]
   },
   "circle-gateway": {
+    "loadConfigs": ["cctp-v2"],
     "txs": [
       {
         "chain": "base",

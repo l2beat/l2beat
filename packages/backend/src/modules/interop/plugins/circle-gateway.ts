@@ -3,7 +3,6 @@ Circle Gateway plugin
 Note - here the transfer of USDC is via burn/mint, but mint on DST happens before burn on SRC.
 */
 
-import { assert } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { CCTPV2Config } from './cctp/cctp.config'
 import {
@@ -52,14 +51,8 @@ export class CircleGatewayPlugIn implements InteropPlugin {
 
     const network = networks.find((n) => n.chain === input.ctx.chain)
     if (!network) return
-    assert(
-      network.messageTransmitter,
-      'We capture only chain with message transmitters',
-    )
 
-    const gatewayBurned = parseGatewayBurned(input.log, [
-      network.messageTransmitter,
-    ])
+    const gatewayBurned = parseGatewayBurned(input.log, null)
     if (gatewayBurned)
       return GatewayBurned.create(input.ctx, {
         token: Address32.from(gatewayBurned.token),
@@ -72,9 +65,7 @@ export class CircleGatewayPlugIn implements InteropPlugin {
         value: gatewayBurned.value.toString(),
       })
 
-    const attestationUsed = parseAttestationUsed(input.log, [
-      network.messageTransmitter,
-    ])
+    const attestationUsed = parseAttestationUsed(input.log, null)
     if (attestationUsed)
       return AttestationUsed.create(input.ctx, {
         token: Address32.from(attestationUsed.token),
