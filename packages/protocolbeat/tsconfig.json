@@ -1,6 +1,3 @@
 {
-  "extends": "@l2beat/typescript-config/react",
-  "compilerOptions": {
-    "moduleResolution": "Bundler"
-  }
+  "extends": "@l2beat/typescript-config/react"
 }
