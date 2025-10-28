@@ -168,7 +168,6 @@ export class RelayIndexer extends ManagedChildIndexer {
       await this.interopEventStore.saveNewEvents(tracked)
     }
 
-    console.log('UPDATE END', tracked.length, syncedTo)
     return syncedTo
   }
 
