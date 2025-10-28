@@ -87,7 +87,7 @@ export function TemplatePanel() {
   )
 }
 
-function findTemplateId(
+export function findTemplateId(
   chains: ApiProjectChain[],
   address: string | undefined,
 ): string | undefined {

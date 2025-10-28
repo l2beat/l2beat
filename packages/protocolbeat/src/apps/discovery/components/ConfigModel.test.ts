@@ -2,8 +2,8 @@ import { expect } from 'earl'
 import type {
   ContractConfigSchema,
   DiscoveryConfigSchema,
-} from '../../schemas/schemas'
-import { ConfigEditor, ContractConfigEditor } from './ConfigEditor'
+} from '../../../../../discovery/src/schemas/schemas'
+import { ConfigModel, ContractConfigModel } from './ConfigModel'
 
 // ===================================
 // Helper functions for creating test configs
@@ -45,14 +45,14 @@ function createContractConfig(
   }
 }
 
-describe('ConfigEditor', () => {
+describe('ConfigModel', () => {
   describe('constructor and initialization', () => {
     it('creates instance with minimal valid config', () => {
       // Given a minimal valid discovery config
       const config = createDiscoveryConfig()
 
-      // When creating a ConfigEditor instance
-      const editor = ConfigEditor.fromPeak(config)
+      // When creating a ConfigModel instance
+      const editor = ConfigModel.fromPeak(config)
 
       // Then it should initialize successfully
       expect(editor.peak().name).toEqual('test-project')
@@ -62,15 +62,15 @@ describe('ConfigEditor', () => {
       // Given a config without overrides
       const config = createDiscoveryConfig()
 
-      // When creating a ConfigEditor instance
-      const editor = ConfigEditor.fromPeak(config)
+      // When creating a ConfigModel instance
+      const editor = ConfigModel.fromPeak(config)
 
       // Then overrides should be initialized
       const result = editor.peak()
       expect(result.overrides).toEqual({})
     })
 
-    it('creates ContractConfigEditor for each override', () => {
+    it('creates ContractConfigModel for each override', () => {
       // Given a config with multiple overrides
       const config = createDiscoveryConfig({
         overrides: {
@@ -82,8 +82,8 @@ describe('ConfigEditor', () => {
         },
       })
 
-      // When creating a ConfigEditor instance
-      const editor = ConfigEditor.fromPeak(config)
+      // When creating a ConfigModel instance
+      const editor = ConfigModel.fromPeak(config)
 
       // Then it should properly initialize overrides
       expect(editor.getIgnoreDiscovery('0xAddress1')).toEqual(false)
@@ -104,9 +104,9 @@ describe('ConfigEditor', () => {
 }`
 
       // When parsing from raw JSONC
-      const editor = ConfigEditor.fromRawJsonc(jsonc)
+      const editor = ConfigModel.fromRawJsonc(jsonc)
 
-      // Then it should create a valid ConfigEditor
+      // Then it should create a valid ConfigModel
       expect(editor.peak().name).toEqual('test-project')
     })
 
@@ -123,7 +123,7 @@ describe('ConfigEditor', () => {
 }`
 
       // When parsing from raw JSONC
-      const editor = ConfigEditor.fromRawJsonc(jsonc)
+      const editor = ConfigModel.fromRawJsonc(jsonc)
 
       // Then it should parse correctly ignoring comments
       const result = editor.peak()
@@ -146,7 +146,7 @@ describe('ConfigEditor', () => {
 }`
 
       // When parsing from raw JSONC
-      const editor = ConfigEditor.fromRawJsonc(jsonc)
+      const editor = ConfigModel.fromRawJsonc(jsonc)
 
       // Then it should parse correctly ignoring comments
       expect(editor.peak().name).toEqual('test-project')
@@ -163,7 +163,7 @@ describe('ConfigEditor', () => {
 }`
 
       // When parsing from raw JSONC
-      const editor = ConfigEditor.fromRawJsonc(jsonc)
+      const editor = ConfigModel.fromRawJsonc(jsonc)
 
       // Then it should parse correctly preserving data
       expect(editor.peak().name).toEqual('test-project')
@@ -180,7 +180,7 @@ describe('ConfigEditor', () => {
 }`
 
       // When parsing from raw JSONC
-      const editor = ConfigEditor.fromRawJsonc(jsonc)
+      const editor = ConfigModel.fromRawJsonc(jsonc)
 
       // Then it should handle trailing commas gracefully
       expect(editor.peak().name).toEqual('test-project')
@@ -209,7 +209,7 @@ describe('ConfigEditor', () => {
 }`
 
       // When parsing from raw JSONC
-      const editor = ConfigEditor.fromRawJsonc(jsonc)
+      const editor = ConfigModel.fromRawJsonc(jsonc)
 
       // Then it should parse overrides correctly
       expect(editor.getIgnoreDiscovery('0xMainContract')).toEqual(true)
@@ -233,7 +233,7 @@ describe('ConfigEditor', () => {
       })
 
       // When getting a snapshot
-      const editor = ConfigEditor.fromPeak(config)
+      const editor = ConfigModel.fromPeak(config)
       const snapshot = editor.peak()
 
       // Then it should return the current state
@@ -242,9 +242,9 @@ describe('ConfigEditor', () => {
     })
 
     it('returns reference to internal state for comment preservation', () => {
-      // Given a ConfigEditor instance
+      // Given a ConfigModel instance
       const config = createDiscoveryConfig({ maxDepth: 5 })
-      const editor = ConfigEditor.fromPeak(config)
+      const editor = ConfigModel.fromPeak(config)
 
       // When getting a snapshot
       const snapshot = editor.peak()
@@ -266,7 +266,7 @@ describe('ConfigEditor', () => {
       })
 
       // When getting a snapshot
-      const editor = ConfigEditor.fromPeak(config)
+      const editor = ConfigModel.fromPeak(config)
       const snapshot = editor.peak()
 
       // Then all overrides should be present
@@ -284,7 +284,7 @@ describe('ConfigEditor', () => {
       const config = createDiscoveryConfig()
 
       // When converting to string
-      const editor = ConfigEditor.fromPeak(config)
+      const editor = ConfigModel.fromPeak(config)
       const result = editor.toString()
 
       // Then it should be valid JSON with proper formatting
@@ -304,7 +304,7 @@ describe('ConfigEditor', () => {
 }`
 
       // When parsing and converting back to string
-      const editor = ConfigEditor.fromRawJsonc(jsonc)
+      const editor = ConfigModel.fromRawJsonc(jsonc)
       const result = editor.toString()
 
       // Then comments should be preserved
@@ -323,7 +323,7 @@ describe('ConfigEditor', () => {
       })
 
       // When converting to string
-      const editor = ConfigEditor.fromPeak(config)
+      const editor = ConfigModel.fromPeak(config)
       const result = editor.toString()
 
       // Then it should be properly indented
@@ -343,7 +343,7 @@ describe('ConfigEditor', () => {
       })
 
       // When setting ignoreDiscovery to true
-      const editor = ConfigEditor.fromPeak(config)
+      const editor = ConfigModel.fromPeak(config)
       editor.setIgnoreDiscovery('0xAddress1', true)
 
       // Then it should be updated
@@ -355,7 +355,7 @@ describe('ConfigEditor', () => {
       const config = createDiscoveryConfig()
 
       // When setting ignoreDiscovery for non-existent address
-      const editor = ConfigEditor.fromPeak(config)
+      const editor = ConfigModel.fromPeak(config)
       editor.setIgnoreDiscovery('0xNonExistent', true)
 
       // Then it should not throw and return default value
@@ -371,7 +371,7 @@ describe('ConfigEditor', () => {
       })
 
       // When getting ignoreDiscovery
-      const editor = ConfigEditor.fromPeak(config)
+      const editor = ConfigModel.fromPeak(config)
       const result = editor.getIgnoreDiscovery('0xAddress1')
 
       // Then it should return the correct value
@@ -383,7 +383,7 @@ describe('ConfigEditor', () => {
       const config = createDiscoveryConfig()
 
       // When getting ignoreDiscovery for non-existent address
-      const editor = ConfigEditor.fromPeak(config)
+      const editor = ConfigModel.fromPeak(config)
       const result = editor.getIgnoreDiscovery('0xNonExistent')
 
       // Then it should return false as default
@@ -401,7 +401,7 @@ describe('ConfigEditor', () => {
       })
 
       // When setting ignoreInWatchMode
-      const editor = ConfigEditor.fromPeak(config)
+      const editor = ConfigModel.fromPeak(config)
       editor.setIgnoreInWatchMode('0xAddress1', ['field1', 'field2'])
 
       // Then it should be updated
@@ -422,7 +422,7 @@ describe('ConfigEditor', () => {
       })
 
       // When setting ignoreInWatchMode to empty array
-      const editor = ConfigEditor.fromPeak(config)
+      const editor = ConfigModel.fromPeak(config)
       editor.setIgnoreInWatchMode('0xAddress1', [])
 
       // Then it should be cleared
@@ -434,7 +434,7 @@ describe('ConfigEditor', () => {
       const config = createDiscoveryConfig()
 
       // When getting ignoreInWatchMode for non-existent address
-      const editor = ConfigEditor.fromPeak(config)
+      const editor = ConfigModel.fromPeak(config)
       const result = editor.getIgnoreInWatchMode('0xNonExistent')
 
       // Then it should return empty array as default
@@ -452,7 +452,7 @@ describe('ConfigEditor', () => {
       })
 
       // When setting ignoreMethods
-      const editor = ConfigEditor.fromPeak(config)
+      const editor = ConfigModel.fromPeak(config)
       editor.setIgnoreMethods('0xAddress1', ['method1', 'method2'])
 
       // Then it should be updated
@@ -473,7 +473,7 @@ describe('ConfigEditor', () => {
       })
 
       // When updating ignoreMethods
-      const editor = ConfigEditor.fromPeak(config)
+      const editor = ConfigModel.fromPeak(config)
       editor.setIgnoreMethods('0xAddress1', ['newMethod1', 'newMethod2'])
 
       // Then it should replace the old values
@@ -488,7 +488,7 @@ describe('ConfigEditor', () => {
       const config = createDiscoveryConfig()
 
       // When getting ignoreMethods for non-existent address
-      const editor = ConfigEditor.fromPeak(config)
+      const editor = ConfigModel.fromPeak(config)
       const result = editor.getIgnoreMethods('0xNonExistent')
 
       // Then it should return empty array as default
@@ -506,7 +506,7 @@ describe('ConfigEditor', () => {
       })
 
       // When setting ignoreRelatives
-      const editor = ConfigEditor.fromPeak(config)
+      const editor = ConfigModel.fromPeak(config)
       editor.setIgnoreRelatives('0xAddress1', ['relative1', 'relative2'])
 
       // Then it should be updated
@@ -527,7 +527,7 @@ describe('ConfigEditor', () => {
       })
 
       // When setting ignoreRelatives to empty array
-      const editor = ConfigEditor.fromPeak(config)
+      const editor = ConfigModel.fromPeak(config)
       editor.setIgnoreRelatives('0xAddress1', [])
 
       // Then it should be cleared
@@ -539,7 +539,7 @@ describe('ConfigEditor', () => {
       const config = createDiscoveryConfig()
 
       // When getting ignoreRelatives for non-existent address
-      const editor = ConfigEditor.fromPeak(config)
+      const editor = ConfigModel.fromPeak(config)
       const result = editor.getIgnoreRelatives('0xNonExistent')
 
       // Then it should return empty array as default
@@ -571,7 +571,7 @@ describe('ConfigEditor', () => {
 }`
 
       // When modifying the config
-      const editor = ConfigEditor.fromRawJsonc(jsonc)
+      const editor = ConfigModel.fromRawJsonc(jsonc)
       editor.setIgnoreDiscovery('0xAddress1', true)
       const result = editor.toString()
 
@@ -606,7 +606,7 @@ describe('ConfigEditor', () => {
 }`
 
       // When modifying the methods array
-      const editor = ConfigEditor.fromRawJsonc(jsonc)
+      const editor = ConfigModel.fromRawJsonc(jsonc)
       editor.setIgnoreMethods('0xAddress1', [
         'deprecated',
         'legacy',
@@ -657,7 +657,7 @@ describe('ConfigEditor', () => {
 }`
 
       // When parsing and converting back
-      const editor = ConfigEditor.fromRawJsonc(jsonc)
+      const editor = ConfigModel.fromRawJsonc(jsonc)
       const result = editor.toString()
 
       // Then all comments should be preserved
@@ -670,14 +670,14 @@ describe('ConfigEditor', () => {
   })
 })
 
-describe('ContractConfigEditor', () => {
+describe('ContractConfigModel', () => {
   describe('constructor and initialization', () => {
     it('creates instance with minimal config', () => {
       // Given a minimal contract config
       const config = createContractConfig()
 
-      // When creating a ContractConfigEditor instance
-      const editor = new ContractConfigEditor(config)
+      // When creating a ContractConfigModel instance
+      const editor = new ContractConfigModel(config)
 
       // Then it should initialize successfully
       expect(editor.peak().ignoreDiscovery).toEqual(false)
@@ -692,8 +692,8 @@ describe('ContractConfigEditor', () => {
         ignoreInWatchMode: ['field1'],
       })
 
-      // When creating a ContractConfigEditor instance
-      const editor = new ContractConfigEditor(config)
+      // When creating a ContractConfigModel instance
+      const editor = new ContractConfigModel(config)
 
       // Then all properties should be accessible
       expect(editor.getIgnoreDiscovery()).toEqual(true)
@@ -717,9 +717,9 @@ describe('ContractConfigEditor', () => {
 }`
 
       // When parsing from raw JSONC
-      const editor = ContractConfigEditor.fromRawJsonc(jsonc)
+      const editor = ContractConfigModel.fromRawJsonc(jsonc)
 
-      // Then it should create a valid ContractConfigEditor
+      // Then it should create a valid ContractConfigModel
       expect(editor.getIgnoreDiscovery()).toEqual(true)
       // Note: comment-json returns CommentArray which behaves like Array but has different type
       const methods = editor.getIgnoreMethods()
@@ -742,7 +742,7 @@ describe('ContractConfigEditor', () => {
 }`
 
       // When parsing from raw JSONC
-      const editor = ContractConfigEditor.fromRawJsonc(jsonc)
+      const editor = ContractConfigModel.fromRawJsonc(jsonc)
 
       // Then it should parse correctly
       expect(editor.getIgnoreDiscovery()).toEqual(true)
@@ -765,7 +765,7 @@ describe('ContractConfigEditor', () => {
       })
 
       // When getting a snapshot
-      const editor = new ContractConfigEditor(config)
+      const editor = new ContractConfigModel(config)
       const snapshot = editor.peak()
 
       // Then it should return the current state
@@ -784,7 +784,7 @@ describe('ContractConfigEditor', () => {
       })
 
       // When converting to string
-      const editor = new ContractConfigEditor(config)
+      const editor = new ContractConfigModel(config)
       const result = editor.toString()
 
       // Then it should be valid JSON
@@ -806,7 +806,7 @@ describe('ContractConfigEditor', () => {
 }`
 
       // When parsing and converting back to string
-      const editor = ContractConfigEditor.fromRawJsonc(jsonc)
+      const editor = ContractConfigModel.fromRawJsonc(jsonc)
       const result = editor.toString()
 
       // Then comments should be preserved
@@ -820,7 +820,7 @@ describe('ContractConfigEditor', () => {
       const config = createContractConfig()
 
       // When setting ignoreDiscovery to true
-      const editor = new ContractConfigEditor(config)
+      const editor = new ContractConfigModel(config)
       editor.setIgnoreDiscovery(true)
 
       // Then it should be updated
@@ -832,7 +832,7 @@ describe('ContractConfigEditor', () => {
       const config = createContractConfig({ ignoreDiscovery: true })
 
       // When setting ignoreDiscovery to false
-      const editor = new ContractConfigEditor(config)
+      const editor = new ContractConfigModel(config)
       editor.setIgnoreDiscovery(false)
 
       // Then the value is removed (set to undefined which cleans up the config)
@@ -849,7 +849,7 @@ describe('ContractConfigEditor', () => {
       })
 
       // When setting ignoreDiscovery
-      const editor = new ContractConfigEditor(config)
+      const editor = new ContractConfigModel(config)
       editor.setIgnoreDiscovery(true)
 
       // Then other properties should remain unchanged
@@ -864,7 +864,7 @@ describe('ContractConfigEditor', () => {
       const config = createContractConfig()
 
       // When setting ignoreInWatchMode
-      const editor = new ContractConfigEditor(config)
+      const editor = new ContractConfigModel(config)
       editor.setIgnoreInWatchMode(['field1', 'field2'])
 
       // Then it should be updated
@@ -878,7 +878,7 @@ describe('ContractConfigEditor', () => {
       })
 
       // When setting ignoreInWatchMode to empty array
-      const editor = new ContractConfigEditor(config)
+      const editor = new ContractConfigModel(config)
       editor.setIgnoreInWatchMode([])
 
       // Then the array is removed (set to undefined which cleans up the config)
@@ -893,7 +893,7 @@ describe('ContractConfigEditor', () => {
       })
 
       // When updating ignoreInWatchMode
-      const editor = new ContractConfigEditor(config)
+      const editor = new ContractConfigModel(config)
       editor.setIgnoreInWatchMode(['newField1', 'newField2'])
 
       // Then it should replace old values
@@ -907,7 +907,7 @@ describe('ContractConfigEditor', () => {
       const config = createContractConfig()
 
       // When setting ignoreMethods
-      const editor = new ContractConfigEditor(config)
+      const editor = new ContractConfigModel(config)
       editor.setIgnoreMethods(['method1', 'method2'])
 
       // Then it should be updated
@@ -921,7 +921,7 @@ describe('ContractConfigEditor', () => {
       })
 
       // When setting ignoreMethods to empty array
-      const editor = new ContractConfigEditor(config)
+      const editor = new ContractConfigModel(config)
       editor.setIgnoreMethods([])
 
       // Then the array is removed (set to undefined which cleans up the config)
@@ -934,7 +934,7 @@ describe('ContractConfigEditor', () => {
       const config = createContractConfig()
 
       // When setting ignoreMethods with special names
-      const editor = new ContractConfigEditor(config)
+      const editor = new ContractConfigModel(config)
       editor.setIgnoreMethods(['_internal', '__private', 'fallback'])
 
       // Then it should handle them correctly
@@ -952,7 +952,7 @@ describe('ContractConfigEditor', () => {
       const config = createContractConfig()
 
       // When setting ignoreRelatives
-      const editor = new ContractConfigEditor(config)
+      const editor = new ContractConfigModel(config)
       editor.setIgnoreRelatives(['relative1', 'relative2'])
 
       // Then it should be updated
@@ -966,7 +966,7 @@ describe('ContractConfigEditor', () => {
       })
 
       // When setting ignoreRelatives to empty array
-      const editor = new ContractConfigEditor(config)
+      const editor = new ContractConfigModel(config)
       editor.setIgnoreRelatives([])
 
       // Then the array is removed (set to undefined which cleans up the config)
@@ -981,7 +981,7 @@ describe('ContractConfigEditor', () => {
       const config = createContractConfig({ ignoreDiscovery: true })
 
       // When getting ignoreDiscovery
-      const editor = new ContractConfigEditor(config)
+      const editor = new ContractConfigModel(config)
       const result = editor.getIgnoreDiscovery()
 
       // Then it should return the set value
@@ -993,7 +993,7 @@ describe('ContractConfigEditor', () => {
       const config = createContractConfig()
 
       // When getting ignoreInWatchMode
-      const editor = new ContractConfigEditor(config)
+      const editor = new ContractConfigModel(config)
       const result = editor.getIgnoreInWatchMode()
 
       // Then it should return empty array as default
@@ -1005,7 +1005,7 @@ describe('ContractConfigEditor', () => {
       const config = createContractConfig()
 
       // When getting ignoreRelatives
-      const editor = new ContractConfigEditor(config)
+      const editor = new ContractConfigModel(config)
       const result = editor.getIgnoreRelatives()
 
       // Then it should return empty array as default
@@ -1027,7 +1027,7 @@ describe('ContractConfigEditor', () => {
 }`
 
       // When modifying values
-      const editor = ContractConfigEditor.fromRawJsonc(jsonc)
+      const editor = ContractConfigModel.fromRawJsonc(jsonc)
       editor.setIgnoreMethods(['new'])
       const result = editor.toString()
 
@@ -1052,7 +1052,7 @@ describe('ContractConfigEditor', () => {
 }`
 
       // When modifying values
-      const editor = ContractConfigEditor.fromRawJsonc(jsonc)
+      const editor = ContractConfigModel.fromRawJsonc(jsonc)
       editor.setIgnoreDiscovery(true)
       const result = editor.toString()
 
@@ -1078,7 +1078,7 @@ describe('ContractConfigEditor', () => {
 }`
 
       // When making multiple modifications
-      const editor = ContractConfigEditor.fromRawJsonc(jsonc)
+      const editor = ContractConfigModel.fromRawJsonc(jsonc)
       editor.setIgnoreDiscovery(true)
       editor.setIgnoreMethods(['method1'])
       editor.setIgnoreRelatives(['rel1'])

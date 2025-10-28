@@ -1,15 +1,13 @@
-import type { Parser } from '@l2beat/validate'
-import { assign, parse, stringify } from 'comment-json'
-import {
+import type {
   ContractConfigSchema,
   DiscoveryConfigSchema,
-} from '../../schemas/schemas'
+} from '@l2beat/discovery'
+import { assign, parse, stringify } from 'comment-json'
 
 // TODO - what if I want to add new override ;p
-// TODO - rename it to 'model' or something like that
-export class ConfigEditor {
+export class ConfigModel {
   private readonly config: DiscoveryConfigSchema
-  private readonly overrides: Record<string, ContractConfigEditor> = {}
+  private readonly overrides: Record<string, ContractConfigModel> = {}
   private constructor(config: DiscoveryConfigSchema) {
     this.config = assign({}, config) as DiscoveryConfigSchema
     this.config.overrides = this.config.overrides ?? {}
@@ -17,56 +15,78 @@ export class ConfigEditor {
     for (const [address, contractConfig] of Object.entries(
       this.config.overrides ?? {},
     )) {
-      this.overrides[address] = new ContractConfigEditor(contractConfig)
+      this.overrides[address] = new ContractConfigModel(contractConfig)
     }
   }
 
-  static fromRawJsonc(jsonc: string): ConfigEditor {
-    const parsed = parse(jsonc)
-    assertSchema(parsed, DiscoveryConfigSchema)
-    return new ConfigEditor(parsed)
+  static fromRawJsonc(jsonc: string): ConfigModel {
+    const parsed = parse(jsonc) as unknown as DiscoveryConfigSchema
+    return new ConfigModel(parsed)
   }
 
-  static fromRawJson(json: string): ConfigEditor {
-    const parsed = JSON.parse(json)
-    assertSchema(parsed, DiscoveryConfigSchema)
-    return new ConfigEditor(parsed)
+  static fromRawJson(json: string): ConfigModel {
+    const parsed = JSON.parse(json) as DiscoveryConfigSchema
+    // assertSchema(parsed, DiscoveryConfigSchema)
+    return new ConfigModel(parsed)
   }
 
-  static fromPeak(config: DiscoveryConfigSchema): ConfigEditor {
+  static fromPeak(config: DiscoveryConfigSchema): ConfigModel {
     // TODO: mutable?
-    return new ConfigEditor(config)
+    return new ConfigModel(config)
   }
 
   peak(): DiscoveryConfigSchema {
     const clone = assign({}, this.config) as DiscoveryConfigSchema
 
-    for (const [address, contractConfig] of Object.entries(this.overrides)) {
+    const [emptyOverrides, nonEmptyOverrides] = partition(
+      Object.entries(this.overrides),
+      ([, entry]) => entry.isEmpty(),
+    )
+
+    for (const [address, contractConfig] of nonEmptyOverrides) {
       assign(clone.overrides, {
         [address]: contractConfig.peak(),
       })
     }
 
+    for (const [address] of emptyOverrides) {
+      delete clone.overrides?.[address]
+    }
+
     return clone
+  }
+
+  hasOverrideDefinition(id: string, key: string): boolean {
+    return this.overrides[id]?.hasDefinition(key) ?? false
   }
 
   toString(): string {
     return stringify(this.peak(), null, 2)
   }
 
+  ensure(id: string) {
+    if (!this.overrides[id]) {
+      this.overrides[id] = new ContractConfigModel({} as ContractConfigSchema)
+    }
+  }
+
   setIgnoreDiscovery(id: string, ignoreDiscovery: boolean): void {
+    this.ensure(id)
     this.overrides[id]?.setIgnoreDiscovery(ignoreDiscovery)
   }
 
   setIgnoreInWatchMode(id: string, ignoreInWatchMode: string[]): void {
+    this.ensure(id)
     this.overrides[id]?.setIgnoreInWatchMode(ignoreInWatchMode)
   }
 
   setIgnoreMethods(id: string, ignoreMethods: string[]): void {
+    this.ensure(id)
     this.overrides[id]?.setIgnoreMethods(ignoreMethods)
   }
 
   setIgnoreRelatives(id: string, ignoreRelatives: string[]): void {
+    this.ensure(id)
     this.overrides[id]?.setIgnoreRelatives(ignoreRelatives)
   }
 
@@ -87,22 +107,30 @@ export class ConfigEditor {
   }
 }
 
-export class ContractConfigEditor {
+export class ContractConfigModel {
   private readonly config: ContractConfigSchema
   constructor(config: ContractConfigSchema) {
     this.config = assign({}, config) as ContractConfigSchema
   }
 
-  static fromRawJsonc(jsonc: string): ContractConfigEditor {
-    const parsed = parse(jsonc)
-    assertSchema(parsed, ContractConfigSchema)
-    return new ContractConfigEditor(parsed)
+  static fromRawJsonc(jsonc: string): ContractConfigModel {
+    const parsed = parse(jsonc) as unknown as ContractConfigSchema
+    // assertSchema(parsed, ContractConfigSchema)
+    return new ContractConfigModel(parsed)
   }
 
-  static fromRawJson(json: string): ContractConfigEditor {
+  static fromRawJson(json: string): ContractConfigModel {
     const parsed = JSON.parse(json)
-    assertSchema(parsed, ContractConfigSchema)
-    return new ContractConfigEditor(parsed)
+    // assertSchema(parsed, ContractConfigSchema)
+    return new ContractConfigModel(parsed)
+  }
+
+  static fromPeak(config: ContractConfigSchema): ContractConfigModel {
+    return new ContractConfigModel(config)
+  }
+
+  isEmpty(): boolean {
+    return Object.keys(this.config).length === 0
   }
 
   peak(): ContractConfigSchema {
@@ -111,6 +139,10 @@ export class ContractConfigEditor {
 
   toString(): string {
     return stringify(this.peak(), null, 2)
+  }
+
+  hasDefinition(key: string): boolean {
+    return this.config[key as keyof ContractConfigSchema] !== undefined
   }
 
   setIgnoreDiscovery(ignoreDiscovery: boolean): void {
@@ -150,9 +182,23 @@ export class ContractConfigEditor {
   }
 }
 
-function assertSchema<T>(
-  value: unknown,
-  schema: Parser<T>,
-): asserts value is T {
-  schema.safeParse(value)
+// function assertSchema<T>(
+//   value: unknown,
+//   schema: Parser<T>,
+// ): asserts value is T {
+//   schema.safeParse(value)
+// }
+
+function partition<T>(array: T[], predicate: (item: T) => boolean): [T[], T[]] {
+  return array.reduce<[T[], T[]]>(
+    (acc, item) => {
+      if (predicate(item)) {
+        acc[0].push(item)
+      } else {
+        acc[1].push(item)
+      }
+      return acc
+    },
+    [[], []],
+  )
 }

@@ -7,6 +7,7 @@ import { AddressIcon } from '../../../components/AddressIcon'
 import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
 import { IS_READONLY } from '../../../config/readonly'
+import { useConfig } from '../../../hooks/useConfigPortal'
 import { findSelected } from '../../../utils/findSelected'
 import { usePanelStore } from '../store/panel-store'
 import { AbiDisplay } from './AbiDisplay'
@@ -16,6 +17,16 @@ import { Folder } from './Folder'
 import { TemplateDialog } from './template-dialog/TemplateDialog'
 
 export function ValuesPanel() {
+  const config = useConfig()
+  console.dir({
+    ignoreDiscovery: config.getIgnoreDiscovery(),
+    ignoreInWatchMode: config.getIgnoreInWatchMode(),
+    ignoreMethods: config.getIgnoreMethods(),
+    ignoreRelatives: config.getIgnoreRelatives(),
+    config: config.template.peak(),
+    config2: config.config.peak(),
+  })
+
   const { project } = useParams()
   if (!project) {
     throw new Error('Cannot use component outside of project page!')

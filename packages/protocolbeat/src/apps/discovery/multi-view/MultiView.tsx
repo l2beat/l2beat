@@ -1,5 +1,4 @@
 import { type ComponentType, useEffect, useRef, useState } from 'react'
-import { useConfigPortal } from '../../../hooks/useConfigPortal'
 import { useIsMobile } from '../../../hooks/useIsMobile'
 import { BottomBar } from './BottomBar'
 import { Panel } from './Panel'
@@ -15,7 +14,6 @@ export interface MultiViewProps {
 }
 
 export function MultiView(props: MultiViewProps) {
-  const _configPortal = useConfigPortal()
   const panelContainerRef = useRef<HTMLDivElement>(null)
   const isMobileOrTablet = useIsMobile()
 

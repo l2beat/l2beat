@@ -7,18 +7,6 @@
   "bin": {
     "discovery": "./cli.js"
   },
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.js"
-    },
-    "./schemas": {
-      "import": "./dist/index.schemas.js",
-      "types": "./dist/index.schemas.d.ts",
-      "require": "./dist/index.schemas.js"
-    }
-  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "build:dependencies": "cd ../.. && pnpm build:dependencies:discovery",

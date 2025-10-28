@@ -23,7 +23,7 @@ export function useProjectData() {
 
   return {
     project,
-    selectedAddress,
+    selectedAddress: selectedAddress ?? '',
     projectResponse,
     selected,
   }
