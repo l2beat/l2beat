@@ -15,7 +15,7 @@ export const earnm: ScalingProject = underReviewL3({
       'Earnm is a mobile-first Orbit stack L3 on Arbitrum that converts everyday mobile activity into cryptocurrency rewards through its EarnOS technology.',
     purposes: ['Universal', 'Social'],
     links: {
-      websites: ['https://www.earnm.com/'],
+      websites: ['https://earnm.com/'],
       documentation: [],
       explorers: ['https://earnm-mainnet.explorer.alchemy.com/'],
       socialMedia: [
@@ -70,5 +70,6 @@ export const earnm: ScalingProject = underReviewL3({
   activityConfig: {
     type: 'block',
     startBlock: 1,
+    adjustCount: { type: 'SubtractOne' },
   },
 })

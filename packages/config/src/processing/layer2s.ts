@@ -43,7 +43,6 @@ import { degate3 } from '../projects/degate3/degate3'
 import { destra } from '../projects/destra/destra'
 import { deversifi } from '../projects/deversifi/deversifi'
 import { dydx } from '../projects/dydx/dydx'
-import { earnm } from '../projects/earnm/earnm'
 import { ebichain } from '../projects/ebichain/ebichain'
 import { eclipse } from '../projects/eclipse/eclipse'
 import { edgeless } from '../projects/edgeless/edgeless'
@@ -274,7 +273,6 @@ export const layer2s: ScalingProject[] = [
   degate3,
   destra,
   dydx,
-  earnm,
   ebichain,
   eclipse,
   edgeless,
