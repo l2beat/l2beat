@@ -19,6 +19,8 @@ const discovery = new ProjectDiscovery('sophon')
 const chainId = 50104
 const trackedTxsSince = UnixTime(1742940287)
 const v26UpgradeTS = UnixTime(1743095267)
+const v29UpgradeTS = UnixTime(1761612755)
+const diamond = discovery.getContract('SophonZkEvm')
 const bridge = discovery.getContract('L1NativeTokenVault')
 const isL2AssetRouterWhitelisted =
   discovery.getContractValue<ChainSpecificAddress[]>(
@@ -74,7 +76,7 @@ export const sophon: ScalingProject = zkStackL2({
       },
     ],
   },
-  diamondContract: discovery.getContract('SophonZkEvm'),
+  diamondContract: diamond,
   daProvider: {
     layer: DA_LAYERS.AVAIL,
     riskView: RISK_VIEW.DATA_AVAIL(true),
@@ -159,7 +161,7 @@ export const sophon: ScalingProject = zkStackL2({
         },
         {
           title: 'Mailbox facet',
-          url: 'https://etherscan.io/address/0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec#code#F1#L472',
+          url: 'https://etherscan.io/address/0x1e34aB39a9682149165ddeCc0583d238A5448B45#code#F1#L405',
         },
         {
           title: 'TransactionFilterer',
@@ -169,6 +171,18 @@ export const sophon: ScalingProject = zkStackL2({
     },
   },
   nonTemplateTrackedTxs: [
+    {
+      uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: ChainSpecificAddress.address(diamond.address),
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0x0b6db820',
+        functionSignature:
+          'function precommitSharedBridge(address _chainAddress, uint256, bytes)',
+        sinceTimestamp: v29UpgradeTS,
+      },
+    },
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
       query: {
@@ -224,6 +238,19 @@ export const sophon: ScalingProject = zkStackL2({
         functionSignature:
           'function commitBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: v26UpgradeTS,
+        untilTimestamp: v29UpgradeTS,
+      },
+    },
+    {
+      uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: ChainSpecificAddress.address(diamond.address),
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0x0db9eb87',
+        functionSignature:
+          'function commitBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: v29UpgradeTS,
       },
     },
     {
@@ -239,6 +266,22 @@ export const sophon: ScalingProject = zkStackL2({
         functionSignature:
           'function proveBatchesSharedBridge(uint256 _chainId, uint256, uint256, bytes)',
         sinceTimestamp: v26UpgradeTS,
+        untilTimestamp: v29UpgradeTS,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'proofSubmissions' },
+        { type: 'l2costs', subtype: 'proofSubmissions' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: ChainSpecificAddress.address(diamond.address),
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0x9271e450',
+        functionSignature:
+          'function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)',
+        sinceTimestamp: v29UpgradeTS,
       },
     },
     {
@@ -254,6 +297,22 @@ export const sophon: ScalingProject = zkStackL2({
         functionSignature:
           'function executeBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: v26UpgradeTS,
+        untilTimestamp: v29UpgradeTS,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: ChainSpecificAddress.address(diamond.address),
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0xa085344d',
+        functionSignature:
+          'function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: v29UpgradeTS,
       },
     },
   ],
