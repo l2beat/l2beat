@@ -138,7 +138,12 @@ export const degate3: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('loopringprover'),
+    zkCatalogProject: [
+      {
+        id: ProjectId('loopringprover'),
+        sinceTimestamp: UnixTime(1699746311),
+      },
+    ],
   },
   chainConfig: {
     name: 'degate3',

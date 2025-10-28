@@ -86,7 +86,12 @@ export const brine: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('stone'),
+    zkCatalogProject: [
+      {
+        id: ProjectId('stone'),
+        sinceTimestamp: UnixTime(1682546400),
+      },
+    ],
   },
   stage: {
     stage: 'NotApplicable',
