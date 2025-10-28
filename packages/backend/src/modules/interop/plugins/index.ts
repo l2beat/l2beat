@@ -17,6 +17,8 @@ import { CCIPPlugIn } from './ccip'
 import { CCTPConfigPlugin } from './cctp/cctp.config'
 import { CCTPV1Plugin } from './cctp/cctp-v1.plugin'
 import { CCTPV2Plugin } from './cctp/cctp-v2.plugin'
+import { CCTPPlugin } from './cctp'
+import { CelerPlugIn } from './celer'
 import { CentriFugePlugin } from './centrifuge'
 import { CircleGatewayPlugIn } from './circle-gateway'
 import { DeBridgePlugin } from './debridge'
@@ -36,6 +38,7 @@ import { MayanSwiftPlugin } from './mayan-swift'
 import { OpStackPlugin } from './opstack/opstack'
 import { OpStackStandardBridgePlugin } from './opstack/opstack-standardbridge'
 import { OrbitStackPlugin } from './orbitstack'
+import { RelayPlugin } from './relay/relay.plugin'
 import { RelaySimplePlugIn } from './relay-simple'
 import { SquidCoralPlugin } from './squid-coral'
 import { StargatePlugin } from './stargate'
@@ -89,6 +92,8 @@ export function createInteropPlugins(
       new DeBridgeDlnPlugin(),
       new MayanForwarderPlugin(),
       new CircleGatewayPlugIn(deps.configs),
+      new CelerPlugIn(),
+      new CircleGatewayPlugIn(),
       new CCIPPlugIn(),
       new CentriFugePlugin(),
       new MayanSwiftPlugin(), // should be run before CCTP
@@ -116,6 +121,7 @@ export function createInteropPlugins(
       new HyperlaneEcoPlugin(), // should be run before Hyperlane
       new HyperlanePlugIn(),
       new OneinchFusionPlusPlugin(),
+      new RelayPlugin(),
       new RelaySimplePlugIn(),
     ],
   }
