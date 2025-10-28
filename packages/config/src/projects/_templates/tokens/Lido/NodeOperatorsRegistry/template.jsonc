@@ -16,5 +16,6 @@
     "getStakingModuleSummary",
     "getActiveNodeOperatorsCount",
     "getNodeOperatorsCount"
-  ]
+  ],
+  "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
 }

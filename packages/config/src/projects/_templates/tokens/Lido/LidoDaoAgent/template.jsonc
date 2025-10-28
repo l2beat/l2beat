@@ -1,4 +1,5 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Custom role-based operations entrypoint for Lido."
+  "description": "Custom role-based operations entrypoint for Lido.",
+  "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
 }
