@@ -83,16 +83,16 @@ describe(InteropFinancialsLoop.name, () => {
           messageId: 'msg1',
           srcChain: 'ethereum',
           srcTokenAddress: Address32.from(DeployedTokenId.address(srcToken1)),
-          srcRawAmount: '1000000000000000000',
+          srcRawAmount: BigInt('1000000000000000000'),
           dstChain: 'arbitrum',
           dstTokenAddress: Address32.from(DeployedTokenId.address(dstToken1)),
-          dstRawAmount: '2000000000000000000',
+          dstRawAmount: BigInt('2000000000000000000'),
         },
         {
           messageId: 'msg2',
           srcChain: 'ethereum',
           srcTokenAddress: 'native',
-          srcRawAmount: '500000000000000000',
+          srcRawAmount: BigInt('500000000000000000'),
           dstChain: 'base',
           dstTokenAddress: Address32.from(DeployedTokenId.address(dstToken2)),
           dstRawAmount: undefined,
@@ -102,7 +102,7 @@ describe(InteropFinancialsLoop.name, () => {
           srcChain: 'unsupported',
           dstChain: 'ethereum',
           dstTokenAddress: Address32.from(DeployedTokenId.address(dstToken3)),
-          dstRawAmount: '200000000000000000',
+          dstRawAmount: BigInt('200000000000000000'),
         },
       ]
 

@@ -1,7 +1,7 @@
 /* axelar Interchain Transfer Service (ITS) plugin
 
 This plugin handles all ITS tokens
-SRC: 
+SRC:
 - InterchainTransfer event
 - ContractCall event
 DST APPROVE:
@@ -169,10 +169,10 @@ export class AxelarITSPlugin implements InteropPlugin {
         }),
         Result.Transfer('axelar-its.Transfer', {
           srcEvent: interchainTransfer,
-          srcAmount: interchainTransfer.args.amount.toString(),
+          srcAmount: BigInt(interchainTransfer.args.amount.toString()),
           srcTokenAddress: interchainTransfer.args.tokenAddress,
           dstEvent: interchainTransferReceived,
-          dstAmount: interchainTransferReceived.args.amount.toString(),
+          dstAmount: BigInt(interchainTransferReceived.args.amount.toString()),
           dstTokenAddress: interchainTransferReceived.args.tokenAddress,
         }),
       ]
