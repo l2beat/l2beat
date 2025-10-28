@@ -816,6 +816,9 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(@types/react@19.0.10)(react@19.0.0)(use-sync-external-store@1.2.2(react@19.0.0))
     devDependencies:
+      '@l2beat/discovery':
+        specifier: workspace:*
+        version: link:../discovery
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config

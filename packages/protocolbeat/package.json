@@ -37,6 +37,7 @@
     "zustand": "^5.0.0"
   },
   "devDependencies": {
+    "@l2beat/discovery": "workspace:*",
     "@l2beat/typescript-config": "workspace:*",
     "@types/ansi-html": "^0.0.0",
     "@vitejs/plugin-react-swc": "^3.7.1",
