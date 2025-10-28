@@ -17,7 +17,7 @@ You can quickly obtain a logger with a specific minimum level by accessing a cor
 const logger = Logger.DEBUG
 ```
 
-There is also a special `NONE` level and a corresponding `Logger.SILENT` property that can be used to disable logging.
+There is also a special `NONE` setting and a corresponding `Logger.SILENT` property that can be used to disable logging. You cannot log with the `NONE` level.
 
 ## Options
 

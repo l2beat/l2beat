@@ -1,9 +1,9 @@
 import { expect, formatCompact, mockFn } from 'earl'
 
-import { LogFormatterEcs } from './LogFormatterEcs'
+import { LogFormatterEcs } from './formatEcsLog'
 import { LogFormatterJson } from './LogFormatterJson'
 import { LogFormatterPretty } from './LogFormatterPretty'
-import { Logger } from './Logger'
+import { Logger } from './OLDLogger'
 import type { LogEntry } from './types'
 
 describe(Logger.name, () => {

@@ -3,13 +3,14 @@ import type { Logger } from '../logger/Logger'
 export interface MetricsAggregatorOptions {
   logger: Logger
   flushInterval?: number
+  enabled: boolean
 }
 
 export abstract class MetricsAggregator<T> {
   buffer: T[] = []
 
   constructor(private readonly $: MetricsAggregatorOptions) {
-    if ($.logger.metricsEnabled) {
+    if ($.enabled) {
       this.start()
     }
   }
@@ -19,10 +20,10 @@ export abstract class MetricsAggregator<T> {
   }
 
   private start(): void {
-    const interval = setInterval(async () => {
-      await this.flush()
-    }, this.$.flushInterval ?? 30_000)
-
+    const interval = setInterval(
+      () => this.flush(),
+      this.$.flushInterval ?? 30_000,
+    )
     // object will not require the Node.js event loop to remain active
     // nodejs.org/api/timers.html#timers_timeout_unref
     interval.unref()
@@ -40,7 +41,7 @@ export abstract class MetricsAggregator<T> {
 
     const aggregatedMetrics = this.aggregate(metrics)
 
-    this.$.logger.metric('Http metrics', { ...aggregatedMetrics })
+    this.$.logger.info('Http metrics', { ...aggregatedMetrics })
   }
 
   protected abstract aggregate(metrics: T[]): object
