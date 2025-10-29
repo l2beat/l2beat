@@ -54,9 +54,6 @@ export class DiscoveryRunner {
     logger: Logger,
     configReader?: ConfigReader,
   ): Promise<DiscoveryRunResult> {
-    // Reset discovery engine state to prevent contamination from previous failed discoveries
-    this.discoveryEngine.reset()
-
     logger.info(
       `Attempting discovery of ${projectName} at timestamp ${discoveryTimestamp}`,
     )
