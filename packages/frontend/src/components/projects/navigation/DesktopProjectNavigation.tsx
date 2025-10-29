@@ -6,7 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/core/Select'
-import { SectionNavigation } from '~/components/SectionNavigation'
+import { SectionNavigation } from '~/components/section-navigation/SectionNavigation'
 import { usePathname } from '~/hooks/usePathname'
 import { useRouter } from '~/hooks/useRouter'
 import { SummaryIcon } from '~/icons/Summary'
@@ -115,8 +115,8 @@ export function DesktopProjectNavigation({
         </div>
 
         <SectionNavigation
-          indexOffset={-1}
-          items={[
+          indexOffset={1}
+          sections={[
             {
               id: 'summary',
               title: 'Summary',

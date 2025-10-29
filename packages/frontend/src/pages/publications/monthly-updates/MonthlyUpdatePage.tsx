@@ -3,7 +3,8 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
-import { SectionNavigation } from '~/components/SectionNavigation'
+import { MobileSectionNavigation } from '~/components/section-navigation/MobileSectionNavigation'
+import { SectionNavigation } from '~/components/section-navigation/SectionNavigation'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { DaMonthlyUpdateEntry } from '~/server/features/monthly-reports/getDaEntries'
@@ -27,9 +28,24 @@ interface Props extends AppLayoutProps {
 }
 
 export function MonthlyUpdatePage({ entry, ...props }: Props) {
+  const sections = [
+    ...entry.ecosystemsUpdatesEntries,
+    ...entry.daUpdatesEntries,
+    ...entry.upcomingProjectsUpdatesEntries,
+  ].map((item) => ({
+    id: item.id,
+    title: item.name,
+    icon: <img src={`/icons/${item.id}.png`} alt={item.name} />,
+  }))
   return (
     <AppLayout {...props}>
       <SideNavLayout>
+        {
+          <div className="md:-mx-6 sticky top-0 z-100 lg:hidden">
+            <MobileSectionNavigation sections={sections} />
+          </div>
+        }
+
         <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
           <MainPageHeader>Publication</MainPageHeader>
           <PrimaryCard className="row-start-2 md:p-8">
@@ -72,17 +88,7 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
           </PrimaryCard>
           <div className="row-start-2 mt-3 hidden shrink-0 lg:block">
             <div className="sticky top-8 w-full">
-              <SectionNavigation
-                items={[
-                  ...entry.ecosystemsUpdatesEntries,
-                  ...entry.daUpdatesEntries,
-                  ...entry.upcomingProjectsUpdatesEntries,
-                ].map((item) => ({
-                  id: item.id,
-                  title: item.name,
-                  icon: <img src={`/icons/${item.id}.png`} alt={item.name} />,
-                }))}
-              />
+              <SectionNavigation sections={sections} />
             </div>
           </div>
         </div>

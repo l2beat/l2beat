@@ -7,7 +7,6 @@ import { StageOneRequirementsChangeNotice } from '~/components/countdowns/stage-
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
-import { MobileProjectNavigation } from '~/components/projects/navigation/MobileProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
@@ -15,6 +14,7 @@ import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
+import { MobileSectionNavigation } from '~/components/section-navigation/MobileSectionNavigation'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -66,7 +66,7 @@ export function ScalingProjectPage({
 
             {!isNavigationEmpty && (
               <div className="md:-mx-6 sticky top-0 z-100 lg:hidden">
-                <MobileProjectNavigation sections={navigationSections} />
+                <MobileSectionNavigation sections={navigationSections} />
               </div>
             )}
             <div className="relative z-0 max-md:bg-surface-primary">

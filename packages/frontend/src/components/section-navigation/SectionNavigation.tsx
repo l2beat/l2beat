@@ -6,20 +6,20 @@ import { useCurrentSection } from '~/hooks/useCurrentSection'
 import { cn } from '~/utils/cn'
 import { scrollVerticallyToItem } from '~/utils/scrollToItem'
 
-interface NavigationItem {
+export interface SectionNavigationItem {
   id: string
   title: string
   icon?: React.ReactNode
-  subitems?: Omit<NavigationItem, 'subsections'>[]
+  subsections?: Omit<SectionNavigationItem, 'subsections'>[]
 }
 
 export function SectionNavigation({
-  items,
+  sections,
   style,
   className,
   indexOffset = 0,
 }: {
-  items: NavigationItem[]
+  sections: SectionNavigationItem[]
   className?: string
   style?: CSSProperties
   indexOffset?: number
@@ -53,10 +53,10 @@ export function SectionNavigation({
       style={style}
       ref={menuContainer}
     >
-      {items.map((item, i) => {
+      {sections.map((item, i) => {
         const selected =
           currentSection?.id === item.id ||
-          !!item.subitems?.some(
+          !!item.subsections?.some(
             (subsection) => subsection.id === currentSection?.id,
           )
 
@@ -84,9 +84,9 @@ export function SectionNavigation({
                 {item.title}
               </span>
             </a>
-            {item.subitems && (
+            {item.subsections && (
               <div className="flex flex-col">
-                {item.subitems.map((subsection, i) => (
+                {item.subsections.map((subsection, i) => (
                   <NavigationSubsectionEntry
                     key={i}
                     {...subsection}
