@@ -56,7 +56,7 @@ export function formatJson(
   return safeToJSON({ ...core, parameters: rest })
 }
 
-function utcTime(time: Date) {
+export function utcTime(time: Date) {
   const h = time.getUTCHours().toString().padStart(2, '0')
   const m = time.getUTCMinutes().toString().padStart(2, '0')
   const s = time.getUTCSeconds().toString().padStart(2, '0')
@@ -64,7 +64,7 @@ function utcTime(time: Date) {
   return `${h}:${m}:${s}.${ms}`
 }
 
-function localTime(time: Date) {
+export function localTime(time: Date) {
   const h = time.getHours().toString().padStart(2, '0')
   const m = time.getMinutes().toString().padStart(2, '0')
   const s = time.getSeconds().toString().padStart(2, '0')

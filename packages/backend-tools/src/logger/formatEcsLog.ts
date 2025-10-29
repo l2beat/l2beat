@@ -71,8 +71,15 @@ export function formatEcsLog(
               : undefined,
           }
         : undefined,
-    parameters: rest,
+    parameters: hasKeys(rest) ? rest : undefined,
   })
+}
+
+function hasKeys(object: Record<string, unknown>): boolean {
+  for (const _ in object) {
+    return true
+  }
+  return false
 }
 
 function truncate(str: unknown): string {

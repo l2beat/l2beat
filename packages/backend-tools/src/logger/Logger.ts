@@ -1,6 +1,6 @@
+import ErrorStackParser from 'error-stack-parser'
 import { ConsoleTransport } from './ConsoleTransport'
 import type { LoggerTransport, LogLevel } from './types'
-import { resolveError } from './utils'
 
 const RANK = {
   CRITICAL: 1,
@@ -45,7 +45,7 @@ export class Logger {
     this.options = {
       level: options.level ?? 'INFO',
       transports: options.transports ?? [ConsoleTransport.PRETTY],
-      getTime: () => new Date(),
+      getTime: options.getTime ?? (() => new Date()),
       cwd: options.cwd ?? process.cwd(),
     }
     this.tags = tags ?? {}
@@ -139,4 +139,29 @@ function resolveArgs(
   }
 
   return { message: message ?? '', parameters }
+}
+
+function resolveError(error: Error, cwd: string) {
+  return {
+    name: error.name,
+    error: error.message,
+    stack: ErrorStackParser.parse(error).map((frame) =>
+      formatFrame(frame, cwd),
+    ),
+  }
+}
+
+function formatFrame(frame: StackFrame, cwd: string): string {
+  const file = frame.fileName?.startsWith(cwd)
+    ? frame.fileName.slice(cwd.length)
+    : frame.fileName
+  const functionName = frame.functionName ? `${frame.functionName} ` : ''
+
+  const fileLocation =
+    frame.lineNumber !== undefined && frame.columnNumber !== undefined
+      ? `:${frame.lineNumber}:${frame.columnNumber}`
+      : ''
+  const location = file !== undefined ? `(${file}${fileLocation})` : ''
+
+  return `${functionName}${location}`
 }
