@@ -124,6 +124,7 @@ export class InteropFinancialsLoop extends TimeLoop {
 
     const fieldMapping = {
       abstractTokenId: `${prefix}AbstractTokenId`,
+      symbol: `${prefix}Symbol`,
       price: `${prefix}Price`,
       amount: `${prefix}Amount`,
       valueUsd: `${prefix}ValueUsd`,
@@ -193,6 +194,7 @@ export class InteropFinancialsLoop extends TimeLoop {
 
     return {
       abstractTokenId: priceInfo.abstractId,
+      symbol: priceInfo.symbol,
       price,
       amount,
       valueUsd,

@@ -1,35 +1,7 @@
 import type { Branded } from '@l2beat/shared-pure'
 import type { TokenDbClient } from '@l2beat/token-backend'
 
-export type AbstractTokenId = Branded<string, 'AbstractTokenId'>
-
-export function AbstractTokenId(id: string) {
-  return id as AbstractTokenId
-}
-
-AbstractTokenId.from = function from(
-  realId: string,
-  issuer: string,
-  symbol: string,
-) {
-  return AbstractTokenId(`${realId}:${issuer}:${symbol}`)
-}
-
-AbstractTokenId.realId = function readId(id: AbstractTokenId) {
-  return id.slice(0, 6)
-}
-
-AbstractTokenId.issuer = function issuer(id: AbstractTokenId) {
-  const withoutRealId = id.slice(7)
-  return withoutRealId.slice(0, withoutRealId.indexOf(':'))
-}
-
-AbstractTokenId.symbol = function symbol(id: AbstractTokenId) {
-  const withoutRealId = id.slice(7)
-  return withoutRealId.slice(withoutRealId.indexOf(':') + 1)
-}
-
-export type DeployedTokenId = Branded<string, 'AbstractTokenId'>
+export type DeployedTokenId = Branded<string, 'DeployedTokenId'>
 
 export function DeployedTokenId(id: string) {
   return id as DeployedTokenId
@@ -50,7 +22,8 @@ DeployedTokenId.address = function address(id: DeployedTokenId) {
 export type PriceInfo = Map<
   DeployedTokenId,
   {
-    abstractId: AbstractTokenId
+    abstractId: string
+    symbol: string
     decimals: number
     coingeckoId: string
   }
@@ -74,11 +47,8 @@ export class TokenDb {
       }
 
       result.set(t, {
-        abstractId: AbstractTokenId.from(
-          abstract.id,
-          abstract.issuer ?? '',
-          abstract.symbol,
-        ),
+        abstractId: abstract.id,
+        symbol: abstract.symbol,
         coingeckoId: abstract.coingeckoId,
         decimals: deployed.decimals,
       })

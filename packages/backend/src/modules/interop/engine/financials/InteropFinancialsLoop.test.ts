@@ -4,7 +4,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { Address32 } from '../../plugins/types'
 import { InteropFinancialsLoop } from './InteropFinancialsLoop'
-import { AbstractTokenId, DeployedTokenId, type TokenDb } from './TokenDb'
+import { DeployedTokenId, type TokenDb } from './TokenDb'
 
 describe(InteropFinancialsLoop.name, () => {
   describe(InteropFinancialsLoop.prototype.run.name, () => {
@@ -110,7 +110,8 @@ describe(InteropFinancialsLoop.name, () => {
         [
           srcToken1,
           {
-            abstractId: AbstractTokenId('123456:ethereum:ETH'),
+            abstractId: '123456:ethereum:ETH',
+            symbol: 'ETH',
             decimals: 18,
             coingeckoId: 'ethereum',
           },
@@ -118,7 +119,8 @@ describe(InteropFinancialsLoop.name, () => {
         [
           dstToken1,
           {
-            abstractId: AbstractTokenId('abcdef:arbitrum:ARB'),
+            abstractId: 'abcdef:arbitrum:ARB',
+            symbol: 'ARB',
             decimals: 18,
             coingeckoId: 'arbitrum',
           },
@@ -126,7 +128,8 @@ describe(InteropFinancialsLoop.name, () => {
         [
           dstToken2,
           {
-            abstractId: AbstractTokenId('fedcba:base:BASE'),
+            abstractId: 'fedcba:base:BASE',
+            symbol: 'BASE',
             decimals: 18,
             coingeckoId: undefined,
           },
@@ -134,7 +137,8 @@ describe(InteropFinancialsLoop.name, () => {
         [
           dstToken3,
           {
-            abstractId: AbstractTokenId('222222:ethereum:TOKEN'),
+            abstractId: '222222:ethereum:TOKEN',
+            symbol: 'TOKEN',
             decimals: 6,
             coingeckoId: 'token',
           },
@@ -201,11 +205,13 @@ describe(InteropFinancialsLoop.name, () => {
       expect(interopTransfer.updateFinancials).toHaveBeenCalledTimes(3)
 
       const firstUpdate: InteropTransferUpdate = {
-        srcAbstractTokenId: AbstractTokenId('123456:ethereum:ETH'),
+        srcAbstractTokenId: '123456:ethereum:ETH',
+        srcSymbol: 'ETH',
         srcAmount: 1,
         srcPrice: 3000,
         srcValueUsd: 3000,
-        dstAbstractTokenId: AbstractTokenId('abcdef:arbitrum:ARB'),
+        dstAbstractTokenId: 'abcdef:arbitrum:ARB',
+        dstSymbol: 'ARB',
         dstAmount: 2,
         dstPrice: 1.5,
         dstValueUsd: 3,
@@ -218,7 +224,8 @@ describe(InteropFinancialsLoop.name, () => {
       expect(interopTransfer.updateFinancials).toHaveBeenCalledWith('msg2', {})
 
       const thirdUpdate: InteropTransferUpdate = {
-        dstAbstractTokenId: AbstractTokenId('222222:ethereum:TOKEN'),
+        dstSymbol: 'TOKEN',
+        dstAbstractTokenId: '222222:ethereum:TOKEN',
         dstAmount: 200000000000,
         dstPrice: 50,
         dstValueUsd: 10000000000000,
