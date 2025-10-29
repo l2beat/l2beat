@@ -103,7 +103,8 @@ export function createWorkerPool(settings: WorkerPoolSettings): WorkerPool {
       logger.debug('Worker started', { workerId })
 
       while (nextTaskIndex < tasks.length && !runTimeoutOccurred) {
-        const taskIndex = nextTaskIndex++
+        const taskIndex = nextTaskIndex
+        nextTaskIndex++
         const task = tasks[taskIndex]
         const startTime = Date.now()
 
