@@ -5,7 +5,7 @@ import type { InteropTransfer } from '../kysely/generated/types'
 
 export interface InteropTransferRecord {
   plugin: string
-  messageId: string
+  transferId: string
   type: string
   duration: number | undefined
   timestamp: UnixTime
@@ -54,7 +54,7 @@ export function toRecord(
 ): InteropTransferRecord {
   return {
     plugin: row.plugin,
-    messageId: row.transferId,
+    transferId: row.transferId,
     type: row.type,
     duration: row.duration ?? undefined,
     timestamp: UnixTime.fromDate(row.timestamp),
@@ -91,7 +91,7 @@ export function toRow(
 ): Insertable<InteropTransfer> {
   return {
     plugin: record.plugin,
-    transferId: record.messageId,
+    transferId: record.transferId,
     type: record.type,
     duration: record.duration,
     timestamp: UnixTime.toDate(record.timestamp),

@@ -3,6 +3,8 @@ import type { Insertable, Selectable, Updateable } from 'kysely'
 import isNil from 'lodash/isNil'
 import { BaseRepository } from '../BaseRepository'
 import type { DeployedToken } from '../kysely/generated/types'
+import { toTimestamp } from '../utils/timestamp'
+import type { AbstractTokenRecord } from './AbstractTokenRepository'
 
 export type DeployedTokenRecord = {
   symbol: string
@@ -66,6 +68,86 @@ export class DeployedTokenRepository extends BaseRepository {
       .executeTakeFirst()
 
     return Number(result.numUpdatedRows)
+  }
+
+  async getByChainAndAddress(pks: DeployedTokenPrimaryKey[]): Promise<
+    {
+      deployedToken: DeployedTokenRecord
+      abstractToken: AbstractTokenRecord | undefined
+    }[]
+  > {
+    if (pks.length === 0) {
+      return []
+    }
+
+    const result = await this.db
+      .selectFrom('DeployedToken')
+      .leftJoin(
+        'AbstractToken',
+        'AbstractToken.id',
+        'DeployedToken.abstractTokenId',
+      )
+      .select([
+        'DeployedToken.symbol',
+        'DeployedToken.comment',
+        'DeployedToken.chain',
+        'DeployedToken.address',
+        'DeployedToken.abstractTokenId',
+        'DeployedToken.decimals',
+        'DeployedToken.deploymentTimestamp',
+        'AbstractToken.id',
+        'AbstractToken.issuer',
+        'AbstractToken.category',
+        'AbstractToken.iconUrl',
+        'AbstractToken.coingeckoId',
+        'AbstractToken.coingeckoListingTimestamp',
+        'AbstractToken.symbol as abstractSymbol',
+        'AbstractToken.comment as abstractComment',
+        'AbstractToken.reviewed',
+      ])
+      .where((eb) =>
+        eb.or(
+          pks.map((pk) =>
+            eb.and([
+              eb('chain', '=', pk.chain),
+              eb('address', '=', pk.address),
+            ]),
+          ),
+        ),
+      )
+      .execute()
+
+    return result.map((row) => ({
+      deployedToken: {
+        symbol: row.symbol,
+        comment: row.comment,
+        chain: row.chain,
+        address: row.address,
+        abstractTokenId: row.abstractTokenId,
+        decimals: row.decimals,
+        deploymentTimestamp: UnixTime.fromDate(row.deploymentTimestamp),
+      },
+      abstractToken:
+        row.id && row.abstractSymbol && row.reviewed !== null
+          ? {
+              symbol: row.abstractSymbol,
+              id: row.id,
+              issuer: row.issuer,
+              category: row.category as
+                | 'btc'
+                | 'ether'
+                | 'stablecoin'
+                | 'other',
+              iconUrl: row.iconUrl,
+              coingeckoId: row.coingeckoId,
+              coingeckoListingTimestamp: toTimestamp(
+                row.coingeckoListingTimestamp,
+              ),
+              comment: row.abstractComment,
+              reviewed: row.reviewed,
+            }
+          : undefined,
+    }))
   }
 
   async findByChainAndAddress(
