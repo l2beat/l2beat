@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xcc3a0f6cd3403e5e9d329ab304eacaadb91581a5
+
+# Diff at Wed, 29 Oct 2025 17:06:08 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@cd3acb30978545d875852451e86e15a019f3b00a block: 1761222889
+- current timestamp: 1761757489
+
+## Description
+
+msig changes.
+
+## Watched changes
+
+```diff
+    contract Base Multisig 1 (eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x1841CB3C2ce6870D0417844C817849da64E6e937"
+      values.$members.1:
++        "eth:0x5B154B8587168CB984Ff610F5De74289D8f68874"
+      values.$members.3:
+-        "eth:0x9bF96DCf51959915c8c343a3E50820Ad069A1859"
+      values.$members.10:
+-        "eth:0x73565876170a336Fa02fDe34EeD03E3121f70bA6"
+      values.$members.11:
+-        "eth:0x92B79E6C995Ee8B267EC1Ac2743D1c1fBFFFc447"
+      values.multisigThreshold:
+-        "3 of 14 (21%)"
++        "3 of 13 (23%)"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.eip1559Elasticity:
+-        3
++        4
+    }
+```
+
 Generated with discovered.json: 0x13de4c889c5a91e8f049d91cfe455ad0d95e5967
 
 # Diff at Mon, 20 Oct 2025 15:11:35 GMT:
