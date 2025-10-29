@@ -4,18 +4,17 @@ import { OverflowWrapper } from '~/components/core/OverflowWrapper'
 import { useCurrentSection } from '~/hooks/useCurrentSection'
 import { cn } from '~/utils/cn'
 import { scrollHorizontallyToItem } from '~/utils/scrollToItem'
-import type { ProjectNavigationSection } from './types'
+import type { SectionNavigationItem } from './SectionNavigation'
 
 interface Props {
-  sections: ProjectNavigationSection[]
+  sections: SectionNavigationItem[]
 }
 
-export function MobileProjectNavigation({ sections }: Props) {
+export function MobileSectionNavigation({ sections }: Props) {
   const selectedItem = useRef(null)
   const overflowContainer = useRef<HTMLDivElement>(null)
 
   const currentSection = useCurrentSection()
-  const isSummarySection = currentSection && currentSection.id === 'summary'
 
   const scrollToItem = useCallback(
     (item: HTMLLIElement, overflowingContainer: HTMLElement) =>
@@ -38,13 +37,6 @@ export function MobileProjectNavigation({ sections }: Props) {
       childrenClassName="w-full"
     >
       <div className="flex items-center justify-between">
-        <Item
-          href="#"
-          ref={isSummarySection ? selectedItem : null}
-          selected={!!isSummarySection}
-        >
-          Summary
-        </Item>
         {sections.map((section) => {
           const selected =
             section.id === currentSection?.id ||

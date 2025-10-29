@@ -185,6 +185,11 @@ export interface UpdateMonitorConfig {
   readonly disabledProjects: string[]
   readonly discord: DiscordConfig | false
   readonly updateMessagesRetentionPeriodDays: number
+  readonly workerPool: {
+    readonly workerCount: number
+    readonly timeoutPerTaskMs: number
+    readonly timeoutPerRunMs: number
+  }
 }
 
 export interface VerifiersConfig {
