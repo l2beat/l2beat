@@ -1,3 +1,4 @@
+import type { CelestiaDaTrackingConfig } from '@l2beat/config'
 import type { DaBlob, DaProvider } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
@@ -157,11 +158,11 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
   getNamespaces(
     configurations: Configuration<BlockDaIndexedConfig>[],
   ): string[] {
-    return configurations
-      .map((c) =>
-        c.properties.type === 'celestia' ? c.properties.namespace : undefined,
-      )
-      .filter((n) => n !== undefined)
+    if (this.$.daLayer !== 'celestia') return []
+
+    return (configurations as Configuration<CelestiaDaTrackingConfig>[]).map(
+      (c) => c.properties.namespace,
+    )
   }
 
   get daLayer() {
