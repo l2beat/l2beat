@@ -6,6 +6,7 @@ export const jetstreamchain: ScalingProject = underReviewL3({
   id: 'jetstreamchain',
   capability: 'universal',
   addedAt: UnixTime(1753947052),
+  archivedAt: UnixTime(1761698219),
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Jetstream',
