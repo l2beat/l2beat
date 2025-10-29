@@ -203,6 +203,11 @@ export class InteropFinancialsLoop extends TimeLoop {
     if (!chain || !address) {
       return
     }
+
+    if (address === 'native') {
+      return DeployedTokenId.from(chain, 'native')
+    }
+
     if (
       address === 'native' ||
       address === '0x' ||
