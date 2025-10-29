@@ -128,16 +128,12 @@ export class DeployedTokenRepository extends BaseRepository {
         deploymentTimestamp: UnixTime.fromDate(row.deploymentTimestamp),
       },
       abstractToken:
-        row.id && row.abstractSymbol && row.reviewed !== null
+        row.id && row.abstractSymbol && row.reviewed !== null && row.category
           ? {
               symbol: row.abstractSymbol,
               id: row.id,
               issuer: row.issuer,
-              category: row.category as
-                | 'btc'
-                | 'ether'
-                | 'stablecoin'
-                | 'other',
+              category: row.category as AbstractTokenRecord['category'],
               iconUrl: row.iconUrl,
               coingeckoId: row.coingeckoId,
               coingeckoListingTimestamp: toTimestamp(
