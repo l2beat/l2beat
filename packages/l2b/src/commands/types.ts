@@ -57,6 +57,7 @@ export const Hash256Value: Type<string, Hash256> = {
 }
 
 const LEVEL = {
+  NONE: true,
   CRITICAL: true,
   ERROR: true,
   WARN: true,
