@@ -1,7 +1,7 @@
 {
   "name": "xlayer",
   "timestamp": 1754482928,
-  "configHash": "0x160cd17e5d3d130f4e310c8ff2eb7b9091c439126027e39e9a059f285f467426",
+  "configHash": "0x9af93dc01d40ad865b67743b8141dee46fbd7e85832168a841a5a5e7b0dc2498",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {

@@ -1,7 +1,7 @@
 {
   "name": "beamer-bridge-v2",
   "timestamp": 1711614839,
-  "configHash": "0xcacaffe009d728bfeacc2d5d541f50bf3811ec11e3b0fd83d9bb1b12c0bf7e9f",
+  "configHash": "0x95547dbc8c4e20e31f8c2d16eabbf7669760dd2164dd83c0395fe9d243795fe5",
   "entries": [
     {
       "name": "EthereumL1Messenger",

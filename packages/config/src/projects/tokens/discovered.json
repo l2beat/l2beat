@@ -1,7 +1,7 @@
 {
   "name": "tokens",
   "timestamp": 1761643706,
-  "configHash": "0xf3e95a5c06d946f3a003e1f7a7e3bdf80a84ca5c73493448401651771cc2f231",
+  "configHash": "0xd987278fcf258fac6030f649cde357f5db8a76f9338f6e3519dc3070eb5d8796",
   "entries": [
     {
       "address": "arb1:0x4896F23FF83242D8D4EB5fA1dEdF8c57e9145949",
@@ -8002,8 +8002,8 @@
   },
   "usedBlockNumbers": {
     "ethereum": 23675030,
-    "base": 37427179,
-    "arbitrum": 394240340
+    "arbitrum": 394240340,
+    "base": 37427179
   },
   "permissionsConfigHash": "0x7884ad18ac23dc269f617186f453e5f9851b8b2449d52d711c9b9a3bb216c6c1"
 }

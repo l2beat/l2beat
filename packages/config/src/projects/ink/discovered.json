@@ -1,7 +1,7 @@
 {
   "name": "ink",
   "timestamp": 1761222955,
-  "configHash": "0x8b834afc2d7634f97b8230111eb489afe4c13855fc85ee36ede6aa3f10ac255e",
+  "configHash": "0x4207dd912b27acf48542ea83aa2c48cfdc785fb77578378fee5dbad4a37fa410",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -182,7 +182,7 @@
         "initBonds": ["80000000000000000", "80000000000000000", 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 185,
+        "permissionedGamesTotal": 190,
         "proxyAdmin": "eth:0xd56045E68956FCe2576E680c95a4750cf8241f79",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "version": "1.2.0"
@@ -4181,6 +4181,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23640237, "ink": 27724544 },
+  "usedBlockNumbers": { "ink": 27724544, "ethereum": 23640237 },
   "permissionsConfigHash": "0xf77bba13ac8c4bb23414c9c592c146c747a0a88d7281e3bcf4fdc6f32ac5267f"
 }

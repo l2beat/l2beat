@@ -1,7 +1,7 @@
 {
   "name": "soon",
   "timestamp": 1760436956,
-  "configHash": "0x3b9f74169c79de589dc0fa1995e058e44defb12cf5624193e9b5073fd2cb4805",
+  "configHash": "0xcccd6c73f7f4629952961df471ff12896182ddeca3ebcf7a4584ff62d32d6c9e",
   "entries": [
     {
       "name": "L2OutputOracle",

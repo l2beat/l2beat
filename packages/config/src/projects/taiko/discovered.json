@@ -1,7 +1,7 @@
 {
   "name": "taiko",
   "timestamp": 1761643945,
-  "configHash": "0xfab89f75d053cae1a12bd233309b4f78f60b5a3821cbd44da3f00eca20de9a46",
+  "configHash": "0x18b7ae367cae9e3f7ea5fa84c5b4a0418cc0d934ecc813a2a1b4f707a03e40ce",
   "entries": [
     {
       "address": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
@@ -6235,6 +6235,6 @@
     "taiko/TaikoWrapper": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 23675050, "taiko": 3021857 },
+  "usedBlockNumbers": { "taiko": 3021857, "ethereum": 23675050 },
   "permissionsConfigHash": "0xa874cbc06f08e79346916c5254aae42b6e9da0ff5b3d432ac1f0869117a93f63"
 }

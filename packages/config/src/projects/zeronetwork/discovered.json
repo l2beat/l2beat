@@ -1,7 +1,7 @@
 {
   "name": "zeronetwork",
   "timestamp": 1761642925,
-  "configHash": "0xff416d7e7bd47079e01a97c6b814405f8cf5fead30ead5e40bbab8165fd08f5c",
+  "configHash": "0x6063e140ef22949dc75c634a2fa827417e4329e2c7a072b0f1f6d45a4d5510e2",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

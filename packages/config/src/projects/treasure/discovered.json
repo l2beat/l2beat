@@ -1,7 +1,7 @@
 {
   "name": "treasure",
   "timestamp": 1753944354,
-  "configHash": "0x20fdd2fa015c11ccb572ebb3f10659f8778822ff7a30df872847680d42d20f29",
+  "configHash": "0x264ece470663ce9b7ac015c4df355e5f047cd194d0ef429cc5942f5cabec8996",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

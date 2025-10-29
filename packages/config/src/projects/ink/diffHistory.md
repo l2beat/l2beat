@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x858509a2f6f4cc2dcbbf669143220d4ba5107427
+
+# Diff at Wed, 29 Oct 2025 12:13:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@eb258fc8a4f09c1ec78661959e5ef0ad546c0bea block: 1761222955
+- current timestamp: 1761222955
+
+## Description
+
+config: add new wmroot v41.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761222955 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.permissionedGamesTotal:
+-        185
++        190
+    }
+```
+
 Generated with discovered.json: 0x7d79aa81d1e63f77bb7af903c9b0a86b8681417c
 
 # Diff at Thu, 23 Oct 2025 12:37:13 GMT:

@@ -1,7 +1,7 @@
 {
   "name": "edgex",
   "timestamp": 1760431807,
-  "configHash": "0x9132668c9c864d489c5257780acba3defff7e21d00d8e5e2cfb07252fec94741",
+  "configHash": "0xb5f24482c5ef5f6763466969105b2ab0d1fa154b1cbe20863f46a84061225f05",
   "entries": [
     {
       "name": "AggregationRouterV5",

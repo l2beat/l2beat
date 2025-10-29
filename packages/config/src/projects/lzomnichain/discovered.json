@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
   "timestamp": 1761552123,
-  "configHash": "0x820fc157b961cd2d0fa0f233b4915ff5b212924d4f49826643ad707decaaf35d",
+  "configHash": "0x9029f3f747fa00b65982f16e4c4a5b17ce5dd8cbdef3e74b5a177c94d8ee6dd5",
   "entries": [
     {
       "name": "FPValidator",

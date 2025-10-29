@@ -1,7 +1,7 @@
 {
   "name": "astarzkevm",
   "timestamp": 1721204831,
-  "configHash": "0x35224c5a902798098477b8b2579f57d0a2453cba9117b0f874e7cb7ed4bda2d9",
+  "configHash": "0x42081ac9bb091c244170f91db396d02595cb954ea61a7fd67db4b42813582fee",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {

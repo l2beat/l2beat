@@ -1,7 +1,7 @@
 {
   "name": "mantle",
   "timestamp": 1760971761,
-  "configHash": "0xa452c4b0f9a9dfc23c49b7a2750d3839acdb7b45f84a88db3b7d94c6ead43a67",
+  "configHash": "0x5e813c6f675ef018b83f8e960a7e30dff6f83b5f2e959833f77adc307e1bb418",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

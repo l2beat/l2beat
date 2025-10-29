@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "timestamp": 1758896971,
-  "configHash": "0xfbda4ca898daf3f88f71cc20ad6cc5ea5a50052145a2427a0d1dc110d1370203",
+  "configHash": "0x3fd0e3cc66844d00b5b0aa411da69d5a5a7882a8a10db68fbdf94ca7016a37d5",
   "entries": [
     {
       "name": "bartek.eth-L2BEAT",
@@ -4306,6 +4306,7 @@
             "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
+            "0xa18d6266cef250802c3cb2bfefe947ea1aa9a32dd30a8d1dfc4568a8714d3a7a": "ArbOS v41 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
             "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
@@ -5900,6 +5901,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "ethereum": 23447792, "nova": 84109217 },
+  "usedBlockNumbers": { "nova": 84109217, "ethereum": 23447792 },
   "permissionsConfigHash": "0x097aab79b9e7f7ff6f3acab1ac062708c128cc253ecbdc42d4bbe1d326108454"
 }

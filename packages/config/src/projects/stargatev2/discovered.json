@@ -1,7 +1,7 @@
 {
   "name": "stargatev2",
   "timestamp": 1761552324,
-  "configHash": "0x0be154e6a9c86be8b871ce3a217cd0407a6a27bd3694f3f8fc1a3053d0e6d366",
+  "configHash": "0xca7c179793f88487037b609d033f30b43000c43c8a63fb70bf9c135e6854455a",
   "entries": [
     {
       "name": "TokenMessagingArbitrum",
@@ -4932,10 +4932,10 @@
   "usedBlockNumbers": {
     "ethereum": 23667478,
     "arbitrum": 393874196,
-    "optimism": 142976773,
     "linea": 24952738,
-    "base": 37381488,
-    "scroll": 23879196
+    "optimism": 142976773,
+    "scroll": 23879196,
+    "base": 37381488
   },
   "permissionsConfigHash": "0xd6dbcf684509cd2702666c5d9eab65e5f34db401f9c83c00bc3e13946467b8a8"
 }

@@ -1,7 +1,7 @@
 {
   "name": "w",
   "timestamp": 1752832725,
-  "configHash": "0xf98f35f6cd458a881918370ca14673dc8a5ff7a419bfd8c7756c4897ed175e4c",
+  "configHash": "0x5917cf943d31eb5e8264bcb734265c8e565748f9f586ce5bb8ae53514bff4656",
   "entries": [
     {
       "name": "Wormhole Token",
@@ -389,6 +389,6 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "arbitrum": 358957206, "base": 33021689 },
+  "usedBlockNumbers": { "base": 33021689, "arbitrum": 358957206 },
   "permissionsConfigHash": "0xdba4f6ddf7f3a2cb07331701a95eb5c773ed66799218829c29f84ca7f4c9921a"
 }

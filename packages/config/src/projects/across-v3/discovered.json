@@ -1,7 +1,7 @@
 {
   "name": "across-v3",
   "timestamp": 1759932934,
-  "configHash": "0x61dd08494791b2aa0c5ead85995d06cf73e1c0ee945f91435144e010cee2fab5",
+  "configHash": "0x5c9f6fb19064071fad48b574da0a4e85ec865a489912cc8137a5b03ef51a0c20",
   "entries": [
     {
       "name": "VotingV2",

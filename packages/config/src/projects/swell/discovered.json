@@ -1,7 +1,7 @@
 {
   "name": "swell",
   "timestamp": 1761223245,
-  "configHash": "0xeff0d898bc8f7ee71ab7f975d1c7c23c528de103afc98f98f6d0a84e7b1601b7",
+  "configHash": "0x945bc87664c6d45a81c541a7fd9812dfc2db50381837fa32ace5d2cf36bc0bf5",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -1023,7 +1023,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 7841,
+        "permissionedGamesTotal": 7870,
         "proxyAdmin": "eth:0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "version": "1.2.0"

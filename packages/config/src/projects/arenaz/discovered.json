@@ -1,7 +1,7 @@
 {
   "name": "arenaz",
   "timestamp": 1761222860,
-  "configHash": "0x945ed6f66b7898b7a73b972f5a8089336e6088a86f9b4f807dce07a985a32e0b",
+  "configHash": "0x1b3a5c1a9eb6071fe5d501def166df40b669d9363f67d549d8dbd543a954abed",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -920,7 +920,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 363,
+        "permissionedGamesTotal": 364,
         "proxyAdmin": "eth:0xEEFD1782D70824CBcacf9438afab7f353F1797F0",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "version": "1.2.0"

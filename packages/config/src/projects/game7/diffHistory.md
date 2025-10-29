@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xed99472feca35b4f08329ae707fd0061856b5eee
+
+# Diff at Wed, 29 Oct 2025 12:13:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@eb258fc8a4f09c1ec78661959e5ef0ad546c0bea block: 1759481125
+- current timestamp: 1759481125
+
+## Description
+
+config: add new wmroot v41.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759481125 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xa18d6266cef250802c3cb2bfefe947ea1aa9a32dd30a8d1dfc4568a8714d3a7a:
++        "ArbOS v41 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0xd2ffa95b8fed6964f9c8d9891d9ce069cdef0a02
 
 # Diff at Fri, 03 Oct 2025 08:47:18 GMT:

@@ -1,7 +1,7 @@
 {
   "name": "witness",
   "timestamp": 1738234259,
-  "configHash": "0x8cbfa087d98cb47ad148b7afdabe8f4c3a246652cd24aaf073a52e1269bf7594",
+  "configHash": "0xcaee2a6d6d53af04ed57580f13fd8f12a49872eca1d62ef288b053bd848b5186",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {

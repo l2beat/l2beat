@@ -1,7 +1,7 @@
 {
   "name": "orbiter",
   "timestamp": 1733239295,
-  "configHash": "0x60aa0be9ab8d92921c65047899de575a29b846a3aecec5a5b7e6283217be16cc",
+  "configHash": "0xd29cc8ba8ad6668fba9d35f95d6ab6b54b778b56b4a460681cb75a479c5c3900",
   "entries": [
     {
       "address": "eth:0x095D2918B03b2e86D68551DCF11302121fb626c9",
