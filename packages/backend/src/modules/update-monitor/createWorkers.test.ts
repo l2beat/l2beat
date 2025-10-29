@@ -21,7 +21,7 @@ describe('createWorkerPool', () => {
   describe('basic execution', () => {
     it('executes all tasks successfully', async () => {
       const workerPool = createWorkerPool({
-        count: 2,
+        workerCount: 2,
         timeoutPerTaskMs: 1000,
         timeoutPerRunMs: 5000,
         logger: Logger.SILENT,
@@ -59,7 +59,7 @@ describe('createWorkerPool', () => {
 
     it('handles empty task array', async () => {
       const workerPool = createWorkerPool({
-        count: 2,
+        workerCount: 2,
         timeoutPerTaskMs: 1000,
         timeoutPerRunMs: 5000,
         logger: Logger.SILENT,
@@ -76,7 +76,7 @@ describe('createWorkerPool', () => {
 
     it('executes tasks with correct concurrency', async () => {
       const workerPool = createWorkerPool({
-        count: 2,
+        workerCount: 2,
         timeoutPerTaskMs: 1000,
         timeoutPerRunMs: 5000,
         logger: Logger.SILENT,
@@ -104,7 +104,7 @@ describe('createWorkerPool', () => {
   describe('error handling', () => {
     it('captures errors without stopping other tasks', async () => {
       const workerPool = createWorkerPool({
-        count: 2,
+        workerCount: 2,
         timeoutPerTaskMs: 1000,
         timeoutPerRunMs: 5000,
         logger: Logger.SILENT,
@@ -146,7 +146,7 @@ describe('createWorkerPool', () => {
 
     it('handles non-Error throws', async () => {
       const workerPool = createWorkerPool({
-        count: 1,
+        workerCount: 1,
         timeoutPerTaskMs: 1000,
         timeoutPerRunMs: 5000,
         logger: Logger.SILENT,
@@ -177,7 +177,7 @@ describe('createWorkerPool', () => {
   describe('per-task timeout', () => {
     it('times out individual slow tasks', async () => {
       const workerPool = createWorkerPool({
-        count: 2,
+        workerCount: 2,
         timeoutPerTaskMs: 100,
         timeoutPerRunMs: 5000,
         logger: Logger.SILENT,
@@ -214,7 +214,7 @@ describe('createWorkerPool', () => {
 
     it('does not timeout tasks that finish just in time', async () => {
       const workerPool = createWorkerPool({
-        count: 1,
+        workerCount: 1,
         timeoutPerTaskMs: 150,
         timeoutPerRunMs: 5000,
         logger: Logger.SILENT,
@@ -245,7 +245,7 @@ describe('createWorkerPool', () => {
   describe('total run timeout', () => {
     it('stops processing when run timeout is reached', async () => {
       const workerPool = createWorkerPool({
-        count: 1,
+        workerCount: 1,
         timeoutPerTaskMs: 1000,
         timeoutPerRunMs: 200,
         logger: Logger.SILENT,
@@ -270,7 +270,7 @@ describe('createWorkerPool', () => {
 
     it('completes all tasks if run finishes before timeout', async () => {
       const workerPool = createWorkerPool({
-        count: 3,
+        workerCount: 3,
         timeoutPerTaskMs: 1000,
         timeoutPerRunMs: 1000,
         logger: Logger.SILENT,
@@ -303,7 +303,7 @@ describe('createWorkerPool', () => {
   describe('worker pool behavior', () => {
     it('processes tasks in order with single worker', async () => {
       const workerPool = createWorkerPool({
-        count: 1,
+        workerCount: 1,
         timeoutPerTaskMs: 1000,
         timeoutPerRunMs: 5000,
         logger: Logger.SILENT,
@@ -328,7 +328,7 @@ describe('createWorkerPool', () => {
 
     it('processes tasks concurrently with multiple workers', async () => {
       const workerPool = createWorkerPool({
-        count: 3,
+        workerCount: 3,
         timeoutPerTaskMs: 1000,
         timeoutPerRunMs: 5000,
         logger: Logger.SILENT,
@@ -356,7 +356,7 @@ describe('createWorkerPool', () => {
 
     it('respects worker count limit', async () => {
       const workerPool = createWorkerPool({
-        count: 2,
+        workerCount: 2,
         timeoutPerTaskMs: 1000,
         timeoutPerRunMs: 5000,
         logger: Logger.SILENT,
@@ -386,7 +386,7 @@ describe('createWorkerPool', () => {
   describe('edge cases', () => {
     it('handles tasks that return undefined', async () => {
       const workerPool = createWorkerPool({
-        count: 1,
+        workerCount: 1,
         timeoutPerTaskMs: 1000,
         timeoutPerRunMs: 5000,
         logger: Logger.SILENT,
@@ -415,7 +415,7 @@ describe('createWorkerPool', () => {
 
     it('handles tasks that return null', async () => {
       const workerPool = createWorkerPool({
-        count: 1,
+        workerCount: 1,
         timeoutPerTaskMs: 1000,
         timeoutPerRunMs: 5000,
         logger: Logger.SILENT,
@@ -438,7 +438,7 @@ describe('createWorkerPool', () => {
 
     it('handles mix of success, error, and timeout', async () => {
       const workerPool = createWorkerPool({
-        count: 2,
+        workerCount: 2,
         timeoutPerTaskMs: 100,
         timeoutPerRunMs: 5000,
         logger: Logger.SILENT,
@@ -495,7 +495,7 @@ describe('createWorkerPool', () => {
   describe('type safety', () => {
     it('handles different return types', async () => {
       const workerPool = createWorkerPool({
-        count: 2,
+        workerCount: 2,
         timeoutPerTaskMs: 1000,
         timeoutPerRunMs: 5000,
         logger: Logger.SILENT,
@@ -519,7 +519,7 @@ describe('createWorkerPool', () => {
 
     it('handles complex object types', async () => {
       const workerPool = createWorkerPool({
-        count: 1,
+        workerCount: 1,
         timeoutPerTaskMs: 1000,
         timeoutPerRunMs: 5000,
         logger: Logger.SILENT,
@@ -551,7 +551,7 @@ describe('createWorkerPool', () => {
   describe('task identity', () => {
     it('includes task identity in results and errors', async () => {
       const workerPool = createWorkerPool({
-        count: 2,
+        workerCount: 2,
         timeoutPerTaskMs: 1000,
         timeoutPerRunMs: 5000,
         logger: Logger.SILENT,

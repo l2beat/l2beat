@@ -59,10 +59,10 @@ export function getUpdateMonitorConfig(
       30,
     ),
     workerPool: {
-      count: env.integer(['UPDATE_MONITOR_WORKER_POOL_COUNT'], 3),
+      workerCount: env.integer(['UPDATE_MONITOR_WORKER_POOL_COUNT'], 3),
       timeoutPerTaskMs: env.integer(
         ['UPDATE_MONITOR_WORKER_POOL_TIMEOUT_PER_TASK_MS'],
-        10 * 60 * 1000, // 10 minutes
+        20 * 60 * 1000, // 10 minutes
       ),
       timeoutPerRunMs: env.integer(
         ['UPDATE_MONITOR_WORKER_POOL_TIMEOUT_PER_RUN_MS'],

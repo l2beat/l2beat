@@ -2,7 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 
 export type WorkerPoolSettings = {
   /** Number of concurrent workers */
-  count: number
+  workerCount: number
   /** Timeout per individual task in milliseconds */
   timeoutPerTaskMs: number
   /** Total timeout for all tasks in milliseconds */
@@ -49,12 +49,12 @@ export type TaskResult<T> = {
 }
 
 /**
- * Creates a worker pool that executes tasks concurrently with limited parallelism.
+ * Creates a worker pool that executes tasks concurrently.
  *
  * @example
  * ```typescript
  * const workerPool = createWorkerPool({
- *   count: 3,
+ *   workerCount: 3,
  *   timeoutPerTaskMs: 30000, // 30 seconds per task
  *   timeoutPerRunMs: 300000, // 5 minutes for all tasks
  *   logger: Logger.INFO,
@@ -72,7 +72,7 @@ export function createWorkerPool(settings: WorkerPoolSettings): WorkerPool {
 
   async function runInPool<T>(tasks: Task<T>[]): Promise<WorkerPoolResult<T>> {
     logger.info('Starting worker pool', {
-      workers: settings.count,
+      workers: settings.workerCount,
       tasks: tasks.length,
       timeoutPerTaskMs: settings.timeoutPerTaskMs,
       timeoutPerRunMs: settings.timeoutPerRunMs,
@@ -163,7 +163,9 @@ export function createWorkerPool(settings: WorkerPoolSettings): WorkerPool {
       logger.debug('Worker finished', { workerId })
     }
 
-    const workers = Array.from({ length: settings.count }, (_, i) => worker(i))
+    const workers = Array.from({ length: settings.workerCount }, (_, i) =>
+      worker(i),
+    )
 
     await Promise.race([Promise.all(workers), runTimeoutPromise])
 

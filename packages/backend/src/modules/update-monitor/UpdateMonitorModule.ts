@@ -73,7 +73,7 @@ export function createUpdateMonitorModule({
   )
 
   const workerPool = createWorkerPool({
-    count: config.updateMonitor.workerPool.count,
+    workerCount: config.updateMonitor.workerPool.workerCount,
     timeoutPerTaskMs: config.updateMonitor.workerPool.timeoutPerTaskMs,
     timeoutPerRunMs: config.updateMonitor.workerPool.timeoutPerRunMs,
     logger: logger.for('UpdateMonitor'),

@@ -186,7 +186,7 @@ export interface UpdateMonitorConfig {
   readonly discord: DiscordConfig | false
   readonly updateMessagesRetentionPeriodDays: number
   readonly workerPool: {
-    readonly count: number
+    readonly workerCount: number
     readonly timeoutPerTaskMs: number
     readonly timeoutPerRunMs: number
   }
