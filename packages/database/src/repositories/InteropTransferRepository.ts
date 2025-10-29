@@ -38,10 +38,12 @@ export interface InteropTransferRecord {
 
 export interface InteropTransferUpdate {
   srcAbstractTokenId?: string
+  srcSymbol?: string
   srcPrice?: number
   srcAmount?: number
   srcValueUsd?: number
   dstAbstractTokenId?: string
+  dstSymbol?: string
   dstPrice?: number
   dstAmount?: number
   dstValueUsd?: number
@@ -64,7 +66,7 @@ export function toRecord(
     srcTokenAddress: row.srcTokenAddress ?? undefined,
     srcRawAmount: row.srcRawAmount ? BigInt(row.srcRawAmount) : undefined,
     srcAbstractTokenId: row.srcAbstractTokenId ?? undefined,
-    srcSymbol: undefined,
+    srcSymbol: row.srcSymbol ?? undefined,
     srcAmount: row.srcAmount ?? undefined,
     srcPrice: row.srcPrice ?? undefined,
     srcValueUsd: row.srcValueUsd ?? undefined,
@@ -76,7 +78,7 @@ export function toRecord(
     dstTokenAddress: row.dstTokenAddress ?? undefined,
     dstRawAmount: row.dstRawAmount ? BigInt(row.dstRawAmount) : undefined,
     dstAbstractTokenId: row.dstAbstractTokenId ?? undefined,
-    dstSymbol: undefined,
+    dstSymbol: row.dstSymbol ?? undefined,
     dstAmount: row.dstAmount ?? undefined,
     dstPrice: row.dstPrice ?? undefined,
     dstValueUsd: row.dstValueUsd ?? undefined,
@@ -102,6 +104,7 @@ export function toRow(
     srcTokenAddress: record.srcTokenAddress,
     srcRawAmount: record.srcRawAmount?.toString(),
     srcAbstractTokenId: record.srcAbstractTokenId,
+    srcSymbol: record.srcSymbol,
     srcAmount: record.srcAmount,
     srcPrice: record.srcPrice,
     srcValueUsd: record.srcValueUsd,
@@ -114,6 +117,7 @@ export function toRow(
     dstTokenAddress: record.dstTokenAddress,
     dstRawAmount: record.dstRawAmount?.toString(),
     dstAbstractTokenId: record.dstAbstractTokenId,
+    dstSymbol: record.dstSymbol,
     dstAmount: record.dstAmount,
     dstPrice: record.dstPrice,
     dstValueUsd: record.dstValueUsd,

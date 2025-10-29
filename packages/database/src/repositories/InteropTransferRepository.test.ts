@@ -103,6 +103,48 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       expect(result[0]?.srcTokenAddress).toEqual(record.srcTokenAddress)
       expect(result[0]?.dstTokenAddress).toEqual(record.dstTokenAddress)
     })
+
+    it('handles records with custom symbol fields', async () => {
+      const record = transfer(
+        'plugin1',
+        'msg1',
+        'deposit',
+        UnixTime(100),
+        'ethereum',
+        'arbitrum',
+        5000,
+      )
+      record.srcSymbol = 'USDC'
+      record.dstSymbol = 'USDC.e'
+
+      const inserted = await repository.insertMany([record])
+      expect(inserted).toEqual(1)
+
+      const result = await repository.getAll()
+      expect(result[0]?.srcSymbol).toEqual('USDC')
+      expect(result[0]?.dstSymbol).toEqual('USDC.e')
+    })
+
+    it('preserves symbol fields when they are undefined', async () => {
+      const record = transfer(
+        'plugin1',
+        'msg1',
+        'deposit',
+        UnixTime(100),
+        'ethereum',
+        'arbitrum',
+        5000,
+      )
+      record.srcSymbol = undefined
+      record.dstSymbol = undefined
+
+      const inserted = await repository.insertMany([record])
+      expect(inserted).toEqual(1)
+
+      const result = await repository.getAll()
+      expect(result[0]?.srcSymbol).toEqual(undefined)
+      expect(result[0]?.dstSymbol).toEqual(undefined)
+    })
   })
 
   describe(InteropTransferRepository.prototype.getByType.name, () => {
@@ -298,10 +340,12 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     it('updates financial data and marks transfer as processed', async () => {
       const record = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
       record.srcAbstractTokenId = undefined
+      record.srcSymbol = undefined
       record.srcPrice = undefined
       record.srcAmount = undefined
       record.srcValueUsd = undefined
       record.dstAbstractTokenId = undefined
+      record.dstSymbol = undefined
       record.dstPrice = undefined
       record.dstAmount = undefined
       record.dstValueUsd = undefined
@@ -310,10 +354,12 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
       const update = {
         srcAbstractTokenId: 'ethereum',
+        srcSymbol: 'ETH',
         srcPrice: 2000.0,
         srcAmount: 1.5,
         srcValueUsd: 3000.0,
         dstAbstractTokenId: 'arbitrum-one',
+        dstSymbol: 'ETH',
         dstPrice: 1999.0,
         dstAmount: 1.4,
         dstValueUsd: 2798.6,
@@ -326,10 +372,12 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
       const updatedRecord = result[0]
       expect(updatedRecord?.srcAbstractTokenId).toEqual('ethereum')
+      expect(updatedRecord?.srcSymbol).toEqual('ETH')
       expect(updatedRecord?.srcPrice).toEqual(2000.0)
       expect(updatedRecord?.srcAmount).toEqual(1.5)
       expect(updatedRecord?.srcValueUsd).toEqual(3000.0)
       expect(updatedRecord?.dstAbstractTokenId).toEqual('arbitrum-one')
+      expect(updatedRecord?.dstSymbol).toEqual('ETH')
       expect(updatedRecord?.dstPrice).toEqual(1999.0)
       expect(updatedRecord?.dstAmount).toEqual(1.4)
       expect(updatedRecord?.dstValueUsd).toEqual(2798.6)
@@ -339,8 +387,10 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     it('updates only provided fields', async () => {
       const record = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
       record.srcAbstractTokenId = 'original-src'
+      record.srcSymbol = 'USDT'
       record.srcPrice = 1000.0
       record.dstAbstractTokenId = 'original-dst'
+      record.dstSymbol = 'USDT.e'
       record.dstPrice = 1001.0
 
       await repository.insertMany([record])
@@ -348,6 +398,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       const partialUpdate = {
         srcPrice: 2000.0,
         dstAmount: 1.5,
+        dstSymbol: 'USDT-updated',
       }
 
       await repository.updateFinancials('msg1', partialUpdate)
@@ -356,8 +407,10 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       const updatedRecord = result[0]
 
       expect(updatedRecord?.srcAbstractTokenId).toEqual('original-src')
+      expect(updatedRecord?.srcSymbol).toEqual('USDT')
       expect(updatedRecord?.srcPrice).toEqual(2000.0)
       expect(updatedRecord?.dstAbstractTokenId).toEqual('original-dst')
+      expect(updatedRecord?.dstSymbol).toEqual('USDT-updated')
       expect(updatedRecord?.dstPrice).toEqual(1001.0)
       expect(updatedRecord?.dstAmount).toEqual(1.5)
       expect(updatedRecord?.isProcessed).toEqual(true)
@@ -433,10 +486,12 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
       const comprehensiveUpdate = {
         srcAbstractTokenId: 'ethereum',
+        srcSymbol: 'WETH',
         srcPrice: 2500.0,
         srcAmount: 0.8,
         srcValueUsd: 2000.0,
         dstAbstractTokenId: 'polygon',
+        dstSymbol: 'WETH',
         dstPrice: 2480.0,
         dstAmount: 0.79,
         dstValueUsd: 1959.2,
@@ -483,7 +538,7 @@ function transfer(
     srcEventId: srcChain ? `${messageId}-src-event` : undefined,
     srcTokenAddress: srcChain ? EthereumAddress.random() : undefined,
     srcRawAmount: srcChain ? 1000000000000000000n : undefined,
-    srcSymbol: undefined,
+    srcSymbol: srcChain ? 'ETH' : undefined,
     srcAbstractTokenId: srcChain ? 'ethereum' : undefined,
     srcAmount: srcChain ? 1.0 : undefined,
     srcPrice: srcChain ? 2000.0 : undefined,
@@ -495,7 +550,7 @@ function transfer(
     dstEventId: dstChain ? `${messageId}-dst-event` : undefined,
     dstTokenAddress: dstChain ? EthereumAddress.random() : undefined,
     dstRawAmount: dstChain ? 1000000000000000000n : undefined,
-    dstSymbol: undefined,
+    dstSymbol: dstChain ? 'ETH' : undefined,
     dstAbstractTokenId: dstChain ? 'ethereum' : undefined,
     dstAmount: dstChain ? 1.0 : undefined,
     dstPrice: dstChain ? 2000.0 : undefined,
