@@ -177,6 +177,10 @@ export const boojum: BaseProject = {
             address: '0xD324a7c8556A059371B207fB96FD77bE24E2042c',
             chain: 'ethereum',
           },
+          {
+            address: '0xD324a7c8556A059371B207fB96FD77bE24E2042c',
+            chain: 'gateway',
+          },
         ],
         verificationStatus: 'notVerified',
       },
@@ -187,6 +191,10 @@ export const boojum: BaseProject = {
           {
             address: '0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7',
             chain: 'ethereum',
+          },
+          {
+            address: '0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7',
+            chain: 'gateway',
           },
         ],
         verificationStatus: 'notVerified',
