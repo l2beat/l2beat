@@ -18,7 +18,7 @@ export function ProjectUpdateSection({
     <section
       id={id}
       data-role="nav-section"
-      className="mb-8 scroll-mt-8 md:mb-16"
+      className="mb-8 scroll-mt-[56px] md:mb-16 md:scroll-mt-8"
     >
       <img
         src={bannerImg}

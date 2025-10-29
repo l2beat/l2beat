@@ -40,11 +40,9 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        {
-          <div className="md:-mx-6 sticky top-0 z-100 lg:hidden">
-            <MobileSectionNavigation sections={sections} />
-          </div>
-        }
+        <div className="md:-mx-6 sticky top-0 z-100 lg:hidden">
+          <MobileSectionNavigation sections={sections} />
+        </div>
 
         <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
           <MainPageHeader>Publication</MainPageHeader>
