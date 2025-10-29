@@ -5,46 +5,26 @@
   "initialAddresses": ["eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9"],
   "sharedModules": ["shared-zk-stack"],
   "names": {
-    "eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9": "AbstractZkEvm",
-    "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock2"
+    "eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9": "AbstractZkEvm"
   },
   "overrides": {
-    "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": {
+    "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": {
       "fields": {
-        "validatorsVTL": {
+        "validatorsVTLFullAC": {
+          // giving the permission to the entire AC, because in practice the actor(s) have all roles
           "handler": {
-            "type": "event",
-            "select": ["validator"],
-            "add": {
-              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
-              "where": ["=", "#chainId", 2741]
-            },
-            "remove": {
-              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
-              "where": ["=", "#chainId", 2741]
-            }
+            "type": "crossChainAccessControl",
+            "pickChainAddress": "eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9"
           },
           "permissions": [{ "type": "validateZkStack" }]
-        }
-      }
-    },
-    "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": {
-      "category": "spam",
-      "fields": {
+        },
         "validatorsVTL": {
+          // for backwards compatibility with the zkstack template
           "handler": {
-            "type": "event",
-            "select": ["validator"],
-            "add": {
-              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
-              "where": ["=", "#chainId", 2741]
-            },
-            "remove": {
-              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
-              "where": ["=", "#chainId", 2741]
-            }
+            "type": "crossChainAccessControl",
+            "pickChainAddress": "eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9"
           },
-          "permissions": [{ "type": "validateZkStack" }]
+          "edit": ["get", "EXECUTOR_ROLE", "members"]
         }
       }
     },

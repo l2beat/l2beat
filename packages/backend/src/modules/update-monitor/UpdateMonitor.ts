@@ -14,6 +14,7 @@ import shuffle from 'lodash/shuffle'
 import { Gauge } from 'prom-client'
 import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
+import type { WorkerPool } from './createWorkers'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import type { DiscoveryRunner } from './DiscoveryRunner'
 import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
@@ -35,6 +36,7 @@ export class UpdateMonitor {
     private readonly discoveryOutputCache: DiscoveryOutputCache,
     private readonly logger: Logger,
     private readonly runOnStart: boolean,
+    private readonly workerPool: WorkerPool,
     private readonly disabledProjects: string[] = [],
   ) {
     this.logger = this.logger.for(this)
@@ -80,10 +82,18 @@ export class UpdateMonitor {
       disabledProjects: this.disabledProjects,
     })
 
-    for (const project of enabledProjects) {
-      await this.updateProject(this.runner, project, timestamp)
-      await this.updateDiffer?.runForProject(project, timestamp)
-    }
+    const tasks = enabledProjects.map((project) => ({
+      identity: {
+        id: project,
+        name: `Update project ${project}`,
+      },
+      job: async () => {
+        await this.updateProject(this.runner, project, timestamp)
+        await this.updateDiffer?.runForProject(project, timestamp)
+      },
+    }))
+
+    const results = await this.workerPool.runInPool(tasks)
 
     const updateEnd = UnixTime.now()
     const updateDuration = updateEnd - updateStart
@@ -94,6 +104,10 @@ export class UpdateMonitor {
       duration: updateDuration,
       updateTarget: timestamp,
       updateTargetDate: targetDateIso,
+      timedOut: results.timedOut,
+      successCount: results.results.length,
+      failedCount: results.errors.length,
+      totalCount: tasks.length,
     })
 
     const reminders = this.generateDailyReminder()
@@ -156,12 +170,10 @@ export class UpdateMonitor {
         return
       }
 
-      const runResult = await runner.discoverWithRetry(
+      const runResult = await runner.run(
         projectConfig,
         timestamp,
         this.logger,
-        undefined,
-        undefined,
         'useCurrentTimestamp', // for dependent discoveries
       )
 
@@ -281,12 +293,10 @@ export class UpdateMonitor {
       previousDiscovery = databaseEntry.discovery
     }
 
-    const runResult = await runner.discoverWithRetry(
+    const runResult = await runner.run(
       projectConfig,
       previousDiscovery.timestamp,
       this.logger,
-      undefined,
-      undefined,
       previousDiscovery.dependentDiscoveries,
     )
     const { discovery, flatSources } = runResult
