@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A router contract for DA Certificate verifiers. Verifier routing depends on the certificate reference block number.",
+  "fields": {
+    "DAVerifiers": {
+      "description": "The DA verifier contracts indexed by activation block number.",
+      "handler": {
+        "type": "event",
+        "select": ["activationBlockNumber", "certVerifier"],
+        "add": {
+          "event": "CertVerifierAdded"
+        }
+      }
+    }
+  }
+}

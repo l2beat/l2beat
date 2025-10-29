@@ -1,10 +1,10 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { solidityKeccak256 } from 'ethers/lib/utils'
 import { BinaryReader } from '../../../../tools/BinaryReader'
+import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import {
   createEventParser,
   createInteropEventType,
-  defineNetworks,
   findChain,
   type InteropEvent,
   type InteropEventDb,
@@ -13,6 +13,7 @@ import {
   type MatchResult,
   Result,
 } from '../types'
+import { LayerZeroV2Config } from './layerzero.config'
 
 export const parsePacketSent = createEventParser(
   'event PacketSent(bytes encodedPayload, bytes options, address sendLibrary)',
@@ -32,41 +33,20 @@ export const PacketDelivered = createInteropEventType<{
   guid: string
 }>('layerzero-v2.PacketDelivered')
 
-export const LAYERZERO_NETWORKS = defineNetworks('layerzero', [
-  {
-    chainId: 1,
-    eid: 30101,
-    chain: 'ethereum',
-    address: EthereumAddress('0x1a44076050125825900e736c501f859c50fE728c'),
-  },
-  {
-    chainId: 42161,
-    eid: 30110,
-    chain: 'arbitrum',
-    address: EthereumAddress('0x1a44076050125825900e736c501f859c50fE728c'),
-  },
-  {
-    chainId: 8453,
-    eid: 30184,
-    chain: 'base',
-    address: EthereumAddress('0x1a44076050125825900e736c501f859c50fE728c'),
-  },
-  {
-    chainId: 10,
-    eid: 30111,
-    chain: 'optimism',
-    address: EthereumAddress('0x1a44076050125825900e736c501f859c50fE728c'),
-  },
-])
-
 export class LayerZeroV2Plugin implements InteropPlugin {
   name = 'layerzero-v2'
 
-  capture(input: LogToCapture) {
-    const network = LAYERZERO_NETWORKS.find((x) => x.chain === input.ctx.chain)
-    if (!network) return
+  constructor(private configs: InteropConfigStore) {}
 
-    const packetSent = parsePacketSent(input.log, [network.address])
+  capture(input: LogToCapture) {
+    const networks = this.configs.get(LayerZeroV2Config)
+    if (!networks) return
+
+    const network = networks.find((x) => x.chain === input.ctx.chain)
+    if (!network) return
+    assert(network.endpointV2, 'We capture only chains with endpoints')
+
+    const packetSent = parsePacketSent(input.log, [network.endpointV2])
     if (packetSent) {
       const packet = decodePacket(packetSent.encodedPayload)
       if (!packet) return
@@ -77,15 +57,13 @@ export class LayerZeroV2Plugin implements InteropPlugin {
         packet.header.dstEid,
         packet.header.receiver,
       )
-      const $dstChain = findChain(
-        LAYERZERO_NETWORKS,
-        (x) => x.eid,
-        packet.header.dstEid,
-      )
+      const $dstChain = findChain(networks, (x) => x.eid, packet.header.dstEid)
       return PacketSent.create(input.ctx, { $dstChain, guid })
     }
 
-    const packetDelivered = parsePacketDelivered(input.log, [network.address])
+    const packetDelivered = parsePacketDelivered(input.log, [
+      network.endpointV2,
+    ])
     if (packetDelivered) {
       const guid = createLayerZeroGuid(
         packetDelivered.origin.nonce,
@@ -95,7 +73,7 @@ export class LayerZeroV2Plugin implements InteropPlugin {
         packetDelivered.receiver,
       )
       const $srcChain = findChain(
-        LAYERZERO_NETWORKS,
+        networks,
         (x) => x.eid,
         packetDelivered.origin.srcEid,
       )

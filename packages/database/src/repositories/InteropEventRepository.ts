@@ -13,8 +13,9 @@ export interface InteropEventRecord {
   blockNumber: number
   blockHash: string
   txHash: string
-  value: string
+  value: bigint | undefined
   txTo: string | undefined
+  calldata: string
   logIndex: number
   matched: boolean
   unsupported: boolean
@@ -32,8 +33,9 @@ export function toRecord(row: Selectable<InteropEvent>): InteropEventRecord {
     blockNumber: row.blockNumber,
     blockHash: row.blockHash,
     txHash: row.txHash,
-    value: row.value ?? '', //TODO: make optional
+    value: row.value ? BigInt(row.value) : undefined, //TODO: make optional
     txTo: row.txTo ?? undefined,
+    calldata: row.calldata,
     logIndex: row.logIndex ?? -1, // TODO: make optional
     matched: row.matched,
     unsupported: row.unsupported,
@@ -52,7 +54,8 @@ export function toRow(record: InteropEventRecord): Insertable<InteropEvent> {
     blockNumber: record.blockNumber,
     blockHash: record.blockHash.toLowerCase(),
     txHash: record.txHash.toLowerCase(),
-    value: record.value,
+    calldata: record.calldata,
+    value: record.value?.toString(),
     txTo: record.txTo ?? null,
     logIndex: record.logIndex,
     matched: record.matched,

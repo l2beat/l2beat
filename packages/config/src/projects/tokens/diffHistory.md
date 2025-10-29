@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x3d824f2011aa3545a5832209ad30a1e5c17fa2da
+
+# Diff at Tue, 28 Oct 2025 09:32:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@090e135db1084f4a9678d6bf1cb0ff5e854903ea block: 1759761526
+- current timestamp: 1761643706
+
+## Description
+
+ignored some values in watchmode.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759761526 (main branch discovery), not current.
+
+```diff
+    contract CSStrikes (eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f) {
+    +++ description: None
+      template:
++        "tokens/Lido/CSStrikes"
+    }
+```
+
 Generated with discovered.json: 0xa580ce65af310668ee81ae6cd4bc2e630f58603d
 
 # Diff at Mon, 06 Oct 2025 15:12:19 GMT:

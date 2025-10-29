@@ -14,7 +14,8 @@
     "getLockbox",
     "getOnRamps",
     "getOffRamps",
-    "adapter"
+    "adapter",
+    "bridge"
   ],
   "ignoreInWatchMode": [
     "getOnRamps",

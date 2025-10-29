@@ -52,7 +52,7 @@ export function ProjectZkCatalogSummary({ project }: Props) {
   )
 }
 
-function TrustedSetupsByProofSystemSection({
+export function TrustedSetupsByProofSystemSection({
   trustedSetupsByProofSystem,
 }: {
   trustedSetupsByProofSystem: TrustedSetupsByProofSystem

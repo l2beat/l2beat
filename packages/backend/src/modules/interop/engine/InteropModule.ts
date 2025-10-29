@@ -3,6 +3,8 @@ import { HourlyIndexer } from '../../../tools/HourlyIndexer'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../../types'
 import { createInteropPlugins } from '../plugins'
+import { RelayApiClient } from '../plugins/relay/RelayApiClient'
+import { RelayIndexer, RelayRootIndexer } from '../plugins/relay/relay.indexer'
 import { InteropBlockProcessor } from './capture/InteropBlockProcessor'
 import { InteropEventStore } from './capture/InteropEventStore'
 import { InteropCleanerLoop } from './cleaner/InteropCleanerLoop'
@@ -28,11 +30,10 @@ export function createInteropModule({
   }
   logger = logger.tag({ feature: 'interop', module: 'interop' })
 
-  const interopStore = new InteropEventStore(db)
-
-  const configs = new InteropConfigStore(db)
+  const eventStore = new InteropEventStore(db)
+  const configStore = new InteropConfigStore(db)
   const plugins = createInteropPlugins({
-    configs,
+    configs: configStore,
     chains: config.interop.config.chains,
     httpClient: new HttpClient(),
     logger,
@@ -45,7 +46,7 @@ export function createInteropModule({
       const processor = new InteropBlockProcessor(
         chain.name,
         plugins.eventPlugins,
-        interopStore,
+        eventStore,
         logger,
       )
       blockProcessors.push(processor)
@@ -54,7 +55,7 @@ export function createInteropModule({
   }
 
   const matcher = new InteropMatchingLoop(
-    interopStore,
+    eventStore,
     db,
     plugins.eventPlugins,
     config.interop.capture.chains.map((c) => c.name),
@@ -67,7 +68,8 @@ export function createInteropModule({
     (c) => new InteropCompareLoop(db, c, logger),
   )
 
-  const cleaner = new InteropCleanerLoop(interopStore, db, logger)
+  const indexerService = new IndexerService(db)
+  const cleaner = new InteropCleanerLoop(eventStore, db, logger)
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
   const recentPricesIndexer = new InteropRecentPricesIndexer({
@@ -76,7 +78,7 @@ export function createInteropModule({
     logger,
     parents: [hourlyIndexer],
     minHeight: 1,
-    indexerService: new IndexerService(db),
+    indexerService,
   })
   const tokenDb = new MockTokenDb()
   const financialsService = new InteropFinancialsLoop(
@@ -86,12 +88,26 @@ export function createInteropModule({
     logger,
   )
 
+  const relayApiClient = new RelayApiClient(new HttpClient())
+  const relayRootIndexer = new RelayRootIndexer(logger)
+  const relayIndexer = new RelayIndexer(
+    config.interop.config.chains,
+    config.interop.capture.chains.map((c) => c.name),
+    relayApiClient,
+    eventStore,
+    relayRootIndexer,
+    indexerService,
+    logger,
+  )
+
   const start = async () => {
     logger = logger.for('InteropModule')
     logger.info('Starting')
     if (config.interop && config.interop.matching) {
-      await interopStore.start()
+      await eventStore.start()
       matcher.start()
+      await relayRootIndexer.start()
+      await relayIndexer.start()
     }
     if (config.interop && config.interop.compare.enabled) {
       for (const compareLoop of compareLoops) {
@@ -107,6 +123,7 @@ export function createInteropModule({
       financialsService.start()
     }
     if (config.interop && config.interop.config.enabled) {
+      await configStore.start()
       for (const configLoop of plugins.configPlugins) {
         configLoop.start()
       }

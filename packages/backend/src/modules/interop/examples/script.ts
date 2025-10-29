@@ -128,7 +128,7 @@ async function runExample(example: Example): Promise<RunResult> {
     }
     return new RpcClient({
       url: env.string(`${chain.toUpperCase()}_RPC_URL`),
-      sourceName: chain,
+      chain: chain,
       http,
       logger,
       callsPerMinute: 600,
@@ -160,48 +160,64 @@ async function runExample(example: Example): Promise<RunResult> {
     rpcClients,
   })
 
-  for (const key of example.loadConfigs ?? []) {
-    const plugin = plugins.configPlugins.find((x) => x.provides.key === key)
-    if (!plugin) {
-      throw new Error(`Cannot load config: ${key}`)
+  if (example.loadConfigs && example.loadConfigs.length > 0) {
+    for (const key of example.loadConfigs) {
+      const config = plugins.configPlugins.find((x) =>
+        x.provides.map((k) => k.key).includes(key),
+      )
+      if (!config) {
+        throw new Error(`Cannot load configs: ${key}`)
+      }
+      console.log('LOADING CONFIG:', key)
+      await config.run()
     }
-    console.log('LOADING CONFIG:', key)
-    await plugin.run()
-  }
-  if (example.loadConfigs) {
-    console.log('CONFIGS LOADED\n')
   }
 
   const events: InteropEvent[] = []
   for (const chain of chains) {
     const tx = await chain.rpc.getTransaction(chain.txHash)
     assert(tx.blockNumber)
+
     const block = await chain.rpc.getBlockWithTransactions(tx.blockNumber)
     const logs = await chain.rpc.getLogs(block.number, block.number)
     const txLogs = logs
       .filter((l) => l.transactionHash === tx.hash)
       .map(logToViemLog)
 
+    const ctx = {
+      timestamp: block.timestamp,
+      chain: chain.name,
+      blockNumber: block.number,
+      blockHash: block.hash,
+      txHash: tx.hash,
+      txValue: tx.value,
+      txTo: tx.to ? Address32.from(tx.to) : undefined,
+      txFrom: tx.from ? Address32.from(tx.from) : undefined,
+      txData: tx.data,
+      logIndex: -1,
+    }
+
+    for (const plugin of plugins.eventPlugins) {
+      if (!plugin.captureTx) {
+        continue
+      }
+      const event = plugin.captureTx({ tx: ctx, txLogs })
+      if (event) {
+        events.push({ ...event, plugin: plugin.name })
+        break
+      }
+    }
+
     for (const log of txLogs) {
       for (const plugin of plugins.eventPlugins) {
         if (!plugin.capture) {
           continue
         }
-        const event = await plugin.capture({
+        const event = plugin.capture({
           log: log,
           txLogs: txLogs,
-          ctx: {
-            timestamp: block.timestamp,
-            chain: chain.name,
-            blockNumber: block.number,
-            blockHash: block.hash,
-            txHash: tx.hash,
-            value: tx.value,
-            txTo: tx.to ? Address32.from(tx.to) : undefined,
-            logIndex: log.logIndex ?? -1,
-          },
+          ctx: { ...ctx, logIndex: log.logIndex ?? -1 },
         })
-
         if (event) {
           events.push({ ...event, plugin: plugin.name })
           break

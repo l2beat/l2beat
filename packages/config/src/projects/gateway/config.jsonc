@@ -18,20 +18,14 @@
       // template override
       "description": "The main contract defining the Gateway settlement layer. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. Bridging transactions that target L2s settling on the Gateway are routed through this contract and proofs are aggregated on L1. Data availability for rollups on the Gateway is provided by the Gateway operators sending the data together with Gateway data.{{isPermanentRollupString}}"
     },
-    "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": {
+    "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": {
+      // validatorTimelock
       "fields": {
-        "validatorsVTL": {
+        "validatorVTL": {
+          // assuming the executor has all the roles, change if not the case
           "handler": {
-            "type": "event",
-            "select": ["validator"],
-            "add": {
-              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
-              "where": ["=", "#chainId", 9075]
-            },
-            "remove": {
-              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
-              "where": ["=", "#chainId", 9075]
-            }
+            "type": "crossChainAccessControl",
+            "pickChainAddress": "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9"
           },
           "permissions": [
             {

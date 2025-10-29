@@ -20,6 +20,19 @@ export function Address32(value: string) {
   throw new Error('Invalid Bytes32Address')
 }
 
+Address32.fromOrUndefined = function fromOrUndefined(
+  value: string | undefined,
+) {
+  if (!value) {
+    return undefined
+  }
+  try {
+    return Address32.from(value)
+  } catch {
+    return undefined
+  }
+}
+
 Address32.from = function from(value: string | EthereumAddress) {
   if (value === 'native') {
     return value as Address32
@@ -45,9 +58,11 @@ export interface InteropEventContext {
   blockNumber: number
   blockHash: string
   txHash: string
-  value: string
+  txValue?: bigint
   txTo?: Address32
+  txFrom?: Address32
   logIndex: number
+  txData: string
 }
 
 export interface InteropEvent<T = unknown> {
@@ -72,7 +87,7 @@ export interface InteropMessage {
 export interface TransferSide {
   event: InteropEvent
   tokenAddress?: Address32
-  tokenAmount?: string
+  tokenAmount?: bigint
 }
 
 export interface InteropTransfer {
@@ -82,6 +97,11 @@ export interface InteropTransfer {
   events: InteropEvent[]
   src: TransferSide
   dst: TransferSide
+}
+
+export interface InteropIgnore {
+  kind: 'InteropIgnore'
+  events: InteropEvent[]
 }
 
 export function generateId(type: string) {
@@ -136,9 +156,15 @@ export interface LogToCapture {
   ctx: InteropEventContext
 }
 
+export interface TxToCapture {
+  tx: InteropEventContext
+  txLogs: Log[]
+}
+
 export type MatchResult = (
   | Omit<InteropMessage, 'plugin'>
   | Omit<InteropTransfer, 'plugin'>
+  | InteropIgnore
 )[]
 
 export type InteropEventQuery<T> = Partial<T> & {
@@ -160,12 +186,8 @@ export interface InteropEventDb {
 
 export interface InteropPlugin {
   name: string
-  capture?: (
-    input: LogToCapture,
-  ) =>
-    | Omit<InteropEvent, 'plugin'>
-    | undefined
-    | Promise<Omit<InteropEvent, 'plugin'> | undefined>
+  capture?: (input: LogToCapture) => Omit<InteropEvent, 'plugin'> | undefined
+  captureTx?: (input: TxToCapture) => Omit<InteropEvent, 'plugin'> | undefined
   matchTypes?: InteropEventType<unknown>[]
   match?: (
     event: InteropEvent,
@@ -218,13 +240,20 @@ export function createEventParser<T extends `event ${string}(${string}`>(
   }
 }
 
-export const Result = { Message, Transfer }
+export const Result = { Ignore, Message, Transfer }
 
 interface InteropMessageOptions {
   app: string
   srcEvent: InteropEvent
   dstEvent: InteropEvent
   extraEvents?: InteropEvent[]
+}
+
+function Ignore(events: InteropEvent[]): InteropIgnore {
+  return {
+    kind: 'InteropIgnore',
+    events,
+  }
 }
 
 function Message(
@@ -253,11 +282,11 @@ function Message(
 export interface InteropTransferOptions {
   srcEvent: InteropEvent
   srcTokenAddress?: Address32
-  srcAmount?: string
+  srcAmount?: bigint
 
   dstEvent: InteropEvent
   dstTokenAddress?: Address32
-  dstAmount?: string
+  dstAmount?: bigint
 
   extraEvents?: InteropEvent[]
 }

@@ -134,8 +134,18 @@
           "decimals": 18
         },
         {
+          "chain": "arbitrum",
+          "address": "native",
+          "decimals": 18
+        },
+        {
           "chain": "base",
           "address": "0x4200000000000000000000000000000000000006",
+          "decimals": 18
+        },
+        {
+          "chain": "base",
+          "address": "native",
           "decimals": 18
         },
         {
@@ -151,6 +161,11 @@
         {
           "chain": "ethereum",
           "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18
+        },
+        {
+          "chain": "ethereum",
+          "address": "native",
           "decimals": 18
         },
         {
@@ -181,6 +196,11 @@
         {
           "chain": "optimism",
           "address": "0x4200000000000000000000000000000000000006",
+          "decimals": 18
+        },
+        {
+          "chain": "optimism",
+          "address": "native",
           "decimals": 18
         },
         {

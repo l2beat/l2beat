@@ -17,9 +17,14 @@ type ScalingActivityTableEntry = ScalingActivityEntry & {
   data:
     | {
         isSynced: boolean
-        change: number
-        pastDayCount: number
-        summedCount: number
+        pastDayCount: {
+          value: number
+          change: number
+        }
+        summedCount: {
+          value: number
+          change: number
+        }
         maxCount: {
           value: number
           timestamp: number
@@ -51,9 +56,13 @@ export const getScalingActivityColumns = (
       }
       return (
         <SyncStatusWrapper isSynced={data.isSynced}>
-          <PrimaryValueCell>
-            {formatActivityCount(data.pastDayCount)}
-          </PrimaryValueCell>
+          <ValueWithPercentageChange
+            change={data.pastDayCount.change}
+            className="font-medium"
+            containerClassName="justify-end"
+          >
+            {formatActivityCount(data.pastDayCount.value)}
+          </ValueWithPercentageChange>
         </SyncStatusWrapper>
       )
     },
@@ -61,7 +70,7 @@ export const getScalingActivityColumns = (
     meta: {
       align: 'right',
       headClassName: 'max-w-[110px]',
-      tooltip: `${metric === 'uops' ? 'User operations' : 'Transactions'} per second averaged over the past day.`,
+      tooltip: `${metric === 'uops' ? 'User operations' : 'Transactions'} per second averaged over the past day, shown together with a percentage changed compared to 7D ago.`,
       colSpan: (ctx) => (ctx.row.original.data ? 1 : 100),
     },
   }),
@@ -85,6 +94,7 @@ export const getScalingActivityColumns = (
     meta: {
       align: 'right',
       hideIfNull: true,
+      tooltip: `Shows the maximum sustained ${metric === 'uops' ? 'UOPS' : 'TPS'}, calculated as an average over the count for a day.`,
     },
   }),
   columnHelper.accessor('data.summedCount', {
@@ -97,11 +107,11 @@ export const getScalingActivityColumns = (
       return (
         <SyncStatusWrapper isSynced={data.isSynced}>
           <ValueWithPercentageChange
-            change={data.change}
+            change={data.summedCount.change}
             className="font-medium"
             containerClassName="justify-end"
           >
-            {formatInteger(data.summedCount)}
+            {formatInteger(data.summedCount.value)}
           </ValueWithPercentageChange>
         </SyncStatusWrapper>
       )

@@ -61,6 +61,7 @@ const parseOrderFilled = createEventParser(
 
 export const SQUIDCORAL_NETWORKS = defineNetworks('squidcoral', [
   { chainId: '1', chain: 'ethereum' },
+  { chainId: '10', chain: 'optimism' },
   { chainId: '42161', chain: 'arbitrum' },
   { chainId: '8453', chain: 'base' },
 ])
@@ -145,10 +146,10 @@ export class SquidCoralPlugin implements InteropPlugin {
       Result.Transfer('squid-coral.Transfer', {
         srcEvent: orderCreated,
         srcTokenAddress: orderCreated.args.fromToken,
-        srcAmount: orderCreated.args.fromAmount,
+        srcAmount: BigInt(orderCreated.args.fromAmount),
         dstEvent: orderFilled,
         dstTokenAddress: orderFilled.args.toToken,
-        dstAmount: orderFilled.args.fillAmount,
+        dstAmount: BigInt(orderFilled.args.fillAmount),
       }),
     ]
   }

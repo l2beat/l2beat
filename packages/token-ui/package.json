@@ -15,6 +15,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@l2beat/shared-pure": "workspace:*",
     "@l2beat/token-backend": "workspace:*",
     "@l2beat/typescript-config": "workspace:*",
     "@l2beat/validate": "workspace:*",

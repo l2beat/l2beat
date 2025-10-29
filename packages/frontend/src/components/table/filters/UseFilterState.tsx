@@ -13,7 +13,7 @@ export const FilterValue = v.object({
 })
 
 export type FilterState = Partial<Record<FilterableValueId, FilterValue>>
-export const FilterState = v.record(FilterableValueId, FilterValue)
+export const FilterState = v.record(FilterableValueId, FilterValue.optional())
 
 type FilterAction =
   | AddFilterAction
@@ -160,10 +160,12 @@ export function useFilterState() {
     replaceState: true,
   })
 
+  const parsed = parseFilters(filters)
+
   const [state, dispatch] = useReducer(
     (state: FilterState, action: FilterAction) =>
       filterReducer(state, action, track),
-    safeParse(filters),
+    parsed,
   )
 
   useEffect(() => {
@@ -176,10 +178,19 @@ export function useFilterState() {
   }
 }
 
-function safeParse(filters: string) {
+function parseFilters(filters: string): FilterState {
+  let json: unknown = {}
   try {
-    return JSON.parse(filters)
+    json = JSON.parse(filters)
   } catch (_) {
     return {}
   }
+
+  const parsed = FilterState.safeParse(json)
+
+  if (!parsed.success) {
+    return {}
+  }
+
+  return parsed.data
 }

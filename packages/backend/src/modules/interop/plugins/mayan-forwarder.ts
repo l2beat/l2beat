@@ -73,7 +73,7 @@ export const MayanForwarded = createInteropEventType<{
   mayanProtocol: string
   methodSignature: `0x${string}`
   tokenIn: Address32
-  amountIn: string
+  amountIn?: string
   tokenOut?: Address32
   minAmountOut?: string
   $dstChain: string
@@ -94,7 +94,7 @@ export class MayanForwarderPlugin implements InteropPlugin {
         ),
         methodSignature: decodedData.methodSignature,
         tokenIn: decodedData.tokenIn ?? Address32.NATIVE,
-        amountIn: decodedData.amountIn ?? input.ctx.value,
+        amountIn: decodedData.amountIn ?? input.ctx.txValue?.toString(),
         tokenOut: decodedData.tokenOut,
         minAmountOut: decodedData.minAmountOut,
         $dstChain: decodedData.dstChain,

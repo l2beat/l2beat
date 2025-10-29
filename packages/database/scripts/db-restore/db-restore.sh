@@ -5,7 +5,7 @@ source .env
 FEATURES_NAMES=("da" "liveness" "tvs" "activity" "shared" "interop")
 FEATURES_TABLES=(
     "IndexerState IndexerConfiguration DataAvailability Blob SyncMetadata"
-    "IndexerState IndexerConfiguration Liveness SyncMetadata"
+    "IndexerState IndexerConfiguration"
     "IndexerState IndexerConfiguration TvsBlockTimestamp TvsPrice TvsAmount TokenValue ProjectValue SyncMetadata"
     "IndexerState IndexerConfiguration Activity SyncMetadata"
     "IndexerState IndexerConfiguration AnomalyStats RealTimeLiveness RealTimeAnomaly"
