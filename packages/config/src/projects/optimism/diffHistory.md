@@ -8,7 +8,7 @@ Generated with discovered.json: 0xbcf59c3129576741002675696eee8bc141adaf09
 
 ## Description
 
-performed an empty mint to disallow inflating the supply for one year. the inflation rate is 2% per year but it was never used, and it is the first time they explicitly skip a year.
+performed an empty mint to disallow inflating the supply for one year. the inflation rate is 2% per year but it was never used, and it is the first time they explicitly skip a year. the value here shows the timestamp of last mint.
 
 ## Watched changes
 
