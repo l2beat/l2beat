@@ -1,13 +1,29 @@
 {
   "name": "jovay",
-  "timestamp": 1761665371,
+  "timestamp": 1761745180,
   "configHash": "0x6012a271dc7923a66a4146b28d8fc6902fbf024aae76179911143d303b30c66e",
   "entries": [
+    {
+      "name": "",
+      "address": "eth:0x371a8bda9a34d641B546883D6B5895d0A44AD46A",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1758378407,
+      "sinceBlock": 23404863,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x371a8bda9a34d641B546883D6B5895d0A44AD46A": ""
+      }
+    },
     {
       "name": "Escrow",
       "address": "eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0xc962a92e7061cd67db98262fe8c93bb63cb5243ffa419d7a0de0fbb11ca67ed2"
+      ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1758377315,
       "sinceBlock": 23404772,
@@ -26,11 +42,231 @@
             ["eth:0x376df788aFc6E801b24fC6C0fa6b53637A947ae7"]
           ]
         ],
-        "$upgradeCount": 2
+        "$upgradeCount": 2,
+        "balance": "726073700666000000",
+        "mailBox": "eth:0x9869A90FDAc287519E48aff4cCE329907a995162",
+        "owner": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
+        "paused": false,
+        "toBridge": "eth:0xb220D17A11bd2d11e3f57a305FF5b481C81B1028"
       },
       "implementationNames": {
-        "eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1": "",
-        "eth:0x376df788aFc6E801b24fC6C0fa6b53637A947ae7": ""
+        "eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1": "TransparentUpgradeableProxy",
+        "eth:0x376df788aFc6E801b24fC6C0fa6b53637A947ae7": "L1ETHBridge"
+      }
+    },
+    {
+      "name": "L1Mailbox",
+      "address": "eth:0x9869A90FDAc287519E48aff4cCE329907a995162",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0x1afeeca3afb0add55ce45f9bed97c7faa33f9e7a59e5b8a43ce5da15d1cfc0f0"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1758377279,
+      "sinceBlock": 23404769,
+      "values": {
+        "$admin": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b",
+        "$implementation": "eth:0x8327820B007Ee6dc6fF24A8798096C9961A0aB80",
+        "$pastUpgrades": [
+          [
+            "2025-09-20T14:07:59.000Z",
+            "0xc594f519ef3a048fb2733b38959f1736434a5e8d4dad8bb513c549da950f4287",
+            ["eth:0x92E92B5060E3578AD4A27e2c9FB489556E434551"]
+          ],
+          [
+            "2025-09-23T14:50:23.000Z",
+            "0x33cc67e6ab8aa7b06389b5cef8cb281cda3864b5042556e06556eb9c102efb82",
+            ["eth:0x8327820B007Ee6dc6fF24A8798096C9961A0aB80"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "baseFee": 1000000,
+        "estimateMsgFee": [0, 1000000, 2000000, 3000000, 4000000],
+        "feeBalance": 28500000000000,
+        "getMsg": [
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x2043aa03d75cf8b37533d755940ae84b08d5066ac607e240145b3ff9f545a1cb",
+          "0xb7bc80e84589e6a54d2d04189da420ea2a1a3981376ab8a410772efc6ec191cc",
+          "0xbb06879881019a674e459d995d78b38fff4de8f1d512adea78a9af8bd3b532a8",
+          "0x2be3757a70c92df278239ca4d280c40495d6e3ff22fcfcbb98432296c4f5fa60"
+        ],
+        "l2FinalizeDepositGasUsed": 300000,
+        "l2GasLimit": 3000000,
+        "lastestQueueIndex": 0,
+        "nextFinalizeQueueIndex": 65,
+        "nextMsgIndex": 65,
+        "owner": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
+        "paused": false,
+        "pendingQueueIndex": 65,
+        "rollingHash": "0x24aa5e7f37c711172694dcb4eec79b57acdfdfe7e1fc829fc49e4d858aea1d34",
+        "rollup": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+        "stableRollingHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "withdrawer": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "errors": {
+        "estimateMsgFee": "Processing error occurred.",
+        "getMsg": "Processing error occurred."
+      },
+      "implementationNames": {
+        "eth:0x9869A90FDAc287519E48aff4cCE329907a995162": "TransparentUpgradeableProxy",
+        "eth:0x8327820B007Ee6dc6fF24A8798096C9961A0aB80": "L1Mailbox"
+      }
+    },
+    {
+      "name": "",
+      "address": "eth:0xA0F26dD30B47f0661f450F8F14cF4832778971A8",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xb220D17A11bd2d11e3f57a305FF5b481C81B1028",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1758375803,
+      "sinceBlock": 23404647,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xA0F26dD30B47f0661f450F8F14cF4832778971A8": ""
+      }
+    },
+    {
+      "address": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "L1Mailbox",
+      "address": "eth:0xb220D17A11bd2d11e3f57a305FF5b481C81B1028",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0x1afeeca3afb0add55ce45f9bed97c7faa33f9e7a59e5b8a43ce5da15d1cfc0f0"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1758375839,
+      "sinceBlock": 23404650,
+      "values": {
+        "$admin": "eth:0xA0F26dD30B47f0661f450F8F14cF4832778971A8",
+        "$implementation": "eth:0x129FD80f5d03528F1F2435eedce46D2d0308f560",
+        "$pastUpgrades": [
+          [
+            "2025-09-20T13:43:59.000Z",
+            "0xbbedf80c53acded449a19baec5e75507c4df808a6e49c678e8855fa29395ffc7",
+            ["eth:0x129FD80f5d03528F1F2435eedce46D2d0308f560"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "baseFee": 0,
+        "estimateMsgFee": [0, 0, 0, 0, 0],
+        "feeBalance": 0,
+        "getMsg": [
+          "0x0000000000000000000000000000000000000000000000000000000000000000"
+        ],
+        "l2FinalizeDepositGasUsed": 0,
+        "l2GasLimit": 0,
+        "lastestQueueIndex": 0,
+        "nextFinalizeQueueIndex": 0,
+        "nextMsgIndex": 0,
+        "owner": "eth:0x0000000000000000000000000000000000000000",
+        "paused": false,
+        "pendingQueueIndex": 0,
+        "rollingHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "rollup": "eth:0x0000000000000000000000000000000000000000",
+        "stableRollingHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "withdrawer": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "errors": { "estimateMsgFee": "Processing error occurred." },
+      "implementationNames": {
+        "eth:0xb220D17A11bd2d11e3f57a305FF5b481C81B1028": "TransparentUpgradeableProxy",
+        "eth:0x129FD80f5d03528F1F2435eedce46D2d0308f560": "L1Mailbox"
+      }
+    },
+    {
+      "name": "Rollup",
+      "address": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0x847ae7ac442ea5bc5906a79d4ecf73fd4c3b9a115b93d29d5053f76459dace60"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1758377339,
+      "sinceBlock": 23404774,
+      "values": {
+        "$admin": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b",
+        "$implementation": "eth:0xc8eEDE7229CcAd4a14f006845d05Fd51B28eE973",
+        "$pastUpgrades": [
+          [
+            "2025-09-20T14:08:59.000Z",
+            "0x191e80563fda9d11b6b8f303de197c8c4eb2c108aea55d2dd5436afd5ada4a26",
+            ["eth:0x5A65b0065A668b844250C04550ce16b1dF6296B6"]
+          ],
+          [
+            "2025-09-23T14:49:47.000Z",
+            "0x11546aaf0ec3476cde945652f2d8612c6f096c0202b6ca1bb149ab05c60b1e16",
+            ["eth:0xc8eEDE7229CcAd4a14f006845d05Fd51B28eE973"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "committedBatches": [
+          "0xea5cea2599c04c99d3239863928db8d5e603885d7ae2a1b3bc99b6088d3f9f80",
+          "0x8e381adcacb08bac6619c5ec700c3d67a18f1dd24234862695c6050ed2e56dc5",
+          "0xd1fd3ab23efd161b7f8880fd237b7494c5831f957366a3ee2362b63517947006",
+          "0x7d146991414e7c9514a74ce1f15787648cdafd83b87368208b35e5fd1d617ed9",
+          "0xcede68b1188a411441bbd74d6a39165ebf843f4ddea59bd934f7fd405fd27c32"
+        ],
+        "finalizedStateRoots": [
+          "0x0364603870f2d85af6c50733233b9849d70d1309070fbb32c679a02a426d4f76",
+          "0x7d836f05af5f3807b6e3d507e8390d0649630357f3a64e28fc60f660cb58f23f",
+          "0xefe0d14fdaea276c5debca390504f11b51afe039a65d016eaaa444730504ed15",
+          "0x87ca9950f2073d33e0b4f31df2bb843a21a41c3c440275528e1a6739c905ab60",
+          "0x18e77711d5988c43a1678c4119b641182f53676d77fab914c1dfc066d92a836e"
+        ],
+        "getL2MsgRoot": [
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x97de32bbb1ad91033f3beb58564ad9e096effcee8ec277a800bb58cd3b840964",
+          "0x97de32bbb1ad91033f3beb58564ad9e096effcee8ec277a800bb58cd3b840964"
+        ],
+        "l1_mail_box": "eth:0x9869A90FDAc287519E48aff4cCE329907a995162",
+        "l1BlobNumberLimit": 6,
+        "l1MsgCount": [0, 0, 1, 2, 2],
+        "l2MsgRoots": [
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x97de32bbb1ad91033f3beb58564ad9e096effcee8ec277a800bb58cd3b840964",
+          "0x97de32bbb1ad91033f3beb58564ad9e096effcee8ec277a800bb58cd3b840964"
+        ],
+        "lastCommittedBatch": 927,
+        "lastTeeVerifiedBatch": 927,
+        "lastZkVerifiedBatch": 0,
+        "layer2ChainId": 5734951,
+        "maxBlockInChunk": 32,
+        "maxCallDataInChunk": 524288,
+        "maxTxsInChunk": 2001,
+        "maxZkCircleInChunk": 4294967295,
+        "owner": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
+        "paused": false,
+        "rollupTimeLimit": 3600000,
+        "tee_verifier": "eth:0x371a8bda9a34d641B546883D6B5895d0A44AD46A",
+        "zk_verifier": "eth:0x371a8bda9a34d641B546883D6B5895d0A44AD46A"
+      },
+      "errors": {
+        "committedBatches": "Processing error occurred.",
+        "finalizedStateRoots": "Processing error occurred.",
+        "getL2MsgRoot": "Processing error occurred.",
+        "l1MsgCount": "Processing error occurred.",
+        "l2MsgRoots": "Processing error occurred."
+      },
+      "implementationNames": {
+        "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1": "TransparentUpgradeableProxy",
+        "eth:0xc8eEDE7229CcAd4a14f006845d05Fd51B28eE973": "Rollup"
       }
     },
     {
@@ -44,6 +280,16 @@
           "permission": "upgrade",
           "from": "eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9869A90FDAc287519E48aff4cCE329907a995162",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1758377243,
@@ -54,8 +300,229 @@
       }
     }
   ],
-  "abis": {},
+  "abis": {
+    "eth:0x129FD80f5d03528F1F2435eedce46D2d0308f560": [
+      "constructor()",
+      "error InvalidInitAddress()",
+      "error InvalidL2GasLimit()",
+      "error OutOfBounds()",
+      "error SetL2FinalizeDepositGasUsedBiggerThanGasLimit()",
+      "error SetL2GasLimitSmallerThanGasUsed()",
+      "event AppendMsg(uint256 index, bytes32 messageHash)",
+      "event BaseFeeChanged(uint256 oldL2BaseFee, uint256 newL2BaseFee)",
+      "event ClaimMsg(bytes32 indexed hash, uint256 nonce)",
+      "event FinalizeDepositETHFailed(bytes32 indexed hash, uint256 nonce)",
+      "event FinalizeDepositETHSuccess(bytes32 indexed hash, uint256 nonce)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event PopMsgs(uint256 finalizeMsgIndex)",
+      "event RelayedMsg(bytes32 indexed hash, uint256 nonce)",
+      "event RelayedMsgFailed(bytes32 indexed hash, uint256 nonce)",
+      "event RollingHash(bytes32 indexed hash)",
+      "event SentMsg(address indexed sender, address indexed target, uint256 value, uint256 nonce, bytes msg, uint256 gasLimit, bytes32 hash)",
+      "event SetL2FinalizeDepositGasUsed(uint256 oldL2FinalizeDepositGasUsed, uint256 newL2FinalizeDepositGasUsed)",
+      "event SetL2GasLimit(uint256 oldGasLimit, uint256 newGasLimit)",
+      "event Unpaused(address account)",
+      "function addBridge(address _bridge)",
+      "function baseFee() view returns (uint256)",
+      "function estimateMsgFee(uint256 gasLimit_) view returns (uint256)",
+      "function feeBalance() view returns (uint256)",
+      "function getMsg(uint256 _l1MsgCount) view returns (bytes32)",
+      "function initialize(address rollup_, address owner_, uint256 baseFee_, uint256 _l2GasLimit, uint256 _l2FinalizeDepositGasUsed)",
+      "function isBridge(address) view returns (bool)",
+      "function l2FinalizeDepositGasUsed() view returns (uint256)",
+      "function l2GasLimit() view returns (uint256)",
+      "function lastestQueueIndex() view returns (uint256)",
+      "function nextFinalizeQueueIndex() view returns (uint256)",
+      "function nextMsgIndex() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingQueueIndex() view returns (uint256)",
+      "function popMsgs(uint256 _l1MsgCount)",
+      "function receiveMsgMap(bytes32) view returns (bool)",
+      "function relayMsgWithProof(address sender_, address target_, uint256 value_, uint256 nonce_, bytes msg_, tuple(uint256 batchIndex, bytes merkleProof) proof_) payable",
+      "function removeBridge(address _bridge)",
+      "function renounceOwnership()",
+      "function rollingHash() view returns (bytes32)",
+      "function rollup() view returns (address)",
+      "function sendMsg(address target_, uint256 value_, bytes msg_, uint256 gasLimit_, address refundAddress_) payable",
+      "function sendMsgMap(bytes32) view returns (bool)",
+      "function setBaseFee(uint256 _newBaseFee)",
+      "function setL2FinalizeDepositGasUsed(uint256 _l2FinalizeDepositGasUsed)",
+      "function setL2GasLimit(uint256 _l2GasLimit)",
+      "function setLastQueueIndex()",
+      "function setRollup(address rollup_)",
+      "function setWithdrawer(address _withdrawer)",
+      "function stableRollingHash() view returns (bytes32)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function withdrawDepositFee(address _target, uint256 _amount)",
+      "function withdrawer() view returns (address)"
+    ],
+    "eth:0x376df788aFc6E801b24fC6C0fa6b53637A947ae7": [
+      "error ErrorCallerIsNotMailBox()",
+      "error InvalidInitAddress()",
+      "event DepositETH(address indexed from, address indexed to, uint256 amount, bytes msg)",
+      "event FinalizeWithdrawETH(address indexed from, address indexed to, uint256 amount, bytes msg)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "function balance() view returns (uint256)",
+      "function deposit(address to_, uint256 amount_, uint256 gasLimit_, bytes msg_) payable",
+      "function finalizeWithdraw(address sender_, address to_, uint256 amount_, bytes msg_) payable",
+      "function initialize(address mailBox_, address toBridge_, address owner)",
+      "function mailBox() view returns (address)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function relayMsgWithProof(uint256 value_, uint256 nonce_, bytes msg_, tuple(uint256 batchIndex, bytes merkleProof) proof_) payable",
+      "function renounceOwnership()",
+      "function setMailBox(address mailBox_)",
+      "function setToBridge(address toBridge_)",
+      "function toBridge() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()"
+    ],
+    "eth:0x8327820B007Ee6dc6fF24A8798096C9961A0aB80": [
+      "constructor()",
+      "error InvalidInitAddress()",
+      "error InvalidL2GasLimit()",
+      "error OutOfBounds()",
+      "error SetL2FinalizeDepositGasUsedBiggerThanGasLimit()",
+      "error SetL2GasLimitSmallerThanGasUsed()",
+      "event AppendMsg(uint256 index, bytes32 messageHash)",
+      "event BaseFeeChanged(uint256 oldL2BaseFee, uint256 newL2BaseFee)",
+      "event ClaimMsg(bytes32 indexed hash, uint256 nonce)",
+      "event FinalizeDepositETHFailed(bytes32 indexed hash, uint256 nonce)",
+      "event FinalizeDepositETHSuccess(bytes32 indexed hash, uint256 nonce)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event PopMsgs(uint256 finalizeMsgIndex)",
+      "event RelayedMsg(bytes32 indexed hash, uint256 nonce)",
+      "event RelayedMsgFailed(bytes32 indexed hash, uint256 nonce)",
+      "event RollingHash(bytes32 indexed hash)",
+      "event SentMsg(address indexed sender, address indexed target, uint256 value, uint256 nonce, bytes msg, uint256 gasLimit, bytes32 hash)",
+      "event SetL2FinalizeDepositGasUsed(uint256 oldL2FinalizeDepositGasUsed, uint256 newL2FinalizeDepositGasUsed)",
+      "event SetL2GasLimit(uint256 oldGasLimit, uint256 newGasLimit)",
+      "event Unpaused(address account)",
+      "function addBridge(address _bridge)",
+      "function baseFee() view returns (uint256)",
+      "function estimateMsgFee(uint256 gasLimit_) view returns (uint256)",
+      "function feeBalance() view returns (uint256)",
+      "function getMsg(uint256 _l1MsgCount) view returns (bytes32)",
+      "function initialize(address rollup_, address owner_, uint256 baseFee_, uint256 _l2GasLimit, uint256 _l2FinalizeDepositGasUsed)",
+      "function isBridge(address) view returns (bool)",
+      "function l2FinalizeDepositGasUsed() view returns (uint256)",
+      "function l2GasLimit() view returns (uint256)",
+      "function lastestQueueIndex() view returns (uint256)",
+      "function nextFinalizeQueueIndex() view returns (uint256)",
+      "function nextMsgIndex() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingQueueIndex() view returns (uint256)",
+      "function popMsgs(uint256 _l1MsgCount)",
+      "function receiveMsgMap(bytes32) view returns (bool)",
+      "function relayMsgWithProof(address sender_, address target_, uint256 value_, uint256 nonce_, bytes msg_, tuple(uint256 batchIndex, bytes merkleProof) proof_) payable",
+      "function removeBridge(address _bridge)",
+      "function renounceOwnership()",
+      "function rollingHash() view returns (bytes32)",
+      "function rollup() view returns (address)",
+      "function sendMsg(address target_, uint256 value_, bytes msg_, uint256 gasLimit_, address refundAddress_) payable",
+      "function sendMsgMap(bytes32) view returns (bool)",
+      "function setBaseFee(uint256 _newBaseFee)",
+      "function setL2FinalizeDepositGasUsed(uint256 _l2FinalizeDepositGasUsed)",
+      "function setL2GasLimit(uint256 _l2GasLimit)",
+      "function setLastQueueIndex()",
+      "function setRollup(address rollup_)",
+      "function setWithdrawer(address _withdrawer)",
+      "function stableRollingHash() view returns (bytes32)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function withdrawDepositFee(address _target, uint256 _amount)",
+      "function withdrawer() view returns (address)"
+    ],
+    "eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x9869A90FDAc287519E48aff4cCE329907a995162": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xb220D17A11bd2d11e3f57a305FF5b481C81B1028": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xc8eEDE7229CcAd4a14f006845d05Fd51B28eE973": [
+      "constructor()",
+      "error NotSupportZkProof()",
+      "event BlobDataHash(bytes32 indexed batchDataHash)",
+      "event CommitBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event RevertBatch(uint256 indexed batchIndex)",
+      "event Unpaused(address account)",
+      "event VerifyBatch(uint8 proveType, uint256 indexed batchIndex, bytes32 indexed batchHash, bytes32 stateRoot, bytes32 l2MsgRoot)",
+      "function addRelayer(address _account)",
+      "function commitBatch(uint8 _version, uint256 _batchIndex, uint256 _totalL1MessagePopped)",
+      "function committedBatches(uint256) view returns (bytes32)",
+      "function finalizedStateRoots(uint256) view returns (bytes32)",
+      "function getL2MsgRoot(uint256 batch_index) view returns (bytes32)",
+      "function importGenesisBatch(bytes _batchHeader, bytes32 _stateRoot)",
+      "function initialize(uint64 _chainId, address _zk_verifier, address _tee_verifier, address _l1_mail_box, uint32 _maxTxsInChunk, uint32 _maxBlockInChunk, uint32 _maxCallDataInChunk, uint32 _maxZkCircleInChunk, uint32 _l1BlobNumberLimit, uint32 _rollupTimeLimit)",
+      "function isRelayer(address) view returns (bool)",
+      "function l1BlobNumberLimit() view returns (uint32)",
+      "function l1MsgCount(uint256) view returns (uint256)",
+      "function l1_mail_box() view returns (address)",
+      "function l2MsgRoots(uint256) view returns (bytes32)",
+      "function lastCommittedBatch() view returns (uint256)",
+      "function lastTeeVerifiedBatch() view returns (uint256)",
+      "function lastZkVerifiedBatch() view returns (uint256)",
+      "function layer2ChainId() view returns (uint64)",
+      "function maxBlockInChunk() view returns (uint32)",
+      "function maxCallDataInChunk() view returns (uint32)",
+      "function maxTxsInChunk() view returns (uint32)",
+      "function maxZkCircleInChunk() view returns (uint32)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function removeRelayer(address _account)",
+      "function renounceOwnership()",
+      "function revertBatches(uint256 _newLastBatchIndex)",
+      "function rollupTimeLimit() view returns (uint64)",
+      "function setL1BlobNumberLimit(uint32 _l1BlobNumberLimit)",
+      "function setL2ChainId(uint64 _layer2ChainId)",
+      "function setMaxBlockInChunk(uint32 _maxBlockInChunk)",
+      "function setMaxCallDataInChunk(uint32 _maxCallDataInChunk)",
+      "function setMaxTxsInChunk(uint32 _maxTxsInChunk)",
+      "function setPause(bool _status)",
+      "function setRollupTimeLimit(uint32 _rollupTimeLimit)",
+      "function setTeeVerifierAddress(address _teeVerifierAddress)",
+      "function setZkVerifierAddress(address _zkVerifierAddress)",
+      "function tee_verifier() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function verifyBatch(uint8 _prove_type, bytes _batchHeader, bytes32 _postStateRoot, bytes32 _l2MsgRoot, bytes _proof)",
+      "function zk_verifier() view returns (address)"
+    ],
+    "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ]
+  },
   "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 23676818 },
-  "permissionsConfigHash": "0x3c38e64dab65c9a5ec9fd42a0ad911ad622eafbff4d42bed54614c5e675af69b"
+  "usedBlockNumbers": { "ethereum": 23683403 },
+  "permissionsConfigHash": "0x7fde7591cdee4601903c486dd839311016aed87c4184b2e71790baf0e6f1703f"
 }
