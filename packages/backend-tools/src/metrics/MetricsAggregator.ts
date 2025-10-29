@@ -3,14 +3,18 @@ import type { Logger } from '../logger/Logger'
 export interface MetricsAggregatorOptions {
   logger: Logger
   flushInterval?: number
-  enabled: boolean
 }
 
 export abstract class MetricsAggregator<T> {
   buffer: T[] = []
 
+  static metricsEnabled = true
+  static setMetricsEnabled(value: boolean) {
+    MetricsAggregator.metricsEnabled = value
+  }
+
   constructor(private readonly $: MetricsAggregatorOptions) {
-    if ($.enabled) {
+    if (MetricsAggregator.metricsEnabled) {
       this.start()
     }
   }

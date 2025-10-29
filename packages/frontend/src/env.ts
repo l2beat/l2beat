@@ -55,7 +55,6 @@ const SERVER_CONFIG = {
       'INFO',
       'DEBUG',
       'TRACE',
-      'METRIC',
     ])
     .default('INFO'),
 
