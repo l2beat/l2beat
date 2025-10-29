@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x1ff5db601d82f1ded5d81787c2c2b346fadff7a0
+
+# Diff at Wed, 29 Oct 2025 12:38:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@eb258fc8a4f09c1ec78661959e5ef0ad546c0bea block: 1755162744
+- current timestamp: 1755162744
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755162744 (main branch discovery), not current.
+
+```diff
+    contract Deal (zksync:0xAE0d8cad4cE522538AE34386c319C7ccD11FE428) {
+    +++ description: None
+      name:
+-        "Private Credit Direct Deal0000023 2 Token"
++        "Deal"
+    }
+```
+
 Generated with discovered.json: 0xcef9f730bf5b7043add0b820d80d011a31827dc7
 
 # Diff at Tue, 07 Oct 2025 14:35:51 GMT:

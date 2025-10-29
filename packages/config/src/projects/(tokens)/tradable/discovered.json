@@ -1,7 +1,7 @@
 {
   "name": "tradable",
   "timestamp": 1755162744,
-  "configHash": "0x45b32ed762d8029fec74708d115145941181d4d90a244af2b356bfcb15b4a085",
+  "configHash": "0x451a38558809f77c6d963ac7ff66deeebba361242d9306a115d9b8f67b3f98fd",
   "entries": [
     {
       "address": "zksync:0x00Ac919b47D88Daf465EA9b03FF3B1D197582CE0",
@@ -10928,7 +10928,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Private Credit Direct Deal0000023 2 Token",
+      "name": "Deal",
       "address": "zksync:0xAE0d8cad4cE522538AE34386c319C7ccD11FE428",
       "type": "Contract",
       "unverified": true,
@@ -16635,5 +16635,5 @@
     "tradable/DealRegistry": "0x80492a8b01b07c7eb3c5cebc3a4c692ef4abb2da9faf34b0d838d7d21d76e23f"
   },
   "usedBlockNumbers": { "zksync2": 64027305 },
-  "permissionsConfigHash": "0x92d6b447e24bcfd75095c12ecc8d930b699b3888b983ffa284043c705e61be3e"
+  "permissionsConfigHash": "0x680101c7c14fce2188b4f839c2368f45e68518b0f44bf83b8d5158010803ec05"
 }
