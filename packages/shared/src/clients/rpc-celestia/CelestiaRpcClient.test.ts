@@ -11,8 +11,7 @@ describe(CelestiaRpcClient.name, () => {
       const http = mockObject<HttpClient>({
         fetch: async () => ({
           result: {
-            height: mockBlockHeight,
-            txs_results: [],
+            last_height: mockBlockHeight,
           },
         }),
       })
@@ -21,7 +20,7 @@ describe(CelestiaRpcClient.name, () => {
       const result = await rpc.getLatestBlockNumber()
 
       expect(result).toEqual(Number(mockBlockHeight))
-      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL/block_results', {
+      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL/blockchain', {
         method: 'GET',
         redirect: 'follow',
       })
@@ -146,6 +145,78 @@ describe(CelestiaRpcClient.name, () => {
           method: 'GET',
           redirect: 'follow',
         },
+      )
+    })
+  })
+
+  describe(CelestiaRpcClient.prototype.getBlobsForNamespaces.name, () => {
+    it('returns blobs for the given namespaces', async () => {
+      const mockBlobs = [
+        {
+          namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+          data: 'SGVsbG8=',
+        },
+        {
+          namespace: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=',
+          data: 'V29ybGQ=',
+        },
+      ]
+
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          result: mockBlobs,
+        }),
+      })
+      const rpc = mockClient({ http })
+
+      const namespaces = [
+        'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+        'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=',
+      ]
+      const result = await rpc.getBlobsForNamespaces(67890, namespaces)
+
+      expect(result).toEqual(mockBlobs)
+      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL/', {
+        method: 'POST',
+        redirect: 'follow',
+        body: JSON.stringify({
+          id: '1',
+          jsonrpc: '2.0',
+          method: 'blob.GetAll',
+          params: [67890, namespaces],
+        }),
+      })
+    })
+
+    it('returns empty array when result is null', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          result: null,
+        }),
+      })
+      const rpc = mockClient({ http })
+
+      const result = await rpc.getBlobsForNamespaces(12345, [
+        'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+      ])
+
+      expect(result).toEqual([])
+    })
+
+    it('throws error when response is invalid', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          invalid: 'response',
+        }),
+      })
+      const rpc = mockClient({ http })
+
+      await expect(
+        rpc.getBlobsForNamespaces(12345, [
+          'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+        ]),
+      ).toBeRejectedWith(
+        'Blobs for namespaces AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=: Error during parsing',
       )
     })
   })
