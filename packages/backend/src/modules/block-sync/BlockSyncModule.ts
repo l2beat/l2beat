@@ -68,7 +68,7 @@ export function createBlockSyncModule({
 
     const stats = await db.stats()
     for (const stat of stats) {
-      logger.metric('Database table size', {
+      logger.info('Database table size', {
         table: stat.tableName,
         sizeInBytes: stat.sizeInBytes,
       })
