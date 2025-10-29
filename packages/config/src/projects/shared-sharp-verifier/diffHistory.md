@@ -11,8 +11,8 @@ Generated with discovered.json: 0xc394eaf0b246f4846a339613477ce2b05ea7052a
 Upgraded SHARP verifier to support Stwo proofs. This includes:
 
 - An upgrade of bootloader program, diff: https://disco.l2beat.com/diff/eth:0x58600A1Dc51dcF7D4F541a8f1F5C6c6AA86cc515/eth:0x192292817680196A0215a50B07d1C5E7Ab8A8636. The bootloader now holds some of the "builtins" code instead of the OS (EC_OP, Keccak).
-- Access control with new roles was added to call proxy.
-- Custom proxy impl references added to call proxy to allow project operators use the old SHARP prover.
+- An upgrade of the SHARPVerifier, diff: https://disco.l2beat.com/diff/eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942/eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934. Minor refactoring + program size update.
+- An upgrade of callproxy, diff: https://disco.l2beat.com/diff/eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458/eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb. Major changes: access control with new roles was added to call proxy. Custom proxy impl references added to call proxy to allow project operators use the old SHARP prover.
 
 ## Watched changes
 

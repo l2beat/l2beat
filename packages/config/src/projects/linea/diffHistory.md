@@ -10,7 +10,7 @@ Generated with discovered.json: 0x21b71892768b708faa4114b197fb43baf6ab2ec6
 
 Presumably [Beta 4.1 upgrade](https://docs.linea.build/release-notes#beta-v41):
 
-Updated Linea verifiers, added new proof type 4.
+Updated Linea verifiers for different forks, see details here: https://docs.linea.build/security-council-record.
 
 ## Watched changes
 
