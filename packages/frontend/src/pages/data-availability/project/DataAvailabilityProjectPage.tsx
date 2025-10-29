@@ -58,33 +58,33 @@ export function DataAvailabilityProjectPage({
             )}
             <div className="relative z-0 max-md:bg-surface-primary">
               <div className="-z-1 absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-branding-primary/75 to-surface-primary md:hidden" />
-              <div className="pt-6 max-md:px-4 lg:w-[calc(100%-196px)] lg:pt-4">
-                <ProjectHeader
-                  project={entry}
-                  ongoingAnomaly={
-                    entry.entryType === 'common'
-                      ? entry.header.ongoingAnomaly
-                      : undefined
-                  }
-                  livenessSectionHref="#da-bridge-liveness"
-                />
-                <ProjectSummaryBars
-                  project={{
-                    archivedAt: entry.archivedAt,
-                    isUpcoming: entry.isUpcoming,
-                    underReviewStatus: entry.isUnderReview
-                      ? 'config'
-                      : undefined,
-                    header: {},
-                  }}
-                />
-                <div className="mb-3 max-md:hidden">
-                  <DesktopProjectLinks projectLinks={entry.header.links} />
-                </div>
-              </div>
 
               <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
-                <div className="w-full">
+                <div className="pt-6 max-md:px-4 lg:pt-4">
+                  <ProjectHeader
+                    project={entry}
+                    ongoingAnomaly={
+                      entry.entryType === 'common'
+                        ? entry.header.ongoingAnomaly
+                        : undefined
+                    }
+                    livenessSectionHref="#da-bridge-liveness"
+                  />
+                  <ProjectSummaryBars
+                    project={{
+                      archivedAt: entry.archivedAt,
+                      isUpcoming: entry.isUpcoming,
+                      underReviewStatus: entry.isUnderReview
+                        ? 'config'
+                        : undefined,
+                      header: {},
+                    }}
+                  />
+                  <div className="mb-3 max-md:hidden">
+                    <DesktopProjectLinks projectLinks={entry.header.links} />
+                  </div>
+                </div>
+                <div className="row-start-2 w-full">
                   {entry.entryType === 'ethereum' ? (
                     <EthereumDaProjectSummary project={entry} />
                   ) : (
@@ -96,7 +96,7 @@ export function DataAvailabilityProjectPage({
                 </div>
 
                 {!isNavigationEmpty && (
-                  <div className="mt-2 hidden shrink-0 lg:block">
+                  <div className="row-start-2 mt-2 hidden shrink-0 lg:block">
                     <DesktopProjectNavigation
                       project={{
                         title: entry.name,

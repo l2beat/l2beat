@@ -45,34 +45,34 @@ export function ZkCatalogProjectPage({
               </div>
             )}
             <div className="z-0 max-md:bg-surface-primary">
-              <div className="pt-6 max-md:px-4 lg:w-[calc(100%-196px)] lg:pt-4">
-                <ProjectHeader
-                  project={projectEntry}
-                  secondLine={projectEntry.creator}
-                />
-                <ProjectSummaryBars project={projectEntry} />
-                {projectEntry.header.description && (
-                  <AboutSection
-                    description={projectEntry.header.description}
-                    className="md:hidden"
-                  />
-                )}
-                <HorizontalSeparator className="my-4 md:hidden" />
-                <div className="mb-3 max-md:hidden">
-                  <DesktopProjectLinks
-                    projectLinks={projectEntry.header.links}
-                  />
-                </div>
-              </div>
               <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
-                <div>
+                <div className="pt-6 max-md:px-4 lg:pt-4">
+                  <ProjectHeader
+                    project={projectEntry}
+                    secondLine={projectEntry.creator}
+                  />
+                  <ProjectSummaryBars project={projectEntry} />
+                  {projectEntry.header.description && (
+                    <AboutSection
+                      description={projectEntry.header.description}
+                      className="md:hidden"
+                    />
+                  )}
+                  <HorizontalSeparator className="my-4 md:hidden" />
+                  <div className="mb-3 max-md:hidden">
+                    <DesktopProjectLinks
+                      projectLinks={projectEntry.header.links}
+                    />
+                  </div>
+                </div>
+                <div className="row-start-2">
                   <ProjectZkCatalogSummary project={projectEntry} />
                   <HighlightableLinkContextProvider>
                     <ProjectDetails items={projectEntry.sections} />
                   </HighlightableLinkContextProvider>
                 </div>
                 {!isNavigationEmpty && (
-                  <div className="mt-2 hidden shrink-0 lg:block">
+                  <div className="row-start-2 mt-2 hidden shrink-0 lg:block">
                     <DesktopProjectNavigation
                       project={{
                         title: projectEntry.shortName ?? projectEntry.name,

@@ -71,34 +71,35 @@ export function ScalingProjectPage({
             )}
             <div className="relative z-0 max-md:bg-surface-primary">
               <div className="-z-1 absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-branding-primary/75 to-surface-primary md:hidden" />
-              <div className="pt-6 max-md:px-4 lg:w-[calc(100%-196px)] lg:pt-4">
-                <ProjectHeader
-                  project={projectEntry}
-                  ongoingAnomaly={projectEntry.header.ongoingAnomaly}
-                />
-                <ProjectSummaryBars project={projectEntry} />
-                {projectEntry.header.badges && (
-                  <BadgesSection
-                    badges={projectEntry.header.badges}
-                    className="mb-4 md:hidden"
-                  />
-                )}
-                {projectEntry.header.description && (
-                  <AboutSection
-                    description={projectEntry.header.description}
-                    className="md:hidden"
-                  />
-                )}
-                <HorizontalSeparator className="my-4 md:hidden" />
-                <div className="mb-3 max-md:hidden">
-                  <DesktopProjectLinks
-                    projectLinks={projectEntry.header.links}
-                    discoUiHref={projectEntry.discoUiHref}
-                  />
-                </div>
-              </div>
+
               <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
-                <div>
+                <div className="pt-6 max-md:px-4 lg:pt-4">
+                  <ProjectHeader
+                    project={projectEntry}
+                    ongoingAnomaly={projectEntry.header.ongoingAnomaly}
+                  />
+                  <ProjectSummaryBars project={projectEntry} />
+                  {projectEntry.header.badges && (
+                    <BadgesSection
+                      badges={projectEntry.header.badges}
+                      className="mb-4 md:hidden"
+                    />
+                  )}
+                  {projectEntry.header.description && (
+                    <AboutSection
+                      description={projectEntry.header.description}
+                      className="md:hidden"
+                    />
+                  )}
+                  <HorizontalSeparator className="my-4 md:hidden" />
+                  <div className="mb-3 max-md:hidden">
+                    <DesktopProjectLinks
+                      projectLinks={projectEntry.header.links}
+                      discoUiHref={projectEntry.discoUiHref}
+                    />
+                  </div>
+                </div>
+                <div className="row-start-2">
                   <ProjectScalingSummary project={projectEntry} />
 
                   {projectEntry.header.category === 'Other' &&
@@ -122,7 +123,7 @@ export function ScalingProjectPage({
                   </HighlightableLinkContextProvider>
                 </div>
                 {!isNavigationEmpty && (
-                  <div className="mt-2 hidden shrink-0 lg:block">
+                  <div className="row-start-2 mt-2 hidden shrink-0 lg:block">
                     <DesktopProjectNavigation
                       project={{
                         title: projectEntry.shortName ?? projectEntry.name,

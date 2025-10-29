@@ -51,28 +51,28 @@ export function BridgesProjectPage({ projectEntry, ...props }: Props) {
 
           <div className="relative z-0 max-md:bg-surface-primary">
             <div className="-z-1 absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-branding-primary/75 to-surface-primary md:hidden" />
-            <div className="pt-6 max-md:px-4 lg:w-[calc(100%-196px)] lg:pt-4">
-              <ProjectHeader project={projectEntry} />
-              <ProjectSummaryBars project={projectEntry} showBridgesWarning />
-
-              {projectEntry.header.description && (
-                <AboutSection
-                  description={projectEntry.header.description}
-                  className="md:hidden"
-                />
-              )}
-              <HorizontalSeparator className="md:!my-6 mt-4 md:hidden" />
-
-              <div className="mb-3 max-md:hidden">
-                <DesktopProjectLinks
-                  projectLinks={projectEntry.header.links}
-                  discoUiHref={projectEntry.discoUiHref}
-                />
-              </div>
-            </div>
 
             <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
-              <div className="w-full">
+              <div className="pt-6 max-md:px-4 lg:pt-4">
+                <ProjectHeader project={projectEntry} />
+                <ProjectSummaryBars project={projectEntry} showBridgesWarning />
+
+                {projectEntry.header.description && (
+                  <AboutSection
+                    description={projectEntry.header.description}
+                    className="md:hidden"
+                  />
+                )}
+                <HorizontalSeparator className="md:!my-6 mt-4 md:hidden" />
+
+                <div className="mb-3 max-md:hidden">
+                  <DesktopProjectLinks
+                    projectLinks={projectEntry.header.links}
+                    discoUiHref={projectEntry.discoUiHref}
+                  />
+                </div>
+              </div>
+              <div className="row-start-2 w-full">
                 <BridgesProjectSummary project={projectEntry} />
 
                 <HighlightableLinkContextProvider>
@@ -80,7 +80,7 @@ export function BridgesProjectPage({ projectEntry, ...props }: Props) {
                 </HighlightableLinkContextProvider>
               </div>
               {!isNavigationEmpty && (
-                <div className="mt-2 hidden shrink-0 lg:block">
+                <div className="row-start-2 mt-2 hidden shrink-0 lg:block">
                   <DesktopProjectNavigation
                     project={{
                       title: projectEntry.shortName ?? projectEntry.name,
