@@ -176,11 +176,11 @@ export class WormholeNTTPlugin implements InteropPlugin {
           srcTokenAddress: srcTokenAddress
             ? Address32.from(srcTokenAddress)
             : Address32.ZERO,
-          srcAmount: amount,
+          srcAmount: amount ? BigInt(amount) : undefined,
           dstTokenAddress: dstTokenAddress
             ? Address32.from(dstTokenAddress)
             : Address32.ZERO, // TODO: Should extract token from dst NTT manager
-          dstAmount: amount,
+          dstAmount: amount ? BigInt(amount) : undefined,
         }),
       ]
     }

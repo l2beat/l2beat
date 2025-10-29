@@ -1,26 +1,29 @@
 import type { ProjectScalingStateValidation } from '@l2beat/config'
 import { DiagramImage } from '~/components/DiagramImage'
-import {
-  ProjectDetailsRelatedProjectBanner,
-  type ProjectDetailsRelatedProjectBannerProps,
-} from '~/components/ProjectDetailsRelatedProjectBanner'
+import type { TrustedSetupsByProofSystem } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
 import { HorizontalSeparator } from '../../../core/HorizontalSeparator'
 import { Markdown } from '../../../markdown/Markdown'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 import { Category } from './Category'
+import { ProverInfo } from './ProverInfo'
 
 export interface StateValidationSectionProps extends ProjectSectionProps {
   diagram: DiagramParams | undefined
   stateValidation: ProjectScalingStateValidation
-  zkCatalogBanner?: ProjectDetailsRelatedProjectBannerProps
+  proverInfo?: {
+    name: string
+    icon: string
+    href: string
+    trustedSetups: TrustedSetupsByProofSystem
+  }
 }
 
 export function StateValidationSection({
   diagram,
   stateValidation,
-  zkCatalogBanner,
+  proverInfo,
   ...sectionProps
 }: StateValidationSectionProps) {
   return (
@@ -46,12 +49,7 @@ export function StateValidationSection({
           <Category key={category.title} category={category} />
         ))}
       </div>
-      {zkCatalogBanner && (
-        <ProjectDetailsRelatedProjectBanner
-          className="mt-4 md:mt-6"
-          {...zkCatalogBanner}
-        />
-      )}
+      {proverInfo && <ProverInfo proverInfo={proverInfo} />}
     </ProjectSection>
   )
 }

@@ -20,6 +20,19 @@ export function Address32(value: string) {
   throw new Error('Invalid Bytes32Address')
 }
 
+Address32.fromOrUndefined = function fromOrUndefined(
+  value: string | undefined,
+) {
+  if (!value) {
+    return undefined
+  }
+  try {
+    return Address32.from(value)
+  } catch {
+    return undefined
+  }
+}
+
 Address32.from = function from(value: string | EthereumAddress) {
   if (value === 'native') {
     return value as Address32
@@ -45,7 +58,7 @@ export interface InteropEventContext {
   blockNumber: number
   blockHash: string
   txHash: string
-  txValue: string
+  txValue?: bigint
   txTo?: Address32
   txFrom?: Address32
   logIndex: number
@@ -74,7 +87,7 @@ export interface InteropMessage {
 export interface TransferSide {
   event: InteropEvent
   tokenAddress?: Address32
-  tokenAmount?: string
+  tokenAmount?: bigint
 }
 
 export interface InteropTransfer {
@@ -269,11 +282,11 @@ function Message(
 export interface InteropTransferOptions {
   srcEvent: InteropEvent
   srcTokenAddress?: Address32
-  srcAmount?: string
+  srcAmount?: bigint
 
   dstEvent: InteropEvent
   dstTokenAddress?: Address32
-  dstAmount?: string
+  dstAmount?: bigint
 
   extraEvents?: InteropEvent[]
 }

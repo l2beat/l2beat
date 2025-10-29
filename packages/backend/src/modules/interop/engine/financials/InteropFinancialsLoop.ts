@@ -107,7 +107,7 @@ export class InteropFinancialsLoop extends TimeLoop {
     update: InteropTransferUpdate,
     plugin: string,
     id: DeployedTokenId,
-    rawAmount: string | undefined,
+    rawAmount: bigint | undefined,
     priceInfos: PriceInfo,
     prices: Map<string, number | undefined>,
     prefix: 'src' | 'dst',
@@ -141,7 +141,7 @@ export class InteropFinancialsLoop extends TimeLoop {
   private calculateTokenUpdate(
     plugin: string,
     id: DeployedTokenId,
-    rawAmount: string | undefined,
+    rawAmount: bigint | undefined,
     priceInfos: PriceInfo,
     prices: Map<string, number | undefined>,
   ) {
@@ -178,9 +178,8 @@ export class InteropFinancialsLoop extends TimeLoop {
     // This calculation gives us 6 decimal places of precision while not
     // calculating absurd values using basic numbers
     const amount =
-      Number(
-        (BigInt(rawAmount) * 1_000_000n) / 10n ** BigInt(priceInfo.decimals),
-      ) / 1_000_000
+      Number((rawAmount * 1_000_000n) / 10n ** BigInt(priceInfo.decimals)) /
+      1_000_000
 
     const valueUsd = price * amount
 
@@ -204,6 +203,11 @@ export class InteropFinancialsLoop extends TimeLoop {
     if (!chain || !address) {
       return
     }
+
+    if (address === 'native') {
+      return DeployedTokenId.from(chain, 'native')
+    }
+
     if (
       address === 'native' ||
       address === '0x' ||

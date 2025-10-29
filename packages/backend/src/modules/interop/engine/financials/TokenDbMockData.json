@@ -1,0 +1,686 @@
+{
+  "tokens": [
+    {
+      "abstractId": "MOCK01:circle:USDC",
+      "coingeckoId": "usd-coin",
+      "across": {
+        "name": "USD Coin",
+        "icon": "https://app.across.to/assets/usdc-174196f9.svg"
+      },
+      "deployed": [
+        {
+          "chain": "arbitrum",
+          "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+          "decimals": 6
+        },
+        {
+          "chain": "arbitrum",
+          "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+          "decimals": 6
+        },
+        {
+          "chain": "base",
+          "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+          "decimals": 6
+        },
+        {
+          "chain": "base",
+          "address": "0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
+          "decimals": 6
+        },
+        {
+          "chain": "bnb",
+          "address": "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+          "decimals": 6
+        },
+        {
+          "chain": "ethereum",
+          "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "decimals": 6
+        },
+        {
+          "chain": "hyperevm",
+          "address": "0xb88339CB7199b77E23DB6E890353E22632Ba630f",
+          "decimals": 6
+        },
+        {
+          "chain": "lens",
+          "address": "0x88F08E304EC4f90D644Cec3Fb69b8aD414acf884",
+          "decimals": 6
+        },
+        {
+          "chain": "linea",
+          "address": "0x176211869cA2b568f2A7D4EE941E073a821EE1ff",
+          "decimals": 6
+        },
+        {
+          "chain": "lisk",
+          "address": "0xF242275d3a6527d877f2c927a82D9b057609cc71",
+          "decimals": 6
+        },
+        {
+          "chain": "mode",
+          "address": "0xd988097fb8612cc24eeC14542bC03424c656005f",
+          "decimals": 6
+        },
+        {
+          "chain": "optimism",
+          "address": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+          "decimals": 6
+        },
+        {
+          "chain": "optimism",
+          "address": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
+          "decimals": 6
+        },
+        {
+          "chain": "polygon",
+          "address": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+          "decimals": 6
+        },
+        {
+          "chain": "polygon",
+          "address": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+          "decimals": 6
+        },
+        {
+          "chain": "scroll",
+          "address": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+          "decimals": 6
+        },
+        {
+          "chain": "solana",
+          "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "decimals": 6
+        },
+        {
+          "chain": "soneium",
+          "address": "0xbA9986D2381edf1DA03B0B9c1f8b00dc4AacC369",
+          "decimals": 6
+        },
+        {
+          "chain": "unichain",
+          "address": "0x078D782b760474a361dDA0AF3839290b0EF57AD6",
+          "decimals": 6
+        },
+        {
+          "chain": "worldchain",
+          "address": "0x79A02482A880bCE3F13e09Da970dC34db4CD24d1",
+          "decimals": 6
+        },
+        {
+          "chain": "zksyncera",
+          "address": "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
+          "decimals": 6
+        },
+        {
+          "chain": "zora",
+          "address": "0xCccCCccc7021b32EBb4e8C08314bD62F7c653EC4",
+          "decimals": 6
+        }
+      ]
+    },
+    {
+      "abstractId": "MOCK02:ethereum:ETH",
+      "coingeckoId": "ethereum",
+      "across": {
+        "name": "Ether",
+        "icon": "https://app.across.to/assets/eth-4706363e.svg"
+      },
+      "deployed": [
+        {
+          "chain": "arbitrum",
+          "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+          "decimals": 18
+        },
+        {
+          "chain": "arbitrum",
+          "address": "native",
+          "decimals": 18
+        },
+        {
+          "chain": "base",
+          "address": "0x4200000000000000000000000000000000000006",
+          "decimals": 18
+        },
+        {
+          "chain": "base",
+          "address": "native",
+          "decimals": 18
+        },
+        {
+          "chain": "blast",
+          "address": "0x4300000000000000000000000000000000000004",
+          "decimals": 18
+        },
+        {
+          "chain": "bnb",
+          "address": "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
+          "decimals": 18
+        },
+        {
+          "chain": "ethereum",
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "decimals": 18
+        },
+        {
+          "chain": "ethereum",
+          "address": "native",
+          "decimals": 18
+        },
+        {
+          "chain": "ink",
+          "address": "0x4200000000000000000000000000000000000006",
+          "decimals": 18
+        },
+        {
+          "chain": "lens",
+          "address": "0xE5ecd226b3032910CEaa43ba92EE8232f8237553",
+          "decimals": 18
+        },
+        {
+          "chain": "linea",
+          "address": "0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f",
+          "decimals": 18
+        },
+        {
+          "chain": "lisk",
+          "address": "0x4200000000000000000000000000000000000006",
+          "decimals": 18
+        },
+        {
+          "chain": "mode",
+          "address": "0x4200000000000000000000000000000000000006",
+          "decimals": 18
+        },
+        {
+          "chain": "optimism",
+          "address": "0x4200000000000000000000000000000000000006",
+          "decimals": 18
+        },
+        {
+          "chain": "optimism",
+          "address": "native",
+          "decimals": 18
+        },
+        {
+          "chain": "polygon",
+          "address": "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+          "decimals": 18
+        },
+        {
+          "chain": "redstone",
+          "address": "0x4200000000000000000000000000000000000006",
+          "decimals": 18
+        },
+        {
+          "chain": "scroll",
+          "address": "0x5300000000000000000000000000000000000004",
+          "decimals": 18
+        },
+        {
+          "chain": "soneium",
+          "address": "0x4200000000000000000000000000000000000006",
+          "decimals": 18
+        },
+        {
+          "chain": "unichain",
+          "address": "0x4200000000000000000000000000000000000006",
+          "decimals": 18
+        },
+        {
+          "chain": "worldchain",
+          "address": "0x4200000000000000000000000000000000000006",
+          "decimals": 18
+        },
+        {
+          "chain": "zksyncera",
+          "address": "0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91",
+          "decimals": 18
+        },
+        {
+          "chain": "zora",
+          "address": "0x4200000000000000000000000000000000000006",
+          "decimals": 18
+        }
+      ]
+    },
+    {
+      "abstractId": "MOCK03:tether:USDT",
+      "coingeckoId": "tether",
+      "across": {
+        "name": "Tether USD",
+        "icon": "https://app.across.to/assets/usdt-fc9c52d6.svg"
+      },
+      "deployed": [
+        {
+          "chain": "ethereum",
+          "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "decimals": 6
+        },
+        {
+          "chain": "linea",
+          "address": "0xA219439258ca9da29E9Cc4cE5596924745e12B93",
+          "decimals": 6
+        },
+        {
+          "chain": "lisk",
+          "address": "0x05D032ac25d322df992303dCa074EE7392C117b9",
+          "decimals": 6
+        },
+        {
+          "chain": "mode",
+          "address": "0xf0F161fDA2712DB8b566946122a5af183995e2eD",
+          "decimals": 6
+        },
+        {
+          "chain": "optimism",
+          "address": "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
+          "decimals": 6
+        },
+        {
+          "chain": "plasma",
+          "address": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
+          "decimals": 6
+        },
+        {
+          "chain": "polygon",
+          "address": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+          "decimals": 6
+        },
+        {
+          "chain": "scroll",
+          "address": "0xf55BEC9cafDbE8730f096Aa55dad6D22d44099Df",
+          "decimals": 6
+        },
+        {
+          "chain": "zksyncera",
+          "address": "0x493257fD37EDB34451f62EDf8D2a0C418852bA4C",
+          "decimals": 6
+        },
+        {
+          "chain": "base",
+          "address": "0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2",
+          "decimals": 6
+        }
+      ]
+    },
+    {
+      "abstractId": "MOCK04:wbtc:WBTC",
+      "coingeckoId": "wrapped-bitcoin",
+      "across": {
+        "name": "Wrapped Bitcoin",
+        "icon": "https://app.across.to/assets/wbtc-66b19847.svg"
+      },
+      "deployed": [
+        {
+          "chain": "ethereum",
+          "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+          "decimals": 8
+        },
+        {
+          "chain": "linea",
+          "address": "0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4",
+          "decimals": 8
+        },
+        {
+          "chain": "lisk",
+          "address": "0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3",
+          "decimals": 8
+        },
+        {
+          "chain": "mode",
+          "address": "0xcDd475325D6F564d27247D1DddBb0DAc6fA0a5CF",
+          "decimals": 8
+        },
+        {
+          "chain": "optimism",
+          "address": "0x68f180fcCe6836688e9084f035309E29Bf0A2095",
+          "decimals": 8
+        },
+        {
+          "chain": "polygon",
+          "address": "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
+          "decimals": 8
+        },
+        {
+          "chain": "scroll",
+          "address": "0x3C1BCa5a656e69edCD0D4E36BEbb3FcDAcA60Cf1",
+          "decimals": 8
+        },
+        {
+          "chain": "worldchain",
+          "address": "0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3",
+          "decimals": 8
+        },
+        {
+          "chain": "zksyncera",
+          "address": "0xBBeB516fb02a01611cBBE0453Fe3c580D7281011",
+          "decimals": 8
+        },
+        {
+          "chain": "arbitrum",
+          "address": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+          "decimals": 8
+        }
+      ]
+    },
+    {
+      "abstractId": "MOCK05:sky:DAI",
+      "coingeckoId": "dai",
+      "across": {
+        "name": "Dai Stablecoin",
+        "icon": "https://app.across.to/assets/dai-a5c4c6fd.svg"
+      },
+      "deployed": [
+        {
+          "chain": "ethereum",
+          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "decimals": 18
+        },
+        {
+          "chain": "linea",
+          "address": "0x4AF15ec2A0BD43Db75dd04E62FAA3B8EF36b00d5",
+          "decimals": 18
+        },
+        {
+          "chain": "optimism",
+          "address": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+          "decimals": 18
+        },
+        {
+          "chain": "polygon",
+          "address": "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+          "decimals": 18
+        },
+        {
+          "chain": "zksyncera",
+          "address": "0x4B9eb6c0b6ea15176BBF62841C6B2A8a398cb656",
+          "decimals": 18
+        },
+        {
+          "chain": "arbitrum",
+          "address": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+          "decimals": 18
+        },
+        {
+          "chain": "base",
+          "address": "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
+          "decimals": 18
+        }
+      ]
+    },
+    {
+      "abstractId": "MOCK06:pooltogether:POOL",
+      "coingeckoId": "pooltogether",
+      "across": {
+        "name": "PoolTogether",
+        "icon": "https://app.across.to/assets/pool-dd2dbe95.svg"
+      },
+      "deployed": [
+        {
+          "chain": "ethereum",
+          "address": "0x0cEC1A9154Ff802e7934Fc916Ed7Ca50bDE6844e",
+          "decimals": 18
+        },
+        {
+          "chain": "optimism",
+          "address": "0x395Ae52bB17aef68C2888d941736A71dC6d4e125",
+          "decimals": 18
+        },
+        {
+          "chain": "polygon",
+          "address": "0x25788a1a171ec66Da6502f9975a15B609fF54CF6",
+          "decimals": 18
+        },
+        {
+          "chain": "scroll",
+          "address": "0xF9Af83FC41e0cc2af2fba93644D542Df6eA0F2b7",
+          "decimals": 18
+        },
+        {
+          "chain": "worldchain",
+          "address": "0x7077C71B4AF70737a08287E279B717Dcf64fdC57",
+          "decimals": 18
+        },
+        {
+          "chain": "arbitrum",
+          "address": "0xCF934E2402A5e072928a39a956964eb8F2B5B79C",
+          "decimals": 18
+        },
+        {
+          "chain": "base",
+          "address": "0xd652C5425aea2Afd5fb142e120FeCf79e18fafc3",
+          "decimals": 18
+        }
+      ]
+    },
+    {
+      "abstractId": "MOCK07:balancer:BAL",
+      "coingeckoId": "balancer",
+      "across": {
+        "name": "Balancer",
+        "icon": "https://app.across.to/assets/bal-68871b30.svg"
+      },
+      "deployed": [
+        {
+          "chain": "ethereum",
+          "address": "0xba100000625a3754423978a60c9317c58a424e3D",
+          "decimals": 18
+        },
+        {
+          "chain": "optimism",
+          "address": "0xFE8B128bA8C78aabC59d4c64cEE7fF28e9379921",
+          "decimals": 18
+        },
+        {
+          "chain": "polygon",
+          "address": "0x9a71012B13CA4d3D0Cdc72A177DF3ef03b0E76A3",
+          "decimals": 18
+        },
+        {
+          "chain": "arbitrum",
+          "address": "0x040d1EdC9569d4Bab2D15287Dc5A4F10F56a56B8",
+          "decimals": 18
+        }
+      ]
+    },
+    {
+      "abstractId": "MOCK08:uma:UMA",
+      "coingeckoId": "uma",
+      "across": {
+        "name": "UMA Voting Token",
+        "icon": "https://app.across.to/assets/uma-b796432b.svg"
+      },
+      "deployed": [
+        {
+          "chain": "ethereum",
+          "address": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
+          "decimals": 18
+        },
+        {
+          "chain": "optimism",
+          "address": "0xE7798f023fC62146e8Aa1b36Da45fb70855a77Ea",
+          "decimals": 18
+        },
+        {
+          "chain": "polygon",
+          "address": "0x3066818837c5e6eD6601bd5a91B0762877A6B731",
+          "decimals": 18
+        }
+      ]
+    },
+    {
+      "abstractId": "MOCK09:across:ACX",
+      "coingeckoId": "across-protocol",
+      "across": {
+        "name": "Across Protocol Token",
+        "icon": "https://app.across.to/assets/acx-0de1e30c.svg"
+      },
+      "deployed": [
+        {
+          "chain": "ethereum",
+          "address": "0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F",
+          "decimals": 18
+        },
+        {
+          "chain": "optimism",
+          "address": "0xFf733b2A3557a7ed6697007ab5D11B79FdD1b76B",
+          "decimals": 18
+        },
+        {
+          "chain": "polygon",
+          "address": "0xF328b73B6c685831F238c30a23Fc19140CB4D8FC",
+          "decimals": 18
+        }
+      ]
+    },
+    {
+      "abstractId": "MOCK10:world:WLD",
+      "coingeckoId": "worldcoin-wld",
+      "across": {
+        "name": "Worldcoin",
+        "icon": "https://app.across.to/assets/wld-e9754ba8.svg"
+      },
+      "deployed": [
+        {
+          "chain": "optimism",
+          "address": "0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1",
+          "decimals": 18
+        },
+        {
+          "chain": "worldchain",
+          "address": "0x2cFc85d8E48F8EAB294be644d9E25C3030863003",
+          "decimals": 18
+        },
+        {
+          "chain": "ethereum",
+          "address": "0x163f8C2467924be0ae7B5347228CABF260318753",
+          "decimals": 18
+        }
+      ]
+    },
+    {
+      "abstractId": "MOCK11:lens:GHO",
+      "coingeckoId": "gho",
+      "across": {
+        "name": "GHO Token",
+        "icon": "https://app.across.to/assets/gho-7dcade44.svg"
+      },
+      "deployed": [
+        {
+          "chain": "lens",
+          "address": "0x000000000000000000000000000000000000800A",
+          "decimals": 18
+        }
+      ]
+    },
+    {
+      "abstractId": "MOCK12:lisk:LSK",
+      "coingeckoId": "lisk",
+      "across": {
+        "name": "Lisk",
+        "icon": "https://app.across.to/assets/lsk-fe8da60d.svg"
+      },
+      "deployed": [
+        {
+          "chain": "lisk",
+          "address": "0xac485391EB2d7D88253a7F1eF18C37f4242D1A24",
+          "decimals": 18
+        }
+      ]
+    },
+    {
+      "abstractId": "MOCK13:synthetix:SNX",
+      "coingeckoId": "havven",
+      "across": {
+        "name": "Synthetix",
+        "icon": "https://app.across.to/assets/snx-2ba7293b.svg"
+      },
+      "deployed": [
+        {
+          "chain": "optimism",
+          "address": "0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4",
+          "decimals": 18
+        },
+        {
+          "chain": "ethereum",
+          "address": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
+          "decimals": 18
+        }
+      ]
+    },
+    {
+      "abstractId": "MOCK14:velora:VLR",
+      "coingeckoId": "velora",
+      "across": {
+        "name": "Velora",
+        "icon": "https://app.across.to/assets/vlr-cf289df5.svg"
+      },
+      "deployed": [
+        {
+          "chain": "optimism",
+          "address": "0x4e107a0000DB66f0E9Fd2039288Bf811dD1f9c74",
+          "decimals": 18
+        },
+        {
+          "chain": "base",
+          "address": "0x4e107a0000DB66f0E9Fd2039288Bf811dD1f9c74",
+          "decimals": 18
+        },
+        {
+          "chain": "ethereum",
+          "address": "0x4e107a0000DB66f0E9Fd2039288Bf811dD1f9c74",
+          "decimals": 18
+        }
+      ]
+    },
+    {
+      "abstractId": "MOCK15:layerzero:ZRO",
+      "coingeckoId": "layerzero",
+      "deployed": [
+        {
+          "chain": "ethereum",
+          "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+          "decimals": 18
+        },
+        {
+          "chain": "arbitrum",
+          "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+          "decimals": 18
+        },
+        {
+          "chain": "base",
+          "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+          "decimals": 18
+        },
+        {
+          "chain": "optimism",
+          "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+          "decimals": 18
+        }
+      ]
+    },
+    {
+      "abstractId": "MOCK16:usdt0:USDT0",
+      "coingeckoId": "usdt0",
+      "deployed": [
+        {
+          "chain": "ethereum",
+          "address": "0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee",
+          "decimals": 18
+        },
+        {
+          "chain": "arbitrum",
+          "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+          "decimals": 18
+        },
+        {
+          "chain": "optimism",
+          "address": "0x01bFF41798a0BcF287b996046Ca68b395DbC1071",
+          "decimals": 18
+        }
+      ]
+    }
+  ]
+}

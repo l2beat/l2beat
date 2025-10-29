@@ -30,8 +30,9 @@ import {
   RpcResponse,
 } from './types'
 
-interface Dependencies extends ClientCoreDependencies {
+interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
   url: string
+  chain: string
   generateId?: () => string
   multicallClient?: MulticallV3Client
 }
@@ -46,7 +47,7 @@ export class RpcClient extends ClientCore implements BlockClient, LogsClient {
   multicallClient?: MulticallV3Client
 
   constructor(private readonly $: Dependencies) {
-    super($)
+    super({ ...$, sourceName: $.chain })
     this.multicallClient = $.multicallClient
   }
 
@@ -347,7 +348,7 @@ export class RpcClient extends ClientCore implements BlockClient, LogsClient {
   }
 
   get chain() {
-    return this.$.sourceName
+    return this.$.chain
   }
 }
 

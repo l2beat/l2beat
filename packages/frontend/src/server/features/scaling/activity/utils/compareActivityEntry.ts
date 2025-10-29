@@ -17,8 +17,8 @@ export function compareActivityEntry(
 
   const metric = opts?.metric ?? 'uops'
   const diff =
-    (b.data?.[metric].pastDayCount ?? -1) -
-    (a.data?.[metric].pastDayCount ?? -1)
+    (b.data?.[metric].pastDayCount.value ?? -1) -
+    (a.data?.[metric].pastDayCount.value ?? -1)
   if (diff !== 0) {
     return diff
   }
