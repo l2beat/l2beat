@@ -64,20 +64,9 @@ export const tokensRouter = router({
       return result ?? null
     }),
   getByChainAndAddress: protectedProcedure
-    .input(v.object({ chain: v.string(), address: v.string() }))
+    .input(v.array(v.object({ chain: v.string(), address: v.string() })))
     .query(async ({ input }) => {
-      const deployed = await db.deployedToken.findByChainAndAddress({
-        chain: input.chain,
-        address: input.address,
-      })
-      const abstractTokenId = deployed?.abstractTokenId
-      const abstract = abstractTokenId
-        ? await db.abstractToken.findById(abstractTokenId)
-        : undefined
-      return {
-        deployed,
-        abstract,
-      }
+      return await db.deployedToken.getByChainAndAddress(input)
     }),
 
   checkIfDeployedTokenExists: protectedProcedure
