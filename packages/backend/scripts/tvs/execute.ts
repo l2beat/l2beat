@@ -1,9 +1,4 @@
-import {
-  type Env,
-  getEnv,
-  Logger,
-  type LogLevel,
-} from '@l2beat/backend-tools'
+import { type Env, getEnv, Logger, type LogLevel } from '@l2beat/backend-tools'
 import { ProjectService, type TvsToken } from '@l2beat/config'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {

@@ -1,9 +1,4 @@
-import {
-  type Env,
-  getEnv,
-  Logger,
-  type LogLevel,
-} from '@l2beat/backend-tools'
+import { type Env, getEnv, Logger, type LogLevel } from '@l2beat/backend-tools'
 import {
   type ChainConfig,
   type Project,

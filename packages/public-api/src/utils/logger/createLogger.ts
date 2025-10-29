@@ -3,7 +3,7 @@ import {
   type Env,
   Logger,
   type LoggerOptions,
-  LoggerTransport,
+  type LoggerTransport,
   MetricsAggregator,
 } from '@l2beat/backend-tools'
 import {
@@ -15,7 +15,7 @@ export function createLogger(env: Env): Logger {
   const isLocal = env.optionalString('DEPLOYMENT_ENV') === undefined
 
   const loggerTransports: LoggerTransport[] = [
-    isLocal ? ConsoleTransport.PRETTY : ConsoleTransport.JSON
+    isLocal ? ConsoleTransport.PRETTY : ConsoleTransport.JSON,
   ]
 
   // Elastic Search logging

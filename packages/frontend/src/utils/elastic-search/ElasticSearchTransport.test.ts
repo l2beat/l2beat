@@ -3,8 +3,8 @@ import type { ElasticSearchClient } from './ElasticSearchClient'
 import {
   ElasticSearchTransport,
   type ElasticSearchTransportOptions,
+  formatDate,
   type UuidProvider,
-  formatDate
 } from './ElasticSearchTransport'
 
 const flushInterval = 10

@@ -4,9 +4,10 @@ import {
   getEnv,
   Logger,
   type LoggerOptions,
-  LoggerTransport,
+  type LoggerTransport,
   MetricsAggregator,
 } from '@l2beat/backend-tools'
+import { Indexer } from '@l2beat/uif'
 import apm from 'elastic-apm-node'
 import { Application } from './Application'
 import { getConfig } from './config'
@@ -14,7 +15,6 @@ import {
   ElasticSearchTransport,
   type ElasticSearchTransportOptions,
 } from './peripherals/elastic-search/ElasticSearchTransport'
-import { Indexer } from '@l2beat/uif'
 
 main().catch(() => {
   process.exit(1)
@@ -51,7 +51,7 @@ function createLogger(env: Env): Logger {
   const isLocal = env.optionalString('DEPLOYMENT_ENV') === undefined
 
   const loggerTransports: LoggerTransport[] = [
-    isLocal ? ConsoleTransport.PRETTY : ConsoleTransport.JSON
+    isLocal ? ConsoleTransport.PRETTY : ConsoleTransport.JSON,
   ]
 
   // Elastic Search logging
