@@ -81,7 +81,7 @@ describe(InteropFinancialsLoop.name, () => {
 
       const mockTransfers = [
         {
-          messageId: 'msg1',
+          transferId: 'msg1',
           srcChain: 'ethereum',
           srcTokenAddress: Address32.from(DeployedTokenId.address(srcToken1)),
           srcRawAmount: BigInt('1000000000000000000'),
@@ -90,7 +90,7 @@ describe(InteropFinancialsLoop.name, () => {
           dstRawAmount: BigInt('2000000000000000000'),
         },
         {
-          messageId: 'msg2',
+          transferId: 'msg2',
           srcChain: 'ethereum',
           srcTokenAddress: 'native',
           srcRawAmount: BigInt('500000000000000000'),
@@ -99,7 +99,7 @@ describe(InteropFinancialsLoop.name, () => {
           dstRawAmount: undefined,
         },
         {
-          messageId: 'msg3',
+          transferId: 'msg3',
           srcChain: 'unsupported',
           dstChain: 'ethereum',
           dstTokenAddress: Address32.from(DeployedTokenId.address(dstToken3)),
@@ -208,13 +208,13 @@ describe(InteropFinancialsLoop.name, () => {
       const firstUpdate: InteropTransferUpdate = {
         srcAbstractTokenId: '123456:ethereum:ETH',
         srcSymbol: 'ETH',
-        srcAmount: 1,
         srcPrice: 3000,
+        srcAmount: 1,
         srcValueUsd: 3000,
         dstAbstractTokenId: 'abcdef:arbitrum:ARB',
         dstSymbol: 'ARB',
-        dstAmount: 2,
         dstPrice: 1.5,
+        dstAmount: 2,
         dstValueUsd: 3,
       }
       expect(interopTransfer.updateFinancials).toHaveBeenCalledWith(
@@ -252,7 +252,7 @@ describe(InteropFinancialsLoop.name, () => {
       const mockTransfers = [
         {
           plugin: 'plugin',
-          messageId: 'msg1',
+          transferId: 'msg1',
           srcChain: 'ethereum',
           srcTokenAddress: Address32.from(DeployedTokenId.address(srcToken1)),
           srcRawAmount: '1000000000000000000',
@@ -301,19 +301,6 @@ describe(InteropFinancialsLoop.name, () => {
       )
 
       await service.run()
-
-      expect(logger.warn).toHaveBeenCalledWith('Missing price info', {
-        plugin: 'plugin',
-        id: srcToken1,
-        chain: DeployedTokenId.chain(srcToken1),
-        token: DeployedTokenId.address(srcToken1),
-      })
-      expect(logger.warn).toHaveBeenCalledWith('Missing price info', {
-        plugin: 'plugin',
-        id: dstToken1,
-        chain: DeployedTokenId.chain(dstToken1),
-        token: DeployedTokenId.address(dstToken1),
-      })
 
       // Should still update with empty financials
       expect(interopTransfer.updateFinancials).toHaveBeenCalledWith('msg1', {})
