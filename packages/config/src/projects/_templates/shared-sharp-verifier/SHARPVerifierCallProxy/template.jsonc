@@ -37,6 +37,36 @@
         }
       }
     },
+    "governanceAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x03711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846": "GOVERNANCE_ADMIN"
+        },
+        "pickRoleMembers": "GOVERNANCE_ADMIN"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the upgrade admin amd access control roles."
+        }
+      ]
+    },
+    "appGovernorAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x00d2ead78c620e94b02d0a996e99298c59ddccfa1d8a0149080ac3a20de06068": "APP_GOVERNOR"
+        },
+        "pickRoleMembers": "APP_GOVERNOR"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set custom implementations for specific operators (changes the verifier based on who calls it)."
+        }
+      ]
+    },
     "customProxyImplementations": {
       "description": "Non-default targets for call proxy delegation. These targets are automatically chosen based on which operator makes a call.",
       "severity": "HIGH",

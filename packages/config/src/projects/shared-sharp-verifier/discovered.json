@@ -1364,6 +1364,18 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
+          "permission": "interact",
+          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "description": "manage the upgrade admin amd access control roles.",
+          "role": ".governanceAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "description": "set custom implementations for specific operators (changes the verifier based on who calls it).",
+          "role": ".appGovernorAC"
+        },
+        {
           "permission": "upgrade",
           "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
           "delay": 691200,
@@ -1672,6 +1684,7 @@
           },
           "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
         },
+        "appGovernorAC": ["eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"],
         "callProxyImplementation": "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934",
         "customImplOperators": [
           "eth:0x54B839D988C9E712cd36cBf7C95dedC2B9F9aE6c",
@@ -1682,6 +1695,7 @@
         ],
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
         "getUpgradeActivationDelay": 691200,
+        "governanceAdminAC": ["eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"],
         "implementation": "eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb",
         "isFrozen": false,
         "isNotFinalized": true,
@@ -2673,8 +2687,8 @@
     "shared-sharp-verifier/ignoreComputeSpam": "0x267b15793053816118dde43f1cfe44b29b6496604275660ece4f747b85bab98e",
     "shared-sharp-verifier/MemoryPageFactRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-sharp-verifier/SHARPVerifier": "0x5ddc350d207181dc4b0b73ef2f493ee3afbaf139e29f26420b57497c7259afc5",
-    "shared-sharp-verifier/SHARPVerifierCallProxy": "0x5f0a52905cef68e613aa096b3d8503b40ea197b0352fddcacfc26e2d0eed6b03"
+    "shared-sharp-verifier/SHARPVerifierCallProxy": "0xcbc3662577ca6bc2de4ebf8583008543e01742f079dd46e757b4abe24d694805"
   },
   "usedBlockNumbers": { "ethereum": 23682614 },
-  "permissionsConfigHash": "0xf321e40f5a1527b36c6b38495d37ad3fca8e162d0d0b61ac27e836db0fd109cc"
+  "permissionsConfigHash": "0xd85b277dbfeabab36ac2dfac96004d2085ac72c97cabc5e4bd14fe9c216b914b"
 }

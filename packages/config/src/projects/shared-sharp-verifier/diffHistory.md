@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xbe8099410839d7fe995cae9020f52246604570d3
+Generated with discovered.json: 0xc394eaf0b246f4846a339613477ce2b05ea7052a
 
-# Diff at Wed, 29 Oct 2025 15:12:22 GMT:
+# Diff at Wed, 29 Oct 2025 16:13:15 GMT:
 
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@c2e645e2dac986faa7cc719ffa69d64a92c32476 block: 1747113875
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@eb258fc8a4f09c1ec78661959e5ef0ad546c0bea block: 1747113875
 - current timestamp: 1761735589
 
 ## Description
@@ -71,6 +71,16 @@ Upgraded SHARP verifier to support Stwo proofs. This includes:
 ```
 
 ```diff
+    contract SHARP Multisig (eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60","description":"manage the upgrade admin amd access control roles.","role":".governanceAdminAC"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60","description":"set custom implementations for specific operators (changes the verifier based on who calls it).","role":".appGovernorAC"}
+    }
+```
+
+```diff
 -   Status: DELETED
     contract CpuFrilessVerifier (eth:0x243682b9A01455ac671c97D8dE686EBd4EE25791)
     +++ description: None
@@ -135,6 +145,8 @@ Upgraded SHARP verifier to support Stwo proofs. This includes:
       values.StarkWareProxy_callImplementation:
 -        "eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942"
 +        "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934"
+      values.appGovernorAC:
++        ["eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"]
 +++ description: Calls of these operators are redirected to custom proxy implementations, usually older versions of verifiers.
 +++ severity: HIGH
       values.customImplOperators:
@@ -145,8 +157,10 @@ Upgraded SHARP verifier to support Stwo proofs. This includes:
 +        ["eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942"]
       values.ENABLE_WINDOW_DURATION_SLOT:
 +        "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738"
+      values.governanceAdminAC:
++        ["eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"]
       errors:
--        {"customImplOperators":"Processing error occurred.","customProxyImplementations":"Processing error occurred."}
+-        {"appGovernorAC":"Processing error occurred.","customImplOperators":"Processing error occurred.","customProxyImplementations":"Processing error occurred.","governanceAdminAC":"Processing error occurred."}
       implementationNames.eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458:
 -        "CallProxy"
       implementationNames.eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb:
@@ -615,7 +629,7 @@ discovery. Values are for block 1747113875 (main branch discovery), not current.
       fieldMeta.customImplOperators:
 +        {"severity":"HIGH","description":"Calls of these operators are redirected to custom proxy implementations, usually older versions of verifiers."}
       errors:
-+        {"customImplOperators":"Processing error occurred.","customProxyImplementations":"Processing error occurred."}
++        {"appGovernorAC":"Processing error occurred.","customImplOperators":"Processing error occurred.","customProxyImplementations":"Processing error occurred.","governanceAdminAC":"Processing error occurred."}
     }
 ```
 
