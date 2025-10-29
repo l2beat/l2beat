@@ -60,17 +60,11 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
         blobs: blobs.length,
       })
     } else {
-      const namespaces = configurations
-        .map((c) =>
-          c.properties.type === 'celestia' ? c.properties.namespace : undefined,
-        )
-        .filter((n) => n !== undefined)
-
       blobs = await this.$.daProvider.getBlobs(
         this.daLayer,
         from,
         adjustedTo,
-        namespaces,
+        this.getNamespaces(configurations),
       )
 
       this.logger.info('Fetched blobs from provider', {
@@ -157,6 +151,17 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
         deletedRecords,
       })
     }
+  }
+
+  /** This is needed because Celestia RPC needs list of namespaces for which to fetch blobs */
+  getNamespaces(
+    configurations: Configuration<BlockDaIndexedConfig>[],
+  ): string[] {
+    return configurations
+      .map((c) =>
+        c.properties.type === 'celestia' ? c.properties.namespace : undefined,
+      )
+      .filter((n) => n !== undefined)
   }
 
   get daLayer() {
