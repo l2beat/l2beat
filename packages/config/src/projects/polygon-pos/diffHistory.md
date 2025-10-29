@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x6b3be109a853454ad5b79b78dbcf83b009aa4b25
+
+# Diff at Tue, 28 Oct 2025 09:18:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@090e135db1084f4a9678d6bf1cb0ff5e854903ea block: 1761060009
+- current timestamp: 1761643008
+
+## Description
+
+vali rm.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        105
++        104
+    }
+```
+
 Generated with discovered.json: 0xca91ce0b5d242835e18af42fa9b0c75de0249f1f
 
 # Diff at Tue, 21 Oct 2025 15:21:26 GMT:
