@@ -60,7 +60,18 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
         blobs: blobs.length,
       })
     } else {
-      blobs = await this.$.daProvider.getBlobs(this.daLayer, from, adjustedTo)
+      const namespaces = configurations
+        .map((c) =>
+          c.properties.type === 'celestia' ? c.properties.namespace : undefined,
+        )
+        .filter((n) => n !== undefined)
+
+      blobs = await this.$.daProvider.getBlobs(
+        this.daLayer,
+        from,
+        adjustedTo,
+        namespaces,
+      )
 
       this.logger.info('Fetched blobs from provider', {
         blobs: blobs.length,
