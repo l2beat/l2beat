@@ -1,25 +1,8 @@
-import type { Branded } from '@l2beat/shared-pure'
+import type { Logger } from '@l2beat/backend-tools'
 import type { TokenDbClient } from '@l2beat/token-backend'
+import { DeployedTokenId } from './DeployedTokenId'
 
-export type DeployedTokenId = Branded<string, 'DeployedTokenId'>
-
-export function DeployedTokenId(id: string) {
-  return id as DeployedTokenId
-}
-
-DeployedTokenId.from = function from(chain: string, address: string) {
-  return `${chain}+${address}` as DeployedTokenId
-}
-
-DeployedTokenId.chain = function chain(id: DeployedTokenId) {
-  return id.slice(0, id.indexOf('+'))
-}
-
-DeployedTokenId.address = function address(id: DeployedTokenId) {
-  return id.slice(id.indexOf('+') + 1)
-}
-
-export type PriceInfo = Map<
+export type TokenInfos = Map<
   DeployedTokenId,
   {
     abstractId: string
@@ -30,29 +13,56 @@ export type PriceInfo = Map<
 >
 
 export class TokenDb {
-  constructor(private readonly tokenDbClient: TokenDbClient) {}
+  constructor(
+    private readonly tokenDbClient: TokenDbClient,
+    private logger: Logger,
+  ) {}
 
-  async getPriceInfo(deployedTokens: DeployedTokenId[]) {
-    const result: PriceInfo = new Map()
+  async getTokenInfos(deployedTokens: DeployedTokenId[]) {
+    const result: TokenInfos = new Map()
 
-    for (const t of deployedTokens) {
-      const tokenData =
-        await this.tokenDbClient.tokens.getByChainAndAddress.query({
-          chain: DeployedTokenId.chain(t),
-          address: DeployedTokenId.address(t),
-        })
-      const { deployed, abstract } = tokenData
-      if (!deployed || !abstract || !abstract.coingeckoId) {
+    const tokens = await this.tokenDbClient.tokens.getByChainAndAddress.query(
+      deployedTokens.map((d) => ({
+        chain: DeployedTokenId.chain(d),
+        address: DeployedTokenId.address(d),
+      })),
+    )
+
+    for (const d of deployedTokens) {
+      const tokenData = tokens.find(
+        (t) =>
+          t.deployedToken.chain === DeployedTokenId.chain(d) &&
+          t.deployedToken.address === DeployedTokenId.address(d),
+      )
+
+      if (!tokenData) {
+        this.logger.info('Missing token detected', { deployedTokenId: d })
         continue
       }
 
-      result.set(t, {
-        abstractId: abstract.id,
-        symbol: abstract.symbol,
-        coingeckoId: abstract.coingeckoId,
-        decimals: deployed.decimals,
+      const { deployedToken, abstractToken } = tokenData
+
+      if (!abstractToken) {
+        this.logger.info('Missing abstract token', { deployedTokenId: d })
+        continue
+      }
+
+      if (!abstractToken.coingeckoId) {
+        this.logger.info('Missing coingeckoId', {
+          deployedTokenId: d,
+          abstractToken,
+        })
+        continue
+      }
+
+      result.set(d, {
+        abstractId: abstractToken.id,
+        symbol: deployedToken.symbol,
+        coingeckoId: abstractToken.coingeckoId,
+        decimals: deployedToken.decimals,
       })
     }
+
     return result
   }
 }

@@ -88,7 +88,7 @@ export function createInteropModule({
     callSource: 'interop',
   })
 
-  const tokenDb = new TokenDb(tokenDbClient)
+  const tokenDb = new TokenDb(tokenDbClient, logger)
 
   const financialsService = new InteropFinancialsLoop(
     config.interop.capture.chains,

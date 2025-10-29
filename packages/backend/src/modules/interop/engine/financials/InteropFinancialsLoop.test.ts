@@ -3,8 +3,9 @@ import type { Database, InteropTransferUpdate } from '@l2beat/database'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { Address32 } from '../../plugins/types'
+import { DeployedTokenId } from './DeployedTokenId'
 import { InteropFinancialsLoop } from './InteropFinancialsLoop'
-import { DeployedTokenId, type TokenDb } from './TokenDb'
+import type { TokenDb } from './TokenDb'
 
 describe(InteropFinancialsLoop.name, () => {
   describe(InteropFinancialsLoop.prototype.run.name, () => {
@@ -16,7 +17,7 @@ describe(InteropFinancialsLoop.name, () => {
         getUnprocessed: mockFn().resolvesTo([]),
       })
       const db = mockObject<Database>({ interopRecentPrices, interopTransfer })
-      const tokenDb = mockObject<TokenDb>({ getPriceInfo: mockFn() })
+      const tokenDb = mockObject<TokenDb>({ getTokenInfos: mockFn() })
       const service = new InteropFinancialsLoop(
         [],
         db,
@@ -29,7 +30,7 @@ describe(InteropFinancialsLoop.name, () => {
 
       expect(interopRecentPrices.hasAnyPrices).toHaveBeenCalledTimes(1)
       expect(interopTransfer.getUnprocessed).not.toHaveBeenCalled()
-      expect(tokenDb.getPriceInfo).not.toHaveBeenCalled()
+      expect(tokenDb.getTokenInfos).not.toHaveBeenCalled()
     })
 
     it('skips when unprocessed length === 0', async () => {
@@ -45,7 +46,7 @@ describe(InteropFinancialsLoop.name, () => {
       })
 
       const tokenDb = mockObject<TokenDb>({
-        getPriceInfo: mockFn(),
+        getTokenInfos: mockFn(),
       })
 
       const service = new InteropFinancialsLoop(
@@ -60,7 +61,7 @@ describe(InteropFinancialsLoop.name, () => {
 
       expect(interopRecentPrices.hasAnyPrices).toHaveBeenCalledTimes(1)
       expect(interopTransfer.getUnprocessed).toHaveBeenCalledTimes(1)
-      expect(tokenDb.getPriceInfo).not.toHaveBeenCalled()
+      expect(tokenDb.getTokenInfos).not.toHaveBeenCalled()
     })
 
     it('calculates financials and updates transfers records', async () => {
@@ -167,7 +168,7 @@ describe(InteropFinancialsLoop.name, () => {
       })
 
       const tokenDb = mockObject<TokenDb>({
-        getPriceInfo: mockFn().resolvesTo(priceInfoMap),
+        getTokenInfos: mockFn().resolvesTo(priceInfoMap),
       })
 
       const service = new InteropFinancialsLoop(
@@ -187,7 +188,7 @@ describe(InteropFinancialsLoop.name, () => {
       expect(interopRecentPrices.hasAnyPrices).toHaveBeenCalledTimes(1)
       expect(interopTransfer.getUnprocessed).toHaveBeenCalledTimes(1)
 
-      expect(tokenDb.getPriceInfo).toHaveBeenCalledWith([
+      expect(tokenDb.getTokenInfos).toHaveBeenCalledWith([
         srcToken1,
         dstToken1,
         DeployedTokenId('ethereum+native'),
@@ -278,7 +279,7 @@ describe(InteropFinancialsLoop.name, () => {
 
       const tokenDb = mockObject<TokenDb>({
         // Empty price info map to trigger warnings
-        getPriceInfo: mockFn().resolvesTo(new Map()),
+        getTokenInfos: mockFn().resolvesTo(new Map()),
       })
 
       const logger = mockObject<Logger>({
