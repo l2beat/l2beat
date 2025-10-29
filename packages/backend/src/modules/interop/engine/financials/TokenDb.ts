@@ -1,6 +1,5 @@
 import type { Branded } from '@l2beat/shared-pure'
 import type { TokenDbClient } from '@l2beat/token-backend'
-import mockData from './TokenDbMockData.json'
 
 export type AbstractTokenId = Branded<string, 'AbstractTokenId'>
 
@@ -57,36 +56,7 @@ export type PriceInfo = Map<
   }
 >
 
-export interface ITokenDb {
-  getPriceInfo(deployedTokens: DeployedTokenId[]): Promise<PriceInfo>
-}
-
-const map: PriceInfo = new Map()
-for (const abstractToken of mockData.tokens) {
-  for (const deployed of abstractToken.deployed) {
-    map.set(DeployedTokenId.from(deployed.chain, deployed.address), {
-      abstractId: AbstractTokenId(abstractToken.abstractId),
-      coingeckoId: abstractToken.coingeckoId,
-      decimals: deployed.decimals,
-    })
-  }
-}
-
-export class MockTokenDb implements ITokenDb {
-  async getPriceInfo(deployedTokens: DeployedTokenId[]) {
-    await new Promise((r) => setTimeout(r, 1000))
-    const out = new Map()
-    for (const id of deployedTokens) {
-      const priceInfo = map.get(id)
-      if (priceInfo) {
-        out.set(id, priceInfo)
-      }
-    }
-    return out
-  }
-}
-
-export class CachingTokenDB implements ITokenDb {
+export class TokenDb {
   constructor(private readonly tokenDbClient: TokenDbClient) {}
 
   async getPriceInfo(deployedTokens: DeployedTokenId[]) {

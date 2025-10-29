@@ -4,7 +4,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { Address32 } from '../../plugins/types'
 import { InteropFinancialsLoop } from './InteropFinancialsLoop'
-import { AbstractTokenId, DeployedTokenId, type ITokenDb } from './TokenDb'
+import { AbstractTokenId, DeployedTokenId, type TokenDb } from './TokenDb'
 
 describe(InteropFinancialsLoop.name, () => {
   describe(InteropFinancialsLoop.prototype.run.name, () => {
@@ -16,7 +16,7 @@ describe(InteropFinancialsLoop.name, () => {
         getUnprocessed: mockFn().resolvesTo([]),
       })
       const db = mockObject<Database>({ interopRecentPrices, interopTransfer })
-      const tokenDb = mockObject<ITokenDb>({ getPriceInfo: mockFn() })
+      const tokenDb = mockObject<TokenDb>({ getPriceInfo: mockFn() })
       const service = new InteropFinancialsLoop(
         [],
         db,
@@ -44,7 +44,7 @@ describe(InteropFinancialsLoop.name, () => {
         interopTransfer,
       })
 
-      const tokenDb = mockObject<ITokenDb>({
+      const tokenDb = mockObject<TokenDb>({
         getPriceInfo: mockFn(),
       })
 
@@ -162,7 +162,7 @@ describe(InteropFinancialsLoop.name, () => {
         transaction,
       })
 
-      const tokenDb = mockObject<ITokenDb>({
+      const tokenDb = mockObject<TokenDb>({
         getPriceInfo: mockFn().resolvesTo(priceInfoMap),
       })
 
@@ -268,7 +268,7 @@ describe(InteropFinancialsLoop.name, () => {
         transaction,
       })
 
-      const tokenDb = mockObject<ITokenDb>({
+      const tokenDb = mockObject<TokenDb>({
         // Empty price info map to trigger warnings
         getPriceInfo: mockFn().resolvesTo(new Map()),
       })

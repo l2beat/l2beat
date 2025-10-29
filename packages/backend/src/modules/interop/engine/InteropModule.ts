@@ -12,7 +12,7 @@ import { InteropConfigStore } from './config/InteropConfigStore'
 import { createInteropRouter } from './dashboard/InteropRouter'
 import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
 import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
-import { CachingTokenDB } from './financials/TokenDb'
+import { TokenDb } from './financials/TokenDb'
 import { InteropMatchingLoop } from './match/InteropMatchingLoop'
 
 export function createInteropModule({
@@ -79,13 +79,13 @@ export function createInteropModule({
     indexerService: new IndexerService(db),
   })
 
-  const tokenDbClinet = getTokenDbClient({
+  const tokenDbClient = getTokenDbClient({
     apiUrl: config.interop.financials.tokenDbApiUrl,
     authToken: config.interop.financials.tokenDbAuthToken,
     callSource: 'interop',
   })
 
-  const tokenDb = new CachingTokenDB(tokenDbClinet)
+  const tokenDb = new TokenDb(tokenDbClient)
 
   const financialsService = new InteropFinancialsLoop(
     config.interop.capture.chains,

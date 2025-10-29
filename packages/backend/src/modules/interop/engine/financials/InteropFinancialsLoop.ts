@@ -3,13 +3,13 @@ import type { Database, InteropTransferUpdate } from '@l2beat/database'
 import { assertUnreachable, UnixTime, unique } from '@l2beat/shared-pure'
 import { TimeLoop } from '../../../../tools/TimeLoop'
 import { Address32 } from '../../plugins/types'
-import { DeployedTokenId, type ITokenDb, type PriceInfo } from './TokenDb'
+import { DeployedTokenId, type PriceInfo, type TokenDb } from './TokenDb'
 
 export class InteropFinancialsLoop extends TimeLoop {
   constructor(
     private chains: { name: string; type: 'evm' }[],
     private db: Database,
-    private tokenDb: ITokenDb,
+    private tokenDb: TokenDb,
     protected logger: Logger,
     intervalMs = 10_000,
   ) {
