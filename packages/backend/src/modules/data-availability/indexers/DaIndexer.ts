@@ -157,8 +157,8 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
   /** This is needed because Celestia RPC needs list of namespaces for which to fetch blobs */
   getNamespaces(
     configurations: Configuration<BlockDaIndexedConfig>[],
-  ): string[] {
-    if (this.$.daLayer !== 'celestia') return []
+  ): string[] | undefined {
+    if (this.$.daLayer !== 'celestia') return
 
     return (configurations as Configuration<CelestiaDaTrackingConfig>[]).map(
       (c) => c.properties.namespace,
