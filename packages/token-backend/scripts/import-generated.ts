@@ -18,7 +18,6 @@ function getTokenDatabase() {
 
   return createTokenDatabase({
     connectionString: connection,
-    ssl: { rejectUnauthorized: false },
   })
 }
 
