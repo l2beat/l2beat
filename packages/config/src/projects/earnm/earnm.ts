@@ -19,9 +19,10 @@ export const earnm: ScalingProject = underReviewL3({
       documentation: [],
       explorers: ['https://earnm-mainnet.explorer.alchemy.com/'],
       socialMedia: [
-        'https://x.com/EARNM_HQ',
-        'https://t.me/earnmofficial',
-        'https://discord.gg/earnm',
+        'https://x.com/earnmrewards',
+        'https://t.me/EARNMrewards',
+        'https://discord.com/invite/earnm',
+        'https://blog.earnm.com/',
       ],
       other: [
         'https://play.google.com/store/apps/details?id=us.current.android&hl=en',
