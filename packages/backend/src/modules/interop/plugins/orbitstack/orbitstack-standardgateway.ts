@@ -1,4 +1,3 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
 import {
   Address32,
   createEventParser,
@@ -65,9 +64,10 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
           })
 
           if (messageDeliveredLog) {
-            const messageDelivered = parseMessageDelivered(messageDeliveredLog, [
-              network.bridge,
-            ])
+            const messageDelivered = parseMessageDelivered(
+              messageDeliveredLog,
+              [network.bridge],
+            )
             if (messageDelivered) {
               return DepositInitiatedMessageDelivered.create(input.ctx, {
                 chain: network.chain,
@@ -81,7 +81,9 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
       }
     } else {
       // L2 finalization of L1->L2 ERC20 deposit (Type 0x68 transaction)
-      const network = ORBITSTACK_NETWORKS.find((x) => x.chain === input.ctx.chain)
+      const network = ORBITSTACK_NETWORKS.find(
+        (x) => x.chain === input.ctx.chain,
+      )
       if (!network) return
 
       const depositFinalized = parseDepositFinalized(input.log, null)

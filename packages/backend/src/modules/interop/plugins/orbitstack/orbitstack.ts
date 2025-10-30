@@ -152,10 +152,7 @@ export class OrbitStackPlugin implements InteropPlugin {
   }
 
   matchTypes = [OutBoxTransactionExecuted, RedeemScheduled]
-  match(
-    event: InteropEvent,
-    db: InteropEventDb,
-  ): MatchResult | undefined {
+  match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     // L2 -> L1 (Withdrawal) matching
     if (OutBoxTransactionExecuted.checkType(event)) {
       const l2ToL1Tx = db.find(L2ToL1Tx, {
@@ -184,7 +181,10 @@ export class OrbitStackPlugin implements InteropPlugin {
       // Check if this is an ETH deposit (based on L2 callValue)
       if (event.args.ethAmount) {
         // Verify L1 has txValue
-        if (!messageDelivered.ctx.txValue || messageDelivered.ctx.txValue === 0n) {
+        if (
+          !messageDelivered.ctx.txValue ||
+          messageDelivered.ctx.txValue === 0n
+        ) {
           return
         }
 
