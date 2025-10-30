@@ -3,8 +3,10 @@ import type { Insertable, Selectable, Updateable } from 'kysely'
 import isNil from 'lodash/isNil'
 import { BaseRepository } from '../BaseRepository'
 import type { DeployedToken } from '../kysely/generated/types'
-import { toTimestamp } from '../utils/timestamp'
-import type { AbstractTokenRecord } from './AbstractTokenRepository'
+import {
+  type AbstractTokenRecord,
+  toAbstractTokenRecord,
+} from './AbstractTokenRepository'
 
 export type DeployedTokenRecord = {
   symbol: string
