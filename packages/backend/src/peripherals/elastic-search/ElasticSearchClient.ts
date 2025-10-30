@@ -28,7 +28,7 @@ type BulkResponse =
 export class ElasticSearchClient {
   private readonly client: Client
 
-  constructor(private readonly options: ElasticSearchClientOptions) {
+  constructor(options: ElasticSearchClientOptions) {
     this.client = new Client({
       node: options.node,
       auth: {
