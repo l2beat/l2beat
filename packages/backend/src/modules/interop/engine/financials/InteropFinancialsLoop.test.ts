@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database, InteropTransferUpdate } from '@l2beat/database'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import type { TokenDbClient } from '@l2beat/token-backend'
 import { expect, mockFn, mockObject } from 'earl'
 import { Address32 } from '../../plugins/types'
 import { DeployedTokenId } from './DeployedTokenId'
@@ -16,7 +17,7 @@ describe(InteropFinancialsLoop.name, () => {
         getUnprocessed: mockFn().resolvesTo([]),
       })
       const db = mockObject<Database>({ interopRecentPrices, interopTransfer })
-      const tokenDb = mockObject<TokenDb>({ getTokenInfos: mockFn() })
+      const tokenDb = mockObject<TokenDbClient>({} as any)
       const service = new InteropFinancialsLoop(
         [],
         db,
@@ -29,7 +30,6 @@ describe(InteropFinancialsLoop.name, () => {
 
       expect(interopRecentPrices.hasAnyPrices).toHaveBeenCalledTimes(1)
       expect(interopTransfer.getUnprocessed).not.toHaveBeenCalled()
-      expect(tokenDb.getTokenInfos).not.toHaveBeenCalled()
     })
 
     it('skips when unprocessed length === 0', async () => {
@@ -44,9 +44,7 @@ describe(InteropFinancialsLoop.name, () => {
         interopTransfer,
       })
 
-      const tokenDb = mockObject<TokenDb>({
-        getTokenInfos: mockFn(),
-      })
+      const tokenDb = mockObject<TokenDbClient>({} as any)
 
       const service = new InteropFinancialsLoop(
         [],
@@ -60,7 +58,6 @@ describe(InteropFinancialsLoop.name, () => {
 
       expect(interopRecentPrices.hasAnyPrices).toHaveBeenCalledTimes(1)
       expect(interopTransfer.getUnprocessed).toHaveBeenCalledTimes(1)
-      expect(tokenDb.getTokenInfos).not.toHaveBeenCalled()
     })
 
     it('calculates financials and updates transfers records', async () => {
@@ -106,48 +103,10 @@ describe(InteropFinancialsLoop.name, () => {
         },
       ]
 
-      const priceInfoMap = new Map([
-        [
-          srcToken1,
-          {
-            abstractId: '123456:ethereum:ETH',
-            symbol: 'ETH',
-            decimals: 18,
-            coingeckoId: 'ethereum',
-          },
-        ],
-        [
-          dstToken1,
-          {
-            abstractId: 'abcdef:arbitrum:ARB',
-            symbol: 'ARB',
-            decimals: 18,
-            coingeckoId: 'arbitrum',
-          },
-        ],
-        [
-          dstToken2,
-          {
-            abstractId: 'fedcba:base:BASE',
-            symbol: 'BASE',
-            decimals: 18,
-            coingeckoId: undefined,
-          },
-        ],
-        [
-          dstToken3,
-          {
-            abstractId: '222222:ethereum:TOKEN',
-            symbol: 'TOKEN',
-            decimals: 6,
-            coingeckoId: 'token',
-          },
-        ],
-      ])
-
       const pricesMap = new Map([
         ['ethereum', 3000],
         ['arbitrum', 1.5],
+        ['base', 2.0],
         ['token', 50],
       ])
 
@@ -166,9 +125,58 @@ describe(InteropFinancialsLoop.name, () => {
         transaction,
       })
 
-      const tokenDb = mockObject<TokenDb>({
-        getTokenInfos: mockFn().resolvesTo(priceInfoMap),
-      })
+      const mockTokens = [
+        {
+          deployedToken: {
+            chain: 'ethereum',
+            address: DeployedTokenId.address(srcToken1),
+            symbol: 'ETH',
+            decimals: 18,
+          },
+          abstractToken: { id: '123456:ethereum:ETH', coingeckoId: 'ethereum' },
+        },
+        {
+          deployedToken: {
+            chain: 'arbitrum',
+            address: DeployedTokenId.address(dstToken1),
+            symbol: 'ARB',
+            decimals: 18,
+          },
+          abstractToken: { id: 'abcdef:arbitrum:ARB', coingeckoId: 'arbitrum' },
+        },
+        {
+          deployedToken: {
+            chain: 'ethereum',
+            address: 'native',
+            symbol: 'ETH',
+            decimals: 18,
+          },
+          abstractToken: { id: 'ethereum+native', coingeckoId: 'ethereum' },
+        },
+        {
+          deployedToken: {
+            chain: 'base',
+            address: DeployedTokenId.address(dstToken2),
+            symbol: 'BASE',
+            decimals: 18,
+          },
+          abstractToken: { id: 'fedcba:base:BASE', coingeckoId: 'base' },
+        },
+        {
+          deployedToken: {
+            chain: 'ethereum',
+            address: DeployedTokenId.address(dstToken3),
+            symbol: 'TOKEN',
+            decimals: 6,
+          },
+          abstractToken: { id: '222222:ethereum:TOKEN', coingeckoId: 'token' },
+        },
+      ]
+
+      const mockQuery = mockFn().resolvesTo(mockTokens)
+      const tokenDb = mockObject<TokenDbClient>({
+        tokens: { getByChainAndAddress: { query: mockQuery } },
+      } as any)
 
       const service = new InteropFinancialsLoop(
         [
@@ -187,17 +195,17 @@ describe(InteropFinancialsLoop.name, () => {
       expect(interopRecentPrices.hasAnyPrices).toHaveBeenCalledTimes(1)
       expect(interopTransfer.getUnprocessed).toHaveBeenCalledTimes(1)
 
-      expect(tokenDb.getTokenInfos).toHaveBeenCalledWith([
-        srcToken1,
-        dstToken1,
-        DeployedTokenId('ethereum+native'),
-        dstToken2,
-        dstToken3,
+      expect(mockQuery).toHaveBeenCalledWith([
+        { chain: 'ethereum', address: DeployedTokenId.address(srcToken1) },
+        { chain: 'arbitrum', address: DeployedTokenId.address(dstToken1) },
+        { chain: 'ethereum', address: 'native' },
+        { chain: 'base', address: DeployedTokenId.address(dstToken2) },
+        { chain: 'ethereum', address: DeployedTokenId.address(dstToken3) },
       ])
 
       expect(interopRecentPrices.getClosestPrices).toHaveBeenNthCalledWith(
         1,
-        ['ethereum', 'arbitrum', 'token'],
+        ['ethereum', 'arbitrum', 'base', 'token'],
         expect.anything(),
         UnixTime.DAY,
       )
@@ -221,7 +229,17 @@ describe(InteropFinancialsLoop.name, () => {
         firstUpdate,
       )
 
-      expect(interopTransfer.updateFinancials).toHaveBeenCalledWith('msg2', {})
+      const secondUpdate: InteropTransferUpdate = {
+        srcAbstractTokenId: 'ethereum+native',
+        srcSymbol: 'ETH',
+        srcPrice: 3000,
+        srcAmount: 0.5,
+        srcValueUsd: 1500,
+      }
+      expect(interopTransfer.updateFinancials).toHaveBeenCalledWith(
+        'msg2',
+        secondUpdate,
+      )
 
       const thirdUpdate: InteropTransferUpdate = {
         dstSymbol: 'TOKEN',
@@ -276,10 +294,9 @@ describe(InteropFinancialsLoop.name, () => {
         transaction,
       })
 
-      const tokenDb = mockObject<TokenDb>({
-        // Empty price info map to trigger warnings
-        getTokenInfos: mockFn().resolvesTo(new Map()),
-      })
+      const tokenDb = mockObject<TokenDbClient>({
+        tokens: { getByChainAndAddress: { query: mockFn().resolvesTo([]) } },
+      } as any)
 
       const logger = mockObject<Logger>({
         info: mockFn().returns(undefined),
