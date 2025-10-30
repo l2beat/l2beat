@@ -826,7 +826,7 @@
       }
     ]
   },
-  "orbitstack": {
+  "orbitstack-withdrawal": {
     "txs": [
       {
         "chain": "arbitrum",
@@ -836,7 +836,47 @@
         "chain": "ethereum",
         "tx": "0xf031b41688650d9cc8c2e02408376c60f43443e3bdc5d1219872da18fafcb9a2"
       }
-    ]
+    ],
+    "events": ["orbitstack.L2ToL1Tx", "orbitstack.OutBoxTransactionExecuted"],
+    "messages": ["orbitstack.L2ToL1Message"]
+  },
+  "orbitstack-standardgateway": {
+    "txs": [
+      // ethereum -> arbitrum (erc20)
+      {
+        "chain": "ethereum",
+        "tx": "0x10677ef4e6819de1a65b73ab0cfd47c0f75bc758fdef7e32fc8fba4dbc930c78"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xf77d8e2fa6f72d944a2cd9d32dd70623f58e7ef19a99bd77117ee5ef04d0e7f8"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xc0a88c1ee35876f124cecedeece187913b4db2c7b00dfa0037d27a3e65622374"
+      },
+      // ethereum -> arbitrum (eth)
+      {
+        "chain": "ethereum",
+        "tx": "0xffb094911c9af4e267067dfc6dfe8c06d87cfa2154851b119d9f1e97fa115d45"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x50c3f95f063bae8c8001a0c34975421a4ba1779b5ce1a263c5864573bcbe0191"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x54a378e6b5511df1260e610c151f448968afe5eeef72d386c84441456bb364ea"
+      }
+    ],
+    "events": [
+      "orbitstack.MessageDelivered",
+      "orbitstack.RedeemScheduled",
+      "orbitstack-standardgateway.MessageDeliveredDepositInitiated",
+      "orbitstack-standardgateway.DepositFinalized"
+    ],
+    "messages": ["orbitstack.L1ToL2Message"],
+    "transfers": ["orbitstack-standardgateway.L1ToL2Transfer"]
   },
   "hyperlane-mix": {
     "txs": [

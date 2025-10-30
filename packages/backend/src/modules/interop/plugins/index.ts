@@ -36,7 +36,8 @@ import { MayanMctpFastPlugin } from './mayan-mctp-fast'
 import { MayanSwiftPlugin } from './mayan-swift'
 import { OpStackPlugin } from './opstack/opstack'
 import { OpStackStandardBridgePlugin } from './opstack/opstack-standardbridge'
-import { OrbitStackPlugin } from './orbitstack'
+import { OrbitStackPlugin } from './orbitstack/orbitstack'
+import { OrbitStackStandardGatewayPlugin } from './orbitstack/orbitstack-standardgateway'
 import { RelayPlugin } from './relay/relay.plugin'
 import { RelaySimplePlugIn } from './relay-simple'
 import { SquidCoralPlugin } from './squid-coral'
@@ -111,6 +112,7 @@ export function createInteropPlugins(
       new AxelarITSPlugin(), // should be run before Axelar
       new AxelarPlugin(),
       new AcrossPlugin(deps.configs),
+      new OrbitStackStandardGatewayPlugin(), // should be run before OrbitStack
       new OrbitStackPlugin(),
       new OpStackStandardBridgePlugin(), // should be run before OpStack
       new OpStackPlugin(),
