@@ -14,7 +14,6 @@ import { InteropConfigStore } from './config/InteropConfigStore'
 import { createInteropRouter } from './dashboard/InteropRouter'
 import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
 import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
-import { TokenDb } from './financials/TokenDb'
 import { InteropMatchingLoop } from './match/InteropMatchingLoop'
 
 export function createInteropModule({
@@ -88,12 +87,10 @@ export function createInteropModule({
     callSource: 'interop',
   })
 
-  const tokenDb = new TokenDb(tokenDbClient, logger)
-
   const financialsService = new InteropFinancialsLoop(
     config.interop.capture.chains,
     db,
-    tokenDb,
+    tokenDbClient,
     logger,
   )
 

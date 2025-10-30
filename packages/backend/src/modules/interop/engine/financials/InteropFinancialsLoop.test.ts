@@ -5,7 +5,6 @@ import { expect, mockFn, mockObject } from 'earl'
 import { Address32 } from '../../plugins/types'
 import { DeployedTokenId } from './DeployedTokenId'
 import { InteropFinancialsLoop } from './InteropFinancialsLoop'
-import type { TokenDb } from './TokenDb'
 
 describe(InteropFinancialsLoop.name, () => {
   describe(InteropFinancialsLoop.prototype.run.name, () => {
