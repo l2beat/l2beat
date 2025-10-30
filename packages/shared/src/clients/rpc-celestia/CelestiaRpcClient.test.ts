@@ -11,8 +11,7 @@ describe(CelestiaRpcClient.name, () => {
       const http = mockObject<HttpClient>({
         fetch: async () => ({
           result: {
-            height: mockBlockHeight,
-            txs_results: [],
+            last_height: mockBlockHeight,
           },
         }),
       })
@@ -21,113 +20,7 @@ describe(CelestiaRpcClient.name, () => {
       const result = await rpc.getLatestBlockNumber()
 
       expect(result).toEqual(Number(mockBlockHeight))
-      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL/block_results', {
-        method: 'GET',
-        redirect: 'follow',
-      })
-    })
-  })
-
-  describe(CelestiaRpcClient.prototype.getBlockWithTransactions.name, () => {
-    it('returns block with transactions for a specific block number', async () => {
-      const mockBlockHeight = '12345'
-      const mockTimestamp = '2024-02-07T10:00:00Z'
-
-      const http = mockObject<HttpClient>({
-        fetch: async (url: string) => {
-          if (url.includes('block_results')) {
-            return {
-              result: {
-                height: mockBlockHeight,
-                txs_results: [],
-              },
-            }
-          }
-          return {
-            result: {
-              block: {
-                header: {
-                  time: mockTimestamp,
-                },
-              },
-            },
-          }
-        },
-      })
-      const rpc = mockClient({ http })
-
-      const result = await rpc.getBlockWithTransactions(Number(mockBlockHeight))
-
-      expect(result).toEqual({
-        number: Number(mockBlockHeight),
-        hash: 'UNSUPPORTED',
-        logsBloom: 'UNSUPPORTED',
-        timestamp: UnixTime.fromDate(new Date(mockTimestamp)),
-        transactions: [],
-      })
-
-      expect(http.fetch).toHaveBeenCalledTimes(2)
-      expect(http.fetch).toHaveBeenNthCalledWith(
-        1,
-        'API_URL/block_results?height=12345',
-        {
-          method: 'GET',
-          redirect: 'follow',
-        },
-      )
-      expect(http.fetch).toHaveBeenNthCalledWith(
-        2,
-        'API_URL/block?height=12345',
-        {
-          method: 'GET',
-          redirect: 'follow',
-        },
-      )
-    })
-
-    it('returns block with transactions for latest block', async () => {
-      const mockBlockHeight = '12345'
-      const mockTimestamp = '2024-02-07T10:00:00Z'
-
-      const http = mockObject<HttpClient>({
-        fetch: async (url: string) => {
-          if (url.includes('block_results')) {
-            return {
-              result: {
-                height: mockBlockHeight,
-                txs_results: [],
-              },
-            }
-          }
-          return {
-            result: {
-              block: {
-                header: {
-                  time: mockTimestamp,
-                },
-              },
-            },
-          }
-        },
-      })
-      const rpc = mockClient({ http })
-
-      const result = await rpc.getBlockWithTransactions('latest')
-
-      expect(result).toEqual({
-        number: Number(mockBlockHeight),
-        hash: 'UNSUPPORTED',
-        logsBloom: 'UNSUPPORTED',
-        timestamp: UnixTime.fromDate(new Date(mockTimestamp)),
-        transactions: [],
-      })
-
-      expect(http.fetch).toHaveBeenCalledTimes(2)
-      expect(http.fetch).toHaveBeenNthCalledWith(1, 'API_URL/block_results', {
-        method: 'GET',
-        redirect: 'follow',
-      })
-      expect(http.fetch).toHaveBeenNthCalledWith(2, 'API_URL/block', {
+      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL/blockchain', {
         method: 'GET',
         redirect: 'follow',
       })
@@ -157,50 +50,6 @@ describe(CelestiaRpcClient.name, () => {
         method: 'GET',
         redirect: 'follow',
       })
-    })
-  })
-
-  describe(CelestiaRpcClient.prototype.getBlockResult.name, () => {
-    it('returns block result', async () => {
-      const mockResults = [
-        {
-          events: [
-            {
-              type: 'celestia.blob.v1.EventPayForBlobs',
-              attributes: [
-                {
-                  key: 'blob_sizes',
-                  value: '[355]',
-                },
-              ],
-            },
-          ],
-        },
-      ]
-
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
-          result: {
-            height: '100',
-            txs_results: mockResults,
-          },
-        }),
-      })
-      const rpc = mockClient({ http })
-
-      const result = await rpc.getBlockResult(100)
-
-      expect(result).toEqual({
-        height: '100',
-        txs_results: mockResults,
-      })
-      expect(http.fetch).toHaveBeenOnlyCalledWith(
-        'API_URL/block_results?height=100',
-        {
-          method: 'GET',
-          redirect: 'follow',
-        },
-      )
     })
   })
 
@@ -296,6 +145,78 @@ describe(CelestiaRpcClient.name, () => {
           method: 'GET',
           redirect: 'follow',
         },
+      )
+    })
+  })
+
+  describe(CelestiaRpcClient.prototype.getBlobsForNamespaces.name, () => {
+    it('returns blobs for the given namespaces', async () => {
+      const mockBlobs = [
+        {
+          namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+          data: 'SGVsbG8=',
+        },
+        {
+          namespace: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=',
+          data: 'V29ybGQ=',
+        },
+      ]
+
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          result: mockBlobs,
+        }),
+      })
+      const rpc = mockClient({ http })
+
+      const namespaces = [
+        'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+        'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=',
+      ]
+      const result = await rpc.getBlobsForNamespaces(67890, namespaces)
+
+      expect(result).toEqual(mockBlobs)
+      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL/', {
+        method: 'POST',
+        redirect: 'follow',
+        body: JSON.stringify({
+          id: '1',
+          jsonrpc: '2.0',
+          method: 'blob.GetAll',
+          params: [67890, namespaces],
+        }),
+      })
+    })
+
+    it('returns empty array when result is null', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          result: null,
+        }),
+      })
+      const rpc = mockClient({ http })
+
+      const result = await rpc.getBlobsForNamespaces(12345, [
+        'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+      ])
+
+      expect(result).toEqual([])
+    })
+
+    it('throws error when response is invalid', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          invalid: 'response',
+        }),
+      })
+      const rpc = mockClient({ http })
+
+      await expect(
+        rpc.getBlobsForNamespaces(12345, [
+          'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+        ]),
+      ).toBeRejectedWith(
+        'Blobs for namespaces AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=: Error during parsing',
       )
     })
   })

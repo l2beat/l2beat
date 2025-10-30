@@ -8,7 +8,13 @@ describe(CelestiaDaProvider.name, () => {
     it('fetches blobs from multiple blocks with different timestamps', async () => {
       const rpcClientMock = createMockRpcClient()
       const provider = new CelestiaDaProvider(rpcClientMock, 'celestia')
-      const blobs = await provider.getBlobs(1, 2)
+      const namespaces = [
+        'namespace1',
+        'namespace2',
+        'namespace3',
+        'namespace4',
+      ]
+      const blobs = await provider.getBlobs(1, 2, namespaces)
 
       expect(blobs).toEqual([
         {
@@ -45,45 +51,54 @@ describe(CelestiaDaProvider.name, () => {
         },
       ])
     })
+
+    it('throws when namespaces are not provided', async () => {
+      const rpcClientMock = createMockRpcClient()
+      const provider = new CelestiaDaProvider(rpcClientMock, 'celestia')
+
+      await expect(() => provider.getBlobs(1, 2)).toBeRejectedWith(
+        'Namespaces are required',
+      )
+    })
+
+    it('returns empty array when no blobs found', async () => {
+      const rpcClientMock = mockObject<CelestiaRpcClient>({
+        getBlobsForNamespaces: async () => [],
+        getBlockTimestamp: async () =>
+          UnixTime.fromDate(new Date('2024-01-01T12:00:00Z')),
+      })
+      const provider = new CelestiaDaProvider(rpcClientMock, 'celestia')
+      const blobs = await provider.getBlobs(1, 1, ['namespace1'])
+
+      expect(blobs).toEqual([])
+    })
   })
 })
 
 function createMockRpcClient() {
+  // Create base64 strings with specific byte lengths
+  // 100 bytes, 200 bytes, 300 bytes, 400 bytes
+  const data100 = Buffer.alloc(100).toString('base64')
+  const data200 = Buffer.alloc(200).toString('base64')
+  const data300 = Buffer.alloc(300).toString('base64')
+  const data400 = Buffer.alloc(400).toString('base64')
+
   return mockObject<CelestiaRpcClient>({
-    getBlockResult: async (blockNumber: number) => ({
-      height: '100',
-      txs_results: [
-        {
-          events: [
-            {
-              type: 'celestia.blob.v1.EventPayForBlobs',
-              attributes: [
-                {
-                  key: 'namespaces',
-                  value:
-                    blockNumber === 1
-                      ? '["namespace1", "namespace2"]'
-                      : '["namespace3", "namespace4"]',
-                },
-                {
-                  key: 'blob_sizes',
-                  value: blockNumber === 1 ? '[100, 200]' : '[300, 400]',
-                },
-              ],
-            },
-            {
-              type: 'otherEvent',
-              attributes: [
-                {
-                  key: 'other-key',
-                  value: 'different-value',
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    }),
+    getBlobsForNamespaces: async (blockNumber: number) => {
+      if (blockNumber === 1) {
+        return [
+          { namespace: 'namespace1', data: data100 },
+          { namespace: 'namespace2', data: data200 },
+        ]
+      }
+      if (blockNumber === 2) {
+        return [
+          { namespace: 'namespace3', data: data300 },
+          { namespace: 'namespace4', data: data400 },
+        ]
+      }
+      return []
+    },
     getBlockTimestamp: async (blockNumber: number) =>
       UnixTime.fromDate(
         new Date(
