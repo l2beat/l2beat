@@ -90,12 +90,51 @@ export const lineaprover: BaseProject = {
       },
     ],
     verifierHashes: [
+      // {
+      //   hash: '0x7a181b5c0d9f93a5935cd1249aaa8e60a0e8f729d78325303e3a7dd769413b5b',
+      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+      //   knownDeployments: [
+      //     {
+      //       address: '0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873',
+      //       chain: 'ethereum',
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      //   description:
+      //     'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
+      // },
       {
-        hash: '0x7a181b5c0d9f93a5935cd1249aaa8e60a0e8f729d78325303e3a7dd769413b5b',
+        hash: '0x352344753c2520da8daf4dfc60dff63ff92b6775434d5582efba9a88b2e370b3',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
-            address: '0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873',
+            address: '0xA12E79C375FB0aaddfDA597BBe7b4e9A92e9b3De',
+            chain: 'ethereum',
+          },
+        ],
+        verificationStatus: 'notVerified',
+        description:
+          'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
+      },
+      {
+        hash: '0x3153d1fecad37e37efc129c7d55aa885e83d152774e6fccded3084959d2524e9',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+        knownDeployments: [
+          {
+            address: '0x8421D1e3fb9A737A85dC7FF531c39f324FB2aC5d',
+            chain: 'ethereum',
+          },
+        ],
+        verificationStatus: 'notVerified',
+        description:
+          'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
+      },
+      {
+        hash: '0x588886af4e1b4355201cfd3b49220f1dd41e3ab6c1611a3bcd67dbdc59bacf5f',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+        knownDeployments: [
+          {
+            address: '0x8CAE7ff138e401384df88a408314e4E9a92f274E',
             chain: 'ethereum',
           },
         ],
