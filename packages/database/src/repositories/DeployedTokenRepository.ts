@@ -112,31 +112,33 @@ export class DeployedTokenRepository extends BaseRepository {
       .execute()
 
     return result.map((row) => ({
-      deployedToken: {
+      deployedToken: toRecord({
         symbol: row.symbol,
         comment: row.comment,
         chain: row.chain,
         address: row.address,
         abstractTokenId: row.abstractTokenId,
         decimals: row.decimals,
-        deploymentTimestamp: UnixTime.fromDate(row.deploymentTimestamp),
-      },
+        deploymentTimestamp: row.deploymentTimestamp,
+      }),
       abstractToken:
-        row.id && row.abstractSymbol && row.reviewed !== null && row.category
-          ? {
-              symbol: row.abstractSymbol,
-              id: row.id,
-              issuer: row.issuer,
-              category: row.category as AbstractTokenRecord['category'],
-              iconUrl: row.iconUrl,
-              coingeckoId: row.coingeckoId,
-              coingeckoListingTimestamp: toTimestamp(
-                row.coingeckoListingTimestamp,
-              ),
-              comment: row.abstractComment,
-              reviewed: row.reviewed,
-            }
-          : undefined,
+        row.AbstractToken_id === null ||
+        row.AbstractToken_symbol === null ||
+        row.AbstractToken_category === null ||
+        row.AbstractToken_reviewed === null
+          ? undefined
+          : toAbstractTokenRecord({
+              id: row.AbstractToken_id,
+              issuer: row.AbstractToken_issuer,
+              symbol: row.AbstractToken_symbol,
+              category: row.AbstractToken_category,
+              iconUrl: row.AbstractToken_iconUrl,
+              coingeckoId: row.AbstractToken_coingeckoId,
+              coingeckoListingTimestamp:
+                row.AbstractToken_coingeckoListingTimestamp,
+              comment: row.AbstractToken_comment,
+              reviewed: row.AbstractToken_reviewed,
+            }),
     }))
   }
 
