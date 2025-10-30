@@ -876,7 +876,7 @@
       "orbitstack-standardgateway.DepositFinalized"
     ],
     "messages": ["orbitstack.L1ToL2Message"],
-    "transfers": ["orbitstack-standardgateway.L1ToL2Transfer", "orbitstack.L1ToL2Transfer"]
+    "transfers": ["orbitstack-standardgateway.L1ToL2Transfer"]
   },
   "hyperlane-mix": {
     "txs": [

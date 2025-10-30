@@ -194,7 +194,7 @@ export class OrbitStackPlugin implements InteropPlugin {
             srcEvent: messageDelivered,
             dstEvent: event,
           }),
-          Result.Transfer('orbitstack.L1ToL2Transfer', {
+          Result.Transfer('orbitstack-standardgateway.L1ToL2Transfer', {
             srcEvent: messageDelivered,
             srcAmount: messageDelivered.ctx.txValue,
             srcTokenAddress: Address32.NATIVE,
