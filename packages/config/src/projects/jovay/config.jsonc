@@ -6,6 +6,7 @@
     "eth:0x922248db4a99bb542539ae7165fb9d7a546fb9f1"
   ],
   "names": {
-    "eth:0x922248db4a99bb542539ae7165fb9d7a546fb9f1": "Escrow"
+    "eth:0x922248db4a99bb542539ae7165fb9d7a546fb9f1": "Escrow",
+    "eth:0xb220D17A11bd2d11e3f57a305FF5b481C81B1028": "L2Mailbox"
   }
 }

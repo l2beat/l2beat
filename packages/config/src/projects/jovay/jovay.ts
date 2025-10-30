@@ -1,12 +1,27 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  CONTRACTS,
+  REASON_FOR_BEING_OTHER,
+  RISK_VIEW,
+  TECHNOLOGY,
+} from '../../common'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { underReviewL2 } from '../../templates/underReview'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
-export const jovay: ScalingProject = underReviewL2({
-  id: 'jovay',
+const discovery = new ProjectDiscovery('jovay')
+
+export const jovay: ScalingProject = {
+  type: 'layer2',
+  id: ProjectId('jovay'),
   capability: 'universal',
   addedAt: UnixTime(1754392609),
   hasTestnet: true,
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Jovay',
     slug: 'jovay',
@@ -26,9 +41,42 @@ export const jovay: ScalingProject = underReviewL2({
       repositories: ['https://github.com/jovaynetwork'],
     },
   },
+  proofSystem: undefined,
   dataAvailability: undefined,
-  proofSystem: {
-    type: 'Validity',
+  stage: {
+    stage: 'NotApplicable',
+  },
+  config: {
+    escrows: [
+      {
+        address: EthereumAddress('0x922248db4a99bb542539ae7165fb9d7a546fb9f1'),
+        sinceTimestamp: UnixTime(1754392609),
+        tokens: ['ETH'],
+        chain: 'ethereum',
+      },
+    ],
+    activityConfig: {
+      type: 'block',
+      startBlock: 1,
+    },
+  },
+  riskView: {
+    stateValidation: {
+      description:
+    'A multi-proof system with a TEE verifier and a ZK verifier is configured . However, only the TEE verifier can currently be used to prove blocks.',
+      sentiment: 'bad',
+      value: 'TEE validation',
+      executionDelay: 0,
+    },
+    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
+    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(false),
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+  },
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
+  contracts: {
+    addresses: generateDiscoveryDrivenContracts([discovery]),
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   chainConfig: {
     name: 'jovay',
@@ -43,16 +91,5 @@ export const jovay: ScalingProject = underReviewL2({
       },
     ],
   },
-  activityConfig: {
-    type: 'block',
-    startBlock: 1,
-  },
-  escrows: [
-    {
-      address: EthereumAddress('0x922248db4a99bb542539ae7165fb9d7a546fb9f1'),
-      sinceTimestamp: UnixTime(1754392609),
-      tokens: ['ETH'],
-      chain: 'ethereum',
-    },
-  ],
-})
+  discoveryInfo: getDiscoveryInfo([discovery]),
+}
