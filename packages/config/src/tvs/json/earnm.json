@@ -1,0 +1,73 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "earnm",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "earnm-EARNM",
+      "priceId": "earnm",
+      "symbol": "EARNM",
+      "name": "EARNM",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52925/large/earnm.jpg?1734706204",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x3e62fED35c97145e6B445704B8CE74B2544776A9",
+            "chain": "arbitrum",
+            "escrowAddress": "0xA9F4ee72439afC704db48dc049CbFb7E914aD300",
+            "decimals": 18,
+            "sinceTimestamp": 1745356800
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x3e62fED35c97145e6B445704B8CE74B2544776A9",
+            "chain": "arbitrum",
+            "escrowAddress": "0x0b6b5aFEe8602A4d88dC26Fc2E85b2d1236156F6",
+            "decimals": 18,
+            "sinceTimestamp": 1745356800
+          }
+        ]
+      },
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1745356800
+            },
+            "priceId": "earnm"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1745356800
+            },
+            "priceId": "earnm"
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    }
+  ]
+}

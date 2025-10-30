@@ -7,6 +7,7 @@ export const xrone: ScalingProject = underReviewL3({
   id: 'xrone',
   capability: 'universal',
   addedAt: UnixTime(1737469445), // 2025-01-21T14:24:03+00:00
+  archivedAt: UnixTime(1761826453), // 2025-10-30T12:14:13Z
   hostChain: ProjectId('arbitrum'),
   badges: [
     BADGES.RaaS.Caldera,

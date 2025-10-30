@@ -20,6 +20,7 @@ import type { SevenDayTvsBreakdown } from '../scaling/tvs/get7dTvsBreakdown'
 export interface DaMonthlyUpdateEntry
   extends Omit<DataAvailabilityUpdate, 'daLayerId' | 'newProjectsIds'> {
   id: string
+  daLayerId: string
   name: string
   colors: ProjectCustomColors
   daProjects: ProjectId[]
@@ -110,7 +111,8 @@ function getDaMonthlyUpdateEntry(
   )?.src
 
   return {
-    id: daLayer.id,
+    id: daUpdateEntry.id,
+    daLayerId: daLayer.id,
     name: daUpdateEntry.name ?? daLayer.name,
     news: daUpdateEntry.news,
     type: daUpdateEntry.type,

@@ -28,7 +28,7 @@ export function DaUpdateSection({ daLayer, from, to }: Props) {
           to={to}
         />
         <MonthlyUpdateThroughputChart
-          id={daLayer.id}
+          id={daLayer.daLayerId}
           dataPosted={daLayer.allProjects.dataPosted}
           pastDayPosted={daLayer.pastDayPosted}
           from={from}
