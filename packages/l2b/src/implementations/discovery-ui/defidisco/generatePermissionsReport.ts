@@ -2,9 +2,9 @@ import { DiscoveryPaths } from '@l2beat/discovery'
 import * as fs from 'fs'
 import * as path from 'path'
 import type {
-  ApiPermissionOverridesResponse,
+  ApiFunctionsResponse,
 } from './types'
-import { resolveOwnersFromDiscovered } from './permissionOverrides'
+import { resolveOwnersFromDiscovered } from './functions'
 
 export interface ReportEntry {
   contractName: string
@@ -19,27 +19,27 @@ export function generatePermissionsReport(
 ): string {
   console.log(`Generating permissions report for project: ${project}`)
 
-  const overridesPath = getPermissionOverridesPath(paths, project)
+  const functionsPath = getFunctionsPath(paths, project)
   const discoveredPath = getDiscoveredPath(paths, project)
   const outputPath = getPermissionsReportPath(paths, project)
 
-  // Load permission overrides (contract-grouped structure)
-  let permissionOverrides: Record<string, any> = {}
-  if (fs.existsSync(overridesPath)) {
+  // Load functions data (contract-grouped structure)
+  let functions: Record<string, any> = {}
+  if (fs.existsSync(functionsPath)) {
     try {
-      const fileContent = fs.readFileSync(overridesPath, 'utf8')
-      const data = JSON.parse(fileContent) as ApiPermissionOverridesResponse
-      permissionOverrides = data.contracts
-      const totalFunctions = Object.values(permissionOverrides).reduce((sum: number, contract: any) =>
+      const fileContent = fs.readFileSync(functionsPath, 'utf8')
+      const data = JSON.parse(fileContent) as ApiFunctionsResponse
+      functions = data.contracts
+      const totalFunctions = Object.values(functions).reduce((sum: number, contract: any) =>
         sum + contract.functions.length, 0)
-      console.log(`Loaded ${totalFunctions} permission overrides from ${Object.keys(permissionOverrides).length} contracts`)
+      console.log(`Loaded ${totalFunctions} functions from ${Object.keys(functions).length} contracts`)
     } catch (error) {
-      console.error('Error parsing permission overrides file:', error)
-      throw new Error('Failed to parse permission overrides file')
+      console.error('Error parsing functions file:', error)
+      throw new Error('Failed to parse functions file')
     }
   } else {
-    console.log('No permission overrides file found')
-    throw new Error('No permission overrides file found')
+    console.log('No functions file found')
+    throw new Error('No functions file found')
   }
 
   // Load discovered data for contract names
@@ -62,11 +62,11 @@ export function generatePermissionsReport(
   const reportEntries: ReportEntry[] = []
   let permissionedFunctionCount = 0
 
-  for (const [contractAddress, contractPermissions] of Object.entries(permissionOverrides)) {
+  for (const [contractAddress, contractFunctions] of Object.entries(functions)) {
     const contractName = getContractName(discoveredData, contractAddress)
 
-    for (const func of (contractPermissions as any).functions) {
-      if (func.userClassification === 'permissioned') {
+    for (const func of (contractFunctions as any).functions) {
+      if (func.isPermissioned) {
         permissionedFunctionCount++
         const impact = func.description || func.reason || 'No description provided'
 
@@ -82,7 +82,7 @@ export function generatePermissionsReport(
             // If no owners could be resolved, show the definition format
             if (owners.length === 0) {
               owners = func.ownerDefinitions.map((def: any) => {
-                return `${def.sourceField} → ${def.dataPath}`
+                return def.path
               })
             }
           } catch (error) {
@@ -163,14 +163,14 @@ No permissioned functions found.
   return header + rows + footer
 }
 
-function getPermissionOverridesPath(
+function getFunctionsPath(
   paths: DiscoveryPaths,
   project: string,
 ): string {
   return path.join(
     paths.discovery,
     project,
-    'permission-overrides.json',
+    'functions.json',
   )
 }
 

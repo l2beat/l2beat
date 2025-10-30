@@ -1,18 +1,18 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Fragment, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getPermissionOverrides, updatePermissionOverride, getCode } from '../../../api/api'
+import { getFunctions, updateFunction, getCode } from '../../../api/api'
 import { useMultiViewStore } from '../multi-view/store'
 import { useCodeStore } from '../../../components/editor/store'
 import { usePanelStore } from '../store/panel-store'
-import type { ApiAbi, ApiAbiEntry, PermissionOverride, OwnerDefinition } from '../../../api/types'
+import type { ApiAbi, ApiAbiEntry, FunctionEntry, OwnerDefinition } from '../../../api/types'
 import { partition } from '../../../utils/partition'
 import { AddressDisplay } from '../panel-values/AddressDisplay'
 import { Folder } from '../panel-values/Folder'
 import { FunctionFolder } from './FunctionFolder'
 
 // Extended type for local display with contractAddress
-interface PermissionOverrideWithContract extends PermissionOverride {
+interface FunctionEntryWithContract extends FunctionEntry {
   contractAddress: string
 }
 
@@ -51,7 +51,7 @@ function findAllFunctionOccurrences(sources: Array<{ name: string; code: string 
 export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
   const { project } = useParams()
   const queryClient = useQueryClient()
-  const [localOverrides, setLocalOverrides] = useState<PermissionOverrideWithContract[]>([])
+  const [localFunctions, setLocalFunctions] = useState<FunctionEntryWithContract[]>([])
 
   // Track current occurrence index for each function (key: "contractAddress:functionName")
   const [functionOccurrenceCounters, setFunctionOccurrenceCounters] = useState<Record<string, number>>({})
@@ -64,39 +64,39 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
   const { showRange, setSourceIndex } = useCodeStore()
 
 
-  // Load permission overrides for this project
-  const { data: overridesData } = useQuery({
-    queryKey: ['permission-overrides', project],
-    queryFn: () => project ? getPermissionOverrides(project) : null,
+  // Load functions data for this project
+  const { data: functionsData } = useQuery({
+    queryKey: ['functions', project],
+    queryFn: () => project ? getFunctions(project) : null,
     enabled: !!project,
   })
 
-  // Get permissions for the specific contracts we're displaying (much more efficient!)
-  const getOverridesForContract = (contractAddress: string) => {
-    const contractPermissions = overridesData?.contracts?.[contractAddress]?.functions || []
-    const localPermissionsForContract = localOverrides.filter(o => o.contractAddress === contractAddress)
+  // Get functions for the specific contracts we're displaying (much more efficient!)
+  const getFunctionsForContract = (contractAddress: string) => {
+    const contractFunctions = functionsData?.contracts?.[contractAddress]?.functions || []
+    const localFunctionsForContract = localFunctions.filter(o => o.contractAddress === contractAddress)
 
-    // Map contract permissions to include contractAddress (functions in contracts don't have it)
-    const withContractAddress = contractPermissions.map(func => ({
+    // Map contract functions to include contractAddress (functions in contracts don't have it)
+    const withContractAddress = contractFunctions.map(func => ({
       ...func,
       contractAddress
     }))
 
-    return [...withContractAddress, ...localPermissionsForContract]
+    return [...withContractAddress, ...localFunctionsForContract]
   }
 
-  const handlePermissionToggle = async (contractAddress: string, functionName: string, currentClassification: 'permissioned' | 'non-permissioned') => {
+  const handlePermissionToggle = async (contractAddress: string, functionName: string, currentIsPermissioned: boolean) => {
     if (!project) return
 
-    const newClassification = currentClassification === 'permissioned' ? 'non-permissioned' : 'permissioned'
+    const newIsPermissioned = !currentIsPermissioned
 
-    await updateOverride(contractAddress, functionName, { userClassification: newClassification })
+    await updateFunctionEntry(contractAddress, functionName, { isPermissioned: newIsPermissioned })
   }
 
   const handleCheckedToggle = async (contractAddress: string, functionName: string, currentChecked: boolean) => {
     if (!project) return
 
-    await updateOverride(contractAddress, functionName, { checked: !currentChecked })
+    await updateFunctionEntry(contractAddress, functionName, { checked: !currentChecked })
   }
 
   const handleScoreToggle = async (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk') => {
@@ -107,25 +107,25 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
     const nextIndex = (currentIndex + 1) % scoreOrder.length
     const newScore = scoreOrder[nextIndex]
 
-    await updateOverride(contractAddress, functionName, { score: newScore })
+    await updateFunctionEntry(contractAddress, functionName, { score: newScore })
   }
 
   const handleDescriptionUpdate = async (contractAddress: string, functionName: string, description: string) => {
     if (!project) return
 
-    await updateOverride(contractAddress, functionName, { description })
+    await updateFunctionEntry(contractAddress, functionName, { description })
   }
 
   const handleOwnerDefinitionsUpdate = async (contractAddress: string, functionName: string, ownerDefinitions: OwnerDefinition[]) => {
     if (!project) return
 
-    await updateOverride(contractAddress, functionName, { ownerDefinitions })
+    await updateFunctionEntry(contractAddress, functionName, { ownerDefinitions })
   }
 
   const handleDelayUpdate = async (contractAddress: string, functionName: string, delay?: { contractAddress: string; fieldName: string }) => {
     if (!project) return
 
-    await updateOverride(contractAddress, functionName, { delay })
+    await updateFunctionEntry(contractAddress, functionName, { delay })
   }
 
   const handleOpenInCode = async (contractAddress: string, functionName: string) => {
@@ -187,36 +187,36 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
     }
   }
 
-  const updateOverride = async (
+  const updateFunctionEntry = async (
     contractAddress: string,
     functionName: string,
-    updates: Partial<Pick<PermissionOverride, 'userClassification' | 'checked' | 'score' | 'description' | 'ownerDefinitions' | 'delay'>>
+    updates: Partial<Pick<FunctionEntry, 'isPermissioned' | 'checked' | 'score' | 'description' | 'ownerDefinitions' | 'delay'>>
   ) => {
-    // Get current override data from contract-specific overrides
-    const contractOverrides = getOverridesForContract(contractAddress)
-    const currentOverride = contractOverrides.find(o => o.functionName === functionName)
+    // Get current function data from contract-specific functions
+    const contractFunctionsData = getFunctionsForContract(contractAddress)
+    const currentFunction = contractFunctionsData.find(o => o.functionName === functionName)
 
     // Create optimistic update
-    const newOverride: PermissionOverrideWithContract = {
+    const newFunction: FunctionEntryWithContract = {
       contractAddress,
       functionName,
-      userClassification: updates.userClassification ?? currentOverride?.userClassification ?? 'non-permissioned',
-      checked: updates.checked ?? currentOverride?.checked,
-      score: updates.score ?? currentOverride?.score,
-      description: updates.description ?? currentOverride?.description,
-      ownerDefinitions: updates.ownerDefinitions ?? currentOverride?.ownerDefinitions,
-      delay: updates.delay !== undefined ? updates.delay : currentOverride?.delay,
+      isPermissioned: updates.isPermissioned ?? currentFunction?.isPermissioned ?? false,
+      checked: updates.checked ?? currentFunction?.checked,
+      score: updates.score ?? currentFunction?.score,
+      description: updates.description ?? currentFunction?.description,
+      ownerDefinitions: updates.ownerDefinitions ?? currentFunction?.ownerDefinitions,
+      delay: updates.delay !== undefined ? updates.delay : currentFunction?.delay,
       timestamp: new Date().toISOString(),
     }
 
-    setLocalOverrides(prev => [
+    setLocalFunctions(prev => [
       ...prev.filter(o => !(o.contractAddress === contractAddress && o.functionName === functionName)),
-      newOverride
+      newFunction
     ])
 
     try {
       if (!project) return
-      await updatePermissionOverride(project, {
+      await updateFunction(project, {
         contractAddress,
         functionName,
         ...updates,
@@ -224,15 +224,15 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
 
       // Invalidate and refetch the query to get fresh data
       await queryClient.invalidateQueries({
-        queryKey: ['permission-overrides', project]
+        queryKey: ['functions', project]
       })
 
-      // Clear local overrides since we now have fresh server data
-      setLocalOverrides([])
+      // Clear local functions since we now have fresh server data
+      setLocalFunctions([])
     } catch (error) {
-      console.error('Failed to update permission override:', error)
+      console.error('Failed to update function:', error)
       // Revert optimistic update on error
-      setLocalOverrides(prev => prev.filter(o => !(o.contractAddress === contractAddress && o.functionName === functionName)))
+      setLocalFunctions(prev => prev.filter(o => !(o.contractAddress === contractAddress && o.functionName === functionName)))
     }
   }
 
@@ -266,7 +266,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
           <PermissionsCode
             entries={abi.entries}
             contractAddress={abi.address}
-            overrides={getOverridesForContract(abi.address)}
+            functions={getFunctionsForContract(abi.address)}
             onPermissionToggle={handlePermissionToggle}
             onCheckedToggle={handleCheckedToggle}
             onScoreToggle={handleScoreToggle}
@@ -284,7 +284,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
 function PermissionsCode({
   entries,
   contractAddress,
-  overrides,
+  functions,
   onPermissionToggle,
   onCheckedToggle,
   onScoreToggle,
@@ -295,8 +295,8 @@ function PermissionsCode({
 }: {
   entries: ApiAbiEntry[]
   contractAddress: string
-  overrides: PermissionOverrideWithContract[]
-  onPermissionToggle: (contractAddress: string, functionName: string, currentClassification: 'permissioned' | 'non-permissioned') => void
+  functions: FunctionEntryWithContract[]
+  onPermissionToggle: (contractAddress: string, functionName: string, currentIsPermissioned: boolean) => void
   onCheckedToggle: (contractAddress: string, functionName: string, currentChecked: boolean) => void
   onScoreToggle: (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk') => void
   onDescriptionUpdate: (contractAddress: string, functionName: string, description: string) => void
@@ -325,7 +325,7 @@ function PermissionsCode({
         <WritePermissionsCodeEntries
           entries={write}
           contractAddress={contractAddress}
-          overrides={overrides}
+          functions={functions}
           onPermissionToggle={onPermissionToggle}
           onCheckedToggle={onCheckedToggle}
           onScoreToggle={onScoreToggle}
@@ -342,7 +342,7 @@ function PermissionsCode({
 function WritePermissionsCodeEntries({
   entries,
   contractAddress,
-  overrides,
+  functions,
   onPermissionToggle,
   onCheckedToggle,
   onScoreToggle,
@@ -353,8 +353,8 @@ function WritePermissionsCodeEntries({
 }: {
   entries: ApiAbiEntry[]
   contractAddress: string
-  overrides: PermissionOverrideWithContract[]
-  onPermissionToggle: (contractAddress: string, functionName: string, currentClassification: 'permissioned' | 'non-permissioned') => void
+  functions: FunctionEntryWithContract[]
+  onPermissionToggle: (contractAddress: string, functionName: string, currentIsPermissioned: boolean) => void
   onCheckedToggle: (contractAddress: string, functionName: string, currentChecked: boolean) => void
   onScoreToggle: (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk') => void
   onDescriptionUpdate: (contractAddress: string, functionName: string, description: string) => void
@@ -390,7 +390,7 @@ function WritePermissionsCodeEntries({
             entry={entry}
             contractAddress={contractAddress}
             functionName={functionName}
-            overrides={overrides}
+            functions={functions}
             onPermissionToggle={onPermissionToggle}
             onCheckedToggle={onCheckedToggle}
             onScoreToggle={onScoreToggle}

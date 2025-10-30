@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
-import type { ApiAbiEntry, PermissionOverride, AddressFieldValue } from '../../../api/types'
+import type { ApiAbiEntry, FunctionEntry, AddressFieldValue } from '../../../api/types'
 import * as solidity from '../../../components/editor/languages/solidity'
 import { IconCheckFalse } from './IconCheckFalse'
 import { IconCheckTrue } from './IconCheckTrue'
@@ -16,7 +16,7 @@ import { getProject } from '../../../api/api'
 import { usePanelStore } from '../store/panel-store'
 
 // Extended type for local display with contractAddress
-interface PermissionOverrideWithContract extends PermissionOverride {
+interface FunctionEntryWithContract extends FunctionEntry {
   contractAddress: string
 }
 
@@ -24,8 +24,8 @@ interface FunctionFolderProps {
   entry: ApiAbiEntry
   contractAddress: string
   functionName: string
-  overrides: PermissionOverrideWithContract[]
-  onPermissionToggle: (contractAddress: string, functionName: string, currentClassification: 'permissioned' | 'non-permissioned') => void
+  functions: FunctionEntryWithContract[]
+  onPermissionToggle: (contractAddress: string, functionName: string, currentIsPermissioned: boolean) => void
   onCheckedToggle: (contractAddress: string, functionName: string, currentChecked: boolean) => void
   onScoreToggle: (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk') => void
   onDescriptionUpdate: (contractAddress: string, functionName: string, description: string) => void
@@ -229,7 +229,7 @@ export function FunctionFolder({
   entry,
   contractAddress,
   functionName,
-  overrides,
+  functions,
   onPermissionToggle,
   onCheckedToggle,
   onScoreToggle,
@@ -241,8 +241,8 @@ export function FunctionFolder({
   const { project } = useParams()
   const [isOpen, setIsOpen] = useState(false)
 
-  // Get current override data for this function
-  const currentOverride = overrides.find(o =>
+  // Get current function data for this function
+  const currentFunction = functions.find(o =>
     o.contractAddress === contractAddress && o.functionName === functionName
   )
 
@@ -255,13 +255,13 @@ export function FunctionFolder({
 
   // Owner resolution using unified path expressions
   const resolvedOwners = React.useMemo(() => {
-    if (!currentOverride?.ownerDefinitions || !projectData?.entries) {
+    if (!currentFunction?.ownerDefinitions || !projectData?.entries) {
       return []
     }
 
     const allContracts = projectData.entries.flatMap(e => [...e.initialContracts, ...e.discoveredContracts])
 
-    return currentOverride.ownerDefinitions.map(definition => {
+    return currentFunction.ownerDefinitions.map(definition => {
       try {
         const result = resolvePathExpressionInUI(allContracts, contractAddress, definition.path)
 
@@ -285,7 +285,7 @@ export function FunctionFolder({
         }
       }
     })
-  }, [currentOverride?.ownerDefinitions, projectData, contractAddress])
+  }, [currentFunction?.ownerDefinitions, projectData, contractAddress])
 
   // Resolve path expression in UI
   function resolvePathExpressionInUI(
@@ -362,11 +362,11 @@ export function FunctionFolder({
 
   // Resolve delay value from projectData
   const resolvedDelay = React.useMemo(() => {
-    if (!currentOverride?.delay || !projectData?.entries) {
+    if (!currentFunction?.delay || !projectData?.entries) {
       return null
     }
 
-    const delayRef = currentOverride.delay
+    const delayRef = currentFunction.delay
 
     try {
       for (const entry of projectData.entries) {
@@ -399,7 +399,7 @@ export function FunctionFolder({
         error: error instanceof Error ? error.message : 'Unknown error'
       }
     }
-  }, [currentOverride?.delay, projectData])
+  }, [currentFunction?.delay, projectData])
 
   // State for managing owner definitions (unified path approach)
   const [isAddingOwner, setIsAddingOwner] = useState(false)
@@ -470,10 +470,10 @@ export function FunctionFolder({
     return []
   }
 
-  const permissionStatus = currentOverride?.userClassification || 'non-permissioned'
-  const checkedStatus = currentOverride?.checked || false
-  const scoreStatus = currentOverride?.score || 'unscored'
-  const description = currentOverride?.description || ''
+  const isPermissioned = currentFunction?.isPermissioned || false
+  const checkedStatus = currentFunction?.checked || false
+  const scoreStatus = currentFunction?.score || 'unscored'
+  const description = currentFunction?.description || ''
 
   // Local state for description input with debouncing
   const [localDescription, setLocalDescription] = useState(description)
@@ -497,18 +497,17 @@ export function FunctionFolder({
 
   // Update edited owner paths when external data changes
   useEffect(() => {
-    if (currentOverride?.ownerDefinitions) {
+    if (currentFunction?.ownerDefinitions) {
       const initialPaths: Record<number, string> = {}
-      currentOverride.ownerDefinitions.forEach((def, index) => {
+      currentFunction.ownerDefinitions.forEach((def, index) => {
         initialPaths[index] = def.path
       })
       setEditedOwnerPaths(initialPaths)
     } else {
       setEditedOwnerPaths({})
     }
-  }, [currentOverride?.ownerDefinitions])
+  }, [currentFunction?.ownerDefinitions])
 
-  const isPermissioned = permissionStatus === 'permissioned'
   const isChecked = checkedStatus
 
   // Validation for checking functionality
@@ -521,7 +520,7 @@ export function FunctionFolder({
     // For permissioned functions, require all fields to be completed
     const hasValidScore = scoreStatus !== 'unscored'
     const hasDescription = description.trim().length > 0
-    const hasOwnerDefinitions = (currentOverride?.ownerDefinitions || []).length > 0
+    const hasOwnerDefinitions = (currentFunction?.ownerDefinitions || []).length > 0
     return hasValidScore && hasDescription && hasOwnerDefinitions
   }
 
@@ -568,7 +567,7 @@ export function FunctionFolder({
 
     // Set new timeout to save after user stops typing (500ms delay)
     ownerPathTimeoutRef.current = setTimeout(() => {
-      const currentDefinitions = currentOverride?.ownerDefinitions || []
+      const currentDefinitions = currentFunction?.ownerDefinitions || []
       const originalPath = currentDefinitions[index]?.path
 
       if (newPath !== originalPath && newPath.trim().length > 0) {
@@ -715,7 +714,7 @@ export function FunctionFolder({
 
           {/* Permission Icon */}
           <button
-            onClick={() => onPermissionToggle(contractAddress, functionName, permissionStatus)}
+            onClick={() => onPermissionToggle(contractAddress, functionName, isPermissioned)}
             className="inline-block cursor-pointer transition-colors"
             style={{
               color: isPermissioned ? '#f87171' : '#9ca3af', // red-400 : gray-400
@@ -768,7 +767,7 @@ export function FunctionFolder({
           </button>
 
           {/* Delay Indicator Icon */}
-          {currentOverride?.delay && resolvedDelay?.isResolved && (
+          {currentFunction?.delay && resolvedDelay?.isResolved && (
             <span
               className="inline-block text-xs"
               style={{
@@ -812,10 +811,10 @@ export function FunctionFolder({
             </div>
 
             {/* Current owner definitions with resolved addresses and delete buttons */}
-            {currentOverride?.ownerDefinitions && currentOverride.ownerDefinitions.length > 0 && (
+            {currentFunction?.ownerDefinitions && currentFunction.ownerDefinitions.length > 0 && (
               <div className="mb-3">
                 <div className="text-xs text-coffee-400 mb-1">
-                  Current Definitions ({currentOverride.ownerDefinitions.length}):
+                  Current Definitions ({currentFunction.ownerDefinitions.length}):
                 </div>
 
                 {ownersLoading && (
@@ -827,7 +826,7 @@ export function FunctionFolder({
                 )}
 
                 <div className="space-y-2">
-                  {currentOverride.ownerDefinitions.map((definition, index) => {
+                  {currentFunction.ownerDefinitions.map((definition, index) => {
                     const correspondingResolved = resolvedOwners[index]
 
                     return (
@@ -987,7 +986,7 @@ export function FunctionFolder({
               <label className="block text-xs text-coffee-300">
                 Function Delay
               </label>
-              {currentOverride?.delay ? (
+              {currentFunction?.delay ? (
                 <button
                   onClick={handleClearDelay}
                   className="text-xs bg-coffee-700 hover:bg-coffee-600 text-coffee-100 px-2 py-1 rounded"
@@ -1005,11 +1004,11 @@ export function FunctionFolder({
             </div>
 
             {/* Display current delay */}
-            {currentOverride?.delay && (
+            {currentFunction?.delay && (
               <div className="mb-3">
                 <div className="bg-coffee-800 p-2 rounded">
                   <div className="text-xs font-mono text-coffee-300 mb-1">
-                    {currentOverride.delay.fieldName} on {availableContracts.find(c => c.address === currentOverride.delay?.contractAddress)?.name || 'Unknown'} ({currentOverride.delay.contractAddress.slice(0, 10)}...)
+                    {currentFunction.delay.fieldName} on {availableContracts.find(c => c.address === currentFunction.delay?.contractAddress)?.name || 'Unknown'} ({currentFunction.delay.contractAddress.slice(0, 10)}...)
                   </div>
                   {resolvedDelay?.isResolved && (
                     <div className="text-sm font-bold text-green-400">
@@ -1026,7 +1025,7 @@ export function FunctionFolder({
             )}
 
             {/* Set delay form */}
-            {isSettingDelay && !currentOverride?.delay && (
+            {isSettingDelay && !currentFunction?.delay && (
               <div className="bg-coffee-800 p-3 rounded">
                 <div className="mb-2">
                   <label className="block text-xs text-coffee-300 mb-1">Contract:</label>

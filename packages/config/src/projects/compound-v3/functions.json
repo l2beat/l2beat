@@ -1,14 +1,14 @@
 {
   "version": "1.0",
-  "lastModified": "2025-10-07T16:20:49.617Z",
+  "lastModified": "2025-10-30T17:38:22.674Z",
   "contracts": {
     "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925": {
       "functions": [
         {
           "functionName": "acceptAdmin",
-          "userClassification": "permissioned",
-          "reason": "Test permission toggle",
-          "timestamp": "2025-09-16T18:01:56.876Z"
+          "isPermissioned": true,
+          "timestamp": "2025-09-16T18:01:56.876Z",
+          "reason": "Test permission toggle"
         }
       ]
     },
@@ -16,17 +16,17 @@
       "functions": [
         {
           "functionName": "deposit",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
           "timestamp": "2025-09-17T12:04:09.116Z"
         },
         {
           "functionName": "transferFrom",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
           "timestamp": "2025-09-17T15:57:41.594Z"
         },
         {
           "functionName": "withdraw",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
           "timestamp": "2025-09-17T15:57:42.803Z"
         }
       ]
@@ -35,80 +35,80 @@
       "functions": [
         {
           "functionName": "testFunction",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
           "timestamp": "2025-09-17T15:22:04.978Z"
         },
         {
           "functionName": "buyCollateral",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
           "timestamp": "2025-09-17T15:24:40.406Z"
         },
         {
           "functionName": "approveThis",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
           "timestamp": "2025-09-17T15:24:48.206Z"
         },
         {
           "functionName": "transferAsset",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
           "timestamp": "2025-09-17T15:24:53.388Z"
         },
         {
           "functionName": "withdraw",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
           "timestamp": "2025-09-17T15:24:57.051Z"
         },
         {
           "functionName": "withdrawReserves",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
           "timestamp": "2025-09-17T15:25:01.958Z"
         },
         {
           "functionName": "accrueAccount",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
           "timestamp": "2025-09-17T15:57:07.657Z"
         },
         {
           "functionName": "initializeStorage",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
           "timestamp": "2025-09-17T15:57:09.278Z"
         },
         {
           "functionName": "supply",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
           "timestamp": "2025-09-17T15:57:11.754Z"
         },
         {
           "functionName": "supplyFrom",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
           "timestamp": "2025-09-17T15:57:12.696Z"
         },
         {
           "functionName": "supplyTo",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
           "timestamp": "2025-09-17T15:57:14.314Z"
         },
         {
           "functionName": "transfer",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
           "timestamp": "2025-09-17T15:57:15.021Z"
         },
         {
           "functionName": "transferAssetFrom",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
           "timestamp": "2025-09-17T15:57:15.713Z"
         },
         {
           "functionName": "pause",
-          "userClassification": "permissioned",
-          "ownerDefinitions": [],
-          "timestamp": "2025-10-01T19:10:13.425Z"
+          "isPermissioned": true,
+          "timestamp": "2025-10-01T19:10:13.425Z",
+          "ownerDefinitions": []
         },
         {
           "functionName": "absorb",
-          "userClassification": "non-permissioned",
-          "score": "medium-risk",
-          "timestamp": "2025-09-18T21:34:51.373Z"
+          "isPermissioned": false,
+          "timestamp": "2025-09-18T21:34:51.373Z",
+          "score": "medium-risk"
         }
       ]
     },
@@ -116,9 +116,9 @@
       "functions": [
         {
           "functionName": "testFunc",
-          "userClassification": "non-permissioned",
-          "checked": true,
-          "timestamp": "2025-09-17T16:08:22.600Z"
+          "isPermissioned": false,
+          "timestamp": "2025-09-17T16:08:22.600Z",
+          "checked": true
         }
       ]
     },
@@ -126,48 +126,48 @@
       "functions": [
         {
           "functionName": "upgradeToAndCall",
-          "userClassification": "permissioned",
-          "checked": true,
-          "timestamp": "2025-09-17T16:09:02.745Z"
+          "isPermissioned": true,
+          "timestamp": "2025-09-17T16:09:02.745Z",
+          "checked": true
         },
         {
           "functionName": "changeAdmin",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-01T19:09:44.175Z",
           "checked": true,
           "score": "high-risk",
           "ownerDefinitions": [
             {
               "path": "$self.$admin"
             }
-          ],
-          "timestamp": "2025-10-01T19:09:44.175Z"
+          ]
         },
         {
           "functionName": "implementation",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
+          "timestamp": "2025-09-19T18:38:52.063Z",
           "checked": true,
-          "score": "unscored",
-          "timestamp": "2025-09-19T18:38:52.063Z"
+          "score": "unscored"
         },
         {
           "functionName": "upgradeTo",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-09-30T15:21:54.826Z",
           "checked": true,
           "score": "low-risk",
           "delay": {
             "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
             "fieldName": "delay"
-          },
-          "timestamp": "2025-09-30T15:21:54.826Z"
+          }
         },
         {
           "functionName": "admin",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-01T19:01:59.563Z",
           "checked": true,
           "score": "medium-risk",
           "description": "This function is a simple getter on the current admin address.",
-          "ownerDefinitions": [],
-          "timestamp": "2025-10-01T19:01:59.563Z"
+          "ownerDefinitions": []
         }
       ]
     },
@@ -175,36 +175,36 @@
       "functions": [
         {
           "functionName": "admin",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-09-18T22:07:55.636Z",
           "checked": true,
-          "score": "low-risk",
-          "timestamp": "2025-09-18T22:07:55.636Z"
+          "score": "low-risk"
         },
         {
           "functionName": "upgradeTo",
-          "userClassification": "permissioned",
-          "score": "high-risk",
-          "timestamp": "2025-09-18T22:08:37.444Z"
+          "isPermissioned": true,
+          "timestamp": "2025-09-18T22:08:37.444Z",
+          "score": "high-risk"
         },
         {
           "functionName": "upgradeToAndCall",
-          "userClassification": "permissioned",
-          "score": "high-risk",
-          "timestamp": "2025-09-18T22:08:38.899Z"
+          "isPermissioned": true,
+          "timestamp": "2025-09-18T22:08:38.899Z",
+          "score": "high-risk"
         },
         {
           "functionName": "implementation",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-09-22T23:05:27.892Z",
           "checked": false,
-          "score": "low-risk",
-          "timestamp": "2025-09-22T23:05:27.892Z"
+          "score": "low-risk"
         },
         {
           "functionName": "changeAdmin",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-09-22T23:05:28.567Z",
           "checked": false,
-          "score": "high-risk",
-          "timestamp": "2025-09-22T23:05:28.567Z"
+          "score": "high-risk"
         }
       ]
     },
@@ -212,7 +212,7 @@
       "functions": [
         {
           "functionName": "admin",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
           "timestamp": "2025-09-23T16:18:18.029Z"
         }
       ]

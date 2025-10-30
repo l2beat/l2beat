@@ -6,8 +6,8 @@ import type {
   ApiCreateConfigFileResponse,
   ApiCreateShapeResponse,
   ApiListTemplatesResponse,
-  ApiPermissionOverridesResponse,
-  ApiPermissionOverridesUpdateRequest,
+  ApiFunctionsResponse,
+  ApiFunctionsUpdateRequest,
   ApiContractTagsResponse,
   ApiContractTagsUpdateRequest,
   ApiPreviewResponse,
@@ -256,20 +256,20 @@ export function executeGeneratePermissionsReport(project: string): EventSource {
   return new EventSource(`/api/terminal/generate-permissions-report?${params}`)
 }
 
-export async function getPermissionOverrides(project: string): Promise<ApiPermissionOverridesResponse> {
-  const res = await fetch(`/api/projects/${project}/permission-overrides`)
+export async function getFunctions(project: string): Promise<ApiFunctionsResponse> {
+  const res = await fetch(`/api/projects/${project}/functions`)
   if (!res.ok) {
     throw new Error(res.statusText)
   }
   const data = await res.json()
-  return data as ApiPermissionOverridesResponse
+  return data as ApiFunctionsResponse
 }
 
-export async function updatePermissionOverride(
+export async function updateFunction(
   project: string,
-  request: ApiPermissionOverridesUpdateRequest
+  request: ApiFunctionsUpdateRequest
 ): Promise<void> {
-  const res = await fetch(`/api/projects/${project}/permission-overrides`, {
+  const res = await fetch(`/api/projects/${project}/functions`, {
     method: 'PUT',
     body: JSON.stringify(request),
     headers: {

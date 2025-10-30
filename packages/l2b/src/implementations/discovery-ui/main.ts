@@ -20,9 +20,9 @@ import { getProject } from './getProject'
 import { getProjects } from './getProjects'
 import { searchCode } from './searchCode'
 import {
-  getPermissionOverrides,
-  updatePermissionOverride,
-} from './defidisco/permissionOverrides'
+  getFunctions,
+  updateFunction,
+} from './defidisco/functions'
 import {
   getContractTags,
   updateContractTag,
@@ -178,7 +178,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     })
   })
 
-  app.get('/api/projects/:project/permission-overrides', (req, res) => {
+  app.get('/api/projects/:project/functions', (req, res) => {
     const paramsValidation = projectParamsSchema.safeParse(req.params)
     if (!paramsValidation.success) {
       res.status(400).json({ errors: paramsValidation.message })
@@ -187,15 +187,15 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     const { project } = paramsValidation.data
 
     try {
-      const response = getPermissionOverrides(paths, project)
+      const response = getFunctions(paths, project)
       res.json(response)
     } catch (error) {
-      console.error('Error loading permission overrides:', error)
-      res.status(500).json({ error: 'Failed to load permission overrides' })
+      console.error('Error loading functions:', error)
+      res.status(500).json({ error: 'Failed to load functions' })
     }
   })
 
-  app.put('/api/projects/:project/permission-overrides', (req, res) => {
+  app.put('/api/projects/:project/functions', (req, res) => {
     if (readonly) {
       res.status(403).json({ error: 'Server is in readonly mode' })
       return
@@ -209,11 +209,11 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     const { project } = paramsValidation.data
 
     try {
-      updatePermissionOverride(paths, project, req.body)
+      updateFunction(paths, project, req.body)
       res.json({ success: true })
     } catch (error) {
-      console.error('Error updating permission overrides:', error)
-      res.status(500).json({ error: 'Failed to update permission overrides' })
+      console.error('Error updating functions:', error)
+      res.status(500).json({ error: 'Failed to update functions' })
     }
   })
 
@@ -376,10 +376,10 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
 
         console.log(`✓ Saving function ${func.functionName} from ${func.sourceFile || 'unknown'} to ${targetAddress}`)
 
-        updatePermissionOverride(paths, project, {
+        updateFunction(paths, project, {
           contractAddress: targetAddress,
           functionName: func.functionName,
-          userClassification: func.aiClassification,
+          isPermissioned: func.isPermissioned,
           ownerDefinitions: func.ownerDefinitions,
         })
 

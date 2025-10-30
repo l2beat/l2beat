@@ -187,27 +187,26 @@ export interface UpgradeabilityActor {
   delay: string
 }
 
-// Permission overrides types
-export interface ApiPermissionOverridesResponse {
+// Functions types
+export interface ApiFunctionsResponse {
   version: string
   lastModified: string
-  contracts: Record<string, ContractPermissions>
+  contracts: Record<string, ContractFunctions>
 }
 
-export interface ContractPermissions {
-  functions: PermissionOverride[]
+export interface ContractFunctions {
+  functions: FunctionEntry[]
 }
 
-export interface PermissionOverride {
+export interface FunctionEntry {
   functionName: string
-  userClassification: 'permissioned' | 'non-permissioned'
-  aiClassification?: 'permissioned' | 'non-permissioned'  // NEW: AI-detected classification
+  isPermissioned: boolean
   checked?: boolean
   score?: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk'
   reason?: string
   description?: string
   timestamp: string
-  // NEW: Multiple owner definitions using L2BEAT's existing handlers
+  // Multiple owner definitions using L2BEAT's existing handlers
   ownerDefinitions?: OwnerDefinition[]
   // Delay field reference
   delay?: {
@@ -229,10 +228,10 @@ export interface OwnerDefinition {
   path: string              // Unified path expression
 }
 
-export interface ApiPermissionOverridesUpdateRequest {
+export interface ApiFunctionsUpdateRequest {
   contractAddress: string
   functionName: string
-  userClassification?: 'permissioned' | 'non-permissioned'
+  isPermissioned?: boolean
   checked?: boolean
   score?: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk'
   reason?: string

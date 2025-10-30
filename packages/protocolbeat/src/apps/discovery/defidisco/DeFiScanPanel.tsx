@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-import { getProject, getPermissionOverrides } from '../../../api/api'
+import { getProject, getFunctions } from '../../../api/api'
 import { useContractTags } from '../../../hooks/useContractTags'
 import { Checkbox } from '../../../components/Checkbox'
 import { usePanelStore } from '../store/panel-store'
@@ -21,21 +21,21 @@ export function DeFiScanPanel() {
   })
 
   const { data: contractTags } = useContractTags(project)
-  const { data: permissionOverrides } = useQuery({
-    queryKey: ['permission-overrides', project],
-    queryFn: () => project ? getPermissionOverrides(project) : null,
+  const { data: functions } = useQuery({
+    queryKey: ['functions', project],
+    queryFn: () => project ? getFunctions(project) : null,
     enabled: !!project,
   })
 
-  if (!response.data || !contractTags || !permissionOverrides) {
+  if (!response.data || !contractTags || !functions) {
     return <div className="flex h-full w-full items-center justify-center">Loading...</div>
   }
 
-  // Filter out external contracts from permissions data
-  const filteredPermissionOverrides = {
-    ...permissionOverrides,
+  // Filter out external contracts from functions data
+  const filteredFunctions = {
+    ...functions,
     contracts: Object.fromEntries(
-      Object.entries(permissionOverrides.contracts || {}).filter(([contractAddress, _]) => {
+      Object.entries(functions.contracts || {}).filter(([contractAddress, _]) => {
         // Normalize address format - remove 'eth:' prefix and convert to lowercase
         const normalizedAddress = contractAddress.replace('eth:', '').toLowerCase()
         const tag = contractTags.tags.find((tag: any) =>
@@ -63,11 +63,11 @@ export function DeFiScanPanel() {
         <StatusOfReviewSection
           projectData={response.data}
           contractTags={contractTags}
-          permissionOverrides={filteredPermissionOverrides}
+          functions={filteredFunctions}
         />
         <ResultsSection
           projectData={response.data}
-          permissionOverrides={filteredPermissionOverrides}
+          functions={filteredFunctions}
           contractTags={contractTags}
         />
       </div>
@@ -75,7 +75,7 @@ export function DeFiScanPanel() {
   )
 }
 
-function StatusOfReviewSection({ projectData, contractTags, permissionOverrides }: { projectData: any, contractTags: any, permissionOverrides: any }) {
+function StatusOfReviewSection({ projectData, contractTags, functions }: { projectData: any, contractTags: any, functions: any }) {
   // Get all contracts from all entries
   const allContracts: any[] = []
   const initialContracts: any[] = []
@@ -104,8 +104,8 @@ function StatusOfReviewSection({ projectData, contractTags, permissionOverrides 
   let permissionedFunctions = 0
   let checkedFunctions = 0
 
-  if (permissionOverrides.contracts) {
-    Object.values(permissionOverrides.contracts).forEach((contractPermissions: any) => {
+  if (functions.contracts) {
+    Object.values(functions.contracts).forEach((contractPermissions: any) => {
       contractPermissions.functions.forEach((func: any) => {
         if (func.userClassification === 'permissioned') {
           permissionedFunctions++
@@ -116,7 +116,7 @@ function StatusOfReviewSection({ projectData, contractTags, permissionOverrides 
       })
     })
   } else {
-    console.error('permissionOverrides.contracts is undefined:', permissionOverrides)
+    console.error('functions.contracts is undefined:', functions)
   }
 
   // Count by address type (including external)
@@ -217,7 +217,7 @@ function StatusOfReviewSection({ projectData, contractTags, permissionOverrides 
               <span>Progress: <span className="text-orange-400">{checkedFunctions}/{permissionedFunctions} reviewed</span></span>
               <ContractsWithPermissionsTable
                 projectData={projectData}
-                permissionOverrides={permissionOverrides}
+                functions={functions}
               />
             </div>
           </div>
@@ -330,22 +330,22 @@ function buildContractsMap(projectData: any): Map<string, { address: string; nam
   return map
 }
 
-function ContractsWithPermissionsTable({ projectData, permissionOverrides }: { projectData: any, permissionOverrides: any }) {
+function ContractsWithPermissionsTable({ projectData, functions }: { projectData: any, functions: any }) {
   const selectGlobal = usePanelStore((state) => state.select)
 
   // Build list of contracts with permissions
   // Permissions can be stored under proxy addresses, implementation addresses, or both
   const contractsMap = new Map<string, { address: string; name: string; permissions: { checked: number; total: number } }>()
 
-  if (permissionOverrides.contracts) {
+  if (functions.contracts) {
     // Build contract name lookup map
     const contractInfoMap = buildContractsMap(projectData)
 
     // First pass: Build a map of implementation -> proxy relationships
     const implToProxy = new Map<string, string>()
-    Object.keys(permissionOverrides.contracts).forEach((addr) => {
+    Object.keys(functions.contracts).forEach((addr) => {
       const implAddr = getImplementationAddress(addr, projectData)
-      if (implAddr && permissionOverrides.contracts[implAddr]) {
+      if (implAddr && functions.contracts[implAddr]) {
         implToProxy.set(implAddr, addr)
       }
     })
@@ -353,14 +353,14 @@ function ContractsWithPermissionsTable({ projectData, permissionOverrides }: { p
     // Second pass: Process each address and merge permissions
     const processed = new Set<string>()
 
-    Object.keys(permissionOverrides.contracts).forEach((permissionAddress) => {
+    Object.keys(functions.contracts).forEach((permissionAddress) => {
       if (processed.has(permissionAddress)) return
 
       // Calculate permissions for this address
       const calcPerms = (addr: string) => {
         let checked = 0
         let total = 0
-        const perms = permissionOverrides.contracts[addr]
+        const perms = functions.contracts[addr]
         if (perms) {
           perms.functions.forEach((func: any) => {
             if (func.userClassification === 'permissioned') {
@@ -404,7 +404,7 @@ function ContractsWithPermissionsTable({ projectData, permissionOverrides }: { p
 
         // Check if it's a proxy with an implementation
         const implAddr = getImplementationAddress(permissionAddress, projectData)
-        if (implAddr && permissionOverrides.contracts[implAddr]) {
+        if (implAddr && functions.contracts[implAddr]) {
           // Already handled in the implementation case above
           return
         }

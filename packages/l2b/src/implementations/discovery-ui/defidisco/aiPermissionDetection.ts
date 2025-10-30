@@ -4,7 +4,7 @@ import Anthropic from '@anthropic-ai/sdk'
 
 export interface AiDetectedPermission {
   functionName: string
-  aiClassification: 'permissioned' | 'non-permissioned'
+  isPermissioned: boolean
   ownerDefinitions?: OwnerDefinition[]
   sourceFile?: string  // Which source file this function was found in
 }
@@ -50,7 +50,7 @@ Response MUST be valid JSON matching this schema:
   "functions": [
     {
       "functionName": "string",
-      "aiClassification": "permissioned" | "non-permissioned",
+      "isPermissioned": boolean,
       "sourceFile": "string (the exact filename where this function is defined)",
       "ownerDefinitions": [
         {
@@ -65,7 +65,7 @@ Examples:
 1. Function with onlyOwner modifier in MyContract.p.sol:
    {
      "functionName": "pause",
-     "aiClassification": "permissioned",
+     "isPermissioned": true,
      "sourceFile": "MyContract.p.sol",
      "ownerDefinitions": [{"path": "$self.owner"}]
    }
@@ -73,7 +73,7 @@ Examples:
 2. Function with AccessControl role in the same contract (MyContract.sol):
    {
      "functionName": "mint",
-     "aiClassification": "permissioned",
+     "isPermissioned": true,
      "sourceFile": "MyContract.sol",
      "ownerDefinitions": [{"path": "$self.accessControl.MINTER_ROLE"}]
    }
@@ -81,7 +81,7 @@ Examples:
 3. Function with AccessControl using an external access control contract:
    {
      "functionName": "upgrade",
-     "aiClassification": "permissioned",
+     "isPermissioned": true,
      "sourceFile": "MyContract.sol",
      "ownerDefinitions": [{"path": "@aclContract.accessControl.DEFAULT_ADMIN_ROLE"}]
    }
@@ -89,7 +89,7 @@ Examples:
 4. Function accessible by admin role OR specific governor:
    {
      "functionName": "setParameter",
-     "aiClassification": "permissioned",
+     "isPermissioned": true,
      "sourceFile": "MyContract.sol",
      "ownerDefinitions": [
        {"path": "$self.accessControl.DEFAULT_ADMIN_ROLE"},
@@ -200,9 +200,8 @@ function parseAiResponse(responseText: string): AiDetectionResult {
       if (!func.functionName || typeof func.functionName !== 'string') {
         throw new Error('Invalid function: missing functionName')
       }
-      if (!func.aiClassification ||
-          (func.aiClassification !== 'permissioned' && func.aiClassification !== 'non-permissioned')) {
-        throw new Error(`Invalid aiClassification for ${func.functionName}`)
+      if (typeof func.isPermissioned !== 'boolean') {
+        throw new Error(`Invalid isPermissioned for ${func.functionName}: must be a boolean`)
       }
 
       // Validate ownerDefinitions if present

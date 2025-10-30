@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import { useState } from 'react'
-import { getProject, getPermissionOverrides, detectPermissionsWithAI } from '../../../api/api'
+import { getProject, getFunctions, detectPermissionsWithAI } from '../../../api/api'
 import type { ApiAddressEntry, ApiProjectContract } from '../../../api/types'
 import { ActionNeededState } from '../../../components/ActionNeededState'
 import { AddressIcon } from '../../../components/AddressIcon'
@@ -65,14 +65,14 @@ function Display({
   }
   const addresses = getAddressesToCopy(selected)
 
-  // Check if contract has existing permissions
-  const { data: permissionOverrides } = useQuery({
-    queryKey: ['permission-overrides', project],
-    queryFn: () => getPermissionOverrides(project),
+  // Check if contract has existing functions
+  const { data: functions } = useQuery({
+    queryKey: ['functions', project],
+    queryFn: () => getFunctions(project),
     enabled: !!project,
   })
 
-  const hasExistingPermissions = permissionOverrides?.contracts?.[selected.address]?.functions?.length > 0
+  const hasExistingPermissions = functions?.contracts?.[selected.address]?.functions?.length > 0
 
   // AI detection mutation
   const aiDetectionMutation = useMutation({
@@ -82,8 +82,8 @@ function Display({
     },
     onSuccess: (data) => {
       setAiDetectionStatus(`✓ Detected ${data.detectedFunctions} functions`)
-      // Invalidate permission overrides to refresh the UI
-      queryClient.invalidateQueries({ queryKey: ['permission-overrides', project] })
+      // Invalidate functions to refresh the UI
+      queryClient.invalidateQueries({ queryKey: ['functions', project] })
       // Clear status after 3 seconds
       setTimeout(() => setAiDetectionStatus(''), 3000)
     },

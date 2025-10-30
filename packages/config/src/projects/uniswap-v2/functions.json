@@ -1,18 +1,18 @@
 {
   "version": "1.0",
-  "lastModified": "2025-10-07T16:20:49.641Z",
+  "lastModified": "2025-10-30T17:38:22.694Z",
   "contracts": {
     "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC": {
       "functions": [
         {
           "functionName": "executeTransaction",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
+          "timestamp": "2025-10-01T19:11:57.678Z",
           "ownerDefinitions": [
             {
               "path": "$self.admin"
             }
-          ],
-          "timestamp": "2025-10-01T19:11:57.678Z"
+          ]
         }
       ]
     }

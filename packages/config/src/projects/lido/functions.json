@@ -1,12 +1,13 @@
 {
   "version": "1.0",
-  "lastModified": "2025-10-13T21:38:30.281Z",
+  "lastModified": "2025-10-30T17:45:41.966Z",
   "contracts": {
     "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": {
       "functions": [
         {
           "functionName": "setOwner",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-06T14:44:26.723Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the owner of the contract. This role is dedicated to the DAO. The owner can add new guardians, change the quorum, and unpause the deposits.",
@@ -14,12 +15,12 @@
             {
               "path": "$self.getOwner"
             }
-          ],
-          "timestamp": "2025-10-06T14:44:26.723Z"
+          ]
         },
         {
           "functionName": "setPauseIntentValidityPeriodBlocks",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-06T15:05:15.917Z",
           "checked": true,
           "score": "medium-risk",
           "description": "Sets the window of validity of a pause intent. This is the reaction time allowed for guardians to pause deposits. When a guardian wants to pause deposits it specifies a block number, the pause is only applied if the current block number is within the validity period of the specified block. This is to avoid replay of pause messages.",
@@ -27,12 +28,12 @@
             {
               "path": "$self.getOwner"
             }
-          ],
-          "timestamp": "2025-10-06T15:05:15.917Z"
+          ]
         },
         {
           "functionName": "setMaxOperatorsPerUnvetting",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-06T15:05:10.563Z",
           "checked": true,
           "score": "low-risk",
           "description": "Sets a limit on how many node operators can have their vetted signing keys unvetted in one transaction, as a safeguard against drastic changes.",
@@ -40,12 +41,12 @@
             {
               "path": "$self.getOwner"
             }
-          ],
-          "timestamp": "2025-10-06T15:05:10.563Z"
+          ]
         },
         {
           "functionName": "setGuardianQuorum",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-06T14:47:10.959Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the quorum value. This is the minimum number of guardians that need to take part in a deposit for it to be valid.",
@@ -53,25 +54,25 @@
             {
               "path": "$self.getOwner"
             }
-          ],
-          "timestamp": "2025-10-06T14:47:10.959Z"
+          ]
         },
         {
           "functionName": "addGuardian",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
           "checked": true,
-          "score": "high-risk",
+          "score": "medium-risk",
           "description": "Adds a guardian and sets a new custom quorum value. Guardians co-sign deposits to reduce the risk of collusion with node operators.",
           "ownerDefinitions": [
             {
               "path": "$self.getOwner"
             }
           ],
-          "timestamp": "2025-10-07T16:31:11.386Z"
+          "timestamp": "2025-10-30T17:45:41.966Z"
         },
         {
           "functionName": "addGuardians",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-06T14:32:19.568Z",
           "checked": true,
           "score": "high-risk",
           "description": "Adds multiple guardians and sets a new custom quorum value. Guardians co-sign deposits to reduce the risk of collusion with node operators.",
@@ -79,12 +80,12 @@
             {
               "path": "$self.getOwner"
             }
-          ],
-          "timestamp": "2025-10-06T14:32:19.568Z"
+          ]
         },
         {
           "functionName": "removeGuardian",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-06T14:36:26.745Z",
           "checked": true,
           "score": "high-risk",
           "description": "Removes a guardian address and sets a new quorum value. There are no protections on the quorum, this could be set to zero (see setGuardianQuorum).",
@@ -92,12 +93,12 @@
             {
               "path": "$self.getOwner"
             }
-          ],
-          "timestamp": "2025-10-06T14:36:26.745Z"
+          ]
         },
         {
           "functionName": "pauseDeposits",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-06T15:01:19.198Z",
           "checked": true,
           "score": "medium-risk",
           "description": "Pauses the deposits. Funds can no longer be deposited into new validators until deposits are unpaused. This can be called by any guardian when a frontrunning by a node operator is suspected and prevents the loss of user funds through deposits.",
@@ -105,12 +106,12 @@
             {
               "path": "$self.getGuardians"
             }
-          ],
-          "timestamp": "2025-10-06T15:01:19.198Z"
+          ]
         },
         {
           "functionName": "unpauseDeposits",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-06T14:43:53.476Z",
           "checked": true,
           "score": "low-risk",
           "description": "Unpauses the deposits without delay.",
@@ -118,12 +119,12 @@
             {
               "path": "$self.getOwner"
             }
-          ],
-          "timestamp": "2025-10-06T14:43:53.476Z"
+          ]
         },
         {
           "functionName": "depositBufferedEther",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-06T15:01:55.782Z",
           "checked": true,
           "score": "high-risk",
           "description": "Deposits ETH into a given validator using `Lido.deposit`. The message must include at least 4/6 signatures from guardians for it to be valid.",
@@ -131,12 +132,12 @@
             {
               "path": "$self.getGuardians"
             }
-          ],
-          "timestamp": "2025-10-06T15:01:55.782Z"
+          ]
         },
         {
           "functionName": "unvetSigningKeys",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-06T15:05:48.571Z",
           "checked": true,
           "score": "low-risk",
           "description": "Unvets signing keys for the given node operators. This can be called by any guardian when a frontrunning by a node operator is suspectedand prevents the loss of user funds through deposits.",
@@ -144,8 +145,7 @@
             {
               "path": "$self.getGuardians"
             }
-          ],
-          "timestamp": "2025-10-06T15:05:48.571Z"
+          ]
         }
       ]
     },
@@ -153,7 +153,8 @@
       "functions": [
         {
           "functionName": "createPermission",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-07T21:23:36.668Z",
           "checked": true,
           "score": "low-risk",
           "description": "Creates a new permission and specifies its permission manager and the role ID.\t",
@@ -161,12 +162,12 @@
             {
               "path": "$self.CREATE_PERMISSIONS_ROLE"
             }
-          ],
-          "timestamp": "2025-10-07T21:23:36.668Z"
+          ]
         },
         {
           "functionName": "grantPermission",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-07T21:13:38.281Z",
           "checked": true,
           "score": "high-risk",
           "description": "Grants a permission (a role) to an entity. The entity can then perform all the actions associated with the role. Optionally the manager can specify parameters associated with the permission that could grant additional permisisons specifically for those parameters.\t",
@@ -216,12 +217,12 @@
             {
               "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].CREATE_VOTES_ROLE.manager"
             }
-          ],
-          "timestamp": "2025-10-07T21:13:38.281Z"
+          ]
         },
         {
           "functionName": "grantPermissionP",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-07T21:13:46.752Z",
           "checked": true,
           "score": "high-risk",
           "description": "Grants a permission with parameters. Similar to grantPermission but allows specifying additional parameters that restrict or extend the permission.",
@@ -271,12 +272,12 @@
             {
               "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].CREATE_VOTES_ROLE.manager"
             }
-          ],
-          "timestamp": "2025-10-07T21:13:46.752Z"
+          ]
         },
         {
           "functionName": "revokePermission",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-07T21:22:33.913Z",
           "checked": true,
           "score": "low-risk",
           "description": "Revokes a permission from an entity.\t",
@@ -326,12 +327,12 @@
             {
               "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].CREATE_VOTES_ROLE.manager"
             }
-          ],
-          "timestamp": "2025-10-07T21:22:33.913Z"
+          ]
         },
         {
           "functionName": "setPermissionManager",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-07T21:23:22.058Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets a permission (role)'s manager. The manager can grant and revoke the permissions for that role ID.\t",
@@ -381,12 +382,12 @@
             {
               "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].CREATE_VOTES_ROLE.manager"
             }
-          ],
-          "timestamp": "2025-10-07T21:23:22.058Z"
+          ]
         },
         {
           "functionName": "removePermissionManager",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-07T21:22:59.241Z",
           "checked": true,
           "score": "low-risk",
           "description": "Removes the permission manager for a role and sets it to the zero address. This role can no longer be granted or revoked, but a new manager can still be named using the createPermission function.\t",
@@ -436,12 +437,12 @@
             {
               "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].CREATE_VOTES_ROLE.manager"
             }
-          ],
-          "timestamp": "2025-10-07T21:22:59.241Z"
+          ]
         },
         {
           "functionName": "createBurnedPermission",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-07T21:22:02.517Z",
           "checked": true,
           "score": "low-risk",
           "description": "Permanently locks a permission so it can never be modified. This variant is called when the manager of the role was already the zero address.\t",
@@ -449,12 +450,12 @@
             {
               "path": "$self.permissions[0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb].CREATE_PERMISSIONS_ROLE"
             }
-          ],
-          "timestamp": "2025-10-07T21:22:02.517Z"
+          ]
         },
         {
           "functionName": "burnPermissionManager",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-07T21:22:18.000Z",
           "checked": true,
           "score": "low-risk",
           "description": "Permanently locks a permission so it can never be modified. This is done by changing the manager to a BURN_ENTITY.\t",
@@ -504,8 +505,7 @@
             {
               "path": "$self.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].CREATE_VOTES_ROLE.manager"
             }
-          ],
-          "timestamp": "2025-10-07T21:22:18.000Z"
+          ]
         }
       ]
     },
@@ -513,7 +513,8 @@
       "functions": [
         {
           "functionName": "requestBurnMyStETHForCover",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:14:47.521Z",
           "checked": true,
           "score": "low-risk",
           "description": "Tranfers stETH from the sender and irreversibly locks it on the burner contract. This increases the cover-backed burning counter. A share burn is to compensate a slashing event.\t",
@@ -521,12 +522,12 @@
             {
               "path": "$self.accessControl.REQUEST_BURN_MY_STETH_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-08T00:14:47.521Z"
+          ]
         },
         {
           "functionName": "requestBurnSharesForCover",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:18:36.050Z",
           "checked": true,
           "score": "low-risk",
           "description": "Transfers stETH shares from another user (who should have approved) and locks it on the burner contract. This increases the cover-backed burning counter. A share burn meant to cover is to compensate a slashing event.\t",
@@ -534,12 +535,12 @@
             {
               "path": "$self.accessControl.REQUEST_BURN_SHARES_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T00:18:36.050Z"
+          ]
         },
         {
           "functionName": "requestBurnMyStETH",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:19:24.302Z",
           "checked": true,
           "score": "low-risk",
           "description": "Tranfers stETH from the sender and irreversibly locks it on the burner contract. This increases the non-cover backed burning counter.\t",
@@ -547,12 +548,12 @@
             {
               "path": "$self.accessControl.REQUEST_BURN_MY_STETH_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T00:19:24.302Z"
+          ]
         },
         {
           "functionName": "requestBurnShares",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:17:57.884Z",
           "checked": true,
           "score": "low-risk",
           "description": "Transfers stETH shares from another user (who should have approved) and locks it on the burner contract. This increases the non-cover backed burning counter.\t",
@@ -560,27 +561,27 @@
             {
               "path": "$self.accessControl.REQUEST_BURN_SHARES_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T00:17:57.884Z"
+          ]
         },
         {
           "functionName": "recoverExcessStETH",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
           "timestamp": "2025-10-02T15:54:05.788Z"
         },
         {
           "functionName": "recoverERC20",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
           "timestamp": "2025-10-02T15:54:05.797Z"
         },
         {
           "functionName": "recoverERC721",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
           "timestamp": "2025-10-02T15:54:05.798Z"
         },
         {
           "functionName": "commitSharesToBurn",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:16:58.886Z",
           "checked": true,
           "score": "low-risk",
           "description": "Marks previously requested to burn cover and non-cover shares as burnt. This function is meant to be called by the Lido contract in the same tx as the share burning it actually done.\t",
@@ -588,12 +589,12 @@
             {
               "path": "$self.STETH"
             }
-          ],
-          "timestamp": "2025-10-08T00:16:58.886Z"
+          ]
         },
         {
           "functionName": "grantRole",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:21:11.982Z",
           "checked": true,
           "score": "high-risk",
           "description": "Grants a role within the contract to a specific address. There are roles to allow burning stETH either from a delegated address or from the caller itself. Only the Governance is currently allowed to burn its own stETH.\t",
@@ -601,12 +602,12 @@
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T00:21:11.982Z"
+          ]
         },
         {
           "functionName": "revokeRole",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:21:58.565Z",
           "checked": true,
           "score": "high-risk",
           "description": "Revokes a role to a specific address.\t",
@@ -614,8 +615,7 @@
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T00:21:58.565Z"
+          ]
         }
       ]
     },
@@ -623,7 +623,7 @@
       "functions": [
         {
           "functionName": "transferToVault",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
           "timestamp": "2025-10-02T19:19:15.299Z"
         }
       ]
@@ -632,7 +632,8 @@
       "functions": [
         {
           "functionName": "execute",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-07T20:54:38.166Z",
           "checked": true,
           "score": "high-risk",
           "description": "Executes arbitrary function calls to any external contract with a given ETH value. This can perform any action that is allowed to the Agent in other Lido contracts, which includes critical ones.",
@@ -640,12 +641,12 @@
             {
               "path": "@acl.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].EXECUTE_ROLE"
             }
-          ],
-          "timestamp": "2025-10-07T20:54:38.166Z"
+          ]
         },
         {
           "functionName": "safeExecute",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-07T20:50:58.535Z",
           "checked": true,
           "score": "high-risk",
           "description": "Similar to execute but with protections for known critical tokens. It ensures there are no direct calls to the protected tokens, the token balances don't decrease, and the list of protected tokens doesn't change.",
@@ -653,12 +654,12 @@
             {
               "path": "@acl.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].SAFE_EXECUTE_ROLE"
             }
-          ],
-          "timestamp": "2025-10-07T20:50:58.535Z"
+          ]
         },
         {
           "functionName": "addProtectedToken",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-07T20:58:00.862Z",
           "checked": true,
           "score": "low-risk",
           "description": "Adds a token to the protected list (maximum of 10 tokens). Those tokens are safeguarded when proposals are executed using safeExecute.",
@@ -666,12 +667,12 @@
             {
               "path": "@acl.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].ADD_PROTECTED_TOKEN_ROLE"
             }
-          ],
-          "timestamp": "2025-10-07T20:58:00.862Z"
+          ]
         },
         {
           "functionName": "removeProtectedToken",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-07T20:58:48.570Z",
           "checked": true,
           "score": "low-risk",
           "description": "Removes a token from the protected list.",
@@ -679,12 +680,12 @@
             {
               "path": "@acl.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].REMOVE_PROTECTED_TOKEN_ROLE"
             }
-          ],
-          "timestamp": "2025-10-07T20:58:48.570Z"
+          ]
         },
         {
           "functionName": "presignHash",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-07T20:59:27.623Z",
           "checked": true,
           "score": "high-risk",
           "description": "Pre-approves a hash according to ERC-1271. It allows the governance to approve a hash so that it is considered valid once verified. This allows the approval of a message without requiring the contract to actually sign it.",
@@ -692,12 +693,12 @@
             {
               "path": "@acl.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].ADD_PRESIGNED_HASH_ROLE"
             }
-          ],
-          "timestamp": "2025-10-07T20:59:27.623Z"
+          ]
         },
         {
           "functionName": "setDesignatedSigner",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-07T20:56:59.406Z",
           "checked": true,
           "score": "high-risk",
           "description": "Adds a designated signer. The external address can sign messages on behalf of the Agent according to ERC-1271.",
@@ -705,12 +706,12 @@
             {
               "path": "@acl.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].DESIGNATE_SIGNER_ROLE"
             }
-          ],
-          "timestamp": "2025-10-07T20:56:59.406Z"
+          ]
         },
         {
           "functionName": "forward",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-07T20:54:19.339Z",
           "checked": true,
           "score": "high-risk",
           "description": "Executes a script as the Agent. This is meant to be called by to execute proposals through the Agent.",
@@ -718,12 +719,12 @@
             {
               "path": "@acl.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].RUN_SCRIPT_ROLE"
             }
-          ],
-          "timestamp": "2025-10-07T20:54:19.339Z"
+          ]
         },
         {
           "functionName": "transfer",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-07T20:51:56.517Z",
           "checked": true,
           "score": "low-risk",
           "description": "Transfers a given ERC20 token out of the contract to a given address.",
@@ -731,14 +732,13 @@
             {
               "path": "@acl.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].TRANSFER_ROLE"
             }
-          ],
-          "timestamp": "2025-10-07T20:51:56.517Z"
+          ]
         },
         {
           "functionName": "initialize",
-          "userClassification": "non-permissioned",
-          "checked": true,
-          "timestamp": "2025-10-06T15:06:24.675Z"
+          "isPermissioned": false,
+          "timestamp": "2025-10-06T15:06:24.675Z",
+          "checked": true
         }
       ]
     },
@@ -746,7 +746,7 @@
       "functions": [
         {
           "functionName": "proxy__upgradeTo",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
           "timestamp": "2025-10-02T21:26:09.167Z"
         }
       ]
@@ -755,9 +755,9 @@
       "functions": [
         {
           "functionName": "addNodeOperatorStETH",
-          "userClassification": "permissioned",
-          "score": "medium-risk",
-          "timestamp": "2025-10-02T21:26:35.194Z"
+          "isPermissioned": true,
+          "timestamp": "2025-10-02T21:26:35.194Z",
+          "score": "medium-risk"
         }
       ]
     },
@@ -765,7 +765,7 @@
       "functions": [
         {
           "functionName": "proxy__upgradeTo",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
           "timestamp": "2025-10-02T21:27:42.520Z"
         }
       ]
@@ -774,7 +774,7 @@
       "functions": [
         {
           "functionName": "discardConsensusReport",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
           "timestamp": "2025-10-02T21:27:52.408Z"
         }
       ]
@@ -783,17 +783,18 @@
       "functions": [
         {
           "functionName": "updateInitialEpoch",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
+          "timestamp": "2025-10-08T00:32:47.706Z",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-08T00:32:47.706Z"
+          ]
         },
         {
           "functionName": "setFrameConfig",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:33:57.962Z",
           "checked": true,
           "score": "medium-risk",
           "description": "Sets the configuration of frames. Frames are time window of equal lenghts referencing the processing of a slot and the corresponding deadline. A report based on the consensus layer must be built and consensus must be reached before each deadline.\t",
@@ -801,12 +802,12 @@
             {
               "path": "$self.accessControl.MANAGE_FRAME_CONFIG_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-08T00:33:57.962Z"
+          ]
         },
         {
           "functionName": "setFastLaneLengthSlots",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:34:14.239Z",
           "checked": true,
           "score": "low-risk",
           "description": "Sets the duration of a fast lane rotation in slots. Members in the fast lane can (and are expected to) submit their report during a dedicated fast lane time window before submissions are open to all other members. The members in the fast lanes are rotated at a rate set using this function. The goal is to enforce active participation of all oracle members, preventing lazy copying.\t",
@@ -814,12 +815,12 @@
             {
               "path": "$self.accessControl.MANAGE_FAST_LANE_CONFIG_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-08T00:34:14.239Z"
+          ]
         },
         {
           "functionName": "addMember",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:25:43.190Z",
           "checked": true,
           "score": "high-risk",
           "description": "Adds a member to the consensus committee. Members can contribute to building consensus and submit reports.\t",
@@ -827,12 +828,12 @@
             {
               "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-08T00:25:43.190Z"
+          ]
         },
         {
           "functionName": "removeMember",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:27:12.736Z",
           "checked": true,
           "score": "high-risk",
           "description": "Removes a member from the consensus committee, and sets a new quorum.",
@@ -840,12 +841,12 @@
             {
               "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T00:27:12.736Z"
+          ]
         },
         {
           "functionName": "setQuorum",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:29:15.115Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the quorum value. This is the amount of equal reports that need to be accumulated for each slot for a report to be considered valid and ready for processing. A value higher the the number of members in the committee would make consensus impossible.\t",
@@ -853,12 +854,12 @@
             {
               "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T00:29:15.115Z"
+          ]
         },
         {
           "functionName": "disableConsensus",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:30:04.541Z",
           "checked": true,
           "score": "high-risk",
           "description": "Temporarily disables consensus by increasing the quorum value to an unreachable number. This prevents any consensus from being reached. Consensus needs to be re-enabled using setQuorum.\t",
@@ -866,12 +867,12 @@
             {
               "path": "$self.accessControl.DISABLE_CONSENSUS_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T00:30:04.541Z"
+          ]
         },
         {
           "functionName": "setReportProcessor",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:33:31.985Z",
           "checked": true,
           "score": "low-risk",
           "description": "Sets the processor contract to which the reports are sent over to.",
@@ -879,12 +880,12 @@
             {
               "path": "$self.accessControl.MANAGE_REPORT_PROCESSOR_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-08T00:33:31.985Z"
+          ]
         },
         {
           "functionName": "submitReport",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:32:20.266Z",
           "checked": true,
           "score": "low-risk",
           "description": "Used by oracle members to submit hash of the data calculated for the given reference slot. If consensus is reached (more submissions of the same report than the quorum amount) the HashConsensus contract submits this report to the processing contract (either AccountingOracle or ValidatorsExitBusOracle) to enable processing.\t",
@@ -892,12 +893,12 @@
             {
               "path": "$self.getMembers.addresses"
             }
-          ],
-          "timestamp": "2025-10-08T00:32:20.266Z"
+          ]
         },
         {
           "functionName": "grantRole",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:30:43.955Z",
           "checked": true,
           "score": "high-risk",
           "description": "Grants a role within the contract to a specific address. This may allow addresses to execute any of the functions above related to the specific role.\t",
@@ -905,12 +906,12 @@
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T00:30:43.955Z"
+          ]
         },
         {
           "functionName": "revokeRole",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:31:11.405Z",
           "checked": true,
           "score": "low-risk",
           "description": "Revokes a role for a specific address.\t",
@@ -918,8 +919,7 @@
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T00:31:11.405Z"
+          ]
         }
       ]
     },
@@ -927,16 +927,16 @@
       "functions": [
         {
           "functionName": "updateInitialEpoch",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
+          "timestamp": "2025-10-08T00:44:01.670Z",
           "checked": false,
           "score": "unscored",
-          "description": "",
-          "ownerDefinitions": [],
-          "timestamp": "2025-10-08T00:44:01.670Z"
+          "ownerDefinitions": []
         },
         {
           "functionName": "setFrameConfig",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-07T19:06:02.215Z",
           "checked": true,
           "score": "medium-risk",
           "description": "Sets the configuration of frames. Frames are time window of equal lenghts referencing the processing of a slot and the corresponding deadline. A report based on the consensus layer must be built and consensus must be reached before each deadline.\t",
@@ -944,12 +944,12 @@
             {
               "path": "$self.accessControl.MANAGE_FRAME_CONFIG_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-07T19:06:02.215Z"
+          ]
         },
         {
           "functionName": "setFastLaneLengthSlots",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-03T14:58:41.702Z",
           "checked": true,
           "score": "low-risk",
           "description": "Sets the duration of a fast lane rotation in slots. Members in the fast lane can (and are expected to) submit their report during a dedicated fast lane time window before submissions are open to all other members. The members in the fast lanes are rotated at a rate set using this function. The goal is to enforce active participation of all oracle members, preventing lazy copying.\t",
@@ -957,12 +957,12 @@
             {
               "path": "$self.accessControl.MANAGE_FAST_LANE_CONFIG_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-03T14:58:41.702Z"
+          ]
         },
         {
           "functionName": "addMember",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-06T18:11:02.341Z",
           "checked": true,
           "score": "high-risk",
           "description": "Adds a member to the consensus committee. Members can contribute to building consensus and submit reports.\t",
@@ -970,12 +970,12 @@
             {
               "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-06T18:11:02.341Z"
+          ]
         },
         {
           "functionName": "removeMember",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-03T14:58:41.703Z",
           "checked": true,
           "score": "high-risk",
           "description": "Removes a member from the consensus committee, and sets a new quorum.",
@@ -983,12 +983,12 @@
             {
               "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE"
             }
-          ],
-          "timestamp": "2025-10-03T14:58:41.703Z"
+          ]
         },
         {
           "functionName": "setQuorum",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-03T14:58:41.704Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the quorum value. This is the amount of equal reports that need to be accumulated for each slot for a report to be considered valid and ready for processing. A value higher the the number of members in the committee would make consensus impossible.\t",
@@ -996,12 +996,12 @@
             {
               "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE"
             }
-          ],
-          "timestamp": "2025-10-03T14:58:41.704Z"
+          ]
         },
         {
           "functionName": "disableConsensus",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-03T14:58:41.705Z",
           "checked": true,
           "score": "high-risk",
           "description": "Temporarily disables consensus by increasing the quorum value to an unreachable number. This prevents any consensus from being reached. Consensus needs to be re-enabled using setQuorum.\t",
@@ -1009,12 +1009,12 @@
             {
               "path": "$self.accessControl.DISABLE_CONSENSUS_ROLE"
             }
-          ],
-          "timestamp": "2025-10-03T14:58:41.705Z"
+          ]
         },
         {
           "functionName": "setReportProcessor",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-03T14:58:41.705Z",
           "checked": true,
           "score": "low-risk",
           "description": "Sets the processor contract to which the reports are sent over to.",
@@ -1022,12 +1022,12 @@
             {
               "path": "$self.accessControl.MANAGE_REPORT_PROCESSOR_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-03T14:58:41.705Z"
+          ]
         },
         {
           "functionName": "submitReport",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-03T14:58:41.706Z",
           "checked": true,
           "score": "low-risk",
           "description": "Used by oracle members to submit hash of the data calculated for the given reference slot. If consensus is reached (more submissions of the same report than the quorum amount) the HashConsensus contract submits this report to the processing contract (either AccountingOracle or ValidatorsExitBusOracle) to enable processing.\t",
@@ -1035,12 +1035,12 @@
             {
               "path": "$self.getMembers.addresses"
             }
-          ],
-          "timestamp": "2025-10-03T14:58:41.706Z"
+          ]
         },
         {
           "functionName": "grantRole",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-03T14:58:41.707Z",
           "checked": true,
           "score": "high-risk",
           "description": "Grants a role within the contract to a specific address. This may allow addresses to execute any of the functions above related to the specific role.\t",
@@ -1048,12 +1048,12 @@
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
             }
-          ],
-          "timestamp": "2025-10-03T14:58:41.707Z"
+          ]
         },
         {
           "functionName": "revokeRole",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-03T14:58:41.708Z",
           "checked": true,
           "score": "low-risk",
           "description": "Revokes a role for a specific address.\t",
@@ -1061,8 +1061,7 @@
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
             }
-          ],
-          "timestamp": "2025-10-03T14:58:41.708Z"
+          ]
         }
       ]
     },
@@ -1070,16 +1069,16 @@
       "functions": [
         {
           "functionName": "updateInitialEpoch",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
+          "timestamp": "2025-10-08T00:43:46.419Z",
           "checked": false,
           "score": "unscored",
-          "description": "",
-          "ownerDefinitions": [],
-          "timestamp": "2025-10-08T00:43:46.419Z"
+          "ownerDefinitions": []
         },
         {
           "functionName": "setFrameConfig",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:35:01.000Z",
           "checked": true,
           "score": "medium-risk",
           "description": "Sets the configuration of frames. Frames are time window of equal lenghts referencing the processing of a slot and the corresponding deadline. A report based on the consensus layer must be built and consensus must be reached before each deadline.\t",
@@ -1087,12 +1086,12 @@
             {
               "path": "$self.accessControl.MANAGE_FRAME_CONFIG_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-08T00:35:01.000Z"
+          ]
         },
         {
           "functionName": "setFastLaneLengthSlots",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:35:02.000Z",
           "checked": true,
           "score": "low-risk",
           "description": "Sets the duration of a fast lane rotation in slots. Members in the fast lane can (and are expected to) submit their report during a dedicated fast lane time window before submissions are open to all other members. The members in the fast lanes are rotated at a rate set using this function. The goal is to enforce active participation of all oracle members, preventing lazy copying.\t",
@@ -1100,12 +1099,12 @@
             {
               "path": "$self.accessControl.MANAGE_FAST_LANE_CONFIG_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-08T00:35:02.000Z"
+          ]
         },
         {
           "functionName": "addMember",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:35:03.000Z",
           "checked": true,
           "score": "high-risk",
           "description": "Adds a member to the consensus committee. Members can contribute to building consensus and submit reports.\t",
@@ -1113,12 +1112,12 @@
             {
               "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-08T00:35:03.000Z"
+          ]
         },
         {
           "functionName": "removeMember",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:35:04.000Z",
           "checked": true,
           "score": "high-risk",
           "description": "Removes a member from the consensus committee, and sets a new quorum.",
@@ -1126,12 +1125,12 @@
             {
               "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T00:35:04.000Z"
+          ]
         },
         {
           "functionName": "setQuorum",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:35:05.000Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the quorum value. This is the amount of equal reports that need to be accumulated for each slot for a report to be considered valid and ready for processing. A value higher the the number of members in the committee would make consensus impossible.\t",
@@ -1139,12 +1138,12 @@
             {
               "path": "$self.accessControl.MANAGE_MEMBERS_AND_QUORUM_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T00:35:05.000Z"
+          ]
         },
         {
           "functionName": "disableConsensus",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:35:06.000Z",
           "checked": true,
           "score": "high-risk",
           "description": "Temporarily disables consensus by increasing the quorum value to an unreachable number. This prevents any consensus from being reached. Consensus needs to be re-enabled using setQuorum.\t",
@@ -1152,12 +1151,12 @@
             {
               "path": "$self.accessControl.DISABLE_CONSENSUS_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T00:35:06.000Z"
+          ]
         },
         {
           "functionName": "setReportProcessor",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:35:07.000Z",
           "checked": true,
           "score": "low-risk",
           "description": "Sets the processor contract to which the reports are sent over to.",
@@ -1165,12 +1164,12 @@
             {
               "path": "$self.accessControl.MANAGE_REPORT_PROCESSOR_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-08T00:35:07.000Z"
+          ]
         },
         {
           "functionName": "submitReport",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:35:08.000Z",
           "checked": true,
           "score": "low-risk",
           "description": "Used by oracle members to submit hash of the data calculated for the given reference slot. If consensus is reached (more submissions of the same report than the quorum amount) the HashConsensus contract submits this report to the processing contract (either AccountingOracle or ValidatorsExitBusOracle) to enable processing.\t",
@@ -1178,12 +1177,12 @@
             {
               "path": "$self.getMembers.addresses"
             }
-          ],
-          "timestamp": "2025-10-08T00:35:08.000Z"
+          ]
         },
         {
           "functionName": "grantRole",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:35:09.000Z",
           "checked": true,
           "score": "high-risk",
           "description": "Grants a role within the contract to a specific address. This may allow addresses to execute any of the functions above related to the specific role.\t",
@@ -1191,12 +1190,12 @@
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T00:35:09.000Z"
+          ]
         },
         {
           "functionName": "revokeRole",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T00:35:10.000Z",
           "checked": true,
           "score": "low-risk",
           "description": "Revokes a role for a specific address.\t",
@@ -1204,8 +1203,7 @@
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T00:35:10.000Z"
+          ]
         }
       ]
     },
@@ -1213,7 +1211,8 @@
       "functions": [
         {
           "functionName": "proxy__ossify",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-06T14:28:13.029Z",
           "checked": true,
           "score": "low-risk",
           "description": "Ossifies the proxy. This freezes the current implementation of the `LidoLocator` and effectively makes it non-upagreable by changing the proxy admin to the zero address.",
@@ -1221,12 +1220,12 @@
             {
               "path": "$self.$admin"
             }
-          ],
-          "timestamp": "2025-10-06T14:28:13.029Z"
+          ]
         },
         {
           "functionName": "proxy__changeAdmin",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-06T14:28:48.677Z",
           "checked": true,
           "score": "high-risk",
           "description": "Changes the proxy admin. The admin can update the entire implementation and logic of the `LidoLocator`.",
@@ -1234,12 +1233,12 @@
             {
               "path": "$self.$admin"
             }
-          ],
-          "timestamp": "2025-10-06T14:28:48.677Z"
+          ]
         },
         {
           "functionName": "proxy__upgradeTo",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-06T14:29:10.017Z",
           "checked": true,
           "score": "high-risk",
           "description": "Upgrades the implementation of the `LidoLocator`. This can change the entire logic of the contract including change ownership of funds locked in the contract, if any.\t",
@@ -1247,12 +1246,12 @@
             {
               "path": "$self.$admin"
             }
-          ],
-          "timestamp": "2025-10-06T14:29:10.017Z"
+          ]
         },
         {
           "functionName": "proxy__upgradeToAndCall",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-06T14:30:30.496Z",
           "checked": true,
           "score": "high-risk",
           "description": "Similar to _upgradeTo_, and then calls a function in the new contract.",
@@ -1260,8 +1259,7 @@
             {
               "path": "$self.$admin"
             }
-          ],
-          "timestamp": "2025-10-06T14:30:30.496Z"
+          ]
         }
       ]
     },
@@ -1269,43 +1267,43 @@
       "functions": [
         {
           "functionName": "proxy__ossify",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T14:06:47.587Z",
           "ownerDefinitions": [
             {
               "path": "$self.$admin"
             }
-          ],
-          "timestamp": "2025-10-08T14:06:47.587Z"
+          ]
         },
         {
           "functionName": "proxy__changeAdmin",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T14:06:47.589Z",
           "ownerDefinitions": [
             {
               "path": "$self.$admin"
             }
-          ],
-          "timestamp": "2025-10-08T14:06:47.589Z"
+          ]
         },
         {
           "functionName": "proxy__upgradeTo",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T14:06:47.596Z",
           "ownerDefinitions": [
             {
               "path": "$self.$admin"
             }
-          ],
-          "timestamp": "2025-10-08T14:06:47.596Z"
+          ]
         },
         {
           "functionName": "proxy__upgradeToAndCall",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T14:06:47.597Z",
           "ownerDefinitions": [
             {
               "path": "$self.$admin"
             }
-          ],
-          "timestamp": "2025-10-08T14:06:47.597Z"
+          ]
         }
       ]
     },
@@ -1313,33 +1311,33 @@
       "functions": [
         {
           "functionName": "processExitDelayReport",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T14:27:24.874Z",
           "ownerDefinitions": [
             {
               "path": "$self.MODULE"
             }
-          ],
-          "timestamp": "2025-10-08T14:27:24.874Z"
+          ]
         },
         {
           "functionName": "processStrikesReport",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T14:28:07.217Z",
           "ownerDefinitions": [
             {
               "path": "$self.STRIKES"
             }
-          ],
-          "timestamp": "2025-10-08T14:28:07.217Z"
+          ]
         },
         {
           "functionName": "processTriggeredExit",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T14:28:25.469Z",
           "ownerDefinitions": [
             {
               "path": "$self.MODULE"
             }
-          ],
-          "timestamp": "2025-10-08T14:28:25.469Z"
+          ]
         }
       ]
     },
@@ -1347,7 +1345,8 @@
       "functions": [
         {
           "functionName": "proxy_upgradeTo",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T14:45:56.984Z",
           "checked": true,
           "score": "high-risk",
           "description": "Upgrades the implementation of the WithdrawalVault This can change the entire logic of the contract including change ownership of funds locked in the contract, if any.\t",
@@ -1355,12 +1354,12 @@
             {
               "path": "$self.$admin"
             }
-          ],
-          "timestamp": "2025-10-08T14:45:56.984Z"
+          ]
         },
         {
           "functionName": "proxy_changeAdmin",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T14:46:08.811Z",
           "checked": true,
           "score": "high-risk",
           "description": "Changes the proxy admin. The admin can update the entire implementation and logic of the WithdrawalVault.\t",
@@ -1368,8 +1367,7 @@
             {
               "path": "$self.$admin"
             }
-          ],
-          "timestamp": "2025-10-08T14:46:08.811Z"
+          ]
         }
       ]
     },
@@ -1377,33 +1375,33 @@
       "functions": [
         {
           "functionName": "withdrawWithdrawals",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T14:44:13.265Z",
           "ownerDefinitions": [
             {
               "path": "$self.LIDO"
             }
-          ],
-          "timestamp": "2025-10-08T14:44:13.265Z"
+          ]
         },
         {
           "functionName": "recoverERC20",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
           "timestamp": "2025-10-08T14:44:13.266Z"
         },
         {
           "functionName": "recoverERC721",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
           "timestamp": "2025-10-08T14:44:13.266Z"
         },
         {
           "functionName": "addWithdrawalRequests",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T14:44:13.267Z",
           "ownerDefinitions": [
             {
               "path": "$self.TRIGGERABLE_WITHDRAWALS_GATEWAY"
             }
-          ],
-          "timestamp": "2025-10-08T14:44:13.267Z"
+          ]
         }
       ]
     },
@@ -1411,7 +1409,8 @@
       "functions": [
         {
           "functionName": "proxy__ossify",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T16:08:06.686Z",
           "checked": true,
           "score": "low-risk",
           "description": "Ossifies the proxy. This freezes the current implementation of the CSAccounting and effectively makes it non-upagreable by changing the proxy admin to the zero address.\t",
@@ -1419,12 +1418,12 @@
             {
               "path": "$self.$admin"
             }
-          ],
-          "timestamp": "2025-10-09T16:08:06.686Z"
+          ]
         },
         {
           "functionName": "proxy__changeAdmin",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T16:07:51.268Z",
           "checked": true,
           "score": "high-risk",
           "description": "Changes the proxy admin. The admin can update the entire implementation and logic of the CSAccounting.\t",
@@ -1432,12 +1431,12 @@
             {
               "path": "$self.$admin"
             }
-          ],
-          "timestamp": "2025-10-09T16:07:51.268Z"
+          ]
         },
         {
           "functionName": "proxy__upgradeTo",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T16:08:11.861Z",
           "checked": true,
           "score": "high-risk",
           "description": "Upgrades the implementation of the CSAccounting This can change the entire logic of the contract including change ownership of funds locked in the contract, if any, or influence interaction with the rest of the protocol.\t",
@@ -1445,12 +1444,12 @@
             {
               "path": "$self.$admin"
             }
-          ],
-          "timestamp": "2025-10-09T16:08:11.861Z"
+          ]
         },
         {
           "functionName": "proxy__upgradeToAndCall",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T16:08:23.930Z",
           "checked": true,
           "score": "high-risk",
           "description": "Upgrades the implementation of the CSAccounting (similarly to proxy__upgradeTo), and then calls a function in the new contract.\t",
@@ -1458,8 +1457,7 @@
             {
               "path": "$self.$admin"
             }
-          ],
-          "timestamp": "2025-10-09T16:08:23.930Z"
+          ]
         }
       ]
     },
@@ -1467,7 +1465,8 @@
       "functions": [
         {
           "functionName": "resume",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T16:00:27.921Z",
           "checked": true,
           "score": "low-risk",
           "description": "Resumes all paused functions.\t",
@@ -1475,12 +1474,12 @@
             {
               "path": "$self.accessControl.RESUME_ROLE"
             }
-          ],
-          "timestamp": "2025-10-09T16:00:27.921Z"
+          ]
         },
         {
           "functionName": "pauseFor",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T15:59:27.742Z",
           "checked": true,
           "score": "high-risk",
           "description": "Pauses deposits and rewards claims for a given amount of seconds.\t",
@@ -1488,12 +1487,12 @@
             {
               "path": "$self.accessControl.PAUSE_ROLE"
             }
-          ],
-          "timestamp": "2025-10-09T15:59:27.742Z"
+          ]
         },
         {
           "functionName": "setChargePenaltyRecipient",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T16:02:21.345Z",
           "checked": true,
           "score": "low-risk",
           "description": "Sets the charge recipient. The address that will receive the withdrawal charge.\t",
@@ -1501,12 +1500,12 @@
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-09T16:02:21.345Z"
+          ]
         },
         {
           "functionName": "setBondLockPeriod",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T16:02:11.156Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the period (in seconds) to retain the bond lock.\t",
@@ -1514,12 +1513,12 @@
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-09T16:02:11.156Z"
+          ]
         },
         {
           "functionName": "addBondCurve",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T15:51:14.611Z",
           "checked": true,
           "score": "low-risk",
           "description": "Adds a new bond curve. Bond curves determine the price of a bond given the amount of validator keys a node operator has created.\t",
@@ -1527,12 +1526,12 @@
             {
               "path": "$self.accessControl.MANAGE_BOND_CURVES_ROLE"
             }
-          ],
-          "timestamp": "2025-10-09T15:51:14.611Z"
+          ]
         },
         {
           "functionName": "updateBondCurve",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T16:02:41.704Z",
           "checked": true,
           "score": "low-risk",
           "description": "Updates an existing bond curve.\t",
@@ -1540,12 +1539,12 @@
             {
               "path": "$self.accessControl.MANAGE_BOND_CURVES_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-09T16:02:41.704Z"
+          ]
         },
         {
           "functionName": "setBondCurve",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T16:02:08.809Z",
           "checked": true,
           "score": "low-risk",
           "description": "Sets the bond curve for a given node operator. This sets how much a node operator needs to deposit for bonds for each validator keys created.\t",
@@ -1553,12 +1552,12 @@
             {
               "path": "$self.accessControl.SET_BOND_CURVE_ROLE"
             }
-          ],
-          "timestamp": "2025-10-09T16:02:08.809Z"
+          ]
         },
         {
           "functionName": "depositETH",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T15:52:11.687Z",
           "checked": true,
           "score": "low-risk",
           "description": "Stake ETH with Lido and deposit stETH to the a node operator's bond.\t",
@@ -1566,12 +1565,12 @@
             {
               "path": "$self.MODULE"
             }
-          ],
-          "timestamp": "2025-10-09T15:52:11.687Z"
+          ]
         },
         {
           "functionName": "depositStETH",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T15:52:26.023Z",
           "checked": true,
           "score": "low-risk",
           "description": "Deposit stETH to the a node operator's bond.\t",
@@ -1579,12 +1578,12 @@
             {
               "path": "$self.MODULE"
             }
-          ],
-          "timestamp": "2025-10-09T15:52:26.023Z"
+          ]
         },
         {
           "functionName": "depositWstETH",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T15:52:37.195Z",
           "checked": true,
           "score": "low-risk",
           "description": "Unwarps wstETH and deposit stETH to a node operator's bond.\t",
@@ -1592,12 +1591,12 @@
             {
               "path": "$self.MODULE"
             }
-          ],
-          "timestamp": "2025-10-09T15:52:37.195Z"
+          ]
         },
         {
           "functionName": "lockBondETH",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T15:57:30.728Z",
           "checked": true,
           "score": "high-risk",
           "description": "Locks an amount in ETH from a node operator's bond. (see CSModule)\t",
@@ -1605,12 +1604,12 @@
             {
               "path": "$self.MODULE"
             }
-          ],
-          "timestamp": "2025-10-09T15:57:30.728Z"
+          ]
         },
         {
           "functionName": "releaseLockedBondETH",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T15:57:48.125Z",
           "checked": true,
           "score": "low-risk",
           "description": "Releases a node operator's locked bond. (see CSModule)\t",
@@ -1618,12 +1617,12 @@
             {
               "path": "$self.MODULE"
             }
-          ],
-          "timestamp": "2025-10-09T15:57:48.125Z"
+          ]
         },
         {
           "functionName": "compensateLockedBondETH",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T15:51:54.934Z",
           "checked": true,
           "score": "low-risk",
           "description": "Compensates a locked bond for the given node operator (see CSModule)\t",
@@ -1631,12 +1630,12 @@
             {
               "path": "$self.MODULE"
             }
-          ],
-          "timestamp": "2025-10-09T15:51:54.934Z"
+          ]
         },
         {
           "functionName": "settleLockedBondETH",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T15:58:14.199Z",
           "checked": true,
           "score": "low-risk",
           "description": "Settle a locked bond for the given node operator. (see CSModule)\t",
@@ -1644,12 +1643,12 @@
             {
               "path": "$self.MODULE"
             }
-          ],
-          "timestamp": "2025-10-09T15:58:14.199Z"
+          ]
         },
         {
           "functionName": "penalize",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T15:58:34.173Z",
           "checked": true,
           "score": "high-risk",
           "description": "Penalize a bond by burning stETH shares of the node operator.\t",
@@ -1657,12 +1656,12 @@
             {
               "path": "$self.MODULE"
             }
-          ],
-          "timestamp": "2025-10-09T15:58:34.173Z"
+          ]
         },
         {
           "functionName": "chargeFee",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T15:51:35.781Z",
           "checked": true,
           "score": "low-risk",
           "description": "Charge a fee from the bond by transfering stETH to the charge recipient.\t",
@@ -1670,12 +1669,12 @@
             {
               "path": "$self.MODULE"
             }
-          ],
-          "timestamp": "2025-10-09T15:51:35.781Z"
+          ]
         },
         {
           "functionName": "recoverERC20",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T16:04:19.864Z",
           "checked": true,
           "score": "low-risk",
           "description": "Sends the amount of token for the specified ERC-20 to the caller.",
@@ -1683,12 +1682,12 @@
             {
               "path": "$self.accessControl.RECOVERER_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-09T16:04:19.864Z"
+          ]
         },
         {
           "functionName": "recoverStETHShares",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T16:05:14.117Z",
           "checked": true,
           "score": "low-risk",
           "description": "Recovers all stETH shares from the contract (except bonds).",
@@ -1696,12 +1695,12 @@
             {
               "path": "$self.accessControl.RECOVERER_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-09T16:05:14.117Z"
+          ]
         },
         {
           "functionName": "grantRole",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T16:06:18.562Z",
           "checked": true,
           "score": "high-risk",
           "description": "Grants a role within the contract to a given address. Roles may allow any address to manage bond curves and change the charge recipient. Contrary to the CSModule's design, the functions destined to be called by contracts (namely by the CSModule) cannot be hijacked as the CSModule's address used cannot be changed.\t",
@@ -1709,12 +1708,12 @@
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-09T16:06:18.562Z"
+          ]
         },
         {
           "functionName": "revokeRole",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T16:06:37.902Z",
           "checked": true,
           "score": "low-risk",
           "description": "Revokes a role within the contract.\t",
@@ -1722,8 +1721,7 @@
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-09T16:06:37.902Z"
+          ]
         }
       ]
     },
@@ -1731,7 +1729,8 @@
       "functions": [
         {
           "functionName": "newAppInstance",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T16:16:03.134Z",
           "checked": true,
           "score": "low-risk",
           "description": "Creates a new upgradeable application instance by deploying the proxy. The instance has an app ID and will use the implementation contract (code logic) currently associated with this ID.\t",
@@ -1739,12 +1738,12 @@
             {
               "path": "@acl.permissions[eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc].APP_MANAGER_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T16:16:03.134Z"
+          ]
         },
         {
           "functionName": "newPinnedAppInstance",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T16:17:43.679Z",
           "checked": true,
           "score": "low-risk",
           "description": "Creates a new non-upgradeable (pinned) application instance. The instance has an app ID and will use the implementation contract (code logic) associated with this ID.\t",
@@ -1752,12 +1751,12 @@
             {
               "path": "@acl.permissions[eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc].APP_MANAGER_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T16:17:43.679Z"
+          ]
         },
         {
           "functionName": "setApp",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T16:15:38.344Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the implementation contract (code logic) that corresponds to a given namespace and app ID in the registry. All proxies in this namespace with this AppID will now point to this new implementation.\t",
@@ -1765,12 +1764,12 @@
             {
               "path": "@acl.permissions[eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc].APP_MANAGER_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T16:15:38.344Z"
+          ]
         },
         {
           "functionName": "setRecoveryVaultAppId",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T16:16:37.995Z",
           "checked": true,
           "score": "low-risk",
           "description": "Sets the recovery vault. A contract to recover assets if neeeded. The current vault is the Agent contract.\t",
@@ -1778,8 +1777,7 @@
             {
               "path": "@acl.permissions[eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc].APP_MANAGER_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T16:16:37.995Z"
+          ]
         }
       ]
     },
@@ -1787,7 +1785,8 @@
       "functions": [
         {
           "functionName": "mint",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T16:27:58.298Z",
           "checked": true,
           "score": "unscored",
           "description": "Mints a given amount of LDO token to a specified address.\t",
@@ -1795,12 +1794,12 @@
             {
               "path": "@acl.permissions[0xf73a1260d222f447210581DDf212D915c09a3249].MINT_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T16:27:58.298Z"
+          ]
         },
         {
           "functionName": "issue",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T16:26:56.132Z",
           "checked": true,
           "score": "high-risk",
           "description": "Mints a given amount of LDO token to the TokenManager. This is used to create a treasury of tokens that can later be assigned.\t",
@@ -1808,12 +1807,12 @@
             {
               "path": "@acl.permissions[0xf73a1260d222f447210581DDf212D915c09a3249].ISSUE_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T16:26:56.132Z"
+          ]
         },
         {
           "functionName": "assign",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T16:25:14.434Z",
           "checked": true,
           "score": "low-risk",
           "description": "Assigns a given amount of LDO tokens to a recipient. The tokens are directly taken out of the TokenManager and transferred to the recipient.\t",
@@ -1821,12 +1820,12 @@
             {
               "path": "@acl.permissions[0xf73a1260d222f447210581DDf212D915c09a3249].ASSIGN_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T16:25:14.434Z"
+          ]
         },
         {
           "functionName": "burn",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T16:26:10.326Z",
           "checked": true,
           "score": "high-risk",
           "description": "Burns the given amount of LDO tokens of any given address. This allows this contract to burn any user's LDO tokens.\t",
@@ -1834,12 +1833,12 @@
             {
               "path": "@acl.permissions[0xf73a1260d222f447210581DDf212D915c09a3249].BURN_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T16:26:10.326Z"
+          ]
         },
         {
           "functionName": "assignVested",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T16:25:15.618Z",
           "checked": true,
           "score": "low-risk",
           "description": "Assigns a given amount of LDO tokens to a recipient with a specific vesting plan. The full amount is transferred to the address but the LDO token is trusted to call the TokenManager upon each transfer and enforce the vesting plan. The plan can optionally contain a revokable flag which allows the manager to cancel the remaining locked tokens in a plan at any time before the plan expires.\t",
@@ -1847,12 +1846,12 @@
             {
               "path": "@acl.permissions[0xf73a1260d222f447210581DDf212D915c09a3249].ASSIGN_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T16:25:15.618Z"
+          ]
         },
         {
           "functionName": "revokeVesting",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T16:29:18.966Z",
           "checked": true,
           "score": "high-risk",
           "description": "Revokes a user's vesting plan. This will cancel all the tokens that are still locked.\t",
@@ -1860,17 +1859,16 @@
             {
               "path": "@acl.permissions[0xf73a1260d222f447210581DDf212D915c09a3249].REVOKE_VESTINGS_ROLE"
             }
-          ],
-          "timestamp": "2025-10-08T16:29:18.966Z"
+          ]
         },
         {
           "functionName": "forward",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
+          "timestamp": "2025-10-08T16:28:45.040Z",
           "checked": true,
           "score": "unscored",
           "description": "Runs an Aragon EVM script on behalf of a token holder. The token holder needs to have permission and the contract uses a blacklist to prevent the holder from executing actions on behalf of the TokenManager.\t",
-          "ownerDefinitions": [],
-          "timestamp": "2025-10-08T16:28:45.040Z"
+          "ownerDefinitions": []
         }
       ]
     },
@@ -1878,7 +1876,8 @@
       "functions": [
         {
           "functionName": "changeController",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T16:32:53.157Z",
           "checked": true,
           "score": "high-risk",
           "description": "Changes the controller contract. The controller (currently TokenManager) can arbitrarily mint and burn LDO tokens from and to any user. This could put the governance and entire protocol at risk since LDO tokens are used to vote.\t",
@@ -1886,12 +1885,12 @@
             {
               "path": "$self.controller"
             }
-          ],
-          "timestamp": "2025-10-08T16:32:53.157Z"
+          ]
         },
         {
           "functionName": "generateTokens",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T16:32:26.125Z",
           "checked": true,
           "score": "high-risk",
           "description": "Generates (mints) new LDO to a specific address.\t",
@@ -1899,12 +1898,12 @@
             {
               "path": "$self.controller"
             }
-          ],
-          "timestamp": "2025-10-08T16:32:26.125Z"
+          ]
         },
         {
           "functionName": "destroyTokens",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T16:32:39.777Z",
           "checked": true,
           "score": "high-risk",
           "description": "Destroys (burns) LDO tokens from a given arbitrary address.\t",
@@ -1912,12 +1911,12 @@
             {
               "path": "$self.controller"
             }
-          ],
-          "timestamp": "2025-10-08T16:32:39.777Z"
+          ]
         },
         {
           "functionName": "enableTransfers",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T16:33:30.402Z",
           "checked": true,
           "score": "high-risk",
           "description": "Enables or disables transfer of LDO tokens.\t",
@@ -1925,12 +1924,12 @@
             {
               "path": "$self.controller"
             }
-          ],
-          "timestamp": "2025-10-08T16:33:30.402Z"
+          ]
         },
         {
           "functionName": "claimTokens",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-08T16:33:14.732Z",
           "checked": true,
           "score": "low-risk",
           "description": "Transfers any given token held in the contract to the TokenManager. This is meant to recover funds sent to the contract by mistake.\t",
@@ -1938,8 +1937,7 @@
             {
               "path": "$self.controller"
             }
-          ],
-          "timestamp": "2025-10-08T16:33:14.732Z"
+          ]
         }
       ]
     },
@@ -1947,7 +1945,8 @@
       "functions": [
         {
           "functionName": "pauseStaking",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T17:28:09.280Z",
           "checked": true,
           "score": "low-risk",
           "description": "Stops accepting new ETH deposits to the protocol. This ensures new funds do not enter the system without affecting other operations.\t",
@@ -1955,12 +1954,12 @@
             {
               "path": "@acl.permissions[eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84].STAKING_PAUSE_ROLE"
             }
-          ],
-          "timestamp": "2025-10-09T17:28:09.280Z"
+          ]
         },
         {
           "functionName": "resumeStaking",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T17:27:38.945Z",
           "checked": true,
           "score": "low-risk",
           "description": "Re-enables staking of new ETH into the contract.\t",
@@ -1968,12 +1967,12 @@
             {
               "path": "@acl.permissions[eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84].STAKING_CONTROL_ROLE"
             }
-          ],
-          "timestamp": "2025-10-09T17:27:38.945Z"
+          ]
         },
         {
           "functionName": "setStakingLimit",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T17:28:21.692Z",
           "checked": true,
           "score": "low-risk",
           "description": "Limits the rate and total stake of ETH allows into the contract. This is done by imposing a maximum stake limit and a rate of increase per block. This will prevent users from depositing additional ETH if the limit is reached.\t",
@@ -1981,12 +1980,12 @@
             {
               "path": "@acl.permissions[eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84].STAKING_CONTROL_ROLE"
             }
-          ],
-          "timestamp": "2025-10-09T17:28:21.692Z"
+          ]
         },
         {
           "functionName": "removeStakingLimit",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T17:27:53.101Z",
           "checked": true,
           "score": "low-risk",
           "description": "Removes the staking limit, allowing unlimited deposits.\t",
@@ -1994,12 +1993,12 @@
             {
               "path": "@acl.permissions[eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84].STAKING_CONTROL_ROLE"
             }
-          ],
-          "timestamp": "2025-10-09T17:27:53.101Z"
+          ]
         },
         {
           "functionName": "stop",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T17:28:39.634Z",
           "checked": true,
           "score": "high-risk",
           "description": "Stops all staking similarly to pauseStaking, and prevents transfer of stETH as well as beacone chain oracle submissions. This is a critical emergency function that completely halts the users' ability to enter and exit the system.\t",
@@ -2007,12 +2006,12 @@
             {
               "path": "@acl.permissions[eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84].PAUSE_ROLE"
             }
-          ],
-          "timestamp": "2025-10-09T17:28:39.634Z"
+          ]
         },
         {
           "functionName": "resume",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T17:28:51.443Z",
           "checked": true,
           "score": "low-risk",
           "description": "Resumes all operations paused after stop was called.\t",
@@ -2023,12 +2022,12 @@
             {
               "path": "@acl.permissions[eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84].RESUME_ROLE"
             }
-          ],
-          "timestamp": "2025-10-09T17:28:51.443Z"
+          ]
         },
         {
           "functionName": "unsafeChangeDepositedValidators",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T17:28:17.408Z",
           "checked": true,
           "score": "high-risk",
           "description": "Unsafely changes the deposited validators counter. This may be used to onboard external validators to Lido. This is function could dangerously change the accounting metrics in Lido as it changes a parameter without any safeguards. Such a change could artificially inflate or deflate the value of stETH or manipulate the expected returns calculation.\t",
@@ -2036,12 +2035,12 @@
             {
               "path": "@acl.permissions[eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84].UNSAFE_CHANGE_DEPOSITED_VALIDATORS_ROLE"
             }
-          ],
-          "timestamp": "2025-10-09T17:28:17.408Z"
+          ]
         },
         {
           "functionName": "transferToVault",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T16:10:16.817Z",
           "checked": true,
           "score": "low-risk",
           "description": "Default recovery function in Aragon Apps. Irreversably disabled.\t",
@@ -2049,12 +2048,12 @@
             {
               "path": "0x0"
             }
-          ],
-          "timestamp": "2025-10-09T16:10:16.817Z"
+          ]
         },
         {
           "functionName": "receiveELRewards",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T16:20:58.726Z",
           "checked": true,
           "score": "low-risk",
           "description": "A function to allow the rewards vault to send rewards to this contract without them being considered user deposits.\t",
@@ -2062,12 +2061,12 @@
             {
               "path": "@getLidoLocator.elRewardsVault"
             }
-          ],
-          "timestamp": "2025-10-09T16:20:58.726Z"
+          ]
         },
         {
           "functionName": "receiveWithdrawals",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T16:22:33.790Z",
           "checked": true,
           "score": "low-risk",
           "description": "A function to allow the WithdrawalVault to receive funds from exited validators without them being considered user deposits.\t",
@@ -2075,12 +2074,12 @@
             {
               "path": "@getLidoLocator.withdrawalVault"
             }
-          ],
-          "timestamp": "2025-10-09T16:22:33.790Z"
+          ]
         },
         {
           "functionName": "handleOracleReport",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T16:25:50.042Z",
           "checked": true,
           "score": "high-risk",
           "description": "Handles the oracle data and takes a series of actions accordingly. Actions include process withdrawals, burning shares, distribute rewards, and rebase tokens. Malicious or wrong data reporting could lead to accounting errors and potential loss of user funds and unclaimed yield.\t",
@@ -2088,12 +2087,12 @@
             {
               "path": "@getLidoLocator.accountingOracle"
             }
-          ],
-          "timestamp": "2025-10-09T16:25:50.042Z"
+          ]
         },
         {
           "functionName": "deposit",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-09T16:27:33.055Z",
           "checked": true,
           "score": "high-risk",
           "description": "Deposits a multiple of DEPOSIT_SIZE ETH into the ethereum staking contract to create a new validator. This can only be called by the DepositSecurityModule which will make sure the call reverts if the state of the deposit contract has changed between the submission and execution of the deposit.\t",
@@ -2101,8 +2100,7 @@
             {
               "path": "@getLidoLocator.depositSecurityModule"
             }
-          ],
-          "timestamp": "2025-10-09T16:27:33.055Z"
+          ]
         }
       ]
     },
@@ -2110,7 +2108,8 @@
       "functions": [
         {
           "functionName": "execute",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-10T01:06:19.062Z",
           "checked": true,
           "score": "high-risk",
           "description": "Allows the contract owner to execute external function calls on target contracts, optionally transferring ether. The purpose of this function is to execute governance decision, in particular, it has the permission to execute calls throught the Agent contract, controlling the entire Lido protocol.",
@@ -2118,12 +2117,12 @@
             {
               "path": "$self.owner"
             }
-          ],
-          "timestamp": "2025-10-10T01:06:19.062Z"
+          ]
         },
         {
           "functionName": "renounceOwnership",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-10T01:08:00.586Z",
           "checked": true,
           "score": "low-risk",
           "description": "This changes the owner of the contract to the zero address, preventing any further _execute_ calls. If at the time of use this contract is still the only allowed caller of the Agent, this could render the protocol immutable.",
@@ -2131,12 +2130,12 @@
             {
               "path": "$self.owner"
             }
-          ],
-          "timestamp": "2025-10-10T01:08:00.586Z"
+          ]
         },
         {
           "functionName": "transferOwnership",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-10T01:08:46.624Z",
           "checked": true,
           "score": "high-risk",
           "description": "Transfer the ownership of the contract to an other address. The address will have the right to call _execute_, potentially making any action in the protocol.",
@@ -2144,8 +2143,7 @@
             {
               "path": "$self.owner"
             }
-          ],
-          "timestamp": "2025-10-10T01:08:46.624Z"
+          ]
         }
       ]
     },
@@ -2153,7 +2151,8 @@
       "functions": [
         {
           "functionName": "submit",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T15:55:11.042Z",
           "checked": true,
           "score": "high-risk",
           "description": "Submits a new proposal that can execute a series of calls in the name of the governance, the proposal needs to be scheduled for execution.",
@@ -2161,12 +2160,12 @@
             {
               "path": "$self.getGovernance"
             }
-          ],
-          "timestamp": "2025-10-13T15:55:11.042Z"
+          ]
         },
         {
           "functionName": "schedule",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T15:57:50.281Z",
           "checked": true,
           "score": "high-risk",
           "description": "Schedules a proposal for execution, the proposal can be executed once the schedule delay has passed, if it was not cancelled by the DAO.",
@@ -2174,12 +2173,12 @@
             {
               "path": "$self.getGovernance"
             }
-          ],
-          "timestamp": "2025-10-13T15:57:50.281Z"
+          ]
         },
         {
           "functionName": "cancelAllNonExecutedProposals",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-11T19:49:17.099Z",
           "checked": true,
           "score": "high-risk",
           "description": "Cancels all proposals that haven't been executed and prevents them from being executed in the future. The DualGovernance contract currently limits the calls to this function only to the state \"vetoSignalling\" or \"vetoSignallingDeactivation\", through a proposal.",
@@ -2187,12 +2186,12 @@
             {
               "path": "$self.getGovernance"
             }
-          ],
-          "timestamp": "2025-10-11T19:49:17.099Z"
+          ]
         },
         {
           "functionName": "setGovernance",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T15:53:39.844Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the address of the governance contract in use. The governance contract can submit and schedule proposals.",
@@ -2200,12 +2199,12 @@
             {
               "path": "$self.getAdminExecutor"
             }
-          ],
-          "timestamp": "2025-10-13T15:53:39.844Z"
+          ]
         },
         {
           "functionName": "setAfterSubmitDelay",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-12T22:58:01.259Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the delay period after a proposal is submitted before it can be scheduled for execution. The current delay is 72 hours and is capped at 720 hours.",
@@ -2213,12 +2212,12 @@
             {
               "path": "$self.getAdminExecutor"
             }
-          ],
-          "timestamp": "2025-10-12T22:58:01.259Z"
+          ]
         },
         {
           "functionName": "setAfterScheduleDelay",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-12T22:57:31.196Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the delay that needs to pass once a proposal has been scheduled, before it can be executed. There is a hardcoded limit of 240 hours, the current delay is 24 hours.",
@@ -2226,12 +2225,12 @@
             {
               "path": "$self.getAdminExecutor"
             }
-          ],
-          "timestamp": "2025-10-12T22:57:31.196Z"
+          ]
         },
         {
           "functionName": "transferExecutorOwnership",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T15:56:50.620Z",
           "checked": true,
           "score": "high-risk",
           "description": "Transfers the ownership of the executor contract to a new address. The owner of the executor can execute any proposal through that contract, which given the current permission assignment could include any Lido governance proposal.",
@@ -2239,12 +2238,12 @@
             {
               "path": "$self.getAdminExecutor"
             }
-          ],
-          "timestamp": "2025-10-13T15:56:50.620Z"
+          ]
         },
         {
           "functionName": "setEmergencyProtectionActivationCommittee",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T15:48:59.205Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the emergency activation committee, the committee with the right to activate the emergency mode.",
@@ -2252,12 +2251,12 @@
             {
               "path": "$self.getAdminExecutor"
             }
-          ],
-          "timestamp": "2025-10-13T15:48:59.205Z"
+          ]
         },
         {
           "functionName": "setEmergencyProtectionExecutionCommittee",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T15:52:31.696Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the emergency protection execution committee. Once the emergency mode is enabled, this committee can execute any proposal.",
@@ -2265,12 +2264,12 @@
             {
               "path": "$self.getAdminExecutor"
             }
-          ],
-          "timestamp": "2025-10-13T15:52:31.696Z"
+          ]
         },
         {
           "functionName": "setEmergencyProtectionEndDate",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T15:51:47.818Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the end date of the emergency protection. Past this date the emergency activation committee can no longer activate the emergency mode. The current date is June 20th, 2026.",
@@ -2278,12 +2277,12 @@
             {
               "path": "$self.getAdminExecutor"
             }
-          ],
-          "timestamp": "2025-10-13T15:51:47.818Z"
+          ]
         },
         {
           "functionName": "setEmergencyModeDuration",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T14:52:04.421Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the duration of the emergency mode. The current duration is 30 days and the value is capped at 365 days.",
@@ -2291,12 +2290,12 @@
             {
               "path": "$self.getAdminExecutor"
             }
-          ],
-          "timestamp": "2025-10-13T14:52:04.421Z"
+          ]
         },
         {
           "functionName": "setEmergencyGovernance",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T14:50:43.297Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the address of the emergency governance, this is the governance that may be activated by the emergency committee.",
@@ -2304,12 +2303,12 @@
             {
               "path": "$self.getAdminExecutor"
             }
-          ],
-          "timestamp": "2025-10-13T14:50:43.297Z"
+          ]
         },
         {
           "functionName": "activateEmergencyMode",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-11T19:45:14.208Z",
           "checked": true,
           "score": "high-risk",
           "description": "Function that activates the emergency mode. The emergency mode can only be activated once and before a set timestamp after which it expires. In the emergency mode, the committee can perform two actions: pass proposals (any), or disable de Dual Governance (and go back to the previous model). This mode is meant as a protection in case of an adversarial proposalthat would exploit a bug in the Dual Governance contracts.",
@@ -2317,12 +2316,12 @@
             {
               "path": "$self.getEmergencyActivationCommittee"
             }
-          ],
-          "timestamp": "2025-10-11T19:45:14.208Z"
+          ]
         },
         {
           "functionName": "emergencyExecute",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-11T19:50:16.145Z",
           "checked": true,
           "score": "high-risk",
           "description": "Executes any proposal if the activation mode is activated and the proposal is from the emergency committee.",
@@ -2330,12 +2329,12 @@
             {
               "path": "$self.getEmergencyActivationCommittee"
             }
-          ],
-          "timestamp": "2025-10-11T19:50:16.145Z"
+          ]
         },
         {
           "functionName": "deactivateEmergencyMode",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T16:00:38.071Z",
           "checked": true,
           "score": "high-risk",
           "description": "Cancels all pending proposals and deactivates the emergency mode. If the emergency mode duration delay has passed, anyone can call this function.",
@@ -2343,12 +2342,12 @@
             {
               "path": "$self.getAdminExecutor"
             }
-          ],
-          "timestamp": "2025-10-13T16:00:38.071Z"
+          ]
         },
         {
           "functionName": "emergencyReset",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T15:59:04.614Z",
           "checked": true,
           "score": "high-risk",
           "description": "Resets the system after it entered emergency mode. This cancels all proposals, deactivates emergency mode, and sets the emergency governance as acting governance.",
@@ -2356,12 +2355,12 @@
             {
               "path": "$self.getEmergencyActivationCommittee"
             }
-          ],
-          "timestamp": "2025-10-13T15:59:04.614Z"
+          ]
         },
         {
           "functionName": "setAdminExecutor",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-12T22:49:52.073Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets a new address for the admin executor contract. The admin executor holds critical administrative permissions in the governance, and should always be grantedto an address subject to the governance process (a \"proposer\").",
@@ -2369,8 +2368,7 @@
             {
               "path": "$self.getAdminExecutor"
             }
-          ],
-          "timestamp": "2025-10-12T22:49:52.073Z"
+          ]
         }
       ]
     },
@@ -2378,7 +2376,8 @@
       "functions": [
         {
           "functionName": "cancelAllPendingProposals",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T16:04:25.946Z",
           "checked": true,
           "score": "low-risk",
           "description": "Cancels all pending proposals that have not been executed.",
@@ -2386,21 +2385,20 @@
             {
               "path": "$self.GOVERNANCE"
             }
-          ],
-          "timestamp": "2025-10-13T16:04:25.946Z"
+          ]
         },
         {
           "functionName": "scheduleProposal",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
+          "timestamp": "2025-10-13T16:05:46.937Z",
           "checked": false,
           "score": "unscored",
-          "description": "",
-          "ownerDefinitions": [],
-          "timestamp": "2025-10-13T16:05:46.937Z"
+          "ownerDefinitions": []
         },
         {
           "functionName": "submitProposal",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T16:05:49.260Z",
           "checked": true,
           "score": "high-risk",
           "description": "Submits a transaction from the Lido governance to the timelock, this proposal can eventually be executed after the mandatory delays, if not cancelled.",
@@ -2408,8 +2406,7 @@
             {
               "path": "$self.GOVERNANCE"
             }
-          ],
-          "timestamp": "2025-10-13T16:05:49.260Z"
+          ]
         }
       ]
     },
@@ -2417,7 +2414,8 @@
       "functions": [
         {
           "functionName": "changeSupportRequiredPct",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T17:19:40.265Z",
           "checked": true,
           "score": "high-risk",
           "description": "Changes the required percentage of \"yes\" votes for a proposal to pass. The number has to be greater or equal than the quorum and less than 100%.\t",
@@ -2425,12 +2423,12 @@
             {
               "path": "@acl.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].MODIFY_SUPPORT_ROLE"
             }
-          ],
-          "timestamp": "2025-10-13T17:19:40.265Z"
+          ]
         },
         {
           "functionName": "changeMinAcceptQuorumPct",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T17:19:46.203Z",
           "checked": true,
           "score": "high-risk",
           "description": "Changes the minimum quorum required for a proposal to pass. This is the percentage of \"yes\" votes in regard to the total voting power. The new value has to be less or equal than the support percentage.\t",
@@ -2438,12 +2436,12 @@
             {
               "path": "@acl.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].MODIFY_QUORUM_ROLE"
             }
-          ],
-          "timestamp": "2025-10-13T17:19:46.203Z"
+          ]
         },
         {
           "functionName": "unsafelyChangeVoteTime",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T17:17:25.856Z",
           "checked": true,
           "score": "high-risk",
           "description": "Changes the total duration of voting. This affects all existing unexecuted votes. The new value has to be greater than the objection time and will effectively change the main voting period. The main voting period is the time before objection during which users can vote \"yes\" or \"no\" for proposals. If the new time is smaller than the passed time on existing proposals this would fast forward the proposals to the objection or closed phase.\t",
@@ -2451,12 +2449,12 @@
             {
               "path": "@acl.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].UNSAFELY_MODIFY_VOTE_TIME_ROLE"
             }
-          ],
-          "timestamp": "2025-10-13T17:17:25.856Z"
+          ]
         },
         {
           "functionName": "unsafelyChangeObjectionPhaseTime",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T17:18:27.211Z",
           "checked": true,
           "score": "high-risk",
           "description": "Changes the duration of the objection phase. This affects all existing unexecuted votes and could be used to remove, fast forward, or extend the objection phase on existing and future proposals. The new value has to be less than the total vote time.\t",
@@ -2464,12 +2462,12 @@
             {
               "path": "@acl.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].UNSAFELY_MODIFY_VOTE_TIME_ROLE"
             }
-          ],
-          "timestamp": "2025-10-13T17:18:27.211Z"
+          ]
         },
         {
           "functionName": "newVote",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T17:20:33.618Z",
           "checked": true,
           "score": "low-risk",
           "description": "Creates a proposal with an associated execution script and description metadata. If the proposal is accepted the script will be executed and could perform any action that the Voting contract is allowed to do.\t",
@@ -2477,12 +2475,12 @@
             {
               "path": "@acl.permissions[eth:0x2e59A20f205bB85a89C53f1936454680651E618e].CREATE_VOTES_ROLE"
             }
-          ],
-          "timestamp": "2025-10-13T17:20:33.618Z"
+          ]
         },
         {
           "functionName": "forward",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T17:22:28.078Z",
           "checked": true,
           "score": "high-risk",
           "description": "Similar to newVote but without any description metadata. This is meant to be called as a result of other governance processes or smart contracts.\t",
@@ -2490,8 +2488,7 @@
             {
               "path": "$self"
             }
-          ],
-          "timestamp": "2025-10-13T17:22:28.078Z"
+          ]
         }
       ]
     },
@@ -2499,7 +2496,8 @@
       "functions": [
         {
           "functionName": "proxy__ossify",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T17:57:55.194Z",
           "checked": true,
           "score": "low-risk",
           "description": "Ossifies the proxy. This freezes the current implementation of the StakingRouter and effectively makes it non-upagreable by changing the proxy admin to the zero address.\t",
@@ -2507,12 +2505,12 @@
             {
               "path": "$self.$admin"
             }
-          ],
-          "timestamp": "2025-10-13T17:57:55.194Z"
+          ]
         },
         {
           "functionName": "proxy__changeAdmin",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T17:58:06.997Z",
           "checked": true,
           "score": "high-risk",
           "description": "Changes the proxy admin. The admin can update the entire implementation and logic of the StakingRouter.\t",
@@ -2520,12 +2518,12 @@
             {
               "path": "$self.$admin"
             }
-          ],
-          "timestamp": "2025-10-13T17:58:06.997Z"
+          ]
         },
         {
           "functionName": "proxy__upgradeTo",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T17:58:15.074Z",
           "checked": true,
           "score": "high-risk",
           "description": "Upgrades the implementation of the StakingRouter This can change the entire logic of the contract including change ownership of funds locked in the contract, if any.\t",
@@ -2533,12 +2531,12 @@
             {
               "path": "$self.$admin"
             }
-          ],
-          "timestamp": "2025-10-13T17:58:15.074Z"
+          ]
         },
         {
           "functionName": "proxy__upgradeToAndCall",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T17:58:24.292Z",
           "checked": true,
           "score": "high-risk",
           "description": "Upgrades the implementation of the StakingRouter (similarly to _proxy__upgradeTo _), and then calls a function in the new contract.\t",
@@ -2546,8 +2544,7 @@
             {
               "path": "$self.$admin"
             }
-          ],
-          "timestamp": "2025-10-13T17:58:24.292Z"
+          ]
         }
       ]
     },
@@ -2555,27 +2552,28 @@
       "functions": [
         {
           "functionName": "initialize",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
+          "timestamp": "2025-10-13T18:15:13.890Z",
           "ownerDefinitions": [
             {
               "path": "$self"
             }
-          ],
-          "timestamp": "2025-10-13T18:15:13.890Z"
+          ]
         },
         {
           "functionName": "finalizeUpgrade_v3",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
+          "timestamp": "2025-10-13T18:13:37.172Z",
           "ownerDefinitions": [
             {
               "path": "$self"
             }
-          ],
-          "timestamp": "2025-10-13T18:13:37.172Z"
+          ]
         },
         {
           "functionName": "addStakingModule",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:12:48.954Z",
           "checked": true,
           "score": "high-risk",
           "description": "Registers a staking module specifying a name, contract, fee settings, and limits on the shares and validators. The new module can receive ETH deposits. Adding a malicious staking modules could lead to the loss of vunds allocated to new deposits.\t",
@@ -2583,12 +2581,12 @@
             {
               "path": "$self.accessControl.STAKING_MODULE_MANAGE_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-13T18:12:48.954Z"
+          ]
         },
         {
           "functionName": "updateStakingModule",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:28:49.597Z",
           "checked": true,
           "score": "high-risk",
           "description": "Updates the settings of an existing Staking Module. This can change the fees or the limits set on deposits and staking shares.\t",
@@ -2596,12 +2594,12 @@
             {
               "path": "$self.accessControl.STAKING_MODULE_MANAGE_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-13T18:28:49.597Z"
+          ]
         },
         {
           "functionName": "updateTargetValidatorsLimits",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:33:29.907Z",
           "checked": true,
           "score": "low-risk",
           "description": "For a specific node operator in a specific staking module, updates the limit of the validators that can be used for deposit.",
@@ -2609,12 +2607,12 @@
             {
               "path": "$self.accessControl.STAKING_MODULE_MANAGE_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-13T18:33:29.907Z"
+          ]
         },
         {
           "functionName": "reportRewardsMinted",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:17:16.797Z",
           "checked": true,
           "score": "medium-risk",
           "description": "Reports rewards that have been minted and notifies each module of the rewards they received by calling a dedicated function in the respective module's contract.\t",
@@ -2622,12 +2620,12 @@
             {
               "path": "$self.accessControl.REPORT_REWARDS_MINTED_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-13T18:17:16.797Z"
+          ]
         },
         {
           "functionName": "updateExitedValidatorsCountByStakingModule",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:18:25.351Z",
           "checked": true,
           "score": "high-risk",
           "description": "Updates the total numbers of exited validators for each module. This is used to determine and confirm the number of active validators.\t",
@@ -2635,12 +2633,12 @@
             {
               "path": "$self.accessControl.REPORT_EXITED_VALIDATORS_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-13T18:18:25.351Z"
+          ]
         },
         {
           "functionName": "reportStakingModuleExitedValidatorsCountByNodeOperator",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:17:57.134Z",
           "checked": true,
           "score": "high-risk",
           "description": "For a specific staking module, reports the total number of exited validators for each node operator.\t",
@@ -2648,12 +2646,12 @@
             {
               "path": "$self.accessControl.REPORT_EXITED_VALIDATORS_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-13T18:17:57.134Z"
+          ]
         },
         {
           "functionName": "unsafeSetExitedValidatorsCount",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:20:41.752Z",
           "checked": true,
           "score": "high-risk",
           "description": "Overrides the number of exited validators for a given node operator in a given staking module, without any safety check. This function cannot be called from the current AccountingOracle, but the Oracle could be upgraded to a version which can call this function if it isn't ossified.\t",
@@ -2661,12 +2659,12 @@
             {
               "path": "$self.accessControl.UNSAFE_SET_EXITED_VALIDATORS_ROLE"
             }
-          ],
-          "timestamp": "2025-10-13T18:20:41.752Z"
+          ]
         },
         {
           "functionName": "onValidatorsCountsByNodeOperatorReportingFinished",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:16:32.806Z",
           "checked": true,
           "score": "high-risk",
           "description": "Called when the reporting of exited and stuck validators is over. This function will call the different staking modules to update their data.\t",
@@ -2674,12 +2672,12 @@
             {
               "path": "$self.accessControl.REPORT_EXITED_VALIDATORS_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-13T18:16:32.806Z"
+          ]
         },
         {
           "functionName": "decreaseStakingModuleVettedKeysCountByNodeOperator",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:13:26.754Z",
           "checked": true,
           "score": "low-risk",
           "description": "Reduces the number of validators a specific node operator can run. This doesn't affect existing validators but may prevent the node operators to create new validators if it has reached the new limit count.\t",
@@ -2687,12 +2685,12 @@
             {
               "path": "$self.accessControl.STAKING_MODULE_UNVETTING_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-13T18:13:26.754Z"
+          ]
         },
         {
           "functionName": "setStakingModuleStatus",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:23:21.531Z",
           "checked": true,
           "score": "medium-risk",
           "description": "Changes the status of a staking module. Modules may be Active, Paused, or Stopped. When Paused no more deposits can be added but the rewards are still distributed. If stopped no more deposits can be added and the rewards go to the protocol treasury instead.\t",
@@ -2700,12 +2698,12 @@
             {
               "path": "$self.accessControl.STAKING_MODULE_MANAGE_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-13T18:23:21.531Z"
+          ]
         },
         {
           "functionName": "setWithdrawalCredentials",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:22:33.747Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the withdraw credentials of each module. The credentials are used to withdraw ETH on the Consensus Layer side. No address currently has the permission to change those credentials.\t",
@@ -2713,12 +2711,12 @@
             {
               "path": "$self.accessControl.MANAGE_WITHDRAWAL_CREDENTIALS_ROLE"
             }
-          ],
-          "timestamp": "2025-10-13T18:22:33.747Z"
+          ]
         },
         {
           "functionName": "reportValidatorExitDelay",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:27:05.382Z",
           "checked": true,
           "score": "low-risk",
           "description": "Handles tracking and penalization logic for a node operator who failed to exit their validator within the defined exit window. The information is simply forwarded to the staking module which contains the logic and possible penalties.",
@@ -2726,12 +2724,12 @@
             {
               "path": "$self.accessControl.REPORT_VALIDATOR_EXITING_STATUS_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-13T18:27:05.382Z"
+          ]
         },
         {
           "functionName": "onValidatorExitTriggered",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:25:42.516Z",
           "checked": true,
           "score": "low-risk",
           "description": "Handles the triggerable exit event for a set of validators. This function will forward the call to the corresponding staking module, different modules can interpret and treat the information differently.",
@@ -2739,12 +2737,12 @@
             {
               "path": "$self.accessControl.REPORT_VALIDATOR_EXIT_TRIGGERED_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-13T18:25:42.516Z"
+          ]
         },
         {
           "functionName": "deposit",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:15:06.751Z",
           "checked": true,
           "score": "high-risk",
           "description": "Deposits ETH to create validators in a given staking module. The staking module is specified by the Lido contract which is the only possible caller, and the underlaying staking module constract specifies the node operator public keys.\t",
@@ -2752,12 +2750,12 @@
             {
               "path": "$self.getLido"
             }
-          ],
-          "timestamp": "2025-10-13T18:15:06.751Z"
+          ]
         },
         {
           "functionName": "grantRole",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:34:33.612Z",
           "checked": true,
           "score": "high-risk",
           "description": "Grants a role within the contract. Roles are used to handle the access control of all functions above. Granting a role to a malicious actor could put lead to the hijack of deposited funds.\t",
@@ -2765,12 +2763,12 @@
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
             }
-          ],
-          "timestamp": "2025-10-13T18:34:33.612Z"
+          ]
         },
         {
           "functionName": "revokeRole",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:34:57.879Z",
           "checked": true,
           "score": "low-risk",
           "description": "Revokes a role from a specific address.\t",
@@ -2778,8 +2776,7 @@
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
             }
-          ],
-          "timestamp": "2025-10-13T18:34:57.879Z"
+          ]
         }
       ]
     },
@@ -2787,7 +2784,8 @@
       "functions": [
         {
           "functionName": "proxy__ossify",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:40:30.872Z",
           "checked": true,
           "score": "low-risk",
           "description": "Ossifies the proxy. This freezes the current implementation of the AccountingOracle and effectively makes it non-upagreable by changing the proxy admin to the zero address.\t",
@@ -2795,12 +2793,12 @@
             {
               "path": "$self.$admin"
             }
-          ],
-          "timestamp": "2025-10-13T18:40:30.872Z"
+          ]
         },
         {
           "functionName": "proxy__changeAdmin",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:40:40.617Z",
           "checked": true,
           "score": "high-risk",
           "description": "Changes the proxy admin. The admin can update the entire implementation and logic of the AccountingOracle.\t",
@@ -2808,12 +2806,12 @@
             {
               "path": "$self.$admin"
             }
-          ],
-          "timestamp": "2025-10-13T18:40:40.617Z"
+          ]
         },
         {
           "functionName": "proxy__upgradeTo",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:40:51.410Z",
           "checked": true,
           "score": "high-risk",
           "description": "Upgrades the implementation of the AccountingOracle This can change the entire logic of the contract including change ownership of funds locked in the contract, if any.\t",
@@ -2821,12 +2819,12 @@
             {
               "path": "$self.$admin"
             }
-          ],
-          "timestamp": "2025-10-13T18:40:51.410Z"
+          ]
         },
         {
           "functionName": "proxy__upgradeToAndCall",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:40:58.090Z",
           "checked": true,
           "score": "high-risk",
           "description": "Upgrades the implementation of the AccountingOracle (similarly to _proxy__upgradeTo _), and then calls a function in the new contract.\t",
@@ -2834,8 +2832,7 @@
             {
               "path": "$self.$admin"
             }
-          ],
-          "timestamp": "2025-10-13T18:40:58.090Z"
+          ]
         }
       ]
     },
@@ -2843,47 +2840,48 @@
       "functions": [
         {
           "functionName": "initialize",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
+          "timestamp": "2025-10-13T18:41:05.768Z",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-13T18:41:05.768Z"
+          ]
         },
         {
           "functionName": "initializeWithoutMigration",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
+          "timestamp": "2025-10-13T18:41:07.230Z",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-13T18:41:07.230Z"
+          ]
         },
         {
           "functionName": "finalizeUpgrade_v2",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
+          "timestamp": "2025-10-13T18:41:01.396Z",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-13T18:41:01.396Z"
+          ]
         },
         {
           "functionName": "finalizeUpgrade_v3",
-          "userClassification": "non-permissioned",
+          "isPermissioned": false,
+          "timestamp": "2025-10-13T18:41:01.997Z",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
             }
-          ],
-          "timestamp": "2025-10-13T18:41:01.997Z"
+          ]
         },
         {
           "functionName": "submitReportData",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:46:25.997Z",
           "checked": true,
           "score": "high-risk",
           "description": "Submits a report for a given reference slot on the beacon chain. This report includes information on the number of Lido validators on the consensus layer, their cumulative balance, exited validators, balance of the rewards and withdrawal vaults, and the simulated share rate (total ether / all shares emitted). This information is then processed and transmitted to other Lido contracts. It will influence how shares are rebased and whether validators will be exited/created in future slots. The report of wrong data could therefore lead to the loss of unclaimed yield or loss of user funds.\t",
@@ -2894,12 +2892,12 @@
             {
               "path": "@getConsensusContract.getMembers.addresses"
             }
-          ],
-          "timestamp": "2025-10-13T18:46:25.997Z"
+          ]
         },
         {
           "functionName": "submitReportExtraDataEmpty",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:47:03.041Z",
           "checked": true,
           "score": "low-risk",
           "description": "Informs that no extra data is submitted for the given slot.\t",
@@ -2910,12 +2908,12 @@
             {
               "path": "@getConsensusContract.getMembers.addresses"
             }
-          ],
-          "timestamp": "2025-10-13T18:47:03.041Z"
+          ]
         },
         {
           "functionName": "submitReportExtraDataList",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:47:25.923Z",
           "checked": true,
           "score": "high-risk",
           "description": "Submits extra data for a slot. This allows the consensus committee to compute the extra data asynchronously and report it later than the main report data. If the deadline has passed or the next report has started then no more extra data can be added for a slot.\t",
@@ -2926,12 +2924,12 @@
             {
               "path": "@getConsensusContract.getMembers.addresses"
             }
-          ],
-          "timestamp": "2025-10-13T18:47:25.923Z"
+          ]
         },
         {
           "functionName": "revokeRole",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:50:23.193Z",
           "checked": true,
           "score": "low-risk",
           "description": "Revokes a role for a specific address.\t",
@@ -2939,12 +2937,12 @@
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
             }
-          ],
-          "timestamp": "2025-10-13T18:50:23.193Z"
+          ]
         },
         {
           "functionName": "grantRole",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:49:54.780Z",
           "checked": true,
           "score": "high-risk",
           "description": "Grants a role within the contract to a specific address. There are roles to allow the management of the consensus contract or the right to submit data. None of these role are currently in use.\t",
@@ -2952,12 +2950,12 @@
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
             }
-          ],
-          "timestamp": "2025-10-13T18:49:54.780Z"
+          ]
         },
         {
           "functionName": "setConsensusContract",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:49:25.080Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the consensus contract to use. The consensus contract is currently HashConsensus, it can decide who is a committee member and push the consensus proof to the AccountingOracle.\t",
@@ -2965,12 +2963,12 @@
             {
               "path": "$self.accessControl.MANAGE_CONSENSUS_CONTRACT_ROLE"
             }
-          ],
-          "timestamp": "2025-10-13T18:49:25.080Z"
+          ]
         },
         {
           "functionName": "setConsensusVersion",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:50:51.674Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the current consensus version used. The version refers to a set of rules that the members must agree on when building the report.\t",
@@ -2978,12 +2976,12 @@
             {
               "path": "$self.accessControl.MANAGE_CONSENSUS_VERSION_ROLE"
             }
-          ],
-          "timestamp": "2025-10-13T18:50:51.674Z"
+          ]
         },
         {
           "functionName": "submitConsensusReport",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:48:03.330Z",
           "checked": true,
           "score": "high-risk",
           "description": "Pushes the hash of the report built by the consensus committee. This ensures that the data reported and processed matches the consensus.\t",
@@ -2991,12 +2989,12 @@
             {
               "path": "$self.getConsensusContract"
             }
-          ],
-          "timestamp": "2025-10-13T18:48:03.330Z"
+          ]
         },
         {
           "functionName": "discardConsensusReport",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T18:48:40.216Z",
           "checked": true,
           "score": "low-risk",
           "description": "Discards the report for the current slot. This can only be called when (all conditions met): a consensus was pushed, the processing hasn't started, the deadline is not expired, and there is no consensus to replace the current one. This may happen if a member changers their report, is moved from the set, or the quorum value gets increased.\t",
@@ -3004,8 +3002,7 @@
             {
               "path": "$self.getConsensusContract"
             }
-          ],
-          "timestamp": "2025-10-13T18:48:40.216Z"
+          ]
         }
       ]
     },
@@ -3013,7 +3010,8 @@
       "functions": [
         {
           "functionName": "setConfigProvider",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T21:36:44.440Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the address of the config provider. The config provider holds critical parameters of the dual governance, such as delays, locking period, and support levels required for the dual governance functionality (veto from stETH holders).",
@@ -3021,12 +3019,12 @@
             {
               "path": "@TIMELOCK.getAdminExecutor"
             }
-          ],
-          "timestamp": "2025-10-13T21:36:44.440Z"
+          ]
         },
         {
           "functionName": "setProposalsCanceller",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T21:26:38.634Z",
           "checked": true,
           "score": "high-risk",
           "description": "Updates the address of the proposals canceller authorized to cancel pending proposals. This is currently set to the DAO voting systems but could also be assigned to a contract with additional logic.",
@@ -3034,12 +3032,12 @@
             {
               "path": "@TIMELOCK.getAdminExecutor"
             }
-          ],
-          "timestamp": "2025-10-13T21:26:38.634Z"
+          ]
         },
         {
           "functionName": "registerProposer",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T21:07:19.533Z",
           "checked": true,
           "score": "high-risk",
           "description": "Registers the proposerAccount address in the system as a valid proposer and associates it with the executor contract address. Currently the only proposer is the Lido Governance contract (Voting), associated with the current admin Executor contract.",
@@ -3047,12 +3045,12 @@
             {
               "path": "@TIMELOCK.getAdminExecutor"
             }
-          ],
-          "timestamp": "2025-10-13T21:07:19.533Z"
+          ]
         },
         {
           "functionName": "setProposerExecutor",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T21:25:36.202Z",
           "checked": true,
           "score": "high-risk",
           "description": "Updates the executor contract associated with a given proposer. ",
@@ -3060,12 +3058,12 @@
             {
               "path": "@TIMELOCK.getAdminExecutor"
             }
-          ],
-          "timestamp": "2025-10-13T21:25:36.202Z"
+          ]
         },
         {
           "functionName": "unregisterProposer",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T21:29:10.651Z",
           "checked": true,
           "score": "high-risk",
           "description": "Unregisters a proposer, a contract allowed to submit proposals.",
@@ -3073,12 +3071,12 @@
             {
               "path": "@TIMELOCK.getAdminExecutor"
             }
-          ],
-          "timestamp": "2025-10-13T21:29:10.651Z"
+          ]
         },
         {
           "functionName": "addTiebreakerSealableWithdrawalBlocker",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T21:37:56.823Z",
           "checked": true,
           "score": "high-risk",
           "description": "Adds a unique address of a sealable contract that can be paused and may cause a Dual Governance tie (deadlock). A tie may occur when user withdrawal requests cannot be processed due to the paused state of a registered sealable withdrawal blocker while the Dual Governance system is in the RageQuit state. This contract could then be paused (sealed), by the reseal committee, and potentially unsealed by the tiebreaker committee.",
@@ -3086,12 +3084,12 @@
             {
               "path": "@TIMELOCK.getAdminExecutor"
             }
-          ],
-          "timestamp": "2025-10-13T21:37:56.823Z"
+          ]
         },
         {
           "functionName": "removeTiebreakerSealableWithdrawalBlocker",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T21:38:30.281Z",
           "checked": true,
           "score": "low-risk",
           "description": "Removes a previously registered sealableWithdrawalBlocker contract from the system. (see addTiebreakerSealableWithdrawalBlocker). \n\n",
@@ -3099,12 +3097,12 @@
             {
               "path": "@TIMELOCK.getAdminExecutor"
             }
-          ],
-          "timestamp": "2025-10-13T21:38:30.281Z"
+          ]
         },
         {
           "functionName": "setTiebreakerCommittee",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T21:16:56.564Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the address of the tie breaker committee. The committee can, in the unique condition of a deadlock in the governance process (stuck in rage quit mode):\n - Schedule any pending proposal for execution\n - Unpause (unseal) any sealable contract using \"tieBreakerResumeSealable\"\n\nThose can only be performed once the delay \"tiebreaker activation timeout\" has passed.",
@@ -3112,12 +3110,12 @@
             {
               "path": "@TIMELOCK.getAdminExecutor"
             }
-          ],
-          "timestamp": "2025-10-13T21:16:56.564Z"
+          ]
         },
         {
           "functionName": "setTiebreakerActivationTimeout",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T21:17:25.731Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the tiebreaker activatioin timeout. This is the delay before which the tiebreaker committee can perform any action, once it's activated.",
@@ -3125,12 +3123,12 @@
             {
               "path": "@TIMELOCK.getAdminExecutor"
             }
-          ],
-          "timestamp": "2025-10-13T21:17:25.731Z"
+          ]
         },
         {
           "functionName": "setResealCommittee",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T21:24:39.204Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the address of the reseal committee.\n\n",
@@ -3138,12 +3136,12 @@
             {
               "path": "@TIMELOCK.getAdminExecutor"
             }
-          ],
-          "timestamp": "2025-10-13T21:24:39.204Z"
+          ]
         },
         {
           "functionName": "setResealManager",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T21:24:03.134Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the address of the Reseal Manager contract.\n\n",
@@ -3151,12 +3149,12 @@
             {
               "path": "@TIMELOCK.getAdminExecutor"
             }
-          ],
-          "timestamp": "2025-10-13T21:24:03.134Z"
+          ]
         },
         {
           "functionName": "tiebreakerScheduleProposal",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T21:19:15.499Z",
           "checked": true,
           "score": "high-risk",
           "description": "Allows the Tiebreaker committee to instruct the EmergencyProtectedTimelock singleton instance to schedule a submitted and non-cancelled proposal for execution. This can only be called if the governance is in deadlock and the mandatory timeout has passed since the activation of the tiebreaker committee.",
@@ -3164,12 +3162,12 @@
             {
               "path": "$self.getTiebreakerDetails.tiebreakerCommittee"
             }
-          ],
-          "timestamp": "2025-10-13T21:19:15.499Z"
+          ]
         },
         {
           "functionName": "tiebreakerResumeSealable",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T21:21:10.012Z",
           "checked": true,
           "score": "high-risk",
           "description": "Allows the Tiebreaker committee to resume a paused sealable contract when the system is in a tie state.\n\n",
@@ -3177,12 +3175,12 @@
             {
               "path": "$self.getTiebreakerDetails.tiebreakerCommittee"
             }
-          ],
-          "timestamp": "2025-10-13T21:21:10.012Z"
+          ]
         },
         {
           "functionName": "resealSealable",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T21:22:44.448Z",
           "checked": true,
           "score": "high-risk",
           "description": "Allows the reseal committee to \"reseal\" (pause indefinitely) an instance of a sealable contract that is currently paused for a limited duration. This is done using the ResealManager contract.",
@@ -3190,18 +3188,18 @@
             {
               "path": "$self.getResealCommittee"
             }
-          ],
-          "timestamp": "2025-10-13T21:22:44.448Z"
+          ]
         },
         {
           "functionName": "cancelAllPendingProposals",
-          "userClassification": "non-permissioned",
-          "score": "unscored",
-          "timestamp": "2025-10-13T21:23:58.863Z"
+          "isPermissioned": false,
+          "timestamp": "2025-10-13T21:23:58.863Z",
+          "score": "unscored"
         },
         {
           "functionName": "submitProposal",
-          "userClassification": "permissioned",
+          "isPermissioned": true,
+          "timestamp": "2025-10-13T21:31:42.769Z",
           "checked": true,
           "score": "high-risk",
           "description": "Instructs the EmergencyProtectedTimelock singleton instance to register a new governance proposal. The proposal will be executed by an executor contract associated with the proposer address calling this function at the moment of submission. This starts a dynamic timelock on scheduling the proposal for execution.",
@@ -3209,14 +3207,13 @@
             {
               "path": "$self.getProposers[0].account"
             }
-          ],
-          "timestamp": "2025-10-13T21:31:42.769Z"
+          ]
         },
         {
           "functionName": "scheduleProposal",
-          "userClassification": "non-permissioned",
-          "score": "unscored",
-          "timestamp": "2025-10-13T21:31:13.236Z"
+          "isPermissioned": false,
+          "timestamp": "2025-10-13T21:31:13.236Z",
+          "score": "unscored"
         }
       ]
     }

@@ -2,10 +2,10 @@ import { DiscoveryPaths } from '@l2beat/discovery'
 import * as fs from 'fs'
 import * as path from 'path'
 import type {
-  ApiPermissionOverridesResponse,
-  ApiPermissionOverridesUpdateRequest,
-  PermissionOverride,
-  ContractPermissions,
+  ApiFunctionsResponse,
+  ApiFunctionsUpdateRequest,
+  FunctionEntry,
+  ContractFunctions,
   OwnerDefinition,
 } from './types'
 
@@ -26,36 +26,36 @@ export interface ResolvedDelay {
   error?: string
 }
 
-// Cache for discovered permissions to avoid repeated file parsing
-const discoveredPermissionsCache = new Map<string, {
-  contracts: Record<string, ContractPermissions>
+// Cache for discovered functions to avoid repeated file parsing
+const discoveredFunctionsCache = new Map<string, {
+  contracts: Record<string, ContractFunctions>
   mtime: number
 }>()
 
-export function getPermissionOverrides(
+export function getFunctions(
   paths: DiscoveryPaths,
   project: string,
-): ApiPermissionOverridesResponse {
-  const overridesPath = getPermissionOverridesPath(paths, project)
+): ApiFunctionsResponse {
+  const functionsPath = getFunctionsPath(paths, project)
   const discoveredPath = getDiscoveredPath(paths, project)
 
-  // Load user overrides
-  let userContracts: Record<string, ContractPermissions> = {}
-  if (fs.existsSync(overridesPath)) {
+  // Load user functions
+  let userContracts: Record<string, ContractFunctions> = {}
+  if (fs.existsSync(functionsPath)) {
     try {
-      const fileContent = fs.readFileSync(overridesPath, 'utf8')
-      const data = JSON.parse(fileContent) as ApiPermissionOverridesResponse
+      const fileContent = fs.readFileSync(functionsPath, 'utf8')
+      const data = JSON.parse(fileContent) as ApiFunctionsResponse
       userContracts = data.contracts || {}
     } catch (error) {
-      console.error('Error parsing permission overrides file:', error)
+      console.error('Error parsing functions file:', error)
     }
   }
 
-  // Load discovered permissions and convert to contract-grouped format
-  const discoveredContracts = loadDiscoveredPermissions(discoveredPath)
+  // Load discovered functions and convert to contract-grouped format
+  const discoveredContracts = loadDiscoveredFunctions(discoveredPath)
 
-  // Merge: user overrides take precedence over discovered permissions
-  const allContracts = mergeContractPermissions(discoveredContracts, userContracts)
+  // Merge: user functions take precedence over discovered functions
+  const allContracts = mergeContractFunctions(discoveredContracts, userContracts)
 
   return {
     version: '1.0',
@@ -64,22 +64,22 @@ export function getPermissionOverrides(
   }
 }
 
-export function updatePermissionOverride(
+export function updateFunction(
   paths: DiscoveryPaths,
   project: string,
-  updateRequest: ApiPermissionOverridesUpdateRequest,
+  updateRequest: ApiFunctionsUpdateRequest,
 ): void {
-  const overridesPath = getPermissionOverridesPath(paths, project)
+  const functionsPath = getFunctionsPath(paths, project)
 
-  // Load existing USER overrides only (not merged data)
-  let userContracts: Record<string, ContractPermissions> = {}
-  if (fs.existsSync(overridesPath)) {
+  // Load existing USER functions only (not merged data)
+  let userContracts: Record<string, ContractFunctions> = {}
+  if (fs.existsSync(functionsPath)) {
     try {
-      const fileContent = fs.readFileSync(overridesPath, 'utf8')
-      const data = JSON.parse(fileContent) as ApiPermissionOverridesResponse
+      const fileContent = fs.readFileSync(functionsPath, 'utf8')
+      const data = JSON.parse(fileContent) as ApiFunctionsResponse
       userContracts = data.contracts || {}
     } catch (error) {
-      console.error('Error parsing permission overrides file:', error)
+      console.error('Error parsing functions file:', error)
     }
   }
 
@@ -91,50 +91,50 @@ export function updatePermissionOverride(
     userContracts[contractAddress] = { functions: [] }
   }
 
-  // Find existing override for the same function
-  const existingOverrideIndex = userContracts[contractAddress].functions.findIndex(
+  // Find existing function entry for the same function
+  const existingFunctionIndex = userContracts[contractAddress].functions.findIndex(
     (func) => func.functionName === functionName
   )
-  const existingOverride = existingOverrideIndex >= 0 ? userContracts[contractAddress].functions[existingOverrideIndex] : undefined
+  const existingFunction = existingFunctionIndex >= 0 ? userContracts[contractAddress].functions[existingFunctionIndex] : undefined
 
-  // Create new override entry, merging with existing data
-  const newOverride: PermissionOverride = {
+  // Create new function entry, merging with existing data
+  const newFunction: FunctionEntry = {
     functionName: updateRequest.functionName,
-    userClassification: updateRequest.userClassification ?? existingOverride?.userClassification ?? 'non-permissioned',
-    checked: updateRequest.checked ?? existingOverride?.checked,
-    score: updateRequest.score ?? existingOverride?.score,
-    reason: updateRequest.reason ?? existingOverride?.reason,
-    description: updateRequest.description ?? existingOverride?.description,
-    ownerDefinitions: updateRequest.ownerDefinitions ?? existingOverride?.ownerDefinitions,
-    delay: updateRequest.delay !== undefined ? updateRequest.delay : existingOverride?.delay,
+    isPermissioned: updateRequest.isPermissioned ?? existingFunction?.isPermissioned ?? false,
+    checked: updateRequest.checked ?? existingFunction?.checked,
+    score: updateRequest.score ?? existingFunction?.score,
+    reason: updateRequest.reason ?? existingFunction?.reason,
+    description: updateRequest.description ?? existingFunction?.description,
+    ownerDefinitions: updateRequest.ownerDefinitions ?? existingFunction?.ownerDefinitions,
+    delay: updateRequest.delay !== undefined ? updateRequest.delay : existingFunction?.delay,
     timestamp: new Date().toISOString(),
   }
 
-  // Update or add the function override
-  if (existingOverrideIndex >= 0) {
-    userContracts[contractAddress].functions[existingOverrideIndex] = newOverride
+  // Update or add the function entry
+  if (existingFunctionIndex >= 0) {
+    userContracts[contractAddress].functions[existingFunctionIndex] = newFunction
   } else {
-    userContracts[contractAddress].functions.push(newOverride)
+    userContracts[contractAddress].functions.push(newFunction)
   }
 
   // Create updated data
-  const updatedData: ApiPermissionOverridesResponse = {
+  const updatedData: ApiFunctionsResponse = {
     version: '1.0',
     lastModified: new Date().toISOString(),
     contracts: userContracts,
   }
 
   // Ensure directory exists
-  const dir = path.dirname(overridesPath)
+  const dir = path.dirname(functionsPath)
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true })
   }
 
   // Write updated data
-  fs.writeFileSync(overridesPath, JSON.stringify(updatedData, null, 2))
+  fs.writeFileSync(functionsPath, JSON.stringify(updatedData, null, 2))
 }
 
-function getPermissionOverridesPath(
+function getFunctionsPath(
   paths: DiscoveryPaths,
   project: string,
 ): string {
@@ -142,7 +142,7 @@ function getPermissionOverridesPath(
   return path.join(
     paths.discovery,
     project,
-    'permission-overrides.json',
+    'functions.json',
   )
 }
 
@@ -157,7 +157,7 @@ function getDiscoveredPath(
   )
 }
 
-function loadDiscoveredPermissions(discoveredPath: string): Record<string, ContractPermissions> {
+function loadDiscoveredFunctions(discoveredPath: string): Record<string, ContractFunctions> {
   if (!fs.existsSync(discoveredPath)) {
     return {}
   }
@@ -166,7 +166,7 @@ function loadDiscoveredPermissions(discoveredPath: string): Record<string, Contr
     // Check cache first
     const stats = fs.statSync(discoveredPath)
     const currentMtime = stats.mtimeMs
-    const cached = discoveredPermissionsCache.get(discoveredPath)
+    const cached = discoveredFunctionsCache.get(discoveredPath)
 
     if (cached && cached.mtime === currentMtime) {
       // Return cached result if file hasn't changed
@@ -174,10 +174,10 @@ function loadDiscoveredPermissions(discoveredPath: string): Record<string, Contr
     }
 
     // File has changed or not cached, parse it
-    console.log(`Parsing discovered.json for permissions (${Math.round(stats.size / 1024)}KB)...`)
+    console.log(`Parsing discovered.json for functions (${Math.round(stats.size / 1024)}KB)...`)
     const fileContent = fs.readFileSync(discoveredPath, 'utf8')
     const discovered = JSON.parse(fileContent)
-    const contracts: Record<string, ContractPermissions> = {}
+    const contracts: Record<string, ContractFunctions> = {}
 
     // Iterate through discovered contracts
     if (discovered.entries && Array.isArray(discovered.entries)) {
@@ -188,16 +188,16 @@ function loadDiscoveredPermissions(discoveredPath: string): Record<string, Contr
 
           // Skip if it's a skipped entry
           if (Array.isArray(permissions)) {
-            const functions: PermissionOverride[] = []
+            const functions: FunctionEntry[] = []
             for (const permission of permissions) {
               if (permission.function && permission.permissionType) {
-                // Convert discovered permission to override format
+                // Convert discovered permission to function entry format
                 const isPermissioned = permission.permissionType === 'modifier' ||
                                      permission.permissionType === 'msgSender'
 
                 functions.push({
                   functionName: permission.function,
-                  userClassification: isPermissioned ? 'permissioned' : 'non-permissioned',
+                  isPermissioned: isPermissioned,
                   timestamp: new Date().toISOString(),
                   reason: `Auto-detected: ${permission.permissionType}${permission.modifiers ? ` (${permission.modifiers.join(', ')})` : ''}`,
                 })
@@ -213,13 +213,13 @@ function loadDiscoveredPermissions(discoveredPath: string): Record<string, Contr
     }
 
     // Cache the result
-    discoveredPermissionsCache.set(discoveredPath, {
+    discoveredFunctionsCache.set(discoveredPath, {
       contracts,
       mtime: currentMtime
     })
 
     const totalFunctions = Object.values(contracts).reduce((sum, contract) => sum + contract.functions.length, 0)
-    console.log(`Cached ${totalFunctions} discovered permissions across ${Object.keys(contracts).length} contracts`)
+    console.log(`Cached ${totalFunctions} discovered functions across ${Object.keys(contracts).length} contracts`)
     return contracts
   } catch (error) {
     console.error('Error parsing discovered.json:', error)
@@ -227,31 +227,31 @@ function loadDiscoveredPermissions(discoveredPath: string): Record<string, Contr
   }
 }
 
-function mergeContractPermissions(
-  discoveredContracts: Record<string, ContractPermissions>,
-  userContracts: Record<string, ContractPermissions>
-): Record<string, ContractPermissions> {
-  const result: Record<string, ContractPermissions> = {}
+function mergeContractFunctions(
+  discoveredContracts: Record<string, ContractFunctions>,
+  userContracts: Record<string, ContractFunctions>
+): Record<string, ContractFunctions> {
+  const result: Record<string, ContractFunctions> = {}
 
   // Start with discovered contracts
   for (const [contractAddress, discoveredContract] of Object.entries(discoveredContracts)) {
     const userContract = userContracts[contractAddress]
 
     if (!userContract) {
-      // No user overrides for this contract, use discovered functions
+      // No user functions for this contract, use discovered functions
       result[contractAddress] = { functions: [...discoveredContract.functions] }
     } else {
       // Merge discovered and user functions, user takes precedence
-      const userFunctionMap = new Map<string, PermissionOverride>()
+      const userFunctionMap = new Map<string, FunctionEntry>()
 
       // Index user functions by function name
       for (const func of userContract.functions) {
         userFunctionMap.set(func.functionName, func)
       }
 
-      const mergedFunctions: PermissionOverride[] = []
+      const mergedFunctions: FunctionEntry[] = []
 
-      // Add discovered functions that don't have user overrides
+      // Add discovered functions that don't have user functions
       for (const discoveredFunc of discoveredContract.functions) {
         if (!userFunctionMap.has(discoveredFunc.functionName)) {
           mergedFunctions.push(discoveredFunc)
@@ -265,7 +265,7 @@ function mergeContractPermissions(
     }
   }
 
-  // Add user-only contracts (contracts that have user overrides but no discovered data)
+  // Add user-only contracts (contracts that have user functions but no discovered data)
   for (const [contractAddress, userContract] of Object.entries(userContracts)) {
     if (!discoveredContracts[contractAddress]) {
       result[contractAddress] = { functions: [...userContract.functions] }
