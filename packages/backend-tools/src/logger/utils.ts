@@ -1,12 +1,15 @@
-export function toJSON(parameters: object): string {
-  return JSON.stringify(parameters, (_k, v: unknown) =>
-    typeof v === 'bigint' ? v.toString() : v,
-  )
+export function safeToJSON(parameters: object): string {
+  try {
+    return JSON.stringify(parameters, (_k, v: unknown) =>
+      typeof v === 'bigint' ? v.toString() : v,
+    )
+  } catch {
+    return '{}'
+  }
 }
 
-export function formatDate(date: Date): string {
-  const padStart = (value: number): string => value.toString().padStart(2, '0')
-  return `${padStart(date.getDate())}-${padStart(
-    date.getMonth() + 1,
-  )}-${date.getFullYear()}`
+export function tagService(service: unknown, tag: unknown): string | undefined {
+  const serviceStr = service !== undefined ? `${service}` : ''
+  const tagStr = tag !== undefined ? `:${tag}` : ''
+  return serviceStr + tagStr || undefined
 }

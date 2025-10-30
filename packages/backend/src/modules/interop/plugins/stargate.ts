@@ -1,5 +1,7 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { BinaryReader } from '../../../tools/BinaryReader'
+import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
+import { LayerZeroV2Config } from './layerzero/layerzero.config'
 import { PacketDelivered, PacketSent } from './layerzero/layerzero-v2.plugin'
 import {
   parseOFTReceived,
@@ -195,7 +197,18 @@ const GUID_ZERO =
 export class StargatePlugin implements InteropPlugin {
   name = 'stargate'
 
+  constructor(private configs: InteropConfigStore) {}
+
   capture(input: LogToCapture) {
+    // trying an awkward fix:
+    const lznetworks = this.configs.get(LayerZeroV2Config)
+    if (!lznetworks) return
+
+    const lznetwork = lznetworks.find((x) => x.chain === input.ctx.chain)
+    if (!lznetwork) return
+    assert(lznetwork.endpointV2, 'We capture only chains with endpoints')
+    // awkward fix end
+
     const network = STARGATE_NETWORKS.find((b) => b.chain === input.ctx.chain)
     if (!network) {
       return

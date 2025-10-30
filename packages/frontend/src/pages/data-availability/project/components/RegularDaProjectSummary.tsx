@@ -31,7 +31,7 @@ export function RegularDaProjectSummary({ project }: Props) {
   return (
     <section
       id="summary"
-      data-role="project-section"
+      data-role="nav-section"
       className="w-full space-y-4 border-divider bg-surface-primary px-4 pb-6 max-md:border-b md:rounded-lg md:p-6"
     >
       <DaProjectStats stats={stats} />

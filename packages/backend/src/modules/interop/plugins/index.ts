@@ -99,7 +99,7 @@ export function createInteropPlugins(
       new MayanMctpFastPlugin(), // should be run before CCTP
       new CCTPV1Plugin(deps.configs),
       new CCTPV2Plugin(deps.configs),
-      new StargatePlugin(), // should be run before stargate bus/taxi, ofts
+      new StargatePlugin(deps.configs), // should be run ofts
       new LayerZeroV2OFTsPlugin(deps.configs), // should be run before LayerZeroV2
       new LayerZeroV1Plugin(deps.configs),
       new LayerZeroV2Plugin(deps.configs),
