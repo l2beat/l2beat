@@ -25,11 +25,13 @@
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "ansi-html": "^0.0.9",
+    "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "comment-json": "^4.4.1",
     "d3-force": "^3.0.0",
     "earl": "^1.1.0",
     "fuzzysort": "^3.1.0",
+    "immer": "^10.2.0",
     "mocha": "^10.2.0",
     "monaco-editor": "^0.52.0",
     "react": "^19.0.0",
@@ -38,8 +40,8 @@
     "zustand": "^5.0.0"
   },
   "devDependencies": {
-    "@l2beat/typescript-config": "workspace:*",
     "@l2beat/discovery": "workspace:*",
+    "@l2beat/typescript-config": "workspace:*",
     "@types/ansi-html": "^0.0.0",
     "@vitejs/plugin-react-swc": "^3.7.1",
     "autoprefixer": "^10.4.20",

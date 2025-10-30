@@ -21,7 +21,12 @@ export function useProjectData() {
     ? findSelected(projectResponse.data.entries, selectedAddress)
     : undefined
 
+  const isLoading = projectResponse.isPending
+  const isError = projectResponse.isError
+
   return {
+    isLoading,
+    isError,
     project,
     selectedAddress,
     projectResponse,

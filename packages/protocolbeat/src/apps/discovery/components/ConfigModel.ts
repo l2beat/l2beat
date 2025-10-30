@@ -3,8 +3,10 @@ import type {
   DiscoveryConfigSchema,
 } from '@l2beat/discovery'
 import { assign, CommentArray, parse, stringify } from 'comment-json'
+import { immerable } from 'immer'
 
 export class ConfigModel {
+  [immerable] = true
   private readonly config: DiscoveryConfigSchema
   private readonly overrides: Record<string, ContractConfigModel> = {}
 
@@ -28,21 +30,19 @@ export class ConfigModel {
   }
 
   peek(): DiscoveryConfigSchema {
+    // Clone the config to ensure we return a plain object (not a draft proxy)
     const clone = assign({}, this.config) as DiscoveryConfigSchema
 
-    const [emptyOverrides, nonEmptyOverrides] = partition(
-      Object.entries(this.overrides),
-      ([, entry]) => entry.isEmpty(),
-    )
-
-    for (const [address, contractConfig] of nonEmptyOverrides) {
-      assign(clone.overrides, {
-        [address]: contractConfig.peek(),
-      })
+    // Merge non-empty overrides back into the clone
+    const overrides: Record<string, ContractConfigSchema> = {}
+    for (const [address, contractConfig] of Object.entries(this.overrides)) {
+      if (!contractConfig.isEmpty()) {
+        overrides[address] = contractConfig.peek()
+      }
     }
 
-    for (const [address] of emptyOverrides) {
-      delete clone.overrides?.[address]
+    if (Object.keys(overrides).length > 0) {
+      clone.overrides = overrides
     }
 
     return clone
@@ -76,6 +76,10 @@ export class ConfigModel {
     this.ensure(id).removeFromIgnoredMethods(method)
   }
 
+  setIgnoreMethods(id: string, methods: string[]) {
+    this.ensure(id).setIgnoreMethods(methods)
+  }
+
   addToIgnoredRelatives(id: string, relative: string) {
     this.ensure(id).addToIgnoredRelatives(relative)
   }
@@ -84,8 +88,16 @@ export class ConfigModel {
     this.ensure(id).removeFromIgnoredRelatives(relative)
   }
 
+  setIgnoreRelatives(id: string, relatives: string[]) {
+    this.ensure(id).setIgnoreRelatives(relatives)
+  }
+
   addToIgnoredInWatchMode(id: string, method: string) {
     this.ensure(id).addToIgnoredInWatchMode(method)
+  }
+
+  setIgnoreInWatchMode(id: string, methods: string[]) {
+    this.ensure(id).setIgnoreInWatchMode(methods)
   }
 
   removeFromIgnoredInWatchMode(id: string, method: string) {
@@ -106,6 +118,7 @@ export class ConfigModel {
 }
 
 export class ContractConfigModel {
+  [immerable] = true
   private readonly config: ContractConfigSchema
   constructor(config: ContractConfigSchema) {
     this.config = assign({}, config) as ContractConfigSchema
@@ -128,7 +141,8 @@ export class ContractConfigModel {
   }
 
   peek() {
-    return this.config
+    // Clone the config to ensure we return a plain object (not a draft proxy)
+    return assign({}, this.config) as ContractConfigSchema
   }
 
   diff(other: ContractConfigModel) {
@@ -152,6 +166,10 @@ export class ContractConfigModel {
     this.removeFromArray('ignoreMethods', method)
   }
 
+  setIgnoreMethods(methods: string[]) {
+    this.patch({ ignoreMethods: methods })
+  }
+
   addToIgnoredRelatives(relative: string) {
     this.addToArray('ignoreRelatives', relative)
   }
@@ -160,12 +178,20 @@ export class ContractConfigModel {
     this.removeFromArray('ignoreRelatives', relative)
   }
 
+  setIgnoreRelatives(relatives: string[]) {
+    this.patch({ ignoreRelatives: relatives })
+  }
+
   addToIgnoredInWatchMode(method: string) {
     this.addToArray('ignoreInWatchMode', method)
   }
 
   removeFromIgnoredInWatchMode(method: string) {
     this.removeFromArray('ignoreInWatchMode', method)
+  }
+
+  setIgnoreInWatchMode(methods: string[]) {
+    this.patch({ ignoreInWatchMode: methods })
   }
 
   private patch(patch: Partial<ContractConfigSchema>) {
@@ -201,20 +227,6 @@ export class ContractConfigModel {
   get ignoreRelatives() {
     return this.config.ignoreRelatives
   }
-}
-
-function partition<T>(array: T[], predicate: (item: T) => boolean): [T[], T[]] {
-  return array.reduce<[T[], T[]]>(
-    (acc, item) => {
-      if (predicate(item)) {
-        acc[0].push(item)
-      } else {
-        acc[1].push(item)
-      }
-      return acc
-    },
-    [[], []],
-  )
 }
 
 function undefinedIfEmpty<T>(arr: T[]): T[] | undefined {

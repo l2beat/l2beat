@@ -2,11 +2,13 @@ import clsx from 'clsx'
 import { Link } from 'react-router-dom'
 import { Button } from '../../../components/Button'
 import { IconPlus } from '../../../icons/IconPlus'
+import { useProjectConfigModels } from '../hooks/useProjectConfig'
 import { Search } from '../search/Search'
 import { SettingsDialog } from './SettingsDialog'
 import { useMultiViewStore } from './store'
 
 export function TopBar(props: { project: string }) {
+  const { configModel } = useProjectConfigModels()
   const layouts = useMultiViewStore((state) => state.layouts)
   const selectedLayout = useMultiViewStore((state) => state.selectedLayout)
   const loadLayout = useMultiViewStore((state) => state.loadLayout)
@@ -42,6 +44,16 @@ export function TopBar(props: { project: string }) {
             </button>
           ))}
         </div>
+
+        <Button
+          className="hidden items-center border-coffee-200 text-sm max-lg:p-2 md:flex"
+          onClick={() => {
+            console.log('save')
+            configModel.save()
+          }}
+        >
+          <span className="max-lg:hidden">Save</span>
+        </Button>
 
         <Button
           className="hidden items-center border-coffee-200 text-sm max-lg:p-2 md:flex"

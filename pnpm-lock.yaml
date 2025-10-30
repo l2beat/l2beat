@@ -785,6 +785,9 @@ importers:
       ansi-html:
         specifier: ^0.0.9
         version: 0.0.9
+      class-variance-authority:
+        specifier: ^0.7.0
+        version: 0.7.0
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -800,6 +803,9 @@ importers:
       fuzzysort:
         specifier: ^3.1.0
         version: 3.1.0
+      immer:
+        specifier: ^10.2.0
+        version: 10.2.0
       mocha:
         specifier: ^10.2.0
         version: 10.7.3
@@ -817,7 +823,7 @@ importers:
         version: 6.27.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       zustand:
         specifier: ^5.0.0
-        version: 5.0.0(@types/react@19.0.10)(react@19.0.0)(use-sync-external-store@1.2.2(react@19.0.0))
+        version: 5.0.0(@types/react@19.0.10)(immer@10.2.0)(react@19.0.0)(use-sync-external-store@1.2.2(react@19.0.0))
     devDependencies:
       '@l2beat/discovery':
         specifier: workspace:*
@@ -5512,6 +5518,9 @@ packages:
     resolution: {integrity: sha512-NI6NK/2zchlZopsQrcVIS7jxA0/rtIy74B+/rx5s7rKQyFebmQjZVhzxXgRZJROk+WhhOq+S6sUaODxp0L5hfg==}
     engines: {node: '>=16.x'}
     hasBin: true
+
+  immer@10.2.0:
+    resolution: {integrity: sha512-d/+XTN3zfODyjr89gM3mPq1WNX2B8pYsu7eORitdwyA2sBubnTl3laYlBk4sXY5FUa5qTZGBDPJICVbvqzjlbw==}
 
   import-in-the-middle@1.13.1:
     resolution: {integrity: sha512-k2V9wNm9B+ysuelDTHjI9d5KPc4l8zAZTGqj+pcynvWkypZd857ryzN8jNC7Pg2YZXNMJcHRPpaDyCBbNyVRpA==}
@@ -12761,6 +12770,8 @@ snapshots:
 
   image-size@2.0.1: {}
 
+  immer@10.2.0: {}
+
   import-in-the-middle@1.13.1:
     dependencies:
       acorn: 8.15.0
@@ -15350,8 +15361,9 @@ snapshots:
   zod@3.24.1:
     optional: true
 
-  zustand@5.0.0(@types/react@19.0.10)(react@19.0.0)(use-sync-external-store@1.2.2(react@19.0.0)):
+  zustand@5.0.0(@types/react@19.0.10)(immer@10.2.0)(react@19.0.0)(use-sync-external-store@1.2.2(react@19.0.0)):
     optionalDependencies:
       '@types/react': 19.0.10
+      immer: 10.2.0
       react: 19.0.0
       use-sync-external-store: 1.2.2(react@19.0.0)
