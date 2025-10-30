@@ -87,23 +87,17 @@ export class DeployedTokenRepository extends BaseRepository {
         'AbstractToken.id',
         'DeployedToken.abstractTokenId',
       )
+      .selectAll('DeployedToken')
       .select([
-        'DeployedToken.symbol',
-        'DeployedToken.comment',
-        'DeployedToken.chain',
-        'DeployedToken.address',
-        'DeployedToken.abstractTokenId',
-        'DeployedToken.decimals',
-        'DeployedToken.deploymentTimestamp',
-        'AbstractToken.id',
-        'AbstractToken.issuer',
-        'AbstractToken.category',
-        'AbstractToken.iconUrl',
-        'AbstractToken.coingeckoId',
-        'AbstractToken.coingeckoListingTimestamp',
-        'AbstractToken.symbol as abstractSymbol',
-        'AbstractToken.comment as abstractComment',
-        'AbstractToken.reviewed',
+        'AbstractToken.id as AbstractToken_id',
+        'AbstractToken.issuer as AbstractToken_issuer',
+        'AbstractToken.category as AbstractToken_category',
+        'AbstractToken.iconUrl as AbstractToken_iconUrl',
+        'AbstractToken.coingeckoId as AbstractToken_coingeckoId',
+        'AbstractToken.coingeckoListingTimestamp as AbstractToken_coingeckoListingTimestamp',
+        'AbstractToken.symbol as AbstractToken_symbol',
+        'AbstractToken.comment as AbstractToken_comment',
+        'AbstractToken.reviewed as AbstractToken_reviewed',
       ])
       .where((eb) =>
         eb.or(
