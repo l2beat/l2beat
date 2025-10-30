@@ -50,13 +50,6 @@ export const OutBoxTransactionExecuted = createInteropEventType<{
   position: number
 }>('orbitstack.OutBoxTransactionExecuted')
 
-// L1 finalization of L2->L1 ETH withdrawal
-const ETHWithdrawalFinalizedOutBoxTransactionExecuted = createInteropEventType<{
-  chain: string
-  position: number
-  amount: string
-}>('orbitstack.OutBoxTxExecutedETHWithdrawalFinalized')
-
 // L1 -> L2 message event types
 export const MessageDelivered = createInteropEventType<{
   chain: string
