@@ -1,4 +1,3 @@
-import type { CelestiaDaTrackingConfig } from '@l2beat/config'
 import type { DaBlob, DaProvider } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
@@ -61,12 +60,7 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
         blobs: blobs.length,
       })
     } else {
-      blobs = await this.$.daProvider.getBlobs(
-        this.daLayer,
-        from,
-        adjustedTo,
-        this.getNamespaces(configurations),
-      )
+      blobs = await this.$.daProvider.getBlobs(this.daLayer, from, adjustedTo)
 
       this.logger.info('Fetched blobs from provider', {
         blobs: blobs.length,
@@ -152,17 +146,6 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
         deletedRecords,
       })
     }
-  }
-
-  /** This is needed because Celestia RPC needs list of namespaces for which to fetch blobs */
-  getNamespaces(
-    configurations: Configuration<BlockDaIndexedConfig>[],
-  ): string[] | undefined {
-    if (this.$.daLayer !== 'celestia') return
-
-    return (configurations as Configuration<CelestiaDaTrackingConfig>[]).map(
-      (c) => c.properties.namespace,
-    )
   }
 
   get daLayer() {
