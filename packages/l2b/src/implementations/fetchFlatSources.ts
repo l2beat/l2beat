@@ -21,10 +21,6 @@ export async function fetchFlatSources(
 
   const progress = new ResponseProgress(response)
   progress.on('progress', (p) => printProgress(logger, p))
-  progress.on('finish', (p) => {
-    printProgress(logger, p)
-    finishProgress(logger, p)
-  })
 
   return FlatSourcesApiResponse.parse(await response.json())
 }
@@ -45,10 +41,6 @@ function printProgress(logger: Logger, progress: ProgressEvent) {
     'lineDownloaded',
     `Downloaded ${prog} % (${done} of ${total}) [${rate} in ~${eta}]`,
   )
-}
-
-function finishProgress(logger: Logger, progress: ProgressEvent) {
-  printProgress(logger, progress)
 }
 
 export function saveIntoDirectory(
