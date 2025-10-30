@@ -44,11 +44,11 @@ function TransfersTable(props: {
               </td>
               <td>{e.duration && formatSeconds(e.duration)}</td>
               <td>
-                {e.srcAmount} {e.srcAbstractTokenId?.split(':')[2]}
+                {e.srcAmount} {e.srcSymbol}
               </td>
               <td data-order={e.srcValueUsd}>{formatDollars(e.srcValueUsd)}</td>
               <td>
-                {e.dstAmount} {e.dstAbstractTokenId?.split(':')[2]}
+                {e.dstAmount} {e.dstSymbol}
               </td>
               <td data-order={e.dstValueUsd}>{formatDollars(e.dstValueUsd)}</td>
               <td>{e.srcChain}</td>
