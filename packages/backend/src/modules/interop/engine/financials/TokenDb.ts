@@ -28,12 +28,15 @@ export class TokenDb {
       })),
     )
 
+    const tokensMap = new Map(
+      tokens.map((t) => [
+        DeployedTokenId.from(t.deployedToken.chain, t.deployedToken.address),
+        t,
+      ]),
+    )
+
     for (const d of deployedTokens) {
-      const tokenData = tokens.find(
-        (t) =>
-          t.deployedToken.chain === DeployedTokenId.chain(d) &&
-          t.deployedToken.address === DeployedTokenId.address(d),
-      )
+      const tokenData = tokensMap.get(d)
 
       if (!tokenData) {
         this.logger.info('Missing token detected', { deployedTokenId: d })
