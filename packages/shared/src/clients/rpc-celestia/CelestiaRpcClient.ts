@@ -1,10 +1,9 @@
 import { type Block, type json, UnixTime } from '@l2beat/shared-pure'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import {
-  type CelestiaBlobResponse,
-  CelestiaBlobsResponse,
-  CelestiaBlockchainResponse,
   CelestiaBlockResponse,
+  type CelestiaBlockResult,
+  CelestiaBlockResultResponse,
   CelestiaErrorResponse,
   CelestiaValidatorsResponse,
 } from './types'
@@ -20,67 +19,24 @@ export class CelestiaRpcClient extends ClientCore {
   }
 
   async getLatestBlockNumber(): Promise<number> {
-    const response = await this.query('blockchain', {})
-
-    const parsedResponse = CelestiaBlockchainResponse.safeParse(response)
-
-    if (!parsedResponse.success) {
-      this.$.logger.warn('Invalid response', {
-        response: JSON.stringify(response),
-      })
-      throw new Error('Error during parsing')
-    }
-
-    return Number(parsedResponse.data.result.last_height)
+    const block = await this.getBlockResult()
+    return Number(block.height)
   }
 
   async getBlockWithTransactions(
     blockNumber: number | 'latest',
   ): Promise<Block> {
-    let number: number
-    if (blockNumber === 'latest') {
-      number = await this.getLatestBlockNumber()
-    } else {
-      number = blockNumber
-    }
-    const blockTimestamp = await this.getBlockTimestamp(number)
+    const height = blockNumber === 'latest' ? undefined : blockNumber
+    const block = await this.getBlockResult(height)
+    const blockTimestamp = await this.getBlockTimestamp(height)
 
     return {
-      number,
+      number: Number(block.height),
       hash: 'UNSUPPORTED',
       logsBloom: 'UNSUPPORTED',
       timestamp: blockTimestamp,
       transactions: [], // UNSUPPORTED
     }
-  }
-
-  async getBlobsForNamespaces(
-    height: number,
-    namespaces: string[],
-  ): Promise<CelestiaBlobResponse[]> {
-    const response = await this.fetch(this.$.url, {
-      method: 'POST',
-      redirect: 'follow',
-      body: JSON.stringify({
-        id: '1',
-        jsonrpc: '2.0',
-        method: 'blob.GetAll',
-        params: [height, namespaces],
-      }),
-    })
-
-    const parsedResponse = CelestiaBlobsResponse.safeParse(response)
-    if (!parsedResponse.success) {
-      this.$.logger.warn('Invalid response', {
-        height,
-        namespaces,
-        response: JSON.stringify(parsedResponse),
-      })
-      throw new Error(
-        `Blobs for namespaces ${namespaces.join(',')}: Error during parsing`,
-      )
-    }
-    return parsedResponse.data.result ?? []
   }
 
   async getBlockTimestamp(height?: number): Promise<UnixTime> {
@@ -101,6 +57,24 @@ export class CelestiaRpcClient extends ClientCore {
     return UnixTime.fromDate(
       new Date(blockResponse.data.result.block.header.time),
     )
+  }
+
+  async getBlockResult(height?: number): Promise<CelestiaBlockResult> {
+    const response = await this.query('block_results', {
+      ...(height && { height: height.toString() }),
+    })
+
+    const blockResponse = CelestiaBlockResultResponse.safeParse(response)
+
+    if (!blockResponse.success) {
+      this.$.logger.warn('Invalid response', {
+        height,
+        response: JSON.stringify(blockResponse),
+      })
+      throw new Error(`Block ${height ?? 'latest'}: Error during parsing`)
+    }
+
+    return blockResponse.data.result
   }
 
   async getValidatorsInfo({
