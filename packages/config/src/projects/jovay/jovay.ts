@@ -130,10 +130,6 @@ export const jovay: ScalingProject = {
             'Rollup.sol - commitBatch stores calldata hashes for each batch',
           url: 'https://etherscan.io/address/0xe0a28B8918a62edB825055221a1dF12c7C81Bac1#code',
         },
-        {
-          title: 'L1Mailbox.sol - sendMsg enqueues transactions on Ethereum',
-          url: 'https://etherscan.io/address/0x9869A90FDAc287519E48aff4cCE329907a995162#code',
-        },
       ],
     },
     operator: {
