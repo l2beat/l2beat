@@ -44,6 +44,7 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
   facet: 'facet',
   gateway: 'gateway',
   ethereal: 'ethereal',
+  jovay: 'jovay',
 } as const
 
 const LONG_TO_SHORT_CHAIN_NAMES = Object.fromEntries(

@@ -376,4 +376,14 @@ export const chains: ChainConfig[] = [
       url: 'https://explorer.ethereal.trade/api',
     },
   },
+  {
+    name: 'jovay',
+    chainId: 5734951,
+    shortName: 'jovay',
+    multicall: undefined,
+    explorer: {
+      type: 'blockscout',
+      url: 'https://explorer.jovay.io/l2/api',
+    },
+  },
 ] as const satisfies ChainConfig[]

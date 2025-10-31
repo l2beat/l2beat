@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "jovay",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0x922248db4a99bb542539ae7165fb9d7a546fb9f1"],
+  "names": {
+    "eth:0x922248db4a99bb542539ae7165fb9d7a546fb9f1": "L1ETHBridge",
+    "eth:0x79241BbE3646d8405849Cbe8608e77b82c402892": "TEEVerifierProxyOwner"
+  },
+  "overrides": {
+    "eth:0x922248db4a99bb542539ae7165fb9d7a546fb9f1": {},
+    "eth:0xb220D17A11bd2d11e3f57a305FF5b481C81B1028": {
+      "ignoreDiscovery": true // It's the L2 counterpart and we don't need L2 discovery yet
+    }
+  }
+}
