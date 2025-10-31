@@ -197,6 +197,8 @@ describe(UpdateMonitor.name, () => {
           ['project-a']: { severityCounts: { low: 0, high: 0, unknown: 2 } },
         },
         timestamp,
+        [],
+        [],
       )
     })
   })
