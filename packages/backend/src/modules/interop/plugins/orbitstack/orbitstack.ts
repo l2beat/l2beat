@@ -14,11 +14,11 @@ import {
 
 // == L2->L1 messages ==
 
-const parseL2ToL1Tx = createEventParser(
+export const parseL2ToL1Tx = createEventParser(
   'event L2ToL1Tx(address caller, address indexed destination, uint256 indexed hash, uint256 indexed position, uint256 arbBlockNum, uint256 ethBlockNum, uint256 timestamp, uint256 callvalue, bytes data)',
 )
 
-const parseOutBoxTransactionExecuted = createEventParser(
+export const parseOutBoxTransactionExecuted = createEventParser(
   'event OutBoxTransactionExecuted(address indexed to, address indexed l2Sender, uint256 indexed zero, uint256 transactionIndex)',
 )
 
@@ -37,6 +37,13 @@ export const L2ToL1Tx = createInteropEventType<{
   chain: string
   position: number
 }>('orbitstack.L2ToL1Tx', { ttl: 14 * UnixTime.DAY })
+
+// L2 -> L1 ETH withdrawal initiation
+const ETHWithdrawalInitiatedL2ToL1Tx = createInteropEventType<{
+  chain: string
+  position: number
+  amount: string
+}>('orbitstack.L2ToL1TxETHWithdrawalInitiated', { ttl: 14 * UnixTime.DAY })
 
 export const OutBoxTransactionExecuted = createInteropEventType<{
   chain: string
@@ -113,6 +120,14 @@ export class OrbitStackPlugin implements InteropPlugin {
       // L2 -> L1 (Withdrawal initiation on L2)
       const l2ToL1Tx = parseL2ToL1Tx(input.log, [network.arbsys])
       if (l2ToL1Tx) {
+        // Check if this is an ETH withdrawal (callvalue > 0)
+        if (l2ToL1Tx.callvalue > 0n) {
+          return ETHWithdrawalInitiatedL2ToL1Tx.create(input.ctx, {
+            chain: network.chain,
+            position: Number(l2ToL1Tx.position),
+            amount: l2ToL1Tx.callvalue.toString(),
+          })
+        }
         return L2ToL1Tx.create(input.ctx, {
           chain: network.chain,
           position: Number(l2ToL1Tx.position),
@@ -155,6 +170,32 @@ export class OrbitStackPlugin implements InteropPlugin {
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     // L2 -> L1 (Withdrawal) matching
     if (OutBoxTransactionExecuted.checkType(event)) {
+      // Check if this is an ETH withdrawal
+      const ethWithdrawalInitiated = db.find(ETHWithdrawalInitiatedL2ToL1Tx, {
+        chain: event.args.chain,
+        position: event.args.position,
+      })
+
+      if (ethWithdrawalInitiated) {
+        // This is an ETH withdrawal - create both Message and Transfer
+        return [
+          Result.Message('orbitstack.L2ToL1Message', {
+            app: 'orbitstack',
+            srcEvent: ethWithdrawalInitiated,
+            dstEvent: event,
+          }),
+          Result.Transfer('orbitstack.L2ToL1Transfer', {
+            srcEvent: ethWithdrawalInitiated,
+            srcAmount: BigInt(ethWithdrawalInitiated.args.amount),
+            srcTokenAddress: Address32.NATIVE,
+            dstEvent: event,
+            dstAmount: BigInt(ethWithdrawalInitiated.args.amount),
+            dstTokenAddress: Address32.NATIVE,
+          }),
+        ]
+      }
+
+      // Not an ETH withdrawal - check for regular L2ToL1Tx
       const l2ToL1Tx = db.find(L2ToL1Tx, {
         chain: event.args.chain,
         position: event.args.position,
