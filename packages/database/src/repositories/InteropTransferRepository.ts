@@ -47,6 +47,12 @@ export interface InteropTransferUpdate {
   dstValueUsd?: number
 }
 
+export interface InteropMissingTokenInfo {
+  chain: string
+  tokenAddress: string
+  count: number
+}
+
 export function toRecord(
   row: Selectable<InteropTransfer>,
 ): InteropTransferRecord {
@@ -288,5 +294,48 @@ export class InteropTransferRepository extends BaseRepository {
       .deleteFrom('InteropTransfer')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
+  }
+
+  async getMissingTokensInfo(): Promise<InteropMissingTokenInfo[]> {
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .select([
+        'srcValueUsd',
+        'dstValueUsd',
+        'srcChain',
+        'srcTokenAddress',
+        'dstChain',
+        'dstTokenAddress',
+      ])
+      .where('isProcessed', '=', true)
+      .where((eb) =>
+        eb.or([eb('srcValueUsd', 'is', null), eb('dstValueUsd', 'is', null)]),
+      )
+      .execute()
+
+    const chainAddressCounts = new Map<string, number>()
+
+    for (const row of rows) {
+      if (row.srcValueUsd === null && row.srcChain && row.srcTokenAddress) {
+        const key = `${row.srcChain}:${row.srcTokenAddress}`
+        chainAddressCounts.set(key, (chainAddressCounts.get(key) || 0) + 1)
+      }
+      if (row.dstValueUsd === null && row.dstChain && row.dstTokenAddress) {
+        const key = `${row.dstChain}:${row.dstTokenAddress}`
+        chainAddressCounts.set(key, (chainAddressCounts.get(key) || 0) + 1)
+      }
+    }
+
+    const result: InteropMissingTokenInfo[] = []
+    for (const [key, count] of chainAddressCounts) {
+      const [chain, tokenAddress] = key.split(':')
+      result.push({
+        chain: chain as string,
+        tokenAddress: tokenAddress as string,
+        count,
+      })
+    }
+
+    return result
   }
 }

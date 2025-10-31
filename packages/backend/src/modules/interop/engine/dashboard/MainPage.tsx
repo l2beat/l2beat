@@ -5,9 +5,11 @@ import type {
   InteropTransfersDetailedStatsRecord,
   InteropTransfersStatsRecord,
 } from '@l2beat/database'
+import type { InteropMissingTokenInfo } from '@l2beat/database/dist/repositories/InteropTransferRepository'
 import { formatSeconds } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
+import { Address32 } from '../../plugins/types'
 import { DataTablePage } from './DataTablePage'
 import { formatDollars } from './formatDollars'
 import {
@@ -358,11 +360,57 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
   )
 }
 
+function MissingTokensTable(props: {
+  missingTokens: InteropMissingTokenInfo[]
+  getExplorerUrl: (chain: string) => string | undefined
+  id: string
+}) {
+  return (
+    <table id={props.id} className="display">
+      <thead>
+        <tr>
+          <th>Chain</th>
+          <th>Address</th>
+          <th>Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        {props.missingTokens.map((t) => {
+          const explorerUrl = props.getExplorerUrl(t.chain)
+          const address =
+            t.tokenAddress !== 'native' && t.tokenAddress !== Address32.ZERO
+              ? Address32.cropToEthereumAddress(t.tokenAddress as Address32)
+              : t.tokenAddress
+          return (
+            <tr>
+              <td>{t.chain}</td>
+              <td>
+                {explorerUrl &&
+                t.tokenAddress !== 'native' &&
+                t.tokenAddress !== Address32.ZERO ? (
+                  <a target="_blank" href={`${explorerUrl}/address/${address}`}>
+                    {address}
+                  </a>
+                ) : (
+                  address
+                )}
+              </td>
+              <td>{t.count}</td>
+            </tr>
+          )
+        })}
+      </tbody>
+    </table>
+  )
+}
+
 function MainPageLayout(props: {
   events: InteropEventStatsRecord[]
   messages: MessageStats[]
   transfers: TransferStats[]
   status: ProcessorsStatus[]
+  missingTokens: InteropMissingTokenInfo[]
+  getExplorerUrl: (chain: string) => string | undefined
 }) {
   const eventsTable = <EventsTable {...props} />
   const messagesTable = (
@@ -370,6 +418,13 @@ function MainPageLayout(props: {
   )
   const transfersTable = (
     <TransfersTable id="transfersTable" items={props.transfers} />
+  )
+  const missingTokensTable = (
+    <MissingTokensTable
+      id="missingTokensTable"
+      missingTokens={props.missingTokens}
+      getExplorerUrl={props.getExplorerUrl}
+    />
   )
 
   return (
@@ -398,6 +453,15 @@ function MainPageLayout(props: {
           tableId: 'transfersTable',
           dataTableOptions: {
             order: [[0, 'asc']],
+          },
+        },
+        {
+          title: 'Missing Tokens',
+          table: missingTokensTable,
+          tableId: 'missingTokensTable',
+          dataTableOptions: {
+            order: [[2, 'desc']],
+            pageLength: 25,
           },
         },
       ]}
@@ -431,6 +495,8 @@ export function renderMainPage(props: {
   messages: MessageStats[]
   transfers: TransferStats[]
   status: ProcessorsStatus[]
+  missingTokens: InteropMissingTokenInfo[]
+  getExplorerUrl: (chain: string) => string | undefined
 }) {
   return '<!DOCTYPE html>' + renderToStaticMarkup(<MainPageLayout {...props} />)
 }
