@@ -86,71 +86,66 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     if (input.ctx.chain === 'ethereum') {
       // L1 -> L2 ERC20 deposit initiated
-      const depositInitiated = parseDepositInitiated(input.log, null)
+      const network = ORBITSTACK_NETWORKS.find(
+        (n) => EthereumAddress(input.log.address) === n.l1StandardGateway,
+      )
+      if (!network) return
+
+      const depositInitiated = parseDepositInitiated(input.log, [
+        network.l1StandardGateway,
+      ])
       if (depositInitiated) {
-        // Check if this is from a standard gateway
-        const network = ORBITSTACK_NETWORKS.find(
-          (n) => EthereumAddress(input.log.address) === n.l1StandardGateway,
-        )
+        // Find MessageDelivered in the same transaction
+        const messageDeliveredLog = input.txLogs.find((log) => {
+          const parsed = parseMessageDelivered(log, [network.bridge])
+          // The sequenceNumber in DepositInitiated equals the messageIndex in MessageDelivered
+          return (
+            parsed !== undefined &&
+            parsed.messageIndex === depositInitiated._sequenceNumber
+          )
+        })
 
-        if (network) {
-          // Find MessageDelivered in the same transaction
-          const messageDeliveredLog = input.txLogs.find((log) => {
-            const parsed = parseMessageDelivered(log, [network.bridge])
-            // The sequenceNumber in DepositInitiated equals the messageIndex in MessageDelivered
-            return (
-              parsed !== undefined &&
-              parsed.messageIndex === depositInitiated._sequenceNumber
-            )
-          })
-
-          if (messageDeliveredLog) {
-            const messageDelivered = parseMessageDelivered(
-              messageDeliveredLog,
-              [network.bridge],
-            )
-            if (messageDelivered) {
-              return DepositInitiatedMessageDelivered.create(input.ctx, {
-                chain: network.chain,
-                messageNum: messageDelivered.messageIndex.toString(),
-                l1Token: Address32.from(depositInitiated._l1Token),
-                amount: depositInitiated._amount.toString(),
-              })
-            }
+        if (messageDeliveredLog) {
+          const messageDelivered = parseMessageDelivered(
+            messageDeliveredLog,
+            [network.bridge],
+          )
+          if (messageDelivered) {
+            return DepositInitiatedMessageDelivered.create(input.ctx, {
+              chain: network.chain,
+              messageNum: messageDelivered.messageIndex.toString(),
+              l1Token: Address32.from(depositInitiated._l1Token),
+              amount: depositInitiated._amount.toString(),
+            })
           }
         }
       }
 
       // L1 finalization of L2->L1 ERC20 withdrawal
-      const withdrawalFinalized = parseWithdrawalFinalized(input.log, null)
+      const withdrawalFinalized = parseWithdrawalFinalized(input.log, [
+        network.l1StandardGateway,
+      ])
       if (withdrawalFinalized) {
-        // Check if this is from a standard gateway
-        const network = ORBITSTACK_NETWORKS.find(
-          (n) => EthereumAddress(input.log.address) === n.l1StandardGateway,
-        )
+        // Find OutBoxTransactionExecuted in the same transaction
+        const outBoxTxLog = input.txLogs.find((log) => {
+          const parsed = parseOutBoxTransactionExecuted(log, [network.outbox])
+          return parsed !== undefined
+        })
 
-        if (network) {
-          // Find OutBoxTransactionExecuted in the same transaction
-          const outBoxTxLog = input.txLogs.find((log) => {
-            const parsed = parseOutBoxTransactionExecuted(log, [network.outbox])
-            return parsed !== undefined
-          })
-
-          if (outBoxTxLog) {
-            const outBoxTx = parseOutBoxTransactionExecuted(outBoxTxLog, [
-              network.outbox,
-            ])
-            if (outBoxTx) {
-              return WithdrawalFinalizedOutBoxTransactionExecuted.create(
-                input.ctx,
-                {
-                  chain: network.chain,
-                  position: Number(outBoxTx.transactionIndex),
-                  l1Token: Address32.from(withdrawalFinalized.l1Token),
-                  amount: withdrawalFinalized.amount.toString(),
-                },
-              )
-            }
+        if (outBoxTxLog) {
+          const outBoxTx = parseOutBoxTransactionExecuted(outBoxTxLog, [
+            network.outbox,
+          ])
+          if (outBoxTx) {
+            return WithdrawalFinalizedOutBoxTransactionExecuted.create(
+              input.ctx,
+              {
+                chain: network.chain,
+                position: Number(outBoxTx.transactionIndex),
+                l1Token: Address32.from(withdrawalFinalized.l1Token),
+                amount: withdrawalFinalized.amount.toString(),
+              },
+            )
           }
         }
       }

@@ -85,16 +85,19 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     if (input.ctx.chain === 'ethereum') {
       // L1 -> L2 WETH deposit initiated
-      const depositInitiated = parseDepositInitiated(input.log, null)
-      if (depositInitiated) {
-        // Check if this is from a WETH gateway
-        const network = ORBITSTACK_NETWORKS.find(
-          (n) =>
-            EthereumAddress(input.log.address) === n.l1WethGateway &&
-            EthereumAddress(depositInitiated._l1Token) === n.l1Weth,
-        )
+      const network = ORBITSTACK_NETWORKS.find(
+        (n) => EthereumAddress(input.log.address) === n.l1WethGateway,
+      )
+      if (network) {
+        const depositInitiated = parseDepositInitiated(input.log, [
+          network.l1WethGateway,
+        ])
+        if (depositInitiated) {
+          // Verify this is for WETH
+          if (EthereumAddress(depositInitiated._l1Token) !== network.l1Weth) {
+            return
+          }
 
-        if (network) {
           // Find MessageDelivered in the same transaction
           const messageDeliveredLog = input.txLogs.find((log) => {
             const parsed = parseMessageDelivered(log, [network.bridge])
@@ -120,22 +123,18 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
             }
           }
         }
-      }
-      // L1 -> L2 WETH deposit finalization OR L2 -> L1 WETH withdrawal finalization
-      // First check for L1 withdrawal finalization (WithdrawalFinalized from L1 WETH gateway)
-      const wethWithdrawalFinalized = parseWethWithdrawalFinalized(
-        input.log,
-        null,
-      )
-      if (wethWithdrawalFinalized) {
-        // Check if this is from a WETH gateway
-        const network = ORBITSTACK_NETWORKS.find(
-          (n) =>
-            EthereumAddress(input.log.address) === n.l1WethGateway &&
-            EthereumAddress(wethWithdrawalFinalized.l1Token) === n.l1Weth,
-        )
 
-        if (network) {
+        // L1 finalization of L2->L1 WETH withdrawal
+        const wethWithdrawalFinalized = parseWethWithdrawalFinalized(
+          input.log,
+          [network.l1WethGateway],
+        )
+        if (wethWithdrawalFinalized) {
+          // Verify this is for WETH
+          if (EthereumAddress(wethWithdrawalFinalized.l1Token) !== network.l1Weth) {
+            return
+          }
+
           // Find OutBoxTransactionExecuted in the same transaction
           const outBoxTxLog = input.txLogs.find((log) => {
             const parsed = parseOutBoxTransactionExecuted(log, [network.outbox])
