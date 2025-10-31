@@ -40,10 +40,6 @@ export interface DiscoveryRunResult {
   flatSources: Record<string, string>
 }
 
-// 10 minutes
-const MAX_RETRIES = 30
-const RETRY_DELAY_MS = 20_000
-
 export class DiscoveryRunner {
   constructor(
     private readonly allProviders: AllProviders,
@@ -58,9 +54,6 @@ export class DiscoveryRunner {
     logger: Logger,
     configReader?: ConfigReader,
   ): Promise<DiscoveryRunResult> {
-    // Reset discovery engine state to prevent contamination from previous failed discoveries
-    this.discoveryEngine.reset()
-
     logger.info(
       `Attempting discovery of ${projectName} at timestamp ${discoveryTimestamp}`,
     )
@@ -193,52 +186,36 @@ export class DiscoveryRunner {
     return discoveries
   }
 
-  async discoverWithRetry(
+  async run(
     config: ConfigRegistry,
     timestamp: UnixTime,
     logger: Logger,
-    maxRetries = MAX_RETRIES,
-    delayMs = RETRY_DELAY_MS,
     dependentDiscoveries?: 'useCurrentTimestamp' | DiscoveryBlockNumbers,
     configReader?: ConfigReader,
   ): Promise<DiscoveryRunResult> {
-    let result: DiscoveryRunResult | undefined = undefined
-    let err: Error | undefined = undefined
-
-    for (let i = 0; i <= maxRetries; i++) {
-      try {
-        result = await this.discover(
-          config.name,
-          timestamp,
-          dependentDiscoveries ?? {},
-          logger,
-          configReader,
-        )
-        break
-      } catch (error) {
-        err = isError(err) ? (error as Error) : new Error(JSON.stringify(error))
-      }
-
+    try {
+      return await this.discover(
+        config.name,
+        timestamp,
+        dependentDiscoveries ?? {},
+        logger,
+        configReader,
+      )
+    } catch (error) {
+      const err = isError(error)
+        ? (error as Error)
+        : new Error(JSON.stringify(error))
       const errorString = JSON.stringify(
         err,
         Object.getOwnPropertyNames(err),
         2,
       )
-      logger.warn(
-        `DiscoveryRunner: Retrying ${config.name} | attempt:${i} | error:${errorString}`,
-      )
-      await new Promise((resolve) => setTimeout(resolve, delayMs))
-    }
 
-    if (result === undefined) {
-      assert(
-        err !== undefined,
-        'Programmer error: Error should not be undefined there',
+      logger.warn(
+        `DiscoveryRunner: Failed to discover ${config.name} - error: ${errorString}`,
       )
       throw err
     }
-
-    return result
   }
 }
 

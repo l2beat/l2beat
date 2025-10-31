@@ -17,7 +17,7 @@ export const polygonmiden: ScalingProject = upcomingL2({
     links: {
       websites: ['https://polygon.technology/polygon-miden'],
       documentation: ['https://docs.polygon.technology/miden/'],
-      repositories: ['https://github.com/0xPolygonMiden'],
+      repositories: ['https://github.com/0xMiden'],
       socialMedia: [
         'https://x.com/0xPolygon',
         'https://x.com/0xPolygonMiden',

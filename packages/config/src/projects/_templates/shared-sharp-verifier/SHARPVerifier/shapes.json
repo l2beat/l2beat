@@ -3,5 +3,11 @@
     "hash": "0x851b82890362af9467218d27c5666552421bca8023529b83632b6ebc4cc6bc8f",
     "address": "eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942",
     "blockNumber": 22188285
+  },
+  "SHARPVerifier_Oct25": {
+    "hash": "0x4861d3367a504472f64f32236f1345c2ab6b1b5e897ece08bc5e215bf14d3c7a",
+    "address": "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934",
+    "chain": "ethereum",
+    "blockNumber": 23682614
   }
 }

@@ -38,6 +38,10 @@ export {
   makeEntryStructureConfig,
   type StructureContractConfig as ContractConfig,
 } from './discovery/config/structureUtils'
+export {
+  type DiscoveryCounter,
+  SimpleDiscoveryCounter,
+} from './discovery/engine/DiscoveryCounter'
 export { DiscoveryEngine } from './discovery/engine/DiscoveryEngine'
 export { getDiscoveryEngine } from './discovery/getDiscoveryEngine'
 export { HandlerExecutor } from './discovery/handlers/HandlerExecutor'

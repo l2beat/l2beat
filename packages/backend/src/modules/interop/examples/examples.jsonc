@@ -828,6 +828,7 @@
   },
   "orbitstack": {
     "txs": [
+      // arbitrum -> ethereum (data message)
       {
         "chain": "arbitrum",
         "tx": "0x3b8f7205e18ab5418b213020e0def446cf845dc7516bc276099869415e55566b"
@@ -835,6 +836,54 @@
       {
         "chain": "ethereum",
         "tx": "0xf031b41688650d9cc8c2e02408376c60f43443e3bdc5d1219872da18fafcb9a2"
+      }
+    ]
+  },
+  "orbitstack-standardgateway": {
+    "txs": [
+      // arbitrum -> ethereum (erc20)
+      {
+        "chain": "ethereum",
+        "tx": "0xf9fd8edbd142e4525fde539673c63d6d0392bf1dd195c3b513513a7f27c14fbc"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x0e9a9557df4e57fec507245404546fbb396d47dbe8ffaaa53c544ab1c00f28a9"
+      },
+      // arbitrum -> ethereum (eth)
+      {
+        "chain": "ethereum",
+        "tx": "0x0fafaeac621538fe6073806c2648b0de1744fa239a9a506d392cbd27d940d027"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xfb06bf2dd5175c05d35282b800bfa5bf638aa2292d958342ce1f98ff5f30b405"
+      },
+      // ethereum -> arbitrum (eth)
+      {
+        "chain": "ethereum",
+        "tx": "0xffb094911c9af4e267067dfc6dfe8c06d87cfa2154851b119d9f1e97fa115d45"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x50c3f95f063bae8c8001a0c34975421a4ba1779b5ce1a263c5864573bcbe0191"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x54a378e6b5511df1260e610c151f448968afe5eeef72d386c84441456bb364ea"
+      },
+      // ethereum -> arbitrum (erc20)
+      {
+        "chain": "ethereum",
+        "tx": "0x10677ef4e6819de1a65b73ab0cfd47c0f75bc758fdef7e32fc8fba4dbc930c78"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xf77d8e2fa6f72d944a2cd9d32dd70623f58e7ef19a99bd77117ee5ef04d0e7f8"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xc0a88c1ee35876f124cecedeece187913b4db2c7b00dfa0037d27a3e65622374"
       }
     ]
   },
@@ -1023,6 +1072,48 @@
       {
         "chain": "base",
         "tx": "0x2745a60ccdfddb2e92251813d86450fe821f997de702edad1c72c37ac6a64ec1"
+      }
+    ]
+  },
+  "gaszip-v2": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xf69385c4dbdad1783768535af78cfb5037778aed6835fec29837b212bebf040e"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x985bb23d389f6767f66cff7245ec05fb631d57c607cd135cd854a32b04642945"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xa533ea7b7d03c30ce199c68f83c16f39ae1477bf8b71cb1f414e7e7c4a11ae46"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x3a90e7a588c108bb92f1e029c929c480b5f73d264be5500f27f223b2d2e9e38d"
+      },
+      {
+        "chain": "base",
+        "tx": "0xa6af4de8b78915d4cf25612fde14a87a3f9d243f5b3d1b056782c15f1be9d112"
+      },
+      // invalid deposit with two times the same dest
+      {
+        "chain": "base",
+        "tx": "0xad5a716619a66cc0631a68416b6bff62b586f385a64ec33ed0c8ab518d25936e"
+      },
+      {
+        "chain": "base",
+        "tx": "0x8e6b5f2ec5a4e87a0b0d44c1d5679ac479284364ca5a990da807ef14a0f24f51"
+      },
+      // contract deposits
+      {
+        "chain": "base",
+        "tx": "0x8d297faa50fe724a3cb5e8aeb2e1470ce46f21d7852d0454cbcde719c91c725e"
+      },
+      {
+        "chain": "base",
+        "tx": "0x88c85b362476cbd7efed57b6af6fe3f9307e7ddf8cdc11c4534a72417cce9752"
       }
     ]
   }
