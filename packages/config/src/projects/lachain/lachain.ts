@@ -117,4 +117,7 @@ export const lachain: ScalingProject = zkStackL2({
       type: 'general',
     },
   ],
+  proofSystemTimestamps: {
+    sinceTimestamp: UnixTime(1747692000),
+  },
 })

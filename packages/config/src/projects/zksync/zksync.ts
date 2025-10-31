@@ -93,7 +93,12 @@ export const zksync: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('zksyncprover'),
+    zkCatalogProject: [
+      {
+        id: ProjectId('zksyncprover'),
+        sinceTimestamp: UnixTime(1592431200),
+      },
+    ],
   },
   chainConfig: {
     name: 'zksync',

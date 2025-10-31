@@ -104,4 +104,7 @@ export const sxt: ScalingProject = zkStackL2({
       type: 'general',
     },
   ],
+  proofSystemTimestamps: {
+    sinceTimestamp: UnixTime(1746741600),
+  },
 })

@@ -393,4 +393,7 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
       type: 'general',
     },
   ],
+  proofSystemTimestamps: {
+    sinceTimestamp: UnixTime(1679868000),
+  },
 })

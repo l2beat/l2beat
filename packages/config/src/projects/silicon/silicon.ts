@@ -135,4 +135,7 @@ export const silicon: ScalingProject = polygonCDKStack({
       membersCount: membersCountDAC,
     },
   }),
+  proofSystemTimestamps: {
+    sinceTimestamp: UnixTime(1724796000),
+  },
 })

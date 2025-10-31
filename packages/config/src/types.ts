@@ -372,8 +372,12 @@ export interface ProjectScalingProofSystem {
   type: 'Optimistic' | 'Validity'
   /** Name of the proof system. Only one of name or zkCatalogId should be provided. */
   name?: string
-  /** Id for ZkCatalog project to link to. Only one of name or zkCatalogId should be provided. */
-  zkCatalogId?: string
+  /** List of ZkCatalog projects to link to. Only one of name or zkCatalogProject should be provided. */
+  zkCatalogProject?: {
+    id: ProjectId
+    sinceTimestamp: UnixTime
+    untilTimestamp?: UnixTime
+  }[]
   /** Challenge protocol of the proof system. Configured only for optimistic proof systems. */
   challengeProtocol?: 'Interactive' | 'Single-step'
 }

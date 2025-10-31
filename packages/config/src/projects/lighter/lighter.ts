@@ -67,7 +67,12 @@ export const lighter: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('lighterprover'),
+    zkCatalogProject: [
+      {
+        id: ProjectId('lighterprover'),
+        sinceTimestamp: UnixTime(1759356000),
+      },
+    ],
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS,

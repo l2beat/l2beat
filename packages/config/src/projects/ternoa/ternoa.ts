@@ -152,4 +152,7 @@ export const ternoa: ScalingProject = polygonCDKStack({
       membersCount: membersCountDAC,
     },
   }),
+  proofSystemTimestamps: {
+    sinceTimestamp: UnixTime(1738105200),
+  },
 })

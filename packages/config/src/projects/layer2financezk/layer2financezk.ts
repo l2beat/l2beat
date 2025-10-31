@@ -54,7 +54,12 @@ export const layer2financezk: ScalingProject = {
   dataAvailability: undefined,
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('stone'),
+    zkCatalogProject: [
+      {
+        id: ProjectId('stone'),
+        sinceTimestamp: UnixTime(1645130774),
+      },
+    ],
   },
   stage: {
     stage: 'NotApplicable',

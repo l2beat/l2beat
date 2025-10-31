@@ -104,7 +104,12 @@ export const paradex: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('stone'),
+    zkCatalogProject: [
+      {
+        id: ProjectId('stone'),
+        sinceTimestamp: UnixTime(1696111200),
+      },
+    ],
   },
   chainConfig: {
     name: 'paradex',

@@ -89,7 +89,12 @@ export const myria: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('stone'),
+    zkCatalogProject: [
+      {
+        id: ProjectId('stone'),
+        sinceTimestamp: UnixTime(1661464800),
+      },
+    ],
   },
   stage: {
     stage: 'NotApplicable',

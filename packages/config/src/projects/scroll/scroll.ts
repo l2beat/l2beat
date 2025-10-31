@@ -107,7 +107,12 @@ export const scroll: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('openvmprover'),
+    zkCatalogProject: [
+      {
+        id: ProjectId('openvmprover'),
+        sinceTimestamp: UnixTime(1697493600),
+      },
+    ],
   },
   scopeOfAssessment: {
     inScope: [

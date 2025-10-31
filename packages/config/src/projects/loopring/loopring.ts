@@ -84,7 +84,12 @@ export const loopring: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('loopringprover'),
+    zkCatalogProject: [
+      {
+        id: ProjectId('loopringprover'),
+        sinceTimestamp: UnixTime(1582758000),
+      },
+    ],
   },
   chainConfig: {
     name: 'loopring',

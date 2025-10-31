@@ -68,7 +68,12 @@ export const zkspace: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('zksyncprover'),
+    zkCatalogProject: [
+      {
+        id: ProjectId('zksyncprover'),
+        sinceTimestamp: UnixTime(1639954800),
+      },
+    ],
   },
   config: {
     associatedTokens: ['ZKS'],

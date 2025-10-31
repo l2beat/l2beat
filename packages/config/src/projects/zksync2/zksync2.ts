@@ -594,4 +594,7 @@ export const zksync2: ScalingProject = zkStackL2({
       type: 'general',
     },
   ],
+  proofSystemTimestamps: {
+    sinceTimestamp: UnixTime(1689544800),
+  },
 })

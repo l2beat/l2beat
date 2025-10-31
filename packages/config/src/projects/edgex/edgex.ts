@@ -94,7 +94,12 @@ export const edgex: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('stone'),
+    zkCatalogProject: [
+      {
+        id: ProjectId('stone'),
+        sinceTimestamp: UnixTime(1722636000),
+      },
+    ],
   },
   stage: {
     stage: 'NotApplicable',

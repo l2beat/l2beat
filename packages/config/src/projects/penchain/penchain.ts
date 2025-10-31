@@ -132,4 +132,7 @@ export const penchain: ScalingProject = polygonCDKStack({
       membersCount: membersCountDAC,
     },
   }),
+  proofSystemTimestamps: {
+    sinceTimestamp: UnixTime(1749938400),
+  },
 })

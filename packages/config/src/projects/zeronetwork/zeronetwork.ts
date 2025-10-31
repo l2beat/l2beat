@@ -171,4 +171,7 @@ export const zeronetwork: ScalingProject = zkStackL2({
       type: 'general',
     },
   ],
+  proofSystemTimestamps: {
+    sinceTimestamp: UnixTime(1731366000),
+  },
 })

@@ -90,7 +90,12 @@ export const deversifi: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('stone'),
+    zkCatalogProject: [
+      {
+        id: ProjectId('stone'),
+        sinceTimestamp: UnixTime(1591135200),
+      },
+    ],
   },
   stage: {
     stage: 'NotApplicable',

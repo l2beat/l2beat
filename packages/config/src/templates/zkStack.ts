@@ -121,6 +121,10 @@ export interface ZkStackConfigCommon {
   /** Configure to enable custom DA tracking e.g. project that switched DA */
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
+  proofSystemTimestamps?: {
+    sinceTimestamp: UnixTime
+    untilTimestamp?: UnixTime
+  }
 }
 
 export type Upgradeability = {
@@ -303,7 +307,18 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       templateVars.nonTemplateProofSystem ??
       (hasNoProofs
         ? undefined
-        : { type: 'Validity', zkCatalogId: ProjectId('boojum') }),
+        : {
+            type: 'Validity',
+            zkCatalogProject: [
+              {
+                id: ProjectId('boojum'),
+                sinceTimestamp:
+                  templateVars.proofSystemTimestamps?.sinceTimestamp ?? 0,
+                untilTimestamp:
+                  templateVars.proofSystemTimestamps?.untilTimestamp,
+              },
+            ],
+          }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: [

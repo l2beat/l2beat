@@ -162,4 +162,7 @@ export const lens: ScalingProject = zkStackL2({
       type: 'general',
     },
   ],
+  proofSystemTimestamps: {
+    sinceTimestamp: UnixTime(1743717600),
+  },
 })
