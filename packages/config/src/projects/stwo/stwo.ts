@@ -48,7 +48,7 @@ Stwo is the next iteration of Starkware zkVM STARK system. It is intended to pro
 
 ## Proof system
 
-Stwo proof system is a zkVM working with AIR aritmetizations over Mersenne31 field. [This stwo-cairo toolkit](https://github.com/starkware-libs/stwo-cairo/tree/main) allows compiling Cairo program traces to the AIR aritmetization, however it is possible to create custom AIRs to be proven by Stwo, see more [here](https://zksecurity.github.io/stwo-book/air-development/index.html). 
+Stwo proof system is a zkVM working with AIR arithmetizations over Mersenne31 field. [This stwo-cairo toolkit](https://github.com/starkware-libs/stwo-cairo/tree/main) allows compiling Cairo program traces to the AIR arithmetization, however it is possible to create custom AIRs to be proven by Stwo, see more [here](https://zksecurity.github.io/stwo-book/air-development/index.html). 
 
 Stwo offers several innovations to optimize proving time. Firstly, its use of small Mersenne31 field compared to previous version [felt252 field](https://docs.starknet.io/archive/cairo-101/felt/) is much better aligned with CPU arithmetics, also operations over M31 could be highly optimized as explained [here](https://zksecurity.github.io/stwo-book/how-it-works/mersenne-prime.html). Secondly, Stwo implements a circle STARK as introduced in [this paper](https://eprint.iacr.org/2024/278). Thirdly, Stwo prover now uses Blake2 hash function instead of Poseidon, which is more efficient.
 
