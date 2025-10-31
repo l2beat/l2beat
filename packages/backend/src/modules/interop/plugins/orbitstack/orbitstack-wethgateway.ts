@@ -176,7 +176,7 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
           if (EthereumAddress(log.address) !== network.l2WethGateway) {
             return false
           }
-          const parsed = parseWithdrawalInitiated(log, null)
+          const parsed = parseWithdrawalInitiated(log, [network.l2WethGateway])
           return (
             parsed !== undefined &&
             EthereumAddress(parsed.l1Token) === network.l1Weth &&
@@ -197,7 +197,9 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
       if (EthereumAddress(input.log.address) !== network.l2WethGateway) return
 
       // L2 finalization of L1->L2 WETH deposit
-      const depositFinalized = parseDepositFinalized(input.log, null)
+      const depositFinalized = parseDepositFinalized(input.log, [
+        network.l2WethGateway,
+      ])
       if (depositFinalized) {
         // Verify this is for WETH
         if (EthereumAddress(depositFinalized.l1Token) !== network.l1Weth) {
@@ -206,14 +208,16 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
 
         // Find the Transfer event (minting) in the same transaction to verify L2 WETH
         const transferLog = input.txLogs.find((log) => {
-          const parsed = parseTransfer(log, null)
+          if (EthereumAddress(log.address) !== network.l2Weth) {
+            return false
+          }
+          const parsed = parseTransfer(log, [network.l2Weth])
           // Look for mint (from == 0x0 or from == gateway) to the recipient
           return (
             parsed !== undefined &&
             (parsed.from === '0x0000000000000000000000000000000000000000' ||
               EthereumAddress(parsed.from) === network.l2WethGateway) &&
-            parsed.to.toLowerCase() === depositFinalized.to.toLowerCase() &&
-            EthereumAddress(log.address) === network.l2Weth
+            parsed.to.toLowerCase() === depositFinalized.to.toLowerCase()
           )
         })
 
@@ -228,7 +232,9 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
       }
 
       // L2 initiation of L2->L1 WETH withdrawal
-      const withdrawalInitiated = parseWithdrawalInitiated(input.log, null)
+      const withdrawalInitiated = parseWithdrawalInitiated(input.log, [
+        network.l2WethGateway,
+      ])
       if (withdrawalInitiated) {
         // Verify this is for WETH
         if (EthereumAddress(withdrawalInitiated.l1Token) !== network.l1Weth) {
@@ -237,14 +243,16 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
 
         // Find the Transfer event (burning) to verify L2 WETH
         const transferLog = input.txLogs.find((log) => {
-          const parsed = parseTransfer(log, null)
+          if (EthereumAddress(log.address) !== network.l2Weth) {
+            return false
+          }
+          const parsed = parseTransfer(log, [network.l2Weth])
           // Look for burn (to == 0x0)
           return (
             parsed !== undefined &&
             parsed.to === '0x0000000000000000000000000000000000000000' &&
             parsed.from.toLowerCase() ===
-              withdrawalInitiated._from.toLowerCase() &&
-            EthereumAddress(log.address) === network.l2Weth
+              withdrawalInitiated._from.toLowerCase()
           )
         })
 
