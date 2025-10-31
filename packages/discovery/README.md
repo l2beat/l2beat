@@ -2,7 +2,7 @@
 
 Discovery is a tool to explore contracts and their dependencies associated with a project.
 
-To view the current state of discovery, see [https://update-monitor-prod.l2beat.com/status/discovery](https://update-monitor-prod.l2beat.com/status/discovery)
+To view the current state of discovery, see [https://um-prod.l2beat.com/status/discovery](https://um-prod.l2beat.com/status/discovery)
 
 Discovery also includes a user interface. See below for instructions on how to run that locally.
 
