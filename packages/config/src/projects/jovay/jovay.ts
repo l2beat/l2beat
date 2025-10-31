@@ -118,7 +118,7 @@ export const jovay: ScalingProject = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
-    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(false),
+    sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   technology: {
