@@ -44,7 +44,9 @@ export const stwo: BaseProject = {
     proofSystemInfo: `
 ## Description
 
-Stwo is the next iteration of Starkware zkVM STARK system. It is intended to prove the execution of programs written in [Cairo language](https://www.starknet.io/cairo-book/title-page.html) and compiled into Cairo assembly (cASM) byte code, however it also allows writing custom AIR to be proven. Stwo verifies STARK proofs directly onchain without any final SNARK wraps and thus requires no trusted setup. Stwo targets 96 bits of cryptographic security + 30 bits of PoW grinding security (e.g. see constructor params on [this contract](https://etherscan.io/address/0x3d57526c1C8D63fa2A8704487Df65e9000166c8E#code)).
+Stwo is the next iteration of Starkware zkVM STARK system. It is intended to prove the execution of programs written in [Cairo language](https://www.starknet.io/cairo-book/title-page.html) and compiled into Cairo assembly (cASM) byte code, however it also allows writing custom AIR to be proven. Stwo verifies STARK proofs directly onchain without any final SNARK wraps and thus requires no trusted setup. 
+
+Stwo targets 96 bits of cryptographic security + 30 bits of PoW grinding security (e.g. see constructor params on [this contract](https://etherscan.io/address/0x3d57526c1C8D63fa2A8704487Df65e9000166c8E#code)). Here PoW grinding refers to a challenge that prover needs to compute every time they generate a proof. An honest prover performs the work only once but a malicious prover has additional computational load with every attempted forging of a proof.
 
 ## Proof system
 
