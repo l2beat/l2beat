@@ -1,3 +1,188 @@
+Generated with discovered.json: 0xa9dad9ecff7a4de3d726aae5fe0774ffbd660a36
+
+# Diff at Fri, 31 Oct 2025 10:12:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@68eb98b0468d176aa44713dcaed98f67b2a200a0 block: 1759480843
+- current timestamp: 1761895573
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      sourceHashes.1:
+-        "0xe893ad152fe92e36431300818c1be2ef9c1d514a53c4ea4beba3dc0f4f9b8e4f"
++        "0xd4a4d01788e8425e9dc0f2cd6f1954d521d3d0b021487bb0daeec6d8e26091c9"
+      values.$implementation:
+-        "eth:0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682"
++        "eth:0x9532A2F35fc9B18BD4FE8315D9C5B1C1Cf6Ac660"
+      values.$pastUpgrades.3:
++        ["2025-10-29T14:11:11.000Z","0x7be3301b763f904f5076e22914b0ea13e101ed3cff6480b23a7757e7b9875939",["eth:0x9532A2F35fc9B18BD4FE8315D9C5B1C1Cf6Ac660"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.pendingVKeyManager:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.useDefaultGateway:
+-        true
+      values.version:
+-        "v2.0.0"
++        "v3.0.0"
+      values.vKeyManager:
+-        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+      values._legacypendingVKeyManager:
++        "eth:0x0000000000000000000000000000000000000000"
+      values._legacyvKeyManager:
++        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+      values.AGGCHAIN_FEP_VERSION:
++        "v3.0.0"
+      values.aggchainMetadataManager:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.aggchainMultisigHash:
++        "0xa57d26181a2caeea2b3fd5057d852d665445bd502aac8281622f922335bcc7d7"
+      values.aggchainSigners:
++        ["eth:0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439"]
+      values.GENESIS_CONFIG_NAME:
++        "0xae8304f40f7123e0c87b97f8a600e94ff3a3a25be588fc66b8a3717c8959ce77"
+      values.getAggchainMultisigHash:
++        "0xa57d26181a2caeea2b3fd5057d852d665445bd502aac8281622f922335bcc7d7"
+      values.getAggchainSignerInfos:
++        [{"addr":"eth:0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439","url":"https://rpc.katanarpc.com"}]
+      values.getAggchainSigners:
++        ["eth:0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439"]
+      values.getAggchainSignersCount:
++        1
+      values.getThreshold:
++        1
+      values.MAX_AGGCHAIN_SIGNERS:
++        255
+      values.selectedOpSuccinctConfig:
++        {"aggregationVkey":"0x00afb45d8064ae10aa6a1793b8f39a24c27268efae2917b5c02950b2377fbf00","rangeVkeyCommitment":"0x416d710344b6b6fa2a0b1a1445f3d6ba4fdd5ab43f0e863b1c522db20f28ad9b","rollupConfigHash":"0x6cd1b72f40b6ddf464897d8d1b084241f38ae5fda17175ff45afb3307b2523e9"}
++++ description: currently enforced OpSuccinctConfig. update the call handler for the full config if this changes.
++++ severity: HIGH
+      values.selectedOpSuccinctConfigName:
++        "0x622142ba8035695383551428b698950d3d4a6a53629c90a86d7192cfb221ae4e"
+      values.threshold:
++        1
++++ severity: HIGH
+      values.useDefaultSigners:
++        false
++++ severity: HIGH
+      values.useDefaultVkeys:
++        true
+      errors:
+-        {"selectedOpSuccinctConfig":"Processing error occurred."}
+      implementationNames.eth:0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682:
+-        "AggchainFEP"
+      implementationNames.eth:0x9532A2F35fc9B18BD4FE8315D9C5B1C1Cf6Ac660:
++        "AggchainFEP"
+    }
+```
+
+```diff
+    EOA  (eth:0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666","description":"sign state transitions (replaces state validation for this aggchain).","role":".aggchainSigners","condition":"optimisticMode is enabled by the optimisticModeManager."}]
+    }
+```
+
+## Source code changes
+
+```diff
+.../AggchainFEP/AggchainFEP.sol                    | 1448 +++++++++++++++-----
+ 1 file changed, 1136 insertions(+), 312 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759480843 (main branch discovery), not current.
+
+```diff
+    reference AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) {
+    +++ description: None
+      name:
+-        "AggLayerGateway"
++        "AgglayerGateway"
+    }
+```
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      description:
+-        "The main system contract defining the katana Layer 2 logic. As this contract is based on the OP-Succinct L2OutputOracle, OP stack outputRoots (L2 state roots) are saved here."
++        "The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here."
+      fieldMeta.optimisticMode.description:
+-        "degrades the system into a permissioned finalization mode without validity proofs. the state root in the aggchain proof in optimistic mode does not need an op succinct validity proof, but only a signature of the trustedSequencer."
++        "degrades the system into a permissioned finalization mode without validity proofs. The state root in the aggchain proof in optimistic mode does not need an op succinct validity proof, but only a signature of the trustedSequencer."
+      fieldMeta.useDefaultGateway:
+-        {"severity":"HIGH","description":"If set to false then aggchainVKey will be loaded from this contract and not from AggLayerGateway. In this case you can uncomment two handlers in this template to track ownedAggchainVKeys."}
+      fieldMeta.aggchainMultisigHash:
++        {"severity":"HIGH"}
+      fieldMeta.selectedOpSuccinctConfigName:
++        {"severity":"HIGH","description":"currently enforced OpSuccinctConfig. update the call handler for the full config if this changes."}
+      fieldMeta.useDefaultSigners:
++        {"severity":"HIGH"}
+      fieldMeta.useDefaultVkeys:
++        {"severity":"HIGH"}
+      errors:
++        {"selectedOpSuccinctConfig":"Processing error occurred."}
+    }
+```
+
+```diff
+    reference AgglayerBridge (eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: None
+      name:
+-        "PolygonSharedBridge"
++        "AgglayerBridge"
+    }
+```
+
+```diff
+    contract Katana Foundation Engineering/Security Multisig (eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "change the op-succinct related verification keys (aggregationVkey, rangeVkeyCommitment) and the rollupConfigHash."
++        "change verification keys (aggregationVkey, rangeVkeyCommitment, aggchainVkey) and the rollupConfigHash, manage multisig signers for permissioned state transitions and change critical configs for state validation."
+    }
+```
+
+```diff
+    reference AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      name:
+-        "PolygonRollupManager"
++        "AgglayerManager"
+    }
+```
+
+```diff
+    reference AgglayerGER (eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: None
+      name:
+-        "PolygonGlobalExitRootV2"
++        "AgglayerGER"
+    }
+```
+
+```diff
+    EOA  (eth:0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666","description":"finalize any state root with only their signature.","role":".trustedSequencer","condition":"optimisticMode is enabled by the optimisticModeManager."}]
+    }
+```
+
 Generated with discovered.json: 0xd9c2099b68f8527d6a640777732122bfe2d0affd
 
 # Diff at Fri, 03 Oct 2025 08:42:02 GMT:

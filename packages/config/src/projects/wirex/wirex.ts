@@ -12,7 +12,7 @@ import { polygonCDKStack } from '../../templates/polygonCDKStack'
 import { PolygoncdkDAC } from '../../templates/polygoncdk-template'
 
 const discovery = new ProjectDiscovery('wirex')
-const bridge = discovery.getContract('PolygonSharedBridge')
+const bridge = discovery.getContract('AgglayerBridge')
 
 const membersCountDAC = discovery.getContractValue<number>(
   'PolygonDataCommittee',

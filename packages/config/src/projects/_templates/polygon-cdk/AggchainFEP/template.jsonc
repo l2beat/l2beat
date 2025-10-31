@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "The main system contract defining the {{networkName}} Layer 2 logic. As this contract is based on the OP-Succinct L2OutputOracle, OP stack outputRoots (L2 state roots) are saved here.",
+  "category": "core",
+  "description": "The main system contract defining the {{networkName}} Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.",
   "ignoreInWatchMode": [
     "lastAccInputHash",
     "latestBlockNumber",
@@ -15,98 +16,65 @@
       "description": "0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)"
     },
     "optimisticMode": {
-      "description": "degrades the system into a permissioned finalization mode without validity proofs. the state root in the aggchain proof in optimistic mode does not need an op succinct validity proof, but only a signature of the trustedSequencer.",
+      "description": "degrades the system into a permissioned finalization mode without validity proofs. The state root in the aggchain proof in optimistic mode does not need an op succinct validity proof, but only a signature of the trustedSequencer.",
       "severity": "HIGH"
     },
-    "trustedSequencer": {
+    "aggchainSigners": {
+      "description:": "aggchain specific multisig signers that are used in pessimistic proofs for state transition signing",
       "permissions": [
         {
           "type": "interact",
-          "description": "finalize any state root with only their signature.",
+          "description": "sign state transitions (replaces state validation for this aggchain).",
           "condition": "optimisticMode is enabled by the optimisticModeManager."
         }
       ]
     },
+    "aggchainMultisigHash": {
+      "description:": "changes if anything in the aggchainSigners multisig changes",
+      "severity": "HIGH"
+    },
     "optimisticModeManager": {
       "permissions": [
-        {
-          "type": "interact",
-          "description": "toggle the 'optimisticMode'."
-        }
+        { "type": "interact", "description": "toggle the 'optimisticMode'." }
       ]
     },
     "aggchainManager": {
       "permissions": [
         {
           "type": "interact",
-          "description": "change the op-succinct related verification keys (aggregationVkey, rangeVkeyCommitment) and the rollupConfigHash."
+          "description": "change verification keys (aggregationVkey, rangeVkeyCommitment, aggchainVkey) and the rollupConfigHash, manage multisig signers for permissioned state transitions and change critical configs for state validation."
         }
       ]
     },
-    "vkeyManager": {
-      "permissions": [
-        {
-          "type": "interact",
-          "description": "manage whether aggchainVkeys are managed by the AggLayerGateway or AggchainFEP. Add new supported aggchainVkeys to AggchainFEP."
-        }
-      ]
+    "selectedOpSuccinctConfigName": {
+      "description": "currently enforced OpSuccinctConfig. update the call handler for the full config if this changes.",
+      "severity": "HIGH"
+    },
+    "selectedOpSuccinctConfig": {
+      "handler": {
+        "type": "call",
+        "method": "function opSuccinctConfigs(bytes32) view returns (bytes32 aggregationVkey, bytes32 rangeVkeyCommitment, bytes32 rollupConfigHash)",
+        // "args": ["{{ selectedOpSuccinctConfigName }}"] // should be this but there is a bug
+        "args": [
+          "0x622142ba8035695383551428b698950d3d4a6a53629c90a86d7192cfb221ae4e"
+        ]
+      }
     },
     "aggregationVkey": {
-      "severity": "HIGH",
-      "description": "Verification key for the aggregation step which aggregates multiple range proofs into a single proof. The aggregation proof ensures that all range proofs in a given block range are linked and use the `rangeVkeyCommitment` as the verification key. This proof is in turn wrapped by the aggchainVkey."
+      "severity": "LOW",
+      "description": "DEPRECATED - Verification key for the aggregation step which aggregates multiple range proofs into a single proof. The aggregation proof ensures that all range proofs in a given block range are linked and use the `rangeVkeyCommitment` as the verification key. This proof is in turn wrapped by the aggchainVkey."
     },
     "rangeVkeyCommitment": {
-      "severity": "HIGH",
-      "description": "Verification key for the OP Stack derivation + STF proof for a range of blocks. This proof is the bottom level proof, wrapped by the aggregationVkey."
+      "severity": "LOW",
+      "description": "DEPRECATED - Verification key for the OP Stack derivation + STF proof for a range of blocks. This proof is the bottom level proof, wrapped by the aggregationVkey."
     },
-    "useDefaultGateway": {
-      "severity": "HIGH",
-      "description": "If set to false then aggchainVKey will be loaded from this contract and not from AggLayerGateway. In this case you can uncomment two handlers in this template to track ownedAggchainVKeys."
+    "useDefaultSigners": {
+      "description:": "uses the signers from the AgglayerManager if true",
+      "severity": "HIGH"
+    },
+    "useDefaultVkeys": {
+      "description:": "ONLY FOR AGGCHAIN VKEYS, uses the vkeys from the AgglayerManager if true. Make sure to extract the custom vkeys saved in this contract if False.",
+      "severity": "HIGH"
     }
-    //
-    // "ownedAggchainVKeys": {
-    //   "description": "The ownedAggchainVkey is an alternative aggchain vkey stored in this smart contract that could be used instead of default one (stored in AggLayerGateway) if useDefaultGateway is set to false. Aggchain is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP, ECDSA).",
-    //   "handler": {
-    //     "type": "event",
-    //     "groupBy": "selector",
-    //     "add": {
-    //       "event": "AddAggchainVKey"
-    //     }
-    //   }
-    // },
-    // "ownedAggchainVKeysUpdated": {
-    //   "description": "emitted when an existing ownedAggchainVKey in `ownedAggchainVKeys` is updated.",
-    //   "handler": {
-    //     "type": "event",
-    //     "groupBy": "selector",
-    //     "set": {
-    //       "event": "UpdateAggchainVKey"
-    //     }
-    //   }
-    // }
-
-    // these params are there but not used, just like 'optimistic mode' is currently not wired up (must check whether the proof references it):
-    // "admin": {
-    //   "permissions": [
-    //     {
-    //       "type": "interact",
-    //       "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches."
-    //     }
-    //   ]
-    // },
-    // "trustedSequencer": {
-    //   "permissions": [{ "type": "sequence" }]
-    // },
-    // "forceBatchAddress": {
-    //   "severity": "HIGH",
-    //   "description": "If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone.",
-    //   "permissions": [
-    //     {
-    //       "type": "interact",
-    //       "description": "sole address that can force batches."
-    //     }
-    //   ]
-    // }
-  },
-  "category": "core"
+  }
 }

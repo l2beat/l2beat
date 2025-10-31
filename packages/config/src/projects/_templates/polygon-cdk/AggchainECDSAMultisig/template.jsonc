@@ -1,0 +1,52 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreInWatchMode": ["lastAccInputHash"],
+  "ignoreRelatives": ["gasTokenAddress", "pol"],
+  "category": "core",
+  "description": "System contract defining the {{networkName}} Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by {{threshold}} aggchainSigner(s).",
+  "fields": {
+    "admin": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the trusted sequencer address."
+        }
+      ]
+    },
+    "CONSENSUS_TYPE": {
+      "description": "0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)",
+      "severity": "HIGH"
+    },
+    "forceBatchAddress": {
+      "severity": "HIGH",
+      "description": "If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sole address that can force batches."
+        }
+      ]
+    },
+    "aggchainSigners": {
+      "description:": "aggchain specific multisig signers that are used in pessimistic proofs for state transition signing",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign state transitions (replaces state validation for this aggchain)."
+        }
+      ]
+    },
+    "aggchainMultisigHash": {
+      "description:": "changes if anything in the aggchainSigners multisig changes",
+      "severity": "HIGH"
+    },
+    "useDefaultSigners": {
+      "description:": "uses the signers from the AgglayerManager if true",
+      "severity": "HIGH"
+    },
+    "useDefaultVkeys": {
+      "description:": "uses the vkeys from the AgglayerManager if true",
+      "severity": "HIGH"
+    }
+  }
+}

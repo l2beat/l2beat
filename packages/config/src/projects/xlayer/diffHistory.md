@@ -1,3 +1,161 @@
+Generated with discovered.json: 0x9f2c67b96df43ee8b66a886f4d06ff6d27a5725e
+
+# Diff at Fri, 31 Oct 2025 09:31:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@68eb98b0468d176aa44713dcaed98f67b2a200a0 block: 1754482928
+- current timestamp: 1761903013
+
+## Description
+
+Upgrade of the main XLayer contract: https://disco.l2beat.com/diff/eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B/eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21
+- rename
+- move to CONSENSUS_TYPE (no change in permissions nor state validation) ref: https://app.excalidraw.com/s/1Pobo8fNXle/oDCa0vpJ3X?element=x9PfT775QIukDuV3P-sUz
+
+## Watched changes
+
+```diff
+    contract AggchainECDSAMultisig (eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507) {
+    +++ description: System contract defining the X Layer Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).
+      name:
+-        "PolygonPessimisticConsensus"
++        "AggchainECDSAMultisig"
+      template:
+-        "polygon-cdk/PolygonPessimisticConsensus"
++        "polygon-cdk/AggchainECDSAMultisig"
+      sourceHashes.1:
+-        "0x555aef5e938f2211fc99363d15a2fcb7a9dc24ee5154f0d6be32a136d7dfbdf7"
++        "0xa58b59f574674919f2c3fb755a6e3e369c0d5f734d8fcca6fe2664629ad8b25e"
+      description:
+-        "System contract defining the X Layer logic. It only enforces bridge accounting (pessimistic) proofs and is otherwise kept minimal as the layer 2 state transitions are not proven."
++        "System contract defining the X Layer Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s)."
+      values.$implementation:
+-        "eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B"
++        "eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21"
+      values.$pastUpgrades.3:
++        ["2025-10-29T14:11:11.000Z","0x7be3301b763f904f5076e22914b0ea13e101ed3cff6480b23a7757e7b9875939",["eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21"]]
+      values.$upgradeCount:
+-        3
++        4
++++ description: 0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)
++++ severity: HIGH
+      values.CONSENSUS_TYPE:
+-        0
++        1
+      values.getConsensusHash:
+-        "0x98293538c941dc104cfe32cbcbb62446815cbaf38feebc35af553113b8499aee"
+      values._legacypendingVKeyManager:
++        "eth:0x0000000000000000000000000000000000000000"
+      values._legacyvKeyManager:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.AGGCHAIN_ECDSA_MULTISIG_VERSION:
++        "v1.0.0"
+      values.AGGCHAIN_TYPE:
++        "0x0000"
+      values.aggchainManager:
++        "eth:0xa90B4C8B8807569980F6cC958c8905383136B5eA"
+      values.aggchainMetadataManager:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.aggchainMultisigHash:
++        "0x5c2eda769fd0841c5db40db6857126dbe0460d5b16c7ed396f4d1d0a66acdee0"
+      values.aggchainSigners:
++        ["eth:0x610DE9141a2c51A9A9624278AA97fbE54b27c102"]
+      values.aggLayerGateway:
++        "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3"
+      values.getAggchainMultisigHash:
++        "0x5c2eda769fd0841c5db40db6857126dbe0460d5b16c7ed396f4d1d0a66acdee0"
+      values.getAggchainSignerInfos:
++        [{"addr":"eth:0x610DE9141a2c51A9A9624278AA97fbE54b27c102","url":"https://rpc.xlayer.tech"}]
+      values.getAggchainSigners:
++        ["eth:0x610DE9141a2c51A9A9624278AA97fbE54b27c102"]
+      values.getAggchainSignersCount:
++        1
+      values.getThreshold:
++        1
+      values.MAX_AGGCHAIN_SIGNERS:
++        255
+      values.pendingAggchainManager:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.threshold:
++        1
+      values.useDefaultSigners:
++        false
+      values.useDefaultVkeys:
++        false
+      values.version:
++        "v1.0.0"
+      fieldMeta.CONSENSUS_TYPE.severity:
++        "HIGH"
+      fieldMeta.aggchainMultisigHash:
++        {"severity":"HIGH"}
+      implementationNames.eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B:
+-        "PolygonPessimisticConsensus"
+      implementationNames.eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21:
++        "AggchainECDSAMultisig"
+    }
+```
+
+```diff
+    EOA  (eth:0x610DE9141a2c51A9A9624278AA97fbE54b27c102) {
+    +++ description: None
+      receivedPermissions.0.role:
+-        ".trustedSequencer"
++        ".aggchainSigners"
+      receivedPermissions.0.description:
+-        "must provide a signature for each pessimistic proof, attesting to a valid state transition."
++        "sign state transitions (replaces state validation for this aggchain)."
+    }
+```
+
+```diff
++   Status: CREATED
+    reference AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../AggchainECDSAMultisig.sol                      | 2242 ++++++++++++++++++++
+ .../PolygonTransparentProxy.p.sol                  |    0
+ .../PolygonPessimisticConsensus.sol => /dev/null   |  845 --------
+ 3 files changed, 2242 insertions(+), 845 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754482928 (main branch discovery), not current.
+
+```diff
+    reference AgglayerBridge (eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: None
+      name:
+-        "PolygonSharedBridge"
++        "AgglayerBridge"
+    }
+```
+
+```diff
+    reference AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      name:
+-        "PolygonRollupManager"
++        "AgglayerManager"
+    }
+```
+
+```diff
+    reference AgglayerGER (eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: None
+      name:
+-        "PolygonGlobalExitRootV2"
++        "AgglayerGER"
+    }
+```
+
 Generated with discovered.json: 0x72aa7160cb47e725a00e4cc934ea71c5a4182268
 
 # Diff at Wed, 03 Sep 2025 15:52:06 GMT:
