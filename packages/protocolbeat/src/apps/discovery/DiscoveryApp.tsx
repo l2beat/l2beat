@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Navigate, Outlet } from 'react-router-dom'
+import { ConfigProvider } from '../../hooks/useConfigPortal'
 import type { AppModule } from '../createRouter'
 import { HomePage } from './HomePage'
 import { NewProjectPage } from './NewProjectPage'
@@ -28,7 +29,11 @@ export const DiscoveryAppModule: AppModule = {
         },
         {
           path: 'p/:project',
-          element: <ProjectPage />,
+          element: (
+            <ConfigProvider>
+              <ProjectPage />
+            </ConfigProvider>
+          ),
         },
         {
           path: 'new',
