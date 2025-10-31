@@ -89,10 +89,12 @@ export class OrbitStackPlugin implements InteropPlugin {
         // L2 -> L1 (Withdrawal finalization on L1)
         const otxe = parseOutBoxTransactionExecuted(input.log, [network.outbox])
         if (otxe) {
-          return OutBoxTransactionExecuted.create(input.ctx, {
-            chain: network.chain,
-            position: Number(otxe.transactionIndex),
-          })
+          return [
+            OutBoxTransactionExecuted.create(input.ctx, {
+              chain: network.chain,
+              position: Number(otxe.transactionIndex),
+            }),
+          ]
         }
       }
 
@@ -105,10 +107,12 @@ export class OrbitStackPlugin implements InteropPlugin {
           networkForBridge.bridge,
         ])
         if (messageDelivered) {
-          return MessageDelivered.create(input.ctx, {
-            chain: networkForBridge.chain,
-            messageNum: messageDelivered.messageIndex.toString(),
-          })
+          return [
+            MessageDelivered.create(input.ctx, {
+              chain: networkForBridge.chain,
+              messageNum: messageDelivered.messageIndex.toString(),
+            }),
+          ]
         }
       }
     } else {
@@ -122,16 +126,20 @@ export class OrbitStackPlugin implements InteropPlugin {
       if (l2ToL1Tx) {
         // Check if this is an ETH withdrawal (callvalue > 0)
         if (l2ToL1Tx.callvalue > 0n) {
-          return ETHWithdrawalInitiatedL2ToL1Tx.create(input.ctx, {
+          return [
+            ETHWithdrawalInitiatedL2ToL1Tx.create(input.ctx, {
+              chain: network.chain,
+              position: Number(l2ToL1Tx.position),
+              amount: l2ToL1Tx.callvalue.toString(),
+            }),
+          ]
+        }
+        return [
+          L2ToL1Tx.create(input.ctx, {
             chain: network.chain,
             position: Number(l2ToL1Tx.position),
-            amount: l2ToL1Tx.callvalue.toString(),
-          })
-        }
-        return L2ToL1Tx.create(input.ctx, {
-          chain: network.chain,
-          position: Number(l2ToL1Tx.position),
-        })
+          }),
+        ]
       }
 
       // L1 -> L2 (Message processing on L2)
@@ -156,12 +164,14 @@ export class OrbitStackPlugin implements InteropPlugin {
             : '0x0'
         const callValue = BigInt(callValueHex)
 
-        return RedeemScheduled.create(input.ctx, {
-          chain: network.chain,
-          messageNum: BigInt(messageNum).toString(),
-          retryTxHash: redeemScheduled.retryTxHash,
-          ethAmount: callValue > 0n ? callValue.toString() : undefined,
-        })
+        return [
+          RedeemScheduled.create(input.ctx, {
+            chain: network.chain,
+            messageNum: BigInt(messageNum).toString(),
+            retryTxHash: redeemScheduled.retryTxHash,
+            ethAmount: callValue > 0n ? callValue.toString() : undefined,
+          }),
+        ]
       }
     }
   }

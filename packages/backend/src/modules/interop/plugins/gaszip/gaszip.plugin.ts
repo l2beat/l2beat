@@ -73,7 +73,7 @@ export class GasZipPlugin implements InteropPlugin {
         }),
       )
     }
-    return events[0] // TODO: Allow to return multiple events
+    return events
   }
 
   capture(input: LogToCapture) {
@@ -118,7 +118,6 @@ export class GasZipPlugin implements InteropPlugin {
         }),
       )
     }
-    // TODO: Allow to return multiple events
-    return events[0]
+    return events
   }
 }

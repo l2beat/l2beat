@@ -55,50 +55,56 @@ export class AcrossPlugin implements InteropPlugin {
 
     const fundsDeposited = parseFundsDeposited(input.log, [network.spokePool])
     if (fundsDeposited) {
-      return AcrossFundsDeposited.create(input.ctx, {
-        $dstChain: findChain(
-          networks,
-          (x) => x.chainId,
-          Number(fundsDeposited.destinationChainId),
-        ),
-        originChainId: network.chainId,
-        destinationChainId: Number(fundsDeposited.destinationChainId),
-        depositId: fundsDeposited.depositId.toString(),
-        tokenAddress: Address32.from(fundsDeposited.inputToken),
-        amount: fundsDeposited.inputAmount.toString(),
-      })
+      return [
+        AcrossFundsDeposited.create(input.ctx, {
+          $dstChain: findChain(
+            networks,
+            (x) => x.chainId,
+            Number(fundsDeposited.destinationChainId),
+          ),
+          originChainId: network.chainId,
+          destinationChainId: Number(fundsDeposited.destinationChainId),
+          depositId: fundsDeposited.depositId.toString(),
+          tokenAddress: Address32.from(fundsDeposited.inputToken),
+          amount: fundsDeposited.inputAmount.toString(),
+        }),
+      ]
     }
 
     const filledRelay = parseFilledRelay(input.log, [network.spokePool])
     if (filledRelay) {
-      return AcrossFilledRelay.create(input.ctx, {
-        $srcChain: findChain(
-          networks,
-          (x) => x.chainId,
-          Number(filledRelay.originChainId),
-        ),
-        originChainId: Number(filledRelay.originChainId),
-        destinationChainId: network.chainId,
-        depositId: filledRelay.depositId.toString(),
-        tokenAddress: Address32.from(filledRelay.outputToken),
-        amount: filledRelay.outputAmount.toString(),
-      })
+      return [
+        AcrossFilledRelay.create(input.ctx, {
+          $srcChain: findChain(
+            networks,
+            (x) => x.chainId,
+            Number(filledRelay.originChainId),
+          ),
+          originChainId: Number(filledRelay.originChainId),
+          destinationChainId: network.chainId,
+          depositId: filledRelay.depositId.toString(),
+          tokenAddress: Address32.from(filledRelay.outputToken),
+          amount: filledRelay.outputAmount.toString(),
+        }),
+      ]
     }
 
     const filledV3Relay = parseFilledV3Relay(input.log, [network.spokePool])
     if (filledV3Relay) {
-      return AcrossFilledRelay.create(input.ctx, {
-        $srcChain: findChain(
-          networks,
-          (x) => x.chainId,
-          Number(filledV3Relay.originChainId),
-        ),
-        originChainId: Number(filledV3Relay.originChainId),
-        destinationChainId: network.chainId,
-        depositId: filledV3Relay.depositId.toString(),
-        tokenAddress: Address32.from(filledV3Relay.outputToken),
-        amount: filledV3Relay.outputAmount.toString(),
-      })
+      return [
+        AcrossFilledRelay.create(input.ctx, {
+          $srcChain: findChain(
+            networks,
+            (x) => x.chainId,
+            Number(filledV3Relay.originChainId),
+          ),
+          originChainId: Number(filledV3Relay.originChainId),
+          destinationChainId: network.chainId,
+          depositId: filledV3Relay.depositId.toString(),
+          tokenAddress: Address32.from(filledV3Relay.outputToken),
+          amount: filledV3Relay.outputAmount.toString(),
+        }),
+      ]
     }
   }
 

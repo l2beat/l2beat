@@ -76,34 +76,42 @@ export class CentriFugePlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     const parsedSendPayload = parseSendPayload(input.log, null)
     if (parsedSendPayload) {
-      return SendPayLoad.create(input.ctx, {
-        payloadId: parsedSendPayload.payloadId,
-        adapter: parsedSendPayload.adapter,
-      })
+      return [
+        SendPayLoad.create(input.ctx, {
+          payloadId: parsedSendPayload.payloadId,
+          adapter: parsedSendPayload.adapter,
+        }),
+      ]
     }
 
     const parsedSendProof = parseSendProof(input.log, null)
     if (parsedSendProof) {
-      return SendProof.create(input.ctx, {
-        payloadId: parsedSendProof.payloadId,
-        adapter: parsedSendProof.adapter,
-      })
+      return [
+        SendProof.create(input.ctx, {
+          payloadId: parsedSendProof.payloadId,
+          adapter: parsedSendProof.adapter,
+        }),
+      ]
     }
 
     const parsedHandlePayload = parseHandlePayload(input.log, null)
     if (parsedHandlePayload) {
-      return HandlePayLoad.create(input.ctx, {
-        payloadId: parsedHandlePayload.payloadId,
-        adapter: parsedHandlePayload.adapter,
-      })
+      return [
+        HandlePayLoad.create(input.ctx, {
+          payloadId: parsedHandlePayload.payloadId,
+          adapter: parsedHandlePayload.adapter,
+        }),
+      ]
     }
 
     const parsedHandleProof = parseHandleProof(input.log, null)
     if (parsedHandleProof) {
-      return HandleProof.create(input.ctx, {
-        payloadId: parsedHandleProof.payloadId,
-        adapter: parsedHandleProof.adapter,
-      })
+      return [
+        HandleProof.create(input.ctx, {
+          payloadId: parsedHandleProof.payloadId,
+          adapter: parsedHandleProof.adapter,
+        }),
+      ]
     }
   }
 
@@ -112,14 +120,14 @@ export class CentriFugePlugin implements InteropPlugin {
     2. Find ContractCallExecuted with the same transaction
     3. Find ContractCallApproved with the same commandId
     4. Find SendProof on SRC chain with the same payloadId
-    5. Find ContractCall on SRC chain 
+    5. Find ContractCall on SRC chain
 
     1. Start with HandlePayload on DST chain
     2. Find Delivery with the same transaction
     3. Find SendPayload on SRC chain with the same payloadId
     4. Find ContractCall on SRC chain with the same txHash as in step 2
 
-    TODO: What if other adapters are used ? 
+    TODO: What if other adapters are used ?
     TODO: Add $srChain and $dstChain to Centrifuge events if possible (depending on adapter used)
   */
 

@@ -127,30 +127,34 @@ export class CCIPPlugIn implements InteropPlugin {
     const ccipSendRequested = parseCCIPSendRequested(input.log, null)
     if (ccipSendRequested) {
       const outboundLane = EthereumAddress(input.log.address)
-      return CCIPSendRequested.create(input.ctx, {
-        messageId: ccipSendRequested.message.messageId,
-        tokenAmounts: ccipSendRequested.message.tokenAmounts.map((ta) => ({
-          token: Address32.from(ta.token),
-          amount: ta.amount.toString(),
-        })),
-        $dstChain:
-          Object.entries(network.outboundLanes).find(
-            ([_, address]) => address === outboundLane,
-          )?.[0] ?? `Unknown_${outboundLane}`,
-      })
+      return [
+        CCIPSendRequested.create(input.ctx, {
+          messageId: ccipSendRequested.message.messageId,
+          tokenAmounts: ccipSendRequested.message.tokenAmounts.map((ta) => ({
+            token: Address32.from(ta.token),
+            amount: ta.amount.toString(),
+          })),
+          $dstChain:
+            Object.entries(network.outboundLanes).find(
+              ([_, address]) => address === outboundLane,
+            )?.[0] ?? `Unknown_${outboundLane}`,
+        }),
+      ]
     }
 
     const executionStateChanged = parseExecutionStateChanged(input.log, null)
     if (executionStateChanged) {
       const inboundLane = EthereumAddress(input.log.address)
-      return ExecutionStateChanged.create(input.ctx, {
-        messageId: executionStateChanged.messageId,
-        state: executionStateChanged.state,
-        $srcChain:
-          Object.entries(network.inboundLanes).find(
-            ([_, address]) => address === inboundLane,
-          )?.[0] ?? `Unknown_${inboundLane}`,
-      })
+      return [
+        ExecutionStateChanged.create(input.ctx, {
+          messageId: executionStateChanged.messageId,
+          state: executionStateChanged.state,
+          $srcChain:
+            Object.entries(network.inboundLanes).find(
+              ([_, address]) => address === inboundLane,
+            )?.[0] ?? `Unknown_${inboundLane}`,
+        }),
+      ]
     }
   }
 

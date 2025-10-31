@@ -235,33 +235,37 @@ export class StargatePlugin implements InteropPlugin {
           const passenger = busRode && decodeBusPassenger(busRode.passenger)
 
           if (busRode && passenger) {
-            return StargateV2OFTSentBusRode.create(input.ctx, {
-              guid: oftSent.guid,
-              ticketId: Number(busRode.ticketId),
-              receiver: passenger.receiver,
-              emitter: EthereumAddress(input.log.address),
-              token: pool.token,
-              destinationEid: oftSent.dstEid,
-              tokenAddress: pool.tokenAddress,
-              amountSentLD: oftSent.amountSentLD.toString(),
-              amountReceivedLD: oftSent.amountReceivedLD.toString(),
-              amountSD: passenger.amountSD.toString(),
-              $dstChain: findChain(
-                STARGATE_NETWORKS,
-                (x) => x.eid,
-                oftSent.dstEid,
-              ),
-            })
+            return [
+              StargateV2OFTSentBusRode.create(input.ctx, {
+                guid: oftSent.guid,
+                ticketId: Number(busRode.ticketId),
+                receiver: passenger.receiver,
+                emitter: EthereumAddress(input.log.address),
+                token: pool.token,
+                destinationEid: oftSent.dstEid,
+                tokenAddress: pool.tokenAddress,
+                amountSentLD: oftSent.amountSentLD.toString(),
+                amountReceivedLD: oftSent.amountReceivedLD.toString(),
+                amountSD: passenger.amountSD.toString(),
+                $dstChain: findChain(
+                  STARGATE_NETWORKS,
+                  (x) => x.eid,
+                  oftSent.dstEid,
+                ),
+              }),
+            ]
           }
         }
       }
-      return StargateV2OFTSentTaxi.create(input.ctx, {
-        guid: oftSent.guid,
-        amountSentLD: oftSent.amountSentLD.toString(),
-        amountReceivedLD: oftSent.amountReceivedLD.toString(),
-        tokenAddress: pool.tokenAddress,
-        $dstChain: findChain(STARGATE_NETWORKS, (x) => x.eid, oftSent.dstEid),
-      })
+      return [
+        StargateV2OFTSentTaxi.create(input.ctx, {
+          guid: oftSent.guid,
+          amountSentLD: oftSent.amountSentLD.toString(),
+          amountReceivedLD: oftSent.amountReceivedLD.toString(),
+          tokenAddress: pool.tokenAddress,
+          $dstChain: findChain(STARGATE_NETWORKS, (x) => x.eid, oftSent.dstEid),
+        }),
+      ]
     }
 
     const oftReceived = parseOFTReceived(input.log, poolAddresses)
@@ -278,20 +282,22 @@ export class StargatePlugin implements InteropPlugin {
       if (!destinationEid) {
         return
       }
-      return StargateV2OFTReceived.create(input.ctx, {
-        guid: oftReceived.guid,
-        receiver: oftReceived.toAddress,
-        emitter: EthereumAddress(input.log.address),
-        token: pool.token,
-        tokenAddress: pool.tokenAddress,
-        destinationEid,
-        amountReceivedLD: oftReceived.amountReceivedLD.toString(),
-        $srcChain: findChain(
-          STARGATE_NETWORKS,
-          (x) => x.eid,
-          oftReceived.srcEid,
-        ),
-      })
+      return [
+        StargateV2OFTReceived.create(input.ctx, {
+          guid: oftReceived.guid,
+          receiver: oftReceived.toAddress,
+          emitter: EthereumAddress(input.log.address),
+          token: pool.token,
+          tokenAddress: pool.tokenAddress,
+          destinationEid,
+          amountReceivedLD: oftReceived.amountReceivedLD.toString(),
+          $srcChain: findChain(
+            STARGATE_NETWORKS,
+            (x) => x.eid,
+            oftReceived.srcEid,
+          ),
+        }),
+      ]
     }
 
     const creditsSent = parseCreditsSent(input.log, poolAddresses)
@@ -301,7 +307,7 @@ export class StargatePlugin implements InteropPlugin {
         (x) => x.eid,
         creditsSent.dstEid,
       )
-      return StargateV2CreditsSent.create(input.ctx, { $dstChain })
+      return [StargateV2CreditsSent.create(input.ctx, { $dstChain })]
     }
 
     const creditsReceived = parseCreditsReceived(input.log, poolAddresses)
@@ -311,18 +317,24 @@ export class StargatePlugin implements InteropPlugin {
         (x) => x.eid,
         creditsReceived.srcEid,
       )
-      return StargateV2CreditsReceived.create(input.ctx, { $srcChain })
+      return [StargateV2CreditsReceived.create(input.ctx, { $srcChain })]
     }
 
     const busDriven = parseBusDriven(input.log, [network.tokenMessaging])
     if (busDriven) {
-      return StargateV2BusDriven.create(input.ctx, {
-        startTicketId: Number(busDriven.startTicketId),
-        numPassengers: busDriven.numPassengers,
-        guid: busDriven.guid,
-        destinationEid: busDriven.dstEid,
-        $dstChain: findChain(STARGATE_NETWORKS, (x) => x.eid, busDriven.dstEid),
-      })
+      return [
+        StargateV2BusDriven.create(input.ctx, {
+          startTicketId: Number(busDriven.startTicketId),
+          numPassengers: busDriven.numPassengers,
+          guid: busDriven.guid,
+          destinationEid: busDriven.dstEid,
+          $dstChain: findChain(
+            STARGATE_NETWORKS,
+            (x) => x.eid,
+            busDriven.dstEid,
+          ),
+        }),
+      ]
     }
   }
 

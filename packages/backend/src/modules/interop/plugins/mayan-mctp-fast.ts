@@ -35,10 +35,12 @@ export class MayanMctpFastPlugin implements InteropPlugin {
         (x) => x.wormholeChainId,
         Number(orderFulfilled.sourceDomain),
       )
-      return OrderFulfilled.create(input.ctx, {
-        amount: orderFulfilled.amount.toString(),
-        $srcChain,
-      })
+      return [
+        OrderFulfilled.create(input.ctx, {
+          amount: orderFulfilled.amount.toString(),
+          $srcChain,
+        }),
+      ]
     }
   }
 
