@@ -130,6 +130,10 @@ export const jovay: ScalingProject = {
             'Rollup.sol - commitBatch stores calldata hashes for each batch',
           url: 'https://etherscan.io/address/0xe0a28B8918a62edB825055221a1dF12c7C81Bac1#code',
         },
+        {
+          title: 'L1Mailbox.sol - sendMsg enqueues transactions on Ethereum',
+          url: 'https://etherscan.io/address/0x9869A90FDAc287519E48aff4cCE329907a995162#code',
+        },
       ],
     },
     operator: {
@@ -142,11 +146,16 @@ export const jovay: ScalingProject = {
       ],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
+      ...FORCE_TRANSACTIONS.ENQUEUE,
       references: [
         {
-          title: 'L1Mailbox.sol - sendMsg guarded by onlyBridge whitelist',
+          title: 'L1Mailbox.sol - sendMsg enqueues deposit transactions',
           url: 'https://etherscan.io/address/0x9869A90FDAc287519E48aff4cCE329907a995162#code',
+        },
+        {
+          title:
+            'Rollup.sol - commitBatch function passes the totalL1MessagePopped as input parameter',
+          url: 'https://etherscan.io/address/0xe0a28B8918a62edB825055221a1dF12c7C81Bac1#code',
         },
       ],
     },

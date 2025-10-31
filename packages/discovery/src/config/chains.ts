@@ -378,7 +378,7 @@ export const chains: ChainConfig[] = [
   },
   {
     name: 'jovay',
-    chainId: 57073,
+    chainId: 5734951,
     shortName: 'jovay',
     multicall: undefined,
     explorer: {
