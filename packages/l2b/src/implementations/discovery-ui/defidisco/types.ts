@@ -203,6 +203,7 @@ export interface FunctionEntry {
   isPermissioned: boolean
   checked?: boolean
   score?: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk' | 'critical'
+  probability?: 'unassigned' | 'unlikely' | 'somewhat-likely' | 'very-likely'
   reason?: string
   description?: string
   constraints?: string
@@ -235,6 +236,7 @@ export interface ApiFunctionsUpdateRequest {
   isPermissioned?: boolean
   checked?: boolean
   score?: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk' | 'critical'
+  probability?: 'unassigned' | 'unlikely' | 'somewhat-likely' | 'very-likely'
   reason?: string
   description?: string
   constraints?: string

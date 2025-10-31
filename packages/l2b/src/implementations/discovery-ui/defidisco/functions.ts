@@ -103,6 +103,7 @@ export function updateFunction(
     isPermissioned: updateRequest.isPermissioned ?? existingFunction?.isPermissioned ?? false,
     checked: updateRequest.checked ?? existingFunction?.checked,
     score: updateRequest.score ?? existingFunction?.score,
+    probability: updateRequest.probability ?? existingFunction?.probability,
     reason: updateRequest.reason ?? existingFunction?.reason,
     description: updateRequest.description ?? existingFunction?.description,
     constraints: updateRequest.constraints ?? existingFunction?.constraints,

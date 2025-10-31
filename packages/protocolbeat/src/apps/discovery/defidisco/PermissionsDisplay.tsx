@@ -110,6 +110,17 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
     await updateFunctionEntry(contractAddress, functionName, { score: newScore })
   }
 
+  const handleProbabilityToggle = async (contractAddress: string, functionName: string, currentProbability: 'unassigned' | 'unlikely' | 'somewhat-likely' | 'very-likely') => {
+    if (!project) return
+
+    const probabilityOrder: Array<'unassigned' | 'unlikely' | 'somewhat-likely' | 'very-likely'> = ['unassigned', 'unlikely', 'somewhat-likely', 'very-likely']
+    const currentIndex = probabilityOrder.indexOf(currentProbability)
+    const nextIndex = (currentIndex + 1) % probabilityOrder.length
+    const newProbability = probabilityOrder[nextIndex]
+
+    await updateFunctionEntry(contractAddress, functionName, { probability: newProbability })
+  }
+
   const handleDescriptionUpdate = async (contractAddress: string, functionName: string, description: string) => {
     if (!project) return
 
@@ -196,7 +207,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
   const updateFunctionEntry = async (
     contractAddress: string,
     functionName: string,
-    updates: Partial<Pick<FunctionEntry, 'isPermissioned' | 'checked' | 'score' | 'description' | 'constraints' | 'ownerDefinitions' | 'delay'>>
+    updates: Partial<Pick<FunctionEntry, 'isPermissioned' | 'checked' | 'score' | 'probability' | 'description' | 'constraints' | 'ownerDefinitions' | 'delay'>>
   ) => {
     // Get current function data from contract-specific functions
     const contractFunctionsData = getFunctionsForContract(contractAddress)
@@ -209,6 +220,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
       isPermissioned: updates.isPermissioned ?? currentFunction?.isPermissioned ?? false,
       checked: updates.checked ?? currentFunction?.checked,
       score: updates.score ?? currentFunction?.score,
+      probability: updates.probability ?? currentFunction?.probability,
       description: updates.description ?? currentFunction?.description,
       constraints: updates.constraints ?? currentFunction?.constraints,
       ownerDefinitions: updates.ownerDefinitions ?? currentFunction?.ownerDefinitions,
@@ -277,6 +289,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
             onPermissionToggle={handlePermissionToggle}
             onCheckedToggle={handleCheckedToggle}
             onScoreToggle={handleScoreToggle}
+            onProbabilityToggle={handleProbabilityToggle}
             onDescriptionUpdate={handleDescriptionUpdate}
             onConstraintsUpdate={handleConstraintsUpdate}
             onOpenInCode={handleOpenInCode}
@@ -296,6 +309,7 @@ function PermissionsCode({
   onPermissionToggle,
   onCheckedToggle,
   onScoreToggle,
+  onProbabilityToggle,
   onDescriptionUpdate,
   onConstraintsUpdate,
   onOpenInCode,
@@ -308,6 +322,7 @@ function PermissionsCode({
   onPermissionToggle: (contractAddress: string, functionName: string, currentIsPermissioned: boolean) => void
   onCheckedToggle: (contractAddress: string, functionName: string, currentChecked: boolean) => void
   onScoreToggle: (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk' | 'critical') => void
+  onProbabilityToggle: (contractAddress: string, functionName: string, currentProbability: 'unassigned' | 'unlikely' | 'somewhat-likely' | 'very-likely') => void
   onDescriptionUpdate: (contractAddress: string, functionName: string, description: string) => void
   onConstraintsUpdate: (contractAddress: string, functionName: string, constraints: string) => void
   onOpenInCode: (contractAddress: string, functionName: string) => void
@@ -339,6 +354,7 @@ function PermissionsCode({
           onPermissionToggle={onPermissionToggle}
           onCheckedToggle={onCheckedToggle}
           onScoreToggle={onScoreToggle}
+          onProbabilityToggle={onProbabilityToggle}
           onDescriptionUpdate={onDescriptionUpdate}
           onConstraintsUpdate={onConstraintsUpdate}
           onOpenInCode={onOpenInCode}
@@ -357,6 +373,7 @@ function WritePermissionsCodeEntries({
   onPermissionToggle,
   onCheckedToggle,
   onScoreToggle,
+  onProbabilityToggle,
   onDescriptionUpdate,
   onConstraintsUpdate,
   onOpenInCode,
@@ -369,6 +386,7 @@ function WritePermissionsCodeEntries({
   onPermissionToggle: (contractAddress: string, functionName: string, currentIsPermissioned: boolean) => void
   onCheckedToggle: (contractAddress: string, functionName: string, currentChecked: boolean) => void
   onScoreToggle: (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk' | 'critical') => void
+  onProbabilityToggle: (contractAddress: string, functionName: string, currentProbability: 'unassigned' | 'unlikely' | 'somewhat-likely' | 'very-likely') => void
   onDescriptionUpdate: (contractAddress: string, functionName: string, description: string) => void
   onConstraintsUpdate: (contractAddress: string, functionName: string, constraints: string) => void
   onOpenInCode: (contractAddress: string, functionName: string) => void
@@ -407,6 +425,7 @@ function WritePermissionsCodeEntries({
             onPermissionToggle={onPermissionToggle}
             onCheckedToggle={onCheckedToggle}
             onScoreToggle={onScoreToggle}
+            onProbabilityToggle={onProbabilityToggle}
             onDescriptionUpdate={onDescriptionUpdate}
             onConstraintsUpdate={onConstraintsUpdate}
             onOpenInCode={onOpenInCode}

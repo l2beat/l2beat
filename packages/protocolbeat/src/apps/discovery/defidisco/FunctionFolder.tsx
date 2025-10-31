@@ -9,6 +9,7 @@ import { IconChevronRight } from '../../../icons/IconChevronRight'
 import { IconLockClosed } from './IconLockClosed'
 import { IconLockOpen } from './IconLockOpen'
 import { IconVoltage } from './IconVoltage'
+import { IconProbability } from './IconProbability'
 import { IconOpen } from './IconOpen'
 import type { OwnerDefinition } from '../../../api/types'
 import { useQuery } from '@tanstack/react-query'
@@ -28,6 +29,7 @@ interface FunctionFolderProps {
   onPermissionToggle: (contractAddress: string, functionName: string, currentIsPermissioned: boolean) => void
   onCheckedToggle: (contractAddress: string, functionName: string, currentChecked: boolean) => void
   onScoreToggle: (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk' | 'critical') => void
+  onProbabilityToggle: (contractAddress: string, functionName: string, currentProbability: 'unassigned' | 'unlikely' | 'somewhat-likely' | 'very-likely') => void
   onDescriptionUpdate: (contractAddress: string, functionName: string, description: string) => void
   onConstraintsUpdate: (contractAddress: string, functionName: string, constraints: string) => void
   onOpenInCode: (contractAddress: string, functionName: string) => void
@@ -234,6 +236,7 @@ export function FunctionFolder({
   onPermissionToggle,
   onCheckedToggle,
   onScoreToggle,
+  onProbabilityToggle,
   onDescriptionUpdate,
   onConstraintsUpdate,
   onOpenInCode,
@@ -475,6 +478,7 @@ export function FunctionFolder({
   const isPermissioned = currentFunction?.isPermissioned || false
   const checkedStatus = currentFunction?.checked || false
   const scoreStatus = currentFunction?.score || 'unscored'
+  const probabilityStatus = currentFunction?.probability || 'unassigned'
   const description = currentFunction?.description || ''
   const constraints = currentFunction?.constraints || ''
 
@@ -546,6 +550,16 @@ export function FunctionFolder({
       case 'high-risk': return isHover ? '#fca5a5' : '#f87171' // red-300 : red-400
       case 'critical': return isHover ? '#c084fc' : '#a855f7' // purple-400 : purple-500
       default: return isHover ? '#d1d5db' : '#9ca3af' // gray-300 : gray-400
+    }
+  }
+
+  // Probability colors
+  const getProbabilityColor = (probability: string, isHover: boolean = false) => {
+    switch (probability) {
+      case 'unlikely': return isHover ? '#6ee7b7' : '#10b981' // green-300 : green-500
+      case 'somewhat-likely': return isHover ? '#fdba74' : '#fb923c' // orange-300 : orange-400
+      case 'very-likely': return isHover ? '#fca5a5' : '#f87171' // red-300 : red-400
+      default: return isHover ? '#d1d5db' : '#9ca3af' // gray-300 : gray-400 (unassigned)
     }
   }
 
@@ -779,6 +793,24 @@ export function FunctionFolder({
             }}
           >
             <IconVoltage />
+          </button>
+
+          {/* Probability Icon */}
+          <button
+            onClick={() => onProbabilityToggle(contractAddress, functionName, probabilityStatus)}
+            className="inline-block cursor-pointer transition-colors"
+            style={{
+              color: getProbabilityColor(probabilityStatus),
+            }}
+            title={`Current probability: ${probabilityStatus}. Click to cycle: unassigned → unlikely → somewhat-likely → very-likely`}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = getProbabilityColor(probabilityStatus, true)
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = getProbabilityColor(probabilityStatus)
+            }}
+          >
+            <IconProbability />
           </button>
 
           {/* Open in Code Icon */}
