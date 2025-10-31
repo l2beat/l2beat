@@ -202,7 +202,7 @@ export interface FunctionEntry {
   functionName: string
   isPermissioned: boolean
   checked?: boolean
-  score?: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk'
+  score?: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk' | 'critical'
   reason?: string
   description?: string
   timestamp: string
@@ -233,7 +233,7 @@ export interface ApiFunctionsUpdateRequest {
   functionName: string
   isPermissioned?: boolean
   checked?: boolean
-  score?: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk'
+  score?: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk' | 'critical'
   reason?: string
   description?: string
   ownerDefinitions?: OwnerDefinition[]

@@ -27,7 +27,7 @@ interface FunctionFolderProps {
   functions: FunctionEntryWithContract[]
   onPermissionToggle: (contractAddress: string, functionName: string, currentIsPermissioned: boolean) => void
   onCheckedToggle: (contractAddress: string, functionName: string, currentChecked: boolean) => void
-  onScoreToggle: (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk') => void
+  onScoreToggle: (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk' | 'critical') => void
   onDescriptionUpdate: (contractAddress: string, functionName: string, description: string) => void
   onOpenInCode: (contractAddress: string, functionName: string) => void
   onOwnerDefinitionsUpdate: (contractAddress: string, functionName: string, ownerDefinitions: OwnerDefinition[]) => void
@@ -532,6 +532,7 @@ export function FunctionFolder({
       case 'low-risk': return isHover ? '#6ee7b7' : '#10b981' // green-300 : green-500
       case 'medium-risk': return isHover ? '#fcd34d' : '#f59e0b' // yellow-300 : yellow-500
       case 'high-risk': return isHover ? '#fca5a5' : '#f87171' // red-300 : red-400
+      case 'critical': return isHover ? '#c084fc' : '#a855f7' // purple-400 : purple-500
       default: return isHover ? '#d1d5db' : '#9ca3af' // gray-300 : gray-400
     }
   }
@@ -737,7 +738,7 @@ export function FunctionFolder({
             style={{
               color: getScoreColor(scoreStatus),
             }}
-            title={`Current score: ${scoreStatus}. Click to cycle: unscored → low-risk → medium-risk → high-risk`}
+            title={`Current score: ${scoreStatus}. Click to cycle: unscored → low-risk → medium-risk → high-risk → critical`}
             onMouseEnter={(e) => {
               e.currentTarget.style.color = getScoreColor(scoreStatus, true)
             }}

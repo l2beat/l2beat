@@ -99,10 +99,10 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
     await updateFunctionEntry(contractAddress, functionName, { checked: !currentChecked })
   }
 
-  const handleScoreToggle = async (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk') => {
+  const handleScoreToggle = async (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk' | 'critical') => {
     if (!project) return
 
-    const scoreOrder: Array<'unscored' | 'low-risk' | 'medium-risk' | 'high-risk'> = ['unscored', 'low-risk', 'medium-risk', 'high-risk']
+    const scoreOrder: Array<'unscored' | 'low-risk' | 'medium-risk' | 'high-risk' | 'critical'> = ['unscored', 'low-risk', 'medium-risk', 'high-risk', 'critical']
     const currentIndex = scoreOrder.indexOf(currentScore)
     const nextIndex = (currentIndex + 1) % scoreOrder.length
     const newScore = scoreOrder[nextIndex]

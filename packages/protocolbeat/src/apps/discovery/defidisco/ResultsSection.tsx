@@ -8,6 +8,7 @@ interface ResultsSectionProps {
 }
 
 interface UpgradeabilityStats {
+  critical: OwnerTypeStats
   highRisk: OwnerTypeStats
   mediumRisk: OwnerTypeStats
   lowRisk: OwnerTypeStats
@@ -51,6 +52,12 @@ function UpgradeabilitySection({ stats }: { stats: UpgradeabilityStats }) {
     <div>
       <h3 className="font-semibold text-lg text-orange-400 mb-2">Upgradeability</h3>
       <div className="ml-4 flex flex-col gap-3 text-sm">
+
+        <RiskLevelStats
+          title="Critical Impact Functions"
+          stats={stats.critical}
+          titleColor="text-purple-400"
+        />
 
         <RiskLevelStats
           title="High Impact Functions"
@@ -133,6 +140,7 @@ function calculateUpgradeabilityStats(
   permissionOverrides: any
 ): UpgradeabilityStats {
   const stats: UpgradeabilityStats = {
+    critical: { totalFunctions: 0, contracts: 0, eoas: 0, multisigs: 0 },
     highRisk: { totalFunctions: 0, contracts: 0, eoas: 0, multisigs: 0 },
     mediumRisk: { totalFunctions: 0, contracts: 0, eoas: 0, multisigs: 0 },
     lowRisk: { totalFunctions: 0, contracts: 0, eoas: 0, multisigs: 0 }
@@ -173,6 +181,9 @@ function calculateUpgradeabilityStats(
         // Determine which risk category this function belongs to
         let targetStats: OwnerTypeStats
         switch (func.score) {
+          case 'critical':
+            targetStats = stats.critical
+            break
           case 'high-risk':
             targetStats = stats.highRisk
             break
