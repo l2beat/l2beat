@@ -2,11 +2,16 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "jovay",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": [
-    "eth:0x922248db4a99bb542539ae7165fb9d7a546fb9f1"
-  ],
+  "initialAddresses": ["eth:0x922248db4a99bb542539ae7165fb9d7a546fb9f1"],
   "names": {
-    "eth:0x922248db4a99bb542539ae7165fb9d7a546fb9f1": "Escrow",
-    "eth:0xb220D17A11bd2d11e3f57a305FF5b481C81B1028": "L2Mailbox"
+    "eth:0x922248db4a99bb542539ae7165fb9d7a546fb9f1": "L1ETHBridge"
+  },
+  "overrides": {
+    "eth:0x922248db4a99bb542539ae7165fb9d7a546fb9f1": {
+      "fields": { "toBridge": { "edit": ["format", "JovayAddress"] } }
+    },
+    "jovay:0xb220D17A11bd2d11e3f57a305FF5b481C81B1028": {
+      "ignoreDiscovery": true // rpc issues, we don't need L2 discovery yet
+    }
   }
 }

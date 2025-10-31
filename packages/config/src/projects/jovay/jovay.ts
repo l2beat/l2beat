@@ -1,9 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
-  TECHNOLOGY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -42,7 +44,11 @@ export const jovay: ScalingProject = {
     },
   },
   proofSystem: undefined,
-  dataAvailability: undefined,
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+  },
   stage: {
     stage: 'NotApplicable',
   },
@@ -59,11 +65,45 @@ export const jovay: ScalingProject = {
       type: 'block',
       startBlock: 1,
     },
+    trackedTxs: [
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xe0a28B8918a62edB825055221a1dF12c7C81Bac1',
+          ),
+          selector: '0x0b6ac513',
+          functionSignature:
+            'function commitBatch(uint8 _version, uint256 _batchIndex, uint256 _totalL1MessagePopped)',
+          sinceTimestamp: UnixTime(1758499200),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xe0a28B8918a62edB825055221a1dF12c7C81Bac1',
+          ),
+          selector: '0x7256b753',
+          functionSignature:
+            'function verifyBatch(uint8 _prove_type, bytes _batchHeader, bytes32 _postStateRoot, bytes32 _l2MsgRoot, bytes _proof)',
+          sinceTimestamp: UnixTime(1758499200),
+        },
+      },
+    ],
   },
   riskView: {
     stateValidation: {
       description:
-    'A multi-proof system with a TEE verifier and a ZK verifier is configured . However, only the TEE verifier can currently be used to prove blocks.',
+        'A multi-proof system with a TEE verifier and a ZK verifier is configured . However, only the TEE verifier can currently be used to prove blocks.',
       sentiment: 'bad',
       value: 'TEE validation',
       executionDelay: 0,

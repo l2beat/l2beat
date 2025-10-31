@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "name": "Rollup",
+  "description": "The Rollup contract is used to submit and verify L2 batches.",
+  "ignoreMethods": [
+    "committedBatches",
+    "finalizedStateRoots",
+    "getL2MsgRoot",
+    "l1MsgCount",
+    "l2MsgRoots"
+  ]
+}
