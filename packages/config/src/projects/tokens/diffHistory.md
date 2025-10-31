@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x0637bd1db3ff73ec34c4fa729b91cebca570c5fb
+Generated with discovered.json: 0x4fe5e6b286725caf57c9dbaa63745abb6f38eb85
 
-# Diff at Fri, 31 Oct 2025 11:41:10 GMT:
+# Diff at Fri, 31 Oct 2025 14:59:02 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@03b105955032cf1d17dbaa7be1e98258a77944f6 block: 1761643706
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@7b866d915f6e4a61d9fdd306c6f31f6478eea38b block: 1761643706
 - current timestamp: 1761643706
 
 ## Description
@@ -107,35 +107,11 @@ discovery. Values are for block 1761643706 (main branch discovery), not current.
 ```diff
     contract CSModule (eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F) {
     +++ description: None
-      template:
--        "tokens/Lido/CSModule"
       sourceHashes.1:
 -        "0xde753d771c3a4dc27e58e529b2dfd70871547d49e71ecd3478353ec02e995aa8"
 +        "0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       values.$libraries:
 +        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9"]
-      values.depositQueuePointers:
-+        [[40,41],[0,0],[0,0],[0,0],[1042,1042]]
-      values.exitDeadlineThreshold:
-+        [432000,432000,432000,345600,345600]
-      values.getNodeOperator:
-+        [[10,0,10,10,0,0,0,0,0,0,"eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8","eth:0x0000000000000000000000000000000000000000","eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8","eth:0x0000000000000000000000000000000000000000",false,true],[20,0,19,20,0,1,0,0,0,1,"eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b","eth:0x0000000000000000000000000000000000000000","eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b","eth:0x0000000000000000000000000000000000000000",false,false],[6,0,6,6,0,0,0,0,0,0,"eth:0x4021caAb9a5621D0ccA630AD4583375590300F4B","eth:0x0000000000000000000000000000000000000000","eth:0x88792bee0d8A4c46acB7a2D8bfBef7e3A678639e","eth:0x0000000000000000000000000000000000000000",false,true],[2,0,2,2,0,0,0,0,0,0,"eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c","eth:0x0000000000000000000000000000000000000000","eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c","eth:0x0000000000000000000000000000000000000000",false,false],[12,0,12,12,0,0,0,0,0,0,"eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B","eth:0x0000000000000000000000000000000000000000","eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B","eth:0x0000000000000000000000000000000000000000",false,false]]
-      values.getNodeOperatorIsActive:
-+        [true,true,true,true,true]
-      values.getNodeOperatorManagementProperties:
-+        [["eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8","eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",false],["eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b","eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",false],["eth:0x4021caAb9a5621D0ccA630AD4583375590300F4B","eth:0x88792bee0d8A4c46acB7a2D8bfBef7e3A678639e",false],["eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c","eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",false],["eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B","eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B",false]]
-      values.getNodeOperatorNonWithdrawnKeys:
-+        [10,20,6,2,12]
-      values.getNodeOperatorOwner:
-+        ["eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8","eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b","eth:0x88792bee0d8A4c46acB7a2D8bfBef7e3A678639e","eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c","eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B"]
-      values.getNodeOperatorSummary:
-+        [[0,0,0,0,0,0,10,0],[0,0,0,0,0,0,19,1],[0,0,0,0,0,0,6,0],[0,0,0,0,0,0,2,0],[0,0,0,0,0,0,12,0]]
-      values.getNodeOperatorTotalDepositedKeys:
-+        [10,19,6,2,12]
-      values.getNonce:
-+        1838
-      errors:
-+        {"depositQueuePointers":"Processing error occurred.","exitDeadlineThreshold":"Processing error occurred.","getNodeOperator":"Processing error occurred.","getNodeOperatorIsActive":"Processing error occurred.","getNodeOperatorManagementProperties":"Processing error occurred.","getNodeOperatorNonWithdrawnKeys":"Processing error occurred.","getNodeOperatorOwner":"Processing error occurred.","getNodeOperatorSummary":"Processing error occurred.","getNodeOperatorTotalDepositedKeys":"Processing error occurred."}
     }
 ```
 

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x598ad128d3f7ec00c2bcf968facc034b85bdc13b
+Generated with discovered.json: 0x585f3871374f69ab75a3705afec7d970cae5a476
 
-# Diff at Fri, 31 Oct 2025 10:40:31 GMT:
+# Diff at Fri, 31 Oct 2025 14:44:03 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@03b105955032cf1d17dbaa7be1e98258a77944f6 block: 1727455453
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@7b866d915f6e4a61d9fdd306c6f31f6478eea38b block: 1727455453
 - current timestamp: 1727455453
 
 ## Description
@@ -39,7 +39,7 @@ discovery. Values are for block 1727455453 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract Bitmask (oeth:0xF5B2d8c81cDE4D6238bBf20D3D77DB37df13f735)
-    +++ description: None
+    +++ description: Implementation of bit mask with dynamic array.
 ```
 
 Generated with discovered.json: 0x73f38b2838827a00faa11a3458d13add4a96e7b3

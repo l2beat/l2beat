@@ -847,7 +847,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "",
+      "name": "EigenDACertVerificationUtilsLibrary",
       "address": "eth:0x5e29552239d9ACa88d2f410C35D8C0dE47483F37",
       "type": "Contract",
       "unverified": true,
@@ -2197,5 +2197,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 23648148 },
-  "permissionsConfigHash": "0xe27483dcfe64fe46bb6d01b723d635d6b2079076b0b2a479d2aa6d5f7c3511af"
+  "permissionsConfigHash": "0x4dcb6601784646c9e3b39b8023fb2769f20513b59307111f77bd93f0ad0a1d7d"
 }

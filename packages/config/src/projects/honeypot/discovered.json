@@ -31,6 +31,7 @@
       "name": "MerkleV2",
       "address": "eth:0x33436035441927Df1a73FE3AAC5906854632e53d",
       "type": "Contract",
+      "template": "bugbuster/MerkleV2",
       "sourceHashes": [
         "0x675099eb69fe5cac5aa600324d551c0cba32065c778fab957b12cdfdf85a6964"
       ],
@@ -39,16 +40,8 @@
       "sinceBlock": 17763539,
       "values": {
         "$immutable": true,
-        "$libraries": ["eth:0xB634F716BEd5Dd5A2b9a91C92474C499e50Cb27D"],
-        "getEmptyTreeHashAtIndex": [
-          "0x011b4d03dd8c01f1049143cf9c4c817e4b167f1d1b83e5c6f0f10d89ba1e7bce",
-          "0x4d9470a821fbe90117ec357e30bad9305732fb19ddf54a07dd3e29f440619254",
-          "0xae39ce8537aca75e2eff3e38c98011dfe934e700a0967732fc07b430dd656a23",
-          "0x3fc9a15f5b4869c872f81087bb6104b7d63e6f9ab47f2c43f3535eae7172aa7f",
-          "0x17d2dd614cddaa4d879276b11e0672c9560033d3e8453a1d045339d34ba601b9"
-        ]
+        "$libraries": ["eth:0xB634F716BEd5Dd5A2b9a91C92474C499e50Cb27D"]
       },
-      "errors": { "getEmptyTreeHashAtIndex": "Processing error occurred." },
       "implementationNames": {
         "eth:0x33436035441927Df1a73FE3AAC5906854632e53d": "MerkleV2"
       }
@@ -132,26 +125,14 @@
       "name": "CartesiMathV2",
       "address": "eth:0xB634F716BEd5Dd5A2b9a91C92474C499e50Cb27D",
       "type": "Contract",
+      "template": "bugbuster/CartesiMathV2",
       "sourceHashes": [
         "0x2da30de4896050157503a4b201540ebce88af44d2b2cd6ef157a829cd0cc7d4e"
       ],
       "proxyType": "immutable",
       "sinceTimestamp": 1690208663,
       "sinceBlock": 17763538,
-      "values": {
-        "$immutable": true,
-        "clz": [256, 255, 254, 254, 253],
-        "ctz": [256, 0, 1, 0, 2],
-        "getLog2Floor": [0, 1, 1, 2],
-        "getLog2TableTimes1M": [0, 1000000, 1584962, 2000000],
-        "isPowerOf2": [false, true, true, false, true],
-        "log2ApproxTimes1M": [0, 1000000, 1584962, 2000000]
-      },
-      "errors": {
-        "clz": "Processing error occurred.",
-        "ctz": "Processing error occurred.",
-        "isPowerOf2": "Processing error occurred."
-      },
+      "values": { "$immutable": true },
       "implementationNames": {
         "eth:0xB634F716BEd5Dd5A2b9a91C92474C499e50Cb27D": "CartesiMathV2"
       }
@@ -160,10 +141,12 @@
       "name": "Bitmask",
       "address": "eth:0xF5B2d8c81cDE4D6238bBf20D3D77DB37df13f735",
       "type": "Contract",
+      "template": "bugbuster/Bitmask",
       "sourceHashes": [
         "0x639743f54fa7369b5278fe2f7a1d02c2348a8f0e70f9f81c54adbe19f5fbef58"
       ],
       "proxyType": "immutable",
+      "description": "Implementation of bit mask with dynamic array.",
       "sinceTimestamp": 1690208639,
       "sinceBlock": 17763536,
       "values": { "$immutable": true },
@@ -259,7 +242,11 @@
       "function log2ApproxTimes1M(uint256 _num) pure returns (uint256)"
     ]
   },
-  "usedTemplates": {},
+  "usedTemplates": {
+    "bugbuster/Bitmask": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "bugbuster/CartesiMathV2": "0x45b392b81be961c24a91deb0f1b32d3dd9ac9b3c54d4451926fb84cbfcb8698f",
+    "bugbuster/MerkleV2": "0xa28847a011dfff9dcaba18afea53d599e875572206a6ca331354f384ad826276"
+  },
   "usedBlockNumbers": { "ethereum": 20641250 },
   "permissionsConfigHash": "0xeac851533890de662722c446a913baf2274836faeec77a9c2ade6ffc953bc7dc"
 }

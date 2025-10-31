@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xba73354aefd18ddda1de4af62c3a6b481c35a8dc
+Generated with discovered.json: 0xfd9353ea5a2d0c45ed17a7f95a3bcb773b67d2cf
 
-# Diff at Fri, 31 Oct 2025 10:37:19 GMT:
+# Diff at Fri, 31 Oct 2025 14:48:11 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@03b105955032cf1d17dbaa7be1e98258a77944f6 block: 1747043363
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@7b866d915f6e4a61d9fdd306c6f31f6478eea38b block: 1747043363
 - current timestamp: 1747043363
 
 ## Description
@@ -26,7 +26,7 @@ discovery. Values are for block 1747043363 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract  (eth:0xF3761B450571a49Fa8e2aF6e37e1Eb3516209d56)
+    contract VerificationKeysLibrary (eth:0xF3761B450571a49Fa8e2aF6e37e1Eb3516209d56)
     +++ description: None
 ```
 

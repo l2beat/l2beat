@@ -9,5 +9,11 @@
     "address": "eth:0x1eB6d4da13ca9566c17F526aE0715325d7a07665",
     "chain": "ethereum",
     "blockNumber": 23519375
+  },
+  "CSModule_v2_Libs": {
+    "hash": "0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "address": "eth:0x1eB6d4da13ca9566c17F526aE0715325d7a07665",
+    "chain": "ethereum",
+    "blockNumber": 23675030
   }
 }
