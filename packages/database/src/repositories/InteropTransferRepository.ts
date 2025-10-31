@@ -51,6 +51,7 @@ export interface InteropMissingTokenInfo {
   chain: string
   tokenAddress: string
   count: number
+  plugins: string[]
 }
 
 export function toRecord(
@@ -300,6 +301,7 @@ export class InteropTransferRepository extends BaseRepository {
     const rows = await this.db
       .selectFrom('InteropTransfer')
       .select([
+        'plugin',
         'srcValueUsd',
         'dstValueUsd',
         'srcChain',
@@ -314,25 +316,42 @@ export class InteropTransferRepository extends BaseRepository {
       .execute()
 
     const chainAddressCounts = new Map<string, number>()
+    const chainAddressPlugins = new Map<string, Set<string>>()
 
     for (const row of rows) {
       if (row.srcValueUsd === null && row.srcChain && row.srcTokenAddress) {
         const key = `${row.srcChain}:${row.srcTokenAddress}`
         chainAddressCounts.set(key, (chainAddressCounts.get(key) || 0) + 1)
+        const plugins = chainAddressPlugins.get(key)
+        if (!plugins) {
+          chainAddressPlugins.set(key, new Set())
+        } else {
+          plugins.add(row.plugin)
+        }
       }
       if (row.dstValueUsd === null && row.dstChain && row.dstTokenAddress) {
         const key = `${row.dstChain}:${row.dstTokenAddress}`
         chainAddressCounts.set(key, (chainAddressCounts.get(key) || 0) + 1)
+        const plugins = chainAddressPlugins.get(key)
+        if (!plugins) {
+          chainAddressPlugins.set(key, new Set())
+        } else {
+          plugins.add(row.plugin)
+        }
       }
     }
 
     const result: InteropMissingTokenInfo[] = []
     for (const [key, count] of chainAddressCounts) {
       const [chain, tokenAddress] = key.split(':')
+      const plugins = Array.from(
+        chainAddressPlugins.get(key) || new Set<string>(),
+      ).sort()
       result.push({
         chain: chain as string,
         tokenAddress: tokenAddress as string,
         count,
+        plugins,
       })
     }
 

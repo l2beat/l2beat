@@ -372,6 +372,7 @@ function MissingTokensTable(props: {
           <th>Chain</th>
           <th>Address</th>
           <th>Count</th>
+          <th>Plugins</th>
         </tr>
       </thead>
       <tbody>
@@ -396,6 +397,7 @@ function MissingTokensTable(props: {
                 )}
               </td>
               <td>{t.count}</td>
+              <td>{t.plugins.join(', ')}</td>
             </tr>
           )
         })}
