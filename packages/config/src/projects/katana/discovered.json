@@ -35,7 +35,7 @@
       "name": "AggchainFEP",
       "address": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
       "type": "Contract",
-      "template": "polygon-cdk/AggchainFEP",
+      "template": "katana/AggchainFEP_post035",
       "sourceHashes": [
         "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
         "0xd4a4d01788e8425e9dc0f2cd6f1954d521d3d0b021487bb0daeec6d8e26091c9"
@@ -159,12 +159,12 @@
           "description": "currently enforced OpSuccinctConfig. update the call handler for the full config if this changes."
         },
         "aggregationVkey": {
-          "severity": "HIGH",
-          "description": "Verification key for the aggregation step which aggregates multiple range proofs into a single proof. The aggregation proof ensures that all range proofs in a given block range are linked and use the `rangeVkeyCommitment` as the verification key. This proof is in turn wrapped by the aggchainVkey."
+          "severity": "LOW",
+          "description": "DEPRECATED - Verification key for the aggregation step which aggregates multiple range proofs into a single proof. The aggregation proof ensures that all range proofs in a given block range are linked and use the `rangeVkeyCommitment` as the verification key. This proof is in turn wrapped by the aggchainVkey."
         },
         "rangeVkeyCommitment": {
-          "severity": "HIGH",
-          "description": "Verification key for the OP Stack derivation + STF proof for a range of blocks. This proof is the bottom level proof, wrapped by the aggregationVkey."
+          "severity": "LOW",
+          "description": "DEPRECATED - Verification key for the OP Stack derivation + STF proof for a range of blocks. This proof is the bottom level proof, wrapped by the aggregationVkey."
         },
         "useDefaultSigners": { "severity": "HIGH" },
         "useDefaultVkeys": { "severity": "HIGH" }
@@ -4240,6 +4240,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "katana/AggchainFEP_post035": "0xe1414571e00a8ab7d555f541b53b024c2e840c8443371fbf1143eac8252bd563",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
@@ -4254,7 +4255,6 @@
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigNoGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
-    "polygon-cdk/AggchainFEP": "0xe1414571e00a8ab7d555f541b53b024c2e840c8443371fbf1143eac8252bd563",
     "polygon-cdk/GenericVaultBridgeToken": "0xd2f17c711d335952bd81aea0281b2e00062cc2cadf4fceec51609fb741d004a7",
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
