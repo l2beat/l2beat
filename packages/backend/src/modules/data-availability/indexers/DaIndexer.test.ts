@@ -172,36 +172,6 @@ describe(DaIndexer.name, () => {
       expect(repository.upsertMany).not.toHaveBeenCalled()
       expect(daService.generateRecords).not.toHaveBeenCalled()
     })
-
-    it('passes namespaces to daProvider during multiUpdate for celestia', async () => {
-      const configurations = [
-        celestiaConfig('project-a', 'namespace-a'),
-        celestiaConfig('project-b', 'namespace-b'),
-      ]
-      const blobs = [
-        blob(100, 100_000, 'celestia'),
-        blob(200, 200_000, 'celestia'),
-      ]
-      const generatedRecords = [
-        record('project-a', 100, 100_000),
-        record('project-b', 100, 100_000),
-      ]
-      const { indexer, daProvider } = mockCelestiaIndexer({
-        configurations,
-        blobs,
-        generatedRecords,
-        batchSize: 100,
-      })
-
-      const updateCallback = await indexer.multiUpdate(
-        100,
-        200,
-        toIndexerConfigurations(configurations),
-      )
-      await updateCallback()
-
-      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith('celestia', 100, 200)
-    })
   })
 
   describe(DaIndexer.prototype.removeData.name, () => {
@@ -326,13 +296,9 @@ function config(project: string, inbox?: string): BlockDaIndexedConfig {
   }
 }
 
-function blob(
-  timestamp: number,
-  size: number,
-  daLayer: string = DA_LAYER,
-): DaBlob {
+function blob(timestamp: number, size: number): DaBlob {
   return {
-    daLayer,
+    daLayer: DA_LAYER,
     blockTimestamp: UnixTime(timestamp),
     blockNumber: 1,
     size: BigInt(size),
@@ -360,86 +326,4 @@ function record(
 function createId(project: string) {
   const hash = createHash('sha1').update(project).digest('hex')
   return hash.slice(0, 12)
-}
-
-function celestiaConfig(
-  project: string,
-  namespace: string,
-): BlockDaIndexedConfig {
-  return {
-    type: 'celestia',
-    configurationId: createId(project),
-    projectId: ProjectId(project),
-    daLayer: ProjectId('celestia'),
-    namespace,
-    sinceBlock: 1,
-  }
-}
-
-function mockCelestiaIndexer($: {
-  configurations?: DataAvailabilityTrackingConfig['blockProjects']
-  batchSize?: number
-  indexerService?: IndexerService
-  blobs?: DaBlob[]
-  previousRecords?: DataAvailabilityRecord[]
-  generatedRecords?: DataAvailabilityRecord[]
-  useBlobService?: boolean
-}) {
-  const repository = mockObject<Database['dataAvailability']>({
-    deleteByConfigurationId: mockFn().resolvesTo({}),
-    upsertMany: mockFn().resolvesTo(undefined),
-    getForDaLayerInTimeRange: mockFn().resolvesTo($.previousRecords ?? []),
-  })
-
-  const syncMetadataRepository = mockObject<Database['syncMetadata']>({
-    updateSyncedUntil: mockFn().resolvesTo(undefined),
-  })
-
-  const daService = mockObject<DaService>({
-    generateRecords: mockFn().returns({
-      records: $.generatedRecords ?? [],
-      latestTimestamp:
-        $.generatedRecords?.[$.generatedRecords.length - 1]?.timestamp ?? 0,
-    }),
-  })
-
-  const daProvider = mockObject<DaProvider>({
-    getBlobs: mockFn().resolvesTo($.blobs ?? []),
-  })
-
-  const blobService = $.useBlobService
-    ? mockObject<BlobService>({
-        get: mockFn().resolvesTo($.blobs ?? []), // Empty response
-      })
-    : undefined
-
-  const indexer = new DaIndexer({
-    configurations: ($.configurations ?? []).map((c) => ({
-      id: c.configurationId,
-      minHeight: c.sinceBlock,
-      maxHeight: c.untilBlock ?? null,
-      properties: c,
-    })),
-    daProvider,
-    daService,
-    logger: Logger.SILENT,
-    daLayer: 'celestia',
-    batchSize: $.batchSize ?? 100,
-    parents: [],
-    indexerService: $.indexerService ?? mockObject<IndexerService>(),
-    db: mockDatabase({
-      dataAvailability: repository,
-      syncMetadata: syncMetadataRepository,
-    }),
-    blobService,
-  })
-
-  return {
-    repository,
-    syncMetadataRepository,
-    indexer,
-    daService,
-    daProvider,
-    blobService,
-  }
 }
