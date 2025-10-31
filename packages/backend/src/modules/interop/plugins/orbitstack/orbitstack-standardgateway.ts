@@ -249,7 +249,7 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
           srcEvent: l2ToL1Tx,
           dstEvent: outBoxTransactionExecuted,
         }),
-        Result.Transfer('orbitstack-standardgateway.L2ToL1Transfer', {
+        Result.Transfer('orbitstack.L2ToL1Transfer', {
           srcEvent: withdrawalInitiated,
           srcAmount: BigInt(withdrawalInitiated.args.amount),
           srcTokenAddress: withdrawalInitiated.args.l2Token,
@@ -290,7 +290,7 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
           srcEvent: messageDelivered,
           dstEvent: redeemScheduled,
         }),
-        Result.Transfer('orbitstack-standardgateway.L1ToL2Transfer', {
+        Result.Transfer('orbitstack.L1ToL2Transfer', {
           srcEvent: depositInitiated,
           srcAmount: BigInt(depositInitiated.args.amount),
           srcTokenAddress: depositInitiated.args.l1Token,
