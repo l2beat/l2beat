@@ -91,21 +91,33 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
       )
       if (!network) return
 
-          if (messageDeliveredLog) {
-            const messageDelivered = parseMessageDelivered(
-              messageDeliveredLog,
-              [network.bridge],
-            )
-            if (messageDelivered) {
-              return [
-                DepositInitiatedMessageDelivered.create(input.ctx, {
-                  chain: network.chain,
-                  messageNum: messageDelivered.messageIndex.toString(),
-                  l1Token: Address32.from(depositInitiated._l1Token),
-                  amount: depositInitiated._amount.toString(),
-                }),
-              ]
-            }
+      const depositInitiated = parseDepositInitiated(input.log, [
+        network.l1StandardGateway,
+      ])
+      if (depositInitiated) {
+        // Find MessageDelivered in the same transaction
+        const messageDeliveredLog = input.txLogs.find((log) => {
+          const parsed = parseMessageDelivered(log, [network.bridge])
+          // The sequenceNumber in DepositInitiated equals the messageIndex in MessageDelivered
+          return (
+            parsed !== undefined &&
+            parsed.messageIndex === depositInitiated._sequenceNumber
+          )
+        })
+
+        if (messageDeliveredLog) {
+          const messageDelivered = parseMessageDelivered(messageDeliveredLog, [
+            network.bridge,
+          ])
+          if (messageDelivered) {
+            return [
+              DepositInitiatedMessageDelivered.create(input.ctx, {
+                chain: network.chain,
+                messageNum: messageDelivered.messageIndex.toString(),
+                l1Token: Address32.from(depositInitiated._l1Token),
+                amount: depositInitiated._amount.toString(),
+              }),
+            ]
           }
         }
       }
@@ -121,20 +133,19 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
           return parsed !== undefined
         })
 
-          if (outBoxTxLog) {
-            const outBoxTx = parseOutBoxTransactionExecuted(outBoxTxLog, [
-              network.outbox,
-            ])
-            if (outBoxTx) {
-              return [
-                WithdrawalFinalizedOutBoxTransactionExecuted.create(input.ctx, {
-                  chain: network.chain,
-                  position: Number(outBoxTx.transactionIndex),
-                  l1Token: Address32.from(withdrawalFinalized.l1Token),
-                  amount: withdrawalFinalized.amount.toString(),
-                }),
-              ]
-            }
+        if (outBoxTxLog) {
+          const outBoxTx = parseOutBoxTransactionExecuted(outBoxTxLog, [
+            network.outbox,
+          ])
+          if (outBoxTx) {
+            return [
+              WithdrawalFinalizedOutBoxTransactionExecuted.create(input.ctx, {
+                chain: network.chain,
+                position: Number(outBoxTx.transactionIndex),
+                l1Token: Address32.from(withdrawalFinalized.l1Token),
+                amount: withdrawalFinalized.amount.toString(),
+              }),
+            ]
           }
         }
       }
