@@ -149,6 +149,35 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
           }
         }
       }
+
+      // L1 finalization of L2->L1 ERC20 withdrawal
+      const withdrawalFinalized = parseWithdrawalFinalized(input.log, null)
+      if (withdrawalFinalized) {
+        // Find which network this withdrawal is for by looking for OutBoxTransactionExecuted
+        for (const network of ORBITSTACK_NETWORKS) {
+          const outBoxTxLog = input.txLogs.find((log) => {
+            const parsed = parseOutBoxTransactionExecuted(log, [network.outbox])
+            return parsed !== undefined
+          })
+
+          if (outBoxTxLog) {
+            const outBoxTx = parseOutBoxTransactionExecuted(outBoxTxLog, [
+              network.outbox,
+            ])
+            if (outBoxTx) {
+              return WithdrawalFinalizedOutBoxTransactionExecuted.create(
+                input.ctx,
+                {
+                  chain: network.chain,
+                  position: Number(outBoxTx.transactionIndex),
+                  l1Token: Address32.from(withdrawalFinalized.l1Token),
+                  amount: withdrawalFinalized.amount.toString(),
+                },
+              )
+            }
+          }
+        }
+      }
     } else {
       // L2 finalization of L1->L2 ERC20 deposit (Type 0x68 transaction)
       const network = ORBITSTACK_NETWORKS.find(
