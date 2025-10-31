@@ -78,12 +78,14 @@ export class WormholePlugin implements InteropPlugin {
       return
     }
 
-    return LogMessagePublished.create(input.ctx, {
-      payload: parsed.payload,
-      sequence: parsed.sequence.toString(),
-      wormholeChainId: network.wormholeChainId,
-      sender: EthereumAddress(parsed.sender),
-    })
+    return [
+      LogMessagePublished.create(input.ctx, {
+        payload: parsed.payload,
+        sequence: parsed.sequence.toString(),
+        wormholeChainId: network.wormholeChainId,
+        sender: EthereumAddress(parsed.sender),
+      }),
+    ]
   }
   // no matching because wormhole matches by source emitter address + sequence, of which the destination event depends on the app layer
 }

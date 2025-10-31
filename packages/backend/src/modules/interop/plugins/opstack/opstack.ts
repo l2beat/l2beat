@@ -147,10 +147,12 @@ export class OpStackPlugin implements InteropPlugin {
         network.optimismPortal,
       ])
       if (withdrawalFinalized) {
-        return WithdrawalFinalized.create(input.ctx, {
-          chain: network.chain,
-          withdrawalHash: withdrawalFinalized.withdrawalHash,
-        })
+        return [
+          WithdrawalFinalized.create(input.ctx, {
+            chain: network.chain,
+            withdrawalHash: withdrawalFinalized.withdrawalHash,
+          }),
+        ]
       }
 
       // check if this is an *L1*->L2 message
@@ -177,10 +179,12 @@ export class OpStackPlugin implements InteropPlugin {
           sentMessage.message,
         )
 
-        return SentMessage.create(input.ctx, {
-          chain: network.chain,
-          msgHash,
-        })
+        return [
+          SentMessage.create(input.ctx, {
+            chain: network.chain,
+            msgHash,
+          }),
+        ]
       }
     } else {
       // get L2 side events
@@ -191,20 +195,24 @@ export class OpStackPlugin implements InteropPlugin {
         network.l2ToL1MessagePasser,
       ])
       if (messagePassed) {
-        return MessagePassed.create(input.ctx, {
-          chain: network.chain,
-          withdrawalHash: messagePassed.withdrawalHash,
-        })
+        return [
+          MessagePassed.create(input.ctx, {
+            chain: network.chain,
+            withdrawalHash: messagePassed.withdrawalHash,
+          }),
+        ]
       }
       // otherwise check if this is an L1->*L2* message
       const relayedMessage = parseRelayedMessage(input.log, [
         network.l2CrossDomainMessenger,
       ])
       if (relayedMessage) {
-        return RelayedMessage.create(input.ctx, {
-          chain: network.chain,
-          msgHash: relayedMessage.msgHash,
-        })
+        return [
+          RelayedMessage.create(input.ctx, {
+            chain: network.chain,
+            msgHash: relayedMessage.msgHash,
+          }),
+        ]
       }
     }
   }

@@ -47,17 +47,19 @@ export class WormholeRelayerPlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     const parsed = parseDelivery(input.log, null)
     if (parsed) {
-      return Delivery.create(input.ctx, {
-        recipientContract: parsed.recipientContract,
-        sourceChain: parsed.sourceChain,
-        deliveryVaaHash: parsed.deliveryVaaHash,
-        $srcChain: findChain(
-          WORMHOLE_NETWORKS,
-          (x) => x.wormholeChainId,
-          Number(parsed.sourceChain),
-        ),
-        sequence: parsed.sequence.toString(),
-      })
+      return [
+        Delivery.create(input.ctx, {
+          recipientContract: parsed.recipientContract,
+          sourceChain: parsed.sourceChain,
+          deliveryVaaHash: parsed.deliveryVaaHash,
+          $srcChain: findChain(
+            WORMHOLE_NETWORKS,
+            (x) => x.wormholeChainId,
+            Number(parsed.sourceChain),
+          ),
+          sequence: parsed.sequence.toString(),
+        }),
+      ]
     }
     /*
         const send = parseSendEvent(input.log, null)

@@ -108,11 +108,13 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
               [network.bridge],
             )
             if (messageDelivered) {
-              return WethDepositInitiatedMessageDelivered.create(input.ctx, {
-                chain: network.chain,
-                messageNum: messageDelivered.messageIndex.toString(),
-                amount: depositInitiated._amount.toString(),
-              })
+              return [
+                WethDepositInitiatedMessageDelivered.create(input.ctx, {
+                  chain: network.chain,
+                  messageNum: messageDelivered.messageIndex.toString(),
+                  amount: depositInitiated._amount.toString(),
+                }),
+              ]
             }
           }
         }
@@ -141,14 +143,16 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
               network.outbox,
             ])
             if (outBoxTx) {
-              return WethWithdrawalFinalizedOutBoxTransactionExecuted.create(
-                input.ctx,
-                {
-                  chain: network.chain,
-                  position: Number(outBoxTx.transactionIndex),
-                  amount: wethWithdrawalFinalized._amount.toString(),
-                },
-              )
+              return [
+                WethWithdrawalFinalizedOutBoxTransactionExecuted.create(
+                  input.ctx,
+                  {
+                    chain: network.chain,
+                    position: Number(outBoxTx.transactionIndex),
+                    amount: wethWithdrawalFinalized._amount.toString(),
+                  },
+                ),
+              ]
             }
           }
         }
@@ -180,10 +184,12 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
 
         if (wethWithdrawalLog) {
           // This is a WETH withdrawal! Capture it to prevent base plugin from seeing it
-          return L2ToL1Tx.create(input.ctx, {
-            chain: network.chain,
-            position: Number(l2ToL1Tx.position),
-          })
+          return [
+            L2ToL1Tx.create(input.ctx, {
+              chain: network.chain,
+              position: Number(l2ToL1Tx.position),
+            }),
+          ]
         }
       }
 
@@ -216,10 +222,12 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
         })
 
         if (transferLog) {
-          return WethDepositFinalized.create(input.ctx, {
-            chain: network.chain,
-            amount: depositFinalized.amount.toString(),
-          })
+          return [
+            WethDepositFinalized.create(input.ctx, {
+              chain: network.chain,
+              amount: depositFinalized.amount.toString(),
+            }),
+          ]
         }
       }
 
@@ -252,11 +260,13 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
 
         // Return the WETH-specific withdrawal initiated event
         // The L2ToL1Tx event is captured separately above
-        return WethWithdrawalInitiatedL2ToL1Tx.create(input.ctx, {
-          chain: network.chain,
-          position: Number(withdrawalInitiated._l2ToL1Id),
-          amount: withdrawalInitiated._amount.toString(),
-        })
+        return [
+          WethWithdrawalInitiatedL2ToL1Tx.create(input.ctx, {
+            chain: network.chain,
+            position: Number(withdrawalInitiated._l2ToL1Id),
+            amount: withdrawalInitiated._amount.toString(),
+          }),
+        ]
       }
     }
   }

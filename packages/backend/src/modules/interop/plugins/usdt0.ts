@@ -82,21 +82,25 @@ export class Usdt0Plugin implements InteropPlugin {
 
     const oftSent = parseOFTSent(input.log, [network.adapter])
     if (oftSent) {
-      return Usdt0OFTSent.create(input.ctx, {
-        guid: oftSent.guid,
-        amountSentLD: Number(oftSent.amountSentLD),
-        amountReceivedLD: Number(oftSent.amountReceivedLD),
-        tokenAddress: network.tokenAddress,
-      })
+      return [
+        Usdt0OFTSent.create(input.ctx, {
+          guid: oftSent.guid,
+          amountSentLD: Number(oftSent.amountSentLD),
+          amountReceivedLD: Number(oftSent.amountReceivedLD),
+          tokenAddress: network.tokenAddress,
+        }),
+      ]
     }
 
     const oftReceived = parseOFTReceived(input.log, [network.adapter])
     if (oftReceived) {
-      return Usdt0OFTReceived.create(input.ctx, {
-        guid: oftReceived.guid,
-        amountReceivedLD: Number(oftReceived.amountReceivedLD),
-        tokenAddress: network.tokenAddress,
-      })
+      return [
+        Usdt0OFTReceived.create(input.ctx, {
+          guid: oftReceived.guid,
+          amountReceivedLD: Number(oftReceived.amountReceivedLD),
+          tokenAddress: network.tokenAddress,
+        }),
+      ]
     }
   }
 

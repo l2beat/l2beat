@@ -96,29 +96,33 @@ export class WormholeNTTPlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     const send = parseSendTransceiverMessage(input.log, null)
     if (send) {
-      return TransceiverMessage.create(input.ctx, {
-        sourceNttManagerAddress: send.message.sourceNttManagerAddress,
-        recipientNttManagerAddress: send.message.recipientNttManagerAddress,
-        nttManagerPayload: send.message.nttManagerPayload,
-        $dstChain: findChain(
-          WORMHOLE_NETWORKS,
-          (x) => x.wormholeChainId,
-          Number(send.recipientChain),
-        ),
-      })
+      return [
+        TransceiverMessage.create(input.ctx, {
+          sourceNttManagerAddress: send.message.sourceNttManagerAddress,
+          recipientNttManagerAddress: send.message.recipientNttManagerAddress,
+          nttManagerPayload: send.message.nttManagerPayload,
+          $dstChain: findChain(
+            WORMHOLE_NETWORKS,
+            (x) => x.wormholeChainId,
+            Number(send.recipientChain),
+          ),
+        }),
+      ]
     }
 
     const received = parseReceivedRelayedMessage(input.log, null)
     if (received) {
-      return ReceivedRelayedMessage.create(input.ctx, {
-        digest: received.digest,
-        emitterAddress: received.emitterAddress,
-        $srcChain: findChain(
-          WORMHOLE_NETWORKS,
-          (x) => x.wormholeChainId,
-          Number(received.emitterChainId),
-        ),
-      })
+      return [
+        ReceivedRelayedMessage.create(input.ctx, {
+          digest: received.digest,
+          emitterAddress: received.emitterAddress,
+          $srcChain: findChain(
+            WORMHOLE_NETWORKS,
+            (x) => x.wormholeChainId,
+            Number(received.emitterChainId),
+          ),
+        }),
+      ]
     }
   }
 

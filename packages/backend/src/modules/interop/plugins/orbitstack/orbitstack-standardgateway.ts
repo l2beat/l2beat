@@ -110,12 +110,14 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
             network.bridge,
           ])
           if (messageDelivered) {
-            return DepositInitiatedMessageDelivered.create(input.ctx, {
-              chain: network.chain,
-              messageNum: messageDelivered.messageIndex.toString(),
-              l1Token: Address32.from(depositInitiated._l1Token),
-              amount: depositInitiated._amount.toString(),
-            })
+            return [
+              DepositInitiatedMessageDelivered.create(input.ctx, {
+                chain: network.chain,
+                messageNum: messageDelivered.messageIndex.toString(),
+                l1Token: Address32.from(depositInitiated._l1Token),
+                amount: depositInitiated._amount.toString(),
+              }),
+            ]
           }
         }
       }
@@ -136,15 +138,14 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
             network.outbox,
           ])
           if (outBoxTx) {
-            return WithdrawalFinalizedOutBoxTransactionExecuted.create(
-              input.ctx,
-              {
+            return [
+              WithdrawalFinalizedOutBoxTransactionExecuted.create(input.ctx, {
                 chain: network.chain,
                 position: Number(outBoxTx.transactionIndex),
                 l1Token: Address32.from(withdrawalFinalized.l1Token),
                 amount: withdrawalFinalized.amount.toString(),
-              },
-            )
+              }),
+            ]
           }
         }
       }
@@ -176,12 +177,14 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
         if (transferLog) {
           const transfer = parseTransfer(transferLog, null)
           if (transfer) {
-            return DepositFinalized.create(input.ctx, {
-              chain: network.chain,
-              l1Token: Address32.from(depositFinalized.l1Token),
-              l2Token: Address32.from(transferLog.address),
-              amount: depositFinalized.amount.toString(),
-            })
+            return [
+              DepositFinalized.create(input.ctx, {
+                chain: network.chain,
+                l1Token: Address32.from(depositFinalized.l1Token),
+                l2Token: Address32.from(transferLog.address),
+                amount: depositFinalized.amount.toString(),
+              }),
+            ]
           }
         }
       }
@@ -215,13 +218,15 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
             })
 
             if (transferLog) {
-              return WithdrawalInitiatedL2ToL1Tx.create(input.ctx, {
-                chain: network.chain,
-                position: Number(l2ToL1Tx.position),
-                l1Token: Address32.from(withdrawalInitiated.l1Token),
-                l2Token: Address32.from(transferLog.address),
-                amount: withdrawalInitiated._amount.toString(),
-              })
+              return [
+                WithdrawalInitiatedL2ToL1Tx.create(input.ctx, {
+                  chain: network.chain,
+                  position: Number(l2ToL1Tx.position),
+                  l1Token: Address32.from(withdrawalInitiated.l1Token),
+                  l2Token: Address32.from(transferLog.address),
+                  amount: withdrawalInitiated._amount.toString(),
+                }),
+              ]
             }
           }
         }

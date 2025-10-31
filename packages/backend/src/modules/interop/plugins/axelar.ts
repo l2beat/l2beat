@@ -102,49 +102,57 @@ export class AxelarPlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     const contractCall = parseContractCall(input.log, null)
     if (contractCall) {
-      return ContractCall.create(input.ctx, {
-        sender: EthereumAddress(contractCall.sender),
-        destinationContractAddress: contractCall.destinationContractAddress,
-        payloadHash: contractCall.payloadHash,
-        $dstChain: findChain(
-          AXELAR_NETWORKS,
-          (x) => x.axelarChainName,
-          contractCall.destinationChain,
-        ),
-      })
+      return [
+        ContractCall.create(input.ctx, {
+          sender: EthereumAddress(contractCall.sender),
+          destinationContractAddress: contractCall.destinationContractAddress,
+          payloadHash: contractCall.payloadHash,
+          $dstChain: findChain(
+            AXELAR_NETWORKS,
+            (x) => x.axelarChainName,
+            contractCall.destinationChain,
+          ),
+        }),
+      ]
     }
 
     const contractCallWithToken = parseContractCallWithToken(input.log, null)
     if (contractCallWithToken) {
-      return ContractCallWithToken.create(input.ctx, {
-        sender: EthereumAddress(contractCallWithToken.sender),
-        destinationContractAddress:
-          contractCallWithToken.destinationContractAddress,
-        payloadHash: contractCallWithToken.payloadHash,
-        symbol: contractCallWithToken.symbol,
-        amount: Number(contractCallWithToken.amount),
-        $dstChain: findChain(
-          AXELAR_NETWORKS,
-          (x) => x.axelarChainName,
-          contractCallWithToken.destinationChain,
-        ),
-      })
+      return [
+        ContractCallWithToken.create(input.ctx, {
+          sender: EthereumAddress(contractCallWithToken.sender),
+          destinationContractAddress:
+            contractCallWithToken.destinationContractAddress,
+          payloadHash: contractCallWithToken.payloadHash,
+          symbol: contractCallWithToken.symbol,
+          amount: Number(contractCallWithToken.amount),
+          $dstChain: findChain(
+            AXELAR_NETWORKS,
+            (x) => x.axelarChainName,
+            contractCallWithToken.destinationChain,
+          ),
+        }),
+      ]
     }
 
     const contractCallApproved = parseContractCallApproved(input.log, null)
     if (contractCallApproved) {
-      return ContractCallApproved.create(input.ctx, {
-        commandId: contractCallApproved.commandId,
-        payloadHash: contractCallApproved.payloadHash,
-        sourceAddress: contractCallApproved.sourceAddress,
-        contractAddress: EthereumAddress(contractCallApproved.contractAddress),
-        srcTxHash: contractCallApproved.sourceTxHash,
-        $srcChain: findChain(
-          AXELAR_NETWORKS,
-          (x) => x.axelarChainName,
-          contractCallApproved.sourceChain,
-        ),
-      })
+      return [
+        ContractCallApproved.create(input.ctx, {
+          commandId: contractCallApproved.commandId,
+          payloadHash: contractCallApproved.payloadHash,
+          sourceAddress: contractCallApproved.sourceAddress,
+          contractAddress: EthereumAddress(
+            contractCallApproved.contractAddress,
+          ),
+          srcTxHash: contractCallApproved.sourceTxHash,
+          $srcChain: findChain(
+            AXELAR_NETWORKS,
+            (x) => x.axelarChainName,
+            contractCallApproved.sourceChain,
+          ),
+        }),
+      ]
     }
 
     const contractCallApprovedWithMint = parseContractCallApprovedWithMint(
@@ -152,29 +160,33 @@ export class AxelarPlugin implements InteropPlugin {
       null,
     )
     if (contractCallApprovedWithMint) {
-      return ContractCallApprovedWithMint.create(input.ctx, {
-        commandId: contractCallApprovedWithMint.commandId,
-        payloadHash: contractCallApprovedWithMint.payloadHash,
-        sourceAddress: contractCallApprovedWithMint.sourceAddress,
-        contractAddress: EthereumAddress(
-          contractCallApprovedWithMint.contractAddress,
-        ),
-        symbol: contractCallApprovedWithMint.symbol,
-        amount: Number(contractCallApprovedWithMint.amount),
-        srcTxHash: contractCallApprovedWithMint.sourceTxHash,
-        $srcChain: findChain(
-          AXELAR_NETWORKS,
-          (x) => x.axelarChainName,
-          contractCallApprovedWithMint.sourceChain,
-        ),
-      })
+      return [
+        ContractCallApprovedWithMint.create(input.ctx, {
+          commandId: contractCallApprovedWithMint.commandId,
+          payloadHash: contractCallApprovedWithMint.payloadHash,
+          sourceAddress: contractCallApprovedWithMint.sourceAddress,
+          contractAddress: EthereumAddress(
+            contractCallApprovedWithMint.contractAddress,
+          ),
+          symbol: contractCallApprovedWithMint.symbol,
+          amount: Number(contractCallApprovedWithMint.amount),
+          srcTxHash: contractCallApprovedWithMint.sourceTxHash,
+          $srcChain: findChain(
+            AXELAR_NETWORKS,
+            (x) => x.axelarChainName,
+            contractCallApprovedWithMint.sourceChain,
+          ),
+        }),
+      ]
     }
 
     const contractCallExecuted = parseContractCallExecuted(input.log, null)
     if (contractCallExecuted) {
-      return ContractCallExecuted.create(input.ctx, {
-        commandId: contractCallExecuted.commandId,
-      })
+      return [
+        ContractCallExecuted.create(input.ctx, {
+          commandId: contractCallExecuted.commandId,
+        }),
+      ]
     }
   }
 
