@@ -31,6 +31,8 @@ AgglayerGER - https://disco.l2beat.com/diff/eth:0xc38C76aE3C8A7dee99d07f1A39246A
 - rename
 - minor changes / refactor an unused _checkValidSubtreeFrontier func
 
+all chains that were previously on the legacy pp setup have now moved to aggchainGateway pp setup
+
 ## Watched changes
 
 ```diff
