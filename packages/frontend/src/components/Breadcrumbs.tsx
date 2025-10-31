@@ -1,5 +1,4 @@
-import type { ReactNode } from 'react'
-import React from 'react'
+import { Fragment, type ReactNode } from 'react'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 
@@ -22,14 +21,14 @@ export function Breadcrumbs({ items, className }: Props) {
       )}
     >
       {items.map((item, i) => (
-        <React.Fragment key={i}>
+        <Fragment key={i}>
           <BreadcrumbItem href={item.href} className="last:text-primary">
             {item.content}
           </BreadcrumbItem>
           {i < items.length - 1 && (
             <ChevronIcon className="-rotate-90 size-2.5 fill-current" />
           )}
-        </React.Fragment>
+        </Fragment>
       ))}
     </nav>
   )
