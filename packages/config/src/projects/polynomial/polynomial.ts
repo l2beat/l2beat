@@ -44,6 +44,7 @@ export const polynomial: ScalingProject = opStackL2({
         url: 'https://rpc.polynomial.fi',
         callsPerMinute: 300,
       },
+      { type: 'blockscoutV2', url: 'https://polynomialscan.io/api/v2' },
     ],
   },
   isNodeAvailable: true,
