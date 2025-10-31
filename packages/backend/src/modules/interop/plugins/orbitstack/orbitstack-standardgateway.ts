@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
   Address32,
   createEventParser,
@@ -86,18 +86,10 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     if (input.ctx.chain === 'ethereum') {
       // L1 -> L2 ERC20 deposit initiated
-      const depositInitiated = parseDepositInitiated(input.log, null)
-      if (depositInitiated) {
-        // Find which network this deposit is for by looking for MessageDelivered
-        for (const network of ORBITSTACK_NETWORKS) {
-          const messageDeliveredLog = input.txLogs.find((log) => {
-            const parsed = parseMessageDelivered(log, [network.bridge])
-            // The sequenceNumber in DepositInitiated equals the messageIndex in MessageDelivered
-            return (
-              parsed !== undefined &&
-              parsed.messageIndex === depositInitiated._sequenceNumber
-            )
-          })
+      const network = ORBITSTACK_NETWORKS.find(
+        (n) => EthereumAddress(input.log.address) === n.l1StandardGateway,
+      )
+      if (!network) return
 
           if (messageDeliveredLog) {
             const messageDelivered = parseMessageDelivered(
@@ -119,14 +111,15 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
       }
 
       // L1 finalization of L2->L1 ERC20 withdrawal
-      const withdrawalFinalized = parseWithdrawalFinalized(input.log, null)
+      const withdrawalFinalized = parseWithdrawalFinalized(input.log, [
+        network.l1StandardGateway,
+      ])
       if (withdrawalFinalized) {
-        // Find which network this withdrawal is for by looking for OutBoxTransactionExecuted
-        for (const network of ORBITSTACK_NETWORKS) {
-          const outBoxTxLog = input.txLogs.find((log) => {
-            const parsed = parseOutBoxTransactionExecuted(log, [network.outbox])
-            return parsed !== undefined
-          })
+        // Find OutBoxTransactionExecuted in the same transaction
+        const outBoxTxLog = input.txLogs.find((log) => {
+          const parsed = parseOutBoxTransactionExecuted(log, [network.outbox])
+          return parsed !== undefined
+        })
 
           if (outBoxTxLog) {
             const outBoxTx = parseOutBoxTransactionExecuted(outBoxTxLog, [
@@ -146,12 +139,17 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
         }
       }
     } else {
-      // L2 finalization of L1->L2 ERC20 deposit (Type 0x68 transaction)
+      // L2 operations
       const network = ORBITSTACK_NETWORKS.find(
-        (x) => x.chain === input.ctx.chain,
+        (n) => n.chain === input.ctx.chain,
       )
       if (!network) return
 
+      // Check if this is from the L2 standard gateway
+      if (EthereumAddress(input.log.address) !== network.l2StandardGateway)
+        return
+
+      // L2 finalization of L1->L2 ERC20 deposit (Type 0x68 transaction)
       const depositFinalized = parseDepositFinalized(input.log, null)
       if (depositFinalized) {
         // Find the Transfer event (minting) in the same transaction to get L2 token address
@@ -254,7 +252,7 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
           srcEvent: l2ToL1Tx,
           dstEvent: outBoxTransactionExecuted,
         }),
-        Result.Transfer('orbitstack-standardgateway.L2ToL1Transfer', {
+        Result.Transfer('orbitstack.L2ToL1Transfer', {
           srcEvent: withdrawalInitiated,
           srcAmount: BigInt(withdrawalInitiated.args.amount),
           srcTokenAddress: withdrawalInitiated.args.l2Token,
@@ -295,7 +293,7 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
           srcEvent: messageDelivered,
           dstEvent: redeemScheduled,
         }),
-        Result.Transfer('orbitstack-standardgateway.L1ToL2Transfer', {
+        Result.Transfer('orbitstack.L1ToL2Transfer', {
           srcEvent: depositInitiated,
           srcAmount: BigInt(depositInitiated.args.amount),
           srcTokenAddress: depositInitiated.args.l1Token,

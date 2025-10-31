@@ -74,6 +74,21 @@ export const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
     arbRetryableTx: EthereumAddress(
       '0x000000000000000000000000000000000000006e',
     ),
+    // Gateways
+    l1StandardGateway: EthereumAddress(
+      '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
+    ),
+    l2StandardGateway: EthereumAddress(
+      '0x09e9222E96E7B4AE2a407B98d48e330053351EEe',
+    ),
+    l1WethGateway: EthereumAddress(
+      '0xd92023e9d9911199a6711321d1277285e6d4e2db',
+    ),
+    l2WethGateway: EthereumAddress(
+      '0x6c411ad3e74de3e7bd422b94a27770f5b86c623b',
+    ),
+    l1Weth: EthereumAddress('0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'),
+    l2Weth: EthereumAddress('0x82af49447d8a07e3bd95bd0d56f35241523fbab1'),
   },
 ])
 
@@ -245,7 +260,7 @@ export class OrbitStackPlugin implements InteropPlugin {
             srcEvent: messageDelivered,
             dstEvent: event,
           }),
-          Result.Transfer('orbitstack-standardgateway.L1ToL2Transfer', {
+          Result.Transfer('orbitstack.L1ToL2Transfer', {
             srcEvent: messageDelivered,
             srcAmount: messageDelivered.ctx.txValue,
             srcTokenAddress: Address32.NATIVE,
