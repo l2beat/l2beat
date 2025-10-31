@@ -1,12 +1,17 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
 const CelestiaBlock = v.object({
   block: v.object({
     header: v.object({
-      time: v.string(),
+      time: v.string().transform((val) => UnixTime.fromDate(new Date(val))),
+    }),
+    data: v.object({
+      txs: v.array(v.string()),
     }),
   }),
 })
+export type CelestiaBlock = v.infer<typeof CelestiaBlock>
 
 export const CelestiaBlockResponse = v.object({
   result: CelestiaBlock,

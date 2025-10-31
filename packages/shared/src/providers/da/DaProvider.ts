@@ -8,7 +8,7 @@ export interface LogsFilter {
 
 export interface DaBlobProvider {
   daLayer: string
-  getBlobs(from: number, to: number, namespaces?: string[]): Promise<DaBlob[]>
+  getBlobs(from: number, to: number): Promise<DaBlob[]>
 }
 
 export class DaProvider {
@@ -18,16 +18,11 @@ export class DaProvider {
     this.providers = new Map(providers.map((p) => [p.daLayer, p]))
   }
 
-  async getBlobs(
-    daLayer: string,
-    from: number,
-    to: number,
-    namespaces?: string[],
-  ): Promise<DaBlob[]> {
+  async getBlobs(daLayer: string, from: number, to: number): Promise<DaBlob[]> {
     const provider = this.providers.get(daLayer)
     assert(provider, `Missing DaProvider for ${daLayer}`)
 
-    return await provider.getBlobs(from, to, namespaces)
+    return await provider.getBlobs(from, to)
   }
 
   getDaProvider(daLayer: string): DaBlobProvider {
