@@ -105,6 +105,7 @@ export function updateFunction(
     score: updateRequest.score ?? existingFunction?.score,
     reason: updateRequest.reason ?? existingFunction?.reason,
     description: updateRequest.description ?? existingFunction?.description,
+    constraints: updateRequest.constraints ?? existingFunction?.constraints,
     ownerDefinitions: updateRequest.ownerDefinitions ?? existingFunction?.ownerDefinitions,
     delay: updateRequest.delay !== undefined ? updateRequest.delay : existingFunction?.delay,
     timestamp: new Date().toISOString(),

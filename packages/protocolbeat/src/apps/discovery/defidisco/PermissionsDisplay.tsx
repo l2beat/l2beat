@@ -116,6 +116,12 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
     await updateFunctionEntry(contractAddress, functionName, { description })
   }
 
+  const handleConstraintsUpdate = async (contractAddress: string, functionName: string, constraints: string) => {
+    if (!project) return
+
+    await updateFunctionEntry(contractAddress, functionName, { constraints })
+  }
+
   const handleOwnerDefinitionsUpdate = async (contractAddress: string, functionName: string, ownerDefinitions: OwnerDefinition[]) => {
     if (!project) return
 
@@ -190,7 +196,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
   const updateFunctionEntry = async (
     contractAddress: string,
     functionName: string,
-    updates: Partial<Pick<FunctionEntry, 'isPermissioned' | 'checked' | 'score' | 'description' | 'ownerDefinitions' | 'delay'>>
+    updates: Partial<Pick<FunctionEntry, 'isPermissioned' | 'checked' | 'score' | 'description' | 'constraints' | 'ownerDefinitions' | 'delay'>>
   ) => {
     // Get current function data from contract-specific functions
     const contractFunctionsData = getFunctionsForContract(contractAddress)
@@ -204,6 +210,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
       checked: updates.checked ?? currentFunction?.checked,
       score: updates.score ?? currentFunction?.score,
       description: updates.description ?? currentFunction?.description,
+      constraints: updates.constraints ?? currentFunction?.constraints,
       ownerDefinitions: updates.ownerDefinitions ?? currentFunction?.ownerDefinitions,
       delay: updates.delay !== undefined ? updates.delay : currentFunction?.delay,
       timestamp: new Date().toISOString(),
@@ -271,6 +278,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
             onCheckedToggle={handleCheckedToggle}
             onScoreToggle={handleScoreToggle}
             onDescriptionUpdate={handleDescriptionUpdate}
+            onConstraintsUpdate={handleConstraintsUpdate}
             onOpenInCode={handleOpenInCode}
             onOwnerDefinitionsUpdate={handleOwnerDefinitionsUpdate}
             onDelayUpdate={handleDelayUpdate}
@@ -289,6 +297,7 @@ function PermissionsCode({
   onCheckedToggle,
   onScoreToggle,
   onDescriptionUpdate,
+  onConstraintsUpdate,
   onOpenInCode,
   onOwnerDefinitionsUpdate,
   onDelayUpdate
@@ -298,8 +307,9 @@ function PermissionsCode({
   functions: FunctionEntryWithContract[]
   onPermissionToggle: (contractAddress: string, functionName: string, currentIsPermissioned: boolean) => void
   onCheckedToggle: (contractAddress: string, functionName: string, currentChecked: boolean) => void
-  onScoreToggle: (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk') => void
+  onScoreToggle: (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk' | 'critical') => void
   onDescriptionUpdate: (contractAddress: string, functionName: string, description: string) => void
+  onConstraintsUpdate: (contractAddress: string, functionName: string, constraints: string) => void
   onOpenInCode: (contractAddress: string, functionName: string) => void
   onOwnerDefinitionsUpdate: (contractAddress: string, functionName: string, ownerDefinitions: OwnerDefinition[]) => void
   onDelayUpdate: (contractAddress: string, functionName: string, delay?: { contractAddress: string; fieldName: string }) => void
@@ -330,6 +340,7 @@ function PermissionsCode({
           onCheckedToggle={onCheckedToggle}
           onScoreToggle={onScoreToggle}
           onDescriptionUpdate={onDescriptionUpdate}
+          onConstraintsUpdate={onConstraintsUpdate}
           onOpenInCode={onOpenInCode}
           onOwnerDefinitionsUpdate={onOwnerDefinitionsUpdate}
           onDelayUpdate={onDelayUpdate}
@@ -347,6 +358,7 @@ function WritePermissionsCodeEntries({
   onCheckedToggle,
   onScoreToggle,
   onDescriptionUpdate,
+  onConstraintsUpdate,
   onOpenInCode,
   onOwnerDefinitionsUpdate,
   onDelayUpdate
@@ -356,8 +368,9 @@ function WritePermissionsCodeEntries({
   functions: FunctionEntryWithContract[]
   onPermissionToggle: (contractAddress: string, functionName: string, currentIsPermissioned: boolean) => void
   onCheckedToggle: (contractAddress: string, functionName: string, currentChecked: boolean) => void
-  onScoreToggle: (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk') => void
+  onScoreToggle: (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk' | 'critical') => void
   onDescriptionUpdate: (contractAddress: string, functionName: string, description: string) => void
+  onConstraintsUpdate: (contractAddress: string, functionName: string, constraints: string) => void
   onOpenInCode: (contractAddress: string, functionName: string) => void
   onOwnerDefinitionsUpdate: (contractAddress: string, functionName: string, ownerDefinitions: OwnerDefinition[]) => void
   onDelayUpdate: (contractAddress: string, functionName: string, delay?: { contractAddress: string; fieldName: string }) => void
@@ -395,6 +408,7 @@ function WritePermissionsCodeEntries({
             onCheckedToggle={onCheckedToggle}
             onScoreToggle={onScoreToggle}
             onDescriptionUpdate={onDescriptionUpdate}
+            onConstraintsUpdate={onConstraintsUpdate}
             onOpenInCode={onOpenInCode}
             onOwnerDefinitionsUpdate={onOwnerDefinitionsUpdate}
             onDelayUpdate={onDelayUpdate}

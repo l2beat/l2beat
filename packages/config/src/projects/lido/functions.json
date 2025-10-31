@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-10-31T11:43:31.182Z",
+  "lastModified": "2025-10-31T17:10:30.721Z",
   "contracts": {
     "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": {
       "functions": [
@@ -67,7 +67,7 @@
               "path": "$self.getOwner"
             }
           ],
-          "timestamp": "2025-10-30T17:45:41.966Z"
+          "timestamp": "2025-10-31T13:27:57.858Z"
         },
         {
           "functionName": "addGuardians",
@@ -594,7 +594,6 @@
         {
           "functionName": "grantRole",
           "isPermissioned": true,
-          "timestamp": "2025-10-08T00:21:11.982Z",
           "checked": true,
           "score": "high-risk",
           "description": "Grants a role within the contract to a specific address. There are roles to allow burning stETH either from a delegated address or from the caller itself. Only the Governance is currently allowed to burn its own stETH.\t",
@@ -602,7 +601,8 @@
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE"
             }
-          ]
+          ],
+          "timestamp": "2025-10-31T13:39:44.718Z"
         },
         {
           "functionName": "revokeRole",
@@ -3154,15 +3154,16 @@
         {
           "functionName": "tiebreakerScheduleProposal",
           "isPermissioned": true,
-          "timestamp": "2025-10-13T21:19:15.499Z",
           "checked": true,
-          "score": "high-risk",
+          "score": "critical",
           "description": "Allows the Tiebreaker committee to instruct the EmergencyProtectedTimelock singleton instance to schedule a submitted and non-cancelled proposal for execution. This can only be called if the governance is in deadlock and the mandatory timeout has passed since the activation of the tiebreaker committee.",
+          "constraints": "Governance has to be in tie state.",
           "ownerDefinitions": [
             {
               "path": "$self.getTiebreakerDetails.tiebreakerCommittee"
             }
-          ]
+          ],
+          "timestamp": "2025-10-31T17:10:30.720Z"
         },
         {
           "functionName": "tiebreakerResumeSealable",
@@ -3214,6 +3215,14 @@
           "isPermissioned": false,
           "timestamp": "2025-10-13T21:31:13.236Z",
           "score": "unscored"
+        }
+      ]
+    },
+    "undefined": {
+      "functions": [
+        {
+          "isPermissioned": false,
+          "timestamp": "2025-10-31T17:03:54.889Z"
         }
       ]
     }

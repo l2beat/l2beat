@@ -29,6 +29,7 @@ interface FunctionFolderProps {
   onCheckedToggle: (contractAddress: string, functionName: string, currentChecked: boolean) => void
   onScoreToggle: (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk' | 'critical') => void
   onDescriptionUpdate: (contractAddress: string, functionName: string, description: string) => void
+  onConstraintsUpdate: (contractAddress: string, functionName: string, constraints: string) => void
   onOpenInCode: (contractAddress: string, functionName: string) => void
   onOwnerDefinitionsUpdate: (contractAddress: string, functionName: string, ownerDefinitions: OwnerDefinition[]) => void
   onDelayUpdate: (contractAddress: string, functionName: string, delay?: { contractAddress: string; fieldName: string }) => void
@@ -234,6 +235,7 @@ export function FunctionFolder({
   onCheckedToggle,
   onScoreToggle,
   onDescriptionUpdate,
+  onConstraintsUpdate,
   onOpenInCode,
   onOwnerDefinitionsUpdate,
   onDelayUpdate
@@ -474,10 +476,15 @@ export function FunctionFolder({
   const checkedStatus = currentFunction?.checked || false
   const scoreStatus = currentFunction?.score || 'unscored'
   const description = currentFunction?.description || ''
+  const constraints = currentFunction?.constraints || ''
 
   // Local state for description input with debouncing
   const [localDescription, setLocalDescription] = useState(description)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  // Local state for constraints input with debouncing
+  const [localConstraints, setLocalConstraints] = useState(constraints)
+  const constraintsTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   // Local state for owner path editing with debouncing
   const [editedOwnerPaths, setEditedOwnerPaths] = useState<Record<number, string>>({})
@@ -494,6 +501,11 @@ export function FunctionFolder({
   useEffect(() => {
     setLocalDescription(description)
   }, [description])
+
+  // Update local constraints when external data changes
+  useEffect(() => {
+    setLocalConstraints(constraints)
+  }, [constraints])
 
   // Update edited owner paths when external data changes
   useEffect(() => {
@@ -554,6 +566,23 @@ export function FunctionFolder({
     }, 500)
   }
 
+  const handleConstraintsChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newConstraints = event.target.value
+    setLocalConstraints(newConstraints)
+
+    // Clear existing timeout
+    if (constraintsTimeoutRef.current) {
+      clearTimeout(constraintsTimeoutRef.current)
+    }
+
+    // Set new timeout to save after user stops typing (500ms delay)
+    constraintsTimeoutRef.current = setTimeout(() => {
+      if (newConstraints !== constraints) {
+        onConstraintsUpdate(contractAddress, functionName, newConstraints)
+      }
+    }, 500)
+  }
+
   const handleOwnerPathChange = (index: number, newPath: string) => {
     // Update local state immediately for responsive UI
     setEditedOwnerPaths(prev => ({
@@ -586,6 +615,9 @@ export function FunctionFolder({
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current)
+      }
+      if (constraintsTimeoutRef.current) {
+        clearTimeout(constraintsTimeoutRef.current)
       }
       if (ownerPathTimeoutRef.current) {
         clearTimeout(ownerPathTimeoutRef.current)
@@ -1084,6 +1116,18 @@ export function FunctionFolder({
               value={localDescription}
               onChange={handleDescriptionChange}
               placeholder="Add a description for this function..."
+              className="w-full h-20 px-2 py-1 text-xs font-mono bg-coffee-800 text-coffee-100 border border-coffee-600 rounded resize-none focus:outline-none focus:border-coffee-500"
+            />
+          </div>
+
+          <div className="p-3">
+            <label className="block text-xs text-coffee-300 mb-2">
+              Function Constraints
+            </label>
+            <textarea
+              value={localConstraints}
+              onChange={handleConstraintsChange}
+              placeholder="Add constraints for this function..."
               className="w-full h-20 px-2 py-1 text-xs font-mono bg-coffee-800 text-coffee-100 border border-coffee-600 rounded resize-none focus:outline-none focus:border-coffee-500"
             />
           </div>
