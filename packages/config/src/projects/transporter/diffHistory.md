@@ -1,3 +1,65 @@
+Generated with discovered.json: 0x67ae6ccceb61733857aae580751a1da763e40dcb
+
+# Diff at Fri, 31 Oct 2025 07:23:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@68eb98b0468d176aa44713dcaed98f67b2a200a0 block: 1761644022
+- current timestamp: 1761895172
+
+## Description
+
+MORE POOOLS!
+
+## Watched changes
+
+```diff
+    contract BurnMintTokenPool (eth:0x1689C22eD5435e49071CFc208D1Ac6F2A2274490) {
+    +++ description: None
+      values.getSupportedChains.18:
++        "3461204551265785888"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (eth:0x43f47a434DADd5A122C42E49378365CcA949fA54) {
+    +++ description: None
+      values.getSupportedChains.1:
++        "4627098889531055414"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0x512c2Ddf5f7F48a6c44cFF73CD8d7edEC5e6b0d8) {
+    +++ description: None
+      values.getSupportedChains.6:
++        "3016212468291539606"
+      values.getSupportedChains.7:
++        "3461204551265785888"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (eth:0x520763c1eBDa04DAC9a6077a41CCC703FF22a9f8) {
+    +++ description: None
+      values.getSupportedChains.2:
++        "4051577828743386545"
+    }
+```
+
+```diff
+    contract Router (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.86:
++        {"sourceChainSelector":"9723842205701363942","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"}
+      values.offRamps.87:
++        {"sourceChainSelector":"4829375610284793157","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"}
+      values.onRamps.9723842205701363942:
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+      values.onRamps.4829375610284793157:
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+    }
+```
+
 Generated with discovered.json: 0x080848aef19cea8e9e7f71443140792b2a785bd1
 
 # Diff at Tue, 28 Oct 2025 09:37:28 GMT:
