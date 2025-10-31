@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x4ad2be96a6472cb72c1740890c9ba97f5d2c0a3f
+
+# Diff at Fri, 31 Oct 2025 07:17:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@68eb98b0468d176aa44713dcaed98f67b2a200a0 block: 1761643945
+- current timestamp: 1761894930
+
+## Description
+
+Minor upgrade proposed.
+
+Reviewed here: https://gist.github.com/sekuba/46d7bcab5127c0ed6e0d66ce285b0559 (approved, will go to optimistic phase if at least 5 approve)
+
+## Watched changes
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        11
++        12
+    }
+```
+
 Generated with discovered.json: 0x48b3c9a94d3498c063182c27bf387c8f600816ad
 
 # Diff at Tue, 28 Oct 2025 09:33:53 GMT:
