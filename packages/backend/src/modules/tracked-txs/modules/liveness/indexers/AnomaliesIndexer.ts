@@ -106,7 +106,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
       }
 
       const records =
-        await this.$.db.liveness.getByConfigurationIdWithinTimeRange(
+        await this.$.db.liveness.getRecordsInRangeWithLatestBefore(
           activeConfigs.map((c) => c.id),
           deviationRange,
           to,
