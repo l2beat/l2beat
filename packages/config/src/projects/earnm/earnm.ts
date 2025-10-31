@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -49,6 +49,14 @@ export const earnm: ScalingProject = orbitStackL3({
     ],
   },
   bridge: discovery.getContract('Bridge'),
+  nonTemplateEscrows: [
+    {
+      address: EthereumAddress('0x0b6b5aFEe8602A4d88dC26Fc2E85b2d1236156F6'),
+      sinceTimestamp: UnixTime(1745356800),
+      tokens: '*',
+      chain: 'arbitrum',
+    },
+  ],
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   activityConfig: {
