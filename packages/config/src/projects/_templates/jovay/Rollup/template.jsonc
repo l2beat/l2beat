@@ -8,5 +8,6 @@
     "getL2MsgRoot",
     "l1MsgCount",
     "l2MsgRoots"
-  ]
+  ],
+  "category": "core"
 }

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xcccb78348720c2070c440b4964bc67cb96f49ea8
+Generated with discovered.json: 0x46187925026a9ea5e71695eb7892048e00355fd2
 
-# Diff at Fri, 31 Oct 2025 00:28:12 GMT:
+# Diff at Fri, 31 Oct 2025 09:55:37 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current timestamp: 1761870423
+- current timestamp: 1761904466
 
 ## Description
 
@@ -14,19 +14,19 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract DcapAttestationRouter (eth:0x238f4DaFC22013a864f85a54E276aC99975566fA)
-    +++ description: None
+    +++ description: The DcapAttestationRouter contract is used for routing and verifying Intel SGX/TDX DCAP attestation proofs. The contract sends each quote to the corresponding verification path (cache verifier vs. Automata DCAP contract, and SGX vs. TDX measurement checks).
 ```
 
 ```diff
 +   Status: CREATED
     contract MeasurementDao (eth:0x359437E2763e9622DD4324D7904BbF7516332D4F)
-    +++ description: None
+    +++ description: The MeasurementDao contract is an onchain registry that allowlists SGX MR_ENCLAVE<->MR_SIGNER pairs and TDX RTMR3/MRTD values, and verifies DCAP quotes by matching quote fields to the stored measurements.
 ```
 
 ```diff
 +   Status: CREATED
     contract TEEVerifierProxy (eth:0x371a8bda9a34d641B546883D6B5895d0A44AD46A)
-    +++ description: None
+    +++ description: The TEEVerifierProxy contract is used to verify L2 batches using TEE attestations. It delegates proof verification to the dcapAttestationRouter contract. 
 ```
 
 ```diff
@@ -44,13 +44,13 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract L1ETHBridge (eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1)
-    +++ description: None
+    +++ description: The L1ETHBridge contract is used to bridge ETH between the L1 and L2.
 ```
 
 ```diff
 +   Status: CREATED
     contract TEECacheVerifier (eth:0x9734CcA9304A4c7a5a27bCFac9eDa23e09cBAaF2)
-    +++ description: None
+    +++ description: A cache-enabled P-256 ECDSA verifier for Intel SGX/TDX DCAP quotes (v3/v4/v5) that authenticates local attestation data, extracts the 32-byte commitment, and lets the owner/authorized callers initialize, manage, and reuse cached attestation keys to skip repeat verifications.
 ```
 
 ```diff
@@ -62,7 +62,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract AutomataDcapAttestationFee (eth:0xb3a96165caf30F8F7cE9BCfdaaAe99BA93C1A6F9)
-    +++ description: None
+    +++ description: Contract used to charge a configurable basis-point fee to verify Intel DCAP quotes. Currently set to 0 basis points.
 ```
 
 ```diff
