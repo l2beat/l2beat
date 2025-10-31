@@ -39,7 +39,7 @@ export const earnm: ScalingProject = orbitStackL3({
   chainConfig: {
     name: 'earnm',
     chainId: 32766,
-    gasTokens: ['EARNM'],
+    gasTokens: ['ETH'],
     apis: [
       {
         type: 'rpc',
