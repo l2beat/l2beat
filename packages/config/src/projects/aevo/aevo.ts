@@ -64,6 +64,16 @@ export const aevo: ScalingProject = opStackL2({
     adjustCount: { type: 'SubtractOne' },
   },
   nonTemplateDaTracking: [
+    // Ethereum fallback
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 16858818,
+      inbox: EthereumAddress('0x253887577420Cb7e7418cD4d50147743c8041b28'),
+      sequencers: [
+        EthereumAddress('0x889e21d7BA3d6dD62e75d4980A4Ad1349c61599d'),
+      ],
+    },
     // {
     //   type: 'celestia',
     //   daLayer: ProjectId('celestia'),
