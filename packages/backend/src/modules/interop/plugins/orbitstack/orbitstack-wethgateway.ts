@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import {
   Address32,
   createEventParser,
@@ -124,7 +124,9 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
         )
         if (wethWithdrawalFinalized) {
           // Verify this is for WETH
-          if (EthereumAddress(wethWithdrawalFinalized.l1Token) !== network.l1Weth) {
+          if (
+            EthereumAddress(wethWithdrawalFinalized.l1Token) !== network.l1Weth
+          ) {
             return
           }
 

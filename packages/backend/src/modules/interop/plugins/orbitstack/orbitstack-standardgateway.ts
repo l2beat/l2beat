@@ -106,10 +106,9 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
         })
 
         if (messageDeliveredLog) {
-          const messageDelivered = parseMessageDelivered(
-            messageDeliveredLog,
-            [network.bridge],
-          )
+          const messageDelivered = parseMessageDelivered(messageDeliveredLog, [
+            network.bridge,
+          ])
           if (messageDelivered) {
             return DepositInitiatedMessageDelivered.create(input.ctx, {
               chain: network.chain,
