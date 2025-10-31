@@ -1,3 +1,47 @@
+Generated with discovered.json: 0xb26b022c23565643aaf2e44a8698c337dbe9d626
+
+# Diff at Fri, 31 Oct 2025 11:03:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@03b105955032cf1d17dbaa7be1e98258a77944f6 block: 1725019175
+- current timestamp: 1725019175
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1725019175 (main branch discovery), not current.
+
+```diff
+    contract Honeypot (eth:0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0xF5B2d8c81cDE4D6238bBf20D3D77DB37df13f735","eth:0x33436035441927Df1a73FE3AAC5906854632e53d"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MerkleV2 (eth:0x33436035441927Df1a73FE3AAC5906854632e53d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CartesiMathV2 (eth:0xB634F716BEd5Dd5A2b9a91C92474C499e50Cb27D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Bitmask (eth:0xF5B2d8c81cDE4D6238bBf20D3D77DB37df13f735)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x171b76b4c9bb15569a055ad257197dd5f6afbbc1
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

@@ -1,3 +1,41 @@
+Generated with discovered.json: 0xbea817e4412b3429a3e6e56f1b8fa9dc3b60e714
+
+# Diff at Fri, 31 Oct 2025 10:48:34 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@03b105955032cf1d17dbaa7be1e98258a77944f6 block: 1746205715
+- current timestamp: 1746205715
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1746205715 (main branch discovery), not current.
+
+```diff
+    contract HotShotLightClient (eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458) {
+    +++ description: The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.
+      values.$libraries:
++        ["eth:0x9760fb6F48c15f37304bCb5B502F00512032A3Bb","eth:0xa239397D05516d3e44bED853E7BA1E672dDD958f"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OperatorRegistryV1Admin (eth:0x9760fb6F48c15f37304bCb5B502F00512032A3Bb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifier (eth:0xa239397D05516d3e44bED853E7BA1E672dDD958f)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x513b91514b5b487138163d383324f96a4e690ab5
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
