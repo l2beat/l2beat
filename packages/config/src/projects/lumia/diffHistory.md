@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x989e16a2839342f0374221b984aeb7f8cf14ef28
+Generated with discovered.json: 0x768338199bc0a7cc70230a0da7b8e36c6bd93403
 
-# Diff at Fri, 31 Oct 2025 09:27:29 GMT:
+# Diff at Fri, 31 Oct 2025 13:56:02 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@68eb98b0468d176aa44713dcaed98f67b2a200a0 block: 1759756767
@@ -91,8 +91,10 @@ Upgrade of the main Lumia contract: https://disco.l2beat.com/diff/eth:0x18C45DD4
 +        "eth:0x0000000000000000000000000000000000000000"
       values.threshold:
 +        1
++++ severity: HIGH
       values.useDefaultSigners:
 +        false
++++ severity: HIGH
       values.useDefaultVkeys:
 +        false
       values.version:
@@ -100,6 +102,10 @@ Upgrade of the main Lumia contract: https://disco.l2beat.com/diff/eth:0x18C45DD4
       fieldMeta.CONSENSUS_TYPE.severity:
 +        "HIGH"
       fieldMeta.aggchainMultisigHash:
++        {"severity":"HIGH"}
+      fieldMeta.useDefaultSigners:
++        {"severity":"HIGH"}
+      fieldMeta.useDefaultVkeys:
 +        {"severity":"HIGH"}
       implementationNames.eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B:
 -        "PolygonPessimisticConsensus"

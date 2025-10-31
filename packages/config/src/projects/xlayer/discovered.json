@@ -112,7 +112,9 @@
           "severity": "HIGH",
           "description": "If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone."
         },
-        "aggchainMultisigHash": { "severity": "HIGH" }
+        "aggchainMultisigHash": { "severity": "HIGH" },
+        "useDefaultSigners": { "severity": "HIGH" },
+        "useDefaultVkeys": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507": "PolygonTransparentProxy",
@@ -360,7 +362,7 @@
     ]
   },
   "usedTemplates": {
-    "polygon-cdk/AggchainECDSAMultisig": "0xaa14db02ef6f984ef178f4bf665bf4f64722810d3a9201b727f89a171de0a013"
+    "polygon-cdk/AggchainECDSAMultisig": "0x29454707054b7ded72a43beeb227e72791b9a0d6d29d48a6dac59812dcc68b29"
   },
   "usedBlockNumbers": { "ethereum": 23696450 },
   "permissionsConfigHash": "0xb8855cefa8216f7510f7854676b67bade0ee5752ed11295d3bc0c7a7d04ca156"

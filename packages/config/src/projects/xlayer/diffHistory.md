@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x9f2c67b96df43ee8b66a886f4d06ff6d27a5725e
+Generated with discovered.json: 0x5c770dc0fc1c566eead414c7ef5b88420096261f
 
-# Diff at Fri, 31 Oct 2025 09:31:16 GMT:
+# Diff at Fri, 31 Oct 2025 13:56:02 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@68eb98b0468d176aa44713dcaed98f67b2a200a0 block: 1754482928
@@ -79,8 +79,10 @@ Upgrade of the main XLayer contract: https://disco.l2beat.com/diff/eth:0x18C45DD
 +        "eth:0x0000000000000000000000000000000000000000"
       values.threshold:
 +        1
++++ severity: HIGH
       values.useDefaultSigners:
 +        false
++++ severity: HIGH
       values.useDefaultVkeys:
 +        false
       values.version:
@@ -88,6 +90,10 @@ Upgrade of the main XLayer contract: https://disco.l2beat.com/diff/eth:0x18C45DD
       fieldMeta.CONSENSUS_TYPE.severity:
 +        "HIGH"
       fieldMeta.aggchainMultisigHash:
++        {"severity":"HIGH"}
+      fieldMeta.useDefaultSigners:
++        {"severity":"HIGH"}
+      fieldMeta.useDefaultVkeys:
 +        {"severity":"HIGH"}
       implementationNames.eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B:
 -        "PolygonPessimisticConsensus"
