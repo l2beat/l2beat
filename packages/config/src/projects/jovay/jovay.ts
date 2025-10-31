@@ -4,7 +4,6 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
   REASON_FOR_BEING_OTHER,
@@ -132,8 +131,7 @@ export const jovay: ScalingProject = {
           url: 'https://etherscan.io/address/0xe0a28B8918a62edB825055221a1dF12c7C81Bac1#code',
         },
         {
-          title:
-            'L1Mailbox.sol - sendMsg enqueues transactions on Ethereum',
+          title: 'L1Mailbox.sol - sendMsg enqueues transactions on Ethereum',
           url: 'https://etherscan.io/address/0x9869A90FDAc287519E48aff4cCE329907a995162#code',
         },
       ],
@@ -151,8 +149,7 @@ export const jovay: ScalingProject = {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       references: [
         {
-          title:
-            'L1Mailbox.sol - sendMsg guarded by onlyBridge whitelist',
+          title: 'L1Mailbox.sol - sendMsg guarded by onlyBridge whitelist',
           url: 'https://etherscan.io/address/0x9869A90FDAc287519E48aff4cCE329907a995162#code',
         },
       ],
@@ -160,8 +157,9 @@ export const jovay: ScalingProject = {
     exitMechanisms: [
       {
         name: 'Regular messaging',
-      description: `The user initiates L2->L1 messages by submitting a regular transaction on this chain. When the block containing that transaction is settled, the message becomes available for processing on L1.`,
-      risks: [],
+        description:
+          'The user initiates L2->L1 messages by submitting a regular transaction on this chain. When the block containing that transaction is settled, the message becomes available for processing on L1.',
+        risks: [],
         references: [
           {
             title:
