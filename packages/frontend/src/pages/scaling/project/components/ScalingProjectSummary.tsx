@@ -47,7 +47,7 @@ export function ProjectScalingSummary({ project }: Props) {
   return (
     <section
       id="summary"
-      data-role="project-section"
+      data-role="nav-section"
       className="w-full border-divider px-4 max-md:border-b md:rounded-lg md:bg-surface-primary md:p-6"
     >
       <div className="flex">

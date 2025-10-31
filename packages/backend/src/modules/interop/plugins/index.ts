@@ -22,6 +22,7 @@ import { CentriFugePlugin } from './centrifuge'
 import { CircleGatewayPlugIn } from './circle-gateway'
 import { DeBridgePlugin } from './debridge'
 import { DeBridgeDlnPlugin } from './debridge-dln'
+import { GasZipPlugin } from './gaszip/gaszip.plugin'
 import { HyperlanePlugIn } from './hyperlane'
 import { HyperlaneEcoPlugin } from './hyperlane-eco'
 import { HyperlaneHwrPlugin } from './hyperlane-hwr'
@@ -36,7 +37,8 @@ import { MayanMctpFastPlugin } from './mayan-mctp-fast'
 import { MayanSwiftPlugin } from './mayan-swift'
 import { OpStackPlugin } from './opstack/opstack'
 import { OpStackStandardBridgePlugin } from './opstack/opstack-standardbridge'
-import { OrbitStackPlugin } from './orbitstack'
+import { OrbitStackPlugin } from './orbitstack/orbitstack'
+import { OrbitStackStandardGatewayPlugin } from './orbitstack/orbitstack-standardgateway'
 import { RelayPlugin } from './relay/relay.plugin'
 import { RelaySimplePlugIn } from './relay-simple'
 import { SquidCoralPlugin } from './squid-coral'
@@ -99,7 +101,7 @@ export function createInteropPlugins(
       new MayanMctpFastPlugin(), // should be run before CCTP
       new CCTPV1Plugin(deps.configs),
       new CCTPV2Plugin(deps.configs),
-      new StargatePlugin(), // should be run before stargate bus/taxi, ofts
+      new StargatePlugin(deps.configs), // should be run ofts
       new LayerZeroV2OFTsPlugin(deps.configs), // should be run before LayerZeroV2
       new LayerZeroV1Plugin(deps.configs),
       new LayerZeroV2Plugin(deps.configs),
@@ -111,6 +113,7 @@ export function createInteropPlugins(
       new AxelarITSPlugin(), // should be run before Axelar
       new AxelarPlugin(),
       new AcrossPlugin(deps.configs),
+      new OrbitStackStandardGatewayPlugin(), // should be run before OrbitStack
       new OrbitStackPlugin(),
       new OpStackStandardBridgePlugin(), // should be run before OpStack
       new OpStackPlugin(),
@@ -121,6 +124,7 @@ export function createInteropPlugins(
       new OneinchFusionPlusPlugin(),
       new RelayPlugin(),
       new RelaySimplePlugIn(),
+      new GasZipPlugin(),
     ],
   }
 }
