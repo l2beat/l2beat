@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { CodeView } from './CodeView'
+import { useCodeSettings } from './code/hooks/useCodeSettings'
 import { EditorFileTabs } from './EditorFileTabs'
 import type { EditorCallbacks } from './editor'
 import { type EditorFile, type Range, useCodeStore } from './store'
@@ -21,11 +22,22 @@ export function EditorView(props: Props) {
   const [activeFileIndex, setActiveFileIndex] = useState(0)
 
   const editor = useCodeStore((store) => store.editors[props.editorId])
-  const { resetRange } = useCodeStore()
+  const { resetRange, initialSelection, setSelection } = useCodeSettings()
 
   const setDirtyFile = (fileId: string, dirty: boolean) => {
     setDirtyFiles((prev) => ({ ...prev, [fileId]: dirty }))
   }
+
+  editor?.onLoad(() => {
+    editor.lineSelector.setSelection(initialSelection)
+    editor.lineSelector.scrollToSelection()
+  })
+
+  useEffect(() => {
+    return editor?.lineSelector.onSelectionChange((selection) => {
+      setSelection(selection)
+    })
+  }, [editor])
 
   useEffect(() => {
     if (editor && props.files.length > 0) {
@@ -41,6 +53,7 @@ export function EditorView(props: Props) {
           })
 
           editor.onChange((content) => {
+            editor.lineSelector.scrollToSelection()
             props.callbacks?.onChange?.(content)
             setDirtyFile(activeFile.id, content !== activeFile.content)
           })
