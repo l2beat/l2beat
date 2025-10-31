@@ -3,13 +3,13 @@ import { ConsoleTransport } from './ConsoleTransport'
 import type { LoggerTransport, LogLevel } from './types'
 
 const RANK = {
+  NONE: 0,
   CRITICAL: 1,
   ERROR: 2,
   WARN: 3,
   INFO: 4,
   DEBUG: 5,
   TRACE: 6,
-  NONE: 100,
 }
 
 export interface LoggerOptions {
