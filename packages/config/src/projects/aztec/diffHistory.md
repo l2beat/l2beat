@@ -1,3 +1,35 @@
+Generated with discovered.json: 0xba73354aefd18ddda1de4af62c3a6b481c35a8dc
+
+# Diff at Fri, 31 Oct 2025 10:37:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@03b105955032cf1d17dbaa7be1e98258a77944f6 block: 1747043363
+- current timestamp: 1747043363
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1747043363 (main branch discovery), not current.
+
+```diff
+    contract TurboVerifier (eth:0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8) {
+    +++ description: Turbo Plonk ZK verifier.
+      values.$libraries:
++        ["eth:0xF3761B450571a49Fa8e2aF6e37e1Eb3516209d56"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0xF3761B450571a49Fa8e2aF6e37e1Eb3516209d56)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x5b754b49ce734257b97900530a11e5b958bf7ef9
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

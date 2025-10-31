@@ -1,3 +1,47 @@
+Generated with discovered.json: 0x598ad128d3f7ec00c2bcf968facc034b85bdc13b
+
+# Diff at Fri, 31 Oct 2025 10:40:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@03b105955032cf1d17dbaa7be1e98258a77944f6 block: 1727455453
+- current timestamp: 1727455453
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1727455453 (main branch discovery), not current.
+
+```diff
+    contract BugBuster (oeth:0x3FF5C7383F614256053c3F6B86A47bA974937299) {
+    +++ description: None
+      values.$libraries:
++        ["oeth:0xF5B2d8c81cDE4D6238bBf20D3D77DB37df13f735","oeth:0x33436035441927Df1a73FE3AAC5906854632e53d"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MerkleV2 (oeth:0x33436035441927Df1a73FE3AAC5906854632e53d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CartesiMathV2 (oeth:0xB634F716BEd5Dd5A2b9a91C92474C499e50Cb27D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Bitmask (oeth:0xF5B2d8c81cDE4D6238bBf20D3D77DB37df13f735)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x73f38b2838827a00faa11a3458d13add4a96e7b3
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

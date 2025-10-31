@@ -54,7 +54,10 @@
       "description": "Turbo Plonk ZK verifier.",
       "sinceTimestamp": 1707995675,
       "sinceBlock": 19232962,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "$libraries": ["eth:0xF3761B450571a49Fa8e2aF6e37e1Eb3516209d56"]
+      },
       "implementationNames": {
         "eth:0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8": "TurboVerifier"
       }
@@ -202,6 +205,19 @@
       "implementationNames": {
         "eth:0xE298a76986336686CC3566469e3520d23D1a8aaD": "Proxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "name": "",
+      "address": "eth:0xF3761B450571a49Fa8e2aF6e37e1Eb3516209d56",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1707995675,
+      "sinceBlock": 19232962,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xF3761B450571a49Fa8e2aF6e37e1Eb3516209d56": ""
       }
     },
     {
@@ -362,5 +378,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 22466421 },
-  "permissionsConfigHash": "0x070536a744866688212a99f1e8ed5b203a4eda91a14acffd20c71e349ab49445"
+  "permissionsConfigHash": "0x1dedb94bcf61d2769a960563f021483c018d3f195773f56b1f4bc2cd8e43a762"
 }

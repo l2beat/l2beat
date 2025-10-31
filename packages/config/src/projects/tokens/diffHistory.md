@@ -1,3 +1,182 @@
+Generated with discovered.json: 0x0637bd1db3ff73ec34c4fa729b91cebca570c5fb
+
+# Diff at Fri, 31 Oct 2025 11:41:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@03b105955032cf1d17dbaa7be1e98258a77944f6 block: 1761643706
+- current timestamp: 1761643706
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761643706 (main branch discovery), not current.
+
+```diff
+    contract USD Coin Token (base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913) {
+    +++ description: None
+      values.$libraries:
++        ["base:0x2D943E25e1859ED786AFe4AFB2B42e14EFAC691e"]
+    }
+```
+
+```diff
+    contract CSExitPenalties (eth:0x06cd61045f958A209a0f8D746e103eCc625f4193) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9"]
+    }
+```
+
+```diff
+    contract CSFeeOracle (eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9","eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9"]
+    }
+```
+
+```diff
+    contract CSAccounting (eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9","eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9"]
+    }
+```
+
+```diff
+    contract NodeOperatorsRegistry (eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0x7e70De6D1877B3711b2bEDa7BA00013C7142d993"]
+    }
+```
+
+```diff
+    contract HashConsensus (eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9"]
+    }
+```
+
+```diff
+    contract CSParametersRegistry (eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9"]
+    }
+```
+
+```diff
+    contract CSStrikes (eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9"]
+    }
+```
+
+```diff
+    contract NodeOperatorsRegistry (eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0x7e70De6D1877B3711b2bEDa7BA00013C7142d993"]
+    }
+```
+
+```diff
+    contract CSEjector (eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9"]
+    }
+```
+
+```diff
+    contract CSFeeDistributor (eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9","eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9"]
+    }
+```
+
+```diff
+    contract CSModule (eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F) {
+    +++ description: None
+      template:
+-        "tokens/Lido/CSModule"
+      sourceHashes.1:
+-        "0xde753d771c3a4dc27e58e529b2dfd70871547d49e71ecd3478353ec02e995aa8"
++        "0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      values.$libraries:
++        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9"]
+      values.depositQueuePointers:
++        [[40,41],[0,0],[0,0],[0,0],[1042,1042]]
+      values.exitDeadlineThreshold:
++        [432000,432000,432000,345600,345600]
+      values.getNodeOperator:
++        [[10,0,10,10,0,0,0,0,0,0,"eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8","eth:0x0000000000000000000000000000000000000000","eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8","eth:0x0000000000000000000000000000000000000000",false,true],[20,0,19,20,0,1,0,0,0,1,"eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b","eth:0x0000000000000000000000000000000000000000","eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b","eth:0x0000000000000000000000000000000000000000",false,false],[6,0,6,6,0,0,0,0,0,0,"eth:0x4021caAb9a5621D0ccA630AD4583375590300F4B","eth:0x0000000000000000000000000000000000000000","eth:0x88792bee0d8A4c46acB7a2D8bfBef7e3A678639e","eth:0x0000000000000000000000000000000000000000",false,true],[2,0,2,2,0,0,0,0,0,0,"eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c","eth:0x0000000000000000000000000000000000000000","eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c","eth:0x0000000000000000000000000000000000000000",false,false],[12,0,12,12,0,0,0,0,0,0,"eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B","eth:0x0000000000000000000000000000000000000000","eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B","eth:0x0000000000000000000000000000000000000000",false,false]]
+      values.getNodeOperatorIsActive:
++        [true,true,true,true,true]
+      values.getNodeOperatorManagementProperties:
++        [["eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8","eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",false],["eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b","eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",false],["eth:0x4021caAb9a5621D0ccA630AD4583375590300F4B","eth:0x88792bee0d8A4c46acB7a2D8bfBef7e3A678639e",false],["eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c","eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",false],["eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B","eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B",false]]
+      values.getNodeOperatorNonWithdrawnKeys:
++        [10,20,6,2,12]
+      values.getNodeOperatorOwner:
++        ["eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8","eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b","eth:0x88792bee0d8A4c46acB7a2D8bfBef7e3A678639e","eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c","eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B"]
+      values.getNodeOperatorSummary:
++        [[0,0,0,0,0,0,10,0],[0,0,0,0,0,0,19,1],[0,0,0,0,0,0,6,0],[0,0,0,0,0,0,2,0],[0,0,0,0,0,0,12,0]]
+      values.getNodeOperatorTotalDepositedKeys:
++        [10,19,6,2,12]
+      values.getNonce:
++        1838
+      errors:
++        {"depositQueuePointers":"Processing error occurred.","exitDeadlineThreshold":"Processing error occurred.","getNodeOperator":"Processing error occurred.","getNodeOperatorIsActive":"Processing error occurred.","getNodeOperatorManagementProperties":"Processing error occurred.","getNodeOperatorNonWithdrawnKeys":"Processing error occurred.","getNodeOperatorOwner":"Processing error occurred.","getNodeOperatorSummary":"Processing error occurred.","getNodeOperatorTotalDepositedKeys":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract StakingRouter (eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0x7e70De6D1877B3711b2bEDa7BA00013C7142d993"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SignatureChecker (base:0x2D943E25e1859ED786AFe4AFB2B42e14EFAC691e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MinFirstAllocationStrategy (eth:0x7e70De6D1877B3711b2bEDa7BA00013C7142d993)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AssetRecovererLib (eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract QueueLib (eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NOAddresses (eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x3d824f2011aa3545a5832209ad30a1e5c17fa2da
 
 # Diff at Tue, 28 Oct 2025 09:32:58 GMT:
