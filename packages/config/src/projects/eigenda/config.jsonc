@@ -11,7 +11,8 @@
   "names": {
     "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d": "TimelockControllerOwning",
     "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83": "EIGEN Token",
-    "eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F": "EigenLayerProtocolCouncil"
+    "eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F": "EigenLayerProtocolCouncil",
+    "eth:0x5e29552239d9ACa88d2f410C35D8C0dE47483F37": "EigenDACertVerificationUtilsLibrary"
   },
   "overrides": {
     "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83": {

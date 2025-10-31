@@ -208,7 +208,7 @@
       }
     },
     {
-      "name": "",
+      "name": "VerificationKeysLibrary",
       "address": "eth:0xF3761B450571a49Fa8e2aF6e37e1Eb3516209d56",
       "type": "Contract",
       "unverified": true,
@@ -378,5 +378,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 22466421 },
-  "permissionsConfigHash": "0x1dedb94bcf61d2769a960563f021483c018d3f195773f56b1f4bc2cd8e43a762"
+  "permissionsConfigHash": "0xb8a37d2ba97b228028ee5f9fe3f340b0b8e44e407bfe12f3b0409e40fac78912"
 }

@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": [
+    "clz",
+    "ctz",
+    "getLog2Floor",
+    "getLog2TableTimes1M",
+    "isPowerOf2",
+    "log2ApproxTimes1M"
+  ]
+}
