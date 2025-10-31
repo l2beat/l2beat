@@ -21,17 +21,6 @@ import {
   RedeemScheduled,
 } from './orbitstack'
 
-// WETH Gateway addresses
-const WETH_GATEWAYS = [
-  {
-    chain: 'arbitrum',
-    l1Gateway: EthereumAddress('0xd92023e9d9911199a6711321d1277285e6d4e2db'),
-    l2Gateway: EthereumAddress('0x6c411ad3e74de3e7bd422b94a27770f5b86c623b'),
-    l1Weth: EthereumAddress('0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'),
-    l2Weth: EthereumAddress('0x82af49447d8a07e3bd95bd0d56f35241523fbab1'),
-  },
-]
-
 // == L1 -> L2 WETH deposits ==
 
 // L1 initiation of L1->L2 WETH deposit
@@ -99,39 +88,35 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
       const depositInitiated = parseDepositInitiated(input.log, null)
       if (depositInitiated) {
         // Check if this is from a WETH gateway
-        const wethGateway = WETH_GATEWAYS.find(
-          (g) =>
-            EthereumAddress(input.log.address) === g.l1Gateway &&
-            EthereumAddress(depositInitiated._l1Token) === g.l1Weth,
+        const network = ORBITSTACK_NETWORKS.find(
+          (n) =>
+            EthereumAddress(input.log.address) === n.l1WethGateway &&
+            EthereumAddress(depositInitiated._l1Token) === n.l1Weth,
         )
 
-        if (wethGateway) {
-          // Find which network this deposit is for by looking for MessageDelivered
-          for (const network of ORBITSTACK_NETWORKS) {
-            if (network.chain !== wethGateway.chain) continue
+        if (network) {
+          // Find MessageDelivered in the same transaction
+          const messageDeliveredLog = input.txLogs.find((log) => {
+            const parsed = parseMessageDelivered(log, [network.bridge])
+            // The sequenceNumber in DepositInitiated equals the messageIndex in MessageDelivered
+            return (
+              parsed !== undefined &&
+              parsed.messageIndex === depositInitiated._sequenceNumber
+            )
+          })
 
-            const messageDeliveredLog = input.txLogs.find((log) => {
-              const parsed = parseMessageDelivered(log, [network.bridge])
-              // The sequenceNumber in DepositInitiated equals the messageIndex in MessageDelivered
-              return (
-                parsed !== undefined &&
-                parsed.messageIndex === depositInitiated._sequenceNumber
-              )
-            })
-
-            if (messageDeliveredLog) {
-              const messageDelivered = parseMessageDelivered(
-                messageDeliveredLog,
-                [network.bridge],
-              )
-              if (messageDelivered) {
-                return WethDepositInitiatedMessageDelivered.create(input.ctx, {
-                  chain: network.chain,
-                  messageNum: messageDelivered.messageIndex.toString(),
-                  l1Weth: Address32.from(wethGateway.l1Weth),
-                  amount: depositInitiated._amount.toString(),
-                })
-              }
+          if (messageDeliveredLog) {
+            const messageDelivered = parseMessageDelivered(
+              messageDeliveredLog,
+              [network.bridge],
+            )
+            if (messageDelivered) {
+              return WethDepositInitiatedMessageDelivered.create(input.ctx, {
+                chain: network.chain,
+                messageNum: messageDelivered.messageIndex.toString(),
+                l1Weth: Address32.from(network.l1Weth),
+                amount: depositInitiated._amount.toString(),
+              })
             }
           }
         }
@@ -144,68 +129,58 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
       )
       if (wethWithdrawalFinalized) {
         // Check if this is from a WETH gateway
-        const wethGateway = WETH_GATEWAYS.find(
-          (g) =>
-            EthereumAddress(input.log.address) === g.l1Gateway &&
-            EthereumAddress(wethWithdrawalFinalized.l1Token) === g.l1Weth,
+        const network = ORBITSTACK_NETWORKS.find(
+          (n) =>
+            EthereumAddress(input.log.address) === n.l1WethGateway &&
+            EthereumAddress(wethWithdrawalFinalized.l1Token) === n.l1Weth,
         )
 
-        if (wethGateway) {
-          // Find the OutBoxTransactionExecuted event to get position
-          for (const network of ORBITSTACK_NETWORKS) {
-            if (network.chain !== wethGateway.chain) continue
+        if (network) {
+          // Find OutBoxTransactionExecuted in the same transaction
+          const outBoxTxLog = input.txLogs.find((log) => {
+            const parsed = parseOutBoxTransactionExecuted(log, [network.outbox])
+            return parsed !== undefined
+          })
 
-            const outBoxTxLog = input.txLogs.find((log) => {
-              const parsed = parseOutBoxTransactionExecuted(log, [
-                network.outbox,
-              ])
-              return parsed !== undefined
-            })
-
-            if (outBoxTxLog) {
-              const outBoxTx = parseOutBoxTransactionExecuted(outBoxTxLog, [
-                network.outbox,
-              ])
-              if (outBoxTx) {
-                return WethWithdrawalFinalizedOutBoxTransactionExecuted.create(
-                  input.ctx,
-                  {
-                    chain: network.chain,
-                    position: Number(outBoxTx.transactionIndex),
-                    l1Weth: Address32.from(wethGateway.l1Weth),
-                    amount: wethWithdrawalFinalized._amount.toString(),
-                  },
-                )
-              }
+          if (outBoxTxLog) {
+            const outBoxTx = parseOutBoxTransactionExecuted(outBoxTxLog, [
+              network.outbox,
+            ])
+            if (outBoxTx) {
+              return WethWithdrawalFinalizedOutBoxTransactionExecuted.create(
+                input.ctx,
+                {
+                  chain: network.chain,
+                  position: Number(outBoxTx.transactionIndex),
+                  l1Weth: Address32.from(network.l1Weth),
+                  amount: wethWithdrawalFinalized._amount.toString(),
+                },
+              )
             }
           }
         }
       }
     } else {
       // L2 operations
-      const wethGateway = WETH_GATEWAYS.find(
-        (g) => g.chain === input.ctx.chain,
+      const network = ORBITSTACK_NETWORKS.find(
+        (n) => n.chain === input.ctx.chain,
       )
-      if (!wethGateway) return
+      if (!network) return
 
       // First, check if this is an L2ToL1Tx event from ArbSys (for WETH withdrawals)
       // This needs to run BEFORE the base plugin to prevent misclassification
-      const l2ToL1Tx = parseL2ToL1Tx(input.log, [
-        ...ORBITSTACK_NETWORKS.filter((n) => n.chain === wethGateway.chain).map(
-          (n) => n.arbsys,
-        ),
-      ])
+      const l2ToL1Tx = parseL2ToL1Tx(input.log, [network.arbsys])
       if (l2ToL1Tx) {
         // Check if this L2ToL1Tx is part of a WETH withdrawal
         // by looking for a WithdrawalInitiated event in the same transaction
         const wethWithdrawalLog = input.txLogs.find((log) => {
-          if (EthereumAddress(log.address) !== wethGateway.l2Gateway) {
+          if (EthereumAddress(log.address) !== network.l2WethGateway) {
             return false
           }
           const parsed = parseWithdrawalInitiated(log, null)
           return (
             parsed !== undefined &&
-            EthereumAddress(parsed.l1Token) === wethGateway.l1Weth &&
+            EthereumAddress(parsed.l1Token) === network.l1Weth &&
             Number(parsed._l2ToL1Id) === Number(l2ToL1Tx.position)
           )
         })
@@ -213,22 +188,20 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
         if (wethWithdrawalLog) {
           // This is a WETH withdrawal! Capture it to prevent base plugin from seeing it
           return L2ToL1Tx.create(input.ctx, {
-            chain: wethGateway.chain,
+            chain: network.chain,
             position: Number(l2ToL1Tx.position),
           })
         }
       }
 
       // Check if this is from the L2 WETH gateway
-      if (EthereumAddress(input.log.address) !== wethGateway.l2Gateway) return
+      if (EthereumAddress(input.log.address) !== network.l2WethGateway) return
 
       // L2 finalization of L1->L2 WETH deposit
       const depositFinalized = parseDepositFinalized(input.log, null)
       if (depositFinalized) {
         // Verify this is for WETH
-        if (
-          EthereumAddress(depositFinalized.l1Token) !== wethGateway.l1Weth
-        ) {
+        if (EthereumAddress(depositFinalized.l1Token) !== network.l1Weth) {
           return
         }
 
@@ -239,17 +212,17 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
           return (
             parsed !== undefined &&
             (parsed.from === '0x0000000000000000000000000000000000000000' ||
-              EthereumAddress(parsed.from) === wethGateway.l2Gateway) &&
+              EthereumAddress(parsed.from) === network.l2WethGateway) &&
             parsed.to.toLowerCase() === depositFinalized.to.toLowerCase() &&
-            EthereumAddress(log.address) === wethGateway.l2Weth
+            EthereumAddress(log.address) === network.l2Weth
           )
         })
 
         if (transferLog) {
           return WethDepositFinalized.create(input.ctx, {
-            chain: wethGateway.chain,
-            l1Weth: Address32.from(wethGateway.l1Weth),
-            l2Weth: Address32.from(wethGateway.l2Weth),
+            chain: network.chain,
+            l1Weth: Address32.from(network.l1Weth),
+            l2Weth: Address32.from(network.l2Weth),
             amount: depositFinalized.amount.toString(),
           })
         }
@@ -259,9 +232,7 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
       const withdrawalInitiated = parseWithdrawalInitiated(input.log, null)
       if (withdrawalInitiated) {
         // Verify this is for WETH
-        if (
-          EthereumAddress(withdrawalInitiated.l1Token) !== wethGateway.l1Weth
-        ) {
+        if (EthereumAddress(withdrawalInitiated.l1Token) !== network.l1Weth) {
           return
         }
 
@@ -272,8 +243,9 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
           return (
             parsed !== undefined &&
             parsed.to === '0x0000000000000000000000000000000000000000' &&
-            parsed.from.toLowerCase() === withdrawalInitiated._from.toLowerCase() &&
-            EthereumAddress(log.address) === wethGateway.l2Weth
+            parsed.from.toLowerCase() ===
+              withdrawalInitiated._from.toLowerCase() &&
+            EthereumAddress(log.address) === network.l2Weth
           )
         })
 
@@ -282,10 +254,10 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
         // Return the WETH-specific withdrawal initiated event
         // The L2ToL1Tx event is captured separately above
         return WethWithdrawalInitiatedL2ToL1Tx.create(input.ctx, {
-          chain: wethGateway.chain,
+          chain: network.chain,
           position: Number(withdrawalInitiated._l2ToL1Id),
-          l1Weth: Address32.from(wethGateway.l1Weth),
-          l2Weth: Address32.from(wethGateway.l2Weth),
+          l1Weth: Address32.from(network.l1Weth),
+          l2Weth: Address32.from(network.l2Weth),
           amount: withdrawalInitiated._amount.toString(),
         })
       }
