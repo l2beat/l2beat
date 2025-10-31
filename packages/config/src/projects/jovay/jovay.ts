@@ -4,8 +4,12 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  EXITS,
+  FORCE_TRANSACTIONS,
+  OPERATOR,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -117,6 +121,61 @@ export const jovay: ScalingProject = {
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(false),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+  },
+  technology: {
+    dataAvailability: {
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
+      references: [
+        {
+          title:
+            'Rollup.sol - commitBatch stores calldata hashes for each batch',
+          url: 'https://etherscan.io/address/0xe0a28B8918a62edB825055221a1dF12c7C81Bac1#code',
+        },
+        {
+          title:
+            'L1Mailbox.sol - sendMsg enqueues transactions on Ethereum',
+          url: 'https://etherscan.io/address/0x9869A90FDAc287519E48aff4cCE329907a995162#code',
+        },
+      ],
+    },
+    operator: {
+      ...OPERATOR.CENTRALIZED_OPERATOR,
+      references: [
+        {
+          title: 'Rollup.sol - addRelayer is restricted to the owner',
+          url: 'https://etherscan.io/address/0xe0a28B8918a62edB825055221a1dF12c7C81Bac1#code',
+        },
+      ],
+    },
+    forceTransactions: {
+      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
+      references: [
+        {
+          title:
+            'L1Mailbox.sol - sendMsg guarded by onlyBridge whitelist',
+          url: 'https://etherscan.io/address/0x9869A90FDAc287519E48aff4cCE329907a995162#code',
+        },
+      ],
+    },
+    exitMechanisms: [
+      {
+        name: 'Regular messaging',
+      description: `The user initiates L2->L1 messages by submitting a regular transaction on this chain. When the block containing that transaction is settled, the message becomes available for processing on L1.`,
+      risks: [],
+        references: [
+          {
+            title:
+              'L1ETHBridge.sol - finalizeWithdraw executes ETH withdrawals',
+            url: 'https://etherscan.io/address/0x922248Db4A99bB542539ae7165FB9D7A546FB9F1#code',
+          },
+          {
+            title:
+              'L1Mailbox.sol - relayMsgWithProof verifies withdrawal proofs',
+            url: 'https://etherscan.io/address/0x9869A90FDAc287519E48aff4cCE329907a995162#code',
+          },
+        ],
+      },
+    ],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   contracts: {
