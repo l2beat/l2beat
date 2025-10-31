@@ -1,7 +1,9 @@
-import { assert } from '@l2beat/shared-pure'
-import type { CelestiaRpcClient } from '../../clients/rpc-celestia/CelestiaRpcClient'
+import type { CelestiaBlock, CelestiaRpcClient } from '../../clients'
 import type { DaBlobProvider } from './DaProvider'
 import type { CelestiaBlob } from './types'
+
+const PAY_FOR_BLOBS_EVENT_SIGNATURE =
+  'Y2VsZXN0aWEuYmxvYi52MS5Nc2dQYXlGb3JCbG9ic'
 
 export class CelestiaDaProvider implements DaBlobProvider {
   constructor(
@@ -21,47 +23,37 @@ export class CelestiaDaProvider implements DaBlobProvider {
   private async getBlobsFromBlock(
     blockNumber: number,
   ): Promise<CelestiaBlob[]> {
-    const [block, blockTimestamp] = await Promise.all([
-      this.rpcClient.getBlockResult(blockNumber),
-      this.rpcClient.getBlockTimestamp(blockNumber),
-    ])
+    const blockData = await this.rpcClient.getBlock(blockNumber)
+    const namespaces = this.extractNamespaces(blockData)
+    const blobsForNamespaces = await this.rpcClient.getBlobsForNamespaces(
+      blockNumber,
+      namespaces,
+    )
 
-    if (block.txs_results === null) {
+    if (blobsForNamespaces.length === 0) {
       return []
     }
 
-    const blobEvents = block.txs_results
-      .flatMap(({ events }) => events)
-      .filter(({ type }) => type === 'celestia.blob.v1.EventPayForBlobs')
-
-    const blobs: CelestiaBlob[] = blobEvents.flatMap((blobEvent) => {
-      const namespaces = getAttributeValue<string[]>(blobEvent, 'namespaces')
-      const sizes = getAttributeValue<number[]>(blobEvent, 'blob_sizes')
-
-      assert(
-        namespaces.length === sizes.length,
-        `[${blockNumber}] Namespaces and sizes should be equal length`,
-      )
-
-      return namespaces.map((namespace, i) => ({
+    const blobs: CelestiaBlob[] = blobsForNamespaces.map((blobForNamespace) => {
+      const { namespace, data } = blobForNamespace
+      const size = Buffer.from(data, 'base64').length
+      return {
         type: 'celestia',
         daLayer: this.daLayer,
         namespace,
-        blockTimestamp,
+        blockTimestamp: blockData.block.header.time,
         blockNumber,
-        size: BigInt(sizes[i]),
-      }))
+        size: BigInt(size),
+      }
     })
 
     return blobs
   }
-}
 
-function getAttributeValue<T>(
-  event: { attributes: { key: string; value?: string }[] },
-  key: string,
-): T {
-  const attribute = event.attributes.find((a) => a.key === key)
-  assert(attribute && attribute.value, `${key} should be defined`)
-  return JSON.parse(attribute.value) as T
+  private extractNamespaces(blockData: CelestiaBlock): string[] {
+    const blobsTxs = blockData.block.data.txs.filter((tx) =>
+      tx.includes(PAY_FOR_BLOBS_EVENT_SIGNATURE),
+    )
+    return blobsTxs.map((txData) => `${txData.slice(128, 128 + 39)}=`)
+  }
 }

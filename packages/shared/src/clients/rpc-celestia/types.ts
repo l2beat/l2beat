@@ -1,36 +1,20 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
-export type CelestiaBlock = v.infer<typeof CelestiaBlock>
 const CelestiaBlock = v.object({
   block: v.object({
     header: v.object({
-      time: v.string(),
+      time: v.string().transform((val) => UnixTime.fromDate(new Date(val))),
+    }),
+    data: v.object({
+      txs: v.array(v.string()),
     }),
   }),
 })
+export type CelestiaBlock = v.infer<typeof CelestiaBlock>
 
 export const CelestiaBlockResponse = v.object({
   result: CelestiaBlock,
-})
-
-export type CelestiaBlockResult = v.infer<typeof CelestiaBlockResult>
-const CelestiaBlockResult = v.object({
-  height: v.string(),
-  txs_results: v.union([
-    v.null(),
-    v.array(
-      v.object({
-        events: v.array(
-          v.object({
-            type: v.string(),
-            attributes: v.array(
-              v.object({ key: v.string(), value: v.string().optional() }),
-            ),
-          }),
-        ),
-      }),
-    ),
-  ]),
 })
 
 export const CelestiaValidatorsResponse = v.object({
@@ -45,8 +29,10 @@ export const CelestiaValidatorsResponse = v.object({
   }),
 })
 
-export const CelestiaBlockResultResponse = v.object({
-  result: CelestiaBlockResult,
+export const CelestiaBlockchainResponse = v.object({
+  result: v.object({
+    last_height: v.string(),
+  }),
 })
 
 export const CelestiaErrorResponse = v.object({
@@ -55,4 +41,13 @@ export const CelestiaErrorResponse = v.object({
     message: v.string(),
     data: v.string(),
   }),
+})
+
+export type CelestiaBlobResponse = v.infer<typeof CelestiaBlobSchema>
+const CelestiaBlobSchema = v.object({
+  namespace: v.string(),
+  data: v.string(),
+})
+export const CelestiaBlobsResponse = v.object({
+  result: v.union([v.array(CelestiaBlobSchema), v.null()]),
 })
