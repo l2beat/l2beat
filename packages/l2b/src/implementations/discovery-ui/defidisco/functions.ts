@@ -8,6 +8,7 @@ import type {
   ContractFunctions,
   OwnerDefinition,
 } from './types'
+import { DiscoveredDataAccess, resolvePathExpression } from './ownerResolution'
 
 // Interface for resolved owner information
 export interface ResolvedOwner {
@@ -278,7 +279,7 @@ function mergeContractFunctions(
 }
 
 /**
- * Resolves owner definitions using unified path expressions:
+ * Resolves owner definitions using unified path expressions with shared utility:
  * Path format: <contractRef>.<valuePath>
  * - $self: current contract
  * - @fieldName: follow address field in current contract
@@ -304,35 +305,35 @@ export function resolveOwnersFromDiscovered(
   try {
     const fileContent = fs.readFileSync(discoveredPath, 'utf8')
     const discovered = JSON.parse(fileContent)
+    const dataAccess = new DiscoveredDataAccess(discovered)
 
     const resolved: ResolvedOwner[] = []
 
     for (const definition of ownerDefinitions) {
-      try {
-        const result = resolvePathExpression(discovered, contractAddress, definition.path)
-        // If there's only one address and no complex structure, create one resolved owner
-        if (result.addresses.length === 1 && typeof result.structuredValue === 'string') {
-          resolved.push({
-            address: result.addresses[0]!,
-            source: definition,
-            isResolved: true,
-          })
-        } else {
-          // Multiple addresses or complex structure - create entries with structured value
-          resolved.push(...result.addresses.map(address => ({
-            address,
-            source: definition,
-            isResolved: true,
-            structuredValue: result.structuredValue,
-          })))
-        }
-      } catch (error) {
+      const result = resolvePathExpression(dataAccess, contractAddress, definition.path)
+
+      if (result.error) {
         resolved.push({
           address: 'RESOLUTION_FAILED',
           source: definition,
           isResolved: false,
-          error: error instanceof Error ? error.message : 'Unknown error',
+          error: result.error,
         })
+      } else if (result.addresses.length === 1 && typeof result.structuredValue === 'string') {
+        // If there's only one address and no complex structure, create one resolved owner
+        resolved.push({
+          address: result.addresses[0]!,
+          source: definition,
+          isResolved: true,
+        })
+      } else {
+        // Multiple addresses or complex structure - create entries with structured value
+        resolved.push(...result.addresses.map(address => ({
+          address,
+          source: definition,
+          isResolved: true,
+          structuredValue: result.structuredValue,
+        })))
       }
     }
 
@@ -348,283 +349,6 @@ export function resolveOwnersFromDiscovered(
   }
 }
 
-/**
- * Resolves a path expression to owner data (addresses + structured value)
- * Path format: <contractRef>.<valuePath>
- * Examples:
- *   "$self.owner" → owner in current contract
- *   "@governor.signers[0]" → follow governor field, get first signer
- *   "eth:0x123.accessControl.ADMIN.members" → absolute address, get role members
- *
- * Returns: { addresses: string[], structuredValue: any }
- */
-function resolvePathExpression(
-  discovered: any,
-  currentContractAddress: string,
-  pathExpression: string
-): { addresses: string[], structuredValue: any } {
-  if (!discovered.entries || !Array.isArray(discovered.entries)) {
-    throw new Error('No entries found in discovered data')
-  }
-
-  // Parse path expression: <contractRef>.<valuePath>
-  // Special case: just "$self" means current contract is the owner
-  if (pathExpression === '$self') {
-    return {
-      addresses: [currentContractAddress],
-      structuredValue: currentContractAddress
-    }
-  }
-
-  // Split on first dot to separate contract ref from value path
-  const firstDotIndex = pathExpression.indexOf('.')
-
-  if (firstDotIndex === -1) {
-    throw new Error(`Invalid path expression "${pathExpression}": must include contract reference and value path`)
-  }
-
-  const contractRef = pathExpression.substring(0, firstDotIndex)
-  const valuePath = pathExpression.substring(firstDotIndex + 1)
-
-  // Resolve contract reference to actual contract address
-  let targetContractAddress: string
-
-  if (contractRef === '$self') {
-    // Current contract
-    targetContractAddress = currentContractAddress
-  } else if (contractRef.startsWith('@')) {
-    // Follow an address field in current contract
-    const fieldName = contractRef.substring(1) // Remove @ prefix
-    const currentContract = findContract(discovered, currentContractAddress)
-    targetContractAddress = getFieldValue(currentContract, fieldName)
-
-    if (!targetContractAddress || typeof targetContractAddress !== 'string' || !targetContractAddress.startsWith('eth:')) {
-      throw new Error(`Field "${fieldName}" not found or is not an address in current contract`)
-    }
-  } else if (contractRef.startsWith('eth:')) {
-    // Absolute contract address
-    targetContractAddress = contractRef
-  } else {
-    throw new Error(`Invalid contract reference "${contractRef}": must be $self, @fieldName, or eth:0xAddress`)
-  }
-
-  // Find target contract
-  const targetContract = findContract(discovered, targetContractAddress)
-
-  // Navigate value path in contract.values
-  return navigateValuePath(targetContract, valuePath)
-}
-
-/**
- * Finds a contract in discovered data by address
- */
-function findContract(discovered: any, contractAddress: string): any {
-  const contract = discovered.entries.find((entry: any) =>
-    entry.type === 'Contract' && entry.address === contractAddress
-  )
-
-  if (!contract) {
-    const available = discovered.entries
-      .filter((e: any) => e.type === 'Contract')
-      .map((e: any) => e.address)
-      .slice(0, 5)
-      .join(', ')
-    throw new Error(`Contract ${contractAddress} not found. Available: ${available}...`)
-  }
-
-  return contract
-}
-
-/**
- * Gets a field value from a contract's values object
- */
-function getFieldValue(contract: any, fieldName: string): any {
-  if (!contract.values || typeof contract.values !== 'object') {
-    throw new Error('Contract has no values')
-  }
-
-  const value = contract.values[fieldName]
-
-  if (value === undefined) {
-    throw new Error(`Field ${fieldName} not found in contract values`)
-  }
-
-  // Handle string addresses (most common case)
-  if (typeof value === 'string' && value.startsWith('eth:')) {
-    return value
-  }
-
-  // Handle complex field value objects
-  if (typeof value === 'object' && value.type === 'address') {
-    return value.address
-  }
-
-  return value
-}
-
-/**
- * Navigates a value path in contract.values and returns the resolved value
- * Supports any structure with JSONPath-like navigation:
- * - Simple fields: "owner"
- * - Nested objects: "accessControl.DEFAULT_ADMIN_ROLE.members"
- * - Array indices: "signers[0]"
- * - Dynamic keys: "permissions[eth:0x123][0xROLE].entities"
- * - Mixed: "governance.roles[ADMIN_ROLE][0]"
- *
- * Returns: { addresses: string[], structuredValue: any }
- * - addresses: flat array of all addresses found (for backward compatibility)
- * - structuredValue: the actual resolved value with its structure preserved
- */
-function navigateValuePath(contract: any, valuePath: string): { addresses: string[], structuredValue: any } {
-  if (!contract.values || typeof contract.values !== 'object') {
-    throw new Error('Contract has no values')
-  }
-
-  // Parse and navigate the path
-  let currentValue: any = contract.values
-  const segments = parseValuePath(valuePath)
-
-  for (let i = 0; i < segments.length; i++) {
-    const segment = segments[i]!
-
-    if (segment.type === 'property') {
-      // Navigate object property
-      if (typeof currentValue !== 'object' || currentValue === null) {
-        throw new Error(`Cannot access property "${segment.value}" on non-object at path segment ${i}`)
-      }
-      currentValue = currentValue[segment.value]
-      if (currentValue === undefined) {
-        const available = Object.keys(currentValue || {}).slice(0, 5).join(', ')
-        throw new Error(`Property "${segment.value}" not found. Available: ${available}`)
-      }
-    } else if (segment.type === 'index') {
-      // Navigate array index
-      if (!Array.isArray(currentValue)) {
-        throw new Error(`Cannot index non-array at path segment ${i}`)
-      }
-      const index = segment.value as number
-      if (index >= currentValue.length) {
-        throw new Error(`Index ${index} out of bounds (length: ${currentValue.length})`)
-      }
-      currentValue = currentValue[index]
-    }
-  }
-
-  // Validate that the value contains addresses and extract them
-  const addresses = extractAddresses(currentValue, valuePath)
-
-  // Return both the extracted addresses and the structured value
-  return {
-    addresses,
-    structuredValue: currentValue
-  }
-}
-
-/**
- * Parses a value path into segments
- * Examples:
- *   "owner" → [{type: 'property', value: 'owner'}]
- *   "signers[0]" → [{type: 'property', value: 'signers'}, {type: 'index', value: 0}]
- *   "accessControl.ADMIN.members" → [{type: 'property', value: 'accessControl'}, {type: 'property', value: 'ADMIN'}, {type: 'property', value: 'members'}]
- */
-function parseValuePath(path: string): Array<{ type: 'property' | 'index'; value: string | number }> {
-  const segments: Array<{ type: 'property' | 'index'; value: string | number }> = []
-  let current = ''
-  let i = 0
-
-  while (i < path.length) {
-    const char = path[i]!
-
-    if (char === '.') {
-      // Property separator
-      if (current) {
-        segments.push({ type: 'property', value: current })
-        current = ''
-      }
-      i++
-    } else if (char === '[') {
-      // Start of array index
-      if (current) {
-        segments.push({ type: 'property', value: current })
-        current = ''
-      }
-
-      // Find closing bracket
-      const closeIndex = path.indexOf(']', i)
-      if (closeIndex === -1) {
-        throw new Error(`Unclosed bracket in path: ${path}`)
-      }
-
-      const indexStr = path.substring(i + 1, closeIndex)
-      const index = parseInt(indexStr, 10)
-
-      if (isNaN(index)) {
-        // Not a numeric index, treat as property key (e.g., [eth:0x123] or [ROLE])
-        segments.push({ type: 'property', value: indexStr })
-      } else {
-        segments.push({ type: 'index', value: index })
-      }
-
-      i = closeIndex + 1
-    } else {
-      current += char
-      i++
-    }
-  }
-
-  // Add final segment
-  if (current) {
-    segments.push({ type: 'property', value: current })
-  }
-
-  return segments
-}
-
-/**
- * Extracts address strings from a value (can be string, array, or object)
- * Recursively extracts addresses from objects
- */
-function extractAddresses(value: any, path: string): string[] {
-  // Single string address
-  if (typeof value === 'string' && value.startsWith('eth:')) {
-    return [value]
-  }
-
-  // Array - recursively extract from elements
-  if (Array.isArray(value)) {
-    const addresses: string[] = []
-    for (const element of value) {
-      if (typeof element === 'string' && element.startsWith('eth:')) {
-        addresses.push(element)
-      } else if (typeof element === 'object' && element !== null) {
-        // Recursively extract from object elements
-        addresses.push(...extractAddresses(element, path))
-      }
-    }
-    if (addresses.length > 0) {
-      return addresses
-    }
-  }
-
-  // Object - recursively extract addresses from all properties
-  if (typeof value === 'object' && value !== null) {
-    const addresses: string[] = []
-    for (const key in value) {
-      const prop = value[key]
-      if (typeof prop === 'string' && prop.startsWith('eth:')) {
-        addresses.push(prop)
-      } else if (typeof prop === 'object' && prop !== null) {
-        // Recursively extract from nested objects/arrays
-        addresses.push(...extractAddresses(prop, path))
-      }
-    }
-    if (addresses.length > 0) {
-      return addresses
-    }
-  }
-
-  throw new Error(`Value at path "${path}" does not contain any addresses`)
-}
 
 /**
  * Resolves a delay field value from discovered data.

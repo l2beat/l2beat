@@ -177,7 +177,7 @@ function calculateUpgradeabilityStats(
   // Process each contract's functions
   Object.entries(permissionOverrides.contracts).forEach(([, contractPermissions]: [string, any]) => {
     contractPermissions.functions.forEach((func: any) => {
-      if (func.userClassification === 'permissioned' && func.score && func.score !== 'unscored') {
+      if (func.isPermissioned === true && func.score && func.score !== 'unscored') {
         // Determine which risk category this function belongs to
         let targetStats: OwnerTypeStats
         switch (func.score) {

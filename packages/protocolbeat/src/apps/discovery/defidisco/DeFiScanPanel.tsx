@@ -6,6 +6,7 @@ import { useContractTags } from '../../../hooks/useContractTags'
 import { Checkbox } from '../../../components/Checkbox'
 import { usePanelStore } from '../store/panel-store'
 import { ResultsSection } from './ResultsSection'
+import { UIContractDataAccess, resolvePathExpression } from './ownerResolution'
 
 export function DeFiScanPanel() {
   const { project } = useParams()
@@ -99,7 +100,7 @@ function StatusOfReviewSection({ projectData, contractTags, functions }: { proje
     allEoas.push(...entry.eoas)
   })
 
-  // Count permissions from permission-overrides (contract-grouped structure)
+  // Count permissions from functions data (contract-grouped structure)
   // Note: Permissions can be stored under implementation addresses for proxy contracts
   let permissionedFunctions = 0
   let checkedFunctions = 0
@@ -107,7 +108,7 @@ function StatusOfReviewSection({ projectData, contractTags, functions }: { proje
   if (functions.contracts) {
     Object.values(functions.contracts).forEach((contractPermissions: any) => {
       contractPermissions.functions.forEach((func: any) => {
-        if (func.userClassification === 'permissioned') {
+        if (func.isPermissioned === true) {
           permissionedFunctions++
           if (func.checked === true) {
             checkedFunctions++
@@ -335,7 +336,17 @@ function ContractsWithPermissionsTable({ projectData, functions }: { projectData
 
   // Build list of contracts with permissions
   // Permissions can be stored under proxy addresses, implementation addresses, or both
-  const contractsMap = new Map<string, { address: string; name: string; permissions: { checked: number; total: number } }>()
+  const contractsMap = new Map<string, {
+    address: string
+    name: string
+    permissions: { checked: number; total: number }
+    owners: Set<string>
+  }>()
+
+  // Create data access for owner resolution
+  const allContracts = projectData?.entries ?
+    projectData.entries.flatMap((e: any) => [...e.initialContracts, ...e.discoveredContracts]) : []
+  const dataAccess = new UIContractDataAccess(allContracts)
 
   if (functions.contracts) {
     // Build contract name lookup map
@@ -356,22 +367,32 @@ function ContractsWithPermissionsTable({ projectData, functions }: { projectData
     Object.keys(functions.contracts).forEach((permissionAddress) => {
       if (processed.has(permissionAddress)) return
 
-      // Calculate permissions for this address
-      const calcPerms = (addr: string) => {
+      // Calculate permissions and collect owners for this address
+      const calcPermsAndOwners = (addr: string) => {
         let checked = 0
         let total = 0
+        const owners = new Set<string>()
         const perms = functions.contracts[addr]
         if (perms) {
           perms.functions.forEach((func: any) => {
-            if (func.userClassification === 'permissioned') {
+            if (func.isPermissioned === true) {
               total++
               if (func.checked === true) {
                 checked++
               }
+              // Resolve owners for this function
+              if (func.ownerDefinitions && func.ownerDefinitions.length > 0) {
+                func.ownerDefinitions.forEach((ownerDef: any) => {
+                  const result = resolvePathExpression(dataAccess, addr, ownerDef.path)
+                  if (!result.error && result.addresses.length > 0) {
+                    result.addresses.forEach((ownerAddr: string) => owners.add(ownerAddr))
+                  }
+                })
+              }
             }
           })
         }
-        return { checked, total }
+        return { checked, total, owners }
       }
 
       // Check if this address is an implementation with a proxy
@@ -379,13 +400,16 @@ function ContractsWithPermissionsTable({ projectData, functions }: { projectData
 
       if (proxyAddr) {
         // This is an implementation - merge with proxy
-        const implPerms = calcPerms(permissionAddress)
-        const proxyPerms = calcPerms(proxyAddr)
+        const implData = calcPermsAndOwners(permissionAddress)
+        const proxyData = calcPermsAndOwners(proxyAddr)
 
-        if (implPerms.total === 0 && proxyPerms.total === 0) return
+        if (implData.total === 0 && proxyData.total === 0) return
 
         processed.add(permissionAddress)
         processed.add(proxyAddr)
+
+        // Merge owners from both
+        const allOwners = new Set([...implData.owners, ...proxyData.owners])
 
         // Use proxy's name and address
         const contractInfo = contractInfoMap.get(proxyAddr) || { address: proxyAddr, name: 'Unknown Contract' }
@@ -393,14 +417,15 @@ function ContractsWithPermissionsTable({ projectData, functions }: { projectData
           address: proxyAddr,
           name: contractInfo.name,
           permissions: {
-            checked: implPerms.checked + proxyPerms.checked,
-            total: implPerms.total + proxyPerms.total
-          }
+            checked: implData.checked + proxyData.checked,
+            total: implData.total + proxyData.total
+          },
+          owners: allOwners
         })
       } else {
         // This is either a proxy or standalone contract
-        const perms = calcPerms(permissionAddress)
-        if (perms.total === 0) return
+        const data = calcPermsAndOwners(permissionAddress)
+        if (data.total === 0) return
 
         // Check if it's a proxy with an implementation
         const implAddr = getImplementationAddress(permissionAddress, projectData)
@@ -419,7 +444,8 @@ function ContractsWithPermissionsTable({ projectData, functions }: { projectData
         contractsMap.set(displayAddress, {
           address: displayAddress,
           name: contractInfo.name,
-          permissions: perms
+          permissions: data,
+          owners: data.owners
         })
       }
     })
@@ -435,28 +461,46 @@ function ContractsWithPermissionsTable({ projectData, functions }: { projectData
     selectGlobal(contractAddress)
   }
 
+  // Helper to get contract name from address
+  const getContractName = (address: string): string => {
+    const contractInfoMap = buildContractsMap(projectData)
+    const info = contractInfoMap.get(address)
+    if (info) return info.name
+    return address.slice(0, 10) + '...'
+  }
+
   return (
     <div className="mt-1">
       <div className="text-xs">
         {contractsWithPermissions.map((contract) => {
           const isIncomplete = contract.permissions.checked < contract.permissions.total
+          const ownerCount = contract.owners.size
+          const ownersList = Array.from(contract.owners)
 
           return (
             <div
               key={contract.address}
-              className="cursor-pointer py-0.5 px-1 rounded hover:bg-coffee-500 transition-colors flex justify-between"
+              className="cursor-pointer py-0.5 px-1 rounded hover:bg-coffee-500 transition-colors"
               onClick={() => handleContractClick(contract.address)}
             >
-              <span
-                style={{ color: isIncomplete ? '#f87171' : 'white' }}
-              >
-                {getContractDisplayName(contract)}
-              </span>
-              <span
-                style={{ color: isIncomplete ? '#f87171' : 'white' }}
-              >
-                ({contract.permissions.checked}/{contract.permissions.total})
-              </span>
+              <div className="flex justify-between">
+                <span
+                  style={{ color: isIncomplete ? '#f87171' : 'white' }}
+                >
+                  {getContractDisplayName(contract)}
+                </span>
+                <span
+                  style={{ color: isIncomplete ? '#f87171' : 'white' }}
+                >
+                  ({contract.permissions.checked}/{contract.permissions.total})
+                </span>
+              </div>
+              {ownerCount > 0 && (
+                <div className="text-[10px] text-gray-400 mt-0.5 ml-2">
+                  Owners: {ownersList.slice(0, 3).map(addr => getContractName(addr)).join(', ')}
+                  {ownerCount > 3 && ` +${ownerCount - 3} more`}
+                </div>
+              )}
             </div>
           )
         })}

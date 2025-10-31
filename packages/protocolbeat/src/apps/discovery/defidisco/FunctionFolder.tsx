@@ -15,6 +15,7 @@ import type { OwnerDefinition } from '../../../api/types'
 import { useQuery } from '@tanstack/react-query'
 import { getProject } from '../../../api/api'
 import { usePanelStore } from '../store/panel-store'
+import { UIContractDataAccess, resolvePathExpression } from './ownerResolution'
 
 // Extended type for local display with contractAddress
 interface FunctionEntryWithContract extends FunctionEntry {
@@ -37,196 +38,6 @@ interface FunctionFolderProps {
   onDelayUpdate: (contractAddress: string, functionName: string, delay?: { contractAddress: string; fieldName: string }) => void
 }
 
-// Helper function to find the contract that owns the given address
-// For proxy contracts, the address might be an implementation address in the abis array
-function findContractForAddress(contracts: any[], address: string): any | null {
-  // First try direct match
-  let contract = contracts.find(c => c.address === address)
-  if (contract) {
-    return contract
-  }
-
-  // Not found directly - might be an implementation address
-  // Find the proxy that has this address in its abis array
-  contract = contracts.find(c =>
-    c.abis?.some((abi: any) => abi.address === address)
-  )
-
-  return contract || null
-}
-
-// Helper function to navigate value path in UI (mirrors backend logic)
-// Returns: { addresses: string[], structuredValue: any }
-function navigateValuePathInUI(contract: any, valuePath: string): { addresses: string[], structuredValue: any } {
-  if (!contract.fields || contract.fields.length === 0) {
-    throw new Error('Contract has no fields')
-  }
-
-  // Convert fields array to values object for easier navigation
-  const values: any = {}
-  for (const field of contract.fields) {
-    values[field.name] = convertFieldValueToPlainValue(field.value)
-  }
-
-  // Parse and navigate the path
-  let currentValue: any = values
-  const segments = parseValuePathInUI(valuePath)
-
-  for (let i = 0; i < segments.length; i++) {
-    const segment = segments[i]!
-
-    if (segment.type === 'property') {
-      if (typeof currentValue !== 'object' || currentValue === null) {
-        throw new Error(`Cannot access property "${segment.value}" on non-object`)
-      }
-      currentValue = currentValue[segment.value]
-      if (currentValue === undefined) {
-        throw new Error(`Property "${segment.value}" not found`)
-      }
-    } else if (segment.type === 'index') {
-      if (!Array.isArray(currentValue)) {
-        throw new Error(`Cannot index non-array`)
-      }
-      const index = segment.value as number
-      if (index >= currentValue.length) {
-        throw new Error(`Index ${index} out of bounds`)
-      }
-      currentValue = currentValue[index]
-    }
-  }
-
-  // Validate that the value contains addresses and extract them
-  const addresses = extractAddressesInUI(currentValue, valuePath)
-
-  // Return both the extracted addresses and the structured value
-  return {
-    addresses,
-    structuredValue: currentValue
-  }
-}
-
-// Converts FieldValue to plain JS value for easier navigation
-function convertFieldValueToPlainValue(fieldValue: any): any {
-  if (!fieldValue || !fieldValue.type) {
-    return fieldValue
-  }
-
-  switch (fieldValue.type) {
-    case 'address':
-      return fieldValue.address
-    case 'string':
-    case 'number':
-    case 'hex':
-      return fieldValue.value
-    case 'boolean':
-      return fieldValue.value
-    case 'array':
-      return fieldValue.values.map((v: any) => convertFieldValueToPlainValue(v))
-    case 'object':
-      // Object is stored as [[key, value], [key, value], ...]
-      const obj: any = {}
-      for (const [keyField, valueField] of fieldValue.values) {
-        const key = convertFieldValueToPlainValue(keyField)
-        const value = convertFieldValueToPlainValue(valueField)
-        obj[key] = value
-      }
-      return obj
-    default:
-      return fieldValue
-  }
-}
-
-// Parses value path into segments (same as backend)
-function parseValuePathInUI(path: string): Array<{ type: 'property' | 'index'; value: string | number }> {
-  const segments: Array<{ type: 'property' | 'index'; value: string | number }> = []
-  let current = ''
-  let i = 0
-
-  while (i < path.length) {
-    const char = path[i]!
-
-    if (char === '.') {
-      if (current) {
-        segments.push({ type: 'property', value: current })
-        current = ''
-      }
-      i++
-    } else if (char === '[') {
-      if (current) {
-        segments.push({ type: 'property', value: current })
-        current = ''
-      }
-
-      const closeIndex = path.indexOf(']', i)
-      if (closeIndex === -1) {
-        throw new Error(`Unclosed bracket in path: ${path}`)
-      }
-
-      const indexStr = path.substring(i + 1, closeIndex)
-      const index = parseInt(indexStr, 10)
-
-      if (isNaN(index)) {
-        segments.push({ type: 'property', value: indexStr })
-      } else {
-        segments.push({ type: 'index', value: index })
-      }
-
-      i = closeIndex + 1
-    } else {
-      current += char
-      i++
-    }
-  }
-
-  if (current) {
-    segments.push({ type: 'property', value: current })
-  }
-
-  return segments
-}
-
-// Extracts addresses from value (recursively handles objects)
-function extractAddressesInUI(value: any, path: string): string[] {
-  // Single string address
-  if (typeof value === 'string' && value.startsWith('eth:')) {
-    return [value]
-  }
-
-  // Array - recursively extract from elements
-  if (Array.isArray(value)) {
-    const addresses: string[] = []
-    for (const element of value) {
-      if (typeof element === 'string' && element.startsWith('eth:')) {
-        addresses.push(element)
-      } else if (typeof element === 'object' && element !== null) {
-        // Recursively extract from object elements
-        addresses.push(...extractAddressesInUI(element, path))
-      }
-    }
-    if (addresses.length > 0) {
-      return addresses
-    }
-  }
-
-  // Object - recursively extract addresses from all properties
-  if (typeof value === 'object' && value !== null) {
-    const addresses: string[] = []
-    for (const key in value) {
-      const prop = value[key]
-      if (typeof prop === 'string' && prop.startsWith('eth:')) {
-        addresses.push(prop)
-      } else if (typeof prop === 'object' && prop !== null) {
-        // Recursively extract from nested objects/arrays
-        addresses.push(...extractAddressesInUI(prop, path))
-      }
-    }
-    if (addresses.length > 0) {
-      return addresses
-    }
-  }
-
-  throw new Error(`Value at path "${path}" does not contain any addresses`)
-}
 
 export function FunctionFolder({
   entry,
@@ -258,99 +69,36 @@ export function FunctionFolder({
     enabled: !!project,
   })
 
-  // Owner resolution using unified path expressions
+  // Owner resolution using unified path expressions with shared utility
   const resolvedOwners = React.useMemo(() => {
     if (!currentFunction?.ownerDefinitions || !projectData?.entries) {
       return []
     }
 
     const allContracts = projectData.entries.flatMap(e => [...e.initialContracts, ...e.discoveredContracts])
+    const dataAccess = new UIContractDataAccess(allContracts)
 
     return currentFunction.ownerDefinitions.map(definition => {
-      try {
-        const result = resolvePathExpressionInUI(allContracts, contractAddress, definition.path)
+      const result = resolvePathExpression(dataAccess, contractAddress, definition.path)
 
-        if (result.addresses.length === 0) {
-          throw new Error('No addresses found')
-        }
-
-        return {
-          address: result.addresses[0]!,
-          source: definition,
-          isResolved: true,
-          allAddresses: result.addresses, // Keep all resolved addresses for display
-          structuredValue: result.structuredValue // Keep the structured value to preserve object structure
-        }
-      } catch (error) {
+      if (result.error) {
         return {
           address: 'RESOLUTION_FAILED',
           source: definition,
           isResolved: false,
-          error: error instanceof Error ? error.message : 'Unknown error'
+          error: result.error
         }
+      }
+
+      return {
+        address: result.addresses[0] || 'NO_ADDRESSES',
+        source: definition,
+        isResolved: true,
+        allAddresses: result.addresses, // Keep all resolved addresses for display
+        structuredValue: result.structuredValue // Keep the structured value to preserve object structure
       }
     })
   }, [currentFunction?.ownerDefinitions, projectData, contractAddress])
-
-  // Resolve path expression in UI
-  function resolvePathExpressionInUI(
-    allContracts: any[],
-    currentContractAddress: string,
-    pathExpression: string
-  ): { addresses: string[], structuredValue: any } {
-    // Special case: just "$self" means current contract is the owner
-    if (pathExpression === '$self') {
-      return {
-        addresses: [currentContractAddress],
-        structuredValue: currentContractAddress
-      }
-    }
-
-    // Split on first dot to separate contract ref from value path
-    const firstDotIndex = pathExpression.indexOf('.')
-
-    if (firstDotIndex === -1) {
-      throw new Error(`Invalid path: must include contract reference and value path`)
-    }
-
-    const contractRef = pathExpression.substring(0, firstDotIndex)
-    const valuePath = pathExpression.substring(firstDotIndex + 1)
-
-    // Resolve contract reference
-    let targetContractAddress: string
-
-    if (contractRef === '$self') {
-      targetContractAddress = currentContractAddress
-    } else if (contractRef.startsWith('@')) {
-      const fieldName = contractRef.substring(1)
-      const currentContract = findContractForAddress(allContracts, currentContractAddress)
-
-      if (!currentContract) {
-        throw new Error('Current contract not found')
-      }
-
-      const field = currentContract.fields?.find((f: any) => f.name === fieldName)
-      if (!field || field.value.type !== 'address') {
-        throw new Error(`Field "${fieldName}" not found or is not an address`)
-      }
-
-      targetContractAddress = (field.value as any).address
-    } else if (contractRef.startsWith('eth:')) {
-      targetContractAddress = contractRef
-    } else {
-      throw new Error(`Invalid contract reference "${contractRef}"`)
-    }
-
-    // Find target contract
-    const targetContract = findContractForAddress(allContracts, targetContractAddress)
-
-    if (!targetContract) {
-      throw new Error(`Contract ${targetContractAddress} not found`)
-    }
-
-    // Navigate value path
-    return navigateValuePathInUI(targetContract, valuePath)
-  }
 
   const ownersLoading = false
   const ownersError = null
