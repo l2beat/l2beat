@@ -1,3 +1,73 @@
+Generated with discovered.json: 0x6bbda819741c8495c041d806fe845440234b9b73
+
+# Diff at Fri, 31 Oct 2025 00:29:43 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@68eb98b0468d176aa44713dcaed98f67b2a200a0 block: 1758899161
+- current timestamp: 1758899161
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758899161 (main branch discovery), not current.
+
+```diff
+    contract L2SecurityCouncilPropose (arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) {
+    +++ description: None
+      receivedPermissions.22:
++        {"permission":"upgrade","from":"eth:0xd92023E9d9911199a6711321D1277285e6d4e2db","role":"admin","via":[{"address":"eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"},{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+    }
+```
+
+```diff
+    contract CoreGovernor (arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) {
+    +++ description: Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 4.5% quorum for proposals.
+      receivedPermissions.19:
++        {"permission":"upgrade","from":"eth:0xd92023E9d9911199a6711321D1277285e6d4e2db","role":"admin","via":[{"address":"eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"},{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+    }
+```
+
+```diff
+    EOA L1Timelock_l2alias (arb1:0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    contract GatewaysAdmin (eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa) {
+    +++ description: None
+      directlyReceivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0xd92023E9d9911199a6711321D1277285e6d4e2db","role":"admin"}
+    }
+```
+
+```diff
+    contract Arbitrum Security Council (eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"eth:0xd92023E9d9911199a6711321D1277285e6d4e2db","role":"admin","via":[{"address":"eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"},{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Wrapped Ether Token (eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1WethGateway (eth:0xd92023E9d9911199a6711321D1277285e6d4e2db)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x5d0ecb0f3d6678b778514ca5f5c29a267e26ac33
 
 # Diff at Fri, 26 Sep 2025 15:07:10 GMT:

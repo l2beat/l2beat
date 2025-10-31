@@ -39,6 +39,7 @@ import { OpStackPlugin } from './opstack/opstack'
 import { OpStackStandardBridgePlugin } from './opstack/opstack-standardbridge'
 import { OrbitStackPlugin } from './orbitstack/orbitstack'
 import { OrbitStackStandardGatewayPlugin } from './orbitstack/orbitstack-standardgateway'
+import { OrbitStackWethGatewayPlugin } from './orbitstack/orbitstack-wethgateway'
 import { RelayPlugin } from './relay/relay.plugin'
 import { RelaySimplePlugIn } from './relay-simple'
 import { SquidCoralPlugin } from './squid-coral'
@@ -114,6 +115,7 @@ export function createInteropPlugins(
       new AxelarPlugin(),
       new AcrossPlugin(deps.configs),
       new OrbitStackStandardGatewayPlugin(), // should be run before OrbitStack
+      new OrbitStackWethGatewayPlugin(), // should be run before OrbitStack
       new OrbitStackPlugin(),
       new OpStackStandardBridgePlugin(), // should be run before OpStack
       new OpStackPlugin(),

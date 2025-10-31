@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "timestamp": 1758899161,
-  "configHash": "0x425825273330d044a5bee85a4ef2f687bf9f8b0090e3d353ec440821db613ecc",
+  "configHash": "0xc53e15e117b6409344f8dbfaea481000ad8779eebcfa9efcec353c55ef0795dc",
   "entries": [
     {
       "address": "arb1:0x0000000000000000000000000000000000000001",
@@ -1400,6 +1400,28 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0xd92023E9d9911199a6711321D1277285e6d4e2db",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa" },
+            { "address": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "role": "admin",
           "via": [
@@ -2424,6 +2446,28 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0xd92023E9d9911199a6711321D1277285e6d4e2db",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa" },
+            { "address": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
+            {
+              "address": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+              "delay": 549816
+            },
+            {
+              "address": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "role": "admin",
           "via": [
@@ -2506,7 +2550,6 @@
       "address": "arb1:0xf7951D92B0C345144506576eC13Ecf5103aC905a",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -3576,6 +3619,11 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "address": "eth:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "GatewayRouter",
       "address": "eth:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
       "type": "Contract",
@@ -3694,6 +3742,11 @@
     },
     {
       "address": "eth:0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -3842,6 +3895,11 @@
         {
           "permission": "upgrade",
           "from": "eth:0xcEe284F754E854890e311e3280b767F80797180d",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd92023E9d9911199a6711321D1277285e6d4e2db",
           "role": "admin"
         }
       ],
@@ -4038,6 +4096,27 @@
       "proxyType": "EOA"
     },
     {
+      "name": "Wrapped Ether Token",
+      "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xec8c1fea9a5a10c4c028664a56d678a0776b07cfc510fc7fa54db0aed0978f49"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1513077455,
+      "sinceBlock": 4719568,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "name": "Wrapped Ether",
+        "symbol": "WETH",
+        "totalSupply": "2485951073703381465875969"
+      },
+      "implementationNames": {
+        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
+      }
+    },
+    {
       "address": "eth:0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc",
       "type": "EOA",
       "proxyType": "EOA",
@@ -4219,6 +4298,64 @@
       "address": "eth:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "L1WethGateway",
+      "address": "eth:0xd92023E9d9911199a6711321D1277285e6d4e2db",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b",
+        "0x07a91511eec88e54898bddfc48de5830a667d9c961413cfb5e747a4dd74e3d45"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1624913245,
+      "sinceBlock": 12724750,
+      "values": {
+        "$admin": "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
+        "$implementation": "eth:0x4B8e9b3F253E68837bf719997B1eeB9E8f1960e2",
+        "$pastUpgrades": [
+          [
+            "2021-06-28T22:19:37.000Z",
+            "0xabf717d1d61d4349c500a23706c81521bdbc74aceba0e9aea2c7a135fe352eae",
+            ["eth:0xbE4371dd2053D4B6113177f81F73b5F8E2075A47"]
+          ],
+          [
+            "2021-07-30T22:41:08.000Z",
+            "0x345b254dab3c0f4e9f5e541df26005b5ddf77bab96a9c8f6bd095cb74e764182",
+            ["eth:0xb0E292c2ceFd5C897883f16af6453dC111940D85"]
+          ],
+          [
+            "2021-08-26T16:14:36.000Z",
+            "0x1188226ac81336a0a00aaa33e0a818c5248c99d12ec27166e6d31b5acf7f59aa",
+            ["eth:0x91801ef40DE9ee143cD2eDFdd43e727E6A06d9F1"]
+          ],
+          [
+            "2021-08-30T17:44:00.000Z",
+            "0xd65cb1643b75e506d0278403da57ee7b1ba7dafa94ac5b677a86d4fb7913cf41",
+            ["eth:0xD21e23a237DaC0311e83f729313232C3b5039925"]
+          ],
+          [
+            "2022-08-08T17:02:04.000Z",
+            "0xf2ba2551709d23686f52c3a3ecc65ae8347f1bab1877265c57ba260e8222bf33",
+            ["eth:0x6299838C8254b59213eb56d158ebe562D23c4936"]
+          ],
+          [
+            "2023-02-10T03:00:23.000Z",
+            "0x18bcb1e0390e182dccb97680b8ca88f06496741c7599a73d8b5220272f3b7c7f",
+            ["eth:0x4B8e9b3F253E68837bf719997B1eeB9E8f1960e2"]
+          ]
+        ],
+        "$upgradeCount": 6,
+        "counterpartGateway": "eth:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B",
+        "inbox": "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
+        "l1Weth": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "l2Weth": "eth:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+        "router": "eth:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
+      },
+      "implementationNames": {
+        "eth:0xd92023E9d9911199a6711321D1277285e6d4e2db": "TransparentUpgradeableProxy",
+        "eth:0x4B8e9b3F253E68837bf719997B1eeB9E8f1960e2": "L1WethGateway"
+      }
     },
     {
       "name": "OneStepProverMemory",
@@ -6598,6 +6735,15 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0xd92023E9d9911199a6711321D1277285e6d4e2db",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa" },
+            { "address": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "role": "admin",
           "via": [
@@ -7975,6 +8121,29 @@
       "function proverMath() view returns (address)",
       "function proverMem() view returns (address)"
     ],
+    "eth:0x4B8e9b3F253E68837bf719997B1eeB9E8f1960e2": [
+      "event DepositInitiated(address l1Token, address indexed _from, address indexed _to, uint256 indexed _sequenceNumber, uint256 _amount)",
+      "event TxToL2(address indexed _from, address indexed _to, uint256 indexed _seqNum, bytes _data)",
+      "event WithdrawRedirected(address indexed from, address indexed to, uint256 indexed exitNum, bytes newData, bytes data, bool madeExternalCall)",
+      "event WithdrawalFinalized(address l1Token, address indexed _from, address indexed _to, uint256 indexed _exitNum, uint256 _amount)",
+      "function calculateL2TokenAddress(address l1ERC20) view returns (address)",
+      "function counterpartGateway() view returns (address)",
+      "function encodeWithdrawal(uint256 _exitNum, address _initialDestination) pure returns (bytes32)",
+      "function finalizeInboundTransfer(address _token, address _from, address _to, uint256 _amount, bytes _data) payable",
+      "function getExternalCall(uint256 _exitNum, address _initialDestination, bytes _initialData) view returns (address target, bytes data)",
+      "function getOutboundCalldata(address _l1Token, address _from, address _to, uint256 _amount, bytes _data) view returns (bytes outboundCalldata)",
+      "function inbox() view returns (address)",
+      "function initialize(address _l2Counterpart, address _l1Router, address _inbox, address _l1Weth, address _l2Weth)",
+      "function l1Weth() view returns (address)",
+      "function l2Weth() view returns (address)",
+      "function outboundTransfer(address _l1Token, address _to, uint256 _amount, uint256 _maxGas, uint256 _gasPriceBid, bytes _data) payable returns (bytes res)",
+      "function outboundTransferCustomRefund(address _l1Token, address _refundTo, address _to, uint256 _amount, uint256 _maxGas, uint256 _gasPriceBid, bytes _data) payable returns (bytes res)",
+      "function postUpgradeInit()",
+      "function redirectedExits(bytes32) view returns (bool isExit, address _newTo, bytes _newData)",
+      "function router() view returns (address)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferExitAndCall(uint256 _exitNum, address _initialDestination, address _newDestination, bytes _newData, bytes _data)"
+    ],
     "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -8595,6 +8764,23 @@
       "function transferExitAndCall(uint256 _exitNum, address _initialDestination, address _newDestination, bytes _newData, bytes _data)",
       "function whitelist() view returns (address)"
     ],
+    "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": [
+      "function name() view returns (string)",
+      "function approve(address guy, uint256 wad) returns (bool)",
+      "function totalSupply() view returns (uint256)",
+      "function transferFrom(address src, address dst, uint256 wad) returns (bool)",
+      "function withdraw(uint256 wad)",
+      "function decimals() view returns (uint8)",
+      "function balanceOf(address) view returns (uint256)",
+      "function symbol() view returns (string)",
+      "function transfer(address dst, uint256 wad) returns (bool)",
+      "function deposit() payable",
+      "function allowance(address, address) view returns (uint256)",
+      "event Approval(address indexed src, address indexed guy, uint256 wad)",
+      "event Transfer(address indexed src, address indexed dst, uint256 wad)",
+      "event Deposit(address indexed dst, uint256 wad)",
+      "event Withdrawal(address indexed src, uint256 wad)"
+    ],
     "eth:0xc4940069140142236D4065b866018f7b2BeC77fD": [
       "function destroy()",
       "function initialize(bytes32 _root, uint256 _numInBatch)",
@@ -8726,6 +8912,16 @@
       "function rely(address usr)",
       "function wards(address) view returns (uint256)"
     ],
+    "eth:0xd92023E9d9911199a6711321D1277285e6d4e2db": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -8841,6 +9037,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "arbitrum": 383248522, "ethereum": 23447973 },
-  "permissionsConfigHash": "0x0e3a96573f6dda655fde4a405cadf690cca538f209eecbf98238792d66b040a7"
+  "usedBlockNumbers": { "ethereum": 23447973, "arbitrum": 383248522 },
+  "permissionsConfigHash": "0x7fddf89a033134a947f860a76d8d446e418bee7773d3f9abafc058603581985a"
 }

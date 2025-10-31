@@ -11,6 +11,7 @@ import {
   type MatchResult,
   Result,
 } from '../types'
+import { DepositInitiatedMessageDelivered as WethDepositInitiated } from './orbitstack-wethgateway'
 
 // == L2->L1 messages ==
 
@@ -73,6 +74,13 @@ export const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
     bridge: EthereumAddress('0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a'),
     arbRetryableTx: EthereumAddress(
       '0x000000000000000000000000000000000000006e',
+    ),
+    // Token Gateways
+    l1StandardGateway: EthereumAddress(
+      '0xa3a7b6f88361f48403514059f1f16c8e78d60eec',
+    ),
+    l2StandardGateway: EthereumAddress(
+      '0x09e9222e96e7b4ae2a407b98d48e330053351eee',
     ),
   },
 ])
@@ -221,23 +229,28 @@ export class OrbitStackPlugin implements InteropPlugin {
 
       // Check if this is an ETH deposit (based on L2 callValue)
       if (event.args.ethAmount) {
-        // Verify L1 has txValue
-        if (
-          !messageDelivered.ctx.txValue ||
-          messageDelivered.ctx.txValue === 0n
-        ) {
+        // Check if this is a WETH deposit (handled by wethgateway plugin)
+        // WETH deposits should not create an ETH transfer here
+        const wethDeposit = db.find(WethDepositInitiated, {
+          messageNum: event.args.messageNum,
+          chain: event.args.chain,
+        })
+        if (wethDeposit) {
+          // WETH gateway will handle the transfer - we don't create one
+          // The Message will be created by wethgateway plugin
           return
         }
 
+        // Native ETH deposit - create both Message and Transfer
         return [
           Result.Message('orbitstack.L1ToL2Message', {
             app: 'orbitstack',
             srcEvent: messageDelivered,
             dstEvent: event,
           }),
-          Result.Transfer('orbitstack-standardgateway.L1ToL2Transfer', {
+          Result.Transfer('orbitstack.L1ToL2Transfer', {
             srcEvent: messageDelivered,
-            srcAmount: messageDelivered.ctx.txValue,
+            srcAmount: BigInt(event.args.ethAmount),
             srcTokenAddress: Address32.NATIVE,
             dstEvent: event,
             dstAmount: BigInt(event.args.ethAmount),

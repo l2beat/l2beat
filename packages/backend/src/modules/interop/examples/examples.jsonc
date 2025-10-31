@@ -884,7 +884,34 @@
       {
         "chain": "arbitrum",
         "tx": "0xc0a88c1ee35876f124cecedeece187913b4db2c7b00dfa0037d27a3e65622374"
+      },
+      // ethereum -> arbitrum (weth)
+      {
+        "chain": "ethereum",
+        "tx": "0xd3cac155ec0c192a58458f91be672b16e59cf084aa31800eb07d2e6001dbf368"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xb0b6f945c00be4f1591050baba93ff0e19145732fbbf2c04a5095aea18d9ed3b"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x4b3a7d33d15e398d5a0eedd88076177eea6574185a8d90b6010f56fa6e7730c0"
       }
+    ],
+    "events": [
+      "orbitstack.MessageDelivered",
+      "orbitstack.RedeemScheduled",
+      "orbitstack-standardgateway.MessageDeliveredDepositInitiated",
+      "orbitstack-standardgateway.DepositFinalized",
+      "orbitstack-wethgateway.MessageDeliveredDepositInitiated",
+      "orbitstack-wethgateway.DepositFinalized"
+    ],
+    "messages": ["orbitstack.L1ToL2Message"],
+    "transfers": [
+      "orbitstack-standardgateway.L1ToL2Transfer",
+      "orbitstack-wethgateway.L1ToL2Transfer",
+      "orbitstack.L1ToL2Transfer"
     ]
   },
   "hyperlane-mix": {
