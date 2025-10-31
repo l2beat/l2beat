@@ -111,7 +111,8 @@ export const apex: ScalingProject = {
     BADGES.Infra.SHARP,
   ],
   proofSystem: {
-    type: 'Optimistic',
+    type: 'Validity',
+    zkCatalogId: ProjectId('stone'),
   },
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
   display: {
