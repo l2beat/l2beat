@@ -17,7 +17,7 @@ export const canto: ScalingProject = upcomingL2({
       websites: ['https://canto.io'],
       bridges: ['https://app.canto.io/bridge'],
       documentation: ['https://docs.canto.io'],
-      explorers: ['https://tuber.build'],
+      explorers: ['https://oklink.com/canto'],
       repositories: ['https://github.com/Canto-Network'],
       socialMedia: [
         'https://twitter.com/CantoPublic',
