@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-10-31T18:32:57.707Z",
+  "lastModified": "2025-10-31T19:02:36.674Z",
   "contracts": {
     "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": {
       "functions": [
@@ -46,7 +46,6 @@
         {
           "functionName": "setGuardianQuorum",
           "isPermissioned": true,
-          "timestamp": "2025-10-06T14:47:10.959Z",
           "checked": true,
           "score": "high-risk",
           "description": "Sets the quorum value. This is the minimum number of guardians that need to take part in a deposit for it to be valid.",
@@ -54,7 +53,8 @@
             {
               "path": "$self.getOwner"
             }
-          ]
+          ],
+          "timestamp": "2025-10-31T19:02:36.674Z"
         },
         {
           "functionName": "addGuardian",
