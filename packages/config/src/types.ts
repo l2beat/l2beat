@@ -257,6 +257,7 @@ export interface MulticallContractConfig {
 export type ChainApiConfig =
   | ChainBasicApi<'rpc'>
   | ChainBasicApi<'starknet'>
+  | ChainBasicApi<'lighter'>
   | ChainBasicApi<'zksync'>
   | ChainBasicApi<'loopring'>
   | ChainBasicApi<'degate3'>
