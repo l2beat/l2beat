@@ -1,7 +1,7 @@
 {
   "name": "jovay",
-  "timestamp": 1761904466,
-  "configHash": "0xcefa4dfcaf4c98e0ee8b51080a3dafdb312a64f4309e6d49da7a10341ae1fa57",
+  "timestamp": 1761907870,
+  "configHash": "0x622125b51a6406eeab9b446ee191c7ffd1aee4ed5e967718f5fbc7970a548154",
   "entries": [
     {
       "name": "DcapAttestationRouter",
@@ -96,7 +96,7 @@
       }
     },
     {
-      "name": "",
+      "name": "TEEVerifierProxyOwner",
       "address": "eth:0x79241BbE3646d8405849Cbe8608e77b82c402892",
       "type": "Contract",
       "unverified": true,
@@ -153,15 +153,12 @@
         "mailBox": "eth:0x9869A90FDAc287519E48aff4cCE329907a995162",
         "owner": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
         "paused": false,
-        "toBridge": "jovay:0xb220D17A11bd2d11e3f57a305FF5b481C81B1028"
+        "toBridge": "eth:0xb220D17A11bd2d11e3f57a305FF5b481C81B1028"
       },
       "implementationNames": {
         "eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1": "TransparentUpgradeableProxy",
         "eth:0x376df788aFc6E801b24fC6C0fa6b53637A947ae7": "L1ETHBridge"
       },
-      "usedTypes": [
-        { "typeCaster": "ChainPrefix", "arg": { "prefix": "jovay" } }
-      ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -246,6 +243,40 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xA217ee134CB95B1ab56eF83a33956E5A979bf6e7",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "role": ".relayer"
+        },
+        {
+          "permission": "sequence",
+          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "role": ".relayer"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xAe13Ce4Cd416cb4598865aa5aC8d13532bd3Cd99",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "role": ".relayer"
+        },
+        {
+          "permission": "sequence",
+          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "role": ".relayer"
+        }
+      ]
+    },
+    {
       "name": "AutomataDcapAttestationFee",
       "address": "eth:0xb3a96165caf30F8F7cE9BCfdaaAe99BA93C1A6F9",
       "type": "Contract",
@@ -297,8 +328,8 @@
         "$upgradeCount": 2,
         "l1_mail_box": "eth:0x9869A90FDAc287519E48aff4cCE329907a995162",
         "l1BlobNumberLimit": 6,
-        "lastCommittedBatch": 970,
-        "lastTeeVerifiedBatch": 970,
+        "lastCommittedBatch": 971,
+        "lastTeeVerifiedBatch": 971,
         "lastZkVerifiedBatch": 0,
         "layer2ChainId": 5734951,
         "maxBlockInChunk": 32,
@@ -307,6 +338,10 @@
         "maxZkCircleInChunk": 4294967295,
         "owner": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
         "paused": false,
+        "relayer": [
+          "eth:0xA217ee134CB95B1ab56eF83a33956E5A979bf6e7",
+          "eth:0xAe13Ce4Cd416cb4598865aa5aC8d13532bd3Cd99"
+        ],
         "rollupTimeLimit": 3600000,
         "tee_verifier": "eth:0x371a8bda9a34d641B546883D6B5895d0A44AD46A",
         "zk_verifier": "eth:0x371a8bda9a34d641B546883D6B5895d0A44AD46A"
@@ -693,10 +728,10 @@
     "jovay/L1ETHBridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "jovay/L1Mailbox": "0xd75a8de0aea57fbdadee1f6157e0f9ba901365080ba928110035ef18640191b8",
     "jovay/MeasurementDao": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "jovay/Rollup": "0xdfed5ac43ec65d05d31bfc9931094d22d95a9a5d84bd1485804f8e5c94f0fdb4",
+    "jovay/Rollup": "0xfefe72e14b81569a237122abd4f83e7a2366955462611ff8eaf63f4f36b103d3",
     "jovay/TEECacheVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "jovay/TEEVerifierProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23696570 },
-  "permissionsConfigHash": "0xe14ae4e963bba2c859c0ac1ec05e67132fb3ef1db8ba420e23a7e587b46578d4"
+  "usedBlockNumbers": { "ethereum": 23696853 },
+  "permissionsConfigHash": "0x519465cb7e1e84c96fef130afd717a0553a0369133c7edb08542054a77898879"
 }

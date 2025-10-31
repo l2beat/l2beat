@@ -60,6 +60,12 @@ export const jovay: ScalingProject = {
         tokens: ['ETH'],
         chain: 'ethereum',
       },
+      {
+        address: EthereumAddress('0x9869A90FDAc287519E48aff4cCE329907a995162'),
+        sinceTimestamp: UnixTime(1754392609),
+        tokens: ['ETH'],
+        chain: 'ethereum',
+      },
     ],
     activityConfig: {
       type: 'block',
@@ -102,11 +108,10 @@ export const jovay: ScalingProject = {
   },
   riskView: {
     stateValidation: {
+      ...RISK_VIEW.STATE_NONE,
+      value: 'TEE attestation',
       description:
-        'A multi-proof system with a TEE verifier and a ZK verifier is configured . However, only the TEE verifier can currently be used to prove blocks.',
-      sentiment: 'bad',
-      value: 'TEE validation',
-      executionDelay: 0,
+        'State roots are accepted when attested by a permissioned Intel SGX TEE through the TEEVerifierProxy. The rollup owner can swap the verifier contract and no permissionless challenges exist, so invalid state roots cannot be disputed or verified onchain.',
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),

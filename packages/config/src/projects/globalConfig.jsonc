@@ -436,12 +436,6 @@
         "prefix": "blastmainnet"
       }
     },
-    "JovayAddress": {
-      "typeCaster": "ChainPrefix",
-      "arg": {
-        "prefix": "jovay"
-      }
-    },
     "ArbOsWasmModuleRoot": {
       "typeCaster": "Mapping",
       "arg": {

@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x46187925026a9ea5e71695eb7892048e00355fd2
+Generated with discovered.json: 0xa068df9137505b691b8dad8cb856f0a378ed111d
 
-# Diff at Fri, 31 Oct 2025 09:55:37 GMT:
+# Diff at Fri, 31 Oct 2025 10:59:58 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current timestamp: 1761904466
+- current timestamp: 1761907870
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+First discovery.
 
 ## Initial discovery
 
@@ -37,7 +37,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (eth:0x79241BbE3646d8405849Cbe8608e77b82c402892)
+    contract TEEVerifierProxyOwner (eth:0x79241BbE3646d8405849Cbe8608e77b82c402892)
     +++ description: None
 ```
 
