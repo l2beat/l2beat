@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xb4558fc46ddef3a964ee3a95e63b95777ca6a28e
+Generated with discovered.json: 0xdf2f75229e06863c6b32f6eb5c5b2d8729313d3e
 
-# Diff at Fri, 31 Oct 2025 09:06:52 GMT:
+# Diff at Fri, 31 Oct 2025 13:59:12 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@68eb98b0468d176aa44713dcaed98f67b2a200a0 block: 1761060538
@@ -92,7 +92,7 @@ AgglayerGER - https://disco.l2beat.com/diff/eth:0xc38C76aE3C8A7dee99d07f1A39246A
     contract PolygonAdminMultisig (eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
     +++ description: None
       receivedPermissions.2:
-+        {"permission":"interact","from":"eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3","description":"change the aggchainSigners and threshold, a multisig used for permissioned state transitions.","role":".alMultisigAC"}
++        {"permission":"interact","from":"eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3","description":"change the aggchainSigners and threshold (a multisig used for permissioned state transitions).","role":".alMultisigAC"}
     }
 ```
 

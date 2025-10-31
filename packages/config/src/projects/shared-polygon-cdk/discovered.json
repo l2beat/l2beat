@@ -256,7 +256,7 @@
         {
           "permission": "interact",
           "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
-          "description": "change the aggchainSigners and threshold, a multisig used for permissioned state transitions.",
+          "description": "change the aggchainSigners and threshold (a multisig used for permissioned state transitions).",
           "role": ".alMultisigAC"
         },
         {
@@ -2600,5 +2600,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23695831 },
-  "permissionsConfigHash": "0x19828c8a71c8cb60e059b208983fab0213fbb79a2603acae6ca74cc2a770896f"
+  "permissionsConfigHash": "0xa27d0300efe1937993acebf4bdaf335c98a18cc14bee4fac7990e1bcf8541aa9"
 }

@@ -354,7 +354,7 @@ export function polygonCDKStack(
             {
               title:
                 'Etherscan: AgglayerManager.sol - verifyPessimisticTrustedAggregator() function',
-              url: 'https://etherscan.io/address/0x42B9fF0644741e3353162678596e7D6aA6a13240#code#F1#L1280',
+              url: 'https://etherscan.io/address/0x15cAF18dEd768e3620E0f656221Bf6B400ad2618#code#F1#L1300',
             },
           ],
         },
