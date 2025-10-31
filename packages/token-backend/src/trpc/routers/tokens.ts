@@ -63,6 +63,11 @@ export const tokensRouter = router({
       })
       return result ?? null
     }),
+  getByChainAndAddress: protectedProcedure
+    .input(v.array(v.object({ chain: v.string(), address: v.string() })))
+    .query(async ({ input }) => {
+      return await db.deployedToken.getByChainAndAddress(input)
+    }),
 
   checkIfDeployedTokenExists: protectedProcedure
     .input(v.object({ chain: v.string(), address: v.string() }))
