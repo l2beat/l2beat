@@ -73,7 +73,7 @@ export const MayanForwarded = createInteropEventType<{
   mayanProtocol: string
   methodSignature: `0x${string}`
   tokenIn: Address32
-  amountIn: string
+  amountIn?: string
   tokenOut?: Address32
   minAmountOut?: string
   $dstChain: string
@@ -87,72 +87,80 @@ export class MayanForwarderPlugin implements InteropPlugin {
     if (forwardedEth) {
       const decodedData = decodeProtocolData(forwardedEth.protocolData)
       if (!decodedData) return
-      return MayanForwarded.create(input.ctx, {
-        mayanProtocol: decodeMayanProtocol(
-          input.ctx.chain,
-          forwardedEth.mayanProtocol,
-        ),
-        methodSignature: decodedData.methodSignature,
-        tokenIn: decodedData.tokenIn ?? Address32.NATIVE,
-        amountIn: decodedData.amountIn ?? input.ctx.txValue,
-        tokenOut: decodedData.tokenOut,
-        minAmountOut: decodedData.minAmountOut,
-        $dstChain: decodedData.dstChain,
-      })
+      return [
+        MayanForwarded.create(input.ctx, {
+          mayanProtocol: decodeMayanProtocol(
+            input.ctx.chain,
+            forwardedEth.mayanProtocol,
+          ),
+          methodSignature: decodedData.methodSignature,
+          tokenIn: decodedData.tokenIn ?? Address32.NATIVE,
+          amountIn: decodedData.amountIn ?? input.ctx.txValue?.toString(),
+          tokenOut: decodedData.tokenOut,
+          minAmountOut: decodedData.minAmountOut,
+          $dstChain: decodedData.dstChain,
+        }),
+      ]
     }
 
     const forwardedERC20 = parseForwardedERC20(input.log, null)
     if (forwardedERC20) {
       const decodedData = decodeProtocolData(forwardedERC20.protocolData)
       if (!decodedData) return
-      return MayanForwarded.create(input.ctx, {
-        mayanProtocol: decodeMayanProtocol(
-          input.ctx.chain,
-          forwardedERC20.mayanProtocol,
-        ),
-        methodSignature: decodedData.methodSignature,
-        tokenIn: decodedData.tokenIn ?? Address32.from(forwardedERC20.token),
-        amountIn: decodedData.amountIn ?? forwardedERC20.amount.toString(),
-        tokenOut: decodedData.tokenOut,
-        minAmountOut: decodedData.minAmountOut,
-        $dstChain: decodedData.dstChain,
-      })
+      return [
+        MayanForwarded.create(input.ctx, {
+          mayanProtocol: decodeMayanProtocol(
+            input.ctx.chain,
+            forwardedERC20.mayanProtocol,
+          ),
+          methodSignature: decodedData.methodSignature,
+          tokenIn: decodedData.tokenIn ?? Address32.from(forwardedERC20.token),
+          amountIn: decodedData.amountIn ?? forwardedERC20.amount.toString(),
+          tokenOut: decodedData.tokenOut,
+          minAmountOut: decodedData.minAmountOut,
+          $dstChain: decodedData.dstChain,
+        }),
+      ]
     }
 
     const swapAndForwardedEth = parseSwapAndForwardedEth(input.log, null)
     if (swapAndForwardedEth) {
       const decodedData = decodeProtocolData(swapAndForwardedEth.mayanData)
       if (!decodedData) return
-      return MayanForwarded.create(input.ctx, {
-        mayanProtocol: decodeMayanProtocol(
-          input.ctx.chain,
-          swapAndForwardedEth.mayanProtocol,
-        ),
-        methodSignature: decodedData.methodSignature,
-        tokenIn: decodedData.tokenIn ?? Address32.ZERO,
-        amountIn: decodedData.amountIn ?? '0',
-        tokenOut: decodedData.tokenOut,
-        minAmountOut: decodedData.minAmountOut,
-        $dstChain: decodedData.dstChain,
-      })
+      return [
+        MayanForwarded.create(input.ctx, {
+          mayanProtocol: decodeMayanProtocol(
+            input.ctx.chain,
+            swapAndForwardedEth.mayanProtocol,
+          ),
+          methodSignature: decodedData.methodSignature,
+          tokenIn: decodedData.tokenIn ?? Address32.ZERO,
+          amountIn: decodedData.amountIn ?? '0',
+          tokenOut: decodedData.tokenOut,
+          minAmountOut: decodedData.minAmountOut,
+          $dstChain: decodedData.dstChain,
+        }),
+      ]
     }
 
     const swapAndForwardedERC20 = parseSwapAndForwardedERC20(input.log, null)
     if (swapAndForwardedERC20) {
       const decodedData = decodeProtocolData(swapAndForwardedERC20.mayanData)
       if (!decodedData) return
-      return MayanForwarded.create(input.ctx, {
-        mayanProtocol: decodeMayanProtocol(
-          input.ctx.chain,
-          swapAndForwardedERC20.mayanProtocol,
-        ),
-        methodSignature: decodedData.methodSignature,
-        tokenIn: decodedData.tokenIn ?? Address32.ZERO,
-        amountIn: decodedData.amountIn ?? '0',
-        tokenOut: decodedData.tokenOut,
-        minAmountOut: decodedData.minAmountOut,
-        $dstChain: decodedData.dstChain,
-      })
+      return [
+        MayanForwarded.create(input.ctx, {
+          mayanProtocol: decodeMayanProtocol(
+            input.ctx.chain,
+            swapAndForwardedERC20.mayanProtocol,
+          ),
+          methodSignature: decodedData.methodSignature,
+          tokenIn: decodedData.tokenIn ?? Address32.ZERO,
+          amountIn: decodedData.amountIn ?? '0',
+          tokenOut: decodedData.tokenOut,
+          minAmountOut: decodedData.minAmountOut,
+          $dstChain: decodedData.dstChain,
+        }),
+      ]
     }
   }
 }

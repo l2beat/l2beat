@@ -58,6 +58,17 @@ export function getUpdateMonitorConfig(
       ['UPDATE_MESSAGES_RETENTION_PERIOD_DAYS'],
       30,
     ),
+    workerPool: {
+      workerCount: env.integer(['UPDATE_MONITOR_WORKER_POOL_COUNT'], 3),
+      timeoutPerTaskMs: env.integer(
+        ['UPDATE_MONITOR_WORKER_POOL_TIMEOUT_PER_TASK_MS'],
+        20 * 60 * 1000, // 10 minutes
+      ),
+      timeoutPerRunMs: env.integer(
+        ['UPDATE_MONITOR_WORKER_POOL_TIMEOUT_PER_RUN_MS'],
+        60 * 60 * 1000, // 1 hour
+      ),
+    },
   }
 }
 

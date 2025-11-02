@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x0b5d761071a93bb2c167755268e28aabb1e76122
+
+# Diff at Fri, 31 Oct 2025 07:24:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@68eb98b0468d176aa44713dcaed98f67b2a200a0 block: 1760431807
+- current timestamp: 1761895426
+
+## Description
+
+New admin.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x17b287122363a0a6dBA7F185347DFcfb9816dA6e) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD","role":".$admin"}
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD","description":"manage the token admin role.","role":".$admin"}
+      receivedPermissions.3:
+-        {"permission":"upgrade","from":"eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD","role":".$admin"}
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    contract StarkPerpetual (eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
++++ description: Permissioned to upgrade the proxy implementations and access all `onlyGovernance` restricted functions in the various implementation contracts.
++++ severity: HIGH
+      values.$admin:
+-        "eth:0x17b287122363a0a6dBA7F185347DFcfb9816dA6e"
++        "eth:0x57814cC6e075f517781cB7c3B42897B3Bb2C54d8"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x57814cC6e075f517781cB7c3B42897B3Bb2C54d8)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/edgex/.flat/Safe/Safe.sol         | 1088 ++++++++++++++++++++
+ .../src/projects/edgex/.flat/Safe/SafeProxy.p.sol  |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
 Generated with discovered.json: 0xb4c46907dc4e1bd153b653fcc735028fe547dc4c
 
 # Diff at Tue, 14 Oct 2025 11:53:00 GMT:

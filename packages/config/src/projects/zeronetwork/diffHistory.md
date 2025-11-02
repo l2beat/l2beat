@@ -1,3 +1,36 @@
+Generated with discovered.json: 0xa129dfb14386cff324142863c3bd34e220c54fac
+
+# Diff at Tue, 28 Oct 2025 09:16:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@090e135db1084f4a9678d6bf1cb0ff5e854903ea block: 1759757379
+- current timestamp: 1761642925
+
+## Description
+
+config related: something to do with the shared modules work imo.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759757379 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-zk-stack"
+      proxyType:
++        "EOA"
+    }
+```
+
 Generated with discovered.json: 0x4a48f107cb040dd8a7cc1993c9dbadfb287a1c80
 
 # Diff at Fri, 24 Oct 2025 09:13:43 GMT:

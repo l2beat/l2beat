@@ -1,3 +1,60 @@
+Generated with discovered.json: 0x4ad2be96a6472cb72c1740890c9ba97f5d2c0a3f
+
+# Diff at Fri, 31 Oct 2025 07:17:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@68eb98b0468d176aa44713dcaed98f67b2a200a0 block: 1761643945
+- current timestamp: 1761894930
+
+## Description
+
+Minor upgrade proposed.
+
+Reviewed here: https://gist.github.com/sekuba/46d7bcab5127c0ed6e0d66ce285b0559 (approved, will go to optimistic phase if at least 5 approve)
+
+## Watched changes
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        11
++        12
+    }
+```
+
+Generated with discovered.json: 0x48b3c9a94d3498c063182c27bf387c8f600816ad
+
+# Diff at Tue, 28 Oct 2025 09:33:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@090e135db1084f4a9678d6bf1cb0ff5e854903ea block: 1761550873
+- current timestamp: 1761643945
+
+## Description
+
+proposer/sequencer whitelist changed.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 4 operators registered.
+      values.registeredOperators.0.sequencer:
+-        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
++        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+      values.registeredOperators.0.proposer:
+-        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
++        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+      values.registeredOperators.3.sequencer:
+-        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
++        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+      values.registeredOperators.3.proposer:
+-        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
++        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+    }
+```
+
 Generated with discovered.json: 0x833740284aedb8b48b0da3078846244cdb7d3086
 
 # Diff at Mon, 27 Oct 2025 07:42:48 GMT:

@@ -1,5 +1,5 @@
 import { BinaryReader } from '../../../tools/BinaryReader'
-import { CCTPv2MessageReceived, CCTPv2MessageSent } from './cctp'
+import { CCTPv2MessageReceived, CCTPv2MessageSent } from './cctp/cctp-v2.plugin'
 import { MayanForwarded } from './mayan-forwarder'
 import {
   Address32,
@@ -35,10 +35,12 @@ export class MayanMctpFastPlugin implements InteropPlugin {
         (x) => x.wormholeChainId,
         Number(orderFulfilled.sourceDomain),
       )
-      return OrderFulfilled.create(input.ctx, {
-        amount: orderFulfilled.amount.toString(),
-        $srcChain,
-      })
+      return [
+        OrderFulfilled.create(input.ctx, {
+          amount: orderFulfilled.amount.toString(),
+          $srcChain,
+        }),
+      ]
     }
   }
 
@@ -79,16 +81,16 @@ export class MayanMctpFastPlugin implements InteropPlugin {
         // TODO: maybe this also has app: mayan-mctp-fast ?
         srcEvent: messageSent,
         srcTokenAddress: messageSent.args.tokenAddress,
-        srcAmount: messageSent.args.amount.toString(),
+        srcAmount: BigInt(messageSent.args.amount),
         dstEvent: messageReceived,
       }),
       Result.Transfer('mayan-mctp-fast.Transfer', {
         srcEvent: messageSent,
         srcTokenAddress: messageSent.args.tokenAddress,
-        srcAmount: messageSent.args.amount.toString(),
+        srcAmount: BigInt(messageSent.args.amount),
         dstEvent: orderFulfilled,
         dstTokenAddress: Address32.from(orderPayload.tokenOut),
-        dstAmount: orderFulfilled.args.amount.toString(),
+        dstAmount: BigInt(orderFulfilled.args.amount),
         extraEvents: [mayanForwarded],
       }),
     ]

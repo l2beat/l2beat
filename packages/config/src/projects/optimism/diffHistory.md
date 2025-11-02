@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xbcf59c3129576741002675696eee8bc141adaf09
+
+# Diff at Wed, 29 Oct 2025 18:21:16 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@cd3acb30978545d875852451e86e15a019f3b00a block: 1761223045
+- current timestamp: 1761761995
+
+## Description
+
+performed an empty mint to disallow inflating the supply for one year. the inflation rate is 2% per year but it was never used, and it is the first time they explicitly skip a year. the value here shows the timestamp of last mint.
+
+## Watched changes
+
+```diff
+    contract MintManager (oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005) {
+    +++ description: Controls the OP inflation rate, which is currently hardcoded to 2% annually.
+      values.mintPermittedAfter:
+-        0
++        1793220409
+    }
+```
+
 Generated with discovered.json: 0x46c4412bd0070ee7ddde29397205ba18790a1ada
 
 # Diff at Mon, 20 Oct 2025 15:27:50 GMT:

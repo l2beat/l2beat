@@ -20,9 +20,9 @@ export interface LayerZeroV1Network {
 
 export interface LayerZeroV2Network {
   chain: string
-  chainId: number
+  chainId?: number
   eid: number
-  endpointV2: EthereumAddress
+  endpointV2?: EthereumAddress
 }
 
 export const LayerZeroV1Config =
@@ -78,7 +78,14 @@ const DocsResult = v.record(
   }),
 )
 
-const OVERRIDES: { id: number; name: string }[] = [] //TODO: fill
+const OVERRIDES = {
+  v2: [
+    {
+      eid: 30168,
+      chain: 'solana',
+    },
+  ],
+}
 
 export class LayerZeroConfigPlugin
   extends TimeLoop
@@ -141,14 +148,12 @@ export class LayerZeroConfigPlugin
     const response = await this.http.fetch(DOCS_URL, { timeout: 10_000 })
     const docs = DocsResult.parse(response)
 
-    const chains = [...this.chains, ...OVERRIDES]
-
     const config: {
       v1: LayerZeroV1Network[]
       v2: LayerZeroV2Network[]
     } = {
       v1: [],
-      v2: [],
+      v2: [...OVERRIDES.v2],
     }
     for (const [_, value] of Object.entries(docs)) {
       if (
@@ -164,7 +169,7 @@ export class LayerZeroConfigPlugin
         continue
       }
 
-      const chain = chains.find(
+      const chain = this.chains.find(
         (c) => c.id === value.chainDetails?.nativeChainId,
       )
 

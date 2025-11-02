@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xe254fc7aded356a287dff310824a9b383cf76ac4
+
+# Diff at Wed, 29 Oct 2025 17:11:43 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@cd3acb30978545d875852451e86e15a019f3b00a block: 1759756433
+- current timestamp: 1761757805
+
+## Description
+
+removed the actor that can pause withdrawals (but not unpause them). the admin msig can still pause.
+
+## Watched changes
+
+```diff
+    contract ZircuitSuperchainConfig (eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and access control for configuring actors who can pause and unpause the system.
+      values.accessControl.MONITOR_ROLE.members.0:
+-        "eth:0xf9Fda17D91383120D59a7c60eAEA8Bd7319B5AE5"
+      values.monitorAC.0:
+-        "eth:0xf9Fda17D91383120D59a7c60eAEA8Bd7319B5AE5"
+    }
+```
+
 Generated with discovered.json: 0xeee1cb88f407f80dd40d299d898e0fb049e169aa
 
 # Diff at Mon, 06 Oct 2025 13:15:55 GMT:
