@@ -98,16 +98,13 @@ async function promisesWithTimeout<T>(
   logger: Logger,
 ) {
   const results: (T | undefined)[] = new Array(promises.length).fill(undefined)
-  const completed: boolean[] = new Array(promises.length).fill(false)
-
+  
   const racePromises = promises.map(async (promise, index) => {
     try {
       const result = await promise
       results[index] = result
-      completed[index] = true
-    } catch (error) {
+      } catch (error) {
       logger.error(error)
-      completed[index] = true
     }
   })
 
