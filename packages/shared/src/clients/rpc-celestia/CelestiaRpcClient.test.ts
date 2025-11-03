@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import type { HttpClient } from '../http/HttpClient'
 import { CelestiaRpcClient } from './CelestiaRpcClient'
@@ -21,32 +20,6 @@ describe(CelestiaRpcClient.name, () => {
 
       expect(result).toEqual(Number(mockBlockHeight))
       expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL/blockchain', {
-        method: 'GET',
-        redirect: 'follow',
-      })
-    })
-  })
-
-  describe(CelestiaRpcClient.prototype.getBlockTimestamp.name, () => {
-    it('returns block timestamp', async () => {
-      const mockTimestamp = '2024-02-06T12:00:00Z'
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
-          result: {
-            block: {
-              header: {
-                time: mockTimestamp,
-              },
-            },
-          },
-        }),
-      })
-      const rpc = mockClient({ http })
-
-      const result = await rpc.getBlockTimestamp(100)
-
-      expect(result).toEqual(UnixTime.fromDate(new Date(mockTimestamp)))
-      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL/block?height=100', {
         method: 'GET',
         redirect: 'follow',
       })
