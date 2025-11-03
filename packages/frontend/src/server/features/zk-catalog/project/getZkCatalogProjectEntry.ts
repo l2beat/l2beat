@@ -143,7 +143,11 @@ export async function getZkCatalogProjectEntry(
     },
   })
 
-  const verifiersSection = await getVerifiersSection(project, contractUtils)
+  const verifiersSection = await getVerifiersSection(
+    project,
+    contractUtils,
+    allProjects,
+  )
   sections.push({
     type: 'VerifiersSection',
     props: {

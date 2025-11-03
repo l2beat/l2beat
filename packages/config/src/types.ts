@@ -257,6 +257,7 @@ export interface MulticallContractConfig {
 export type ChainApiConfig =
   | ChainBasicApi<'rpc'>
   | ChainBasicApi<'starknet'>
+  | ChainBasicApi<'lighter'>
   | ChainBasicApi<'zksync'>
   | ChainBasicApi<'loopring'>
   | ChainBasicApi<'degate3'>
@@ -820,6 +821,7 @@ export interface ProjectZkCatalogInfo {
     knownDeployments: {
       address: string
       chain: string
+      overrideUsedIn?: ProjectId[]
     }[]
     verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
     verificationSteps?: string
