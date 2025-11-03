@@ -820,6 +820,7 @@ export interface ProjectZkCatalogInfo {
     knownDeployments: {
       address: string
       chain: string
+      overrideUsedIn?: ProjectId[]
     }[]
     verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
     verificationSteps?: string

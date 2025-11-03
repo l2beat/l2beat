@@ -72,7 +72,7 @@ Stwo is a STARK (transparent SNARK) that does not perform a wrap in a SNARK, so 
     trustedSetups: [
       {
         ...TRUSTED_SETUPS.TransparentSetup,
-        proofSystem: ZK_CATALOG_TAGS.STARK.Stone,
+        proofSystem: ZK_CATALOG_TAGS.STARK.Stwo,
       },
     ],
     verifierHashes: [
@@ -83,6 +83,7 @@ Stwo is a STARK (transparent SNARK) that does not perform a wrap in a SNARK, so 
           {
             address: '0x13e120F6c8E747983F7aaF0f7731796bfcb0D934',
             chain: 'ethereum',
+            overrideUsedIn: [ProjectId('starknet')],
           },
         ],
         verificationStatus: 'notVerified',
