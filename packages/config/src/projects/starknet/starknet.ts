@@ -239,7 +239,7 @@ export const starknet: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('stone'),
+    zkCatalogId: ProjectId('stwo'),
   },
   chainConfig: {
     name: 'starknet',
