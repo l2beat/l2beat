@@ -860,10 +860,12 @@
       "name": "L1Messenger",
       "address": "gateway:0x0000000000000000000000000000000000008008",
       "type": "Contract",
+      "template": "shared-zk-stack/L1Messenger",
       "sourceHashes": [
         "0x2c4e54d52c2919d3fc227e2a04b26b5e9daee5ef7031fb0e076ac5ed9f2cc7a5"
       ],
       "proxyType": "immutable",
+      "description": "System contract implementing public L2->L1 messaging functionality. Part of the canonical bridge.",
       "sinceTimestamp": 1761040360,
       "sinceBlock": 74512,
       "values": { "$immutable": true },
@@ -1318,6 +1320,7 @@
     "shared-zk-stack/Diamond": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/GatewayTransactionFilterer": "0xa76aef97935fb7a6867df3455e3fc9e7034f5c104c8330e8dd9cd9c34d1302ed",
+    "shared-zk-stack/L1Messenger": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock_post29": "0x6b83daae3459d63aeff3b894c47d96c0190d2aaccc58fd6243a417aa7e5ac3a3"

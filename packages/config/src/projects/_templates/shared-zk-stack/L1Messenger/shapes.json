@@ -5,8 +5,9 @@
     "blockNumber": 14855
   },
   "L1Messenger_Nov25": {
-    "hash": "0x043e92da78fdbbb316ceaafc425f6cdc0ba326bcf752c958ac7bedf26815faa7",
+    "hash": "0x2c4e54d52c2919d3fc227e2a04b26b5e9daee5ef7031fb0e076ac5ed9f2cc7a5",
     "address": "gateway:0x0000000000000000000000000000000000008008",
-    "blockNumber": 84432
+    "chain": "gateway",
+    "blockNumber": 84434
   }
 }
