@@ -39,7 +39,7 @@ export function toRecord(row: Selectable<InteropEvent>): InteropEventRecord {
     logIndex: row.logIndex ?? -1, // TODO: make optional
     matched: row.matched,
     unsupported: row.unsupported,
-    args: row.args,
+    args: reviveBigInts(row.args),
   }
 }
 
@@ -60,7 +60,9 @@ export function toRow(record: InteropEventRecord): Insertable<InteropEvent> {
     logIndex: record.logIndex,
     matched: record.matched,
     unsupported: record.unsupported,
-    args: record.args,
+    args: JSON.stringify(record.args, (_, value) =>
+      typeof value === 'bigint' ? `BigInt(${value})` : value,
+    ),
   }
 }
 
@@ -212,4 +214,27 @@ export class InteropEventRepository extends BaseRepository {
     const result = await this.db.deleteFrom('InteropEvent').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
+}
+
+function reviveBigInts(obj: unknown): unknown {
+  if (
+    typeof obj === 'string' &&
+    obj.startsWith('BigInt(') &&
+    obj.endsWith(')')
+  ) {
+    return BigInt(obj.slice(7, -1))
+  }
+  if (Array.isArray(obj)) {
+    for (let i = 0; i < obj.length; i++) {
+      obj[i] = reviveBigInts(obj[i])
+    }
+    return obj
+  }
+  if (obj !== null && typeof obj === 'object') {
+    for (const [key, value] of Object.entries(obj)) {
+      ;(obj as Record<string, unknown>)[key] = reviveBigInts(value)
+    }
+    return obj
+  }
+  return obj
 }

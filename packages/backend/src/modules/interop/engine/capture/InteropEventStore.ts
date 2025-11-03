@@ -8,7 +8,6 @@ import {
   type InteropEventType,
 } from '../../plugins/types'
 import { InMemoryEventDb } from './InMemoryEventDb'
-import { InteropArgs } from './InteropArgs'
 
 export class InteropEventStore implements InteropEventDb {
   private eventDb = new InMemoryEventDb()
@@ -84,7 +83,7 @@ function fromDbRecord(record: InteropEventRecord): InteropEvent {
     eventId: record.eventId,
     type: record.type,
     expiresAt: record.expiresAt,
-    args: InteropArgs.deserialize(record.args),
+    args: record.args,
     ctx: {
       chain: record.chain,
       blockHash: record.blockHash,
@@ -105,7 +104,7 @@ function toDbRecord(event: InteropEvent): InteropEventRecord {
     eventId: event.eventId,
     type: event.type,
     expiresAt: event.expiresAt,
-    args: InteropArgs.serialize(event.args),
+    args: event.args,
     chain: event.ctx.chain,
     blockHash: event.ctx.blockHash,
     blockNumber: event.ctx.blockNumber,
