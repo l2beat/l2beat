@@ -413,6 +413,14 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
 `,
   milestones: [
     {
+      title: 'Starknet upgrades its proving system to Stwo',
+      url: 'https://etherscan.io/tx/0x7b4a25af246b28b6d5bed86942696273a84e57abc629b83072be370df2bdb797',
+      date: '2025-10-19T00:00:00.00Z',
+      description:
+        'Starknet switches to the next-generation prover Stwo to prove its STF on Ethereum L1.',
+      type: 'general',
+    },
+    {
       title: 'Starknet is down for several hours',
       url: 'https://x.com/Starknet/status/1962740091937317247',
       date: '2025-09-02T00:00:00.00Z',
