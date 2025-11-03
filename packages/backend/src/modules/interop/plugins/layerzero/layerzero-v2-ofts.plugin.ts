@@ -32,15 +32,15 @@ export const parseOFTReceived = createEventParser(
 const OFTSentPacketSent = createInteropEventType<{
   $dstChain: string
   guid: string
-  amountSentLD: number
-  amountReceivedLD: number
+  amountSentLD: string
+  amountReceivedLD: string
   tokenAddress: Address32
 }>('layerzero-v2.PacketOFTSent')
 
 const OFTReceivedPacketDelivered = createInteropEventType<{
   $srcChain: string
   guid: string
-  amountReceivedLD: number
+  amountReceivedLD: string
   tokenAddress: Address32
 }>('layerzero-v2.PacketOFTDelivered')
 
@@ -84,8 +84,8 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
               OFTSentPacketSent.create(input.ctx, {
                 $dstChain,
                 guid,
-                amountSentLD: Number(oftSent.amountSentLD),
-                amountReceivedLD: Number(oftSent.amountReceivedLD),
+                amountSentLD: oftSent.amountSentLD.toString(),
+                amountReceivedLD: oftSent.amountReceivedLD.toString(),
                 tokenAddress: Address32.from(input.log.address),
               }),
             ]
@@ -121,7 +121,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
             OFTReceivedPacketDelivered.create(input.ctx, {
               $srcChain,
               guid,
-              amountReceivedLD: Number(oftReceived.amountReceivedLD),
+              amountReceivedLD: oftReceived.amountReceivedLD.toString(),
               // TODO: OFT log emitter is not always the token contract (needs effects)
               tokenAddress: Address32.from(input.log.address),
             }),
