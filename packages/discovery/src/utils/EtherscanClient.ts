@@ -336,24 +336,22 @@ function decodeEtherscanSource(
   try {
     const verified = EtherscanSource.parse(parsed)
     if (verified.settings.libraries !== undefined) {
-      // NOTE(radomski): There is no docs about this field, so I'm just
-      // asserting what I my model is
       for (const [key, value] of Object.entries(verified.settings.libraries)) {
-        const address = Object.values(value)[0]
-        assert(address !== undefined, 'Missing address in libraries object')
-        assert(
-          Object.keys(value).length === 1,
-          'Unexpected number of entries in libraries object',
-        )
+        if (Object.keys(value).length === 0) {
+          continue
+        }
 
-        libraries[key] = EthereumAddress(address)
+        for (const [name, address] of Object.entries(value)) {
+          libraries[`${key}/${name}`] = EthereumAddress(address)
+        }
       }
     }
 
     validated = verified.sources
     remappings = verified.settings.remappings ?? []
-  } catch {
+  } catch (e) {
     validated = Sources.parse(parsed)
+    throw e
   }
 
   return {

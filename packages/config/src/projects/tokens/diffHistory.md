@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x4fe5e6b286725caf57c9dbaa63745abb6f38eb85
+Generated with discovered.json: 0x3d1a75debd83ca8b5ab7db1e02ddef71caa2aa4e
 
-# Diff at Fri, 31 Oct 2025 14:59:02 GMT:
+# Diff at Mon, 03 Nov 2025 14:49:52 GMT:
 
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@7b866d915f6e4a61d9fdd306c6f31f6478eea38b block: 1761643706
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@c0ded7fb517fbc1fc7a271bd8f66f3f3538c35d3 block: 1761643706
 - current timestamp: 1761643706
 
 ## Description
@@ -107,11 +107,8 @@ discovery. Values are for block 1761643706 (main branch discovery), not current.
 ```diff
     contract CSModule (eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F) {
     +++ description: None
-      sourceHashes.1:
--        "0xde753d771c3a4dc27e58e529b2dfd70871547d49e71ecd3478353ec02e995aa8"
-+        "0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       values.$libraries:
-+        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9"]
++        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9","eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xE4d5a7be8d7c3db15755061053F5a49b6a67fFfc","eth:0x6eFF460627b6798C2907409EA2Fdfb287Eaa2e55"]
     }
 ```
 
@@ -131,6 +128,12 @@ discovery. Values are for block 1761643706 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
+    contract QueueLib (eth:0x6eFF460627b6798C2907409EA2Fdfb287Eaa2e55)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract MinFirstAllocationStrategy (eth:0x7e70De6D1877B3711b2bEDa7BA00013C7142d993)
     +++ description: None
 ```
@@ -144,6 +147,12 @@ discovery. Values are for block 1761643706 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract QueueLib (eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NOAddresses (eth:0xE4d5a7be8d7c3db15755061053F5a49b6a67fFfc)
     +++ description: None
 ```
 
