@@ -162,6 +162,20 @@ export function DeployedTokenForm({
               )}
             />
           </div>
+
+          <FormField
+            control={form.control}
+            name="symbol"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Symbol</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="decimals"
@@ -179,20 +193,20 @@ export function DeployedTokenForm({
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
-            name="symbol"
+            name="deploymentTimestamp"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Symbol</FormLabel>
+                <FormLabel>Deployment Timestamp</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input type="datetime-local" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="abstractTokenId"
@@ -286,21 +300,6 @@ export function DeployedTokenForm({
               </FormItem>
             )}
           />
-
-          <FormField
-            control={form.control}
-            name="deploymentTimestamp"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Deployment Timestamp</FormLabel>
-                <FormControl>
-                  <Input type="datetime-local" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
           <FormField
             control={form.control}
             name="comment"
