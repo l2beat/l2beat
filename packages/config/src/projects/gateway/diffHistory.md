@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xab6e4356c39d9e7911adb569e1b1d49741cc8e1f
+
+# Diff at Mon, 03 Nov 2025 15:15:46 GMT:
+
+- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- comparing to: main@64561b32de50bd9ecc1f1ddea1db1aa9e5ae4bee block: 1761643087
+- current timestamp: 1762182733
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761643087 (main branch discovery), not current.
+
+```diff
+    contract L1Messenger (gateway:0x0000000000000000000000000000000000008008) {
+    +++ description: None
+      template:
+-        "shared-zk-stack/L1Messenger"
+      sourceHashes.0:
+-        "0xd2ecfc7e11d1c2bd428a0170a09a7734dd4640ef3291609ddf62dbdb4c344f14"
++        "0x2c4e54d52c2919d3fc227e2a04b26b5e9daee5ef7031fb0e076ac5ed9f2cc7a5"
+      description:
+-        "System contract implementing public L2->L1 messaging functionality. Part of the canonical bridge."
+      sinceTimestamp:
+-        1750953821
++        1761040360
+      sinceBlock:
+-        85
++        74512
+    }
+```
+
 Generated with discovered.json: 0x5185cf613a03f1b8682b445d84ca58147d2dbe47
 
 # Diff at Tue, 28 Oct 2025 09:19:14 GMT:

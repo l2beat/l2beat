@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x4e2aff97b2b4185b08bea09e2aa30159eb71658a
+
+# Diff at Mon, 03 Nov 2025 14:41:33 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@64561b32de50bd9ecc1f1ddea1db1aa9e5ae4bee block: 1761220191
+- current timestamp: 1762180826
+
+## Description
+
+Queued this proposal, funding for governance: https://www.tally.xyz/gov/zksync/proposal/8043865517871673466500920771587039178855876090726876272793935297016439640908?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746. 
+
+## Watched changes
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        8
++        9
+    }
+```
+
 Generated with discovered.json: 0xca96b303a588e901da012a888fda90ac91477451
 
 # Diff at Fri, 24 Oct 2025 09:13:47 GMT:

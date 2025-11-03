@@ -1,6 +1,6 @@
 {
   "name": "gateway",
-  "timestamp": 1761643087,
+  "timestamp": 1762182733,
   "configHash": "0x114c8bb3affafd7d43e0ca41deb1df649be6343ffb81b8005401d21f5ae65244",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -588,7 +588,7 @@
           "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "eth:0x64E2AfcFE648201b2F4a749aF0B7229ecfa44281"
         ],
-        "getFirstUnprocessedPriorityTx": 13525,
+        "getFirstUnprocessedPriorityTx": 14129,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -596,8 +596,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 8,
-        "getPriorityTreeRoot": "0x27fed1c286616faa70dd8141804c483b921327947714ad42fb26f0ca84750fbd",
+        "getPriorityQueueSize": 84,
+        "getPriorityTreeRoot": "0x49e8c9770fa5b902cb28ac2261c6c26612a94edc42d1b3a963ec91756df0ae5d",
         "getPriorityTreeStartIndex": 0,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 124554051586,
@@ -605,13 +605,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 29, 2],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 1542,
-        "getTotalBatchesExecuted": 1540,
-        "getTotalBatchesVerified": 1542,
-        "getTotalBlocksCommitted": 1542,
-        "getTotalBlocksExecuted": 1540,
-        "getTotalBlocksVerified": 1542,
-        "getTotalPriorityTxs": 13533,
+        "getTotalBatchesCommitted": 1616,
+        "getTotalBatchesExecuted": 1614,
+        "getTotalBatchesVerified": 1615,
+        "getTotalBlocksCommitted": 1616,
+        "getTotalBlocksExecuted": 1614,
+        "getTotalBlocksVerified": 1615,
+        "getTotalPriorityTxs": 14213,
         "getTransactionFilterer": "eth:0x5540DE94485dB078025318428F813C5d88215823",
         "getVerifier": "eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3",
         "getVerifierParams": {
@@ -860,14 +860,12 @@
       "name": "L1Messenger",
       "address": "gateway:0x0000000000000000000000000000000000008008",
       "type": "Contract",
-      "template": "shared-zk-stack/L1Messenger",
       "sourceHashes": [
-        "0xd2ecfc7e11d1c2bd428a0170a09a7734dd4640ef3291609ddf62dbdb4c344f14"
+        "0x2c4e54d52c2919d3fc227e2a04b26b5e9daee5ef7031fb0e076ac5ed9f2cc7a5"
       ],
       "proxyType": "immutable",
-      "description": "System contract implementing public L2->L1 messaging functionality. Part of the canonical bridge.",
-      "sinceTimestamp": 1750953821,
-      "sinceBlock": 85,
+      "sinceTimestamp": 1761040360,
+      "sinceBlock": 74512,
       "values": { "$immutable": true },
       "implementationNames": {
         "gateway:0x0000000000000000000000000000000000008008": "L1Messenger"
@@ -1320,11 +1318,10 @@
     "shared-zk-stack/Diamond": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/GatewayTransactionFilterer": "0xa76aef97935fb7a6867df3455e3fc9e7034f5c104c8330e8dd9cd9c34d1302ed",
-    "shared-zk-stack/L1Messenger": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock_post29": "0x6b83daae3459d63aeff3b894c47d96c0190d2aaccc58fd6243a417aa7e5ac3a3"
   },
-  "usedBlockNumbers": { "gateway": 79601, "ethereum": 23674979 },
+  "usedBlockNumbers": { "gateway": 84434, "ethereum": 23719618 },
   "permissionsConfigHash": "0xed03a041b3120f7322ac625af9966c59719e71f0cd2f35218a2aa3680602966b"
 }

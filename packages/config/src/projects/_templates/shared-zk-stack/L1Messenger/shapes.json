@@ -3,5 +3,10 @@
     "hash": "0xd2ecfc7e11d1c2bd428a0170a09a7734dd4640ef3291609ddf62dbdb4c344f14",
     "address": "gateway:0x0000000000000000000000000000000000008008",
     "blockNumber": 14855
+  },
+  "L1Messenger_Nov25": {
+    "hash": "0x043e92da78fdbbb316ceaafc425f6cdc0ba326bcf752c958ac7bedf26815faa7",
+    "address": "gateway:0x0000000000000000000000000000000000008008",
+    "blockNumber": 84432
   }
 }
