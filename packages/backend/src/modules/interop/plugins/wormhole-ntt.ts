@@ -202,7 +202,7 @@ function decodeNTTManagerPayload(payload: string) {
     const reader2 = new BinaryReader(payloadData)
     const prefix = reader2.readBytes(4)
     const decimals = reader2.readBytes(1)
-    const amount = reader2.readUint64().toString()
+    const amount = reader2.readUint64()
     const sourceToken = reader2.readBytes(32)
     const toAddress = reader2.readBytes(32)
     const toChain = reader2.readBytes(2)

@@ -20,9 +20,9 @@ export const AcrossFundsDeposited = createInteropEventType<{
   $dstChain: string
   originChainId: number
   destinationChainId: number
-  depositId: string
+  depositId: bigint
   tokenAddress: Address32
-  amount: string
+  amount: bigint
 }>('across.FundsDeposited')
 
 const parseFilledRelay = createEventParser(
@@ -36,9 +36,9 @@ export const AcrossFilledRelay = createInteropEventType<{
   $srcChain: string
   originChainId: number
   destinationChainId: number
-  depositId: string
+  depositId: bigint
   tokenAddress: Address32
-  amount: string
+  amount: bigint
 }>('across.FilledRelay')
 
 export class AcrossPlugin implements InteropPlugin {
@@ -64,9 +64,9 @@ export class AcrossPlugin implements InteropPlugin {
           ),
           originChainId: network.chainId,
           destinationChainId: Number(fundsDeposited.destinationChainId),
-          depositId: fundsDeposited.depositId.toString(),
+          depositId: fundsDeposited.depositId,
           tokenAddress: Address32.from(fundsDeposited.inputToken),
-          amount: fundsDeposited.inputAmount.toString(),
+          amount: fundsDeposited.inputAmount,
         }),
       ]
     }
@@ -82,9 +82,9 @@ export class AcrossPlugin implements InteropPlugin {
           ),
           originChainId: Number(filledRelay.originChainId),
           destinationChainId: network.chainId,
-          depositId: filledRelay.depositId.toString(),
+          depositId: filledRelay.depositId,
           tokenAddress: Address32.from(filledRelay.outputToken),
-          amount: filledRelay.outputAmount.toString(),
+          amount: filledRelay.outputAmount,
         }),
       ]
     }
@@ -100,9 +100,9 @@ export class AcrossPlugin implements InteropPlugin {
           ),
           originChainId: Number(filledV3Relay.originChainId),
           destinationChainId: network.chainId,
-          depositId: filledV3Relay.depositId.toString(),
+          depositId: BigInt(filledV3Relay.depositId),
           tokenAddress: Address32.from(filledV3Relay.outputToken),
-          amount: filledV3Relay.outputAmount.toString(),
+          amount: filledV3Relay.outputAmount,
         }),
       ]
     }

@@ -30,7 +30,7 @@ const ERC20BridgeInitiatedMessagePassed = createInteropEventType<{
   withdrawalHash: string
   localToken: Address32
   remoteToken: Address32
-  amount: string
+  amount: bigint
 }>('opstack.MessagePassedERC20BridgeInitiated', {
   ttl: 14 * UnixTime.DAY,
 })
@@ -45,7 +45,7 @@ const ERC20BridgeFinalizedWithdrawalFinalized = createInteropEventType<{
   withdrawalHash: string
   localToken: Address32
   remoteToken: Address32
-  amount: string
+  amount: bigint
 }>('opstack.WithdrawalFinalizedERC20BridgeFinalized')
 
 const parseERC20BridgeFinalized = createEventParser(
@@ -58,7 +58,7 @@ const ERC20DepositInitiatedSentMessage = createInteropEventType<{
   msgHash: string
   localToken: Address32
   remoteToken: Address32
-  amount: string
+  amount: bigint
 }>('opstack.SentMessageERC20DepositInitiated')
 
 const parseERC20DepositInitiated = createEventParser(
@@ -71,7 +71,7 @@ const DepositFinalizedRelayedMessage = createInteropEventType<{
   msgHash: string
   localToken: Address32
   remoteToken: Address32
-  amount: string
+  amount: bigint
 }>('opstack.RelayedMessageDepositFinalized')
 
 const parseDepositFinalized = createEventParser(
@@ -82,7 +82,7 @@ const parseDepositFinalized = createEventParser(
 const ETHBridgeInitiatedSentMessage = createInteropEventType<{
   chain: string
   msgHash: string
-  amount: string
+  amount: bigint
 }>('opstack.SentMessageETHBridgeInitiated')
 
 const parseETHBridgeInitiated = createEventParser(
@@ -92,7 +92,7 @@ const parseETHBridgeInitiated = createEventParser(
 const ETHBridgeFinalizedRelayedMessage = createInteropEventType<{
   chain: string
   msgHash: string
-  amount: string
+  amount: bigint
 }>('opstack.RelayedMessageETHBridgeFinalized')
 
 const parseETHBridgeFinalized = createEventParser(
@@ -103,7 +103,7 @@ const parseETHBridgeFinalized = createEventParser(
 const ETHBridgeInitiatedMessagePassed = createInteropEventType<{
   chain: string
   withdrawalHash: string
-  amount: string
+  amount: bigint
 }>('opstack.MessagePassedETHBridgeInitiated', {
   ttl: 14 * UnixTime.DAY,
 })
@@ -112,7 +112,7 @@ const ETHBridgeInitiatedMessagePassed = createInteropEventType<{
 const ETHBridgeFinalizedWithdrawalFinalized = createInteropEventType<{
   chain: string
   withdrawalHash: string
-  amount: string
+  amount: bigint
 }>('opstack.WithdrawalFinalizedETHBridgeFinalized')
 
 export class OpStackStandardBridgePlugin implements InteropPlugin {
@@ -144,7 +144,7 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
                 withdrawalHash: messagePassed.withdrawalHash,
                 localToken: Address32.from(erc20BridgeInitiated.localToken),
                 remoteToken: Address32.from(erc20BridgeInitiated.remoteToken),
-                amount: erc20BridgeInitiated.amount.toString(),
+                amount: erc20BridgeInitiated.amount,
               }),
             ]
           }
@@ -171,7 +171,7 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
               ETHBridgeInitiatedMessagePassed.create(input.ctx, {
                 chain: network.chain,
                 withdrawalHash: messagePassed.withdrawalHash,
-                amount: ethBridgeInitiatedL2.amount.toString(),
+                amount: ethBridgeInitiatedL2.amount,
               }),
             ]
           }
@@ -202,7 +202,7 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
                 msgHash: relayedMessage.msgHash,
                 localToken: Address32.from(depositFinalized.localToken),
                 remoteToken: Address32.from(depositFinalized.remoteToken),
-                amount: depositFinalized.amount.toString(),
+                amount: depositFinalized.amount,
               }),
             ]
           }
@@ -231,7 +231,7 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
               ETHBridgeFinalizedRelayedMessage.create(input.ctx, {
                 chain: network.chain,
                 msgHash: relayedMessage.msgHash,
-                amount: ethBridgeFinalized.amount.toString(),
+                amount: ethBridgeFinalized.amount,
               }),
             ]
           }
@@ -268,7 +268,7 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
                 withdrawalHash: withdrawalFinalized.withdrawalHash,
                 localToken: Address32.from(erc20BridgeFinalized.localToken),
                 remoteToken: Address32.from(erc20BridgeFinalized.remoteToken),
-                amount: erc20BridgeFinalized.amount.toString(),
+                amount: erc20BridgeFinalized.amount,
               }),
             ]
           }
@@ -296,7 +296,7 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
               ETHBridgeFinalizedWithdrawalFinalized.create(input.ctx, {
                 chain: network.chain,
                 withdrawalHash: withdrawalFinalized.withdrawalHash,
-                amount: ethBridgeFinalizedL1.amount.toString(),
+                amount: ethBridgeFinalizedL1.amount,
               }),
             ]
           }
@@ -345,7 +345,7 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
                 msgHash,
                 localToken: Address32.from(erc20DepositInitiated.localToken),
                 remoteToken: Address32.from(erc20DepositInitiated.remoteToken),
-                amount: erc20DepositInitiated.amount.toString(),
+                amount: erc20DepositInitiated.amount,
               }),
             ]
           }
@@ -392,7 +392,7 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
               ETHBridgeInitiatedSentMessage.create(input.ctx, {
                 chain: network.chain,
                 msgHash,
-                amount: ethBridgeInitiated.amount.toString(),
+                amount: ethBridgeInitiated.amount,
               }),
             ]
           }

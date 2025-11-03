@@ -68,7 +68,7 @@ export const ContractCallWithToken = createInteropEventType<{
   destinationContractAddress: string
   payloadHash: `0x${string}`
   symbol: string
-  amount: string
+  amount: bigint
   $dstChain: string
 }>('axelar.ContractCallWithToken')
 
@@ -86,7 +86,7 @@ export const ContractCallApprovedWithMint = createInteropEventType<{
   sourceAddress: string
   contractAddress: EthereumAddress
   symbol: string
-  amount: string
+  amount: bigint
   srcTxHash: `0x${string}`
   payloadHash: `0x${string}`
   $srcChain: string
@@ -125,7 +125,7 @@ export class AxelarPlugin implements InteropPlugin {
             contractCallWithToken.destinationContractAddress,
           payloadHash: contractCallWithToken.payloadHash,
           symbol: contractCallWithToken.symbol,
-          amount: contractCallWithToken.amount.toString(),
+          amount: contractCallWithToken.amount,
           $dstChain: findChain(
             AXELAR_NETWORKS,
             (x) => x.axelarChainName,
@@ -169,7 +169,7 @@ export class AxelarPlugin implements InteropPlugin {
             contractCallApprovedWithMint.contractAddress,
           ),
           symbol: contractCallApprovedWithMint.symbol,
-          amount: contractCallApprovedWithMint.amount.toString(),
+          amount: contractCallApprovedWithMint.amount,
           srcTxHash: contractCallApprovedWithMint.sourceTxHash,
           $srcChain: findChain(
             AXELAR_NETWORKS,
@@ -249,7 +249,7 @@ export class AxelarPlugin implements InteropPlugin {
           srcEvent: contractCallWithToken,
           // TODO: mapping. See axelar-its
           // symbol: contractCallWithToken.args.symbol,
-          srcAmount: contractCallWithToken.args.amount.toString(),
+          srcAmount: contractCallWithToken.args.amount,
           dstEvent: contractCallExecuted,
         }),
       ]

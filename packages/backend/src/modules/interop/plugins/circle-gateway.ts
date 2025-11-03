@@ -30,14 +30,14 @@ export const AttestationUsed = createInteropEventType<{
   token: Address32
   transferSpecHash: `0x${string}`
   $dstChain: string
-  value: string
+  value: bigint
 }>('circle-gateway.AttestationUsed')
 
 export const GatewayBurned = createInteropEventType<{
   token: Address32
   transferSpecHash: `0x${string}`
   $srcChain: string
-  value: string
+  value: bigint
 }>('circle-gateway.GatewayBurned')
 
 export class CircleGatewayPlugIn implements InteropPlugin {
@@ -63,7 +63,7 @@ export class CircleGatewayPlugIn implements InteropPlugin {
             (x) => x.domain,
             Number(gatewayBurned.destinationDomain), // yes, that's not a mistake
           ),
-          value: gatewayBurned.value.toString(),
+          value: gatewayBurned.value,
         }),
       ]
 
@@ -78,7 +78,7 @@ export class CircleGatewayPlugIn implements InteropPlugin {
             (x) => x.domain,
             Number(attestationUsed.sourceDomain), // yes, that's not a mistake
           ),
-          value: attestationUsed.value.toString(),
+          value: attestationUsed.value,
         }),
       ]
   }

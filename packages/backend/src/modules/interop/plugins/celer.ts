@@ -56,14 +56,14 @@ export const CelerExecuted = createInteropEventType<{
 export const CelerSent = createInteropEventType<{
   transferId: string
   token: Address32
-  amount: string
+  amount: bigint
   $dstChain: string
 }>('celer.Send')
 
 export const CelerRelay = createInteropEventType<{
   transferId: string
   token: Address32
-  amount: string
+  amount: bigint
   srcTransferId: string
   $srcChain: string
 }>('celer.Relay')
@@ -110,7 +110,7 @@ export class CelerPlugIn implements InteropPlugin {
         CelerSent.create(input.ctx, {
           transferId: sent.transferId,
           token: Address32.from(sent.token),
-          amount: sent.amount.toString(),
+          amount: sent.amount,
           $dstChain: findChain(
             CELER_NETWORKS,
             (x) => x.celerChainId,
@@ -126,7 +126,7 @@ export class CelerPlugIn implements InteropPlugin {
         CelerRelay.create(input.ctx, {
           transferId: relay.transferId,
           token: Address32.from(relay.token),
-          amount: relay.amount.toString(),
+          amount: relay.amount,
           srcTransferId: relay.srcTransferId,
           $srcChain: findChain(
             CELER_NETWORKS,

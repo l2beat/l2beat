@@ -78,8 +78,8 @@ export const LogCreatedOrder = createInteropEventType<{
   orderId: `0x${string}`
   fromToken: Address32
   toToken: Address32
-  fromAmount: string
-  fillAmount: string
+  fromAmount: bigint
+  fillAmount: bigint
   $dstChain: string
 }>('debridge-dln.CreatedOrder')
 
@@ -87,8 +87,8 @@ export const LogFulfilledOrder = createInteropEventType<{
   orderId: `0x${string}`
   fromToken: Address32
   toToken: Address32
-  fromAmount: string
-  fillAmount: string
+  fromAmount: bigint
+  fillAmount: bigint
   $srcChain: string
 }>('debridge-dln.FulfilledOrder')
 
@@ -103,8 +103,8 @@ export class DeBridgeDlnPlugin implements InteropPlugin {
           orderId: logOrderCreated.orderId,
           fromToken: Address32.from(logOrderCreated.order.giveTokenAddress),
           toToken: Address32.from(logOrderCreated.order.takeTokenAddress),
-          fromAmount: logOrderCreated.order.giveAmount.toString(),
-          fillAmount: logOrderCreated.order.takeAmount.toString(),
+          fromAmount: logOrderCreated.order.giveAmount,
+          fillAmount: logOrderCreated.order.takeAmount,
           $dstChain: findChain(
             DEBRIDGE_NETWORKS,
             (x) => x.chainId,
@@ -121,8 +121,8 @@ export class DeBridgeDlnPlugin implements InteropPlugin {
           orderId: logOrderFilled.orderId,
           fromToken: Address32.from(logOrderFilled.order.giveTokenAddress),
           toToken: Address32.from(logOrderFilled.order.takeTokenAddress),
-          fromAmount: logOrderFilled.order.giveAmount.toString(),
-          fillAmount: logOrderFilled.order.takeAmount.toString(),
+          fromAmount: logOrderFilled.order.giveAmount,
+          fillAmount: logOrderFilled.order.takeAmount,
           $srcChain: findChain(
             DEBRIDGE_NETWORKS,
             (x) => x.chainId,

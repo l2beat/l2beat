@@ -70,8 +70,8 @@ export const LogOrderCreated = createInteropEventType<{
   orderHash: `0x${string}`
   fromToken: Address32
   toToken: Address32
-  fromAmount: string
-  fillAmount: string
+  fromAmount: bigint
+  fillAmount: bigint
   $dstChain: string
 }>('squid-coral.LogOrderCreated')
 
@@ -79,8 +79,8 @@ export const LogOrderFilled = createInteropEventType<{
   orderHash: `0x${string}`
   fromToken: Address32
   toToken: Address32
-  fromAmount: string
-  fillAmount: string
+  fromAmount: bigint
+  fillAmount: bigint
   $srcChain: string
 }>('squid-coral.LogOrderFilled')
 
@@ -95,8 +95,8 @@ export class SquidCoralPlugin implements InteropPlugin {
           orderHash: logOrderCreated.orderHash,
           fromToken: Address32.from(logOrderCreated.order.fromToken),
           toToken: Address32.from(logOrderCreated.order.toToken),
-          fromAmount: logOrderCreated.order.fromAmount.toString(),
-          fillAmount: logOrderCreated.order.fillAmount.toString(),
+          fromAmount: logOrderCreated.order.fromAmount,
+          fillAmount: logOrderCreated.order.fillAmount,
           $dstChain: findChain(
             SQUIDCORAL_NETWORKS,
             (x) => x.chainId,
@@ -113,8 +113,8 @@ export class SquidCoralPlugin implements InteropPlugin {
           orderHash: logOrderFilled.orderHash,
           fromToken: Address32.from(logOrderFilled.order.fromToken),
           toToken: Address32.from(logOrderFilled.order.toToken),
-          fromAmount: logOrderFilled.order.fromAmount.toString(),
-          fillAmount: logOrderFilled.order.fillAmount.toString(),
+          fromAmount: logOrderFilled.order.fromAmount,
+          fillAmount: logOrderFilled.order.fillAmount,
           $srcChain: findChain(
             SQUIDCORAL_NETWORKS,
             (x) => x.chainId,

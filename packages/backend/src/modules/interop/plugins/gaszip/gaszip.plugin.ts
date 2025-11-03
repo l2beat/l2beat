@@ -21,7 +21,7 @@ const parseDeposit = createEventParser(
 export const GasZipDeposit = createInteropEventType<{
   $dstChain: string
   depositor: string
-  amount: string
+  amount: bigint
   tokenAddress: Address32
   depositType: string
   destinationChains: string
@@ -63,9 +63,7 @@ export class GasZipPlugin implements InteropPlugin {
         GasZipDeposit.create(input.tx, {
           $dstChain: dc.chain,
           depositor: input.tx.txFrom,
-          amount: (
-            input.tx.txValue / BigInt(destinationChains.length)
-          ).toString(),
+          amount: input.tx.txValue / BigInt(destinationChains.length),
           tokenAddress: Address32.NATIVE,
           depositType: decoded.type,
           destinationChains: JSON.stringify(destinationChains),
@@ -108,9 +106,7 @@ export class GasZipPlugin implements InteropPlugin {
         GasZipDeposit.create(input.ctx, {
           $dstChain: dc.chain,
           depositor: deposit.from,
-          amount: (
-            deposit.amount / BigInt(destinationChains.length)
-          ).toString(),
+          amount: deposit.amount / BigInt(destinationChains.length),
           tokenAddress: Address32.NATIVE,
           depositType: 'CONTRACT',
           destinationChains: JSON.stringify(destinationChains),

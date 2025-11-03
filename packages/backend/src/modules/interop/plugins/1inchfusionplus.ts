@@ -59,8 +59,8 @@ const DstEscrowCreated = createInteropEventType<{
 
 const SrcEscrowCreated = createInteropEventType<{
   hashlock: string
-  srcTokenId: string
-  srcAmount: string
+  srcTokenId: bigint
+  srcAmount: bigint
 }>('oneinch-fusion-plus.SrcEscrowCreated')
 
 export class OneinchFusionPlusPlugin implements InteropPlugin {
@@ -86,8 +86,8 @@ export class OneinchFusionPlusPlugin implements InteropPlugin {
       return [
         SrcEscrowCreated.create(input.ctx, {
           hashlock: srcEscrowCreated.srcImmutables.hashlock,
-          srcTokenId: srcEscrowCreated.srcImmutables.token.toString(), // 1inch token id, not token address
-          srcAmount: srcEscrowCreated.srcImmutables.amount.toString(),
+          srcTokenId: srcEscrowCreated.srcImmutables.token, // 1inch token id, not token address
+          srcAmount: srcEscrowCreated.srcImmutables.amount,
         }),
       ]
     }

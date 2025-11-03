@@ -28,10 +28,14 @@ export class RelayPlugin implements InteropPlugin {
       }),
       Result.Transfer('relay.Transfer', {
         srcEvent: tokenSent,
-        srcAmount: tokenSent.args.amount,
+        srcAmount: tokenSent.args.amount
+          ? BigInt(tokenSent.args.amount)
+          : undefined,
         srcTokenAddress: tokenSent.args.token,
         dstEvent: tokenReceived,
-        dstAmount: tokenReceived.args.amount,
+        dstAmount: tokenReceived.args.amount
+          ? BigInt(tokenReceived.args.amount)
+          : undefined,
         dstTokenAddress: tokenReceived.args.token,
       }),
     ]

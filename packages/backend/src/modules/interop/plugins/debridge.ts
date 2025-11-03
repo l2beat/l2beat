@@ -88,14 +88,14 @@ export const DEBRIDGE_NETWORKS = defineNetworks('debridge', [
 export const Sent = createInteropEventType<{
   submissionId: `0x${string}`
   debridgeId: `0x${string}`
-  amount: string
+  amount: bigint
   $dstChain: string
 }>('debridge.Sent')
 
 export const Claimed = createInteropEventType<{
   submissionId: `0x${string}`
   debridgeId: `0x${string}`
-  amount: string
+  amount: bigint
   receiver: EthereumAddress
   $srcChain: string
 }>('debridge.Claimed')
@@ -110,7 +110,7 @@ export class DeBridgePlugin implements InteropPlugin {
         Sent.create(input.ctx, {
           submissionId: sent.submissionId,
           debridgeId: sent.debridgeId,
-          amount: sent.amount.toString(),
+          amount: sent.amount,
           $dstChain: findChain(
             DEBRIDGE_NETWORKS,
             (x) => x.chainId,
@@ -126,7 +126,7 @@ export class DeBridgePlugin implements InteropPlugin {
         Claimed.create(input.ctx, {
           submissionId: claimed.submissionId,
           debridgeId: claimed.debridgeId,
-          amount: claimed.amount.toString(),
+          amount: claimed.amount,
           receiver: EthereumAddress(claimed.receiver),
           $srcChain: findChain(
             DEBRIDGE_NETWORKS,

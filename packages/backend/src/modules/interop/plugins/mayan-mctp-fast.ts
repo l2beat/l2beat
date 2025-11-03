@@ -20,7 +20,7 @@ const parseOrderFulfilled = createEventParser(
 )
 
 export const OrderFulfilled = createInteropEventType<{
-  amount: string
+  amount: bigint
   $srcChain: string
 }>('mayan-mctp-fast.OrderFulfilled')
 
@@ -37,7 +37,7 @@ export class MayanMctpFastPlugin implements InteropPlugin {
       )
       return [
         OrderFulfilled.create(input.ctx, {
-          amount: orderFulfilled.amount.toString(),
+          amount: orderFulfilled.amount,
           $srcChain,
         }),
       ]

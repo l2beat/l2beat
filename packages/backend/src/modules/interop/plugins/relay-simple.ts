@@ -45,14 +45,14 @@ const parseRelayERC20Deposit = createEventParser(
 )
 
 export const TransferSrc = createInteropEventType<{
-  amount?: string
+  amount?: bigint
   tokenAddress: Address32
   kind: string
   requestId: string
 }>('relay-simple.TransferSrc')
 
 export const TransferDst = createInteropEventType<{
-  amount?: string
+  amount?: bigint
   tokenAddress: Address32
   kind: string
   requestId: string
@@ -63,13 +63,13 @@ export const FundsForwardedWithData = createInteropEventType<{
 }>('relay-simple.FundsForwardedWithData')
 
 export const RelayNativeDeposit = createInteropEventType<{
-  amount: string
+  amount: bigint
   requestId: string
 }>('relay-simple.RelayNativeDeposit')
 
 export const RelayERC20Deposit = createInteropEventType<{
   tokenAddress: Address32
-  amount: string
+  amount: bigint
   requestId: string
 }>('relay-simple.RelayERC20Deposit')
 
@@ -97,7 +97,7 @@ export class RelaySimplePlugIn implements InteropPlugin {
       if (input.tx.txData.length === 2 + 64) {
         return [
           TransferSrc.create(input.tx, {
-            amount: input.tx.txValue?.toString(),
+            amount: input.tx.txValue,
             tokenAddress: Address32.NATIVE,
             kind: 'direct transfer',
             requestId: input.tx.txData,
@@ -110,7 +110,7 @@ export class RelaySimplePlugIn implements InteropPlugin {
       if (input.tx.txData.length === 2 + 64) {
         return [
           TransferDst.create(input.tx, {
-            amount: input.tx.txValue?.toString(),
+            amount: input.tx.txValue,
             tokenAddress: Address32.NATIVE,
             kind: 'direct transfer',
             requestId: input.tx.txData,
@@ -122,7 +122,7 @@ export class RelaySimplePlugIn implements InteropPlugin {
     if (input.tx.txTo === RelayRouter32) {
       return [
         TransferDst.create(input.tx, {
-          amount: input.tx.txValue?.toString(),
+          amount: input.tx.txValue,
           tokenAddress: Address32.NATIVE,
           kind: 'relay router',
           requestId: '0x' + input.tx.txData.slice(-64),
@@ -133,7 +133,7 @@ export class RelaySimplePlugIn implements InteropPlugin {
     if (input.tx.txTo === RelayApprovalProxy32) {
       return [
         TransferDst.create(input.tx, {
-          amount: input.tx.txValue?.toString(),
+          amount: input.tx.txValue,
           tokenAddress: Address32.NATIVE,
           kind: 'relay approval proxy',
           requestId: '0x' + input.tx.txData.slice(-64),
@@ -149,7 +149,7 @@ export class RelaySimplePlugIn implements InteropPlugin {
         if (input.ctx.txData.length === 2 + 8 + 64 * 3) {
           return [
             TransferSrc.create(input.ctx, {
-              amount: transfer.value.toString(),
+              amount: transfer.value,
               tokenAddress: Address32.from(input.log.address),
               kind: 'direct ERC20 transfer',
               requestId: '0x' + input.ctx.txData.slice(-64),
@@ -162,7 +162,7 @@ export class RelaySimplePlugIn implements InteropPlugin {
         if (input.ctx.txData.length === 2 + 8 + 64 * 3) {
           return [
             TransferDst.create(input.ctx, {
-              amount: transfer.value.toString(),
+              amount: transfer.value,
               tokenAddress: Address32.from(input.log.address),
               kind: 'direct ERC20 transfer',
               requestId: '0x' + input.ctx.txData.slice(-64),
@@ -176,7 +176,7 @@ export class RelaySimplePlugIn implements InteropPlugin {
     if (fundsForwardedWithData) {
       return [
         TransferSrc.create(input.ctx, {
-          amount: input.ctx.txValue?.toString(),
+          amount: input.ctx.txValue,
           tokenAddress: Address32.NATIVE,
           kind: 'funds forwarded',
           requestId: fundsForwardedWithData.data.slice(0, 2 + 64),
@@ -188,7 +188,7 @@ export class RelaySimplePlugIn implements InteropPlugin {
     if (relayNativeDeposit) {
       return [
         TransferSrc.create(input.ctx, {
-          amount: relayNativeDeposit.amount.toString(),
+          amount: relayNativeDeposit.amount,
           tokenAddress: Address32.NATIVE,
           kind: 'relay native deposit',
           requestId: relayNativeDeposit.id,
@@ -200,7 +200,7 @@ export class RelaySimplePlugIn implements InteropPlugin {
     if (relayERC20Deposit) {
       return [
         TransferSrc.create(input.ctx, {
-          amount: relayERC20Deposit.amount.toString(),
+          amount: relayERC20Deposit.amount,
           tokenAddress: Address32.from(input.log.address),
           kind: 'relay ERC20 deposit',
           requestId: relayERC20Deposit.id,
