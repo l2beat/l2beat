@@ -2,7 +2,7 @@
 
 source .env
 
-FEATURES_NAMES=("da" "liveness" "tvs" "activity" "shared" "interop")
+FEATURES_NAMES=("da" "liveness" "tvs" "activity" "shared" "interop" "tokens-ui")
 FEATURES_TABLES=(
     "IndexerState IndexerConfiguration DataAvailability Blob SyncMetadata"
     "IndexerState IndexerConfiguration"
@@ -10,6 +10,7 @@ FEATURES_TABLES=(
     "IndexerState IndexerConfiguration Activity SyncMetadata"
     "IndexerState IndexerConfiguration AnomalyStats RealTimeLiveness RealTimeAnomaly"
     "IndexerState IndexerConfiguration InteropEvent InteropMessage InteropTransfer"
+    "AbstractToken DeployedToken TokenConnection"
 )
 
 clear_tables() {
