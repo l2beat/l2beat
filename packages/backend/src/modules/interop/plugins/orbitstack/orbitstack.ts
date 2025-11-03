@@ -71,7 +71,9 @@ export const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
     outbox: EthereumAddress('0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840'),
     // L1 -> L2 (Messages)
     bridge: EthereumAddress('0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a'),
-    sequencerInbox: EthereumAddress('0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6'),
+    sequencerInbox: EthereumAddress(
+      '0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6',
+    ),
     arbRetryableTx: EthereumAddress(
       '0x000000000000000000000000000000000000006e',
     ),
