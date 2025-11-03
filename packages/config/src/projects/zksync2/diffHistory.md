@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x95849a531b11ea07ee49d7ee942018fdf467370a
+Generated with discovered.json: 0x7a13f4153e212350239f5c235de2f016d0064d83
 
-# Diff at Mon, 03 Nov 2025 15:58:33 GMT:
+# Diff at Mon, 03 Nov 2025 16:50:08 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - comparing to: main@6b72018cd9706ce7cba8ec489b67d7193f34dc20 block: 1761643176
@@ -67,7 +67,7 @@ discovery. Values are for block 1761643176 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract  (gateway:0x000000000000000000000000000000000001000a)
+    contract ChainAssetHandler_unverified (gateway:0x000000000000000000000000000000000001000a)
     +++ description: None
 ```
 

@@ -807,7 +807,7 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "name": "",
+      "name": "ChainAssetHandler_unverified",
       "address": "gateway:0x000000000000000000000000000000000001000a",
       "type": "Contract",
       "unverified": true,
@@ -2708,5 +2708,5 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x6b83daae3459d63aeff3b894c47d96c0190d2aaccc58fd6243a417aa7e5ac3a3"
   },
   "usedBlockNumbers": { "gateway": 84446, "ethereum": 23719710 },
-  "permissionsConfigHash": "0xfb0a69334050031d736d4084e8e130bededf0a73c2409c5985ead90df3aea32d"
+  "permissionsConfigHash": "0xdaebab4a463a67a4983f634bd30f7f86a3a9cc52aa5b130657d3ab038d6ec195"
 }
