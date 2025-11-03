@@ -7,6 +7,7 @@ import { Checkbox } from '../../../components/Checkbox'
 import { usePanelStore } from '../store/panel-store'
 import { ResultsSection } from './ResultsSection'
 import { UIContractDataAccess, resolvePathExpression } from './ownerResolution'
+import { V2ScoringSection } from '../../../defidisco/V2ScoringSection'
 
 export function DeFiScanPanel() {
   const { project } = useParams()
@@ -71,6 +72,7 @@ export function DeFiScanPanel() {
           functions={filteredFunctions}
           contractTags={contractTags}
         />
+        <V2ScoringSection project={project} />
       </div>
     </div>
   )

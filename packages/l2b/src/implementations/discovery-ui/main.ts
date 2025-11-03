@@ -30,6 +30,7 @@ import {
 import { generatePermissionsReport } from './defidisco/generatePermissionsReport'
 import { filterDefiProjects } from './defidisco/defiProjectFilter'
 import { detectPermissionsWithAI, combineSourceFiles } from './defidisco/aiPermissionDetection'
+import { calculateV2Score } from './defidisco/v2Scoring'
 import {
   attachTemplateRouter,
   listTemplateFilesSchema,
@@ -440,6 +441,24 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     } catch (error) {
       console.error('Error updating contract tags:', error)
       res.status(500).json({ error: 'Failed to update contract tags' })
+    }
+  })
+
+  // V2 Scoring endpoint
+  app.get('/api/projects/:project/v2-score', (req, res) => {
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+
+    try {
+      const score = calculateV2Score(paths, configReader, templateService, project)
+      res.json(score)
+    } catch (error) {
+      console.error('Error calculating V2 score:', error)
+      res.status(500).json({ error: 'Failed to calculate V2 score' })
     }
   })
 

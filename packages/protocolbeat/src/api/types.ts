@@ -268,3 +268,21 @@ export interface ApiContractTagsUpdateRequest {
   centralization?: 'high' | 'medium' | 'low'
   mitigations?: 'complete' | 'partial' | 'none'
 }
+
+// V2 Scoring types
+export type LetterGrade = 'AAA' | 'AA' | 'A' | 'BBB' | 'BB' | 'B' | 'CCC' | 'CC' | 'C' | 'D'
+
+export interface ModuleScore {
+  grade: LetterGrade
+  inventory: number
+}
+
+export interface ApiV2ScoreResponse {
+  inventory: {
+    contracts: ModuleScore
+    functions: ModuleScore
+    dependencies: ModuleScore
+    admins: ModuleScore
+  }
+  finalScore: LetterGrade
+}

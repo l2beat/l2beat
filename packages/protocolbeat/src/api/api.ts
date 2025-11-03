@@ -14,6 +14,7 @@ import type {
   ApiProjectResponse,
   ApiProjectsResponse,
   ApiTemplateFileResponse,
+  ApiV2ScoreResponse,
 } from './types'
 
 export async function getProjects(): Promise<ApiProjectsResponse> {
@@ -325,5 +326,14 @@ export async function detectPermissionsWithAI(
   }
 
   return await res.json()
+}
+
+export async function getV2Score(project: string): Promise<ApiV2ScoreResponse> {
+  const res = await fetch(`/api/projects/${project}/v2-score`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiV2ScoreResponse
 }
 
