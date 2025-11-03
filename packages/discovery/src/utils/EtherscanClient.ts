@@ -349,9 +349,8 @@ function decodeEtherscanSource(
 
     validated = verified.sources
     remappings = verified.settings.remappings ?? []
-  } catch (e) {
+  } catch {
     validated = Sources.parse(parsed)
-    throw e
   }
 
   return {
