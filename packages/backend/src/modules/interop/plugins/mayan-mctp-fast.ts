@@ -1,4 +1,5 @@
 import { BinaryReader } from '../../../tools/BinaryReader'
+import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { CCTPv2MessageReceived, CCTPv2MessageSent } from './cctp/cctp-v2.plugin'
 import { MayanForwarded } from './mayan-forwarder'
 import {
@@ -13,7 +14,7 @@ import {
   type MatchResult,
   Result,
 } from './types'
-import { WORMHOLE_NETWORKS } from './wormhole'
+import { WormholeConfig } from './wormhole/wormhole.config'
 
 const parseOrderFulfilled = createEventParser(
   'event OrderFulfilled(uint32 sourceDomain, bytes32 sourceNonce, uint256 amount)',
@@ -27,11 +28,16 @@ export const OrderFulfilled = createInteropEventType<{
 export class MayanMctpFastPlugin implements InteropPlugin {
   name = 'mayan-mctp-fast'
 
+  constructor(private configs: InteropConfigStore) {}
+
   capture(input: LogToCapture) {
+    const wormholeNetworks = this.configs.get(WormholeConfig)
+    if (!wormholeNetworks) return
+
     const orderFulfilled = parseOrderFulfilled(input.log, null)
     if (orderFulfilled) {
       const $srcChain = findChain(
-        WORMHOLE_NETWORKS,
+        wormholeNetworks,
         (x) => x.wormholeChainId,
         Number(orderFulfilled.sourceDomain),
       )
