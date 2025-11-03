@@ -114,7 +114,7 @@ export const jovay: ScalingProject = {
       ...RISK_VIEW.STATE_NONE,
       value: 'TEE attestations',
       description:
-        'State roots are accepted when attested by a permissioned Intel SGX TEE through the TEEVerifierProxy. The rollup owner can swap the verifier contract and no permissionless challenges exist, so invalid state roots cannot be disputed or verified onchain.',
+        'State roots are accepted when attested by a permissioned TEE through the TEEVerifierProxy. There is no challenge mechanism and no validity proofs can be submitted.',
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
