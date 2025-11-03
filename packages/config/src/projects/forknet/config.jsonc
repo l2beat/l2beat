@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "forknet",
+  "import": ["../globalConfig.jsonc"],
+  "sharedModules": ["shared-polygon-cdk"],
+  "initialAddresses": [
+    "eth:0x6C82EEE75Bb8b957C12FaaF8CAb549BE4b0fD5af",
+    "eth:0x2f3d687e02dbe83B6cDaE02aeb66C0e8E69CcA4b"
+  ]
+}
