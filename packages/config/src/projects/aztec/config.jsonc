@@ -7,7 +7,8 @@
     "eth:0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895"
   ],
   "names": {
-    "eth:0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734": "AztecFeeDistributor"
+    "eth:0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734": "AztecFeeDistributor",
+    "eth:0xF3761B450571a49Fa8e2aF6e37e1Eb3516209d56": "VerificationKeysLibrary"
   },
   "overrides": {
     "eth:0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266": {
