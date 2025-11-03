@@ -12,7 +12,7 @@ import { AddDeployedToken } from './AddDeployedToken'
 
 export function AddTokensPage() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const tab = searchParams.get('tab') ?? 'abstract'
+  const tab = searchParams.get('tab') ?? 'deployed'
 
   return (
     <AppLayout>
@@ -24,20 +24,9 @@ export function AddTokensPage() {
         }}
       >
         <TabsList>
-          <TabsTrigger value="abstract">Abstract Token</TabsTrigger>
           <TabsTrigger value="deployed">Deployed Token</TabsTrigger>
+          <TabsTrigger value="abstract">Abstract Token</TabsTrigger>
         </TabsList>
-        <TabsContent
-          value="abstract"
-          forceMount
-          className="data-[state=inactive]:hidden"
-        >
-          <Card>
-            <CardContent>
-              <AddAbstractToken />
-            </CardContent>
-          </Card>
-        </TabsContent>
         <TabsContent
           value="deployed"
           forceMount
@@ -46,6 +35,17 @@ export function AddTokensPage() {
           <Card>
             <CardContent>
               <AddDeployedToken />
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent
+          value="abstract"
+          forceMount
+          className="data-[state=inactive]:hidden"
+        >
+          <Card>
+            <CardContent>
+              <AddAbstractToken />
             </CardContent>
           </Card>
         </TabsContent>
