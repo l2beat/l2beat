@@ -142,6 +142,7 @@ export class GasZipPlugin implements InteropPlugin {
     }
     return events
   }
+  matchTypes = [GasZipFill]
   match(gasZipFill: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (!GasZipFill.checkType(gasZipFill)) return
 
