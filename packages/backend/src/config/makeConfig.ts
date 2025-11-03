@@ -33,6 +33,9 @@ export async function makeConfig(
   const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
     (p) => p.chainConfig,
   )
+  const activeChains = (
+    await ps.getProjects({ select: ['chainConfig'], whereNot: ['archivedAt'] })
+  ).map((p) => p.chainConfig)
   const isReadonly = env.boolean(
     'READONLY',
     // if we connect locally to production db, we want to be readonly!
@@ -179,7 +182,7 @@ export async function makeConfig(
       },
       config: {
         enabled: flags.isEnabled('interop', 'config'),
-        chains: chains
+        chains: activeChains
           .filter((c) => c.chainId !== undefined)
           .map((c) => ({ id: c.chainId as number, name: c.name })),
       },

@@ -26,6 +26,7 @@ export interface VerifiersSectionProps extends ProjectSectionProps {
       hash: string
       description?: string
       knownDeployments: {
+        projectsUsedIn: UsedInProjectWithIcon[]
         url?: string
         address: string
       }[]
@@ -131,7 +132,7 @@ function VerifierCollapsibleWithDetails({
               <div className="font-bold text-label-value-16">
                 Known deployments
               </div>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {verifierHash.knownDeployments.map((deployment, index) => (
                   <div key={deployment.url} className="space-y-2">
                     <h3 className="font-bold text-label-value-14">{`Deployment #${index + 1}`}</h3>
@@ -143,6 +144,15 @@ function VerifierCollapsibleWithDetails({
                         address={deployment.address}
                         href={deployment.url}
                         className="text-label-value-14"
+                      />
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <span className="font-medium text-label-value-14 text-secondary">
+                        Used in:
+                      </span>
+                      <ProjectsUsedIn
+                        noL2ClassName="text-label-value-14 font-medium text-secondary"
+                        usedIn={deployment.projectsUsedIn}
                       />
                     </div>
                   </div>

@@ -1,8 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { DiscoveryPaths } from '@l2beat/discovery'
-import path from 'path'
-import { keyInYN } from 'readline-sync'
-import { powerdiff } from '../powerdiff'
 import {
   computeComparisonBetweenProjects,
   computeStackSimilarity,
@@ -50,15 +47,4 @@ export async function executeFindSimilar(
   )
   command.logger.info(formatHeader('Most similar to:'))
   command.logger.info(`${otherName} => ${name} @ ${colorMap(similarity)}`)
-
-  if (similarity === 1) {
-    command.logger.info('No need to run powerdiff, projects are identical')
-    return
-  }
-
-  if (keyInYN('Run powerdiff?')) {
-    const path1 = path.join(command.paths.discovery, name, '.flat')
-    const path2 = path.join(command.paths.discovery, otherName, '.flat')
-    powerdiff(path1, path2)
-  }
 }

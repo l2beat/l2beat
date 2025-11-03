@@ -1,55 +1,24 @@
-import type { LogLevel } from './LogLevel'
-import type { ResolvedError } from './resolveError'
+export type LogLevel =
+  | 'CRITICAL'
+  | 'ERROR'
+  | 'WARN'
+  | 'INFO'
+  | 'DEBUG'
+  | 'TRACE'
 
 export interface LoggerTransport {
-  debug(message: string): void
-  log(message: string): void
-  warn(message: string): void
-  error(message: string): void
-  /**
-   * Optional method to flush buffered logs.
-   * Should be called before the process exits to ensure all logs are sent.
-   */
-  flush?(): Promise<void>
+  log(
+    time: Date,
+    level: LogLevel,
+    message: string,
+    parameters: Record<string, unknown>,
+  ): void
+  flush(): void
 }
 
-export interface LogFormatter {
-  format(entry: LogEntry): string
-}
-
-export interface LoggerTransportOptions {
-  transport: LoggerTransport
-  formatter: LogFormatter
-}
-
-export interface LoggerOptions {
-  logLevel: LogLevel
-  service?: string
-  tag?: string
-  feature?: string
-  module?: string
-  chain?: string
-  project?: string
-  source?: string
-  utc: boolean
-  cwd: string
-  getTime: () => Date
-  reportError: (entry: LogEntry) => void
-  transports: LoggerTransportOptions[]
-  metricsEnabled?: boolean
-}
-
-export interface LogEntry {
-  level: LogLevel
-  time: Date
-  service?: string
-  feature?: string
-  module?: string
-  chain?: string
-  project?: string
-  source?: string
-  message?: string
-  error?: Error
-  resolvedError?: ResolvedError
-  parameters?: object
-}
+export type LogFormatter = (
+  time: Date,
+  level: LogLevel,
+  message: string,
+  parameters: Record<string, unknown>,
+) => string

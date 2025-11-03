@@ -7,7 +7,6 @@ import {
 import {
   assert,
   ChainSpecificAddress,
-  type EthereumAddress,
   formatAsAsciiTable,
   Hash256,
   UnixTime,
@@ -18,10 +17,9 @@ import { getProvider } from './common/GetProvider'
 import { getExplorerConfig } from './common/getExplorer'
 
 export interface EventArgs {
-  address: EthereumAddress
+  address: ChainSpecificAddress
   topics: string[]
   rpcUrl: string
-  chainName: string | undefined
   explorerUrl: string
   explorerApiKey: string | undefined
   explorerType: string
@@ -29,14 +27,18 @@ export interface EventArgs {
 }
 
 export async function getEvents(logger: Logger, args: EventArgs) {
-  const { address, topics: inputTopics, rpcUrl } = args
+  const { address: fullAddress, topics: inputTopics, rpcUrl } = args
 
-  const explorer = getExplorerConfig(args)
-  const provider = await getProvider(rpcUrl, explorer)
-  const fullAddress = ChainSpecificAddress.fromLong(provider.chain, address)
+  // Extract chain name from the chain-specific address
+  const chainName = ChainSpecificAddress.longChain(fullAddress)
 
-  const onlyHashedTopics = inputTopics.every((t) => Hash256.check(t))
-  const topics = []
+  const explorer = getExplorerConfig({ ...args, chainName })
+  const provider = await getProvider(rpcUrl, explorer, chainName)
+
+  const onlyHashedTopics = inputTopics.every(
+    (t) => Hash256.check(t) || t === 'null',
+  )
+  const topics: (string | null)[] = []
   if (!onlyHashedTopics) {
     logger.info(
       'Some of the topics you provided are not hashes, trying to match them to the ABI',
@@ -62,9 +64,14 @@ export async function getEvents(logger: Logger, args: EventArgs) {
     )
 
     for (const topic of inputTopics) {
+      if (topic === 'null') {
+        topics.push(null)
+        continue
+      }
+
       if (Hash256.check(topic)) {
         topics.push(topic)
-        break
+        continue
       }
 
       try {
@@ -80,7 +87,7 @@ export async function getEvents(logger: Logger, args: EventArgs) {
     }
     logger.info('Done')
   } else {
-    topics.push(...inputTopics)
+    topics.push(...inputTopics.map((t) => (t === 'null' ? null : t)))
   }
 
   logger.info('Fetching logs...')
@@ -88,7 +95,7 @@ export async function getEvents(logger: Logger, args: EventArgs) {
     fullAddress,
     topics.map((t) => t),
   )
-  logger.info('Done.')
+  logger.info(`Done. Found ${logs.length} events.`)
 
   const headers = ['Date', 'Transaction hash', 'Sender']
   const values: string[][] = await Promise.all(

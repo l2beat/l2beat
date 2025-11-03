@@ -9,6 +9,7 @@ import {
   EigenApiClient,
   FuelClient,
   HttpClient,
+  LighterClient,
   type LogsClient,
   LoopringClient,
   MulticallV3Client,
@@ -31,6 +32,7 @@ export interface Clients {
   svmBlock: SvmBlockClient[]
   indexer: BlockIndexerClient[]
   voyager: VoyagerClient | undefined
+  lighter: LighterClient | undefined
   starkex: StarkexClient | undefined
   loopring: LoopringClient | undefined
   degate: LoopringClient | undefined
@@ -95,7 +97,7 @@ export function initClients(config: Config, logger: Logger): Clients {
               )
             : undefined
           const rpcClient = new RpcClient({
-            sourceName: chain.name,
+            chain: chain.name,
             url: blockApi.url,
             http,
             callsPerMinute: blockApi.callsPerMinute,
@@ -267,6 +269,14 @@ export function initClients(config: Config, logger: Logger): Clients {
     })
   }
 
+  const lighterClient = new LighterClient({
+    sourceName: 'lighter',
+    http,
+    logger,
+    callsPerMinute: 100,
+    retryStrategy: 'RELIABLE',
+  })
+
   if (config.beaconApi.url) {
     beaconChainClient = new BeaconChainClient({
       sourceName: 'beaconApi',
@@ -332,5 +342,6 @@ export function initClients(config: Config, logger: Logger): Clients {
     rpcClients,
     starknetClients,
     voyager: voyagerClient,
+    lighter: lighterClient,
   }
 }

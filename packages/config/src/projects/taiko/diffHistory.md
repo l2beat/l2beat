@@ -1,3 +1,138 @@
+Generated with discovered.json: 0xaefab4cb6d9e9b925cae4be6786e47867737eeb5
+
+# Diff at Mon, 03 Nov 2025 14:19:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@64561b32de50bd9ecc1f1ddea1db1aa9e5ae4bee block: 1761894930
+- current timestamp: 1761894930
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761894930 (main branch discovery), not current.
+
+```diff
+    contract TaikoL1 (eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: Main contract implementing the logic for proposing and proving Taiko blocks on L1.
+      values.$libraries:
++        ["eth:0xc618b0bA27F751D33689DebA538f8567AeF53ee6","eth:0xe61FD6715FfFA2f4057f1Cf0230512b91A9f5f84","eth:0xfD9B548c00a1E96BbFc2C5FE0D339618B40B4593","eth:0x5565543Ec09f746721928B0A4d019c9E750d0552"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LibUtils (eth:0x5565543Ec09f746721928B0A4d019c9E750d0552)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LibBonds (eth:0xc618b0bA27F751D33689DebA538f8567AeF53ee6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LibData (eth:0xe61FD6715FfFA2f4057f1Cf0230512b91A9f5f84)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LibProving (eth:0xfD9B548c00a1E96BbFc2C5FE0D339618B40B4593)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x4ad2be96a6472cb72c1740890c9ba97f5d2c0a3f
+
+# Diff at Fri, 31 Oct 2025 07:17:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@68eb98b0468d176aa44713dcaed98f67b2a200a0 block: 1761643945
+- current timestamp: 1761894930
+
+## Description
+
+Minor upgrade proposed.
+
+Reviewed here: https://gist.github.com/sekuba/46d7bcab5127c0ed6e0d66ce285b0559 (approved, will go to optimistic phase if at least 5 approve)
+
+## Watched changes
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        11
++        12
+    }
+```
+
+Generated with discovered.json: 0x48b3c9a94d3498c063182c27bf387c8f600816ad
+
+# Diff at Tue, 28 Oct 2025 09:33:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@090e135db1084f4a9678d6bf1cb0ff5e854903ea block: 1761550873
+- current timestamp: 1761643945
+
+## Description
+
+proposer/sequencer whitelist changed.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 4 operators registered.
+      values.registeredOperators.0.sequencer:
+-        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
++        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+      values.registeredOperators.0.proposer:
+-        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
++        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+      values.registeredOperators.3.sequencer:
+-        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
++        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+      values.registeredOperators.3.proposer:
+-        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
++        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+    }
+```
+
+Generated with discovered.json: 0x833740284aedb8b48b0da3078846244cdb7d3086
+
+# Diff at Mon, 27 Oct 2025 07:42:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e31499883253bb2b7c36fe0654ea187cfa3ca612 block: 1759909174
+- current timestamp: 1761550873
+
+## Description
+
+Operator change.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 4 operators registered.
+      values.registeredOperators.0:
+-        {"proposer":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990","sequencer":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"}
+      values.registeredOperators.1:
+-        {"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}
+      values.registeredOperators.2:
++        {"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}
+      values.registeredOperators.3:
++        {"proposer":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990","sequencer":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"}
+    }
+```
+
 Generated with discovered.json: 0x55b32044ebd850568f757d8965b323b8b37b1ae5
 
 # Diff at Wed, 08 Oct 2025 07:42:30 GMT:

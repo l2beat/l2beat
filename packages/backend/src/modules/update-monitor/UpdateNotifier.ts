@@ -39,7 +39,6 @@ export class UpdateNotifier {
     private readonly logger: Logger,
     private readonly updateMessagesService: UpdateMessagesService,
     private readonly projectService: ProjectService,
-    private readonly disabledChains: string[],
   ) {
     this.logger = this.logger.for(this)
   }
@@ -160,6 +159,8 @@ export class UpdateNotifier {
   async sendDailyReminder(
     reminders: Record<string, DailyReminderChainEntry>,
     timestamp: UnixTime,
+    disabledProjects: string[],
+    failedProjects: string[],
   ): Promise<void> {
     if (!isNineAM(timestamp, 'CET')) {
       this.logger.info('Daily reminder not sent, not the right time', {
@@ -171,7 +172,8 @@ export class UpdateNotifier {
     let internals = ''
     const header = `${await getDailyReminderHeader(
       timestamp,
-      this.disabledChains,
+      disabledProjects,
+      failedProjects,
     )}\n${internals}\n`
 
     if (!isEmpty(reminders)) {
@@ -190,7 +192,8 @@ export class UpdateNotifier {
 
     const notifyMessage = `${await getDailyReminderHeader(
       timestamp,
-      this.disabledChains,
+      disabledProjects,
+      failedProjects,
     )}\n${internals}\n`
 
     await this.notify(notifyMessage, 'INTERNAL')
@@ -297,16 +300,22 @@ export async function generateTemplatizedStatus(): Promise<string> {
 
 async function getDailyReminderHeader(
   timestamp: UnixTime,
-  disabledChains: string[],
+  disabledProjects: string[],
+  failedProjects: string[],
 ): Promise<string> {
   const templatizedProjectsString = await generateTemplatizedStatus()
 
-  const disabledChainsMessage =
-    disabledChains.length > 0
-      ? `:warning: Disabled chains: ${disabledChains.map((c) => `\`${c}\``).join(', ')}\n`
+  const disabledProjectsMessage =
+    disabledProjects.length > 0
+      ? `:warning: Disabled projects: ${disabledProjects.map((c) => `\`${c}\``).join(', ')}\n`
       : ''
 
-  return `# Daily bot report @ ${UnixTime.toYYYYMMDD(timestamp)}\n${disabledChainsMessage}${templatizedProjectsString}\n:x: Detected changes with following severities :x:`
+  const failedProjectsMessage =
+    failedProjects.length > 0
+      ? `:warning: Failed projects: ${failedProjects.map((c) => `\`${c}\``).join(', ')}\n`
+      : ''
+
+  return `# Daily bot report @ ${UnixTime.toYYYYMMDD(timestamp)}\n${disabledProjectsMessage}${failedProjectsMessage}${templatizedProjectsString}\n:x: Detected changes with following severities :x:`
 }
 
 function countDiff(diff: DiscoveryDiff[]): number {

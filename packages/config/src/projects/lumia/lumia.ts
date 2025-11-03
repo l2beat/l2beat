@@ -17,7 +17,7 @@ import {
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('lumia')
-const bridge = discovery.getContract('PolygonSharedBridge')
+const bridge = discovery.getContract('AgglayerBridge')
 
 export const lumia: ScalingProject = {
   addedAt: UnixTime(1718181773), // 2024-06-12T08:42:53Z
@@ -104,8 +104,8 @@ export const lumia: ScalingProject = {
           },
           {
             title:
-              'Etherscan: PolygonRollupManager.sol - verifyPessimisticTrustedAggregator() function',
-            url: 'https://etherscan.io/address/0x42B9fF0644741e3353162678596e7D6aA6a13240#code#F1#L1280',
+              'Etherscan: AgglayerManager.sol - verifyPessimisticTrustedAggregator() function',
+            url: 'https://etherscan.io/address/0x15cAF18dEd768e3620E0f656221Bf6B400ad2618#code#F1#L1300',
           },
         ],
       },
@@ -168,7 +168,7 @@ export const lumia: ScalingProject = {
 function getPessimisticVKeys(): string[] {
   type ProgramHashDict = Record<string, Record<string, string>[]>
   const pessimisticVKeyDict = discovery.getContractValue<ProgramHashDict>(
-    'AggLayerGateway',
+    'AgglayerGateway',
     'routes',
   )
   // Iterate over all selectors, each of the selectors could be used as it is set in calldata

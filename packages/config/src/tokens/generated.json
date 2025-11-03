@@ -12347,6 +12347,28 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "EARNM",
+      "coingeckoId": "earnm",
+      "address": "0x3e62fED35c97145e6B445704B8CE74B2544776A9",
+      "symbol": "EARNM",
+      "decimals": 18,
+      "deploymentTimestamp": 1732049680,
+      "coingeckoListingTimestamp": 1734652800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52925/large/earnm.jpg?1734706204",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "name": "EDU Coin",
       "coingeckoId": "edu-coin",
       "address": "0xf8173a39c56a554837C4C7f104153A005D284D11",

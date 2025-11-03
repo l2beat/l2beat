@@ -1234,7 +1234,7 @@
   "static/meta-images/scaling/projects/katana/opengraph-image.png": "a0e6d13cad4537d4f115f82b8777e203",
   "static/icons/cartesi-prt-honeypot.png": "1386222d674f3b86767f3380650e602c",
   "static/meta-images/scaling/projects/cartesi-prt-honeypot/opengraph-image.png": "16ba8b04d90b09ad49af5bf99238d8fe",
-  "static/icons/nethermind.png": "62838a6f94715dd9ef1164f02d65ed73",
+  "static/icons/nethermind.png": "6ef436389c08409cfae1c8bb36663bf2",
   "static/partners/agglayer/build-on.png": "47a86bac78ed5bd5eedeb6a8b47fb2f1",
   "static/partners/agglayer/logo.dark.png": "f8b59f71a9f8ed10f13c7f1f90222767",
   "static/partners/agglayer/logo.png": "7e44ef98f1cf862d7b4978c5a509d8ab",
@@ -1455,7 +1455,7 @@
   "static/icons/agglayer.png": "7deb3d9db192f9577d832ca3433ee0dc",
   "static/icons/arbitrum-orbit.png": "37d514602a21b07af5fd6ada5b855eaf",
   "static/icons/superchain.png": "f5e19aff7ed3a2aa4add91e5409aa0c8",
-  "static/icons/the-elastic-network.png": "30cb970773c127cf20da4811786876ec",
+  "static/icons/the-elastic-network.png": "c637f90a11e1e697a31d18ea86085673",
   "static/meta-images/ecosystems/agglayer/opengraph-image.png": "3bee14526e63c05edf9ad3f0ffd8e221",
   "static/meta-images/ecosystems/arbitrum-orbit/opengraph-image.png": "c69e04095eeee675b9a177a1fc158466",
   "static/meta-images/ecosystems/superchain/opengraph-image.png": "a5c00ee3b7dc5d8f3ad03c9004ed075b",
@@ -1497,5 +1497,14 @@
   "static/images/architecture/edgex.png": "7ac46b2f0dec519fc2ae693d120fac54",
   "static/meta-images/publications/governance-review-73.png": "0ea005fdee03429b9df705ca432cbe73",
   "static/images/architecture/ethereal.png": "360d85725bd64e162a95f1fd7e3514dc",
-  "static/icons/eigenda-v2.png": "e2e46805ed07bd1ef0d136e6262cb8cf"
+  "static/icons/eigenda-v2.png": "e2e46805ed07bd1ef0d136e6262cb8cf",
+  "static/images/architecture/jovay.png": "1d809369b95f9c96a224c33132368af3",
+  "static/meta-images/scaling/projects/earnm/opengraph-image.png": "fc05908b2ac7b5329121dc426344d4d4",
+  "static/icons/earnm.png": "d33825b35690cfe1797b8fe9a0039640",
+  "static/meta-images/publications/governance-review-74.png": "34963848036eebd1df8e37fb7e36c94c",
+  "static/icons/cartesi.png": "b1265a1d67db8ed2acc3d6191556b1da",
+  "static/icons/eigenlayer.png": "b12018bdf4f6e03713c8c670fdde9f44",
+  "static/meta-images/publications/monthly-update-2025-10.png": "327e623bbfd06b0610932e36d8a361e2",
+  "static/icons/stwo.png": "2844e04d003ec887a6707096937e5119",
+  "static/meta-images/zk-catalog/projects/stwo/opengraph-image.png": "30308525ddf32264b87fdc1e3557c72d"
 }

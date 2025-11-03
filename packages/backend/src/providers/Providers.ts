@@ -67,6 +67,7 @@ export class Providers {
     this.day = new DayProviders(config.chainConfig, {
       starkex: this.clients.starkex,
       voyager: this.clients.voyager,
+      lighter: this.clients.lighter,
     })
 
     const blobProviders: DaBlobProvider[] = []
