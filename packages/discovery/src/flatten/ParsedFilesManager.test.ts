@@ -320,7 +320,9 @@ describe(ParsedFilesManager.name, () => {
         },
       ]
 
-      const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
+      const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS, {
+        includeAll: true,
+      })
       const root = manager.findDeclaration('User')
 
       expect(root.declaration.dynamicReferences.sort()).toEqual(

@@ -354,11 +354,19 @@ export class ParsedFilesManager {
       const isContract = result.declaration.type === 'contract'
       const isAbstract = result.declaration.type === 'abstract'
       const isInterface = result.declaration.type === 'interface'
+      const isEvent = result.declaration.type === 'event'
+      const isError = result.declaration.type === 'error'
+      const isConstant = result.declaration.type === 'constant'
 
-      if (
-        (isInterface || isContract || isAbstract) &&
-        this.options.includeAll !== true
-      ) {
+      const isExtendedDeclaration =
+        isContract ||
+        isAbstract ||
+        isInterface ||
+        isEvent ||
+        isError ||
+        isConstant
+
+      if (isExtendedDeclaration && this.options.includeAll !== true) {
         continue
       }
 
