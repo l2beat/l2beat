@@ -16,6 +16,12 @@
         "args": []
       },
       "edit": ["format", "OpStackAbsolutePrestate"]
+    },
+    "proposer": {
+      "permissions": [{ "type": "propose" }]
+    },
+    "challenger": {
+      "permissions": [{ "type": "challenge" }]
     }
   }
 }

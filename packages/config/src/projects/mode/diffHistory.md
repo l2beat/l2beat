@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x38280f042faa1f307e5a60d738ca5f8eef6aab07
+
+# Diff at Mon, 03 Nov 2025 17:48:54 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6b72018cd9706ce7cba8ec489b67d7193f34dc20 block: 1761223020
+- current timestamp: 1761223020
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761223020 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"eth:0xF25E6e47Ce13a73550c4DA8824DFC3bDa9191249","role":".proposer"}]
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"challenge","from":"eth:0xF25E6e47Ce13a73550c4DA8824DFC3bDa9191249","role":".challenger"}]
+    }
+```
+
 Generated with discovered.json: 0x426d187785f76461364a70bba696f43256292e0e
 
 # Diff at Thu, 23 Oct 2025 12:38:25 GMT:
