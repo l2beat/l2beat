@@ -77,7 +77,7 @@ export const stone: BaseProject = {
               ProjectId('edgex'),
               ProjectId('immutablex'),
               ProjectId('myria'),
-              ProjectId('Paradex'),
+              ProjectId('paradex'),
               ProjectId('sorare'),
               ProjectId('brine'),
             ],
