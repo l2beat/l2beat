@@ -1,4 +1,8 @@
-import type { LighterClient, StarkexClient, VoyagerClient } from '@l2beat/shared'
+import type {
+  LighterClient,
+  StarkexClient,
+  VoyagerClient,
+} from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import type { ChainApi } from '../../config/chain/ChainApi'
 import { LighterDayProvider } from './LighterDayProvider'
