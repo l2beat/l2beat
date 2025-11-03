@@ -80,13 +80,15 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
               (x) => x.eid,
               packet.header.dstEid,
             )
-            return OFTSentPacketSent.create(input.ctx, {
-              $dstChain,
-              guid,
-              amountSentLD: Number(oftSent.amountSentLD),
-              amountReceivedLD: Number(oftSent.amountReceivedLD),
-              tokenAddress: Address32.from(input.log.address),
-            })
+            return [
+              OFTSentPacketSent.create(input.ctx, {
+                $dstChain,
+                guid,
+                amountSentLD: Number(oftSent.amountSentLD),
+                amountReceivedLD: Number(oftSent.amountReceivedLD),
+                tokenAddress: Address32.from(input.log.address),
+              }),
+            ]
           }
         }
       }
@@ -115,13 +117,15 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
             (x) => x.eid,
             packetDelivered.origin.srcEid,
           )
-          return OFTReceivedPacketDelivered.create(input.ctx, {
-            $srcChain,
-            guid,
-            amountReceivedLD: Number(oftReceived.amountReceivedLD),
-            // TODO: OFT log emitter is not always the token contract (needs effects)
-            tokenAddress: Address32.from(input.log.address),
-          })
+          return [
+            OFTReceivedPacketDelivered.create(input.ctx, {
+              $srcChain,
+              guid,
+              amountReceivedLD: Number(oftReceived.amountReceivedLD),
+              // TODO: OFT log emitter is not always the token contract (needs effects)
+              tokenAddress: Address32.from(input.log.address),
+            }),
+          ]
         }
       }
     }

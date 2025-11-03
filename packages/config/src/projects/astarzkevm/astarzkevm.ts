@@ -12,7 +12,7 @@ import { polygonCDKStack } from '../../templates/polygonCDKStack'
 import { PolygoncdkDAC } from '../../templates/polygoncdk-template'
 
 const discovery = new ProjectDiscovery('astarzkevm')
-const bridge = discovery.getContract('PolygonSharedBridge')
+const bridge = discovery.getContract('AgglayerBridge')
 
 const membersCountDAC = discovery.getContractValue<number>(
   'PolygonDataCommittee',
@@ -118,7 +118,7 @@ export const astarzkevm: ScalingProject = polygonCDKStack({
       'Node software can be found [here](https://github.com/0xPolygon/cdk-validium-node).',
     compressionScheme: 'No compression scheme yet.',
     genesisState:
-      'The genesis state, whose corresponding root is accessible as Batch 0 root in the `getRollupBatchNumToStateRoot` method of PolygonRollupManager, is available [here](https://github.com/0xPolygonHermez/zkevm-contracts/blob/1ad7089d04910c319a257ff4f3674ffd6fc6e64e/tools/addRollupType/genesis.json).',
+      'The genesis state, whose corresponding root is accessible as Batch 0 root in the `getRollupBatchNumToStateRoot` method of AgglayerManager, is available [here](https://github.com/0xPolygonHermez/zkevm-contracts/blob/1ad7089d04910c319a257ff4f3674ffd6fc6e64e/tools/addRollupType/genesis.json).',
     dataFormat:
       'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the AstarValidium contract.',
   },

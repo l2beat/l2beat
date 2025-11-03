@@ -1,0 +1,80 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "The main system contract defining the {{networkName}} Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.",
+  "ignoreInWatchMode": [
+    "lastAccInputHash",
+    "latestBlockNumber",
+    "latestOutputIndex",
+    "nextBlockNumber",
+    "nextOutputIndex"
+  ],
+  "ignoreMethods": ["computeL2Timestamp", "getL2Output"],
+  "ignoreRelatives": ["gasTokenAddress", "pol"],
+  "fields": {
+    "CONSENSUS_TYPE": {
+      "description": "0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)"
+    },
+    "optimisticMode": {
+      "description": "degrades the system into a permissioned finalization mode without validity proofs. The state root in the aggchain proof in optimistic mode does not need an op succinct validity proof, but only a signature of the trustedSequencer.",
+      "severity": "HIGH"
+    },
+    "aggchainSigners": {
+      "description:": "aggchain specific multisig signers that are used in pessimistic proofs for state transition signing",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign state transitions (replaces state validation for this aggchain).",
+          "condition": "optimisticMode is enabled by the optimisticModeManager."
+        }
+      ]
+    },
+    "aggchainMultisigHash": {
+      "description:": "changes if anything in the aggchainSigners multisig changes",
+      "severity": "HIGH"
+    },
+    "optimisticModeManager": {
+      "permissions": [
+        { "type": "interact", "description": "toggle the 'optimisticMode'." }
+      ]
+    },
+    "aggchainManager": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change verification keys (aggregationVkey, rangeVkeyCommitment, aggchainVkey) and the rollupConfigHash, manage multisig signers for permissioned state transitions and change critical configs for state validation."
+        }
+      ]
+    },
+    "selectedOpSuccinctConfigName": {
+      "description": "currently enforced OpSuccinctConfig. update the call handler for the full config if this changes.",
+      "severity": "HIGH"
+    },
+    "selectedOpSuccinctConfig": {
+      "handler": {
+        "type": "call",
+        "method": "function opSuccinctConfigs(bytes32) view returns (bytes32 aggregationVkey, bytes32 rangeVkeyCommitment, bytes32 rollupConfigHash)",
+        // "args": ["{{ selectedOpSuccinctConfigName }}"] // should be this but there is a bug
+        "args": [
+          "0x622142ba8035695383551428b698950d3d4a6a53629c90a86d7192cfb221ae4e"
+        ]
+      }
+    },
+    "aggregationVkey": {
+      "severity": "LOW",
+      "description": "DEPRECATED - Verification key for the aggregation step which aggregates multiple range proofs into a single proof. The aggregation proof ensures that all range proofs in a given block range are linked and use the `rangeVkeyCommitment` as the verification key. This proof is in turn wrapped by the aggchainVkey."
+    },
+    "rangeVkeyCommitment": {
+      "severity": "LOW",
+      "description": "DEPRECATED - Verification key for the OP Stack derivation + STF proof for a range of blocks. This proof is the bottom level proof, wrapped by the aggregationVkey."
+    },
+    "useDefaultSigners": {
+      "description:": "uses the signers from the AgglayerManager if true",
+      "severity": "HIGH"
+    },
+    "useDefaultVkeys": {
+      "description:": "ONLY FOR AGGCHAIN VKEYS, uses the vkeys from the AgglayerManager if true. Make sure to extract the custom vkeys saved in this contract if False.",
+      "severity": "HIGH"
+    }
+  }
+}

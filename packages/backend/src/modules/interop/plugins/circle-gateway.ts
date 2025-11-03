@@ -54,29 +54,33 @@ export class CircleGatewayPlugIn implements InteropPlugin {
 
     const gatewayBurned = parseGatewayBurned(input.log, null)
     if (gatewayBurned)
-      return GatewayBurned.create(input.ctx, {
-        token: Address32.from(gatewayBurned.token),
-        transferSpecHash: gatewayBurned.transferSpecHash,
-        $srcChain: findChain(
-          networks,
-          (x) => x.domain,
-          Number(gatewayBurned.destinationDomain), // yes, that's not a mistake
-        ),
-        value: gatewayBurned.value.toString(),
-      })
+      return [
+        GatewayBurned.create(input.ctx, {
+          token: Address32.from(gatewayBurned.token),
+          transferSpecHash: gatewayBurned.transferSpecHash,
+          $srcChain: findChain(
+            networks,
+            (x) => x.domain,
+            Number(gatewayBurned.destinationDomain), // yes, that's not a mistake
+          ),
+          value: gatewayBurned.value.toString(),
+        }),
+      ]
 
     const attestationUsed = parseAttestationUsed(input.log, null)
     if (attestationUsed)
-      return AttestationUsed.create(input.ctx, {
-        token: Address32.from(attestationUsed.token),
-        transferSpecHash: attestationUsed.transferSpecHash,
-        $dstChain: findChain(
-          networks,
-          (x) => x.domain,
-          Number(attestationUsed.sourceDomain), // yes, that's not a mistake
-        ),
-        value: attestationUsed.value.toString(),
-      })
+      return [
+        AttestationUsed.create(input.ctx, {
+          token: Address32.from(attestationUsed.token),
+          transferSpecHash: attestationUsed.transferSpecHash,
+          $dstChain: findChain(
+            networks,
+            (x) => x.domain,
+            Number(attestationUsed.sourceDomain), // yes, that's not a mistake
+          ),
+          value: attestationUsed.value.toString(),
+        }),
+      ]
   }
 
   matchTypes = [GatewayBurned]

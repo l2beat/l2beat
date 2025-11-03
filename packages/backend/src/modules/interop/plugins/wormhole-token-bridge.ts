@@ -29,16 +29,18 @@ export class WormholeTokenBridgePlugin implements InteropPlugin {
     const parsed = parseLogTransferRedeemed(input.log, null)
     if (!parsed) return
 
-    return TransferRedeemed.create(input.ctx, {
-      sequence: parsed.sequence.toString(),
-      $srcChain: findChain(
-        WORMHOLE_NETWORKS,
-        (x) => x.wormholeChainId,
-        parsed.emitterChainId,
-      ),
-      srcWormholeChainId: parsed.emitterChainId,
-      sender: parsed.emitterAddress,
-    })
+    return [
+      TransferRedeemed.create(input.ctx, {
+        sequence: parsed.sequence.toString(),
+        $srcChain: findChain(
+          WORMHOLE_NETWORKS,
+          (x) => x.wormholeChainId,
+          parsed.emitterChainId,
+        ),
+        srcWormholeChainId: parsed.emitterChainId,
+        sender: parsed.emitterAddress,
+      }),
+    ]
   }
 
   matchTypes = [TransferRedeemed]

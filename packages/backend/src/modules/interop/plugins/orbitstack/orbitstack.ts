@@ -74,6 +74,21 @@ export const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
     arbRetryableTx: EthereumAddress(
       '0x000000000000000000000000000000000000006e',
     ),
+    // Gateways
+    l1StandardGateway: EthereumAddress(
+      '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
+    ),
+    l2StandardGateway: EthereumAddress(
+      '0x09e9222E96E7B4AE2a407B98d48e330053351EEe',
+    ),
+    l1WethGateway: EthereumAddress(
+      '0xd92023e9d9911199a6711321d1277285e6d4e2db',
+    ),
+    l2WethGateway: EthereumAddress(
+      '0x6c411ad3e74de3e7bd422b94a27770f5b86c623b',
+    ),
+    l1Weth: EthereumAddress('0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'),
+    l2Weth: EthereumAddress('0x82af49447d8a07e3bd95bd0d56f35241523fbab1'),
   },
 ])
 
@@ -89,10 +104,12 @@ export class OrbitStackPlugin implements InteropPlugin {
         // L2 -> L1 (Withdrawal finalization on L1)
         const otxe = parseOutBoxTransactionExecuted(input.log, [network.outbox])
         if (otxe) {
-          return OutBoxTransactionExecuted.create(input.ctx, {
-            chain: network.chain,
-            position: Number(otxe.transactionIndex),
-          })
+          return [
+            OutBoxTransactionExecuted.create(input.ctx, {
+              chain: network.chain,
+              position: Number(otxe.transactionIndex),
+            }),
+          ]
         }
       }
 
@@ -105,10 +122,12 @@ export class OrbitStackPlugin implements InteropPlugin {
           networkForBridge.bridge,
         ])
         if (messageDelivered) {
-          return MessageDelivered.create(input.ctx, {
-            chain: networkForBridge.chain,
-            messageNum: messageDelivered.messageIndex.toString(),
-          })
+          return [
+            MessageDelivered.create(input.ctx, {
+              chain: networkForBridge.chain,
+              messageNum: messageDelivered.messageIndex.toString(),
+            }),
+          ]
         }
       }
     } else {
@@ -122,16 +141,20 @@ export class OrbitStackPlugin implements InteropPlugin {
       if (l2ToL1Tx) {
         // Check if this is an ETH withdrawal (callvalue > 0)
         if (l2ToL1Tx.callvalue > 0n) {
-          return ETHWithdrawalInitiatedL2ToL1Tx.create(input.ctx, {
+          return [
+            ETHWithdrawalInitiatedL2ToL1Tx.create(input.ctx, {
+              chain: network.chain,
+              position: Number(l2ToL1Tx.position),
+              amount: l2ToL1Tx.callvalue.toString(),
+            }),
+          ]
+        }
+        return [
+          L2ToL1Tx.create(input.ctx, {
             chain: network.chain,
             position: Number(l2ToL1Tx.position),
-            amount: l2ToL1Tx.callvalue.toString(),
-          })
-        }
-        return L2ToL1Tx.create(input.ctx, {
-          chain: network.chain,
-          position: Number(l2ToL1Tx.position),
-        })
+          }),
+        ]
       }
 
       // L1 -> L2 (Message processing on L2)
@@ -156,12 +179,14 @@ export class OrbitStackPlugin implements InteropPlugin {
             : '0x0'
         const callValue = BigInt(callValueHex)
 
-        return RedeemScheduled.create(input.ctx, {
-          chain: network.chain,
-          messageNum: BigInt(messageNum).toString(),
-          retryTxHash: redeemScheduled.retryTxHash,
-          ethAmount: callValue > 0n ? callValue.toString() : undefined,
-        })
+        return [
+          RedeemScheduled.create(input.ctx, {
+            chain: network.chain,
+            messageNum: BigInt(messageNum).toString(),
+            retryTxHash: redeemScheduled.retryTxHash,
+            ethAmount: callValue > 0n ? callValue.toString() : undefined,
+          }),
+        ]
       }
     }
   }
@@ -235,7 +260,7 @@ export class OrbitStackPlugin implements InteropPlugin {
             srcEvent: messageDelivered,
             dstEvent: event,
           }),
-          Result.Transfer('orbitstack-standardgateway.L1ToL2Transfer', {
+          Result.Transfer('orbitstack.L1ToL2Transfer', {
             srcEvent: messageDelivered,
             srcAmount: messageDelivered.ctx.txValue,
             srcTokenAddress: Address32.NATIVE,
