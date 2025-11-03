@@ -259,7 +259,9 @@ contract R1 {
           `,
     }
 
-    const flattened = flattenStartingFrom('R1', [rootFile, c2File], [])
+    const flattened = flattenStartingFrom('R1', [rootFile, c2File], [], {
+      includeAll: true,
+    })
 
     expect(flattened).toEqual(
       String.raw`error CustomError(address account);
