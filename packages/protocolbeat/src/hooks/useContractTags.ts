@@ -27,6 +27,17 @@ export function useUpdateContractTag(project: string) {
 export function useIsContractExternal(project: string, contractAddress: string) {
   const { data: contractTags } = useContractTags(project)
 
-  const tag = contractTags?.tags.find(tag => tag.contractAddress === contractAddress)
+  // Normalize both addresses for comparison (handle eth: prefix)
+  const normalizeAddress = (addr: string) => {
+    return addr.toLowerCase().replace('eth:', '')
+  }
+
+  const normalizedNodeAddress = normalizeAddress(contractAddress)
+
+  const tag = contractTags?.tags.find(tag => {
+    const normalizedTagAddress = normalizeAddress(tag.contractAddress)
+    return normalizedTagAddress === normalizedNodeAddress
+  })
+
   return tag?.isExternal ?? false
 }

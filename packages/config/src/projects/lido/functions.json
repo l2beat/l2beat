@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-10-31T19:02:36.674Z",
+  "lastModified": "2025-11-03T21:19:22.826Z",
   "contracts": {
     "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": {
       "functions": [
@@ -133,7 +133,7 @@
               "path": "$self.getGuardians"
             }
           ],
-          "timestamp": "2025-10-31T11:43:31.182Z"
+          "timestamp": "2025-11-03T21:19:22.826Z"
         },
         {
           "functionName": "unvetSigningKeys",
@@ -3224,6 +3224,20 @@
         {
           "isPermissioned": false,
           "timestamp": "2025-10-31T17:03:54.889Z"
+        }
+      ]
+    },
+    "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa": {
+      "functions": [
+        {
+          "functionName": "deposit",
+          "isPermissioned": false,
+          "dependencies": [
+            {
+              "contractAddress": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa"
+            }
+          ],
+          "timestamp": "2025-11-03T21:10:08.513Z"
         }
       ]
     }

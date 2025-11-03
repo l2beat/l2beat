@@ -16,6 +16,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getProject } from '../../../api/api'
 import { usePanelStore } from '../store/panel-store'
 import { UIContractDataAccess, resolvePathExpression } from './ownerResolution'
+import { useContractTags } from '../../../hooks/useContractTags'
 
 // Extended type for local display with contractAddress
 interface FunctionEntryWithContract extends FunctionEntry {
@@ -36,6 +37,7 @@ interface FunctionFolderProps {
   onOpenInCode: (contractAddress: string, functionName: string) => void
   onOwnerDefinitionsUpdate: (contractAddress: string, functionName: string, ownerDefinitions: OwnerDefinition[]) => void
   onDelayUpdate: (contractAddress: string, functionName: string, delay?: { contractAddress: string; fieldName: string }) => void
+  onDependenciesUpdate: (contractAddress: string, functionName: string, dependencies?: { contractAddress: string }[]) => void
 }
 
 
@@ -52,7 +54,8 @@ export function FunctionFolder({
   onConstraintsUpdate,
   onOpenInCode,
   onOwnerDefinitionsUpdate,
-  onDelayUpdate
+  onDelayUpdate,
+  onDependenciesUpdate
 }: FunctionFolderProps) {
   const { project } = useParams()
   const [isOpen, setIsOpen] = useState(false)
@@ -68,6 +71,9 @@ export function FunctionFolder({
     queryFn: () => project ? getProject(project) : null,
     enabled: !!project,
   })
+
+  // Fetch contract tags to get external contracts and their attributes
+  const { data: contractTags } = useContractTags(project || '')
 
   // Owner resolution using unified path expressions with shared utility
   const resolvedOwners = React.useMemo(() => {
@@ -223,6 +229,80 @@ export function FunctionFolder({
     return []
   }
 
+  // Get external contracts with their centralization and likelihood attributes
+  const getExternalContracts = React.useMemo(() => {
+    if (!projectData?.entries || !contractTags?.tags) return []
+
+    const externalTags = contractTags.tags.filter(tag => tag.isExternal)
+    const contracts: Array<{
+      address: string
+      name: string
+      centralization?: 'high' | 'medium' | 'low' | 'immutable'
+      likelihood?: 'high' | 'medium' | 'low' | 'mitigated'
+    }> = []
+
+    externalTags.forEach(tag => {
+      // Find contract name from project data
+      // Address normalization is now handled in the backend when saving
+      const contract = projectData.entries.flatMap(e => [...e.initialContracts, ...e.discoveredContracts])
+        .find(c => c.address === tag.contractAddress)
+
+      if (contract) {
+        contracts.push({
+          address: tag.contractAddress,
+          name: contract.name || 'Unknown Contract',
+          centralization: tag.centralization,
+          likelihood: tag.likelihood
+        })
+      }
+    })
+
+    return contracts
+  }, [projectData, contractTags])
+
+  // Helper to get dependency info (name, centralization, likelihood)
+  const getDependencyInfo = (address: string) => {
+    return getExternalContracts.find(c => c.address === address)
+  }
+
+  // Helper functions for dependency management
+  const handleAddDependency = (dependencyAddress: string) => {
+    const currentDependencies = currentFunction?.dependencies || []
+    const newDependencies = [...currentDependencies, { contractAddress: dependencyAddress }]
+    onDependenciesUpdate(contractAddress, functionName, newDependencies)
+    setIsAddingDependency(false)
+  }
+
+  const handleRemoveDependency = (index: number) => {
+    const currentDependencies = currentFunction?.dependencies || []
+    const newDependencies = currentDependencies.filter((_, i) => i !== index)
+    // Always pass the array, even if empty - backend will handle it
+    // Empty array will be omitted from JSON when serialized
+    onDependenciesUpdate(contractAddress, functionName, newDependencies)
+  }
+
+  // Helper to get centralization color
+  const getCentralizationColor = (centralization?: 'high' | 'medium' | 'low' | 'immutable') => {
+    switch (centralization) {
+      case 'high': return '#f87171' // red-400
+      case 'medium': return '#fb923c' // orange-400
+      case 'low': return '#fbbf24' // amber-400
+      case 'immutable': return '#10b981' // green-500
+      default: return '#9ca3af' // gray-400
+    }
+  }
+
+  // Helper to get likelihood color
+  const getLikelihoodColor = (likelihood?: 'high' | 'medium' | 'low' | 'mitigated') => {
+    switch (likelihood) {
+      case 'high': return '#f87171' // red-400
+      case 'medium': return '#fb923c' // orange-400
+      case 'low': return '#fbbf24' // amber-400
+      case 'mitigated': return '#10b981' // green-500
+      default: return '#9ca3af' // gray-400
+    }
+  }
+
   const isPermissioned = currentFunction?.isPermissioned || false
   const checkedStatus = currentFunction?.checked || false
   const scoreStatus = currentFunction?.score || 'unscored'
@@ -248,6 +328,9 @@ export function FunctionFolder({
     contractAddress: contractAddress,
     fieldName: ''
   })
+
+  // State for managing dependencies
+  const [isAddingDependency, setIsAddingDependency] = useState(false)
 
   // Update local description when external data changes
   useEffect(() => {
@@ -389,7 +472,7 @@ export function FunctionFolder({
 
   // Owner definition management handlers
   const handleAddOwnerDefinition = () => {
-    const currentDefinitions = currentOverride?.ownerDefinitions || []
+    const currentDefinitions = currentFunction?.ownerDefinitions || []
 
     const newDefinition: OwnerDefinition = {
       path: newOwnerPath
@@ -404,7 +487,7 @@ export function FunctionFolder({
   }
 
   const handleRemoveOwnerDefinition = (index: number) => {
-    const currentDefinitions = currentOverride?.ownerDefinitions || []
+    const currentDefinitions = currentFunction?.ownerDefinitions || []
     const updatedDefinitions = currentDefinitions.filter((_, i) => i !== index)
     onOwnerDefinitionsUpdate(contractAddress, functionName, updatedDefinitions)
   }
@@ -883,6 +966,155 @@ export function FunctionFolder({
                 >
                   Set Delay
                 </button>
+              </div>
+            )}
+          </div>
+
+          {/* Dependencies Section */}
+          <div className="p-3 border-b border-coffee-700">
+            <div className="flex items-center justify-between mb-2">
+              <label className="block text-xs text-coffee-300">
+                External Dependencies
+              </label>
+              <button
+                onClick={() => setIsAddingDependency(!isAddingDependency)}
+                className="text-xs bg-coffee-700 hover:bg-coffee-600 text-coffee-100 px-2 py-1 rounded"
+              >
+                {isAddingDependency ? 'Cancel' : '+ Add Dependency'}
+              </button>
+            </div>
+
+            {/* Display current dependencies */}
+            {currentFunction?.dependencies && currentFunction.dependencies.length > 0 && (
+              <div className="mb-3">
+                <div className="text-xs text-coffee-400 mb-1">
+                  Current Dependencies ({currentFunction.dependencies.length}):
+                </div>
+
+                <div className="space-y-2">
+                  {currentFunction.dependencies.map((dependency, index) => {
+                    const depInfo = getDependencyInfo(dependency.contractAddress)
+
+                    return (
+                      <div key={index} className="bg-coffee-800 p-2 rounded">
+                        <div className="flex items-center justify-between mb-1">
+                          <div className="flex items-center gap-2 flex-1">
+                            <button
+                              onClick={() => usePanelStore.getState().select(dependency.contractAddress)}
+                              className="text-aux-cyan hover:text-aux-cyan-light text-xs font-mono"
+                              title={`Select ${dependency.contractAddress}`}
+                            >
+                              {depInfo?.name || dependency.contractAddress.slice(0, 10) + '...'}
+                            </button>
+                            <button
+                              onClick={() => usePanelStore.getState().select(dependency.contractAddress)}
+                              className="text-coffee-400 hover:text-coffee-300"
+                              title="Select this contract"
+                            >
+                              <IconOpen />
+                            </button>
+                          </div>
+                          <button
+                            onClick={() => handleRemoveDependency(index)}
+                            className="text-red-400 hover:text-red-300 flex-shrink-0 ml-2"
+                            title="Remove this dependency"
+                          >
+                            ✕
+                          </button>
+                        </div>
+
+                        {/* Show centralization and likelihood attributes */}
+                        {depInfo && (depInfo.centralization || depInfo.likelihood) && (
+                          <div className="flex items-center gap-3 text-xs mt-1">
+                            {depInfo.centralization && (
+                              <div className="flex items-center gap-1">
+                                <span className="text-coffee-400">Centralization:</span>
+                                <span
+                                  style={{ color: getCentralizationColor(depInfo.centralization) }}
+                                  className="font-semibold"
+                                >
+                                  {depInfo.centralization}
+                                </span>
+                              </div>
+                            )}
+                            {depInfo.likelihood && (
+                              <div className="flex items-center gap-1">
+                                <span className="text-coffee-400">Likelihood:</span>
+                                <span
+                                  style={{ color: getLikelihoodColor(depInfo.likelihood) }}
+                                  className="font-semibold"
+                                >
+                                  {depInfo.likelihood}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Add dependency form */}
+            {isAddingDependency && (
+              <div className="bg-coffee-800 p-3 rounded">
+                <div className="text-xs text-coffee-400 mb-3">
+                  Select an external contract to add as a dependency
+                </div>
+
+                {getExternalContracts.length === 0 ? (
+                  <div className="text-xs text-coffee-400">
+                    No external contracts found. Mark contracts as external in the Values panel to add them as dependencies.
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    {getExternalContracts.map((contract) => (
+                      <button
+                        key={contract.address}
+                        onClick={() => handleAddDependency(contract.address)}
+                        disabled={currentFunction?.dependencies?.some(d => d.contractAddress === contract.address)}
+                        className="w-full text-left bg-coffee-700 hover:bg-coffee-600 disabled:bg-coffee-600 disabled:opacity-50 disabled:cursor-not-allowed p-2 rounded"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex-1">
+                            <div className="text-xs font-mono text-coffee-100">
+                              {contract.name}
+                            </div>
+                            <div className="text-xs text-coffee-400 mt-1">
+                              {contract.address.slice(0, 10)}...
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2 ml-2">
+                            {contract.centralization && (
+                              <div className="flex items-center gap-1">
+                                <span className="text-xs text-coffee-400">C:</span>
+                                <span
+                                  style={{ color: getCentralizationColor(contract.centralization) }}
+                                  className="text-xs font-semibold"
+                                >
+                                  {contract.centralization.charAt(0).toUpperCase()}
+                                </span>
+                              </div>
+                            )}
+                            {contract.likelihood && (
+                              <div className="flex items-center gap-1">
+                                <span className="text-xs text-coffee-400">L:</span>
+                                <span
+                                  style={{ color: getLikelihoodColor(contract.likelihood) }}
+                                  className="text-xs font-semibold"
+                                >
+                                  {contract.likelihood.charAt(0).toUpperCase()}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </div>

@@ -110,6 +110,10 @@ export function updateFunction(
     constraints: updateRequest.constraints ?? existingFunction?.constraints,
     ownerDefinitions: updateRequest.ownerDefinitions ?? existingFunction?.ownerDefinitions,
     delay: updateRequest.delay !== undefined ? updateRequest.delay : existingFunction?.delay,
+    // Handle dependencies: if provided and non-empty, use it; if provided and empty, set undefined to remove from JSON
+    dependencies: updateRequest.dependencies !== undefined
+      ? (updateRequest.dependencies.length > 0 ? updateRequest.dependencies : undefined)
+      : existingFunction?.dependencies,
     timestamp: new Date().toISOString(),
   }
 

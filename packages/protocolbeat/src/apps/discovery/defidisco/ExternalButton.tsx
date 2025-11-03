@@ -22,8 +22,10 @@ export function ExternalButton() {
 
   // Check if any of the selected contracts are external
   const hasExternalContract = selectedNodes.some(node => {
-    const normalizedAddr = node.address.replace('eth:', '').toLowerCase()
-    const tag = contractTags?.tags.find(tag => tag.contractAddress.toLowerCase() === normalizedAddr)
+    const normalizedNodeAddress = node.address.toLowerCase().replace('eth:', '')
+    const tag = contractTags?.tags.find(tag =>
+      tag.contractAddress.toLowerCase().replace('eth:', '') === normalizedNodeAddress
+    )
     return tag?.isExternal ?? false
   })
 
@@ -61,9 +63,8 @@ export function ExternalButton() {
     const newExternalStatus = !hasExternalContract
 
     selectedNodes.forEach(node => {
-      const normalizedAddr = node.address.replace('eth:', '')
       updateContractTag.mutate({
-        contractAddress: normalizedAddr,
+        contractAddress: node.address,  // Backend will normalize to ensure eth: prefix
         isExternal: newExternalStatus
       })
     })
@@ -76,12 +77,12 @@ export function ExternalButton() {
     likelihood: 'high' | 'medium' | 'low' | 'mitigated'
   ) => {
     const promises = selectedNodes.map(node => {
-      const normalizedAddr = node.address.replace('eth:', '')
+      const normalizedNodeAddress = node.address.toLowerCase().replace('eth:', '')
       const tag = contractTags?.tags.find(tag =>
-        tag.contractAddress.toLowerCase() === normalizedAddr.toLowerCase()
+        tag.contractAddress.toLowerCase().replace('eth:', '') === normalizedNodeAddress
       )
       return updateContractTag.mutateAsync({
-        contractAddress: normalizedAddr,
+        contractAddress: node.address,  // Backend will normalize to ensure eth: prefix
         isExternal: tag?.isExternal ?? true,
         centralization,
         likelihood
@@ -133,8 +134,10 @@ function AttributePicker({ onToggleExternal, onSetAttributes, hasExternalContrac
   // Get current attributes from first selected node
   const getCurrentAttributes = () => {
     if (selectedNodes.length > 0 && selectedNodes[0]) {
-      const normalizedAddr = selectedNodes[0].address.replace('eth:', '').toLowerCase()
-      const tag = contractTags?.tags.find(tag => tag.contractAddress.toLowerCase() === normalizedAddr)
+      const normalizedNodeAddress = selectedNodes[0].address.toLowerCase().replace('eth:', '')
+      const tag = contractTags?.tags.find(tag =>
+        tag.contractAddress.toLowerCase().replace('eth:', '') === normalizedNodeAddress
+      )
       return {
         centralization: tag?.centralization || 'high',
         likelihood: tag?.likelihood || 'high'

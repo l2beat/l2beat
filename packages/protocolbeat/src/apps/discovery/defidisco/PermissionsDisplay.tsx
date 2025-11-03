@@ -145,6 +145,12 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
     await updateFunctionEntry(contractAddress, functionName, { delay })
   }
 
+  const handleDependenciesUpdate = async (contractAddress: string, functionName: string, dependencies?: { contractAddress: string }[]) => {
+    if (!project) return
+
+    await updateFunctionEntry(contractAddress, functionName, { dependencies })
+  }
+
   const handleOpenInCode = async (contractAddress: string, functionName: string) => {
     if (!project) return
 
@@ -207,7 +213,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
   const updateFunctionEntry = async (
     contractAddress: string,
     functionName: string,
-    updates: Partial<Pick<FunctionEntry, 'isPermissioned' | 'checked' | 'score' | 'probability' | 'description' | 'constraints' | 'ownerDefinitions' | 'delay'>>
+    updates: Partial<Pick<FunctionEntry, 'isPermissioned' | 'checked' | 'score' | 'probability' | 'description' | 'constraints' | 'ownerDefinitions' | 'delay' | 'dependencies'>>
   ) => {
     // Get current function data from contract-specific functions
     const contractFunctionsData = getFunctionsForContract(contractAddress)
@@ -225,6 +231,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
       constraints: updates.constraints ?? currentFunction?.constraints,
       ownerDefinitions: updates.ownerDefinitions ?? currentFunction?.ownerDefinitions,
       delay: updates.delay !== undefined ? updates.delay : currentFunction?.delay,
+      dependencies: updates.dependencies !== undefined ? updates.dependencies : currentFunction?.dependencies,
       timestamp: new Date().toISOString(),
     }
 
@@ -295,6 +302,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
             onOpenInCode={handleOpenInCode}
             onOwnerDefinitionsUpdate={handleOwnerDefinitionsUpdate}
             onDelayUpdate={handleDelayUpdate}
+            onDependenciesUpdate={handleDependenciesUpdate}
           />
         </li>
       ))}
@@ -314,7 +322,8 @@ function PermissionsCode({
   onConstraintsUpdate,
   onOpenInCode,
   onOwnerDefinitionsUpdate,
-  onDelayUpdate
+  onDelayUpdate,
+  onDependenciesUpdate
 }: {
   entries: ApiAbiEntry[]
   contractAddress: string
@@ -328,6 +337,7 @@ function PermissionsCode({
   onOpenInCode: (contractAddress: string, functionName: string) => void
   onOwnerDefinitionsUpdate: (contractAddress: string, functionName: string, ownerDefinitions: OwnerDefinition[]) => void
   onDelayUpdate: (contractAddress: string, functionName: string, delay?: { contractAddress: string; fieldName: string }) => void
+  onDependenciesUpdate: (contractAddress: string, functionName: string, dependencies?: { contractAddress: string }[]) => void
 }) {
   const readMarkers = [' view ', ' pure ']
 
@@ -360,6 +370,7 @@ function PermissionsCode({
           onOpenInCode={onOpenInCode}
           onOwnerDefinitionsUpdate={onOwnerDefinitionsUpdate}
           onDelayUpdate={onDelayUpdate}
+          onDependenciesUpdate={onDependenciesUpdate}
         />
       </Folder>
     </div>
@@ -378,7 +389,8 @@ function WritePermissionsCodeEntries({
   onConstraintsUpdate,
   onOpenInCode,
   onOwnerDefinitionsUpdate,
-  onDelayUpdate
+  onDelayUpdate,
+  onDependenciesUpdate
 }: {
   entries: ApiAbiEntry[]
   contractAddress: string
@@ -392,6 +404,7 @@ function WritePermissionsCodeEntries({
   onOpenInCode: (contractAddress: string, functionName: string) => void
   onOwnerDefinitionsUpdate: (contractAddress: string, functionName: string, ownerDefinitions: OwnerDefinition[]) => void
   onDelayUpdate: (contractAddress: string, functionName: string, delay?: { contractAddress: string; fieldName: string }) => void
+  onDependenciesUpdate: (contractAddress: string, functionName: string, dependencies?: { contractAddress: string }[]) => void
 }) {
   const extractFunctionName = (abiEntry: string): string | null => {
     const match = abiEntry.match(/function\s+(\w+)\s*\(/)
@@ -431,6 +444,7 @@ function WritePermissionsCodeEntries({
             onOpenInCode={onOpenInCode}
             onOwnerDefinitionsUpdate={onOwnerDefinitionsUpdate}
             onDelayUpdate={onDelayUpdate}
+            onDependenciesUpdate={onDependenciesUpdate}
           />
         )
       })}

@@ -1,11 +1,11 @@
 {
   "version": "1.0",
-  "lastModified": "2025-11-03T18:55:22.504Z",
+  "lastModified": "2025-11-03T21:10:03.401Z",
   "tags": [
     {
-      "contractAddress": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
+      "contractAddress": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
       "isExternal": true,
-      "timestamp": "2025-11-03T18:55:22.504Z",
+      "timestamp": "2025-11-03T21:10:03.400Z",
       "centralization": "immutable",
       "likelihood": "mitigated"
     }

@@ -39,6 +39,11 @@ export function updateContractTag(
 ): void {
   const tagsPath = getContractTagsPath(paths, project)
 
+  // Normalize contract address to always include eth: prefix
+  const normalizedAddress = updateRequest.contractAddress.startsWith('eth:')
+    ? updateRequest.contractAddress
+    : `eth:${updateRequest.contractAddress}`
+
   // Load existing contract tags
   let contractTags: ContractTag[] = []
   if (fs.existsSync(tagsPath)) {
@@ -51,15 +56,18 @@ export function updateContractTag(
     }
   }
 
-  // Find existing tag for the same contract
-  const existingTagIndex = contractTags.findIndex(
-    (tag) => tag.contractAddress === updateRequest.contractAddress
-  )
+  // Find existing tag for the same contract (normalize both for comparison)
+  const existingTagIndex = contractTags.findIndex((tag) => {
+    const existingNormalized = tag.contractAddress.startsWith('eth:')
+      ? tag.contractAddress
+      : `eth:${tag.contractAddress}`
+    return existingNormalized === normalizedAddress
+  })
 
   if (updateRequest.isExternal !== undefined) {
     // Create or update tag entry
     const newTag: ContractTag = {
-      contractAddress: updateRequest.contractAddress,
+      contractAddress: normalizedAddress,  // Use normalized address with eth: prefix
       isExternal: updateRequest.isExternal,
       timestamp: new Date().toISOString(),
     }

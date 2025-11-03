@@ -3,246 +3,246 @@
   "lastModified": "2025-09-30T19:47:51.353Z",
   "tags": [
     {
-      "contractAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "contractAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
       "isExternal": true,
       "timestamp": "2025-09-22T15:37:16.254Z"
     },
     {
-      "contractAddress": "0xbbf3f1421D886E9b2c5D716B5192aC998af2012c",
+      "contractAddress": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c",
       "isExternal": false,
       "timestamp": "2025-09-22T15:26:26.067Z"
     },
     {
-      "contractAddress": "0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+      "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
       "isExternal": false,
       "timestamp": "2025-09-22T20:23:19.956Z"
     },
     {
-      "contractAddress": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+      "contractAddress": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
       "isExternal": true,
       "timestamp": "2025-09-22T23:09:10.177Z"
     },
     {
-      "contractAddress": "0xc9E1a09622afdB659913fefE800fEaE5DBbFe9d7",
+      "contractAddress": "eth:0xc9E1a09622afdB659913fefE800fEaE5DBbFe9d7",
       "isExternal": true,
       "timestamp": "2025-09-22T23:09:40.398Z"
     },
     {
-      "contractAddress": "0x35a06994a99B335b700bB3c875408489a9F8BbeF",
+      "contractAddress": "eth:0x35a06994a99B335b700bB3c875408489a9F8BbeF",
       "isExternal": true,
       "timestamp": "2025-09-22T23:09:40.405Z"
     },
     {
-      "contractAddress": "0x5C026B7107f1F92a9768CF64f8B2a22252B0788d",
+      "contractAddress": "eth:0x5C026B7107f1F92a9768CF64f8B2a22252B0788d",
       "isExternal": true,
       "timestamp": "2025-09-22T23:09:40.410Z"
     },
     {
-      "contractAddress": "0x6aEeF00A3A55b2a11C96e59b48bdb3f30DD8125A",
+      "contractAddress": "eth:0x6aEeF00A3A55b2a11C96e59b48bdb3f30DD8125A",
       "isExternal": true,
       "timestamp": "2025-09-22T23:09:40.420Z"
     },
     {
-      "contractAddress": "0x5Dc428646BF9a29A4d623E0CDB57384E811f6F77",
+      "contractAddress": "eth:0x5Dc428646BF9a29A4d623E0CDB57384E811f6F77",
       "isExternal": true,
       "timestamp": "2025-09-22T23:09:40.423Z"
     },
     {
-      "contractAddress": "0x5eA7eAe0EBC1f4256806C8bf234F672d410Fc988",
+      "contractAddress": "eth:0x5eA7eAe0EBC1f4256806C8bf234F672d410Fc988",
       "isExternal": true,
       "timestamp": "2025-09-22T23:09:40.425Z"
     },
     {
-      "contractAddress": "0x6D53d5E35F5226a1613877e071b81217387aC6B5",
+      "contractAddress": "eth:0x6D53d5E35F5226a1613877e071b81217387aC6B5",
       "isExternal": true,
       "timestamp": "2025-09-22T23:09:40.427Z"
     },
     {
-      "contractAddress": "0x7A13cD97D442856FF5387d55a7b3F09bf680102B",
+      "contractAddress": "eth:0x7A13cD97D442856FF5387d55a7b3F09bf680102B",
       "isExternal": true,
       "timestamp": "2025-09-22T23:09:40.429Z"
     },
     {
-      "contractAddress": "0x8AaDF849561DcCeC75DA44d1147E736E0cc0134E",
+      "contractAddress": "eth:0x8AaDF849561DcCeC75DA44d1147E736E0cc0134E",
       "isExternal": true,
       "timestamp": "2025-09-22T23:09:40.434Z"
     },
     {
-      "contractAddress": "0x990cfBBDc5aeB794B657b4309017F84479e8Eb7D",
+      "contractAddress": "eth:0x990cfBBDc5aeB794B657b4309017F84479e8Eb7D",
       "isExternal": true,
       "timestamp": "2025-09-22T23:09:40.439Z"
     },
     {
-      "contractAddress": "0xE9DcbaCc91dB0e37562a8455c80d0734D7CF3bd1",
+      "contractAddress": "eth:0xE9DcbaCc91dB0e37562a8455c80d0734D7CF3bd1",
       "isExternal": true,
       "timestamp": "2025-09-22T23:09:40.441Z"
     },
     {
-      "contractAddress": "0x7B740d24396B09F992B655A590139D7Fbb5C73c8",
+      "contractAddress": "eth:0x7B740d24396B09F992B655A590139D7Fbb5C73c8",
       "isExternal": true,
       "timestamp": "2025-09-22T23:09:40.443Z"
     },
     {
-      "contractAddress": "0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
+      "contractAddress": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
       "isExternal": true,
       "timestamp": "2025-09-30T19:47:42.278Z",
       "centralization": "high",
       "likelihood": "high"
     },
     {
-      "contractAddress": "0xF38326579519377178725A741C35999E8051e907",
+      "contractAddress": "eth:0xF38326579519377178725A741C35999E8051e907",
       "isExternal": true,
       "timestamp": "2025-09-22T23:09:40.448Z"
     },
     {
-      "contractAddress": "0x3Dc0D7C8f6925422AF7CFEafaF1588c185C05624",
+      "contractAddress": "eth:0x3Dc0D7C8f6925422AF7CFEafaF1588c185C05624",
       "isExternal": true,
       "timestamp": "2025-09-22T23:09:40.451Z"
     },
     {
-      "contractAddress": "0x641B698aD1C6E503470520B0EeCb472c0589dfE6",
+      "contractAddress": "eth:0x641B698aD1C6E503470520B0EeCb472c0589dfE6",
       "isExternal": true,
       "timestamp": "2025-09-22T23:09:40.454Z"
     },
     {
-      "contractAddress": "0x9db83CEf9f68b63989E4E82D65D549e7fF2aCda9",
+      "contractAddress": "eth:0x9db83CEf9f68b63989E4E82D65D549e7fF2aCda9",
       "isExternal": true,
       "timestamp": "2025-09-22T23:09:40.458Z"
     },
     {
-      "contractAddress": "0x42Afc2F6aE88678296EcB2eBA34cCfbd1Adc5F93",
+      "contractAddress": "eth:0x42Afc2F6aE88678296EcB2eBA34cCfbd1Adc5F93",
       "isExternal": true,
       "timestamp": "2025-09-22T23:09:40.460Z"
     },
     {
-      "contractAddress": "0x4b4df3c44FA13f9D12277458e2069EcBbeE1b085",
+      "contractAddress": "eth:0x4b4df3c44FA13f9D12277458e2069EcBbeE1b085",
       "isExternal": true,
       "timestamp": "2025-09-22T23:09:40.464Z"
     },
     {
-      "contractAddress": "0x585B3e95EEdd03AF221F724557D03384864Da3ca",
+      "contractAddress": "eth:0x585B3e95EEdd03AF221F724557D03384864Da3ca",
       "isExternal": true,
       "timestamp": "2025-09-22T23:09:40.469Z"
     },
     {
-      "contractAddress": "0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
+      "contractAddress": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
       "isExternal": true,
       "timestamp": "2025-09-22T23:10:03.817Z"
     },
     {
-      "contractAddress": "0x2A6A86466F181721ec8ff946967b56f1AA4758c5",
+      "contractAddress": "eth:0x2A6A86466F181721ec8ff946967b56f1AA4758c5",
       "isExternal": true,
       "timestamp": "2025-09-22T23:10:03.825Z"
     },
     {
-      "contractAddress": "0x7359fD9aA258992eb4B6d9572c6f6c74Cf719a94",
+      "contractAddress": "eth:0x7359fD9aA258992eb4B6d9572c6f6c74Cf719a94",
       "isExternal": true,
       "timestamp": "2025-09-22T23:10:03.843Z"
     },
     {
-      "contractAddress": "0x9812d5F0a0832d9A0a78a1ba728fACd87bC35b19",
+      "contractAddress": "eth:0x9812d5F0a0832d9A0a78a1ba728fACd87bC35b19",
       "isExternal": true,
       "timestamp": "2025-09-22T23:10:03.827Z"
     },
     {
-      "contractAddress": "0xB72F2Bb8AD7aDB4e40e3ACD8F34160B4991e7ADe",
+      "contractAddress": "eth:0xB72F2Bb8AD7aDB4e40e3ACD8F34160B4991e7ADe",
       "isExternal": true,
       "timestamp": "2025-09-22T23:10:03.840Z"
     },
     {
-      "contractAddress": "0xFbAF3A19B1c02b8Bef52a7E9Fa855c86c69aB95c",
+      "contractAddress": "eth:0xFbAF3A19B1c02b8Bef52a7E9Fa855c86c69aB95c",
       "isExternal": true,
       "timestamp": "2025-09-22T23:10:03.836Z"
     },
     {
-      "contractAddress": "0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+      "contractAddress": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
       "isExternal": true,
       "timestamp": "2025-09-22T23:11:00.874Z"
     },
     {
-      "contractAddress": "0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b",
+      "contractAddress": "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b",
       "isExternal": true,
       "timestamp": "2025-09-22T23:11:00.881Z"
     },
     {
-      "contractAddress": "0x3F7b49F03375Aa588B828A5FfbAac5727fb8202d",
+      "contractAddress": "eth:0x3F7b49F03375Aa588B828A5FfbAac5727fb8202d",
       "isExternal": true,
       "timestamp": "2025-09-22T23:11:00.885Z"
     },
     {
-      "contractAddress": "0xb7F0643D4ca8c296564Ce335062833e1afa3Afdb",
+      "contractAddress": "eth:0xb7F0643D4ca8c296564Ce335062833e1afa3Afdb",
       "isExternal": true,
       "timestamp": "2025-09-22T23:11:00.887Z"
     },
     {
-      "contractAddress": "0x47A1dD4E277530fffb5B5f70A43CCbD542F54e17",
+      "contractAddress": "eth:0x47A1dD4E277530fffb5B5f70A43CCbD542F54e17",
       "isExternal": true,
       "timestamp": "2025-09-22T23:11:00.890Z"
     },
     {
-      "contractAddress": "0xFdE996F00E42b33bdE7C640786333623aCC3f298",
+      "contractAddress": "eth:0xFdE996F00E42b33bdE7C640786333623aCC3f298",
       "isExternal": true,
       "timestamp": "2025-09-22T23:11:00.895Z"
     },
     {
-      "contractAddress": "0x7052cB84079905400ea52B635cAb6a275fDA8823",
+      "contractAddress": "eth:0x7052cB84079905400ea52B635cAb6a275fDA8823",
       "isExternal": true,
       "timestamp": "2025-09-22T23:11:00.898Z"
     },
     {
-      "contractAddress": "0xB65B6d224351cD61f856c227b2d5cFc611E9B2d8",
+      "contractAddress": "eth:0xB65B6d224351cD61f856c227b2d5cFc611E9B2d8",
       "isExternal": true,
       "timestamp": "2025-09-22T23:11:00.902Z"
     },
     {
-      "contractAddress": "0x480496c0884D61F2f56707Adb11697F8018898c2",
+      "contractAddress": "eth:0x480496c0884D61F2f56707Adb11697F8018898c2",
       "isExternal": true,
       "timestamp": "2025-09-22T23:11:05.099Z"
     },
     {
-      "contractAddress": "0x80eFDeE7F82d0F2aBF3bF29A9A85edF0B42C9e19",
+      "contractAddress": "eth:0x80eFDeE7F82d0F2aBF3bF29A9A85edF0B42C9e19",
       "isExternal": true,
       "timestamp": "2025-09-22T23:11:05.104Z"
     },
     {
-      "contractAddress": "0xaD8A3E228d1f1ffff22AB1720fE6fF7f92DdA252",
+      "contractAddress": "eth:0xaD8A3E228d1f1ffff22AB1720fE6fF7f92DdA252",
       "isExternal": true,
       "timestamp": "2025-09-22T23:11:05.110Z"
     },
     {
-      "contractAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "contractAddress": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
       "isExternal": true,
       "timestamp": "2025-09-30T19:47:51.353Z",
       "centralization": "high",
       "likelihood": "mitigated"
     },
     {
-      "contractAddress": "0x4914f61d25e5C567143774B76EdbF4D5109a8566",
+      "contractAddress": "eth:0x4914f61d25e5C567143774B76EdbF4D5109a8566",
       "isExternal": true,
       "timestamp": "2025-09-22T23:12:05.005Z"
     },
     {
-      "contractAddress": "0xFcb19e6a322b27c06842A71e8c725399f049AE3a",
+      "contractAddress": "eth:0xFcb19e6a322b27c06842A71e8c725399f049AE3a",
       "isExternal": true,
       "timestamp": "2025-09-30T19:13:55.466Z"
     },
     {
-      "contractAddress": "0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+      "contractAddress": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
       "isExternal": true,
       "timestamp": "2025-09-22T23:12:04.989Z"
     },
     {
-      "contractAddress": "0x0A06BE16275B95a7d2567fBdAE118b36C7DA78F9",
+      "contractAddress": "eth:0x0A06BE16275B95a7d2567fBdAE118b36C7DA78F9",
       "isExternal": true,
       "timestamp": "2025-09-22T23:12:05.000Z"
     },
     {
-      "contractAddress": "0x807a96288A1A408dBC13DE2b1d087d10356395d2",
+      "contractAddress": "eth:0x807a96288A1A408dBC13DE2b1d087d10356395d2",
       "isExternal": true,
       "timestamp": "2025-09-22T23:12:05.009Z"
     },
     {
-      "contractAddress": "0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704",
+      "contractAddress": "eth:0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704",
       "isExternal": true,
       "timestamp": "2025-09-22T23:12:05.013Z"
     }

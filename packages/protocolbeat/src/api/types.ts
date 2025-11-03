@@ -215,6 +215,10 @@ export interface FunctionEntry {
     contractAddress: string
     fieldName: string
   }
+  // External contract dependencies
+  dependencies?: {
+    contractAddress: string
+  }[]
 }
 
 // Owner definition types - unified path expression approach
@@ -245,6 +249,9 @@ export interface ApiFunctionsUpdateRequest {
     contractAddress: string
     fieldName: string
   }
+  dependencies?: {
+    contractAddress: string
+  }[]
 }
 
 // Contract tags types
