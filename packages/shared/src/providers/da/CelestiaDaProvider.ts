@@ -54,6 +54,31 @@ export class CelestiaDaProvider implements DaBlobProvider {
     const blobsTxs = blockData.block.data.txs.filter((tx) =>
       tx.includes(PAY_FOR_BLOBS_EVENT_SIGNATURE),
     )
-    return blobsTxs.map((txData) => `${txData.slice(128, 128 + 39)}=`)
+    const namespaces = new Set<string>()
+
+    for (const txData of blobsTxs) {
+      const txBytes = Buffer.from(txData, 'base64')
+
+      for (let i = 0; i < txBytes.length - 29; i++) {
+        if (
+          (txBytes[i] === 0x0a || txBytes[i] === 0x12) &&
+          txBytes[i + 1] === 0x1d
+        ) {
+          const namespace = txBytes.slice(i + 2, i + 2 + 29)
+          const namespaceB64 = namespace.toString('base64')
+
+          const hasLeadingZeros = namespace
+            .slice(0, 18)
+            .every((byte: number) => byte === 0x00)
+
+          // Validate: Celestia namespaces start with 18 leading zeros)
+          if (hasLeadingZeros && !namespaces.has(namespaceB64)) {
+            namespaces.add(namespaceB64)
+          }
+        }
+      }
+    }
+
+    return Array.from(namespaces)
   }
 }
