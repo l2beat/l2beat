@@ -1,4 +1,9 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -44,6 +49,22 @@ export const galxegravity: ScalingProject = orbitStackL2({
     sinceBlock: 5169794,
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABH1QsY4w6WU=',
   },
+  nonTemplateDaTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: discovery.getContract('SequencerInbox').sinceBlock ?? 0,
+      inbox: ChainSpecificAddress.address(
+        discovery.getContractDetails('SequencerInbox').address,
+      ),
+      sequencers: discovery
+        .getContractValue<ChainSpecificAddress[]>(
+          'SequencerInbox',
+          'batchPosters',
+        )
+        .map((a) => ChainSpecificAddress.address(a)),
+    },
+  ],
   chainConfig: {
     name: 'galxegravity',
     coingeckoPlatform: 'gravity-alpha',

@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -64,14 +69,17 @@ export const aevo: ScalingProject = opStackL2({
     adjustCount: { type: 'SubtractOne' },
   },
   nonTemplateDaTracking: [
-    // Ethereum fallback
     {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
-      sinceBlock: 16858818,
-      inbox: EthereumAddress('0x253887577420Cb7e7418cD4d50147743c8041b28'),
+      sinceBlock: discovery.getContract('SystemConfig').sinceBlock ?? 0,
+      inbox: ChainSpecificAddress.address(
+        discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+      ),
       sequencers: [
-        EthereumAddress('0x889e21d7BA3d6dD62e75d4980A4Ad1349c61599d'),
+        ChainSpecificAddress.address(
+          discovery.getContractValue('SystemConfig', 'batcherHash'),
+        ),
       ],
     },
     // {

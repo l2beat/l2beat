@@ -1,6 +1,7 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
+  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
@@ -61,6 +62,22 @@ export const plumenetwork: ScalingProject = orbitStackL2({
     sinceBlock: 5757261,
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADQSAB6M6v+s=',
   },
+  nonTemplateDaTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: discovery.getContract('SequencerInbox').sinceBlock ?? 0,
+      inbox: ChainSpecificAddress.address(
+        discovery.getContractDetails('SequencerInbox').address,
+      ),
+      sequencers: discovery
+        .getContractValue<ChainSpecificAddress[]>(
+          'SequencerInbox',
+          'batchPosters',
+        )
+        .map((a) => ChainSpecificAddress.address(a)),
+    },
+  ],
   chainConfig: {
     name: 'plumenetwork',
     coingeckoPlatform: 'plume-network',
