@@ -40,6 +40,7 @@ describe(AddressAnalyzer.name, () => {
 
       const provider = mockObject<IProvider>({
         getBytecode: async () => Bytes.EMPTY,
+        chain: 'ethereum',
       })
       const addressAnalyzer = new AddressAnalyzer(
         mockObject<ProxyDetector>({
@@ -135,6 +136,7 @@ describe(AddressAnalyzer.name, () => {
 
       const provider = mockObject<IProvider>({
         getBytecode: async () => Bytes.fromHex('0x1234'),
+        chain: 'ethereum',
       })
 
       const addressAnalyzer = new AddressAnalyzer(
@@ -253,6 +255,7 @@ describe(AddressAnalyzer.name, () => {
 
       const provider = mockObject<IProvider>({
         getBytecode: async () => Bytes.fromHex('0x1234'),
+        chain: 'ethereum',
       })
 
       const addressAnalyzer = new AddressAnalyzer(
@@ -373,6 +376,7 @@ describe(AddressAnalyzer.name, () => {
       const provider = mockObject<IProvider>({
         getBytecode: async () => Bytes.fromHex('0x1234'),
         getDeployment: mockFn().resolvesTo(undefined),
+        chain: 'ethereum',
       })
 
       const addressAnalyzer = new AddressAnalyzer(
