@@ -1,14 +1,14 @@
 Generated with discovered.json: 0x95849a531b11ea07ee49d7ee942018fdf467370a
 
-# Diff at Mon, 03 Nov 2025 15:55:21 GMT:
+# Diff at Mon, 03 Nov 2025 15:58:33 GMT:
 
-- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
-- comparing to: main@5ad393bac5dce3b55b894f601ac224ffa90954a1 block: 1761643176
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6b72018cd9706ce7cba8ec489b67d7193f34dc20 block: 1761643176
 - current timestamp: 1762183851
 
 ## Description
 
-Upgraded BridgeHub on gateway to v29.
+Upgraded BridgeHub and MessageRoot on gateway to v29. Could not identify the diff on L2AssetRouter, but source hash changed. Also deployed ChainAssetHandler that is not verified on Gateway.
 
 ## Config/verification related changes
 
