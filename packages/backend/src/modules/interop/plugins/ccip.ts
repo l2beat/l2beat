@@ -178,9 +178,9 @@ export class CCIPPlugIn implements InteropPlugin {
             srcEvent: ccipSendRequested,
             dstEvent: delivery,
             srcTokenAddress: tokenAmount.token,
-            srcAmount: BigInt(tokenAmount.amount),
+            srcAmount: tokenAmount.amount,
             dstTokenAddress: tokenAmount.token,
-            dstAmount: BigInt(tokenAmount.amount),
+            dstAmount: tokenAmount.amount,
           }),
         )
       }

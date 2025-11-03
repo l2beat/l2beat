@@ -135,10 +135,10 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
       Result.Transfer('hyperlaneHwr.Transfer', {
         srcEvent: hwrSent,
         srcTokenAddress: hwrSent.args.tokenAddress,
-        srcAmount: BigInt(hwrSent.args.amount),
+        srcAmount: hwrSent.args.amount,
         dstEvent: event,
         dstTokenAddress: event.args.tokenAddress, // TODO: not necessarily the token address, can be an adapter or wrapper
-        dstAmount: BigInt(event.args.amount),
+        dstAmount: event.args.amount,
       }),
     ]
   }

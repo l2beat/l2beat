@@ -158,10 +158,10 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
       }),
       Result.Transfer('oftv2.Transfer', {
         srcEvent: oftSentPacketSent,
-        srcAmount: BigInt(oftSentPacketSent.args.amountSentLD),
+        srcAmount: oftSentPacketSent.args.amountSentLD.toString(),
         srcTokenAddress: oftSentPacketSent.args.tokenAddress,
         dstEvent: oftReceivedPacketDelivered,
-        dstAmount: BigInt(oftReceivedPacketDelivered.args.amountReceivedLD),
+        dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD.toString(),
         // TODO: OFT log emitter is not always the token contract (needs effects)
         dstTokenAddress: oftReceivedPacketDelivered.args.tokenAddress,
       }),

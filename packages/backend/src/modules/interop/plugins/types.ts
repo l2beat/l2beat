@@ -1,5 +1,6 @@
 import { type Branded, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { randomUUID } from 'crypto'
+import { ethers } from 'ethers'
 import {
   type Abi,
   type ContractEventName,
@@ -282,11 +283,11 @@ function Message(
 export interface InteropTransferOptions {
   srcEvent: InteropEvent
   srcTokenAddress?: Address32
-  srcAmount?: bigint
+  srcAmount?: string
 
   dstEvent: InteropEvent
   dstTokenAddress?: Address32
-  dstAmount?: bigint
+  dstAmount?: string
 
   extraEvents?: InteropEvent[]
 }
@@ -311,12 +312,12 @@ function Transfer(
     src: {
       event: options.srcEvent,
       tokenAddress: options.srcTokenAddress,
-      tokenAmount: options.srcAmount,
+      tokenAmount: ethers.BigNumber.from(options.srcAmount).toBigInt(),
     },
     dst: {
       event: options.dstEvent,
       tokenAddress: options.dstTokenAddress,
-      tokenAmount: options.dstAmount,
+      tokenAmount: ethers.BigNumber.from(options.dstAmount).toBigInt(),
     },
   }
 }

@@ -232,14 +232,10 @@ export class RelaySimplePlugIn implements InteropPlugin {
         }),
         Result.Transfer('relay-simple.Transfer', {
           srcEvent: transferDst,
-          srcAmount: transferDst.args.amount
-            ? BigInt(transferDst.args.amount)
-            : undefined,
+          srcAmount: transferDst.args.amount,
           srcTokenAddress: transferDst.args.tokenAddress,
           dstEvent: transferSrc,
-          dstAmount: transferSrc.args.amount
-            ? BigInt(transferSrc.args.amount)
-            : undefined,
+          dstAmount: transferSrc.args.amount,
           dstTokenAddress: transferSrc.args.tokenAddress,
         }),
       ]

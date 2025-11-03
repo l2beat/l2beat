@@ -113,7 +113,7 @@ export class HyperlaneMerklyTokenBridgePlugin implements InteropPlugin {
         Result.Transfer('hyperlaneMerklyTokenbridge.Transfer', {
           srcEvent: hwrSentMerkly,
           srcTokenAddress: hwrSentMerkly.args.tokenAddress,
-          srcAmount: BigInt(hwrSentMerkly.args.amount),
+          srcAmount: hwrSentMerkly.args.amount,
           dstEvent: process, // merkly does not emit at destination
         }),
       ]

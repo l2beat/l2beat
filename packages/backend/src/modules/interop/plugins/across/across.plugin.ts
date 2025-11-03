@@ -133,10 +133,10 @@ export class AcrossPlugin implements InteropPlugin {
       Result.Transfer('across.Transfer', {
         srcEvent: fundsDeposited,
         srcTokenAddress: fundsDeposited.args.tokenAddress,
-        srcAmount: BigInt(fundsDeposited.args.amount),
+        srcAmount: fundsDeposited.args.amount,
         dstEvent: filledRelay,
         dstTokenAddress: filledRelay.args.tokenAddress,
-        dstAmount: BigInt(filledRelay.args.amount),
+        dstAmount: filledRelay.args.amount,
       }),
     ]
   }

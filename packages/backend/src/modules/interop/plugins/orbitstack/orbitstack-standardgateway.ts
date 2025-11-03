@@ -265,10 +265,10 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
         }),
         Result.Transfer('orbitstack.L2ToL1Transfer', {
           srcEvent: withdrawalInitiated,
-          srcAmount: BigInt(withdrawalInitiated.args.amount),
+          srcAmount: withdrawalInitiated.args.amount,
           srcTokenAddress: withdrawalInitiated.args.l2Token,
           dstEvent: event,
-          dstAmount: BigInt(event.args.amount),
+          dstAmount: event.args.amount,
           dstTokenAddress: event.args.l1Token,
         }),
       ]
@@ -306,10 +306,10 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
         }),
         Result.Transfer('orbitstack.L1ToL2Transfer', {
           srcEvent: depositInitiated,
-          srcAmount: BigInt(depositInitiated.args.amount),
+          srcAmount: depositInitiated.args.amount,
           srcTokenAddress: depositInitiated.args.l1Token,
           dstEvent: event,
-          dstAmount: BigInt(event.args.amount),
+          dstAmount: event.args.amount,
           dstTokenAddress: event.args.l2Token,
         }),
       ]

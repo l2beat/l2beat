@@ -112,7 +112,7 @@ export class OneinchFusionPlusPlugin implements InteropPlugin {
         }),
         Result.Transfer('oneinch-fusion-plus.Transfer', {
           srcEvent: srcEscrowCreated,
-          srcAmount: BigInt(srcEscrowCreated.args.srcAmount),
+          srcAmount: srcEscrowCreated.args.srcAmount,
           dstEvent: dstEscrowCreated,
         }),
       ]

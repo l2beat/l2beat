@@ -167,12 +167,12 @@ export class DeBridgePlugin implements InteropPlugin {
           srcTokenAddress:
             DEBRIDGE_TOKENS.find((t) => t.tokenId === sent.args.debridgeId)
               ?.tokenAddresses[sent.ctx.chain] ?? Address32.ZERO,
-          srcAmount: BigInt(claimed.args.amount),
+          srcAmount: claimed.args.amount,
           dstEvent: claimed,
           dstTokenAddress:
             DEBRIDGE_TOKENS.find((t) => t.tokenId === claimed.args.debridgeId)
               ?.tokenAddresses[claimed.ctx.chain] ?? Address32.ZERO,
-          dstAmount: BigInt(claimed.args.amount),
+          dstAmount: claimed.args.amount,
         }),
       )
     }

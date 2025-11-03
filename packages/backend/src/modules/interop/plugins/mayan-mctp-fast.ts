@@ -81,16 +81,16 @@ export class MayanMctpFastPlugin implements InteropPlugin {
         // TODO: maybe this also has app: mayan-mctp-fast ?
         srcEvent: messageSent,
         srcTokenAddress: messageSent.args.tokenAddress,
-        srcAmount: BigInt(messageSent.args.amount),
+        srcAmount: messageSent.args.amount,
         dstEvent: messageReceived,
       }),
       Result.Transfer('mayan-mctp-fast.Transfer', {
         srcEvent: messageSent,
         srcTokenAddress: messageSent.args.tokenAddress,
-        srcAmount: BigInt(messageSent.args.amount),
+        srcAmount: messageSent.args.amount,
         dstEvent: orderFulfilled,
         dstTokenAddress: Address32.from(orderPayload.tokenOut),
-        dstAmount: BigInt(orderFulfilled.args.amount),
+        dstAmount: orderFulfilled.args.amount,
         extraEvents: [mayanForwarded],
       }),
     ]

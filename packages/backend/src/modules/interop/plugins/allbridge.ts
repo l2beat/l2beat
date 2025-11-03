@@ -178,9 +178,9 @@ export class AllbridgePlugIn implements InteropPlugin {
         }),
         Result.Transfer('allbridgeswap.Transfer', {
           srcEvent: tokensSent,
-          srcAmount: BigInt(tokensSent.args.amount.toString()),
+          srcAmount: tokensSent.args.amount.toString(),
           dstEvent: delivery,
-          dstAmount: BigInt(delivery.args.amount.toString()),
+          dstAmount: delivery.args.amount.toString(),
         }),
       ]
     }

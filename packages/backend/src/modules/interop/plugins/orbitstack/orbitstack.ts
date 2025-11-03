@@ -211,10 +211,10 @@ export class OrbitStackPlugin implements InteropPlugin {
           }),
           Result.Transfer('orbitstack.L2ToL1Transfer', {
             srcEvent: ethWithdrawalInitiated,
-            srcAmount: BigInt(ethWithdrawalInitiated.args.amount),
+            srcAmount: ethWithdrawalInitiated.args.amount,
             srcTokenAddress: Address32.NATIVE,
             dstEvent: event,
-            dstAmount: BigInt(ethWithdrawalInitiated.args.amount),
+            dstAmount: ethWithdrawalInitiated.args.amount,
             dstTokenAddress: Address32.NATIVE,
           }),
         ]
@@ -262,10 +262,10 @@ export class OrbitStackPlugin implements InteropPlugin {
           }),
           Result.Transfer('orbitstack.L1ToL2Transfer', {
             srcEvent: messageDelivered,
-            srcAmount: messageDelivered.ctx.txValue,
+            srcAmount: messageDelivered.ctx.txValue.toString(),
             srcTokenAddress: Address32.NATIVE,
             dstEvent: event,
-            dstAmount: BigInt(event.args.ethAmount),
+            dstAmount: event.args.ethAmount,
             dstTokenAddress: Address32.NATIVE,
           }),
         ]

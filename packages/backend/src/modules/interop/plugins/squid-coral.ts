@@ -150,10 +150,10 @@ export class SquidCoralPlugin implements InteropPlugin {
       Result.Transfer('squid-coral.Transfer', {
         srcEvent: orderCreated,
         srcTokenAddress: orderCreated.args.fromToken,
-        srcAmount: BigInt(orderCreated.args.fromAmount),
+        srcAmount: orderCreated.args.fromAmount,
         dstEvent: orderFilled,
         dstTokenAddress: orderFilled.args.toToken,
-        dstAmount: BigInt(orderFilled.args.fillAmount),
+        dstAmount: orderFilled.args.fillAmount,
       }),
     ]
   }

@@ -173,10 +173,10 @@ export class AxelarITSPlugin implements InteropPlugin {
         }),
         Result.Transfer('axelar-its.Transfer', {
           srcEvent: interchainTransfer,
-          srcAmount: BigInt(interchainTransfer.args.amount.toString()),
+          srcAmount: interchainTransfer.args.amount.toString(),
           srcTokenAddress: interchainTransfer.args.tokenAddress,
           dstEvent: interchainTransferReceived,
-          dstAmount: BigInt(interchainTransferReceived.args.amount.toString()),
+          dstAmount: interchainTransferReceived.args.amount.toString(),
           dstTokenAddress: interchainTransferReceived.args.tokenAddress,
         }),
       ]

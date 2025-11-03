@@ -249,7 +249,7 @@ export class AxelarPlugin implements InteropPlugin {
           srcEvent: contractCallWithToken,
           // TODO: mapping. See axelar-its
           // symbol: contractCallWithToken.args.symbol,
-          srcAmount: BigInt(contractCallWithToken.args.amount.toString()),
+          srcAmount: contractCallWithToken.args.amount.toString(),
           dstEvent: contractCallExecuted,
         }),
       ]

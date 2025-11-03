@@ -313,10 +313,10 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
         }),
         Result.Transfer('orbitstack.L1ToL2Transfer', {
           srcEvent: depositInitiated,
-          srcAmount: BigInt(depositInitiated.args.amount),
+          srcAmount: depositInitiated.args.amount,
           srcTokenAddress: Address32.from(network.l1Weth),
           dstEvent: event,
-          dstAmount: BigInt(event.args.amount),
+          dstAmount: event.args.amount,
           dstTokenAddress: Address32.from(network.l2Weth),
         }),
       ]
@@ -360,10 +360,10 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
         }),
         Result.Transfer('orbitstack.L2ToL1Transfer', {
           srcEvent: withdrawalInitiated,
-          srcAmount: BigInt(withdrawalInitiated.args.amount),
+          srcAmount: withdrawalInitiated.args.amount,
           srcTokenAddress: Address32.from(network.l2Weth),
           dstEvent: event,
-          dstAmount: BigInt(event.args.amount),
+          dstAmount: event.args.amount,
           dstTokenAddress: Address32.from(network.l1Weth),
         }),
       ]

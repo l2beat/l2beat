@@ -106,9 +106,9 @@ export class CircleGatewayPlugIn implements InteropPlugin {
           // NOTE: TRANSFER has an opposite direction than MESSAGE
           srcEvent: gatewayBurned,
           srcTokenAddress: gatewayBurned.args.token,
-          srcAmount: BigInt(gatewayBurned.args.value),
+          srcAmount: gatewayBurned.args.value,
           dstEvent: attestationUsed,
-          dstAmount: BigInt(attestationUsed.args.value),
+          dstAmount: attestationUsed.args.value,
           dstTokenAddress: attestationUsed.args.token,
         }),
       ]

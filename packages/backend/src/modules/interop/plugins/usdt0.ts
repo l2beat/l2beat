@@ -131,10 +131,10 @@ export class Usdt0Plugin implements InteropPlugin {
       Result.Transfer('usdt0.Transfer', {
         srcEvent: oftSent,
         srcTokenAddress: oftSent.args.tokenAddress,
-        srcAmount: BigInt(oftSent.args.amountSentLD),
+        srcAmount: oftSent.args.amountSentLD.toString(),
         dstEvent: oftReceived,
         dstTokenAddress: oftReceived.args.tokenAddress,
-        dstAmount: BigInt(oftReceived.args.amountReceivedLD),
+        dstAmount: oftReceived.args.amountReceivedLD.toString(),
       }),
     ]
   }
