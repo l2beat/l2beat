@@ -11,21 +11,14 @@ export class LighterDayProvider implements DayProvider {
   ): Promise<Record<number, number>> {
     const hourlyStats = await this.lighterClient.getHourlyStats()
 
-    // Group hourly data by day and sum
     const dailyData = new Map<number, number>()
 
     for (const stat of hourlyStats) {
-      const timestamp = UnixTime(stat.timestamp)
-      const dayStart = UnixTime.toStartOf(timestamp, 'day')
-      const dayTimestamp = dayStart
+      const dayStart = UnixTime.toStartOf(stat.timestamp, 'day')
 
-      // Filter by date range
-      if (
-        dayTimestamp >= from * UnixTime.DAY &&
-        dayTimestamp < to * UnixTime.DAY
-      ) {
-        const current = dailyData.get(dayTimestamp) ?? 0
-        dailyData.set(dayTimestamp, current + stat.count)
+      if (dayStart >= from * UnixTime.DAY && dayStart < to * UnixTime.DAY) {
+        const current = dailyData.get(dayStart) ?? 0
+        dailyData.set(dayStart, current + stat.count)
       }
     }
 
@@ -38,21 +31,14 @@ export class LighterDayProvider implements DayProvider {
   ): Promise<Record<number, number>> {
     const hourlyStats = await this.lighterClient.getHourlyStats()
 
-    // Group hourly data by day and sum
     const dailyData = new Map<number, number>()
 
     for (const stat of hourlyStats) {
-      const timestamp = UnixTime(stat.timestamp)
-      const dayStart = UnixTime.toStartOf(timestamp, 'day')
-      const dayTimestamp = dayStart
+      const dayStart = UnixTime.toStartOf(stat.timestamp, 'day')
 
-      // Filter by date range
-      if (
-        dayTimestamp >= from * UnixTime.DAY &&
-        dayTimestamp < to * UnixTime.DAY
-      ) {
-        const current = dailyData.get(dayTimestamp) ?? 0
-        dailyData.set(dayTimestamp, current + stat.uopsCount)
+      if (dayStart >= from * UnixTime.DAY && dayStart < to * UnixTime.DAY) {
+        const current = dailyData.get(dayStart) ?? 0
+        dailyData.set(dayStart, current + stat.uopsCount)
       }
     }
 

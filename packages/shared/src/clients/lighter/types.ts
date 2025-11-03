@@ -16,5 +16,5 @@ export const HourlyStatsResponse = v.object({
 })
 
 export const LighterErrorResponse = v.object({
-  message: v.string(),
+  error: v.string(),
 })

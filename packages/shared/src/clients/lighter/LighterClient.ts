@@ -49,7 +49,7 @@ export class LighterClient extends ClientCore {
 
     if (parsedError.success) {
       this.$.logger.warn('Response validation error', {
-        message: parsedError.data.message,
+        message: parsedError.data.error,
       })
       return { success: false }
     }
