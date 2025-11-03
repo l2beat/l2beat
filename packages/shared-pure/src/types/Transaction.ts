@@ -4,5 +4,5 @@ export interface Transaction {
   to?: string
   data?: string | string[]
   type?: string
-  value?: string
+  value?: bigint
 }

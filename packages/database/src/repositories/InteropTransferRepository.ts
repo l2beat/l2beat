@@ -15,7 +15,7 @@ export interface InteropTransferRecord {
   srcLogIndex: number | undefined
   srcEventId: string | undefined
   srcTokenAddress: string | undefined
-  srcRawAmount: string | undefined
+  srcRawAmount: bigint | undefined
   srcAbstractTokenId: string | undefined
   srcSymbol: string | undefined
   srcAmount: number | undefined
@@ -27,7 +27,7 @@ export interface InteropTransferRecord {
   dstLogIndex: number | undefined
   dstEventId: string | undefined
   dstTokenAddress: string | undefined
-  dstRawAmount: string | undefined
+  dstRawAmount: bigint | undefined
   dstAbstractTokenId: string | undefined
   dstSymbol: string | undefined
   dstAmount: number | undefined
@@ -47,6 +47,13 @@ export interface InteropTransferUpdate {
   dstValueUsd?: number
 }
 
+export interface InteropMissingTokenInfo {
+  chain: string
+  tokenAddress: string
+  count: number
+  plugins: string[]
+}
+
 export function toRecord(
   row: Selectable<InteropTransfer>,
 ): InteropTransferRecord {
@@ -62,7 +69,7 @@ export function toRecord(
     srcLogIndex: row.srcLogIndex ?? undefined,
     srcEventId: row.srcEventId ?? undefined,
     srcTokenAddress: row.srcTokenAddress ?? undefined,
-    srcRawAmount: row.srcRawAmount ?? undefined,
+    srcRawAmount: row.srcRawAmount ? BigInt(row.srcRawAmount) : undefined,
     srcAbstractTokenId: row.srcAbstractTokenId ?? undefined,
     srcSymbol: undefined,
     srcAmount: row.srcAmount ?? undefined,
@@ -74,7 +81,7 @@ export function toRecord(
     dstLogIndex: row.dstLogIndex ?? undefined,
     dstEventId: row.dstEventId ?? undefined,
     dstTokenAddress: row.dstTokenAddress ?? undefined,
-    dstRawAmount: row.dstRawAmount ?? undefined,
+    dstRawAmount: row.dstRawAmount ? BigInt(row.dstRawAmount) : undefined,
     dstAbstractTokenId: row.dstAbstractTokenId ?? undefined,
     dstSymbol: undefined,
     dstAmount: row.dstAmount ?? undefined,
@@ -100,7 +107,7 @@ export function toRow(
     srcLogIndex: record.srcLogIndex,
     srcEventId: record.srcEventId,
     srcTokenAddress: record.srcTokenAddress,
-    srcRawAmount: record.srcRawAmount,
+    srcRawAmount: record.srcRawAmount?.toString(),
     srcAbstractTokenId: record.srcAbstractTokenId,
     srcAmount: record.srcAmount,
     srcPrice: record.srcPrice,
@@ -112,7 +119,7 @@ export function toRow(
     dstLogIndex: record.dstLogIndex,
     dstEventId: record.dstEventId,
     dstTokenAddress: record.dstTokenAddress,
-    dstRawAmount: record.dstRawAmount,
+    dstRawAmount: record.dstRawAmount?.toString(),
     dstAbstractTokenId: record.dstAbstractTokenId,
     dstAmount: record.dstAmount,
     dstPrice: record.dstPrice,
@@ -288,5 +295,66 @@ export class InteropTransferRepository extends BaseRepository {
       .deleteFrom('InteropTransfer')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
+  }
+
+  async getMissingTokensInfo(): Promise<InteropMissingTokenInfo[]> {
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .select([
+        'plugin',
+        'srcValueUsd',
+        'dstValueUsd',
+        'srcChain',
+        'srcTokenAddress',
+        'dstChain',
+        'dstTokenAddress',
+      ])
+      .where('isProcessed', '=', true)
+      .where((eb) =>
+        eb.or([eb('srcValueUsd', 'is', null), eb('dstValueUsd', 'is', null)]),
+      )
+      .execute()
+
+    const chainAddressCounts = new Map<string, number>()
+    const chainAddressPlugins = new Map<string, Set<string>>()
+
+    for (const row of rows) {
+      if (row.srcValueUsd === null && row.srcChain && row.srcTokenAddress) {
+        const key = `${row.srcChain}:${row.srcTokenAddress}`
+        chainAddressCounts.set(key, (chainAddressCounts.get(key) || 0) + 1)
+        const plugins = chainAddressPlugins.get(key)
+        if (!plugins) {
+          chainAddressPlugins.set(key, new Set())
+        } else {
+          plugins.add(row.plugin)
+        }
+      }
+      if (row.dstValueUsd === null && row.dstChain && row.dstTokenAddress) {
+        const key = `${row.dstChain}:${row.dstTokenAddress}`
+        chainAddressCounts.set(key, (chainAddressCounts.get(key) || 0) + 1)
+        const plugins = chainAddressPlugins.get(key)
+        if (!plugins) {
+          chainAddressPlugins.set(key, new Set())
+        } else {
+          plugins.add(row.plugin)
+        }
+      }
+    }
+
+    const result: InteropMissingTokenInfo[] = []
+    for (const [key, count] of chainAddressCounts) {
+      const [chain, tokenAddress] = key.split(':')
+      const plugins = Array.from(
+        chainAddressPlugins.get(key) || new Set<string>(),
+      ).sort()
+      result.push({
+        chain: chain as string,
+        tokenAddress: tokenAddress as string,
+        count,
+        plugins,
+      })
+    }
+
+    return result
   }
 }

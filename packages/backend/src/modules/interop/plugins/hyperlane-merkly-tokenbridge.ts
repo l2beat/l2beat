@@ -76,14 +76,16 @@ export class HyperlaneMerklyTokenBridgePlugin implements InteropPlugin {
         Number(sentTransferRemote.destination),
       )
 
-      return HwrTransferSentMerkly.create(input.ctx, {
-        messageId,
-        $dstChain,
-        destination: Number(sentTransferRemote.destination),
-        recipient: Address32.from(sentTransferRemote.recipient),
-        amount: sentTransferRemote.amount.toString(),
-        tokenAddress: Address32.ZERO, // we assume ETH (empirically, contracts are unverified)
-      })
+      return [
+        HwrTransferSentMerkly.create(input.ctx, {
+          messageId,
+          $dstChain,
+          destination: Number(sentTransferRemote.destination),
+          recipient: Address32.from(sentTransferRemote.recipient),
+          amount: sentTransferRemote.amount.toString(),
+          tokenAddress: Address32.ZERO, // we assume ETH (empirically, contracts are unverified)
+        }),
+      ]
     }
   }
 
@@ -111,7 +113,7 @@ export class HyperlaneMerklyTokenBridgePlugin implements InteropPlugin {
         Result.Transfer('hyperlaneMerklyTokenbridge.Transfer', {
           srcEvent: hwrSentMerkly,
           srcTokenAddress: hwrSentMerkly.args.tokenAddress,
-          srcAmount: hwrSentMerkly.args.amount,
+          srcAmount: BigInt(hwrSentMerkly.args.amount),
           dstEvent: process, // merkly does not emit at destination
         }),
       ]

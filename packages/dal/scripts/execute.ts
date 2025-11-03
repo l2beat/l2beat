@@ -1,4 +1,4 @@
-import { getEnv, LogFormatterPretty, Logger } from '@l2beat/backend-tools'
+import { getEnv, Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import { createDatabase } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
@@ -9,7 +9,7 @@ import { getPackageHash } from '../src/utils/packageHash'
 main().catch((err) => console.error(err))
 
 async function main() {
-  const logger = getLogger()
+  const logger = Logger.INFO
 
   const db = getDb()
   const cache = getCache()
@@ -75,17 +75,4 @@ export function getCache() {
     redisUrl,
   })
   return new Cache(redisUrl, packageHash)
-}
-
-export function getLogger() {
-  const logger = new Logger({
-    logLevel: 'INFO',
-    transports: [
-      {
-        transport: console,
-        formatter: new LogFormatterPretty(),
-      },
-    ],
-  })
-  return logger
 }

@@ -136,6 +136,19 @@ describe('validate', () => {
     })
   })
 
+  it('strict object', () => {
+    const Foo = v.strictObject({
+      key1: v.string(),
+      key2: v.string().optional(),
+    })
+
+    expect(Foo.safeValidate({ key1: 'bar', key3: 'foo' })).toEqual({
+      success: false,
+      path: '.key3',
+      message: 'Strict violation, unexpected key found.',
+    })
+  })
+
   it('default - basic use', () => {
     const Foo = v.union([v.number(), v.null(), v.undefined()]).default(2)
     expect(Foo.safeParse(3)).toEqual({ success: true, data: 3 })

@@ -14,7 +14,7 @@ const isForcedBatchDisallowed =
   discovery.getContractValue<string>('PolygonZkEVM', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
-const bridge = discovery.getContract('PolygonSharedBridge')
+const bridge = discovery.getContract('AgglayerBridge')
 
 const chainId = 1101
 

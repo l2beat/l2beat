@@ -2253,6 +2253,21 @@
   ],
   "arbitrum": [
     {
+      "symbol": "EARNM",
+      "address": "0x3e62fed35c97145e6b445704b8ce74b2544776a9",
+      "source": "external",
+      "supply": "totalSupply",
+      "coingeckoId": "earnm",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "TBILL",
       "address": "0xF84D28A8D28292842dD73D1c5F99476A80b6666A",
       "source": "native",

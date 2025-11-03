@@ -106,31 +106,35 @@ export class DeBridgePlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     const sent = parseSent(input.log, null)
     if (sent) {
-      return Sent.create(input.ctx, {
-        submissionId: sent.submissionId,
-        debridgeId: sent.debridgeId,
-        amount: sent.amount.toString(),
-        $dstChain: findChain(
-          DEBRIDGE_NETWORKS,
-          (x) => x.chainId,
-          sent.chainIdTo.toString(),
-        ),
-      })
+      return [
+        Sent.create(input.ctx, {
+          submissionId: sent.submissionId,
+          debridgeId: sent.debridgeId,
+          amount: sent.amount.toString(),
+          $dstChain: findChain(
+            DEBRIDGE_NETWORKS,
+            (x) => x.chainId,
+            sent.chainIdTo.toString(),
+          ),
+        }),
+      ]
     }
 
     const claimed = parseClaimed(input.log, null)
     if (claimed) {
-      return Claimed.create(input.ctx, {
-        submissionId: claimed.submissionId,
-        debridgeId: claimed.debridgeId,
-        amount: claimed.amount.toString(),
-        receiver: EthereumAddress(claimed.receiver),
-        $srcChain: findChain(
-          DEBRIDGE_NETWORKS,
-          (x) => x.chainId,
-          claimed.chainIdFrom.toString(),
-        ),
-      })
+      return [
+        Claimed.create(input.ctx, {
+          submissionId: claimed.submissionId,
+          debridgeId: claimed.debridgeId,
+          amount: claimed.amount.toString(),
+          receiver: EthereumAddress(claimed.receiver),
+          $srcChain: findChain(
+            DEBRIDGE_NETWORKS,
+            (x) => x.chainId,
+            claimed.chainIdFrom.toString(),
+          ),
+        }),
+      ]
     }
   }
 
@@ -163,12 +167,12 @@ export class DeBridgePlugin implements InteropPlugin {
           srcTokenAddress:
             DEBRIDGE_TOKENS.find((t) => t.tokenId === sent.args.debridgeId)
               ?.tokenAddresses[sent.ctx.chain] ?? Address32.ZERO,
-          srcAmount: claimed.args.amount,
+          srcAmount: BigInt(claimed.args.amount),
           dstEvent: claimed,
           dstTokenAddress:
             DEBRIDGE_TOKENS.find((t) => t.tokenId === claimed.args.debridgeId)
               ?.tokenAddresses[claimed.ctx.chain] ?? Address32.ZERO,
-          dstAmount: claimed.args.amount,
+          dstAmount: BigInt(claimed.args.amount),
         }),
       )
     }
