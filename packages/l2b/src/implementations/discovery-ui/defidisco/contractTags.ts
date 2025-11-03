@@ -64,19 +64,19 @@ export function updateContractTag(
       timestamp: new Date().toISOString(),
     }
 
-    // Preserve existing centralization and mitigations if not explicitly updated
+    // Preserve existing centralization and likelihood if not explicitly updated
     if (existingTagIndex >= 0) {
       const existingTag = contractTags[existingTagIndex]
       newTag.centralization = updateRequest.centralization !== undefined
         ? updateRequest.centralization
         : existingTag.centralization
-      newTag.mitigations = updateRequest.mitigations !== undefined
-        ? updateRequest.mitigations
-        : existingTag.mitigations
+      newTag.likelihood = updateRequest.likelihood !== undefined
+        ? updateRequest.likelihood
+        : existingTag.likelihood
     } else {
       // New tag - apply provided values
       newTag.centralization = updateRequest.centralization
-      newTag.mitigations = updateRequest.mitigations
+      newTag.likelihood = updateRequest.likelihood
     }
 
     if (existingTagIndex >= 0) {
@@ -86,8 +86,8 @@ export function updateContractTag(
       // Add new tag
       contractTags.push(newTag)
     }
-  } else if (updateRequest.centralization !== undefined || updateRequest.mitigations !== undefined) {
-    // Update only centralization/mitigations for existing tag
+  } else if (updateRequest.centralization !== undefined || updateRequest.likelihood !== undefined) {
+    // Update only centralization/likelihood for existing tag
     if (existingTagIndex >= 0) {
       const existingTag = contractTags[existingTagIndex]
       contractTags[existingTagIndex] = {
@@ -95,9 +95,9 @@ export function updateContractTag(
         centralization: updateRequest.centralization !== undefined
           ? updateRequest.centralization
           : existingTag.centralization,
-        mitigations: updateRequest.mitigations !== undefined
-          ? updateRequest.mitigations
-          : existingTag.mitigations,
+        likelihood: updateRequest.likelihood !== undefined
+          ? updateRequest.likelihood
+          : existingTag.likelihood,
         timestamp: new Date().toISOString(),
       }
     }

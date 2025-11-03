@@ -72,8 +72,8 @@ export function ExternalButton() {
   }
 
   const handleSetAttributes = async (
-    centralization: 'high' | 'medium' | 'low',
-    mitigations: 'complete' | 'partial' | 'none'
+    centralization: 'high' | 'medium' | 'low' | 'immutable',
+    likelihood: 'high' | 'medium' | 'low' | 'mitigated'
   ) => {
     const promises = selectedNodes.map(node => {
       const normalizedAddr = node.address.replace('eth:', '')
@@ -84,7 +84,7 @@ export function ExternalButton() {
         contractAddress: normalizedAddr,
         isExternal: tag?.isExternal ?? true,
         centralization,
-        mitigations
+        likelihood
       })
     })
 
@@ -118,17 +118,17 @@ export function ExternalButton() {
 interface AttributePickerProps {
   onToggleExternal: () => void
   onSetAttributes: (
-    centralization: 'high' | 'medium' | 'low',
-    mitigations: 'complete' | 'partial' | 'none'
+    centralization: 'high' | 'medium' | 'low' | 'immutable',
+    likelihood: 'high' | 'medium' | 'low' | 'mitigated'
   ) => void
   hasExternalContract: boolean
   selectedNodes: Array<{ id: string; address: string }>
-  contractTags: { tags: Array<{ contractAddress: string; centralization?: 'high' | 'medium' | 'low'; mitigations?: 'complete' | 'partial' | 'none' }> } | undefined
+  contractTags: { tags: Array<{ contractAddress: string; centralization?: 'high' | 'medium' | 'low' | 'immutable'; likelihood?: 'high' | 'medium' | 'low' | 'mitigated' }> } | undefined
 }
 
 function AttributePicker({ onToggleExternal, onSetAttributes, hasExternalContract, selectedNodes, contractTags }: AttributePickerProps) {
-  const centralizationOptions: Array<'high' | 'medium' | 'low'> = ['high', 'medium', 'low']
-  const mitigationsOptions: Array<'complete' | 'partial' | 'none'> = ['complete', 'partial', 'none']
+  const centralizationOptions: Array<'high' | 'medium' | 'low' | 'immutable'> = ['high', 'medium', 'low', 'immutable']
+  const likelihoodOptions: Array<'high' | 'medium' | 'low' | 'mitigated'> = ['high', 'medium', 'low', 'mitigated']
 
   // Get current attributes from first selected node
   const getCurrentAttributes = () => {
@@ -137,15 +137,15 @@ function AttributePicker({ onToggleExternal, onSetAttributes, hasExternalContrac
       const tag = contractTags?.tags.find(tag => tag.contractAddress.toLowerCase() === normalizedAddr)
       return {
         centralization: tag?.centralization || 'high',
-        mitigations: tag?.mitigations || 'none'
+        likelihood: tag?.likelihood || 'high'
       }
     }
-    return { centralization: 'high' as const, mitigations: 'none' as const }
+    return { centralization: 'high' as const, likelihood: 'high' as const }
   }
 
   const currentAttrs = getCurrentAttributes()
-  const [selectedCentralization, setSelectedCentralization] = useState<'high' | 'medium' | 'low'>(currentAttrs.centralization)
-  const [selectedMitigations, setSelectedMitigations] = useState<'complete' | 'partial' | 'none'>(currentAttrs.mitigations)
+  const [selectedCentralization, setSelectedCentralization] = useState<'high' | 'medium' | 'low' | 'immutable'>(currentAttrs.centralization)
+  const [selectedLikelihood, setSelectedLikelihood] = useState<'high' | 'medium' | 'low' | 'mitigated'>(currentAttrs.likelihood)
 
   return (
     <div className="flex flex-col gap-3 rounded border border-coffee-600 bg-coffee-800 p-3 shadow-xl">
@@ -157,7 +157,7 @@ function AttributePicker({ onToggleExternal, onSetAttributes, hasExternalContrac
         {hasExternalContract ? 'Mark Internal' : 'Mark External'}
       </button>
 
-      {/* Centralization + Mitigations Columns */}
+      {/* Centralization + Likelihood Columns */}
       {hasExternalContract && (
         <>
           <div className="flex gap-3">
@@ -179,20 +179,20 @@ function AttributePicker({ onToggleExternal, onSetAttributes, hasExternalContrac
               ))}
             </div>
 
-            {/* Mitigations Column */}
+            {/* Likelihood Column */}
             <div className="flex flex-col gap-2">
-              <div className="text-xs font-semibold text-coffee-300">Mitigations</div>
-              {mitigationsOptions.map((mit) => (
+              <div className="text-xs font-semibold text-coffee-300">Likelihood</div>
+              {likelihoodOptions.map((lik) => (
                 <button
-                  key={mit}
+                  key={lik}
                   className={`rounded border border-coffee-600 px-3 py-2 text-xs capitalize ${
-                    selectedMitigations === mit
+                    selectedLikelihood === lik
                       ? 'bg-coffee-600'
                       : 'bg-coffee-700 hover:bg-coffee-600'
                   }`}
-                  onClick={() => setSelectedMitigations(mit)}
+                  onClick={() => setSelectedLikelihood(lik)}
                 >
-                  {mit}
+                  {lik}
                 </button>
               ))}
             </div>
@@ -201,7 +201,7 @@ function AttributePicker({ onToggleExternal, onSetAttributes, hasExternalContrac
           {/* Apply Button */}
           <button
             className="w-full rounded border border-coffee-600 bg-coffee-700 px-3 py-2 text-xs hover:bg-coffee-600"
-            onClick={() => onSetAttributes(selectedCentralization, selectedMitigations)}
+            onClick={() => onSetAttributes(selectedCentralization, selectedLikelihood)}
           >
             Apply
           </button>
