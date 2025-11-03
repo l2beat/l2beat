@@ -109,9 +109,15 @@ export class UpdateMonitor {
       failedCount: results.errors.length,
       totalCount: tasks.length,
     })
+    const failedProjects = results.errors.map((error) => error.identity.id)
 
     const reminders = this.generateDailyReminder()
-    await this.updateNotifier.sendDailyReminder(reminders, timestamp)
+    await this.updateNotifier.sendDailyReminder(
+      reminders,
+      timestamp,
+      this.disabledProjects,
+      failedProjects,
+    )
   }
 
   generateDailyReminder(): Record<string, DailyReminderChainEntry> {
