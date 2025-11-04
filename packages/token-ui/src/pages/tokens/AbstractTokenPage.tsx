@@ -3,7 +3,7 @@ import type { Plan } from '@l2beat/token-backend'
 import { ArrowRightIcon, CoinsIcon, TrashIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, Navigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import { Button } from '~/components/core/Button'
@@ -35,19 +35,12 @@ import { validateResolver } from '~/utils/validateResolver'
 
 export function AbstractTokenPage() {
   const { id } = useParams()
-  const navigate = useNavigate()
   const { data } = api.tokens.getAbstractById.useQuery(id ?? '', {
     enabled: id !== '',
   })
 
-  useEffect(() => {
-    if (!id || data === null) {
-      navigate('/not-found')
-    }
-  }, [id, data, navigate])
-
   if (!id || data === null) {
-    return null
+    return <Navigate to="/not-found" replace />
   }
 
   return (

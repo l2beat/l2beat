@@ -3,7 +3,7 @@ import type { Plan } from '@l2beat/token-backend'
 import { TrashIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import {
@@ -28,7 +28,6 @@ import { validateResolver } from '~/utils/validateResolver'
 
 export function DeployedTokenPage() {
   const { chain, address } = useParams()
-  const navigate = useNavigate()
   const { data } = api.tokens.getDeployedByChainAndAddress.useQuery(
     {
       chain: chain ?? '',
@@ -39,14 +38,8 @@ export function DeployedTokenPage() {
     },
   )
 
-  useEffect(() => {
-    if (!chain || !address || data === null) {
-      navigate('/not-found')
-    }
-  }, [chain, address, data, navigate])
-
   if (!chain || !address || data === null) {
-    return null
+    return <Navigate to="/not-found" replace />
   }
 
   return (
