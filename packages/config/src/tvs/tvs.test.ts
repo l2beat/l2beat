@@ -19,7 +19,7 @@ describe('tvs', () => {
       .map((c) => c.chainConfig!.name),
   )
 
-  it.only('throws when token config has wrong schema', () => {
+  it('throws when token config has wrong schema', () => {
     const mockTvsConfig = {
       projectId: ProjectId('project'),
       tokens: [
