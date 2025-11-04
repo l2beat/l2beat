@@ -164,6 +164,7 @@ describe(CelestiaRpcClient.name, () => {
     it('returns block result', async () => {
       const mockResults = [
         {
+          log: null,
           events: [
             {
               type: 'celestia.blob.v1.EventPayForBlobs',
