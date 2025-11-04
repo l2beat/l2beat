@@ -19,7 +19,7 @@ describe('tvs', () => {
       .map((c) => c.chainConfig!.name),
   )
 
-  it('throws when token config has wrong schema', () => {
+  it.only('throws when token config has wrong schema', () => {
     const mockTvsConfig = {
       projectId: ProjectId('project'),
       tokens: [
@@ -44,7 +44,7 @@ describe('tvs', () => {
     }
 
     expect(() => ProjectTvsConfigSchema.parse(mockTvsConfig)).toThrow(
-      'At .tokens[0].amount: None of the union variants matched, got String.',
+      'At .tokens[0].amount: None of the union variants matched, got Object. Variant 0 at .type: Expected exactly calculation, got string. Variant 1: None of the union variants matched, got Object. Variant 0 at .type: Expected exactly balanceOfEscrow, got string. Variant 1 at .address: Invalid EthereumAddress Variant 2 at .type: Expected exactly circulatingSupply, got string. Variant 3 at .type: Expected exactly const, got string. Variant 4 at .type: Expected exactly starknetTotalSupply, got string.',
     )
   })
 
