@@ -485,7 +485,7 @@ function impUnion<
   T extends [Validator<unknown>, Validator<unknown>, ...Validator<unknown>[]],
 >(elements: T, clone: boolean) {
   return function impUnion(value: unknown): Result<Infer<T[number]>> {
-    const errors: string[] = []
+    let errorMessage = ''
     for (const [i, element] of elements.entries()) {
       const result = clone
         ? element.safeParse(value)
@@ -495,13 +495,12 @@ function impUnion<
       }
 
       const location = result.path ? ` at ${result.path}` : ''
-      errors.push(`Variant ${i}${location}: ${result.message}`)
+      errorMessage += ` Variant ${i}${location}: ${result.message}`
     }
-    const errorDetails = errors.length > 0 ? ` ${errors.join(' ')}` : ''
     return {
       success: false,
       path: '',
-      message: `None of the union variants matched, got ${whatType(value)}.${errorDetails}`,
+      message: `None of the union variants matched, got ${whatType(value)}.${errorMessage}`,
     }
   }
 }
