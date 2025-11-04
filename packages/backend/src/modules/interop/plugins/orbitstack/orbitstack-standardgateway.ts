@@ -28,7 +28,7 @@ const DepositInitiatedMessageDelivered = createInteropEventType<{
   chain: string
   messageNum: string
   l1Token: Address32
-  amount: string
+  amount: bigint
 }>('orbitstack-standardgateway.MessageDeliveredDepositInitiated')
 
 const parseDepositInitiated = createEventParser(
@@ -40,7 +40,7 @@ const DepositFinalized = createInteropEventType<{
   chain: string
   l1Token: Address32
   l2Token: Address32
-  amount: string
+  amount: bigint
 }>('orbitstack-standardgateway.DepositFinalized')
 
 const parseDepositFinalized = createEventParser(
@@ -59,7 +59,7 @@ const WithdrawalInitiatedL2ToL1Tx = createInteropEventType<{
   position: number
   l1Token: Address32
   l2Token: Address32
-  amount: string
+  amount: bigint
 }>('orbitstack-standardgateway.L2ToL1TxWithdrawalInitiated', {
   ttl: 14 * UnixTime.DAY,
 })
@@ -73,7 +73,7 @@ const WithdrawalFinalizedOutBoxTransactionExecuted = createInteropEventType<{
   chain: string
   position: number
   l1Token: Address32
-  amount: string
+  amount: bigint
 }>('orbitstack-standardgateway.WithdrawalFinalized')
 
 const parseWithdrawalFinalized = createEventParser(
@@ -115,7 +115,7 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
                 chain: network.chain,
                 messageNum: messageDelivered.messageIndex.toString(),
                 l1Token: Address32.from(depositInitiated._l1Token),
-                amount: depositInitiated._amount.toString(),
+                amount: depositInitiated._amount,
               }),
             ]
           }
@@ -143,7 +143,7 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
                 chain: network.chain,
                 position: Number(outBoxTx.transactionIndex),
                 l1Token: Address32.from(withdrawalFinalized.l1Token),
-                amount: withdrawalFinalized.amount.toString(),
+                amount: withdrawalFinalized.amount,
               }),
             ]
           }
@@ -182,7 +182,7 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
                 chain: network.chain,
                 l1Token: Address32.from(depositFinalized.l1Token),
                 l2Token: Address32.from(transferLog.address),
-                amount: depositFinalized.amount.toString(),
+                amount: depositFinalized.amount,
               }),
             ]
           }
@@ -224,7 +224,7 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
                   position: Number(l2ToL1Tx.position),
                   l1Token: Address32.from(withdrawalInitiated.l1Token),
                   l2Token: Address32.from(transferLog.address),
-                  amount: withdrawalInitiated._amount.toString(),
+                  amount: withdrawalInitiated._amount,
                 }),
               ]
             }
@@ -265,10 +265,10 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
         }),
         Result.Transfer('orbitstack.L2ToL1Transfer', {
           srcEvent: withdrawalInitiated,
-          srcAmount: BigInt(withdrawalInitiated.args.amount),
+          srcAmount: withdrawalInitiated.args.amount,
           srcTokenAddress: withdrawalInitiated.args.l2Token,
           dstEvent: event,
-          dstAmount: BigInt(event.args.amount),
+          dstAmount: event.args.amount,
           dstTokenAddress: event.args.l1Token,
         }),
       ]
@@ -306,10 +306,10 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
         }),
         Result.Transfer('orbitstack.L1ToL2Transfer', {
           srcEvent: depositInitiated,
-          srcAmount: BigInt(depositInitiated.args.amount),
+          srcAmount: depositInitiated.args.amount,
           srcTokenAddress: depositInitiated.args.l1Token,
           dstEvent: event,
-          dstAmount: BigInt(event.args.amount),
+          dstAmount: event.args.amount,
           dstTokenAddress: event.args.l2Token,
         }),
       ]

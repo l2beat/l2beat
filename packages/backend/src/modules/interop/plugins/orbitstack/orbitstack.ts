@@ -42,7 +42,7 @@ export const L2ToL1Tx = createInteropEventType<{
 const ETHWithdrawalInitiatedL2ToL1Tx = createInteropEventType<{
   chain: string
   position: number
-  amount: string
+  amount: bigint
 }>('orbitstack.L2ToL1TxETHWithdrawalInitiated', { ttl: 14 * UnixTime.DAY })
 
 export const OutBoxTransactionExecuted = createInteropEventType<{
@@ -60,7 +60,7 @@ export const RedeemScheduled = createInteropEventType<{
   chain: string
   messageNum: string
   retryTxHash: string
-  ethAmount?: string
+  ethAmount?: bigint
 }>('orbitstack.RedeemScheduled')
 
 export const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
@@ -156,7 +156,7 @@ export class OrbitStackPlugin implements InteropPlugin {
             ETHWithdrawalInitiatedL2ToL1Tx.create(input.ctx, {
               chain: network.chain,
               position: Number(l2ToL1Tx.position),
-              amount: l2ToL1Tx.callvalue.toString(),
+              amount: l2ToL1Tx.callvalue,
             }),
           ]
         }
@@ -193,9 +193,9 @@ export class OrbitStackPlugin implements InteropPlugin {
         return [
           RedeemScheduled.create(input.ctx, {
             chain: network.chain,
-            messageNum: BigInt(messageNum).toString(),
+            messageNum: messageNum,
             retryTxHash: redeemScheduled.retryTxHash,
-            ethAmount: callValue > 0n ? callValue.toString() : undefined,
+            ethAmount: callValue > 0n ? callValue : undefined,
           }),
         ]
       }
@@ -222,10 +222,10 @@ export class OrbitStackPlugin implements InteropPlugin {
           }),
           Result.Transfer('orbitstack.L2ToL1Transfer', {
             srcEvent: ethWithdrawalInitiated,
-            srcAmount: BigInt(ethWithdrawalInitiated.args.amount),
+            srcAmount: ethWithdrawalInitiated.args.amount,
             srcTokenAddress: Address32.NATIVE,
             dstEvent: event,
-            dstAmount: BigInt(ethWithdrawalInitiated.args.amount),
+            dstAmount: ethWithdrawalInitiated.args.amount,
             dstTokenAddress: Address32.NATIVE,
           }),
         ]
@@ -276,7 +276,7 @@ export class OrbitStackPlugin implements InteropPlugin {
             srcAmount: messageDelivered.ctx.txValue,
             srcTokenAddress: Address32.NATIVE,
             dstEvent: event,
-            dstAmount: BigInt(event.args.ethAmount),
+            dstAmount: event.args.ethAmount,
             dstTokenAddress: Address32.NATIVE,
           }),
         ]

@@ -31,7 +31,7 @@ const parseSendEvent = createEventParser(
 export const Delivery = createInteropEventType<{
   recipientContract: string
   sourceChain: number
-  sequence: string
+  sequence: bigint
   deliveryVaaHash: `0x${string}`
   $srcChain: string
 }>('wormhole-relayer.Delivery')
@@ -57,7 +57,7 @@ export class WormholeRelayerPlugin implements InteropPlugin {
             (x) => x.wormholeChainId,
             Number(parsed.sourceChain),
           ),
-          sequence: parsed.sequence.toString(),
+          sequence: parsed.sequence,
         }),
       ]
     }

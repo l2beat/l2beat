@@ -75,7 +75,7 @@ export const CCTPv2MessageSent = createInteropEventType<{
   fast: boolean
   app?: string
   hookData?: string
-  amount?: string
+  amount?: bigint
   tokenAddress?: Address32
   messageHash: string
   $dstChain: string
@@ -132,7 +132,7 @@ export class CCTPV2Plugin implements InteropPlugin {
             ),
             app: burnMessage ? 'TokenMessengerV2' : undefined,
             hookData: burnMessage?.hookData,
-            amount: burnMessage?.amount.toString(),
+            amount: burnMessage?.amount,
             tokenAddress: burnMessage
               ? Address32.from(burnMessage.burnToken)
               : Address32.ZERO,

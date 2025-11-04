@@ -32,15 +32,15 @@ export const parseOFTReceived = createEventParser(
 const OFTSentPacketSent = createInteropEventType<{
   $dstChain: string
   guid: string
-  amountSentLD: number
-  amountReceivedLD: number
+  amountSentLD: bigint
+  amountReceivedLD: bigint
   tokenAddress: Address32
 }>('layerzero-v2.PacketOFTSent')
 
 const OFTReceivedPacketDelivered = createInteropEventType<{
   $srcChain: string
   guid: string
-  amountReceivedLD: number
+  amountReceivedLD: bigint
   tokenAddress: Address32
 }>('layerzero-v2.PacketOFTDelivered')
 
@@ -84,8 +84,8 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
               OFTSentPacketSent.create(input.ctx, {
                 $dstChain,
                 guid,
-                amountSentLD: Number(oftSent.amountSentLD),
-                amountReceivedLD: Number(oftSent.amountReceivedLD),
+                amountSentLD: oftSent.amountSentLD,
+                amountReceivedLD: oftSent.amountReceivedLD,
                 tokenAddress: Address32.from(input.log.address),
               }),
             ]
@@ -121,7 +121,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
             OFTReceivedPacketDelivered.create(input.ctx, {
               $srcChain,
               guid,
-              amountReceivedLD: Number(oftReceived.amountReceivedLD),
+              amountReceivedLD: oftReceived.amountReceivedLD,
               // TODO: OFT log emitter is not always the token contract (needs effects)
               tokenAddress: Address32.from(input.log.address),
             }),
@@ -158,10 +158,10 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
       }),
       Result.Transfer('oftv2.Transfer', {
         srcEvent: oftSentPacketSent,
-        srcAmount: BigInt(oftSentPacketSent.args.amountSentLD),
+        srcAmount: oftSentPacketSent.args.amountSentLD,
         srcTokenAddress: oftSentPacketSent.args.tokenAddress,
         dstEvent: oftReceivedPacketDelivered,
-        dstAmount: BigInt(oftReceivedPacketDelivered.args.amountReceivedLD),
+        dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD,
         // TODO: OFT log emitter is not always the token contract (needs effects)
         dstTokenAddress: oftReceivedPacketDelivered.args.tokenAddress,
       }),
