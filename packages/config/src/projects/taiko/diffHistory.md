@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x576c334abeb3e31443fed29382c4b557df4e7902
+
+# Diff at Tue, 04 Nov 2025 15:15:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2a2e6dec6588b124016c602f3ebd0bbf5fa7ec73 block: 1761894930
+- current timestamp: 1762269183
+
+## Description
+
+operator change.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered.
+      description:
+-        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 4 operators registered."
++        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered."
+      values.registeredOperators.1:
+-        {"proposer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74","sequencer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"}
+      values.registeredOperators.3.sequencer:
+-        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
++        "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"
+      values.registeredOperators.3.proposer:
+-        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
++        "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"
+      values.registeredOperatorsCount:
+-        4
++        3
+    }
+```
+
 Generated with discovered.json: 0x3176f5adf28bb496205bbfff361cda93ee8c6998
 
 # Diff at Tue, 04 Nov 2025 11:34:42 GMT:
