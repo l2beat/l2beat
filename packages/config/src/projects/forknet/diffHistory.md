@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x5d07b91783169aa99536fcc1e38ef2314753b829
+Generated with discovered.json: 0x17c2a52161ad7790b711c373b99243b95983b9fc
 
-# Diff at Tue, 04 Nov 2025 08:51:46 GMT:
+# Diff at Tue, 04 Nov 2025 09:09:39 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current timestamp: 1762246195
@@ -110,7 +110,7 @@ aggkit opstack without proof system/state roots and onchain DA.
 ```diff
 +   Status: CREATED
     contract PermissionedDisputeGame (eth:0xd102e395aA8b4710db44B33F14Ae0038F318C2AC)
-    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger. In the context of this permissioned aggkit deployment, there are no state proposals made here and the op stack fault proof system is not used.
 ```
 
 ```diff

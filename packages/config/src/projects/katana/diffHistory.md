@@ -1,3 +1,49 @@
+Generated with discovered.json: 0xd711d26e0acafacaf8e87ddc2745943abf94b387
+
+# Diff at Tue, 04 Nov 2025 09:10:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c52d5c1cf2092208997feb6320a35c565d7e0b0b block: 1761895573
+- current timestamp: 1761895573
+
+## Description
+
+config: hide proposer/challenger perms with custom criteria template for the dispute game contract.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761895573 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"challenge","from":"eth:0x667b7DA73DA7B2A75286378FF45637eEaE9B4793","role":".challenger"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x4A6f5889409Bf4Bf3Bff0Fef585D7A29FdA64258) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"propose","from":"eth:0x667b7DA73DA7B2A75286378FF45637eEaE9B4793","role":".proposer"}]
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0x667b7DA73DA7B2A75286378FF45637eEaE9B4793) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger. In the context of this permissioned aggkit deployment, there are no state proposals made here and the op stack fault proof system is not used.
+      template:
+-        "opstack/PermissionedDisputeGame"
++        "polygon-cdk/PermissionedDisputeGameUnused"
+      description:
+-        "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger."
++        "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger. In the context of this permissioned aggkit deployment, there are no state proposals made here and the op stack fault proof system is not used."
+    }
+```
+
 Generated with discovered.json: 0xa954e75854d6138c7e6f20c3e2b7e2d0ca8a3896
 
 # Diff at Mon, 03 Nov 2025 17:47:30 GMT:

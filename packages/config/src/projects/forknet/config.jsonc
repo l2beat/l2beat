@@ -12,7 +12,9 @@
       "category": "spam",
       "description": "Since this contract is deployed in the context of a neutered op stack system, the guardian role has no significance.",
       "fields": {
-        "guardian": {}
+        "guardian": {
+          "permissions": []
+        }
       }
     }
   }
