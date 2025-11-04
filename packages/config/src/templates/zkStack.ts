@@ -409,7 +409,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         references: [
           {
             title: "L1 - L2 interoperability - Developer's documentation",
-            url: 'https://docs.zksync.io/build/developer-reference/l1-l2-interoperability#priority-queue',
+            url: 'https://docs.zksync.io/zksync-protocol/era-vm/contracts/handling-l1-l2-ops',
           },
         ],
       },
