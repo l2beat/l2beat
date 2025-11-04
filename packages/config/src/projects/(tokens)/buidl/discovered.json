@@ -23,6 +23,7 @@
       "values": {
         "$admin": "arb1:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
         "$implementation": "arb1:0xdbf6db49066784A69244d3b33Cf44C25Ec86C0F7",
+        "$libraries": ["arb1:0xf5493Af69553f78A513F27333e8F87479A66EB4d"],
         "$pastUpgrades": [
           [
             "2024-11-04T14:14:49.000Z",

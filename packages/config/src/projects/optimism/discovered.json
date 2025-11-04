@@ -525,7 +525,7 @@
       "values": {
         "$immutable": true,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "20d 1h",
+        "timeSinceLastL2beatInteraction": "20d 18h",
         "version": "1.0.0"
       },
       "implementationNames": {

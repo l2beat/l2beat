@@ -1928,6 +1928,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "optimism": 141031377, "ethereum": 23345439 },
+  "usedBlockNumbers": { "ethereum": 23345439, "optimism": 141031377 },
   "permissionsConfigHash": "0x408d2687d7e80da3a0c17c7aa3ab91a061ee917a618b37aa2351fa0faff42200"
 }

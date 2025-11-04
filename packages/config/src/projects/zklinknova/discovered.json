@@ -5708,16 +5708,16 @@
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
   "usedBlockNumbers": {
-    "zksync2": 63447251,
-    "mantle": 82778743,
-    "mantapacific": 5946384,
-    "ethereum": 23016163,
-    "linea": 21375252,
-    "optimism": 139044511,
-    "scroll": 17695863,
+    "arbitrum": 362382003,
     "base": 33449226,
     "blast": 22438992,
-    "arbitrum": 362382003
+    "ethereum": 23016163,
+    "linea": 21375252,
+    "mantapacific": 5946384,
+    "mantle": 82778743,
+    "optimism": 139044511,
+    "scroll": 17695863,
+    "zksync2": 63447251
   },
   "permissionsConfigHash": "0xa52d924a2d1677aa8315bc14d2d2615ca2ff6a066d62370a3b3d9fd78a2dbb5e"
 }

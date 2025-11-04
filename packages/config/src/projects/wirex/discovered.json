@@ -35,7 +35,7 @@
       ]
     },
     {
-      "name": "PolygonSharedBridge",
+      "name": "AgglayerBridge",
       "address": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
       "type": "Reference",
       "targetType": "Contract",
@@ -68,7 +68,7 @@
       }
     },
     {
-      "name": "PolygonRollupManager",
+      "name": "AgglayerManager",
       "address": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
       "type": "Reference",
       "targetType": "Contract",
@@ -80,7 +80,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "PolygonGlobalExitRootV2",
+      "name": "AgglayerGER",
       "address": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
       "type": "Reference",
       "targetType": "Contract",

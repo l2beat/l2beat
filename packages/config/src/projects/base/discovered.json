@@ -4854,6 +4854,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23684424, "base": 37484071 },
+  "usedBlockNumbers": { "base": 37484071, "ethereum": 23684424 },
   "permissionsConfigHash": "0x2dff3969c61f31ddd865376f783fbde687c74eff3bf01449156fe2d66ac838e3"
 }

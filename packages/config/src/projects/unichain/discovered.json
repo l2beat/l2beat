@@ -4893,6 +4893,6 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "unichain/L1Splitter": "0xf1512f595a0a8fc0981c747d8b7c7b4939bc3136849b90b2bbf68c4b236c93d7"
   },
-  "usedBlockNumbers": { "unichain": 30840223, "ethereum": 23670474 },
+  "usedBlockNumbers": { "ethereum": 23670474, "unichain": 30840223 },
   "permissionsConfigHash": "0xadd6cba03406180625f8ee57d221b8064b7c280dd02b5782fed83553bb29139f"
 }

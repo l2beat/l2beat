@@ -4930,11 +4930,11 @@
     "stargate/Treasurer": "0x893e4b5c910be84ccc45d870bef75de4b3fc748040df291137faab3705c83c24"
   },
   "usedBlockNumbers": {
-    "ethereum": 23667478,
     "arbitrum": 393874196,
-    "optimism": 142976773,
-    "linea": 24952738,
     "base": 37381488,
+    "ethereum": 23667478,
+    "linea": 24952738,
+    "optimism": 142976773,
     "scroll": 23879196
   },
   "permissionsConfigHash": "0xd6dbcf684509cd2702666c5d9eab65e5f34db401f9c83c00bc3e13946467b8a8"
