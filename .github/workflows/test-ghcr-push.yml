@@ -1,0 +1,43 @@
+name: Test push image to ghcr.io registry
+
+concurrency:
+  group: test-ghcr-push
+permissions:
+  contents: read
+  packages: write
+
+on:
+  pull_request:
+
+jobs:
+  build-deploy-ghcr:
+    name: Build and push backend image to ghcr.io
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Set up Docker.io mirror
+        uses: docker/setup-buildx-action@v3
+        with:
+          buildkitd-config-inline: |
+            [registry."docker.io"]
+              mirrors = ["mirror.gcr.io"]
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and publish containers
+        run: |
+          docker build --push \
+            --build-arg TURBO_TEAM=${TURBO_TEAM} \
+            --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
+            -t ${GH_TAG_TEST} \
+            -f ${DOCKERFILE} .
+        env:
+          DOCKERFILE: Dockerfile.backend
+          GH_TAG_TEST: ghcr.io/${{ github.repository }}/backend:test
+          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}

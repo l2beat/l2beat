@@ -97,8 +97,8 @@ jobs:
         env:
           DOCKERFILE: Dockerfile.frontend
           HEROKU_TAG: registry.heroku.com/${{ secrets.HEROKU_FRONTEND_PROD }}/web
-          GH_TAG_LATEST: ${{ github.repository }}/frontend:latest
-          GH_TAG_SHA: ${{ github.repository }}/frontend:${{ github.sha }}
+          GH_TAG_LATEST: ghcr.io/${{ github.repository }}/frontend:latest
+          GH_TAG_SHA: ghcr.io/${{ github.repository }}/frontend:${{ github.sha }}
           TURBO_TEAM: ${{ vars.TURBO_TEAM }}
           TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       - name: Release published container

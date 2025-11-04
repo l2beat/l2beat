@@ -51,8 +51,8 @@ jobs:
           DOCKERFILE: Dockerfile.backend
           TAG_DEV: registry.heroku.com/${{ secrets.HEROKU_UPDATE_MONITOR_DEV }}/web
           TAG_PROD: registry.heroku.com/${{ secrets.HEROKU_UPDATE_MONITOR_PROD }}/web
-          GH_TAG_LATEST: ${{ github.repository }}/update-monitor:latest
-          GH_TAG_SHA: ${{ github.repository }}/update-monitor:${{ github.sha }}
+          GH_TAG_LATEST: ghcr.io/${{ github.repository }}/update-monitor:latest
+          GH_TAG_SHA: ghcr.io/${{ github.repository }}/update-monitor:${{ github.sha }}
           TURBO_TEAM: ${{ vars.TURBO_TEAM }}
           TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       - name: Release published containers
