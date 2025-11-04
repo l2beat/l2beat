@@ -73,7 +73,7 @@ export class RelayIndexer extends ManagedChildIndexer {
     }
 
     const res = await this.relayApiClient.getAllRequests({
-      limit: 50,
+      limit: 500,
       startTimestamp: from,
       sortBy: 'updatedAt',
       sortDirection: 'asc',
@@ -159,13 +159,23 @@ export class RelayIndexer extends ManagedChildIndexer {
       }
     }
 
-    const tracked = events.filter((e) =>
-      this.trackedChains.includes(e.ctx.chain),
-    )
+    const newTrackedEvents = events.filter((e) => {
+      if (!this.trackedChains.includes(e.ctx.chain)) {
+        return false
+      }
 
-    if (tracked.length > 0) {
-      this.logger.info('Saved new events', { events: tracked.length })
-      await this.interopEventStore.saveNewEvents(tracked)
+      if (TokenSent.checkType(e)) {
+        return !this.interopEventStore.find(TokenSent, { id: e.args.id })
+      }
+      if (TokenReceived.checkType(e)) {
+        return !this.interopEventStore.find(TokenReceived, { id: e.args.id })
+      }
+      return false
+    })
+
+    if (newTrackedEvents.length > 0) {
+      this.logger.info('Saved new events', { events: newTrackedEvents.length })
+      await this.interopEventStore.saveNewEvents(newTrackedEvents)
     }
 
     return syncedTo

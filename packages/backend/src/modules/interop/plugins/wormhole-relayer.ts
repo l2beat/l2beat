@@ -5,6 +5,7 @@ On DST it emits Delivery event which is used to match with LogMessagePublished o
 
 */
 
+import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
   createEventParser,
   createInteropEventType,
@@ -16,7 +17,8 @@ import {
   type MatchResult,
   Result,
 } from './types'
-import { LogMessagePublished, WORMHOLE_NETWORKS } from './wormhole'
+import { WormholeConfig } from './wormhole/wormhole.config'
+import { LogMessagePublished } from './wormhole/wormhole.plugin'
 
 const parseDelivery = createEventParser(
   'event Delivery(address indexed recipientContract, uint16 indexed sourceChain, uint64 indexed sequence, bytes32 deliveryVaaHash,uint8 status,uint256 gasUsed,uint8 refundStatus,bytes additionalStatusInfo,bytes overridesInfo)',
@@ -31,7 +33,7 @@ const parseSendEvent = createEventParser(
 export const Delivery = createInteropEventType<{
   recipientContract: string
   sourceChain: number
-  sequence: string
+  sequence: bigint
   deliveryVaaHash: `0x${string}`
   $srcChain: string
 }>('wormhole-relayer.Delivery')
@@ -44,7 +46,12 @@ export const SendEvent = createInteropEventType<{
 export class WormholeRelayerPlugin implements InteropPlugin {
   name = 'wormhole-relayer'
 
+  constructor(private configs: InteropConfigStore) {}
+
   capture(input: LogToCapture) {
+    const wormholeNetworks = this.configs.get(WormholeConfig)
+    if (!wormholeNetworks) return
+
     const parsed = parseDelivery(input.log, null)
     if (parsed) {
       return [
@@ -53,11 +60,11 @@ export class WormholeRelayerPlugin implements InteropPlugin {
           sourceChain: parsed.sourceChain,
           deliveryVaaHash: parsed.deliveryVaaHash,
           $srcChain: findChain(
-            WORMHOLE_NETWORKS,
+            wormholeNetworks,
             (x) => x.wormholeChainId,
             Number(parsed.sourceChain),
           ),
-          sequence: parsed.sequence.toString(),
+          sequence: parsed.sequence,
         }),
       ]
     }

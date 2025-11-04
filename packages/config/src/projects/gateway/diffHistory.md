@@ -1,3 +1,38 @@
+Generated with discovered.json: 0xcaa62448c606e501995a54ff8061a5b3748b799a
+
+# Diff at Mon, 03 Nov 2025 15:23:47 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@5ad393bac5dce3b55b894f601ac224ffa90954a1 block: 1761643087
+- current timestamp: 1762182733
+
+## Description
+
+Modified predeployed contract L1Messenger on Gateway. Diff cannot be displayed on diffo, but here is the full diff: lines 27, 28 added, 2 new entries in SystemLogKey enum MESSAGE_ROOT_ROLLING_HASH_KEY, L2_TXS_STATUS_ROLLING_HASH_KEY. Two comments are rephrased:
+-  // Just in case, that the `sloadContractBytecodeHash` is known -> // Just in case, checking that the `sloadContractBytecodeHash` is known.
+- /// can only be called from the EVM emulator using system call (unaccessible from EVM environment) -> /// can only be called from the EVM emulator using system call (inaccessible from EVM environment)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761643087 (main branch discovery), not current.
+
+```diff
+    contract L1Messenger (gateway:0x0000000000000000000000000000000000008008) {
+    +++ description: System contract implementing public L2->L1 messaging functionality. Part of the canonical bridge.
+      sourceHashes.0:
+-        "0xd2ecfc7e11d1c2bd428a0170a09a7734dd4640ef3291609ddf62dbdb4c344f14"
++        "0x2c4e54d52c2919d3fc227e2a04b26b5e9daee5ef7031fb0e076ac5ed9f2cc7a5"
+      sinceTimestamp:
+-        1750953821
++        1761040360
+      sinceBlock:
+-        85
++        74512
+    }
+```
+
 Generated with discovered.json: 0x5185cf613a03f1b8682b445d84ca58147d2dbe47
 
 # Diff at Tue, 28 Oct 2025 09:19:14 GMT:

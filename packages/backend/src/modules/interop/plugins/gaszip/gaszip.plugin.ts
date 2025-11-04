@@ -16,7 +16,7 @@ import {
   GASZIP_NETWORKS,
   getChainNameByGaszipId,
 } from './gaszip.config'
-import { decodeGasZipDeposit } from './gaszip.decoder'
+import { decodeGasZipDeposit, extractFirstTwentyHex } from './gaszip.decoder'
 
 const parseDeposit = createEventParser(
   'event Deposit(address from, uint256 chains, uint256 amount, bytes32 to)',
@@ -25,7 +25,7 @@ const parseDeposit = createEventParser(
 export const GasZipDeposit = createInteropEventType<{
   $dstChain: string
   depositor: Address32
-  amount: string
+  amount: bigint
   tokenAddress: Address32
   depositType: string
   destinationChains: string
@@ -34,7 +34,7 @@ export const GasZipDeposit = createInteropEventType<{
 
 export const GasZipFill = createInteropEventType<{
   receiver: Address32
-  amount: string
+  amount: bigint
   tokenAddress: Address32
 }>('gaszip.Fill')
 
@@ -70,9 +70,7 @@ export class GasZipPlugin implements InteropPlugin {
           GasZipDeposit.create(input.tx, {
             $dstChain: dc.chain,
             depositor: input.tx.txFrom,
-            amount: (
-              input.tx.txValue / BigInt(destinationChains.length)
-            ).toString(),
+            amount: input.tx.txValue / BigInt(destinationChains.length),
             tokenAddress: Address32.NATIVE,
             depositType: decoded.type,
             destinationChains: JSON.stringify(destinationChains),
@@ -91,7 +89,7 @@ export class GasZipPlugin implements InteropPlugin {
           receiver:
             input.tx.txTo ??
             Address32.from('0x0000000000000000000000000000000000000000'),
-          amount: input.tx.txValue?.toString() ?? '0',
+          amount: input.tx.txValue ?? 0n,
           tokenAddress: Address32.NATIVE,
         }),
       ]
@@ -130,13 +128,11 @@ export class GasZipPlugin implements InteropPlugin {
         GasZipDeposit.create(input.ctx, {
           $dstChain: dc.chain,
           depositor: Address32.from(deposit.from),
-          amount: (
-            deposit.amount / BigInt(destinationChains.length)
-          ).toString(),
+          amount: deposit.amount / BigInt(destinationChains.length),
           tokenAddress: Address32.NATIVE,
           depositType: 'CONTRACT',
           destinationChains: JSON.stringify(destinationChains),
-          destinationAddress: Address32.from(deposit.to),
+          destinationAddress: Address32.from(extractFirstTwentyHex(deposit.to)),
         }),
       )
     }

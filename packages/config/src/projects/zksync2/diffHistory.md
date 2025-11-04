@@ -1,3 +1,76 @@
+Generated with discovered.json: 0x7a13f4153e212350239f5c235de2f016d0064d83
+
+# Diff at Mon, 03 Nov 2025 16:50:08 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6b72018cd9706ce7cba8ec489b67d7193f34dc20 block: 1761643176
+- current timestamp: 1762183851
+
+## Description
+
+Upgraded BridgeHub and MessageRoot on gateway to v29. Could not identify the diff on L2AssetRouter, but source hash changed. Also deployed ChainAssetHandler that is not verified on Gateway.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761643176 (main branch discovery), not current.
+
+```diff
+    contract Bridgehub (gateway:0x0000000000000000000000000000000000010002) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
+      sourceHashes.0:
+-        "0x85a0337c9b2db31a1b7e623ed99509d22ead32ce301ae832247ee1240f43eccb"
++        "0x2a749098cea7b9243019ffc1193ad519dbadc55c43cf610962f7ba13beba3f21"
+      sinceTimestamp:
+-        1750953821
++        1761040360
+      sinceBlock:
+-        85
++        74512
+      values.chainAssetHandler:
++        "gateway:0x000000000000000000000000000000000001000a"
+    }
+```
+
+```diff
+    contract L2AssetRouter (gateway:0x0000000000000000000000000000000000010003) {
+    +++ description: Bridge routing contract that exists once on every zk stack chain and keeps mappings of assets to their escrows (asset handlers) and deployment trackers.
+      sourceHashes.0:
+-        "0xf172d1bbdbfdc509412a55599c12b6560db7d034e85921bf659002546beba891"
++        "0x90516fc3d3fdc8e2493843e947f1ece3b3298e4fd741555582c35093fa077f95"
+      sinceTimestamp:
+-        1750953821
++        1761040360
+      sinceBlock:
+-        85
++        74512
+    }
+```
+
+```diff
+    contract MessageRoot (gateway:0x0000000000000000000000000000000000010005) {
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+      sourceHashes.0:
+-        "0x9fe7372b4f7ead74634ad13ce858c9a6242995f2a40facaa212e524a02b506a2"
++        "0x515c1999e39bdd6435caf0c49791fcb515fb14c69a02e55dac0ff893f07bc6fe"
+      sinceTimestamp:
+-        1750953821
++        1761040360
+      sinceBlock:
+-        85
++        74512
+      values.L1_CHAIN_ID:
++        0
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ChainAssetHandler_unverified (gateway:0x000000000000000000000000000000000001000a)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x04af828839dc72895e319e7c8c46e988d2bfc019
 
 # Diff at Fri, 24 Oct 2025 09:13:45 GMT:
