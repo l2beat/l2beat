@@ -4,12 +4,12 @@ import { CoingeckoQueryService, type QueryResultPoint } from '../../services'
 export class PriceProvider {
   constructor(private readonly client: CoingeckoQueryService) {}
 
-  async getUsdPriceHistoryHourly(
+  getUsdPriceHistoryHourly(
     coingeckoId: CoingeckoId,
     from: UnixTime,
     to: UnixTime,
   ): Promise<QueryResultPoint[]> {
-    return await this.client.getUsdPriceHistoryHourly(coingeckoId, from, to)
+    return this.client.getUsdPriceHistoryHourly(coingeckoId, from, to)
   }
 
   async getLatestPrices(
@@ -26,8 +26,8 @@ export class PriceProvider {
     return result
   }
 
-  async getAllCoingeckoIds(): Promise<CoingeckoId[]> {
-    return await this.client.getAllCoingeckoIds()
+  getAllCoingeckoIds(): Promise<CoingeckoId[]> {
+    return this.client.getAllCoingeckoIds()
   }
 
   getAdjustedTo(from: number, to: number): UnixTime {
