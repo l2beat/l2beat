@@ -17,25 +17,24 @@ export function formatSeconds(
   const SECONDS_IN_HOUR = 60 * 60
   const SECONDS_IN_MINUTE = 60
 
-  const years = Math.floor(seconds / SECONDS_IN_YEAR)
-  const months = Math.floor((seconds % SECONDS_IN_YEAR) / SECONDS_IN_MONTH)
-  const days = Math.floor(
-    ((seconds % SECONDS_IN_YEAR) % SECONDS_IN_MONTH) / SECONDS_IN_DAY,
-  )
-  const hours = Math.floor(
-    (((seconds % SECONDS_IN_YEAR) % SECONDS_IN_MONTH) % SECONDS_IN_DAY) /
-      SECONDS_IN_HOUR,
-  )
-  const minutes = Math.floor(
-    ((((seconds % SECONDS_IN_YEAR) % SECONDS_IN_MONTH) % SECONDS_IN_DAY) %
-      SECONDS_IN_HOUR) /
-      SECONDS_IN_MINUTE,
-  )
-  const secs = Math.floor(
-    ((((seconds % SECONDS_IN_YEAR) % SECONDS_IN_MONTH) % SECONDS_IN_DAY) %
-      SECONDS_IN_HOUR) %
-      SECONDS_IN_MINUTE,
-  )
+  let remainder = seconds
+
+  const years = Math.floor(remainder / SECONDS_IN_YEAR)
+  remainder %= SECONDS_IN_YEAR
+
+  const months = Math.floor(remainder / SECONDS_IN_MONTH)
+  remainder %= SECONDS_IN_MONTH
+
+  const days = Math.floor(remainder / SECONDS_IN_DAY)
+  remainder %= SECONDS_IN_DAY
+
+  const hours = Math.floor(remainder / SECONDS_IN_HOUR)
+  remainder %= SECONDS_IN_HOUR
+
+  const minutes = Math.floor(remainder / SECONDS_IN_MINUTE)
+  remainder %= SECONDS_IN_MINUTE
+
+  const secs = remainder
 
   const values = [years, months, days, hours, minutes, secs]
   if (opts?.preventRoundingUp) {
