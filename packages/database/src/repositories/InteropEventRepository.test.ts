@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
 import {
@@ -48,23 +48,6 @@ describeDatabase(InteropEventRepository.name, (db) => {
 
       const inserted = await repository.insertMany(records)
       expect(inserted).toEqual(2500)
-    })
-
-    it('handles records with undefined txTo', async () => {
-      const record = event(
-        'plugin1',
-        'event1',
-        'deposit',
-        UnixTime(100),
-        UnixTime(200),
-      )
-      record.txTo = undefined
-
-      const inserted = await repository.insertMany([record])
-      expect(inserted).toEqual(1)
-
-      const result = await repository.getAll()
-      expect(result).toEqual([record])
     })
   })
 
@@ -375,7 +358,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
         UnixTime(100),
         UnixTime(200),
         {
-          value: 123456789012345678901234567890n,
+          args: { value: 123456789012345678901234567890n },
         },
       )
 
@@ -383,7 +366,9 @@ describeDatabase(InteropEventRepository.name, (db) => {
       const result = await repository.getAll()
 
       expect(result).toHaveLength(1)
-      expect(result[0]?.value).toEqual(123456789012345678901234567890n)
+      expect((result[0]?.args as { value: bigint }).value).toEqual(
+        123456789012345678901234567890n,
+      )
     })
 
     it('handles bigints inside args object', async () => {
@@ -433,17 +418,10 @@ function event(
     type,
     expiresAt,
     timestamp,
-    chain: 'ethereum',
-    blockNumber: 12345,
-    blockHash: `0x${eventId}blockhash`,
-    txHash: `0x${eventId}txhash`,
-    value: 111111n,
-    txTo: EthereumAddress.random(),
-    calldata: '0x',
-    logIndex: 0,
     matched: false,
     unsupported: false,
     args: { amount: '1000000000000000000' },
+    ctx: { blockNumber: 1 },
     ...overrides,
   }
 }

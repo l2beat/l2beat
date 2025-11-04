@@ -9,17 +9,10 @@ export interface InteropEventRecord {
   type: string
   expiresAt: UnixTime
   timestamp: UnixTime
-  chain: string
-  blockNumber: number
-  blockHash: string
-  txHash: string
-  value: bigint | undefined
-  txTo: string | undefined
-  calldata: string
-  logIndex: number
+  args: unknown
+  ctx: unknown
   matched: boolean
   unsupported: boolean
-  args: unknown
 }
 
 export function toRecord(row: Selectable<InteropEvent>): InteropEventRecord {
@@ -29,17 +22,10 @@ export function toRecord(row: Selectable<InteropEvent>): InteropEventRecord {
     type: row.type,
     expiresAt: UnixTime.fromDate(row.expiresAt),
     timestamp: UnixTime.fromDate(row.timestamp),
-    chain: row.chain,
-    blockNumber: row.blockNumber,
-    blockHash: row.blockHash,
-    txHash: row.txHash,
-    value: row.value ? BigInt(row.value) : undefined, //TODO: make optional
-    txTo: row.txTo ?? undefined,
-    calldata: row.calldata,
-    logIndex: row.logIndex ?? -1, // TODO: make optional
+    args: reviveBigInts(row.args),
+    ctx: reviveBigInts(row.ctx),
     matched: row.matched,
     unsupported: row.unsupported,
-    args: reviveBigInts(row.args),
   }
 }
 
@@ -50,17 +36,16 @@ export function toRow(record: InteropEventRecord): Insertable<InteropEvent> {
     type: record.type,
     expiresAt: UnixTime.toDate(record.expiresAt),
     timestamp: UnixTime.toDate(record.timestamp),
-    chain: record.chain,
-    blockNumber: record.blockNumber,
-    blockHash: record.blockHash.toLowerCase(),
-    txHash: record.txHash.toLowerCase(),
-    calldata: record.calldata,
-    value: record.value?.toString(),
-    txTo: record.txTo ?? null,
-    logIndex: record.logIndex,
+    chain: '',
+    blockNumber: -1,
+    blockHash: '',
+    txHash: '',
     matched: record.matched,
     unsupported: record.unsupported,
     args: JSON.stringify(record.args, (_, value) =>
+      typeof value === 'bigint' ? `BigInt(${value})` : value,
+    ),
+    ctx: JSON.stringify(record.ctx, (_, value) =>
       typeof value === 'bigint' ? `BigInt(${value})` : value,
     ),
   }
