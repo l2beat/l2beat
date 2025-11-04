@@ -204,7 +204,6 @@ export class RelayApiClient {
         }
       }
       continuation = res.continuation
-      console.log(limit)
     } while (continuation && limit > 0)
     return result
   }
