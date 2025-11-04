@@ -361,6 +361,7 @@ model InteropEvent {
   calldata    String  @default("0x") @db.Text
   logIndex    Int?
   args        Json
+  ctx         Json    @default("{}")
 
   matched     Boolean
   unsupported Boolean
