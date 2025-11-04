@@ -7,7 +7,6 @@
   "AccountingOracle_v2": {
     "hash": "0x90b97d1cb45e9893fa400657a6d60368adbd83c194db38ea948219e3cab9fb7b",
     "address": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
-    "chain": "ethereum",
     "blockNumber": 23519375
   }
 }

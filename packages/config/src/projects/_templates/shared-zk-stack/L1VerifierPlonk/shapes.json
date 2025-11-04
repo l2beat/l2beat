@@ -17,7 +17,6 @@
   "L1VerifierPlonk_v29": {
     "hash": "0x20269ba58e717388e68842ab5a0b73b744856b4b1fb48d57ac7dce36d0c3c765",
     "address": "gateway:0xfA7c56B328bEb5deB9218f3a4b60ADc59Bb6Ad8d",
-    "chain": "gateway",
     "blockNumber": 75862
   }
 }

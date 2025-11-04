@@ -132,7 +132,6 @@
   "SystemConfig_v3_7_0": {
     "hash": "0xc64176b1425d9639f5082ecef5e30b3b365111e2be71596ab1bd831edba65bd9",
     "address": "eth:0x2bFE4A5Bd5A41e9d848d843ebCDFa15954e9A557",
-    "chain": "ethereum",
     "blockNumber": 23496267
   }
 }

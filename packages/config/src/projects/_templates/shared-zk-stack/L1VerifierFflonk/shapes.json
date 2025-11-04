@@ -17,7 +17,6 @@
   "L1VerifierFflonk_v29": {
     "hash": "0xfa2f6dacae61a1115ee373883922baaaea3e9b5e2bd4746522faff0e9d0019e0",
     "address": "gateway:0xD837976329d59057b27192f0cF6c8f357143670A",
-    "chain": "gateway",
     "blockNumber": 75862
   }
 }

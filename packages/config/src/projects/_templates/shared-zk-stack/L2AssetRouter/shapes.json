@@ -2,7 +2,6 @@
   "L2AssetRouter_Nov25": {
     "hash": "0x90516fc3d3fdc8e2493843e947f1ece3b3298e4fd741555582c35093fa077f95",
     "address": "gateway:0x0000000000000000000000000000000000010003",
-    "chain": "gateway",
     "blockNumber": 84446
   }
 }

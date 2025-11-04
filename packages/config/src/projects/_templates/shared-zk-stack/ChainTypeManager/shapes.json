@@ -12,7 +12,6 @@
   "ChainTypeManager_v29": {
     "hash": "0xee0ad6dd34008989477a03f84eca5083a1cb79b46c01c850617d62c7b406c4ba",
     "address": "eth:0x4aB7204e4205c96C32E23ADa9191720976dC084f",
-    "chain": "ethereum",
     "blockNumber": 23588465
   }
 }

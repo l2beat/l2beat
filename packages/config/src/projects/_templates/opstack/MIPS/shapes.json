@@ -32,7 +32,6 @@
   "MIPS64_v1_8_0": {
     "hash": "0x4bde2f6a5214eb2f1bd8caaeb2a6700260f66f1ae8f389a13763187c11634d03",
     "address": "eth:0x07BABE08EE4D07dBA236530183B24055535A7011",
-    "chain": "ethereum",
     "blockNumber": 23496267
   }
 }

@@ -5,7 +5,6 @@
       "eth:0x1D2624A65F8aaD1c4Bc406b4D2418ba577D218cb",
       "eth:0x4194D3847a0239d59a87bC82C1870CBE1FA99db1"
     ],
-    "chain": "ethereum",
     "blockNumber": 23495073
   },
   "Proxy.sol": {
@@ -14,7 +13,6 @@
       "eth:0x4FF23C6cA650166A95D854935a8b012B53ac59Bc",
       "eth:0xf255FC8738a5c6Ee6E869A5b182a9Cd4F99a2ED6"
     ],
-    "chain": "ethereum",
     "blockNumber": 23670579
   }
 }

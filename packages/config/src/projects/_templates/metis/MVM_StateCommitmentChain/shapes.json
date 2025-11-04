@@ -17,7 +17,6 @@
   "StateCommitmentChain_proposerRegistry": {
     "hash": "0xa42c85a235f67f88b193b516224025a8c54c8fc5a0204c0f7b4fc0202b70eed0",
     "address": "eth:0xA738573Ec0FD7959BfA60Aaa8a23Fe7BEC6c4Bd7",
-    "chain": "ethereum",
     "blockNumber": 23417732
   }
 }
