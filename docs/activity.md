@@ -15,9 +15,11 @@ If you want to add a StarkEx type of project, go to the [next section](#starkex-
 1. Find RPC endpoint for a project you want to add. Try to write directly to project to obtain a
    private node access. If you can't, you can use a public node or RPC provider e.g. QuickNode.
 
-2. Next you need to test your RPC locally. Use `cast` for this. If you do not have it yet, just
-   install it by running `curl -L https://foundry.paradigm.xyz | bash` in terminal. After
-   installing, run these 2 commands and check if you get a response:
+2. Next you need to test your RPC locally. Use `cast` for this. If you do not have it yet, install
+   Foundry (which includes `cast` along with other tools like `forge`, `anvil`, and `chisel`) by
+   running `curl -L https://foundry.paradigm.xyz | bash` in terminal. This installs `foundryup`, the
+   Foundry version manager. After that, run `foundryup` to install all Foundry tools. Then run these
+   2 commands and check if you get a response:
 
    - `cast block-number -r <rpc-url>`
    - `cast block -r <rpc-url>`
