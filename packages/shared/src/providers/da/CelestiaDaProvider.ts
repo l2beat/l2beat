@@ -31,7 +31,8 @@ export class CelestiaDaProvider implements DaBlobProvider {
     }
 
     const blobEvents = block.txs_results
-      .flatMap(({ events }) => events)
+      // if there are logs we use them, otherwise we use the "events" property
+      .flatMap(({ log, events }) => log?.flatMap((l) => l.events) ?? events)
       .filter(({ type }) => type === 'celestia.blob.v1.EventPayForBlobs')
 
     const blobs: CelestiaBlob[] = blobEvents.flatMap((blobEvent) => {
@@ -58,7 +59,7 @@ export class CelestiaDaProvider implements DaBlobProvider {
 }
 
 function getAttributeValue<T>(
-  event: { attributes: { key: string; value?: string }[] },
+  event: { attributes: { key: string; value?: string | null }[] },
   key: string,
 ): T {
   const attribute = event.attributes.find((a) => a.key === key)

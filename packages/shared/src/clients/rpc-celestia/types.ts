@@ -13,6 +13,22 @@ export const CelestiaBlockResponse = v.object({
   result: CelestiaBlock,
 })
 
+const EventSchema = v.object({
+  type: v.string(),
+  attributes: v.array(
+    v.object({
+      key: v.string(),
+      value: v.union([v.string(), v.null()]).optional(),
+    }),
+  ),
+})
+
+const LogSchema = v.array(
+  v.object({
+    events: v.array(EventSchema),
+  }),
+)
+
 export type CelestiaBlockResult = v.infer<typeof CelestiaBlockResult>
 const CelestiaBlockResult = v.object({
   height: v.string(),
@@ -20,14 +36,10 @@ const CelestiaBlockResult = v.object({
     v.null(),
     v.array(
       v.object({
-        events: v.array(
-          v.object({
-            type: v.string(),
-            attributes: v.array(
-              v.object({ key: v.string(), value: v.string().optional() }),
-            ),
-          }),
-        ),
+        log: v
+          .string()
+          .transform((x) => (x === '' ? null : LogSchema.parse(JSON.parse(x)))),
+        events: v.array(EventSchema),
       }),
     ),
   ]),
