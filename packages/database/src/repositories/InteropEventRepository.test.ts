@@ -1,7 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { expect, mockObject } from 'earl'
 import { describeDatabase } from '../test/database'
 import {
+  type InteropEventContext,
   type InteropEventRecord,
   InteropEventRepository,
 } from './InteropEventRepository'
@@ -359,7 +360,9 @@ describeDatabase(InteropEventRepository.name, (db) => {
         UnixTime(200),
         {
           args: 123456789012345678901234567890n,
-          ctx: 123456789012345678901234567890n,
+          ctx: mockObject<InteropEventContext>({
+            txValue: 123456789012345678901234567890n,
+          }),
         },
       )
 
@@ -368,7 +371,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
 
       expect(result).toHaveLength(1)
       expect(result[0]?.args).toEqual(123456789012345678901234567890n)
-      expect(result[0]?.ctx).toEqual(123456789012345678901234567890n)
+      expect(result[0]?.ctx.txValue).toEqual(123456789012345678901234567890n)
     })
 
     it('handles bigints inside args object', async () => {
@@ -382,9 +385,9 @@ describeDatabase(InteropEventRepository.name, (db) => {
           args: {
             amount: 999999999999999999999999n,
           },
-          ctx: {
-            value: 999999999999999999999999n,
-          },
+          ctx: mockObject<InteropEventContext>({
+            txValue: 999999999999999999999999n,
+          }),
         },
       )
 
@@ -396,9 +399,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
         amount: 999999999999999999999999n,
       })
 
-      expect(result[0]?.ctx).toEqual({
-        value: 999999999999999999999999n,
-      })
+      expect(result[0]?.ctx.txValue).toEqual(999999999999999999999999n)
     })
   })
 
@@ -424,7 +425,7 @@ function event(
     matched: false,
     unsupported: false,
     args: { amount: '1000000000000000000' },
-    ctx: { blockNumber: 1 },
+    ctx: mockObject<InteropEventContext>({ blockNumber: 1 }),
     chain: 'chain',
     blockNumber: 1,
     ...overrides,
