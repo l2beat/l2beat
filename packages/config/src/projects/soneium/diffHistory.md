@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x27d701a69b7d8a67cb8a1737873baccef2c8069c
+Generated with discovered.json: 0xddefa416679c69dcdd25906bd46e3678cc90a97a
 
-# Diff at Tue, 04 Nov 2025 13:46:56 GMT:
+# Diff at Tue, 04 Nov 2025 17:13:36 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@6b72018cd9706ce7cba8ec489b67d7193f34dc20 block: 1761223197
-- current timestamp: 1762263900
+- comparing to: main@247fa0b26d8d13bf9c509f1c360df6ee053d13ee block: 1761223197
+- current timestamp: 1762276338
 
 ## Description
 
@@ -21,7 +21,7 @@ gas market changes.
     }
 ```
 
-Generated with discovered.json: 0x10ce92d4a03d9e40475e803c257dc0d61a5a1dbc
+Generated with discovered.json: 0x135ff6bcee79a3dc811e7a39563374a5411214ea
 
 # Diff at Tue, 04 Nov 2025 11:34:32 GMT:
 
@@ -91,8 +91,7 @@ discovery. Values are for block 1761223197 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0xede75f5a73d39a7ff5093b3d3fb19ce21d89a7ab
-
+Generated with discovered.json: 0x10ce92d4a03d9e40475e803c257dc0d61a5a1dbc
 
 # Diff at Thu, 23 Oct 2025 12:41:45 GMT:
 

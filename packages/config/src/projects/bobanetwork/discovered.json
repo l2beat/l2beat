@@ -1,6 +1,6 @@
 {
   "name": "bobanetwork",
-  "timestamp": 1762264077,
+  "timestamp": 1762276576,
   "configHash": "0xc3ba7d5d34760a946151a3e021df69cb66e1f34cba3c60d53b9639f56d7b1e5b",
   "entries": [
     {
@@ -588,7 +588,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 100000,
-          "prevBlockNum": 23722087
+          "prevBlockNum": 23727136
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -997,7 +997,7 @@
         ],
         "$upgradeCount": 1,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 3132,
+        "gameCount": 3136,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x97e8B3e46a251A657A56CEe8c24E4C0F1864be64",
@@ -1009,7 +1009,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x56121a8612474C3eB65D69a3b871f284705b9bC4",
-        "permissionedGamesTotal": 3132,
+        "permissionedGamesTotal": 3136,
         "version": "1.0.0"
       },
       "fieldMeta": {
@@ -1652,6 +1652,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23726350 },
+  "usedBlockNumbers": { "ethereum": 23727384 },
   "permissionsConfigHash": "0xa87092fee49f907d789ad9acf88cd3ff671704e19095c2707f51a82164727f5a"
 }

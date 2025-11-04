@@ -1,6 +1,6 @@
 {
   "name": "zircuit",
-  "timestamp": 1762269063,
+  "timestamp": 1762276375,
   "configHash": "0xa721fd52d401a16b9fbcadc5ade3f759ae184f4a9e202f3f14da01d3d1fa0a64",
   "entries": [
     {
@@ -703,12 +703,12 @@
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
         "l2ChainId": 48900,
-        "latestBlockNumber": 21162279,
-        "latestOutputIndex": 34625,
+        "latestBlockNumber": 21165479,
+        "latestOutputIndex": 34627,
         "latestOutputProposedV2": 32836,
-        "latestOutputProposedV3": 34625,
-        "nextBlockNumber": 21162280,
-        "nextOutputIndex": 34626,
+        "latestOutputProposedV3": 34627,
+        "nextBlockNumber": 21165480,
+        "nextOutputIndex": 34628,
         "owner": "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "proposer": "eth:0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
@@ -1164,21 +1164,21 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 2456727655,
+        "basefee": 9140058294,
         "baseFeeScalar": 1368,
         "batcherHash": "0x000000000000000000000000af1e4f6a47af647f87c0ec814d8032c4a4bff145",
-        "blobBaseFee": 1,
+        "blobBaseFee": 2,
         "blobBaseFeeScalar": 810949,
         "depositExclusions": "0x",
         "DEPOSITOR_ACCOUNT": "zircuit:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0x576ea954dafc6197950dcf0f599ce39d6821a236fb6079c7f66b50dcdf99e659",
+        "hash": "0xfcbddddcbbf612f8f9ad395706d62ee0b975aa66e7ba4671871481e81c816cc8",
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 23726761,
+        "number": 23727365,
         "operatorFeeConstant": 23225000000,
         "operatorFeeScalar": 4200000000,
-        "sequenceNumber": 1,
-        "timestamp": 1762269035,
+        "sequenceNumber": 6,
+        "timestamp": 1762276343,
         "version": "1.3.0"
       },
       "implementationNames": {
@@ -2071,6 +2071,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 23726763, "zircuit": 21166424 },
+  "usedBlockNumbers": { "ethereum": 23727367, "zircuit": 21170080 },
   "permissionsConfigHash": "0x67ece5dae13cacc152f0707587f262be2f0478e1b8db708ded73a7dcc2afe746"
 }

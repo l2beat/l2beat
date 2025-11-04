@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x704baae2e7c8725895ba86f7e81c59342becaf89
+Generated with discovered.json: 0xef0ceb6e69c517c4bd23d4af72948192d5ca6c4c
 
-# Diff at Tue, 04 Nov 2025 13:50:01 GMT:
+# Diff at Tue, 04 Nov 2025 17:17:31 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@6b72018cd9706ce7cba8ec489b67d7193f34dc20 block: 1751366039
-- current timestamp: 1762264077
+- comparing to: main@247fa0b26d8d13bf9c509f1c360df6ee053d13ee block: 1751366039
+- current timestamp: 1762276576
 
 ## Description
 
@@ -29,7 +29,7 @@ System config owner moved to EOA.
     }
 ```
 
-Generated with discovered.json: 0x0b0cca0a4e82aea994f4f0631f4e5e54f7fce2c2
+Generated with discovered.json: 0xd38f16d5b5fc4d0a0bb3e204512e6ec9b0394433
 
 # Diff at Tue, 04 Nov 2025 11:32:28 GMT:
 

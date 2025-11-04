@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xd6b80e8d75254f1a6b57fe578b28ccd515656b64
+Generated with discovered.json: 0xb90c9c95e5c5a84c0a87b5246e16cc27a0b2699d
 
-# Diff at Tue, 04 Nov 2025 15:14:05 GMT:
+# Diff at Tue, 04 Nov 2025 17:14:37 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@6b72018cd9706ce7cba8ec489b67d7193f34dc20 block: 1761757805
-- current timestamp: 1762269063
+- comparing to: main@247fa0b26d8d13bf9c509f1c360df6ee053d13ee block: 1761757805
+- current timestamp: 1762276375
 
 ## Description
 
@@ -30,7 +30,7 @@ msig changes.
     }
 ```
 
-Generated with discovered.json: 0x839ef7210c25489feac0a89cd0c844e1ffe55af4
+Generated with discovered.json: 0x80b750e3deb7f81abc83ce979443df3d13b3d0c3
 
 # Diff at Fri, 31 Oct 2025 11:50:25 GMT:
 
