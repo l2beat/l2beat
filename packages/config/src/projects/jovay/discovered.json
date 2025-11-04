@@ -1,6 +1,6 @@
 {
   "name": "jovay",
-  "timestamp": 1762271166,
+  "timestamp": 1762272779,
   "configHash": "0x622125b51a6406eeab9b446ee191c7ffd1aee4ed5e967718f5fbc7970a548154",
   "entries": [
     {
@@ -39,6 +39,7 @@
       ],
       "proxyType": "immutable",
       "description": "The MeasurementDao contract is an onchain registry that allowlists SGX MR_ENCLAVE<->MR_SIGNER pairs and TDX RTMR3/MRTD values, and verifies DCAP quotes by matching quote fields to the stored measurements.",
+      "ignoreInWatchMode": ["get_rtMr"],
       "sinceTimestamp": 1758378371,
       "sinceBlock": 23404860,
       "values": {
@@ -309,6 +310,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The Rollup contract is used to submit and verify L2 batches.",
+      "ignoreInWatchMode": ["lastCommittedBatch", "lastTeeVerifiedBatch"],
       "sinceTimestamp": 1758377339,
       "sinceBlock": 23404774,
       "values": {
@@ -329,8 +331,8 @@
         "$upgradeCount": 2,
         "l1_mail_box": "eth:0x9869A90FDAc287519E48aff4cCE329907a995162",
         "l1BlobNumberLimit": 6,
-        "lastCommittedBatch": 1071,
-        "lastTeeVerifiedBatch": 1071,
+        "lastCommittedBatch": 1072,
+        "lastTeeVerifiedBatch": 1072,
         "lastZkVerifiedBatch": 0,
         "layer2ChainId": 5734951,
         "maxBlockInChunk": 32,
@@ -728,11 +730,11 @@
     "jovay/DcapAttestationRouter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "jovay/L1ETHBridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "jovay/L1Mailbox": "0xd75a8de0aea57fbdadee1f6157e0f9ba901365080ba928110035ef18640191b8",
-    "jovay/MeasurementDao": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "jovay/Rollup": "0xfefe72e14b81569a237122abd4f83e7a2366955462611ff8eaf63f4f36b103d3",
+    "jovay/MeasurementDao": "0x284197987ec66e00fe0e7ed783549510dbb4e2da7f7a46443a91ab7efb02bba8",
+    "jovay/Rollup": "0xd7746226f9952f7e388de7c12050a1bf84b140fbc9868b9211fa1dcf48ea4563",
     "jovay/TEECacheVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "jovay/TEEVerifierProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23726935 },
+  "usedBlockNumbers": { "ethereum": 23727069 },
   "permissionsConfigHash": "0x519465cb7e1e84c96fef130afd717a0553a0369133c7edb08542054a77898879"
 }
