@@ -246,11 +246,11 @@ function whatType(value: unknown) {
   if (type === 'object') {
     if (value === null) {
       type = 'null'
-    } else if (Array.isArray(type)) {
+    } else if (Array.isArray(value)) {
       type = 'array'
     } else {
       try {
-        type = Object.getPrototypeOf(type).constructor.name
+        type = Object.getPrototypeOf(value).constructor.name
       } catch {}
     }
   }
@@ -485,18 +485,23 @@ function impUnion<
   T extends [Validator<unknown>, Validator<unknown>, ...Validator<unknown>[]],
 >(elements: T, clone: boolean) {
   return function impUnion(value: unknown): Result<Infer<T[number]>> {
-    for (const element of elements) {
+    const errors: string[] = []
+    for (const [i, element] of elements.entries()) {
       const result = clone
         ? element.safeParse(value)
         : element.safeValidate(value)
       if (result.success) {
         return result as Result<Infer<T[number]>>
       }
+      // Collect error details for better diagnostics
+      const location = result.path ? ` at ${result.path}` : ''
+      errors.push(`Variant ${i}${location}: ${result.message}`)
     }
+    const errorDetails = errors.length > 0 ? ` ${errors.join(' ')}` : ''
     return {
       success: false,
       path: '',
-      message: `None of the union variants matched, got ${whatType(value)}.`,
+      message: `None of the union variants matched, got ${whatType(value)}.${errorDetails}`,
     }
   }
 }
