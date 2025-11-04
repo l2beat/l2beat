@@ -197,7 +197,6 @@ export class RelaySimplePlugIn implements InteropPlugin {
     }
 
     const relayERC20Deposit = parseRelayERC20Deposit(input.log, null)
-    console.log('hello', relayERC20Deposit)
     if (relayERC20Deposit) {
       return [
         TransferSrc.create(input.ctx, {
