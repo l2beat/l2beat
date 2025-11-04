@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x1f7fecd0c6d4c6d1d4faa6822bd2f73e02e77f9b
+
+# Diff at Fri, 31 Oct 2025 11:10:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@03b105955032cf1d17dbaa7be1e98258a77944f6 block: 1761668177
+- current timestamp: 1761668177
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761668177 (main branch discovery), not current.
+
+```diff
+    contract Roles (eth:0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.
+      values.$libraries:
++        ["eth:0x33D1C5A5B6a7f3885c7467e829aaa21698937597"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Permissions (eth:0x33D1C5A5B6a7f3885c7467e829aaa21698937597)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x21b71892768b708faa4114b197fb43baf6ab2ec6
 
 # Diff at Tue, 28 Oct 2025 16:17:31 GMT:

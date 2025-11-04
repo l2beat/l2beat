@@ -1,3 +1,35 @@
+Generated with discovered.json: 0xecc8a52201850fd3bf471509b00b4a84276bf3dd
+
+# Diff at Fri, 31 Oct 2025 11:17:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@03b105955032cf1d17dbaa7be1e98258a77944f6 block: 1757940700
+- current timestamp: 1757940700
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757940700 (main branch discovery), not current.
+
+```diff
+    contract SP1HeliosAdapter (gno:0x9C63010F056E4692A44A510F2F5E8A44B94960Bf) {
+    +++ description: None
+      values.$libraries:
++        ["gno:0xff07C59F7D882D1799e1CABd1D17faaDE7694fe0"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MerklePatricia (gno:0xff07C59F7D882D1799e1CABd1D17faaDE7694fe0)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x64463a25ed3f55cef66e484b40a9475e744109a4
 
 # Diff at Thu, 18 Sep 2025 08:59:29 GMT:
