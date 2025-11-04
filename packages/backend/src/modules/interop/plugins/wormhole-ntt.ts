@@ -25,6 +25,7 @@ Note that (TODO: )
 */
 
 import { BinaryReader } from '../../../tools/BinaryReader'
+import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
   Address32,
   createEventParser,
@@ -37,7 +38,8 @@ import {
   type MatchResult,
   Result,
 } from './types'
-import { LogMessagePublished, WORMHOLE_NETWORKS } from './wormhole'
+import { WormholeConfig } from './wormhole/wormhole.config'
+import { LogMessagePublished } from './wormhole/wormhole.plugin'
 import { Delivery } from './wormhole-relayer'
 
 /*
@@ -93,7 +95,12 @@ export const ReceivedRelayedMessage = createInteropEventType<{
 export class WormholeNTTPlugin implements InteropPlugin {
   name = 'wormhole-ntt'
 
+  constructor(private configs: InteropConfigStore) {}
+
   capture(input: LogToCapture) {
+    const wormholeNetworks = this.configs.get(WormholeConfig)
+    if (!wormholeNetworks) return
+
     const send = parseSendTransceiverMessage(input.log, null)
     if (send) {
       return [
@@ -102,7 +109,7 @@ export class WormholeNTTPlugin implements InteropPlugin {
           recipientNttManagerAddress: send.message.recipientNttManagerAddress,
           nttManagerPayload: send.message.nttManagerPayload,
           $dstChain: findChain(
-            WORMHOLE_NETWORKS,
+            wormholeNetworks,
             (x) => x.wormholeChainId,
             Number(send.recipientChain),
           ),
@@ -117,7 +124,7 @@ export class WormholeNTTPlugin implements InteropPlugin {
           digest: received.digest,
           emitterAddress: received.emitterAddress,
           $srcChain: findChain(
-            WORMHOLE_NETWORKS,
+            wormholeNetworks,
             (x) => x.wormholeChainId,
             Number(received.emitterChainId),
           ),

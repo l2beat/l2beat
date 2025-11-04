@@ -14,7 +14,7 @@ import {
   type MatchResult,
   Result,
 } from './types'
-import { LogMessagePublished } from './wormhole'
+import { LogMessagePublished } from './wormhole/wormhole.plugin'
 
 export class MayanMctpPlugin implements InteropPlugin {
   name = 'mayan-mctp'
