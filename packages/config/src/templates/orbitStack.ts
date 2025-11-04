@@ -750,7 +750,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): ScalingProject {
           RISK_VIEW.SEQUENCER_SELF_SEQUENCE,
         ),
       proposerFailure:
-        templateVars.stackedRiskView?.sequencerFailure ??
+        templateVars.stackedRiskView?.proposerFailure ??
         sumRisk(
           common.riskView.proposerFailure,
           baseChain.riskView.proposerFailure,
