@@ -213,7 +213,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
   const updateFunctionEntry = async (
     contractAddress: string,
     functionName: string,
-    updates: Partial<Pick<FunctionEntry, 'isPermissioned' | 'checked' | 'score' | 'probability' | 'description' | 'constraints' | 'ownerDefinitions' | 'delay' | 'dependencies'>>
+    updates: Partial<Pick<FunctionEntry, 'isPermissioned' | 'checked' | 'score' | 'likelihood' | 'description' | 'constraints' | 'ownerDefinitions' | 'delay' | 'dependencies'>>
   ) => {
     // Get current function data from contract-specific functions
     const contractFunctionsData = getFunctionsForContract(contractAddress)
@@ -226,7 +226,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
       isPermissioned: updates.isPermissioned ?? currentFunction?.isPermissioned ?? false,
       checked: updates.checked ?? currentFunction?.checked,
       score: updates.score ?? currentFunction?.score,
-      probability: updates.probability ?? currentFunction?.probability,
+      likelihood: updates.likelihood ?? currentFunction?.likelihood,
       description: updates.description ?? currentFunction?.description,
       constraints: updates.constraints ?? currentFunction?.constraints,
       ownerDefinitions: updates.ownerDefinitions ?? currentFunction?.ownerDefinitions,
@@ -251,6 +251,11 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
       // Invalidate and refetch the query to get fresh data
       await queryClient.invalidateQueries({
         queryKey: ['functions', project]
+      })
+
+      // Invalidate V2 score since function changes affect scoring
+      await queryClient.invalidateQueries({
+        queryKey: ['v2-score', project]
       })
 
       // Clear local functions since we now have fresh server data

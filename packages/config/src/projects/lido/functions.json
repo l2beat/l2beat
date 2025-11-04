@@ -1,34 +1,36 @@
 {
   "version": "1.0",
-  "lastModified": "2025-11-04T18:46:24.741Z",
+  "lastModified": "2025-11-04T19:29:49.308Z",
   "contracts": {
     "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": {
       "functions": [
         {
           "functionName": "setOwner",
           "isPermissioned": true,
-          "timestamp": "2025-10-06T14:44:26.723Z",
           "checked": true,
           "score": "high-risk",
+          "likelihood": "high",
           "description": "Sets the owner of the contract. This role is dedicated to the DAO. The owner can add new guardians, change the quorum, and unpause the deposits.",
           "ownerDefinitions": [
             {
               "path": "$self.getOwner"
             }
-          ]
+          ],
+          "timestamp": "2025-11-04T19:16:24.200Z"
         },
         {
           "functionName": "setPauseIntentValidityPeriodBlocks",
           "isPermissioned": true,
-          "timestamp": "2025-10-06T15:05:15.917Z",
           "checked": true,
           "score": "medium-risk",
+          "likelihood": "mitigated",
           "description": "Sets the window of validity of a pause intent. This is the reaction time allowed for guardians to pause deposits. When a guardian wants to pause deposits it specifies a block number, the pause is only applied if the current block number is within the validity period of the specified block. This is to avoid replay of pause messages.",
           "ownerDefinitions": [
             {
               "path": "$self.getOwner"
             }
-          ]
+          ],
+          "timestamp": "2025-11-04T19:29:49.308Z"
         },
         {
           "functionName": "setMaxOperatorsPerUnvetting",
@@ -75,39 +77,42 @@
           "isPermissioned": true,
           "checked": true,
           "score": "medium-risk",
+          "likelihood": "medium",
           "description": "Adds multiple guardians and sets a new custom quorum value. Guardians co-sign deposits to reduce the risk of collusion with node operators.",
           "ownerDefinitions": [
             {
               "path": "$self.getOwner"
             }
           ],
-          "timestamp": "2025-10-31T11:42:48.167Z"
+          "timestamp": "2025-11-04T19:07:45.748Z"
         },
         {
           "functionName": "removeGuardian",
           "isPermissioned": true,
-          "timestamp": "2025-10-06T14:36:26.745Z",
           "checked": true,
           "score": "high-risk",
+          "likelihood": "low",
           "description": "Removes a guardian address and sets a new quorum value. There are no protections on the quorum, this could be set to zero (see setGuardianQuorum).",
           "ownerDefinitions": [
             {
               "path": "$self.getOwner"
             }
-          ]
+          ],
+          "timestamp": "2025-11-04T19:16:09.338Z"
         },
         {
           "functionName": "pauseDeposits",
           "isPermissioned": true,
-          "timestamp": "2025-10-06T15:01:19.198Z",
           "checked": true,
           "score": "medium-risk",
+          "likelihood": "low",
           "description": "Pauses the deposits. Funds can no longer be deposited into new validators until deposits are unpaused. This can be called by any guardian when a frontrunning by a node operator is suspected and prevents the loss of user funds through deposits.",
           "ownerDefinitions": [
             {
               "path": "$self.getGuardians"
             }
-          ]
+          ],
+          "timestamp": "2025-11-04T19:16:05.202Z"
         },
         {
           "functionName": "unpauseDeposits",
@@ -127,13 +132,14 @@
           "isPermissioned": true,
           "checked": true,
           "score": "high-risk",
+          "likelihood": "low",
           "description": "Deposits ETH into a given validator using `Lido.deposit`. The message must include at least 4/6 signatures from guardians for it to be valid.",
           "ownerDefinitions": [
             {
               "path": "$self.getGuardians"
             }
           ],
-          "timestamp": "2025-11-03T21:19:22.826Z"
+          "timestamp": "2025-11-04T19:07:49.906Z"
         },
         {
           "functionName": "unvetSigningKeys",

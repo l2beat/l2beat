@@ -2,7 +2,7 @@ import type { ConfigReader, DiscoveryPaths, TemplateService } from '@l2beat/disc
 import { getProject } from '../getProject'
 import { getFunctions } from './functions'
 import { getContractTags } from './contractTags'
-import type { Impact, Likelihood, Severity } from './types'
+import type { Impact, Likelihood, Severity, FunctionDetail, LetterGrade as ImportedLetterGrade } from './types'
 
 // ============================================================================
 // Type Definitions
@@ -13,6 +13,10 @@ export type LetterGrade = 'AAA' | 'AA' | 'A' | 'BBB' | 'BB' | 'B' | 'CCC' | 'CC'
 export interface ModuleScore {
   grade: LetterGrade
   inventory: number
+}
+
+export interface FunctionModuleScore extends ModuleScore {
+  breakdown?: Record<LetterGrade, FunctionDetail[]>
 }
 
 // ============================================================================
@@ -126,7 +130,7 @@ export function getSeverityGrade(impact: Impact, likelihood: Likelihood): Letter
 export interface V2ScoreResult {
   inventory: {
     contracts: ModuleScore
-    functions: ModuleScore
+    functions: FunctionModuleScore
     dependencies: ModuleScore
     admins: ModuleScore
   }
@@ -244,32 +248,114 @@ class ContractInventoryModule implements ScoringModule {
 
 /**
  * Function Inventory Module
- * Counts permissioned functions (where isPermissioned = true)
- * Scoring: fewer permissioned functions = better grade
- *
- * NOTE: Thresholds below are TEMPORARY PLACEHOLDER logic and will be replaced
- * with proper V2 framework scoring criteria in the future.
+ * Scores permissioned functions based on Impact × Likelihood
+ * Module grade = worst function grade
+ * Provides detailed breakdown of functions by grade
  */
 class FunctionInventoryModule implements ScoringModule {
   name = 'functions'
 
-  calculate(data: ScoringData): ModuleScore {
+  calculate(data: ScoringData): FunctionModuleScore {
+    const breakdown: Record<LetterGrade, FunctionDetail[]> = {
+      'D': [], 'C': [], 'CC': [], 'CCC': [],
+      'B': [], 'BB': [], 'BBB': [],
+      'A': [], 'AA': [], 'AAA': []
+    }
+
     let functionCount = 0
+    let worstGrade: LetterGrade = 'AAA'
 
     if (data.permissionOverrides?.contracts) {
-      Object.values(data.permissionOverrides.contracts).forEach((contractData: any) => {
+      Object.entries(data.permissionOverrides.contracts).forEach(([contractAddress, contractData]: [string, any]) => {
         contractData.functions?.forEach((func: any) => {
           if (func.isPermissioned === true) {
             functionCount++
+
+            // Skip if function doesn't have both score and likelihood
+            if (!func.score || func.score === 'unscored' || !func.likelihood) {
+              return
+            }
+
+            // Map score field to Impact
+            const impactMap: Record<string, Impact> = {
+              'low-risk': 'low',
+              'medium-risk': 'medium',
+              'high-risk': 'high',
+              'critical': 'critical'
+            }
+
+            const impact = impactMap[func.score]
+            if (!impact) return
+
+            const likelihood = func.likelihood as Likelihood
+
+            // Calculate severity and grade
+            const severity = getSeverityLevel(impact, likelihood)
+            const grade = getSeverityGrade(impact, likelihood)
+
+            // Resolve contract name from projectData
+            const contractName = this.getContractName(data.projectData, contractAddress)
+
+            // Add to breakdown
+            breakdown[grade].push({
+              contractAddress,
+              contractName,
+              functionName: func.functionName,
+              impact,
+              likelihood,
+              severity,
+              grade
+            })
+
+            // Track worst grade
+            if (this.gradeToNumeric(grade) < this.gradeToNumeric(worstGrade)) {
+              worstGrade = grade
+            }
           }
         })
       })
     }
 
-    // TEMPORARY PLACEHOLDER THRESHOLDS - will be replaced with proper V2 logic
-    const grade = this.countToGrade(functionCount)
+    // If no functions have been scored, use count-based fallback
+    if (Object.values(breakdown).flat().length === 0) {
+      worstGrade = this.countToGrade(functionCount)
+    }
 
-    return { grade, inventory: functionCount }
+    return {
+      grade: worstGrade,
+      inventory: functionCount,
+      breakdown
+    }
+  }
+
+  private getContractName(projectData: any, contractAddress: string): string {
+    if (!projectData?.entries) return contractAddress
+
+    // Normalize address for comparison (remove eth: prefix if present)
+    const normalizedAddress = contractAddress.replace('eth:', '')
+
+    for (const entry of projectData.entries) {
+      // Check both initialContracts and discoveredContracts
+      const contracts = [...(entry.initialContracts || []), ...(entry.discoveredContracts || [])]
+
+      for (const contract of contracts) {
+        const entryAddress = contract.address.replace('eth:', '')
+        if (entryAddress === normalizedAddress) {
+          return contract.name || contractAddress
+        }
+      }
+    }
+
+    return contractAddress
+  }
+
+  private gradeToNumeric(grade: LetterGrade): number {
+    const map: Record<LetterGrade, number> = {
+      'AAA': 10, 'AA': 9, 'A': 8,
+      'BBB': 7, 'BB': 6, 'B': 5,
+      'CCC': 4, 'CC': 3, 'C': 2, 'D': 1
+    }
+    return map[grade]
   }
 
   private countToGrade(count: number): LetterGrade {

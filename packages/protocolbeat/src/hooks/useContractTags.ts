@@ -16,9 +16,13 @@ export function useUpdateContractTag(project: string) {
   return useMutation({
     mutationFn: (request: ApiContractTagsUpdateRequest) =>
       updateContractTag(project, request),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
         queryKey: ['contractTags', project],
+      })
+      // Invalidate V2 scores since external contracts affect scoring
+      await queryClient.invalidateQueries({
+        queryKey: ['v2-score', project],
       })
     },
   })

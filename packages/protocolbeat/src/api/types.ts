@@ -7,6 +7,17 @@ export type Impact = 'low' | 'medium' | 'high' | 'critical'
 export type Likelihood = 'mitigated' | 'low' | 'medium' | 'high'
 export type Severity = 'informational' | 'low' | 'medium' | 'high' | 'critical'
 
+// Function detail for severity scoring breakdown
+export interface FunctionDetail {
+  contractAddress: string
+  contractName: string
+  functionName: string
+  impact: Impact
+  likelihood: Likelihood
+  severity: Severity
+  grade: LetterGrade
+}
+
 export type ApiProjectsResponse = ApiProjectEntry[]
 
 export interface ApiProjectEntry {
@@ -289,10 +300,14 @@ export interface ModuleScore {
   inventory: number
 }
 
+export interface FunctionModuleScore extends ModuleScore {
+  breakdown?: Record<LetterGrade, FunctionDetail[]>
+}
+
 export interface ApiV2ScoreResponse {
   inventory: {
     contracts: ModuleScore
-    functions: ModuleScore
+    functions: FunctionModuleScore
     dependencies: ModuleScore
     admins: ModuleScore
   }
