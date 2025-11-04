@@ -24,10 +24,8 @@ const parseDeposit = createEventParser(
 
 export const GasZipDeposit = createInteropEventType<{
   $dstChain: string
-  depositor: string
-  amount: bigint
   depositor: Address32
-  amount: string
+  amount: bigint
   tokenAddress: Address32
   depositType: string
   destinationChains: string
@@ -36,7 +34,7 @@ export const GasZipDeposit = createInteropEventType<{
 
 export const GasZipFill = createInteropEventType<{
   receiver: Address32
-  amount: string
+  amount: bigint
   tokenAddress: Address32
 }>('gaszip.Fill')
 
@@ -72,9 +70,7 @@ export class GasZipPlugin implements InteropPlugin {
           GasZipDeposit.create(input.tx, {
             $dstChain: dc.chain,
             depositor: input.tx.txFrom,
-            amount: (
-              input.tx.txValue / BigInt(destinationChains.length)
-            ).toString(),
+            amount: input.tx.txValue / BigInt(destinationChains.length),
             tokenAddress: Address32.NATIVE,
             depositType: decoded.type,
             destinationChains: JSON.stringify(destinationChains),
@@ -84,26 +80,6 @@ export class GasZipPlugin implements InteropPlugin {
       }
       return events
     }
-    if (decoded.destinationChainIds.length === 0) return
-    if (!input.tx.txValue || input.tx.txValue === 0n) return
-    if (!input.tx.txFrom) return
-
-    const destinationChains = decoded.destinationChainIds.map((gaszipId) => ({
-      gaszipId,
-      chain: getChainNameByGaszipId(gaszipId),
-    }))
-
-    const destinationAddress = decoded.destinationAddress ?? input.tx.txFrom
-    const events = []
-    if (destinationChains.length > 1)
-      console.log(`GasZip deposit to multiple chains: ${input.tx.txHash}`)
-
-    for (const dc of destinationChains) {
-      events.push(
-        GasZipDeposit.create(input.tx, {
-          $dstChain: dc.chain,
-          depositor: input.tx.txFrom,
-          amount: input.tx.txValue / BigInt(destinationChains.length),
     if (
       input.tx.txFrom ===
       GASZIP_NETWORKS.find((n) => n.chain === input.tx.chain)?.solver
@@ -113,7 +89,7 @@ export class GasZipPlugin implements InteropPlugin {
           receiver:
             input.tx.txTo ??
             Address32.from('0x0000000000000000000000000000000000000000'),
-          amount: input.tx.txValue?.toString() ?? '0',
+          amount: input.tx.txValue ?? 0n,
           tokenAddress: Address32.NATIVE,
         }),
       ]
@@ -151,12 +127,8 @@ export class GasZipPlugin implements InteropPlugin {
       events.push(
         GasZipDeposit.create(input.ctx, {
           $dstChain: dc.chain,
-          depositor: deposit.from,
-          amount: deposit.amount / BigInt(destinationChains.length),
           depositor: Address32.from(deposit.from),
-          amount: (
-            deposit.amount / BigInt(destinationChains.length)
-          ).toString(),
+          amount: deposit.amount / BigInt(destinationChains.length),
           tokenAddress: Address32.NATIVE,
           depositType: 'CONTRACT',
           destinationChains: JSON.stringify(destinationChains),
