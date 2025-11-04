@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xfd3177583f17eec5e5244067dec51b589ded3868
+
+# Diff at Tue, 04 Nov 2025 11:32:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1761895426
+- current timestamp: 1761895426
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761895426 (main branch discovery), not current.
+
+```diff
+    contract AggregationRouterV5 (eth:0x1111111254EEB25477B68fb85Ed929f73A960582) {
+    +++ description: 1inch DEX aggregator supporting RFQ fills, limit-order fills and direct DEX swaps.
+      sourceHashes.0:
+-        "0xcda14981e0e7c14eca7a40d2deb572f93fbfa2b9ee6e894c5b3d967ad1068bbb"
++        "0x3f07a08957b7504b340685cdf34a4374c24c86a8d07a040efe71444cbfa2ac06"
+    }
+```
+
 Generated with discovered.json: 0x0b5d761071a93bb2c167755268e28aabb1e76122
 
 # Diff at Fri, 31 Oct 2025 07:24:53 GMT:

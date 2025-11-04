@@ -1,4 +1,31 @@
-Generated with discovered.json: 0x00d60cc75138408cd04e526141acbc6a80ac55e2
+Generated with discovered.json: 0x73a4596b4417b4f00363d69946a2f1e6c29d8681
+
+# Diff at Tue, 04 Nov 2025 11:33:35 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1759830990
+- current timestamp: 1759830990
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759830990 (main branch discovery), not current.
+
+```diff
+    contract FaultDisputeGame (eth:0x388DEfE576077257074F77c727aA5F2e3B815E21) {
+    +++ description: Contract for handling fault disputes (should games be created). Successfully disputed batches are marked as disputed to the StateCommitmentChain.
+      sourceHashes.0:
+-        "0xdb0bc4b729d8cc8e76dd61589bf15ae77b281c791ca8a7c9c615f855d0e1be37"
++        "0xcab2446b5b05f3af5fbdda3c99e19228203a34e88d64e1c3a1f0d011e8465100"
+    }
+```
+
+Generated with discovered.json: 0x23f4d2c2a8858416750d594735b77b6fbb0f9db7
 
 # Diff at Tue, 30 Sep 2025 17:10:58 GMT:
 

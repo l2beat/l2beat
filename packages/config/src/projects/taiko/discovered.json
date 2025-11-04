@@ -21,7 +21,7 @@
       "type": "Contract",
       "template": "taiko/PEMCertChainLib",
       "sourceHashes": [
-        "0x97476fc6413c58015ddf51b5d2e37c3fdfc6b85ced25779773a1652ecc154c77"
+        "0x59efc4927f69d03e199767bdde2f8a8ef3a544833cdbf8c2eecf9152b373dcbc"
       ],
       "proxyType": "immutable",
       "description": "Library for managing PEM certificate chains.",
@@ -631,7 +631,7 @@
       "template": "taiko/AutomataDcapV3Attestation",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x0568e673edec0254e0d0584958369ffcb951f679158dd2a7c167bbf5fcf2a5bf"
+        "0xb88d9a2a00b03d84804743d62f07486e1276d8e7c989cc3a3cfd8f0ae26b5cd9"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract managing SGX attestation certificates.",
@@ -1739,7 +1739,7 @@
       "template": "taiko/AutomataDcapV3Attestation",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0xac51975c574b128e9dc1e8542c616ed655d4a2abc91d3233648ac688e530c68c"
+        "0xf03ee5163c982d906a23e9650c5ca9a0f66fa6bf33b9496c71476ce91c8d32ec"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract managing SGX attestation certificates.",
@@ -3750,7 +3750,7 @@
       "template": "taiko/TaikoAnchor",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0xd2bffd1aa4016a982cb8f166de6b32cfa89406896b754e2f5abb2f63e7defd5a"
+        "0x94dfc8c1aa6a1ce9447da9bf865b6e827ffe8c9cb0b08e4d7c7589b8c4193134"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Handles cross-layer message verification and manages EIP-1559 gas pricing for L2 operations. Anchors L1 block details to L2 for cross-layer communication.",

@@ -339,7 +339,7 @@
       "type": "Contract",
       "template": "metis/FaultDisputeGame",
       "sourceHashes": [
-        "0xdb0bc4b729d8cc8e76dd61589bf15ae77b281c791ca8a7c9c615f855d0e1be37"
+        "0xcab2446b5b05f3af5fbdda3c99e19228203a34e88d64e1c3a1f0d011e8465100"
       ],
       "proxyType": "immutable",
       "description": "Contract for handling fault disputes (should games be created). Successfully disputed batches are marked as disputed to the StateCommitmentChain.",

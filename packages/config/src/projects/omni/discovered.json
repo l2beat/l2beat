@@ -175,7 +175,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0x781decea1d7b5174464b57449f32ada83d1c1b7e12bdfa47eb9d00a41a36c839",
-        "0x07db9068db8cb815b37ab00e7a0098b6200657a2c4126fc4c87af49468891d99"
+        "0x3c108eaa9520cd55043d9ba97a6dea1d273e4300c8b99800347d12780410f08f"
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Token bridge implementation and escrow for DAI-related tokens. Escrowed Dai can be invested in the Spark protocol for sDai.",
@@ -333,7 +333,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
-        "0xd9dd29f51753144909a424e20a1281bc15263ea2de2f5f028666b183b00d5fc3"
+        "0x5d956ab2f7704c419737b2e96845631d87156578b49801dde52cc9e56eaa182f"
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Arbitrary Message Bridge validated by the BridgeValidators. Can be used for token bridges or any other cross-chain messaging.",
@@ -496,7 +496,7 @@
       "address": "eth:0x7c24d0061b484B267F286aa2DCe891220Db254b3",
       "type": "Contract",
       "sourceHashes": [
-        "0x064c46a3015079f17e93b171ff684cda28a0ecdbd55ecec09c4ddf50e0a5c312"
+        "0xd9a3b7f2158f4a5eea989005a42d2423bb609fe9ace98844568d2df9ac271035"
       ],
       "proxyType": "immutable",
       "sinceTimestamp": 1634280299,
@@ -1043,7 +1043,7 @@
       "address": "gno:0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4",
       "type": "Contract",
       "sourceHashes": [
-        "0x064c46a3015079f17e93b171ff684cda28a0ecdbd55ecec09c4ddf50e0a5c312"
+        "0xd9a3b7f2158f4a5eea989005a42d2423bb609fe9ace98844568d2df9ac271035"
       ],
       "proxyType": "immutable",
       "sinceTimestamp": 1634244030,
@@ -1316,7 +1316,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
-        "0x42c489ed63dc75d73bab6e89bc470b7c805b0c16cbbc0e9287cc824cc88b0b79"
+        "0x4e50aa13a908fda155f0aef44f6f0e2c003038cb4ba9731fc7fb16b70c3b7de4"
       ],
       "proxyType": "Eternal Storage proxy",
       "sinceTimestamp": 1579258310,
