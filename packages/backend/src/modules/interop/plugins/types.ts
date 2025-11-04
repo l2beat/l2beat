@@ -1,3 +1,4 @@
+import type { InteropEventContext } from '@l2beat/database'
 import { type Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { randomUUID } from 'crypto'
 import {
@@ -10,19 +11,6 @@ import {
   type ParseAbiItem,
   parseAbi,
 } from 'viem'
-
-export interface InteropEventContext {
-  timestamp: UnixTime
-  chain: string
-  blockNumber: number
-  blockHash: string
-  txHash: string
-  txValue?: bigint
-  txTo?: Address32
-  txFrom?: Address32
-  logIndex: number
-  txData: string
-}
 
 export interface InteropEvent<T = unknown> {
   plugin: string

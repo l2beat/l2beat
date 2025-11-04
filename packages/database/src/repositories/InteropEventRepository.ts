@@ -17,7 +17,7 @@ export interface InteropEventRecord {
   unsupported: boolean
 }
 
-interface InteropEventContext {
+export interface InteropEventContext {
   timestamp: UnixTime
   chain: string
   blockNumber: number

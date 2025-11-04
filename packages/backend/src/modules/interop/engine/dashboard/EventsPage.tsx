@@ -1,7 +1,6 @@
 import type { InteropEventRecord } from '@l2beat/database'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import type { InteropEventContext } from '../../plugins/types'
 import { DataTablePage } from './DataTablePage'
 import {
   type ProcessorsStatus,
@@ -9,7 +8,7 @@ import {
 } from './ProcessorsStatusTable'
 
 function EventsTable(props: {
-  events: (InteropEventRecord & { ctx: InteropEventContext })[]
+  events: InteropEventRecord[]
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   return (
@@ -57,7 +56,7 @@ function EventsTable(props: {
 }
 
 function EventsPageLayout(props: {
-  events: (InteropEventRecord & { ctx: InteropEventContext })[]
+  events: InteropEventRecord[]
   getExplorerUrl: (chain: string) => string | undefined
   status: ProcessorsStatus[]
 }) {
@@ -90,7 +89,7 @@ function EventsPageLayout(props: {
 }
 
 export function renderEventsPage(props: {
-  events: (InteropEventRecord & { ctx: InteropEventContext })[]
+  events: InteropEventRecord[]
   getExplorerUrl: (chain: string) => string | undefined
   status: ProcessorsStatus[]
 }) {

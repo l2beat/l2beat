@@ -2,7 +2,6 @@ import type { Database, InteropEventRecord } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
 import type {
   InteropEvent,
-  InteropEventContext,
   InteropEventDb,
   InteropEventQuery,
   InteropEventType,
@@ -84,7 +83,7 @@ function fromDbRecord(record: InteropEventRecord): InteropEvent {
     type: record.type,
     expiresAt: record.expiresAt,
     args: record.args,
-    ctx: record.ctx as InteropEventContext,
+    ctx: record.ctx,
   }
 }
 
