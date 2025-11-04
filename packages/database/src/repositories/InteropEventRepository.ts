@@ -9,6 +9,8 @@ export interface InteropEventRecord {
   type: string
   expiresAt: UnixTime
   timestamp: UnixTime
+  chain: string
+  blockNumber: number
   args: unknown
   ctx: unknown
   matched: boolean
