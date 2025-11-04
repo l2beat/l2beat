@@ -20,10 +20,9 @@ export function OfficeHoursSection() {
         <p className="text-paragraph-15">
           During the Office Hours, anyone is able to reach L2BEAT&apos;s
           governance team, which consists of{' '}
-          <span className="underline">Kaereste</span> (Krzysztof Urbanski),{' '}
-          <span className="underline">Sinkas</span> (Anastassis Oikonomopoulos)
-          and <span className="underline">Manugotsuka</span> (Manuel Gonzalez)
-          and discuss our activity as delegates.
+          <span className="underline">Kaereste</span> (Krzysztof Urbanski) and{' '}
+          <span className="underline">Manugotsuka</span> (Manuel Gonzalez), to
+          discuss our activity as delegates.
         </p>
         <p className="text-paragraph-15">
           To allow enough time for constructive discussion, each Office Hours
