@@ -493,7 +493,7 @@ function impUnion<
       if (result.success) {
         return result as Result<Infer<T[number]>>
       }
-      // Collect error details for better diagnostics
+
       const location = result.path ? ` at ${result.path}` : ''
       errors.push(`Variant ${i}${location}: ${result.message}`)
     }
