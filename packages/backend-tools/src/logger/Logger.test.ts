@@ -82,6 +82,18 @@ describe(Logger.name, () => {
       const logger = Logger.INFO.for('FooService').for('queue')
       expect(logger.tags).toEqual({ service: 'FooService.queue' })
     })
+
+    it('filter', () => {
+      const transport = new TestTransport()
+      const logger = new Logger({
+        transports: [transport],
+        filter: (e) => e.message.startsWith('f'),
+      })
+      logger.info('bar')
+      expect(transport.log).toHaveBeenCalledTimes(0)
+      logger.info('foo')
+      expect(transport.log).toHaveBeenCalledTimes(1)
+    })
   })
 
   describe('parameters', () => {
