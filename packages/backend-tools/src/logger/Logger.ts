@@ -74,7 +74,7 @@ export class Logger {
     const combinedParameters = { ...this.tags, ...parameters }
     for (const transport of this.options.transports) {
       try {
-        transport.log(time, level, message, combinedParameters)
+        transport.log({ time, level, message, parameters: combinedParameters })
       } catch {}
     }
   }

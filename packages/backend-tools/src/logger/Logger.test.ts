@@ -35,9 +35,14 @@ describe(Logger.name, () => {
         { foo: 'bar' },
       )
       logger.info('Hello', { baz: false })
-      expect(transport.log).toHaveBeenCalledWith(new Date(0), 'INFO', 'Hello', {
-        foo: 'bar',
-        baz: false,
+      expect(transport.log).toHaveBeenCalledWith({
+        time: new Date(0),
+        level: 'INFO',
+        message: 'Hello',
+        parameters: {
+          foo: 'bar',
+          baz: false,
+        },
       })
     })
 
@@ -50,10 +55,15 @@ describe(Logger.name, () => {
       )
       logger = logger.tag({ foo: 'oof', baz: false })
       logger.info('Hello', { x: 1 })
-      expect(transport.log).toHaveBeenCalledWith(new Date(0), 'INFO', 'Hello', {
-        foo: 'oof',
-        baz: false,
-        x: 1,
+      expect(transport.log).toHaveBeenCalledWith({
+        time: new Date(0),
+        level: 'INFO',
+        message: 'Hello',
+        parameters: {
+          foo: 'oof',
+          baz: false,
+          x: 1,
+        },
       })
     })
 
@@ -81,20 +91,25 @@ describe(Logger.name, () => {
       const transport = new TestTransport()
       const logger = new Logger({ getTime, transports: [transport] })
       logger.info('Hello')
-      expect(transport.log).toHaveBeenCalledWith(
-        new Date(0),
-        'INFO',
-        'Hello',
-        {},
-      )
+      expect(transport.log).toHaveBeenCalledWith({
+        time: new Date(0),
+        level: 'INFO',
+        message: 'Hello',
+        parameters: {},
+      })
     })
 
     it('message and parameters', () => {
       const transport = new TestTransport()
       const logger = new Logger({ getTime, transports: [transport] })
       logger.info('Hello', { foo: 'bar' })
-      expect(transport.log).toHaveBeenCalledWith(new Date(0), 'INFO', 'Hello', {
-        foo: 'bar',
+      expect(transport.log).toHaveBeenCalledWith({
+        time: new Date(0),
+        level: 'INFO',
+        message: 'Hello',
+        parameters: {
+          foo: 'bar',
+        },
       })
     })
 
@@ -102,8 +117,13 @@ describe(Logger.name, () => {
       const transport = new TestTransport()
       const logger = new Logger({ getTime, transports: [transport] })
       logger.info({ message: 'Hello', foo: 'bar' })
-      expect(transport.log).toHaveBeenCalledWith(new Date(0), 'INFO', 'Hello', {
-        foo: 'bar',
+      expect(transport.log).toHaveBeenCalledWith({
+        time: new Date(0),
+        level: 'INFO',
+        message: 'Hello',
+        parameters: {
+          foo: 'bar',
+        },
       })
     })
 
@@ -111,8 +131,13 @@ describe(Logger.name, () => {
       const transport = new TestTransport()
       const logger = new Logger({ getTime, transports: [transport] })
       logger.info({ foo: 'bar' })
-      expect(transport.log).toHaveBeenCalledWith(new Date(0), 'INFO', '', {
-        foo: 'bar',
+      expect(transport.log).toHaveBeenCalledWith({
+        time: new Date(0),
+        level: 'INFO',
+        message: '',
+        parameters: {
+          foo: 'bar',
+        },
       })
     })
 
@@ -120,9 +145,14 @@ describe(Logger.name, () => {
       const transport = new TestTransport()
       const logger = new Logger({ getTime, transports: [transport] })
       logger.info({ foo: 'bar' }, { baz: false })
-      expect(transport.log).toHaveBeenCalledWith(new Date(0), 'INFO', '', {
-        foo: 'bar',
-        baz: false,
+      expect(transport.log).toHaveBeenCalledWith({
+        time: new Date(0),
+        level: 'INFO',
+        message: '',
+        parameters: {
+          foo: 'bar',
+          baz: false,
+        },
       })
     })
 
@@ -130,8 +160,13 @@ describe(Logger.name, () => {
       const transport = new TestTransport()
       const logger = new Logger({ getTime, transports: [transport] })
       logger.info(123)
-      expect(transport.log).toHaveBeenCalledWith(new Date(0), 'INFO', '', {
-        value: 123,
+      expect(transport.log).toHaveBeenCalledWith({
+        time: new Date(0),
+        level: 'INFO',
+        message: '',
+        parameters: {
+          value: 123,
+        },
       })
     })
 
@@ -139,8 +174,13 @@ describe(Logger.name, () => {
       const transport = new TestTransport()
       const logger = new Logger({ getTime, transports: [transport] })
       logger.info(123, false)
-      expect(transport.log).toHaveBeenCalledWith(new Date(0), 'INFO', '', {
-        values: [123, false],
+      expect(transport.log).toHaveBeenCalledWith({
+        time: new Date(0),
+        level: 'INFO',
+        message: '',
+        parameters: {
+          values: [123, false],
+        },
       })
     })
 
@@ -148,8 +188,13 @@ describe(Logger.name, () => {
       const transport = new TestTransport()
       const logger = new Logger({ getTime, transports: [transport] })
       logger.info(123, false, 'foo', 'bar')
-      expect(transport.log).toHaveBeenCalledWith(new Date(0), 'INFO', 'foo', {
-        values: [123, false, 'bar'],
+      expect(transport.log).toHaveBeenCalledWith({
+        time: new Date(0),
+        level: 'INFO',
+        message: 'foo',
+        parameters: {
+          values: [123, false, 'bar'],
+        },
       })
     })
 
@@ -158,11 +203,16 @@ describe(Logger.name, () => {
       const transport = new TestTransport()
       const logger = new Logger({ getTime, transports: [transport] })
       logger.info(error)
-      expect(transport.log).toHaveBeenCalledWith(new Date(0), 'INFO', '', {
-        error: {
-          name: 'Error',
-          error: 'Oops',
-          stack: expect.a(Array),
+      expect(transport.log).toHaveBeenCalledWith({
+        time: new Date(0),
+        level: 'INFO',
+        message: '',
+        parameters: {
+          error: {
+            name: 'Error',
+            error: 'Oops',
+            stack: expect.a(Array),
+          },
         },
       })
     })
@@ -172,11 +222,16 @@ describe(Logger.name, () => {
       const transport = new TestTransport()
       const logger = new Logger({ getTime, transports: [transport] })
       logger.info({ error })
-      expect(transport.log).toHaveBeenCalledWith(new Date(0), 'INFO', '', {
-        error: {
-          name: 'Error',
-          error: 'Oops',
-          stack: expect.a(Array),
+      expect(transport.log).toHaveBeenCalledWith({
+        time: new Date(0),
+        level: 'INFO',
+        message: '',
+        parameters: {
+          error: {
+            name: 'Error',
+            error: 'Oops',
+            stack: expect.a(Array),
+          },
         },
       })
     })

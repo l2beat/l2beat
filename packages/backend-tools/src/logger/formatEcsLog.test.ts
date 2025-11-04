@@ -3,8 +3,13 @@ import { formatEcsLog } from './formatEcsLog'
 
 describe(formatEcsLog.name, () => {
   it('module', () => {
-    const message = formatEcsLog(new Date(0), 'INFO', 'hello', {
-      module: 'module',
+    const message = formatEcsLog({
+      time: new Date(0),
+      level: 'INFO',
+      message: 'hello',
+      parameters: {
+        module: 'module',
+      },
     })
     expect(message).toEqual(
       JSON.stringify({
@@ -20,9 +25,14 @@ describe(formatEcsLog.name, () => {
   })
 
   it('feature', () => {
-    const message = formatEcsLog(new Date(0), 'INFO', 'hello', {
-      module: 'module',
-      feature: 'feature',
+    const message = formatEcsLog({
+      time: new Date(0),
+      level: 'INFO',
+      message: 'hello',
+      parameters: {
+        module: 'module',
+        feature: 'feature',
+      },
     })
     expect(message).toEqual(
       JSON.stringify({
@@ -39,8 +49,13 @@ describe(formatEcsLog.name, () => {
   })
 
   it('source', () => {
-    const message = formatEcsLog(new Date(0), 'INFO', 'hello', {
-      source: 'source',
+    const message = formatEcsLog({
+      time: new Date(0),
+      level: 'INFO',
+      message: 'hello',
+      parameters: {
+        source: 'source',
+      },
     })
     expect(message).toEqual(
       JSON.stringify({
@@ -56,10 +71,15 @@ describe(formatEcsLog.name, () => {
   })
 
   it('service tag', () => {
-    const message = formatEcsLog(new Date(0), 'INFO', 'hello', {
-      tag: 'tag',
-      feature: 'feature',
-      module: 'module',
+    const message = formatEcsLog({
+      time: new Date(0),
+      level: 'INFO',
+      message: 'hello',
+      parameters: {
+        tag: 'tag',
+        feature: 'feature',
+        module: 'module',
+      },
     })
     expect(message).toEqual(
       JSON.stringify({
@@ -78,10 +98,15 @@ describe(formatEcsLog.name, () => {
   })
 
   it('project', () => {
-    const message = formatEcsLog(new Date(0), 'INFO', 'hello', {
-      feature: 'feature',
-      module: 'module',
-      project: 'project',
+    const message = formatEcsLog({
+      time: new Date(0),
+      level: 'INFO',
+      message: 'hello',
+      parameters: {
+        feature: 'feature',
+        module: 'module',
+        project: 'project',
+      },
     })
     expect(message).toEqual(
       JSON.stringify({
@@ -99,10 +124,15 @@ describe(formatEcsLog.name, () => {
   })
 
   it('chain', () => {
-    const message = formatEcsLog(new Date(0), 'INFO', 'hello', {
-      feature: 'feature',
-      module: 'module',
-      chain: 'chain',
+    const message = formatEcsLog({
+      time: new Date(0),
+      level: 'INFO',
+      message: 'hello',
+      parameters: {
+        feature: 'feature',
+        module: 'module',
+        chain: 'chain',
+      },
     })
     expect(message).toEqual(
       JSON.stringify({
@@ -120,8 +150,13 @@ describe(formatEcsLog.name, () => {
   })
 
   it('parameters', () => {
-    const message = formatEcsLog(new Date(0), 'INFO', 'hello', {
-      foo: 'bar',
+    const message = formatEcsLog({
+      time: new Date(0),
+      level: 'INFO',
+      message: 'hello',
+      parameters: {
+        foo: 'bar',
+      },
     })
     expect(message).toEqual(
       JSON.stringify({
@@ -138,11 +173,16 @@ describe(formatEcsLog.name, () => {
   })
 
   it('error', () => {
-    const message = formatEcsLog(new Date(0), 'INFO', 'hello', {
-      error: {
-        name: 'Error',
-        error: 'oops, something went wrong',
-        stack: ['here', 'there'],
+    const message = formatEcsLog({
+      time: new Date(0),
+      level: 'INFO',
+      message: 'hello',
+      parameters: {
+        error: {
+          name: 'Error',
+          error: 'oops, something went wrong',
+          stack: ['here', 'there'],
+        },
       },
     })
     expect(message).toEqual(
