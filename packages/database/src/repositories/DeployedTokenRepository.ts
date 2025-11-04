@@ -75,7 +75,7 @@ export class DeployedTokenRepository extends BaseRepository {
       .selectFrom('DeployedToken')
       .selectAll()
       .where('chain', '=', pk.chain)
-      .where('address', '=', pk.address)
+      .where((eb) => eb.fn('lower', ['address']), '=', pk.address.toLowerCase())
       .executeTakeFirst()
     return row ? toRecord(row) : undefined
   }

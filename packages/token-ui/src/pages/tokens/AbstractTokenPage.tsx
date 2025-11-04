@@ -39,9 +39,15 @@ export function AbstractTokenPage() {
   const { data } = api.tokens.getAbstractById.useQuery(id ?? '', {
     enabled: id !== '',
   })
+
+  useEffect(() => {
+    if (!id || data === null) {
+      navigate('/not-found')
+    }
+  }, [id, data, navigate])
+
   if (!id || data === null) {
-    navigate('/not-found')
-    return
+    return null
   }
 
   return (

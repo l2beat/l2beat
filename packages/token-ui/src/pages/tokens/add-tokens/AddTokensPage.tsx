@@ -1,4 +1,3 @@
-import { useSearchParams } from 'react-router-dom'
 import { Card, CardContent } from '~/components/core/Card'
 import {
   Tabs,
@@ -6,22 +5,19 @@ import {
   TabsList,
   TabsTrigger,
 } from '~/components/core/Tabs'
+import { useQueryState } from '~/hooks/useQueryState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { AddAbstractToken } from './AddAbstractToken'
 import { AddDeployedToken } from './AddDeployedToken'
 
 export function AddTokensPage() {
-  const [searchParams, setSearchParams] = useSearchParams()
-  const tab = searchParams.get('tab') ?? 'deployed'
-
+  const [tab, setTab] = useQueryState('tab', 'deployed')
   return (
     <AppLayout>
       <Tabs
-        defaultValue={tab}
         className="mx-auto w-full max-w-3xl"
-        onValueChange={(value) => {
-          setSearchParams({ tab: value })
-        }}
+        value={tab}
+        onValueChange={setTab}
       >
         <TabsList>
           <TabsTrigger value="deployed">Deployed Token</TabsTrigger>

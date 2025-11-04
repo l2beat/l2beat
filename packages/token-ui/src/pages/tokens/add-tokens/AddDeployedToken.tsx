@@ -1,7 +1,7 @@
+import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import {
@@ -10,20 +10,23 @@ import {
   setDeployedTokenExistsError,
 } from '~/components/forms/DeployedTokenForm'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
+import { useQueryState } from '~/hooks/useQueryState'
 import { api } from '~/react-query/trpc'
 import { dateTimeInputToUnixTimestamp } from '~/utils/dateTimeInputToUnixTimestamp'
 import { validateResolver } from '~/utils/validateResolver'
 
 export function AddDeployedToken() {
-  const [searchParams] = useSearchParams()
+  const [abstractTokenId, , clearAbstractTokenId] = useQueryState(
+    'abstractTokenId',
+    '',
+  )
   const form = useForm<DeployedTokenSchema>({
     resolver: validateResolver(DeployedTokenSchema),
-    defaultValues: {
-      abstractTokenId: searchParams.get('abstractTokenId') ?? undefined,
-    },
   })
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
 
+  const { data: abstractTokens, isLoading: areAbstractTokensLoading } =
+    api.tokens.getAllAbstractTokens.useQuery()
   const { mutate: planMutate, isPending } = api.plan.generate.useMutation({
     onSuccess: (data) => {
       if (data.outcome === 'success') {
@@ -36,8 +39,8 @@ export function AddDeployedToken() {
 
   const chain = form.watch('chain')
   const address = form.watch('address')
-  const { data: deployedTokenExists, isLoading: deployedTokenExistsLoading } =
-    api.tokens.checkIfDeployedTokenExists.useQuery(
+  const { data: details, isLoading: detailsLoading } =
+    api.tokens.getDeployedTokenDetails.useQuery(
       {
         chain,
         address,
@@ -48,18 +51,63 @@ export function AddDeployedToken() {
     )
 
   useEffect(() => {
-    if (deployedTokenExistsLoading) return
-    if (deployedTokenExists) {
-      setDeployedTokenExistsError(form)
-    } else {
-      form.clearErrors('address')
-      form.clearErrors('chain')
+    if (!details || detailsLoading) return
+    switch (details.type) {
+      case 'already-exists':
+        setDeployedTokenExistsError(form)
+        break
+
+      case 'not-found-on-rpc':
+        form.setError('address', {
+          type: 'custom',
+          message: 'Token not found on chain',
+        })
+        break
+      case 'not-found-on-coingecko':
+        form.setError('address', {
+          type: 'custom',
+          message: 'Coin not found on Coingecko',
+        })
+        form.setValue('decimals', details.data.decimals, { shouldDirty: true })
+        form.setValue(
+          'deploymentTimestamp',
+          UnixTime.toYYYYMMDDHHMM(details.data.deploymentTimestamp),
+          { shouldDirty: true },
+        )
+        break
+
+      case 'success':
+        form.clearErrors('address')
+        form.setValue('symbol', details.data.symbol, { shouldDirty: true })
+        form.setValue('decimals', details.data.decimals, { shouldDirty: true })
+        form.setValue(
+          'deploymentTimestamp',
+          UnixTime.toYYYYMMDDHHMM(details.data.deploymentTimestamp),
+          { shouldDirty: true },
+        )
+        if (details.data.abstractToken) {
+          form.setValue('abstractTokenId', details.data.abstractToken.id, {
+            shouldDirty: true,
+          })
+        }
+        break
+      default:
+        assertUnreachable(details)
     }
-  }, [deployedTokenExists, deployedTokenExistsLoading, form])
+  }, [details, detailsLoading, form])
+
+  useEffect(() => {
+    const exists = abstractTokens?.find(
+      (abstractToken) => abstractToken.id === abstractTokenId,
+    )
+    if (abstractTokenId && exists) {
+      form.setValue('abstractTokenId', abstractTokenId, { shouldDirty: true })
+    }
+  }, [abstractTokenId, form.setValue, abstractTokens])
 
   function onSubmit(values: DeployedTokenSchema) {
-    if (deployedTokenExistsLoading) return
-    if (deployedTokenExists) {
+    if (detailsLoading) return
+    if (details?.type === 'already-exists') {
       setDeployedTokenExistsError(form)
       return
     }
@@ -82,15 +130,22 @@ export function AddDeployedToken() {
       <PlanConfirmationDialog
         plan={plan}
         setPlan={setPlan}
-        onSuccess={form.reset}
+        onSuccess={() => {
+          form.reset()
+          clearAbstractTokenId()
+        }}
       />
       <DeployedTokenForm
         form={form}
         onSubmit={onSubmit}
         isFormDisabled={isPending}
-        deployedTokenCheck={{
-          exists: deployedTokenExists,
-          loading: deployedTokenExistsLoading,
+        tokenDetails={{
+          data: details,
+          loading: detailsLoading,
+        }}
+        abstractTokens={{
+          data: abstractTokens,
+          loading: areAbstractTokensLoading,
         }}
       >
         <ButtonWithSpinner

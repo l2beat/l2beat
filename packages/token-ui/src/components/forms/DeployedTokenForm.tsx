@@ -1,7 +1,13 @@
+import type { AbstractTokenRecord, AppRouter } from '@l2beat/token-backend'
 import { v } from '@l2beat/validate'
-import { ArrowRightIcon, CheckIcon, ChevronsUpDownIcon } from 'lucide-react'
+import {
+  ArrowRightIcon,
+  CheckIcon,
+  ChevronsUpDownIcon,
+  PlusIcon,
+} from 'lucide-react'
 import type { SubmitHandler, UseFormReturn } from 'react-hook-form'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Button, buttonVariants } from '~/components/core/Button'
 import {
   Command,
@@ -28,9 +34,11 @@ import {
 import { Spinner } from '~/components/core/Spinner'
 import { Textarea } from '~/components/core/TextArea'
 import { api } from '~/react-query/trpc'
+import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
 import { minLengthCheck, minNumberCheck } from '~/utils/checks'
 import { cn } from '~/utils/cn'
 import { getAbstractTokenDisplayId } from '~/utils/getDisplayId'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../core/Tooltip'
 
 export type DeployedTokenSchema = v.infer<typeof DeployedTokenSchema>
 export const DeployedTokenSchema = v.object({
@@ -43,27 +51,38 @@ export const DeployedTokenSchema = v.object({
   comment: v.string().optional(),
 })
 
+interface Props {
+  form: UseFormReturn<DeployedTokenSchema, unknown, DeployedTokenSchema>
+  onSubmit: SubmitHandler<DeployedTokenSchema>
+  isFormDisabled: boolean
+  tokenDetails: {
+    data:
+      | Awaited<ReturnType<AppRouter['tokens']['getDeployedTokenDetails']>>
+      | undefined
+    loading: boolean
+  }
+  abstractTokens: {
+    data: AbstractTokenRecord[] | undefined
+    loading: boolean
+  }
+  children: React.ReactNode
+}
+
 export function DeployedTokenForm({
   form,
   onSubmit,
   isFormDisabled,
-  deployedTokenCheck,
+  tokenDetails,
+  abstractTokens,
   children,
-}: {
-  form: UseFormReturn<DeployedTokenSchema, unknown, DeployedTokenSchema>
-  onSubmit: SubmitHandler<DeployedTokenSchema>
-  isFormDisabled: boolean
-  deployedTokenCheck: {
-    exists: boolean | undefined
-    loading: boolean
-  }
-  children: React.ReactNode
-}) {
-  const [searchParams, setSearchParams] = useSearchParams()
+}: Props) {
   const { data: chains, isLoading: areChainsLoading } =
     api.chains.getAll.useQuery()
-  const { data: abstractTokens, isLoading: areAbstractTokensLoading } =
-    api.tokens.getAllAbstractTokens.useQuery()
+
+  const abstractTokenId = form.watch('abstractTokenId')
+  const abstractToken = abstractTokens.data?.find(
+    (abstractToken) => abstractToken.id === abstractTokenId,
+  )
 
   return (
     <Form {...form}>
@@ -73,14 +92,12 @@ export function DeployedTokenForm({
             <FormField
               control={form.control}
               name="chain"
-              success={deployedTokenCheck.exists === false}
+              success={tokenDetails.data?.type === 'success'}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
                     Chain{' '}
-                    {deployedTokenCheck.loading && (
-                      <Spinner className="size-3.5" />
-                    )}
+                    {tokenDetails.loading && <Spinner className="size-3.5" />}
                   </FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
@@ -145,14 +162,12 @@ export function DeployedTokenForm({
             <FormField
               control={form.control}
               name="address"
-              success={deployedTokenCheck.exists === false}
+              success={tokenDetails.data?.type === 'success'}
               render={({ field }) => (
                 <FormItem className="col-span-2">
                   <FormLabel>
                     Address{' '}
-                    {deployedTokenCheck.loading && (
-                      <Spinner className="size-3.5" />
-                    )}
+                    {tokenDetails.loading && <Spinner className="size-3.5" />}
                   </FormLabel>
                   <FormControl>
                     <Input {...field} placeholder="0xd33db33f" />
@@ -170,7 +185,7 @@ export function DeployedTokenForm({
               <FormItem>
                 <FormLabel>Symbol</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} disabled={tokenDetails.loading} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -187,6 +202,7 @@ export function DeployedTokenForm({
                     type="number"
                     {...field}
                     onChange={(e) => field.onChange(Number(e.target.value))}
+                    disabled={tokenDetails.loading}
                   />
                 </FormControl>
                 <FormMessage />
@@ -201,7 +217,11 @@ export function DeployedTokenForm({
               <FormItem>
                 <FormLabel>Deployment Timestamp</FormLabel>
                 <FormControl>
-                  <Input type="datetime-local" {...field} />
+                  <Input
+                    type="datetime-local"
+                    {...field}
+                    disabled={tokenDetails.loading}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -218,7 +238,7 @@ export function DeployedTokenForm({
                     <PopoverTrigger asChild>
                       <FormControl className="w-[300px]">
                         <Button
-                          disabled={areAbstractTokensLoading}
+                          disabled={abstractTokens.loading}
                           variant="outline"
                           role="combobox"
                           className={cn(
@@ -226,12 +246,12 @@ export function DeployedTokenForm({
                             !field.value && 'text-muted-foreground',
                           )}
                         >
-                          {areAbstractTokensLoading
+                          {abstractTokens.loading
                             ? 'Loading...'
                             : field.value
                               ? getAbstractTokenDisplayId(
                                   // biome-ignore lint/style/noNonNullAssertion: it's there
-                                  abstractTokens?.find(
+                                  abstractTokens.data?.find(
                                     (abstractToken) =>
                                       abstractToken.id === field.value,
                                   )!,
@@ -250,51 +270,74 @@ export function DeployedTokenForm({
                         <CommandList>
                           <CommandEmpty>No abstract token found.</CommandEmpty>
                           <CommandGroup>
-                            {abstractTokens?.map((abstractToken) => (
-                              <CommandItem
-                                value={abstractToken.id}
-                                key={abstractToken.id}
-                                onSelect={() => {
-                                  form.setValue(
-                                    'abstractTokenId',
-                                    abstractToken.id,
-                                    { shouldDirty: true },
-                                  )
-                                  setSearchParams({
-                                    ...Object.fromEntries(
-                                      searchParams.entries(),
-                                    ),
-                                    abstractTokenId: abstractToken.id,
-                                  })
-                                }}
-                              >
-                                {getAbstractTokenDisplayId(abstractToken)}
-                                <CheckIcon
-                                  className={cn(
-                                    'ml-auto',
-                                    abstractToken.id === field.value
-                                      ? 'opacity-100'
-                                      : 'opacity-0',
-                                  )}
-                                />
-                              </CommandItem>
-                            ))}
+                            {abstractTokens.data?.map((abstractToken) => {
+                              const displayId =
+                                getAbstractTokenDisplayId(abstractToken)
+                              return (
+                                <CommandItem
+                                  value={displayId}
+                                  key={displayId}
+                                  onSelect={() => {
+                                    form.setValue(
+                                      'abstractTokenId',
+                                      abstractToken.id,
+                                      { shouldDirty: true },
+                                    )
+                                  }}
+                                >
+                                  {displayId}
+                                  <CheckIcon
+                                    className={cn(
+                                      'ml-auto',
+                                      abstractToken.id === field.value
+                                        ? 'opacity-100'
+                                        : 'opacity-0',
+                                    )}
+                                  />
+                                </CommandItem>
+                              )
+                            })}
                           </CommandGroup>
                         </CommandList>
                       </Command>
                     </PopoverContent>
                   </Popover>
 
-                  <Link
-                    to={`/tokens/${field.value}`}
-                    aria-disabled={!field.value}
-                    className={buttonVariants({
-                      variant: 'outline',
-                      className: 'shrink-0',
-                    })}
-                  >
-                    <ArrowRightIcon />
-                  </Link>
+                  {abstractToken && (
+                    <Link
+                      to={`/tokens/${field.value}`}
+                      target="_blank"
+                      className={buttonVariants({
+                        variant: 'outline',
+                        className: 'shrink-0',
+                      })}
+                    >
+                      <ArrowRightIcon />
+                    </Link>
+                  )}
+                  {tokenDetails.data?.type === 'success' && !abstractToken && (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Link
+                          to={buildUrlWithParams('/tokens/new', {
+                            tab: 'abstract',
+                            coingeckoId: tokenDetails.data.data.id,
+                            redirectTo: 'deployed',
+                          })}
+                          className={buttonVariants({
+                            variant: 'outline',
+                            className: 'shrink-0',
+                          })}
+                        >
+                          <PlusIcon />
+                        </Link>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        No abstract token found for this token. Click to add
+                        one.
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
                 </div>
                 <FormMessage />
               </FormItem>
@@ -324,10 +367,6 @@ export function setDeployedTokenExistsError(
   form: UseFormReturn<DeployedTokenSchema>,
 ) {
   form.setError('address', {
-    type: 'custom',
-    message: 'Deployed token with given address and chain already exists',
-  })
-  form.setError('chain', {
     type: 'custom',
     message: 'Deployed token with given address and chain already exists',
   })

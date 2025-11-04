@@ -2,6 +2,7 @@ import { v } from '@l2beat/validate'
 import fuzzysort from 'fuzzysort'
 import { db } from '../../database/db'
 import { protectedProcedure, router } from '../trpc'
+import { getCoinByChainAndAddress } from './coingecko'
 
 export const tokensRouter = router({
   getAllAbstractTokens: protectedProcedure.query(() => {
@@ -73,6 +74,47 @@ export const tokensRouter = router({
       })
       return result !== undefined
     }),
+  getDeployedTokenDetails: protectedProcedure
+    .input(v.object({ chain: v.string(), address: v.string() }))
+    .query(async ({ input }) => {
+      const result = await db.deployedToken.findByChainAndAddress({
+        chain: input.chain,
+        address: input.address,
+      })
+      if (result !== undefined) {
+        return {
+          type: 'already-exists' as const,
+        }
+      }
+
+      const token = getRpcDetails(input.chain, input.address)
+      if (token === undefined) {
+        return {
+          type: 'not-found-on-rpc' as const,
+        }
+      }
+
+      const coin = await getCoinByChainAndAddress(input.chain, input.address)
+      if (coin === null) {
+        return {
+          type: 'not-found-on-coingecko' as const,
+          data: token,
+        }
+      }
+
+      const abstractToken = coin.id
+        ? await db.abstractToken.findByCoingeckoId(coin.id)
+        : undefined
+
+      return {
+        type: 'success' as const,
+        data: {
+          ...coin,
+          ...token,
+          abstractToken,
+        },
+      }
+    }),
   search: protectedProcedure.input(v.string()).query(async ({ input }) => {
     const deployedTokens = await db.deployedToken.getAll()
     if (input.startsWith('0x')) {
@@ -111,3 +153,13 @@ export const tokensRouter = router({
     }
   }),
 })
+
+function getRpcDetails(
+  chain: string,
+  address: string,
+): { decimals: number; deploymentTimestamp: number } | undefined {
+  return {
+    decimals: 18,
+    deploymentTimestamp: 1714732800,
+  }
+}

@@ -3,7 +3,7 @@ import type { Plan } from '@l2beat/token-backend'
 import { TrashIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import {
@@ -19,6 +19,7 @@ import {
 } from '~/components/forms/DeployedTokenForm'
 import { LoadingText } from '~/components/LoadingText'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
+import { useQueryState } from '~/hooks/useQueryState'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { DeployedToken } from '~/mock/types'
 import { api } from '~/react-query/trpc'
@@ -37,9 +38,15 @@ export function DeployedTokenPage() {
       enabled: chain !== '' && address !== '',
     },
   )
+
+  useEffect(() => {
+    if (!chain || !address || data === null) {
+      navigate('/not-found')
+    }
+  }, [chain, address, data, navigate])
+
   if (!chain || !address || data === null) {
-    navigate('/not-found')
-    return
+    return null
   }
 
   return (
@@ -56,7 +63,7 @@ export function DeployedTokenPage() {
 function DeployedTokenView({ token }: { token: DeployedToken }) {
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
 
-  const [searchParams] = useSearchParams()
+  const [abstractTokenId] = useQueryState('abstractTokenId', '')
   const form = useForm<DeployedTokenSchema>({
     resolver: validateResolver(DeployedTokenSchema),
     defaultValues: {
@@ -69,12 +76,14 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
     },
   })
 
+  const { data: abstractTokens, isLoading: areAbstractTokensLoading } =
+    api.tokens.getAllAbstractTokens.useQuery()
+
   useEffect(() => {
-    const abstractTokenId = searchParams.get('abstractTokenId')
     if (abstractTokenId) {
       form.setValue('abstractTokenId', abstractTokenId, { shouldDirty: true })
     }
-  }, [searchParams, form.setValue])
+  }, [abstractTokenId, form.setValue])
 
   const { mutate: planMutate, isPending: isPending } =
     api.plan.generate.useMutation({
@@ -172,9 +181,15 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
               form={form}
               onSubmit={onSubmit}
               isFormDisabled={isPending}
-              deployedTokenCheck={{
-                exists: deployedTokenExists,
+              tokenDetails={{
+                data: deployedTokenExists
+                  ? { type: 'already-exists' }
+                  : undefined,
                 loading: deployedTokenExistsLoading,
+              }}
+              abstractTokens={{
+                data: abstractTokens,
+                loading: areAbstractTokensLoading,
               }}
             >
               <ButtonWithSpinner

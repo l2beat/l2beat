@@ -2,6 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import {
@@ -10,7 +11,9 @@ import {
 } from '~/components/forms/AbstractTokenForm'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
+import { useQueryState } from '~/hooks/useQueryState'
 import { api } from '~/react-query/trpc'
+import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
 import { generateRandomString } from '~/utils/generateRandomString'
 import { validateResolver } from '~/utils/validateResolver'
 
@@ -23,6 +26,9 @@ export function AddAbstractToken({
 }: {
   defaultValues?: AbstractTokenSchema
 }) {
+  const [coingeckoIdQueryState] = useQueryState('coingeckoId', '')
+  const [redirectTo] = useQueryState('redirectTo', '')
+  const navigate = useNavigate()
   const form = useForm<AbstractTokenSchema>({
     resolver: validateResolver(AbstractTokenSchema),
     defaultValues: defaultValues ?? {
@@ -57,6 +63,12 @@ export function AddAbstractToken({
       }
     },
   })
+
+  useEffect(() => {
+    if (coingeckoIdQueryState) {
+      form.setValue('coingeckoId', coingeckoIdQueryState)
+    }
+  }, [coingeckoIdQueryState, form.setValue])
 
   useEffect(() => {
     if (isCoinLoading) return
@@ -134,7 +146,17 @@ export function AddAbstractToken({
       <PlanConfirmationDialog
         plan={plan}
         setPlan={setPlan}
-        onSuccess={form.reset}
+        onSuccess={() => {
+          form.reset()
+          if (redirectTo) {
+            navigate(
+              buildUrlWithParams('/tokens/new', {
+                tab: redirectTo,
+                abstractTokenId: form.getValues('id'),
+              }),
+            )
+          }
+        }}
       />
       <AbstractTokenForm
         form={form}
