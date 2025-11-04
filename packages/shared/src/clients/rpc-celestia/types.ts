@@ -36,9 +36,13 @@ const CelestiaBlockResult = v.object({
     v.null(),
     v.array(
       v.object({
-        log: v
-          .string()
-          .transform((x) => (x === '' ? null : LogSchema.parse(JSON.parse(x)))),
+        log: v.string().transform((x) => {
+          try {
+            return LogSchema.parse(JSON.parse(x))
+          } catch {
+            return null
+          }
+        }),
         events: v.array(EventSchema),
       }),
     ),
