@@ -74,9 +74,9 @@ export const MayanForwarded = createInteropEventType<{
   mayanProtocol: string
   methodSignature: `0x${string}`
   tokenIn: Address32
-  amountIn?: string
+  amountIn?: bigint
   tokenOut?: Address32
-  minAmountOut?: string
+  minAmountOut?: bigint
   $dstChain: string
 }>('mayan-forwarder.MayanForwarded')
 
@@ -104,7 +104,7 @@ export class MayanForwarderPlugin implements InteropPlugin {
           ),
           methodSignature: decodedData.methodSignature,
           tokenIn: decodedData.tokenIn ?? Address32.NATIVE,
-          amountIn: decodedData.amountIn ?? input.ctx.txValue?.toString(),
+          amountIn: decodedData.amountIn ?? input.ctx.txValue,
           tokenOut: decodedData.tokenOut,
           minAmountOut: decodedData.minAmountOut,
           $dstChain: decodedData.dstChain,
@@ -127,7 +127,7 @@ export class MayanForwarderPlugin implements InteropPlugin {
           ),
           methodSignature: decodedData.methodSignature,
           tokenIn: decodedData.tokenIn ?? Address32.from(forwardedERC20.token),
-          amountIn: decodedData.amountIn ?? forwardedERC20.amount.toString(),
+          amountIn: decodedData.amountIn ?? forwardedERC20.amount,
           tokenOut: decodedData.tokenOut,
           minAmountOut: decodedData.minAmountOut,
           $dstChain: decodedData.dstChain,
@@ -150,7 +150,7 @@ export class MayanForwarderPlugin implements InteropPlugin {
           ),
           methodSignature: decodedData.methodSignature,
           tokenIn: decodedData.tokenIn ?? Address32.ZERO,
-          amountIn: decodedData.amountIn ?? '0',
+          amountIn: decodedData.amountIn,
           tokenOut: decodedData.tokenOut,
           minAmountOut: decodedData.minAmountOut,
           $dstChain: decodedData.dstChain,
@@ -173,7 +173,7 @@ export class MayanForwarderPlugin implements InteropPlugin {
           ),
           methodSignature: decodedData.methodSignature,
           tokenIn: decodedData.tokenIn ?? Address32.ZERO,
-          amountIn: decodedData.amountIn ?? '0',
+          amountIn: decodedData.amountIn,
           tokenOut: decodedData.tokenOut,
           minAmountOut: decodedData.minAmountOut,
           $dstChain: decodedData.dstChain,
@@ -238,9 +238,9 @@ interface DecodedData {
   args: unknown
   dstChain: string
   tokenIn?: Address32
-  amountIn?: string
+  amountIn?: bigint
   tokenOut?: Address32
-  minAmountOut?: string
+  minAmountOut?: bigint
 }
 
 function decodeProtocolData(
@@ -272,9 +272,9 @@ function decodeProtocolData(
       res.args[2].destChainId,
     )
     decoded.tokenIn = Address32.from(res.args[0])
-    decoded.amountIn = res.args[1].toString()
+    decoded.amountIn = res.args[1]
     decoded.tokenOut = Address32.from(res.args[2].tokenOut)
-    decoded.minAmountOut = res.args[2].minAmountOut.toString()
+    decoded.minAmountOut = res.args[2].minAmountOut
   } else if (res.functionName === 'createOrderWithEth') {
     decoded.dstChain = getChainFromWormholeId(
       wormholeNetworks,
@@ -282,7 +282,7 @@ function decodeProtocolData(
     )
     decoded.tokenIn = Address32.NATIVE
     decoded.tokenOut = Address32.from(res.args[0].tokenOut)
-    decoded.minAmountOut = res.args[0].minAmountOut.toString()
+    decoded.minAmountOut = res.args[0].minAmountOut
   } else if (res.functionName === 'createOrder') {
     if (res.args.length === 1) {
       decoded.dstChain = getChainFromWormholeId(
@@ -290,39 +290,39 @@ function decodeProtocolData(
         res.args[0].destChain,
       )
       decoded.tokenIn = Address32.from(res.args[0].tokenIn)
-      decoded.amountIn = res.args[0].amountIn.toString()
+      decoded.amountIn = res.args[0].amountIn
       decoded.tokenOut = Address32.from(res.args[0].tokenOut)
-      decoded.minAmountOut = res.args[0].minAmountOut.toString()
+      decoded.minAmountOut = res.args[0].minAmountOut
     } else {
       decoded.dstChain = getChainFromWormholeId(wormholeNetworks, res.args[4])
       decoded.tokenIn = Address32.from(res.args[0])
-      decoded.amountIn = res.args[1].toString()
+      decoded.amountIn = res.args[1]
       decoded.tokenOut = Address32.from(res.args[5].tokenOut)
-      decoded.minAmountOut = res.args[5].amountOutMin.toString()
+      decoded.minAmountOut = res.args[5].amountOutMin
     }
   } else if (res.functionName === 'bridgeWithFee') {
     decoded.dstChain = getChainFromWormholeId(wormholeNetworks, res.args[5])
     decoded.tokenIn = Address32.from(res.args[0])
-    decoded.amountIn = res.args[1].toString()
+    decoded.amountIn = res.args[1]
   } else if (res.functionName === 'bridgeWithLockedFee') {
     decoded.dstChain = getChainFromWormholeId(wormholeNetworks, res.args[4])
     decoded.tokenIn = Address32.from(res.args[0])
-    decoded.amountIn = res.args[1].toString()
+    decoded.amountIn = res.args[1]
   } else if (res.functionName === 'bridge') {
     decoded.dstChain = getChainFromWormholeId(wormholeNetworks, res.args[6])
     decoded.tokenIn = Address32.from(res.args[0])
-    decoded.amountIn = res.args[1].toString()
+    decoded.amountIn = res.args[1]
   } else if (res.functionName === 'swap') {
     decoded.dstChain = getChainFromWormholeId(wormholeNetworks, res.args[3])
     decoded.tokenIn = Address32.from(res.args[5])
-    decoded.amountIn = res.args[6].toString()
+    decoded.amountIn = res.args[6]
     decoded.tokenOut = Address32.from(res.args[2])
-    decoded.minAmountOut = res.args[4].amountOutMin.toString()
+    decoded.minAmountOut = res.args[4].amountOutMin
   } else if (res.functionName === 'wrapAndSwapETH') {
     decoded.dstChain = getChainFromWormholeId(wormholeNetworks, res.args[3])
     decoded.tokenIn = Address32.NATIVE
     decoded.tokenOut = Address32.from(res.args[2])
-    decoded.minAmountOut = res.args[4].amountOutMin.toString()
+    decoded.minAmountOut = res.args[4].amountOutMin
   }
   return decoded
 }

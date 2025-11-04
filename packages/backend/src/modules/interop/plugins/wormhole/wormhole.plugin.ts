@@ -14,7 +14,7 @@ const parseLogMessagePublished = createEventParser(
 
 export const LogMessagePublished = createInteropEventType<{
   payload: `0x${string}`
-  sequence: string
+  sequence: bigint
   wormholeChainId: number
   sender: EthereumAddress
 }>('wormhole.LogMessagePublished')
@@ -41,7 +41,7 @@ export class WormholePlugin implements InteropPlugin {
     return [
       LogMessagePublished.create(input.ctx, {
         payload: parsed.payload,
-        sequence: parsed.sequence.toString(),
+        sequence: parsed.sequence,
         wormholeChainId: network.wormholeChainId,
         sender: EthereumAddress(parsed.sender),
       }),

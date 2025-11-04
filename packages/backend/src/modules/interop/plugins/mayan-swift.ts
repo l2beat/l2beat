@@ -49,7 +49,7 @@ export class MayanSwiftPlugin implements InteropPlugin {
     if (orderFulfilled) {
       return [
         OrderFulfilled.create(input.ctx, {
-          key: orderFulfilled.key.toString(),
+          key: orderFulfilled.key,
         }),
       ]
     }
@@ -65,7 +65,7 @@ export class MayanSwiftPlugin implements InteropPlugin {
       const dstChain = parsed?.dstChain ?? 'unknown_missing_protocolData'
       return [
         OrderCreated.create(input.ctx, {
-          key: orderCreated.key.toString(),
+          key: orderCreated.key,
           $dstChain: dstChain,
         }),
       ]

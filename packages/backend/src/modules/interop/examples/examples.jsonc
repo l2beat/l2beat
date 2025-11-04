@@ -1150,7 +1150,11 @@
       },
       {
         "chain": "base",
-        "tx": "0x88c85b362476cbd7efed57b6af6fe3f9307e7ddf8cdc11c4534a72417cce9752"
+        "tx": "0x2de129557d9d6928255ef9604115f3f4a093247aecf84bcb2b08f0ec06b92b64"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x2b996c0833a7a18e0e04aa5e2fb370c0ffc919b1523f9de36a5ba669336bd44d"
       }
     ]
   }

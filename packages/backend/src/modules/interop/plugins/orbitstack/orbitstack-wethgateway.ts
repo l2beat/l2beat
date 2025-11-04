@@ -27,7 +27,7 @@ import {
 const WethDepositInitiatedMessageDelivered = createInteropEventType<{
   chain: string
   messageNum: string
-  amount: string
+  amount: bigint
 }>('orbitstack-wethgateway.WethDepositInitiated')
 
 const parseDepositInitiated = createEventParser(
@@ -37,7 +37,7 @@ const parseDepositInitiated = createEventParser(
 // L2 finalization of L1->L2 WETH deposit
 const WethDepositFinalized = createInteropEventType<{
   chain: string
-  amount: string
+  amount: bigint
 }>('orbitstack-wethgateway.WethDepositFinalized')
 
 const parseDepositFinalized = createEventParser(
@@ -54,7 +54,7 @@ const parseTransfer = createEventParser(
 const WethWithdrawalInitiatedL2ToL1Tx = createInteropEventType<{
   chain: string
   position: number
-  amount: string
+  amount: bigint
 }>('orbitstack-wethgateway.WethWithdrawalInitiated')
 
 const parseWithdrawalInitiated = createEventParser(
@@ -66,7 +66,7 @@ const WethWithdrawalFinalizedOutBoxTransactionExecuted =
   createInteropEventType<{
     chain: string
     position: number
-    amount: string
+    amount: bigint
   }>('orbitstack-wethgateway.WethWithdrawalFinalized')
 
 const parseWethWithdrawalFinalized = createEventParser(
@@ -112,7 +112,7 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
                 WethDepositInitiatedMessageDelivered.create(input.ctx, {
                   chain: network.chain,
                   messageNum: messageDelivered.messageIndex.toString(),
-                  amount: depositInitiated._amount.toString(),
+                  amount: depositInitiated._amount,
                 }),
               ]
             }
@@ -149,7 +149,7 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
                   {
                     chain: network.chain,
                     position: Number(outBoxTx.transactionIndex),
-                    amount: wethWithdrawalFinalized._amount.toString(),
+                    amount: wethWithdrawalFinalized._amount,
                   },
                 ),
               ]
@@ -225,7 +225,7 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
           return [
             WethDepositFinalized.create(input.ctx, {
               chain: network.chain,
-              amount: depositFinalized.amount.toString(),
+              amount: depositFinalized.amount,
             }),
           ]
         }
@@ -264,7 +264,7 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
           WethWithdrawalInitiatedL2ToL1Tx.create(input.ctx, {
             chain: network.chain,
             position: Number(withdrawalInitiated._l2ToL1Id),
-            amount: withdrawalInitiated._amount.toString(),
+            amount: withdrawalInitiated._amount,
           }),
         ]
       }
@@ -313,10 +313,10 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
         }),
         Result.Transfer('orbitstack.L1ToL2Transfer', {
           srcEvent: depositInitiated,
-          srcAmount: BigInt(depositInitiated.args.amount),
+          srcAmount: depositInitiated.args.amount,
           srcTokenAddress: Address32.from(network.l1Weth),
           dstEvent: event,
-          dstAmount: BigInt(event.args.amount),
+          dstAmount: event.args.amount,
           dstTokenAddress: Address32.from(network.l2Weth),
         }),
       ]
@@ -360,10 +360,10 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
         }),
         Result.Transfer('orbitstack.L2ToL1Transfer', {
           srcEvent: withdrawalInitiated,
-          srcAmount: BigInt(withdrawalInitiated.args.amount),
+          srcAmount: withdrawalInitiated.args.amount,
           srcTokenAddress: Address32.from(network.l2Weth),
           dstEvent: event,
-          dstAmount: BigInt(event.args.amount),
+          dstAmount: event.args.amount,
           dstTokenAddress: Address32.from(network.l1Weth),
         }),
       ]

@@ -187,11 +187,11 @@ export class WormholeNTTPlugin implements InteropPlugin {
           srcTokenAddress: srcTokenAddress
             ? Address32.from(srcTokenAddress)
             : Address32.ZERO,
-          srcAmount: amount ? BigInt(amount) : undefined,
+          srcAmount: amount,
           dstTokenAddress: dstTokenAddress
             ? Address32.from(dstTokenAddress)
             : Address32.ZERO, // TODO: Should extract token from dst NTT manager
-          dstAmount: amount ? BigInt(amount) : undefined,
+          dstAmount: amount,
         }),
       ]
     }
@@ -209,7 +209,7 @@ function decodeNTTManagerPayload(payload: string) {
     const reader2 = new BinaryReader(payloadData)
     const prefix = reader2.readBytes(4)
     const decimals = reader2.readBytes(1)
-    const amount = reader2.readUint64().toString()
+    const amount = reader2.readUint64()
     const sourceToken = reader2.readBytes(32)
     const toAddress = reader2.readBytes(32)
     const toChain = reader2.readBytes(2)

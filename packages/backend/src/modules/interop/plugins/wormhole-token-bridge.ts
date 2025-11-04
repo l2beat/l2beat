@@ -18,7 +18,7 @@ const parseLogTransferRedeemed = createEventParser(
 )
 
 export const TransferRedeemed = createInteropEventType<{
-  sequence: string
+  sequence: bigint
   $srcChain: string
   srcWormholeChainId: number
   sender: string
@@ -38,7 +38,7 @@ export class WormholeTokenBridgePlugin implements InteropPlugin {
 
     return [
       TransferRedeemed.create(input.ctx, {
-        sequence: parsed.sequence.toString(),
+        sequence: parsed.sequence,
         $srcChain: findChain(
           wormholeNetworks,
           (x) => x.wormholeChainId,
