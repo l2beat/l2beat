@@ -2,6 +2,7 @@ import type { ConfigReader, DiscoveryPaths, TemplateService } from '@l2beat/disc
 import { getProject } from '../getProject'
 import { getFunctions } from './functions'
 import { getContractTags } from './contractTags'
+import type { Impact, Likelihood, Severity } from './types'
 
 // ============================================================================
 // Type Definitions
@@ -12,6 +13,114 @@ export type LetterGrade = 'AAA' | 'AA' | 'A' | 'BBB' | 'BB' | 'B' | 'CCC' | 'CC'
 export interface ModuleScore {
   grade: LetterGrade
   inventory: number
+}
+
+// ============================================================================
+// Severity Scoring Functions
+// ============================================================================
+
+/**
+ * Severity level mapping: Impact × Likelihood → Severity
+ *
+ * Maps the combination of impact and likelihood to a severity level string.
+ * This table is used for textual severity classification.
+ *
+ * Table format:
+ * Impact \ Likelihood | Mitigated     | Low       | Medium    | High
+ * Critical            | Medium        | High      | Critical  | Critical
+ * High                | Low           | Medium    | Medium    | High
+ * Medium              | Informational | Low       | Medium    | High
+ * Low                 | Informational | Informational | Low   | Medium
+ */
+const SEVERITY_LEVEL_MAP: Record<Impact, Record<Likelihood, Severity>> = {
+  critical: {
+    mitigated: 'medium',
+    low: 'high',
+    medium: 'critical',
+    high: 'critical',
+  },
+  high: {
+    mitigated: 'low',
+    low: 'medium',
+    medium: 'medium',
+    high: 'high',
+  },
+  medium: {
+    mitigated: 'informational',
+    low: 'low',
+    medium: 'medium',
+    high: 'high',
+  },
+  low: {
+    mitigated: 'informational',
+    low: 'informational',
+    medium: 'low',
+    high: 'medium',
+  },
+}
+
+/**
+ * Grade mapping: Impact × Likelihood → LetterGrade
+ *
+ * Maps the combination of impact and likelihood to a letter grade.
+ * This table is used for quantitative risk scoring.
+ *
+ * Table format:
+ * Impact \ Likelihood | Mitigated | Low  | Medium | High
+ * Critical            | B         | C    | D      | D
+ * High                | A         | BB   | CC     | D
+ * Medium              | AA        | A    | BBB    | CCC
+ * Low                 | AA        | AA   | A      | BBB
+ */
+const SEVERITY_GRADE_MAP: Record<Impact, Record<Likelihood, LetterGrade>> = {
+  critical: {
+    mitigated: 'B',
+    low: 'C',
+    medium: 'D',
+    high: 'D',
+  },
+  high: {
+    mitigated: 'A',
+    low: 'BB',
+    medium: 'CC',
+    high: 'D',
+  },
+  medium: {
+    mitigated: 'AA',
+    low: 'A',
+    medium: 'BBB',
+    high: 'CCC',
+  },
+  low: {
+    mitigated: 'AA',
+    low: 'AA',
+    medium: 'A',
+    high: 'BBB',
+  },
+}
+
+/**
+ * Get severity level from impact and likelihood.
+ * Returns the textual severity classification.
+ *
+ * @param impact - The impact level (low, medium, high, critical)
+ * @param likelihood - The likelihood level (mitigated, low, medium, high)
+ * @returns The severity level (informational, low, medium, high, critical)
+ */
+export function getSeverityLevel(impact: Impact, likelihood: Likelihood): Severity {
+  return SEVERITY_LEVEL_MAP[impact][likelihood]
+}
+
+/**
+ * Get severity grade from impact and likelihood.
+ * Returns the letter grade for quantitative scoring.
+ *
+ * @param impact - The impact level (low, medium, high, critical)
+ * @param likelihood - The likelihood level (mitigated, low, medium, high)
+ * @returns The letter grade (AAA through D)
+ */
+export function getSeverityGrade(impact: Impact, likelihood: Likelihood): LetterGrade {
+  return SEVERITY_GRADE_MAP[impact][likelihood]
 }
 
 export interface V2ScoreResult {

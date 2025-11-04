@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-11-03T21:19:22.826Z",
+  "lastModified": "2025-11-04T18:46:24.741Z",
   "contracts": {
     "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": {
       "functions": [
@@ -61,14 +61,14 @@
           "isPermissioned": true,
           "checked": true,
           "score": "medium-risk",
-          "probability": "unlikely",
+          "likelihood": "medium",
           "description": "Adds a guardian and sets a new custom quorum value. Guardians co-sign deposits to reduce the risk of collusion with node operators.",
           "ownerDefinitions": [
             {
               "path": "$self.getOwner"
             }
           ],
-          "timestamp": "2025-10-31T18:32:57.707Z"
+          "timestamp": "2025-11-04T18:46:24.741Z"
         },
         {
           "functionName": "addGuardians",

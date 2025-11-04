@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
-import type { ApiAbiEntry, FunctionEntry, AddressFieldValue } from '../../../api/types'
+import type { ApiAbiEntry, FunctionEntry, AddressFieldValue, Likelihood } from '../../../api/types'
 import * as solidity from '../../../components/editor/languages/solidity'
 import { IconCheckFalse } from './IconCheckFalse'
 import { IconCheckTrue } from './IconCheckTrue'
@@ -31,7 +31,7 @@ interface FunctionFolderProps {
   onPermissionToggle: (contractAddress: string, functionName: string, currentIsPermissioned: boolean) => void
   onCheckedToggle: (contractAddress: string, functionName: string, currentChecked: boolean) => void
   onScoreToggle: (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk' | 'critical') => void
-  onProbabilityToggle: (contractAddress: string, functionName: string, currentProbability: 'unassigned' | 'unlikely' | 'somewhat-likely' | 'very-likely') => void
+  onLikelihoodToggle: (contractAddress: string, functionName: string, currentLikelihood: Likelihood) => void
   onDescriptionUpdate: (contractAddress: string, functionName: string, description: string) => void
   onConstraintsUpdate: (contractAddress: string, functionName: string, constraints: string) => void
   onOpenInCode: (contractAddress: string, functionName: string) => void
@@ -49,7 +49,7 @@ export function FunctionFolder({
   onPermissionToggle,
   onCheckedToggle,
   onScoreToggle,
-  onProbabilityToggle,
+  onLikelihoodToggle,
   onDescriptionUpdate,
   onConstraintsUpdate,
   onOpenInCode,
@@ -293,20 +293,20 @@ export function FunctionFolder({
   }
 
   // Helper to get likelihood color
-  const getLikelihoodColor = (likelihood?: 'high' | 'medium' | 'low' | 'mitigated') => {
+  const getLikelihoodColor = (likelihood?: 'high' | 'medium' | 'low' | 'mitigated', isHover: boolean = false) => {
     switch (likelihood) {
-      case 'high': return '#f87171' // red-400
-      case 'medium': return '#fb923c' // orange-400
-      case 'low': return '#fbbf24' // amber-400
-      case 'mitigated': return '#10b981' // green-500
-      default: return '#9ca3af' // gray-400
+      case 'high': return isHover ? '#fca5a5' : '#f87171' // red-300 : red-400
+      case 'medium': return isHover ? '#fdba74' : '#fb923c' // orange-300 : orange-400
+      case 'low': return isHover ? '#6ee7b7' : '#10b981' // green-300 : green-500 (swapped from amber to match new mapping)
+      case 'mitigated': return isHover ? '#d1d5db' : '#9ca3af' // gray-300 : gray-400
+      default: return isHover ? '#d1d5db' : '#9ca3af' // gray-300 : gray-400
     }
   }
 
   const isPermissioned = currentFunction?.isPermissioned || false
   const checkedStatus = currentFunction?.checked || false
   const scoreStatus = currentFunction?.score || 'unscored'
-  const probabilityStatus = currentFunction?.probability || 'unassigned'
+  const likelihoodStatus = currentFunction?.likelihood || 'mitigated'
   const description = currentFunction?.description || ''
   const constraints = currentFunction?.constraints || ''
 
@@ -381,16 +381,6 @@ export function FunctionFolder({
       case 'high-risk': return isHover ? '#fca5a5' : '#f87171' // red-300 : red-400
       case 'critical': return isHover ? '#c084fc' : '#a855f7' // purple-400 : purple-500
       default: return isHover ? '#d1d5db' : '#9ca3af' // gray-300 : gray-400
-    }
-  }
-
-  // Probability colors
-  const getProbabilityColor = (probability: string, isHover: boolean = false) => {
-    switch (probability) {
-      case 'unlikely': return isHover ? '#6ee7b7' : '#10b981' // green-300 : green-500
-      case 'somewhat-likely': return isHover ? '#fdba74' : '#fb923c' // orange-300 : orange-400
-      case 'very-likely': return isHover ? '#fca5a5' : '#f87171' // red-300 : red-400
-      default: return isHover ? '#d1d5db' : '#9ca3af' // gray-300 : gray-400 (unassigned)
     }
   }
 
@@ -626,19 +616,19 @@ export function FunctionFolder({
             <IconVoltage />
           </button>
 
-          {/* Probability Icon */}
+          {/* Likelihood Icon */}
           <button
-            onClick={() => onProbabilityToggle(contractAddress, functionName, probabilityStatus)}
+            onClick={() => onLikelihoodToggle(contractAddress, functionName, likelihoodStatus)}
             className="inline-block cursor-pointer transition-colors"
             style={{
-              color: getProbabilityColor(probabilityStatus),
+              color: getLikelihoodColor(likelihoodStatus),
             }}
-            title={`Current probability: ${probabilityStatus}. Click to cycle: unassigned → unlikely → somewhat-likely → very-likely`}
+            title={`Current likelihood: ${likelihoodStatus}. Click to cycle: mitigated → low → medium → high`}
             onMouseEnter={(e) => {
-              e.currentTarget.style.color = getProbabilityColor(probabilityStatus, true)
+              e.currentTarget.style.color = getLikelihoodColor(likelihoodStatus, true)
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.color = getProbabilityColor(probabilityStatus)
+              e.currentTarget.style.color = getLikelihoodColor(likelihoodStatus)
             }}
           >
             <IconProbability />

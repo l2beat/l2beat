@@ -2,6 +2,11 @@
 
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 
+// Severity scoring type aliases
+export type Impact = 'low' | 'medium' | 'high' | 'critical'
+export type Likelihood = 'mitigated' | 'low' | 'medium' | 'high'
+export type Severity = 'informational' | 'low' | 'medium' | 'high' | 'critical'
+
 export type ApiProjectsResponse = ApiProjectEntry[]
 
 export interface ApiProjectEntry {
@@ -203,7 +208,7 @@ export interface FunctionEntry {
   isPermissioned: boolean
   checked?: boolean
   score?: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk' | 'critical'
-  probability?: 'unassigned' | 'unlikely' | 'somewhat-likely' | 'very-likely'
+  likelihood?: Likelihood
   reason?: string
   description?: string
   constraints?: string
@@ -240,7 +245,7 @@ export interface ApiFunctionsUpdateRequest {
   isPermissioned?: boolean
   checked?: boolean
   score?: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk' | 'critical'
-  probability?: 'unassigned' | 'unlikely' | 'somewhat-likely' | 'very-likely'
+  likelihood?: Likelihood
   reason?: string
   description?: string
   constraints?: string
@@ -265,7 +270,7 @@ export interface ContractTag {
   contractAddress: string
   isExternal: boolean
   centralization?: 'high' | 'medium' | 'low' | 'immutable'
-  likelihood?: 'high' | 'medium' | 'low' | 'mitigated'
+  likelihood?: Likelihood
   timestamp: string
 }
 
@@ -273,5 +278,5 @@ export interface ApiContractTagsUpdateRequest {
   contractAddress: string
   isExternal?: boolean
   centralization?: 'high' | 'medium' | 'low' | 'immutable'
-  likelihood?: 'high' | 'medium' | 'low' | 'mitigated'
+  likelihood?: Likelihood
 }
