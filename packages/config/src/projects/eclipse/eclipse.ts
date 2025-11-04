@@ -1,4 +1,5 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -72,6 +73,17 @@ export const eclipse: ScalingProject = {
       },
     ],
     daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 20546918,
+        inbox: ChainSpecificAddress(
+          'eth:0x4cef0fa54dc06ce0ea198dab2f57d28a9dee712b',
+        ),
+        sequencers: [
+          ChainSpecificAddress('eth:0xc1f4d15C16A1f3555E0a5F7AeFD1e17AD4aaf40B'),
+        ],
+      },
       {
         type: 'celestia',
         daLayer: ProjectId('celestia'),

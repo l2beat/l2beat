@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -83,6 +83,21 @@ export const fraxtal: ScalingProject = opStackL2({
   },
   genesisTimestamp: UnixTime(1706811599),
   isNodeAvailable: true,
+  nonTemplateDaTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: discovery.getContract('SystemConfig').sinceBlock ?? 0,
+      inbox: ChainSpecificAddress.address(
+        discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+      ),
+      sequencers: [
+        ChainSpecificAddress.address(
+          discovery.getContractValue('SystemConfig', 'batcherHash'),
+        ),
+      ],
+    },
+  ],
   chainConfig: {
     name: 'fraxtal',
     chainId: 252,

@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -98,6 +103,19 @@ export const lens: ScalingProject = zkStackL2({
     sinceBlock: 1180000, // avail block number, roughly 04/03 right before mainnet launch (chain was active before)
     appIds: ['26'],
   },
+  nonTemplateDaTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: discovery.getContract('LensZkEvm').sinceBlock ?? 0,
+      inbox: ChainSpecificAddress.address(
+        discovery.getContractDetails('LensZkEvm').address,
+      ),
+      sequencers: discovery
+        .getContractValue<ChainSpecificAddress[]>('ValidatorTimelock', 'validators')
+        .map((a) => ChainSpecificAddress.address(a)),
+    },
+  ],
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],

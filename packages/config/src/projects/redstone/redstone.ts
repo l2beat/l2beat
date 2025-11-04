@@ -1,4 +1,9 @@
-import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   DA_LAYERS,
   DaCommitteeSecurityRisk,
@@ -131,4 +136,19 @@ However, there is a mechanism that allows users to challenge unavailability of d
       relayerFailure: DaRelayerFailureRisk.NoMechanism,
     },
   },
+  nonTemplateDaTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: discovery.getContract('SystemConfig').sinceBlock ?? 0,
+      inbox: ChainSpecificAddress.address(
+        discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+      ),
+      sequencers: [
+        ChainSpecificAddress.address(
+          discovery.getContractValue('SystemConfig', 'batcherHash'),
+        ),
+      ],
+    },
+  ],
 })
