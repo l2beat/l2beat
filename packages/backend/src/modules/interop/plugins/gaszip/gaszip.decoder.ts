@@ -154,3 +154,8 @@ export function decodeGasZipDeposit(input: string): GasZipDecodedDeposit {
 
   return result
 }
+
+export function extractFirstTwentyHex(bytes32: string): string {
+  const hex = bytes32.startsWith('0x') ? bytes32.slice(2) : bytes32
+  return '0x' + hex.slice(0, 40)
+}
