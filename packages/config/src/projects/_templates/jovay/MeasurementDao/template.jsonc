@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "name": "MeasurementDao",
-  "description": "The MeasurementDao contract is an onchain registry that allowlists SGX MR_ENCLAVE<->MR_SIGNER pairs and TDX RTMR3/MRTD values, and verifies DCAP quotes by matching quote fields to the stored measurements."
+  "description": "The MeasurementDao contract is an onchain registry that allowlists SGX MR_ENCLAVE<->MR_SIGNER pairs and TDX RTMR3/MRTD values, and verifies DCAP quotes by matching quote fields to the stored measurements.",
+  "ignoreInWatchMode": ["get_rtMr"]
 }

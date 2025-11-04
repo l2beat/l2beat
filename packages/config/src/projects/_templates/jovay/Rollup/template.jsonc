@@ -9,6 +9,7 @@
     "l1MsgCount",
     "l2MsgRoots"
   ],
+  "ignoreInWatchMode": ["lastCommittedBatch", "lastTeeVerifiedBatch"],
   "fields": {
     "relayer": {
       "handler": {

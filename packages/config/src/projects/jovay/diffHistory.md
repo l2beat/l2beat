@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x66a41fb6b5544540adbcdfa5f30ef3b9cce359cd
+
+# Diff at Tue, 04 Nov 2025 15:49:48 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@0ebe5cf1be74efd95b3e7efea7b23edc17a308e5 block: 1761907870
+- current timestamp: 1762271166
+
+## Description
+
+Ignored in watchmode.
+
+## Watched changes
+
+```diff
+    contract MeasurementDao (eth:0x359437E2763e9622DD4324D7904BbF7516332D4F) {
+    +++ description: The MeasurementDao contract is an onchain registry that allowlists SGX MR_ENCLAVE<->MR_SIGNER pairs and TDX RTMR3/MRTD values, and verifies DCAP quotes by matching quote fields to the stored measurements.
+      values.get_rtMr.1:
++        "0xe6ad4b4f516eda68799b6940a6759e6515f0d86ca9694c2c3a1e824db11766026ae904d9d6601b50138162eb61d940ee"
+    }
+```
+
+```diff
+    contract Rollup (eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1) {
+    +++ description: The Rollup contract is used to submit and verify L2 batches.
+      values.lastCommittedBatch:
+-        971
++        1071
+      values.lastTeeVerifiedBatch:
+-        971
++        1071
+    }
+```
+
 Generated with discovered.json: 0xa068df9137505b691b8dad8cb856f0a378ed111d
 
 # Diff at Fri, 31 Oct 2025 10:59:58 GMT:

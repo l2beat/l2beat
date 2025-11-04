@@ -1,6 +1,6 @@
 {
   "name": "jovay",
-  "timestamp": 1761907870,
+  "timestamp": 1762271166,
   "configHash": "0x622125b51a6406eeab9b446ee191c7ffd1aee4ed5e967718f5fbc7970a548154",
   "entries": [
     {
@@ -46,7 +46,8 @@
         "get_mr_enclave": [],
         "get_mrtd": [],
         "get_rtMr": [
-          "0x3e0b25d2f522b09e8f9749dbb7cb0b49d677372868cddcffa568cf2fb9386efe0e455af66021216d37b2a9c19d88ca90"
+          "0x3e0b25d2f522b09e8f9749dbb7cb0b49d677372868cddcffa568cf2fb9386efe0e455af66021216d37b2a9c19d88ca90",
+          "0xe6ad4b4f516eda68799b6940a6759e6515f0d86ca9694c2c3a1e824db11766026ae904d9d6601b50138162eb61d940ee"
         ],
         "owner": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB"
       },
@@ -328,8 +329,8 @@
         "$upgradeCount": 2,
         "l1_mail_box": "eth:0x9869A90FDAc287519E48aff4cCE329907a995162",
         "l1BlobNumberLimit": 6,
-        "lastCommittedBatch": 971,
-        "lastTeeVerifiedBatch": 971,
+        "lastCommittedBatch": 1071,
+        "lastTeeVerifiedBatch": 1071,
         "lastZkVerifiedBatch": 0,
         "layer2ChainId": 5734951,
         "maxBlockInChunk": 32,
@@ -732,6 +733,6 @@
     "jovay/TEECacheVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "jovay/TEEVerifierProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23696853 },
+  "usedBlockNumbers": { "ethereum": 23726935 },
   "permissionsConfigHash": "0x519465cb7e1e84c96fef130afd717a0553a0369133c7edb08542054a77898879"
 }
