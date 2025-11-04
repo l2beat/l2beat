@@ -2,9 +2,7 @@ name: Deploy backend prod
 
 concurrency:
   group: backend-deployment-prod
-permissions:
-  contents: read
-  packages: write
+permissions: {}
 
 on:
   workflow_dispatch: {}
@@ -34,24 +32,15 @@ jobs:
           username: "_"
           password: ${{ secrets.HEROKU_TOKEN }}
           registry: registry.heroku.com
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and publish containers
         run: |
           docker build --push \
             --build-arg TURBO_TEAM=${TURBO_TEAM} \
             --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
-            -t ${HEROKU_TAG} -t ${GH_TAG_LATEST} -t ${GH_TAG_SHA} \
-            -f ${DOCKERFILE} .
+            -t ${TAG} -f ${DOCKERFILE} .
         env:
           DOCKERFILE: Dockerfile.backend
-          HEROKU_TAG: registry.heroku.com/${{ secrets.HEROKU_BACKEND_PROD }}/web
-          GH_TAG_LATEST: ${{ github.repository }}/backend:latest
-          GH_TAG_SHA: ${{ github.repository }}/backend:${{ github.sha }}
+          TAG: registry.heroku.com/${{ secrets.HEROKU_BACKEND_PROD }}/web
           TURBO_TEAM: ${{ vars.TURBO_TEAM }}
           TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       - name: Release published container
