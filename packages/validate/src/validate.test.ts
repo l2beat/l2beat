@@ -75,7 +75,8 @@ describe('validate', () => {
     expect(Foo.safeValidate(1)).toEqual({
       success: false,
       path: '',
-      message: 'None of the union variants matched, got number.',
+      message:
+        'None of the union variants matched, got number. Variant 0: Expected string, got number. Variant 1: Expected null, got number.',
     })
   })
 
