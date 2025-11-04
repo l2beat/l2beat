@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x6f004ab0d42db8a1426122313592245548a53d3a
+Generated with discovered.json: 0x5d07b91783169aa99536fcc1e38ef2314753b829
 
-# Diff at Mon, 03 Nov 2025 15:18:30 GMT:
+# Diff at Tue, 04 Nov 2025 08:51:46 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current timestamp: 1762181193
+- current timestamp: 1762246195
 
 ## Description
 
@@ -26,7 +26,7 @@ aggkit opstack without proof system/state roots and onchain DA.
 ```diff
 +   Status: CREATED
     contract SuperchainConfig (eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC)
-    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+    +++ description: Since this contract is deployed in the context of a neutered op stack system, the guardian role has no significance.
 ```
 
 ```diff

@@ -1,7 +1,7 @@
 {
   "name": "forknet",
-  "timestamp": 1762181193,
-  "configHash": "0xed235118e1071aad38e36f8ca70921feb575f397872a5cd1c2fd4b32af45b519",
+  "timestamp": 1762246195,
+  "configHash": "0xd03be6ef393bfbc7b02ab42f9c0d14fdb4a1553b262c4d59c8e796053bf47fda",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -71,13 +71,13 @@
       "name": "SuperchainConfig",
       "address": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
       "type": "Contract",
-      "template": "opstack/SuperchainConfigNoGuard",
+      "template": "opstack/SuperchainConfigFake",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x03dba37173051b02bc81487e181c791bcf1aef664c249e5d035f11f488bdd686"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
+      "description": "Since this contract is deployed in the context of a neutered op stack system, the guardian role has no significance.",
       "sinceTimestamp": 1750849619,
       "sinceBlock": 22781049,
       "values": {
@@ -269,6 +269,16 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0xd102e395aA8b4710db44B33F14Ae0038F318C2AC",
+          "role": ".challenger"
+        },
+        {
+          "permission": "guard",
+          "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
+          "role": ".guardian"
+        },
         {
           "permission": "interact",
           "from": "eth:0x2258d4C98AaeDB54f6f1be40ca347FD3160B34C2",
@@ -785,7 +795,14 @@
     {
       "address": "eth:0xbF57d9fBFF423Ef2bB11fc0927CeAd6909353C52",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0xd102e395aA8b4710db44B33F14Ae0038F318C2AC",
+          "role": ".proposer"
+        }
+      ]
     },
     {
       "name": "PermissionedDisputeGame",
@@ -2010,12 +2027,12 @@
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismPortal2_noForce": "0x7ac072ef679e441e8543bbc677bcba6f25016b1232f4ee456519a28e3c3e2dee",
-    "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
+    "opstack/PermissionedDisputeGame": "0xe39c1284ebcc867153d8d9bf8d32a6ab7daf95dde76ad7e13a040bb64d98b985",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
-    "opstack/SuperchainConfigNoGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "polygon-cdk/AggchainECDSAMultisig": "0x29454707054b7ded72a43beeb227e72791b9a0d6d29d48a6dac59812dcc68b29"
   },
-  "usedBlockNumbers": { "ethereum": 23719489 },
-  "permissionsConfigHash": "0x0d409bd320db32b9fbec760bbe42a03e4d1c9c48886169eb5bc7b2efd1bc2381"
+  "usedBlockNumbers": { "ethereum": 23724873 },
+  "permissionsConfigHash": "0x76b6de42caf834e32628c9268a8a692bf2249e045db9c0bc0b60d7c06744eb9e"
 }
