@@ -1,4 +1,36 @@
-Generated with discovered.json: 0x80b750e3deb7f81abc83ce979443df3d13b3d0c3
+Generated with discovered.json: 0xd6b80e8d75254f1a6b57fe578b28ccd515656b64
+
+# Diff at Tue, 04 Nov 2025 15:14:05 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6b72018cd9706ce7cba8ec489b67d7193f34dc20 block: 1761757805
+- current timestamp: 1762269063
+
+## Description
+
+msig changes.
+
+## Watched changes
+
+```diff
+    contract Zircuit Multisig 1 (eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xC1Ea584f696ABF39044c18D510067f0Ce2cC8966"
++        "eth:0xf5B2C0bfA18561d5374EAcc5FFfA3E39B049c1ae"
+    }
+```
+
+```diff
+    contract GnosisSafe (zircuit:0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      values.$members.1:
+-        "zircuit:0xC1Ea584f696ABF39044c18D510067f0Ce2cC8966"
++        "zircuit:0xf5B2C0bfA18561d5374EAcc5FFfA3E39B049c1ae"
+    }
+```
+
+Generated with discovered.json: 0x839ef7210c25489feac0a89cd0c844e1ffe55af4
 
 # Diff at Fri, 31 Oct 2025 11:50:25 GMT:
 

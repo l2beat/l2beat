@@ -1,4 +1,35 @@
-Generated with discovered.json: 0xd38f16d5b5fc4d0a0bb3e204512e6ec9b0394433
+Generated with discovered.json: 0x704baae2e7c8725895ba86f7e81c59342becaf89
+
+# Diff at Tue, 04 Nov 2025 13:50:01 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6b72018cd9706ce7cba8ec489b67d7193f34dc20 block: 1751366039
+- current timestamp: 1762264077
+
+## Description
+
+System config owner moved to EOA.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.owner:
+-        "eth:0x56121a8612474C3eB65D69a3b871f284705b9bC4"
++        "eth:0xD382C8Ae5c51131086E2c5a2292E7B35D2093369"
+    }
+```
+
+```diff
+    contract Boba Multisig (eth:0x56121a8612474C3eB65D69a3b871f284705b9bC4) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","role":".owner"}
+    }
+```
+
+Generated with discovered.json: 0x0b0cca0a4e82aea994f4f0631f4e5e54f7fce2c2
 
 # Diff at Tue, 04 Nov 2025 11:32:28 GMT:
 
