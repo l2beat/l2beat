@@ -1,6 +1,6 @@
 {
   "name": "transporter",
-  "timestamp": 1761895172,
+  "timestamp": 1762264674,
   "configHash": "0x4e045723beaf31fcfff76bccbfc7f2591b2ddf0c0bf1dc5d49e9cbc705c02de7",
   "entries": [
     {
@@ -97,7 +97,7 @@
         ],
         "getToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "getTokenDecimals": 18,
-        "getUnsiloedLiquidity": "2721614787599264381485",
+        "getUnsiloedLiquidity": "2707510593397021860055",
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "typeAndVersion": "SiloedLockReleaseTokenPool 1.6.0"
       },
@@ -130,7 +130,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 33,
+        "getExpectedNextSequenceNumber": 34,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -263,6 +263,19 @@
       "address": "eth:0x02b60267bceeaFDC45005e0Fa0dd783eFeBc9F1b",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "TokenPool",
+      "address": "eth:0x02E87189512d1Bdc3Ca7795CAb68A8311703B88C",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1761923159,
+      "sinceBlock": 23698122,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x02E87189512d1Bdc3Ca7795CAb68A8311703B88C": ""
+      }
     },
     {
       "name": "HybridLockReleaseUSDCTokenPool",
@@ -691,7 +704,7 @@
         "getAllowListEnabled": false,
         "getBridgeLimit": "40000000000000000000000000",
         "getBridgeLimitAdmin": "eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39",
-        "getCurrentBridgedAmount": "21585155731745493940356185",
+        "getCurrentBridgedAmount": "21365755638407146271766509",
         "getRateLimitAdmin": "eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39",
         "getRebalancer": "eth:0x0000000000000000000000000000000000000000",
         "getRmnProxy": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
@@ -817,7 +830,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 104,
+        "nonce": 106,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -963,7 +976,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 0,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 364882,
+        "nextAvailableNonce": 367380,
         "owner": "eth:0x4aA5bF962852DcC59695F600d346D3F751B0D920",
         "paused": false,
         "pauser": "eth:0xc809b0216B149cc301Cb203EDD84FCdB8F15C4ed",
@@ -1377,7 +1390,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 813,
+        "getExpectedNextSequenceNumber": 829,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -2923,7 +2936,8 @@
           "17673274061779414707",
           "4426351306075016396",
           "5936861837188149645",
-          "6473245816409426016"
+          "6473245816409426016",
+          "4829375610284793157"
         ],
         "getToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "getTokenDecimals": 18,
@@ -3637,7 +3651,7 @@
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
         "getExpectedNextSequenceNumber": 3591,
-        "getLatestPriceEpochAndRound": 36047875,
+        "getLatestPriceEpochAndRound": 36397314,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "avalanche",
@@ -4360,6 +4374,19 @@
       }
     },
     {
+      "name": "TokenPool",
+      "address": "eth:0x3690367eDd22eDE1FE827258352F900fBD05b8Dc",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1761922943,
+      "sinceBlock": 23698104,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x3690367eDd22eDE1FE827258352F900fBD05b8Dc": ""
+      }
+    },
+    {
       "name": "HybridWithExternalMinterTokenPool",
       "address": "eth:0x36a72eD0096B414521C45E3ddC9ed657d1D9c141",
       "type": "Contract",
@@ -4461,7 +4488,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 132,
+        "getExpectedNextSequenceNumber": 151,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -6390,7 +6417,11 @@
         "getRateLimitAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getRmnProxy": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
         "getRouter": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
-        "getSupportedChains": ["15971525489660198786", "11344663589394136015"],
+        "getSupportedChains": [
+          "15971525489660198786",
+          "11344663589394136015",
+          "9813823125703490621"
+        ],
         "getToken": "eth:0x8238884Ec9668Ef77B90C6dfF4D1a9F4F4823BFe",
         "getTokenDecimals": 18,
         "owner": "eth:0x5EaFF7af80488033Bc845709806D5Fae5291eB88",
@@ -7105,7 +7136,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1197,
+        "getExpectedNextSequenceNumber": 1205,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -7431,7 +7462,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 74,
+        "nonce": 75,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -8280,7 +8311,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 79,
+        "getExpectedNextSequenceNumber": 82,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -8434,7 +8465,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 38,
+        "nonce": 49,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -8551,7 +8582,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1066,
+        "getExpectedNextSequenceNumber": 1073,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -8828,7 +8859,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 340,
+        "getExpectedNextSequenceNumber": 342,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -8933,7 +8964,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 109,
+        "getExpectedNextSequenceNumber": 114,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -10140,7 +10171,7 @@
           "4560701533377838164": "eth:0x86768e4e4B2E3C1CF812D5C8A7c7becFA4c8D486",
           "7222032299962346917": "eth:0x4109D281EB5C768556dFF78ba400cE2E3564d5B0",
           "2459028469735686113": "eth:0xc5Dbe2055Fa233ece44c99432526F3Fc46cA3FC2",
-          "13624601974233774587": "eth:0x0000000000000000000000000000000000000000",
+          "13624601974233774587": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
           "9813823125703490621": "eth:0x8469b5AbD81987F9347c0bAbd47b9eB11dA7d0dF",
           "18164309074156128038": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
           "4741433654826277614": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
@@ -10286,6 +10317,19 @@
       },
       "implementationNames": {
         "eth:0x80e2dcE0A16c8DB769995129cF6BbFCac8E4cFb8": "BurnMintTokenPool"
+      }
+    },
+    {
+      "name": "TokenPool",
+      "address": "eth:0x80E873D80ed41ED0a3aAeEb6efbaA01839f2111b",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1761923075,
+      "sinceBlock": 23698115,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x80E873D80ed41ED0a3aAeEb6efbaA01839f2111b": ""
       }
     },
     {
@@ -10780,7 +10824,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 974,
+        "getExpectedNextSequenceNumber": 980,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -11005,7 +11049,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 155,
+        "getExpectedNextSequenceNumber": 156,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -11153,7 +11197,8 @@
           "11344663589394136015",
           "15971525489660198786",
           "1673871237479749969",
-          "2459028469735686113"
+          "2459028469735686113",
+          "6433500567565415381"
         ],
         "getToken": "eth:0x8236a87084f8B84306f72007F36F2618A5634494",
         "getTokenDecimals": 8,
@@ -12484,7 +12529,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 206,
+        "getExpectedNextSequenceNumber": 207,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -12956,7 +13001,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 8715,
+        "getExpectedNextSequenceNumber": 8785,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -13106,7 +13151,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 139,
+        "getExpectedNextSequenceNumber": 141,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -13287,7 +13332,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 189,
+        "getExpectedNextSequenceNumber": 198,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -13375,7 +13420,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 9 (67%)",
-        "nonce": 444,
+        "nonce": 447,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -13453,6 +13498,19 @@
       "address": "eth:0xa18BC8b64a863DB34199F7e59F3A3d051ABa413d",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "TokenPool",
+      "address": "eth:0xa1fDd455Ed9adc66F2b6a496405911C0bbC9424e",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1761922727,
+      "sinceBlock": 23698086,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xa1fDd455Ed9adc66F2b6a496405911C0bbC9424e": ""
+      }
     },
     {
       "name": "LockReleaseTokenPoolAndProxy",
@@ -13574,7 +13632,7 @@
         ],
         "getToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "getTokenDecimals": 6,
-        "getUnsiloedLiquidity": 807842206088,
+        "getUnsiloedLiquidity": 731706835035,
         "getXERC20": "eth:0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "typeAndVersion": "SiloedWithUnsiloedXERC20GroupTokenPool 1.6.0"
@@ -13625,6 +13683,19 @@
       }
     },
     {
+      "name": "TokenPool",
+      "address": "eth:0xa42baa160DB5Aea58a1800ac6a33a92488288767",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1761922763,
+      "sinceBlock": 23698089,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xa42baa160DB5Aea58a1800ac6a33a92488288767": ""
+      }
+    },
+    {
       "address": "eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D",
       "type": "EOA",
       "proxyType": "EOA"
@@ -13649,7 +13720,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1144,
+        "getExpectedNextSequenceNumber": 1159,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -13912,7 +13983,7 @@
         ],
         "getToken": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
         "getTokenDecimals": 18,
-        "getUnsiloedLiquidity": "91938241511493960",
+        "getUnsiloedLiquidity": "116543273594210678",
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "typeAndVersion": "SiloedLockReleaseTokenPool 1.6.0"
       },
@@ -13940,7 +14011,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 589,
+        "getExpectedNextSequenceNumber": 593,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -14129,7 +14200,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 120,
+        "getExpectedNextSequenceNumber": 121,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -14443,8 +14514,8 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 2962,
-        "getLatestPriceEpochAndRound": 30539011,
+        "getExpectedNextSequenceNumber": 3062,
+        "getLatestPriceEpochAndRound": 30891009,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "avalanche",
@@ -15400,7 +15471,14 @@
           "eth:0x05eEe76f456C51Be0459EC1c0a78bf177B2c877C",
           "eth:0x78865D1C87C853b0Ae9921370AFD734A5e4bbAa7",
           "eth:0xb503BE040deb89Fb5f169693Bcd756d63ac31aA1",
-          "eth:0x58e53cad56180743aCE00349Ef3E1BFE4EfF5732"
+          "eth:0x58e53cad56180743aCE00349Ef3E1BFE4EfF5732",
+          "eth:0xE25a97E9e2f1Eeee81d4a7986A018AC3Ae8D857b",
+          "eth:0xa1fDd455Ed9adc66F2b6a496405911C0bbC9424e",
+          "eth:0xa42baa160DB5Aea58a1800ac6a33a92488288767",
+          "eth:0x3690367eDd22eDE1FE827258352F900fBD05b8Dc",
+          "eth:0x80E873D80ed41ED0a3aAeEb6efbaA01839f2111b",
+          "eth:0x02E87189512d1Bdc3Ca7795CAb68A8311703B88C",
+          "eth:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0"
         ],
         "poolsMap": {
           "eth:0xB006A31a279fd90be4CdfFFab5fD45Dd605D33CC": "eth:0x55042569836d203456d013dEFA8c670AD865d451",
@@ -15677,7 +15755,14 @@
           "eth:0xb45ad160634c528Cc3D2926d9807104FA3157305": "eth:0x05eEe76f456C51Be0459EC1c0a78bf177B2c877C",
           "eth:0x3f9794E80Ff8272748D22C7c0FcC84EbaF40DFAB": "eth:0x78865D1C87C853b0Ae9921370AFD734A5e4bbAa7",
           "eth:0xbbA1d5a84ef618Bb0fEBDB89B31289b925da2b0c": "eth:0xb503BE040deb89Fb5f169693Bcd756d63ac31aA1",
-          "eth:0xC477B6dfd26EC2460b3b92de18837Fd476Ea7549": "eth:0x58e53cad56180743aCE00349Ef3E1BFE4EfF5732"
+          "eth:0xC477B6dfd26EC2460b3b92de18837Fd476Ea7549": "eth:0x58e53cad56180743aCE00349Ef3E1BFE4EfF5732",
+          "eth:0x4C1Dab3Be86347977F3DfC4b9688224ef2272939": "eth:0xE25a97E9e2f1Eeee81d4a7986A018AC3Ae8D857b",
+          "eth:0xa0769f7A8fC65e47dE93797b4e21C073c117Fc80": "eth:0xa1fDd455Ed9adc66F2b6a496405911C0bbC9424e",
+          "eth:0xe4880249745eAc5F1eD9d8F7DF844792D560e750": "eth:0xa42baa160DB5Aea58a1800ac6a33a92488288767",
+          "eth:0xf695Df6c0f3bB45918A7A82e83348FC59517734E": "eth:0x3690367eDd22eDE1FE827258352F900fBD05b8Dc",
+          "eth:0x4f33aCf823E6eEb697180d553cE0c710124C8D59": "eth:0x80E873D80ed41ED0a3aAeEb6efbaA01839f2111b",
+          "eth:0x3868D4e336d14D38031cf680329d31e4712e11cC": "eth:0x02E87189512d1Bdc3Ca7795CAb68A8311703B88C",
+          "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072": "eth:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0"
         },
         "typeAndVersion": "TokenAdminRegistry 1.5.0"
       },
@@ -15996,6 +16081,41 @@
       "address": "eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "LombardTokenPoolV2",
+      "address": "eth:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0",
+      "type": "Contract",
+      "template": "transporter/TokenPool",
+      "sourceHashes": [
+        "0x8e421d5afd1c7e19b36271c4b4881ec63b043cafb738247e93581440affd41fb"
+      ],
+      "proxyType": "immutable",
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
+      "sinceTimestamp": 1761578039,
+      "sinceBlock": 23669600,
+      "values": {
+        "$immutable": true,
+        "bridge": "eth:0x451c54981C7DA5d95901b770C540547cF5FE0A2D",
+        "getAllowList": [],
+        "getAllowListEnabled": false,
+        "getRateLimitAdmin": "eth:0x0000000000000000000000000000000000000000",
+        "getRmnProxy": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+        "getRouter": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+        "getSupportedChains": ["2459028469735686113"],
+        "getToken": "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
+        "getTokenDecimals": 8,
+        "owner": "eth:0x251a604E8E8f6906d60f8dedC5aAeb8CD38F4892",
+        "typeAndVersion": "LombardTokenPoolV2 1.6.1"
+      },
+      "implementationNames": {
+        "eth:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0": "LombardTokenPoolV2"
+      }
     },
     {
       "name": "BurnMintTokenPool",
@@ -17094,7 +17214,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 2516,
+        "getExpectedNextSequenceNumber": 2521,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -17171,7 +17291,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 5 (80%)",
-        "nonce": 91,
+        "nonce": 92,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -17901,7 +18021,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 782,
+        "getExpectedNextSequenceNumber": 791,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -18333,7 +18453,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1124,
+        "getExpectedNextSequenceNumber": 1127,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -18633,16 +18753,16 @@
             0, 0, 0, 0, 0, 0, 0, 0, 0
           ]
         },
-        "getOpCount": 327,
+        "getOpCount": 338,
         "getRoot": {
-          "root": "0x53a363d94ee7fa9e006e7dcec2fa4ad54dbb346d7c11cc59460adcd3d2b9112e",
-          "validUntil": 1762087120
+          "root": "0xd5f16ecfc6b45ae5e613535c4803972ee56b028c42de65228eccab0b1db61865",
+          "validUntil": 1762506718
         },
         "getRootMetadata": {
           "chainId": 1,
           "multiSig": "eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e",
-          "preOpCount": 320,
-          "postOpCount": 327,
+          "preOpCount": 337,
+          "postOpCount": 338,
           "overridePreviousRoot": false
         },
         "MAX_NUM_SIGNERS": 200,
@@ -18748,7 +18868,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 7827,
+        "getExpectedNextSequenceNumber": 7980,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -19158,6 +19278,44 @@
       "proxyType": "EOA"
     },
     {
+      "name": "BurnMintTokenPool",
+      "address": "eth:0xE25a97E9e2f1Eeee81d4a7986A018AC3Ae8D857b",
+      "type": "Contract",
+      "template": "transporter/TokenPool",
+      "sourceHashes": [
+        "0x13a54b9fa6dcbabb8da7f4aacda0d48bce37bb2a77380e13585e1160245e0cf4"
+      ],
+      "proxyType": "immutable",
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens"
+      ],
+      "sinceTimestamp": 1761912467,
+      "sinceBlock": 23697233,
+      "values": {
+        "$immutable": true,
+        "getAllowList": [],
+        "getAllowListEnabled": false,
+        "getRateLimitAdmin": "eth:0x0000000000000000000000000000000000000000",
+        "getRmnProxy": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+        "getRouter": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+        "getSupportedChains": [
+          "4426351306075016396",
+          "4949039107694359620",
+          "15971525489660198786"
+        ],
+        "getToken": "eth:0x4C1Dab3Be86347977F3DfC4b9688224ef2272939",
+        "getTokenDecimals": 18,
+        "owner": "eth:0xecf08409A5e35aA58A887Cf892c6Af6648727281",
+        "typeAndVersion": "BurnMintTokenPool 1.5.1"
+      },
+      "implementationNames": {
+        "eth:0xE25a97E9e2f1Eeee81d4a7986A018AC3Ae8D857b": "BurnMintTokenPool"
+      }
+    },
+    {
       "name": "LockReleaseTokenPool",
       "address": "eth:0xe26D9c68cF6d284367C5e90EC834C6Ec0051f73C",
       "type": "Contract",
@@ -19338,7 +19496,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 9770,
+        "getExpectedNextSequenceNumber": 9938,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -21044,7 +21202,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 8708,
+        "getExpectedNextSequenceNumber": 8808,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -21222,7 +21380,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 385,
+        "getExpectedNextSequenceNumber": 393,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -43086,6 +43244,96 @@
       "function unpause()",
       "function verify(bytes32[] hashedLeaves, bytes32[] proofs, uint256 proofFlagBits) view returns (uint256 timestamp)"
     ],
+    "eth:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0": [
+      "constructor(address bridge_, address token_, address[] allowlist, address rmnProxy, address router, uint8 fallbackDecimals)",
+      "error AllowListNotEnabled()",
+      "error BucketOverfilled()",
+      "error CallerIsNotARampOnRouter(address caller)",
+      "error CannotTransferToSelf()",
+      "error ChainAlreadyExists(uint64 chainSelector)",
+      "error ChainNotAllowed(uint64 remoteChainSelector)",
+      "error ChainNotSupported()",
+      "error CursedByRMN()",
+      "error DisabledNonZeroRateLimit(tuple(bool isEnabled, uint128 capacity, uint128 rate) config)",
+      "error ExecutionError()",
+      "error HashMismatch()",
+      "error InvalidAllowedCaller(bytes)",
+      "error InvalidDecimalArgs(uint8 expected, uint8 actual)",
+      "error InvalidMessageVersion(uint8 expected, uint8 actual)",
+      "error InvalidRateLimitRate(tuple(bool isEnabled, uint128 capacity, uint128 rate) rateLimiterConfig)",
+      "error InvalidReceiver(bytes)",
+      "error InvalidRemoteChainDecimals(bytes sourcePoolData)",
+      "error InvalidRemotePoolForChain(uint64 remoteChainSelector, bytes remotePoolAddress)",
+      "error InvalidSourcePoolAddress(bytes sourcePoolAddress)",
+      "error InvalidToken(address token)",
+      "error MismatchedArrayLengths()",
+      "error MustBeProposedOwner()",
+      "error NonExistentChain(uint64 remoteChainSelector)",
+      "error OnlyCallableByOwner()",
+      "error OverflowDetected(uint8 remoteDecimals, uint8 localDecimals, uint256 remoteAmount)",
+      "error OwnerCannotBeZero()",
+      "error PathNotExist(uint64 remoteChainSelector)",
+      "error PoolAlreadyAdded(uint64 remoteChainSelector, bytes remotePoolAddress)",
+      "error RemoteTokenMismatch(bytes32 bridge, bytes32 pool)",
+      "error SenderNotAllowed(address sender)",
+      "error TokenMaxCapacityExceeded(uint256 capacity, uint256 requested, address tokenAddress)",
+      "error TokenRateLimitReached(uint256 minWaitInSeconds, uint256 available, address tokenAddress)",
+      "error Unauthorized(address caller)",
+      "error ZeroAddressNotAllowed()",
+      "error ZeroBridge()",
+      "error ZeroLombardChainId()",
+      "event AllowListAdd(address sender)",
+      "event AllowListRemove(address sender)",
+      "event ChainAdded(uint64 remoteChainSelector, bytes remoteToken, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig)",
+      "event ChainConfigured(uint64 remoteChainSelector, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig)",
+      "event ChainRemoved(uint64 remoteChainSelector)",
+      "event ConfigChanged(tuple(bool isEnabled, uint128 capacity, uint128 rate) config)",
+      "event InboundRateLimitConsumed(uint64 indexed remoteChainSelector, address token, uint256 amount)",
+      "event LockedOrBurned(uint64 indexed remoteChainSelector, address token, address sender, uint256 amount)",
+      "event OutboundRateLimitConsumed(uint64 indexed remoteChainSelector, address token, uint256 amount)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "event PathRemoved(uint64 indexed remoteChainSelector, bytes32 indexed lChainId, bytes32 allowedCaller)",
+      "event PathSet(uint64 indexed remoteChainSelector, bytes32 indexed lChainId, bytes32 allowedCaller, bytes32 adapter)",
+      "event RateLimitAdminSet(address rateLimitAdmin)",
+      "event ReleasedOrMinted(uint64 indexed remoteChainSelector, address token, address sender, address recipient, uint256 amount)",
+      "event RemotePoolAdded(uint64 indexed remoteChainSelector, bytes remotePoolAddress)",
+      "event RemotePoolRemoved(uint64 indexed remoteChainSelector, bytes remotePoolAddress)",
+      "event RouterUpdated(address oldRouter, address newRouter)",
+      "function acceptOwnership()",
+      "function addRemotePool(uint64 remoteChainSelector, bytes remotePoolAddress)",
+      "function applyAllowListUpdates(address[] removes, address[] adds)",
+      "function applyChainUpdates(uint64[] remoteChainSelectorsToRemove, tuple(uint64 remoteChainSelector, bytes[] remotePoolAddresses, bytes remoteTokenAddress, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig)[] chainsToAdd)",
+      "function bridge() view returns (address)",
+      "function getAllowList() view returns (address[])",
+      "function getAllowListEnabled() view returns (bool)",
+      "function getCurrentInboundRateLimiterState(uint64 remoteChainSelector) view returns (tuple(uint128 tokens, uint32 lastUpdated, bool isEnabled, uint128 capacity, uint128 rate))",
+      "function getCurrentOutboundRateLimiterState(uint64 remoteChainSelector) view returns (tuple(uint128 tokens, uint32 lastUpdated, bool isEnabled, uint128 capacity, uint128 rate))",
+      "function getRateLimitAdmin() view returns (address)",
+      "function getRemotePools(uint64 remoteChainSelector) view returns (bytes[])",
+      "function getRemoteToken(uint64 remoteChainSelector) view returns (bytes)",
+      "function getRmnProxy() view returns (address rmnProxy)",
+      "function getRouter() view returns (address router)",
+      "function getSupportedChains() view returns (uint64[])",
+      "function getToken() view returns (address token)",
+      "function getTokenDecimals() view returns (uint8 decimals)",
+      "function isRemotePool(uint64 remoteChainSelector, bytes remotePoolAddress) view returns (bool)",
+      "function isSupportedChain(uint64 remoteChainSelector) view returns (bool)",
+      "function isSupportedToken(address token) view returns (bool)",
+      "function lockOrBurn(tuple(bytes receiver, uint64 remoteChainSelector, address originalSender, uint256 amount, address localToken) lockOrBurnIn) returns (tuple(bytes destTokenAddress, bytes destPoolData))",
+      "function owner() view returns (address)",
+      "function releaseOrMint(tuple(bytes originalSender, uint64 remoteChainSelector, address receiver, uint256 sourceDenominatedAmount, address localToken, bytes sourcePoolAddress, bytes sourcePoolData, bytes offchainTokenData) releaseOrMintIn) returns (tuple(uint256 destinationAmount))",
+      "function removePath(uint64 remoteChainSelector)",
+      "function removeRemotePool(uint64 remoteChainSelector, bytes remotePoolAddress)",
+      "function setChainRateLimiterConfig(uint64 remoteChainSelector, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundConfig)",
+      "function setChainRateLimiterConfigs(uint64[] remoteChainSelectors, tuple(bool isEnabled, uint128 capacity, uint128 rate)[] outboundConfigs, tuple(bool isEnabled, uint128 capacity, uint128 rate)[] inboundConfigs)",
+      "function setPath(uint64 remoteChainSelector, bytes32 lChainId, bytes allowedCaller, bytes32 adapter)",
+      "function setRateLimitAdmin(address rateLimitAdmin)",
+      "function setRouter(address newRouter)",
+      "function supportsInterface(bytes4 interfaceId) pure returns (bool)",
+      "function transferOwnership(address to)",
+      "function typeAndVersion() view returns (string)"
+    ],
     "eth:0xba5F6Cf1121c572602e638bC8A0d87Db61072e35": [
       "constructor(address token, uint8 localTokenDecimals, address[] allowlist, address rmnProxy, address router)",
       "error AggregateValueMaxCapacityExceeded(uint256 capacity, uint256 requested)",
@@ -47564,6 +47812,83 @@
       "function transferOwnership(address to)",
       "function typeAndVersion() view returns (string)"
     ],
+    "eth:0xE25a97E9e2f1Eeee81d4a7986A018AC3Ae8D857b": [
+      "constructor(address token, uint8 localTokenDecimals, address[] allowlist, address rmnProxy, address router)",
+      "error AggregateValueMaxCapacityExceeded(uint256 capacity, uint256 requested)",
+      "error AggregateValueRateLimitReached(uint256 minWaitInSeconds, uint256 available)",
+      "error AllowListNotEnabled()",
+      "error BucketOverfilled()",
+      "error CallerIsNotARampOnRouter(address caller)",
+      "error CannotTransferToSelf()",
+      "error ChainAlreadyExists(uint64 chainSelector)",
+      "error ChainNotAllowed(uint64 remoteChainSelector)",
+      "error CursedByRMN()",
+      "error DisabledNonZeroRateLimit(tuple(bool isEnabled, uint128 capacity, uint128 rate) config)",
+      "error InvalidDecimalArgs(uint8 expected, uint8 actual)",
+      "error InvalidRateLimitRate(tuple(bool isEnabled, uint128 capacity, uint128 rate) rateLimiterConfig)",
+      "error InvalidRemoteChainDecimals(bytes sourcePoolData)",
+      "error InvalidRemotePoolForChain(uint64 remoteChainSelector, bytes remotePoolAddress)",
+      "error InvalidSourcePoolAddress(bytes sourcePoolAddress)",
+      "error InvalidToken(address token)",
+      "error MustBeProposedOwner()",
+      "error NonExistentChain(uint64 remoteChainSelector)",
+      "error OnlyCallableByOwner()",
+      "error OverflowDetected(uint8 remoteDecimals, uint8 localDecimals, uint256 remoteAmount)",
+      "error OwnerCannotBeZero()",
+      "error PoolAlreadyAdded(uint64 remoteChainSelector, bytes remotePoolAddress)",
+      "error RateLimitMustBeDisabled()",
+      "error SenderNotAllowed(address sender)",
+      "error TokenMaxCapacityExceeded(uint256 capacity, uint256 requested, address tokenAddress)",
+      "error TokenRateLimitReached(uint256 minWaitInSeconds, uint256 available, address tokenAddress)",
+      "error Unauthorized(address caller)",
+      "error ZeroAddressNotAllowed()",
+      "event AllowListAdd(address sender)",
+      "event AllowListRemove(address sender)",
+      "event Burned(address indexed sender, uint256 amount)",
+      "event ChainAdded(uint64 remoteChainSelector, bytes remoteToken, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig)",
+      "event ChainConfigured(uint64 remoteChainSelector, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig)",
+      "event ChainRemoved(uint64 remoteChainSelector)",
+      "event ConfigChanged(tuple(bool isEnabled, uint128 capacity, uint128 rate) config)",
+      "event Locked(address indexed sender, uint256 amount)",
+      "event Minted(address indexed sender, address indexed recipient, uint256 amount)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "event RateLimitAdminSet(address rateLimitAdmin)",
+      "event Released(address indexed sender, address indexed recipient, uint256 amount)",
+      "event RemotePoolAdded(uint64 indexed remoteChainSelector, bytes remotePoolAddress)",
+      "event RemotePoolRemoved(uint64 indexed remoteChainSelector, bytes remotePoolAddress)",
+      "event RouterUpdated(address oldRouter, address newRouter)",
+      "event TokensConsumed(uint256 tokens)",
+      "function acceptOwnership()",
+      "function addRemotePool(uint64 remoteChainSelector, bytes remotePoolAddress)",
+      "function applyAllowListUpdates(address[] removes, address[] adds)",
+      "function applyChainUpdates(uint64[] remoteChainSelectorsToRemove, tuple(uint64 remoteChainSelector, bytes[] remotePoolAddresses, bytes remoteTokenAddress, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig)[] chainsToAdd)",
+      "function getAllowList() view returns (address[])",
+      "function getAllowListEnabled() view returns (bool)",
+      "function getCurrentInboundRateLimiterState(uint64 remoteChainSelector) view returns (tuple(uint128 tokens, uint32 lastUpdated, bool isEnabled, uint128 capacity, uint128 rate))",
+      "function getCurrentOutboundRateLimiterState(uint64 remoteChainSelector) view returns (tuple(uint128 tokens, uint32 lastUpdated, bool isEnabled, uint128 capacity, uint128 rate))",
+      "function getRateLimitAdmin() view returns (address)",
+      "function getRemotePools(uint64 remoteChainSelector) view returns (bytes[])",
+      "function getRemoteToken(uint64 remoteChainSelector) view returns (bytes)",
+      "function getRmnProxy() view returns (address rmnProxy)",
+      "function getRouter() view returns (address router)",
+      "function getSupportedChains() view returns (uint64[])",
+      "function getToken() view returns (address token)",
+      "function getTokenDecimals() view returns (uint8 decimals)",
+      "function isRemotePool(uint64 remoteChainSelector, bytes remotePoolAddress) view returns (bool)",
+      "function isSupportedChain(uint64 remoteChainSelector) view returns (bool)",
+      "function isSupportedToken(address token) view returns (bool)",
+      "function lockOrBurn(tuple(bytes receiver, uint64 remoteChainSelector, address originalSender, uint256 amount, address localToken) lockOrBurnIn) returns (tuple(bytes destTokenAddress, bytes destPoolData))",
+      "function owner() view returns (address)",
+      "function releaseOrMint(tuple(bytes originalSender, uint64 remoteChainSelector, address receiver, uint256 amount, address localToken, bytes sourcePoolAddress, bytes sourcePoolData, bytes offchainTokenData) releaseOrMintIn) returns (tuple(uint256 destinationAmount))",
+      "function removeRemotePool(uint64 remoteChainSelector, bytes remotePoolAddress)",
+      "function setChainRateLimiterConfig(uint64 remoteChainSelector, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundConfig)",
+      "function setRateLimitAdmin(address rateLimitAdmin)",
+      "function setRouter(address newRouter)",
+      "function supportsInterface(bytes4 interfaceId) pure returns (bool)",
+      "function transferOwnership(address to)",
+      "function typeAndVersion() view returns (string)"
+    ],
     "eth:0xe26D9c68cF6d284367C5e90EC834C6Ec0051f73C": [
       "constructor(address token, uint8 localTokenDecimals, address[] allowlist, address rmnProxy, bool acceptLiquidity, address router)",
       "error AggregateValueMaxCapacityExceeded(uint256 capacity, uint256 requested)",
@@ -51194,6 +51519,6 @@
     "transporter/TokenAdminRegistry": "0x28d68380ec883c6a6b267b97c91ab0904a762c604e68b51e4ec12ffed9c32d05",
     "transporter/TokenPool": "0x8acb4979a48889011ad003ec6c5882b4c1892b3c874a46713b70aaea7a825e84"
   },
-  "usedBlockNumbers": { "ethereum": 23695805 },
-  "permissionsConfigHash": "0x8f984d00a15500576477c1e87e5a363324636472d1c5d3ca4c847e12d9743561"
+  "usedBlockNumbers": { "ethereum": 23726399 },
+  "permissionsConfigHash": "0xb93daa51217f6c30e37b92400589e3be5809fc8e1cdc06d90b49b1dca46b1a01"
 }
