@@ -385,6 +385,14 @@
     "messages": ["axelar.ContractCallWithTokenMessage"],
     "transfers": ["axelar-gateway.Transfer"]
   },
+  "relay-simple-3": {
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x8ff6c0aaf973cffb1f526bad1b6731127c46015f8fa5db619dc09e235b0628e1"
+      }
+    ]
+  },
   "relay-simple": {
     "txs": [
       {
