@@ -12,7 +12,7 @@
  * Chain IDs are encoded as 2-byte big-endian shorts at the end.
  */
 
-import { Address32 } from '../types'
+import { Address32 } from '@l2beat/shared-pure'
 
 export type GasZipDepositType =
   | 'SELF'

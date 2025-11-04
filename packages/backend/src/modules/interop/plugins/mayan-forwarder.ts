@@ -4,11 +4,10 @@ Mayan Forwarder
 - emits Event that will allow further matching
 */
 
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import { decodeFunctionData, type Log, parseAbi } from 'viem'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   findChain,

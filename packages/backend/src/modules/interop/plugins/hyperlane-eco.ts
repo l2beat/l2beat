@@ -1,3 +1,4 @@
+import { Address32 } from '@l2beat/shared-pure'
 import {
   Dispatch,
   HYPERLANE_NETWORKS,
@@ -7,7 +8,6 @@ import {
   parseProcessId,
 } from './hyperlane'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   findChain,

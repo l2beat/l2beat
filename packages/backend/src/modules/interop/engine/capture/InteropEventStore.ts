@@ -1,11 +1,11 @@
 import type { Database, InteropEventRecord } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
-import {
-  Address32,
-  type InteropEvent,
-  type InteropEventDb,
-  type InteropEventQuery,
-  type InteropEventType,
+import type {
+  InteropEvent,
+  InteropEventContext,
+  InteropEventDb,
+  InteropEventQuery,
+  InteropEventType,
 } from '../../plugins/types'
 import { InMemoryEventDb } from './InMemoryEventDb'
 
@@ -84,17 +84,7 @@ function fromDbRecord(record: InteropEventRecord): InteropEvent {
     type: record.type,
     expiresAt: record.expiresAt,
     args: record.args,
-    ctx: {
-      chain: record.chain,
-      blockHash: record.blockHash,
-      blockNumber: record.blockNumber,
-      logIndex: record.logIndex,
-      timestamp: record.timestamp,
-      txHash: record.txHash,
-      txValue: record.value,
-      txTo: record.txTo ? Address32.from(record.txTo) : undefined,
-      txData: record.calldata,
-    },
+    ctx: record.ctx as InteropEventContext,
   }
 }
 
@@ -104,16 +94,11 @@ function toDbRecord(event: InteropEvent): InteropEventRecord {
     eventId: event.eventId,
     type: event.type,
     expiresAt: event.expiresAt,
-    args: event.args,
-    chain: event.ctx.chain,
-    blockHash: event.ctx.blockHash,
-    blockNumber: event.ctx.blockNumber,
-    logIndex: event.ctx.logIndex,
     timestamp: event.ctx.timestamp,
-    txHash: event.ctx.txHash,
-    value: event.ctx.txValue,
-    txTo: event.ctx.txTo,
-    calldata: event.ctx.txData,
+    chain: event.ctx.chain,
+    blockNumber: event.ctx.blockNumber,
+    args: event.args,
+    ctx: event.ctx,
     matched: false,
     unsupported: false,
   }

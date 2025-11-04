@@ -1,6 +1,7 @@
 import type { InteropEventRecord } from '@l2beat/database'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
+import type { InteropEventContext } from '../../plugins/types'
 import { DataTablePage } from './DataTablePage'
 import {
   type ProcessorsStatus,
@@ -8,7 +9,7 @@ import {
 } from './ProcessorsStatusTable'
 
 function EventsTable(props: {
-  events: InteropEventRecord[]
+  events: (InteropEventRecord & { ctx: InteropEventContext })[]
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   return (
@@ -37,11 +38,11 @@ function EventsTable(props: {
               <td>{e.chain}</td>
               <td>
                 {explorerUrl ? (
-                  <a target="_blank" href={`${explorerUrl}/tx/${e.txHash}`}>
-                    {e.txHash}
+                  <a target="_blank" href={`${explorerUrl}/tx/${e.ctx.txHash}`}>
+                    {e.ctx.txHash}
                   </a>
                 ) : (
-                  e.txHash
+                  e.ctx.txHash
                 )}
               </td>
               <td>{srcChain ?? ''}</td>
@@ -56,7 +57,7 @@ function EventsTable(props: {
 }
 
 function EventsPageLayout(props: {
-  events: InteropEventRecord[]
+  events: (InteropEventRecord & { ctx: InteropEventContext })[]
   getExplorerUrl: (chain: string) => string | undefined
   status: ProcessorsStatus[]
 }) {
@@ -89,7 +90,7 @@ function EventsPageLayout(props: {
 }
 
 export function renderEventsPage(props: {
-  events: InteropEventRecord[]
+  events: (InteropEventRecord & { ctx: InteropEventContext })[]
   getExplorerUrl: (chain: string) => string | undefined
   status: ProcessorsStatus[]
 }) {

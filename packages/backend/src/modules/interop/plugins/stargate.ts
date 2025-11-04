@@ -1,4 +1,4 @@
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { Address32, assert, EthereumAddress } from '@l2beat/shared-pure'
 import { BinaryReader } from '../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { LayerZeroV2Config } from './layerzero/layerzero.config'
@@ -8,7 +8,6 @@ import {
   parseOFTSent,
 } from './layerzero/layerzero-v2-ofts.plugin'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   defineNetworks,

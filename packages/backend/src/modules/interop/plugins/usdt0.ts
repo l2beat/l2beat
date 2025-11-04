@@ -1,7 +1,6 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import { PacketDelivered, PacketSent } from './layerzero/layerzero-v2.plugin'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   defineNetworks,

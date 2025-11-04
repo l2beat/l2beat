@@ -1,14 +1,13 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Block, Log } from '@l2beat/shared-pure'
+import { Address32, type Block, type Log } from '@l2beat/shared-pure'
 import type { Log as ViemLog } from 'viem'
 import type { BlockProcessor } from '../../../types'
-import {
-  Address32,
-  type InteropEvent,
-  type InteropEventContext,
-  type InteropPlugin,
-  type LogToCapture,
-  type TxToCapture,
+import type {
+  InteropEvent,
+  InteropEventContext,
+  InteropPlugin,
+  LogToCapture,
+  TxToCapture,
 } from '../../plugins/types'
 import type { InteropEventStore } from './InteropEventStore'
 
