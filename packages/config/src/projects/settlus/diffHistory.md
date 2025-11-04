@@ -1,3 +1,48 @@
+Generated with discovered.json: 0xca4e4e42f3947b1589b948375f9af46d72fe345c
+
+# Diff at Tue, 04 Nov 2025 11:34:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1761223075
+- current timestamp: 1761223075
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761223075 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (eth:0x15C1dAED5443A77b4DcF6FE35cAFcCEBb0c6da0E) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xc7135dbd2a53312d36df3f3ee91ce0a5a459ab8fc7725880a3a9c55a5fa0ed6c"
++        "0xf2ca03f1fb80fdb3c1281ea41b46245c8e6811a03a9ad7129f60cfedaac0e231"
+    }
+```
+
+```diff
+    contract MIPS (eth:0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes.0:
+-        "0xa2e4c062c9c44866846c9caf76340a103baaf77ec936f0e8fd29e5de6bdeb779"
++        "0xbb3cae27c16856a4265d2e2e2614765c1254c07cf3bb84574cd46e033524f1c8"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0xf9534EBc84082dF9d35Fb1Ed8786bF8cE8a90294) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sourceHashes.0:
+-        "0x36b6d01ce1c06ddc49ae1e3fcb2954cf2bfba1c55fd1174fce55ebd20e3dbe13"
++        "0x8738d176c361d44d45a0045debf90812ce2af53a3ca1a6483afd9d85d5f95883"
+    }
+```
+
 Generated with discovered.json: 0x43b4f5750815a4176069483c6846b101ae15d13d
 
 # Diff at Thu, 23 Oct 2025 12:39:51 GMT:

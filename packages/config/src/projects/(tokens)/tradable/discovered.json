@@ -21,7 +21,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -288,7 +288,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -644,7 +644,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -1295,7 +1295,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -1501,7 +1501,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -1604,7 +1604,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -1746,7 +1746,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -1961,6 +1961,10 @@
         "$admin": "zksync:0x13695d7D74e0d7BC65Fc77Ae290D9602975FE20F",
         "$immutable": false,
         "$implementation": "zksync:0xF4d6912ED152600356ea991F027046F6d1740b8d",
+        "$libraries": [
+          "zksync:0x6Cf0138D1cDD4955C52591da2481696184E0398e",
+          "zksync:0xF80b78BA81f0E01D9d1D609C3d0Cf1DcAc577B74"
+        ],
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "admin": "zksync:0x13695d7D74e0d7BC65Fc77Ae290D9602975FE20F",
@@ -2031,7 +2035,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -2161,7 +2165,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -2324,7 +2328,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -2485,7 +2489,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -2803,7 +2807,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -2895,7 +2899,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -3021,7 +3025,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -3507,7 +3511,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -3942,7 +3946,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -4053,7 +4057,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -4136,7 +4140,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -4250,7 +4254,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -4358,7 +4362,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -4427,7 +4431,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -4575,7 +4579,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -4667,7 +4671,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -4749,7 +4753,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -4818,7 +4822,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -5003,7 +5007,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -5321,7 +5325,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -5467,7 +5471,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -5818,7 +5822,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -5912,7 +5916,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -6202,7 +6206,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -6436,7 +6440,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -6539,7 +6543,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -6685,7 +6689,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -7209,7 +7213,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -7448,7 +7452,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -7551,7 +7555,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -7884,7 +7888,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -8034,7 +8038,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -8108,7 +8112,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -8286,7 +8290,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -8576,7 +8580,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -8815,7 +8819,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -9204,7 +9208,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -9313,7 +9317,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -9431,7 +9435,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -9642,7 +9646,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -10044,7 +10048,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -10390,7 +10394,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -10472,7 +10476,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -10616,7 +10620,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -10799,7 +10803,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -10928,14 +10932,14 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Private Credit Direct Deal0000023 2 Token",
+      "name": "Deal",
       "address": "zksync:0xAE0d8cad4cE522538AE34386c319C7ccD11FE428",
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -11071,7 +11075,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -11224,7 +11228,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -11682,7 +11686,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -11949,7 +11953,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -12044,7 +12048,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -12265,7 +12269,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -12532,7 +12536,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -12663,7 +12667,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -12953,7 +12957,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -13070,7 +13074,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -13464,7 +13468,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -13693,7 +13697,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -13797,7 +13801,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -13885,7 +13889,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -14251,7 +14255,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -14358,7 +14362,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -14489,7 +14493,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -14609,7 +14613,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -14876,7 +14880,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -14971,7 +14975,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -15139,7 +15143,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -15854,7 +15858,7 @@
       "template": "tradable/Deal",
       "sourceHashes": [
         null,
-        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+        "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
@@ -15995,7 +15999,7 @@
       "template": "tradable/DealManager",
       "sourceHashes": [
         null,
-        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+        "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
@@ -16635,5 +16639,5 @@
     "tradable/DealRegistry": "0x80492a8b01b07c7eb3c5cebc3a4c692ef4abb2da9faf34b0d838d7d21d76e23f"
   },
   "usedBlockNumbers": { "zksync2": 64027305 },
-  "permissionsConfigHash": "0x92d6b447e24bcfd75095c12ecc8d930b699b3888b983ffa284043c705e61be3e"
+  "permissionsConfigHash": "0x680101c7c14fce2188b4f839c2368f45e68518b0f44bf83b8d5158010803ec05"
 }

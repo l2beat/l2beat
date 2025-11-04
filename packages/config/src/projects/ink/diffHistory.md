@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x06c1bf9ade2222c09d2cc879b8190d2176315ee9
+
+# Diff at Tue, 04 Nov 2025 11:32:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1761310677
+- current timestamp: 1761310677
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761310677 (main branch discovery), not current.
+
+```diff
+    contract MIPS (eth:0x07BABE08EE4D07dBA236530183B24055535A7011) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes.0:
+-        "0x4bde2f6a5214eb2f1bd8caaeb2a6700260f66f1ae8f389a13763187c11634d03"
++        "0xbb4d6f68705092044f28ad3a6bd721dfca9c2ba8a561025495d950aca06b10ee"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0x5562D33B68fa20572FC58fA36aB19CCFeDD6eE8f) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sourceHashes.0:
+-        "0x6e19dedf2965b6aaae0af2c98a6df46b1caac3ffc191eaf1d10ca5570076252f"
++        "0x78ef988441111e9471e72a55f764cd7f35a0f81de503ac5d7ea03765b043da3b"
+    }
+```
+
+```diff
+    contract FaultDisputeGame (eth:0x5F5BEa598Fdf8DF30d56808E8b793da8FC7f3028) {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      sourceHashes.0:
+-        "0x825c4efedd1d48e3087fc99ff4e29a742c8e2a95498e4165e580f93ae5d23e74"
++        "0xa84a2c287a4758ce3cd3e4fd5e99b5cc94278297c2be14317401ae973d4dd23e"
+    }
+```
+
+```diff
+    contract GasPriceOracle (ink:0x420000000000000000000000000000000000000F) {
+    +++ description: Provides the current gas price for L2 transactions.
+      sourceHashes.1:
+-        "0xa6ae4f0695335983b644f1524c759f3178ee95c406e1e905b8cbccf5763af43a"
++        "0xc5d4d2bf19122f506ce43be8395b97b65c2b1109721869f31aa0b39605c5254b"
+    }
+```
+
 Generated with discovered.json: 0x17d9daef3de1e0781cefc8f2f9b2b0787d758e00
 
 # Diff at Mon, 03 Nov 2025 17:46:35 GMT:

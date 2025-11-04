@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x3176f5adf28bb496205bbfff361cda93ee8c6998
+
+# Diff at Tue, 04 Nov 2025 11:34:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1761894930
+- current timestamp: 1761894930
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761894930 (main branch discovery), not current.
+
+```diff
+    contract PEMCertChainLib (eth:0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169) {
+    +++ description: Library for managing PEM certificate chains.
+      sourceHashes.0:
+-        "0x97476fc6413c58015ddf51b5d2e37c3fdfc6b85ced25779773a1652ecc154c77"
++        "0x59efc4927f69d03e199767bdde2f8a8ef3a544833cdbf8c2eecf9152b373dcbc"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261) {
+    +++ description: Contract managing SGX attestation certificates.
+      sourceHashes.1:
+-        "0x0568e673edec0254e0d0584958369ffcb951f679158dd2a7c167bbf5fcf2a5bf"
++        "0xb88d9a2a00b03d84804743d62f07486e1276d8e7c989cc3a3cfd8f0ae26b5cd9"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: Contract managing SGX attestation certificates.
+      sourceHashes.1:
+-        "0xac51975c574b128e9dc1e8542c616ed655d4a2abc91d3233648ac688e530c68c"
++        "0xf03ee5163c982d906a23e9650c5ca9a0f66fa6bf33b9496c71476ce91c8d32ec"
+    }
+```
+
+```diff
+    contract TaikoAnchor (taiko:0x1670000000000000000000000000000000010001) {
+    +++ description: Handles cross-layer message verification and manages EIP-1559 gas pricing for L2 operations. Anchors L1 block details to L2 for cross-layer communication.
+      sourceHashes.1:
+-        "0xd2bffd1aa4016a982cb8f166de6b32cfa89406896b754e2f5abb2f63e7defd5a"
++        "0x94dfc8c1aa6a1ce9447da9bf865b6e827ffe8c9cb0b08e4d7c7589b8c4193134"
+    }
+```
+
 Generated with discovered.json: 0xaefab4cb6d9e9b925cae4be6786e47867737eeb5
 
 # Diff at Mon, 03 Nov 2025 14:19:44 GMT:

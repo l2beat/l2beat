@@ -8232,9 +8232,9 @@
     "tokens/STRK": "0x9979d16113874eb421347478aae102736cd4055e0853e97e1c132d1f41506d1d"
   },
   "usedBlockNumbers": {
-    "ethereum": 23675030,
+    "arbitrum": 394240340,
     "base": 37427179,
-    "arbitrum": 394240340
+    "ethereum": 23675030
   },
   "permissionsConfigHash": "0x8078c2e6a7ea3b3e184b6b02b5244ca688920f91fdb6340fcddab018d6dbe22a"
 }

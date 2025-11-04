@@ -715,8 +715,8 @@
   },
   "usedBlockNumbers": {
     "arbitrum": 355918557,
-    "ethereum": 22882427,
-    "base": 32642217
+    "base": 32642217,
+    "ethereum": 22882427
   },
   "permissionsConfigHash": "0x5678fb65a2cb6af3f59f17e28bc44010d83688acbd7074a596cc2b211030dcbf"
 }

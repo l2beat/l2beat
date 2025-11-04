@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xd4d364a1cde7f2c92bfe04a6eb913033b00282e7
+
+# Diff at Tue, 04 Nov 2025 11:32:45 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1762182733
+- current timestamp: 1762182733
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762182733 (main branch discovery), not current.
+
+```diff
+    contract L1VerifierPlonk (eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7) {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+      sourceHashes.0:
+-        "0x20269ba58e717388e68842ab5a0b73b744856b4b1fb48d57ac7dce36d0c3c765"
++        "0x4e306eb2936a09bd91390a0b661bfd8eda46b873600b8c7b4fb9be3cc3867a8d"
+    }
+```
+
 Generated with discovered.json: 0xcaa62448c606e501995a54ff8061a5b3748b799a
 
 # Diff at Mon, 03 Nov 2025 15:23:47 GMT:

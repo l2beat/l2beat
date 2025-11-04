@@ -95,7 +95,7 @@
       "type": "Contract",
       "template": "opstack/MIPS",
       "sourceHashes": [
-        "0x4bde2f6a5214eb2f1bd8caaeb2a6700260f66f1ae8f389a13763187c11634d03"
+        "0xbb4d6f68705092044f28ad3a6bd721dfca9c2ba8a561025495d950aca06b10ee"
       ],
       "proxyType": "immutable",
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
@@ -233,7 +233,7 @@
       "type": "Contract",
       "template": "opstack/PermissionedDisputeGame",
       "sourceHashes": [
-        "0x6e19dedf2965b6aaae0af2c98a6df46b1caac3ffc191eaf1d10ca5570076252f"
+        "0x78ef988441111e9471e72a55f764cd7f35a0f81de503ac5d7ea03765b043da3b"
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
@@ -1023,7 +1023,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 7841,
+        "permissionedGamesTotal": 7870,
         "proxyAdmin": "eth:0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "version": "1.2.0"

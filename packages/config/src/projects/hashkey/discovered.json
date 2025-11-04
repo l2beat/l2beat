@@ -192,7 +192,7 @@
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0xa49e39ce5420cad79f28224507ee4639c68c6d017b42f844b9d31e9cfc5c2c6f"
+        "0x3cdcfae65bb5f8df426350541726ba956e428f7b58730577db22fc48bd7ac4c7"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
@@ -525,7 +525,7 @@
       "type": "Contract",
       "template": "opstack/MIPS",
       "sourceHashes": [
-        "0xb09d83cfb489ff7f6e5c0d0ca61324097190fd21243bf2a122da50b7c4a47413"
+        "0x41762a10a7d78d4074b50ffc9b426420faa947abc31d9279c9f1973504deed01"
       ],
       "proxyType": "immutable",
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
@@ -551,7 +551,7 @@
       "type": "Contract",
       "template": "opstack/PermissionedDisputeGame",
       "sourceHashes": [
-        "0xdac9cce03f8066b7a55f8f75f29c4dea8d99ebe438d1724f9d29ac150f6c5b3f"
+        "0x42d9bef8dd252ad9f5c4e0f9476d758e0580ba046660165ffc4991ddcefae7f8"
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
@@ -859,7 +859,7 @@
       "type": "Contract",
       "template": "opstack/FaultDisputeGame",
       "sourceHashes": [
-        "0xbd6116af9840987ef3c83075917f47592d6b1a13143aa7172a578125bdc983cf"
+        "0x1a2367437cfb7cb21928a5bbd1fe8d8ba9602190438fee88e83a08f25a1e14c6"
       ],
       "proxyType": "immutable",
       "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",

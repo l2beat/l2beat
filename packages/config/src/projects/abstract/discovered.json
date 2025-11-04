@@ -1018,7 +1018,7 @@
       "type": "Contract",
       "template": "shared-zk-stack/L1VerifierPlonk",
       "sourceHashes": [
-        "0x20269ba58e717388e68842ab5a0b73b744856b4b1fb48d57ac7dce36d0c3c765"
+        "0x4e306eb2936a09bd91390a0b661bfd8eda46b873600b8c7b4fb9be3cc3867a8d"
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",

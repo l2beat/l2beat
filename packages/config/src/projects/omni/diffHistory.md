@@ -1,3 +1,66 @@
+Generated with discovered.json: 0xd406ff6e6f64ddedeaedac62563897ccb121fdfe
+
+# Diff at Tue, 04 Nov 2025 11:33:45 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1757940700
+- current timestamp: 1757940700
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757940700 (main branch discovery), not current.
+
+```diff
+    contract DaiForeignBridge (eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016) {
+    +++ description: Token bridge implementation and escrow for DAI-related tokens. Escrowed Dai can be invested in the Spark protocol for sDai.
+      sourceHashes.1:
+-        "0x07db9068db8cb815b37ab00e7a0098b6200657a2c4126fc4c87af49468891d99"
++        "0x3c108eaa9520cd55043d9ba97a6dea1d273e4300c8b99800347d12780410f08f"
+    }
+```
+
+```diff
+    contract ForeignAMB (eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e) {
+    +++ description: Arbitrary Message Bridge validated by the BridgeValidators. Can be used for token bridges or any other cross-chain messaging.
+      sourceHashes.1:
+-        "0xd9dd29f51753144909a424e20a1281bc15263ea2de2f5f028666b183b00d5fc3"
++        "0x5d956ab2f7704c419737b2e96845631d87156578b49801dde52cc9e56eaa182f"
+    }
+```
+
+```diff
+    contract PermittableToken (eth:0x7c24d0061b484B267F286aa2DCe891220Db254b3) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x064c46a3015079f17e93b171ff684cda28a0ecdbd55ecec09c4ddf50e0a5c312"
++        "0xd9a3b7f2158f4a5eea989005a42d2423bb609fe9ace98844568d2df9ac271035"
+    }
+```
+
+```diff
+    contract PermittableToken (gno:0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x064c46a3015079f17e93b171ff684cda28a0ecdbd55ecec09c4ddf50e0a5c312"
++        "0xd9a3b7f2158f4a5eea989005a42d2423bb609fe9ace98844568d2df9ac271035"
+    }
+```
+
+```diff
+    contract HomeAMB (gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x42c489ed63dc75d73bab6e89bc470b7c805b0c16cbbc0e9287cc824cc88b0b79"
++        "0x4e50aa13a908fda155f0aef44f6f0e2c003038cb4ba9731fc7fb16b70c3b7de4"
+    }
+```
+
 Generated with discovered.json: 0xecc8a52201850fd3bf471509b00b4a84276bf3dd
 
 # Diff at Fri, 31 Oct 2025 11:17:06 GMT:
