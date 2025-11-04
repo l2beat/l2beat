@@ -1,7 +1,7 @@
 import {
   formatEcsLog,
+  type LogEntry,
   type LoggerTransport,
-  type LogLevel,
 } from '@l2beat/backend-tools'
 import { v4 as uuidv4 } from 'uuid'
 import {
@@ -31,13 +31,8 @@ export class ElasticSearchTransport implements LoggerTransport {
     this.start()
   }
 
-  log(
-    time: Date,
-    level: LogLevel,
-    message: string,
-    parameters: Record<string, unknown>,
-  ): void {
-    this.buffer.push(formatEcsLog(time, level, message, parameters))
+  log(entry: LogEntry): void {
+    this.buffer.push(formatEcsLog(entry))
   }
 
   push(log: string) {

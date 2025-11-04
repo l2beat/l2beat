@@ -1,6 +1,6 @@
 import ErrorStackParser from 'error-stack-parser'
 import { ConsoleTransport } from './ConsoleTransport'
-import type { LoggerTransport, LogLevel } from './types'
+import type { LogEntry, LoggerTransport, LogLevel } from './types'
 
 const RANK = {
   NONE: 0,
@@ -17,6 +17,7 @@ export interface LoggerOptions {
   transports: LoggerTransport[]
   getTime: () => Date
   cwd: string
+  filter: (entry: LogEntry) => boolean
 }
 
 /**
@@ -47,12 +48,17 @@ export class Logger {
       transports: options.transports ?? [ConsoleTransport.PRETTY],
       getTime: options.getTime ?? (() => new Date()),
       cwd: options.cwd ?? process.cwd(),
+      filter: options.filter ?? (() => true),
     }
     this.tags = tags ?? {}
   }
 
   configure(options: Partial<LoggerOptions>) {
     return new Logger({ ...this.options, ...options }, this.tags)
+  }
+
+  filter(predicate: (entry: LogEntry) => boolean) {
+    return this.configure({ filter: predicate })
   }
 
   tag(tags: Record<string, unknown>) {
@@ -71,10 +77,16 @@ export class Logger {
     if (RANK[this.options.level] < RANK[level]) return
     const time = this.options.getTime()
     const { message, parameters } = resolveArgs(args, this.options.cwd)
-    const combinedParameters = { ...this.tags, ...parameters }
+    const entry: LogEntry = {
+      time,
+      level,
+      message,
+      parameters: { ...this.tags, ...parameters },
+    }
+    if (!this.options.filter(entry)) return
     for (const transport of this.options.transports) {
       try {
-        transport.log(time, level, message, combinedParameters)
+        transport.log(entry)
       } catch {}
     }
   }
