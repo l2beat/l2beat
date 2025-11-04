@@ -1,6 +1,6 @@
 {
   "name": "penchain",
-  "timestamp": 1752752123,
+  "timestamp": 1762264391,
   "configHash": "0x9a0096280118c4c662c5b66fdd492b5049b63c336a5d2e90e7295e94b9c9cde6",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
@@ -171,7 +171,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0xc08488a287722e0829f14591c8d688b3151808a15a21257f2f2fbd482e03587a",
+        "lastAccInputHash": "0x57386edb93a22eb06d9a231bc26ac813991c5a7d50f9f96b1b190d105e95a40b",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "Pentagon Games",
@@ -424,6 +424,6 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 22938657 },
+  "usedBlockNumbers": { "ethereum": 23726376 },
   "permissionsConfigHash": "0xfcc22f86b4d5682b4f2a9b18ac5e07b9abf7650f648a3136ad1b4d62807d3404"
 }

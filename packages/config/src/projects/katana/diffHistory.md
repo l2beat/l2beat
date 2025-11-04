@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x2841529776b042045de62632501c9feaf74f7368
+
+# Diff at Tue, 04 Nov 2025 13:55:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f12d06bbf120eab9f5356a235918d4d6b2484290 block: 1761895573
+- current timestamp: 1762264436
+
+## Description
+
+ms signer added.
+
+## Watched changes
+
+```diff
+    contract Katana Steakhouse Financial / Morpho Multisig (eth:0x827e86072B06674a077f592A531dcE4590aDeCdB) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x8AE8EE5ad6EaE89836B0070Ebc47AF06E3D7422b"
+      values.multisigThreshold:
+-        "2 of 4 (50%)"
++        "2 of 5 (40%)"
+    }
+```
+
 Generated with discovered.json: 0xe88f397606c7e20474b3e8f173408bfa1c4b0a9d
 
 # Diff at Tue, 04 Nov 2025 12:50:09 GMT:
