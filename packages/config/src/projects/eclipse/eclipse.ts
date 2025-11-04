@@ -1,5 +1,4 @@
 import {
-  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
