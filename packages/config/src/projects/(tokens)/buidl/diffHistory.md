@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x22ce6ed78b07a4bb7d16073da61c687022830b80
+Generated with discovered.json: 0xd1692a4667c370de0fa4270297a1ac912800f794
 
 # Diff at Tue, 04 Nov 2025 11:35:05 GMT:
 
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x22ce6ed78b07a4bb7d16073da61c687022830b80
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Config: library, should be removed.
 
 ## Config/verification related changes
 

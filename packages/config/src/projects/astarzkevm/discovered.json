@@ -1,6 +1,6 @@
 {
   "name": "astarzkevm",
-  "timestamp": 1721204831,
+  "timestamp": 1762264420,
   "configHash": "0x35224c5a902798098477b8b2579f57d0a2453cba9117b0f874e7cb7ed4bda2d9",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
@@ -107,7 +107,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x46dbccfee8a6b6c69390347d9379ec493f19310f1453b97b7331f8fd004071fb",
+        "lastAccInputHash": "0x00dd14d2b88a921ec38f18ae2ffbd46f7c4abfb42ead50dcf2e0c6d27286a170",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "Astar zkEVM",
@@ -623,6 +623,6 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 20325048 },
+  "usedBlockNumbers": { "ethereum": 23726378 },
   "permissionsConfigHash": "0xfd723da2fdd1f0622486693cce69c11da86ea764814eec6e622c5339ba2b2cb1"
 }
