@@ -1,12 +1,18 @@
-import type { StarkexClient, VoyagerClient } from '@l2beat/shared'
+import type {
+  LighterClient,
+  StarkexClient,
+  VoyagerClient,
+} from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import type { ChainApi } from '../../config/chain/ChainApi'
+import { LighterDayProvider } from './LighterDayProvider'
 import { StarkexDayProvider } from './StarkexDayProvider'
 import { StarknetDayProvider } from './StarknetDayProvider'
 
 interface DayProvidersClients {
   starkex: StarkexClient | undefined
   voyager: VoyagerClient | undefined
+  lighter: LighterClient | undefined
 }
 
 export interface DayProvider {
@@ -31,6 +37,9 @@ export class DayProviders {
     }
     if (clients.voyager) {
       this.providers.set('starknet', new StarknetDayProvider(clients.voyager))
+    }
+    if (clients.lighter) {
+      this.providers.set('lighter', new LighterDayProvider(clients.lighter))
     }
   }
 

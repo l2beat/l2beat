@@ -65,7 +65,8 @@ const parseExecutionStateChanged = createEventParser(
 export const CCIPSendRequested = createInteropEventType<{
   messageId: `0x${string}`
   $dstChain: string
-  tokenAmounts: { token: Address32; amount: string }[]
+  token: Address32
+  amount: bigint
 }>('ccip.CCIPSendRequested')
 
 export const ExecutionStateChanged = createInteropEventType<{
@@ -127,19 +128,17 @@ export class CCIPPlugIn implements InteropPlugin {
     const ccipSendRequested = parseCCIPSendRequested(input.log, null)
     if (ccipSendRequested) {
       const outboundLane = EthereumAddress(input.log.address)
-      return [
+      return ccipSendRequested.message.tokenAmounts.map((ta) =>
         CCIPSendRequested.create(input.ctx, {
           messageId: ccipSendRequested.message.messageId,
-          tokenAmounts: ccipSendRequested.message.tokenAmounts.map((ta) => ({
-            token: Address32.from(ta.token),
-            amount: ta.amount.toString(),
-          })),
+          token: Address32.from(ta.token),
+          amount: ta.amount,
           $dstChain:
             Object.entries(network.outboundLanes).find(
               ([_, address]) => address === outboundLane,
             )?.[0] ?? `Unknown_${outboundLane}`,
         }),
-      ]
+      )
     }
 
     const executionStateChanged = parseExecutionStateChanged(input.log, null)
@@ -164,30 +163,30 @@ export class CCIPPlugIn implements InteropPlugin {
   matchTypes = [ExecutionStateChanged]
   match(delivery: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (ExecutionStateChanged.checkType(delivery)) {
-      const ccipSendRequested = db.find(CCIPSendRequested, {
+      const ccipSendRequests = db.findAll(CCIPSendRequested, {
         messageId: delivery.args.messageId,
       })
 
-      if (!ccipSendRequested) return
+      if (ccipSendRequests.length === 0) return
       if (delivery.args.state !== 2) return
       // For each token in token amounts create add TRANSFER to the Result
       const result: MatchResult = []
-      for (const tokenAmount of ccipSendRequested.args.tokenAmounts) {
+      for (const ccipSendRequested of ccipSendRequests) {
         result.push(
           Result.Transfer('ccip.Transfer', {
             srcEvent: ccipSendRequested,
             dstEvent: delivery,
-            srcTokenAddress: tokenAmount.token,
-            srcAmount: BigInt(tokenAmount.amount),
-            dstTokenAddress: tokenAmount.token,
-            dstAmount: BigInt(tokenAmount.amount),
+            srcTokenAddress: ccipSendRequested.args.token,
+            srcAmount: ccipSendRequested.args.amount,
+            dstTokenAddress: ccipSendRequested.args.token,
+            dstAmount: ccipSendRequested.args.amount,
           }),
         )
       }
       result.push(
         Result.Message('ccip.Message', {
           app: 'CCIP Token Transfer',
-          srcEvent: ccipSendRequested,
+          srcEvent: ccipSendRequests[0],
           dstEvent: delivery,
         }),
       )

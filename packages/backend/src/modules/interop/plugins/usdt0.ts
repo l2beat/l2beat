@@ -24,14 +24,14 @@ const parseOFTReceived = createEventParser(
 
 export const Usdt0OFTSent = createInteropEventType<{
   guid: string
-  amountSentLD: number
-  amountReceivedLD: number
+  amountSentLD: bigint
+  amountReceivedLD: bigint
   tokenAddress: Address32
 }>('usdt0.OFTSent')
 
 export const Usdt0OFTReceived = createInteropEventType<{
   guid: string
-  amountReceivedLD: number
+  amountReceivedLD: bigint
   tokenAddress: Address32
 }>('usdt0.OFTReceived')
 
@@ -85,8 +85,8 @@ export class Usdt0Plugin implements InteropPlugin {
       return [
         Usdt0OFTSent.create(input.ctx, {
           guid: oftSent.guid,
-          amountSentLD: Number(oftSent.amountSentLD),
-          amountReceivedLD: Number(oftSent.amountReceivedLD),
+          amountSentLD: oftSent.amountSentLD,
+          amountReceivedLD: oftSent.amountReceivedLD,
           tokenAddress: network.tokenAddress,
         }),
       ]
@@ -97,7 +97,7 @@ export class Usdt0Plugin implements InteropPlugin {
       return [
         Usdt0OFTReceived.create(input.ctx, {
           guid: oftReceived.guid,
-          amountReceivedLD: Number(oftReceived.amountReceivedLD),
+          amountReceivedLD: oftReceived.amountReceivedLD,
           tokenAddress: network.tokenAddress,
         }),
       ]
@@ -131,10 +131,10 @@ export class Usdt0Plugin implements InteropPlugin {
       Result.Transfer('usdt0.Transfer', {
         srcEvent: oftSent,
         srcTokenAddress: oftSent.args.tokenAddress,
-        srcAmount: BigInt(oftSent.args.amountSentLD),
+        srcAmount: oftSent.args.amountSentLD,
         dstEvent: oftReceived,
         dstTokenAddress: oftReceived.args.tokenAddress,
-        dstAmount: BigInt(oftReceived.args.amountReceivedLD),
+        dstAmount: oftReceived.args.amountReceivedLD,
       }),
     ]
   }

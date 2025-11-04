@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xa954e75854d6138c7e6f20c3e2b7e2d0ca8a3896
+
+# Diff at Mon, 03 Nov 2025 17:47:30 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6b72018cd9706ce7cba8ec489b67d7193f34dc20 block: 1761895573
+- current timestamp: 1761895573
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761895573 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"challenge","from":"eth:0x667b7DA73DA7B2A75286378FF45637eEaE9B4793","role":".challenger"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x4A6f5889409Bf4Bf3Bff0Fef585D7A29FdA64258) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"eth:0x667b7DA73DA7B2A75286378FF45637eEaE9B4793","role":".proposer"}]
+    }
+```
+
 Generated with discovered.json: 0x7f972cfc07a9051463a8b73abd6ad4365e0b992d
 
 # Diff at Fri, 31 Oct 2025 13:46:31 GMT:

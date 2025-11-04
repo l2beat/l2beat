@@ -34,16 +34,16 @@ export const StargateV2OFTSentBusRode = createInteropEventType<{
   receiver: string
   destinationEid: number
   tokenAddress: Address32
-  amountSentLD: string
-  amountReceivedLD: string
-  amountSD: string
+  amountSentLD: bigint
+  amountReceivedLD: bigint
+  amountSD: bigint
   $dstChain: string
 }>('stargate-v2.OFTSentBus')
 
 export const StargateV2OFTSentTaxi = createInteropEventType<{
   guid: string
-  amountSentLD: string
-  amountReceivedLD: string
+  amountSentLD: bigint
+  amountReceivedLD: bigint
   tokenAddress: Address32
   $dstChain: string
 }>('stargate-v2.OFTSentTaxi')
@@ -55,7 +55,7 @@ export const StargateV2OFTReceived = createInteropEventType<{
   token: string
   tokenAddress: Address32
   destinationEid: number
-  amountReceivedLD: string
+  amountReceivedLD: bigint
   $srcChain: string
 }>('stargate-v2.OFTReceived')
 
@@ -244,9 +244,9 @@ export class StargatePlugin implements InteropPlugin {
                 token: pool.token,
                 destinationEid: oftSent.dstEid,
                 tokenAddress: pool.tokenAddress,
-                amountSentLD: oftSent.amountSentLD.toString(),
-                amountReceivedLD: oftSent.amountReceivedLD.toString(),
-                amountSD: passenger.amountSD.toString(),
+                amountSentLD: oftSent.amountSentLD,
+                amountReceivedLD: oftSent.amountReceivedLD,
+                amountSD: passenger.amountSD,
                 $dstChain: findChain(
                   STARGATE_NETWORKS,
                   (x) => x.eid,
@@ -260,8 +260,8 @@ export class StargatePlugin implements InteropPlugin {
       return [
         StargateV2OFTSentTaxi.create(input.ctx, {
           guid: oftSent.guid,
-          amountSentLD: oftSent.amountSentLD.toString(),
-          amountReceivedLD: oftSent.amountReceivedLD.toString(),
+          amountSentLD: oftSent.amountSentLD,
+          amountReceivedLD: oftSent.amountReceivedLD,
           tokenAddress: pool.tokenAddress,
           $dstChain: findChain(STARGATE_NETWORKS, (x) => x.eid, oftSent.dstEid),
         }),
@@ -290,7 +290,7 @@ export class StargatePlugin implements InteropPlugin {
           token: pool.token,
           tokenAddress: pool.tokenAddress,
           destinationEid,
-          amountReceivedLD: oftReceived.amountReceivedLD.toString(),
+          amountReceivedLD: oftReceived.amountReceivedLD,
           $srcChain: findChain(
             STARGATE_NETWORKS,
             (x) => x.eid,
@@ -396,10 +396,10 @@ export class StargatePlugin implements InteropPlugin {
           Result.Transfer('stargate-v2-bus.Transfer', {
             srcEvent: oftSentBusRode,
             srcTokenAddress: oftSentBusRode.args.tokenAddress,
-            srcAmount: BigInt(oftSentBusRode.args.amountSentLD),
+            srcAmount: oftSentBusRode.args.amountSentLD,
             dstEvent: matchedOftReceived,
             dstTokenAddress: matchedOftReceived.args.tokenAddress,
-            dstAmount: BigInt(matchedOftReceived.args.amountReceivedLD),
+            dstAmount: matchedOftReceived.args.amountReceivedLD,
           }),
         )
       }
@@ -421,10 +421,10 @@ export class StargatePlugin implements InteropPlugin {
         Result.Transfer('stargate-v2-taxi.Transfer', {
           srcEvent: oftSentTaxi,
           srcTokenAddress: oftSentTaxi.args.tokenAddress,
-          srcAmount: BigInt(oftSentTaxi.args.amountSentLD),
+          srcAmount: oftSentTaxi.args.amountSentLD,
           dstEvent: oftReceived,
           dstTokenAddress: oftReceived.args.tokenAddress,
-          dstAmount: BigInt(oftReceived.args.amountReceivedLD),
+          dstAmount: oftReceived.args.amountReceivedLD,
         }),
       ]
     }

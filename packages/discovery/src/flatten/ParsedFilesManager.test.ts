@@ -295,5 +295,53 @@ describe(ParsedFilesManager.name, () => {
         ['L1', 'L2', 'S1', 'T1', 'f1'].sort(),
       )
     })
+
+    it('finds file-level constants, events, and errors', () => {
+      const files = [
+        {
+          path: 'Globals.sol',
+          content: `
+          uint256 constant GLOBAL_VALUE = 42;
+          event EventHappened(uint256 value, address account);
+          error CustomError(address account);
+          `,
+        },
+        {
+          path: 'Usage.sol',
+          content: `
+          import "./Globals.sol";
+          contract User {
+            function doSomething() public {
+              emit EventHappened(GLOBAL_VALUE, msg.sender);
+              revert CustomError(msg.sender);
+            }
+          }
+          `,
+        },
+      ]
+
+      const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS, {
+        includeAll: true,
+      })
+      const root = manager.findDeclaration('User')
+
+      expect(root.declaration.dynamicReferences.sort()).toEqual(
+        ['CustomError', 'EventHappened', 'GLOBAL_VALUE'].sort(),
+      )
+      expect(manager.findDeclaration('GLOBAL_VALUE').declaration).toHaveSubset({
+        name: 'GLOBAL_VALUE',
+        type: 'constant',
+      })
+      expect(manager.findDeclaration('EventHappened').declaration).toHaveSubset(
+        {
+          name: 'EventHappened',
+          type: 'event',
+        },
+      )
+      expect(manager.findDeclaration('CustomError').declaration).toHaveSubset({
+        name: 'CustomError',
+        type: 'error',
+      })
+    })
   })
 })

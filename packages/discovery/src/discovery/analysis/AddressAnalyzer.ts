@@ -12,6 +12,7 @@ import type { ContractValue } from '../output/types'
 import type { IProvider } from '../provider/IProvider'
 import type { ProxyDetector } from '../proxies/ProxyDetector'
 import { getImplementationNames } from '../source/getDerivedName'
+import { getLibraries } from '../source/getLibraries'
 import type {
   PerContractSource,
   SourceCodeService,
@@ -128,6 +129,8 @@ export class AddressAnalyzer {
       config.manualSourcePaths,
     )
 
+    const libraries = getLibraries(provider.chain, sources)
+
     if (extendedTemplate === undefined) {
       const matchingTemplates = this.templateService.findMatchingTemplates(
         sources,
@@ -158,6 +161,10 @@ export class AddressAnalyzer {
       ([field, value]): HandlerResult => ({ field, value }),
     )
 
+    const libraryResults: HandlerResult[] = [
+      { field: '$libraries', value: libraries },
+    ]
+
     const handlerResults = results.map(
       (result): HandlerResult => ({ ...result, value: values?.[result.field] }),
     )
@@ -168,7 +175,7 @@ export class AddressAnalyzer {
       ...pastUpgrades.flatMap((e) => e[2]),
     ]
     const relatives = getRelativesWithSuggestedTemplates(
-      handlerResults.concat(proxyResults),
+      handlerResults.concat(proxyResults).concat(libraryResults),
       config.ignoreRelatives,
       ignoredAddresses,
       config.fields,
@@ -177,6 +184,10 @@ export class AddressAnalyzer {
     const mergedValues = {
       ...proxy.values,
       ...(values ?? {}),
+    }
+
+    if (libraries.length > 0) {
+      mergedValues.$libraries = libraries
     }
 
     const deployment = proxy.deployment

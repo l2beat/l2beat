@@ -58,7 +58,7 @@ export const MessageSent = createInteropEventType<{
 }>('allbridge.MessageSent')
 
 export const TokensSent = createInteropEventType<{
-  amount: number
+  amount: bigint
   receiveToken: `0x${string}`
   $dstChain: string
 }>('allbridge.TokensSent')
@@ -69,7 +69,7 @@ export const MessageReceived = createInteropEventType<{
 }>('allbridge.MessageReceived')
 
 export const TokensReceived = createInteropEventType<{
-  amount: number
+  amount: bigint
   message: `0x${string}`
   $srcChain: string
 }>('allbridge.TokensReceived')
@@ -111,7 +111,7 @@ export class AllbridgePlugIn implements InteropPlugin {
     if (tokensSent) {
       return [
         TokensSent.create(input.ctx, {
-          amount: Number(tokensSent.amount),
+          amount: tokensSent.amount,
           receiveToken: tokensSent.receiveToken,
           $dstChain: findChain(
             ALLBRDIGE_NETWORKS,
@@ -126,7 +126,7 @@ export class AllbridgePlugIn implements InteropPlugin {
     if (tokensReceived) {
       return [
         TokensReceived.create(input.ctx, {
-          amount: Number(tokensReceived.amount),
+          amount: tokensReceived.amount,
           message: tokensReceived.message,
           $srcChain: findChain(
             ALLBRDIGE_NETWORKS,
@@ -178,9 +178,9 @@ export class AllbridgePlugIn implements InteropPlugin {
         }),
         Result.Transfer('allbridgeswap.Transfer', {
           srcEvent: tokensSent,
-          srcAmount: BigInt(tokensSent.args.amount.toString()),
+          srcAmount: tokensSent.args.amount,
           dstEvent: delivery,
-          dstAmount: BigInt(delivery.args.amount.toString()),
+          dstAmount: delivery.args.amount,
         }),
       ]
     }
