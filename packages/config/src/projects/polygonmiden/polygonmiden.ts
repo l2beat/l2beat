@@ -16,7 +16,7 @@ export const polygonmiden: ScalingProject = upcomingL2({
     stacks: ['Agglayer CDK'],
     links: {
       websites: ['https://polygon.technology/polygon-miden'],
-      documentation: ['https://docs.polygon.technology/miden/'],
+      documentation: ['https://docs.miden.xyz/intro/'],
       repositories: ['https://github.com/0xMiden'],
       socialMedia: [
         'https://x.com/0xPolygon',
