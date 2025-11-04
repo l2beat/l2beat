@@ -30,6 +30,7 @@ import { ModelPermissions } from './ModelPermissions'
 import { OPConfigs } from './OPConfigs'
 import { DetectProxy } from './Proxy'
 import { RefreshDiscovery } from './RefreshDiscovery'
+import { RegenerateShapeHashes } from './RegenerateShapeHashes'
 import { ScanKintoAm } from './ScanKintoAm'
 import { SolFmt } from './SolFmt'
 import { StarknetAccessControl } from './StarknetAccessControl'
@@ -48,9 +49,9 @@ export function getSubcommands() {
     CompareOpStacks,
     CompareOrbitStacks,
     CountUserOperations,
+    DecodeEigenDACommitment,
     DeploymentTimestamp,
     DetectProxy,
-    DecodeEigenDACommitment,
     Discover,
     DownloadAllShapes,
     DownloadShapes,
@@ -64,8 +65,8 @@ export function getSubcommands() {
     FindUnusedShapes,
     FixDiscoverySchemaPaths,
     Flatten,
-    GetTokenMinters,
     GenerateEntrypoints,
+    GetTokenMinters,
     Init,
     InitTemplate,
     MatchFlat,
@@ -73,6 +74,7 @@ export function getSubcommands() {
     ModelPermissions,
     OPConfigs,
     RefreshDiscovery,
+    RegenerateShapeHashes,
     ScanKintoAm,
     SolFmt,
     StarknetAccessControl,

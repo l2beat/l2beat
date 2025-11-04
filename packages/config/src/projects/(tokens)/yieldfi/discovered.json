@@ -375,6 +375,21 @@
       }
     },
     {
+      "name": "SignatureChecker",
+      "address": "eth:0x800C32EaA2a6c93cF4CB51794450ED77fBfbB172",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xfb452b0284bb37c8567dbbf7e82ec155f2717595393d406a74b603c77947f7fc"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1704220319,
+      "sinceBlock": 18921496,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x800C32EaA2a6c93cF4CB51794450ED77fBfbB172": "SignatureChecker"
+      }
+    },
+    {
       "name": "YieldFiTimelockController",
       "address": "eth:0x8E31eFdA4453494a84Fa6168D53Eb1418c0b4aC4",
       "type": "Contract",
@@ -561,6 +576,7 @@
         "$admin": "eth:0x807a96288A1A408dBC13DE2b1d087d10356395d2",
         "$immutable": false,
         "$implementation": "eth:0x43506849D7C04F9138D1A2050bbF3A0c054402dd",
+        "$libraries": ["eth:0x800C32EaA2a6c93cF4CB51794450ED77fBfbB172"],
         "$pastUpgrades": [
           [
             "2020-08-27T15:32:54.000Z",
@@ -1073,6 +1089,9 @@
       "function withdrawAssets(address, address) view returns (bool)",
       "function withdrawBondYield(address _yToken, address receiver, uint256 amount, address assetToken)"
     ],
+    "eth:0x800C32EaA2a6c93cF4CB51794450ED77fBfbB172": [
+      "function isValidSignatureNow(address signer, bytes32 digest, bytes signature) view returns (bool)"
+    ],
     "eth:0x8E31eFdA4453494a84Fa6168D53Eb1418c0b4aC4": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
       "error AccessControlBadConfirmation()",
@@ -1319,5 +1338,5 @@
     "yieldfi/yToken": "0x9b5cc48d825b194515dfb745175d1b88cfddd832dc92dc60a7ec999ac69ef274"
   },
   "usedBlockNumbers": { "ethereum": 23519593 },
-  "permissionsConfigHash": "0x18458e2b07fa1858f4202f05bfa54acc492bdc77c6e46233e5a109e5388c120f"
+  "permissionsConfigHash": "0x105935ee5393320bbb220d34ccfbdba5bcab4b369396b38098844ac3439e4fba"
 }

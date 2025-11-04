@@ -1,6 +1,8 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { InteropEventContext } from '@l2beat/database'
 import { Address32, UnixTime } from '@l2beat/shared-pure'
+import type { Database } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer, RootIndexer } from '@l2beat/uif'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { ManagedChildIndexer } from '../../../../tools/uif/ManagedChildIndexer'
@@ -35,10 +37,14 @@ export const TokenReceived = createInteropEventType<{
 }>('relay.TokenReceived')
 
 export class RelayIndexer extends ManagedChildIndexer {
+  private sentIds = new Set<string>()
+  private receivedIds = new Set<string>()
+
   constructor(
     private chains: { id: number; name: string }[],
     private trackedChains: string[],
     private relayApiClient: RelayApiClient,
+    private db: Database,
     private interopEventStore: InteropEventStore,
     parent: RelayRootIndexer,
     indexerService: IndexerService,
@@ -52,6 +58,20 @@ export class RelayIndexer extends ManagedChildIndexer {
       name: 'relay_indexer',
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
+  }
+
+  override async start(): Promise<void> {
+    const sentEvents = await this.db.interopEvent.getByType(TokenSent.type)
+    const receivedEvents = await this.db.interopEvent.getByType(
+      TokenReceived.type,
+    )
+    for (const e of sentEvents) {
+      this.sentIds.add((e.args as Record<string, unknown>).id as string)
+    }
+    for (const e of receivedEvents) {
+      this.receivedIds.add((e.args as Record<string, unknown>).id as string)
+    }
+    await super.start()
   }
 
   private getChainName(chainId: number | undefined) {
@@ -161,10 +181,18 @@ export class RelayIndexer extends ManagedChildIndexer {
       }
 
       if (TokenSent.checkType(e)) {
-        return !this.interopEventStore.find(TokenSent, { id: e.args.id })
+        if (this.sentIds.has(e.args.id)) {
+          return false
+        }
+        this.sentIds.add(e.args.id)
+        return true
       }
       if (TokenReceived.checkType(e)) {
-        return !this.interopEventStore.find(TokenReceived, { id: e.args.id })
+        if (this.receivedIds.has(e.args.id)) {
+          return false
+        }
+        this.receivedIds.add(e.args.id)
+        return true
       }
       return false
     })

@@ -1560,7 +1560,7 @@
       "type": "Contract",
       "template": "shared-zk-stack/L1VerifierPlonk",
       "sourceHashes": [
-        "0x20269ba58e717388e68842ab5a0b73b744856b4b1fb48d57ac7dce36d0c3c765"
+        "0x4e306eb2936a09bd91390a0b661bfd8eda46b873600b8c7b4fb9be3cc3867a8d"
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
@@ -2707,6 +2707,6 @@
     "shared-zk-stack/ServerNotifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/ValidatorTimelock_post29": "0x6b83daae3459d63aeff3b894c47d96c0190d2aaccc58fd6243a417aa7e5ac3a3"
   },
-  "usedBlockNumbers": { "gateway": 84446, "ethereum": 23719710 },
+  "usedBlockNumbers": { "ethereum": 23719710, "gateway": 84446 },
   "permissionsConfigHash": "0xdaebab4a463a67a4983f634bd30f7f86a3a9cc52aa5b130657d3ab038d6ec195"
 }

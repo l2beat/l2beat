@@ -593,7 +593,7 @@
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x60ebf53dd49973efa525783a0716f706ac120b1ee0443943732fe5c97dd4959e",
-        "0x8594410431f0c8cc86d641b9954c3ad91e81fecc79f25ec8d62b294c44201533"
+        "0x37e4bc420a724954556b571c6d8bc8c72d7c7f2b6c48465c65d895e51d5bbc10"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",

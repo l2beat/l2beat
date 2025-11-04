@@ -1,0 +1,181 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "forknet",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "forknet-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ethereum",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "category": "ether",
+      "source": "canonical",
+      "amount": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "const",
+            "value": "340282366920938463463374607431768211455",
+            "decimals": 18,
+            "sinceTimestamp": 1756893611
+          },
+          {
+            "type": "balanceOfEscrow",
+            "chain": "forknet",
+            "decimals": 18,
+            "address": "native",
+            "escrowAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+            "sinceTimestamp": 1756893611
+          }
+        ]
+      },
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "forknet-POL",
+      "priceId": "polygon-ecosystem-token",
+      "symbol": "POL",
+      "name": "Polygon Ecosystem Token",
+      "iconUrl": "/images/custom-tokens/polygon-ecosystem-token.png",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xb24e3035d1FCBC0E43CF3143C3Fd92E53df2009b",
+        "chain": "forknet",
+        "decimals": 18,
+        "sinceTimestamp": 1756893611
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "forknet-STG",
+      "priceId": "stargate-finance",
+      "symbol": "STG",
+      "name": "StargateToken",
+      "iconUrl": "https://assets.coingecko.com/coins/images/24413/large/STG_LOGO.png?1696523595",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xdEC51100A464D05865952F8E041b3FD3357A32D3",
+        "chain": "forknet",
+        "decimals": 18,
+        "sinceTimestamp": 1756893611
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "forknet-SUSHI",
+      "priceId": "sushi",
+      "symbol": "SUSHI",
+      "name": "SushiToken",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12271/large/512x512_Logo_no_chop.png?1696512101",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x17BFF452dae47e07CeA877Ff0E1aba17eB62b0aB",
+        "chain": "forknet",
+        "decimals": 18,
+        "sinceTimestamp": 1756893611
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "forknet-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xfd415D011FfaA8e6f17fa753CdB080d1dE266784",
+        "chain": "forknet",
+        "decimals": 6,
+        "sinceTimestamp": 1756893611
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "forknet-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xf44e3BCB7A2461CC08185E127B324f2486a74E20",
+        "chain": "forknet",
+        "decimals": 6,
+        "sinceTimestamp": 1756893611
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "forknet-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "category": "btc",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xB33e43A3F276e8e75792b941bccC996EcB2c0bBD",
+        "chain": "forknet",
+        "decimals": 8,
+        "sinceTimestamp": 1756893611
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "forknet-WETH",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x815955d051C6262C16c720b19D735426254Bec5B",
+        "chain": "forknet",
+        "decimals": 18,
+        "sinceTimestamp": 1756893611
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "forknet-XAUt",
+      "priceId": "tether-gold",
+      "symbol": "XAUt",
+      "name": "Tether Gold",
+      "iconUrl": "https://assets.coingecko.com/coins/images/10481/large/Tether_Gold.png?1696510471",
+      "category": "rwaPublic",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x1c188CA40e63a5c5864A9C0Be9fAaB8308d932Cf",
+        "chain": "forknet",
+        "decimals": 6,
+        "sinceTimestamp": 1756893611
+      }
+    }
+  ]
+}

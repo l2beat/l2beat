@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xcc0f62e80c373949527783d0021de6e9698b3ff5
+
+# Diff at Tue, 04 Nov 2025 11:34:49 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1761895172
+- current timestamp: 1761895172
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761895172 (main branch discovery), not current.
+
+```diff
+    contract ARMProxy (eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x5561ac1c24a1f2bd38ec522cf6fde1f06f5d2eff0d9006035ff445d9e1505a47"
++        "0x3693b1f8ad16df4a5aaa5bfcfb070ead01c1ca6e49553832567f9710362a47ac"
+    }
+```
+
+```diff
+    contract CallProxy (eth:0x82b8A19497fA25575f250a3DcFfCD2562B575A2e) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x0b5d83431c69340cb7e56f4baac882eed639a835829b4752caefdb78e4b32741"
++        "0x838eaabb6de8f4c17edd99a2bc83ce87289ec3e6fb3ce7ebf21b989b8acc2397"
+    }
+```
+
 Generated with discovered.json: 0x67ae6ccceb61733857aae580751a1da763e40dcb
 
 # Diff at Fri, 31 Oct 2025 07:23:07 GMT:
