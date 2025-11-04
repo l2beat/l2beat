@@ -114,6 +114,12 @@
           "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
           "eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8"
         ],
+        "$libraries": [
+          "eth:0xc618b0bA27F751D33689DebA538f8567AeF53ee6",
+          "eth:0xe61FD6715FfFA2f4057f1Cf0230512b91A9f5f84",
+          "eth:0xfD9B548c00a1E96BbFc2C5FE0D339618B40B4593",
+          "eth:0x5565543Ec09f746721928B0A4d019c9E750d0552"
+        ],
         "$pastUpgrades": [
           [
             "2024-05-01T08:03:47.000Z",
@@ -1115,6 +1121,21 @@
       "address": "eth:0x5374b2907a45a28c37caA45e06FC6eBceECAC72a",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "LibUtils",
+      "address": "eth:0x5565543Ec09f746721928B0A4d019c9E750d0552",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xa95a0bf39ca3a8957ae05fcfb8e1fa0fc50899665b9b2ac121aeb1aa45c7478b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1747264643,
+      "sinceBlock": 22484611,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x5565543Ec09f746721928B0A4d019c9E750d0552": "LibUtils"
+      }
     },
     {
       "address": "eth:0x55792e1F0a41D3af8B6d41DFdcf24651AA80fA1e",
@@ -2876,6 +2897,21 @@
       "proxyType": "EOA"
     },
     {
+      "name": "LibBonds",
+      "address": "eth:0xc618b0bA27F751D33689DebA538f8567AeF53ee6",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x640f3fde75c47db84e65ebce824c47d9121d25898c7f0636a7abfba5b1e74de1"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1747264643,
+      "sinceBlock": 22484611,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xc618b0bA27F751D33689DebA538f8567AeF53ee6": "LibBonds"
+      }
+    },
+    {
       "address": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
       "type": "EOA",
       "proxyType": "EOA",
@@ -3146,6 +3182,21 @@
           "role": ".getOperatorCandidatesForCurrentEpoch"
         }
       ]
+    },
+    {
+      "name": "LibData",
+      "address": "eth:0xe61FD6715FfFA2f4057f1Cf0230512b91A9f5f84",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x650f9dc1d365201df825d0fb98420f99dce408d0548f7acc1c7da75270b0226d"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1747264667,
+      "sinceBlock": 22484613,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xe61FD6715FfFA2f4057f1Cf0230512b91A9f5f84": "LibData"
+      }
     },
     {
       "address": "eth:0xE7CBcDa9a4FEAe2bC7ca6b2B682Bc4Ae9f8B7e3B",
@@ -3446,6 +3497,21 @@
       "implementationNames": {
         "eth:0xFD019460881e6EeC632258222393d5821029b2ac": "ERC1967Proxy",
         "eth:0x54FeDc114D78dcbDb8c7b2DeA433f9749E8fd0Fc": "PreconfWhitelist"
+      }
+    },
+    {
+      "name": "LibProving",
+      "address": "eth:0xfD9B548c00a1E96BbFc2C5FE0D339618B40B4593",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x3b628cc0cda00f7669f586b33786da861f2b2ed1bd0be4f3500099dec66962d0"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1747264643,
+      "sinceBlock": 22484611,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xfD9B548c00a1E96BbFc2C5FE0D339618B40B4593": "LibProving"
       }
     },
     {
@@ -4559,6 +4625,14 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "eth:0x5565543Ec09f746721928B0A4d019c9E750d0552": [
+      "error L1_INVALID_BLOCK_ID()",
+      "error L1_INVALID_GENESIS_HASH()",
+      "error L1_INVALID_PARAMS()",
+      "error L1_TRANSITION_NOT_FOUND()",
+      "error L1_UNEXPECTED_TRANSITION_ID()",
+      "event BlockVerifiedV2(uint256 indexed blockId, address indexed prover, bytes32 blockHash, uint16 tier)"
+    ],
     "eth:0x584fE70fE82F728f0Fe26488857D623f3B59E070": [
       "constructor()",
       "error DaoUnauthorized(address dao, address where, address who, bytes32 permissionId)",
@@ -5478,6 +5552,15 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "eth:0xc618b0bA27F751D33689DebA538f8567AeF53ee6": [
+      "error ETH_TRANSFER_FAILED()",
+      "error L1_ETH_NOT_PAID_AS_BOND()",
+      "error L1_INVALID_MSG_VALUE()",
+      "event BondCredited(address indexed user, uint256 blockId, uint256 amount)",
+      "event BondDebited(address indexed user, uint256 blockId, uint256 amount)",
+      "event BondDeposited(address indexed user, uint256 amount)",
+      "event BondWithdrawn(address indexed user, uint256 amount)"
+    ],
     "eth:0xcdb25e201Ad3fdcFe16730A6CA2cC0B1Ce2137a2": [
       "constructor(uint8 _inclusionDelay, uint64 _feeInGwei, address _inbox, address _inboxWrapper)",
       "error ACCESS_DENIED()",
@@ -5691,6 +5774,9 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function verifyProof(tuple(uint64 batchId, bytes32 metaHash, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot) transition)[] _ctxs, bytes _proof)"
     ],
+    "eth:0xe61FD6715FfFA2f4057f1Cf0230512b91A9f5f84": [
+      "function blockV2ToV1(tuple(bytes32 metaHash, address assignedProver, uint96 livenessBond, uint64 blockId, uint64 proposedAt, uint64 proposedIn, uint24 nextTransitionId, bool livenessBondReturned, uint24 verifiedTransitionId) _v2) pure returns (tuple(bytes32 metaHash, address assignedProver, uint96 livenessBond, uint64 blockId, uint64 proposedAt, uint64 proposedIn, uint32 nextTransitionId, uint32 verifiedTransitionId))"
+    ],
     "eth:0xE78659fbF234c84C909Cf317D84edc2f6C0D8413": [
       "constructor()",
       "error ACCESS_DENIED()",
@@ -5827,6 +5913,33 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xfD9B548c00a1E96BbFc2C5FE0D339618B40B4593": [
+      "error L1_ALREADY_CONTESTED()",
+      "error L1_ALREADY_PROVED()",
+      "error L1_BLOCK_MISMATCH()",
+      "error L1_BLOCK_MISMATCH()",
+      "error L1_CANNOT_CONTEST()",
+      "error L1_DIFF_VERIFIER()",
+      "error L1_ETH_NOT_PAID_AS_BOND()",
+      "error L1_FORK_HEIGHT_ERROR()",
+      "error L1_INVALID_BLOCK_ID()",
+      "error L1_INVALID_MSG_VALUE()",
+      "error L1_INVALID_PARAMS()",
+      "error L1_INVALID_PAUSE_STATUS()",
+      "error L1_INVALID_TIER()",
+      "error L1_INVALID_TRANSITION()",
+      "error L1_NOT_ASSIGNED_PROVER()",
+      "error L1_PROVING_PAUSED()",
+      "error L1_TRANSITION_ID_ZERO()",
+      "error L1_UNEXPECTED_TRANSITION_ID()",
+      "event BlockVerifiedV2(uint256 indexed blockId, address indexed prover, bytes32 blockHash, uint16 tier)",
+      "event BondCredited(address indexed user, uint256 blockId, uint256 amount)",
+      "event BondDebited(address indexed user, uint256 blockId, uint256 amount)",
+      "event BondDeposited(address indexed user, uint256 amount)",
+      "event ProvingPaused(bool paused)",
+      "event TransitionContestedV2(uint256 indexed blockId, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, bytes32 graffiti) tran, address contester, uint96 contestBond, uint16 tier, uint64 proposedIn)",
+      "event TransitionProvedV2(uint256 indexed blockId, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, bytes32 graffiti) tran, address prover, uint96 validityBond, uint16 tier, uint64 proposedIn)"
     ],
     "eth:0xFF5Adab685362DC4C33536a65aF5873738D1216B": [
       "error InvalidProof()",
@@ -6236,5 +6349,5 @@
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
   "usedBlockNumbers": { "ethereum": 23695785, "taiko": 3057658 },
-  "permissionsConfigHash": "0xa874cbc06f08e79346916c5254aae42b6e9da0ff5b3d432ac1f0869117a93f63"
+  "permissionsConfigHash": "0xb6f82656942b474e8cd8782b2972a86cc6d14b33671f096fa643d7e40ab8413e"
 }

@@ -16,7 +16,7 @@ import {
   GASZIP_NETWORKS,
   getChainNameByGaszipId,
 } from './gaszip.config'
-import { decodeGasZipDeposit } from './gaszip.decoder'
+import { decodeGasZipDeposit, extractFirstTwentyHex } from './gaszip.decoder'
 
 const parseDeposit = createEventParser(
   'event Deposit(address from, uint256 chains, uint256 amount, bytes32 to)',
@@ -136,7 +136,7 @@ export class GasZipPlugin implements InteropPlugin {
           tokenAddress: Address32.NATIVE,
           depositType: 'CONTRACT',
           destinationChains: JSON.stringify(destinationChains),
-          destinationAddress: Address32.from(deposit.to),
+          destinationAddress: Address32.from(extractFirstTwentyHex(deposit.to)),
         }),
       )
     }

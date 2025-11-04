@@ -16,7 +16,14 @@
     {
       "address": "eth:0x0F7A7ca8f7673D9D219766a962856371e1Ed27FF",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0xC5D5B6fCD5FdBdA41Ae640aC9881dC949aEd36d0",
+          "role": ".proposer"
+        }
+      ]
     },
     {
       "name": "PreimageOracle",
@@ -371,6 +378,11 @@
           "permission": "challenge",
           "from": "eth:0xb7850CFa577332EB839840e1411962AC3Dd2f183",
           "role": ".CHALLENGER"
+        },
+        {
+          "permission": "challenge",
+          "from": "eth:0xC5D5B6fCD5FdBdA41Ae640aC9881dC949aEd36d0",
+          "role": ".challenger"
         }
       ]
     },
@@ -1855,11 +1867,11 @@
     "opstack/L2OutputOracle": "0xa2cc6168170a36a722f835a7b21e69ad8bd33ba742127e8b51bf2c53fb0258b7",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
-    "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
+    "opstack/PermissionedDisputeGame": "0xe39c1284ebcc867153d8d9bf8d32a6ab7daf95dde76ad7e13a040bb64d98b985",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "usedBlockNumbers": { "ethereum": 22195184 },
-  "permissionsConfigHash": "0xe03a506b0b4b165de70e4bbe28ad49348469776b27a704dbd7abebcf158a4c7f"
+  "permissionsConfigHash": "0xe6caa1f1a7e48253b1d50ac1c5c1a390e758e97917b9d4734b885ecb35e6e970"
 }
