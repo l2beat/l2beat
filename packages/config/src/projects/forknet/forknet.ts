@@ -36,7 +36,7 @@ export const forknet: ScalingProject = {
     links: {
       websites: ['https://forknet.io/'],
       bridges: ['https://bridge.forknet.io/'],
-      explorers: ['https://testnet.forkscan.org'],
+      explorers: ['https://forkscan.org'],
       socialMedia: ['https://x.com/forknet_io'],
     },
   },
