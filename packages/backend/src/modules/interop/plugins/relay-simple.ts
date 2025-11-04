@@ -41,7 +41,7 @@ const parseRelayNativeDeposit = createEventParser(
 )
 
 const parseRelayERC20Deposit = createEventParser(
-  'event RelayERC20Deposit(address from, address token, uint256 amount, bytes32 id)',
+  'event RelayErc20Deposit(address from, address token, uint256 amount, bytes32 id)',
 )
 
 export const TransferSrc = createInteropEventType<{
@@ -201,7 +201,7 @@ export class RelaySimplePlugIn implements InteropPlugin {
       return [
         TransferSrc.create(input.ctx, {
           amount: relayERC20Deposit.amount,
-          tokenAddress: Address32.from(input.log.address),
+          tokenAddress: Address32.from(relayERC20Deposit.token),
           kind: 'relay ERC20 deposit',
           requestId: relayERC20Deposit.id,
         }),
