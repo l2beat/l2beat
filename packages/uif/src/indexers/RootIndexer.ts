@@ -7,19 +7,19 @@ export abstract class RootIndexer extends Indexer {
     super(logger, [], opts)
   }
 
-  override async update(): Promise<number> {
-    return await Promise.reject(new Error('RootIndexer cannot update'))
+  override update(): Promise<number> {
+    return Promise.reject(new Error('RootIndexer cannot update'))
   }
 
-  override async invalidate(): Promise<number> {
-    return await Promise.reject(new Error('RootIndexer cannot invalidate'))
+  override invalidate(): Promise<number> {
+    return Promise.reject(new Error('RootIndexer cannot invalidate'))
   }
 
-  override async setInitialState(): Promise<void> {
-    return await Promise.resolve()
+  override setInitialState(): Promise<void> {
+    return Promise.resolve()
   }
 
-  override async setSafeHeight(): Promise<void> {
-    return await Promise.resolve()
+  override setInitialState(): Promise<void> {
+    return Promise.resolve()
   }
 }
