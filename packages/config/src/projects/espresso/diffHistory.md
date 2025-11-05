@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x98efb0f69e415149810b5f5dda863ac5a5b6da56
+
+# Diff at Wed, 05 Nov 2025 12:46:40 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bc0ecd2e43db8badee0981759f26dbc0b38299e3 block: 1746205715
+- current timestamp: 1746205715
+
+## Description
+
+Libraries are opt-in
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1746205715 (main branch discovery), not current.
+
+```diff
+    contract OperatorRegistryV1Admin (eth:0x9760fb6F48c15f37304bCb5B502F00512032A3Bb) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0x9760fb6F48c15f37304bCb5B502F00512032A3Bb"]
+    }
+```
+
 Generated with discovered.json: 0xeac2f7b660d3b4f6b72dc225fe8d7135a61363c6
 
 # Diff at Tue, 04 Nov 2025 11:32:38 GMT:

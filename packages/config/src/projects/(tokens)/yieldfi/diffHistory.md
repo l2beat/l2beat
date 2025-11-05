@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x578acfb87cfeb40ea44a32d4a6f964d5de36fc81
+
+# Diff at Wed, 05 Nov 2025 12:48:34 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bc0ecd2e43db8badee0981759f26dbc0b38299e3 block: 1762265442
+- current timestamp: 1762265442
+
+## Description
+
+Libraries are opt-in
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762265442 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract SignatureChecker (eth:0x800C32EaA2a6c93cF4CB51794450ED77fBfbB172)
+    +++ description: None
+```
+
+```diff
+    contract USD Coin Token (eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0x800C32EaA2a6c93cF4CB51794450ED77fBfbB172"]
+    }
+```
+
 Generated with discovered.json: 0x2ad368eb3dda978605c77c2f6ed4a2423fd495aa
 
 # Diff at Tue, 04 Nov 2025 14:12:05 GMT:

@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x5c5f544337726a102f4fd424667e0e244094b6f1
+
+# Diff at Wed, 05 Nov 2025 12:46:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@65e01cac46a1da4a93a30562e3b62c4f0590a2f9 block: 1762264490
+- current timestamp: 1762264490
+
+## Description
+
+Libraries are opt-in
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762264490 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract LpTokenFactory (eth:0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d)
+    +++ description: None
+```
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.$libraries:
+-        ["eth:0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d"]
+    }
+```
+
 Generated with discovered.json: 0x14bdb6df23743d0ea6e179071ed0140eae8dddf9
 
 # Diff at Tue, 04 Nov 2025 13:56:12 GMT:
