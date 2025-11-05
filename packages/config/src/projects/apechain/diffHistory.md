@@ -1,3 +1,97 @@
+Generated with discovered.json: 0x88b6eb57760e02c15e4a3e70a023fb2eedd2dac5
+
+# Diff at Wed, 05 Nov 2025 14:06:56 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@2369552edf4e3d745fb05d6aea795be46115ba13 block: 1760538265
+- current timestamp: 1762351508
+
+## Description
+
+New registered signers.
+
+## Watched changes
+
+```diff
+    contract EspressoNitroTEEVerifier (arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C) {
+    +++ description: Verifies attestations of an AWS Nitro TEE.
+      values.registeredSigners.4:
++        "arb1:0x6480ec7c5bA30bAa4c7F32fbB6eD5299117c5397"
+      values.registeredSigners.5:
++        "arb1:0x37aa7921D4a65d4D224d9C733E3E26c750A79D81"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1760538265 (main branch discovery), not current.
+
+```diff
+    contract V3QuoteVerifier (arb1:0x69523d25E25e5c78d828Df90459b75F189D40Cf7) {
+    +++ description: None
+      name:
+-        "QuoteVerifier"
++        "V3QuoteVerifier"
+      template:
+-        "espresso/Sequencing/QuoteVerifier"
+      sourceHashes.0:
+-        "0x17cf7a67e150ce8a604a58eacd58d5a05651d1783698d5782148bdaf167b3236"
++        "0x2ce21f391e19a4d7b963b79fced06804cb79a44416a35e9e11b229a9a6957b2e"
+      description:
+-        "The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (arb1:0x0d089B3fA00CBAD0a5098025519e9e4620622acF), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified."
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PCCSRouter (arb1:0x0d089B3fA00CBAD0a5098025519e9e4620622acF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (arb1:0x181dc716922c84554aeA8bafa07c906F4e4C15B2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (arb1:0xA454FB9522631D586f3A790c6CDc6f1B70Ca903C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (arb1:0xa4615C2a260413878241ff7605AD9577feB356A5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (arb1:0xB270cD8550DA117E3accec36A90c4b0b48daD342)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (arb1:0xd3A3f34E8615065704cCb5c304C0cEd41bB81483)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (arb1:0xd74e880029cd3B6b434f16beA5F53A06989458Ee)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (arb1:0xeD75bb6543c53d49f4445055Ba18380068025370)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xdf65af09d961fe678a04cd142ba73cc6f85937f8
 
 # Diff at Tue, 04 Nov 2025 11:32:21 GMT:

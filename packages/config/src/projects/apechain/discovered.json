@@ -1,8 +1,13 @@
 {
   "name": "apechain",
-  "timestamp": 1760538265,
+  "timestamp": 1762351508,
   "configHash": "0x18d2a648590449b2753808bbbf9b9481e9e09e07d8536752e2abafaf23d49309",
   "entries": [
+    {
+      "address": "arb1:0x0000000000000000000000000000000000000100",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "EspressoSGXTEEVerifier",
       "address": "arb1:0x05A16513BF74629b834878731f07b075Cca33f55",
@@ -27,6 +32,44 @@
       "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "arb1:0x05A16513BF74629b834878731f07b075Cca33f55": "EspressoSGXTEEVerifier"
+      }
+    },
+    {
+      "name": "PCCSRouter",
+      "address": "arb1:0x0d089B3fA00CBAD0a5098025519e9e4620622acF",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xd857716a2c89774e23390e29b9c9e0876152acfbf115b60d394f38c932a8519d"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1742379476,
+      "sinceBlock": 317289242,
+      "values": {
+        "$immutable": true,
+        "crlHelperAddr": "arb1:0xA454FB9522631D586f3A790c6CDc6f1B70Ca903C",
+        "fmspcTcbDaoAddr": "arb1:0xd3A3f34E8615065704cCb5c304C0cEd41bB81483",
+        "fmspcTcbHelperAddr": "arb1:0x181dc716922c84554aeA8bafa07c906F4e4C15B2",
+        "owner": "arb1:0xDf841B239bE7a6b37366005107069b7410da4Ff9",
+        "pckDaoAddr": "arb1:0xa4615C2a260413878241ff7605AD9577feB356A5",
+        "pckHelperAddr": "arb1:0xeD75bb6543c53d49f4445055Ba18380068025370",
+        "pcsDaoAddr": "arb1:0xB270cD8550DA117E3accec36A90c4b0b48daD342",
+        "qeIdDaoAddr": "arb1:0xd74e880029cd3B6b434f16beA5F53A06989458Ee"
+      },
+      "implementationNames": {
+        "arb1:0x0d089B3fA00CBAD0a5098025519e9e4620622acF": "PCCSRouter"
+      }
+    },
+    {
+      "name": "",
+      "address": "arb1:0x181dc716922c84554aeA8bafa07c906F4e4C15B2",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1742375560,
+      "sinceBlock": 317273704,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "arb1:0x181dc716922c84554aeA8bafa07c906F4e4C15B2": ""
       }
     },
     {
@@ -328,13 +371,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 9562,
+        "firstUnresolvedNode": 10060,
         "inbox": "arb1:0x1B98e4ED82Ee1a91A65a38C690e2266364064D15",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 20628667,
-        "latestConfirmed": 9561,
-        "latestNodeCreated": 9713,
+        "latestConfirmed": 10059,
+        "latestNodeCreated": 10210,
         "loserStakeEscrow": "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF",
@@ -415,6 +458,11 @@
         }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "arb1:0x37aa7921D4a65d4D224d9C733E3E26c750A79D81",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B",
@@ -549,6 +597,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "arb1:0x6480ec7c5bA30bAa4c7F32fbB6eD5299117c5397",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "arb1:0x651cF50272Ffa8f6D954080DF743410Bb0aa7AFa",
       "type": "EOA",
       "proxyType": "EOA"
@@ -559,15 +612,13 @@
       "proxyType": "EOA"
     },
     {
-      "name": "QuoteVerifier",
+      "name": "V3QuoteVerifier",
       "address": "arb1:0x69523d25E25e5c78d828Df90459b75F189D40Cf7",
       "type": "Contract",
-      "template": "espresso/Sequencing/QuoteVerifier",
       "sourceHashes": [
-        "0x17cf7a67e150ce8a604a58eacd58d5a05651d1783698d5782148bdaf167b3236"
+        "0x2ce21f391e19a4d7b963b79fced06804cb79a44416a35e9e11b229a9a6957b2e"
       ],
       "proxyType": "immutable",
-      "description": "The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (arb1:0x0d089B3fA00CBAD0a5098025519e9e4620622acF), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.",
       "sinceTimestamp": 1742380160,
       "sinceBlock": 317291908,
       "values": {
@@ -617,7 +668,7 @@
         "allowedOutboxList": [
           "arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF"
         ],
-        "delayedMessageCount": 1113,
+        "delayedMessageCount": 1128,
         "inboxHistory": [
           "arb1:0x1B98e4ED82Ee1a91A65a38C690e2266364064D15",
           "arb1:0xf383814AE1eD316ed7d6FeA28810C77E8a15A49F",
@@ -628,8 +679,8 @@
         "outboxHistory": ["arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF"],
         "rollup": "arb1:0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
         "sequencerInbox": "arb1:0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C",
-        "sequencerMessageCount": 57820,
-        "sequencerReportedSubMessageCount": 25050744
+        "sequencerMessageCount": 66515,
+        "sequencerReportedSubMessageCount": 26254434
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -728,6 +779,32 @@
       }
     },
     {
+      "name": "",
+      "address": "arb1:0xA454FB9522631D586f3A790c6CDc6f1B70Ca903C",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1742375567,
+      "sinceBlock": 317273719,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "arb1:0xA454FB9522631D586f3A790c6CDc6f1B70Ca903C": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "arb1:0xa4615C2a260413878241ff7605AD9577feB356A5",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1742375596,
+      "sinceBlock": 317273837,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "arb1:0xa4615C2a260413878241ff7605AD9577feB356A5": ""
+      }
+    },
+    {
       "name": "ChallengeManager",
       "address": "arb1:0xAB2182C8c9a9d853Cf06A77967D2b3971A453ee1",
       "type": "Contract",
@@ -794,6 +871,19 @@
       ]
     },
     {
+      "name": "",
+      "address": "arb1:0xB270cD8550DA117E3accec36A90c4b0b48daD342",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1742375594,
+      "sinceBlock": 317273829,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "arb1:0xB270cD8550DA117E3accec36A90c4b0b48daD342": ""
+      }
+    },
+    {
       "name": "EspressoNitroTEEVerifier",
       "address": "arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C",
       "type": "Contract",
@@ -823,7 +913,9 @@
           "arb1:0xC4872A3587C7937b11e6D4c0B0b0174F4b29c8D7",
           "arb1:0xf7BE303e415DD245F685eA0CF6d1dE4B002703B0",
           "arb1:0x9173d4E736A1625400a8711E08A5d9C20A7c9131",
-          "arb1:0x5254e65b4835abf4669f0f838EFfDCb07Ede5F7E"
+          "arb1:0x5254e65b4835abf4669f0f838EFfDCb07Ede5F7E",
+          "arb1:0x6480ec7c5bA30bAa4c7F32fbB6eD5299117c5397",
+          "arb1:0x37aa7921D4a65d4D224d9C733E3E26c750A79D81"
         ],
         "TIMESTAMP_KEY": "0x4ebf727c48eac2c66272456b06a885c5cc03e54d140f63b63b6fd10c1227958e",
         "USER_DATA_KEY": "0x5e4ea5393e4327b3014bc32f2264336b0d1ee84a4cfd197c8ad7e1e16829a16a",
@@ -848,6 +940,37 @@
     },
     {
       "address": "arb1:0xd125c9222160C308EdC5Cf642573Ca8a14D9d33c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "",
+      "address": "arb1:0xd3A3f34E8615065704cCb5c304C0cEd41bB81483",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1742375600,
+      "sinceBlock": 317273853,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "arb1:0xd3A3f34E8615065704cCb5c304C0cEd41bB81483": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "arb1:0xd74e880029cd3B6b434f16beA5F53A06989458Ee",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1742375598,
+      "sinceBlock": 317273845,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "arb1:0xd74e880029cd3B6b434f16beA5F53A06989458Ee": ""
+      }
+    },
+    {
+      "address": "arb1:0xDf841B239bE7a6b37366005107069b7410da4Ff9",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -957,7 +1080,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 57820,
+        "batchCount": 66515,
         "batchPosterManager": "arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B",
         "batchPosters": ["arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B"],
         "bridge": "arb1:0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
@@ -994,7 +1117,7 @@
         "rollup": "arb1:0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1113,
+        "totalDelayedMessagesRead": 1128,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1008,6 +1131,19 @@
         "arb1:0xCfAfB803EF1FEc576138Cebc79Ad41Aa6760C575": "SequencerInbox"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "",
+      "address": "arb1:0xeD75bb6543c53d49f4445055Ba18380068025370",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1742375562,
+      "sinceBlock": 317273712,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "arb1:0xeD75bb6543c53d49f4445055Ba18380068025370": ""
+      }
     },
     {
       "name": "RollupEventInbox",
@@ -1103,6 +1239,55 @@
       "function setEnclaveHash(bytes32 enclaveHash, bool valid)",
       "function transferOwnership(address newOwner)",
       "function verify(bytes rawQuote, bytes32 reportDataHash) view returns (tuple(bytes16 cpuSvn, bytes4 miscSelect, bytes28 reserved1, bytes16 attributes, bytes32 mrEnclave, bytes32 reserved2, bytes32 mrSigner, bytes reserved3, uint16 isvProdId, uint16 isvSvn, bytes reserved4, bytes reportData))"
+    ],
+    "arb1:0x0d089B3fA00CBAD0a5098025519e9e4620622acF": [
+      "constructor(address owner, address _qeid, address _fmspcTcb, address _pcs, address _pck, address _x509, address _x509Crl, address _tcbHelper)",
+      "error AlreadyInitialized()",
+      "error CertExpiredOrNotFound(uint8 ca)",
+      "error CrlExpiredOrNotFound(uint8 ca)",
+      "error FmspcTcbExpiredOrNotFound(uint8 id, uint256 tcbVersion)",
+      "error Forbidden()",
+      "error NewOwnerIsZeroAddress()",
+      "error NoHandoverRequest()",
+      "error PckNotFound()",
+      "error QEIdentityExpiredOrNotFound(uint8 id, uint256 quoteVersion)",
+      "error Unauthorized()",
+      "event OwnershipHandoverCanceled(address indexed pendingOwner)",
+      "event OwnershipHandoverRequested(address indexed pendingOwner)",
+      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
+      "event SetCallerAuthorization(address caller, bool authorized)",
+      "event UpdateCallerRestriction(bool restricted)",
+      "event UpdateConfig(address qeid, address fmspcTcb, address pcs, address pck, address x509, address x509Crl, address tcbHelper)",
+      "function cancelOwnershipHandover() payable",
+      "function completeOwnershipHandover(address pendingOwner) payable",
+      "function crlHelperAddr() view returns (address)",
+      "function disableCallerRestriction()",
+      "function enableCallerRestriction()",
+      "function fmspcTcbDaoAddr() view returns (address)",
+      "function fmspcTcbHelperAddr() view returns (address)",
+      "function getCert(uint8 ca) view returns (bytes x509Der)",
+      "function getCertHash(uint8 ca) view returns (bytes32 hash)",
+      "function getCertHashWithTimestamp(uint8 ca, uint64 timestamp) view returns (bytes32 hash)",
+      "function getCrl(uint8 ca) view returns (bytes x509CrlDer)",
+      "function getCrlHash(uint8 ca) view returns (bytes32 hash)",
+      "function getCrlHashWithTimestamp(uint8 ca, uint64 timestamp) view returns (bytes32 hash)",
+      "function getFmspcTcbContentHash(uint8 id, bytes6 fmspc, uint32 version) view returns (bytes32)",
+      "function getFmspcTcbV2(bytes6 fmspc) view returns (tuple(uint16 pcesvn, uint8[] sgxComponentCpuSvns, uint8[] tdxComponentCpuSvns, uint64 tcbDateTimestamp, uint8 status, string[] advisoryIDs)[] tcbLevelsV2)",
+      "function getFmspcTcbV3(uint8 id, bytes6 fmspc) view returns (tuple(uint16 pcesvn, uint8[] sgxComponentCpuSvns, uint8[] tdxComponentCpuSvns, uint64 tcbDateTimestamp, uint8 status, string[] advisoryIDs)[] tcbLevelsV3, tuple(bytes mrsigner, bytes8 attributes, bytes8 attributesMask) tdxModule, tuple(string id, bytes8 attributes, bytes8 attributesMask, bytes mrsigner, tuple(uint8 isvsvn, uint64 tcbDateTimestamp, uint8 status)[] tcbLevels)[] tdxModuleIdentities)",
+      "function getPckCert(string qeid, string platformCpuSvn, string platformPceSvn, string pceid) view returns (bytes pckDer)",
+      "function getQeIdentity(uint8 id, uint256 quoteVersion) view returns (tuple(uint8 id, uint32 version, uint64 issueDateTimestamp, uint64 nextUpdateTimestamp, uint32 tcbEvaluationDataNumber, bytes4 miscselect, bytes4 miscselectMask, bytes16 attributes, bytes16 attributesMask, bytes32 mrsigner, uint16 isvprodid, tuple(uint16 isvsvn, uint256 dateTimestamp, uint8 status)[] tcb) identity)",
+      "function getQeIdentityContentHash(uint8 id, uint256 quoteVersion) view returns (bytes32 contentHash)",
+      "function owner() view returns (address result)",
+      "function ownershipHandoverExpiresAt(address pendingOwner) view returns (uint256 result)",
+      "function pckDaoAddr() view returns (address)",
+      "function pckHelperAddr() view returns (address)",
+      "function pcsDaoAddr() view returns (address)",
+      "function qeIdDaoAddr() view returns (address)",
+      "function renounceOwnership() payable",
+      "function requestOwnershipHandover() payable",
+      "function setAuthorized(address caller, bool authorized)",
+      "function setConfig(address _qeid, address _fmspcTcb, address _pcs, address _pck, address _x509, address _x509Crl, address _tcbHelper)",
+      "function transferOwnership(address newOwner) payable"
     ],
     "arb1:0x1B98e4ED82Ee1a91A65a38C690e2266364064D15": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1811,7 +1996,6 @@
     "espresso/Sequencing/EspressoNitroTEEVerifier": "0xcfbcf143ae6576f201097bd2db629a4fbdc20ae286e1555faf44db61111d2eab",
     "espresso/Sequencing/EspressoSGXTEEVerifier": "0x62bb42822457b8146a3651a1d679d850d8a71b735dea0dd125493dd81cf1c23e",
     "espresso/Sequencing/EspressoTEEVerifier_gateway": "0x7d9c15aef19b3644fef05d35c978c01dce14e16ba55e9fd3c6326394607401e3",
-    "espresso/Sequencing/QuoteVerifier": "0xb7f636cfce72573f7409bc600a4b5d138f2dd0b21892e2f0b670471967df4837",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "orbitstack/Bridge": "0x021d1c558348a8ac876fad0f0af08c828492fdfc313056db0a923dec120b1f09",
@@ -1829,6 +2013,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 389815516 },
-  "permissionsConfigHash": "0x287f5406f8eedad166fe2e359a94f2ecd795fed8d1a8a178af77e3d67bf3486c"
+  "usedBlockNumbers": { "arbitrum": 397075940 },
+  "permissionsConfigHash": "0xcead9fed6318f47cadf20f99e4237ca00e676bf90290b8d2b96afcb041692972"
 }
