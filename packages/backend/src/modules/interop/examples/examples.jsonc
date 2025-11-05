@@ -74,6 +74,7 @@
     ]
   },
   "cctpv1": {
+    "loadConfigs": ["cctp-v1"],
     "txs": [
       {
         "chain": "base",
@@ -86,6 +87,7 @@
     ]
   },
   "cctpv2": {
+    "loadConfigs": ["cctp-v2"],
     "txs": [
       {
         "chain": "arbitrum",
@@ -385,6 +387,14 @@
     "messages": ["axelar.ContractCallWithTokenMessage"],
     "transfers": ["axelar-gateway.Transfer"]
   },
+  "relay-simple-3": {
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x8ff6c0aaf973cffb1f526bad1b6731127c46015f8fa5db619dc09e235b0628e1"
+      }
+    ]
+  },
   "relay-simple": {
     "txs": [
       {
@@ -571,9 +581,9 @@
   "layerzeromix": {
     "loadConfigs": ["layerzero-v2"],
     // Messages:
-    //   layerzero-v2.Message 5
+    //   layerzero-v2.Message 6
     // Transfers:
-    //   oftv2.Transfer 2
+    //   oftv2.Transfer 3
     //   stargate-v2-bus.Transfer 3
     //   stargate-v2-taxi.Transfer 1
     "txs": [
@@ -628,6 +638,14 @@
       {
         "chain": "ethereum",
         "tx": "0x17a8188cbc60c5fdea6160dd4f51b5c0be25f4e93d5bcfc9a53fda3047a4e1db"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x8237c97cc2c4a0406e99a201a81fd25d3c66a64c9dae214c179fb10d9b5678ad"
+      },
+      {
+        "chain": "base",
+        "tx": "0xda926e7dd4b35380b6c6ef3c90f207aa7766cbdb3efdb9d33a008be1d5eb62af"
       }
     ]
   },
@@ -887,6 +905,32 @@
       }
     ]
   },
+  "orbitstack-wethgateway": {
+    "txs": [
+      // ethereum -> arbitrum (weth deposit via unwrap/rewrap)
+      {
+        "chain": "ethereum",
+        "tx": "0xd3cac155ec0c192a58458f91be672b16e59cf084aa31800eb07d2e6001dbf368"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xb0b6f945c00be4f1591050baba93ff0e19145732fbbf2c04a5095aea18d9ed3b"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x4b3a7d33d15e398d5a0eedd88076177eea6574185a8d90b6010f56fa6e7730c0"
+      },
+      // arbitrum -> ethereum (weth withdrawal via unwrap/rewrap)
+      {
+        "chain": "arbitrum",
+        "tx": "0x9dc59f855366ce4e98d51d391f93a9a3f03ade96d233081d6f6654c84df40682"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x21aa860c4921be68811f449b8163385c5e4b859e17636d22e43ec40c2d06a64d"
+      }
+    ]
+  },
   "hyperlane-mix": {
     "txs": [
       {
@@ -967,6 +1011,7 @@
     ]
   },
   "cctpv1-debug": {
+    "loadConfigs": ["cctp-v1", "cctp-v2"],
     // should be 4 cctpv1 message and a couple other ones. somehow these are not correctly tracked in prod but work locally
     "txs": [
       {
@@ -1081,18 +1126,25 @@
         "chain": "ethereum",
         "tx": "0xf69385c4dbdad1783768535af78cfb5037778aed6835fec29837b212bebf040e"
       },
+      // deposit with 16 dest chains
       {
         "chain": "ethereum",
-        "tx": "0x985bb23d389f6767f66cff7245ec05fb631d57c607cd135cd854a32b04642945"
+        "tx": "0xccfadc74e02b2c48146a516a6ed884093cf841ec77d8dde2bc04a157ffec65fb"
+      },
+      // fills for above
+      {
+        "chain": "optimism",
+        "tx": "0xf158c458d32b8ba8f71d631d67bfd5d6f0d839e04bd38dfe0e41300839fbe136"
       },
       {
-        "chain": "ethereum",
-        "tx": "0xa533ea7b7d03c30ce199c68f83c16f39ae1477bf8b71cb1f414e7e7c4a11ae46"
+        "chain": "base",
+        "tx": "0xfcd4de0142d7eef3aea9f05e5b9bed2e3de5d2f1464b3d1b8c3a4e07fb7995fb"
       },
       {
-        "chain": "ethereum",
-        "tx": "0x3a90e7a588c108bb92f1e029c929c480b5f73d264be5500f27f223b2d2e9e38d"
+        "chain": "arbitrum",
+        "tx": "0x717897c55295b740b184d9e200439760ea922273b451346c9e54e79bab473557"
       },
+      //end fills
       {
         "chain": "base",
         "tx": "0xa6af4de8b78915d4cf25612fde14a87a3f9d243f5b3d1b056782c15f1be9d112"
@@ -1112,8 +1164,16 @@
         "tx": "0x8d297faa50fe724a3cb5e8aeb2e1470ce46f21d7852d0454cbcde719c91c725e"
       },
       {
+        "chain": "ethereum",
+        "tx": "0x1f2b6e04846afc5f9547ef7970e8c26e1f8d95ab32352db04e699b04e0a4739b"
+      },
+      {
         "chain": "base",
-        "tx": "0x88c85b362476cbd7efed57b6af6fe3f9307e7ddf8cdc11c4534a72417cce9752"
+        "tx": "0x2de129557d9d6928255ef9604115f3f4a093247aecf84bcb2b08f0ec06b92b64"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x2b996c0833a7a18e0e04aa5e2fb370c0ffc919b1523f9de36a5ba669336bd44d"
       }
     ]
   }

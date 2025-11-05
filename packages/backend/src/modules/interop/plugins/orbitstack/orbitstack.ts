@@ -42,7 +42,7 @@ export const L2ToL1Tx = createInteropEventType<{
 const ETHWithdrawalInitiatedL2ToL1Tx = createInteropEventType<{
   chain: string
   position: number
-  amount: string
+  amount: bigint
 }>('orbitstack.L2ToL1TxETHWithdrawalInitiated', { ttl: 14 * UnixTime.DAY })
 
 export const OutBoxTransactionExecuted = createInteropEventType<{
@@ -60,7 +60,7 @@ export const RedeemScheduled = createInteropEventType<{
   chain: string
   messageNum: string
   retryTxHash: string
-  ethAmount?: string
+  ethAmount?: bigint
 }>('orbitstack.RedeemScheduled')
 
 export const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
@@ -71,9 +71,27 @@ export const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
     outbox: EthereumAddress('0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840'),
     // L1 -> L2 (Messages)
     bridge: EthereumAddress('0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a'),
+    sequencerInbox: EthereumAddress(
+      '0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6',
+    ),
     arbRetryableTx: EthereumAddress(
       '0x000000000000000000000000000000000000006e',
     ),
+    // Gateways
+    l1StandardGateway: EthereumAddress(
+      '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
+    ),
+    l2StandardGateway: EthereumAddress(
+      '0x09e9222E96E7B4AE2a407B98d48e330053351EEe',
+    ),
+    l1WethGateway: EthereumAddress(
+      '0xd92023e9d9911199a6711321d1277285e6d4e2db',
+    ),
+    l2WethGateway: EthereumAddress(
+      '0x6c411ad3e74de3e7bd422b94a27770f5b86c623b',
+    ),
+    l1Weth: EthereumAddress('0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'),
+    l2Weth: EthereumAddress('0x82af49447d8a07e3bd95bd0d56f35241523fbab1'),
   },
 ])
 
@@ -89,10 +107,12 @@ export class OrbitStackPlugin implements InteropPlugin {
         // L2 -> L1 (Withdrawal finalization on L1)
         const otxe = parseOutBoxTransactionExecuted(input.log, [network.outbox])
         if (otxe) {
-          return OutBoxTransactionExecuted.create(input.ctx, {
-            chain: network.chain,
-            position: Number(otxe.transactionIndex),
-          })
+          return [
+            OutBoxTransactionExecuted.create(input.ctx, {
+              chain: network.chain,
+              position: Number(otxe.transactionIndex),
+            }),
+          ]
         }
       }
 
@@ -105,10 +125,20 @@ export class OrbitStackPlugin implements InteropPlugin {
           networkForBridge.bridge,
         ])
         if (messageDelivered) {
-          return MessageDelivered.create(input.ctx, {
-            chain: networkForBridge.chain,
-            messageNum: messageDelivered.messageIndex.toString(),
-          })
+          // Filter out SequencerInbox batch submissions - these are batch metadata, not user messages
+          if (
+            EthereumAddress(messageDelivered.inbox) ===
+            networkForBridge.sequencerInbox
+          ) {
+            return
+          }
+
+          return [
+            MessageDelivered.create(input.ctx, {
+              chain: networkForBridge.chain,
+              messageNum: messageDelivered.messageIndex.toString(),
+            }),
+          ]
         }
       }
     } else {
@@ -122,16 +152,20 @@ export class OrbitStackPlugin implements InteropPlugin {
       if (l2ToL1Tx) {
         // Check if this is an ETH withdrawal (callvalue > 0)
         if (l2ToL1Tx.callvalue > 0n) {
-          return ETHWithdrawalInitiatedL2ToL1Tx.create(input.ctx, {
+          return [
+            ETHWithdrawalInitiatedL2ToL1Tx.create(input.ctx, {
+              chain: network.chain,
+              position: Number(l2ToL1Tx.position),
+              amount: l2ToL1Tx.callvalue,
+            }),
+          ]
+        }
+        return [
+          L2ToL1Tx.create(input.ctx, {
             chain: network.chain,
             position: Number(l2ToL1Tx.position),
-            amount: l2ToL1Tx.callvalue.toString(),
-          })
-        }
-        return L2ToL1Tx.create(input.ctx, {
-          chain: network.chain,
-          position: Number(l2ToL1Tx.position),
-        })
+          }),
+        ]
       }
 
       // L1 -> L2 (Message processing on L2)
@@ -142,10 +176,11 @@ export class OrbitStackPlugin implements InteropPlugin {
         // Extract messageNum from transaction calldata
         // The calldata format is: selector (4 bytes) + messageNum (32 bytes) + ...
         // messageNum is the first parameter after the function selector
-        const messageNum =
+        const messageNumHex =
           input.ctx.txData.length >= 2 + 8 + 64
             ? '0x' + input.ctx.txData.slice(2 + 8, 2 + 8 + 64)
             : '0x0'
+        const messageNum = BigInt(messageNumHex).toString()
 
         // Extract callValue (param 3) from calldata
         // submitRetryable(bytes32,uint256,uint256,uint256,...)
@@ -156,12 +191,14 @@ export class OrbitStackPlugin implements InteropPlugin {
             : '0x0'
         const callValue = BigInt(callValueHex)
 
-        return RedeemScheduled.create(input.ctx, {
-          chain: network.chain,
-          messageNum: BigInt(messageNum).toString(),
-          retryTxHash: redeemScheduled.retryTxHash,
-          ethAmount: callValue > 0n ? callValue.toString() : undefined,
-        })
+        return [
+          RedeemScheduled.create(input.ctx, {
+            chain: network.chain,
+            messageNum: messageNum,
+            retryTxHash: redeemScheduled.retryTxHash,
+            ethAmount: callValue > 0n ? callValue : undefined,
+          }),
+        ]
       }
     }
   }
@@ -186,10 +223,10 @@ export class OrbitStackPlugin implements InteropPlugin {
           }),
           Result.Transfer('orbitstack.L2ToL1Transfer', {
             srcEvent: ethWithdrawalInitiated,
-            srcAmount: BigInt(ethWithdrawalInitiated.args.amount),
+            srcAmount: ethWithdrawalInitiated.args.amount,
             srcTokenAddress: Address32.NATIVE,
             dstEvent: event,
-            dstAmount: BigInt(ethWithdrawalInitiated.args.amount),
+            dstAmount: ethWithdrawalInitiated.args.amount,
             dstTokenAddress: Address32.NATIVE,
           }),
         ]
@@ -235,12 +272,12 @@ export class OrbitStackPlugin implements InteropPlugin {
             srcEvent: messageDelivered,
             dstEvent: event,
           }),
-          Result.Transfer('orbitstack-standardgateway.L1ToL2Transfer', {
+          Result.Transfer('orbitstack.L1ToL2Transfer', {
             srcEvent: messageDelivered,
             srcAmount: messageDelivered.ctx.txValue,
             srcTokenAddress: Address32.NATIVE,
             dstEvent: event,
-            dstAmount: BigInt(event.args.ethAmount),
+            dstAmount: event.args.ethAmount,
             dstTokenAddress: Address32.NATIVE,
           }),
         ]

@@ -19,6 +19,13 @@ export const ZkCatalogTagType = {
 export const zkCatalogTags = [
   // STARK
   {
+    id: 'Stwo',
+    type: ZkCatalogTagType.STARK,
+    name: 'Stwo',
+    description:
+      'State of the art implementation of Circle STARK zkVM, created by Starkware to prove Cairo programs, including state transition of Starknet.',
+  },
+  {
     id: 'Airbender',
     type: ZkCatalogTagType.STARK,
     name: 'Airbender',

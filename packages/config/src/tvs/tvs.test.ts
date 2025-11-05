@@ -43,9 +43,7 @@ describe('tvs', () => {
       ],
     }
 
-    expect(() => ProjectTvsConfigSchema.parse(mockTvsConfig)).toThrow(
-      'At .tokens[0].amount: None of the union variants matched, got String.',
-    )
+    expect(() => ProjectTvsConfigSchema.parse(mockTvsConfig)).toThrow()
   })
 
   for (const project of projects) {

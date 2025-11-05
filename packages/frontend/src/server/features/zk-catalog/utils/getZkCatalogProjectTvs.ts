@@ -15,13 +15,15 @@ export function getZkCatalogProjectTvs(
   contractUtils: ContractUtils,
 ) {
   const usedInVerifiers = uniq(
-    project.zkCatalogInfo.verifierHashes
-      .flatMap((v) =>
-        v.knownDeployments.flatMap((d) =>
-          contractUtils.getUsedIn(project.id, d.chain, d.address),
-        ),
-      )
-      .map((u) => u.id),
+    project.zkCatalogInfo.verifierHashes.flatMap((v) =>
+      v.knownDeployments.flatMap(
+        (d) =>
+          d.overrideUsedIn ??
+          contractUtils
+            .getUsedIn(project.id, d.chain, d.address)
+            .map((u) => u.id),
+      ),
+    ),
   )
   const projectsForTvs = uniq(
     usedInVerifiers.flatMap((vp) => {

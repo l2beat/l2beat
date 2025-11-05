@@ -65,10 +65,12 @@ export class HyperlaneEcoPlugin implements InteropPlugin {
         Number(batchSent._sourceChainID), // intended
       )
 
-      return BatchSentDispatch.create(input.ctx, {
-        messageId: dispatchId.messageId,
-        $dstChain,
-      })
+      return [
+        BatchSentDispatch.create(input.ctx, {
+          messageId: dispatchId.messageId,
+          $dstChain,
+        }),
+      ]
     }
 
     const intentProven = parseIntentProven(input.log, null)
@@ -94,11 +96,13 @@ export class HyperlaneEcoPlugin implements InteropPlugin {
         Number(process.origin), // intended
       )
 
-      return IntentProvenProcess.create(input.ctx, {
-        messageId: dispatchId.messageId,
-        $srcChain,
-        recipient: Address32.from(intentProven._claimant),
-      })
+      return [
+        IntentProvenProcess.create(input.ctx, {
+          messageId: dispatchId.messageId,
+          $srcChain,
+          recipient: Address32.from(intentProven._claimant),
+        }),
+      ]
     }
   }
 

@@ -75,7 +75,7 @@ export const CCTPv2MessageSent = createInteropEventType<{
   fast: boolean
   app?: string
   hookData?: string
-  amount?: string
+  amount?: bigint
   tokenAddress?: Address32
   messageHash: string
   $dstChain: string
@@ -121,22 +121,24 @@ export class CCTPV2Plugin implements InteropPlugin {
         if (!message) return
         const burnMessage = decodeBurnMessage(message.messageBody)
 
-        return CCTPv2MessageSent.create(input.ctx, {
-          // https://developers.circle.com/cctp/technical-guide#messages-and-finality
-          fast: message.minFinalityThreshold <= 1000,
-          $dstChain: findChain(
-            networks,
-            (x) => x.domain,
-            Number(message.destinationDomain),
-          ),
-          app: burnMessage ? 'TokenMessengerV2' : undefined,
-          hookData: burnMessage?.hookData,
-          amount: burnMessage?.amount.toString(),
-          tokenAddress: burnMessage
-            ? Address32.from(burnMessage.burnToken)
-            : Address32.ZERO,
-          messageHash: hashBurnMessage(message.messageBody),
-        })
+        return [
+          CCTPv2MessageSent.create(input.ctx, {
+            // https://developers.circle.com/cctp/technical-guide#messages-and-finality
+            fast: message.minFinalityThreshold <= 1000,
+            $dstChain: findChain(
+              networks,
+              (x) => x.domain,
+              Number(message.destinationDomain),
+            ),
+            app: burnMessage ? 'TokenMessengerV2' : undefined,
+            hookData: burnMessage?.hookData,
+            amount: burnMessage?.amount,
+            tokenAddress: burnMessage
+              ? Address32.from(burnMessage.burnToken)
+              : undefined,
+            messageHash: hashBurnMessage(message.messageBody),
+          }),
+        ]
       }
     }
 
@@ -149,22 +151,24 @@ export class CCTPV2Plugin implements InteropPlugin {
       if (!v2MessageReceived) return
       const burnMessage = decodeBurnMessage(v2MessageReceived.messageBody)
 
-      return CCTPv2MessageReceived.create(input.ctx, {
-        app: burnMessage ? 'TokenMessengerV2' : undefined,
-        hookData: burnMessage?.hookData,
-        caller: EthereumAddress(v2MessageReceived.caller),
-        $srcChain: findChain(
-          networks,
-          (x) => x.domain,
-          Number(v2MessageReceived.sourceDomain),
-        ),
-        nonce: Number(v2MessageReceived.nonce),
-        sender: EthereumAddress(`0x${v2MessageReceived.sender.slice(-40)}`),
-        finalityThresholdExecuted: Number(
-          v2MessageReceived.finalityThresholdExecuted,
-        ),
-        messageHash: hashBurnMessage(v2MessageReceived.messageBody),
-      })
+      return [
+        CCTPv2MessageReceived.create(input.ctx, {
+          app: burnMessage ? 'TokenMessengerV2' : undefined,
+          hookData: burnMessage?.hookData,
+          caller: EthereumAddress(v2MessageReceived.caller),
+          $srcChain: findChain(
+            networks,
+            (x) => x.domain,
+            Number(v2MessageReceived.sourceDomain),
+          ),
+          nonce: Number(v2MessageReceived.nonce),
+          sender: EthereumAddress(`0x${v2MessageReceived.sender.slice(-40)}`),
+          finalityThresholdExecuted: Number(
+            v2MessageReceived.finalityThresholdExecuted,
+          ),
+          messageHash: hashBurnMessage(v2MessageReceived.messageBody),
+        }),
+      ]
     }
   }
 
@@ -187,6 +191,12 @@ export class CCTPV2Plugin implements InteropPlugin {
             dstEvent: messageReceived,
           },
         ),
+        Result.Transfer('cctp-v2.Transfer', {
+          srcEvent: messageSent,
+          srcTokenAddress: messageSent.args.tokenAddress,
+          srcAmount: messageSent.args.amount,
+          dstEvent: messageReceived,
+        }),
       ]
     }
   }

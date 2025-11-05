@@ -1,11 +1,11 @@
 {
   "DealManager.sol": {
-    "hash": "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0",
+    "hash": "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479",
     "address": "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47",
     "blockNumber": 62911550
   },
   "DeaManagerOld.sol": {
-    "hash": "0xef1bcdda87f38fedcc0261e1e243160a6d5dcfb5e377739c1d8204c66c9ceb13",
+    "hash": "0x2871c6eda5f6221b285b29b6c21be4262dfe2090a19d2673483991c33d21dba1",
     "address": "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe",
     "blockNumber": 49035878
   }

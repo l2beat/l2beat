@@ -4,11 +4,6 @@
     "address": "eth:0x7a616b25E7c96fc4d652966d7DDAbB51dE28eCc1",
     "blockNumber": 22188285
   },
-  "AddressManager_blast": {
-    "hash": "0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380",
-    "address": "eth:0x7a616b25E7c96fc4d652966d7DDAbB51dE28eCc1",
-    "blockNumber": 22188285
-  },
   "Lib_AddressManager": {
     "hash": "0xe5211497d15a7ea75577cf992ab6093dd0f6083f45c955f0136737810e44c205",
     "address": "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",

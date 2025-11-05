@@ -127,7 +127,6 @@
   "L1CrossDomainMessenger_v2_10_0": {
     "hash": "0x12cf78bcfa479caaee8133c0f935dcdcc333cdc116805f6b81bd80f6ba52128c",
     "address": "eth:0x22D12E0FAebD62d429514A65EBAe32dd316c12D6",
-    "chain": "ethereum",
     "blockNumber": 23496267
   }
 }
