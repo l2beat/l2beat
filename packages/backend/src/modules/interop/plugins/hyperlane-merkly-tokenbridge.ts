@@ -83,7 +83,7 @@ export class HyperlaneMerklyTokenBridgePlugin implements InteropPlugin {
           destination: Number(sentTransferRemote.destination),
           recipient: Address32.from(sentTransferRemote.recipient),
           amount: sentTransferRemote.amount,
-          tokenAddress: Address32.ZERO, // we assume ETH (empirically, contracts are unverified)
+          tokenAddress: Address32.NATIVE, // we assume ETH (empirically, contracts are unverified)
         }),
       ]
     }
