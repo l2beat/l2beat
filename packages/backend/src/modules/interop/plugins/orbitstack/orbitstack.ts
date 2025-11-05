@@ -176,10 +176,11 @@ export class OrbitStackPlugin implements InteropPlugin {
         // Extract messageNum from transaction calldata
         // The calldata format is: selector (4 bytes) + messageNum (32 bytes) + ...
         // messageNum is the first parameter after the function selector
-        const messageNum =
+        const messageNumHex =
           input.ctx.txData.length >= 2 + 8 + 64
             ? '0x' + input.ctx.txData.slice(2 + 8, 2 + 8 + 64)
             : '0x0'
+        const messageNum = BigInt(messageNumHex).toString()
 
         // Extract callValue (param 3) from calldata
         // submitRetryable(bytes32,uint256,uint256,uint256,...)
