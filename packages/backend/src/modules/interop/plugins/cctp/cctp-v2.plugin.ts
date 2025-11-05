@@ -135,7 +135,7 @@ export class CCTPV2Plugin implements InteropPlugin {
             amount: burnMessage?.amount,
             tokenAddress: burnMessage
               ? Address32.from(burnMessage.burnToken)
-              : Address32.ZERO,
+              : undefined,
             messageHash: hashBurnMessage(message.messageBody),
           }),
         ]
@@ -191,6 +191,12 @@ export class CCTPV2Plugin implements InteropPlugin {
             dstEvent: messageReceived,
           },
         ),
+        Result.Transfer('cctp-v2.Transfer', {
+          srcEvent: messageSent,
+          srcTokenAddress: messageSent.args.tokenAddress,
+          srcAmount: messageSent.args.amount,
+          dstEvent: messageReceived,
+        }),
       ]
     }
   }
