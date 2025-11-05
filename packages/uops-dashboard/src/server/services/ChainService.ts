@@ -76,7 +76,7 @@ export class ChainService {
   }
 
   async getBlockNumber(): Promise<number> {
-    return await this.client.getLatestBlockNumber()
+    return this.client.getLatestBlockNumber()
   }
 
   async getBlock(blockNumber: number): Promise<CountedBlock> {
