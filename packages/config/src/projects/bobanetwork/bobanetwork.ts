@@ -24,7 +24,7 @@ export const bobanetwork: ScalingProject = opStackL2({
       websites: ['https://boba.network'],
       bridges: ['https://hub.boba.network/bridge'],
       documentation: ['https://docs.boba.network/'],
-      explorers: ['https://bobascan.com/'],
+      explorers: ['https://bobascan.com/', 'https://eth.bobascan.com/'],
       repositories: ['https://github.com/bobanetwork/boba'],
       socialMedia: [
         'https://boba.network/',
