@@ -3,6 +3,10 @@ import type { CelestiaRpcClient } from '../../clients/rpc-celestia/CelestiaRpcCl
 import type { DaBlobProvider } from './DaProvider'
 import type { CelestiaBlob } from './types'
 
+// Block number when Celestia switched from base64-encoded to plain-text response attributes
+// exclusive: first block which we do not need to decode
+const CELESTIA_BASE64_ENCODING_END_BLOCK = 6515203
+
 export class CelestiaDaProvider implements DaBlobProvider {
   constructor(
     private readonly rpcClient: CelestiaRpcClient,
@@ -34,9 +38,19 @@ export class CelestiaDaProvider implements DaBlobProvider {
       .flatMap(({ events }) => events)
       .filter(({ type }) => type === 'celestia.blob.v1.EventPayForBlobs')
 
+    const usesBase64Encoding = blockNumber < CELESTIA_BASE64_ENCODING_END_BLOCK
+
     const blobs: CelestiaBlob[] = blobEvents.flatMap((blobEvent) => {
-      const namespaces = getAttributeValue<string[]>(blobEvent, 'namespaces')
-      const sizes = getAttributeValue<number[]>(blobEvent, 'blob_sizes')
+      const namespaces = getAttributeValue<string[]>(
+        blobEvent,
+        'namespaces',
+        usesBase64Encoding,
+      )
+      const sizes = getAttributeValue<number[]>(
+        blobEvent,
+        'blob_sizes',
+        usesBase64Encoding,
+      )
 
       assert(
         namespaces.length === sizes.length,
@@ -60,8 +74,16 @@ export class CelestiaDaProvider implements DaBlobProvider {
 function getAttributeValue<T>(
   event: { attributes: { key: string; value?: string }[] },
   key: string,
+  decodeBase64: boolean,
 ): T {
-  const attribute = event.attributes.find((a) => a.key === key)
+  const attribute = event.attributes.find((a) =>
+    decodeBase64
+      ? Buffer.from(a.key, 'base64').toString() === key
+      : a.key === key,
+  )
   assert(attribute && attribute.value, `${key} should be defined`)
+  if (decodeBase64) {
+    return JSON.parse(Buffer.from(attribute.value, 'base64').toString()) as T
+  }
   return JSON.parse(attribute.value) as T
 }
