@@ -4,6 +4,7 @@ import type { DaBlobProvider } from './DaProvider'
 import type { CelestiaBlob } from './types'
 
 // Block number when Celestia switched from base64-encoded to plain-text response attributes
+// exclusive: first block which we do not need to decode
 const CELESTIA_BASE64_ENCODING_END_BLOCK = 6515203
 
 export class CelestiaDaProvider implements DaBlobProvider {
