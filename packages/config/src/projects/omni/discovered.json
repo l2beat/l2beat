@@ -1562,7 +1562,6 @@
       "sinceBlock": 40374946,
       "values": {
         "$immutable": true,
-        "$libraries": ["gno:0xff07C59F7D882D1799e1CABd1D17faaDE7694fe0"],
         "PROVIDER": "sp1-helios",
         "SOURCE_CHAIN_ID": 1,
         "SOURCE_YAHO": "gno:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8",
@@ -1953,21 +1952,6 @@
       "address": "gno:0xFcf00B0fEdBc8f2F35a3B8d4B858d5805f2Bb05D",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "MerklePatricia",
-      "address": "gno:0xff07C59F7D882D1799e1CABd1D17faaDE7694fe0",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x8356705839d2e807efe192e0aacc526c9e779a2b34eacc7d7839f408a49cd38d"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1725542550,
-      "sinceBlock": 35845711,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "gno:0xff07C59F7D882D1799e1CABd1D17faaDE7694fe0": "MerklePatricia"
-      }
     }
   ],
   "abis": {
@@ -3086,11 +3070,6 @@
       "function transferProxyOwnership(address newOwner)",
       "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
       "event Upgraded(uint256 version, address indexed implementation)"
-    ],
-    "gno:0xff07C59F7D882D1799e1CABd1D17faaDE7694fe0": [
-      "function ReadChildProofCheck(bytes32 root, bytes[] proof, bytes[] keys, bytes childInfo) pure returns (tuple(bytes key, bytes value)[])",
-      "function VerifyEthereumProof(bytes32 root, bytes[] proof, bytes[] keys) pure returns (tuple(bytes key, bytes value)[])",
-      "function VerifySubstrateProof(bytes32 root, bytes[] proof, bytes[] keys) pure returns (tuple(bytes key, bytes value)[])"
     ]
   },
   "usedTemplates": {
@@ -3102,5 +3081,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23368594, "gnosis": 42135396 },
-  "permissionsConfigHash": "0xde9cdbd2e4022c7fcb7b8372707bcf56201bd41024f07037918b2eb2129b9907"
+  "permissionsConfigHash": "0xdd14a223281ad3007f536bad13ce1c6e2547595fe29cce02186ba8e2b58df53b"
 }

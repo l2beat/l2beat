@@ -1,3 +1,78 @@
+Generated with discovered.json: 0x55b9c632c1a981f5e2009480d87c5a8a04743af0
+
+# Diff at Wed, 05 Nov 2025 11:52:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@65e01cac46a1da4a93a30562e3b62c4f0590a2f9 block: 1756899680
+- current timestamp: 1756899680
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756899680 (main branch discovery), not current.
+
+```diff
+    contract sdeUSD Vault (Reya) (eth:0x0A5A19376064fED2A0A9f3120B2426c957BC289D) {
+    +++ description: None
+      unverified:
+-        true
+      values.bridgeType:
++        "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876"
+      values.nominee:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
++        "eth:0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+      implementationNames.eth:0x0A5A19376064fED2A0A9f3120B2426c957BC289D:
+-        ""
++        "Vault"
+      sourceHashes:
++        ["0x602df965bf4dcd6a254d0f73df43d800eba973378ebe545c730e4eaebc9f8e02"]
+    }
+```
+
+```diff
+    contract deUSD Vault (Reya) (eth:0x0b4447344fAAA340bcD2B0FdBD8f0CEcd161bC9E) {
+    +++ description: None
+      unverified:
+-        true
+      values.bridgeType:
++        "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876"
+      values.nominee:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
++        "eth:0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+      implementationNames.eth:0x0b4447344fAAA340bcD2B0FdBD8f0CEcd161bC9E:
+-        ""
++        "Vault"
+      sourceHashes:
++        ["0x602df965bf4dcd6a254d0f73df43d800eba973378ebe545c730e4eaebc9f8e02"]
+    }
+```
+
+```diff
+    contract sUSDe Vault (Reya) (eth:0x5F3B301B4967623fDb3AE52Bb8FF4dB01C460Cd3) {
+    +++ description: None
+      unverified:
+-        true
+      values.bridgeType:
++        "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876"
+      values.nominee:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
++        "eth:0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+      implementationNames.eth:0x5F3B301B4967623fDb3AE52Bb8FF4dB01C460Cd3:
+-        ""
++        "Vault"
+      sourceHashes:
++        ["0x602df965bf4dcd6a254d0f73df43d800eba973378ebe545c730e4eaebc9f8e02"]
+    }
+```
+
 Generated with discovered.json: 0xd196cc4ae7cbe918c3d116d920240c124363fcd9
 
 # Diff at Wed, 03 Sep 2025 11:42:55 GMT:

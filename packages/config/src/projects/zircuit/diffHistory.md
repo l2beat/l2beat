@@ -1,3 +1,65 @@
+Generated with discovered.json: 0x190130439109a53a8f289265895685b4fe65d0bd
+
+# Diff at Wed, 05 Nov 2025 11:53:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@65e01cac46a1da4a93a30562e3b62c4f0590a2f9 block: 1762276375
+- current timestamp: 1762276375
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762276375 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (eth:0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from the host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a time defined by the eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4.
+      values.$libraries:
+-        ["eth:0xB60F4a5964A6d332D1780FEDEfd339cF6B021bb7"]
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) {
+    +++ description: The main entry point to deposit ERC20 tokens from the host chain to this chain. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a configurable time.
+      values.$libraries:
+-        ["eth:0xdE12436E4eA89262D7daB924c30CB4E2fD6Ac46F"]
+    }
+```
+
+```diff
+    contract ResolverRegistry (eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E) {
+    +++ description: Registers 'resolvers' which are allowed to supply authoritative data for blockchain balances to support escapes without merkle proofs from e.g. DeFi smart contracts on L2. A resolver can either be registered directly by the respective contract on L2 or by its deployer from L1, using deterministic deployment derivation.
+      values.$libraries:
+-        ["eth:0xdE12436E4eA89262D7daB924c30CB4E2fD6Ac46F"]
+    }
+```
+
+```diff
+    contract ZircuitSuperchainConfig (eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and access control for configuring actors who can pause and unpause the system.
+      values.$libraries:
+-        ["eth:0xdE12436E4eA89262D7daB924c30CB4E2fD6Ac46F"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract StateVerifier (eth:0xB60F4a5964A6d332D1780FEDEfd339cF6B021bb7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StateVerifier (eth:0xdE12436E4eA89262D7daB924c30CB4E2fD6Ac46F)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xb90c9c95e5c5a84c0a87b5246e16cc27a0b2699d
 
 # Diff at Tue, 04 Nov 2025 17:14:37 GMT:

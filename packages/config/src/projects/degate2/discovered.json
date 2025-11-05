@@ -4,56 +4,6 @@
   "configHash": "0x132eb7d138e65c2cc7069e410b97a57b66c2c082d5de56ebfd81ebd8615c4743",
   "entries": [
     {
-      "name": "ExchangeWithdrawals",
-      "address": "eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x4cd395529591eb0bbbc53d4bd93b07e3a6c5fd0bbeb2d84d9ed2e48efa8b2f34"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1693304735,
-      "sinceBlock": 18019668,
-      "values": {
-        "$immutable": true,
-        "$libraries": [
-          "eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533",
-          "eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5",
-          "eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A",
-          "eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396",
-          "eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e",
-          "eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569"
-        ]
-      },
-      "implementationNames": {
-        "eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569": "ExchangeWithdrawals"
-      }
-    },
-    {
-      "name": "ExchangeAdmins",
-      "address": "eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xb06f76a2fda4b96241f4cda12e5b77cff3f665807651479b05f4daf517848140"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1693304711,
-      "sinceBlock": 18019666,
-      "values": {
-        "$immutable": true,
-        "$libraries": [
-          "eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533",
-          "eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5",
-          "eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A",
-          "eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396",
-          "eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e",
-          "eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569"
-        ]
-      },
-      "implementationNames": {
-        "eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533": "ExchangeAdmins"
-      }
-    },
-    {
       "name": "LoopringIOExchangeOwner",
       "address": "eth:0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215",
       "type": "Contract",
@@ -65,14 +15,6 @@
       "sinceBlock": 18019675,
       "values": {
         "$immutable": true,
-        "$libraries": [
-          "eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533",
-          "eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5",
-          "eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A",
-          "eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396",
-          "eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e",
-          "eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569"
-        ],
         "blockSubmitters": ["eth:0x4e3FE240B50A445fc6137a6363aC3593Af173b8a"],
         "open": false,
         "owner": "eth:0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82",
@@ -94,31 +36,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ExchangeGenesis",
-      "address": "eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xf720a2785c02a894bb6101c9fe64f2c4b53b14eab1181b261cc4b7108565e5c0"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1693304759,
-      "sinceBlock": 18019670,
-      "values": {
-        "$immutable": true,
-        "$libraries": [
-          "eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533",
-          "eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5",
-          "eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A",
-          "eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396",
-          "eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e",
-          "eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569"
-        ]
-      },
-      "implementationNames": {
-        "eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e": "ExchangeGenesis"
-      }
-    },
-    {
       "name": "LoopringV3",
       "address": "eth:0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7",
       "type": "Contract",
@@ -130,14 +47,6 @@
       "sinceBlock": 18019664,
       "values": {
         "$immutable": true,
-        "$libraries": [
-          "eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533",
-          "eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5",
-          "eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A",
-          "eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396",
-          "eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e",
-          "eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569"
-        ],
         "blockVerifierAddress": "eth:0x707B12e8921b442D4015eb03c86E66F3b8042Dd2",
         "forcedWithdrawalFee": "10000000000000000",
         "getProtocolFeeValues": 18,
@@ -169,14 +78,6 @@
       "sinceBlock": 18019663,
       "values": {
         "$immutable": true,
-        "$libraries": [
-          "eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533",
-          "eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5",
-          "eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A",
-          "eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396",
-          "eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e",
-          "eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569"
-        ],
         "owner": "eth:0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
       },
@@ -214,31 +115,6 @@
       }
     },
     {
-      "name": "ExchangeTokens",
-      "address": "eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x446241d487d90b8e72ca458ffa74705a6cce95b4c560dcb306beca1b9d5273e1"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1693304723,
-      "sinceBlock": 18019667,
-      "values": {
-        "$immutable": true,
-        "$libraries": [
-          "eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533",
-          "eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5",
-          "eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A",
-          "eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396",
-          "eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e",
-          "eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569"
-        ]
-      },
-      "implementationNames": {
-        "eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A": "ExchangeTokens"
-      }
-    },
-    {
       "name": "ExchangeV3",
       "address": "eth:0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7",
       "type": "Contract",
@@ -258,14 +134,6 @@
       "sinceBlock": 18019673,
       "values": {
         "$immutable": true,
-        "$libraries": [
-          "eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533",
-          "eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5",
-          "eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A",
-          "eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396",
-          "eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e",
-          "eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569"
-        ],
         "allowOnchainTransferFrom": false,
         "domainSeparator": "0xe28bada2629b92fae534318e0ab97ecdfab14b258848e76b6e6282f6fbbdb0dd",
         "getBlockHeight": 669,
@@ -341,31 +209,6 @@
       }
     },
     {
-      "name": "ExchangeBalances",
-      "address": "eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xd28593050a2afcbb00997d6931b30196e24375f51d93aca572cf233217d70376"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1693304699,
-      "sinceBlock": 18019665,
-      "values": {
-        "$immutable": true,
-        "$libraries": [
-          "eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533",
-          "eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5",
-          "eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A",
-          "eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396",
-          "eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e",
-          "eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569"
-        ]
-      },
-      "implementationNames": {
-        "eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5": "ExchangeBalances"
-      }
-    },
-    {
       "name": "LoopringOwner",
       "address": "eth:0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82",
       "type": "EOA",
@@ -398,14 +241,6 @@
       "sinceBlock": 18019674,
       "values": {
         "$immutable": true,
-        "$libraries": [
-          "eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533",
-          "eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5",
-          "eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A",
-          "eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396",
-          "eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e",
-          "eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569"
-        ],
         "exchange": "eth:0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7",
         "owner": "eth:0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
@@ -418,42 +253,9 @@
       "address": "eth:0xf5020ADf433645c451A4809eac0d6F680709f11B",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "ExchangeBlocks",
-      "address": "eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe03b37811a35219e7acb1fbbc4a83187add88ede303576cda20c6db4e8e15832"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1693304747,
-      "sinceBlock": 18019669,
-      "values": {
-        "$immutable": true,
-        "$libraries": [
-          "eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533",
-          "eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5",
-          "eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A",
-          "eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396",
-          "eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e",
-          "eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569"
-        ]
-      },
-      "implementationNames": {
-        "eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396": "ExchangeBlocks"
-      }
     }
   ],
   "abis": {
-    "eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569": [
-      "event ForcedWithdrawalRequested(address owner, address token, uint32 accountID)",
-      "event WithdrawalCompleted(uint8 category, address from, address to, address token, uint256 amount)",
-      "event WithdrawalFailed(uint8 category, address from, address to, address token, uint256 amount)"
-    ],
-    "eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533": [
-      "event MaxAgeDepositUntilWithdrawableChanged(address indexed exchangeAddr, uint32 oldValue, uint32 newValue)"
-    ],
     "eth:0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215": [
       "constructor(address _exchange)",
       "event Drained(address to, address token, uint256 amount)",
@@ -477,9 +279,6 @@
       "function target() view returns (address)",
       "function transact(bytes data) payable",
       "function transferOwnership(address newOwner)"
-    ],
-    "eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e": [
-      "event ExchangeGenesisBlockInitialized(address loopringAddr, bytes32 genesisMerkleRoot, bytes32 genesisMerkleAssetRoot, bytes32 domainSeparator)"
     ],
     "eth:0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7": [
       "constructor(address _lrcAddress, address _protocolFeeVault, address _blockVerifierAddress)",
@@ -555,9 +354,6 @@
       "event OwnerAddition(address indexed owner)",
       "event OwnerRemoval(address indexed owner)",
       "event RequirementChange(uint256 required)"
-    ],
-    "eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A": [
-      "event TokenRegistered(address token, uint32 tokenId)"
     ],
     "eth:0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7": [
       "constructor()",
@@ -637,11 +433,6 @@
       "function withdrawFromDepositRequest(address from, address token)",
       "function withdrawFromMerkleTree(tuple(tuple(uint32 accountID, address owner, uint256 pubKeyX, uint256 pubKeyY, uint32 nonce) accountLeaf, tuple(uint32 tokenID, uint248 balance) balanceLeaf, uint256[48] accountMerkleProof, uint256[48] balanceMerkleProof) merkleProof)"
     ],
-    "eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5": [
-      "function hashAccountLeaf(uint256 t0, uint256 t1, uint256 t2, uint256 t3, uint256 t4) pure returns (uint256)",
-      "function isAccountBalanceCorrect(uint256 merkleRoot, tuple(tuple(uint32 accountID, address owner, uint256 pubKeyX, uint256 pubKeyY, uint32 nonce) accountLeaf, tuple(uint32 tokenID, uint248 balance) balanceLeaf, uint256[48] accountMerkleProof, uint256[48] balanceMerkleProof) merkleProof) pure returns (bool)",
-      "function verifyAccountBalance(uint256 merkleRoot, tuple(tuple(uint32 accountID, address owner, uint256 pubKeyX, uint256 pubKeyY, uint32 nonce) accountLeaf, tuple(uint32 tokenID, uint248 balance) balanceLeaf, uint256[48] accountMerkleProof, uint256[48] balanceMerkleProof) merkleProof) pure"
-    ],
     "eth:0xF13e21653AEB763595D5E4baA1dC115689Da49b9": [
       "event CheckBalance(address indexed token, bool checkBalance)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -658,13 +449,9 @@
       "function transfer(address from, address to, address token, uint256 amount) payable",
       "function transferOwnership(address newOwner)",
       "function withdraw(address, address to, address token, uint256 amount) payable"
-    ],
-    "eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396": [
-      "event BlockSubmitted(uint256 indexed blockIdx, bytes32 merkleRoot, bytes32 publicDataHash)",
-      "event ProtocolFeesUpdated(uint16 protocolFeeBips, uint16 previousProtocolFeeBips)"
     ]
   },
   "usedTemplates": {},
   "usedBlockNumbers": { "ethereum": 18554408 },
-  "permissionsConfigHash": "0x2e9ebc68d527edc48bfd44f4aadc2c902d3f1b13101291fcbd1b088eb0a8d32d"
+  "permissionsConfigHash": "0x8640372d25c4c45b396d2288798f8ac32553050c0f08f6ee496fa2bf4adb28a0"
 }

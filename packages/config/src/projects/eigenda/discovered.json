@@ -847,19 +847,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "EigenDACertVerificationUtilsLibrary",
-      "address": "eth:0x5e29552239d9ACa88d2f410C35D8C0dE47483F37",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1748902919,
-      "sinceBlock": 22619929,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x5e29552239d9ACa88d2f410C35D8C0dE47483F37": ""
-      }
-    },
-    {
       "name": "EigenDACertVerifier",
       "address": "eth:0x61692e93b6B045c444e942A91EcD1527F23A3FB7",
       "type": "Contract",
@@ -907,7 +894,6 @@
       "values": {
         "$admin": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99",
         "$implementation": "eth:0x7DECf99BE82Ea4Cf72F381a5fCBc04228955FBE5",
-        "$libraries": ["eth:0x8113823aEF00b8Ef4Dac4CF4D20B40D27b3d552f"],
         "$pastUpgrades": [
           [
             "2025-04-15T20:51:35.000Z",
@@ -925,25 +911,6 @@
       "implementationNames": {
         "eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad": "TransparentUpgradeableProxy",
         "eth:0x7DECf99BE82Ea4Cf72F381a5fCBc04228955FBE5": "EigenDADisperserRegistry"
-      }
-    },
-    {
-      "name": "EigenDACertVerificationUtils",
-      "address": "eth:0x8113823aEF00b8Ef4Dac4CF4D20B40D27b3d552f",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x303cbc62ec0e47e45fdbbcd173b0a23191f796e4b1d3523e0065a7893ec19c03"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1743099263,
-      "sinceBlock": 22139974,
-      "values": {
-        "$immutable": true,
-        "$libraries": ["eth:0x8113823aEF00b8Ef4Dac4CF4D20B40D27b3d552f"],
-        "THRESHOLD_DENOMINATOR": 100
-      },
-      "implementationNames": {
-        "eth:0x8113823aEF00b8Ef4Dac4CF4D20B40D27b3d552f": "EigenDACertVerificationUtils"
       }
     },
     {
@@ -1231,7 +1198,6 @@
       "values": {
         "$admin": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99",
         "$implementation": "eth:0x62242213E6FA34E943844f9B3124150EFb9CB0dD",
-        "$libraries": ["eth:0x8113823aEF00b8Ef4Dac4CF4D20B40D27b3d552f"],
         "$pastUpgrades": [
           [
             "2025-04-15T20:51:35.000Z",
@@ -1319,7 +1285,6 @@
       "values": {
         "$admin": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99",
         "$implementation": "eth:0xF6D82FBBdf700c086389e72C3023812e956ECa9e",
-        "$libraries": ["eth:0x8113823aEF00b8Ef4Dac4CF4D20B40D27b3d552f"],
         "$pastUpgrades": [
           [
             "2025-04-15T20:50:23.000Z",
@@ -1374,7 +1339,6 @@
       "values": {
         "$admin": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99",
         "$implementation": "eth:0x92104977f16dAe423966caa5cD9C115F2D25a8D6",
-        "$libraries": ["eth:0x8113823aEF00b8Ef4Dac4CF4D20B40D27b3d552f"],
         "$pastUpgrades": [
           [
             "2025-04-15T20:50:11.000Z",
@@ -1435,7 +1399,6 @@
       "sinceBlock": 22619945,
       "values": {
         "$immutable": true,
-        "$libraries": ["eth:0x5e29552239d9ACa88d2f410C35D8C0dE47483F37"],
         "eigenDABatchMetadataStorage": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
         "eigenDARelayRegistry": "eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
         "eigenDASignatureVerifier": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
@@ -1868,10 +1831,6 @@
       "function setDisperserInfo(uint32 _disperserKey, tuple(address disperserAddress) _disperserInfo)",
       "function transferOwnership(address newOwner)"
     ],
-    "eth:0x8113823aEF00b8Ef4Dac4CF4D20B40D27b3d552f": [
-      "function THRESHOLD_DENOMINATOR() view returns (uint256)",
-      "function verifyDACertV2ForQuorumsExternal(IEigenDAThresholdRegistry _eigenDAThresholdRegistry, IEigenDASignatureVerifier _signatureVerifier, IEigenDARelayRegistry _eigenDARelayRegistry, tuple(bytes32 batchRoot, uint32 referenceBlockNumber) _batchHeader, tuple(tuple(tuple(uint16 version, bytes quorumNumbers, tuple(tuple(uint256 X, uint256 Y) commitment, tuple(uint256[2] X, uint256[2] Y) lengthCommitment, tuple(uint256[2] X, uint256[2] Y) lengthProof, uint32 length) commitment, bytes32 paymentHeaderHash) blobHeader, bytes signature, uint32[] relayKeys) blobCertificate, uint32 blobIndex, bytes inclusionProof) _blobInclusionInfo, tuple(uint32[] nonSignerQuorumBitmapIndices, tuple(uint256 X, uint256 Y)[] nonSignerPubkeys, tuple(uint256 X, uint256 Y)[] quorumApks, tuple(uint256[2] X, uint256[2] Y) apkG2, tuple(uint256 X, uint256 Y) sigma, uint32[] quorumApkIndices, uint32[] totalStakeIndices, uint32[][] nonSignerStakeIndices) _nonSignerStakesAndSignature, tuple(uint8 confirmationThreshold, uint8 adversaryThreshold) _securityThresholds, bytes _requiredQuorumNumbers, bytes _signedQuorumNumbers) view"
-    ],
     "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -2197,5 +2156,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 23648148 },
-  "permissionsConfigHash": "0x4dcb6601784646c9e3b39b8023fb2769f20513b59307111f77bd93f0ad0a1d7d"
+  "permissionsConfigHash": "0xab3f0f211741fa9ce8f402114c3ae0427e11c49abfccd9c4714a8da6029a69d2"
 }

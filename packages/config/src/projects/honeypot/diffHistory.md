@@ -1,3 +1,47 @@
+Generated with discovered.json: 0x171b76b4c9bb15569a055ad257197dd5f6afbbc1
+
+# Diff at Wed, 05 Nov 2025 11:51:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@65e01cac46a1da4a93a30562e3b62c4f0590a2f9 block: 1725019175
+- current timestamp: 1725019175
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1725019175 (main branch discovery), not current.
+
+```diff
+    contract Honeypot (eth:0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0xF5B2d8c81cDE4D6238bBf20D3D77DB37df13f735","eth:0x33436035441927Df1a73FE3AAC5906854632e53d"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MerkleV2 (eth:0x33436035441927Df1a73FE3AAC5906854632e53d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CartesiMathV2 (eth:0xB634F716BEd5Dd5A2b9a91C92474C499e50Cb27D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Bitmask (eth:0xF5B2d8c81cDE4D6238bBf20D3D77DB37df13f735)
+    +++ description: Implementation of bit mask with dynamic array.
+```
+
 Generated with discovered.json: 0xee16b9219a797f1f63c972a27aa4978b7913a4b3
 
 # Diff at Fri, 31 Oct 2025 14:45:10 GMT:

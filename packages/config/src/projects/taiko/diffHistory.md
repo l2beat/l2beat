@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xa6b0b533d0ee714110efc7db3fbbfa1f6d0ae39b
+
+# Diff at Wed, 05 Nov 2025 11:53:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@65e01cac46a1da4a93a30562e3b62c4f0590a2f9 block: 1762269183
+- current timestamp: 1762269183
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762269183 (main branch discovery), not current.
+
+```diff
+    contract TaikoL1 (eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: Main contract implementing the logic for proposing and proving Taiko blocks on L1.
+      values.$libraries:
+-        ["eth:0xc618b0bA27F751D33689DebA538f8567AeF53ee6","eth:0xe61FD6715FfFA2f4057f1Cf0230512b91A9f5f84","eth:0xfD9B548c00a1E96BbFc2C5FE0D339618B40B4593","eth:0x5565543Ec09f746721928B0A4d019c9E750d0552"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LibUtils (eth:0x5565543Ec09f746721928B0A4d019c9E750d0552)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LibBonds (eth:0xc618b0bA27F751D33689DebA538f8567AeF53ee6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LibData (eth:0xe61FD6715FfFA2f4057f1Cf0230512b91A9f5f84)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LibProving (eth:0xfD9B548c00a1E96BbFc2C5FE0D339618B40B4593)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x576c334abeb3e31443fed29382c4b557df4e7902
 
 # Diff at Tue, 04 Nov 2025 15:15:49 GMT:

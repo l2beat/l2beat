@@ -149,34 +149,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Pairing",
-      "address": "eth:0x57f928158C3EE7CDad1e4D8642503c4D0201f611",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x876b520a0365533c73106c1a1714cfc667554e0ef691d4ded5e01e5b67fc8ee0"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1688036699,
-      "sinceBlock": 17584542,
-      "values": {
-        "$immutable": true,
-        "P1": { "X": 1, "Y": 2 },
-        "P2": {
-          "X": [
-            "11559732032986387107991004021392285783925812861821192530917403151452391805634",
-            "10857046999023057135944570762232829481370756359578518086990519993285655852781"
-          ],
-          "Y": [
-            "4082367875863433681332203403145435568316851327593401208105741076214120093531",
-            "8495653923123431417604973247489272438418190587263600148770280649306958101930"
-          ]
-        }
-      },
-      "implementationNames": {
-        "eth:0x57f928158C3EE7CDad1e4D8642503c4D0201f611": "Pairing"
-      }
-    },
-    {
       "address": "eth:0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04",
       "type": "EOA",
       "proxyType": "EOA"
@@ -345,10 +317,7 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1688036723,
       "sinceBlock": 17584544,
-      "values": {
-        "$immutable": true,
-        "$libraries": ["eth:0x57f928158C3EE7CDad1e4D8642503c4D0201f611"]
-      },
+      "values": { "$immutable": true },
       "implementationNames": {
         "eth:0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5": "SemaphoreVerifier"
       }
@@ -483,35 +452,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Pairing",
-      "address": "oeth:0x047eE5313F98E26Cc8177fA38877cB36292D2364",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x876b520a0365533c73106c1a1714cfc667554e0ef691d4ded5e01e5b67fc8ee0"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1689013679,
-      "sinceBlock": 106707451,
-      "values": {
-        "$immutable": true,
-        "$libraries": ["oeth:0x047eE5313F98E26Cc8177fA38877cB36292D2364"],
-        "P1": { "X": 1, "Y": 2 },
-        "P2": {
-          "X": [
-            "11559732032986387107991004021392285783925812861821192530917403151452391805634",
-            "10857046999023057135944570762232829481370756359578518086990519993285655852781"
-          ],
-          "Y": [
-            "4082367875863433681332203403145435568316851327593401208105741076214120093531",
-            "8495653923123431417604973247489272438418190587263600148770280649306958101930"
-          ]
-        }
-      },
-      "implementationNames": {
-        "oeth:0x047eE5313F98E26Cc8177fA38877cB36292D2364": "Pairing"
-      }
-    },
-    {
       "name": "GnosisSafe",
       "address": "oeth:0x0897316DFE7141DB1E182551c3e8077cf5dd9695",
       "type": "Contract",
@@ -582,35 +522,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Pairing",
-      "address": "oeth:0x2a968958E6136FA0FC2Ed068aF8Bef464c7b66EA",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x876b520a0365533c73106c1a1714cfc667554e0ef691d4ded5e01e5b67fc8ee0"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1695411619,
-      "sinceBlock": 109906421,
-      "values": {
-        "$immutable": true,
-        "$libraries": ["oeth:0x2a968958E6136FA0FC2Ed068aF8Bef464c7b66EA"],
-        "P1": { "X": 1, "Y": 2 },
-        "P2": {
-          "X": [
-            "11559732032986387107991004021392285783925812861821192530917403151452391805634",
-            "10857046999023057135944570762232829481370756359578518086990519993285655852781"
-          ],
-          "Y": [
-            "4082367875863433681332203403145435568316851327593401208105741076214120093531",
-            "8495653923123431417604973247489272438418190587263600148770280649306958101930"
-          ]
-        }
-      },
-      "implementationNames": {
-        "oeth:0x2a968958E6136FA0FC2Ed068aF8Bef464c7b66EA": "Pairing"
-      }
-    },
-    {
       "name": "SemaphoreVerifier",
       "address": "oeth:0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c",
       "type": "Contract",
@@ -623,35 +534,6 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "oeth:0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c": "SemaphoreVerifier"
-      }
-    },
-    {
-      "name": "Pairing",
-      "address": "oeth:0x379C62556c665F1eDD25f2c2A0f76Bc70a53b2e4",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x876b520a0365533c73106c1a1714cfc667554e0ef691d4ded5e01e5b67fc8ee0"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1689065805,
-      "sinceBlock": 106733514,
-      "values": {
-        "$immutable": true,
-        "$libraries": ["oeth:0x379C62556c665F1eDD25f2c2A0f76Bc70a53b2e4"],
-        "P1": { "X": 1, "Y": 2 },
-        "P2": {
-          "X": [
-            "11559732032986387107991004021392285783925812861821192530917403151452391805634",
-            "10857046999023057135944570762232829481370756359578518086990519993285655852781"
-          ],
-          "Y": [
-            "4082367875863433681332203403145435568316851327593401208105741076214120093531",
-            "8495653923123431417604973247489272438418190587263600148770280649306958101930"
-          ]
-        }
-      },
-      "implementationNames": {
-        "oeth:0x379C62556c665F1eDD25f2c2A0f76Bc70a53b2e4": "Pairing"
       }
     },
     {
@@ -669,10 +551,7 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1695411619,
       "sinceBlock": 109906421,
-      "values": {
-        "$immutable": true,
-        "$libraries": ["oeth:0x2a968958E6136FA0FC2Ed068aF8Bef464c7b66EA"]
-      },
+      "values": { "$immutable": true },
       "implementationNames": {
         "oeth:0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF": "SemaphoreVerifier"
       }
@@ -689,7 +568,6 @@
       "sinceBlock": 106733514,
       "values": {
         "$immutable": true,
-        "$libraries": ["oeth:0x047eE5313F98E26Cc8177fA38877cB36292D2364"],
         "getTreeDepth": 30,
         "isLocal": false,
         "latestRoot": "16412537888131705117576507501476154387116854019668596975685798118923752115572",
@@ -786,10 +664,7 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1689065805,
       "sinceBlock": 106733514,
-      "values": {
-        "$immutable": true,
-        "$libraries": ["oeth:0x379C62556c665F1eDD25f2c2A0f76Bc70a53b2e4"]
-      },
+      "values": { "$immutable": true },
       "implementationNames": {
         "oeth:0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB": "SemaphoreVerifier"
       }
@@ -1035,7 +910,6 @@
       "sinceBlock": 109906421,
       "values": {
         "$immutable": true,
-        "$libraries": ["oeth:0x2a968958E6136FA0FC2Ed068aF8Bef464c7b66EA"],
         "getTreeDepth": 30,
         "isLocal": false,
         "owner": "oeth:0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F",
@@ -1359,15 +1233,6 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function verifyProof(uint256 root, uint256 signalHash, uint256 nullifierHash, uint256 externalNullifierHash, uint256[8] proof) view"
     ],
-    "eth:0x57f928158C3EE7CDad1e4D8642503c4D0201f611": [
-      "error InvalidProof()",
-      "function P1() pure returns (tuple(uint256 X, uint256 Y))",
-      "function P2() pure returns (tuple(uint256[2] X, uint256[2] Y))",
-      "function addition(tuple(uint256 X, uint256 Y) p1, tuple(uint256 X, uint256 Y) p2) view returns (tuple(uint256 X, uint256 Y) r)",
-      "function negate(tuple(uint256 X, uint256 Y) p) pure returns (tuple(uint256 X, uint256 Y) r)",
-      "function pairingCheck(tuple(uint256 X, uint256 Y)[] p1, tuple(uint256[2] X, uint256[2] Y)[] p2) view",
-      "function scalar_mul(tuple(uint256 X, uint256 Y) p, uint256 s) view returns (tuple(uint256 X, uint256 Y) r)"
-    ],
     "eth:0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6": [
       "constructor(address _singleton)"
     ],
@@ -1466,15 +1331,6 @@
       "function verifyCompressedProof(uint256[4] compressedProof, uint256[1] input) view",
       "function verifyProof(uint256[8] proof, uint256[1] input) view"
     ],
-    "oeth:0x047eE5313F98E26Cc8177fA38877cB36292D2364": [
-      "error InvalidProof()",
-      "function P1() pure returns (tuple(uint256 X, uint256 Y))",
-      "function P2() pure returns (tuple(uint256[2] X, uint256[2] Y))",
-      "function addition(tuple(uint256 X, uint256 Y) p1, tuple(uint256 X, uint256 Y) p2) view returns (tuple(uint256 X, uint256 Y) r)",
-      "function negate(tuple(uint256 X, uint256 Y) p) pure returns (tuple(uint256 X, uint256 Y) r)",
-      "function pairingCheck(tuple(uint256 X, uint256 Y)[] p1, tuple(uint256[2] X, uint256[2] Y)[] p2) view",
-      "function scalar_mul(tuple(uint256 X, uint256 Y) p, uint256 s) view returns (tuple(uint256 X, uint256 Y) r)"
-    ],
     "oeth:0x0897316DFE7141DB1E182551c3e8077cf5dd9695": [
       "constructor(address _singleton)"
     ],
@@ -1515,30 +1371,12 @@
     "oeth:0x140C0227Cbe493A56868DDF4ea582E92ef3e9744": [
       "constructor(address _singleton)"
     ],
-    "oeth:0x2a968958E6136FA0FC2Ed068aF8Bef464c7b66EA": [
-      "error InvalidProof()",
-      "function P1() pure returns (tuple(uint256 X, uint256 Y))",
-      "function P2() pure returns (tuple(uint256[2] X, uint256[2] Y))",
-      "function addition(tuple(uint256 X, uint256 Y) p1, tuple(uint256 X, uint256 Y) p2) view returns (tuple(uint256 X, uint256 Y) r)",
-      "function negate(tuple(uint256 X, uint256 Y) p) pure returns (tuple(uint256 X, uint256 Y) r)",
-      "function pairingCheck(tuple(uint256 X, uint256 Y)[] p1, tuple(uint256[2] X, uint256[2] Y)[] p2) view",
-      "function scalar_mul(tuple(uint256 X, uint256 Y) p, uint256 s) view returns (tuple(uint256 X, uint256 Y) r)"
-    ],
     "oeth:0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c": [
       "error ProofInvalid()",
       "error PublicInputNotInField()",
       "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
       "function verifyCompressedProof(uint256[4] compressedProof, uint256[4] input) view",
       "function verifyProof(uint256[8] proof, uint256[4] input) view"
-    ],
-    "oeth:0x379C62556c665F1eDD25f2c2A0f76Bc70a53b2e4": [
-      "error InvalidProof()",
-      "function P1() pure returns (tuple(uint256 X, uint256 Y))",
-      "function P2() pure returns (tuple(uint256[2] X, uint256[2] Y))",
-      "function addition(tuple(uint256 X, uint256 Y) p1, tuple(uint256 X, uint256 Y) p2) view returns (tuple(uint256 X, uint256 Y) r)",
-      "function negate(tuple(uint256 X, uint256 Y) p) pure returns (tuple(uint256 X, uint256 Y) r)",
-      "function pairingCheck(tuple(uint256 X, uint256 Y)[] p1, tuple(uint256[2] X, uint256[2] Y)[] p2) view",
-      "function scalar_mul(tuple(uint256 X, uint256 Y) p, uint256 s) view returns (tuple(uint256 X, uint256 Y) r)"
     ],
     "oeth:0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF": [
       "function verifyProof(uint256 merkleTreeRoot, uint256 nullifierHash, uint256 signal, uint256 externalNullifier, uint256[8] proof, uint256 merkleTreeDepth) view"
@@ -1929,5 +1767,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 23345439, "optimism": 141031377 },
-  "permissionsConfigHash": "0x408d2687d7e80da3a0c17c7aa3ab91a061ee917a618b37aa2351fa0faff42200"
+  "permissionsConfigHash": "0x65d23ab8366ecc75855efe8f0d98cb0fe7bb5e76af655d612a546a0c79c3a197"
 }

@@ -30,7 +30,6 @@
       "values": {
         "$admin": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "eth:0xF7209f5471628aC5f68FE4ae98Feb7f02E0f40Be",
-        "$libraries": ["eth:0xB60F4a5964A6d332D1780FEDEfd339cF6B021bb7"],
         "$pastUpgrades": [
           [
             "2024-07-02T16:13:23.000Z",
@@ -323,7 +322,6 @@
       "values": {
         "$admin": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "eth:0xFF30d6E9acecc919e4E9e1A2e67980ee44Df6Ebb",
-        "$libraries": ["eth:0xdE12436E4eA89262D7daB924c30CB4E2fD6Ac46F"],
         "$pastUpgrades": [
           [
             "2024-07-02T16:11:59.000Z",
@@ -506,7 +504,6 @@
       "values": {
         "$admin": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "eth:0xC82fB8FB873b0c56E1aeb9238d79b27e3d67f155",
-        "$libraries": ["eth:0xdE12436E4eA89262D7daB924c30CB4E2fD6Ac46F"],
         "$pastUpgrades": [
           [
             "2025-08-05T13:35:59.000Z",
@@ -539,7 +536,6 @@
       "values": {
         "$admin": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "eth:0x70D688D4Bd6B1b195aE51040b54ab501278D1d31",
-        "$libraries": ["eth:0xdE12436E4eA89262D7daB924c30CB4E2fD6Ac46F"],
         "$pastUpgrades": [
           [
             "2024-07-02T16:08:11.000Z",
@@ -798,21 +794,6 @@
       ]
     },
     {
-      "name": "StateVerifier",
-      "address": "eth:0xB60F4a5964A6d332D1780FEDEfd339cF6B021bb7",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xba04d7e8b367b65100f3b45fa539e2429c4228730876d190942264930fc0d6b0"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1755850859,
-      "sinceBlock": 23195383,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xB60F4a5964A6d332D1780FEDEfd339cF6B021bb7": "StateVerifier"
-      }
-    },
-    {
       "name": "VerifierV2",
       "address": "eth:0xC25D093D3A3f58952252D2e763BEAF2559dc9737",
       "type": "Contract",
@@ -1037,24 +1018,6 @@
       "address": "eth:0xD8399320cF3a6C7068DaC0C35ea5e74ddd650BD4",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "StateVerifier",
-      "address": "eth:0xdE12436E4eA89262D7daB924c30CB4E2fD6Ac46F",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x2bd01d93bb706111696f17e8351705d6e05a320aae3941b2a2aa0e4acc17b1ba"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1753117691,
-      "sinceBlock": 22968957,
-      "values": {
-        "$immutable": true,
-        "$libraries": ["eth:0xdE12436E4eA89262D7daB924c30CB4E2fD6Ac46F"]
-      },
-      "implementationNames": {
-        "eth:0xdE12436E4eA89262D7daB924c30CB4E2fD6Ac46F": "StateVerifier"
-      }
     },
     {
       "address": "eth:0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
@@ -1759,11 +1722,6 @@
       "function version() view returns (string)",
       "function xDomainMessageSender() view returns (address)"
     ],
-    "eth:0xB60F4a5964A6d332D1780FEDEfd339cF6B021bb7": [
-      "function verifyAccountState(address _account, tuple(uint256 nonce, uint256 balance, bytes32 storageRoot, bytes32 codeHash) _accountState, bytes[] _proof, bytes32 _stateRoot) pure returns (bool)",
-      "function verifyERC20Balance(bytes32 _storageKey, uint256 _tokenBalance, bytes[] _storageProof, bytes32 _storageRoot) pure returns (bool)",
-      "function verifyERC721Owner(bytes32 _storageKey, address _owner, bytes[] _storageProof, bytes32 _storageRoot) pure returns (bool)"
-    ],
     "eth:0xC25D093D3A3f58952252D2e763BEAF2559dc9737": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1801,11 +1759,6 @@
       "function setResolverByDeployer2(address _resolver, address _l2Contract, address _factory, bytes32 _salt, bytes32 _byteCodeHash)",
       "function setResolverByDeployer3(address _resolver, address _l2Contract, address _factory, bytes32 _salt)",
       "function version() view returns (string)"
-    ],
-    "eth:0xdE12436E4eA89262D7daB924c30CB4E2fD6Ac46F": [
-      "function verifyAccountState(address _account, tuple(uint256 nonce, uint256 balance, bytes32 storageRoot, bytes32 codeHash) _accountState, bytes[] _proof, bytes32 _stateRoot) pure returns (bool)",
-      "function verifyERC20Balance(bytes32 _storageKey, uint256 _tokenBalance, bytes[] _storageProof, bytes32 _storageRoot) pure returns (bool)",
-      "function verifyERC721Owner(bytes32 _storageKey, address _owner, bytes[] _storageProof, bytes32 _storageRoot) pure returns (bool)"
     ],
     "eth:0xDF129ECFc63Af454F62b69d03C0f0E21e69bcDAb": [
       "constructor()",
@@ -2072,5 +2025,5 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
   "usedBlockNumbers": { "ethereum": 23727367, "zircuit": 21170080 },
-  "permissionsConfigHash": "0x67ece5dae13cacc152f0707587f262be2f0478e1b8db708ded73a7dcc2afe746"
+  "permissionsConfigHash": "0x8b999edebb73312fc58543d4a2c5075e319a5a3bf22f04422934a85fd7dc17de"
 }

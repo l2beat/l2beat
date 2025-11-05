@@ -1,7 +1,7 @@
 {
   "name": "espresso",
   "timestamp": 1746205715,
-  "configHash": "0xc10a33c67d8afa8cdd597f38efabd39268d8d27d452a14e6d0b46e8ebe897fc2",
+  "configHash": "0x469e0d1daca2de4cc0ee945162c980d66ff545ebd9bf1edbaced610abae5f992",
   "entries": [
     {
       "name": "EspressoMultisig",
@@ -154,7 +154,6 @@
       "sinceBlock": 19692700,
       "values": {
         "$immutable": true,
-        "$libraries": ["eth:0x9760fb6F48c15f37304bCb5B502F00512032A3Bb"],
         "MAX_ACTIVE_OPERATOR_COUNT": 32,
         "MAX_OPERATOR_COUNT": 254
       },
