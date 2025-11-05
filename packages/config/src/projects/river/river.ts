@@ -20,21 +20,6 @@ export const river: ScalingProject = opStackL2({
     sinceBlock: 4071540, // first blob in this celestia block https://celenium.io/block/4071540?tab=transactions
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4Sor8Q7yCoU=',
   },
-  nonTemplateDaTracking: [
-    {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      sinceBlock: discovery.getContract('SystemConfig').sinceBlock ?? 0,
-      inbox: ChainSpecificAddress.address(
-        discovery.getContractValue('SystemConfig', 'sequencerInbox'),
-      ),
-      sequencers: [
-        ChainSpecificAddress.address(
-          discovery.getContractValue('SystemConfig', 'batcherHash'),
-        ),
-      ],
-    },
-  ],
   display: {
     name: 'Towns',
     slug: 'towns',

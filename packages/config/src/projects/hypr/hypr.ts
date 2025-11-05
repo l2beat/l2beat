@@ -35,21 +35,6 @@ export const hypr: ScalingProject = opStackL2({
     sinceBlock: 0, // Edge Case: config added @ DA Module start
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABqVjuNvNnoE=',
   },
-  nonTemplateDaTracking: [
-    {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      sinceBlock: discovery.getContract('SystemConfig').sinceBlock ?? 0,
-      inbox: ChainSpecificAddress.address(
-        discovery.getContractValue('SystemConfig', 'sequencerInbox'),
-      ),
-      sequencers: [
-        ChainSpecificAddress.address(
-          discovery.getContractValue('SystemConfig', 'batcherHash'),
-        ),
-      ],
-    },
-  ],
   isNodeAvailable: 'UnderReview',
   milestones: [
     {

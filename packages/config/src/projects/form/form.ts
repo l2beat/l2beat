@@ -14,21 +14,6 @@ export const form: ScalingProject = opStackL2({
     sinceBlock: 2943925,
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpR3bjJQT0=',
   },
-  nonTemplateDaTracking: [
-    {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      sinceBlock: discovery.getContract('SystemConfig').sinceBlock ?? 0,
-      inbox: ChainSpecificAddress.address(
-        discovery.getContractValue('SystemConfig', 'sequencerInbox'),
-      ),
-      sequencers: [
-        ChainSpecificAddress.address(
-          discovery.getContractValue('SystemConfig', 'batcherHash'),
-        ),
-      ],
-    },
-  ],
   capability: 'universal',
   addedAt: UnixTime(1717490033), // 2024-06-04T08:33:53Z
   additionalPurposes: ['Social'],

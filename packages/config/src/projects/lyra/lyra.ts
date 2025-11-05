@@ -50,21 +50,6 @@ export const lyra: ScalingProject = opStackL2({
     sinceBlock: 0, // Edge Case: config added @ DA Module start
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAACLkdk+ILapw=',
   },
-  nonTemplateDaTracking: [
-    {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      sinceBlock: discovery.getContract('SystemConfig').sinceBlock ?? 0,
-      inbox: ChainSpecificAddress.address(
-        discovery.getContractValue('SystemConfig', 'sequencerInbox'),
-      ),
-      sequencers: [
-        ChainSpecificAddress.address(
-          discovery.getContractValue('SystemConfig', 'batcherHash'),
-        ),
-      ],
-    },
-  ],
   // stateDerivation: DERIVATION.OPSTACK('LYRA'),
   isNodeAvailable: 'UnderReview',
   milestones: [

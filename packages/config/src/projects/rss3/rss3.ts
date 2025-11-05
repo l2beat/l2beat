@@ -106,21 +106,6 @@ export const rss3: ScalingProject = opStackL2({
   },
   genesisTimestamp: UnixTime(1709858519),
   isNodeAvailable: false,
-  nonTemplateDaTracking: [
-    {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      sinceBlock: discovery.getContract('SystemConfig').sinceBlock ?? 0,
-      inbox: ChainSpecificAddress.address(
-        discovery.getContractValue('SystemConfig', 'sequencerInbox'),
-      ),
-      sequencers: [
-        ChainSpecificAddress.address(
-          discovery.getContractValue('SystemConfig', 'batcherHash'),
-        ),
-      ],
-    },
-  ],
   milestones: [
     {
       title: 'RSS3 Mainnet Alpha Launch',

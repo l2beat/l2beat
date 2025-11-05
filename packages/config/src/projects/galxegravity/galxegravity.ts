@@ -49,22 +49,6 @@ export const galxegravity: ScalingProject = orbitStackL2({
     sinceBlock: 5169794,
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABH1QsY4w6WU=',
   },
-  nonTemplateDaTracking: [
-    {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      sinceBlock: discovery.getContract('SequencerInbox').sinceBlock ?? 0,
-      inbox: ChainSpecificAddress.address(
-        discovery.getContractDetails('SequencerInbox').address,
-      ),
-      sequencers: discovery
-        .getContractValue<ChainSpecificAddress[]>(
-          'SequencerInbox',
-          'batchPosters',
-        )
-        .map((a) => ChainSpecificAddress.address(a)),
-    },
-  ],
   chainConfig: {
     name: 'galxegravity',
     coingeckoPlatform: 'gravity-alpha',

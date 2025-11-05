@@ -83,21 +83,6 @@ export const fraxtal: ScalingProject = opStackL2({
   },
   genesisTimestamp: UnixTime(1706811599),
   isNodeAvailable: true,
-  nonTemplateDaTracking: [
-    {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      sinceBlock: discovery.getContract('SystemConfig').sinceBlock ?? 0,
-      inbox: ChainSpecificAddress.address(
-        discovery.getContractValue('SystemConfig', 'sequencerInbox'),
-      ),
-      sequencers: [
-        ChainSpecificAddress.address(
-          discovery.getContractValue('SystemConfig', 'batcherHash'),
-        ),
-      ],
-    },
-  ],
   chainConfig: {
     name: 'fraxtal',
     chainId: 252,
