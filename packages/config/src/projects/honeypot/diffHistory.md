@@ -1,14 +1,14 @@
 Generated with discovered.json: 0x171b76b4c9bb15569a055ad257197dd5f6afbbc1
 
-# Diff at Wed, 05 Nov 2025 11:51:33 GMT:
+# Diff at Wed, 05 Nov 2025 12:46:51 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@65e01cac46a1da4a93a30562e3b62c4f0590a2f9 block: 1725019175
+- comparing to: main@bc0ecd2e43db8badee0981759f26dbc0b38299e3 block: 1725019175
 - current timestamp: 1725019175
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Libraries are opt-in
 
 ## Config/verification related changes
 
