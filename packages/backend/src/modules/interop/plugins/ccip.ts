@@ -178,8 +178,8 @@ export class CCIPPlugIn implements InteropPlugin {
             dstEvent: delivery,
             srcTokenAddress: ccipSendRequested.args.token,
             srcAmount: ccipSendRequested.args.amount,
-            dstTokenAddress: ccipSendRequested.args.token,
-            dstAmount: ccipSendRequested.args.amount,
+            // dstTokenAddress: ccipSendRequested.args.token, // this is the source data and contaminates the financials
+            // dstAmount: ccipSendRequested.args.amount,
           }),
         )
       }
