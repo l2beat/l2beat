@@ -31,7 +31,7 @@ interface FunctionFolderProps {
   onPermissionToggle: (contractAddress: string, functionName: string, currentIsPermissioned: boolean) => void
   onCheckedToggle: (contractAddress: string, functionName: string, currentChecked: boolean) => void
   onScoreToggle: (contractAddress: string, functionName: string, currentScore: 'unscored' | 'low-risk' | 'medium-risk' | 'high-risk' | 'critical') => void
-  onLikelihoodToggle: (contractAddress: string, functionName: string, currentLikelihood: Likelihood) => void
+  onLikelihoodToggle: (contractAddress: string, functionName: string, currentLikelihood?: Likelihood) => void
   onDescriptionUpdate: (contractAddress: string, functionName: string, description: string) => void
   onConstraintsUpdate: (contractAddress: string, functionName: string, constraints: string) => void
   onOpenInCode: (contractAddress: string, functionName: string) => void
@@ -298,15 +298,15 @@ export function FunctionFolder({
       case 'high': return isHover ? '#fca5a5' : '#f87171' // red-300 : red-400
       case 'medium': return isHover ? '#fdba74' : '#fb923c' // orange-300 : orange-400
       case 'low': return isHover ? '#6ee7b7' : '#10b981' // green-300 : green-500 (swapped from amber to match new mapping)
-      case 'mitigated': return isHover ? '#d1d5db' : '#9ca3af' // gray-300 : gray-400
-      default: return isHover ? '#d1d5db' : '#9ca3af' // gray-300 : gray-400
+      case 'mitigated': return isHover ? '#93c5fd' : '#60a5fa' // blue-300 : blue-400
+      default: return isHover ? '#d1d5db' : '#9ca3af' // gray-300 : gray-400 (unassigned)
     }
   }
 
   const isPermissioned = currentFunction?.isPermissioned || false
   const checkedStatus = currentFunction?.checked || false
   const scoreStatus = currentFunction?.score || 'unscored'
-  const likelihoodStatus = currentFunction?.likelihood || 'mitigated'
+  const likelihoodStatus = currentFunction?.likelihood // Keep undefined as-is (unassigned)
   const description = currentFunction?.description || ''
   const constraints = currentFunction?.constraints || ''
 

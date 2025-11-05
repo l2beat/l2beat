@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-11-04T19:29:49.308Z",
+  "lastModified": "2025-11-05T01:09:36.689Z",
   "contracts": {
     "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": {
       "functions": [
@@ -77,14 +77,13 @@
           "isPermissioned": true,
           "checked": true,
           "score": "medium-risk",
-          "likelihood": "medium",
           "description": "Adds multiple guardians and sets a new custom quorum value. Guardians co-sign deposits to reduce the risk of collusion with node operators.",
           "ownerDefinitions": [
             {
               "path": "$self.getOwner"
             }
           ],
-          "timestamp": "2025-11-04T19:07:45.748Z"
+          "timestamp": "2025-11-05T01:09:36.689Z"
         },
         {
           "functionName": "removeGuardian",
@@ -132,14 +131,14 @@
           "isPermissioned": true,
           "checked": true,
           "score": "high-risk",
-          "likelihood": "low",
+          "likelihood": "high",
           "description": "Deposits ETH into a given validator using `Lido.deposit`. The message must include at least 4/6 signatures from guardians for it to be valid.",
           "ownerDefinitions": [
             {
               "path": "$self.getGuardians"
             }
           ],
-          "timestamp": "2025-11-04T19:07:49.906Z"
+          "timestamp": "2025-11-05T01:03:59.076Z"
         },
         {
           "functionName": "unvetSigningKeys",

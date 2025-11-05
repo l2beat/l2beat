@@ -96,9 +96,9 @@ function getLikelihoodColor(likelihood: string): string {
     case 'low':
       return '#10b981' // green-500
     case 'mitigated':
-      return '#9ca3af' // gray-400
+      return '#60a5fa' // blue-400
     default:
-      return '#9ca3af' // gray-400
+      return '#9ca3af' // gray-400 (unassigned)
   }
 }
 

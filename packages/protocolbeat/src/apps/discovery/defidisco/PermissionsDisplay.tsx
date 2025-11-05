@@ -110,15 +110,22 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
     await updateFunctionEntry(contractAddress, functionName, { score: newScore })
   }
 
-  const handleLikelihoodToggle = async (contractAddress: string, functionName: string, currentLikelihood: Likelihood) => {
+  const handleLikelihoodToggle = async (contractAddress: string, functionName: string, currentLikelihood?: Likelihood) => {
     if (!project) return
 
-    const likelihoodOrder: Likelihood[] = ['mitigated', 'low', 'medium', 'high']
-    const currentIndex = likelihoodOrder.indexOf(currentLikelihood)
+    const likelihoodOrder: (Likelihood | undefined)[] = [undefined, 'mitigated', 'low', 'medium', 'high']
+    let currentIndex = likelihoodOrder.indexOf(currentLikelihood)
+
+    // If not found (e.g., undefined not matching), treat as -1 and start from beginning
+    if (currentIndex === -1) {
+      currentIndex = currentLikelihood === undefined ? 0 : -1
+    }
+
     const nextIndex = (currentIndex + 1) % likelihoodOrder.length
     const newLikelihood = likelihoodOrder[nextIndex]
 
-    await updateFunctionEntry(contractAddress, functionName, { likelihood: newLikelihood })
+    // Use null instead of undefined for JSON serialization (undefined gets stripped from JSON)
+    await updateFunctionEntry(contractAddress, functionName, { likelihood: newLikelihood === undefined ? null as any : newLikelihood })
   }
 
   const handleDescriptionUpdate = async (contractAddress: string, functionName: string, description: string) => {
