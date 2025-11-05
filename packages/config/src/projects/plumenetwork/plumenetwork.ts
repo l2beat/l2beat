@@ -1,7 +1,6 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
-  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'

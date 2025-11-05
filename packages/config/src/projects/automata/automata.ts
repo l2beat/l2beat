@@ -195,5 +195,5 @@ However, there is a mechanism that allows users to challenge unavailability of d
       upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
       relayerFailure: DaRelayerFailureRisk.NoMechanism,
     },
-  }
+  },
 })

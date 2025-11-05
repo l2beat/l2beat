@@ -1,9 +1,4 @@
-import {
-  ChainSpecificAddress,
-  formatSeconds,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_LAYERS,
   DaCommitteeSecurityRisk,
