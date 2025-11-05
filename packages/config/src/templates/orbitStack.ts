@@ -1062,15 +1062,14 @@ function getDAProviders(
     // Return and don't even check for other DAs
     return [
       {
-        layer:
-          (hostChainDA?.layer ?? usesBlobs)
-            ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
-            : DA_LAYERS.ETH_CALLDATA,
-        bridge: hostChainDA?.layer ?? DA_BRIDGES.ENSHRINED,
-        mode: hostChainDA?.layer ?? DA_MODES.TRANSACTION_DATA_COMPRESSED,
-        badge:
-          hostChainDA?.badge ??
-          (usesBlobs ? BADGES.DA.EthereumBlobs : BADGES.DA.EthereumCalldata),
+        layer: usesBlobs
+          ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
+          : DA_LAYERS.ETH_CALLDATA,
+        bridge: DA_BRIDGES.ENSHRINED,
+        mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+        badge: usesBlobs
+          ? BADGES.DA.EthereumBlobs
+          : BADGES.DA.EthereumCalldata,
         riskViewDA:
           type === 'layer2'
             ? RISK_VIEW.DATA_ON_CHAIN
