@@ -6,7 +6,6 @@ import type {
   DaLayerRisks,
   DaTechnology,
   ProjectCustomDa,
-  TableReadyValue,
 } from '../types'
 import { DAC } from './dac-template'
 
@@ -15,7 +14,6 @@ interface TemplateVars {
     knownMembers?: DacInfo['knownMembers']
   }
   risks?: Partial<DaLayerRisks & DaBridgeRisks>
-  fallback?: TableReadyValue
   discovery: ProjectDiscovery
   hostChain: string
 }
