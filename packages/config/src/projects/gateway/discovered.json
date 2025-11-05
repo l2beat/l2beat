@@ -1,6 +1,6 @@
 {
   "name": "gateway",
-  "timestamp": 1761288563,
+  "timestamp": 1762182733,
   "configHash": "0x114c8bb3affafd7d43e0ca41deb1df649be6343ffb81b8005401d21f5ae65244",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -84,6 +84,80 @@
               "members": [
                 "eth:0x14F19299476664665eDa17DBb7dA7e62E3253aa8",
                 "eth:0x7d95f0B9D3383D58E39a75a67760aA2153D355A2"
+              ]
+            }
+          },
+          "eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9": {
+            "PRECOMMITTER_ROLE": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": [
+                "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
+                "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+              ]
+            },
+            "COMMITTER_ROLE": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": [
+                "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
+                "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+              ]
+            },
+            "REVERTER_ROLE": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": [
+                "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
+                "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+              ]
+            },
+            "PROVER_ROLE": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": [
+                "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
+                "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+              ]
+            },
+            "EXECUTOR_ROLE": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": [
+                "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
+                "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+              ]
+            }
+          },
+          "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3": {
+            "PRECOMMITTER_ROLE": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": [
+                "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA",
+                "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
+              ]
+            },
+            "COMMITTER_ROLE": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": [
+                "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA",
+                "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
+              ]
+            },
+            "REVERTER_ROLE": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": [
+                "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA",
+                "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
+              ]
+            },
+            "PROVER_ROLE": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": [
+                "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA",
+                "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
+              ]
+            },
+            "EXECUTOR_ROLE": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": [
+                "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA",
+                "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
               ]
             }
           }
@@ -514,7 +588,7 @@
           "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "eth:0x64E2AfcFE648201b2F4a749aF0B7229ecfa44281"
         ],
-        "getFirstUnprocessedPriorityTx": 13042,
+        "getFirstUnprocessedPriorityTx": 14129,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -522,8 +596,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 8,
-        "getPriorityTreeRoot": "0x348a08315a7f92757d87007e5d24ae81bba45510db0eb2fb8a466e60bc6c0657",
+        "getPriorityQueueSize": 84,
+        "getPriorityTreeRoot": "0x49e8c9770fa5b902cb28ac2261c6c26612a94edc42d1b3a963ec91756df0ae5d",
         "getPriorityTreeStartIndex": 0,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 124554051586,
@@ -531,13 +605,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 29, 2],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 1493,
-        "getTotalBatchesExecuted": 1492,
-        "getTotalBatchesVerified": 1493,
-        "getTotalBlocksCommitted": 1493,
-        "getTotalBlocksExecuted": 1492,
-        "getTotalBlocksVerified": 1493,
-        "getTotalPriorityTxs": 13050,
+        "getTotalBatchesCommitted": 1616,
+        "getTotalBatchesExecuted": 1614,
+        "getTotalBatchesVerified": 1615,
+        "getTotalBlocksCommitted": 1616,
+        "getTotalBlocksExecuted": 1614,
+        "getTotalBlocksVerified": 1615,
+        "getTotalPriorityTxs": 14213,
         "getTransactionFilterer": "eth:0x5540DE94485dB078025318428F813C5d88215823",
         "getVerifier": "eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3",
         "getVerifierParams": {
@@ -674,7 +748,7 @@
       "type": "Contract",
       "template": "shared-zk-stack/L1VerifierPlonk",
       "sourceHashes": [
-        "0x20269ba58e717388e68842ab5a0b73b744856b4b1fb48d57ac7dce36d0c3c765"
+        "0x4e306eb2936a09bd91390a0b661bfd8eda46b873600b8c7b4fb9be3cc3867a8d"
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
@@ -788,12 +862,12 @@
       "type": "Contract",
       "template": "shared-zk-stack/L1Messenger",
       "sourceHashes": [
-        "0xd2ecfc7e11d1c2bd428a0170a09a7734dd4640ef3291609ddf62dbdb4c344f14"
+        "0x2c4e54d52c2919d3fc227e2a04b26b5e9daee5ef7031fb0e076ac5ed9f2cc7a5"
       ],
       "proxyType": "immutable",
       "description": "System contract implementing public L2->L1 messaging functionality. Part of the canonical bridge.",
-      "sinceTimestamp": 1750953821,
-      "sinceBlock": 85,
+      "sinceTimestamp": 1761040360,
+      "sinceBlock": 74512,
       "values": { "$immutable": true },
       "implementationNames": {
         "gateway:0x0000000000000000000000000000000000008008": "L1Messenger"
@@ -1251,6 +1325,6 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock_post29": "0x6b83daae3459d63aeff3b894c47d96c0190d2aaccc58fd6243a417aa7e5ac3a3"
   },
-  "usedBlockNumbers": { "gateway": 76562, "ethereum": 23645644 },
+  "usedBlockNumbers": { "ethereum": 23719618, "gateway": 84434 },
   "permissionsConfigHash": "0xed03a041b3120f7322ac625af9966c59719e71f0cd2f35218a2aa3680602966b"
 }

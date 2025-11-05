@@ -11,6 +11,11 @@
       "category": "rwaPublic"
     },
     {
+      "symbol": "mRe7BTC",
+      "address": "0x9FB442d6B612a6dcD2acC67bb53771eF1D9F661A",
+      "category": "rwaPublic"
+    }, // the mRe tokens do not have any tx restrictions and can be used in defi
+    {
       "symbol": "mRe7YIELD",
       "address": "0x87C9053C819bB28e0D73d33059E1b3DA80AFb0cf",
       "category": "rwaPublic"
@@ -2252,6 +2257,21 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "EARNM",
+      "address": "0x3e62fed35c97145e6b445704b8ce74b2544776a9",
+      "source": "external",
+      "supply": "totalSupply",
+      "coingeckoId": "earnm",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
     {
       "symbol": "TBILL",
       "address": "0xF84D28A8D28292842dD73D1c5F99476A80b6666A",

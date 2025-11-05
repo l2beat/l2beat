@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x27006db10506824c759f5f7fe7749667dbb41374
+
+# Diff at Tue, 04 Nov 2025 11:32:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1760538476
+- current timestamp: 1760538476
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1760538476 (main branch discovery), not current.
+
+```diff
+    contract QuoteVerifier (eth:0x816ADa3B63F3c643fb04152eA32B58Db89aadd89) {
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (eth:0xe20C4d54afBbea5123728d5b7dAcD9CB3c65C39a), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.
+      sourceHashes.0:
+-        "0x2ce21f391e19a4d7b963b79fced06804cb79a44416a35e9e11b229a9a6957b2e"
++        "0x17cf7a67e150ce8a604a58eacd58d5a05651d1783698d5782148bdaf167b3236"
+    }
+```
+
 Generated with discovered.json: 0xd5bdffbcd42074f185e7f82e73232292e166c43c
 
 # Diff at Wed, 15 Oct 2025 14:29:01 GMT:

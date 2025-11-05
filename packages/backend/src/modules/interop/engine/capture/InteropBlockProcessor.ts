@@ -33,11 +33,11 @@ export class InteropBlockProcessor implements BlockProcessor {
     for (const txToCapture of toCapture.txsToCapture) {
       for (const plugin of this.plugins) {
         try {
-          const event = plugin.captureTx?.(txToCapture)
-          if (event) {
-            events.push({ ...event, plugin: plugin.name })
+          const captured = plugin.captureTx?.(txToCapture)
+          if (captured) {
+            events.push(...captured.map((c) => ({ ...c, plugin: plugin.name })))
             pluginEventCounts[plugin.name] =
-              (pluginEventCounts[plugin.name] || 0) + 1
+              (pluginEventCounts[plugin.name] || 0) + captured.length
             break
           }
         } catch (e) {
@@ -53,11 +53,11 @@ export class InteropBlockProcessor implements BlockProcessor {
     for (const logToDecode of toCapture.logsToCapture) {
       for (const plugin of this.plugins) {
         try {
-          const event = plugin.capture?.(logToDecode)
-          if (event) {
-            events.push({ ...event, plugin: plugin.name })
+          const captured = plugin.capture?.(logToDecode)
+          if (captured) {
+            events.push(...captured.map((c) => ({ ...c, plugin: plugin.name })))
             pluginEventCounts[plugin.name] =
-              (pluginEventCounts[plugin.name] || 0) + 1
+              (pluginEventCounts[plugin.name] || 0) + captured.length
             break
           }
         } catch (e) {

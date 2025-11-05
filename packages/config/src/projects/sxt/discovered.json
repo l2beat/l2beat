@@ -1,6 +1,6 @@
 {
   "name": "sxt",
-  "timestamp": 1753944351,
+  "timestamp": 1761642957,
   "configHash": "0x7e16d62ce9530ec9600be56f0d3da1f5cd5fa7ada13b327d5d191513243df5db",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -94,7 +94,7 @@
       "type": "Contract",
       "template": "shared-zk-stack/L1VerifierPlonk",
       "sourceHashes": [
-        "0xeacd5b06c59874d47b7685e8f5d715a03e25bae887e159251920b78b0c084387"
+        "0x4307e17da28c7b2fe29ba4658f25dec8e6611161bb60270d2ad04feb38988dc2"
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
@@ -343,12 +343,12 @@
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 28, 0],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 36,
-        "getTotalBatchesExecuted": 36,
-        "getTotalBatchesVerified": 36,
-        "getTotalBlocksCommitted": 36,
-        "getTotalBlocksExecuted": 36,
-        "getTotalBlocksVerified": 36,
+        "getTotalBatchesCommitted": 38,
+        "getTotalBatchesExecuted": 38,
+        "getTotalBatchesVerified": 38,
+        "getTotalBlocksCommitted": 38,
+        "getTotalBlocksExecuted": 38,
+        "getTotalBlocksVerified": 38,
         "getTotalPriorityTxs": 14,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579",
@@ -608,9 +608,8 @@
     },
     {
       "address": "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-zk-stack"
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1004,6 +1003,6 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "usedBlockNumbers": { "ethereum": 23037387 },
-  "permissionsConfigHash": "0xb0d9dfa98ff242f3ba6bb135108e273feb46e102435d29c33b956bb616a661c3"
+  "usedBlockNumbers": { "ethereum": 23674968 },
+  "permissionsConfigHash": "0x0e808c2cdda85c33c7c1b5772eed63df6fcf8ac3ef19ee587834fe5c1bc2daaa"
 }

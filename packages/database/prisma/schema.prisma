@@ -361,6 +361,7 @@ model InteropEvent {
   calldata    String  @default("0x") @db.Text
   logIndex    Int?
   args        Json
+  ctx         Json    @default("{}")
 
   matched     Boolean
   unsupported Boolean
@@ -411,6 +412,7 @@ model InteropTransfer {
   srcRawAmount    Decimal?  @db.Decimal(80, 0)
 
   srcAbstractTokenId String?  @db.VarChar(66)
+  srcSymbol          String?  @db.VarChar(66)
   srcAmount          Float?   @db.Real
   srcPrice           Float?   @db.Real
   srcValueUsd        Float?   @db.Real
@@ -425,6 +427,7 @@ model InteropTransfer {
   dstRawAmount    Decimal?  @db.Decimal(80, 0)
 
   dstAbstractTokenId String?  @db.VarChar(66)
+  dstSymbol          String?  @db.VarChar(66)
   dstAmount          Float?   @db.Real
   dstPrice           Float?   @db.Real
   dstValueUsd        Float?   @db.Real

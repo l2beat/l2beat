@@ -106,14 +106,16 @@ export class CCTPV1Plugin implements InteropPlugin {
       if (version === 0) {
         const message = decodeV1Message(messageSent.message)
         if (!message) return
-        return CCTPv1MessageSent.create(input.ctx, {
-          messageBody: message.rawBody,
-          $dstChain: findChain(
-            networks,
-            (x) => x.domain,
-            Number(message.destinationDomain),
-          ),
-        })
+        return [
+          CCTPv1MessageSent.create(input.ctx, {
+            messageBody: message.rawBody,
+            $dstChain: findChain(
+              networks,
+              (x) => x.domain,
+              Number(message.destinationDomain),
+            ),
+          }),
+        ]
       }
     }
 
@@ -121,16 +123,18 @@ export class CCTPV1Plugin implements InteropPlugin {
       network.messageTransmitter,
     ])
     if (v1MessageReceived) {
-      return CCTPv1MessageReceived.create(input.ctx, {
-        caller: EthereumAddress(v1MessageReceived.caller),
-        $srcChain: findChain(
-          networks,
-          (x) => x.domain,
-          Number(v1MessageReceived.sourceDomain),
-        ),
-        nonce: Number(v1MessageReceived.nonce),
-        messageBody: v1MessageReceived.messageBody,
-      })
+      return [
+        CCTPv1MessageReceived.create(input.ctx, {
+          caller: EthereumAddress(v1MessageReceived.caller),
+          $srcChain: findChain(
+            networks,
+            (x) => x.domain,
+            Number(v1MessageReceived.sourceDomain),
+          ),
+          nonce: Number(v1MessageReceived.nonce),
+          messageBody: v1MessageReceived.messageBody,
+        }),
+      ]
     }
   }
 

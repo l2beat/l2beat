@@ -1,8 +1,7 @@
 {
   "1InchAggregationRouterV5.sol": {
-    "hash": "0xcda14981e0e7c14eca7a40d2deb572f93fbfa2b9ee6e894c5b3d967ad1068bbb",
+    "hash": "0x3f07a08957b7504b340685cdf34a4374c24c86a8d07a040efe71444cbfa2ac06",
     "address": "eth:0x1111111254EEB25477B68fb85Ed929f73A960582",
-    "chain": "ethereum",
     "blockNumber": 23568183
   }
 }

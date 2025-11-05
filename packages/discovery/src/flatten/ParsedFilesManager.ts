@@ -21,6 +21,9 @@ type DeclarationType =
   | 'function'
   | 'typedef'
   | 'enum'
+  | 'constant'
+  | 'event'
+  | 'error'
 
 type TopLevelDeclarationNode =
   | AST.StructDefinition
@@ -28,6 +31,9 @@ type TopLevelDeclarationNode =
   | AST.FunctionDefinition
   | AST.TypeDefinition
   | AST.ContractDefinition
+  | AST.FileLevelConstant
+  | AST.EventDefinition
+  | AST.CustomErrorDefinition
 
 export interface TopLevelDeclaration {
   name: string
@@ -144,7 +150,10 @@ export class ParsedFilesManager {
         n.type === 'StructDefinition' ||
         n.type === 'FunctionDefinition' ||
         n.type === 'TypeDefinition' ||
-        n.type === 'EnumDefinition',
+        n.type === 'EnumDefinition' ||
+        n.type === 'FileLevelConstant' ||
+        n.type === 'EventDefinition' ||
+        n.type === 'CustomErrorDefinition',
     )
 
     const getDeclarationType = (
@@ -161,6 +170,12 @@ export class ParsedFilesManager {
           return 'typedef'
         case 'EnumDefinition':
           return 'enum'
+        case 'FileLevelConstant':
+          return 'constant'
+        case 'EventDefinition':
+          return 'event'
+        case 'CustomErrorDefinition':
+          return 'error'
       }
     }
 
@@ -315,6 +330,12 @@ export class ParsedFilesManager {
       subNodes = []
     } else if (c.type === 'EnumDefinition') {
       subNodes = c.members
+    } else if (c.type === 'FileLevelConstant') {
+      subNodes = [c.typeName, c.initialValue]
+    } else if (c.type === 'EventDefinition') {
+      subNodes = c.parameters ?? []
+    } else if (c.type === 'CustomErrorDefinition') {
+      subNodes = c.parameters ?? []
     } else {
       throw new Error('Invalid node type')
     }
@@ -333,11 +354,19 @@ export class ParsedFilesManager {
       const isContract = result.declaration.type === 'contract'
       const isAbstract = result.declaration.type === 'abstract'
       const isInterface = result.declaration.type === 'interface'
+      const isEvent = result.declaration.type === 'event'
+      const isError = result.declaration.type === 'error'
+      const isConstant = result.declaration.type === 'constant'
 
-      if (
-        (isInterface || isContract || isAbstract) &&
-        this.options.includeAll !== true
-      ) {
+      const isExtendedDeclaration =
+        isContract ||
+        isAbstract ||
+        isInterface ||
+        isEvent ||
+        isError ||
+        isConstant
+
+      if (isExtendedDeclaration && this.options.includeAll !== true) {
         continue
       }
 

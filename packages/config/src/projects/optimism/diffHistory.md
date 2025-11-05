@@ -1,3 +1,114 @@
+Generated with discovered.json: 0xddcfc3f6e2d4dc864d2c73aadf8f603f5cea8bb2
+
+# Diff at Tue, 04 Nov 2025 11:33:47 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1761761995
+- current timestamp: 1761761995
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761761995 (main branch discovery), not current.
+
+```diff
+    contract MIPS (eth:0x07BABE08EE4D07dBA236530183B24055535A7011) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes.0:
+-        "0x4bde2f6a5214eb2f1bd8caaeb2a6700260f66f1ae8f389a13763187c11634d03"
++        "0xbb4d6f68705092044f28ad3a6bd721dfca9c2ba8a561025495d950aca06b10ee"
+    }
+```
+
+```diff
+    contract FaultDisputeGame (eth:0x22F2AfB837156246187Cd2652ad281eE08EBBB9d) {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      sourceHashes.0:
+-        "0x825c4efedd1d48e3087fc99ff4e29a742c8e2a95498e4165e580f93ae5d23e74"
++        "0xa84a2c287a4758ce3cd3e4fd5e99b5cc94278297c2be14317401ae973d4dd23e"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0xbF2027A15e1a6ceE76257ED9bB623C8dC08D4EF7) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sourceHashes.0:
+-        "0x6e19dedf2965b6aaae0af2c98a6df46b1caac3ffc191eaf1d10ca5570076252f"
++        "0x78ef988441111e9471e72a55f764cd7f35a0f81de503ac5d7ea03765b043da3b"
+    }
+```
+
+```diff
+    contract GasPriceOracle (oeth:0x420000000000000000000000000000000000000F) {
+    +++ description: Provides the current gas price for L2 transactions.
+      sourceHashes.1:
+-        "0x926a45849c8c68704718056d544ac26d7683a6b44a90a9590dda1a9bdd495962"
++        "0x1cb14befaee4fe093cdeeaab8c4a2d125540a0790929ca046c8193a094a88a4f"
+    }
+```
+
+Generated with discovered.json: 0x6973016c8dbf4a4bb4b33df8b8302f8be6d74127
+
+# Diff at Mon, 03 Nov 2025 17:49:27 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6b72018cd9706ce7cba8ec489b67d7193f34dc20 block: 1761761995
+- current timestamp: 1761761995
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761761995 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x473300df21D047806A082244b417f96b32f13A33) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"eth:0xbF2027A15e1a6ceE76257ED9bB623C8dC08D4EF7","role":".proposer"}]
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"challenge","from":"eth:0xbF2027A15e1a6ceE76257ED9bB623C8dC08D4EF7","role":".challenger"}]
+    }
+```
+
+Generated with discovered.json: 0xbcf59c3129576741002675696eee8bc141adaf09
+
+# Diff at Wed, 29 Oct 2025 18:21:16 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@cd3acb30978545d875852451e86e15a019f3b00a block: 1761223045
+- current timestamp: 1761761995
+
+## Description
+
+performed an empty mint to disallow inflating the supply for one year. the inflation rate is 2% per year but it was never used, and it is the first time they explicitly skip a year. the value here shows the timestamp of last mint.
+
+## Watched changes
+
+```diff
+    contract MintManager (oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005) {
+    +++ description: Controls the OP inflation rate, which is currently hardcoded to 2% annually.
+      values.mintPermittedAfter:
+-        0
++        1793220409
+    }
+```
+
 Generated with discovered.json: 0x46c4412bd0070ee7ddde29397205ba18790a1ada
 
 # Diff at Mon, 20 Oct 2025 15:27:50 GMT:

@@ -9,7 +9,7 @@ import {
   makeEntryStructureConfig,
   TemplateService,
 } from '@l2beat/discovery'
-import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress, unique } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { isDeepStrictEqual } from 'util'
 import { bridges } from '../../processing/bridges'
@@ -124,6 +124,27 @@ describe('discovery config.jsonc', () => {
         reason === undefined,
         `${c.name} project is outdated: ${reason}.\n Run "l2b refresh-discovery"`,
       )
+    }
+  })
+
+  describe('shape addresses are unique', () => {
+    const shapes = templateService.listAllTemplates()
+
+    for (const [templateId, { shapePath }] of Object.entries(shapes)) {
+      it(`shape ${templateId}:${shapePath} has unique addresses`, () => {
+        const shape = templateService.readShapeSchema(shapePath)
+        const addresses = Object.values(shape).map((x) => x.address)
+
+        const asKey = (
+          address: ChainSpecificAddress | ChainSpecificAddress[],
+        ) => {
+          const array = Array.isArray(address) ? address : [address]
+          return JSON.stringify(array.sort())
+        }
+
+        const uniqueAddresses = unique(addresses, asKey)
+        expect(addresses).toHaveLength(uniqueAddresses.length)
+      })
     }
   })
 

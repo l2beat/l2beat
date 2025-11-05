@@ -3587,6 +3587,20 @@
       "supply": "zero"
     },
     {
+      "name": "Midas Re7 BTC",
+      "coingeckoId": "midas-mre7btc-2",
+      "address": "0x9FB442d6B612a6dcD2acC67bb53771eF1D9F661A",
+      "symbol": "mRe7BTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1756975739,
+      "coingeckoListingTimestamp": 1762214400,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/69666/large/mRe7BTC_icon.png?1759235343",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Midas Re7 Yield",
       "coingeckoId": "midas-mre7yield",
       "address": "0x87C9053C819bB28e0D73d33059E1b3DA80AFb0cf",
@@ -12345,6 +12359,28 @@
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "EARNM",
+      "coingeckoId": "earnm",
+      "address": "0x3e62fED35c97145e6B445704B8CE74B2544776A9",
+      "symbol": "EARNM",
+      "decimals": 18,
+      "deploymentTimestamp": 1732049680,
+      "coingeckoListingTimestamp": 1734652800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52925/large/earnm.jpg?1734706204",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "name": "EDU Coin",

@@ -1,3 +1,63 @@
+Generated with discovered.json: 0x9b02e7046575ef41285fe82b080fb299c2d15e4f
+
+# Diff at Tue, 04 Nov 2025 11:34:40 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1761642957
+- current timestamp: 1761642957
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761642957 (main branch discovery), not current.
+
+```diff
+    contract L1VerifierPlonk (eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1) {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+      sourceHashes.0:
+-        "0xeacd5b06c59874d47b7685e8f5d715a03e25bae887e159251920b78b0c084387"
++        "0x4307e17da28c7b2fe29ba4658f25dec8e6611161bb60270d2ad04feb38988dc2"
+    }
+```
+
+Generated with discovered.json: 0xb1342730f2e33a14642ca19b8a9598675ca8db77
+
+# Diff at Tue, 28 Oct 2025 09:17:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@090e135db1084f4a9678d6bf1cb0ff5e854903ea block: 1753944351
+- current timestamp: 1761642957
+
+## Description
+
+config related: something to do with the shared modules work imo.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753944351 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-zk-stack"
+      proxyType:
++        "EOA"
+    }
+```
+
 Generated with discovered.json: 0x7ca680cd2cbdf39b4d28abea7fcd8a544dd93dfb
 
 # Diff at Fri, 24 Oct 2025 09:13:41 GMT:

@@ -1,6 +1,6 @@
 {
   "name": "mode",
-  "timestamp": 1761223020,
+  "timestamp": 1762276311,
   "configHash": "0x0c32ae9ab5d35f729317ec90d7436220d475e9a4e79683bdc73ec4fa1b9c58cf",
   "entries": [
     {
@@ -48,7 +48,7 @@
       "type": "Contract",
       "template": "opstack/MIPS",
       "sourceHashes": [
-        "0x4bde2f6a5214eb2f1bd8caaeb2a6700260f66f1ae8f389a13763187c11634d03"
+        "0xbb4d6f68705092044f28ad3a6bd721dfca9c2ba8a561025495d950aca06b10ee"
       ],
       "proxyType": "immutable",
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
@@ -157,7 +157,7 @@
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
         "systemConfig": "eth:0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221",
-        "totalSupply": "7590751400000000000",
+        "totalSupply": 0,
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -501,7 +501,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 179,
+        "nonce": 180,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -795,11 +795,11 @@
           ]
         ],
         "$upgradeCount": 10,
-        "basefeeScalar": 20000,
+        "basefeeScalar": 100000,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "eth:0x99199a22125034c808ff20f377d91187E8050F2E",
         "batchInbox": "eth:0x24E59d9d3Bd73ccC28Dc54062AF7EF7bFF58Bd67",
-        "blobbasefeeScalar": 611590,
+        "blobbasefeeScalar": 1014213,
         "disputeGameFactory": "eth:0x6f13EFadABD9269D6cEAd22b448d434A1f1B433E",
         "eip1559Denominator": 0,
         "eip1559Elasticity": 0,
@@ -846,7 +846,7 @@
           "systemTxMaxGas": 1000000,
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
-        "scalar": "452312848583266388373324160190187140051835877600158453279133814289959243296",
+        "scalar": "452312848583266388373324160190187140051835877600158453279135543542576940704",
         "sequencerInbox": "eth:0x24E59d9d3Bd73ccC28Dc54062AF7EF7bFF58Bd67",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 18586931,
@@ -884,7 +884,14 @@
     {
       "address": "eth:0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0xF25E6e47Ce13a73550c4DA8824DFC3bDa9191249",
+          "role": ".proposer"
+        }
+      ]
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -980,7 +987,7 @@
         ],
         "$upgradeCount": 3,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 528,
+        "gameCount": 577,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xF25E6e47Ce13a73550c4DA8824DFC3bDa9191249",
@@ -993,7 +1000,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 528,
+        "permissionedGamesTotal": 577,
         "proxyAdmin": "eth:0x470d87b1dae09a454A43D1fD772A561a03276aB7",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "version": "1.2.0"
@@ -1249,7 +1256,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 23640011
+          "prevBlockNum": 23727102
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1420,7 +1427,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292838254",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292838551",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1470,6 +1477,13 @@
         "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0xF25E6e47Ce13a73550c4DA8824DFC3bDa9191249",
+          "role": ".challenger"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1610850364,
       "sinceBlock": 11670007,
@@ -1706,7 +1720,7 @@
       "type": "Contract",
       "template": "opstack/PermissionedDisputeGame",
       "sourceHashes": [
-        "0x6e19dedf2965b6aaae0af2c98a6df46b1caac3ffc191eaf1d10ca5570076252f"
+        "0x78ef988441111e9471e72a55f764cd7f35a0f81de503ac5d7ea03765b043da3b"
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
@@ -2742,11 +2756,11 @@
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismPortal2": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
-    "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
+    "opstack/PermissionedDisputeGame": "0xe39c1284ebcc867153d8d9bf8d32a6ab7daf95dde76ad7e13a040bb64d98b985",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23640243 },
-  "permissionsConfigHash": "0xc8b22827637f8c1eaaea4e6d60c89e4a1ee7a572f267db39debb3d50413ab0a5"
+  "usedBlockNumbers": { "ethereum": 23727362 },
+  "permissionsConfigHash": "0xd93ab9c2b713bef1854e653586d50a89fcf7a39b5cb6d01c03ecd8c6b840a2b8"
 }

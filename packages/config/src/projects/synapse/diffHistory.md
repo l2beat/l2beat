@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x489ff40310ad4393c5f13a1c1c64fbbb57e5f8f6
+
+# Diff at Tue, 04 Nov 2025 11:34:41 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1734022739
+- current timestamp: 1734022739
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1734022739 (main branch discovery), not current.
+
+```diff
+    contract Liquidity Pool (eth:0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0x11199A9eE50127F335B84A1eEb961D8A85147f5F","eth:0xFE986b20d34df3Aa9fA2e4d18b8EBe5AC6c753b0","eth:0x11199A9eE50127F335B84A1eEb961D8A85147f5F","eth:0xFE986b20d34df3Aa9fA2e4d18b8EBe5AC6c753b0"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SwapUtils (eth:0x11199A9eE50127F335B84A1eEb961D8A85147f5F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AmplificationUtils (eth:0xFE986b20d34df3Aa9fA2e4d18b8EBe5AC6c753b0)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xd029233d4237509f87b0bfa190ebadc7bcbe9d4f
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xd1692a4667c370de0fa4270297a1ac912800f794
+
+# Diff at Tue, 04 Nov 2025 11:35:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1759846774
+- current timestamp: 1759846774
+
+## Description
+
+Config: library, should be removed.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759846774 (main branch discovery), not current.
+
+```diff
+    contract BlackRock USD Institutional Digital Liquidity Fund Token (arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872) {
+    +++ description: None
+      values.$libraries:
++        ["arb1:0xf5493Af69553f78A513F27333e8F87479A66EB4d"]
+    }
+```
+
 Generated with discovered.json: 0xd99fa48c41251ed2db7902449c8a373164774d8a
 
 # Diff at Tue, 07 Oct 2025 14:35:51 GMT:

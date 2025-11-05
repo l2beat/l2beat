@@ -74,6 +74,11 @@ export const lighter: ScalingProject = {
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.STATE_DIFFS,
   },
+  chainConfig: {
+    name: 'lighter',
+    chainId: undefined,
+    apis: [],
+  },
   config: {
     escrows: [
       discovery.getEscrowDetails({
@@ -143,6 +148,11 @@ export const lighter: ScalingProject = {
         },
       },
     ],
+    activityConfig: {
+      type: 'day',
+      dataSource: 'Lighter API',
+      sinceTimestamp: UnixTime(1759363200), // 2025-10-01T00:00:00Z
+    },
   },
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_SN,

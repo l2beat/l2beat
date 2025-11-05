@@ -56,14 +56,14 @@ export const CelerExecuted = createInteropEventType<{
 export const CelerSent = createInteropEventType<{
   transferId: string
   token: Address32
-  amount: string
+  amount: bigint
   $dstChain: string
 }>('celer.Send')
 
 export const CelerRelay = createInteropEventType<{
   transferId: string
   token: Address32
-  amount: string
+  amount: bigint
   srcTransferId: string
   $srcChain: string
 }>('celer.Relay')
@@ -74,59 +74,67 @@ export class CelerPlugIn implements InteropPlugin {
   capture(input: LogToCapture) {
     const parsed = parseMessage(input.log, null)
     if (parsed) {
-      return CelerMessage.create(input.ctx, {
-        receiver: Address32.from(parsed.receiver),
-        $dstChain: findChain(
-          CELER_NETWORKS,
-          (x) => x.celerChainId,
-          Number(parsed.dstChainId),
-        ),
-        message: parsed.message,
-      })
+      return [
+        CelerMessage.create(input.ctx, {
+          receiver: Address32.from(parsed.receiver),
+          $dstChain: findChain(
+            CELER_NETWORKS,
+            (x) => x.celerChainId,
+            Number(parsed.dstChainId),
+          ),
+          message: parsed.message,
+        }),
+      ]
     }
 
     const executed = parseExecuted(input.log, null)
     if (executed) {
-      return CelerExecuted.create(input.ctx, {
-        msgType: Number(executed.msgType),
-        msgId: executed.msgId,
-        status: Number(executed.status),
-        $srcChain: findChain(
-          CELER_NETWORKS,
-          (x) => x.celerChainId,
-          Number(executed.srcChainId),
-        ),
-        srcTxHash: executed.srcTxHash,
-      })
+      return [
+        CelerExecuted.create(input.ctx, {
+          msgType: Number(executed.msgType),
+          msgId: executed.msgId,
+          status: Number(executed.status),
+          $srcChain: findChain(
+            CELER_NETWORKS,
+            (x) => x.celerChainId,
+            Number(executed.srcChainId),
+          ),
+          srcTxHash: executed.srcTxHash,
+        }),
+      ]
     }
 
     const sent = parseSent(input.log, null)
     if (sent) {
-      return CelerSent.create(input.ctx, {
-        transferId: sent.transferId,
-        token: Address32.from(sent.token),
-        amount: sent.amount.toString(),
-        $dstChain: findChain(
-          CELER_NETWORKS,
-          (x) => x.celerChainId,
-          Number(sent.dstChainId),
-        ),
-      })
+      return [
+        CelerSent.create(input.ctx, {
+          transferId: sent.transferId,
+          token: Address32.from(sent.token),
+          amount: sent.amount,
+          $dstChain: findChain(
+            CELER_NETWORKS,
+            (x) => x.celerChainId,
+            Number(sent.dstChainId),
+          ),
+        }),
+      ]
     }
 
     const relay = parseRelay(input.log, null)
     if (relay) {
-      return CelerRelay.create(input.ctx, {
-        transferId: relay.transferId,
-        token: Address32.from(relay.token),
-        amount: relay.amount.toString(),
-        srcTransferId: relay.srcTransferId,
-        $srcChain: findChain(
-          CELER_NETWORKS,
-          (x) => x.celerChainId,
-          Number(relay.srcChainId),
-        ),
-      })
+      return [
+        CelerRelay.create(input.ctx, {
+          transferId: relay.transferId,
+          token: Address32.from(relay.token),
+          amount: relay.amount,
+          srcTransferId: relay.srcTransferId,
+          $srcChain: findChain(
+            CELER_NETWORKS,
+            (x) => x.celerChainId,
+            Number(relay.srcChainId),
+          ),
+        }),
+      ]
     }
   }
 
@@ -162,10 +170,10 @@ export class CelerPlugIn implements InteropPlugin {
         Result.Transfer('celer.BridgeTransfer', {
           srcEvent: sent,
           srcTokenAddress: sent.args.token,
-          srcAmount: BigInt(sent.args.amount),
+          srcAmount: sent.args.amount,
           dstEvent: delivery,
           dstTokenAddress: delivery.args.token,
-          dstAmount: BigInt(delivery.args.amount),
+          dstAmount: delivery.args.amount,
         }),
       ]
     }

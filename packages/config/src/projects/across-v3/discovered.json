@@ -1,6 +1,6 @@
 {
   "name": "across-v3",
-  "timestamp": 1759932934,
+  "timestamp": 1762264490,
   "configHash": "0x61dd08494791b2aa0c5ead85995d06cf73e1c0ee945f91435144e010cee2fab5",
   "entries": [
     {
@@ -30,28 +30,28 @@
       "values": {
         "$immutable": true,
         "ANCILLARY_BYTES_LIMIT": 8192,
-        "cumulativeStake": "22609485916246922730855924",
+        "cumulativeStake": "23377963385076757936750168",
         "currentActiveRequests": true,
         "delayFmt": "1d",
         "emissionRate": "130000000000000000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "gat": "5000000000000000000000000",
-        "getCurrentRoundId": 10184,
+        "getCurrentRoundId": 10198,
         "getNumberOfPriceRequests": {
-          "numberPendingPriceRequests": 17,
-          "numberResolvedPriceRequests": 1472
+          "numberPendingPriceRequests": 10,
+          "numberResolvedPriceRequests": 1566
         },
-        "getVotePhase": 1,
-        "lastRoundIdProcessed": 10184,
-        "lastUpdateTime": 1759932851,
+        "getVotePhase": 0,
+        "lastRoundIdProcessed": 10198,
+        "lastUpdateTime": 1762264079,
         "maxRequestsPerRound": 1000,
         "maxRolls": 4,
         "migratedAddress": "eth:0x0000000000000000000000000000000000000000",
-        "nextPendingIndexToProcess": 17,
+        "nextPendingIndexToProcess": 10,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "previousVotingContract": "eth:0x8B1631ab830d11531aE83725fDa4D86012eCCd77",
-        "rewardPerToken": "684230278778222749",
-        "rewardPerTokenStored": "684229864792693195",
+        "rewardPerToken": "697259475099174824",
+        "rewardPerTokenStored": "697257206295895157",
         "slashingLibrary": "eth:0x9a406ba5a99983250Fd663947b3c968D387ce5cd",
         "spat": "650000000000000000",
         "UINT64_MAX": "18446744073709551615",
@@ -644,7 +644,7 @@
         "bond": "5000000000000000000000",
         "bondFmt": "5,000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1759932923,
+        "getCurrentTime": 1762264487,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -856,11 +856,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1759932923,
+        "getCurrentTime": 1762264487,
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 3245211,
+        "numberOfDeposits": 3374931,
         "owner": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -1090,7 +1090,7 @@
         "$immutable": true,
         "emergencyProposer": "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1759932923,
+        "getCurrentTime": 1762264487,
         "getMember": [
           "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -1104,6 +1104,21 @@
         "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8": "GovernorV2"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "LpTokenFactory",
+      "address": "eth:0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x54ab5e1f981929fca37e28c313db9ab35343de3df6907dbaeb29dda3840aadcd"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1651576251,
+      "sinceBlock": 14704307,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d": "LpTokenFactory"
+      }
     },
     {
       "name": "Ink_Adapter",
@@ -1172,7 +1187,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 884,
+        "nonce": 901,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1374,7 +1389,7 @@
         "delayFmt": "10d",
         "emergencyProposals": [],
         "executor": "eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1759932923,
+        "getCurrentTime": 1762264487,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -1566,7 +1581,7 @@
           "eth:0x8692B776d1Ff0664177c90465038056Dc64f8991"
         ],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 371,
+        "nonce": 376,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1624,7 +1639,7 @@
         "0x3afa0a01f4cde6c678d6ec12443078407e69293b9a4519105445f694671b2dec"
       ],
       "proxyType": "immutable",
-      "description": "The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h and a bond amount of 0.45 ABT.",
+      "description": "The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -1643,6 +1658,7 @@
       "sinceBlock": 14819537,
       "values": {
         "$immutable": true,
+        "$libraries": ["eth:0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d"],
         "Adapters": {
           "1": "eth:0x527E872a5c3f0C7c24Fe33F2593cFB890a285084",
           "10": "eth:0x3562e309C6C79626E5F0Cf746FB5Bf4f6b8EebE5",
@@ -1698,10 +1714,10 @@
           "7777777": "eth:0x13fDac9F9b4777705db45291bbFF3c972c6d1d97",
           "34268394551451": "eth:0x5b162F2c7EC8795BD0800C1462949E2328D1DD5a"
         },
-        "finalizationDelayFmt": "1h",
+        "finalizationDelayFmt": "30m",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "identifier": "0x4143524f53532d56320000000000000000000000000000000000000000000000",
-        "liveness": 3600,
+        "liveness": 1800,
         "lpFeeRatePerSecond": 1500000000000,
         "lpTokenFactory": "eth:0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d",
         "owner": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
@@ -1709,13 +1725,13 @@
         "protocolFeeCaptureAddress": "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0xe62eeb43d452f23c32ed4f605b6ced5aa4794e05f8649fa0065c92aaaaa8b6cf",
-          "relayerRefundRoot": "0x68e4e006f115536d558819c1e7a155bf2f4012fcb98f8abd086105ddbd48d448",
-          "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "poolRebalanceRoot": "0xe0ef76038348f7958b009979f6ca7e6f414a845c53fd7310d50c56ef082d015e",
+          "relayerRefundRoot": "0x3e54902f7be76dd66cd1153e7943d83edf292eac0c881690836dbe985cd4a4ea",
+          "slowRelayRoot": "0x12e655f35c69641d833cf16b4369c7620b4cc3abe1c9621cc0017865555eb5db",
           "claimedBitMap": 0,
           "proposer": "eth:0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
           "unclaimedPoolRebalanceLeafCount": 20,
-          "challengePeriodEndTimestamp": 1759934963
+          "challengePeriodEndTimestamp": 1762264739
         },
         "spokePool": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
         "timerAddress": "eth:0x0000000000000000000000000000000000000000",
@@ -3015,6 +3031,9 @@
       "function renounceMembership(uint256 roleId)",
       "function resetMember(uint256 roleId, address newMember)"
     ],
+    "eth:0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d": [
+      "function createLpToken(address l1Token) returns (address)"
+    ],
     "eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2": [
       "constructor(address _l1Weth, address _l1Usdc, address _crossDomainMessenger, address _l1StandardBridge, address _l1USDCBridge)",
       "event MessageRelayed(address target, bytes message)",
@@ -3661,6 +3680,6 @@
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b",
     "uma/VotingV2": "0x8f7872c0ad9d4612ce7305fb6318475b85db06d8406d8e835e88e5afc8367f64"
   },
-  "usedBlockNumbers": { "ethereum": 23533560 },
-  "permissionsConfigHash": "0x95c7dec47993af3a0ecff4e5e4f14a43048d8cf2795765df9aa39600da9c5006"
+  "usedBlockNumbers": { "ethereum": 23726384 },
+  "permissionsConfigHash": "0x80686c11998f1b8bb3f645976b214fae682fb7404ed884b7f3245eb7fbb392c5"
 }

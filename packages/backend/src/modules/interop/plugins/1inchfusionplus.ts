@@ -59,8 +59,8 @@ const DstEscrowCreated = createInteropEventType<{
 
 const SrcEscrowCreated = createInteropEventType<{
   hashlock: string
-  srcTokenId: string
-  srcAmount: string
+  srcTokenId: bigint
+  srcAmount: bigint
 }>('oneinch-fusion-plus.SrcEscrowCreated')
 
 export class OneinchFusionPlusPlugin implements InteropPlugin {
@@ -74,18 +74,22 @@ export class OneinchFusionPlusPlugin implements InteropPlugin {
 
     const dstEscrowCreated = parseDstEscrowCreated(input.log, [network.address])
     if (dstEscrowCreated) {
-      return DstEscrowCreated.create(input.ctx, {
-        hashlock: dstEscrowCreated.hashlock,
-      })
+      return [
+        DstEscrowCreated.create(input.ctx, {
+          hashlock: dstEscrowCreated.hashlock,
+        }),
+      ]
     }
 
     const srcEscrowCreated = parseSrcEscrowCreated(input.log, [network.address])
     if (srcEscrowCreated) {
-      return SrcEscrowCreated.create(input.ctx, {
-        hashlock: srcEscrowCreated.srcImmutables.hashlock,
-        srcTokenId: srcEscrowCreated.srcImmutables.token.toString(), // 1inch token id, not token address
-        srcAmount: srcEscrowCreated.srcImmutables.amount.toString(),
-      })
+      return [
+        SrcEscrowCreated.create(input.ctx, {
+          hashlock: srcEscrowCreated.srcImmutables.hashlock,
+          srcTokenId: srcEscrowCreated.srcImmutables.token, // 1inch token id, not token address
+          srcAmount: srcEscrowCreated.srcImmutables.amount,
+        }),
+      ]
     }
   }
 
@@ -108,7 +112,7 @@ export class OneinchFusionPlusPlugin implements InteropPlugin {
         }),
         Result.Transfer('oneinch-fusion-plus.Transfer', {
           srcEvent: srcEscrowCreated,
-          srcAmount: BigInt(srcEscrowCreated.args.srcAmount),
+          srcAmount: srcEscrowCreated.args.srcAmount,
           dstEvent: dstEscrowCreated,
         }),
       ]

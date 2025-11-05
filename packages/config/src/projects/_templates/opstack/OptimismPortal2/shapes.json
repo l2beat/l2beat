@@ -32,7 +32,6 @@
   "OptimismPortal2_v5_0_0": {
     "hash": "0x8ca0818fc584e81a5cead0efc1c32f3273182323dcbd08a60779d55cb0aa90c9",
     "address": "eth:0x381E729FF983FA4BCEd820e7b922d79bF653B999",
-    "chain": "ethereum",
     "blockNumber": 23496267
   }
 }

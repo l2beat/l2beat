@@ -1,3 +1,64 @@
+Generated with discovered.json: 0x14bdb6df23743d0ea6e179071ed0140eae8dddf9
+
+# Diff at Tue, 04 Nov 2025 13:56:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f12d06bbf120eab9f5356a235918d4d6b2484290 block: 1759932934
+- current timestamp: 1762264490
+
+## Description
+
+Finalization delay halved to 30min.
+
+## Watched changes
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      description:
+-        "The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h and a bond amount of 0.45 ABT."
++        "The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT."
+      values.finalizationDelayFmt:
+-        "1h"
++        "30m"
+      values.liveness:
+-        3600
++        1800
+    }
+```
+
+Generated with discovered.json: 0xe4c8e28753387db86ba32e3b776747560466c459
+
+# Diff at Fri, 31 Oct 2025 10:30:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@03b105955032cf1d17dbaa7be1e98258a77944f6 block: 1759932934
+- current timestamp: 1759932934
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759932934 (main branch discovery), not current.
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h and a bond amount of 0.45 ABT.
+      values.$libraries:
++        ["eth:0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LpTokenFactory (eth:0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xfbbdfb0b407b4cb708d344887cbb040e3c6ccef8
 
 # Diff at Wed, 08 Oct 2025 14:28:26 GMT:
