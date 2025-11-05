@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -59,4 +59,19 @@ export const ham: ScalingProject = opStackL3({
       },
     ],
   },
+  nonTemplateDaTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('base'),
+      sinceBlock: discovery.getContract('SystemConfig').sinceBlock ?? 0,
+      inbox: ChainSpecificAddress.address(
+        discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+      ),
+      sequencers: [
+        ChainSpecificAddress.address(
+          discovery.getContractValue('SystemConfig', 'batcherHash'),
+        ),
+      ],
+    },
+  ],
 })
