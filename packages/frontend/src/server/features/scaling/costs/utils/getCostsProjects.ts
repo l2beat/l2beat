@@ -49,8 +49,10 @@ function filterToCondition(
       return (p) =>
         p.scalingInfo.type === 'Other' &&
         !(p.statuses.reviewStatus === 'initialReview')
-    case 'projects':
-      return (p) => new Set(filter.projectIds).has(p.id)
+    case 'projects': {
+      const projectIds = new Set(filter.projectIds)
+      return (p) => projectIds.has(p.id)
+    }
     default:
       assertUnreachable(filter)
   }
