@@ -74,6 +74,7 @@
     ]
   },
   "cctpv1": {
+    "loadConfigs": ["cctp-v1"],
     "txs": [
       {
         "chain": "base",
@@ -86,6 +87,7 @@
     ]
   },
   "cctpv2": {
+    "loadConfigs": ["cctp-v2"],
     "txs": [
       {
         "chain": "arbitrum",
@@ -1009,6 +1011,7 @@
     ]
   },
   "cctpv1-debug": {
+    "loadConfigs": ["cctp-v1", "cctp-v2"],
     // should be 4 cctpv1 message and a couple other ones. somehow these are not correctly tracked in prod but work locally
     "txs": [
       {
