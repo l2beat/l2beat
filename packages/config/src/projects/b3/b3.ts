@@ -63,7 +63,7 @@ export const b3: ScalingProject = opStackL3({
   nonTemplateDaTracking: [
     {
       type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
+      daLayer: ProjectId('base'),
       sinceBlock: discovery.getContract('SystemConfig').sinceBlock ?? 0,
       inbox: ChainSpecificAddress.address(
         discovery.getContractValue('SystemConfig', 'sequencerInbox'),
