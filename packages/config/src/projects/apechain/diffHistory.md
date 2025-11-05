@@ -8,7 +8,7 @@ Generated with discovered.json: 0x25dae8348bfd88343f0d7e930ec2b5ad9dbecd23
 
 ## Description
 
-New registered signers.
+New registered AWS TEE signers.
 
 ## Watched changes
 
