@@ -128,8 +128,10 @@ export class AddressAnalyzer {
       proxy.addresses,
       config.manualSourcePaths,
     )
-
-    const libraries = getLibraries(provider.chain, sources)
+    const libraries =
+      config.discoverLibraries === true
+        ? getLibraries(provider.chain, sources)
+        : []
 
     if (extendedTemplate === undefined) {
       const matchingTemplates = this.templateService.findMatchingTemplates(
@@ -161,9 +163,8 @@ export class AddressAnalyzer {
       ([field, value]): HandlerResult => ({ field, value }),
     )
 
-    const libraryResults: HandlerResult[] = [
-      { field: '$libraries', value: libraries },
-    ]
+    const libraryResults: HandlerResult[] =
+      libraries.length > 0 ? [{ field: '$libraries', value: libraries }] : []
 
     const handlerResults = results.map(
       (result): HandlerResult => ({ ...result, value: values?.[result.field] }),
