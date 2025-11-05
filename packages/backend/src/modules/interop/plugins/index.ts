@@ -110,10 +110,10 @@ export function createInteropPlugins(
       new MayanMctpFastPlugin(deps.configs), // should be run before CCTP
       new CCTPV1Plugin(deps.configs),
       new CCTPV2Plugin(deps.configs),
-      new StargatePlugin(deps.configs), // should be run ofts
+      new StargatePlugin(deps.configs), // should be run before ofts, lzv2
       new LayerZeroV2OFTsPlugin(deps.configs), // should be run before LayerZeroV2
-      new LayerZeroV1Plugin(deps.configs),
       new LayerZeroV2Plugin(deps.configs),
+      new LayerZeroV1Plugin(deps.configs),
       new WormholeNTTPlugin(deps.configs), // should be run before WormholeCore and WormholeRelayer
       new WormholeTokenBridgePlugin(deps.configs), // should be run before Wormhole
       new WormholeRelayerPlugin(deps.configs), // should be run before Wormhole
