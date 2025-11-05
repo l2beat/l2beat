@@ -72,7 +72,7 @@ export class CelestiaDaProvider implements DaBlobProvider {
 }
 
 function getAttributeValue<T>(
-  event: { attributes: { key: string; value?: string }[] },
+  event: { attributes: { key: string; value?: string | null }[] },
   key: string,
   decodeBase64: boolean,
 ): T {
