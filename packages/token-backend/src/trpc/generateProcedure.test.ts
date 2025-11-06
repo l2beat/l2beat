@@ -1,7 +1,11 @@
 import { expect, mockObject } from 'earl'
 import type { jwtVerify } from 'jose'
 import type { AuthConfig, Config } from '../config/Config'
-import { createCallerFactory, generateProcedure, router } from './trpc'
+import {
+  createCallerFactory,
+  generateProcedure,
+  trcpRoot,
+} from './generateProcedure'
 
 const READ_ONLY_TOKEN = 'read-only-token-abcd-1234'
 
@@ -113,7 +117,7 @@ function generateCaller(
     jwtVerifyFn,
   })
 
-  const appRouter = router({
+  const appRouter = trcpRoot.router({
     whoamiReadOnly: readOnlyProcedure.query(({ ctx }) => ctx.email),
     whoamiProtected: protectedProcedure.query(({ ctx }) => ctx.email),
   })
