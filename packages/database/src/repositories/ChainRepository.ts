@@ -63,6 +63,15 @@ export class ChainRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async findByName(name: string): Promise<ChainRecord | undefined> {
+    const row = await this.db
+      .selectFrom('Chain')
+      .selectAll()
+      .where('name', '=', name)
+      .executeTakeFirst()
+    return row ? toRecord(row) : undefined
+  }
+
   async deleteAll(): Promise<number> {
     const result = await this.db.deleteFrom('Chain').executeTakeFirst()
     return Number(result.numDeletedRows)

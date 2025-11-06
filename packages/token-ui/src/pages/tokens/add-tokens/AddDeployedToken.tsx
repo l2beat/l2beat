@@ -39,8 +39,8 @@ export function AddDeployedToken() {
 
   const chain = form.watch('chain')
   const address = form.watch('address')
-  const { data: details, isLoading: detailsLoading } =
-    api.deployedTokens.getDetails.useQuery(
+  const { data: checks, isLoading: checksLoading } =
+    api.deployedTokens.checks.useQuery(
       {
         chain,
         address,
@@ -51,8 +51,8 @@ export function AddDeployedToken() {
     )
 
   useEffect(() => {
-    if (!details || detailsLoading) return
-    switch (details.type) {
+    if (!checks || checksLoading) return
+    switch (checks.type) {
       case 'already-exists':
         setDeployedTokenExistsError(form)
         break
@@ -68,33 +68,37 @@ export function AddDeployedToken() {
           type: 'custom',
           message: 'Coin not found on Coingecko',
         })
-        form.setValue('decimals', details.data.decimals, { shouldDirty: true })
-        form.setValue(
-          'deploymentTimestamp',
-          UnixTime.toYYYYMMDDHHMM(details.data.deploymentTimestamp),
-          { shouldDirty: true },
-        )
+        if (checks.data.decimals) {
+          form.setValue('decimals', checks.data.decimals, { shouldDirty: true })
+        }
+        // form.setValue(
+        //   'deploymentTimestamp',
+        //   UnixTime.toYYYYMMDDHHMM(checks.data.deploymentTimestamp),
+        //   { shouldDirty: true },
+        // )
         break
 
       case 'success':
         form.clearErrors('address')
-        form.setValue('symbol', details.data.symbol, { shouldDirty: true })
-        form.setValue('decimals', details.data.decimals, { shouldDirty: true })
+        form.setValue('symbol', checks.data.symbol, { shouldDirty: true })
+        if (checks.data.decimals) {
+          form.setValue('decimals', checks.data.decimals, { shouldDirty: true })
+        }
         form.setValue(
           'deploymentTimestamp',
-          UnixTime.toYYYYMMDDHHMM(details.data.deploymentTimestamp),
+          UnixTime.toYYYYMMDDHHMM(checks.data.deploymentTimestamp),
           { shouldDirty: true },
         )
-        if (details.data.abstractToken) {
-          form.setValue('abstractTokenId', details.data.abstractToken.id, {
+        if (checks.data.abstractToken) {
+          form.setValue('abstractTokenId', checks.data.abstractToken.id, {
             shouldDirty: true,
           })
         }
         break
       default:
-        assertUnreachable(details)
+        assertUnreachable(checks)
     }
-  }, [details, detailsLoading, form])
+  }, [checks, checksLoading, form])
 
   useEffect(() => {
     const exists = abstractTokens?.find(
@@ -106,8 +110,8 @@ export function AddDeployedToken() {
   }, [abstractTokenId, form.setValue, abstractTokens])
 
   function onSubmit(values: DeployedTokenSchema) {
-    if (detailsLoading) return
-    if (details?.type === 'already-exists') {
+    if (checksLoading) return
+    if (checks?.type === 'already-exists') {
       setDeployedTokenExistsError(form)
       return
     }
@@ -140,8 +144,8 @@ export function AddDeployedToken() {
         onSubmit={onSubmit}
         isFormDisabled={isPending}
         tokenDetails={{
-          data: details,
-          loading: detailsLoading,
+          data: checks,
+          loading: checksLoading,
         }}
         abstractTokens={{
           data: abstractTokens,

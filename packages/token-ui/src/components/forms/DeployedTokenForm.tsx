@@ -56,9 +56,7 @@ interface Props {
   onSubmit: SubmitHandler<DeployedTokenSchema>
   isFormDisabled: boolean
   tokenDetails: {
-    data:
-      | Awaited<ReturnType<AppRouter['deployedTokens']['getDetails']>>
-      | undefined
+    data: Awaited<ReturnType<AppRouter['deployedTokens']['checks']>> | undefined
     loading: boolean
   }
   abstractTokens: {

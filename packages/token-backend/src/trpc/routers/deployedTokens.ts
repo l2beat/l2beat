@@ -1,5 +1,7 @@
+import { assert } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { CoingeckoClient } from '../../clients/coingecko/CoingeckoClient'
+import { RpcClient } from '../../clients/rpc/RpcClient'
 import { config } from '../../config'
 import { db } from '../../database/db'
 import { protectedProcedure, router } from '../trpc'
@@ -29,7 +31,7 @@ export const deployedTokensRouter = router({
       return result !== undefined
     }),
 
-  getDetails: protectedProcedure
+  checks: protectedProcedure
     .input(v.object({ chain: v.string(), address: v.string() }))
     .query(async ({ input }) => {
       const result = await db.deployedToken.findByChainAndAddress({
@@ -41,11 +43,20 @@ export const deployedTokensRouter = router({
           type: 'already-exists' as const,
         }
       }
+      const chain = await db.chain.findByName(input.chain)
+      assert(chain, 'Chain not found')
 
-      const token = getRpcDetails(input.chain, input.address)
-      if (token === undefined) {
-        return {
-          type: 'not-found-on-rpc' as const,
+      const rpcApi = chain.apis?.find((api) => api.type === 'rpc')
+      let decimals: number | undefined
+      if (rpcApi) {
+        const rpcClient = new RpcClient(rpcApi, chain.name)
+
+        try {
+          decimals = await rpcClient.getDecimals(input.address)
+        } catch {
+          return {
+            type: 'not-found-on-rpc' as const,
+          }
         }
       }
 
@@ -53,7 +64,9 @@ export const deployedTokensRouter = router({
       if (coin === null) {
         return {
           type: 'not-found-on-coingecko' as const,
-          data: token,
+          data: {
+            decimals,
+          },
         }
       }
 
@@ -65,28 +78,19 @@ export const deployedTokensRouter = router({
         type: 'success' as const,
         data: {
           ...coin,
-          ...token,
+          decimals,
+          deploymentTimestamp: 1714732800,
           abstractToken,
         },
       }
     }),
 })
 
-function getRpcDetails(
-  chain: string,
-  address: string,
-): { decimals: number; deploymentTimestamp: number } | undefined {
-  return {
-    decimals: 18,
-    deploymentTimestamp: 1714732800,
-  }
-}
-
 async function getCoinByChainAndAddress(chain: string, address: string) {
   const data = await coingeckoClient.getCoinList({ includePlatform: true })
   const chains = await db.chain.getAll()
   const chainToAliases = new Map(
-    chains.map((chain) => [chain.name, chain.aliases ?? []]),
+    chains.map((chain) => [chain.name, [chain.name, ...(chain.aliases ?? [])]]),
   )
 
   const aliases = chainToAliases.get(chain)
