@@ -166,7 +166,6 @@ export interface ProjectLinks {
   repositories?: string[]
   socialMedia?: string[]
   other?: string[]
-  rollupCodes?: string
 }
 export interface Badge {
   id: string

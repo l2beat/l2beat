@@ -43,7 +43,7 @@ export const zksync2: ScalingProject = zkStackL2({
         'https://twitter.com/zksync',
         'https://twitter.com/zkSyncDevs',
       ],
-      rollupCodes: 'https://rollup.codes/zksync-era',
+      other: ['https://rollup.codes/zksync-era'],
     },
   },
   diamondContract: discovery.getContract('ZKsync'),

@@ -108,7 +108,7 @@ export const zircuit: ScalingProject = opStackL2({
         'https://zircuit.com/blog',
         'https://t.me/zircuitl2_bot',
       ],
-      rollupCodes: 'https://rollup.codes/zircuit',
+      other: ['https://rollup.codes/zircuit'],
     },
     architectureImage: 'zircuit',
   },
