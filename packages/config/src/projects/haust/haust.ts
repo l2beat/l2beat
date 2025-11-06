@@ -1,8 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
-import { upcomingL2 } from '../../templates/upcoming'
+import { underReviewL2 } from '../../templates/underReview'
 
-export const haust: ScalingProject = upcomingL2({
+export const haust: ScalingProject = underReviewL2({
   id: 'haust',
   capability: 'universal',
   addedAt: UnixTime(1736600180), // 2024-11-12T10:56:20Z
@@ -16,8 +16,9 @@ export const haust: ScalingProject = upcomingL2({
     links: {
       websites: ['https://haust.network/'],
       documentation: ['https://docs.haust.network/'],
-      explorers: ['https://explorer-testnet.haust.app/'],
+      explorers: ['https://haustscan.com/'],
       repositories: ['https://github.com/Haust-Labs'],
+      bridges: ['https://haustbridge.com'],
       socialMedia: [
         'https://twitter.com/HaustNetwork',
         'https://t.me/haustnetwork',
@@ -32,4 +33,5 @@ export const haust: ScalingProject = upcomingL2({
   proofSystem: {
     type: 'Validity',
   },
+  dataAvailability: undefined,
 })
