@@ -1,6 +1,7 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { CoingeckoClient } from '../../clients/coingecko/CoingeckoClient'
+import { EtherscanClient } from '../../clients/etherscan/EtherscanClient'
 import { RpcClient } from '../../clients/rpc/RpcClient'
 import { config } from '../../config'
 import { db } from '../../database/db'
@@ -60,12 +61,28 @@ export const deployedTokensRouter = router({
         }
       }
 
+      let deploymentTimestamp: UnixTime | undefined
+      const etherscanApi = chain.apis?.find((api) => api.type === 'etherscan')
+      if (etherscanApi) {
+        const etherscanClient = new EtherscanClient(
+          {
+            apiKey: config.etherscanApiKey,
+          },
+          chain.chainId,
+        )
+        const contractCreation = await etherscanClient.getContractCreation(
+          input.address,
+        )
+        deploymentTimestamp = contractCreation[0].timestamp
+      }
+
       const coin = await getCoinByChainAndAddress(input.chain, input.address)
       if (coin === null) {
         return {
           type: 'not-found-on-coingecko' as const,
           data: {
             decimals,
+            deploymentTimestamp,
           },
         }
       }
@@ -79,7 +96,7 @@ export const deployedTokensRouter = router({
         data: {
           ...coin,
           decimals,
-          deploymentTimestamp: 1714732800,
+          deploymentTimestamp,
           abstractToken,
         },
       }
