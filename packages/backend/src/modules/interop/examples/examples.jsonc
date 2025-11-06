@@ -506,7 +506,8 @@
       }
     ]
   },
-  "wormhole-token-bridge": {
+  "wormhole-tokenbridge": {
+    "loadConfigs": ["wormhole"],
     "txs": [
       {
         "chain": "ethereum",
