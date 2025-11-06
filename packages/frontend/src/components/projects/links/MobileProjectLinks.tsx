@@ -5,9 +5,11 @@ import {
   AccordionTrigger,
 } from '~/components/core/Accordion'
 import { CustomLink } from '~/components/link/CustomLink'
+import { OtherIcon } from '~/icons/products/OtherIcon'
 import { SocialIcon } from '~/icons/products/SocialIcon'
 import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/formatLink'
+import { parseOther } from './parseOther'
 import { parseSocial } from './parseSocial'
 import type { ProjectLink } from './types'
 
@@ -61,6 +63,24 @@ export function MobileProjectLinks({
                           >
                             {parsed.platform ? (
                               <SocialIcon
+                                className="size-[1em] shrink-0 fill-current"
+                                product={parsed.platform}
+                              />
+                            ) : null}
+                            <span className="truncate">{parsed.text}</span>
+                          </CustomLink>
+                        )
+                      }
+                      if (name === 'Other') {
+                        const parsed = parseOther(link)
+                        return (
+                          <CustomLink
+                            key={link}
+                            className="mt-1 flex items-center gap-1.5 first:mt-0"
+                            href={link}
+                          >
+                            {parsed.platform ? (
+                              <OtherIcon
                                 className="size-[1em] shrink-0 fill-current"
                                 product={parsed.platform}
                               />
