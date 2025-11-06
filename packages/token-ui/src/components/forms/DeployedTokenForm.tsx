@@ -112,8 +112,9 @@ export function DeployedTokenForm({
                           )}
                         >
                           {field.value
-                            ? (chains?.find((chain) => chain === field.value) ??
-                              form.formState.defaultValues?.chain)
+                            ? (chains?.find(
+                                (chain) => chain.name === field.value,
+                              )?.name ?? form.formState.defaultValues?.chain)
                             : 'Select chain'}
                           <ChevronsUpDownIcon className="opacity-50" />
                         </Button>
@@ -130,19 +131,19 @@ export function DeployedTokenForm({
                           <CommandGroup>
                             {chains?.map((chain) => (
                               <CommandItem
-                                value={chain}
-                                key={chain}
+                                value={chain.name}
+                                key={chain.name}
                                 onSelect={() => {
-                                  form.setValue('chain', chain, {
+                                  form.setValue('chain', chain.name, {
                                     shouldDirty: true,
                                   })
                                 }}
                               >
-                                {chain}
+                                {chain.name}
                                 <CheckIcon
                                   className={cn(
                                     'ml-auto',
-                                    chain === field.value
+                                    chain.name === field.value
                                       ? 'opacity-100'
                                       : 'opacity-0',
                                   )}
