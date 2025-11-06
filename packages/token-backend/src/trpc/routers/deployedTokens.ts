@@ -1,79 +1,135 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import { CoingeckoClient } from '../../clients/coingecko/CoingeckoClient'
 import { config } from '../../config'
-import { getUrlWithParams } from '../../utils/getUrlWithParams'
+import { db } from '../../database/db'
 import { protectedProcedure, router } from '../trpc'
 
-export type Coin = v.infer<typeof CoinSchema>
-const CoinSchema = v.object({
-  id: v.string(),
-  image: v.object({
-    large: v.string(),
-  }),
+const coingeckoClient = new CoingeckoClient({
+  apiKey: config.coingeckoApiKey,
 })
 
-const HistoricalChartSchema = v.object({
-  prices: v.array(v.tuple([v.number(), v.number()])),
-})
-
-export const coingeckoRouter = router({
-  getCoinById: protectedProcedure.input(v.string()).query(async ({ input }) => {
-    try {
-      const url = getUrlWithParams(
-        `https://pro-api.coingecko.com/api/v3/coins/${input}`,
-        {
-          localization: 'false',
-          tickers: 'false',
-          market_data: 'false',
-          community_data: 'false',
-          developer_data: 'false',
-          sparkline: 'false',
-        },
-      )
-      const options = {
-        method: 'GET',
-        headers: {
-          'x-cg-pro-api-key': config.coingeckoApiKey,
-        },
-      }
-      const response = await fetch(url, options)
-      const data = await response.json()
-      return CoinSchema.parse(data)
-    } catch {
-      return null
-    }
-  }),
-  getListingTimestamp: protectedProcedure
-    .input(v.string())
+export const deployedTokensRouter = router({
+  getByChainAndAddress: protectedProcedure
+    .input(v.object({ chain: v.string(), address: v.string() }))
     .query(async ({ input }) => {
-      try {
-        const url = getUrlWithParams(
-          `https://pro-api.coingecko.com/api/v3/coins/${input}/market_chart/range`,
-          {
-            vs_currency: 'usd',
-            from: '2000-01-01',
-            to: UnixTime.toYYYYMMDD(UnixTime.fromDate(new Date())),
-            precision: '0',
-          },
-        )
-        const options = {
-          method: 'GET',
-          headers: {
-            'x-cg-pro-api-key': config.coingeckoApiKey,
-          },
-        }
-        const response = await fetch(url, options)
-        const data = await response.json()
-        const parsed = HistoricalChartSchema.parse(data)
-        const [firstPrice] = parsed.prices
+      const result = await db.deployedToken.findByChainAndAddress({
+        chain: input.chain,
+        address: input.address,
+      })
+      return result ?? null
+    }),
 
-        if (!firstPrice) {
-          return null
-        }
+  checkIfExists: protectedProcedure
+    .input(v.object({ chain: v.string(), address: v.string() }))
+    .query(async ({ input }) => {
+      const result = await db.deployedToken.findByChainAndAddress({
+        chain: input.chain,
+        address: input.address,
+      })
+      return result !== undefined
+    }),
 
-        return UnixTime(Math.floor(firstPrice[0] / 1000))
-      } catch {
-        return null
+  getDetails: protectedProcedure
+    .input(v.object({ chain: v.string(), address: v.string() }))
+    .query(async ({ input }) => {
+      const result = await db.deployedToken.findByChainAndAddress({
+        chain: input.chain,
+        address: input.address,
+      })
+      if (result !== undefined) {
+        return {
+          type: 'already-exists' as const,
+        }
+      }
+
+      const token = getRpcDetails(input.chain, input.address)
+      if (token === undefined) {
+        return {
+          type: 'not-found-on-rpc' as const,
+        }
+      }
+
+      const coin = await getCoinByChainAndAddress(input.chain, input.address)
+      if (coin === null) {
+        return {
+          type: 'not-found-on-coingecko' as const,
+          data: token,
+        }
+      }
+
+      const abstractToken = coin.id
+        ? await db.abstractToken.findByCoingeckoId(coin.id)
+        : undefined
+
+      return {
+        type: 'success' as const,
+        data: {
+          ...coin,
+          ...token,
+          abstractToken,
+        },
       }
     }),
 })
+
+function getRpcDetails(
+  chain: string,
+  address: string,
+): { decimals: number; deploymentTimestamp: number } | undefined {
+  return {
+    decimals: 18,
+    deploymentTimestamp: 1714732800,
+  }
+}
+
+async function getCoinByChainAndAddress(chain: string, address: string) {
+  const data = await coingeckoClient.getCoinList({ includePlatform: true })
+  const chains = await db.chain.getAll()
+  const chainToAliases = new Map(
+    chains.map((chain) => [chain.name, chain.aliases ?? []]),
+  )
+
+  const aliases = chainToAliases.get(chain)
+  if (!aliases) return null
+
+  const coin = data.find((coin) =>
+    aliases.some(
+      (alias) => coin.platforms[alias]?.toLowerCase() === address.toLowerCase(),
+    ),
+  )
+  if (!coin) return null
+
+  const aliasToChain = new Map(
+    chains.flatMap(
+      (chain) => chain.aliases?.map((alias) => [alias, chain.name]) ?? [],
+    ),
+  )
+
+  const otherChains = (
+    await Promise.all(
+      Object.entries(coin.platforms).map(async ([platform, address]) => {
+        const platformChain = aliasToChain.get(platform)
+        if (!platformChain || !address || platformChain === chain)
+          return undefined
+
+        const record = await db.deployedToken.findByChainAndAddress({
+          chain: platformChain,
+          address,
+        })
+
+        return {
+          chain: platformChain,
+          address,
+          exists: !!record,
+        }
+      }),
+    )
+  ).filter((x) => x !== undefined)
+
+  return {
+    id: coin.id,
+    name: coin.name,
+    symbol: coin.symbol,
+    otherChains,
+  }
+}
