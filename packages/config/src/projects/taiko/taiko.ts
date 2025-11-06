@@ -119,7 +119,7 @@ export const taiko: ScalingProject = {
         'https://community.taiko.xyz',
         'https://youtube.com/@taikoxyz',
       ],
-      rollupCodes: 'https://rollup.codes/taiko',
+      other: ['https://rollup.codes/taiko'],
     },
     liveness: {
       explanation:
