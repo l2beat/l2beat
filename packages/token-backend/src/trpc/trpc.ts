@@ -1,6 +1,7 @@
 import { initTRPC, TRPCError } from '@trpc/server'
 import { jwtVerify } from 'jose'
 import { config } from '../config'
+import type { Config } from '../config/Config'
 import { parseCookies } from '../utils/parseCookies'
 
 export const createTRPCContext = (opts: { headers: Headers }) => {
@@ -39,45 +40,78 @@ export const createCallerFactory = t.createCallerFactory
  */
 export const router = t.router
 
-/**
- * Used to define a procedure in the tRPC API.
- */
-const publicProcedure = t.procedure
+export function generateProcedure(
+  config: Config,
+  options: {
+    acceptReadOnlyToken: boolean
+    jwtVerifyFn?: typeof jwtVerify
+  },
+) {
+  return t.procedure.use(async (opts) => {
+    // If there's no authentication configured (e.g. on local), pass-through
+    const auth = config.auth
+    if (auth === false) {
+      return opts.next({ ctx: { email: 'dev@l2beat.com' } })
+    }
 
-export const protectedProcedure = publicProcedure.use(async (opts) => {
-  const auth = config.auth
-  if (auth === false) {
-    return opts.next({
-      ctx: {
-        email: 'dev@l2beat.com',
-      },
-    })
-  }
-  const headers = opts.ctx.headers
-  const cookie = headers.get('cookie')
-  if (!cookie) {
-    throw new TRPCError({ code: 'UNAUTHORIZED' })
-  }
+    // Otherwise, check the cookie
+    const headers = opts.ctx.headers
+    const cookie = headers.get('cookie')
+    if (!cookie) {
+      throw new TRPCError({
+        code: 'UNAUTHORIZED',
+        cause: 'missing authorization data',
+      })
+    }
 
-  const cookies = parseCookies(cookie)
-  const token = cookies['CF_Authorization']
+    const cookies = parseCookies(cookie)
+    const token = cookies['CF_Authorization']
 
-  if (!token) {
-    throw new TRPCError({ code: 'UNAUTHORIZED' })
-  }
-  const { JWKS, teamDomain, aud } = auth
-  const decodedToken = await jwtVerify(token, JWKS, {
-    issuer: teamDomain,
-    audience: aud,
+    if (!token) {
+      throw new TRPCError({
+        code: 'UNAUTHORIZED',
+        cause: 'missing authorization method',
+      })
+    }
+
+    // If the cookie is a prefefined read-only token,
+    // accept if options.acceptReadOnly is true
+    if (token === config.readOnlyAuthToken) {
+      if (options.acceptReadOnlyToken) {
+        return opts.next({ ctx: { email: 'dev-readonly@l2beat.com' } })
+      }
+      throw new TRPCError({
+        code: 'UNAUTHORIZED',
+        cause: 'incorrect read-only token',
+      })
+    }
+
+    // Otherwise check if it's a valid JWT cookie
+    const { JWKS, teamDomain, aud } = auth
+    const jwtVerifyFn = options.jwtVerifyFn ?? jwtVerify
+
+    let decodedToken
+    try {
+      decodedToken = await jwtVerifyFn(token, JWKS, {
+        issuer: teamDomain,
+        audience: aud,
+      })
+    } catch {
+      throw new TRPCError({
+        code: 'UNAUTHORIZED',
+        cause: 'JWT token verification failed',
+      })
+    }
+
+    const { payload } = decodedToken
+    return opts.next({ ctx: { email: payload.email as string } })
   })
-  if (!decodedToken) {
-    throw new TRPCError({ code: 'UNAUTHORIZED' })
-  }
-  const { payload } = decodedToken
+}
 
-  return opts.next({
-    ctx: {
-      email: payload.email as string,
-    },
-  })
+export const readOnlyProcedure = generateProcedure(config, {
+  acceptReadOnlyToken: true,
+})
+
+export const protectedProcedure = generateProcedure(config, {
+  acceptReadOnlyToken: false,
 })
