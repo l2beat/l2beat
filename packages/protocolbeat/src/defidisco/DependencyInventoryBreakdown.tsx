@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
-import type { DependencyModuleScore, LetterGrade, Likelihood } from '../api/types'
+import type { DependencyModuleScore, LetterGrade, Likelihood, Impact } from '../api/types'
 import { usePanelStore } from '../apps/discovery/store/panel-store'
 import { useContractTags } from '../hooks/useContractTags'
-import { updateContractTag } from '../api/api'
+import { updateContractTag, updateFunction } from '../api/api'
 
 interface DependencyInventoryBreakdownProps {
   score: DependencyModuleScore
@@ -107,6 +107,81 @@ function getLikelihoodColor(likelihood: string): string {
 }
 
 /**
+ * Convert Impact to score string for API
+ */
+function impactToScore(impact: Impact): 'low-risk' | 'medium-risk' | 'high-risk' | 'critical' {
+  switch (impact) {
+    case 'low':
+      return 'low-risk'
+    case 'medium':
+      return 'medium-risk'
+    case 'high':
+      return 'high-risk'
+    case 'critical':
+      return 'critical'
+  }
+}
+
+/**
+ * Impact inline editor dropdown
+ */
+function ImpactPicker({
+  currentImpact,
+  onUpdate,
+}: {
+  currentImpact: Impact
+  onUpdate: (impact: Impact) => void
+}) {
+  const [isOpen, setIsOpen] = useState(false)
+  const impactOptions: Impact[] = ['low', 'medium', 'high', 'critical']
+
+  const handleSelect = (impact: Impact) => {
+    onUpdate(impact)
+    setIsOpen(false)
+  }
+
+  return (
+    <div className="relative inline-block">
+      <button
+        onClick={(e) => {
+          e.stopPropagation()
+          setIsOpen(!isOpen)
+        }}
+        className="text-xs px-2 py-0.5 rounded border border-coffee-600 bg-coffee-700 hover:bg-coffee-600 capitalize"
+        style={{ color: getImpactColor(currentImpact) }}
+      >
+        {currentImpact}
+      </button>
+
+      {isOpen && (
+        <>
+          <div
+            className="fixed inset-0 z-40"
+            onClick={() => setIsOpen(false)}
+          />
+          <div className="absolute right-0 z-50 mt-1 flex flex-col gap-2 rounded border border-coffee-600 bg-coffee-800 p-2 shadow-xl min-w-[120px]">
+            <div className="text-xs font-semibold text-coffee-300">Impact</div>
+            {impactOptions.map((imp) => (
+              <button
+                key={imp}
+                className={`rounded border border-coffee-600 px-2 py-1 text-xs capitalize ${
+                  currentImpact === imp
+                    ? 'bg-coffee-600'
+                    : 'bg-coffee-700 hover:bg-coffee-600'
+                }`}
+                onClick={() => handleSelect(imp)}
+              >
+                {imp}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
+/**
  * Likelihood inline editor dropdown
  */
 function LikelihoodPicker({
@@ -120,18 +195,25 @@ function LikelihoodPicker({
   const [selectedLikelihood, setSelectedLikelihood] = useState<Likelihood>(currentLikelihood)
   const likelihoodOptions: Likelihood[] = ['high', 'medium', 'low', 'mitigated']
 
+  // Sync internal state when prop changes
+  useEffect(() => {
+    setSelectedLikelihood(currentLikelihood)
+  }, [currentLikelihood])
+
   const handleApply = () => {
     onUpdate(selectedLikelihood)
     setIsOpen(false)
   }
 
+  const handleOpen = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setIsOpen(!isOpen)
+  }
+
   return (
     <div className="relative inline-block">
       <button
-        onClick={(e) => {
-          e.stopPropagation()
-          setIsOpen(!isOpen)
-        }}
+        onClick={handleOpen}
         className="text-xs px-2 py-0.5 rounded border border-coffee-600 bg-coffee-700 hover:bg-coffee-600 capitalize"
         style={{ color: getLikelihoodColor(currentLikelihood) }}
       >
@@ -178,9 +260,11 @@ function LikelihoodPicker({
 function DependencySection({
   dependency,
   onUpdateLikelihood,
+  onUpdateImpact,
 }: {
   dependency: any
   onUpdateLikelihood: (contractAddress: string, likelihood: Likelihood) => void
+  onUpdateImpact: (contractAddress: string, functionName: string, impact: Impact) => void
 }) {
   const [isExpanded, setIsExpanded] = useState(false)
   const selectGlobal = usePanelStore((state) => state.select)
@@ -243,7 +327,6 @@ function DependencySection({
       {isExpanded && (
         <ul className="ml-8 mt-2 space-y-1.5">
           {dependency.functions.map((func: any, idx: number) => {
-            const impactColor = getImpactColor(func.impact)
             const likelihoodColor = getLikelihoodColor(dependency.likelihood)
             const gradeBadgeStyles = getGradeBadgeStyles(func.grade)
 
@@ -267,9 +350,12 @@ function DependencySection({
                 </button>
                 <span className="text-coffee-500">.</span>
                 <span className="text-blue-400">{func.functionName}()</span>
-                <span className="text-coffee-500 ml-2">(</span>
-                <span style={{ color: impactColor }}>{func.impact}</span>
-                <span className="text-coffee-500"> × </span>
+                <span className="text-coffee-500 ml-2">(Impact: </span>
+                <ImpactPicker
+                  currentImpact={func.impact}
+                  onUpdate={(impact) => onUpdateImpact(func.contractAddress, func.functionName, impact)}
+                />
+                <span className="text-coffee-500">, Likelihood: </span>
                 <span style={{ color: likelihoodColor }}>{dependency.likelihood}</span>
                 <span className="text-coffee-500">)</span>
               </li>
@@ -297,13 +383,13 @@ export function DependencyInventoryBreakdown({ score }: DependencyInventoryBreak
       if (!project) throw new Error('Project not found')
 
       // Get existing tag to preserve other attributes
-      const normalizedAddress = contractAddress.replace('eth:', '').toLowerCase()
+      // IMPORTANT: Keep the eth: prefix for matching!
       const existingTag = contractTags?.tags.find(tag =>
-        tag.contractAddress.toLowerCase() === normalizedAddress
+        tag.contractAddress.toLowerCase() === contractAddress.toLowerCase()
       )
 
       return updateContractTag(project, {
-        contractAddress: normalizedAddress,
+        contractAddress: contractAddress,
         isExternal: existingTag?.isExternal ?? true,
         centralization: existingTag?.centralization,
         likelihood: likelihood,
@@ -318,6 +404,28 @@ export function DependencyInventoryBreakdown({ score }: DependencyInventoryBreak
 
   const handleUpdateLikelihood = (contractAddress: string, likelihood: Likelihood) => {
     updateLikelihoodMutation.mutate({ contractAddress, likelihood })
+  }
+
+  // Mutation for updating impact
+  const updateImpactMutation = useMutation({
+    mutationFn: ({ contractAddress, functionName, impact }: { contractAddress: string; functionName: string; impact: Impact }) => {
+      if (!project) throw new Error('Project not found')
+
+      return updateFunction(project, {
+        contractAddress,
+        functionName,
+        score: impactToScore(impact),
+      })
+    },
+    onSuccess: () => {
+      // Invalidate queries to refetch data
+      queryClient.invalidateQueries({ queryKey: ['functions', project] })
+      queryClient.invalidateQueries({ queryKey: ['v2-score', project] })
+    },
+  })
+
+  const handleUpdateImpact = (contractAddress: string, functionName: string, impact: Impact) => {
+    updateImpactMutation.mutate({ contractAddress, functionName, impact })
   }
 
   // Count functions across all dependencies
@@ -354,6 +462,7 @@ export function DependencyInventoryBreakdown({ score }: DependencyInventoryBreak
                 key={dep.dependencyAddress}
                 dependency={dep}
                 onUpdateLikelihood={handleUpdateLikelihood}
+                onUpdateImpact={handleUpdateImpact}
               />
             ))}
           </>

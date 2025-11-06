@@ -1,6 +1,9 @@
 import { useState } from 'react'
-import type { FunctionModuleScore, LetterGrade, FunctionDetail } from '../api/types'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useParams } from 'react-router-dom'
+import type { FunctionModuleScore, LetterGrade, FunctionDetail, Impact } from '../api/types'
 import { usePanelStore } from '../apps/discovery/store/panel-store'
+import { updateFunction } from '../api/api'
 
 interface FunctionBreakdownProps {
   score: FunctionModuleScore
@@ -103,14 +106,91 @@ function getLikelihoodColor(likelihood: string): string {
 }
 
 /**
+ * Convert Impact to score string for API
+ */
+function impactToScore(impact: Impact): 'low-risk' | 'medium-risk' | 'high-risk' | 'critical' {
+  switch (impact) {
+    case 'low':
+      return 'low-risk'
+    case 'medium':
+      return 'medium-risk'
+    case 'high':
+      return 'high-risk'
+    case 'critical':
+      return 'critical'
+  }
+}
+
+/**
+ * Impact inline editor dropdown
+ */
+function ImpactPicker({
+  currentImpact,
+  onUpdate,
+}: {
+  currentImpact: Impact
+  onUpdate: (impact: Impact) => void
+}) {
+  const [isOpen, setIsOpen] = useState(false)
+  const impactOptions: Impact[] = ['low', 'medium', 'high', 'critical']
+
+  const handleSelect = (impact: Impact) => {
+    onUpdate(impact)
+    setIsOpen(false)
+  }
+
+  return (
+    <div className="relative inline-block">
+      <button
+        onClick={(e) => {
+          e.stopPropagation()
+          setIsOpen(!isOpen)
+        }}
+        className="text-xs px-2 py-0.5 rounded border border-coffee-600 bg-coffee-700 hover:bg-coffee-600 capitalize"
+        style={{ color: getImpactColor(currentImpact) }}
+      >
+        {currentImpact}
+      </button>
+
+      {isOpen && (
+        <>
+          <div
+            className="fixed inset-0 z-40"
+            onClick={() => setIsOpen(false)}
+          />
+          <div className="absolute right-0 z-50 mt-1 flex flex-col gap-2 rounded border border-coffee-600 bg-coffee-800 p-2 shadow-xl min-w-[120px]">
+            <div className="text-xs font-semibold text-coffee-300">Impact</div>
+            {impactOptions.map((imp) => (
+              <button
+                key={imp}
+                className={`rounded border border-coffee-600 px-2 py-1 text-xs capitalize ${
+                  currentImpact === imp
+                    ? 'bg-coffee-600'
+                    : 'bg-coffee-700 hover:bg-coffee-600'
+                }`}
+                onClick={() => handleSelect(imp)}
+              >
+                {imp}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
+/**
  * Grade section component - displays functions for a single grade
  */
 function GradeSection({
   grade,
   functions,
+  onUpdateImpact,
 }: {
   grade: LetterGrade
   functions: FunctionDetail[]
+  onUpdateImpact: (contractAddress: string, functionName: string, impact: Impact) => void
 }) {
   const [isExpanded, setIsExpanded] = useState(false)
   const badgeStyles = getGradeBadgeStyles(grade)
@@ -144,7 +224,6 @@ function GradeSection({
       {isExpanded && (
         <ul className="ml-8 mt-2 space-y-1.5">
           {functions.map((func, idx) => {
-            const impactColor = getImpactColor(func.impact)
             const likelihoodColor = getLikelihoodColor(func.likelihood)
 
             return (
@@ -157,9 +236,12 @@ function GradeSection({
                 </button>
                 <span className="text-coffee-500 mx-1">.</span>
                 <span className="text-blue-400">{func.functionName}()</span>
-                <span className="text-coffee-500 ml-2">(</span>
-                <span style={{ color: impactColor }}>{func.impact}</span>
-                <span className="text-coffee-500"> × </span>
+                <span className="text-coffee-500 ml-2">(Impact: </span>
+                <ImpactPicker
+                  currentImpact={func.impact}
+                  onUpdate={(impact) => onUpdateImpact(func.contractAddress, func.functionName, impact)}
+                />
+                <span className="text-coffee-500">, Likelihood: </span>
                 <span style={{ color: likelihoodColor }}>{func.likelihood}</span>
                 <span className="text-coffee-500">)</span>
               </li>
@@ -176,6 +258,8 @@ function GradeSection({
  * Displays breakdown of functions by grade
  */
 export function FunctionBreakdown({ score }: FunctionBreakdownProps) {
+  const { project } = useParams()
+  const queryClient = useQueryClient()
   const gradeColor = getGradeColor(score.grade)
 
   // Get grade order from worst to best
@@ -185,6 +269,28 @@ export function FunctionBreakdown({ score }: FunctionBreakdownProps) {
   const scoredFunctionCount = score.breakdown
     ? Object.values(score.breakdown).flat().length
     : 0
+
+  // Mutation for updating impact
+  const updateImpactMutation = useMutation({
+    mutationFn: ({ contractAddress, functionName, impact }: { contractAddress: string; functionName: string; impact: Impact }) => {
+      if (!project) throw new Error('Project not found')
+
+      return updateFunction(project, {
+        contractAddress,
+        functionName,
+        score: impactToScore(impact),
+      })
+    },
+    onSuccess: () => {
+      // Invalidate queries to refetch data
+      queryClient.invalidateQueries({ queryKey: ['functions', project] })
+      queryClient.invalidateQueries({ queryKey: ['v2-score', project] })
+    },
+  })
+
+  const handleUpdateImpact = (contractAddress: string, functionName: string, impact: Impact) => {
+    updateImpactMutation.mutate({ contractAddress, functionName, impact })
+  }
 
   return (
     <div className="text-coffee-300">
@@ -215,6 +321,7 @@ export function FunctionBreakdown({ score }: FunctionBreakdownProps) {
                 key={grade}
                 grade={grade}
                 functions={score.breakdown?.[grade] || []}
+                onUpdateImpact={handleUpdateImpact}
               />
             ))}
           </>
