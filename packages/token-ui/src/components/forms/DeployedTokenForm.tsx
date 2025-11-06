@@ -57,7 +57,7 @@ interface Props {
   isFormDisabled: boolean
   tokenDetails: {
     data:
-      | Awaited<ReturnType<AppRouter['tokens']['getDeployedTokenDetails']>>
+      | Awaited<ReturnType<AppRouter['deployedTokens']['getDetails']>>
       | undefined
     loading: boolean
   }

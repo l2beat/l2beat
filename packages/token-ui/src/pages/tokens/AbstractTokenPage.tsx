@@ -35,7 +35,7 @@ import { validateResolver } from '~/utils/validateResolver'
 
 export function AbstractTokenPage() {
   const { id } = useParams()
-  const { data } = api.tokens.getAbstractById.useQuery(id ?? '', {
+  const { data } = api.abstractTokens.getById.useQuery(id ?? '', {
     enabled: id !== '',
   })
 

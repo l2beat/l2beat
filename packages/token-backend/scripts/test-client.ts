@@ -15,7 +15,7 @@ async function main() {
     authToken,
     callSource: 'test-script',
   })
-  const result = await client.tokens.getAllAbstractTokens.query()
+  const result = await client.abstractTokens.getAll.query()
   console.log(JSON.stringify(result, null, 2))
 }
 

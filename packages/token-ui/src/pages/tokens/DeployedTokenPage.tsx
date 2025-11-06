@@ -28,7 +28,7 @@ import { validateResolver } from '~/utils/validateResolver'
 
 export function DeployedTokenPage() {
   const { chain, address } = useParams()
-  const { data } = api.tokens.getDeployedByChainAndAddress.useQuery(
+  const { data } = api.deployedTokens.getByChainAndAddress.useQuery(
     {
       chain: chain ?? '',
       address: address ?? '',
@@ -70,7 +70,7 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
   })
 
   const { data: abstractTokens, isLoading: areAbstractTokensLoading } =
-    api.tokens.getAllAbstractTokens.useQuery()
+    api.abstractTokens.getAll.useQuery()
 
   useEffect(() => {
     if (abstractTokenId) {
@@ -116,7 +116,7 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
   const chain = form.watch('chain')
   const address = form.watch('address')
   const { data: deployedTokenExists, isLoading: deployedTokenExistsLoading } =
-    api.tokens.checkIfDeployedTokenExists.useQuery(
+    api.deployedTokens.checkIfExists.useQuery(
       {
         chain,
         address,

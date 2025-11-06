@@ -26,7 +26,7 @@ export function AddDeployedToken() {
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
 
   const { data: abstractTokens, isLoading: areAbstractTokensLoading } =
-    api.tokens.getAllAbstractTokens.useQuery()
+    api.abstractTokens.getAll.useQuery()
   const { mutate: planMutate, isPending } = api.plan.generate.useMutation({
     onSuccess: (data) => {
       if (data.outcome === 'success') {
@@ -40,7 +40,7 @@ export function AddDeployedToken() {
   const chain = form.watch('chain')
   const address = form.watch('address')
   const { data: details, isLoading: detailsLoading } =
-    api.tokens.getDeployedTokenDetails.useQuery(
+    api.deployedTokens.getDetails.useQuery(
       {
         chain,
         address,
