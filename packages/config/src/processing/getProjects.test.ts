@@ -223,51 +223,16 @@ describe('getProjects', () => {
   })
 
   describe.only('zk catalog', async () => {
-    const usageMap = new Map<string, Map<EthereumAddress, ProjectId[]>>()
-
-    function addUsage(
-      chain: string,
-      address: EthereumAddress,
-      usage: ProjectId,
-    ) {
-      let byAddress = usageMap.get(chain)
-      if (!byAddress) {
-        byAddress = new Map()
-        usageMap.set(chain, byAddress)
-      }
-      let uses = byAddress.get(address)
-      if (!uses) {
-        uses = []
-        byAddress.set(address, uses)
-      }
-      if (!uses.includes(usage)) {
-        uses.push(usage)
-      }
-    }
-
-    for (const project of projects) {
-      if (!project.isScaling || !project.contracts) continue
-
-      for (const chain in project.contracts.addresses) {
-        for (const contract of project.contracts.addresses[chain] ?? []) {
-          addUsage(
-            chain,
-            ChainSpecificAddress.address(contract.address),
-            project.id,
-          )
-          for (const impl of contract.upgradeability?.implementations ?? []) {
-            addUsage(chain, ChainSpecificAddress.address(impl), project.id)
-          }
-        }
-      }
-    }
+    const usageMap = getUsageMap(projects)
 
     for (const project of projects) {
       describe(project.id, () => {
         if (!project.zkCatalogInfo) return
-        const liveTvsProjects = project.zkCatalogInfo.projectsForTvs
-          ?.filter((p) => !p.untilTimestamp)
-          .map((p) => p.projectId)
+        const liveTvsProjects = new Set(
+          project.zkCatalogInfo.projectsForTvs
+            ?.filter((p) => !p.untilTimestamp)
+            .map((p) => p.projectId),
+        )
 
         const usedInVerifiers = uniq(
           project.zkCatalogInfo.verifierHashes.flatMap((v) =>
@@ -281,7 +246,7 @@ describe('getProjects', () => {
 
         for (const usedIn of usedInVerifiers) {
           it(`${usedIn} is configured in ${project.id} TVS projects`, () => {
-            expect(liveTvsProjects?.includes(usedIn)).toEqual(true)
+            expect(liveTvsProjects.has(usedIn)).toEqual(true)
           })
         }
       })
@@ -732,3 +697,44 @@ describe('getProjects', () => {
     }
   })
 })
+
+// This is simpler version of getContractUtils that we have in FE. It's used only for testing.
+function getUsageMap(projects: BaseProject[]) {
+  const usageMap = new Map<string, Map<EthereumAddress, ProjectId[]>>()
+
+  function addUsage(chain: string, address: EthereumAddress, usage: ProjectId) {
+    let byAddress = usageMap.get(chain)
+    if (!byAddress) {
+      byAddress = new Map()
+      usageMap.set(chain, byAddress)
+    }
+    let uses = byAddress.get(address)
+    if (!uses) {
+      uses = []
+      byAddress.set(address, uses)
+    }
+    if (!uses.includes(usage)) {
+      uses.push(usage)
+    }
+  }
+
+  for (const project of projects) {
+    if (!project.isScaling || !project.contracts) continue
+
+    for (const [chain, contracts] of Object.entries(
+      project.contracts.addresses,
+    )) {
+      for (const contract of contracts) {
+        addUsage(
+          chain,
+          ChainSpecificAddress.address(contract.address),
+          project.id,
+        )
+        for (const impl of contract.upgradeability?.implementations ?? []) {
+          addUsage(chain, ChainSpecificAddress.address(impl), project.id)
+        }
+      }
+    }
+  }
+  return usageMap
+}
