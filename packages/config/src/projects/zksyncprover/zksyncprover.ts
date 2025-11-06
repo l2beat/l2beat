@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -50,13 +50,21 @@ export const zksyncprover: BaseProject = {
         ...TRUSTED_SETUPS.AztecIgnition,
       },
     ],
+    projectsForTvs: [
+      {
+        projectId: ProjectId('zksync'),
+        sinceTimestamp: UnixTime(1592431200),
+      },
+    ],
     verifierHashes: [
       {
         hash: '0xfa15bba967ebf892d9657359fb8ff07aea13e152c0d5160143a494abb4bc9df3',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
         knownDeployments: [
           {
-            address: '0x57B09100e6160503aBDEBC76012b6c358eA4e462',
+            address: EthereumAddress(
+              '0x57B09100e6160503aBDEBC76012b6c358eA4e462',
+            ),
             chain: 'ethereum',
           },
         ],
@@ -69,7 +77,9 @@ export const zksyncprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
         knownDeployments: [
           {
-            address: '0x57B09100e6160503aBDEBC76012b6c358eA4e462',
+            address: EthereumAddress(
+              '0x57B09100e6160503aBDEBC76012b6c358eA4e462',
+            ),
             chain: 'ethereum',
           },
         ],
@@ -82,7 +92,9 @@ export const zksyncprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
         knownDeployments: [
           {
-            address: '0x57B09100e6160503aBDEBC76012b6c358eA4e462',
+            address: EthereumAddress(
+              '0x57B09100e6160503aBDEBC76012b6c358eA4e462',
+            ),
             chain: 'ethereum',
           },
         ],
@@ -95,7 +107,9 @@ export const zksyncprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
         knownDeployments: [
           {
-            address: '0x44DedA2C824458A5DfE1e363c679dea33f1ffA39',
+            address: EthereumAddress(
+              '0x44DedA2C824458A5DfE1e363c679dea33f1ffA39',
+            ),
             chain: 'ethereum',
           },
         ],
@@ -108,7 +122,9 @@ export const zksyncprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
         knownDeployments: [
           {
-            address: '0x44DedA2C824458A5DfE1e363c679dea33f1ffA39',
+            address: EthereumAddress(
+              '0x44DedA2C824458A5DfE1e363c679dea33f1ffA39',
+            ),
             chain: 'ethereum',
           },
         ],
@@ -121,7 +137,9 @@ export const zksyncprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
         knownDeployments: [
           {
-            address: '0x44DedA2C824458A5DfE1e363c679dea33f1ffA39',
+            address: EthereumAddress(
+              '0x44DedA2C824458A5DfE1e363c679dea33f1ffA39',
+            ),
             chain: 'ethereum',
           },
         ],
@@ -134,7 +152,9 @@ export const zksyncprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
         knownDeployments: [
           {
-            address: '0x44DedA2C824458A5DfE1e363c679dea33f1ffA39',
+            address: EthereumAddress(
+              '0x44DedA2C824458A5DfE1e363c679dea33f1ffA39',
+            ),
             chain: 'ethereum',
           },
         ],
