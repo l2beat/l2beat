@@ -64,13 +64,13 @@ export const aevo: ScalingProject = opStackL2({
     adjustCount: { type: 'SubtractOne' },
   },
   nonTemplateDaTracking: [
-    // {
-    //   type: 'celestia',
-    //   daLayer: ProjectId('celestia'),
-    //   namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADBuw7+PjGs8=',
-    //   sinceBlock: 0,
-    //   untilBlock: 3538077,
-    // },
+    {
+      type: 'celestia',
+      daLayer: ProjectId('celestia'),
+      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADBuw7+PjGs8=',
+      sinceBlock: 0,
+      untilBlock: 3538077,
+    },
     {
       type: 'eigen-da',
       customerId: '0x2dc71dbd1cf713e70f939346317bf93a2e62cfee',
