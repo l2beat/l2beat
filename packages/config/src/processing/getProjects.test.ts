@@ -4,10 +4,16 @@ import {
   type TrackedTxFunctionCallConfig,
   type TrackedTxTransferConfig,
 } from '@l2beat/shared'
-import { assert, EthereumAddress, type ProjectId } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  EthereumAddress,
+  type ProjectId,
+} from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { expect } from 'earl'
 import { existsSync } from 'fs'
+import uniq from 'lodash/uniq'
 import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { checkRisk } from '../test/helpers'
@@ -213,6 +219,72 @@ describe('getProjects', () => {
           ).toEqual(true)
         })
       }
+    }
+  })
+
+  describe.only('zk catalog', async () => {
+    const usageMap = new Map<string, Map<EthereumAddress, ProjectId[]>>()
+
+    function addUsage(
+      chain: string,
+      address: EthereumAddress,
+      usage: ProjectId,
+    ) {
+      let byAddress = usageMap.get(chain)
+      if (!byAddress) {
+        byAddress = new Map()
+        usageMap.set(chain, byAddress)
+      }
+      let uses = byAddress.get(address)
+      if (!uses) {
+        uses = []
+        byAddress.set(address, uses)
+      }
+      if (!uses.includes(usage)) {
+        uses.push(usage)
+      }
+    }
+
+    for (const project of projects) {
+      if (!project.isScaling || !project.contracts) continue
+
+      for (const chain in project.contracts.addresses) {
+        for (const contract of project.contracts.addresses[chain] ?? []) {
+          addUsage(
+            chain,
+            ChainSpecificAddress.address(contract.address),
+            project.id,
+          )
+          for (const impl of contract.upgradeability?.implementations ?? []) {
+            addUsage(chain, ChainSpecificAddress.address(impl), project.id)
+          }
+        }
+      }
+    }
+
+    for (const project of projects) {
+      describe(project.id, () => {
+        if (!project.zkCatalogInfo) return
+        const liveTvsProjects = project.zkCatalogInfo.projectsForTvs
+          ?.filter((p) => !p.untilTimestamp)
+          .map((p) => p.projectId)
+
+        const usedInVerifiers = uniq(
+          project.zkCatalogInfo.verifierHashes.flatMap((v) =>
+            v.knownDeployments.flatMap(
+              (d) =>
+                d.overrideUsedIn ??
+                usageMap.get(d.chain)?.get(EthereumAddress(d.address)),
+            ),
+          ),
+        ).filter((p) => p !== undefined)
+
+        for (const usedIn of usedInVerifiers) {
+          it(`${usedIn} is configured in ${project.id} TVS projects`, () => {
+            expect(liveTvsProjects?.includes(usedIn)).toEqual(true)
+          })
+        }
+      })
     }
   })
 
