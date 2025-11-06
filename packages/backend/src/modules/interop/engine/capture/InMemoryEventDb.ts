@@ -132,7 +132,7 @@ function getIndexKey(
     indexKey += getApproximateValueKey(query.approximateValue)
   }
   if (query.ctx?.txHash || query.sameTxAfter || query.sameTxBefore) {
-    return indexKey + '#txHash#' // shouldn't it be += ?
+    return indexKey + '#txHash#'
   }
   for (const key in query) {
     if (key !== 'ctx') {
