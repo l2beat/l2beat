@@ -144,8 +144,12 @@ export class GasZipPlugin implements InteropPlugin {
 
     const gasZipDeposit = db.find(GasZipDeposit, {
       $dstChain: gasZipFill.ctx.chain,
-      // amount: ~gasZipFill.args.amount, // TODO: we need a way to match approximate amounts (e.g. 5% tolerance)
       destinationAddress: gasZipFill.args.receiver,
+      approximateValue: {
+        key: 'amount',
+        value: gasZipFill.args.amount,
+        tolerance: 0.05,
+      },
     })
     if (!gasZipDeposit) return
     return [
