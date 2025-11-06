@@ -8,11 +8,13 @@ import {
   navigationMenuTriggerStyle,
 } from '~/components/core/NavigationMenu'
 import { CustomLinkIcon } from '~/icons/Outlink'
+import { OtherIcon } from '~/icons/products/OtherIcon'
 import { SocialIcon } from '~/icons/products/SocialIcon'
 import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/formatLink'
 import { DiscoUiLink } from './DiscoUiLink'
 import { ProjectLinkIcon } from './ProjectLinkIcon'
+import { parseOther } from './parseOther'
 import { parseSocial } from './parseSocial'
 import type { ProjectLink } from './types'
 
@@ -78,6 +80,9 @@ function MultiProjectLink({ projectLink }: { projectLink: ProjectLink }) {
         {projectLink.links.map((link) => {
           const parsedSocial =
             projectLink.name === 'Social' ? parseSocial(link) : undefined
+          const parsedOther =
+            projectLink.name === 'Other' ? parseOther(link) : undefined
+
           return (
             <NavigationMenuLink
               key={link}
@@ -97,7 +102,14 @@ function MultiProjectLink({ projectLink }: { projectLink: ProjectLink }) {
                   height={16}
                 />
               )}
-              {parsedSocial ? parsedSocial.text : formatLink(link)}
+              {parsedOther?.platform && (
+                <OtherIcon
+                  product={parsedOther.platform}
+                  width={16}
+                  height={16}
+                />
+              )}
+              {parsedSocial?.text ?? parsedOther?.text ?? formatLink(link)}
               <CustomLinkIcon className="shrink-0 fill-current" />
             </NavigationMenuLink>
           )
