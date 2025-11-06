@@ -97,14 +97,9 @@ export class InMemoryEventDb implements InteropEventDb {
     if (!index) {
       const fields: string[] = []
       const ctxFields: string[] = []
-      let approximateValueKey: string | undefined
 
       if (query.approximateValue) {
-        approximateValueKey =
-          query.approximateValue.key +
-          query.approximateValue.value.toString() +
-          query.approximateValue.tolerance +
-          '#'
+        fields.push(getApproximateValueKey(query.approximateValue))
       } else if (query.ctx?.txHash || query.sameTxAfter || query.sameTxBefore) {
         ctxFields.push('txHash')
       } else {
@@ -118,7 +113,7 @@ export class InMemoryEventDb implements InteropEventDb {
           }
         }
       }
-      index = new EventIndex(type.type, fields, ctxFields, approximateValueKey)
+      index = new EventIndex(type.type, fields, ctxFields)
       this.indices.set(indexKey, index)
       for (const event of this.getEvents(type.type)) {
         index.addEvent(event)
@@ -134,11 +129,7 @@ function getIndexKey(
 ) {
   let indexKey = type.type + '#'
   if (query.approximateValue) {
-    indexKey +=
-      query.approximateValue.key +
-      query.approximateValue.value.toString() +
-      query.approximateValue.tolerance +
-      '#'
+    indexKey += getApproximateValueKey(query.approximateValue)
   }
   if (query.ctx?.txHash || query.sameTxAfter || query.sameTxBefore) {
     return indexKey + '#txHash#' // shouldn't it be += ?
@@ -167,7 +158,6 @@ class EventIndex {
     private eventType: string,
     private fields: string[],
     private ctxFields: string[],
-    private approximateValueKey?: string,
   ) {}
 
   findEvents(query: InteropEventQuery<unknown>): InteropEvent[] {
@@ -189,9 +179,7 @@ class EventIndex {
         eventKey += value + ','
       }
     }
-    if (this.approximateValueKey) {
-      eventKey += this.approximateValueKey
-    }
+
     const array = this.buckets.get(eventKey) ?? []
     return array.filter((e) => matchesQuery(e, query))
   }
@@ -208,9 +196,7 @@ class EventIndex {
     for (const field of this.ctxFields) {
       eventKey += (event.ctx as unknown as Record<string, unknown>)[field] + ','
     }
-    if (this.approximateValueKey) {
-      eventKey += this.approximateValueKey
-    }
+
     this.eventKeys.set(event.eventId, eventKey)
     const array = this.buckets.get(eventKey) ?? []
     array.push(event)
@@ -289,4 +275,17 @@ function matchesQuery<T>(
     }
   }
   return true
+}
+
+function getApproximateValueKey(approximateValue: {
+  key: string
+  value: bigint
+  tolerance: number
+}): string {
+  return (
+    approximateValue.key +
+    approximateValue.value.toString() +
+    approximateValue.tolerance +
+    '#'
+  )
 }
