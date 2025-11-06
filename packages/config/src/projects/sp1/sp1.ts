@@ -190,6 +190,23 @@ export const sp1: BaseProject = {
         projectId: ProjectId('omni'),
         sinceTimestamp: UnixTime(1748856160),
       },
+      // archived projects
+      {
+        projectId: ProjectId('gpt'),
+        sinceTimestamp: UnixTime(1753882500),
+      },
+      {
+        projectId: ProjectId('astarzkevm'),
+        sinceTimestamp: UnixTime(1753882500),
+      },
+      {
+        projectId: ProjectId('witness'),
+        sinceTimestamp: UnixTime(1753882500),
+      },
+      {
+        projectId: ProjectId('kroma'),
+        sinceTimestamp: UnixTime(1739228400),
+      },
     ],
     verifierHashes: [
       {

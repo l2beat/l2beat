@@ -55,6 +55,10 @@ export const zksyncprover: BaseProject = {
         projectId: ProjectId('zksync'),
         sinceTimestamp: UnixTime(1592431200),
       },
+      {
+        projectId: ProjectId('zkspace'),
+        sinceTimestamp: UnixTime(1639954800),
+      },
     ],
     verifierHashes: [
       {
