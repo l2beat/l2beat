@@ -3,9 +3,9 @@ import type { jwtVerify } from 'jose'
 import type { AuthConfig, Config } from '../config/Config'
 import {
   createCallerFactory,
-  generateProcedure,
+  protectedProcedure,
   trcpRoot,
-} from './generateProcedure'
+} from './protectedProcedure'
 
 const READ_ONLY_TOKEN = 'read-only-token-abcd-1234'
 
@@ -18,7 +18,7 @@ const mockConfig = mockObject<Config>({
   readOnlyAuthToken: READ_ONLY_TOKEN,
 })
 
-describe(generateProcedure.name, () => {
+describe(protectedProcedure.name, () => {
   it('works as expected when auth is undefined', async () => {
     const mockNonAuthConfig = mockObject<Config>({
       auth: false,
@@ -28,11 +28,10 @@ describe(generateProcedure.name, () => {
       failJwtToken: true,
     })
 
-    const resultReadOnly = await caller.whoamiReadOnly()
-    const resultProtected = await caller.whoamiProtected()
-
-    expect(resultReadOnly).toEqual('dev@l2beat.com')
-    expect(resultProtected).toEqual('dev@l2beat.com')
+    expect(await caller.whoami()).toEqual({
+      email: 'dev@l2beat.com',
+      permissions: ['read', 'write'],
+    })
   })
 
   it('fails if auth is set but no correct token is set', async () => {
@@ -45,13 +44,7 @@ describe(generateProcedure.name, () => {
       failJwtToken: true,
     })
 
-    const resultReadOnly = caller.whoamiReadOnly()
-    const resultProtected = caller.whoamiProtected()
-
-    await expect(resultReadOnly).toBeRejectedWith(
-      'JWT token verification failed',
-    )
-    await expect(resultProtected).toBeRejectedWith(
+    await expect(caller.whoami).toBeRejectedWith(
       'JWT token verification failed',
     )
   })
@@ -66,11 +59,10 @@ describe(generateProcedure.name, () => {
       failJwtToken: false,
     })
 
-    const resultReadOnly = await caller.whoamiReadOnly()
-    const resultProtected = await caller.whoamiProtected()
-
-    expect(resultReadOnly).toEqual('someone@l2beat.com')
-    expect(resultProtected).toEqual('someone@l2beat.com')
+    expect(await caller.whoami()).toEqual({
+      email: 'someone@l2beat.com',
+      permissions: ['read', 'write'],
+    })
   })
 
   it('works as expected for read-only token', async () => {
@@ -83,11 +75,10 @@ describe(generateProcedure.name, () => {
       failJwtToken: true,
     })
 
-    const resultReadOnly = await caller.whoamiReadOnly()
-    const resultProtected = caller.whoamiProtected
-
-    expect(resultReadOnly).toEqual('dev-readonly@l2beat.com')
-    await expect(resultProtected).toBeRejectedWith('incorrect read-only token')
+    expect(await caller.whoami()).toEqual({
+      email: 'dev-readonly@l2beat.com',
+      permissions: ['read'],
+    })
   })
 })
 
@@ -107,19 +98,11 @@ function generateCaller(
     } as unknown as Awaited<ReturnType<typeof jwtVerify>>
   }
 
-  const readOnlyProcedure = generateProcedure(config, {
-    acceptReadOnlyToken: true,
-    jwtVerifyFn,
-  })
-
-  const protectedProcedure = generateProcedure(config, {
-    acceptReadOnlyToken: false,
-    jwtVerifyFn,
-  })
-
   const appRouter = trcpRoot.router({
-    whoamiReadOnly: readOnlyProcedure.query(({ ctx }) => ctx.email),
-    whoamiProtected: protectedProcedure.query(({ ctx }) => ctx.email),
+    whoami: protectedProcedure(config, { jwtVerifyFn }).query(({ ctx }) => ({
+      email: ctx.email,
+      permissions: ctx.permissions,
+    })),
   })
 
   const callerFactory = createCallerFactory(appRouter)

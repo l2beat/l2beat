@@ -34,33 +34,25 @@ export const trcpRoot = initTRPC.context<Context>().create({
  */
 export const createCallerFactory = trcpRoot.createCallerFactory
 
-export function generateProcedure(
+export const protectedProcedure = (
   config: Config,
-  options: {
-    acceptReadOnlyToken: boolean
+  options?: {
     jwtVerifyFn?: typeof jwtVerify
   },
-) {
-  return trcpRoot.procedure.use(async (opts) => {
-    // If there's no authentication configured (e.g. on local), pass-through
+) =>
+  trcpRoot.procedure.use(async (opts) => {
     const auth = config.auth
     if (auth === false) {
-      return opts.next({ ctx: { email: 'dev@l2beat.com' } })
+      return opts.next({
+        ctx: { email: 'dev@l2beat.com', permissions: ['read', 'write'] },
+      })
     }
 
     // Otherwise, check the cookie
     const headers = opts.ctx.headers
-    const cookie = headers.get('cookie')
-    if (!cookie) {
-      throw new TRPCError({
-        code: 'UNAUTHORIZED',
-        cause: 'missing authorization data',
-      })
-    }
-
+    const cookie = headers.get('cookie') ?? ''
     const cookies = parseCookies(cookie)
     const token = cookies['CF_Authorization']
-
     if (!token) {
       throw new TRPCError({
         code: 'UNAUTHORIZED',
@@ -71,18 +63,14 @@ export function generateProcedure(
     // If the cookie is a prefefined read-only token,
     // accept if options.acceptReadOnly is true
     if (token === config.readOnlyAuthToken) {
-      if (options.acceptReadOnlyToken) {
-        return opts.next({ ctx: { email: 'dev-readonly@l2beat.com' } })
-      }
-      throw new TRPCError({
-        code: 'UNAUTHORIZED',
-        cause: 'incorrect read-only token',
+      return opts.next({
+        ctx: { email: 'dev-readonly@l2beat.com', permissions: ['read'] },
       })
     }
 
     // Otherwise check if it's a valid JWT cookie
     const { JWKS, teamDomain, aud } = auth
-    const jwtVerifyFn = options.jwtVerifyFn ?? jwtVerify
+    const jwtVerifyFn = options?.jwtVerifyFn ?? jwtVerify
 
     let decodedToken
     try {
@@ -98,6 +86,7 @@ export function generateProcedure(
     }
 
     const { payload } = decodedToken
-    return opts.next({ ctx: { email: payload.email as string } })
+    return opts.next({
+      ctx: { email: payload.email as string, permissions: ['read', 'write'] },
+    })
   })
-}
