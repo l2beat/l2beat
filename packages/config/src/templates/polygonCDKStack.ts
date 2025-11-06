@@ -190,10 +190,10 @@ export function polygonCDKStack(
         ...(templateVars.additionalPurposes ?? []),
       ],
       architectureImage:
-        (templateVars.architectureImage ??
-        templateVars.daProvider !== undefined)
+        templateVars.architectureImage ??
+        (templateVars.daProvider !== undefined
           ? 'polygon-cdk-validium'
-          : 'polygon-cdk-rollup',
+          : 'polygon-cdk-rollup'),
       stacks: ['Agglayer CDK'],
       tvsWarning: templateVars.display.tvsWarning,
     },
