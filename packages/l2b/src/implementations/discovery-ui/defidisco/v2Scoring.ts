@@ -2,7 +2,7 @@ import type { ConfigReader, DiscoveryPaths, TemplateService } from '@l2beat/disc
 import { getProject } from '../getProject'
 import { getFunctions } from './functions'
 import { getContractTags } from './contractTags'
-import type { Impact, Likelihood, Severity, FunctionDetail, LetterGrade as ImportedLetterGrade } from './types'
+import type { Impact, Likelihood, Severity, FunctionDetail, DependencyDetail, LetterGrade as ImportedLetterGrade } from './types'
 
 // ============================================================================
 // Type Definitions
@@ -17,6 +17,10 @@ export interface ModuleScore {
 
 export interface FunctionModuleScore extends ModuleScore {
   breakdown?: Record<LetterGrade, FunctionDetail[]>
+}
+
+export interface DependencyModuleScore extends ModuleScore {
+  breakdown?: DependencyDetail[]
 }
 
 // ============================================================================
@@ -131,7 +135,7 @@ export interface V2ScoreResult {
   inventory: {
     contracts: ModuleScore
     functions: FunctionModuleScore
-    dependencies: ModuleScore
+    dependencies: DependencyModuleScore
     admins: ModuleScore
   }
   finalScore: LetterGrade
@@ -141,6 +145,7 @@ interface ScoringData {
   projectData: any
   permissionOverrides: any
   contractTags: any
+  functions: any
 }
 
 // ============================================================================
@@ -203,7 +208,7 @@ export function aggregateGrades(grades: LetterGrade[]): LetterGrade {
  */
 interface ScoringModule {
   name: string
-  calculate(data: ScoringData): ModuleScore
+  calculate(data: ScoringData): ModuleScore | FunctionModuleScore | DependencyModuleScore
 }
 
 /**
@@ -374,43 +379,130 @@ class FunctionInventoryModule implements ScoringModule {
 
 /**
  * Dependency Inventory Module
- * Counts external contracts (marked as isExternal = true)
- * Scoring: fewer external dependencies = better grade
+ * Analyzes functions that depend on external contracts
+ * Combines function impact × dependency likelihood to calculate grades
  *
- * NOTE: Thresholds below are TEMPORARY PLACEHOLDER logic and will be replaced
- * with proper V2 framework scoring criteria in the future.
+ * Overall grade = worst grade among all function-dependency combinations
  */
-class DependencyInventoryModule implements ScoringModule {
+class DependencyInventoryModule {
   name = 'dependencies'
 
-  calculate(data: ScoringData): ModuleScore {
-    let dependencyCount = 0
+  /**
+   * Convert score field to Impact type
+   * score: 'low-risk' | 'medium-risk' | 'high-risk' | 'critical' | 'unscored'
+   * impact: 'low' | 'medium' | 'high' | 'critical'
+   */
+  private scoreToImpact(score?: string): Impact | undefined {
+    if (!score || score === 'unscored') return undefined
 
-    if (data.contractTags?.tags) {
-      data.contractTags.tags.forEach((tag: any) => {
-        if (tag.isExternal === true) {
-          dependencyCount++
-        }
+    switch (score) {
+      case 'low-risk':
+        return 'low'
+      case 'medium-risk':
+        return 'medium'
+      case 'high-risk':
+        return 'high'
+      case 'critical':
+        return 'critical'
+      default:
+        return undefined
+    }
+  }
+
+  calculate(data: ScoringData): DependencyModuleScore {
+    // Build contract name lookup map
+    const contractNameMap = new Map<string, string>()
+    data.projectData.entries?.forEach((entry: any) => {
+      const allContracts = [...(entry.initialContracts || []), ...(entry.discoveredContracts || [])]
+      allContracts.forEach((contract: any) => {
+        contractNameMap.set(contract.address, contract.name || 'Unknown Contract')
+      })
+    })
+
+    // Process dependencies: group by external contract
+    const dependenciesMap = new Map<string, DependencyDetail>()
+    const allGrades: LetterGrade[] = []
+
+    if (data.functions?.contracts) {
+      Object.entries(data.functions.contracts).forEach(([contractAddress, contractData]: [string, any]) => {
+        contractData.functions.forEach((func: any) => {
+          // Convert score to impact
+          const impact = this.scoreToImpact(func.score)
+
+          // Only process functions that have dependencies and impact
+          if (func.dependencies && func.dependencies.length > 0 && impact) {
+            func.dependencies.forEach((dep: { contractAddress: string }) => {
+              const depAddress = dep.contractAddress
+
+              // Get likelihood from contract tags
+              const normalizedDepAddress = depAddress.toLowerCase()
+              const tag = data.contractTags?.tags?.find((tag: any) =>
+                tag.contractAddress.toLowerCase() === normalizedDepAddress
+              )
+
+              // Skip if not external or no likelihood
+              if (!tag?.isExternal || !tag.likelihood) {
+                return
+              }
+
+              // Calculate grade for this function-dependency combination
+              const grade = getSeverityGrade(impact, tag.likelihood)
+              allGrades.push(grade)
+
+              // Get or create dependency entry
+              if (!dependenciesMap.has(depAddress)) {
+                dependenciesMap.set(depAddress, {
+                  dependencyAddress: depAddress,
+                  dependencyName: contractNameMap.get(depAddress) || 'Unknown Contract',
+                  likelihood: tag.likelihood,
+                  functions: []
+                })
+              }
+
+              // Add function to dependency
+              const depData = dependenciesMap.get(depAddress)!
+              depData.functions.push({
+                contractAddress,
+                contractName: contractNameMap.get(contractAddress) || 'Unknown Contract',
+                functionName: func.functionName,
+                impact: impact,
+                grade,
+              })
+            })
+          }
+        })
       })
     }
 
-    // TEMPORARY PLACEHOLDER THRESHOLDS - will be replaced with proper V2 logic
-    const grade = this.countToGrade(dependencyCount)
+    const breakdown = Array.from(dependenciesMap.values())
 
-    return { grade, inventory: dependencyCount }
+    // Overall grade = worst grade among all function-dependency combinations
+    const overallGrade = allGrades.length > 0
+      ? this.getWorstGrade(allGrades)
+      : 'AAA' // No dependencies = best grade
+
+    // Count total external contracts that have functions depending on them
+    const dependencyCount = breakdown.length
+
+    return {
+      grade: overallGrade,
+      inventory: dependencyCount,
+      breakdown
+    }
   }
 
-  private countToGrade(count: number): LetterGrade {
-    if (count < 2) return 'AAA'
-    if (count < 5) return 'AA'
-    if (count < 10) return 'A'
-    if (count < 15) return 'BBB'
-    if (count < 20) return 'BB'
-    if (count < 25) return 'B'
-    if (count < 30) return 'CCC'
-    if (count < 35) return 'CC'
-    if (count < 45) return 'C'
-    return 'D'
+  private getWorstGrade(grades: LetterGrade[]): LetterGrade {
+    const gradeValues: Record<LetterGrade, number> = {
+      'AAA': 10, 'AA': 9, 'A': 8,
+      'BBB': 7, 'BB': 6, 'B': 5,
+      'CCC': 4, 'CC': 3, 'C': 2, 'D': 1
+    }
+
+    const numericGrades = grades.map(g => gradeValues[g])
+    const worstNumeric = Math.min(...numericGrades)
+
+    const entry = Object.entries(gradeValues).find(([_, value]) => value === worstNumeric)
+    return entry ? (entry[0] as LetterGrade) : 'D'
   }
 }
 
@@ -477,7 +569,10 @@ class AdminInventoryModule implements ScoringModule {
 // ============================================================================
 
 export class ScoreCalculator {
-  private modules: ScoringModule[]
+  private contractModule: ContractInventoryModule
+  private functionModule: FunctionInventoryModule
+  private dependencyModule: DependencyInventoryModule
+  private adminModule: AdminInventoryModule
   private paths: DiscoveryPaths
   private configReader: ConfigReader
   private templateService: TemplateService
@@ -486,12 +581,10 @@ export class ScoreCalculator {
     this.paths = paths
     this.configReader = configReader
     this.templateService = templateService
-    this.modules = [
-      new ContractInventoryModule(),
-      new FunctionInventoryModule(),
-      new DependencyInventoryModule(),
-      new AdminInventoryModule(),
-    ]
+    this.contractModule = new ContractInventoryModule()
+    this.functionModule = new FunctionInventoryModule()
+    this.dependencyModule = new DependencyInventoryModule()
+    this.adminModule = new AdminInventoryModule()
   }
 
   /**
@@ -502,19 +595,21 @@ export class ScoreCalculator {
     const projectData = getProject(this.configReader, this.templateService, projectName)
     const permissionOverrides = getFunctions(this.paths, projectName)
     const contractTags = getContractTags(this.paths, projectName)
+    const functions = getFunctions(this.paths, projectName)
 
     const data: ScoringData = {
       projectData,
       permissionOverrides,
       contractTags,
+      functions,
     }
 
     // Calculate each module score
     const moduleScores = {
-      contracts: this.modules[0].calculate(data),
-      functions: this.modules[1].calculate(data),
-      dependencies: this.modules[2].calculate(data),
-      admins: this.modules[3].calculate(data),
+      contracts: this.contractModule.calculate(data),
+      functions: this.functionModule.calculate(data),
+      dependencies: this.dependencyModule.calculate(data),
+      admins: this.adminModule.calculate(data),
     }
 
     // Aggregate to final score

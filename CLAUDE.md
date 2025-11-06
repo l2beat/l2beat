@@ -206,7 +206,11 @@ packages/
 - **Project Data**: Use `useQuery` with `getProject(project)` from `api.ts`
 - **Contract Tags**: Use `useContractTags(project)` hook for external address marking
 - **Permission Overrides**: Use `useQuery` with `getPermissionOverrides(project)` directly (no hook exists)
-- **Address Format**: Always normalize `contract.address.replace('eth:', '').toLowerCase()` when matching with tags
+- **Address Format**:
+  - **IMPORTANT**: Contract addresses use `eth:` prefix in ALL data files (functions.json, contract-tags.json, discovered.json)
+  - When comparing addresses, keep the prefix: `address1.toLowerCase() === address2.toLowerCase()`
+  - **Do NOT strip** the `eth:` prefix unless specifically needed for display purposes
+  - Example: `eth:0x123...` should match `eth:0x123...` (both lowercase)
 - **EOA Counting**: EOAs stored separately in `entry.eoas[]` array, not mixed with contracts
 
 **Contract Tags Data Structure**:
@@ -312,5 +316,15 @@ packages/
 **Important Notes**:
 - **Permission Owner System**: Uses generalized path expressions that work with **any** handler's data structure (ACL, AccessControl, custom handlers, future handlers). No special cases or hardcoded logic needed.
 - **Migration**: All existing permission-overrides.json files have been migrated to the new unified path format (one-off migration, October 2025).
+- **Score vs Impact Terminology**:
+  - **CRITICAL**: In `functions.json`, the field is called `score` with values: `'unscored' | 'low-risk' | 'medium-risk' | 'high-risk' | 'critical'`
+  - **TypeScript types** use `Impact` with values: `'low' | 'medium' | 'high' | 'critical'`
+  - **Conversion required**: When working with backend scoring (e.g., V2 scoring, dependencies), convert:
+    - `'low-risk'` → `'low'`
+    - `'medium-risk'` → `'medium'`
+    - `'high-risk'` → `'high'`
+    - `'critical'` → `'critical'`
+    - `'unscored'` → `undefined`
+  - Example conversion function in `DependencyInventoryModule.scoreToImpact()`
 
 **Future Development:** Follow the minimal integration principle to ensure easy upstream merges and maintainable code separation.

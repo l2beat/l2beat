@@ -19,6 +19,20 @@ export interface FunctionDetail {
   grade: LetterGrade
 }
 
+// Dependency detail for dependency scoring breakdown
+export interface DependencyDetail {
+  dependencyAddress: string
+  dependencyName: string
+  likelihood: Likelihood
+  functions: {
+    contractAddress: string
+    contractName: string
+    functionName: string
+    impact: Impact
+    grade: LetterGrade
+  }[]
+}
+
 export type ApiProjectsResponse = ApiProjectEntry[]
 
 export interface ApiProjectEntry {

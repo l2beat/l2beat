@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getV2Score } from '../api/api'
 import type { LetterGrade, ModuleScore } from '../api/types'
 import { FunctionBreakdown } from './FunctionBreakdown'
+import { DependencyInventoryBreakdown } from './DependencyInventoryBreakdown'
 
 interface V2ScoringSectionProps {
   project: string
@@ -107,8 +108,7 @@ export function V2ScoringSection({ project }: V2ScoringSectionProps) {
             <FunctionBreakdown
               score={scoreData.inventory.functions}
             />
-            <InventoryItem
-              label="Dependencies"
+            <DependencyInventoryBreakdown
               score={scoreData.inventory.dependencies}
             />
             <InventoryItem

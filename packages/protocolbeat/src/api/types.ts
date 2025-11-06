@@ -18,6 +18,20 @@ export interface FunctionDetail {
   grade: LetterGrade
 }
 
+// Dependency detail for dependency scoring breakdown
+export interface DependencyDetail {
+  dependencyAddress: string
+  dependencyName: string
+  likelihood: Likelihood
+  functions: {
+    contractAddress: string
+    contractName: string
+    functionName: string
+    impact: Impact
+    grade: LetterGrade
+  }[]
+}
+
 export type ApiProjectsResponse = ApiProjectEntry[]
 
 export interface ApiProjectEntry {
@@ -304,11 +318,15 @@ export interface FunctionModuleScore extends ModuleScore {
   breakdown?: Record<LetterGrade, FunctionDetail[]>
 }
 
+export interface DependencyModuleScore extends ModuleScore {
+  breakdown?: DependencyDetail[]
+}
+
 export interface ApiV2ScoreResponse {
   inventory: {
     contracts: ModuleScore
     functions: FunctionModuleScore
-    dependencies: ModuleScore
+    dependencies: DependencyModuleScore
     admins: ModuleScore
   }
   finalScore: LetterGrade

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-11-05T01:09:36.689Z",
+  "lastModified": "2025-11-05T19:12:28.097Z",
   "contracts": {
     "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": {
       "functions": [
@@ -111,7 +111,7 @@
               "path": "$self.getGuardians"
             }
           ],
-          "timestamp": "2025-11-04T19:16:05.202Z"
+          "timestamp": "2025-11-05T19:12:28.097Z"
         },
         {
           "functionName": "unpauseDeposits",
@@ -138,7 +138,12 @@
               "path": "$self.getGuardians"
             }
           ],
-          "timestamp": "2025-11-05T01:03:59.076Z"
+          "dependencies": [
+            {
+              "contractAddress": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa"
+            }
+          ],
+          "timestamp": "2025-11-05T18:19:52.647Z"
         },
         {
           "functionName": "unvetSigningKeys",
