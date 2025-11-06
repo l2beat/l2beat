@@ -2,6 +2,7 @@ import type { LogConfig } from 'kysely'
 import type { PoolConfig } from 'pg'
 import { DatabaseClient } from './kysely'
 import { AbstractTokenRepository } from './repositories/AbstractTokenRepository'
+import { ChainRepository } from './repositories/ChainRepository'
 import { DeployedTokenRepository } from './repositories/DeployedTokenRepository'
 import { TokenConnectionRepository } from './repositories/TokenConnectionRepository'
 import { getDatabaseStats } from './utils/getDatabaseStats'
@@ -14,6 +15,7 @@ export function createTokenDatabase(config?: PoolConfig & { log?: LogConfig }) {
     transaction: db.transaction.bind(db),
     close: db.close.bind(db),
 
+    chain: new ChainRepository(db),
     abstractToken: new AbstractTokenRepository(db),
     deployedToken: new DeployedTokenRepository(db),
     tokenConnection: new TokenConnectionRepository(db),

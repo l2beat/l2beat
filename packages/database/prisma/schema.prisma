@@ -527,6 +527,6 @@ model InteropConfig {
 model Chain {
   name    String @id @db.VarChar(255)
   chainId Int    @unique()
-  aliases Json?  @db.Json
-  apis    Json?  @db.Json
+  aliases Json?
+  apis    Json?
 }
