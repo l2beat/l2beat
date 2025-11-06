@@ -43,8 +43,8 @@ const toRecord = (record: Chain): ChainRecord => {
 const toRow = (record: ChainRecord): Insertable<Chain> => {
   return {
     ...record,
-    aliases: JSON.stringify(record.aliases),
-    apis: JSON.stringify(record.apis),
+    aliases: record.aliases !== null ? JSON.stringify(record.aliases) : null,
+    apis: record.apis !== null ? JSON.stringify(record.apis) : null,
   }
 }
 
