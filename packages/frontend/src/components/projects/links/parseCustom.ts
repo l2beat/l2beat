@@ -1,12 +1,12 @@
-import type { SocialIconType } from '~/icons/products/SocialIcon'
+import type { CustomIconType } from '~/icons/products/CustomIcon'
 import { formatLink } from '~/utils/formatLink'
 
-interface SocialDetails {
-  platform?: SocialIconType
+interface CustomDetails {
+  platform?: CustomIconType
   text: string
 }
 
-export function parseSocial(href: string): SocialDetails {
+export function parseCustom(href: string): CustomDetails {
   const link = formatLink(href)
   if (link.startsWith('discord.gg') || link.startsWith('discord.com/invite/')) {
     return {
@@ -87,6 +87,20 @@ export function parseSocial(href: string): SocialDetails {
     return {
       platform: 'mirror',
       text: 'Mirror',
+    }
+  }
+
+  if (link.startsWith('growthepie')) {
+    return {
+      platform: 'growthepie',
+      text: 'growthepie',
+    }
+  }
+
+  if (link.startsWith('rollup.codes')) {
+    return {
+      platform: 'rollup.codes',
+      text: 'rollup.codes',
     }
   }
 

@@ -8,14 +8,12 @@ import {
   navigationMenuTriggerStyle,
 } from '~/components/core/NavigationMenu'
 import { CustomLinkIcon } from '~/icons/Outlink'
-import { OtherIcon } from '~/icons/products/OtherIcon'
-import { SocialIcon } from '~/icons/products/SocialIcon'
+import { CustomIcon } from '~/icons/products/CustomIcon'
 import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/formatLink'
 import { DiscoUiLink } from './DiscoUiLink'
 import { ProjectLinkIcon } from './ProjectLinkIcon'
-import { parseOther } from './parseOther'
-import { parseSocial } from './parseSocial'
+import { parseCustom } from './parseCustom'
 import type { ProjectLink } from './types'
 
 interface Props {
@@ -78,10 +76,10 @@ function MultiProjectLink({ projectLink }: { projectLink: ProjectLink }) {
       </NavigationMenuTrigger>
       <NavigationMenuContent>
         {projectLink.links.map((link) => {
-          const parsedSocial =
-            projectLink.name === 'Social' ? parseSocial(link) : undefined
-          const parsedOther =
-            projectLink.name === 'Other' ? parseOther(link) : undefined
+          const parsedCustom =
+            projectLink.name === 'Social' || projectLink.name === 'Other'
+              ? parseCustom(link)
+              : undefined
 
           return (
             <NavigationMenuLink
@@ -95,21 +93,14 @@ function MultiProjectLink({ projectLink }: { projectLink: ProjectLink }) {
                 'flex w-full justify-start gap-1.5',
               )}
             >
-              {parsedSocial?.platform && (
-                <SocialIcon
-                  product={parsedSocial.platform}
+              {parsedCustom?.platform && (
+                <CustomIcon
+                  product={parsedCustom.platform}
                   width={16}
                   height={16}
                 />
               )}
-              {parsedOther?.platform && (
-                <OtherIcon
-                  product={parsedOther.platform}
-                  width={16}
-                  height={16}
-                />
-              )}
-              {parsedSocial?.text ?? parsedOther?.text ?? formatLink(link)}
+              {parsedCustom?.text ?? formatLink(link)}
               <CustomLinkIcon className="shrink-0 fill-current" />
             </NavigationMenuLink>
           )
