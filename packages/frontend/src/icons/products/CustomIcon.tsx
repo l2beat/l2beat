@@ -2,16 +2,18 @@ import type { JSX, SVGAttributes } from 'react'
 
 import { DiscordIcon } from './Discord'
 import { GithubIcon } from './Github'
+import { GrowThePieIcon } from './GrowThePie'
 import { InstagramIcon } from './Instagram'
 import { LinkedInIcon } from './Linkedin'
 import { MediumIcon } from './Medium'
 import { MirrorIcon } from './Mirror'
 import { RedditIcon } from './Reddit'
+import { RollupCodesIcon } from './RollupCodes'
 import { TelegramIcon } from './Telegram'
 import { XIcon } from './X'
 import { YouTubeIcon } from './Youtube'
 
-export type SocialIconType =
+export type CustomIconType =
   | 'discord'
   | 'github'
   | 'instagram'
@@ -22,12 +24,14 @@ export type SocialIconType =
   | 'x'
   | 'youtube'
   | 'mirror'
+  | 'growthepie'
+  | 'rollup.codes'
 
 interface Props extends SVGAttributes<SVGElement> {
-  product: SocialIconType
+  product: CustomIconType
 }
 
-export function SocialIcon({ product, ...props }: Props): JSX.Element {
+export function CustomIcon({ product, ...props }: Props): JSX.Element {
   switch (product) {
     case 'discord':
       return <DiscordIcon {...props} />
@@ -49,5 +53,9 @@ export function SocialIcon({ product, ...props }: Props): JSX.Element {
       return <YouTubeIcon {...props} />
     case 'mirror':
       return <MirrorIcon {...props} />
+    case 'growthepie':
+      return <GrowThePieIcon {...props} />
+    case 'rollup.codes':
+      return <RollupCodesIcon {...props} />
   }
 }
