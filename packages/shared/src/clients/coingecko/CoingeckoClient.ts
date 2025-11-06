@@ -78,7 +78,7 @@ export class CoingeckoClient extends ClientCore {
     return CoinListPlatformResult.parse(data)
   }
 
-  async getCoinDataById(id: CoingeckoId): Promise<CoinData | null> {
+  async getCoinDataById(id: CoingeckoId): Promise<CoinData> {
     const data = await this.query(`/coins/${id.toString()}`, {
       localization: 'false',
       tickers: 'false',
@@ -86,13 +86,7 @@ export class CoingeckoClient extends ClientCore {
       developer_data: 'false',
       sparkline: 'false',
     })
-
-    const parsed = CoinData.safeParse(data)
-
-    if (!parsed.success) {
-      return null
-    }
-    return parsed.data
+    return CoinData.parse(data)
   }
 
   async getCoinHistoricalDataById(

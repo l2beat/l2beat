@@ -1,6 +1,6 @@
 import type { Database } from '@l2beat/database'
 import type { CoingeckoClient } from '@l2beat/shared'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { EcosystemTokenConfig } from '../../config/Config'
 import { INDEXER_NAMES } from '../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../tools/uif/multi/ManagedMultiIndexer'
@@ -39,11 +39,6 @@ export class EcosystemTokenIndexer extends ManagedMultiIndexer<EcosystemTokenCon
             UnixTime.toStartOf(to, 'day') - 7 * UnixTime.DAY,
           ),
         ])
-
-        assert(
-          data,
-          `Coin not found by coingecko id: ${configuration.properties.coingeckoId}. Please check if the coingecko id is correct for the project: ${configuration.properties.projectId}.`,
-        )
 
         const price7dChange =
           (data.market_data.current_price.usd -

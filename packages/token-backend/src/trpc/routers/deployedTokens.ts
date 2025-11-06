@@ -1,78 +1,79 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { db } from '../../database/db'
+import { config } from '../../config'
+import { getUrlWithParams } from '../../utils/getUrlWithParams'
 import { protectedProcedure, router } from '../trpc'
-import { getCoinByChainAndAddress } from './coingecko'
 
-export const deployedTokensRouter = router({
-  getByChainAndAddress: protectedProcedure
-    .input(v.object({ chain: v.string(), address: v.string() }))
-    .query(async ({ input }) => {
-      const result = await db.deployedToken.findByChainAndAddress({
-        chain: input.chain,
-        address: input.address,
-      })
-      return result ?? null
-    }),
+export type Coin = v.infer<typeof CoinSchema>
+const CoinSchema = v.object({
+  id: v.string(),
+  image: v.object({
+    large: v.string(),
+  }),
+})
 
-  checkIfExists: protectedProcedure
-    .input(v.object({ chain: v.string(), address: v.string() }))
-    .query(async ({ input }) => {
-      const result = await db.deployedToken.findByChainAndAddress({
-        chain: input.chain,
-        address: input.address,
-      })
-      return result !== undefined
-    }),
+const HistoricalChartSchema = v.object({
+  prices: v.array(v.tuple([v.number(), v.number()])),
+})
 
-  getDetails: protectedProcedure
-    .input(v.object({ chain: v.string(), address: v.string() }))
-    .query(async ({ input }) => {
-      const result = await db.deployedToken.findByChainAndAddress({
-        chain: input.chain,
-        address: input.address,
-      })
-      if (result !== undefined) {
-        return {
-          type: 'already-exists' as const,
-        }
-      }
-
-      const token = getRpcDetails(input.chain, input.address)
-      if (token === undefined) {
-        return {
-          type: 'not-found-on-rpc' as const,
-        }
-      }
-
-      const coin = await getCoinByChainAndAddress(input.chain, input.address)
-      if (coin === null) {
-        return {
-          type: 'not-found-on-coingecko' as const,
-          data: token,
-        }
-      }
-
-      const abstractToken = coin.id
-        ? await db.abstractToken.findByCoingeckoId(coin.id)
-        : undefined
-
-      return {
-        type: 'success' as const,
-        data: {
-          ...coin,
-          ...token,
-          abstractToken,
+export const coingeckoRouter = router({
+  getCoinById: protectedProcedure.input(v.string()).query(async ({ input }) => {
+    try {
+      const url = getUrlWithParams(
+        `https://pro-api.coingecko.com/api/v3/coins/${input}`,
+        {
+          localization: 'false',
+          tickers: 'false',
+          market_data: 'false',
+          community_data: 'false',
+          developer_data: 'false',
+          sparkline: 'false',
         },
+      )
+      const options = {
+        method: 'GET',
+        headers: {
+          'x-cg-pro-api-key': config.coingeckoApiKey,
+        },
+      }
+      const response = await fetch(url, options)
+      const data = await response.json()
+      return CoinSchema.parse(data)
+    } catch {
+      return null
+    }
+  }),
+  getListingTimestamp: protectedProcedure
+    .input(v.string())
+    .query(async ({ input }) => {
+      try {
+        const url = getUrlWithParams(
+          `https://pro-api.coingecko.com/api/v3/coins/${input}/market_chart/range`,
+          {
+            vs_currency: 'usd',
+            from: '2000-01-01',
+            to: UnixTime.toYYYYMMDD(UnixTime.fromDate(new Date())),
+            precision: '0',
+          },
+        )
+        const options = {
+          method: 'GET',
+          headers: {
+            'x-cg-pro-api-key': config.coingeckoApiKey,
+          },
+        }
+        const response = await fetch(url, options)
+        const data = await response.json()
+        const parsed = HistoricalChartSchema.parse(data)
+        const [firstPrice] = parsed.prices
+
+        if (!firstPrice) {
+          return null
+        }
+
+        return UnixTime(Math.floor(firstPrice[0] / 1000))
+      } catch {
+        return null
       }
     }),
 })
-
-function getRpcDetails(
-  chain: string,
-  address: string,
-): { decimals: number; deploymentTimestamp: number } | undefined {
-  return {
-    decimals: 18,
-    deploymentTimestamp: 1714732800,
-  }
-}

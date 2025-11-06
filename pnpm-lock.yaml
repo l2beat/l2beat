@@ -972,9 +972,6 @@ importers:
       '@l2beat/database':
         specifier: workspace:*
         version: link:../database
-      '@l2beat/shared':
-        specifier: workspace:*
-        version: link:../shared
       '@l2beat/shared-pure':
         specifier: workspace:*
         version: link:../shared-pure
