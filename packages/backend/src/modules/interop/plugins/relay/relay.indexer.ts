@@ -103,16 +103,14 @@ export class RelayIndexer extends ManagedChildIndexer {
       successes.length > 0 ? successes[successes.length - 1] : undefined
 
     if (!last) {
-      // TODO: allow not progressing
-      throw new Error('No entries')
+      return from
     }
     const syncedTo = Math.min(
       to,
       UnixTime.fromDate(new Date(last.updatedAt)) - 1,
     )
     if (syncedTo < from) {
-      // TODO: allow not progressing
-      throw new Error('No entries')
+      return from
     }
 
     const events: InteropEvent[] = []
