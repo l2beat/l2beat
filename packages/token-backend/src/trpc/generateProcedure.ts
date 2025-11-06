@@ -34,10 +34,6 @@ export const trcpRoot = initTRPC.context<Context>().create({
  */
 export const createCallerFactory = trcpRoot.createCallerFactory
 
-/**
- * Used to create a router in the tRPC API.
- */
-
 export function generateProcedure(
   config: Config,
   options: {
