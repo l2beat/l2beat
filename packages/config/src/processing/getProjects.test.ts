@@ -703,10 +703,10 @@ function getUsageMap(projects: BaseProject[]) {
 
   function addUsage(chain: string, address: EthereumAddress, usage: ProjectId) {
     const key = `${chain}-${address}` as const
-    let uses = usageMap.get(key)
+    const uses = usageMap.get(key)
     if (!uses) {
-      uses = []
-      usageMap.set(key, uses)
+      usageMap.set(key, [usage])
+      return
     }
     if (!uses.includes(usage)) {
       uses.push(usage)
