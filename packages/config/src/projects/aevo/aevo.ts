@@ -82,6 +82,7 @@ export const aevo: ScalingProject = opStackL2({
         ),
       ],
     },
+    {
       type: 'celestia',
       daLayer: ProjectId('celestia'),
       namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADBuw7+PjGs8=',
