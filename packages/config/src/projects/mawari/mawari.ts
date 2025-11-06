@@ -18,7 +18,7 @@ export const mawari: ScalingProject = upcomingL2({
       websites: ['https://mawari.net/'],
       bridges: ['https://mawari-network-testnet.bridge.caldera.xyz'],
       documentation: ['https://docs.mawari.net'],
-      explorers: ['https://mawari-network-testnet.explorer.caldera.xyz/'],
+      explorers: ['https://explorer.testnet.mawari.net/'],
       socialMedia: [
         'https://t.me/mawarinet',
         'https://x.com/mawariXR',

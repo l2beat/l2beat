@@ -53,7 +53,6 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
-        [],
       )
 
       const project = 'project-a'
@@ -138,7 +137,6 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
-        [],
       )
 
       const project = 'project-a'
@@ -235,7 +233,6 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
-        [],
       )
 
       const project = 'project-a'
@@ -325,7 +322,6 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
-        [],
       )
 
       const project = 'project-a'
@@ -414,7 +410,6 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         mockProjectService,
-        [],
       )
 
       const project = 'project-a'
@@ -520,7 +515,6 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         mockProjectService,
-        [],
       )
 
       const project = 'project-a'
@@ -589,7 +583,6 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
-        [],
       )
 
       const reminders = {
@@ -609,12 +602,17 @@ describe(UpdateNotifier.name, () => {
       const table = formatAsAsciiTable(headers, rows)
       const templatizationStatus = await generateTemplatizedStatus()
 
-      await updateNotifier.sendDailyReminder(reminders, timestamp)
+      await updateNotifier.sendDailyReminder(
+        reminders,
+        timestamp,
+        ['project-aaa'],
+        ['project-bbb'],
+      )
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
-        `# Daily bot report @ ${UnixTime.toYYYYMMDD(timestamp)}\n${templatizationStatus}\n:x: Detected changes with following severities :x:\n\`\`\`\n${table}\n\`\`\`\n`,
+        `# Daily bot report @ ${UnixTime.toYYYYMMDD(timestamp)}\n:warning: Disabled projects: \`project-aaa\`\n:warning: Failed projects: \`project-bbb\`\n${templatizationStatus}\n:x: Detected changes with following severities :x:\n\`\`\`\n${table}\n\`\`\`\n`,
         'INTERNAL',
       )
     })
@@ -644,7 +642,6 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
-        [],
       )
 
       const reminders = {
@@ -655,7 +652,12 @@ describe(UpdateNotifier.name, () => {
       const timestamp =
         UnixTime.toStartOf(UnixTime.now(), 'day') + 6 * UnixTime.HOUR
 
-      await updateNotifier.sendDailyReminder(reminders, timestamp)
+      await updateNotifier.sendDailyReminder(
+        reminders,
+        timestamp,
+        ['project-aaa'],
+        ['project-bbb'],
+      )
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
     })
@@ -677,19 +679,23 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
-        [],
       )
 
       const reminders = {}
       const timestamp =
         UnixTime.toStartOf(UnixTime.now(), 'day') + 1 * UnixTime.HOUR
 
-      await updateNotifier.sendDailyReminder(reminders, timestamp)
+      await updateNotifier.sendDailyReminder(
+        reminders,
+        timestamp,
+        ['project-aaa'],
+        ['project-bbb'],
+      )
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(0)
     })
 
-    it('includes disabled chains in daily reminder', async () => {
+    it('includes disabled projects and failed projects in daily reminder', async () => {
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async () => {},
       })
@@ -700,26 +706,30 @@ describe(UpdateNotifier.name, () => {
       const updateMessagesService = mockObject<UpdateMessagesService>({
         storeAndPrune: async () => {},
       })
-      const disabledChains = ['optimism', 'arbitrum']
       const updateNotifier = new UpdateNotifier(
         mockObject<Database>({ updateNotifier: updateNotifierRepository }),
         discordClient,
         Logger.SILENT,
         updateMessagesService,
         projectService,
-        disabledChains,
       )
 
       const reminders = {}
       const timestamp =
         UnixTime.toStartOf(UnixTime.now(), 'day') + 6 * UnixTime.HOUR
 
-      await updateNotifier.sendDailyReminder(reminders, timestamp)
+      await updateNotifier.sendDailyReminder(
+        reminders,
+        timestamp,
+        ['project-aaa'],
+        ['project-bbb'],
+      )
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       const message = discordClient.sendMessage.calls[0]?.args[0] as string
       expect(message).toInclude(
-        ':warning: Disabled chains: `optimism`, `arbitrum`',
+        ':warning: Disabled projects: `project-aaa`',
+        ':warning: Failed projects: `project-bbb`',
       )
     })
   })

@@ -1,3 +1,171 @@
+Generated with discovered.json: 0xac425cfbd5a241f700c17be7787cedf50065979c
+
+# Diff at Tue, 04 Nov 2025 14:07:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f12d06bbf120eab9f5356a235918d4d6b2484290 block: 1761895172
+- current timestamp: 1762264674
+
+## Description
+
+add tokenpools (some unverified).
+
+## Watched changes
+
+```diff
+    contract LockReleaseTokenPool (eth:0x1B7492C3bD23A4aDB448710e4275FF14A5288932) {
+    +++ description: None
+      values.getSupportedChains.20:
++        "4829375610284793157"
+    }
+```
+
+```diff
+    contract USDOBurnMintTokenPool (eth:0x500d4882938020E939a5666c1B4200873da7EfD3) {
+    +++ description: None
+      values.getSupportedChains.2:
++        "9813823125703490621"
+    }
+```
+
+```diff
+    contract Router (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.onRamps.13624601974233774587:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+    }
+```
+
+```diff
+    contract LombardTokenPoolV2 (eth:0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7) {
+    +++ description: None
+      values.getSupportedChains.4:
++        "6433500567565415381"
+    }
+```
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.275:
++        "eth:0xE25a97E9e2f1Eeee81d4a7986A018AC3Ae8D857b"
+      values.pools.276:
++        "eth:0xa1fDd455Ed9adc66F2b6a496405911C0bbC9424e"
+      values.pools.277:
++        "eth:0xa42baa160DB5Aea58a1800ac6a33a92488288767"
+      values.pools.278:
++        "eth:0x3690367eDd22eDE1FE827258352F900fBD05b8Dc"
+      values.pools.279:
++        "eth:0x80E873D80ed41ED0a3aAeEb6efbaA01839f2111b"
+      values.pools.280:
++        "eth:0x02E87189512d1Bdc3Ca7795CAb68A8311703B88C"
+      values.pools.281:
++        "eth:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0"
+      values.poolsMap.eth:0x4C1Dab3Be86347977F3DfC4b9688224ef2272939:
++        "eth:0xE25a97E9e2f1Eeee81d4a7986A018AC3Ae8D857b"
+      values.poolsMap.eth:0xa0769f7A8fC65e47dE93797b4e21C073c117Fc80:
++        "eth:0xa1fDd455Ed9adc66F2b6a496405911C0bbC9424e"
+      values.poolsMap.eth:0xe4880249745eAc5F1eD9d8F7DF844792D560e750:
++        "eth:0xa42baa160DB5Aea58a1800ac6a33a92488288767"
+      values.poolsMap.eth:0xf695Df6c0f3bB45918A7A82e83348FC59517734E:
++        "eth:0x3690367eDd22eDE1FE827258352F900fBD05b8Dc"
+      values.poolsMap.eth:0x4f33aCf823E6eEb697180d553cE0c710124C8D59:
++        "eth:0x80E873D80ed41ED0a3aAeEb6efbaA01839f2111b"
+      values.poolsMap.eth:0x3868D4e336d14D38031cf680329d31e4712e11cC:
++        "eth:0x02E87189512d1Bdc3Ca7795CAb68A8311703B88C"
+      values.poolsMap.eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072:
++        "eth:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TokenPool (eth:0x02E87189512d1Bdc3Ca7795CAb68A8311703B88C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenPool (eth:0x3690367eDd22eDE1FE827258352F900fBD05b8Dc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenPool (eth:0x80E873D80ed41ED0a3aAeEb6efbaA01839f2111b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenPool (eth:0xa1fDd455Ed9adc66F2b6a496405911C0bbC9424e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenPool (eth:0xa42baa160DB5Aea58a1800ac6a33a92488288767)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LombardTokenPoolV2 (eth:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xE25a97E9e2f1Eeee81d4a7986A018AC3Ae8D857b)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0xE25a97E9e2f1Eeee81d4a7986A018AC3Ae8D857b.sol | 1615 ++++++++++++++++
+ ...0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7.sol} |    0
+ ...:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0.sol | 1949 ++++++++++++++++++++
+ 3 files changed, 3564 insertions(+)
+```
+
+Generated with discovered.json: 0xcc0f62e80c373949527783d0021de6e9698b3ff5
+
+# Diff at Tue, 04 Nov 2025 11:34:49 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1761895172
+- current timestamp: 1761895172
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761895172 (main branch discovery), not current.
+
+```diff
+    contract ARMProxy (eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x5561ac1c24a1f2bd38ec522cf6fde1f06f5d2eff0d9006035ff445d9e1505a47"
++        "0x3693b1f8ad16df4a5aaa5bfcfb070ead01c1ca6e49553832567f9710362a47ac"
+    }
+```
+
+```diff
+    contract CallProxy (eth:0x82b8A19497fA25575f250a3DcFfCD2562B575A2e) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x0b5d83431c69340cb7e56f4baac882eed639a835829b4752caefdb78e4b32741"
++        "0x838eaabb6de8f4c17edd99a2bc83ce87289ec3e6fb3ce7ebf21b989b8acc2397"
+    }
+```
+
 Generated with discovered.json: 0x67ae6ccceb61733857aae580751a1da763e40dcb
 
 # Diff at Fri, 31 Oct 2025 07:23:07 GMT:

@@ -45,7 +45,8 @@ import { RelaySimplePlugIn } from './relay-simple'
 import { SquidCoralPlugin } from './squid-coral'
 import { StargatePlugin } from './stargate'
 import type { InteropPlugin } from './types'
-import { WormholePlugin } from './wormhole'
+import { WormholeConfigPlugin } from './wormhole/wormhole.config'
+import { WormholePlugin } from './wormhole/wormhole.plugin'
 import { WormholeNTTPlugin } from './wormhole-ntt'
 import { WormholeRelayerPlugin } from './wormhole-relayer'
 import { WormholeTokenBridgePlugin } from './wormhole-token-bridge'
@@ -87,29 +88,36 @@ export function createInteropPlugins(
         deps.httpClient,
       ),
       new CCTPConfigPlugin(deps.chains, deps.configs, deps.logger, rpcs),
+      new WormholeConfigPlugin(
+        deps.chains,
+        deps.configs,
+        deps.logger,
+        deps.httpClient,
+        rpcs,
+      ),
     ],
     eventPlugins: [
       new SquidCoralPlugin(),
       new DeBridgePlugin(),
       new DeBridgeDlnPlugin(),
-      new MayanForwarderPlugin(),
+      new MayanForwarderPlugin(deps.configs),
       new CircleGatewayPlugIn(deps.configs),
       new CelerPlugIn(),
       new CCIPPlugIn(),
       new CentriFugePlugin(),
-      new MayanSwiftPlugin(), // should be run before CCTP
+      new MayanSwiftPlugin(deps.configs), // should be run before CCTP
       new MayanMctpPlugin(), // should be run before CCTP
-      new MayanMctpFastPlugin(), // should be run before CCTP
+      new MayanMctpFastPlugin(deps.configs), // should be run before CCTP
       new CCTPV1Plugin(deps.configs),
       new CCTPV2Plugin(deps.configs),
-      new StargatePlugin(deps.configs), // should be run ofts
+      new StargatePlugin(deps.configs), // should be run before ofts, lzv2
       new LayerZeroV2OFTsPlugin(deps.configs), // should be run before LayerZeroV2
-      new LayerZeroV1Plugin(deps.configs),
       new LayerZeroV2Plugin(deps.configs),
-      new WormholeNTTPlugin(), // should be run before WormholeCore and WormholeRelayer
-      new WormholeTokenBridgePlugin(), // should be run before Wormhole
-      new WormholeRelayerPlugin(), // should be run before Wormhole
-      new WormholePlugin(),
+      new LayerZeroV1Plugin(deps.configs),
+      new WormholeNTTPlugin(deps.configs), // should be run before WormholeCore and WormholeRelayer
+      new WormholeTokenBridgePlugin(deps.configs), // should be run before Wormhole
+      new WormholeRelayerPlugin(deps.configs), // should be run before Wormhole
+      new WormholePlugin(deps.configs),
       new AllbridgePlugIn(),
       new AxelarITSPlugin(), // should be run before Axelar
       new AxelarPlugin(),

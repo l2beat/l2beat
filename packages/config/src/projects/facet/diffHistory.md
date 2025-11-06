@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x6e72e8999769d8491f81dc867356b9f578232874
+
+# Diff at Tue, 04 Nov 2025 11:32:41 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1756809496
+- current timestamp: 1756809496
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756809496 (main branch discovery), not current.
+
+```diff
+    contract FastExternalBridge (eth:0x0000000000000b07ED001607f5263D85bf28Ce4C) {
+    +++ description: A Facet implementation of the ETH Bridge. This bridge is also called "fast bridge" as it uses a permissioned EOA as operator for faster withdrawal processing.
+      sourceHashes.0:
+-        "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e"
++        "0xa8b34ebf808e75f97d6309614717af3f10929ff9f0824ab86cb5501f257a32a2"
+      sourceHashes.1:
+-        "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e"
++        "0xa8b34ebf808e75f97d6309614717af3f10929ff9f0824ab86cb5501f257a32a2"
+    }
+```
+
 Generated with discovered.json: 0x88f5fa6d952d7ee313819a598a64aab568f50506
 
 # Diff at Tue, 02 Sep 2025 10:39:32 GMT:

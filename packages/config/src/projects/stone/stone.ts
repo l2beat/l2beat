@@ -73,6 +73,14 @@ export const stone: BaseProject = {
           {
             address: '0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942',
             chain: 'ethereum',
+            overrideUsedIn: [
+              ProjectId('edgex'),
+              ProjectId('immutablex'),
+              ProjectId('myria'),
+              ProjectId('paradex'),
+              ProjectId('sorare'),
+              ProjectId('brine'),
+            ],
           },
         ],
         verificationStatus: 'notVerified',

@@ -20,7 +20,6 @@ import { FindL2 } from './FindL2'
 import { FindUnusedShapes } from './FindUnusedShapes'
 import { FixDiscoverySchemaPaths } from './FixDiscoverySchemaPaths'
 import { Flatten } from './Flatten'
-import { FlattenAndDiff } from './FlattenAndDiff'
 import { GenerateEntrypoints } from './GenerateEntrypoints'
 import { GetTokenMinters } from './GetTokenMinters'
 import { Init } from './Init'
@@ -29,9 +28,9 @@ import { MatchFlat } from './MatchFlat'
 import { Minters } from './Minters'
 import { ModelPermissions } from './ModelPermissions'
 import { OPConfigs } from './OPConfigs'
-import { Powerdiff } from './Powerdiff'
 import { DetectProxy } from './Proxy'
 import { RefreshDiscovery } from './RefreshDiscovery'
+import { RegenerateShapeHashes } from './RegenerateShapeHashes'
 import { ScanKintoAm } from './ScanKintoAm'
 import { SolFmt } from './SolFmt'
 import { StarknetAccessControl } from './StarknetAccessControl'
@@ -50,9 +49,9 @@ export function getSubcommands() {
     CompareOpStacks,
     CompareOrbitStacks,
     CountUserOperations,
+    DecodeEigenDACommitment,
     DeploymentTimestamp,
     DetectProxy,
-    DecodeEigenDACommitment,
     Discover,
     DownloadAllShapes,
     DownloadShapes,
@@ -66,17 +65,16 @@ export function getSubcommands() {
     FindUnusedShapes,
     FixDiscoverySchemaPaths,
     Flatten,
-    FlattenAndDiff,
-    GetTokenMinters,
     GenerateEntrypoints,
+    GetTokenMinters,
     Init,
     InitTemplate,
     MatchFlat,
     Minters,
     ModelPermissions,
     OPConfigs,
-    Powerdiff,
     RefreshDiscovery,
+    RegenerateShapeHashes,
     ScanKintoAm,
     SolFmt,
     StarknetAccessControl,

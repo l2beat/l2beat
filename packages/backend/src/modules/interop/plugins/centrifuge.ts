@@ -31,7 +31,7 @@ import {
   type MatchResult,
   Result,
 } from './types'
-import { LogMessagePublished } from './wormhole'
+import { LogMessagePublished } from './wormhole/wormhole.plugin'
 import { Delivery } from './wormhole-relayer'
 
 const parseSendPayload = createEventParser(

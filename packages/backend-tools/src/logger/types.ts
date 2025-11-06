@@ -6,19 +6,14 @@ export type LogLevel =
   | 'DEBUG'
   | 'TRACE'
 
-export interface LoggerTransport {
-  log(
-    time: Date,
-    level: LogLevel,
-    message: string,
-    parameters: Record<string, unknown>,
-  ): void
-  flush(): void
+export interface LogEntry {
+  time: Date
+  level: LogLevel
+  message: string
+  parameters: Record<string, unknown>
 }
 
-export type LogFormatter = (
-  time: Date,
-  level: LogLevel,
-  message: string,
-  parameters: Record<string, unknown>,
-) => string
+export interface LoggerTransport {
+  log(entry: LogEntry): void
+  flush(): void
+}

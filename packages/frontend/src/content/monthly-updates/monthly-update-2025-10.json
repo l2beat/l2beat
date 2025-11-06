@@ -1,0 +1,219 @@
+{
+  "title": "Monthly Updates - October 2025",
+  "startDate": "2025-10-01",
+  "endDate": "2025-10-31",
+  "publishedOn": "2025-11-01",
+  "description": "Discover the most important October developments across major ecosystems — from governance updates to technical upgrades and ecosystem milestones.",
+  "updates": [
+    {
+      "type": "ecosystem",
+      "ecosystemId": "arbitrum-orbit",
+      "news": [
+        {
+          "title": "Arbitrum One Hits 2 Billion Transactions",
+          "content": "Arbitrum One [has officially](https://x.com/arbitrum/status/1981446226982879399) surpassed **2 billion transactions**, cementing its lead as the largest Ethereum Layer 2. This milestone showcases massive growth across DeFi, gaming, and infrastructure apps leveraging Arbitrum’s scalability and security."
+        },
+        {
+          "title": "Security Council Election Enters Vote-Decay Phase",
+          "content": "The Arbitrum Security Council Cohort B election is [in progress](https://www.tally.xyz/gov/arbitrum/council/security-council/election/4/round-2). After the initial vote (Oct 13–20), the process entered the **vote-decay period** until November 3. The six highest-voted nominees will form the new Council, responsible for overseeing upgrades and governance execution across Arbitrum’s ecosystem.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "The Arbitrum DAO Has Voted to Reject the DAO Incentive Program (DIP 2.0)",
+          "content": "The proposal aimed to strengthen governance participation by rewarding both delegates and contributors through structured incentives, peer recognition, and “Nudge Seasons” to encourage active engagement in the DAO. DIP 2.0 was presented as a continuation of the Delegate Incentive Program, introducing the Arbitrum Peer Assembly to foster accountability and collaboration among participants.\n\nDespite its goal of promoting sustainable participation, the community ultimately [decided against](https://snapshot.box/#/s:arbitrumfoundation.eth/proposal/0x44dedacbdae958904427db9ee93065917f57f50b71b4e87a94a318de18df399b) implementing DIP 2.0. The rejection highlights ongoing discussions within the Arbitrum DAO about how to design effective, transparent, and value-aligned governance incentives moving forward.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Transfer 8,500 ETH to ATMC Treasury Strategies",
+          "content": "The proposal to transfer **8,500 ETH** from the DAO Treasury to **ATMC’s ETH Treasury Strategies** will be finalized after the [Tally vote closes](https://www.tally.xyz/gov/arbitrum/proposal/57495998481040869152703890521939307107269690440073097268210566577740258992963?govId=eip155:42161:0x789fC99093B09aD01C34DC7251D0C89ce743e5a4) on October 30.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Arbitrum Aegis Insurance Pool Proposal",
+          "content": "The Arbitrum DAO is [discussing](https://forum.arbitrum.foundation/t/non-constitutional-arbitrum-aegis/30071) a proposal called *Arbitrum Aegis*, a $4M ARB initiative to bootstrap a dedicated onchain insurance pool on Nexus Mutual. This one-year pilot aims to enhance DeFi security by offering protocol-level coverage against brilliant contract exploits, oracle failures, and more.\n\nRather than direct sales, Aegis targets protocols to buy coverage on behalf of users, building trust and setting a new security standard in the ecosystem. DAOplomats will manage the pool, leveraging Nexus Mutual’s underwriting expertise while aligning incentives via a 7.5% performance fee on net yield. Coverage will be curated, not blanket, based on a risk framework and due diligence process.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Arbitrum x Kaito Season 2 Launches with 700K ARB in Rewards",
+          "content": "Arbitrum and Kaito are [back](https://blog.arbitrum.io/arbitrum-x-kaito-season-2/) with Season 2 of their creator grant program, offering **700,000 ARB** in rewards to top voices promoting Arbitrum on X (Twitter). This season expands rewards to the **Top 150 creators** each month, up from 100 in Season 1, and introduces a **fairer algorithm** giving smaller accounts an equal shot.\n\nThe ARB grants will be distributed across **three tranches**:\n\n- Oct 7–31: 233,333 ARB\n- Nov 1–30: 233,333 ARB\n- Dec 1–31: 233,334 ARB\n\nThe leaderboard is live on [Kaito’s platform](https://yaps.kaito.ai/pre-tge?ref=blog.arbitrum.io), and all participants must connect their X accounts via **Kaito Yaps** to start earning.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Arbitrum Hosts “Open House” at Ethereum World’s Fair (Devconnect ARG)",
+          "content": "At the first-ever Ethereum World’s Fair in Istanbul, Arbitrum is [presenting Open House](https://x.com/EFDevcon/status/1981105026614644790), a hybrid in-person and online experience designed for builders. This initiative aims to help developers learn, hack, and ship onchain, showcasing how Arbitrum is accelerating onchain adoption globally. Whether you're attending in person or tuning in virtually, it’s a chance to dive into Arbitrum’s ecosystem and community-driven innovation."
+        },
+        {
+          "title": "Arbitrum Heads to Devconnect with ArbiVerse",
+          "content": "Arbitrum is [going](https://x.com/arbitrum/status/1981032261006098884) to Devconnect Buenos Aires with multiple events lined up to engage the community. On November 19, ArbiVerse will take center stage, a flagship event featuring live demos, insightful talks, mini-games, music, and food. Two days later, ArbiPanadas on November 21 offers a chill afternoon with good conversations and local treats.\n\nThe team will also be present at the central Devconnect Conference (Nov 17–18) at the L2 District, so be sure to stop by their booth."
+        },
+        {
+          "title": "Notable on Applications: DRIP Season 1 Boosts Arbitrum Lending",
+          "content": "DRIP Season 1 [continues](https://x.com/EntropyAdvisors/status/1981737510201180328) to accelerate lending growth on Arbitrum, with total lending across major protocols jumping from ~$300M to >$1B since launch. Since DRIP began, Arbitrum’s lending market share among non-Ethereum networks rose from <1% to ~9%.\n\n**Morpho**\n- Market size ATH at **$485M** (+ $47M / +11% WoW)\n- **USDC loans > $200M** for the first time (+ $14M / +7% WoW)\n\n**Silo Finance**\n- Market size ATH at **$113M** (+ $3M / +3% WoW)\n- **USDC loans ~ $30M**, another high (+ $1M / +5% WoW)\n\n"
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "the-elastic-network",
+      "news": [
+        {
+          "title": "V29 Upgrade Now Live: Unlocking Interop Messaging and Fast Finality for ZK Chains",
+          "content": "The V29 upgrade to the ZKsync protocol has [officially passed governance](https://www.tally.xyz/gov/zksync/proposal/40562439712311128665286075271414168289029475306445402072499591795343687723101?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f) and is live on mainnet, delivering one of the most significant protocol improvements to date. Now active across upgraded ZK Chains like Era, Abstract, and Sophon, V29 cuts block times down to 200ms while enabling new capabilities that strengthen interoperability and improve real-time performance.\n\nThis upgrade introduces native Interop Messaging between ZK Chains through the ZK Gateway.  Using Merkle proofs and a shared root structure, chains can now communicate securely and natively, setting the stage for seamless cross-chain applications.\n\nIt also implements Fast Finality, allowing ZK Chains to confirm transaction execution on Ethereum L1 earlier than before. This mechanism is especially important for centralized exchanges and time-sensitive use cases that rely on predictable finality guarantees.\n\nUnder the hood, V29 delivers foundational code improvements, including modular settlement support through a refactored **ChainAssetHandler**, and introduces an upgradable **ValidatorTimelock**, enhancing flexibility for future protocol upgrades.\n\nSecurity remains tightly scoped: pre-commitments in the finality system are only reversible by the ZKsync Security Council, and all components were audited by OpenZeppelin between May and June 2025."
+        },
+        {
+          "title": "ZKsync Publishes MiCA-Compliant ZK Token White Paper",
+          "content": "ZK Nation [has released](https://x.com/TheZKNation/status/1983172206269186085) the official MiCA White Paper for the ZK Token, offering a detailed explanation of the ZKsync protocol, token classifications, and core technologies like zero-knowledge proofs, governance, and cryptographic standards. This document helps exchanges meet MiCA listing requirements and provides enterprise partners and ecosystem teams with canonical legal and operational references."
+        },
+        {
+          "title": "ZKsync Unveils Atlas Upgrade",
+          "content": "ZKsync has [presented](https://zksync.mirror.xyz/XrlYJN9SUbOtRn9nyqrfPyaAqot--PlUcnSRK_OF1Bs) the Atlas upgrade to the ZK Stack, marking a significant leap toward building a scalable, cryptographically secure network of sovereign chains. Atlas introduces a high-performance sequencer capable of over 15,000 TPS, one-second finality via the Airbender zkVM, and full EVM equivalence, all while slashing proving costs to ~$0.0001 per transfer.\n\nThe upgrade is designed to support institutions, enterprises, and fintechs moving onchain. With one-second zk proofs, chains can interoperate without intermediaries, enabling real-time settlement for payments, tokenized assets, and DeFi applications."
+        },
+        {
+          "title": "ZKsync Unveils Prividium: Institutional-Grade ZK Infrastructure",
+          "content": "ZKsync [launched a paper on](https://x.com/zksync/status/1977710454177698252) Prividium, a cryptographically secure financial infrastructure tailored for institutions. Built on the ZK Stack and powered by the newly launched Atlas upgrade, Prividiums promise to deliver 15K+ TPS, 1-second finality, and $0.0001 proving cost, enabling confidential, high-performance finance onchain.\n\nIn partnership with Deloitte, ZKsync hosted workshops with over 35 financial institutions, including Anchorage and Ant Group, to showcase real-time, private, cross-border payments and automated intraday repo settlement using Prividiums.\n\nA new [whitepaper](https://zksync.io/papers/beyond_public_vs_private_chains-design.pdf) outlines why public blockchains lack the privacy guarantees needed by banks, and how Prividiums represents a fundamental redesign for onchain finance, reducing operational risk, ensuring compliance, and unlocking institutional liquidity."
+        },
+        {
+          "title": "ZKsync Governance Infrastructure Funding Proposal",
+          "content": "The ZKsync community [has approved](https://www.notion.so/October-Report-299094a2aee78055a5dddfa98312bc97?pvs=21) TPP-11, authorizing 33M ZK (~$1.65M at $0.05/ZK) to fund governance infrastructure through the end of 2026. The proposal empowers the ZKsync Association to maintain and improve key components, including protocol upgrade tooling, voting interfaces, smart contracts, security frameworks, and legal infrastructure.\n\nFunds will be disbursed via a capped minter system with a monthly minting limit of 8M ZK, ensuring controlled, transparent allocation. Importantly, none of the funds are directed toward salaries or operational overhead. Instead, they go directly to critical governance services.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "TPP-12: ZKnomics Token Staking",
+          "content": "The ZKsync DAO is currently voting on [ZKnomics Token Staking](https://www.tally.xyz/gov/zksync/proposal/97314764080859415498674952864578860560861880297360481348949362100730414449748?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746), a proposal that would activate a capped minter with 37.5M ZK (around $1.9M) to pilot staking rewards over two 3-month seasons. If approved, the program will offer up to 10% annualized returns to eligible tokenholders who delegate and actively participate in governance. The pilot is designed to prepare for ZKsync’s future decentralized sequencer and deepen protocol alignment. Voting is still ongoing and is expected to lead to approval.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Community Activation RFP 1: Devconnect Meetup Winners Announced",
+          "content": "The ZKsync Foundation has selected two winning proposals for its first Community Activation RFP, aimed at supporting ZKsync-aligned meetups during Devconnect Buenos Aires (Nov 17–22, 2025).\n\nTo better reflect the real-world costs of hosting in-person events, the total allocation was increased to 170,000 ZK (up from 100,000 ZK), representing ~1.3% of the Community Activation workstream’s 13.6M ZK budget.\n\nSelected Events are:\n\n- ZKsync LATAM – “Buenos Aires Historic Night”\n    \n    A cultural and educational evening at the Buenos Aires Museum (BAM), gathering builders, founders, and ecosystem partners to celebrate ZKsync’s growing presence in Latin America.\n    \n- Nethermind x ZKsync Community Event\n    \n    A co-hosted technical meetup focused on developer engagement and fostering deep technical exchange during Devconnect."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "superchain",
+      "news": [
+        {
+          "title": "The New Optimism Documentation Is Live",
+          "content": "OP Labs [rolled out](https://www.optimism.io/blog/the-new-optimism-documentation) a full revamp of the **Optimism docs** (new IA, faster search, mobile-first UI) plus an **AI documentation assistant** trained on the OP Stack to answer build questions and point to exact sections/snippets."
+        },
+        {
+          "title": "Optimism Security Council Cohort A: Election Results",
+          "content": "The Cohort A election for the Optimism Collective’s Security Council has [officially concluded](https://vote.optimism.io/proposals/47939764654845104552261722485539617002410064905544331999528786700108507099119). This council plays a critical role in securing the Superchain by executing protocol upgrades, enforcing governance decisions, and maintaining the integrity of the OP Stack.\n\nFollowing a successful election process, the newly elected Council members are: **Agora, Velodrome, Cyfrin, Pablito.eth, Mariano, Uniswap Foundation, Emiliano, Ξthernaut**.\n\nAdditionally, **Alisha** [has been selected](https://vote.optimism.io/proposals/28197030874936103651584757576099649781961082558352101632047737121219887503363) to serve as **Cohort A Lead**, providing coordination and leadership for the new term.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Cycle 42: Season 8 Audit Grants Results",
+          "content": "The Optimism Collective [has announced](https://gov.optimism.io/t/cycle-42-results-season-8-audit-grants/10315) the results of Cycle 42 under Season 8’s Audit Grants program. Two projects, Own Protocol (48,250 OP) and TrueMarkets (62,500 OP), were approved for funding. Solo Chain and VII Finance were placed on hold for future consideration, while eight other applications were rejected, including proposals from Alchemix V3, Velodrome, and ZKP2P. A total of 110,750 OP was awarded from a remaining budget of **581,726 OP**, leaving **347,676.4 OP** available for upcoming cycles.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Cycle 43 Grants Council Report",
+          "content": "Cycle 43 [saw steady](https://gov.optimism.io/t/cycle-43-grants-council-report/10363?utm_source=chatgpt.com) progress in Optimism’s Season 8, with 8 grants approved out of 40 reviewed applications. A total of **2M OP** was allocated from the **17.8M OP** requested, leaving **3.14M OP** in the Season 8 budget. Notable approvals include Tydro and Oku, while major proposals like Aave and Velodrome were declined. The cycle introduced impact-based rejections for the first time, signaling a more data-driven and accountable grants process.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "The Superchain Now Powers Over Half of All L2 Transactions",
+          "content": "The Superchains are scaling Ethereum at a [remarkable speed](https://x.com/Optimism/status/1978813765820064092). With networks like OP Mainnet, Base, Ink, Soneium, and Unichain onboard, according to our [L2BEAT Superchain chart,](https://l2beat.com/ecosystems/superchain) the Superchain now accounts for 55.9% of all L2 transactions and secures billions in onchain value.\n\nEach OP Stack chain benefits from shared infrastructure, governance, and upgrades maintained by Optimism, creating a unified network that strengthens Ethereum’s modular future."
+        },
+        {
+          "title": "Super Raffle Launches on Farcaster — Play, Win, and Earn OP Tokens!",
+          "content": "The Super Raffle is [officially live,](https://www.superchain.eco/insights/play-win-and-earn-the-superchain-raffle-is-here) bringing a fresh onchain gaming experience to Farcaster users. This simple mini-app lets anyone join a weekly draw for a chance to win a share of 250 OP tokens, just by claiming a ticket.\n\nParticipation is easy: open the Super Raffle Mini App on Farcaster, connect your wallet (MetaMask, Rabby, Rainbow, etc.), and claim your raffle ticket. Once you’ve entered, you’ll be in the running for this week’s prize pool, distributed across 10 winners."
+        },
+        {
+          "title": "Notable on Applications",
+          "content": "Messari’s [H1 2025 Superchain report](https://messari.io/report/state-of-the-superchain-h1-2025) spotlights strong app-level momentum. Macro context: Superchain TVL rose 54% in Q2 via SuperStacks; apps generated **$396.5M** YTD in revenue with Base contributing **91.3%**; App RCR reached **8.2x** (apps earn $819.5 for every $100 in sequencer fees); Uniswap, Aerodrome, and Circle comprised **86.9%** of Superchain GDP. Unichain launched (Feb 2025) with fast blocks and a builder-focused roadmap.\n\n**Morpho**\n- TVL up **246.9% YTD** to **$1.74B**; active loans up **248.2%** to **$567.2M**, overtaking Aave and Moonwell; expanded to OP Mainnet and Unichain.\n- Announced **Morpho V2** (intent-based): **Markets V2** (fixed rate/term, bespoke parameters, flexible collateral) and **Vaults V2** (curator-led strategies, higher yield, enhanced risk).\n- Launched **Morpho Prime**: **Curator App** (no-code vaults/markets/caps/roles) and **Rewards App** (create/manage custom incentives).\n- **Coinbase** rolled out bitcoin-backed **USDC loans** in-app, facilitated on Base via Morpho (cbBTC collateral).\n\n**Aerodrome - Leading DEX on the Superchain**\n- Averaged **$580.5M** daily spot volume in H1 (ahead of Uniswap’s $406.1M); top DEX by volume on the Superchain.\n- **Coinbase integration** announced (June 2025): trading Aerodrome liquidity directly to 100M+ users.\n- Announced **Pool Launcher** to help teams bootstrap and scale liquidity.\n\n**Moonwell**\n- Third by active loans at **$220.9M** despite a **16.9%** YTD dip; partners with Morpho via **Moonwell Morpho Vaults**.\n\n**Uniswap**\n- #1 by application revenue each month of 2025, totaling **$131.5M** in H1; active across the Superchain, including Unichain.\n\n**Virtuals Protocol**\n- Q4 2024–Jan 2025 surge; **75.5%** of H1 revenue generated in January alone; ranked **#4** by H1 app revenue on the Superchain.\n\n**Circle**\n- Contributed **$75.8M** in H1 application revenue, placing within the top three alongside Uniswap and Aerodrome."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "agglayer",
+      "news": [
+        {
+          "title": "Polygon Launches Rio Upgrade",
+          "content": "Polygon’s Rio hardfork is [live](https://polygon.technology/blog/polygon-launches-major-payments-upgrade-with-rio-faster-lighter-and-easier-to-build), delivering the network’s most significant payments-focused upgrade to date.\n\nRio brings:\n\n- ~5,000 TPS throughput via the new VEBloP block production model\n- Near-instant finality with reorgs eliminated\n- Stateless validation, enabling lightweight, low-cost nodes\n- A more accessible, scalable, and enterprise-ready infrastructure\n\nWith VEBloP, validators elect a small pool of block producers per span, boosting performance while reducing complexity. Combined with PIP-72’s stateless block verification, validators no longer need to store the entire state, making it dramatically cheaper and easier to join the network.\n\nThis upgrade further cements Polygon PoS as a global payments chain, ideal for stablecoins and RWA settlements. Transactions are faster and final, and run on more accessible infrastructure, making Polygon more attractive to fintechs, enterprises, and developers."
+        },
+        {
+          "title": "Immutable x Polygon Launch Gaming Hub with Agglayer Integration Incoming",
+          "content": "Immutable and Polygon Labs [have teamed up](https://polygon.technology/blog/immutable-teams-up-with-polygon-labs-to-launch-dedicated-gaming-hub-with-agglayer-connection-coming-soon) to launch a new “Gaming on Polygon” hub within Immutable Play, creating a dedicated destination for discovering Web3 games built on Polygon. The initiative debuts with five new games, quests, leaderboards, and a $100,000 reward pool to boost player engagement and retention.\n\nThe hub aims to streamline game onboarding at scale, offering devs enterprise-grade tooling and a shared ecosystem powered by Immutable zkEVM.\n\nAdditionally, Immutable zkEVM is preparing to connect to Agglayer, Polygon’s cross-chain interoperability and shared liquidity protocol. This will allow seamless gameplay and asset transfers across ecosystems, benefiting both gamers and game developers.\n\nWith over 250K monthly users, 5.5M Passport signups, and $40M in TVL, Immutable is further cementing its position as a leader in Web3 gaming, now bringing that momentum to Polygon."
+        },
+        {
+          "title": "AMINA Bank Launches Regulated POL Staking for Institutions",
+          "content": "AMINA Bank, a Swiss FINMA-licensed crypto bank, [has become](https://polygon.technology/blog/amina-bank-introduces-regulated-polygon-pol-staking-for-institutions) the first regulated institution to offer staking services for Polygon’s upgraded POL token. This marks a major milestone in institutional Web3 adoption.\n\nWith backing from the Polygon Foundation, AMINA clients can now earn up to 15% staking yield, a significant boost over standard rewards. Institutions like asset managers, family offices, and corporate treasuries can participate securely through AMINA’s compliant custody stack.\n\nThis move comes as Polygon leads in stablecoin payment activity, supporting $3.4B in supply and dominating microtransaction volume across EVM chains. Major firms like Stripe, J.P. Morgan, and BlackRock have already built on Polygon, further validating its enterprise-grade infrastructure."
+        },
+        {
+          "title": "AlloyX Launches Real Yield Token (RYT) on Polygon with Institutional Custody",
+          "content": "AlloyX, Asia’s leading stablecoin service provider, [has launched](https://polygon.technology/blog/alloyx-launches-tokenized-money-market-fund-real-yield-token-ryt-on-polygon) Real Yield Token (RYT), a compliant, tokenized money market fund, exclusively on Polygon. Custodied by Standard Chartered Bank (Hong Kong), RYT offers institutional-grade yield with the flexibility and composability of DeFi.\n\nThe fund operates with T+1 settlement, daily liquidity, and onchain transparency, bridging regulated finance and DeFi. RYT is optimized for capital efficiency through looping strategies, leveraging Polygon’s low fees and high throughput for amplified returns.\n\nPolygon Labs is actively supporting the initiative with integration and growth support during its exclusivity period. RYT joins the growing suite of institutional financial products on Polygon, alongside integrations by Stripe, BlackRock, Apollo, and others."
+        },
+        {
+          "title": "Proposal: Polygon Considers Removing POL Inflation and Adding Buybacks",
+          "content": "A new draft proposal [aims](https://forum.polygon.technology/t/proposal-revision-of-pol-tokenomics-elimination-of-2-inflation-and-introduction-of-treasury-buyback-burn-policy/21323?utm_source=chatgpt.com) to overhaul POL’s tokenomics by removing its 2% annual inflation and introducing a buyback-and-burn mechanism. The plan seeks to restore investor confidence, reduce continuous sell pressure, and reflect Polygon’s evolving architecture.\n\nThe inflation, which mints ~200 million new tokens annually, has been criticized for contributing to POL’s underperformance. The proposal suggests halting inflation immediately or phasing it out gradually, while redirecting 20% of the Polygon Treasury’s net quarterly revenue to buy back or burn tokens.\n\nPolygon Labs would also commit to full transparency, with quarterly reports and a public dashboard tracking supply, treasury holdings, and emissions.",
+          "tags": ["governance"]
+        }
+      ]
+    },
+    {
+      "type": "data-availability",
+      "id": "eigenlayer",
+      "daLayerId": "eigenda",
+      "name": "EigenLayer",
+      "news": [
+        {
+          "title": "Collective Memory Uses EigenAI to Verify Reality Onchain",
+          "content": "Collective Memory, a decentralized social network, [enables users](https://blog.eigencloud.xyz/how-collective-memory-uses-eigenai-to-verify-1-6m-war-photos-protests-and-party-pics-onchain/) to upload unfiltered images and videos, ranging from protests and wars to parties and daily life, called “Memories.” These are not just content but verifiable onchain assets. Each Memory can be staked into using ATTN tokens, allowing creators to earn and fans to invest in the truth they value.\n\nThe challenge was processing 1.6 million Memories at scale without relying on centralized AI, which contradicts their core principle of decentralization. To solve this, they integrated EigenAI, a service built on EigenCloud that ensures inference (like time, location, and context detection) is verifiable, tamper-proof, and free from centralized control.\n\nEigenAI orchestrates multiple open-source AI models and provides a transparent infrastructure for inference. It ensures that all prompts, models, and outputs are verifiable, which was essential for Collective Memory’s vision of a decentralized and trustworthy knowledge base.\n\nSince integrating EigenAI, the platform has significantly improved the transparency and trust of its verification process. It laid the foundation for a new internet-native, user-owned knowledge graph, which the founders describe as “the world’s verified reality graph.”"
+        },
+        {
+          "title": "Witness Chain & EigenCloud: Building Trustless Proof of Location",
+          "content": "Witness Chain [introduces](https://blog.eigencloud.xyz/verifying-the-physical-world/) a cryptographically verifiable Proof of Location (PoL) system designed for decentralized physical infrastructure (DePIN). Unlike traditional GPS or Wi-Fi-based systems vulnerable to spoofing, Witness Chain uses network latency between distributed “watchtowers” to verify that a device is physically located where it claims to be. This verification enables onchain enforcement of location-sensitive actions, such as jurisdictional compute, localized energy trading, and geo-fenced storage.\n\nBy integrating with EigenCloud as an Autonomous Verifiable Service (AVS), Witness Chain benefits from Ethereum-grade trust, decentralization, and slashing-based security. EigenLayer stakers act as challengers, verifying location claims through latency checks and earning rewards for honest participation. The result is a scalable, cryptoeconomically secure location layer for smart contracts and DePIN coordination."
+        },
+        {
+          "title": "FereAI & EigenAI: Making AI Trading Agents Deterministic and Verifiable",
+          "content": "FereAI is a crypto assistant platform focused on long-horizon, AI-driven trading and research. It serves thousands of daily users with real-time intelligence by processing onchain activity, market news, and social signals. However, it faced a key limitation in AI: non-deterministic behavior. Identical prompts often yielded different outputs, posing a significant risk when managing real capital and long-term strategies.\n\nTo solve this, FereAI [integrated](https://blog.eigencloud.xyz/how-fereai-uses-eigenai/) with EigenAI, a verifiable inference service by EigenCloud. EigenAI ensures deterministic outputs from large language models (LLMs), meaning the same prompt always yields the same response — even with tool calls. This guarantees auditability and reproducibility and eliminates the need for complex guardrails.\n\nWith EigenAI, FereAI was able to scale faster, ship features more confidently, and provide trustworthy agent actions. Their developers can now focus on innovation instead of debugging unpredictable model outputs. For trading, where consistency is non-negotiable, this deterministic infrastructure turns experimental AI agents into reliable, production-grade financial tools."
+        },
+        {
+          "title": "Protocol Council Approves ELIPs 008, 010, and 011",
+          "content": "The EigenLayer Protocol Council [has officially](https://forum.eigenlayer.xyz/t/protocol-council-evaluation-elip-008-010-011/14723) approved three proposals after rigorous review:\n\n**ELIP-008 (Multi-Chain Verification)** introduces cross-chain capabilities for AVSs. It received unanimous support following a full security audit by Sigma Prime. While some complexity risks were noted around the stake transporter, a decentralization roadmap and controls were deemed adequate.\n\n**ELIP-010 (Mailbox for Hourglass)** standardizes task coordination for task-based AVSs. Reviewers praised its modular design and potential to expand viable AVS types. A minor spam attack vector was flagged but considered manageable. Final approval was conditional on audit completion, which is now public.\n\n**ELIP-011 (Programmatic Incentives v2.0)** updates EIGEN staking parameters to enhance rewards. It was described as simple and low-risk, with only one council member abstaining from the vote.\n\nThese approvals mark significant progress for EigenLayer's cross-chain operability, developer experience, and incentive alignment.",
+          "tags": ["governance"]
+        }
+      ]
+    },
+    {
+      "name": "Nethermind",
+      "type": "upcoming-project",
+      "projectId": "nethermind",
+      "news": [
+        {
+          "title": "Fusaka Upgrade: Nethermind Engineers Drive Ethereum’s Next Leap",
+          "content": "Ethereum is set to [launch](https://www.nethermind.io/blog/shaping-fusaka-netherminds-6-eips-for-ethereums-next-upgrade) the Fusaka upgrade in December 2025, boosting L1 throughput, expanding blob capacity for rollups, and improving validator and app experience. Nethermind plays a major role, both implementing and co-authoring key EIPs that shape the upgrade.\n\nAmong their contributions:\n\n- EIP-7642 improves sync efficiency by eliminating unnecessary bloom filters.\n- EIP-7883 & EIP-7823 adjust gas costs to close attack vectors.\n- EIP-7934 & EIP-7935 increase block size and gas limits safely.\n- EIP-7939 adds the CLZ opcode, lowering ZK proof costs significantly.\n\nFusaka also introduces PeerDAS (EIP-7594) to expand blob capacity, making rollups cheaper and faster, and EIP-7918 to keep blob fees economically healthy.\n\nFor users and developers, changes like EIP-7917 (deterministic proposer lookahead) and EIP-7825 (congestion resistance) bring better performance and predictability.\n\nWith Fusaka, Ethereum strengthens every layer of its stack — and Nethermind ensures it's battle-ready for production."
+        }
+      ]
+    },
+    {
+      "name": "Cartesi",
+      "type": "upcoming-project",
+      "projectId": "cartesi",
+      "news": [
+        {
+          "title": "Rollups Contracts v2.1.0-alpha.1 Speeds Up Node Syncing",
+          "content": "Cartesi Rollups Contracts v2.1.0-alpha.1 has been shipped, focusing on improving the reference node. The key feature is the introduction of new view functions to help the node sync its state faster. The new functions help fetch the number of executed outputs and the number of accepted claims, available on the Application and Consensus interfaces, respectively. This release also bumps a few dependencies. Read the changelog [here](https://github.com/cartesi/rollups-contracts/releases/tag/v2.1.0-alpha.1)."
+        },
+        {
+          "title": "Post Mortem: Liveness Bug Exposed by PRT Honeypot",
+          "content": "A detailed technical post-mortem [report](https://cartesi.io/blog/prt_honeypot_postmortem/) confirmed that the PRT Honeypot test successfully exposed a liveness bug in the dispute game. The root cause was an implementation-specific bug in the PRT smart contracts, not an algorithmic flaw in the fraud-proof system. While safety was preserved (no unauthorized withdrawals or incorrect settlements occurred), the flaw caused the application to permanently freeze, resulting in approximately $1,000 in Cartesi-owned funds being locked."
+        },
+        {
+          "title": "Fraud-Proof System Enhancements: Bonds Implementation, Revert Support Added",
+          "content": "Cartesi’s PRT fraud-proof system progressed with the implementation of the bond design, now [merged](https://github.com/cartesi/dave/pull/195) into the main branch. The approach greatly reduces the delay that a well-funded attacker - even a multimillionaire - could impose from an estimated 106 weeks down to 22 weeks, while still keeping validation costs minimal for honest participants. The bond system makes claims modestly expensive to mitigate Sybil and delay attacks, and helps ensure dispute costs are covered without acting as a participation incentive. The upcoming Honeypot release will include this bond design for further testing under adversarial conditions.\n\nThe PRT prototype now also supports applications that use the [revert feature](https://github.com/cartesi/dave/pull/194) of the Cartesi Machine, enabling more realistic testing conditions. These improvements will be exercised in the upcoming Honeypot [release](https://github.com/cartesi/honeypot/releases/tag/v3.0.0-rc1)."
+        },
+        {
+          "title": "Cartesi Machine Guest Tools v0.17.2 Released",
+          "content": "The Cartesi Machine Guest Tools provide essential tooling for the RISC-V Linux OS, including a RISC-V Debian package and a root filesystem for Ubuntu 24.04. The [latest update](https://github.com/cartesi/machine-guest-tools/releases/tag/v0.17.2) introduces caching the outputs Merkle hash when no new outputs are generated and addressing a non-determinism issue during installation. A pre-release of Honeypot v3.0.0-rc1 incorporating these changes has also been tagged for continued testing."
+        },
+        {
+          "title": "Stage 2 Rollups Booth at DevConnect’s L2District",
+          "content": "Cartesi and L2BEAT will co-host a booth in the L2District at [DevConnect](https://devconnect.org/) dedicated to Stage 2 Rollups. The booth will highlight what achieving Stage 2 status means for developers and users, and foster conversations about advancing decentralization and security across the Ethereum ecosystem."
+        }
+      ]
+    }
+  ]
+}

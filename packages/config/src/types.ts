@@ -166,7 +166,6 @@ export interface ProjectLinks {
   repositories?: string[]
   socialMedia?: string[]
   other?: string[]
-  rollupCodes?: string
 }
 export interface Badge {
   id: string
@@ -821,6 +820,7 @@ export interface ProjectZkCatalogInfo {
     knownDeployments: {
       address: string
       chain: string
+      overrideUsedIn?: ProjectId[]
     }[]
     verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
     verificationSteps?: string

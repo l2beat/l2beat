@@ -1,3 +1,144 @@
+Generated with discovered.json: 0x2841529776b042045de62632501c9feaf74f7368
+
+# Diff at Tue, 04 Nov 2025 13:55:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f12d06bbf120eab9f5356a235918d4d6b2484290 block: 1761895573
+- current timestamp: 1762264436
+
+## Description
+
+ms signer added.
+
+## Watched changes
+
+```diff
+    contract Katana Steakhouse Financial / Morpho Multisig (eth:0x827e86072B06674a077f592A531dcE4590aDeCdB) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x8AE8EE5ad6EaE89836B0070Ebc47AF06E3D7422b"
+      values.multisigThreshold:
+-        "2 of 4 (50%)"
++        "2 of 5 (40%)"
+    }
+```
+
+Generated with discovered.json: 0xe88f397606c7e20474b3e8f173408bfa1c4b0a9d
+
+# Diff at Tue, 04 Nov 2025 12:50:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@6b9a294e84c4d5ca84a7b377bd638098bb461624 block: 1761895573
+- current timestamp: 1761895573
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761895573 (main branch discovery), not current.
+
+```diff
+    contract PermissionedDisputeGame (eth:0x667b7DA73DA7B2A75286378FF45637eEaE9B4793) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger. In the context of this permissioned aggkit deployment, there are no state proposals made here and the op stack fault proof system is not used.
+      sourceHashes.0:
+-        "0x7129ee348039f13e017c18c90ffcb319f67a8fdd3b4a5a28c39aabc8bf0c57f6"
++        "0x0a442058af95748cc6199d889a46c775f9f6f4d29a61df5124ceb93ff631074d"
+    }
+```
+
+```diff
+    contract MIPS (eth:0xF027F4A985560fb13324e943edf55ad6F1d15Dc1) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes.0:
+-        "0x115725ab57eeed11f754138c0ec5f9bfba41e494b2336c2cd4745778eb26f776"
++        "0xd693f0cc376e99425037555be4a61adb70c597ad1485e838c475743c79a41fa0"
+    }
+```
+
+Generated with discovered.json: 0xd711d26e0acafacaf8e87ddc2745943abf94b387
+
+# Diff at Tue, 04 Nov 2025 09:10:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c52d5c1cf2092208997feb6320a35c565d7e0b0b block: 1761895573
+- current timestamp: 1761895573
+
+## Description
+
+config: hide proposer/challenger perms with custom criteria template for the dispute game contract.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761895573 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"challenge","from":"eth:0x667b7DA73DA7B2A75286378FF45637eEaE9B4793","role":".challenger"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x4A6f5889409Bf4Bf3Bff0Fef585D7A29FdA64258) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"propose","from":"eth:0x667b7DA73DA7B2A75286378FF45637eEaE9B4793","role":".proposer"}]
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0x667b7DA73DA7B2A75286378FF45637eEaE9B4793) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger. In the context of this permissioned aggkit deployment, there are no state proposals made here and the op stack fault proof system is not used.
+      template:
+-        "opstack/PermissionedDisputeGame"
++        "polygon-cdk/PermissionedDisputeGameUnused"
+      description:
+-        "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger."
++        "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger. In the context of this permissioned aggkit deployment, there are no state proposals made here and the op stack fault proof system is not used."
+    }
+```
+
+Generated with discovered.json: 0xa954e75854d6138c7e6f20c3e2b7e2d0ca8a3896
+
+# Diff at Mon, 03 Nov 2025 17:47:30 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6b72018cd9706ce7cba8ec489b67d7193f34dc20 block: 1761895573
+- current timestamp: 1761895573
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761895573 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"challenge","from":"eth:0x667b7DA73DA7B2A75286378FF45637eEaE9B4793","role":".challenger"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x4A6f5889409Bf4Bf3Bff0Fef585D7A29FdA64258) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"eth:0x667b7DA73DA7B2A75286378FF45637eEaE9B4793","role":".proposer"}]
+    }
+```
+
 Generated with discovered.json: 0x7f972cfc07a9051463a8b73abd6ad4365e0b992d
 
 # Diff at Fri, 31 Oct 2025 13:46:31 GMT:

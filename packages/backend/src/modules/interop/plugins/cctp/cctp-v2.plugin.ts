@@ -75,7 +75,7 @@ export const CCTPv2MessageSent = createInteropEventType<{
   fast: boolean
   app?: string
   hookData?: string
-  amount?: string
+  amount?: bigint
   tokenAddress?: Address32
   messageHash: string
   $dstChain: string
@@ -132,10 +132,10 @@ export class CCTPV2Plugin implements InteropPlugin {
             ),
             app: burnMessage ? 'TokenMessengerV2' : undefined,
             hookData: burnMessage?.hookData,
-            amount: burnMessage?.amount.toString(),
+            amount: burnMessage?.amount,
             tokenAddress: burnMessage
               ? Address32.from(burnMessage.burnToken)
-              : Address32.ZERO,
+              : undefined,
             messageHash: hashBurnMessage(message.messageBody),
           }),
         ]
@@ -191,6 +191,12 @@ export class CCTPV2Plugin implements InteropPlugin {
             dstEvent: messageReceived,
           },
         ),
+        Result.Transfer('cctp-v2.Transfer', {
+          srcEvent: messageSent,
+          srcTokenAddress: messageSent.args.tokenAddress,
+          srcAmount: messageSent.args.amount,
+          dstEvent: messageReceived,
+        }),
       ]
     }
   }

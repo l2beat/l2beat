@@ -39,7 +39,7 @@ export const lighterprover: BaseProject = {
     proofSystemInfo: `
     ## Description
 
-Lighter prover is a zk proving system for Lighter L2 based on [Plonky2](https://github.com/0xPolygonZero/plonky2/tree/main) circuits. It verifies the logic for regular state transition of Lighter L2, as well as state transitions in the “desert mode” when L2 is shut down and users exit, using different sets of circuits. The circuits are proven with a STARK which is wrapped into a Plonk SNARK before settling onchain.
+Lighter prover is a zk proving system for Lighter L2 based on [Plonky2](https://github.com/0xPolygonZero/plonky2/tree/main) circuits (see [this audit report](https://1186887628-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FXuISSHTfjHCg60BNss6v%2Fuploads%2F1rAS0JHojcLLcERDaceR%2Fzklighter-block.pdf?alt=media&token=3cc0f17d-7d5a-411d-800a-4c7116b6fb76) for more info). It verifies the logic for regular state transition of Lighter L2, as well as state transitions in the “desert mode” when L2 is shut down and users exit, using different sets of circuits. The circuits are proven with a STARK which is wrapped into a Plonk SNARK before settling onchain.
 
 ## Proof system
 
