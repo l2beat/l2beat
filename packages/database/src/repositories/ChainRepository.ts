@@ -54,6 +54,7 @@ export class ChainRepository extends BaseRepository {
   }
 
   async insertMany(records: ChainRecord[]): Promise<void> {
+    if (records.length === 0) return
     await this.db.insertInto('Chain').values(records.map(toRow)).execute()
   }
 
