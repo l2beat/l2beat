@@ -222,7 +222,7 @@ describe('getProjects', () => {
     }
   })
 
-  describe.only('zk catalog', async () => {
+  describe('zk catalog', async () => {
     const usageMap = getUsageMap(projects)
 
     for (const project of projects) {
@@ -238,8 +238,7 @@ describe('getProjects', () => {
           project.zkCatalogInfo.verifierHashes.flatMap((v) =>
             v.knownDeployments.flatMap(
               (d) =>
-                d.overrideUsedIn ??
-                usageMap.get(d.chain)?.get(EthereumAddress(d.address)),
+                d.overrideUsedIn ?? usageMap.get(`${d.chain}-${d.address}`),
             ),
           ),
         ).filter((p) => p !== undefined)
@@ -700,18 +699,14 @@ describe('getProjects', () => {
 
 // This is simpler version of getContractUtils that we have in FE. It's used only for testing.
 function getUsageMap(projects: BaseProject[]) {
-  const usageMap = new Map<string, Map<EthereumAddress, ProjectId[]>>()
+  const usageMap = new Map<`${string}-${EthereumAddress}`, ProjectId[]>()
 
   function addUsage(chain: string, address: EthereumAddress, usage: ProjectId) {
-    let byAddress = usageMap.get(chain)
-    if (!byAddress) {
-      byAddress = new Map()
-      usageMap.set(chain, byAddress)
-    }
-    let uses = byAddress.get(address)
+    const key = `${chain}-${address}` as const
+    let uses = usageMap.get(key)
     if (!uses) {
       uses = []
-      byAddress.set(address, uses)
+      usageMap.set(key, uses)
     }
     if (!uses.includes(usage)) {
       uses.push(usage)

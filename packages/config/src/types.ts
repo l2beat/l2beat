@@ -824,7 +824,7 @@ export interface ProjectZkCatalogInfo {
     hash: string
     proofSystem: ZkCatalogTag
     knownDeployments: {
-      address: string
+      address: EthereumAddress
       chain: string
       overrideUsedIn?: ProjectId[]
     }[]
