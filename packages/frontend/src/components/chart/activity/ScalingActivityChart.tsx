@@ -1,6 +1,8 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
+import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useIsClient } from '~/hooks/useIsClient'
@@ -35,11 +37,18 @@ export function ScalingActivityChart({ milestones, entries }: Props) {
   })
 
   const ratioData = useMemo(() => getRatioChartData(data), [data])
+  const chartRange = useMemo(
+    () => getChartRange(data?.data.map(([timestamp, ..._]) => ({ timestamp }))),
+    [data?.data],
+  )
 
   return (
     <div className="flex flex-col">
       <ActivityChartHeader />
       <ScalingRecategorizedActivityStats entries={entries} />
+      <div className="mt-1 mb-2">
+        <ChartTimeRange range={chartRange} />
+      </div>
       <ScalingRecategorizedActivityChart data={data} isLoading={isLoading} />
       <ActivityRatioChart
         data={ratioData}

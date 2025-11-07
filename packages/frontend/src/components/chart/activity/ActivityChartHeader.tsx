@@ -11,7 +11,7 @@ export function ActivityChartHeader() {
   const { metric, setMetric } = useActivityMetricContext()
 
   return (
-    <div className="flex items-start max-md:mb-2 max-md:flex-col md:items-center md:gap-2">
+    <div className="flex items-center gap-2">
       <h1 className="whitespace-nowrap font-bold text-xl max-md:ml-1 md:text-2xl">
         Daily average
       </h1>
