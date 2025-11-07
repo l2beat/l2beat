@@ -5,9 +5,8 @@ The dst chain on SRC must be determined by the contract address that emitted the
 contracts are set up for every SRC-DST pair on each chain
 */
 
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   defineNetworks,

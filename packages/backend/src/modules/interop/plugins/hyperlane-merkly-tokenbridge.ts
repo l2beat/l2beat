@@ -1,8 +1,7 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import { Dispatch, Process } from './hyperlane'
 import { findDispatchMessageId, parseSentTransferRemote } from './hyperlane-hwr'
 import {
-  Address32,
   createInteropEventType,
   defineNetworks,
   findChain,

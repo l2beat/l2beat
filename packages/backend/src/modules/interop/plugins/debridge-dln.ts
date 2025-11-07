@@ -1,6 +1,6 @@
+import { Address32 } from '@l2beat/shared-pure'
 import { DEBRIDGE_NETWORKS } from './debridge'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   findChain,

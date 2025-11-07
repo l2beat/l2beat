@@ -37,11 +37,11 @@ function EventsTable(props: {
               <td>{e.chain}</td>
               <td>
                 {explorerUrl ? (
-                  <a target="_blank" href={`${explorerUrl}/tx/${e.txHash}`}>
-                    {e.txHash}
+                  <a target="_blank" href={`${explorerUrl}/tx/${e.ctx.txHash}`}>
+                    {e.ctx.txHash}
                   </a>
                 ) : (
-                  e.txHash
+                  e.ctx.txHash
                 )}
               </td>
               <td>{srcChain ?? ''}</td>

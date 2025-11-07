@@ -1,8 +1,8 @@
 // TODO: find better examples
 // TODO: add intent protocol
 
+import { Address32 } from '@l2beat/shared-pure'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   defineNetworks,

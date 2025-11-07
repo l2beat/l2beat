@@ -3,10 +3,10 @@ Circle Gateway plugin
 Note - here the transfer of USDC is via burn/mint, but mint on DST happens before burn on SRC.
 */
 
+import { Address32 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { CCTPV2Config } from './cctp/cctp.config'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   findChain,

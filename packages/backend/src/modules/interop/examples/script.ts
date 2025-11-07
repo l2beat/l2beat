@@ -1,7 +1,7 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import { HttpClient, MulticallV3Client, RpcClient } from '@l2beat/shared'
-import { assert } from '@l2beat/shared-pure'
+import { Address32, assert } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { boolean, command, flag, positional, run, string } from 'cmd-ts'
 import { readFileSync } from 'fs'
@@ -12,11 +12,10 @@ import { logToViemLog } from '../engine/capture/InteropBlockProcessor'
 import { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { match } from '../engine/match/InteropMatchingLoop'
 import { createInteropPlugins } from '../plugins'
-import {
-  Address32,
-  type InteropEvent,
-  type InteropMessage,
-  type InteropTransfer,
+import type {
+  InteropEvent,
+  InteropMessage,
+  InteropTransfer,
 } from '../plugins/types'
 
 export function readJsonc(path: string): JSON {

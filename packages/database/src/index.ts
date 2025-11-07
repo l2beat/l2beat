@@ -31,6 +31,7 @@ export type { IndexerConfigurationRecord } from './repositories/IndexerConfigura
 export type { IndexerStateRecord } from './repositories/IndexerStateRepository'
 export type { InteropConfigRecord } from './repositories/InteropConfigRepository'
 export type {
+  InteropEventContext,
   InteropEventRecord,
   InteropEventStatsRecord,
 } from './repositories/InteropEventRepository'
