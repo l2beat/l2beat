@@ -10,6 +10,26 @@ const coingeckoClient = new CoingeckoClient({
   apiKey: config.coingeckoApiKey,
 })
 
+interface ChecksResponse {
+  error?: {
+    type: 'already-exists' | 'not-found-on-chain' | 'not-found-on-coingecko'
+    message: string
+  }
+  data: {
+    symbol: string | undefined
+    otherChains:
+      | {
+          chain: string
+          address: string
+          exists: boolean
+        }[]
+      | undefined
+    decimals: number | undefined
+    deploymentTimestamp: UnixTime | undefined
+    abstractTokenId: string | undefined
+  }
+}
+
 export const deployedTokensRouter = router({
   getByChainAndAddress: readOnlyProcedure
     .input(v.object({ chain: v.string(), address: v.string() }))
@@ -33,16 +53,39 @@ export const deployedTokensRouter = router({
 
   checks: readOnlyProcedure
     .input(v.object({ chain: v.string(), address: v.string() }))
-    .query(async ({ input }) => {
+    .query(async ({ input }): Promise<ChecksResponse> => {
       const result = await db.deployedToken.findByChainAndAddress({
         chain: input.chain,
         address: input.address,
       })
       if (result !== undefined) {
         return {
-          type: 'already-exists' as const,
+          error: {
+            type: 'already-exists' as const,
+            message:
+              'Deployed token with given address and chain already exists',
+          },
+          data: {
+            symbol: undefined,
+            otherChains: undefined,
+            decimals: undefined,
+            deploymentTimestamp: undefined,
+            abstractTokenId: undefined,
+          },
         }
       }
+      if (!input.address.startsWith('0x')) {
+        return {
+          data: {
+            symbol: undefined,
+            otherChains: undefined,
+            decimals: undefined,
+            deploymentTimestamp: undefined,
+            abstractTokenId: undefined,
+          },
+        }
+      }
+
       const chainRecord = await db.chain.findByName(input.chain)
       assert(chainRecord, 'Chain not found')
 
@@ -57,7 +100,17 @@ export const deployedTokensRouter = router({
         } catch (error) {
           console.error(error)
           return {
-            type: 'not-found-on-rpc' as const,
+            error: {
+              type: 'not-found-on-chain' as const,
+              message: 'Token not found on chain',
+            },
+            data: {
+              symbol: undefined,
+              otherChains: undefined,
+              decimals: undefined,
+              deploymentTimestamp: undefined,
+              abstractTokenId: undefined,
+            },
           }
         }
       }
@@ -88,10 +141,16 @@ export const deployedTokensRouter = router({
       const coin = await getCoinByChainAndAddress(input.chain, input.address)
       if (coin === null) {
         return {
-          type: 'not-found-on-coingecko' as const,
+          error: {
+            type: 'not-found-on-coingecko' as const,
+            message: 'Coin not found on Coingecko',
+          },
           data: {
+            symbol: undefined,
+            otherChains: undefined,
             decimals,
             deploymentTimestamp,
+            abstractTokenId: undefined,
           },
         }
       }
@@ -101,12 +160,12 @@ export const deployedTokensRouter = router({
         : undefined
 
       return {
-        type: 'success' as const,
         data: {
-          ...coin,
+          symbol: coin.symbol,
           decimals,
           deploymentTimestamp,
-          abstractToken,
+          abstractTokenId: abstractToken?.id,
+          otherChains: coin.otherChains,
         },
       }
     }),

@@ -1,4 +1,4 @@
-import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -52,55 +52,29 @@ export function AddDeployedToken() {
 
   useEffect(() => {
     if (!checks || checksLoading) return
-    switch (checks.type) {
-      case 'already-exists':
-        setDeployedTokenExistsError(form)
-        break
-
-      case 'not-found-on-rpc':
-        form.setError('address', {
-          type: 'custom',
-          message: 'Token not found on chain',
-        })
-        break
-      case 'not-found-on-coingecko':
-        form.setError('address', {
-          type: 'custom',
-          message: 'Coin not found on Coingecko',
-        })
-        if (checks.data.decimals) {
-          form.setValue('decimals', checks.data.decimals, { shouldDirty: true })
-        }
-        if (checks.data.deploymentTimestamp) {
-          form.setValue(
-            'deploymentTimestamp',
-            UnixTime.toYYYYMMDDHHMM(checks.data.deploymentTimestamp),
-            { shouldDirty: true },
-          )
-        }
-        break
-
-      case 'success':
-        form.clearErrors('address')
-        form.setValue('symbol', checks.data.symbol, { shouldDirty: true })
-        if (checks.data.decimals) {
-          form.setValue('decimals', checks.data.decimals, { shouldDirty: true })
-        }
-        if (checks.data.deploymentTimestamp) {
-          form.setValue(
-            'deploymentTimestamp',
-            UnixTime.toYYYYMMDDHHMM(checks.data.deploymentTimestamp),
-            { shouldDirty: true },
-          )
-        }
-        if (checks.data.abstractToken) {
-          form.setValue('abstractTokenId', checks.data.abstractToken.id, {
-            shouldDirty: true,
-          })
-        }
-        break
-      default:
-        assertUnreachable(checks)
+    if (checks.error) {
+      form.setError('address', {
+        type: 'custom',
+        message: checks.error.message,
+      })
+    }
+    if (checks.data?.decimals) {
+      form.setValue('decimals', checks.data.decimals, { shouldDirty: true })
+    }
+    if (checks.data?.deploymentTimestamp) {
+      form.setValue(
+        'deploymentTimestamp',
+        UnixTime.toYYYYMMDDHHMM(checks.data.deploymentTimestamp),
+        { shouldDirty: true },
+      )
+    }
+    if (checks.data?.abstractTokenId) {
+      form.setValue('abstractTokenId', checks.data.abstractTokenId, {
+        shouldDirty: true,
+      })
+    }
+    if (checks.data?.symbol) {
+      form.setValue('symbol', checks.data.symbol, { shouldDirty: true })
     }
   }, [checks, checksLoading, form])
 
@@ -115,7 +89,7 @@ export function AddDeployedToken() {
 
   function onSubmit(values: DeployedTokenSchema) {
     if (checksLoading) return
-    if (checks?.type === 'already-exists') {
+    if (checks?.error?.type === 'already-exists') {
       setDeployedTokenExistsError(form)
       return
     }

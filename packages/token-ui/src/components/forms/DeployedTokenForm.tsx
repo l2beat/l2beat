@@ -82,6 +82,8 @@ export function DeployedTokenForm({
     (abstractToken) => abstractToken.id === abstractTokenId,
   )
 
+  const success = tokenDetails.data?.error?.type !== 'already-exists'
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit((values) => onSubmit(values))}>
@@ -90,7 +92,7 @@ export function DeployedTokenForm({
             <FormField
               control={form.control}
               name="chain"
-              success={tokenDetails.data?.type === 'success'}
+              success={success}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
@@ -161,7 +163,7 @@ export function DeployedTokenForm({
             <FormField
               control={form.control}
               name="address"
-              success={tokenDetails.data?.type === 'success'}
+              success={success}
               render={({ field }) => (
                 <FormItem className="col-span-2">
                   <FormLabel>
@@ -314,29 +316,31 @@ export function DeployedTokenForm({
                       <ArrowRightIcon />
                     </Link>
                   )}
-                  {tokenDetails.data?.type === 'success' && !abstractToken && (
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Link
-                          to={buildUrlWithParams('/tokens/new', {
-                            tab: 'abstract',
-                            coingeckoId: tokenDetails.data.data.id,
-                            redirectTo: 'deployed',
-                          })}
-                          className={buttonVariants({
-                            variant: 'outline',
-                            className: 'shrink-0',
-                          })}
-                        >
-                          <PlusIcon />
-                        </Link>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        No abstract token found for this token. Click to add
-                        one.
-                      </TooltipContent>
-                    </Tooltip>
-                  )}
+                  {tokenDetails.data?.data.abstractTokenId &&
+                    !abstractToken && (
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Link
+                            to={buildUrlWithParams('/tokens/new', {
+                              tab: 'abstract',
+                              coingeckoId:
+                                tokenDetails.data?.data.abstractTokenId,
+                              redirectTo: 'deployed',
+                            })}
+                            className={buttonVariants({
+                              variant: 'outline',
+                              className: 'shrink-0',
+                            })}
+                          >
+                            <PlusIcon />
+                          </Link>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          No abstract token found for this token. Click to add
+                          one.
+                        </TooltipContent>
+                      </Tooltip>
+                    )}
                 </div>
                 <FormMessage />
               </FormItem>
