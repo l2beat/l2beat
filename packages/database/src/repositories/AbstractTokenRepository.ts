@@ -95,6 +95,18 @@ export class AbstractTokenRepository extends BaseRepository {
     return result ? toRecord(result) : undefined
   }
 
+  async findByCoingeckoId(
+    coingeckoId: string,
+  ): Promise<AbstractTokenRecord | undefined> {
+    const result = await this.db
+      .selectFrom('AbstractToken')
+      .selectAll()
+      .where('coingeckoId', '=', coingeckoId)
+      .executeTakeFirst()
+
+    return result ? toRecord(result) : undefined
+  }
+
   async getByIds(ids: string[]): Promise<AbstractTokenRecord[]> {
     const result = await this.db
       .selectFrom('AbstractToken')

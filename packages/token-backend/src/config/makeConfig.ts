@@ -12,6 +12,7 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
     database: getDatabaseConfig(env, options),
     auth: options.isLocal ? false : getAuthConfig(env),
     coingeckoApiKey: env.string('COINGECKO_API_KEY'),
+    etherscanApiKey: env.string('ETHERSCAN_API_KEY'),
     readOnlyAuthToken: env.optionalString('TOKEN_BACKEND_READONLY_AUTH_TOKEN'),
   }
 }

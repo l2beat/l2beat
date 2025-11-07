@@ -1,61 +1,8 @@
+import { db } from '../../database/db'
 import { readOnlyProcedure, router } from '../trpc'
 
 export const chainsRouter = router({
   getAll: readOnlyProcedure.query(() => {
-    return chains
+    return db.chain.getAll()
   }),
 })
-
-const chains = [
-  'kinto',
-  'superseed',
-  'fraxtal',
-  'galxegravity',
-  'immutablezkevm',
-  'cronoszkevm',
-  'reya',
-  'nova',
-  'katana',
-  'swell',
-  'everclear',
-  'corn',
-  'optimism',
-  'degen',
-  'blast',
-  'aevo',
-  'bob',
-  'mantapacific',
-  'educhain',
-  'abstract',
-  'zklinknova',
-  'polygonzkevm',
-  'base',
-  'sanko',
-  'unichain',
-  'mint',
-  'zircuit',
-  'mode',
-  'ethereum',
-  'arbitrum',
-  'lisk',
-  'plumenetwork',
-  'kroma',
-  'zkfair',
-  'taiko',
-  'rari',
-  'cyber',
-  'ternoa',
-  'soneium',
-  'real',
-  'ink',
-  'celo',
-  'zksync2',
-  'polygonpos',
-  'bobanetwork',
-  'morph',
-  'scroll',
-  'form',
-  'mantle',
-  'linea',
-  'metis',
-]

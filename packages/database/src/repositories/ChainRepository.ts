@@ -2,9 +2,15 @@ import type { Insertable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { Chain } from '../kysely/generated/types'
 
-type ChainApi = {
+export type ChainApi = {
   callsPerMinute?: number
-} & (RpcChainApi | EtherscanChainApi | BlockscoutChainApi | RoutescanChainApi)
+} & (
+  | RpcChainApi
+  | EtherscanChainApi
+  | BlockscoutChainApi
+  | BlockscoutV2ChainApi
+  | RoutescanChainApi
+)
 
 type EtherscanChainApi = {
   type: 'etherscan'
@@ -12,6 +18,11 @@ type EtherscanChainApi = {
 
 type BlockscoutChainApi = {
   type: 'blockscout'
+  url: string
+}
+
+type BlockscoutV2ChainApi = {
+  type: 'blockscoutV2'
   url: string
 }
 
@@ -61,6 +72,15 @@ export class ChainRepository extends BaseRepository {
   async getAll(): Promise<ChainRecord[]> {
     const rows = await this.db.selectFrom('Chain').selectAll().execute()
     return rows.map(toRecord)
+  }
+
+  async findByName(name: string): Promise<ChainRecord | undefined> {
+    const row = await this.db
+      .selectFrom('Chain')
+      .selectAll()
+      .where('name', '=', name)
+      .executeTakeFirst()
+    return row ? toRecord(row) : undefined
   }
 
   async deleteAll(): Promise<number> {

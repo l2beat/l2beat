@@ -188,12 +188,13 @@ export class InteropFinancialsLoop extends TimeLoop {
   async getTokenInfos(deployedTokens: DeployedTokenId[]) {
     const result: TokenInfos = new Map()
 
-    const tokens = await this.tokenDbClient.tokens.getByChainAndAddress.query(
-      deployedTokens.map((d) => ({
-        chain: DeployedTokenId.chain(d),
-        address: DeployedTokenId.address(d),
-      })),
-    )
+    const tokens =
+      await this.tokenDbClient.deployedTokens.getByChainAndAddress.query(
+        deployedTokens.map((d) => ({
+          chain: DeployedTokenId.chain(d),
+          address: DeployedTokenId.address(d),
+        })),
+      )
 
     const tokensMap = new Map(
       tokens.map((t) => [
