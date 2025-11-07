@@ -11,7 +11,7 @@ const coingeckoClient = new CoingeckoClient({
 })
 
 export const deployedTokensRouter = router({
-  getByChainAndAddress: readOnlyProcedure
+  findByChainAndAddress: readOnlyProcedure
     .input(v.object({ chain: v.string(), address: v.string() }))
     .query(async ({ input }) => {
       const result = await db.deployedToken.findByChainAndAddress({
@@ -31,6 +31,9 @@ export const deployedTokensRouter = router({
       return result !== undefined
     }),
 
+  getByChainAndAddress: readOnlyProcedure
+    .input(v.array(v.object({ chain: v.string(), address: v.string() })))
+    .query(async ({ input }) => db.deployedToken.getByChainAndAddress(input)),
   checks: readOnlyProcedure
     .input(v.object({ chain: v.string(), address: v.string() }))
     .query(async ({ input }) => {

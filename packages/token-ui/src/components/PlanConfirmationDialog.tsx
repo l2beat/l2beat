@@ -40,7 +40,7 @@ export function PlanConfirmationDialog({
   function invalidateDeployedTokenQueries() {
     utils.abstractTokens.getAllWithDeployedTokens.invalidate()
     utils.abstractTokens.getById.invalidate()
-    utils.deployedTokens.getByChainAndAddress.invalidate()
+    utils.deployedTokens.findByChainAndAddress.invalidate()
     utils.search.tokens.invalidate()
     utils.deployedTokens.checkIfExists.invalidate()
   }

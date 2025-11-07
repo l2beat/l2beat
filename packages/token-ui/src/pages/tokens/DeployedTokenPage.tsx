@@ -28,7 +28,7 @@ import { validateResolver } from '~/utils/validateResolver'
 
 export function DeployedTokenPage() {
   const { chain, address } = useParams()
-  const { data } = api.deployedTokens.getByChainAndAddress.useQuery(
+  const { data } = api.deployedTokens.findByChainAndAddress.useQuery(
     {
       chain: chain ?? '',
       address: address ?? '',
@@ -176,7 +176,20 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
               isFormDisabled={isPending}
               tokenDetails={{
                 data: deployedTokenExists
-                  ? { type: 'already-exists' }
+                  ? {
+                      error: {
+                        type: 'already-exists',
+                        message:
+                          'Deployed token with given address and chain already exists',
+                      },
+                      data: {
+                        symbol: undefined,
+                        otherChains: undefined,
+                        decimals: undefined,
+                        deploymentTimestamp: undefined,
+                        abstractTokenId: undefined,
+                      },
+                    }
                   : undefined,
                 loading: deployedTokenExistsLoading,
               }}

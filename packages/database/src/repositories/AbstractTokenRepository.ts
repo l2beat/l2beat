@@ -28,6 +28,7 @@ function toRecord(row: Selectable<AbstractToken>): AbstractTokenRecord {
     coingeckoListingTimestamp: toTimestamp(row.coingeckoListingTimestamp),
   }
 }
+export { toRecord as toAbstractTokenRecord }
 
 function toRow(record: AbstractTokenRecord): Insertable<AbstractToken> {
   return {

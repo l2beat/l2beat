@@ -1,3 +1,4 @@
+export { getTokenDbClient, type TokenDbClient } from './client'
 export type { Command } from './commands'
 export type { Plan } from './planning'
 export type * from './schemas/AbstractToken'

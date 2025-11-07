@@ -1,15 +1,26 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, InteropTransferUpdate } from '@l2beat/database'
 import { assertUnreachable, UnixTime, unique } from '@l2beat/shared-pure'
+import type { TokenDbClient } from '@l2beat/token-backend'
 import { TimeLoop } from '../../../../tools/TimeLoop'
 import { Address32 } from '../../plugins/types'
-import { DeployedTokenId, type ITokenDb, type PriceInfo } from './TokenDb'
+import { DeployedTokenId } from './DeployedTokenId'
+
+export type TokenInfos = Map<
+  DeployedTokenId,
+  {
+    abstractId: string
+    symbol: string
+    decimals: number
+    coingeckoId: string
+  }
+>
 
 export class InteropFinancialsLoop extends TimeLoop {
   constructor(
     private chains: { name: string; type: 'evm' }[],
     private db: Database,
-    private tokenDb: ITokenDb,
+    private tokenDbClient: TokenDbClient,
     protected logger: Logger,
     intervalMs = 10_000,
   ) {
@@ -24,7 +35,6 @@ export class InteropFinancialsLoop extends TimeLoop {
       return
     }
 
-    // TODO: consider adding index to isProcessed
     const unprocessed = (await this.db.interopTransfer.getUnprocessed()).map(
       (u) => ({
         transfer: u,
@@ -32,10 +42,12 @@ export class InteropFinancialsLoop extends TimeLoop {
         dstId: this.toDeployedId(u.dstChain, u.dstTokenAddress),
       }),
     )
+
     if (unprocessed.length === 0) {
-      this.logger.info('No uprocessed transfers found')
+      this.logger.info('Skipping run, no transfers to process.')
       return
     }
+
     this.logger.info('Processing transfers', {
       transfers: unprocessed.length,
     })
@@ -45,10 +57,11 @@ export class InteropFinancialsLoop extends TimeLoop {
         .flatMap((t) => [t.srcId, t.dstId])
         .filter((x) => x !== undefined),
     )
-    const priceInfos = await this.tokenDb.getPriceInfo(tokens)
+
+    const tokenInfos = await this.getTokenInfos(tokens)
 
     const coingeckoIds = unique(
-      Array.from(priceInfos.values())
+      Array.from(tokenInfos.values())
         .map((t) => t.coingeckoId)
         .filter((u) => u !== undefined),
     )
@@ -64,27 +77,25 @@ export class InteropFinancialsLoop extends TimeLoop {
         const update: InteropTransferUpdate = {}
         if (t.srcId) {
           this.applyTokenUpdate(
-            update,
-            t.transfer.plugin,
+            tokenInfos,
+            prices,
             t.srcId,
             t.transfer.srcRawAmount,
-            priceInfos,
-            prices,
             'src',
+            update,
           )
         }
         if (t.dstId) {
           this.applyTokenUpdate(
-            update,
-            t.transfer.plugin,
+            tokenInfos,
+            prices,
             t.dstId,
             t.transfer.dstRawAmount,
-            priceInfos,
-            prices,
             'dst',
+            update,
           )
         }
-        return { id: t.transfer.messageId, update }
+        return { id: t.transfer.transferId, update }
       })
 
     await this.db.transaction(async () => {
@@ -104,26 +115,24 @@ export class InteropFinancialsLoop extends TimeLoop {
   }
 
   private applyTokenUpdate(
-    update: InteropTransferUpdate,
-    plugin: string,
+    tokenInfos: TokenInfos,
+    prices: Map<string, number | undefined>,
     id: DeployedTokenId,
     rawAmount: bigint | undefined,
-    priceInfos: PriceInfo,
-    prices: Map<string, number | undefined>,
     prefix: 'src' | 'dst',
+    update: InteropTransferUpdate,
   ) {
-    const tokenUpdate = this.calculateTokenUpdate(
-      plugin,
+    const tokenUpdate = this.generateTokenUpdate(
+      tokenInfos,
+      prices,
       id,
       rawAmount,
-      priceInfos,
-      prices,
     )
-
     if (!tokenUpdate) return
 
     const fieldMapping = {
       abstractTokenId: `${prefix}AbstractTokenId`,
+      symbol: `${prefix}Symbol`,
       price: `${prefix}Price`,
       amount: `${prefix}Amount`,
       valueUsd: `${prefix}ValueUsd`,
@@ -138,65 +147,93 @@ export class InteropFinancialsLoop extends TimeLoop {
     })
   }
 
-  private calculateTokenUpdate(
-    plugin: string,
+  private generateTokenUpdate(
+    tokenInfos: TokenInfos,
+    prices: Map<string, number | undefined>,
     id: DeployedTokenId,
     rawAmount: bigint | undefined,
-    priceInfos: PriceInfo,
-    prices: Map<string, number | undefined>,
   ) {
-    const priceInfo = priceInfos.get(id)
-    if (!priceInfo) {
-      this.logger.warn('Missing price info', {
-        plugin,
-        id,
-        chain: DeployedTokenId.chain(id),
-        token: DeployedTokenId.address(id),
-      })
-      return
-    }
+    const tokenInfo = tokenInfos.get(id)
+    if (!tokenInfo) return
 
-    const price = prices.get(priceInfo.coingeckoId)
+    const price = prices.get(tokenInfo.coingeckoId)
     if (price === undefined) {
       this.logger.warn('Missing price data', {
-        plugin,
         id,
-        coingeckoId: priceInfo.coingeckoId,
+        coingeckoId: tokenInfo.coingeckoId,
       })
       return
     }
 
-    if (!rawAmount) {
-      this.logger.warn('Missing raw amount', {
-        plugin,
-        id,
-        rawAmount,
-      })
+    if (rawAmount === undefined) {
+      this.logger.warn('Missing raw amount', { id })
       return
     }
 
     // This calculation gives us 6 decimal places of precision while not
     // calculating absurd values using basic numbers
     const amount =
-      Number((rawAmount * 1_000_000n) / 10n ** BigInt(priceInfo.decimals)) /
+      Number((rawAmount * 1_000_000n) / 10n ** BigInt(tokenInfo.decimals)) /
       1_000_000
 
-    const valueUsd = price * amount
-
-    this.logger.info('Token value calculated', {
-      plugin,
-      id,
-      amount,
-      price,
-      valueUsd,
-    })
-
     return {
-      abstractTokenId: priceInfo.abstractId,
+      abstractTokenId: tokenInfo.abstractId,
+      symbol: tokenInfo.symbol,
       price,
       amount,
-      valueUsd,
+      valueUsd: price * amount,
     }
+  }
+
+  async getTokenInfos(deployedTokens: DeployedTokenId[]) {
+    const result: TokenInfos = new Map()
+
+    const tokens = await this.tokenDbClient.tokens.getByChainAndAddress.query(
+      deployedTokens.map((d) => ({
+        chain: DeployedTokenId.chain(d),
+        address: DeployedTokenId.address(d),
+      })),
+    )
+
+    const tokensMap = new Map(
+      tokens.map((t) => [
+        DeployedTokenId.from(t.deployedToken.chain, t.deployedToken.address),
+        t,
+      ]),
+    )
+
+    for (const d of deployedTokens) {
+      const tokenData = tokensMap.get(d)
+
+      if (!tokenData) {
+        this.logger.info('Missing token detected', { deployedTokenId: d })
+        continue
+      }
+
+      const { deployedToken, abstractToken } = tokenData
+
+      if (!abstractToken) {
+        this.logger.info('Missing abstract token', { deployedTokenId: d })
+        continue
+      }
+
+      if (!abstractToken.coingeckoId) {
+        this.logger.info('Missing coingeckoId', {
+          deployedTokenId: d,
+          abstractToken,
+        })
+        continue
+      }
+
+      result.set(d, {
+        abstractId: abstractToken.id,
+        symbol: deployedToken.symbol,
+        coingeckoId: abstractToken.coingeckoId,
+        decimals: deployedToken.decimals,
+      })
+    }
+
+    return result
   }
 
   toDeployedId(chain: string | undefined, address: string | undefined) {
@@ -208,17 +245,12 @@ export class InteropFinancialsLoop extends TimeLoop {
       return DeployedTokenId.from(chain, 'native')
     }
 
-    if (
-      address === 'native' ||
-      address === '0x' ||
-      address === Address32.ZERO
-    ) {
+    if (address === '0x' || address === Address32.ZERO) {
       return
     }
+
     const chainConfig = this.chains.find((c) => c.name === chain)
-    if (!chainConfig) {
-      return
-    }
+    if (!chainConfig) return
 
     switch (chainConfig.type) {
       case 'evm':
