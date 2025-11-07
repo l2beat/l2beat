@@ -120,7 +120,7 @@ export async function getRecategorisedActivityChart(
       const validiumsAndOptimiumsTxCount =
         validiumsAndOptimiumsEntry?.count ?? null
       const othersTxCount = othersEntry?.count ?? null
-      const ethereumTxCount = ethereumEntry?.count ?? null
+      const ethereumTxCount = ethereumEntry?.ethereumCount ?? null
 
       const rollupsUopsCount = rollupsEntry?.uopsCount ?? rollupsTxCount
       const validiumsAndOptimiumsUopsCount =

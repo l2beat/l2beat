@@ -117,78 +117,70 @@ export function ScalingRecategorizedActivityChart({ data, isLoading }: Props) {
   }, [data, metric])
 
   return (
-    <div className="flex flex-col">
-      <ChartContainer
-        meta={chartMeta}
-        data={chartData}
-        isLoading={isLoading}
-        interactiveLegend={{
-          dataKeys,
-          onItemClick: toggleDataKey,
-          disableOnboarding: true,
-        }}
-      >
-        <AreaChart data={chartData} margin={{ top: 20 }}>
-          <defs>
-            <PinkFillGradientDef id="rollups-fill" />
-            <PinkStrokeGradientDef id="rollups-stroke" />
-            <CyanFillGradientDef id="validiums-and-optimiums-fill" />
-            <CyanStrokeGradientDef id="validiums-and-optimiums-stroke" />
-            <YellowFillGradientDef id="others-fill" />
-            <YellowStrokeGradientDef id="others-stroke" />
-            <EthereumFillGradientDef id="ethereum-fill" />
-            <EthereumStrokeGradientDef id="ethereum-stroke" />
-          </defs>
-          <ChartLegend content={<ChartLegendContent />} />
-          {getStrokeOverFillAreaComponents({
-            data: [
-              {
-                dataKey: 'rollups',
-                stroke: 'url(#rollups-stroke)',
-                fill: 'url(#rollups-fill)',
-                hide: !dataKeys.includes('rollups'),
-              },
-              {
-                dataKey: 'validiumsAndOptimiums',
-                stroke: 'url(#validiums-and-optimiums-stroke)',
-                fill: 'url(#validiums-and-optimiums-fill)',
-                hide: !dataKeys.includes('validiumsAndOptimiums'),
-              },
-              {
-                dataKey: 'others',
-                stroke: 'url(#others-stroke)',
-                fill: 'url(#others-fill)',
-                hide: !dataKeys.includes('others'),
-              },
-              {
-                dataKey: 'ethereum',
-                stroke: 'url(#ethereum-stroke)',
-                fill: 'url(#ethereum-fill)',
-                hide: !dataKeys.includes('ethereum'),
-              },
-            ],
-          })}
-          <ChartTooltip
-            content={<CustomTooltip syncedUntil={data?.syncedUntil} />}
-          />
-          {getCommonChartComponents({
-            data: chartData,
-            isLoading,
-            yAxis: {
-              domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
-              unit: ' UOPS',
+    <ChartContainer
+      meta={chartMeta}
+      data={chartData}
+      isLoading={isLoading}
+      interactiveLegend={{
+        dataKeys,
+        onItemClick: toggleDataKey,
+        disableOnboarding: true,
+      }}
+    >
+      <AreaChart data={chartData} margin={{ top: 20 }}>
+        <defs>
+          <PinkFillGradientDef id="rollups-fill" />
+          <PinkStrokeGradientDef id="rollups-stroke" />
+          <CyanFillGradientDef id="validiums-and-optimiums-fill" />
+          <CyanStrokeGradientDef id="validiums-and-optimiums-stroke" />
+          <YellowFillGradientDef id="others-fill" />
+          <YellowStrokeGradientDef id="others-stroke" />
+          <EthereumFillGradientDef id="ethereum-fill" />
+          <EthereumStrokeGradientDef id="ethereum-stroke" />
+        </defs>
+        <ChartLegend content={<ChartLegendContent />} />
+        {getStrokeOverFillAreaComponents({
+          data: [
+            {
+              dataKey: 'rollups',
+              stroke: 'url(#rollups-stroke)',
+              fill: 'url(#rollups-fill)',
+              hide: !dataKeys.includes('rollups'),
             },
-            syncedUntil: data?.syncedUntil,
-          })}
-        </AreaChart>
-      </ChartContainer>
-      {/* <ActivityRatioChart
-        data={ratioData}
-        isLoading={isLoading}
-        syncedUntil={data?.syncedUntil}
-        className="mb-2"
-      /> */}
-    </div>
+            {
+              dataKey: 'validiumsAndOptimiums',
+              stroke: 'url(#validiums-and-optimiums-stroke)',
+              fill: 'url(#validiums-and-optimiums-fill)',
+              hide: !dataKeys.includes('validiumsAndOptimiums'),
+            },
+            {
+              dataKey: 'others',
+              stroke: 'url(#others-stroke)',
+              fill: 'url(#others-fill)',
+              hide: !dataKeys.includes('others'),
+            },
+            {
+              dataKey: 'ethereum',
+              stroke: 'url(#ethereum-stroke)',
+              fill: 'url(#ethereum-fill)',
+              hide: !dataKeys.includes('ethereum'),
+            },
+          ],
+        })}
+        <ChartTooltip
+          content={<CustomTooltip syncedUntil={data?.syncedUntil} />}
+        />
+        {getCommonChartComponents({
+          data: chartData,
+          isLoading,
+          yAxis: {
+            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
+            unit: ' UOPS',
+          },
+          syncedUntil: data?.syncedUntil,
+        })}
+      </AreaChart>
+    </ChartContainer>
   )
 }
 

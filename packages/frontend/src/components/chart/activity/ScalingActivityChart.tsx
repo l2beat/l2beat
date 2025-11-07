@@ -1,4 +1,5 @@
 import type { Milestone } from '@l2beat/config'
+import { useMemo } from 'react'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -11,7 +12,9 @@ import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils
 import { api } from '~/trpc/React'
 import type { ChartScale } from '../types'
 import { ActivityChartHeader } from './ActivityChartHeader'
+import { ActivityRatioChart } from './ActivityRatioChart'
 import { ScalingRecategorizedActivityChart } from './ScalingRecategorizedActivityChart'
+import { getRatioChartData } from './utils/getRatioChartData'
 
 interface Props {
   milestones: Milestone[]
@@ -30,26 +33,18 @@ export function ScalingActivityChart({ milestones, entries }: Props) {
     filter: { type: 'projects', projectIds: entries.map((entry) => entry.id) },
   })
 
+  const ratioData = useMemo(() => getRatioChartData(data), [data])
+
   return (
     <div className="flex flex-col">
       <ActivityChartHeader />
       <ScalingRecategorizedActivityChart data={data} isLoading={isLoading} />
-      {/* <ActivityChart
-        className="mt-4 mb-3"
-        data={chartData}
-        syncedUntil={data?.syncedUntil}
-        isLoading={isLoading}
-        milestones={milestones}
-        scale={scale}
-        metric={metric}
-        type="Rollups"
-      />
       <ActivityRatioChart
         data={ratioData}
         isLoading={isLoading}
         syncedUntil={data?.syncedUntil}
         className="mb-2"
-      />*/}
+      />
       <Controls
         scale={scale}
         setScale={setScale}
