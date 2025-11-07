@@ -13,7 +13,8 @@ export const coingeckoRouter = router({
     try {
       const coin = await coingeckoClient.getCoinDataById(input)
       return coin
-    } catch {
+    } catch (error) {
+      console.error(error)
       return null
     }
   }),
@@ -34,7 +35,8 @@ export const coingeckoRouter = router({
         }
 
         return UnixTime(Math.floor(firstPrice.date.getTime() / 1000))
-      } catch {
+      } catch (error) {
+        console.error(error)
         return null
       }
     }),

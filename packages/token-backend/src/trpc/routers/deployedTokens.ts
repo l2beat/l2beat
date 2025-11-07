@@ -54,7 +54,8 @@ export const deployedTokensRouter = router({
       if (chain.rpc) {
         try {
           decimals = await chain.rpc.getDecimals(input.address)
-        } catch {
+        } catch (error) {
+          console.error(error)
           return {
             type: 'not-found-on-rpc' as const,
           }
@@ -63,17 +64,25 @@ export const deployedTokensRouter = router({
 
       let deploymentTimestamp: UnixTime | undefined
       if (chain.etherscan) {
-        const contractCreation = await chain.etherscan.getContractCreation(
-          input.address,
-        )
-        deploymentTimestamp = contractCreation[0].timestamp
+        try {
+          const contractCreation = await chain.etherscan.getContractCreation(
+            input.address,
+          )
+          deploymentTimestamp = contractCreation[0].timestamp
+        } catch (error) {
+          console.error(error)
+        }
       }
 
       if (deploymentTimestamp === undefined && chain.blockscout) {
-        const contractCreation = await chain.blockscout.getContractCreation(
-          input.address,
-        )
-        deploymentTimestamp = contractCreation[0].timestamp
+        try {
+          const contractCreation = await chain.blockscout.getContractCreation(
+            input.address,
+          )
+          deploymentTimestamp = contractCreation[0].timestamp
+        } catch (error) {
+          console.error(error)
+        }
       }
 
       const coin = await getCoinByChainAndAddress(input.chain, input.address)

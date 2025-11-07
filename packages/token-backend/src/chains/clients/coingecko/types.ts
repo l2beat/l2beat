@@ -24,9 +24,9 @@ export const CoinListPlatformEntrySchema = v.object({
 })
 
 export const CoinMarketChartRangeResultSchema = v.object({
-  prices: v.array(v.tuple([v.number(), v.string()])),
-  market_caps: v.array(v.tuple([v.number(), v.string()])),
-  total_volumes: v.array(v.tuple([v.number(), v.string()])),
+  prices: v.array(v.tuple([v.number(), v.number()])),
+  market_caps: v.array(v.tuple([v.number(), v.number()])),
+  total_volumes: v.array(v.tuple([v.number(), v.number()])),
 })
 
 export interface CoinMarketChartRangeData {
@@ -37,4 +37,3 @@ export interface CoinMarketChartRangeData {
 export interface CoingeckoClientConfig {
   apiKey?: string
 }
-
