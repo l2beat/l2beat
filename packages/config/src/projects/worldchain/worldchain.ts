@@ -51,12 +51,14 @@ export const worldchain = opStackL2({
     coingeckoPlatform: 'world-chain',
     sinceTimestamp: genesisTimestamp,
     chainId: 480,
+    explorerUrl: 'https://worldscan.org',
     apis: [
       {
         type: 'rpc',
         url: 'https://worldchain-mainnet.g.alchemy.com/public',
         callsPerMinute: 300,
       },
+      { type: 'etherscan', chainId: 480 },
     ],
   },
   stateDerivation: DERIVATION.OPSTACK('WORLD'),
