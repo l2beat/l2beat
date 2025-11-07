@@ -27,7 +27,7 @@ export const beamerbridgev2: Bridge = {
     links: {
       websites: ['https://beamerbridge.com'],
       bridges: ['https://app.beamerbridge.com'],
-      documentation: ['https://docs.aevo.xyz/#nature-of-the-token-documentation'],
+      documentation: ['https://docs.beamerbridge.com/'],
       repositories: ['https://github.com/beamer-bridge/beamer'],
       socialMedia: [
         'https://twitter.com/BeamerBridge',
