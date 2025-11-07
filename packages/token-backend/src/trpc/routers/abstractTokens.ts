@@ -1,12 +1,12 @@
 import { v } from '@l2beat/validate'
 import { db } from '../../database/db'
-import { protectedProcedure, router } from '../trpc'
+import { readOnlyProcedure, router } from '../trpc'
 
 export const abstractTokensRouter = router({
-  getAll: protectedProcedure.query(() => {
+  getAll: readOnlyProcedure.query(() => {
     return db.abstractToken.getAll()
   }),
-  getAllWithDeployedTokens: protectedProcedure.query(async () => {
+  getAllWithDeployedTokens: readOnlyProcedure.query(async () => {
     const [abstractTokens, allDeployedTokens] = await Promise.all([
       db.abstractToken.getAll(),
       db.deployedToken.getAll(),
@@ -40,7 +40,7 @@ export const abstractTokensRouter = router({
       deployedWithoutAbstractTokens,
     }
   }),
-  getById: protectedProcedure.input(v.string()).query(async ({ input }) => {
+  getById: readOnlyProcedure.input(v.string()).query(async ({ input }) => {
     const abstractToken = await db.abstractToken.findById(input)
     if (!abstractToken) {
       return null

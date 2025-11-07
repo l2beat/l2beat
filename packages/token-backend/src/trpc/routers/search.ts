@@ -1,10 +1,10 @@
 import { v } from '@l2beat/validate'
 import fuzzysort from 'fuzzysort'
 import { db } from '../../database/db'
-import { protectedProcedure, router } from '../trpc'
+import { readOnlyProcedure, router } from '../trpc'
 
 export const searchRouter = router({
-  tokens: protectedProcedure.input(v.string()).query(async ({ input }) => {
+  tokens: readOnlyProcedure.input(v.string()).query(async ({ input }) => {
     const deployedTokens = await db.deployedToken.getAll()
     if (input.startsWith('0x')) {
       return {

@@ -4,14 +4,14 @@ import { Chain } from '../../chains/Chain'
 import { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
 import { config } from '../../config'
 import { db } from '../../database/db'
-import { protectedProcedure, router } from '../trpc'
+import { readOnlyProcedure, router } from '../trpc'
 
 const coingeckoClient = new CoingeckoClient({
   apiKey: config.coingeckoApiKey,
 })
 
 export const deployedTokensRouter = router({
-  getByChainAndAddress: protectedProcedure
+  getByChainAndAddress: readOnlyProcedure
     .input(v.object({ chain: v.string(), address: v.string() }))
     .query(async ({ input }) => {
       const result = await db.deployedToken.findByChainAndAddress({
@@ -21,7 +21,7 @@ export const deployedTokensRouter = router({
       return result ?? null
     }),
 
-  checkIfExists: protectedProcedure
+  checkIfExists: readOnlyProcedure
     .input(v.object({ chain: v.string(), address: v.string() }))
     .query(async ({ input }) => {
       const result = await db.deployedToken.findByChainAndAddress({
@@ -31,7 +31,7 @@ export const deployedTokensRouter = router({
       return result !== undefined
     }),
 
-  checks: protectedProcedure
+  checks: readOnlyProcedure
     .input(v.object({ chain: v.string(), address: v.string() }))
     .query(async ({ input }) => {
       const result = await db.deployedToken.findByChainAndAddress({
