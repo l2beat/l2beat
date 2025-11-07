@@ -123,6 +123,7 @@ export const deployedTokensRouter = router({
             decimals,
             deploymentTimestamp,
             abstractTokenId: undefined,
+            coingeckoId: undefined,
           },
         }
       }
@@ -139,6 +140,7 @@ export const deployedTokensRouter = router({
           deploymentTimestamp,
           abstractTokenId: abstractToken?.id,
           otherChains: coin.otherChains,
+          coingeckoId: coin.id,
         },
       }
     }),
