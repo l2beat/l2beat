@@ -1,4 +1,4 @@
-import type { AbstractTokenRecord, AppRouter } from '@l2beat/token-backend'
+import type { AbstractTokenRecord, RouterOutputs } from '@l2beat/token-backend'
 import { v } from '@l2beat/validate'
 import {
   ArrowRightIcon,
@@ -56,7 +56,7 @@ interface Props {
   onSubmit: SubmitHandler<DeployedTokenSchema>
   isFormDisabled: boolean
   tokenDetails: {
-    data: Awaited<ReturnType<AppRouter['deployedTokens']['checks']>> | undefined
+    data: RouterOutputs['deployedTokens']['checks']
     loading: boolean
   }
   abstractTokens: {

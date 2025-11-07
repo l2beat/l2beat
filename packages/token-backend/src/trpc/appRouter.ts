@@ -1,3 +1,4 @@
+import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 import { abstractTokensRouter } from './routers/abstractTokens'
 import { chainsRouter } from './routers/chains'
 import { coingeckoRouter } from './routers/coingecko'
@@ -16,3 +17,5 @@ export const appRouter = router({
 })
 
 export type AppRouter = typeof appRouter
+export type RouterOutputs = inferRouterOutputs<AppRouter>
+export type RouterInputs = inferRouterInputs<AppRouter>
