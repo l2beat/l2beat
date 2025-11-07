@@ -508,7 +508,7 @@
       "type": "Contract",
       "template": "espresso/Sequencing/QuoteVerifier",
       "sourceHashes": [
-        "0x2ce21f391e19a4d7b963b79fced06804cb79a44416a35e9e11b229a9a6957b2e"
+        "0x17cf7a67e150ce8a604a58eacd58d5a05651d1783698d5782148bdaf167b3236"
       ],
       "proxyType": "immutable",
       "description": "The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (arb1:0x0d089B3fA00CBAD0a5098025519e9e4620622acF), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.",

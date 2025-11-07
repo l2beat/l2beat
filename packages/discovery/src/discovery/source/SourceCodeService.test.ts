@@ -15,6 +15,7 @@ describe(SourceCodeService.name, () => {
     constructorArguments: '',
     files: {},
     remappings: [],
+    libraries: {},
   }
 
   const BAR_ADDRESS = ChainSpecificAddress.random()
@@ -26,6 +27,7 @@ describe(SourceCodeService.name, () => {
     constructorArguments: '',
     files: { 'root.sol': 'contract Bar {}' },
     remappings: [],
+    libraries: {},
   }
 
   const BAZ_ADDRESS = ChainSpecificAddress.random()
@@ -37,6 +39,7 @@ describe(SourceCodeService.name, () => {
     constructorArguments: '',
     files: { 'root.sol': 'contract Baz {}' },
     remappings: [],
+    libraries: {},
   }
 
   it('single, unverified contract', async () => {

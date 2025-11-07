@@ -1,3 +1,66 @@
+Generated with discovered.json: 0x5ec7b959b6c03e8d660b5216a915883c9c2ec67f
+
+# Diff at Tue, 04 Nov 2025 15:46:20 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@0ebe5cf1be74efd95b3e7efea7b23edc17a308e5 block: 1758899161
+- current timestamp: 1762271108
+
+## Description
+
+New security council.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilManager (arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.0:
+-        "arb1:0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
++        "arb1:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.1:
+-        "arb1:0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
++        "arb1:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.2:
+-        "arb1:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
++        "arb1:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.4:
+-        "arb1:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
++        "arb1:0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.5:
+-        "arb1:0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
++        "arb1:0x875573B973F7E9Ca54eb34a59180C70eE1128208"
+      values.getFirstCohort.0:
+-        "arb1:0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
++        "arb1:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157"
+      values.getFirstCohort.1:
+-        "arb1:0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
++        "arb1:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988"
+      values.getFirstCohort.2:
+-        "arb1:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
++        "arb1:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
+      values.getFirstCohort.4:
+-        "arb1:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
++        "arb1:0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
+      values.getFirstCohort.5:
+-        "arb1:0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
++        "arb1:0x875573B973F7E9Ca54eb34a59180C70eE1128208"
+      values.updateNonce:
+-        13
++        14
+    }
+```
+
 Generated with discovered.json: 0x5d0ecb0f3d6678b778514ca5f5c29a267e26ac33
 
 # Diff at Fri, 26 Sep 2025 15:07:10 GMT:

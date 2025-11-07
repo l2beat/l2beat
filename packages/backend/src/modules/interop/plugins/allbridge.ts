@@ -58,7 +58,7 @@ export const MessageSent = createInteropEventType<{
 }>('allbridge.MessageSent')
 
 export const TokensSent = createInteropEventType<{
-  amount: number
+  amount: bigint
   receiveToken: `0x${string}`
   $dstChain: string
 }>('allbridge.TokensSent')
@@ -69,7 +69,7 @@ export const MessageReceived = createInteropEventType<{
 }>('allbridge.MessageReceived')
 
 export const TokensReceived = createInteropEventType<{
-  amount: number
+  amount: bigint
   message: `0x${string}`
   $srcChain: string
 }>('allbridge.TokensReceived')
@@ -80,54 +80,62 @@ export class AllbridgePlugIn implements InteropPlugin {
   capture(input: LogToCapture) {
     const messageSent = parseMessageSent(input.log, null)
     if (messageSent) {
-      return MessageSent.create(input.ctx, {
-        message: messageSent.message,
-        $dstChain: findChain(
-          ALLBRDIGE_NETWORKS,
-          (x) => x.allBridgeChainId,
-          /* dstChain is the second byte of the message */
-          Number.parseInt(messageSent.message.slice(4, 6), 16),
-        ),
-      })
+      return [
+        MessageSent.create(input.ctx, {
+          message: messageSent.message,
+          $dstChain: findChain(
+            ALLBRDIGE_NETWORKS,
+            (x) => x.allBridgeChainId,
+            /* dstChain is the second byte of the message */
+            Number.parseInt(messageSent.message.slice(4, 6), 16),
+          ),
+        }),
+      ]
     }
 
     const messageReceived = parseMessageReceived(input.log, null)
     if (messageReceived) {
-      return MessageReceived.create(input.ctx, {
-        message: messageReceived.message,
-        $srcChain: findChain(
-          ALLBRDIGE_NETWORKS,
-          (x) => x.allBridgeChainId,
-          /* srcChain is the first byte of the message */
-          Number.parseInt(messageReceived.message.slice(2, 4), 16),
-        ),
-      })
+      return [
+        MessageReceived.create(input.ctx, {
+          message: messageReceived.message,
+          $srcChain: findChain(
+            ALLBRDIGE_NETWORKS,
+            (x) => x.allBridgeChainId,
+            /* srcChain is the first byte of the message */
+            Number.parseInt(messageReceived.message.slice(2, 4), 16),
+          ),
+        }),
+      ]
     }
     const tokensSent = parseTokensSent(input.log, null)
     if (tokensSent) {
-      return TokensSent.create(input.ctx, {
-        amount: Number(tokensSent.amount),
-        receiveToken: tokensSent.receiveToken,
-        $dstChain: findChain(
-          ALLBRDIGE_NETWORKS,
-          (x) => x.allBridgeChainId,
-          Number(tokensSent.destinationChainId),
-        ),
-      })
+      return [
+        TokensSent.create(input.ctx, {
+          amount: tokensSent.amount,
+          receiveToken: tokensSent.receiveToken,
+          $dstChain: findChain(
+            ALLBRDIGE_NETWORKS,
+            (x) => x.allBridgeChainId,
+            Number(tokensSent.destinationChainId),
+          ),
+        }),
+      ]
     }
 
     const tokensReceived = parseTokensReceived(input.log, null)
     if (tokensReceived) {
-      return TokensReceived.create(input.ctx, {
-        amount: Number(tokensReceived.amount),
-        message: tokensReceived.message,
-        $srcChain: findChain(
-          ALLBRDIGE_NETWORKS,
-          (x) => x.allBridgeChainId,
-          /* srcChain is the first byte of the message */
-          Number.parseInt(tokensReceived.message.slice(2, 4), 16),
-        ),
-      })
+      return [
+        TokensReceived.create(input.ctx, {
+          amount: tokensReceived.amount,
+          message: tokensReceived.message,
+          $srcChain: findChain(
+            ALLBRDIGE_NETWORKS,
+            (x) => x.allBridgeChainId,
+            /* srcChain is the first byte of the message */
+            Number.parseInt(tokensReceived.message.slice(2, 4), 16),
+          ),
+        }),
+      ]
     }
   }
   /* Matching logic:
@@ -170,9 +178,9 @@ export class AllbridgePlugIn implements InteropPlugin {
         }),
         Result.Transfer('allbridgeswap.Transfer', {
           srcEvent: tokensSent,
-          srcAmount: BigInt(tokensSent.args.amount.toString()),
+          srcAmount: tokensSent.args.amount,
           dstEvent: delivery,
-          dstAmount: BigInt(delivery.args.amount.toString()),
+          dstAmount: delivery.args.amount,
         }),
       ]
     }

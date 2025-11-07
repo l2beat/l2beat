@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -74,17 +74,71 @@ export const boojum: BaseProject = {
         ...TRUSTED_SETUPS.AztecIgnition,
       },
     ],
+    projectsForTvs: [
+      {
+        projectId: ProjectId('zklinknova'),
+        sinceTimestamp: UnixTime(1709217961),
+      },
+      {
+        projectId: ProjectId('zksync2'),
+        sinceTimestamp: UnixTime(1689544800),
+      },
+      {
+        projectId: ProjectId('abstract'),
+        sinceTimestamp: UnixTime(1737932400),
+      },
+      {
+        projectId: ProjectId('sophon'),
+        sinceTimestamp: UnixTime(1734476400),
+      },
+      {
+        projectId: ProjectId('cronoszkevm'),
+        sinceTimestamp: UnixTime(1723672800),
+      },
+      {
+        projectId: ProjectId('zeronetwork'),
+        sinceTimestamp: UnixTime(1731366000),
+      },
+      {
+        projectId: ProjectId('lens'),
+        sinceTimestamp: UnixTime(1743717600),
+      },
+      {
+        projectId: ProjectId('wonder'),
+        sinceTimestamp: UnixTime(1746741600),
+      },
+      {
+        projectId: ProjectId('zkcandy'),
+        sinceTimestamp: UnixTime(1743976800),
+      },
+      {
+        projectId: ProjectId('grvt'),
+        sinceTimestamp: UnixTime(1734649200),
+      },
+      {
+        projectId: ProjectId('lachain'),
+        sinceTimestamp: UnixTime(1747692000),
+      },
+      {
+        projectId: ProjectId('sxt'),
+        sinceTimestamp: UnixTime(1746741600),
+      },
+    ],
     verifierHashes: [
       {
         hash: '0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a',
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
         knownDeployments: [
           {
-            address: '0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911',
+            address: EthereumAddress(
+              '0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911',
+            ),
             chain: 'ethereum',
           },
           {
-            address: '0x3CFB3a80Af42cBE4d82C14301690A62D53e870a5',
+            address: EthereumAddress(
+              '0x3CFB3a80Af42cBE4d82C14301690A62D53e870a5',
+            ),
             chain: 'zksync',
           },
         ],
@@ -95,7 +149,9 @@ export const boojum: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
         knownDeployments: [
           {
-            address: '0xD5dBE903F5382B052317D326FA1a7B63710C6a5b',
+            address: EthereumAddress(
+              '0xD5dBE903F5382B052317D326FA1a7B63710C6a5b',
+            ),
             chain: 'ethereum',
           },
         ],
@@ -117,11 +173,15 @@ export const boojum: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {
-            address: '0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6',
+            address: EthereumAddress(
+              '0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6',
+            ),
             chain: 'ethereum',
           },
           {
-            address: '0x92A9Fd0E84354213D9c3d33128eDd6Ea55ee0717',
+            address: EthereumAddress(
+              '0x92A9Fd0E84354213D9c3d33128eDd6Ea55ee0717',
+            ),
             chain: 'zksync',
           },
         ],
@@ -132,7 +192,9 @@ export const boojum: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {
-            address: '0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1',
+            address: EthereumAddress(
+              '0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1',
+            ),
             chain: 'ethereum',
           },
         ],
@@ -163,7 +225,9 @@ export const boojum: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {
-            address: '0x902C3806A84f4e855a8746e92d7F1C9a51400458',
+            address: EthereumAddress(
+              '0x902C3806A84f4e855a8746e92d7F1C9a51400458',
+            ),
             chain: 'linea',
           },
         ],
@@ -174,11 +238,15 @@ export const boojum: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
         knownDeployments: [
           {
-            address: '0xD324a7c8556A059371B207fB96FD77bE24E2042c',
+            address: EthereumAddress(
+              '0xD324a7c8556A059371B207fB96FD77bE24E2042c',
+            ),
             chain: 'ethereum',
           },
           {
-            address: '0xD324a7c8556A059371B207fB96FD77bE24E2042c',
+            address: EthereumAddress(
+              '0xD324a7c8556A059371B207fB96FD77bE24E2042c',
+            ),
             chain: 'gateway',
           },
         ],
@@ -189,11 +257,15 @@ export const boojum: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {
-            address: '0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7',
+            address: EthereumAddress(
+              '0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7',
+            ),
             chain: 'ethereum',
           },
           {
-            address: '0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7',
+            address: EthereumAddress(
+              '0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7',
+            ),
             chain: 'gateway',
           },
         ],

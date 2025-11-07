@@ -39,7 +39,7 @@ const HwrTransferSent = createInteropEventType<{
   $dstChain: string
   destination: number
   recipient: Address32
-  amount: string
+  amount: bigint
   tokenAddress: Address32
 }>('hyperlane-hwr.TransferSent')
 
@@ -48,7 +48,7 @@ const HwrTransferReceived = createInteropEventType<{
   $srcChain: string
   origin: number
   recipient: Address32
-  amount: string
+  amount: bigint
   tokenAddress: Address32
 }>('hyperlane-hwr.TransferReceived')
 
@@ -67,14 +67,16 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
         Number(sentTransferRemote.destination),
       )
 
-      return HwrTransferSent.create(input.ctx, {
-        messageId,
-        $dstChain,
-        destination: Number(sentTransferRemote.destination),
-        recipient: Address32.from(sentTransferRemote.recipient),
-        amount: sentTransferRemote.amount.toString(),
-        tokenAddress: Address32.from(input.log.address),
-      })
+      return [
+        HwrTransferSent.create(input.ctx, {
+          messageId,
+          $dstChain,
+          destination: Number(sentTransferRemote.destination),
+          recipient: Address32.from(sentTransferRemote.recipient),
+          amount: sentTransferRemote.amount,
+          tokenAddress: Address32.from(input.log.address),
+        }),
+      ]
     }
 
     const receivedTransferRemote = parseReceivedTransferRemote(input.log, null)
@@ -88,14 +90,16 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
         Number(receivedTransferRemote.origin),
       )
 
-      return HwrTransferReceived.create(input.ctx, {
-        messageId,
-        $srcChain,
-        origin: Number(receivedTransferRemote.origin),
-        recipient: Address32.from(receivedTransferRemote.recipient),
-        amount: receivedTransferRemote.amount.toString(),
-        tokenAddress: Address32.from(input.log.address),
-      })
+      return [
+        HwrTransferReceived.create(input.ctx, {
+          messageId,
+          $srcChain,
+          origin: Number(receivedTransferRemote.origin),
+          recipient: Address32.from(receivedTransferRemote.recipient),
+          amount: receivedTransferRemote.amount,
+          tokenAddress: Address32.from(input.log.address),
+        }),
+      ]
     }
   }
 
@@ -131,10 +135,10 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
       Result.Transfer('hyperlaneHwr.Transfer', {
         srcEvent: hwrSent,
         srcTokenAddress: hwrSent.args.tokenAddress,
-        srcAmount: BigInt(hwrSent.args.amount),
+        srcAmount: hwrSent.args.amount,
         dstEvent: event,
         dstTokenAddress: event.args.tokenAddress, // TODO: not necessarily the token address, can be an adapter or wrapper
-        dstAmount: BigInt(event.args.amount),
+        dstAmount: event.args.amount,
       }),
     ]
   }

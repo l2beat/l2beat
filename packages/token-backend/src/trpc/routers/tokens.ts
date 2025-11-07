@@ -1,13 +1,13 @@
 import { v } from '@l2beat/validate'
 import fuzzysort from 'fuzzysort'
 import { db } from '../../database/db'
-import { protectedProcedure, router } from '../trpc'
+import { readOnlyProcedure, router } from '../trpc'
 
 export const tokensRouter = router({
-  getAllAbstractTokens: protectedProcedure.query(() => {
+  getAllAbstractTokens: readOnlyProcedure.query(() => {
     return db.abstractToken.getAll()
   }),
-  getAllAbstractTokensWithDeployedTokens: protectedProcedure.query(async () => {
+  getAllAbstractTokensWithDeployedTokens: readOnlyProcedure.query(async () => {
     const [abstractTokens, allDeployedTokens] = await Promise.all([
       db.abstractToken.getAll(),
       db.deployedToken.getAll(),
@@ -41,7 +41,7 @@ export const tokensRouter = router({
       deployedWithoutAbstractTokens,
     }
   }),
-  getAbstractById: protectedProcedure
+  getAbstractById: readOnlyProcedure
     .input(v.string())
     .query(async ({ input }) => {
       const abstractToken = await db.abstractToken.findById(input)
@@ -54,7 +54,7 @@ export const tokensRouter = router({
         deployedTokens,
       }
     }),
-  getDeployedByChainAndAddress: protectedProcedure
+  getDeployedByChainAndAddress: readOnlyProcedure
     .input(v.object({ chain: v.string(), address: v.string() }))
     .query(async ({ input }) => {
       const result = await db.deployedToken.findByChainAndAddress({
@@ -69,7 +69,7 @@ export const tokensRouter = router({
       return await db.deployedToken.getByChainAndAddress(input)
     }),
 
-  checkIfDeployedTokenExists: protectedProcedure
+  checkIfDeployedTokenExists: readOnlyProcedure
     .input(v.object({ chain: v.string(), address: v.string() }))
     .query(async ({ input }) => {
       const result = await db.deployedToken.findByChainAndAddress({
@@ -78,7 +78,7 @@ export const tokensRouter = router({
       })
       return result !== undefined
     }),
-  search: protectedProcedure.input(v.string()).query(async ({ input }) => {
+  search: readOnlyProcedure.input(v.string()).query(async ({ input }) => {
     const deployedTokens = await db.deployedToken.getAll()
     if (input.startsWith('0x')) {
       return {

@@ -57,26 +57,30 @@ export class HyperlanePlugIn implements InteropPlugin {
       )
       const processId = nextLog && parseProcessId(nextLog, null)
       if (!processId) return
-      return Process.create(input.ctx, {
-        messageId: processId.messageId,
-        $srcChain: findChain(
-          HYPERLANE_NETWORKS,
-          (x) => x.chainId,
-          process.origin,
-        ),
-      })
+      return [
+        Process.create(input.ctx, {
+          messageId: processId.messageId,
+          $srcChain: findChain(
+            HYPERLANE_NETWORKS,
+            (x) => x.chainId,
+            process.origin,
+          ),
+        }),
+      ]
     }
 
     const dispatch = parseDispatch(input.log, null)
     if (dispatch)
-      return Dispatch.create(input.ctx, {
-        messageId: keccak256(dispatch.message),
-        $dstChain: findChain(
-          HYPERLANE_NETWORKS,
-          (x) => x.chainId,
-          dispatch.destination,
-        ),
-      })
+      return [
+        Dispatch.create(input.ctx, {
+          messageId: keccak256(dispatch.message),
+          $dstChain: findChain(
+            HYPERLANE_NETWORKS,
+            (x) => x.chainId,
+            dispatch.destination,
+          ),
+        }),
+      ]
   }
 
   matchTypes = [Process]

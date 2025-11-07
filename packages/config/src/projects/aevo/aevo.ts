@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -64,13 +69,26 @@ export const aevo: ScalingProject = opStackL2({
     adjustCount: { type: 'SubtractOne' },
   },
   nonTemplateDaTracking: [
-    // {
-    //   type: 'celestia',
-    //   daLayer: ProjectId('celestia'),
-    //   namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADBuw7+PjGs8=',
-    //   sinceBlock: 0,
-    //   untilBlock: 3538077,
-    // },
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: discovery.getContract('SystemConfig').sinceBlock ?? 0,
+      inbox: ChainSpecificAddress.address(
+        discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+      ),
+      sequencers: [
+        ChainSpecificAddress.address(
+          discovery.getContractValue('SystemConfig', 'batcherHash'),
+        ),
+      ],
+    },
+    {
+      type: 'celestia',
+      daLayer: ProjectId('celestia'),
+      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADBuw7+PjGs8=',
+      sinceBlock: 0,
+      untilBlock: 3538077,
+    },
     {
       type: 'eigen-da',
       customerId: '0x2dc71dbd1cf713e70f939346317bf93a2e62cfee',

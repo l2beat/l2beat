@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { config } from '../../config'
 import { getUrlWithParams } from '../../utils/getUrlWithParams'
-import { protectedProcedure, router } from '../trpc'
+import { readOnlyProcedure, router } from '../trpc'
 
 export type Coin = v.infer<typeof CoinSchema>
 const CoinSchema = v.object({
@@ -17,7 +17,7 @@ const HistoricalChartSchema = v.object({
 })
 
 export const coingeckoRouter = router({
-  getCoinById: protectedProcedure.input(v.string()).query(async ({ input }) => {
+  getCoinById: readOnlyProcedure.input(v.string()).query(async ({ input }) => {
     try {
       const url = getUrlWithParams(
         `https://pro-api.coingecko.com/api/v3/coins/${input}`,
@@ -43,7 +43,7 @@ export const coingeckoRouter = router({
       return null
     }
   }),
-  getListingTimestamp: protectedProcedure
+  getListingTimestamp: readOnlyProcedure
     .input(v.string())
     .query(async ({ input }) => {
       try {

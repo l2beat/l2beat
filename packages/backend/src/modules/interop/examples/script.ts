@@ -201,9 +201,9 @@ async function runExample(example: Example): Promise<RunResult> {
       if (!plugin.captureTx) {
         continue
       }
-      const event = plugin.captureTx({ tx: ctx, txLogs })
-      if (event) {
-        events.push({ ...event, plugin: plugin.name })
+      const captured = plugin.captureTx({ tx: ctx, txLogs })
+      if (captured) {
+        events.push(...captured.map((c) => ({ ...c, plugin: plugin.name })))
         break
       }
     }
@@ -213,13 +213,13 @@ async function runExample(example: Example): Promise<RunResult> {
         if (!plugin.capture) {
           continue
         }
-        const event = plugin.capture({
+        const captured = plugin.capture({
           log: log,
           txLogs: txLogs,
           ctx: { ...ctx, logIndex: log.logIndex ?? -1 },
         })
-        if (event) {
-          events.push({ ...event, plugin: plugin.name })
+        if (captured) {
+          events.push(...captured.map((c) => ({ ...c, plugin: plugin.name })))
           break
         }
       }

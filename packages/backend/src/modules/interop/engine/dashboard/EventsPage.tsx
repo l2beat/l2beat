@@ -46,7 +46,11 @@ function EventsTable(props: {
               </td>
               <td>{srcChain ?? ''}</td>
               <td>{dstChain ?? ''}</td>
-              <td>{JSON.stringify(e.args)}</td>
+              <td>
+                {JSON.stringify(e.args, (_, value) =>
+                  typeof value === 'bigint' ? `BigInt(${value})` : value,
+                )}
+              </td>
             </tr>
           )
         })}

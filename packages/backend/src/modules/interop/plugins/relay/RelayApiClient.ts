@@ -186,15 +186,25 @@ export class RelayApiClient {
   }
 
   async getAllRequests(options: GetRequestsOptions = {}) {
+    let limit = options.limit ?? 50
     const result: GetRequestsResponse = {
       requests: [],
     }
     let continuation = options.continuation
     do {
-      const res = await this.getRequests({ ...options, continuation })
-      result.requests.push(...res.requests)
+      const res = await this.getRequests({
+        ...options,
+        limit: Math.min(limit, 50),
+        continuation,
+      })
+      for (const req of res.requests) {
+        if (limit > 0) {
+          limit -= 1
+          result.requests.push(req)
+        }
+      }
       continuation = res.continuation
-    } while (continuation)
+    } while (continuation && limit > 0)
     return result
   }
 }

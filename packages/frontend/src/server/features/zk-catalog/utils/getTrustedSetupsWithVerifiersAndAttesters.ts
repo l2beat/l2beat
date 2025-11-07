@@ -4,7 +4,7 @@ import type {
   TrustedSetup,
   ZkCatalogTag,
 } from '@l2beat/config'
-import { notUndefined } from '@l2beat/shared-pure'
+import { notUndefined, type ProjectId } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
@@ -56,7 +56,9 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
       const projectsUsedIn = uniqBy(
         trustedSetupVerifiers.flatMap((v) =>
           v.knownDeployments.flatMap((d) =>
-            contractUtils.getUsedIn(project.id, d.chain, d.address),
+            d.overrideUsedIn
+              ? getProjectsUsedIn(d.overrideUsedIn, allProjects)
+              : contractUtils.getUsedIn(project.id, d.chain, d.address),
           ),
         ),
         (u) => u.id,
@@ -109,4 +111,39 @@ export function getVerifiersWithAttesters(
         icon: getProjectIcon(a.id),
       })),
   }
+}
+
+export function getProjectsUsedIn(
+  projectIds: ProjectId[],
+  allProjects: Project<
+    never,
+    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
+  >[],
+): UsedInProjectWithIcon[] {
+  return projectIds
+    .map((projectId) => {
+      const project = allProjects.find((p) => p.id === projectId)
+      if (!project) return undefined
+
+      let url = `/scaling/projects/${project.slug}`
+      if (project.isBridge) {
+        url = `/bridges/projects/${project.slug}`
+      } else if (project.daBridge) {
+        const layer = allProjects
+          .filter((x) => x.isDaLayer)
+          .find((x) => x.id === project.daBridge?.daLayer)
+        url = `/data-availability/projects/${layer?.slug}/${project.slug}`
+      } else if (project.isDaLayer) {
+        url = `/data-availability/projects/${project.slug}/no-bridge`
+      }
+
+      return {
+        id: project.id,
+        name: project.name,
+        slug: project.slug,
+        icon: getProjectIcon(project.slug),
+        url,
+      }
+    })
+    .filter(notUndefined)
 }

@@ -3,6 +3,5 @@
   "name": "lumia",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B"],
-  "names": { "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B": "Validium" },
   "sharedModules": ["shared-polygon-cdk"]
 }

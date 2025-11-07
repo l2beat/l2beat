@@ -1,16 +1,11 @@
-import type { LogLevel } from './types'
+import type { LogEntry } from './types'
 import { safeToJSON, tagService } from './utils'
 
 const MAX_LENGTH = 1000
 
 // https://www.elastic.co/guide/en/ecs/8.11/ecs-reference.html
-export function formatEcsLog(
-  time: Date,
-  level: LogLevel,
-  message: string,
-  parameters: Record<string, unknown>,
-): string {
-  const { service, tag, error, ...rest } = parameters
+export function formatEcsLog(entry: LogEntry): string {
+  const { service, tag, error, ...rest } = entry.parameters
 
   let feature: string | undefined
   let module: string | undefined
@@ -44,9 +39,9 @@ export function formatEcsLog(
   }
 
   return safeToJSON({
-    '@timestamp': time.toISOString(),
+    '@timestamp': entry.time.toISOString(),
     log: {
-      level: level,
+      level: entry.level,
     },
     service: {
       name: tagService(service, tag),
@@ -58,7 +53,7 @@ export function formatEcsLog(
       project: project,
       source: source,
     },
-    message: truncate(message),
+    message: truncate(entry.message),
     error:
       typeof error === 'object' && error !== null && !Array.isArray(error)
         ? {

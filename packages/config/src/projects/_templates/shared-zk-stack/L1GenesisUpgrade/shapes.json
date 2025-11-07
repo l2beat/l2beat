@@ -17,7 +17,6 @@
   "L1GenesisUpgrade_v29": {
     "hash": "0xcf720c550063195782639668a10f51f4795d77e30b60eb7428b5adff5bff7969",
     "address": "eth:0x390bc10e854e137d2625573272b3fEe2C615eBA4",
-    "chain": "ethereum",
     "blockNumber": 23588465
   }
 }

@@ -115,7 +115,7 @@ export function DesktopProjectNavigation({
         </div>
 
         <SectionNavigation
-          indexOffset={1}
+          indexOffset={-1}
           sections={[
             {
               id: 'summary',

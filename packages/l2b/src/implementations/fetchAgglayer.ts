@@ -39,7 +39,7 @@ interface ErrorWithMessage {
 
 export class AgglayerDataFetcher {
   private provider: ethers.providers.JsonRpcProvider
-  private rollupManagerAddress = '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2'
+  private agglayerManagerAddress = '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2'
   private outputFilePath: string
   private readonly zeroAddress = '0x0000000000000000000000000000000000000000'
 
@@ -90,7 +90,7 @@ export class AgglayerDataFetcher {
     }
   }
 
-  private rollupManagerAbi = [
+  private agglayerManagerAbi = [
     'function rollupIDToRollupDataV2(uint32 rollupID) view returns (tuple(address rollupContract, uint64 chainID, address verifier, uint64 forkID, bytes32 lastLocalExitRoot, uint64 lastBatchSequenced, uint64 lastVerifiedBatch, uint64 lastVerifiedBatchBeforeUpgrade, uint64 rollupTypeID, uint8 rollupVerifierType, bytes32 lastPessimisticRoot, bytes32 programVKey) rollupData)',
   ]
 
@@ -115,9 +115,9 @@ export class AgglayerDataFetcher {
 
   public async fetchAndDisplayRollupData(): Promise<void> {
     // Create contract instance
-    const rollupManager = new ethers.Contract(
-      this.rollupManagerAddress,
-      this.rollupManagerAbi,
+    const agglayerManager = new ethers.Contract(
+      this.agglayerManagerAddress,
+      this.agglayerManagerAbi,
       this.provider,
     )
 
@@ -134,7 +134,7 @@ export class AgglayerDataFetcher {
         ids.map(async (id) => {
           try {
             const data: RollupData =
-              await rollupManager.rollupIDToRollupDataV2(id)
+              await agglayerManager.rollupIDToRollupDataV2(id)
             return { id, data }
           } catch (error: unknown) {
             const errorWithMessage = error as ErrorWithMessage

@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -55,13 +55,21 @@ export const loopringprover: BaseProject = {
         ...TRUSTED_SETUPS.Loopring,
       },
     ],
+    projectsForTvs: [
+      {
+        projectId: ProjectId('loopring'),
+        sinceTimestamp: UnixTime(1582758000),
+      },
+    ],
     verifierHashes: [
       {
         hash: '0x4c18cccb70be9bd6c438cc6d558d3451114af2fcd2e45a4286afecf2f327b80d',
         proofSystem: ZK_CATALOG_TAGS.Groth16.EthSnarks,
         knownDeployments: [
           {
-            address: '0x6150343E0F43A17519c0327c41eDd9eBE88D01ef',
+            address: EthereumAddress(
+              '0x6150343E0F43A17519c0327c41eDd9eBE88D01ef',
+            ),
             chain: 'ethereum',
           },
         ],
@@ -74,7 +82,9 @@ export const loopringprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Groth16.EthSnarks,
         knownDeployments: [
           {
-            address: '0x6150343E0F43A17519c0327c41eDd9eBE88D01ef',
+            address: EthereumAddress(
+              '0x6150343E0F43A17519c0327c41eDd9eBE88D01ef',
+            ),
             chain: 'ethereum',
           },
         ],
@@ -87,7 +97,9 @@ export const loopringprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Groth16.EthSnarks,
         knownDeployments: [
           {
-            address: '0x6150343E0F43A17519c0327c41eDd9eBE88D01ef',
+            address: EthereumAddress(
+              '0x6150343E0F43A17519c0327c41eDd9eBE88D01ef',
+            ),
             chain: 'ethereum',
           },
         ],
@@ -100,7 +112,9 @@ export const loopringprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Groth16.EthSnarks,
         knownDeployments: [
           {
-            address: '0x6150343E0F43A17519c0327c41eDd9eBE88D01ef',
+            address: EthereumAddress(
+              '0x6150343E0F43A17519c0327c41eDd9eBE88D01ef',
+            ),
             chain: 'ethereum',
           },
         ],
@@ -113,7 +127,9 @@ export const loopringprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Groth16.EthSnarks,
         knownDeployments: [
           {
-            address: '0x6150343E0F43A17519c0327c41eDd9eBE88D01ef',
+            address: EthereumAddress(
+              '0x6150343E0F43A17519c0327c41eDd9eBE88D01ef',
+            ),
             chain: 'ethereum',
           },
         ],

@@ -100,6 +100,7 @@ export function createInteropModule({
     config.interop.config.chains,
     config.interop.capture.chains.map((c) => c.name),
     relayApiClient,
+    db,
     eventStore,
     relayRootIndexer,
     indexerService,
