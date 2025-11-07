@@ -82,7 +82,8 @@ export function DeployedTokenForm({
     (abstractToken) => abstractToken.id === abstractTokenId,
   )
 
-  const success = tokenDetails.data?.error?.type !== 'already-exists'
+  const success =
+    tokenDetails.data && tokenDetails.data?.error?.type !== 'already-exists'
 
   return (
     <Form {...form}>

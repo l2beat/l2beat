@@ -57,6 +57,8 @@ export function AddDeployedToken() {
         type: 'custom',
         message: checks.error.message,
       })
+    } else {
+      form.clearErrors('address')
     }
     if (checks.data?.decimals) {
       form.setValue('decimals', checks.data.decimals, { shouldDirty: true })

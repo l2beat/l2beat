@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
 import { ArrowRightIcon, CoinsIcon, TrashIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
@@ -26,7 +26,6 @@ import {
 } from '~/components/forms/AbstractTokenForm'
 import { LoadingText } from '~/components/LoadingText'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
-import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractTokenWithDeployedTokens } from '~/mock/types'
 import { api } from '~/react-query/trpc'
@@ -71,19 +70,6 @@ function AbstractTokenView({
     },
   })
 
-  const coingeckoId = form.watch('coingeckoId')
-  const debouncedCoingeckoId = useDebouncedValue(form.watch('coingeckoId'), 500)
-  const { data: coin, isLoading } = api.coingecko.getCoinById.useQuery(
-    debouncedCoingeckoId ?? '',
-    {
-      enabled:
-        !!debouncedCoingeckoId && token.coingeckoId !== debouncedCoingeckoId,
-      retry: false,
-    },
-  )
-
-  const showCoingeckoLoading = isLoading || coingeckoId !== debouncedCoingeckoId
-
   const { mutate: planMutate, isPending } = api.plan.generate.useMutation({
     onSuccess: (data) => {
       if (data.outcome === 'success') {
@@ -93,38 +79,6 @@ function AbstractTokenView({
       }
     },
   })
-
-  useEffect(() => {
-    if (isLoading) return
-    if (!debouncedCoingeckoId) return
-    if (token.coingeckoId === debouncedCoingeckoId) {
-      form.setValue('iconUrl', token.iconUrl ?? '')
-      return
-    }
-
-    if (coin) {
-      form.clearErrors('coingeckoId')
-      form.setValue('iconUrl', coin.image.large)
-    }
-    if (!coin) {
-      form.setValue('iconUrl', '')
-    }
-    if (coin === null) {
-      form.setError('coingeckoId', {
-        message: 'Coin not found',
-        type: 'validate',
-      })
-    }
-  }, [
-    coin,
-    form.clearErrors,
-    form.setValue,
-    form.setError,
-    isLoading,
-    debouncedCoingeckoId,
-    token.coingeckoId,
-    token.iconUrl,
-  ])
 
   return (
     <>
@@ -167,17 +121,11 @@ function AbstractTokenView({
                   })
                 }}
                 isFormDisabled={isPending}
-                coingeckoFields={{
-                  isLoading: showCoingeckoLoading,
-                  success: !!coin,
-                  isListingTimestampLoading: false,
-                }}
               >
                 <ButtonWithSpinner
                   isLoading={false}
                   disabled={
-                    Object.keys(form.formState.dirtyFields).length === 0 ||
-                    showCoingeckoLoading
+                    Object.keys(form.formState.dirtyFields).length === 0
                   }
                   className="w-full"
                   type="submit"
