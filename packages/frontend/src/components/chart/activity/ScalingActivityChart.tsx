@@ -39,7 +39,7 @@ export function ScalingActivityChart({ milestones, entries }: Props) {
   return (
     <div className="flex flex-col">
       <ActivityChartHeader />
-      <ScalingRecategorizedActivityStats data={data} />
+      <ScalingRecategorizedActivityStats entries={entries} />
       <ScalingRecategorizedActivityChart data={data} isLoading={isLoading} />
       <ActivityRatioChart
         data={ratioData}

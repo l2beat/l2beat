@@ -1,6 +1,6 @@
-import { useMemo } from 'react'
 import { CssVariables } from '~/components/CssVariables'
 import { OverflowWrapper } from '~/components/core/OverflowWrapper'
+import { Skeleton } from '~/components/core/Skeleton'
 import {
   Tooltip,
   TooltipContent,
@@ -11,56 +11,20 @@ import {
   type ActivityMetric,
   useActivityMetricContext,
 } from '~/pages/scaling/activity/components/ActivityMetricContext'
-import type { RecategorisedActivityChartData } from '~/server/features/scaling/activity/getRecategorisedActivityChart'
-import { countPerSecond } from '~/server/features/scaling/activity/utils/countPerSecond'
+import type { ScalingActivityEntry } from '~/server/features/scaling/activity/getScalingActivityEntries'
+import { api } from '~/trpc/React'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 
 interface Props {
-  data: RecategorisedActivityChartData | undefined
+  entries: ScalingActivityEntry[]
 }
 
-export function ScalingRecategorizedActivityStats({ data }: Props) {
+export function ScalingRecategorizedActivityStats({ entries }: Props) {
   const { metric } = useActivityMetricContext()
 
-  const stats = useMemo(() => {
-    const latestData = data?.data.at(-1)
-    if (!latestData)
-      return {
-        rollups: 0,
-        validiumsAndOptimiums: 0,
-        others: 0,
-        ethereum: 0,
-      }
-
-    const [
-      _,
-      rollupsUops,
-      validiumsAndOptimiumsUops,
-      othersUops,
-      ethereumUops,
-      rollupsTx,
-      validiumsAndOptimiumsTx,
-      othersTx,
-      ethereumTx,
-    ] = latestData
-
-    const rollupsValue = metric === 'uops' ? rollupsUops : rollupsTx
-    const validiumsAndOptimiumsValue =
-      metric === 'uops' ? validiumsAndOptimiumsUops : validiumsAndOptimiumsTx
-    const othersValue = metric === 'uops' ? othersUops : othersTx
-    const ethereumValue = metric === 'uops' ? ethereumUops : ethereumTx
-
-    return {
-      rollups: rollupsValue ? countPerSecond(rollupsValue) : 0,
-      validiumsAndOptimiums: validiumsAndOptimiumsValue
-        ? countPerSecond(validiumsAndOptimiumsValue)
-        : 0,
-      others: othersValue ? countPerSecond(othersValue) : 0,
-      ethereum: ethereumValue ? countPerSecond(ethereumValue) : 0,
-      scalingFactor:
-        rollupsValue && ethereumValue ? rollupsValue / ethereumValue : 0,
-    }
-  }, [data, metric])
+  const { data: stats, isLoading } = api.activity.chartStats.useQuery({
+    filter: { type: 'projects', projectIds: entries.map((entry) => entry.id) },
+  })
 
   return (
     <OverflowWrapper>
@@ -68,16 +32,28 @@ export function ScalingRecategorizedActivityStats({ data }: Props) {
         <Stat
           type="rollups"
           metric={metric}
-          value={stats.rollups}
-          scalingFactor={stats.scalingFactor}
+          value={stats?.[metric].rollups}
+          scalingFactor={stats?.[metric].scalingFactor}
+          isLoading={isLoading}
         />
         <Stat
           type="validiumsAndOptimiums"
           metric={metric}
-          value={stats.validiumsAndOptimiums}
+          value={stats?.[metric].validiumsAndOptimiums}
+          isLoading={isLoading}
         />
-        <Stat type="others" metric={metric} value={stats.others} />
-        <Stat type="ethereum" metric={metric} value={stats.ethereum} />
+        <Stat
+          type="others"
+          metric={metric}
+          value={stats?.[metric].others}
+          isLoading={isLoading}
+        />
+        <Stat
+          type="ethereum"
+          metric={metric}
+          value={stats?.[metric].ethereum}
+          isLoading={isLoading}
+        />
       </div>
     </OverflowWrapper>
   )
@@ -107,11 +83,13 @@ function Stat({
   metric,
   value,
   scalingFactor,
+  isLoading,
 }: {
   type: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'ethereum'
   metric: ActivityMetric
-  value: number
+  value: number | undefined
   scalingFactor?: number
+  isLoading: boolean
 }) {
   return (
     <CssVariables
@@ -124,10 +102,14 @@ function Stat({
           {statsMeta[type].label} Past Day {metric.toUpperCase()}
         </div>
         <div className="flex h-9 flex-col items-center justify-center md:h-[43px] lg:h-13">
-          <div className="font-bold text-heading-20 md:text-heading-24 lg:text-heading-32">
-            {formatActivityCount(value)}
-          </div>
-          {scalingFactor && (
+          {isLoading ? (
+            <Skeleton className="h-[23px] w-15 md:h-7 md:w-19 lg:h-8 lg:w-25" />
+          ) : (
+            <div className="font-bold text-heading-20 md:text-heading-24 lg:text-heading-32">
+              {value !== undefined ? formatActivityCount(value) : 'No data'}
+            </div>
+          )}
+          {scalingFactor !== undefined && (
             <div className="flex items-center gap-1 text-secondary">
               <div className="text-label-value-13 lg:text-label-value-14">
                 <span className="font-normal">Scaling factor: </span>
