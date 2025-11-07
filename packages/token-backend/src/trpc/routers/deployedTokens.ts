@@ -2,13 +2,12 @@ import type { TokenDatabase } from '@l2beat/database'
 import { assert, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { Chain } from '../../chains/Chain'
-import type { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
-import { CoingeckoClient as CoingeckoClientImpl } from '../../chains/clients/coingecko/CoingeckoClient'
+import { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
 import { config } from '../../config'
 import { db } from '../../database/db'
 import { readOnlyProcedure, router } from '../trpc'
 
-const coingeckoClient = new CoingeckoClientImpl({
+const coingeckoClient = new CoingeckoClient({
   apiKey: config.coingeckoApiKey,
 })
 
