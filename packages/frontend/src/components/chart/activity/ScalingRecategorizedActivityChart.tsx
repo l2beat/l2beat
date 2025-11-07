@@ -30,7 +30,10 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { useActivityMetricContext } from '~/pages/scaling/activity/components/ActivityMetricContext'
+import {
+  type ActivityMetric,
+  useActivityMetricContext,
+} from '~/pages/scaling/activity/components/ActivityMetricContext'
 import type { RecategorisedActivityChartData } from '~/server/features/scaling/activity/getRecategorisedActivityChart'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/countPerSecond'
 import { formatRange } from '~/utils/dates'
@@ -68,18 +71,13 @@ const chartMeta = {
   },
 } satisfies ChartMeta
 
-const hiddenDataKeys = ['others'] as const
-
 interface Props {
   data: RecategorisedActivityChartData | undefined
   isLoading: boolean
 }
 
 export function ScalingRecategorizedActivityChart({ data, isLoading }: Props) {
-  const { dataKeys, toggleDataKey } = useChartDataKeys(
-    chartMeta,
-    hiddenDataKeys,
-  )
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
   const { metric } = useActivityMetricContext()
 
   const chartData = useMemo(() => {
@@ -168,14 +166,16 @@ export function ScalingRecategorizedActivityChart({ data, isLoading }: Props) {
           ],
         })}
         <ChartTooltip
-          content={<CustomTooltip syncedUntil={data?.syncedUntil} />}
+          content={
+            <CustomTooltip syncedUntil={data?.syncedUntil} metric={metric} />
+          }
         />
         {getCommonChartComponents({
           data: chartData,
           isLoading,
           yAxis: {
             domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
-            unit: ' UOPS',
+            unit: metric === 'uops' ? ' UOPS' : ' TPS',
           },
           syncedUntil: data?.syncedUntil,
         })}
@@ -189,7 +189,11 @@ function CustomTooltip({
   payload,
   label,
   syncedUntil,
-}: TooltipProps<number, string> & { syncedUntil: number | undefined }) {
+  metric,
+}: TooltipProps<number, string> & {
+  syncedUntil: number | undefined
+  metric: ActivityMetric
+}) {
   if (!active || !payload || typeof label !== 'number') return null
 
   return (
@@ -198,7 +202,7 @@ function CustomTooltip({
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {formatRange(label, label + UnixTime.DAY)}
         </div>
-        <span className="text-heading-16">Average UOPS</span>
+        <span className="text-heading-16">Average {metric.toUpperCase()}</span>
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {
@@ -228,7 +232,9 @@ function CustomTooltip({
           })}
         </div>
 
-        <span className="mt-3 text-heading-16">Operations count</span>
+        <span className="mt-3 text-heading-16">
+          {metric === 'uops' ? 'Operations' : 'Transactions'} count
+        </span>
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {
