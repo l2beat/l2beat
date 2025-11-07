@@ -1,7 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
-import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import { ps } from '~/server/projects'
 import type { ProjectChanges } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
@@ -38,16 +37,11 @@ export async function getScalingActivityEntries() {
         activityData[project.id],
       ),
     )
-    .concat([
-      getEthereumEntry(ethereumData, 'rollups'),
-      getEthereumEntry(ethereumData, 'validiumsAndOptimiums'),
-      getEthereumEntry(ethereumData, 'others'),
-      getEthereumEntry(ethereumData, 'notReviewed'),
-    ])
+    .concat(getEthereumEntry(ethereumData, 'rollups'))
     .filter((p) => p !== undefined)
     .sort(compareActivityEntry)
 
-  return groupByScalingTabs(entries)
+  return entries
 }
 
 export interface ScalingActivityEntry extends CommonScalingEntry {
