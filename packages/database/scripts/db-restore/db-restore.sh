@@ -10,7 +10,7 @@ FEATURES_TABLES=(
     "IndexerState IndexerConfiguration Activity SyncMetadata"
     "IndexerState IndexerConfiguration AnomalyStats RealTimeLiveness RealTimeAnomaly"
     "IndexerState IndexerConfiguration InteropEvent InteropMessage InteropTransfer"
-    "AbstractToken DeployedToken TokenConnection"
+    "AbstractToken DeployedToken TokenConnection Chain"
 )
 
 clear_tables() {
