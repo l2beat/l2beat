@@ -1,6 +1,14 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
+import type { Coin } from '../../chains/clients/coingecko/types'
+import { config } from '../../config'
 import { db } from '../../database/db'
 import { readOnlyProcedure, router } from '../trpc'
+
+const coingeckoClient = new CoingeckoClient({
+  apiKey: config.coingeckoApiKey,
+})
 
 export const abstractTokensRouter = router({
   getAll: readOnlyProcedure.query(() => {
@@ -49,6 +57,52 @@ export const abstractTokensRouter = router({
     return {
       ...abstractToken,
       deployedTokens,
+    }
+  }),
+  checks: readOnlyProcedure.input(v.string()).query(async ({ input }) => {
+    let coin: Coin | null = null
+    try {
+      coin = await coingeckoClient.getCoinDataById(input)
+    } catch (error) {
+      console.error(error)
+    }
+
+    if (coin === null) {
+      return {
+        error: {
+          type: 'not-found-on-coingecko' as const,
+          message: 'Coin not found on Coingecko',
+        },
+        data: undefined,
+      }
+    }
+
+    let listingTimestamp: UnixTime | undefined
+    try {
+      const marketChart = await coingeckoClient.getCoinMarketChartRange(
+        coin.id,
+        'usd',
+        UnixTime.fromDate(new Date('2000-01-01')),
+        UnixTime.fromDate(new Date()),
+      )
+      const [firstPrice] = marketChart.prices
+
+      if (!firstPrice) {
+        return null
+      }
+
+      listingTimestamp = UnixTime(Math.floor(firstPrice.date.getTime() / 1000))
+    } catch (error) {
+      console.error(error)
+    }
+
+    return {
+      error: undefined,
+      data: {
+        coinId: coin.id,
+        coinUrl: coin.image.large,
+        listingTimestamp,
+      },
     }
   }),
 })
