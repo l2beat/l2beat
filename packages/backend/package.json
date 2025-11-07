@@ -67,6 +67,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "redis": "^4.7.0",
+    "sorted-btree": "^1.8.1",
     "source-map-support": "^0.5.21",
     "uuid": "^9.0.1",
     "viem": "^2.31.6",
