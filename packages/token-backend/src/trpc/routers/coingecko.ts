@@ -2,14 +2,14 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
 import { config } from '../../config'
-import { protectedProcedure, router } from '../trpc'
+import { readOnlyProcedure, router } from '../trpc'
 
 const coingeckoClient = new CoingeckoClient({
   apiKey: config.coingeckoApiKey,
 })
 
 export const coingeckoRouter = router({
-  getCoinById: protectedProcedure.input(v.string()).query(async ({ input }) => {
+  getCoinById: readOnlyProcedure.input(v.string()).query(async ({ input }) => {
     try {
       const coin = await coingeckoClient.getCoinDataById(input)
       return coin
@@ -18,7 +18,7 @@ export const coingeckoRouter = router({
       return null
     }
   }),
-  getListingTimestamp: protectedProcedure
+  getListingTimestamp: readOnlyProcedure
     .input(v.string())
     .query(async ({ input }) => {
       try {

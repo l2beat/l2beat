@@ -5,6 +5,7 @@ export interface Config {
   readonly auth: AuthConfig | false
   readonly coingeckoApiKey: string
   readonly etherscanApiKey: string
+  readonly readOnlyAuthToken?: string
 }
 
 export interface DatabaseConfig {

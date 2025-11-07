@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -89,6 +89,12 @@ export const lineaprover: BaseProject = {
         ...TRUSTED_SETUPS.CeloPlumo,
       },
     ],
+    projectsForTvs: [
+      {
+        projectId: ProjectId('linea'),
+        sinceTimestamp: UnixTime(1689112800),
+      },
+    ],
     verifierHashes: [
       // {
       //   hash: '0x7a181b5c0d9f93a5935cd1249aaa8e60a0e8f729d78325303e3a7dd769413b5b',
@@ -108,7 +114,9 @@ export const lineaprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
-            address: '0xA12E79C375FB0aaddfDA597BBe7b4e9A92e9b3De',
+            address: EthereumAddress(
+              '0xA12E79C375FB0aaddfDA597BBe7b4e9A92e9b3De',
+            ),
             chain: 'ethereum',
           },
         ],
@@ -121,7 +129,9 @@ export const lineaprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
-            address: '0x8421D1e3fb9A737A85dC7FF531c39f324FB2aC5d',
+            address: EthereumAddress(
+              '0x8421D1e3fb9A737A85dC7FF531c39f324FB2aC5d',
+            ),
             chain: 'ethereum',
           },
         ],
@@ -134,7 +144,9 @@ export const lineaprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
-            address: '0x8CAE7ff138e401384df88a408314e4E9a92f274E',
+            address: EthereumAddress(
+              '0x8CAE7ff138e401384df88a408314e4E9a92f274E',
+            ),
             chain: 'ethereum',
           },
         ],
