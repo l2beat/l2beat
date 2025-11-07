@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import chunk from 'lodash/chunk'
 import round from 'lodash/round'
 import { Fragment } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -23,7 +24,7 @@ interface Props {
 const GROUPS = 4
 
 export function DaProjectStats({ stats, className }: Props) {
-  const chunked = chunkArray(stats, GROUPS)
+  const chunked = chunk(stats, GROUPS)
 
   return (
     <div className={cn('grid grid-cols-1 gap-3 md:grid-cols-4', className)}>
@@ -43,15 +44,6 @@ export function DaProjectStats({ stats, className }: Props) {
       })}
     </div>
   )
-}
-
-function chunkArray<T>(array: T[], divider: number): T[][] {
-  const chunkedArray: T[][] = []
-  for (let i = 0; i < array.length; i += divider) {
-    const chunk = array.slice(i, i + divider)
-    chunkedArray.push(chunk)
-  }
-  return chunkedArray
 }
 
 export function getCommonDaProjectStats(
