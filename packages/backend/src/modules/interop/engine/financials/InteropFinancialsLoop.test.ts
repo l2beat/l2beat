@@ -175,7 +175,7 @@ describe(InteropFinancialsLoop.name, () => {
 
       const mockQuery = mockFn().resolvesTo(mockTokens)
       const tokenDb = mockObject<TokenDbClient>({
-        tokens: { getByChainAndAddress: { query: mockQuery } },
+        deployedTokens: { getByChainAndAddress: { query: mockQuery } },
       } as any)
 
       const service = new InteropFinancialsLoop(
@@ -295,7 +295,9 @@ describe(InteropFinancialsLoop.name, () => {
       })
 
       const tokenDb = mockObject<TokenDbClient>({
-        tokens: { getByChainAndAddress: { query: mockFn().resolvesTo([]) } },
+        deployedTokens: {
+          getByChainAndAddress: { query: mockFn().resolvesTo([]) },
+        },
       } as any)
 
       const logger = mockObject<Logger>({
