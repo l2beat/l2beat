@@ -14,6 +14,7 @@ import type { ChartScale } from '../types'
 import { ActivityChartHeader } from './ActivityChartHeader'
 import { ActivityRatioChart } from './ActivityRatioChart'
 import { ScalingRecategorizedActivityChart } from './ScalingRecategorizedActivityChart'
+import { ScalingRecategorizedActivityStats } from './ScalingRecategorizedActivityStats'
 import { getRatioChartData } from './utils/getRatioChartData'
 
 interface Props {
@@ -38,6 +39,7 @@ export function ScalingActivityChart({ milestones, entries }: Props) {
   return (
     <div className="flex flex-col">
       <ActivityChartHeader />
+      <ScalingRecategorizedActivityStats data={data} />
       <ScalingRecategorizedActivityChart data={data} isLoading={isLoading} />
       <ActivityRatioChart
         data={ratioData}
