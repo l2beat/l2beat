@@ -1,8 +1,7 @@
 import { assert, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { CoingeckoClient } from '../../clients/coingecko/CoingeckoClient'
-import { EtherscanClient } from '../../clients/etherscan/EtherscanClient'
-import { RpcClient } from '../../clients/rpc/RpcClient'
+import { Chain } from '../../chains/Chain'
+import { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
 import { config } from '../../config'
 import { db } from '../../database/db'
 import { protectedProcedure, router } from '../trpc'
@@ -44,16 +43,17 @@ export const deployedTokensRouter = router({
           type: 'already-exists' as const,
         }
       }
-      const chain = await db.chain.findByName(input.chain)
-      assert(chain, 'Chain not found')
+      const chainRecord = await db.chain.findByName(input.chain)
+      assert(chainRecord, 'Chain not found')
 
-      const rpcApi = chain.apis?.find((api) => api.type === 'rpc')
+      const chain = new Chain(chainRecord, {
+        etherscanApiKey: config.etherscanApiKey,
+      })
+
       let decimals: number | undefined
-      if (rpcApi) {
-        const rpcClient = new RpcClient(rpcApi, chain.name)
-
+      if (chain.rpc) {
         try {
-          decimals = await rpcClient.getDecimals(input.address)
+          decimals = await chain.rpc.getDecimals(input.address)
         } catch {
           return {
             type: 'not-found-on-rpc' as const,
@@ -62,15 +62,15 @@ export const deployedTokensRouter = router({
       }
 
       let deploymentTimestamp: UnixTime | undefined
-      const etherscanApi = chain.apis?.find((api) => api.type === 'etherscan')
-      if (etherscanApi) {
-        const etherscanClient = new EtherscanClient(
-          {
-            apiKey: config.etherscanApiKey,
-          },
-          chain.chainId,
+      if (chain.etherscan) {
+        const contractCreation = await chain.etherscan.getContractCreation(
+          input.address,
         )
-        const contractCreation = await etherscanClient.getContractCreation(
+        deploymentTimestamp = contractCreation[0].timestamp
+      }
+
+      if (deploymentTimestamp === undefined && chain.blockscout) {
+        const contractCreation = await chain.blockscout.getContractCreation(
           input.address,
         )
         deploymentTimestamp = contractCreation[0].timestamp

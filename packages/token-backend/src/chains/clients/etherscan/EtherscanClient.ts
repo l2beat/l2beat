@@ -13,13 +13,24 @@ export class EtherscanClient {
   ) {}
 
   async getContractCreation(address: string) {
-    const url = this.buildUrl({
-      module: 'contract',
-      chainid: this.chainId.toString(),
-      action: 'getcontractcreation',
+    const data = await this.call('contract', 'getcontractcreation', {
       contractaddresses: address,
     })
 
+    return ContractCreationResultSchema.parse(data)
+  }
+
+  private async call(
+    module: string,
+    action: string,
+    params: Record<string, string>,
+  ) {
+    const url = this.buildUrl({
+      module,
+      action,
+      chainid: this.chainId.toString(),
+      ...params,
+    })
     const response = await fetch(url)
     if (!response.ok) {
       throw new Error(
@@ -29,12 +40,11 @@ export class EtherscanClient {
 
     const json = await response.json()
     const data = EtherscanResponseSchema.parse(json)
-
     if (data.status !== '1' || data.message !== 'OK') {
       throw new Error(`Etherscan API error: ${data.message ?? 'Unknown error'}`)
     }
 
-    return ContractCreationResultSchema.parse(data.result)
+    return data.result
   }
 
   private buildUrl(params: Record<string, string>): string {

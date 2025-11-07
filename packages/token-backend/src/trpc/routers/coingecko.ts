@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { CoingeckoClient } from '../../clients/coingecko/CoingeckoClient'
+import { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
 import { config } from '../../config'
 import { protectedProcedure, router } from '../trpc'
 
