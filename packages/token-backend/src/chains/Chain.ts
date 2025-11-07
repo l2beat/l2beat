@@ -17,7 +17,9 @@ export class Chain {
 
   constructor(
     private readonly chainConfig: ChainRecord,
-    config: { etherscanApiKey?: string },
+    config: {
+      etherscanApiKey: string | undefined
+    },
   ) {
     const rpcApi = chainConfig.apis?.find((api) => api.type === 'rpc')
     if (rpcApi?.url) {
@@ -37,10 +39,10 @@ export class Chain {
     const blockscoutApi = chainConfig.apis?.find(
       (api) => api.type === 'blockscout',
     )
+
     if (blockscoutApi) {
       this.blockscout = new BlockscoutClient({
         url: blockscoutApi.url,
-        apiKey: config.blockscoutApiKey,
       })
     }
   }

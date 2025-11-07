@@ -84,11 +84,13 @@ export function AddDeployedToken() {
         if (checks.data.decimals) {
           form.setValue('decimals', checks.data.decimals, { shouldDirty: true })
         }
-        form.setValue(
-          'deploymentTimestamp',
-          UnixTime.toYYYYMMDDHHMM(checks.data.deploymentTimestamp),
-          { shouldDirty: true },
-        )
+        if (checks.data.deploymentTimestamp) {
+          form.setValue(
+            'deploymentTimestamp',
+            UnixTime.toYYYYMMDDHHMM(checks.data.deploymentTimestamp),
+            { shouldDirty: true },
+          )
+        }
         if (checks.data.abstractToken) {
           form.setValue('abstractTokenId', checks.data.abstractToken.id, {
             shouldDirty: true,
