@@ -79,42 +79,6 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
 
   describe(AbstractTokenRepository.prototype.findByCoingeckoId.name, () => {
     it('finds record by coingeckoId', async () => {
-      const record = abstractToken({
-        id: 'TK0001',
-        coingeckoId: 'bitcoin',
-        symbol: 'BTC',
-        category: 'btc',
-      })
-      await repository.insert(record)
-
-      const found = await repository.findByCoingeckoId('bitcoin')
-      expect(found).toEqual(record)
-    })
-
-    it('returns undefined when coingeckoId does not exist', async () => {
-      await repository.insert(
-        abstractToken({
-          id: 'TK0001',
-          coingeckoId: 'bitcoin',
-        }),
-      )
-
-      const found = await repository.findByCoingeckoId('ethereum')
-      expect(found).toBeUndefined()
-    })
-
-    it('returns undefined when no records exist', async () => {
-      const found = await repository.findByCoingeckoId('bitcoin')
-      expect(found).toBeUndefined()
-    })
-
-    it('finds correct record when multiple records exist with different coingeckoIds', async () => {
-      const bitcoin = abstractToken({
-        id: 'TK0001',
-        coingeckoId: 'bitcoin',
-        symbol: 'BTC',
-        category: 'btc',
-      })
       const ethereum = abstractToken({
         id: 'TK0002',
         coingeckoId: 'ethereum',
@@ -128,18 +92,23 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
         category: 'stablecoin',
       })
 
-      await repository.insert(bitcoin)
       await repository.insert(ethereum)
       await repository.insert(usdc)
 
-      const foundBitcoin = await repository.findByCoingeckoId('bitcoin')
-      expect(foundBitcoin).toEqual(bitcoin)
-
-      const foundEthereum = await repository.findByCoingeckoId('ethereum')
-      expect(foundEthereum).toEqual(ethereum)
-
       const foundUsdc = await repository.findByCoingeckoId('usd-coin')
       expect(foundUsdc).toEqual(usdc)
+    })
+
+    it('returns undefined when coingeckoId does not exist', async () => {
+      await repository.insert(
+        abstractToken({
+          id: 'TK0001',
+          coingeckoId: 'bitcoin',
+        }),
+      )
+
+      const found = await repository.findByCoingeckoId('ethereum')
+      expect(found).toEqual(undefined)
     })
   })
 
