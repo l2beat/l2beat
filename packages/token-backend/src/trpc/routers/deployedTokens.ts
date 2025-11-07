@@ -10,26 +10,6 @@ const coingeckoClient = new CoingeckoClient({
   apiKey: config.coingeckoApiKey,
 })
 
-interface ChecksResponse {
-  error?: {
-    type: 'already-exists' | 'not-found-on-chain' | 'not-found-on-coingecko'
-    message: string
-  }
-  data: {
-    symbol: string | undefined
-    otherChains:
-      | {
-          chain: string
-          address: string
-          exists: boolean
-        }[]
-      | undefined
-    decimals: number | undefined
-    deploymentTimestamp: UnixTime | undefined
-    abstractTokenId: string | undefined
-  }
-}
-
 export const deployedTokensRouter = router({
   getByChainAndAddress: readOnlyProcedure
     .input(v.object({ chain: v.string(), address: v.string() }))
@@ -53,7 +33,7 @@ export const deployedTokensRouter = router({
 
   checks: readOnlyProcedure
     .input(v.object({ chain: v.string(), address: v.string() }))
-    .query(async ({ input }): Promise<ChecksResponse> => {
+    .query(async ({ input }) => {
       const result = await db.deployedToken.findByChainAndAddress({
         chain: input.chain,
         address: input.address,
