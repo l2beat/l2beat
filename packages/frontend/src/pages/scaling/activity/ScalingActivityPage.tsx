@@ -9,7 +9,7 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/getScalingActivityEntries'
 import { ActivityMetricContextProvider } from './components/ActivityMetricContext'
 import { ActivityTimeRangeContextProvider } from './components/ActivityTimeRangeContext'
-import { ScalingActivityTabs } from './components/ScalingActivityTabs'
+import { ScalingActivityCard } from './components/ScalingActivityCard'
 
 interface Props extends AppLayoutProps {
   entries: ScalingActivityEntry[]
@@ -31,7 +31,7 @@ export function ScalingActivityPage({
             <ActivityTimeRangeContextProvider>
               <ActivityMetricContextProvider>
                 <MainPageHeader>Activity</MainPageHeader>
-                <ScalingActivityTabs
+                <ScalingActivityCard
                   entries={entries}
                   milestones={milestones}
                 />

@@ -1,12 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import type { TooltipProps } from 'recharts'
-import { AreaChart } from 'recharts'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import { AreaChart, type TooltipProps } from 'recharts'
 import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
+  type ChartMeta,
   ChartTooltip,
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
@@ -31,20 +30,12 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { Skeleton } from '~/components/core/Skeleton'
-import { CustomLink } from '~/components/link/CustomLink'
-import { ChevronIcon } from '~/icons/Chevron'
+import { useActivityMetricContext } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import type { RecategorisedActivityChartData } from '~/server/features/scaling/activity/getRecategorisedActivityChart'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/countPerSecond'
-import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
-import { api } from '~/trpc/React'
 import { formatRange } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatInteger } from '~/utils/number-format/formatInteger'
-
-interface Props {
-  timeRange: ActivityTimeRange
-}
 
 const chartMeta = {
   rollups: {
@@ -79,39 +70,54 @@ const chartMeta = {
 
 const hiddenDataKeys = ['others'] as const
 
-export function ScalingSummaryActivityChart({ timeRange }: Props) {
+interface Props {
+  data: RecategorisedActivityChartData | undefined
+  isLoading: boolean
+}
+
+export function ScalingRecategorizedActivityChart({ data, isLoading }: Props) {
   const { dataKeys, toggleDataKey } = useChartDataKeys(
     chartMeta,
     hiddenDataKeys,
   )
-
-  const { data, isLoading } = api.activity.recategorisedChart.useQuery({
-    range: timeRange,
-    filter: { type: 'all' },
-  })
+  const { metric } = useActivityMetricContext()
 
   const chartData = useMemo(() => {
+    const getDataPoint = (uops: number | null, tx: number | null) => {
+      if (metric === 'uops') {
+        return uops !== null ? countPerSecond(uops) : null
+      }
+      return tx !== null ? countPerSecond(tx) : null
+    }
+
     return data?.data.map(
-      ([timestamp, rollups, validiumsAndOptimiums, others, ethereum]) => {
+      ([
+        timestamp,
+        rollupsUops,
+        validiumsAndOptimiumsUops,
+        othersUops,
+        ethereumUops,
+        rollupsTx,
+        validiumsAndOptimiumsTx,
+        othersTx,
+        ethereumTx,
+      ]) => {
         return {
           timestamp,
-          rollups: rollups !== null ? countPerSecond(rollups) : null,
-          validiumsAndOptimiums:
-            validiumsAndOptimiums !== null
-              ? countPerSecond(validiumsAndOptimiums)
-              : null,
-          others: others !== null ? countPerSecond(others) : null,
-          ethereum: ethereum !== null ? countPerSecond(ethereum) : null,
+          rollups: getDataPoint(rollupsUops, rollupsTx),
+          validiumsAndOptimiums: getDataPoint(
+            validiumsAndOptimiumsUops,
+            validiumsAndOptimiumsTx,
+          ),
+          others: getDataPoint(othersUops, othersTx),
+          ethereum: getDataPoint(ethereumUops, ethereumTx),
         }
       },
     )
-  }, [data])
-
-  const stats = getStats(data?.data, dataKeys)
+  }, [data, metric])
 
   return (
-    <div className="flex flex-col gap-4">
-      <Header latestUopsCount={stats} />
+    <div className="flex flex-col">
       <ChartContainer
         meta={chartMeta}
         data={chartData}
@@ -176,6 +182,12 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
           })}
         </AreaChart>
       </ChartContainer>
+      {/* <ActivityRatioChart
+        data={ratioData}
+        isLoading={isLoading}
+        syncedUntil={data?.syncedUntil}
+        className="mb-2"
+      /> */}
     </div>
   )
 }
@@ -261,88 +273,4 @@ function CustomTooltip({
       </div>
     </ChartTooltipWrapper>
   )
-}
-
-function Header({ latestUopsCount }: { latestUopsCount: number | undefined }) {
-  return (
-    <div className="flex items-start justify-between">
-      <div>
-        <div className="flex items-center gap-3">
-          <span className="font-bold text-xl">Activity</span>
-          <a
-            className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke px-3 py-2 font-bold text-[13px] text-link leading-none max-md:hidden"
-            href="/scaling/activity"
-          >
-            View details
-            <ChevronIcon className="-rotate-90 size-[10px] fill-current" />
-          </a>
-        </div>
-        <CustomLink
-          href="/scaling/activity"
-          className="flex items-center gap-1 text-xs leading-[1.15] md:hidden"
-          underline={false}
-        >
-          Details
-          <ChevronIcon className="-rotate-90 size-[10px] fill-current" />
-        </CustomLink>
-      </div>
-      <div className="flex flex-col items-end">
-        {latestUopsCount !== undefined ? (
-          <>
-            <div className="whitespace-nowrap text-right font-bold text-xl">
-              {formatActivityCount(countPerSecond(latestUopsCount))} UOPS
-            </div>
-            <div className="h-5" />
-          </>
-        ) : (
-          <>
-            <Skeleton className="my-[5px] h-5 w-20 md:w-[243px]" />
-            <div className="h-5" />
-          </>
-        )}
-      </div>
-    </div>
-  )
-}
-
-function getStats(
-  data: RecategorisedActivityChartData['data'] | undefined,
-  dataKeys: (keyof typeof chartMeta)[],
-) {
-  if (!data) {
-    return undefined
-  }
-
-  const pointsWithData = data.filter(
-    ([_, rollupsUops, validiumsAndOptimiumsUops, othersUops]) => {
-      return (
-        rollupsUops !== null &&
-        validiumsAndOptimiumsUops !== null &&
-        othersUops !== null
-      )
-    },
-  ) as [
-    number,
-    number,
-    number,
-    number,
-    number | null,
-    number | null,
-    number | null,
-    number | null,
-    number | null,
-  ][]
-  const latestData = pointsWithData.at(-1)
-
-  if (!latestData) {
-    return undefined
-  }
-
-  const toSum = [
-    dataKeys.includes('rollups') ? latestData[1] : 0,
-    dataKeys.includes('validiumsAndOptimiums') ? latestData[2] : 0,
-    dataKeys.includes('others') ? latestData[3] : 0,
-  ]
-
-  return toSum.reduce((acc, curr) => acc + curr, 0)
 }

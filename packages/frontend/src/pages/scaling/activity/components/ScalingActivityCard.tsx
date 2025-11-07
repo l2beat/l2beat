@@ -13,7 +13,8 @@ type Props = {
   entries: ScalingActivityEntry[]
   milestones: Milestone[]
 }
-export function ScalingActivityTabs(props: Props) {
+
+export function ScalingActivityCard(props: Props) {
   const filterEntries = useFilterEntries()
 
   const entries = props.entries.filter(filterEntries)
@@ -30,18 +31,13 @@ export function ScalingActivityTabs(props: Props) {
         <UopsExplorerLink />
       </div>
 
-      <TableSortingProvider initialSort={initialSort}>
-        <PrimaryCard className="mt-2">
-          <ScalingActivityChart
-            entries={entries}
-            milestones={props.milestones}
-            type="Rollups"
-          />
-
-          <HorizontalSeparator className="mt-5 mb-3" />
+      <PrimaryCard className="mt-2">
+        <ScalingActivityChart entries={entries} milestones={props.milestones} />
+        <HorizontalSeparator className="mt-5 mb-3" />
+        <TableSortingProvider initialSort={initialSort}>
           <ScalingActivityTable entries={entries} />
-        </PrimaryCard>
-      </TableSortingProvider>
+        </TableSortingProvider>
+      </PrimaryCard>
     </>
   )
 }
