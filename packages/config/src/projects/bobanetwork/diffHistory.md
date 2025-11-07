@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xd3d272a73d4b760adb9f39fbfed2a2498a789ef1
+
+# Diff at Fri, 07 Nov 2025 12:11:11 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@13bc02ee5170e2fdf5ee8d6add3be941d055d545 block: 1762276576
+- current timestamp: 1762517395
+
+## Description
+
+msig change.
+
+## Watched changes
+
+```diff
+    contract Boba Multisig (eth:0x56121a8612474C3eB65D69a3b871f284705b9bC4) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x33A0B6C2Bd60A592C5e91dCCd5E5f403693F0AC1"
++        "eth:0xBEC9D08ddfb46F20f3a847180E6bC04c8Dc8aCb4"
+    }
+```
+
 Generated with discovered.json: 0xef0ceb6e69c517c4bd23d4af72948192d5ca6c4c
 
 # Diff at Tue, 04 Nov 2025 17:17:31 GMT:
