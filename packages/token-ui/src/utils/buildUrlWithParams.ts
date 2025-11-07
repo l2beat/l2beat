@@ -26,4 +26,3 @@ export function buildUrlWithParams(
   const queryString = searchParams.toString()
   return queryString ? `${path}?${queryString}` : path
 }
-
