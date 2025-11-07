@@ -99,6 +99,72 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
     },
   )
 
+  describe(DeployedTokenRepository.prototype.findByChainAndAddress.name, () => {
+    it('finds record with case-insensitive address matching', async () => {
+      const record = deployedToken({
+        chain: 'ethereum',
+        address: '0x' + 'ABCDEF1234567890'.repeat(2) + 'ABCDEF1234',
+        symbol: 'TOKEN',
+        decimals: 18,
+        deploymentTimestamp: 10,
+      })
+      await repository.insert(record)
+
+      // Query with lowercase address
+      const found = await repository.findByChainAndAddress({
+        chain: record.chain,
+        address: record.address.toLowerCase(),
+      })
+      expect(found).toEqual(record)
+    })
+
+    it('finds record when stored address is lowercase and query is uppercase', async () => {
+      const lowercaseAddress = '0x' + 'a'.repeat(40)
+      const record = deployedToken({
+        chain: 'arbitrum',
+        address: lowercaseAddress,
+        symbol: 'TOKEN',
+        decimals: 18,
+        deploymentTimestamp: 10,
+      })
+      await repository.insert(record)
+
+      // Query with uppercase address
+      const found = await repository.findByChainAndAddress({
+        chain: record.chain,
+        address: lowercaseAddress.toUpperCase(),
+      })
+      expect(found).toEqual(record)
+    })
+
+    it('finds record when stored address is mixed case and query is different case', async () => {
+      const mixedCaseAddress =
+        '0x' + 'AbCdEf1234567890'.repeat(2) + 'AbCdEf1234'
+      const record = deployedToken({
+        chain: 'optimism',
+        address: mixedCaseAddress,
+        symbol: 'TOKEN',
+        decimals: 18,
+        deploymentTimestamp: 10,
+      })
+      await repository.insert(record)
+
+      // Query with all lowercase
+      const foundLower = await repository.findByChainAndAddress({
+        chain: record.chain,
+        address: mixedCaseAddress.toLowerCase(),
+      })
+      expect(foundLower).toEqual(record)
+
+      // Query with all uppercase
+      const foundUpper = await repository.findByChainAndAddress({
+        chain: record.chain,
+        address: mixedCaseAddress.toUpperCase(),
+      })
+      expect(foundUpper).toEqual(record)
+    })
+  })
+
   describe(DeployedTokenRepository.prototype.getByAbstractTokenId.name, () => {
     it('returns matching records', async () => {
       await abstractTokens.insert(abstractToken({ id: 'TK0001' }))
