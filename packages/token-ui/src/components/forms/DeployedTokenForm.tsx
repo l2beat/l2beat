@@ -56,7 +56,7 @@ interface Props {
   onSubmit: SubmitHandler<DeployedTokenSchema>
   isFormDisabled: boolean
   tokenDetails: {
-    data: RouterOutputs['deployedTokens']['checks']
+    data: RouterOutputs['deployedTokens']['checks'] | undefined
     loading: boolean
   }
   abstractTokens: {
@@ -316,7 +316,7 @@ export function DeployedTokenForm({
                       <ArrowRightIcon />
                     </Link>
                   )}
-                  {tokenDetails.data?.data.abstractTokenId &&
+                  {tokenDetails.data?.data?.abstractTokenId &&
                     !abstractToken && (
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -324,7 +324,7 @@ export function DeployedTokenForm({
                             to={buildUrlWithParams('/tokens/new', {
                               tab: 'abstract',
                               coingeckoId:
-                                tokenDetails.data?.data.abstractTokenId,
+                                tokenDetails.data.data.abstractTokenId,
                               redirectTo: 'deployed',
                             })}
                             className={buttonVariants({

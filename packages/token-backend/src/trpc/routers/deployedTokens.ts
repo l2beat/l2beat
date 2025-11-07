@@ -48,24 +48,13 @@ export const deployedTokensRouter = router({
             message:
               'Deployed token with given address and chain already exists',
           },
-          data: {
-            symbol: undefined,
-            otherChains: undefined,
-            decimals: undefined,
-            deploymentTimestamp: undefined,
-            abstractTokenId: undefined,
-          },
+          data: undefined,
         }
       }
       if (!input.address.startsWith('0x')) {
         return {
-          data: {
-            symbol: undefined,
-            otherChains: undefined,
-            decimals: undefined,
-            deploymentTimestamp: undefined,
-            abstractTokenId: undefined,
-          },
+          error: undefined,
+          data: undefined,
         }
       }
 
@@ -143,6 +132,7 @@ export const deployedTokensRouter = router({
         : undefined
 
       return {
+        error: undefined,
         data: {
           symbol: coin.symbol,
           decimals,
