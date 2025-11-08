@@ -158,12 +158,13 @@ export const acrossV3: Bridge = {
   technology: {
     destination: [
       'Optimism',
-      'Polygon',
-      'Boba',
       'Arbitrum',
-      'ZkSync Era',
-      'Linea',
       'Base',
+      'Linea',
+      'Scroll',
+      'Blast',
+      'Mode',
+      'ZkSync Era',
     ],
     principleOfOperation: {
       name: 'Principle of operation',
