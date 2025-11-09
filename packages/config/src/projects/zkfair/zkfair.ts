@@ -137,7 +137,11 @@ export const zkfair: ScalingProject = {
       documentation: ['https://docs.zkfair.io/'],
       explorers: ['https://scan.zkfair.io/'],
       repositories: ['https://github.com/ZKFair'],
-      socialMedia: ['https://twitter.com/ZKFCommunity'],
+      socialMedia: [
+        'https://twitter.com/ZKFCommunity',
+        'https://t.me/zkfaircommunity',
+        'https://mirror.xyz/zkfair.eth',
+      ],
     },
   },
   proofSystem: undefined,
