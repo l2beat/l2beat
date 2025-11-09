@@ -1,5 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
-import { isDraft, original, produce } from 'immer'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { writeTemplateFile } from '../../../api/api'
 import { ContractConfigModel } from './ConfigModel'
@@ -10,6 +9,7 @@ type Props = {
 }
 
 export function useTemplateModel({ templateId, template }: Props) {
+  const queryClient = useQueryClient()
   const [templateModel, setTemplateModel] = useState(
     ContractConfigModel.fromRawJsonc(template ?? '{}'),
   )
@@ -18,39 +18,29 @@ export function useTemplateModel({ templateId, template }: Props) {
     setTemplateModel(ContractConfigModel.fromRawJsonc(template ?? '{}'))
   }, [template])
 
-  const originalTemplate = useMemo(() => {
-    return isDraft(templateModel) ? original(templateModel) : undefined
+  // ??
+  const isDirty = useMemo(() => {
+    return templateModel.diff(templateModel) ?? false
   }, [templateModel])
 
-  const isDirty = useMemo(() => {
-    return originalTemplate?.diff(templateModel) ?? false
-  }, [templateModel, originalTemplate])
-
   const setIgnoreMethods = (methods: string[]) => {
-    setTemplateModel(
-      produce((draft) => {
-        draft.setIgnoreMethods(methods)
-      }),
-    )
+    setTemplateModel(templateModel.setIgnoreMethods(methods))
   }
   const setIgnoreRelatives = (relatives: string[]) => {
-    setTemplateModel(
-      produce((draft) => {
-        draft.setIgnoreRelatives(relatives)
-      }),
-    )
+    setTemplateModel(templateModel.setIgnoreRelatives(relatives))
   }
   const setIgnoreInWatchMode = (methods: string[]) => {
-    setTemplateModel(
-      produce((draft) => {
-        draft.setIgnoreInWatchMode(methods)
-      }),
-    )
+    setTemplateModel(templateModel.setIgnoreInWatchMode(methods))
   }
 
   const saveMutation = useMutation({
     mutationFn: async () => {
-      await writeTemplateFile(templateId, getTemplateString())
+      await writeTemplateFile(templateId, templateString)
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ['template', templateId],
+      })
     },
   })
 
@@ -61,7 +51,7 @@ export function useTemplateModel({ templateId, template }: Props) {
     [templateModel],
   )
 
-  const getTemplateString = useCallback(() => {
+  const templateString = useMemo(() => {
     return templateModel.toString()
   }, [templateModel])
 
@@ -76,7 +66,7 @@ export function useTemplateModel({ templateId, template }: Props) {
 
     isDirty,
 
-    getTemplateString,
+    templateString,
 
     ignoreMethods: templateModel.ignoreMethods,
     ignoreRelatives: templateModel.ignoreRelatives,

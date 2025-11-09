@@ -803,9 +803,6 @@ importers:
       fuzzysort:
         specifier: ^3.1.0
         version: 3.1.0
-      immer:
-        specifier: ^10.2.0
-        version: 10.2.0
       mocha:
         specifier: ^10.2.0
         version: 10.7.3
@@ -12770,7 +12767,8 @@ snapshots:
 
   image-size@2.0.1: {}
 
-  immer@10.2.0: {}
+  immer@10.2.0:
+    optional: true
 
   import-in-the-middle@1.13.1:
     dependencies:
