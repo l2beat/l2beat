@@ -28,6 +28,8 @@ function getGradeColor(grade: LetterGrade): string {
       return 'text-orange-400'
     case 'D':
       return 'text-red-400'
+    case 'Unscored':
+      return 'text-gray-400'
   }
 }
 

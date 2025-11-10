@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-11-10T13:25:42.729Z",
+  "lastModified": "2025-11-10T19:15:35.143Z",
   "contracts": {
     "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": {
       "functions": [
@@ -9,28 +9,26 @@
           "isPermissioned": true,
           "checked": true,
           "score": "high-risk",
-          "likelihood": "high",
           "description": "Sets the owner of the contract. This role is dedicated to the DAO. The owner can add new guardians, change the quorum, and unpause the deposits.",
           "ownerDefinitions": [
             {
               "path": "$self.getOwner"
             }
           ],
-          "timestamp": "2025-11-04T19:16:24.200Z"
+          "timestamp": "2025-11-10T18:28:53.806Z"
         },
         {
           "functionName": "setPauseIntentValidityPeriodBlocks",
           "isPermissioned": true,
           "checked": true,
           "score": "medium-risk",
-          "likelihood": "mitigated",
           "description": "Sets the window of validity of a pause intent. This is the reaction time allowed for guardians to pause deposits. When a guardian wants to pause deposits it specifies a block number, the pause is only applied if the current block number is within the validity period of the specified block. This is to avoid replay of pause messages.",
           "ownerDefinitions": [
             {
               "path": "$self.getOwner"
             }
           ],
-          "timestamp": "2025-11-04T19:29:49.308Z"
+          "timestamp": "2025-11-10T18:29:00.873Z"
         },
         {
           "functionName": "setMaxOperatorsPerUnvetting",
@@ -63,14 +61,13 @@
           "isPermissioned": true,
           "checked": true,
           "score": "medium-risk",
-          "likelihood": "medium",
           "description": "Adds a guardian and sets a new custom quorum value. Guardians co-sign deposits to reduce the risk of collusion with node operators.",
           "ownerDefinitions": [
             {
               "path": "$self.getOwner"
             }
           ],
-          "timestamp": "2025-11-06T14:22:36.686Z"
+          "timestamp": "2025-11-10T18:29:13.479Z"
         },
         {
           "functionName": "addGuardians",
@@ -90,28 +87,26 @@
           "isPermissioned": true,
           "checked": true,
           "score": "high-risk",
-          "likelihood": "low",
           "description": "Removes a guardian address and sets a new quorum value. There are no protections on the quorum, this could be set to zero (see setGuardianQuorum).",
           "ownerDefinitions": [
             {
               "path": "$self.getOwner"
             }
           ],
-          "timestamp": "2025-11-04T19:16:09.338Z"
+          "timestamp": "2025-11-10T18:29:04.799Z"
         },
         {
           "functionName": "pauseDeposits",
           "isPermissioned": true,
           "checked": true,
           "score": "medium-risk",
-          "likelihood": "low",
           "description": "Pauses the deposits. Funds can no longer be deposited into new validators until deposits are unpaused. This can be called by any guardian when a frontrunning by a node operator is suspected and prevents the loss of user funds through deposits.",
           "ownerDefinitions": [
             {
               "path": "$self.getGuardians"
             }
           ],
-          "timestamp": "2025-11-05T19:12:28.097Z"
+          "timestamp": "2025-11-10T18:29:08.594Z"
         },
         {
           "functionName": "unpauseDeposits",
@@ -131,7 +126,6 @@
           "isPermissioned": true,
           "checked": true,
           "score": "high-risk",
-          "likelihood": "low",
           "description": "Deposits ETH into a given validator using `Lido.deposit`. The message must include at least 4/6 signatures from guardians for it to be valid.",
           "ownerDefinitions": [
             {
@@ -143,7 +137,7 @@
               "contractAddress": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa"
             }
           ],
-          "timestamp": "2025-11-10T13:24:04.229Z"
+          "timestamp": "2025-11-10T18:29:11.429Z"
         },
         {
           "functionName": "unvetSigningKeys",
@@ -758,7 +752,13 @@
         {
           "functionName": "proxy__upgradeTo",
           "isPermissioned": true,
-          "timestamp": "2025-10-02T21:26:09.167Z"
+          "score": "medium-risk",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-11-10T19:15:35.143Z"
         }
       ]
     },
@@ -3169,7 +3169,8 @@
           "functionName": "tiebreakerScheduleProposal",
           "isPermissioned": true,
           "checked": true,
-          "score": "critical",
+          "score": "high-risk",
+          "likelihood": "mitigated",
           "description": "Allows the Tiebreaker committee to instruct the EmergencyProtectedTimelock singleton instance to schedule a submitted and non-cancelled proposal for execution. This can only be called if the governance is in deadlock and the mandatory timeout has passed since the activation of the tiebreaker committee.",
           "constraints": "Governance has to be in tie state.",
           "ownerDefinitions": [
@@ -3177,20 +3178,21 @@
               "path": "$self.getTiebreakerDetails.tiebreakerCommittee"
             }
           ],
-          "timestamp": "2025-10-31T17:10:30.720Z"
+          "timestamp": "2025-11-10T18:33:29.431Z"
         },
         {
           "functionName": "tiebreakerResumeSealable",
           "isPermissioned": true,
-          "timestamp": "2025-10-13T21:21:10.012Z",
           "checked": true,
           "score": "high-risk",
+          "likelihood": "mitigated",
           "description": "Allows the Tiebreaker committee to resume a paused sealable contract when the system is in a tie state.\n\n",
           "ownerDefinitions": [
             {
               "path": "$self.getTiebreakerDetails.tiebreakerCommittee"
             }
-          ]
+          ],
+          "timestamp": "2025-11-10T18:33:30.570Z"
         },
         {
           "functionName": "resealSealable",

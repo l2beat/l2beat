@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-11-06T14:30:48.727Z",
+  "lastModified": "2025-11-10T18:29:54.333Z",
   "tags": [
     {
       "contractAddress": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
@@ -14,6 +14,108 @@
       "isExternal": true,
       "timestamp": "2025-11-06T14:22:03.982Z",
       "likelihood": "low"
+    },
+    {
+      "contractAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+      "isExternal": false,
+      "timestamp": "2025-11-10T18:29:54.333Z",
+      "likelihood": "mitigated"
+    },
+    {
+      "contractAddress": "eth:0xf65614d73952Be91ce0aE7Dd9cFf25Ba15bEE2f5",
+      "isExternal": false,
+      "timestamp": "2025-11-10T18:16:11.815Z",
+      "likelihood": "low"
+    },
+    {
+      "contractAddress": "eth:0x5fd0dDbC3351d009eb3f88DE7Cd081a614C519F1",
+      "isExternal": false,
+      "timestamp": "2025-11-10T18:16:36.091Z",
+      "likelihood": "mitigated"
+    },
+    {
+      "contractAddress": "eth:0x7912Fa976BcDe9c2cf728e213e892AD7588E6AaF",
+      "isExternal": false,
+      "timestamp": "2025-11-10T18:16:44.272Z",
+      "likelihood": "mitigated"
+    },
+    {
+      "contractAddress": "eth:0xd4EF84b638B334699bcf5AF4B0410B8CCD71943f",
+      "isExternal": false,
+      "timestamp": "2025-11-10T18:22:03.221Z",
+      "likelihood": "mitigated"
+    },
+    {
+      "contractAddress": "eth:0xf82D88217C249297C6037BA77CE34b3d8a90ab43",
+      "isExternal": false,
+      "timestamp": "2025-11-10T18:22:07.151Z",
+      "likelihood": "mitigated"
+    },
+    {
+      "contractAddress": "eth:0xa56b128Ea2Ea237052b0fA2a96a387C0E43157d8",
+      "isExternal": false,
+      "timestamp": "2025-11-10T18:22:09.975Z",
+      "likelihood": "mitigated"
+    },
+    {
+      "contractAddress": "eth:0x6d22aE126eB2c37F67a1391B37FF4f2863e61389",
+      "isExternal": false,
+      "timestamp": "2025-11-10T18:22:12.652Z",
+      "likelihood": "mitigated"
+    },
+    {
+      "contractAddress": "eth:0x73181107c8D9ED4ce0bbeF7A0b4ccf3320C41d12",
+      "isExternal": false,
+      "timestamp": "2025-11-10T18:27:57.996Z",
+      "likelihood": "mitigated"
+    },
+    {
+      "contractAddress": "eth:0x285f8537e1dAeEdaf617e96C742F2Cf36d63CcfB",
+      "isExternal": false,
+      "timestamp": "2025-11-10T18:28:03.276Z",
+      "likelihood": "mitigated"
+    },
+    {
+      "contractAddress": "eth:0x404335BcE530400a5814375E7Ec1FB55fAff3eA2",
+      "isExternal": false,
+      "timestamp": "2025-11-10T18:28:07.244Z",
+      "likelihood": "mitigated"
+    },
+    {
+      "contractAddress": "eth:0x946D3b081ed19173dC83Cd974fC69e1e760B7d78",
+      "isExternal": false,
+      "timestamp": "2025-11-10T18:28:12.867Z",
+      "likelihood": "mitigated"
+    },
+    {
+      "contractAddress": "eth:0x007DE4a5F7bc37E2F26c0cb2E8A95006EE9B89b5",
+      "isExternal": false,
+      "timestamp": "2025-11-10T18:28:15.465Z",
+      "likelihood": "mitigated"
+    },
+    {
+      "contractAddress": "eth:0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf",
+      "isExternal": false,
+      "timestamp": "2025-11-10T18:28:18.732Z",
+      "likelihood": "mitigated"
+    },
+    {
+      "contractAddress": "eth:0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8",
+      "isExternal": false,
+      "timestamp": "2025-11-10T18:28:20.824Z",
+      "likelihood": "mitigated"
+    },
+    {
+      "contractAddress": "eth:0xe57B3792aDCc5da47EF4fF588883F0ee0c9835C9",
+      "isExternal": false,
+      "timestamp": "2025-11-10T18:28:24.572Z",
+      "likelihood": "mitigated"
+    },
+    {
+      "contractAddress": "eth:0x4118DAD7f348A4063bD15786c299De2f3B1333F3",
+      "isExternal": false,
+      "timestamp": "2025-11-10T18:28:27.038Z",
+      "likelihood": "mitigated"
     }
   ]
 }

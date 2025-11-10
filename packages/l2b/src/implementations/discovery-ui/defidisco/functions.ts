@@ -356,6 +356,56 @@ export function resolveOwnersFromDiscovered(
   }
 }
 
+/**
+ * Extracts all addresses from an array of resolved owners
+ * Handles the ResolvedOwner format from resolveOwnersFromDiscovered()
+ *
+ * @param resolved Array of ResolvedOwner objects
+ * @returns Array of address strings (may include duplicates if structured values contain addresses)
+ */
+export function extractAddressesFromResolvedOwners(resolved: ResolvedOwner[]): string[] {
+  const addresses: string[] = []
+
+  for (const owner of resolved) {
+    if (!owner.isResolved) continue
+
+    // Add the primary address if it exists and is valid
+    if (owner.address && owner.address !== 'DISCOVERY_NOT_FOUND' && owner.address !== 'RESOLUTION_FAILED' && owner.address !== 'PARSE_ERROR') {
+      addresses.push(owner.address)
+    }
+
+    // If there's a structured value, recursively extract addresses from it
+    if (owner.structuredValue) {
+      extractAddressesFromValue(owner.structuredValue, addresses)
+    }
+  }
+
+  return addresses
+}
+
+/**
+ * Helper function to recursively extract addresses from any value
+ */
+function extractAddressesFromValue(value: any, addresses: string[]): void {
+  if (!value) return
+
+  // If it's an address-like string
+  if (typeof value === 'string' && value.match(/^(eth:)?0x[a-fA-F0-9]{40}$/)) {
+    addresses.push(value)
+    return
+  }
+
+  // If it's an array
+  if (Array.isArray(value)) {
+    value.forEach(item => extractAddressesFromValue(item, addresses))
+    return
+  }
+
+  // If it's an object
+  if (typeof value === 'object') {
+    Object.values(value).forEach(v => extractAddressesFromValue(v, addresses))
+  }
+}
 
 /**
  * Resolves a delay field value from discovered data.

@@ -6,7 +6,7 @@ import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 export type Impact = 'low' | 'medium' | 'high' | 'critical'
 export type Likelihood = 'mitigated' | 'low' | 'medium' | 'high'
 export type Severity = 'informational' | 'low' | 'medium' | 'high' | 'critical'
-export type LetterGrade = 'AAA' | 'AA' | 'A' | 'BBB' | 'BB' | 'B' | 'CCC' | 'CC' | 'C' | 'D'
+export type LetterGrade = 'AAA' | 'AA' | 'A' | 'BBB' | 'BB' | 'B' | 'CCC' | 'CC' | 'C' | 'D' | 'Unscored'
 
 // Function detail for severity scoring breakdown
 export interface FunctionDetail {

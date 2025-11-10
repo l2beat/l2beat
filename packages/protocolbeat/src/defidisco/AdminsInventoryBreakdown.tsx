@@ -440,7 +440,7 @@ export function AdminsInventoryBreakdown({ score }: AdminsInventoryBreakdownProp
 
       return updateContractTag(project, {
         contractAddress: adminAddress,
-        isExternal: existingTag?.isExternal,
+        isExternal: existingTag?.isExternal ?? false,
         centralization: existingTag?.centralization,
         likelihood: likelihood,
       })

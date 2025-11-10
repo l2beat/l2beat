@@ -28,6 +28,8 @@ function getGradeColor(grade: LetterGrade): string {
       return 'text-orange-400'
     case 'D':
       return 'text-red-400'
+    case 'Unscored':
+      return 'text-gray-400'
   }
 }
 
@@ -65,6 +67,12 @@ function getGradeBadgeStyles(grade: LetterGrade): { backgroundColor: string; bor
         backgroundColor: 'rgba(127, 29, 29, 0.5)', // red-900/50
         borderColor: 'rgba(239, 68, 68, 0.3)', // red-500/30
         color: '#f87171' // red-400
+      }
+    case 'Unscored':
+      return {
+        backgroundColor: 'rgba(55, 65, 81, 0.5)', // gray-700/50
+        borderColor: 'rgba(156, 163, 175, 0.3)', // gray-400/30
+        color: '#9ca3af' // gray-400
       }
   }
 }
@@ -262,13 +270,19 @@ export function FunctionBreakdown({ score }: FunctionBreakdownProps) {
   const queryClient = useQueryClient()
   const gradeColor = getGradeColor(score.grade)
 
-  // Get grade order from worst to best
+  // Get grade order from worst to best (excluding Unscored)
   const gradeOrder: LetterGrade[] = ['D', 'C', 'CC', 'CCC', 'B', 'BB', 'BBB', 'A', 'AA', 'AAA']
 
-  // Count scored functions
+  // Count scored functions (excluding Unscored)
   const scoredFunctionCount = score.breakdown
-    ? Object.values(score.breakdown).flat().length
+    ? Object.entries(score.breakdown)
+        .filter(([grade]) => grade !== 'Unscored')
+        .flatMap(([_, functions]) => functions).length
     : 0
+
+  // Get unscored functions
+  const unscoredFunctions = score.breakdown?.['Unscored'] || []
+  const unscoredCount = unscoredFunctions.length
 
   // Mutation for updating impact
   const updateImpactMutation = useMutation({
@@ -307,15 +321,23 @@ export function FunctionBreakdown({ score }: FunctionBreakdownProps) {
 
       {/* Grade breakdown - always shown */}
       <div className="mt-3 ml-2">
-        {scoredFunctionCount === 0 ? (
+        {scoredFunctionCount === 0 && unscoredCount === 0 ? (
           <p className="text-xs text-coffee-400 ml-4">
-            No functions with both impact and likelihood scores
+            No functions with impact scores
           </p>
         ) : (
           <>
-            <p className="text-xs text-coffee-400 ml-4 mb-3">
-              {scoredFunctionCount} scored function{scoredFunctionCount !== 1 ? 's' : ''}
-            </p>
+            {scoredFunctionCount > 0 && (
+              <p className="text-xs text-coffee-400 ml-4 mb-3">
+                {scoredFunctionCount} scored function{scoredFunctionCount !== 1 ? 's' : ''}
+                {unscoredCount > 0 && ` + ${unscoredCount} unscored`}
+              </p>
+            )}
+            {scoredFunctionCount === 0 && unscoredCount > 0 && (
+              <p className="text-xs text-coffee-400 ml-4 mb-3">
+                {unscoredCount} unscored function{unscoredCount !== 1 ? 's' : ''} (missing likelihood)
+              </p>
+            )}
             {gradeOrder.map((grade) => (
               <GradeSection
                 key={grade}
@@ -324,6 +346,15 @@ export function FunctionBreakdown({ score }: FunctionBreakdownProps) {
                 onUpdateImpact={handleUpdateImpact}
               />
             ))}
+            {/* Unscored section */}
+            {unscoredCount > 0 && (
+              <GradeSection
+                key="Unscored"
+                grade="Unscored"
+                functions={unscoredFunctions}
+                onUpdateImpact={handleUpdateImpact}
+              />
+            )}
           </>
         )}
       </div>

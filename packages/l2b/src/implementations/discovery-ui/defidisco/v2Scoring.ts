@@ -1,6 +1,6 @@
 import type { ConfigReader, DiscoveryPaths, TemplateService } from '@l2beat/discovery'
 import { getProject } from '../getProject'
-import { getFunctions, resolveOwnersFromDiscovered } from './functions'
+import { getFunctions, resolveOwnersFromDiscovered, extractAddressesFromResolvedOwners } from './functions'
 import { getContractTags } from './contractTags'
 import type { Impact, Likelihood, Severity, FunctionDetail, DependencyDetail, AdminDetail, LetterGrade as ImportedLetterGrade, ApiAddressType } from './types'
 
@@ -8,7 +8,7 @@ import type { Impact, Likelihood, Severity, FunctionDetail, DependencyDetail, Ad
 // Type Definitions
 // ============================================================================
 
-export type LetterGrade = 'AAA' | 'AA' | 'A' | 'BBB' | 'BB' | 'B' | 'CCC' | 'CC' | 'C' | 'D'
+export type LetterGrade = 'AAA' | 'AA' | 'A' | 'BBB' | 'BB' | 'B' | 'CCC' | 'CC' | 'C' | 'D' | 'Unscored'
 
 export interface ModuleScore {
   grade: LetterGrade
@@ -17,6 +17,7 @@ export interface ModuleScore {
 
 export interface FunctionModuleScore extends ModuleScore {
   breakdown?: Record<LetterGrade, FunctionDetail[]>
+  unscoredCount?: number
 }
 
 export interface DependencyModuleScore extends ModuleScore {
@@ -169,6 +170,7 @@ const GRADE_TO_NUMERIC: Record<LetterGrade, number> = {
   'CC': 3,
   'C': 2,
   'D': 1,
+  'Unscored': 0, // Special value - doesn't affect grade calculations
 }
 
 const NUMERIC_TO_GRADE: LetterGrade[] = [
@@ -270,11 +272,14 @@ class FunctionInventoryModule implements ScoringModule {
     const breakdown: Record<LetterGrade, FunctionDetail[]> = {
       'D': [], 'C': [], 'CC': [], 'CCC': [],
       'B': [], 'BB': [], 'BBB': [],
-      'A': [], 'AA': [], 'AAA': []
+      'A': [], 'AA': [], 'AAA': [],
+      'Unscored': []
     }
 
     let functionCount = 0
+    let unscoredCount = 0
     let worstGrade: LetterGrade = 'AAA'
+    const ownerResolutionCache = new Map<string, string[]>()
 
     if (data.permissionOverrides?.contracts) {
       Object.entries(data.permissionOverrides.contracts).forEach(([contractAddress, contractData]: [string, any]) => {
@@ -282,8 +287,8 @@ class FunctionInventoryModule implements ScoringModule {
           if (func.isPermissioned === true) {
             functionCount++
 
-            // Skip if function doesn't have both score and likelihood
-            if (!func.score || func.score === 'unscored' || !func.likelihood) {
+            // Skip if function doesn't have impact
+            if (!func.score || func.score === 'unscored') {
               return
             }
 
@@ -298,29 +303,97 @@ class FunctionInventoryModule implements ScoringModule {
             const impact = impactMap[func.score]
             if (!impact) return
 
-            const likelihood = func.likelihood as Likelihood
+            // Determine effective likelihood: function likelihood OR owner likelihood
+            let effectiveLikelihood: Likelihood | undefined = func.likelihood
 
-            // Calculate severity and grade
-            const severity = getSeverityLevel(impact, likelihood)
-            const grade = getSeverityGrade(impact, likelihood)
+            // If no function likelihood, try to get owner likelihood
+            if (!effectiveLikelihood && func.ownerDefinitions && func.ownerDefinitions.length > 0) {
+              // Create cache key from owner definitions
+              const cacheKey = JSON.stringify(func.ownerDefinitions)
+
+              // Check cache first
+              let adminAddresses = ownerResolutionCache.get(cacheKey)
+              if (!adminAddresses) {
+                // Cache miss - resolve and store
+                const resolved = resolveOwnersFromDiscovered(
+                  data.paths,
+                  data.projectName,
+                  contractAddress,
+                  func.ownerDefinitions
+                )
+                // Extract all addresses from resolved owners
+                adminAddresses = extractAddressesFromResolvedOwners(resolved)
+                ownerResolutionCache.set(cacheKey, adminAddresses)
+              }
+
+              // Use worst-case (highest risk) likelihood among all owners
+              // For security analysis, if ANY owner has high likelihood, the function inherits that risk
+              if (adminAddresses && adminAddresses.length > 0) {
+                const likelihoodPriority: Record<Likelihood, number> = {
+                  'high': 4,
+                  'medium': 3,
+                  'low': 2,
+                  'mitigated': 1
+                }
+
+                let worstLikelihood: Likelihood | undefined = undefined
+                let worstPriority = 0
+
+                for (const ownerAddr of adminAddresses) {
+                  const normalizedAddr = ownerAddr.toLowerCase()
+                  const tag = data.contractTags?.tags?.find((tag: any) =>
+                    tag.contractAddress.toLowerCase() === normalizedAddr
+                  )
+
+                  if (tag?.likelihood) {
+                    const likelihood = tag.likelihood as Likelihood
+                    const priority = likelihoodPriority[likelihood]
+                    if (priority > worstPriority) {
+                      worstPriority = priority
+                      worstLikelihood = likelihood
+                    }
+                  }
+                }
+
+                effectiveLikelihood = worstLikelihood
+              }
+            }
 
             // Resolve contract name from projectData
             const contractName = this.getContractName(data.projectData, contractAddress)
 
-            // Add to breakdown
-            breakdown[grade].push({
-              contractAddress,
-              contractName,
-              functionName: func.functionName,
-              impact,
-              likelihood,
-              severity,
-              grade
-            })
+            // If we have both impact and likelihood, calculate grade
+            if (effectiveLikelihood) {
+              const severity = getSeverityLevel(impact, effectiveLikelihood)
+              const grade = getSeverityGrade(impact, effectiveLikelihood)
 
-            // Track worst grade
-            if (this.gradeToNumeric(grade) < this.gradeToNumeric(worstGrade)) {
-              worstGrade = grade
+              // Add to breakdown
+              breakdown[grade].push({
+                contractAddress,
+                contractName,
+                functionName: func.functionName,
+                impact,
+                likelihood: effectiveLikelihood,
+                severity,
+                grade
+              })
+
+              // Track worst grade (excluding Unscored)
+              if (this.gradeToNumeric(grade) < this.gradeToNumeric(worstGrade)) {
+                worstGrade = grade
+              }
+            } else {
+              // Has impact but no likelihood source - add to Unscored
+              unscoredCount++
+              breakdown['Unscored'].push({
+                contractAddress,
+                contractName,
+                functionName: func.functionName,
+                impact,
+                likelihood: 'low', // Placeholder for type compatibility
+                severity: 'informational',
+                grade: 'Unscored'
+              })
             }
           }
         })
@@ -328,14 +401,19 @@ class FunctionInventoryModule implements ScoringModule {
     }
 
     // If no functions have been scored, use count-based fallback
-    if (Object.values(breakdown).flat().length === 0) {
+    const scoredCount = Object.entries(breakdown)
+      .filter(([grade]) => grade !== 'Unscored')
+      .flatMap(([_, functions]) => functions).length
+
+    if (scoredCount === 0 && unscoredCount === 0) {
       worstGrade = this.countToGrade(functionCount)
     }
 
     return {
       grade: worstGrade,
       inventory: functionCount,
-      breakdown
+      breakdown,
+      unscoredCount
     }
   }
 
@@ -364,7 +442,8 @@ class FunctionInventoryModule implements ScoringModule {
     const map: Record<LetterGrade, number> = {
       'AAA': 10, 'AA': 9, 'A': 8,
       'BBB': 7, 'BB': 6, 'B': 5,
-      'CCC': 4, 'CC': 3, 'C': 2, 'D': 1
+      'CCC': 4, 'CC': 3, 'C': 2, 'D': 1,
+      'Unscored': 0
     }
     return map[grade]
   }
@@ -501,7 +580,8 @@ class DependencyInventoryModule {
     const gradeValues: Record<LetterGrade, number> = {
       'AAA': 10, 'AA': 9, 'A': 8,
       'BBB': 7, 'BB': 6, 'B': 5,
-      'CCC': 4, 'CC': 3, 'C': 2, 'D': 1
+      'CCC': 4, 'CC': 3, 'C': 2, 'D': 1,
+      'Unscored': 0
     }
 
     const numericGrades = grades.map(g => gradeValues[g])
@@ -570,7 +650,7 @@ class AdminInventoryModule implements ScoringModule {
               func.ownerDefinitions
             )
             // Extract all addresses from resolved owners
-            adminAddresses = this.extractAddresses(resolved)
+            adminAddresses = extractAddressesFromResolvedOwners(resolved)
             ownerResolutionCache.set(cacheKey, adminAddresses)
           }
 
@@ -626,53 +706,6 @@ class AdminInventoryModule implements ScoringModule {
       grade: worstGrade,
       inventory: adminsMap.size,
       breakdown: Array.from(adminsMap.values())
-    }
-  }
-
-  /**
-   * Extract all addresses from resolved owners (recursive)
-   */
-  private extractAddresses(resolved: any[]): string[] {
-    const addresses: string[] = []
-
-    for (const owner of resolved) {
-      if (!owner.isResolved) continue
-
-      // Add the primary address
-      if (owner.address && owner.address !== 'DISCOVERY_NOT_FOUND') {
-        addresses.push(owner.address)
-      }
-
-      // If there's a structured value, recursively extract addresses
-      if (owner.structuredValue) {
-        this.extractAddressesFromValue(owner.structuredValue, addresses)
-      }
-    }
-
-    return addresses
-  }
-
-  /**
-   * Recursively extract addresses from any value
-   */
-  private extractAddressesFromValue(value: any, addresses: string[]): void {
-    if (!value) return
-
-    // If it's an address-like string
-    if (typeof value === 'string' && value.match(/^(eth:)?0x[a-fA-F0-9]{40}$/)) {
-      addresses.push(value)
-      return
-    }
-
-    // If it's an array
-    if (Array.isArray(value)) {
-      value.forEach(item => this.extractAddressesFromValue(item, addresses))
-      return
-    }
-
-    // If it's an object
-    if (typeof value === 'object') {
-      Object.values(value).forEach(v => this.extractAddressesFromValue(v, addresses))
     }
   }
 

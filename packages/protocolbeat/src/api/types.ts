@@ -322,7 +322,7 @@ export interface ApiContractTagsUpdateRequest {
 }
 
 // V2 Scoring types
-export type LetterGrade = 'AAA' | 'AA' | 'A' | 'BBB' | 'BB' | 'B' | 'CCC' | 'CC' | 'C' | 'D'
+export type LetterGrade = 'AAA' | 'AA' | 'A' | 'BBB' | 'BB' | 'B' | 'CCC' | 'CC' | 'C' | 'D' | 'Unscored'
 
 export interface ModuleScore {
   grade: LetterGrade
@@ -331,6 +331,7 @@ export interface ModuleScore {
 
 export interface FunctionModuleScore extends ModuleScore {
   breakdown?: Record<LetterGrade, FunctionDetail[]>
+  unscoredCount?: number
 }
 
 export interface DependencyModuleScore extends ModuleScore {
