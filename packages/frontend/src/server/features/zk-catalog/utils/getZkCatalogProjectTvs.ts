@@ -2,7 +2,6 @@ import type { Project } from '@l2beat/config'
 import uniq from 'lodash/uniq'
 import { getLogger } from '~/server/utils/logger'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
-import type { ContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import type { SevenDayTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
 
 export function getZkCatalogProjectTvs(
@@ -12,25 +11,18 @@ export function getZkCatalogProjectTvs(
     'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
   >[],
   tvs: SevenDayTvsBreakdown,
-  contractUtils: ContractUtils,
 ) {
-  const usedInVerifiers = uniq(
-    project.zkCatalogInfo.verifierHashes.flatMap((v) =>
-      v.knownDeployments.flatMap(
-        (d) =>
-          d.overrideUsedIn ??
-          contractUtils
-            .getUsedIn(project.id, d.chain, d.address)
-            .map((u) => u.id),
-      ),
-    ),
-  )
+  const liveTvsProjects =
+    project.zkCatalogInfo.projectsForTvs
+      ?.filter((p) => !p.untilTimestamp)
+      .map((p) => p.projectId) ?? []
+
   const projectsForTvs = uniq(
-    usedInVerifiers.flatMap((vp) => {
-      const project = allProjects.find((p) => p.id === vp)
+    liveTvsProjects.flatMap((tp) => {
+      const project = allProjects.find((p) => p.id === tp)
       if (!project) {
         const logger = getLogger().for('getZkCatalogEntry')
-        logger.warn(`Project ${vp} not found`)
+        logger.warn(`Project ${tp} not found`)
         return []
       }
 
@@ -38,7 +30,7 @@ export function getZkCatalogProjectTvs(
       if (project.daBridge) {
         return project.daBridge.usedIn.flatMap((p) => p.id)
       }
-      return vp
+      return tp
     }),
   )
 
