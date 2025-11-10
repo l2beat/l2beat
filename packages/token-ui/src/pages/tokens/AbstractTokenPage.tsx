@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
-import { ArrowRightIcon, CoinsIcon, TrashIcon } from 'lucide-react'
+import { ArrowRightIcon, CoinsIcon, PlusIcon, TrashIcon } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, Navigate, useParams } from 'react-router-dom'
@@ -172,7 +172,7 @@ function AbstractTokenView({
                             })}
                             target="_blank"
                           >
-                            <ArrowRightIcon />
+                            <PlusIcon />
                           </Link>
                         </Button>
                       </div>
