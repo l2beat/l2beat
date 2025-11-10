@@ -91,7 +91,7 @@ Espressoguy [created a proposal](https://forum.arbitrum.foundation/t/proposal-in
 
 ### **Proposal: Establishing the Arbitrum Ecosystem Fund**
 
-Crypto_Lilia [created a post](https://forum.arbitrum.foundation/t/non-constitutional-proposal-establishing-the-arbitrum-ecosystem-fund/29513https://forum.arbitrum.foundation/t/non-constitutional-proposal-establishing-the-arbitrum-ecosystem-fund/29513) aimed at seeding a VC-run fund that backs builders on Arbitrum. Under the plan, the DAO would park part of its treasury with a top venture firm; the new vehicle would mix token grants, equity checks, and pilot-program financing across infra tools, DeFi, RWAs, gaming, and NFTs. Similar funds on Avalanche, Base, and Solana are cited as evidence that the model is effective. Goals: speed up product launches, diversify the app stack, and create steady buy-side demand for ARB as teams vest and spend their tokens.
+Crypto_Lilia [created a post](https://forum.arbitrum.foundation/t/non-constitutional-proposal-establishing-the-arbitrum-ecosystem-fund/29513) aimed at seeding a VC-run fund that backs builders on Arbitrum. Under the plan, the DAO would park part of its treasury with a top venture firm; the new vehicle would mix token grants, equity checks, and pilot-program financing across infra tools, DeFi, RWAs, gaming, and NFTs. Similar funds on Avalanche, Base, and Solana are cited as evidence that the model is effective. Goals: speed up product launches, diversify the app stack, and create steady buy-side demand for ARB as teams vest and spend their tokens.
 
 **Discuss with L2BEAT**
 

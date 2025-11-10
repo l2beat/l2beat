@@ -1,4 +1,5 @@
 import { BinaryReader } from '../../../tools/BinaryReader'
+import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { CCTPv2MessageReceived, CCTPv2MessageSent } from './cctp/cctp-v2.plugin'
 import { MayanForwarded } from './mayan-forwarder'
 import {
@@ -13,32 +14,39 @@ import {
   type MatchResult,
   Result,
 } from './types'
-import { WORMHOLE_NETWORKS } from './wormhole'
+import { WormholeConfig } from './wormhole/wormhole.config'
 
 const parseOrderFulfilled = createEventParser(
   'event OrderFulfilled(uint32 sourceDomain, bytes32 sourceNonce, uint256 amount)',
 )
 
 export const OrderFulfilled = createInteropEventType<{
-  amount: string
+  amount: bigint
   $srcChain: string
 }>('mayan-mctp-fast.OrderFulfilled')
 
 export class MayanMctpFastPlugin implements InteropPlugin {
   name = 'mayan-mctp-fast'
 
+  constructor(private configs: InteropConfigStore) {}
+
   capture(input: LogToCapture) {
+    const wormholeNetworks = this.configs.get(WormholeConfig)
+    if (!wormholeNetworks) return
+
     const orderFulfilled = parseOrderFulfilled(input.log, null)
     if (orderFulfilled) {
       const $srcChain = findChain(
-        WORMHOLE_NETWORKS,
+        wormholeNetworks,
         (x) => x.wormholeChainId,
         Number(orderFulfilled.sourceDomain),
       )
-      return OrderFulfilled.create(input.ctx, {
-        amount: orderFulfilled.amount.toString(),
-        $srcChain,
-      })
+      return [
+        OrderFulfilled.create(input.ctx, {
+          amount: orderFulfilled.amount,
+          $srcChain,
+        }),
+      ]
     }
   }
 
@@ -79,16 +87,16 @@ export class MayanMctpFastPlugin implements InteropPlugin {
         // TODO: maybe this also has app: mayan-mctp-fast ?
         srcEvent: messageSent,
         srcTokenAddress: messageSent.args.tokenAddress,
-        srcAmount: BigInt(messageSent.args.amount),
+        srcAmount: messageSent.args.amount,
         dstEvent: messageReceived,
       }),
       Result.Transfer('mayan-mctp-fast.Transfer', {
         srcEvent: messageSent,
         srcTokenAddress: messageSent.args.tokenAddress,
-        srcAmount: BigInt(messageSent.args.amount),
+        srcAmount: messageSent.args.amount,
         dstEvent: orderFulfilled,
         dstTokenAddress: Address32.from(orderPayload.tokenOut),
-        dstAmount: BigInt(orderFulfilled.args.amount),
+        dstAmount: orderFulfilled.args.amount,
         extraEvents: [mayanForwarded],
       }),
     ]

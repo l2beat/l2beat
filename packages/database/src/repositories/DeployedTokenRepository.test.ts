@@ -99,6 +99,223 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
     },
   )
 
+  describe(DeployedTokenRepository.prototype.findByChainAndAddress.name, () => {
+    it('finds record with case-insensitive address matching', async () => {
+      const record = deployedToken({
+        chain: 'ethereum',
+        address: '0x' + 'ABCDEF1234567890'.repeat(2) + 'ABCDEF1234',
+        symbol: 'TOKEN',
+        decimals: 18,
+        deploymentTimestamp: 10,
+      })
+      await repository.insert(record)
+
+      // Query with lowercase address
+      const found = await repository.findByChainAndAddress({
+        chain: record.chain,
+        address: record.address.toLowerCase(),
+      })
+      expect(found).toEqual(record)
+    })
+
+    it('finds record when stored address is lowercase and query is uppercase', async () => {
+      const lowercaseAddress = '0x' + 'a'.repeat(40)
+      const record = deployedToken({
+        chain: 'arbitrum',
+        address: lowercaseAddress,
+        symbol: 'TOKEN',
+        decimals: 18,
+        deploymentTimestamp: 10,
+      })
+      await repository.insert(record)
+
+      // Query with uppercase address
+      const found = await repository.findByChainAndAddress({
+        chain: record.chain,
+        address: lowercaseAddress.toUpperCase(),
+      })
+      expect(found).toEqual(record)
+    })
+
+    it('finds record when stored address is mixed case and query is different case', async () => {
+      const mixedCaseAddress =
+        '0x' + 'AbCdEf1234567890'.repeat(2) + 'AbCdEf1234'
+      const record = deployedToken({
+        chain: 'optimism',
+        address: mixedCaseAddress,
+        symbol: 'TOKEN',
+        decimals: 18,
+        deploymentTimestamp: 10,
+      })
+      await repository.insert(record)
+
+      // Query with all lowercase
+      const foundLower = await repository.findByChainAndAddress({
+        chain: record.chain,
+        address: mixedCaseAddress.toLowerCase(),
+      })
+      expect(foundLower).toEqual(record)
+
+      // Query with all uppercase
+      const foundUpper = await repository.findByChainAndAddress({
+        chain: record.chain,
+        address: mixedCaseAddress.toUpperCase(),
+      })
+      expect(foundUpper).toEqual(record)
+    })
+  })
+
+  describe(DeployedTokenRepository.prototype.getByChainAndAddress.name, () => {
+    it('returns empty array for empty input', async () => {
+      const result = await repository.getByChainAndAddress([])
+      expect(result).toEqual([])
+    })
+
+    it('returns deployed token with abstract token when both exist', async () => {
+      const abstractTokenRecord = abstractToken({ id: 'TK0001' })
+      await abstractTokens.insert(abstractTokenRecord)
+
+      const deployedTokenRecord = deployedToken({
+        chain: 'ethereum',
+        address: '0x' + '1'.repeat(40),
+        abstractTokenId: 'TK0001',
+        symbol: 'ETH',
+        decimals: 18,
+        deploymentTimestamp: 10,
+        comment: 'ethereum token',
+      })
+      await repository.insert(deployedTokenRecord)
+
+      const result = await repository.getByChainAndAddress([
+        { chain: 'ethereum', address: '0x' + '1'.repeat(40) },
+      ])
+
+      expect(result).toEqual([
+        {
+          deployedToken: deployedTokenRecord,
+          abstractToken: abstractTokenRecord,
+        },
+      ])
+    })
+
+    it('returns deployed token with undefined abstract token when abstract token does not exist', async () => {
+      const deployedTokenRecord = deployedToken({
+        chain: 'arbitrum',
+        address: '0x' + '2'.repeat(40),
+        abstractTokenId: null,
+        symbol: 'ARB',
+        decimals: 18,
+        deploymentTimestamp: 20,
+        comment: 'arbitrum token',
+      })
+      await repository.insert(deployedTokenRecord)
+
+      const result = await repository.getByChainAndAddress([
+        { chain: 'arbitrum', address: '0x' + '2'.repeat(40) },
+      ])
+
+      expect(result).toEqual([
+        {
+          deployedToken: deployedTokenRecord,
+          abstractToken: undefined,
+        },
+      ])
+    })
+
+    it('returns multiple deployed tokens with their abstract tokens', async () => {
+      const abstractToken1 = abstractToken({ id: 'TK0001', symbol: 'TOKEN1' })
+      const abstractToken2 = abstractToken({ id: 'TK0002', symbol: 'TOKEN2' })
+      await abstractTokens.insert(abstractToken1)
+      await abstractTokens.insert(abstractToken2)
+
+      const deployedToken1 = deployedToken({
+        chain: 'ethereum',
+        address: '0x' + '1'.repeat(40),
+        abstractTokenId: 'TK0001',
+        symbol: 'ETH1',
+        decimals: 18,
+        deploymentTimestamp: 10,
+      })
+      const deployedToken2 = deployedToken({
+        chain: 'arbitrum',
+        address: '0x' + '2'.repeat(40),
+        abstractTokenId: 'TK0002',
+        symbol: 'ARB1',
+        decimals: 6,
+        deploymentTimestamp: 20,
+      })
+      const deployedToken3 = deployedToken({
+        chain: 'optimism',
+        address: '0x' + '3'.repeat(40),
+        abstractTokenId: null,
+        symbol: 'OP1',
+        decimals: 8,
+        deploymentTimestamp: 30,
+      })
+
+      await repository.insert(deployedToken1)
+      await repository.insert(deployedToken2)
+      await repository.insert(deployedToken3)
+
+      const result = await repository.getByChainAndAddress([
+        { chain: 'ethereum', address: '0x' + '1'.repeat(40) },
+        { chain: 'arbitrum', address: '0x' + '2'.repeat(40) },
+        { chain: 'optimism', address: '0x' + '3'.repeat(40) },
+      ])
+
+      expect(result).toEqual([
+        {
+          deployedToken: deployedToken1,
+          abstractToken: abstractToken1,
+        },
+        {
+          deployedToken: deployedToken2,
+          abstractToken: abstractToken2,
+        },
+        {
+          deployedToken: deployedToken3,
+          abstractToken: undefined,
+        },
+      ])
+    })
+
+    it('returns empty array when no deployed tokens match', async () => {
+      const result = await repository.getByChainAndAddress([
+        { chain: 'ethereum', address: '0x' + '9'.repeat(40) },
+        { chain: 'arbitrum', address: '0x' + '8'.repeat(40) },
+      ])
+
+      expect(result).toEqual([])
+    })
+
+    it('returns only matching deployed tokens when some do not exist', async () => {
+      const abstractTokenRecord = abstractToken({ id: 'TK0001' })
+      await abstractTokens.insert(abstractTokenRecord)
+
+      const deployedTokenRecord = deployedToken({
+        chain: 'ethereum',
+        address: '0x' + '1'.repeat(40),
+        abstractTokenId: 'TK0001',
+        symbol: 'ETH',
+        decimals: 18,
+        deploymentTimestamp: 10,
+      })
+      await repository.insert(deployedTokenRecord)
+
+      const result = await repository.getByChainAndAddress([
+        { chain: 'ethereum', address: '0x' + '1'.repeat(40) },
+        { chain: 'arbitrum', address: '0x' + '9'.repeat(40) }, // doesn't exist
+      ])
+
+      expect(result).toEqual([
+        {
+          deployedToken: deployedTokenRecord,
+          abstractToken: abstractTokenRecord,
+        },
+      ])
+    })
+  })
+
   describe(DeployedTokenRepository.prototype.getByAbstractTokenId.name, () => {
     it('returns matching records', async () => {
       await abstractTokens.insert(abstractToken({ id: 'TK0001' }))

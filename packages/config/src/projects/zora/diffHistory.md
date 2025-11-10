@@ -1,3 +1,73 @@
+Generated with discovered.json: 0x2c972c9b643db53903731562b91203e2905d301e
+
+# Diff at Tue, 04 Nov 2025 11:35:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1761223428
+- current timestamp: 1761223428
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761223428 (main branch discovery), not current.
+
+```diff
+    contract MIPS (eth:0x07BABE08EE4D07dBA236530183B24055535A7011) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes.0:
+-        "0x4bde2f6a5214eb2f1bd8caaeb2a6700260f66f1ae8f389a13763187c11634d03"
++        "0xbb4d6f68705092044f28ad3a6bd721dfca9c2ba8a561025495d950aca06b10ee"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0x90Ac42EB72E6ae6f597E8c5a8816d9179a1456F8) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sourceHashes.0:
+-        "0x6e19dedf2965b6aaae0af2c98a6df46b1caac3ffc191eaf1d10ca5570076252f"
++        "0x78ef988441111e9471e72a55f764cd7f35a0f81de503ac5d7ea03765b043da3b"
+    }
+```
+
+Generated with discovered.json: 0xba79069aa2882569379107843c819f62bda93717
+
+# Diff at Mon, 03 Nov 2025 17:54:56 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6b72018cd9706ce7cba8ec489b67d7193f34dc20 block: 1761223428
+- current timestamp: 1761223428
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761223428 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"eth:0x90Ac42EB72E6ae6f597E8c5a8816d9179a1456F8","role":".proposer"}]
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"challenge","from":"eth:0x90Ac42EB72E6ae6f597E8c5a8816d9179a1456F8","role":".challenger"}]
+    }
+```
+
 Generated with discovered.json: 0x6aead9390b103e7193671de275d2b8eada500165
 
 # Diff at Mon, 20 Oct 2025 16:07:05 GMT:

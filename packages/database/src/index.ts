@@ -40,6 +40,7 @@ export type {
   InteropMessageStatsRecord,
 } from './repositories/InteropMessageRepository'
 export type {
+  InteropMissingTokenInfo,
   InteropTransferRecord,
   InteropTransfersDetailedStatsRecord,
   InteropTransfersStatsRecord,

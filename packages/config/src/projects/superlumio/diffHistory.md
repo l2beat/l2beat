@@ -1,4 +1,40 @@
-Generated with discovered.json: 0x5c77af62a2501597dcdb31663189ba0e67804bd4
+Generated with discovered.json: 0x475700ff41939b9aacbb2fd23103675ade2a42cb
+
+# Diff at Tue, 04 Nov 2025 11:34:37 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1759830334
+- current timestamp: 1759830334
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759830334 (main branch discovery), not current.
+
+```diff
+    contract PermissionedDisputeGame (eth:0x542102Bb35C32ADa5D72cB791295d97574A71C84) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sourceHashes.0:
+-        "0x7129ee348039f13e017c18c90ffcb319f67a8fdd3b4a5a28c39aabc8bf0c57f6"
++        "0x0a442058af95748cc6199d889a46c775f9f6f4d29a61df5124ceb93ff631074d"
+    }
+```
+
+```diff
+    contract MIPS (eth:0xF027F4A985560fb13324e943edf55ad6F1d15Dc1) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes.0:
+-        "0x115725ab57eeed11f754138c0ec5f9bfba41e494b2336c2cd4745778eb26f776"
++        "0xd693f0cc376e99425037555be4a61adb70c597ad1485e838c475743c79a41fa0"
+    }
+```
+
+Generated with discovered.json: 0x11c2eafbaf57084fd56f403fe6c7d13a82548f3c
 
 # Diff at Tue, 07 Oct 2025 09:46:42 GMT:
 

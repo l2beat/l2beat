@@ -21,12 +21,15 @@ export function createInteropRouter(
     const messages = await getMessagesStats(db)
     const transfers = await getTransfersStats(db)
     const status = getProcessorsStatus(processors)
+    const missingTokens = await db.interopTransfer.getMissingTokensInfo()
 
     ctx.body = renderMainPage({
       events,
       messages,
       transfers,
       status,
+      missingTokens,
+      getExplorerUrl: config.dashboard.getExplorerUrl,
     })
   })
 

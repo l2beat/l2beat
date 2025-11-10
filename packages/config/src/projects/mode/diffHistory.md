@@ -1,3 +1,99 @@
+Generated with discovered.json: 0xa14b4833c516a1636a773a8439692fb75fbfab7b
+
+# Diff at Tue, 04 Nov 2025 17:39:23 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@247fa0b26d8d13bf9c509f1c360df6ee053d13ee block: 1761223020
+- current timestamp: 1762276311
+
+## Description
+
+gas pricing changes.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.basefeeScalar:
+-        20000
++        100000
+      values.blobbasefeeScalar:
+-        611590
++        1014213
+    }
+```
+
+Generated with discovered.json: 0x2315cedb85b69dadfe5aec8ca4bd3fc8326ad325
+
+# Diff at Tue, 04 Nov 2025 11:33:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1761223020
+- current timestamp: 1761223020
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761223020 (main branch discovery), not current.
+
+```diff
+    contract MIPS (eth:0x07BABE08EE4D07dBA236530183B24055535A7011) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes.0:
+-        "0x4bde2f6a5214eb2f1bd8caaeb2a6700260f66f1ae8f389a13763187c11634d03"
++        "0xbb4d6f68705092044f28ad3a6bd721dfca9c2ba8a561025495d950aca06b10ee"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0xF25E6e47Ce13a73550c4DA8824DFC3bDa9191249) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sourceHashes.0:
+-        "0x6e19dedf2965b6aaae0af2c98a6df46b1caac3ffc191eaf1d10ca5570076252f"
++        "0x78ef988441111e9471e72a55f764cd7f35a0f81de503ac5d7ea03765b043da3b"
+    }
+```
+
+Generated with discovered.json: 0x38280f042faa1f307e5a60d738ca5f8eef6aab07
+
+# Diff at Mon, 03 Nov 2025 17:48:54 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6b72018cd9706ce7cba8ec489b67d7193f34dc20 block: 1761223020
+- current timestamp: 1761223020
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761223020 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"eth:0xF25E6e47Ce13a73550c4DA8824DFC3bDa9191249","role":".proposer"}]
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"challenge","from":"eth:0xF25E6e47Ce13a73550c4DA8824DFC3bDa9191249","role":".challenger"}]
+    }
+```
+
 Generated with discovered.json: 0x426d187785f76461364a70bba696f43256292e0e
 
 # Diff at Thu, 23 Oct 2025 12:38:25 GMT:

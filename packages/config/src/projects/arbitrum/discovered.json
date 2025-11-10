@@ -1,6 +1,6 @@
 {
   "name": "arbitrum",
-  "timestamp": 1758899161,
+  "timestamp": 1762271108,
   "configHash": "0x425825273330d044a5bee85a4ef2f687bf9f8b0090e3d353ec440821db613ecc",
   "entries": [
     {
@@ -62,7 +62,7 @@
         "beaconProxyFactory": "arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "arb1:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 37182,
+        "exitNum": 38258,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -73,6 +73,11 @@
     },
     {
       "address": "arb1:0x0adc7D8eB4C01219858a579C9539780CD9575035",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -458,7 +463,7 @@
           "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
         ],
         "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -825,6 +830,11 @@
     {
       "name": "JohnMorrow-Gauntlet",
       "address": "arb1:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x875573B973F7E9Ca54eb34a59180C70eE1128208",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1642,7 +1652,7 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "arb1:0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 2205,
+        "exitNum": 2231,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -1785,12 +1795,12 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"],
         "getBothCohorts": [
-          "arb1:0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
-          "arb1:0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8",
-          "arb1:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
-          "arb1:0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
+          "arb1:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157",
+          "arb1:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988",
           "arb1:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33",
-          "arb1:0x59c8535419BbCb8AdFFDB3C835435E907e3B183B",
+          "arb1:0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
+          "arb1:0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
+          "arb1:0x875573B973F7E9Ca54eb34a59180C70eE1128208",
           "arb1:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
           "arb1:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D",
           "arb1:0x475816ca2a31D601B4e336f5c2418A67978aBf09",
@@ -1799,12 +1809,12 @@
           "arb1:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
         ],
         "getFirstCohort": [
-          "arb1:0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
-          "arb1:0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8",
-          "arb1:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
-          "arb1:0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
+          "arb1:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157",
+          "arb1:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988",
           "arb1:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33",
-          "arb1:0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
+          "arb1:0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
+          "arb1:0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
+          "arb1:0x875573B973F7E9Ca54eb34a59180C70eE1128208"
         ],
         "getSecondCohort": [
           "arb1:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
@@ -1852,7 +1862,7 @@
           ]
         ],
         "securityCouncilsLength": 4,
-        "updateNonce": 13
+        "updateNonce": 14
       },
       "fieldMeta": {
         "getBothCohorts": {
@@ -2663,6 +2673,11 @@
       ]
     },
     {
+      "address": "arb1:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A",
       "type": "EOA",
       "proxyType": "EOA",
@@ -2909,7 +2924,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchCount": 1015120,
+        "batchCount": 1059331,
         "batchPosterManager": "eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "eth:0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A",
@@ -2919,12 +2934,12 @@
         "bridge": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "BROTLI_MESSAGE_HEADER_FLAG": "0x00",
         "buffer": {
-          "bufferBlocks": 14338,
+          "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 150,
-          "prevBlockNumber": 23447886,
+          "prevBlockNumber": 23726836,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 23447945
+          "prevSequencedBlockNumber": 23726900
         },
         "dacKeyset": {
           "requiredSignatures": 0,
@@ -2950,7 +2965,7 @@
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 4,
-        "totalDelayedMessagesRead": 2132729,
+        "totalDelayedMessagesRead": 2184991,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -3292,7 +3307,7 @@
         "getValidators": [],
         "inbox": "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isPostBoLD": true,
-        "latestConfirmed": "0x5ee04c4edf9bf9343507d357526a5e1a7b9d647197dad8631e74226fcb668962",
+        "latestConfirmed": "0x3b9f048d90893c58be49659651cc19db780c2359caca10bc17fc9f5ef63faf34",
         "loserStakeEscrow": "eth:0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -3760,7 +3775,7 @@
           "eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 2132744,
+        "delayedMessageCount": 2185009,
         "inboxHistory": [
           "eth:0x1c9DbddC9C2f1B29d4613E45BD5F35C0b1FBA8d6",
           "eth:0x57Bd336d579A51938619271a7Cc137a46D0501B1",
@@ -3774,8 +3789,8 @@
         ],
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerInbox": "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 1015120,
-        "sequencerReportedSubMessageCount": 361040493
+        "sequencerMessageCount": 1059331,
+        "sequencerReportedSubMessageCount": 374545479
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -8841,6 +8856,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "arbitrum": 383248522, "ethereum": 23447973 },
-  "permissionsConfigHash": "0x0e3a96573f6dda655fde4a405cadf690cca538f209eecbf98238792d66b040a7"
+  "usedBlockNumbers": { "arbitrum": 396753758, "ethereum": 23726930 },
+  "permissionsConfigHash": "0x7194e4cc57c17f07c433674f4e78d933a57eb82880b223e892752a0bd4c77c82"
 }

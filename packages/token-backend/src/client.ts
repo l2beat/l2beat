@@ -7,6 +7,8 @@ export interface TokenClientConfig {
   callSource?: string
 }
 
+export type TokenDbClient = ReturnType<typeof getTokenDbClient>
+
 export function getTokenDbClient(config: TokenClientConfig) {
   const headers: Record<string, string> = {}
 

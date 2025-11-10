@@ -18,7 +18,7 @@ export const FetchFlatSources = command({
       type: HttpUrl,
       long: 'backend-url',
       short: 'u',
-      defaultValue: () => 'https://backend.l2beat.com',
+      defaultValue: () => 'https://be-prod.l2beat.com',
       defaultValueIsSerializable: true,
     }),
     outputPath: option({

@@ -1,4 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
+import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer, RootIndexer } from '@l2beat/uif'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
@@ -39,10 +40,14 @@ export const TokenReceived = createInteropEventType<{
 }>('relay.TokenReceived')
 
 export class RelayIndexer extends ManagedChildIndexer {
+  private sentIds = new Set<string>()
+  private receivedIds = new Set<string>()
+
   constructor(
     private chains: { id: number; name: string }[],
     private trackedChains: string[],
     private relayApiClient: RelayApiClient,
+    private db: Database,
     private interopEventStore: InteropEventStore,
     parent: RelayRootIndexer,
     indexerService: IndexerService,
@@ -56,6 +61,20 @@ export class RelayIndexer extends ManagedChildIndexer {
       name: 'relay_indexer',
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
+  }
+
+  override async start(): Promise<void> {
+    const sentEvents = await this.db.interopEvent.getByType(TokenSent.type)
+    const receivedEvents = await this.db.interopEvent.getByType(
+      TokenReceived.type,
+    )
+    for (const e of sentEvents) {
+      this.sentIds.add((e.args as Record<string, unknown>).id as string)
+    }
+    for (const e of receivedEvents) {
+      this.receivedIds.add((e.args as Record<string, unknown>).id as string)
+    }
+    await super.start()
   }
 
   private getChainName(chainId: number | undefined) {
@@ -73,7 +92,7 @@ export class RelayIndexer extends ManagedChildIndexer {
     }
 
     const res = await this.relayApiClient.getAllRequests({
-      limit: 50,
+      limit: 500,
       startTimestamp: from,
       sortBy: 'updatedAt',
       sortDirection: 'asc',
@@ -159,13 +178,31 @@ export class RelayIndexer extends ManagedChildIndexer {
       }
     }
 
-    const tracked = events.filter((e) =>
-      this.trackedChains.includes(e.ctx.chain),
-    )
+    const newTrackedEvents = events.filter((e) => {
+      if (!this.trackedChains.includes(e.ctx.chain)) {
+        return false
+      }
 
-    if (tracked.length > 0) {
-      this.logger.info('Saved new events', { events: tracked.length })
-      await this.interopEventStore.saveNewEvents(tracked)
+      if (TokenSent.checkType(e)) {
+        if (this.sentIds.has(e.args.id)) {
+          return false
+        }
+        this.sentIds.add(e.args.id)
+        return true
+      }
+      if (TokenReceived.checkType(e)) {
+        if (this.receivedIds.has(e.args.id)) {
+          return false
+        }
+        this.receivedIds.add(e.args.id)
+        return true
+      }
+      return false
+    })
+
+    if (newTrackedEvents.length > 0) {
+      this.logger.info('Saved new events', { events: newTrackedEvents.length })
+      await this.interopEventStore.saveNewEvents(newTrackedEvents)
     }
 
     return syncedTo

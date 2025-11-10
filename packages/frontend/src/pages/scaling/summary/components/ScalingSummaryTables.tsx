@@ -43,7 +43,7 @@ export function ScalingSummaryTables(props: Props) {
   return (
     <>
       <HorizontalSeparator className="my-4 max-md:hidden" />
-      <div className="mr-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-1 md:mr-0">
+      <div className="mr-4 flex flex-wrap items-end justify-between gap-y-1 md:mr-0">
         <TableFilters
           entries={[
             ...props.rollups,
@@ -52,7 +52,7 @@ export function ScalingSummaryTables(props: Props) {
             ...props.notReviewed,
           ]}
         />
-        <div className="flex flex-wrap gap-1">
+        <div className="ml-4 flex flex-wrap gap-1 md:ml-0">
           <IncludeRwaRestrictedTokensCheckbox />
           <ExcludeAssociatedTokensCheckbox />
         </div>

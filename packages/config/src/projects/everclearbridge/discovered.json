@@ -1366,6 +1366,6 @@
     "everclearbridge/EverclearHubGateway": "0x7f95b098436a5c7082be25b752b0735f2a98d896415b75cefa4e7c0a4c270c74",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "everclear": 2881606, "ethereum": 23626761 },
+  "usedBlockNumbers": { "ethereum": 23626761, "everclear": 2881606 },
   "permissionsConfigHash": "0xae2cfea5911cacbbe8d05d9507f1c11f65cc26dc8c22df13349e6eb8a413a665"
 }

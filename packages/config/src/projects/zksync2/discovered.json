@@ -1,6 +1,6 @@
 {
   "name": "zksync2",
-  "timestamp": 1761643176,
+  "timestamp": 1762505590,
   "configHash": "0x4d6bfcee7b0158ff6dc00b005447a210bdb446c7ecc62cd6e8be98125aea492c",
   "sharedModules": ["shared-zk-stack", "gateway"],
   "entries": [
@@ -433,8 +433,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 13414,
-        "getPriorityTreeRoot": "0xe03190260ce9069073a2ded23ce09f1f298ed3c55c82cc223a1e4706d8b3f9c2",
+        "getPriorityQueueSize": 14808,
+        "getPriorityTreeRoot": "0x0952d6c40b015a770871f25d6c2e2323461be290309a21e14ac880c7846af737",
         "getPriorityTreeStartIndex": 3270719,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 124554051586,
@@ -448,7 +448,7 @@
         "getTotalBlocksCommitted": 501263,
         "getTotalBlocksExecuted": 501260,
         "getTotalBlocksVerified": 501263,
-        "getTotalPriorityTxs": 3291987,
+        "getTotalPriorityTxs": 3293381,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3",
         "getVerifierParams": {
@@ -708,16 +708,17 @@
       "type": "Contract",
       "template": "shared-zk-stack/BridgeHub",
       "sourceHashes": [
-        "0x85a0337c9b2db31a1b7e623ed99509d22ead32ce301ae832247ee1240f43eccb"
+        "0x2a749098cea7b9243019ffc1193ad519dbadc55c43cf610962f7ba13beba3f21"
       ],
       "proxyType": "immutable",
       "description": "The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.",
-      "sinceTimestamp": 1750953821,
-      "sinceBlock": 85,
+      "sinceTimestamp": 1761040360,
+      "sinceBlock": 74512,
       "values": {
         "$immutable": true,
         "admin": "gateway:0x0000000000000000000000000000000000000000",
         "assetRouter": "gateway:0x0000000000000000000000000000000000010003",
+        "chainAssetHandler": "gateway:0x000000000000000000000000000000000001000a",
         "chainsCreated": [],
         "getAllZKChainChainIDs": [324],
         "getAllZKChains": [
@@ -754,12 +755,12 @@
       "type": "Contract",
       "template": "shared-zk-stack/L2AssetRouter",
       "sourceHashes": [
-        "0xf172d1bbdbfdc509412a55599c12b6560db7d034e85921bf659002546beba891"
+        "0x90516fc3d3fdc8e2493843e947f1ece3b3298e4fd741555582c35093fa077f95"
       ],
       "proxyType": "immutable",
       "description": "Bridge routing contract that exists once on every zk stack chain and keeps mappings of assets to their escrows (asset handlers) and deployment trackers.",
-      "sinceTimestamp": 1750953821,
-      "sinceBlock": 85,
+      "sinceTimestamp": 1761040360,
+      "sinceBlock": 74512,
       "values": {
         "$immutable": true,
         "BASE_TOKEN_ASSET_ID": "0x83e2fbc0a739b3c765de4c2b4bf8072a71ea8fbb09c8cf579c71425d8bc8804a",
@@ -784,25 +785,61 @@
       "type": "Contract",
       "template": "shared-zk-stack/MessageRoot",
       "sourceHashes": [
-        "0x9fe7372b4f7ead74634ad13ce858c9a6242995f2a40facaa212e524a02b506a2"
+        "0x515c1999e39bdd6435caf0c49791fcb515fb14c69a02e55dac0ff893f07bc6fe"
       ],
       "proxyType": "immutable",
       "description": "Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.",
       "ignoreInWatchMode": ["sharedTree", "getAggregatedRoot"],
-      "sinceTimestamp": 1750953821,
-      "sinceBlock": 85,
+      "sinceTimestamp": 1761040360,
+      "sinceBlock": 74512,
       "values": {
         "$immutable": true,
         "BRIDGE_HUB": "gateway:0x0000000000000000000000000000000000010002",
         "chainCount": 2,
-        "getAggregatedRoot": "0xbb717cf4b34fb4506f20afd4dd390c788fde7f6964276e311e70c4e468c95fe3",
+        "getAggregatedRoot": "0x5cb9374f1214fe520984ba59a49d3a7f66036ee505eaa4c5a3e153737fde36be",
         "getChainRoot": [],
+        "L1_CHAIN_ID": 0,
         "sharedTree": { "_height": 1, "_leafNumber": 2 }
       },
       "implementationNames": {
         "gateway:0x0000000000000000000000000000000000010005": "MessageRoot"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "ChainAssetHandler",
+      "address": "gateway:0x000000000000000000000000000000000001000a",
+      "type": "Contract",
+      "template": "shared-zk-stack/ChainAssetHandler",
+      "sourceHashes": [
+        "0x0ae09698e3bbec162b9457ba33b3184a082d0d89367f001764f8b8b22a1f950d"
+      ],
+      "proxyType": "immutable",
+      "description": "Specialized contract for managing chain assets, i.e. chain migrations.",
+      "sinceTimestamp": 1761040360,
+      "sinceBlock": 74512,
+      "values": {
+        "$immutable": true,
+        "migrationPaused": false,
+        "migrations": [],
+        "owner": "gateway:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4",
+        "paused": false,
+        "pendingOwner": "gateway:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "migrationPaused": { "severity": "HIGH" },
+        "paused": {
+          "severity": "LOW",
+          "description": "this 'paused' is unrelated to migrations and only used for initialization."
+        },
+        "migrations": {
+          "severity": "HIGH",
+          "description": "zk chain migrations that were started"
+        }
+      },
+      "implementationNames": {
+        "gateway:0x000000000000000000000000000000000001000a": "ChainAssetHandler"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -1265,7 +1302,7 @@
           "gateway:0x595b8C88B9e5f3a4c596C3e81BE6e11D53Bb9200",
           "gateway:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 3291984,
+        "getFirstUnprocessedPriorityTx": 3293372,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -1273,8 +1310,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "gateway:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 1,
-        "getPriorityTreeRoot": "0xe574a0b5a9349e03010e70d0102004262baa1567dd678a3c4d5b076f3e036ad0",
+        "getPriorityQueueSize": 7,
+        "getPriorityTreeRoot": "0xb4b598aaf902676ff530a8881388dc1ef3fe023e72b84e58ede40eaaf3ba4d4b",
         "getPriorityTreeStartIndex": 3270719,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 124554051586,
@@ -1282,13 +1319,13 @@
         "getRollupDAManager": "gateway:0x5E12D7E0bB68029afbeC83ccB9E8eDE6019ef073",
         "getSemverProtocolVersion": [0, 29, 2],
         "getSettlementLayer": "gateway:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 503521,
-        "getTotalBatchesExecuted": 503520,
-        "getTotalBatchesVerified": 503520,
-        "getTotalBlocksCommitted": 503521,
-        "getTotalBlocksExecuted": 503520,
-        "getTotalBlocksVerified": 503520,
-        "getTotalPriorityTxs": 3291985,
+        "getTotalBatchesCommitted": 503839,
+        "getTotalBatchesExecuted": 503837,
+        "getTotalBatchesVerified": 503838,
+        "getTotalBlocksCommitted": 503839,
+        "getTotalBlocksExecuted": 503837,
+        "getTotalBlocksVerified": 503838,
+        "getTotalPriorityTxs": 3293379,
         "getTransactionFilterer": "gateway:0x0000000000000000000000000000000000000000",
         "getVerifier": "gateway:0xa99f11045E14d068088786CF6b61e8730817Cf52",
         "getVerifierParams": {
@@ -1496,6 +1533,12 @@
         },
         {
           "permission": "interact",
+          "from": "gateway:0x000000000000000000000000000000000001000a",
+          "description": "pause, resume chain migrations.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
           "from": "gateway:0x5E12D7E0bB68029afbeC83ccB9E8eDE6019ef073",
           "description": "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).",
           "role": ".owner"
@@ -1545,7 +1588,7 @@
       "type": "Contract",
       "template": "shared-zk-stack/L1VerifierPlonk",
       "sourceHashes": [
-        "0x20269ba58e717388e68842ab5a0b73b744856b4b1fb48d57ac7dce36d0c3c765"
+        "0x4e306eb2936a09bd91390a0b661bfd8eda46b873600b8c7b4fb9be3cc3867a8d"
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
@@ -1955,15 +1998,10 @@
       "error ChainNotLegacy()",
       "error ChainNotPresentInCTM()",
       "error EmptyAssetId()",
-      "error HyperchainNotRegistered()",
       "error IncorrectBridgeHubAddress(address bridgehub)",
-      "error IncorrectChainAssetId(bytes32 assetId, bytes32 assetIdFromChainId)",
-      "error IncorrectSender(address prevMsgSender, address chainAdmin)",
-      "error MigrationPaused()",
       "error MsgValueMismatch(uint256 expectedMsgValue, uint256 providedMsgValue)",
       "error NoCTMForAssetId(bytes32 assetId)",
-      "error NonEmptyMsgValue()",
-      "error NotAssetRouter(address msgSender, address sharedBridge)",
+      "error NotChainAssetHandler(address sender, address chainAssetHandler)",
       "error NotCurrentSL(uint256 settlementLayerChainId, uint256 blockChainId)",
       "error NotInGatewayMode()",
       "error NotInitializedReentrancyGuard()",
@@ -1982,13 +2020,9 @@
       "error ZeroChainId()",
       "event AssetRegistered(bytes32 indexed assetInfo, address indexed _assetAddress, bytes32 indexed additionalData, address sender)",
       "event BaseTokenAssetIdRegistered(bytes32 indexed assetId)",
-      "event BridgeBurn(uint256 indexed chainId, bytes32 indexed assetId, address indexed sender, address receiver, uint256 amount)",
-      "event BridgeMint(uint256 indexed chainId, bytes32 indexed assetId, address receiver, uint256 amount)",
       "event ChainTypeManagerAdded(address indexed chainTypeManager)",
       "event ChainTypeManagerRemoved(address indexed chainTypeManager)",
       "event Initialized(uint8 version)",
-      "event MigrationFinalized(uint256 indexed chainId, bytes32 indexed assetId, address indexed zkChain)",
-      "event MigrationStarted(uint256 indexed chainId, bytes32 indexed assetId, uint256 indexed settlementLayerChainId)",
       "event NewAdmin(address indexed oldAdmin, address indexed newAdmin)",
       "event NewChain(uint256 indexed chainId, address chainTypeManager, address indexed chainGovernance)",
       "event NewPendingAdmin(address indexed oldPendingAdmin, address indexed newPendingAdmin)",
@@ -1999,8 +2033,6 @@
       "event Unpaused(address account)",
       "function L1_CHAIN_ID() view returns (uint256)",
       "function MAX_NUMBER_OF_ZK_CHAINS() view returns (uint256)",
-      "function __DEPRECATED_baseToken(uint256 chainId) view returns (address)",
-      "function __DEPRECATED_tokenIsRegistered(address baseToken) view returns (bool)",
       "function acceptAdmin()",
       "function acceptOwnership()",
       "function addChainTypeManager(address _chainTypeManager)",
@@ -2010,9 +2042,7 @@
       "function assetRouter() view returns (address)",
       "function baseToken(uint256 _chainId) view returns (address)",
       "function baseTokenAssetId(uint256 chainId) view returns (bytes32)",
-      "function bridgeBurn(uint256 _settlementChainId, uint256 _l2MsgValue, bytes32 _assetId, address _originalCaller, bytes _data) payable returns (bytes bridgehubMintData)",
-      "function bridgeMint(uint256, bytes32 _assetId, bytes _bridgehubMintData) payable",
-      "function bridgeRecoverFailedTransfer(uint256, bytes32 _assetId, address _depositSender, bytes _data) payable",
+      "function chainAssetHandler() view returns (address)",
       "function chainTypeManager(uint256 chainId) view returns (address)",
       "function chainTypeManagerIsRegistered(address chainTypeManager) view returns (bool)",
       "function createNewChain(uint256 _chainId, address _chainTypeManager, bytes32 _baseTokenAssetId, uint256 _salt, address _admin, bytes _initData, bytes[] _factoryDeps) returns (uint256)",
@@ -2020,6 +2050,9 @@
       "function ctmAssetIdFromChainId(uint256 _chainId) view returns (bytes32)",
       "function ctmAssetIdToAddress(bytes32 ctmAssetId) view returns (address ctmAddress)",
       "function forwardTransactionOnGateway(uint256 _chainId, bytes32 _canonicalTxHash, uint64 _expirationTimestamp)",
+      "function forwardedBridgeBurnSetSettlementLayer(uint256 _chainId, uint256 _newSettlementLayerChainId) returns (address zkChain, address ctm)",
+      "function forwardedBridgeMint(bytes32 _assetId, uint256 _chainId, bytes32 _baseTokenAssetId) returns (address zkChain, address ctm)",
+      "function forwardedBridgeRecoverFailedTransfer(uint256 _chainId) returns (address zkChain, address ctm)",
       "function getAllZKChainChainIDs() view returns (uint256[])",
       "function getAllZKChains() view returns (address[] chainAddresses)",
       "function getHyperchain(uint256 _chainId) view returns (address)",
@@ -2040,13 +2073,15 @@
       "function proveL2MessageInclusion(uint256 _chainId, uint256 _batchNumber, uint256 _index, tuple(uint16 txNumberInBatch, address sender, bytes data) _message, bytes32[] _proof) view returns (bool)",
       "function registerAlreadyDeployedZKChain(uint256 _chainId, address _zkChain)",
       "function registerLegacyChain(uint256 _chainId)",
+      "function registerNewZKChain(uint256 _chainId, address _zkChain, bool _checkMaxNumberOfZKChains)",
       "function registerSettlementLayer(uint256 _newSettlementLayerChainId, bool _isWhitelisted)",
       "function removeChainTypeManager(address _chainTypeManager)",
       "function renounceOwnership()",
       "function requestL2TransactionDirect(tuple(uint256 chainId, uint256 mintValue, address l2Contract, uint256 l2Value, bytes l2Calldata, uint256 l2GasLimit, uint256 l2GasPerPubdataByteLimit, bytes[] factoryDeps, address refundRecipient) _request) payable returns (bytes32 canonicalTxHash)",
       "function requestL2TransactionTwoBridges(tuple(uint256 chainId, uint256 mintValue, uint256 l2Value, uint256 l2GasLimit, uint256 l2GasPerPubdataByteLimit, address refundRecipient, address secondBridgeAddress, uint256 secondBridgeValue, bytes secondBridgeCalldata) _request) payable returns (bytes32 canonicalTxHash)",
-      "function setAddresses(address _assetRouter, address _l1CtmDeployer, address _messageRoot)",
+      "function setAddresses(address _assetRouter, address _l1CtmDeployer, address _messageRoot, address _chainAssetHandler)",
       "function setCTMAssetAddress(bytes32 _additionalData, address _assetAddress)",
+      "function setChainAssetHandler(address _chainAssetHandler)",
       "function setPendingAdmin(address _newPendingAdmin)",
       "function settlementLayer(uint256 chainId) view returns (uint256 activeSettlementLayerChainId)",
       "function sharedBridge() view returns (address)",
@@ -2109,18 +2144,21 @@
       "function withdrawLegacyBridge(address _l1Receiver, address _l2Token, uint256 _amount, address _sender)"
     ],
     "gateway:0x0000000000000000000000000000000000010005": [
-      "constructor(address _bridgehub)",
+      "constructor(address _bridgehub, uint256 _l1ChainId)",
       "error ChainExists()",
       "error MerkleWrongIndex(uint256 index, uint256 maxNodeNumber)",
       "error MerkleWrongLength(uint256 newLeavesLength, uint256 leafNumber)",
       "error MessageRootNotRegistered()",
-      "error OnlyBridgehub(address msgSender, address bridgehub)",
+      "error NotL2()",
+      "error OnlyBridgehubOrChainAssetHandler(address sender, address bridgehub, address chainAssetHandler)",
       "error OnlyChain(address msgSender, address zkChainAddress)",
       "event AddedChain(uint256 indexed chainId, uint256 indexed chainIndex)",
-      "event AppendedChainBatchRoot(uint256 indexed chainId, uint256 indexed batchNumber, bytes32 batchRoot)",
+      "event AppendedChainBatchRoot(uint256 indexed chainId, uint256 indexed batchNumber, bytes32 chainBatchRoot)",
       "event Initialized(uint8 version)",
-      "event Preimage(bytes32 one, bytes32 two)",
+      "event NewChainRoot(uint256 indexed chainId, bytes32 chainRoot, bytes32 chainIdLeafHash)",
+      "event NewInteropRoot(uint256 indexed chainId, uint256 indexed blockNumber, uint256 indexed logId, bytes32[] sides)",
       "function BRIDGE_HUB() view returns (address)",
+      "function L1_CHAIN_ID() view returns (uint256)",
       "function addChainBatchRoot(uint256 _chainId, uint256 _batchNumber, bytes32 _chainBatchRoot)",
       "function addNewChain(uint256 _chainId)",
       "function chainCount() view returns (uint256)",
@@ -2129,9 +2167,45 @@
       "function chainRegistered(uint256 _chainId) view returns (bool)",
       "function getAggregatedRoot() view returns (bytes32)",
       "function getChainRoot(uint256 _chainId) view returns (bytes32)",
+      "function historicalRoot(uint256 blockNumber) view returns (bytes32 globalMessageRoot)",
       "function initialize()",
       "function sharedTree() view returns (uint256 _height, uint256 _leafNumber)",
       "function updateFullTree()"
+    ],
+    "gateway:0x000000000000000000000000000000000001000a": [
+      "constructor(uint256 _l1ChainId, address _owner, address _bridgehub, address _assetRouter, address _messageRoot)",
+      "error ChainIdNotRegistered(uint256 chainId)",
+      "error HyperchainNotRegistered()",
+      "error IncorrectChainAssetId(bytes32 assetId, bytes32 assetIdFromChainId)",
+      "error IncorrectSender(address prevMsgSender, address chainAdmin)",
+      "error MigrationPaused()",
+      "error NonEmptyMsgValue()",
+      "error NotAssetRouter(address msgSender, address sharedBridge)",
+      "error NotL1(uint256 l1ChainId, uint256 blockChainId)",
+      "error SLHasDifferentCTM()",
+      "error SlotOccupied()",
+      "event BridgeBurn(uint256 indexed chainId, bytes32 indexed assetId, address indexed sender, address receiver, uint256 amount)",
+      "event BridgeMint(uint256 indexed chainId, bytes32 indexed assetId, address receiver, uint256 amount)",
+      "event Initialized(uint8 version)",
+      "event MigrationFinalized(uint256 indexed chainId, bytes32 indexed assetId, address indexed zkChain)",
+      "event MigrationStarted(uint256 indexed chainId, bytes32 indexed assetId, uint256 indexed settlementLayerChainId)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "function acceptOwnership()",
+      "function bridgeBurn(uint256 _settlementChainId, uint256 _l2MsgValue, bytes32 _assetId, address _originalCaller, bytes _data) payable returns (bytes bridgehubMintData)",
+      "function bridgeMint(uint256, bytes32 _assetId, bytes _bridgehubMintData) payable",
+      "function bridgeRecoverFailedTransfer(uint256, bytes32 _assetId, address _depositSender, bytes _data) payable",
+      "function initialize(address _owner)",
+      "function migrationPaused() view returns (bool)",
+      "function owner() view returns (address)",
+      "function pauseMigration()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function unpauseMigration()"
     ],
     "gateway:0x0241a7F1a1f07644A51394415bD1f44f6FDF26ab": [
       "constructor()",
@@ -2682,6 +2756,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "shared-zk-stack/BridgeHub": "0xfd2849d6578c8e65be896397655debce2a55f8d0d0b3e3d12d69b926d4211260",
+    "shared-zk-stack/ChainAssetHandler": "0x8014df0d446cdb3c3b832daf6f52f4993f5315bacda2db187328db9c6a777312",
     "shared-zk-stack/ChainTypeManager": "0xb7f925f4ec6667faaeff32265fbd70df37c380a287f8784541ddf3e7cc488598",
     "shared-zk-stack/Diamond": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",
     "shared-zk-stack/Diamond_NotSettlementLayer": "0x30b60445419f8d3893ba4eb0b4a8d04ad751d7ec8882a4a4ab5f7276c730ff8f",
@@ -2696,6 +2771,6 @@
     "shared-zk-stack/ServerNotifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/ValidatorTimelock_post29": "0x6b83daae3459d63aeff3b894c47d96c0190d2aaccc58fd6243a417aa7e5ac3a3"
   },
-  "usedBlockNumbers": { "gateway": 79602, "ethereum": 23674987 },
-  "permissionsConfigHash": "0xa95e031157b422cce3b3804512fd92844ce27d705971835c09eefaaa7d1c6a2e"
+  "usedBlockNumbers": { "ethereum": 23746323, "gateway": 87463 },
+  "permissionsConfigHash": "0x086649429f79cd0e85a7bed5d80cd72309e980baf193ca9622c427008c52b550"
 }

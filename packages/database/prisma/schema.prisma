@@ -361,6 +361,7 @@ model InteropEvent {
   calldata    String  @default("0x") @db.Text
   logIndex    Int?
   args        Json
+  ctx         Json    @default("{}")
 
   matched     Boolean
   unsupported Boolean
@@ -495,7 +496,7 @@ model TokenConnection {
   tokenToChain     String  @db.VarChar(32)
   tokenToAddress   String  @db.VarChar(255)
   type             String  @db.VarChar(32)
-  params           Json?   @db.Json
+  params           Json?
   comment          String? @db.Text
 
   tokenFrom DeployedToken @relation("TokenConnection_tokenFrom", fields: [tokenFromChain, tokenFromAddress], references: [chain, address], onDelete: Restrict)
@@ -521,4 +522,11 @@ model InteropConfig {
   value     String   @db.Text
 
   @@id([key, timestamp])
+}
+
+model Chain {
+  name    String @id @db.VarChar(255)
+  chainId Int    @unique()
+  aliases Json?
+  apis    Json?
 }

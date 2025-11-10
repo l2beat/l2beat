@@ -36,7 +36,10 @@ export const eigendaV2: BaseProject = {
       documentation: ['https://docs.eigenda.xyz/overview'],
       repositories: ['https://github.com/Layr-Labs/eigenda'],
       explorers: ['https://blobs.eigenda.xyz/'],
-      socialMedia: ['https://x.com/eigen_da'],
+      socialMedia: [
+        'https://x.com/eigen_da',
+        'https://discord.com/invite/eigenlayer',
+      ],
     },
     badges: [],
   },

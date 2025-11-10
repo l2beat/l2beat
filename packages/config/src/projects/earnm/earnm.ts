@@ -1,19 +1,23 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { underReviewL3 } from '../../templates/underReview'
+import { orbitStackL3 } from '../../templates/orbitStack'
 
-export const earnm: ScalingProject = underReviewL3({
-  id: ProjectId('earnm'),
-  hostChain: ProjectId('arbitrum'),
-  capability: 'universal',
+const discovery = new ProjectDiscovery('earnm')
+
+export const earnm: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1761662460),
+  hostChain: 'arbitrum',
+  discovery,
+  additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Alchemy],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Earnm',
     slug: 'earnm',
     description:
       'Earnm is a mobile-first Orbit stack L3 on Arbitrum that converts everyday mobile activity into cryptocurrency rewards through its EarnOS technology.',
-    purposes: ['Universal', 'Social'],
     links: {
       websites: ['https://earnm.com/'],
       documentation: [],
@@ -29,17 +33,13 @@ export const earnm: ScalingProject = underReviewL3({
       ],
       repositories: [],
     },
-    stacks: ['Arbitrum'],
   },
+  additionalPurposes: ['Social'],
   associatedTokens: ['EARNM'],
-  dataAvailability: undefined,
-  proofSystem: {
-    type: 'Optimistic',
-  },
   chainConfig: {
     name: 'earnm',
     chainId: 32766,
-    gasTokens: ['EARNM'],
+    gasTokens: ['ETH'],
     apis: [
       {
         type: 'rpc',
@@ -48,19 +48,8 @@ export const earnm: ScalingProject = underReviewL3({
       },
     ],
   },
-  badges: [
-    BADGES.L3ParentChain.Arbitrum,
-    BADGES.Stack.Orbit,
-    BADGES.VM.EVM,
-    BADGES.RaaS.Alchemy,
-  ],
-  escrows: [
-    {
-      address: EthereumAddress('0xA9F4ee72439afC704db48dc049CbFb7E914aD300'),
-      sinceTimestamp: UnixTime(1745356800),
-      tokens: '*',
-      chain: 'arbitrum',
-    },
+  bridge: discovery.getContract('Bridge'),
+  nonTemplateEscrows: [
     {
       address: EthereumAddress('0x0b6b5aFEe8602A4d88dC26Fc2E85b2d1236156F6'),
       sinceTimestamp: UnixTime(1745356800),
@@ -68,6 +57,8 @@ export const earnm: ScalingProject = underReviewL3({
       chain: 'arbitrum',
     },
   ],
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
   activityConfig: {
     type: 'block',
     startBlock: 1,

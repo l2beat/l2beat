@@ -66,7 +66,7 @@ const parseInterchainTransferReceived = createEventParser(
 
 export const InterchainTransfer = createInteropEventType<{
   tokenId: `0x${string}`
-  amount: number
+  amount: bigint
   tokenAddress: Address32
   $dstChain: string
 }>('axelar-its.InterchainTransfer')
@@ -74,7 +74,7 @@ export const InterchainTransfer = createInteropEventType<{
 export const InterchainTransferReceived = createInteropEventType<{
   commandId: `0x${string}`
   tokenId: `0x${string}`
-  amount: number
+  amount: bigint
   tokenAddress: Address32
   $srcChain: string
 }>('axelar-its.InterchainTransferReceived')
@@ -85,18 +85,20 @@ export class AxelarITSPlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     const interchainTransfer = parseInterchainTransfer(input.log, null)
     if (interchainTransfer) {
-      return InterchainTransfer.create(input.ctx, {
-        tokenId: interchainTransfer.tokenId,
-        amount: Number(interchainTransfer.amount),
-        tokenAddress:
-          ITS_TOKENS.find((t) => t.tokenId === interchainTransfer.tokenId)
-            ?.tokenAddresses[input.ctx.chain] ?? Address32.ZERO,
-        $dstChain: findChain(
-          AXELAR_NETWORKS,
-          (x) => x.axelarChainName,
-          interchainTransfer.destinationChain,
-        ),
-      })
+      return [
+        InterchainTransfer.create(input.ctx, {
+          tokenId: interchainTransfer.tokenId,
+          amount: interchainTransfer.amount,
+          tokenAddress:
+            ITS_TOKENS.find((t) => t.tokenId === interchainTransfer.tokenId)
+              ?.tokenAddresses[input.ctx.chain] ?? Address32.ZERO,
+          $dstChain: findChain(
+            AXELAR_NETWORKS,
+            (x) => x.axelarChainName,
+            interchainTransfer.destinationChain,
+          ),
+        }),
+      ]
     }
 
     const interchainTransferReceived = parseInterchainTransferReceived(
@@ -104,20 +106,22 @@ export class AxelarITSPlugin implements InteropPlugin {
       null,
     )
     if (interchainTransferReceived) {
-      return InterchainTransferReceived.create(input.ctx, {
-        commandId: interchainTransferReceived.commandId,
-        tokenId: interchainTransferReceived.tokenId,
-        amount: Number(interchainTransferReceived.amount),
-        tokenAddress:
-          ITS_TOKENS.find(
-            (t) => t.tokenId === interchainTransferReceived.tokenId,
-          )?.tokenAddresses[input.ctx.chain] ?? Address32.ZERO,
-        $srcChain: findChain(
-          AXELAR_NETWORKS,
-          (x) => x.axelarChainName,
-          interchainTransferReceived.sourceChain,
-        ),
-      })
+      return [
+        InterchainTransferReceived.create(input.ctx, {
+          commandId: interchainTransferReceived.commandId,
+          tokenId: interchainTransferReceived.tokenId,
+          amount: interchainTransferReceived.amount,
+          tokenAddress:
+            ITS_TOKENS.find(
+              (t) => t.tokenId === interchainTransferReceived.tokenId,
+            )?.tokenAddresses[input.ctx.chain] ?? Address32.ZERO,
+          $srcChain: findChain(
+            AXELAR_NETWORKS,
+            (x) => x.axelarChainName,
+            interchainTransferReceived.sourceChain,
+          ),
+        }),
+      ]
     }
   }
 
@@ -169,10 +173,10 @@ export class AxelarITSPlugin implements InteropPlugin {
         }),
         Result.Transfer('axelar-its.Transfer', {
           srcEvent: interchainTransfer,
-          srcAmount: BigInt(interchainTransfer.args.amount.toString()),
+          srcAmount: interchainTransfer.args.amount,
           srcTokenAddress: interchainTransfer.args.tokenAddress,
           dstEvent: interchainTransferReceived,
-          dstAmount: BigInt(interchainTransferReceived.args.amount.toString()),
+          dstAmount: interchainTransferReceived.args.amount,
           dstTokenAddress: interchainTransferReceived.args.tokenAddress,
         }),
       ]
