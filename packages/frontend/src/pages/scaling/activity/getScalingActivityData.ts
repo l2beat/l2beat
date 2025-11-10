@@ -52,14 +52,21 @@ export async function getScalingActivityData(
 async function getCachedData() {
   const helpers = getSsrHelpers()
 
-  const [entries] = await Promise.all([
-    getScalingActivityEntries(),
-    helpers.activity.chart.prefetch({
-      range: { type: '1y' },
-      filter: { type: 'rollups' },
+  const entries = await getScalingActivityEntries()
+
+  await Promise.all([
+    helpers.activity.recategorisedChart.prefetch({
+      range: '1y',
+      filter: {
+        type: 'projects',
+        projectIds: entries.map((entry) => entry.id),
+      },
     }),
     helpers.activity.chartStats.prefetch({
-      filter: { type: 'rollups' },
+      filter: {
+        type: 'projects',
+        projectIds: entries.map((entry) => entry.id),
+      },
     }),
   ])
 
