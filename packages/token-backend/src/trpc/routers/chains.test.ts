@@ -4,10 +4,11 @@ import type {
   ChainRepository,
 } from '@l2beat/database/dist/repositories/ChainRepository'
 import { expect, mockFn, mockObject } from 'earl'
-import { createCallerFactory } from '../protectedProcedure'
-import { createChainsRouter } from './chains'
+import type { Config } from '../../config/Config'
+import { createCallerFactory } from '../trpc'
+import { chainsRouter } from './chains'
 
-describe(createChainsRouter.name, () => {
+describe('chainRouter', () => {
   describe('getAll', () => {
     it('returns empty array when no chains exist', async () => {
       const mockDb = mockObject<TokenDatabase>({
@@ -54,10 +55,10 @@ describe(createChainsRouter.name, () => {
 })
 
 function createRouter(mockDb: TokenDatabase) {
-  const router = createChainsRouter({
+  const callerFactory = createCallerFactory(chainsRouter)
+  return callerFactory({
+    headers: new Headers(),
+    config: mockObject<Config>({ auth: false }),
     db: mockDb,
   })
-
-  const callerFactory = createCallerFactory(router)
-  return callerFactory({ headers: new Headers() })
 }

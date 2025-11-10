@@ -1,32 +1,24 @@
-import type { TokenDatabase } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
+import type { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
 import type { Coin } from '../../chains/clients/coingecko/types'
-import { config } from '../../config'
-import { db } from '../../database/db'
 import { readOnlyProcedure, router } from '../trpc'
 
-const coingeckoClient = new CoingeckoClient({
-  apiKey: config.coingeckoApiKey,
-})
-
 export interface AbstractTokensRouterDeps {
-  db: TokenDatabase
   coingeckoClient: CoingeckoClient
 }
 
-export function createAbstractTokensRouter(deps: AbstractTokensRouterDeps) {
-  const { db, coingeckoClient } = deps
+export const abstractTokensRouter = (deps: AbstractTokensRouterDeps) => {
+  const { coingeckoClient } = deps
 
   return router({
-    getAll: readOnlyProcedure.query(() => {
-      return db.abstractToken.getAll()
+    getAll: readOnlyProcedure.query(({ ctx }) => {
+      return ctx.db.abstractToken.getAll()
     }),
-    getAllWithDeployedTokens: readOnlyProcedure.query(async () => {
+    getAllWithDeployedTokens: readOnlyProcedure.query(async ({ ctx }) => {
       const [abstractTokens, allDeployedTokens] = await Promise.all([
-        db.abstractToken.getAll(),
-        db.deployedToken.getAll(),
+        ctx.db.abstractToken.getAll(),
+        ctx.db.deployedToken.getAll(),
       ])
 
       const deployedByAbstract = allDeployedTokens.reduce(
@@ -57,17 +49,20 @@ export function createAbstractTokensRouter(deps: AbstractTokensRouterDeps) {
         deployedWithoutAbstractTokens,
       }
     }),
-    getById: readOnlyProcedure.input(v.string()).query(async ({ input }) => {
-      const abstractToken = await db.abstractToken.findById(input)
-      if (!abstractToken) {
-        return null
-      }
-      const deployedTokens = await db.deployedToken.getByAbstractTokenId(input)
-      return {
-        ...abstractToken,
-        deployedTokens,
-      }
-    }),
+    getById: readOnlyProcedure
+      .input(v.string())
+      .query(async ({ ctx, input }) => {
+        const abstractToken = await ctx.db.abstractToken.findById(input)
+        if (!abstractToken) {
+          return null
+        }
+        const deployedTokens =
+          await ctx.db.deployedToken.getByAbstractTokenId(input)
+        return {
+          ...abstractToken,
+          deployedTokens,
+        }
+      }),
     checks: readOnlyProcedure.input(v.string()).query(async ({ input }) => {
       let coin: Coin | null = null
       try {
@@ -118,8 +113,3 @@ export function createAbstractTokensRouter(deps: AbstractTokensRouterDeps) {
     }),
   })
 }
-
-export const abstractTokensRouter = createAbstractTokensRouter({
-  db,
-  coingeckoClient,
-})

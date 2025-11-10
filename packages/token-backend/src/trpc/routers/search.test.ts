@@ -2,10 +2,11 @@ import type { TokenDatabase } from '@l2beat/database'
 import type { AbstractTokenRepository } from '@l2beat/database/dist/repositories/AbstractTokenRepository'
 import type { DeployedTokenRepository } from '@l2beat/database/dist/repositories/DeployedTokenRepository'
 import { expect, mockFn, mockObject } from 'earl'
-import { createCallerFactory } from '../protectedProcedure'
-import { createSearchRouter } from './search'
+import type { Config } from '../../config/Config'
+import { createCallerFactory } from '../trpc'
+import { searchRouter } from './search'
 
-describe(createSearchRouter.name, () => {
+describe('searchRouter', () => {
   describe('tokens', () => {
     it('returns deployed tokens matching exact address when input starts with 0x', async () => {
       const deployedTokens = [
@@ -189,10 +190,10 @@ describe(createSearchRouter.name, () => {
 })
 
 function createRouter(mockDb: TokenDatabase) {
-  const router = createSearchRouter({
+  const callerFactory = createCallerFactory(searchRouter)
+  return callerFactory({
+    headers: new Headers(),
+    config: mockObject<Config>({ auth: false }),
     db: mockDb,
   })
-
-  const callerFactory = createCallerFactory(router)
-  return callerFactory({ headers: new Headers() })
 }

@@ -4,10 +4,11 @@ import type { ChainRepository } from '@l2beat/database/dist/repositories/ChainRe
 import type { DeployedTokenRepository } from '@l2beat/database/dist/repositories/DeployedTokenRepository'
 import { expect, mockFn, mockObject } from 'earl'
 import type { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
-import { createCallerFactory } from '../protectedProcedure'
-import { createDeployedTokensRouter } from './deployedTokens'
+import type { Config } from '../../config/Config'
+import { createCallerFactory } from '../trpc'
+import { deployedTokensRouter } from './deployedTokens'
 
-describe(createDeployedTokensRouter.name, () => {
+describe('deployedTokensRouter', () => {
   describe('findByChainAndAddress', () => {
     it('returns null when token is not found', async () => {
       const mockFindByChainAndAddress = mockFn().resolvesTo(undefined)
@@ -23,7 +24,6 @@ describe(createDeployedTokensRouter.name, () => {
         chain: 'ethereum',
         address: '0x123',
       })
-
       expect(result).toEqual(null)
       expect(mockFindByChainAndAddress).toHaveBeenCalledWith({
         chain: 'ethereum',
@@ -524,12 +524,17 @@ function createRouter(
   mockDb: TokenDatabase,
   mockCoingeckoClient: CoingeckoClient,
 ) {
-  const router = createDeployedTokensRouter({
-    db: mockDb,
+  const router = deployedTokensRouter({
     coingeckoClient: mockCoingeckoClient,
-    etherscanApiKey: 'test-api-key',
   })
 
   const callerFactory = createCallerFactory(router)
-  return callerFactory({ headers: new Headers() })
+  return callerFactory({
+    headers: new Headers(),
+    config: mockObject<Config>({
+      auth: false,
+      etherscanApiKey: 'test-api-key',
+    }),
+    db: mockDb,
+  })
 }

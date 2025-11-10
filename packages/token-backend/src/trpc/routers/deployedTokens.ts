@@ -2,25 +2,21 @@ import type { TokenDatabase } from '@l2beat/database'
 import { assert, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { Chain } from '../../chains/Chain'
-import { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
-import { config } from '../../config'
-import { db } from '../../database/db'
+import type { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
 import { readOnlyProcedure, router } from '../trpc'
 
-const coingeckoClient = new CoingeckoClient({
-  apiKey: config.coingeckoApiKey,
-})
-
 export interface DeployedTokensRouterDeps {
-  db: TokenDatabase
   coingeckoClient: CoingeckoClient
-  etherscanApiKey: string | undefined
 }
 
-export function createDeployedTokensRouter(deps: DeployedTokensRouterDeps) {
-  const { db, coingeckoClient, etherscanApiKey } = deps
+export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
+  const { coingeckoClient } = deps
 
-  async function getCoinByChainAndAddress(chain: string, address: string) {
+  async function getCoinByChainAndAddress(
+    db: TokenDatabase,
+    chain: string,
+    address: string,
+  ) {
     const data = await coingeckoClient.getCoinList({ includePlatform: true })
     const chains = await db.chain.getAll()
     const chainToAliases = new Map(
@@ -79,8 +75,8 @@ export function createDeployedTokensRouter(deps: DeployedTokensRouterDeps) {
   return router({
     findByChainAndAddress: readOnlyProcedure
       .input(v.object({ chain: v.string(), address: v.string() }))
-      .query(async ({ input }) => {
-        const result = await db.deployedToken.findByChainAndAddress({
+      .query(async ({ ctx, input }) => {
+        const result = await ctx.db.deployedToken.findByChainAndAddress({
           chain: input.chain,
           address: input.address,
         })
@@ -89,8 +85,8 @@ export function createDeployedTokensRouter(deps: DeployedTokensRouterDeps) {
 
     checkIfExists: readOnlyProcedure
       .input(v.object({ chain: v.string(), address: v.string() }))
-      .query(async ({ input }) => {
-        const result = await db.deployedToken.findByChainAndAddress({
+      .query(async ({ ctx, input }) => {
+        const result = await ctx.db.deployedToken.findByChainAndAddress({
           chain: input.chain,
           address: input.address,
         })
@@ -99,12 +95,14 @@ export function createDeployedTokensRouter(deps: DeployedTokensRouterDeps) {
 
     getByChainAndAddress: readOnlyProcedure
       .input(v.array(v.object({ chain: v.string(), address: v.string() })))
-      .query(async ({ input }) => db.deployedToken.getByChainAndAddress(input)),
+      .query(async ({ ctx, input }) =>
+        ctx.db.deployedToken.getByChainAndAddress(input),
+      ),
 
     checks: readOnlyProcedure
       .input(v.object({ chain: v.string(), address: v.string() }))
-      .query(async ({ input }) => {
-        const result = await db.deployedToken.findByChainAndAddress({
+      .query(async ({ ctx, input }) => {
+        const result = await ctx.db.deployedToken.findByChainAndAddress({
           chain: input.chain,
           address: input.address,
         })
@@ -125,11 +123,11 @@ export function createDeployedTokensRouter(deps: DeployedTokensRouterDeps) {
           }
         }
 
-        const chainRecord = await db.chain.findByName(input.chain)
+        const chainRecord = await ctx.db.chain.findByName(input.chain)
         assert(chainRecord, 'Chain not found')
 
         const chain = new Chain(chainRecord, {
-          etherscanApiKey,
+          etherscanApiKey: ctx.config.etherscanApiKey,
         })
 
         let decimals: number | undefined
@@ -177,7 +175,11 @@ export function createDeployedTokensRouter(deps: DeployedTokensRouterDeps) {
           }
         }
 
-        const coin = await getCoinByChainAndAddress(input.chain, input.address)
+        const coin = await getCoinByChainAndAddress(
+          ctx.db,
+          input.chain,
+          input.address,
+        )
         if (coin === null) {
           return {
             error: {
@@ -195,7 +197,7 @@ export function createDeployedTokensRouter(deps: DeployedTokensRouterDeps) {
         }
 
         const abstractToken = coin.id
-          ? await db.abstractToken.findByCoingeckoId(coin.id)
+          ? await ctx.db.abstractToken.findByCoingeckoId(coin.id)
           : undefined
 
         return {
@@ -211,9 +213,3 @@ export function createDeployedTokensRouter(deps: DeployedTokensRouterDeps) {
       }),
   })
 }
-
-export const deployedTokensRouter = createDeployedTokensRouter({
-  db,
-  coingeckoClient,
-  etherscanApiKey: config.etherscanApiKey,
-})

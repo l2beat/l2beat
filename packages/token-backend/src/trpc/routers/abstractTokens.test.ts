@@ -3,10 +3,11 @@ import type { AbstractTokenRepository } from '@l2beat/database/dist/repositories
 import type { DeployedTokenRepository } from '@l2beat/database/dist/repositories/DeployedTokenRepository'
 import { expect, mockFn, mockObject } from 'earl'
 import type { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
-import { createCallerFactory } from '../protectedProcedure'
-import { createAbstractTokensRouter } from './abstractTokens'
+import type { Config } from '../../config/Config'
+import { createCallerFactory } from '../trpc'
+import { abstractTokensRouter } from './abstractTokens'
 
-describe(createAbstractTokensRouter.name, () => {
+describe('abstractTokensRouter', () => {
   describe('getAll', () => {
     it('returns all abstract tokens', async () => {
       const abstractTokens = [
@@ -328,11 +329,14 @@ function createRouter(
   mockDb: TokenDatabase,
   mockCoingeckoClient: CoingeckoClient,
 ) {
-  const router = createAbstractTokensRouter({
-    db: mockDb,
+  const router = abstractTokensRouter({
     coingeckoClient: mockCoingeckoClient,
   })
 
   const callerFactory = createCallerFactory(router)
-  return callerFactory({ headers: new Headers() })
+  return callerFactory({
+    headers: new Headers(),
+    config: mockObject<Config>({ auth: false }),
+    db: mockDb,
+  })
 }

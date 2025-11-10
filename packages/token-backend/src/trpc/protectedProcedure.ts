@@ -1,47 +1,13 @@
-import { initTRPC, TRPCError } from '@trpc/server'
+import { TRPCError } from '@trpc/server'
 import { jwtVerify } from 'jose'
-import type { Config } from '../config/Config'
 import { parseCookies } from '../utils/parseCookies'
+import { trcpRoot } from './trpc'
 
-export const createTRPCContext = (opts: { headers: Headers }) => {
-  return {
-    ...opts,
-  }
-}
-
-type Context = Awaited<ReturnType<typeof createTRPCContext>>
-
-export const trcpRoot = initTRPC.context<Context>().create({
-  transformer: {
-    serialize: JSON.stringify,
-    deserialize: JSON.parse,
-  },
-  errorFormatter({ shape, error }) {
-    return {
-      ...shape,
-      data: {
-        ...shape.data,
-        zodError: error.cause,
-      },
-    }
-  },
-})
-
-/**
- * Create a server-side caller.
- *
- * @see https://trpc.io/docs/server/server-side-calls
- */
-export const createCallerFactory = trcpRoot.createCallerFactory
-
-export const protectedProcedure = (
-  config: Config,
-  options?: {
-    jwtVerifyFn?: typeof jwtVerify
-  },
-) =>
+export const protectedProcedure = (options?: {
+  jwtVerifyFn?: typeof jwtVerify
+}) =>
   trcpRoot.procedure.use(async (opts) => {
-    const auth = config.auth
+    const auth = opts.ctx.config.auth
     if (auth === false) {
       return opts.next({
         ctx: { email: 'dev@l2beat.com', permissions: ['read', 'write'] },
@@ -62,7 +28,7 @@ export const protectedProcedure = (
 
     // If the cookie is a prefefined read-only token,
     // accept if options.acceptReadOnly is true
-    if (token === config.readOnlyAuthToken) {
+    if (token === opts.ctx.config.readOnlyAuthToken) {
       return opts.next({
         ctx: { email: 'dev-readonly@l2beat.com', permissions: ['read'] },
       })

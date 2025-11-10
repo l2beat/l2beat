@@ -1,11 +1,9 @@
+import type { TokenDatabase } from '@l2beat/database'
 import { expect, mockObject } from 'earl'
 import type { jwtVerify } from 'jose'
 import type { AuthConfig, Config } from '../config/Config'
-import {
-  createCallerFactory,
-  protectedProcedure,
-  trcpRoot,
-} from './protectedProcedure'
+import { protectedProcedure } from './protectedProcedure'
+import { createCallerFactory, trcpRoot } from './trpc'
 
 const READ_ONLY_TOKEN = 'read-only-token-abcd-1234'
 
@@ -99,12 +97,12 @@ function generateCaller(
   }
 
   const appRouter = trcpRoot.router({
-    whoami: protectedProcedure(config, { jwtVerifyFn }).query(({ ctx }) => ({
+    whoami: protectedProcedure({ jwtVerifyFn }).query(({ ctx }) => ({
       email: ctx.email,
       permissions: ctx.permissions,
     })),
   })
 
   const callerFactory = createCallerFactory(appRouter)
-  return callerFactory({ headers })
+  return callerFactory({ headers, config, db: mockObject<TokenDatabase>({}) })
 }
