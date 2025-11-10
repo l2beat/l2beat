@@ -135,7 +135,7 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
         address: EthereumAddress('0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2'),
         selector: '0x621dd411',
         functionSignature:
-          'function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) ',
+          'function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof)',
         sinceTimestamp: UnixTime(1679653163),
         untilTimestamp: UnixTime(1707822059),
       },
