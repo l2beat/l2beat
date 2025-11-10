@@ -1,9 +1,19 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
-import { useEffect, useState } from 'react'
+import { CheckIcon, ListPlusIcon, PlusIcon } from 'lucide-react'
+import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { Link, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
+import { Button, buttonVariants } from '~/components/core/Button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '~/components/core/Card'
 import {
   DeployedTokenForm,
   DeployedTokenSchema,
@@ -12,14 +22,25 @@ import {
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { useQueryState } from '~/hooks/useQueryState'
 import { api } from '~/react-query/trpc'
+import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
+import { cn } from '~/utils/cn'
 import { dateTimeInputToUnixTimestamp } from '~/utils/dateTimeInputToUnixTimestamp'
 import { validateResolver } from '~/utils/validateResolver'
 
 export function AddDeployedToken() {
+  const [, setSearchParams] = useSearchParams()
+  const [queryChain, , clearQueryChain] = useQueryState('chain', '')
+  const [queryAddress, , clearQueryAddress] = useQueryState('address', '')
   const [abstractTokenId, , clearAbstractTokenId] = useQueryState(
     'abstractTokenId',
     '',
   )
+
+  const [queue, setQueue] = useState<{ chain: string; address: string }[]>([])
+  const addToQueue = useCallback((chain: string, address: string) => {
+    setQueue((prev) => [...prev, { chain, address }])
+  }, [])
+
   const form = useForm<DeployedTokenSchema>({
     resolver: validateResolver(DeployedTokenSchema),
   })
@@ -89,6 +110,15 @@ export function AddDeployedToken() {
     }
   }, [abstractTokenId, form.setValue, abstractTokens])
 
+  useEffect(() => {
+    if (queryChain) {
+      form.setValue('chain', queryChain, { shouldDirty: true })
+    }
+    if (queryAddress) {
+      form.setValue('address', queryAddress, { shouldDirty: true })
+    }
+  }, [queryChain, queryAddress, form.setValue])
+
   function onSubmit(values: DeployedTokenSchema) {
     if (checksLoading) return
     if (checks?.error?.type === 'already-exists') {
@@ -117,29 +147,107 @@ export function AddDeployedToken() {
         onSuccess={() => {
           form.reset()
           clearAbstractTokenId()
+          const queueItem = queue[0]
+          if (!queueItem) {
+            clearQueryChain()
+            clearQueryAddress()
+          } else {
+            setSearchParams((prev) => {
+              const newParams = new URLSearchParams(prev)
+              newParams.set('chain', queueItem.chain)
+              newParams.set('address', queueItem.address)
+              return newParams
+            })
+            setQueue(queue.slice(1))
+          }
         }}
       />
-      <DeployedTokenForm
-        form={form}
-        onSubmit={onSubmit}
-        isFormDisabled={isPending}
-        tokenDetails={{
-          data: checks,
-          loading: checksLoading,
-        }}
-        abstractTokens={{
-          data: abstractTokens,
-          loading: areAbstractTokensLoading,
-        }}
-      >
-        <ButtonWithSpinner
-          isLoading={isPending}
-          className="w-full"
-          type="submit"
-        >
-          Submit
-        </ButtonWithSpinner>
-      </DeployedTokenForm>
+      <Card>
+        <CardContent>
+          <DeployedTokenForm
+            form={form}
+            onSubmit={onSubmit}
+            isFormDisabled={isPending}
+            tokenDetails={{
+              data: checks,
+              loading: checksLoading,
+            }}
+            abstractTokens={{
+              data: abstractTokens,
+              loading: areAbstractTokensLoading,
+            }}
+          >
+            <ButtonWithSpinner
+              isLoading={isPending}
+              className="w-full"
+              type="submit"
+            >
+              Submit
+            </ButtonWithSpinner>
+          </DeployedTokenForm>
+        </CardContent>
+      </Card>
+      {checks?.data?.suggestions && checks.data.suggestions.length !== 0 && (
+        <Card className="mt-4">
+          <CardHeader>
+            <CardTitle>Suggestions</CardTitle>
+            <CardDescription>
+              We've found this token on other chains and thought you may want to
+              add it.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="-mx-6 flex flex-col gap-2">
+              {checks.data.suggestions.map((suggestion) => {
+                const isInQueue = queue.some(
+                  (q) =>
+                    q.chain === suggestion.chain &&
+                    q.address === suggestion.address,
+                )
+                return (
+                  <div
+                    key={suggestion.chain}
+                    className="flex items-center justify-between gap-2 px-6 odd:bg-muted"
+                  >
+                    {suggestion.chain} ({suggestion.address})
+                    <div className="flex items-center">
+                      {isInQueue ? (
+                        <div className={buttonVariants({ variant: 'link' })}>
+                          <CheckIcon
+                            className={cn('size-4 stroke-green-500')}
+                          />
+                        </div>
+                      ) : (
+                        <Button
+                          variant="link"
+                          onClick={() =>
+                            addToQueue(suggestion.chain, suggestion.address)
+                          }
+                        >
+                          <ListPlusIcon />
+                        </Button>
+                      )}
+
+                      <Button variant="link" asChild>
+                        <Link
+                          to={buildUrlWithParams('/tokens/new', {
+                            tab: 'deployed',
+                            chain: suggestion.chain,
+                            address: suggestion.address,
+                          })}
+                          target="_blank"
+                        >
+                          <PlusIcon />
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </>
   )
 }

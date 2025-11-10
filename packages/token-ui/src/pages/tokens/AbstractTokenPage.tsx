@@ -10,6 +10,7 @@ import { Button } from '~/components/core/Button'
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
 } from '~/components/core/Card'
@@ -29,6 +30,7 @@ import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractTokenWithDeployedTokens } from '~/mock/types'
 import { api } from '~/react-query/trpc'
+import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
 import { getDeployedTokenDisplayId } from '~/utils/getDisplayId'
 import { validateResolver } from '~/utils/validateResolver'
 
@@ -79,6 +81,14 @@ function AbstractTokenView({
       }
     },
   })
+
+  const { data: suggestions } =
+    api.deployedTokens.getSuggestionsByCoingeckoId.useQuery(
+      token.coingeckoId ?? '',
+      {
+        enabled: !!token.coingeckoId,
+      },
+    )
 
   return (
     <>
@@ -135,6 +145,44 @@ function AbstractTokenView({
               </AbstractTokenForm>
             </CardContent>
           </Card>
+          {suggestions && suggestions.length !== 0 && (
+            <Card className="mt-4">
+              <CardHeader>
+                <CardTitle>Suggestions</CardTitle>
+                <CardDescription>
+                  We've found this token on other chains and thought you may
+                  want to add it.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="-mx-6 flex flex-col gap-2">
+                  {suggestions.map((suggestion) => {
+                    return (
+                      <div
+                        key={suggestion.chain}
+                        className="flex items-center justify-between gap-2 px-6 odd:bg-muted"
+                      >
+                        {suggestion.chain} ({suggestion.address})
+                        <Button variant="link" asChild>
+                          <Link
+                            to={buildUrlWithParams('/tokens/new', {
+                              tab: 'deployed',
+                              chain: suggestion.chain,
+                              address: suggestion.address,
+                            })}
+                            target="_blank"
+                          >
+                            <ArrowRightIcon />
+                          </Link>
+                        </Button>
+                      </div>
+                    )
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
