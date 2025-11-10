@@ -65,4 +65,14 @@ export const galxegravity: ScalingProject = orbitStackL2({
       { type: 'blockscoutV2', url: 'https://explorer.gravity.xyz/api/v2' },
     ],
   },
+  milestones: [
+    {
+      title: 'Gravity starts using Blobstream',
+      url: 'https://etherscan.io/tx/0x89bb6d5ad4aee106eb3057f96b1c3dc685bc40dc798d267f429c486b114fbd25',
+      date: '2025-04-28T00:00:00Z',
+      description:
+        'Upgraded ChallengeManager contract to the version that uses Celestia with Blobstream bridge.',
+      type: 'general',
+    },
+  ],
 })

@@ -44,7 +44,7 @@ export const optimism: ScalingProject = opStackL2({
         'https://twitch.tv/optimismpbc',
         'https://discord.gg/optimism',
       ],
-      rollupCodes: 'https://rollup.codes/optimism',
+      other: ['https://rollup.codes/optimism'],
     },
   },
   hasSuperchainScUpgrades: true,

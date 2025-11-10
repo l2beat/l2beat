@@ -134,11 +134,7 @@ export class HyperlaneEcoPlugin implements InteropPlugin {
         app: 'eco',
         srcEvent: dispatch,
         dstEvent: process,
-      }),
-      Result.Transfer('hyperlaneEco.Transfer', {
-        // TODO: intent settlement, not really transfer (but we need to consume the events)
-        srcEvent: batchSentDispatch,
-        dstEvent: event,
+        extraEvents: [batchSentDispatch, event],
       }),
     ]
   }

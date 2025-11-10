@@ -2,6 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import {
@@ -10,7 +11,9 @@ import {
 } from '~/components/forms/AbstractTokenForm'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
+import { useQueryState } from '~/hooks/useQueryState'
 import { api } from '~/react-query/trpc'
+import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
 import { generateRandomString } from '~/utils/generateRandomString'
 import { validateResolver } from '~/utils/validateResolver'
 
@@ -23,6 +26,9 @@ export function AddAbstractToken({
 }: {
   defaultValues?: AbstractTokenSchema
 }) {
+  const [coingeckoIdQueryState] = useQueryState('coingeckoId', '')
+  const [redirectTo] = useQueryState('redirectTo', '')
+  const navigate = useNavigate()
   const form = useForm<AbstractTokenSchema>({
     resolver: validateResolver(AbstractTokenSchema),
     defaultValues: defaultValues ?? {
@@ -34,19 +40,11 @@ export function AddAbstractToken({
 
   const coingeckoId = form.watch('coingeckoId')
   const debouncedCoingeckoId = useDebouncedValue(form.watch('coingeckoId'), 500)
-  const { data: coin, isLoading: isCoinLoading } =
-    api.coingecko.getCoinById.useQuery(debouncedCoingeckoId ?? '', {
+  const { data: checks, isLoading: areChecksLoading } =
+    api.abstractTokens.checks.useQuery(debouncedCoingeckoId ?? '', {
       enabled: !!debouncedCoingeckoId,
       retry: false,
     })
-
-  const {
-    data: coingeckoListingTimestamp,
-    isLoading: isCoingeckoListingTimestampLoading,
-  } = api.coingecko.getListingTimestamp.useQuery(coin?.id ?? '', {
-    enabled: !!coin?.id,
-    retry: false,
-  })
 
   const { mutate: planMutate, isPending } = api.plan.generate.useMutation({
     onSuccess: (data) => {
@@ -59,55 +57,51 @@ export function AddAbstractToken({
   })
 
   useEffect(() => {
-    if (isCoinLoading) return
-    if (!coingeckoId) return
-    if (coin) {
-      form.clearErrors('coingeckoId')
-      form.setValue('iconUrl', coin.image.large)
+    if (coingeckoIdQueryState) {
+      form.setValue('coingeckoId', coingeckoIdQueryState)
     }
-    if (!coin) {
-      form.setValue('iconUrl', '')
-    }
-    if (coin === null) {
+  }, [coingeckoIdQueryState, form.setValue])
+
+  useEffect(() => {
+    if (areChecksLoading) return
+    if (!coingeckoId || !checks) return
+
+    if (checks.error) {
       form.setError('coingeckoId', {
-        message: 'Coin not found',
-        type: 'validate',
+        message: checks.error.message,
+        type: 'custom',
       })
+    } else {
+      form.clearErrors('coingeckoId')
+    }
+
+    if (checks.data?.coinId) {
+      form.setValue('coingeckoId', checks.data.coinId)
+    }
+    if (checks.data?.coinUrl) {
+      form.setValue('iconUrl', checks.data.coinUrl)
+    }
+    if (checks.data?.listingTimestamp) {
+      form.setValue(
+        'coingeckoListingTimestamp',
+        UnixTime.toYYYYMMDD(checks.data.listingTimestamp),
+      )
     }
   }, [
-    coin,
+    checks,
+    areChecksLoading,
     form.clearErrors,
     form.setValue,
     form.setError,
-    isCoinLoading,
     coingeckoId,
   ])
 
-  useEffect(() => {
-    if (isCoingeckoListingTimestampLoading) return
-    if (coingeckoListingTimestamp) {
-      form.clearErrors('coingeckoListingTimestamp')
-      form.setValue(
-        'coingeckoListingTimestamp',
-        UnixTime.toYYYYMMDD(coingeckoListingTimestamp),
-      )
-      return
-    }
-
-    form.setValue('coingeckoListingTimestamp', undefined)
-  }, [
-    coingeckoListingTimestamp,
-    form.clearErrors,
-    form.setValue,
-    isCoingeckoListingTimestampLoading,
-  ])
-
   function onSubmit(values: AbstractTokenSchema) {
-    if (isCoinLoading) return
-    if (coin === null) {
+    if (areChecksLoading) return
+    if (checks?.error?.type === 'not-found-on-coingecko') {
       form.setError('coingeckoId', {
-        message: 'Coin not found',
-        type: 'validate',
+        message: checks.error.message,
+        type: 'custom',
       })
       return
     }
@@ -126,15 +120,25 @@ export function AddAbstractToken({
     })
   }
 
-  const showCoingeckoLoading =
-    isCoinLoading || coingeckoId !== debouncedCoingeckoId
+  const showChecksLoading =
+    areChecksLoading || coingeckoId !== debouncedCoingeckoId
 
   return (
     <>
       <PlanConfirmationDialog
         plan={plan}
         setPlan={setPlan}
-        onSuccess={form.reset}
+        onSuccess={() => {
+          form.reset()
+          if (redirectTo) {
+            navigate(
+              buildUrlWithParams('/tokens/new', {
+                tab: redirectTo,
+                abstractTokenId: form.getValues('id'),
+              }),
+            )
+          }
+        }}
       />
       <AbstractTokenForm
         form={form}
@@ -144,10 +148,9 @@ export function AddAbstractToken({
           const id = generateRandomId()
           form.setValue('id', id)
         }}
-        coingeckoFields={{
-          isLoading: showCoingeckoLoading,
-          isListingTimestampLoading: isCoingeckoListingTimestampLoading,
-          success: !!coin,
+        checks={{
+          isLoading: showChecksLoading,
+          success: !!checks && checks.error === undefined,
         }}
       >
         <ButtonWithSpinner
