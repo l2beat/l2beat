@@ -162,7 +162,7 @@ export function AddDeployedToken() {
           }
         }}
       />
-      <Card>
+      <Card className="relative">
         <CardContent>
           <DeployedTokenForm
             form={form}
@@ -182,10 +182,30 @@ export function AddDeployedToken() {
               className="w-full"
               type="submit"
             >
-              Submit
+              {queue.length > 0 ? 'Submit and add next' : 'Submit'}
             </ButtonWithSpinner>
           </DeployedTokenForm>
         </CardContent>
+
+        {queue.length > 0 && (
+          <Card className="absolute top-0 left-full ml-4 w-full max-w-xs">
+            <CardHeader>
+              <CardTitle>Queue</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="list-inside list-decimal">
+                {queue.map((item) => (
+                  <li
+                    key={item.chain + item.address}
+                    className="truncate whitespace-nowrap"
+                  >
+                    {item.chain} ({item.address})
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        )}
       </Card>
       {checks?.data?.suggestions && checks.data.suggestions.length !== 0 && (
         <Card className="mt-4">
