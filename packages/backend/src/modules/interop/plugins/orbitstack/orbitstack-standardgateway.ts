@@ -77,7 +77,7 @@ const WithdrawalFinalizedOutBoxTransactionExecuted = createInteropEventType<{
 }>('orbitstack-standardgateway.WithdrawalFinalized')
 
 const parseWithdrawalFinalized = createEventParser(
-  'event WithdrawalFinalized(address indexed l1Token, address indexed from, address indexed to, uint256 exitNum, uint256 amount)',
+  'event WithdrawalFinalized(address l1Token, address indexed _from, address indexed _to, uint256 indexed _exitNum, uint256 _amount)',
 )
 
 export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
@@ -143,7 +143,7 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
                 chain: network.chain,
                 position: Number(outBoxTx.transactionIndex),
                 l1Token: Address32.from(withdrawalFinalized.l1Token),
-                amount: withdrawalFinalized.amount,
+                amount: withdrawalFinalized._amount,
               }),
             ]
           }
