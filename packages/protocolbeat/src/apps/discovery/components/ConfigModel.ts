@@ -3,13 +3,14 @@ import type {
   DiscoveryConfigSchema,
 } from '@l2beat/discovery'
 import { assign, CommentArray, parse, stringify } from 'comment-json'
+import { clone } from './cloneWithComments'
 
 export class ConfigModel {
   private readonly config: DiscoveryConfigSchema
   private readonly overrides: Record<string, ContractConfigModel> = {}
 
   constructor(config: DiscoveryConfigSchema) {
-    this.config = assign({}, config) as DiscoveryConfigSchema
+    this.config = clone(config)
 
     for (const [address, contractConfig] of Object.entries(
       this.config.overrides ?? {},
@@ -23,29 +24,23 @@ export class ConfigModel {
     return new ConfigModel(parsed)
   }
 
-  static frompeek(config: DiscoveryConfigSchema) {
+  static fromPeek(config: DiscoveryConfigSchema) {
     return new ConfigModel(config)
   }
 
   peek(): DiscoveryConfigSchema {
-    const clone = assign({}, this.config) as DiscoveryConfigSchema
+    const cloned = clone(this.config)
 
-    const [emptyOverrides, nonEmptyOverrides] = partition(
-      Object.entries(this.overrides),
-      ([, entry]) => entry.isEmpty(),
-    )
-
-    for (const [address, contractConfig] of nonEmptyOverrides) {
-      assign(clone.overrides, {
-        [address]: contractConfig.peek(),
-      })
+    const overrides: Record<string, ContractConfigSchema> = {}
+    for (const [address, contractConfig] of Object.entries(this.overrides)) {
+      if (!contractConfig.isEmpty()) {
+        overrides[address] = contractConfig.peek()
+      }
     }
 
-    for (const [address] of emptyOverrides) {
-      delete clone.overrides?.[address]
-    }
+    assign(cloned, { overrides })
 
-    return clone
+    return cloned
   }
 
   hasOverrideDefinition(id: string, key: string) {
@@ -60,36 +55,87 @@ export class ConfigModel {
     return stringify(this.peek()) !== stringify(other.peek())
   }
 
-  private ensure(id: string) {
+  private getOverride(id: string) {
     if (!this.overrides[id]) {
-      this.overrides[id] = new ContractConfigModel({} as ContractConfigSchema)
+      return new ContractConfigModel({} as ContractConfigSchema)
     }
 
     return this.overrides[id]
   }
 
   addToIgnoredMethods(id: string, method: string) {
-    this.ensure(id).addToIgnoredMethods(method)
+    return this.patchOverride(id, (override) =>
+      override.addToIgnoredMethods(method),
+    )
   }
 
   removeFromIgnoredMethods(id: string, method: string) {
-    this.ensure(id).removeFromIgnoredMethods(method)
+    return this.patchOverride(id, (override) =>
+      override.removeFromIgnoredMethods(method),
+    )
+  }
+
+  setIgnoreMethods(id: string, methods: string[]) {
+    return this.patchOverride(id, (override) =>
+      override.setIgnoreMethods(methods),
+    )
   }
 
   addToIgnoredRelatives(id: string, relative: string) {
-    this.ensure(id).addToIgnoredRelatives(relative)
+    return this.patchOverride(id, (override) =>
+      override.addToIgnoredRelatives(relative),
+    )
   }
 
   removeFromIgnoredRelatives(id: string, relative: string) {
-    this.ensure(id).removeFromIgnoredRelatives(relative)
+    return this.patchOverride(id, (override) =>
+      override.removeFromIgnoredRelatives(relative),
+    )
+  }
+
+  setIgnoreRelatives(id: string, relatives: string[]) {
+    return this.patchOverride(id, (override) =>
+      override.setIgnoreRelatives(relatives),
+    )
   }
 
   addToIgnoredInWatchMode(id: string, method: string) {
-    this.ensure(id).addToIgnoredInWatchMode(method)
+    return this.patchOverride(id, (override) =>
+      override.addToIgnoredInWatchMode(method),
+    )
+  }
+
+  setIgnoreInWatchMode(id: string, methods: string[]) {
+    return this.patchOverride(id, (override) =>
+      override.setIgnoreInWatchMode(methods),
+    )
   }
 
   removeFromIgnoredInWatchMode(id: string, method: string) {
-    this.ensure(id).removeFromIgnoredInWatchMode(method)
+    return this.patchOverride(id, (override) =>
+      override.removeFromIgnoredInWatchMode(method),
+    )
+  }
+
+  patchOverride(
+    id: string,
+    patch: (override: ContractConfigModel) => ContractConfigModel,
+  ) {
+    const newOverride = patch(this.getOverride(id))
+    const overrides = { ...this.overrides, [id]: newOverride }
+
+    const newConfig = clone(this.config)
+
+    const newOverrides: Record<string, ContractConfigSchema> = {}
+    for (const [address, contractConfig] of Object.entries(overrides)) {
+      if (!contractConfig.isEmpty()) {
+        newOverrides[address] = contractConfig.peek()
+      }
+    }
+
+    assign(newConfig, { overrides: newOverrides })
+
+    return new ConfigModel(newConfig)
   }
 
   getIgnoredMethods(id: string) {
@@ -108,7 +154,7 @@ export class ConfigModel {
 export class ContractConfigModel {
   private readonly config: ContractConfigSchema
   constructor(config: ContractConfigSchema) {
-    this.config = assign({}, config) as ContractConfigSchema
+    this.config = clone(config)
   }
 
   static fromRawJsonc(jsonc: string) {
@@ -128,7 +174,7 @@ export class ContractConfigModel {
   }
 
   peek() {
-    return this.config
+    return clone(this.config)
   }
 
   diff(other: ContractConfigModel) {
@@ -145,31 +191,45 @@ export class ContractConfigModel {
   }
 
   addToIgnoredMethods(method: string) {
-    this.addToArray('ignoreMethods', method)
+    return this.addToArray('ignoreMethods', method)
   }
 
   removeFromIgnoredMethods(method: string) {
-    this.removeFromArray('ignoreMethods', method)
+    return this.removeFromArray('ignoreMethods', method)
+  }
+
+  setIgnoreMethods(methods: string[]) {
+    return this.patch({ ignoreMethods: methods })
   }
 
   addToIgnoredRelatives(relative: string) {
-    this.addToArray('ignoreRelatives', relative)
+    return this.addToArray('ignoreRelatives', relative)
   }
 
   removeFromIgnoredRelatives(relative: string) {
-    this.removeFromArray('ignoreRelatives', relative)
+    return this.removeFromArray('ignoreRelatives', relative)
+  }
+
+  setIgnoreRelatives(relatives: string[]) {
+    return this.patch({ ignoreRelatives: relatives })
   }
 
   addToIgnoredInWatchMode(method: string) {
-    this.addToArray('ignoreInWatchMode', method)
+    return this.addToArray('ignoreInWatchMode', method)
   }
 
   removeFromIgnoredInWatchMode(method: string) {
-    this.removeFromArray('ignoreInWatchMode', method)
+    return this.removeFromArray('ignoreInWatchMode', method)
+  }
+
+  setIgnoreInWatchMode(methods: string[]) {
+    return this.patch({ ignoreInWatchMode: methods })
   }
 
   private patch(patch: Partial<ContractConfigSchema>) {
-    assign(this.config, patch)
+    const newConfig = clone(this.config)
+    assign(newConfig, patch)
+    return ContractConfigModel.fromPeek(newConfig)
   }
 
   private addToArray(
@@ -178,7 +238,7 @@ export class ContractConfigModel {
   ) {
     const current = this.config[key] ?? []
     const next = new CommentArray(...current).concat(value)
-    this.patch({ [key]: next })
+    return this.patch({ [key]: next })
   }
 
   private removeFromArray(
@@ -187,7 +247,7 @@ export class ContractConfigModel {
   ) {
     const current = this.config[key] ?? []
     const next = current.filter((v) => v !== value)
-    this.patch({ [key]: undefinedIfEmpty(next) })
+    return this.patch({ [key]: undefinedIfEmpty(next) })
   }
 
   get ignoreInWatchMode() {
@@ -201,20 +261,6 @@ export class ContractConfigModel {
   get ignoreRelatives() {
     return this.config.ignoreRelatives
   }
-}
-
-function partition<T>(array: T[], predicate: (item: T) => boolean): [T[], T[]] {
-  return array.reduce<[T[], T[]]>(
-    (acc, item) => {
-      if (predicate(item)) {
-        acc[0].push(item)
-      } else {
-        acc[1].push(item)
-      }
-      return acc
-    },
-    [[], []],
-  )
 }
 
 function undefinedIfEmpty<T>(arr: T[]): T[] | undefined {
