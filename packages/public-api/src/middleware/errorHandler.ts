@@ -2,7 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import { randomUUID } from 'crypto'
 import type { NextFunction, Request, Response } from 'express'
 
-export function ErrorHandler(logger: Logger) {
+export function errorHandler(logger: Logger) {
   logger = logger.for('ErrorHandler')
   return (err: Error, req: Request, res: Response, next: NextFunction) => {
     if (res.headersSent) {
