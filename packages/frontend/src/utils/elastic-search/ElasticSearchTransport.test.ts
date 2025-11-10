@@ -1,9 +1,9 @@
-import { formatDate } from '@l2beat/backend-tools'
 import { expect, type MockObject, mockFn, mockObject } from 'earl'
 import type { ElasticSearchClient } from './ElasticSearchClient'
 import {
   ElasticSearchTransport,
   type ElasticSearchTransportOptions,
+  formatDate,
   type UuidProvider,
 } from './ElasticSearchTransport'
 
@@ -24,7 +24,7 @@ describe(ElasticSearchTransport.name, () => {
     const clientMock = createClientMock(false)
     const transportMock = createTransportMock(clientMock)
 
-    transportMock.log(JSON.stringify(log))
+    transportMock.push(JSON.stringify(log))
 
     // wait for log flus
     await delay(flushInterval + 10)
@@ -46,7 +46,7 @@ describe(ElasticSearchTransport.name, () => {
     const clientMock = createClientMock(false)
     const transportMock = createTransportMock(clientMock)
 
-    transportMock.log(JSON.stringify(log))
+    transportMock.push(JSON.stringify(log))
 
     // wait for log flush
     await delay(flushInterval + 10)

@@ -78,8 +78,8 @@ export const LogCreatedOrder = createInteropEventType<{
   orderId: `0x${string}`
   fromToken: Address32
   toToken: Address32
-  fromAmount: string
-  fillAmount: string
+  fromAmount: bigint
+  fillAmount: bigint
   $dstChain: string
 }>('debridge-dln.CreatedOrder')
 
@@ -87,8 +87,8 @@ export const LogFulfilledOrder = createInteropEventType<{
   orderId: `0x${string}`
   fromToken: Address32
   toToken: Address32
-  fromAmount: string
-  fillAmount: string
+  fromAmount: bigint
+  fillAmount: bigint
   $srcChain: string
 }>('debridge-dln.FulfilledOrder')
 
@@ -98,34 +98,38 @@ export class DeBridgeDlnPlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     const logOrderCreated = parseCreatedOrder(input.log, null)
     if (logOrderCreated) {
-      return LogCreatedOrder.create(input.ctx, {
-        orderId: logOrderCreated.orderId,
-        fromToken: Address32.from(logOrderCreated.order.giveTokenAddress),
-        toToken: Address32.from(logOrderCreated.order.takeTokenAddress),
-        fromAmount: logOrderCreated.order.giveAmount.toString(),
-        fillAmount: logOrderCreated.order.takeAmount.toString(),
-        $dstChain: findChain(
-          DEBRIDGE_NETWORKS,
-          (x) => x.chainId,
-          logOrderCreated.order.takeChainId.toString(),
-        ),
-      })
+      return [
+        LogCreatedOrder.create(input.ctx, {
+          orderId: logOrderCreated.orderId,
+          fromToken: Address32.from(logOrderCreated.order.giveTokenAddress),
+          toToken: Address32.from(logOrderCreated.order.takeTokenAddress),
+          fromAmount: logOrderCreated.order.giveAmount,
+          fillAmount: logOrderCreated.order.takeAmount,
+          $dstChain: findChain(
+            DEBRIDGE_NETWORKS,
+            (x) => x.chainId,
+            logOrderCreated.order.takeChainId.toString(),
+          ),
+        }),
+      ]
     }
 
     const logOrderFilled = parseFulfilledOrder(input.log, null)
     if (logOrderFilled) {
-      return LogFulfilledOrder.create(input.ctx, {
-        orderId: logOrderFilled.orderId,
-        fromToken: Address32.from(logOrderFilled.order.giveTokenAddress),
-        toToken: Address32.from(logOrderFilled.order.takeTokenAddress),
-        fromAmount: logOrderFilled.order.giveAmount.toString(),
-        fillAmount: logOrderFilled.order.takeAmount.toString(),
-        $srcChain: findChain(
-          DEBRIDGE_NETWORKS,
-          (x) => x.chainId,
-          logOrderFilled.order.giveChainId.toString(),
-        ),
-      })
+      return [
+        LogFulfilledOrder.create(input.ctx, {
+          orderId: logOrderFilled.orderId,
+          fromToken: Address32.from(logOrderFilled.order.giveTokenAddress),
+          toToken: Address32.from(logOrderFilled.order.takeTokenAddress),
+          fromAmount: logOrderFilled.order.giveAmount,
+          fillAmount: logOrderFilled.order.takeAmount,
+          $srcChain: findChain(
+            DEBRIDGE_NETWORKS,
+            (x) => x.chainId,
+            logOrderFilled.order.giveChainId.toString(),
+          ),
+        }),
+      ]
     }
   }
 

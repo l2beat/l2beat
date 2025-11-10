@@ -1,5 +1,7 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { BinaryReader } from '../../../tools/BinaryReader'
+import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
+import { LayerZeroV2Config } from './layerzero/layerzero.config'
 import { PacketDelivered, PacketSent } from './layerzero/layerzero-v2.plugin'
 import {
   parseOFTReceived,
@@ -32,16 +34,16 @@ export const StargateV2OFTSentBusRode = createInteropEventType<{
   receiver: string
   destinationEid: number
   tokenAddress: Address32
-  amountSentLD: string
-  amountReceivedLD: string
-  amountSD: string
+  amountSentLD: bigint
+  amountReceivedLD: bigint
+  amountSD: bigint
   $dstChain: string
 }>('stargate-v2.OFTSentBus')
 
 export const StargateV2OFTSentTaxi = createInteropEventType<{
   guid: string
-  amountSentLD: string
-  amountReceivedLD: string
+  amountSentLD: bigint
+  amountReceivedLD: bigint
   tokenAddress: Address32
   $dstChain: string
 }>('stargate-v2.OFTSentTaxi')
@@ -53,7 +55,7 @@ export const StargateV2OFTReceived = createInteropEventType<{
   token: string
   tokenAddress: Address32
   destinationEid: number
-  amountReceivedLD: string
+  amountReceivedLD: bigint
   $srcChain: string
 }>('stargate-v2.OFTReceived')
 
@@ -195,7 +197,18 @@ const GUID_ZERO =
 export class StargatePlugin implements InteropPlugin {
   name = 'stargate'
 
+  constructor(private configs: InteropConfigStore) {}
+
   capture(input: LogToCapture) {
+    // trying an awkward fix:
+    const lznetworks = this.configs.get(LayerZeroV2Config)
+    if (!lznetworks) return
+
+    const lznetwork = lznetworks.find((x) => x.chain === input.ctx.chain)
+    if (!lznetwork) return
+    assert(lznetwork.endpointV2, 'We capture only chains with endpoints')
+    // awkward fix end
+
     const network = STARGATE_NETWORKS.find((b) => b.chain === input.ctx.chain)
     if (!network) {
       return
@@ -222,33 +235,37 @@ export class StargatePlugin implements InteropPlugin {
           const passenger = busRode && decodeBusPassenger(busRode.passenger)
 
           if (busRode && passenger) {
-            return StargateV2OFTSentBusRode.create(input.ctx, {
-              guid: oftSent.guid,
-              ticketId: Number(busRode.ticketId),
-              receiver: passenger.receiver,
-              emitter: EthereumAddress(input.log.address),
-              token: pool.token,
-              destinationEid: oftSent.dstEid,
-              tokenAddress: pool.tokenAddress,
-              amountSentLD: oftSent.amountSentLD.toString(),
-              amountReceivedLD: oftSent.amountReceivedLD.toString(),
-              amountSD: passenger.amountSD.toString(),
-              $dstChain: findChain(
-                STARGATE_NETWORKS,
-                (x) => x.eid,
-                oftSent.dstEid,
-              ),
-            })
+            return [
+              StargateV2OFTSentBusRode.create(input.ctx, {
+                guid: oftSent.guid,
+                ticketId: Number(busRode.ticketId),
+                receiver: passenger.receiver,
+                emitter: EthereumAddress(input.log.address),
+                token: pool.token,
+                destinationEid: oftSent.dstEid,
+                tokenAddress: pool.tokenAddress,
+                amountSentLD: oftSent.amountSentLD,
+                amountReceivedLD: oftSent.amountReceivedLD,
+                amountSD: passenger.amountSD,
+                $dstChain: findChain(
+                  STARGATE_NETWORKS,
+                  (x) => x.eid,
+                  oftSent.dstEid,
+                ),
+              }),
+            ]
           }
         }
       }
-      return StargateV2OFTSentTaxi.create(input.ctx, {
-        guid: oftSent.guid,
-        amountSentLD: oftSent.amountSentLD.toString(),
-        amountReceivedLD: oftSent.amountReceivedLD.toString(),
-        tokenAddress: pool.tokenAddress,
-        $dstChain: findChain(STARGATE_NETWORKS, (x) => x.eid, oftSent.dstEid),
-      })
+      return [
+        StargateV2OFTSentTaxi.create(input.ctx, {
+          guid: oftSent.guid,
+          amountSentLD: oftSent.amountSentLD,
+          amountReceivedLD: oftSent.amountReceivedLD,
+          tokenAddress: pool.tokenAddress,
+          $dstChain: findChain(STARGATE_NETWORKS, (x) => x.eid, oftSent.dstEid),
+        }),
+      ]
     }
 
     const oftReceived = parseOFTReceived(input.log, poolAddresses)
@@ -265,20 +282,22 @@ export class StargatePlugin implements InteropPlugin {
       if (!destinationEid) {
         return
       }
-      return StargateV2OFTReceived.create(input.ctx, {
-        guid: oftReceived.guid,
-        receiver: oftReceived.toAddress,
-        emitter: EthereumAddress(input.log.address),
-        token: pool.token,
-        tokenAddress: pool.tokenAddress,
-        destinationEid,
-        amountReceivedLD: oftReceived.amountReceivedLD.toString(),
-        $srcChain: findChain(
-          STARGATE_NETWORKS,
-          (x) => x.eid,
-          oftReceived.srcEid,
-        ),
-      })
+      return [
+        StargateV2OFTReceived.create(input.ctx, {
+          guid: oftReceived.guid,
+          receiver: oftReceived.toAddress,
+          emitter: EthereumAddress(input.log.address),
+          token: pool.token,
+          tokenAddress: pool.tokenAddress,
+          destinationEid,
+          amountReceivedLD: oftReceived.amountReceivedLD,
+          $srcChain: findChain(
+            STARGATE_NETWORKS,
+            (x) => x.eid,
+            oftReceived.srcEid,
+          ),
+        }),
+      ]
     }
 
     const creditsSent = parseCreditsSent(input.log, poolAddresses)
@@ -288,7 +307,7 @@ export class StargatePlugin implements InteropPlugin {
         (x) => x.eid,
         creditsSent.dstEid,
       )
-      return StargateV2CreditsSent.create(input.ctx, { $dstChain })
+      return [StargateV2CreditsSent.create(input.ctx, { $dstChain })]
     }
 
     const creditsReceived = parseCreditsReceived(input.log, poolAddresses)
@@ -298,18 +317,24 @@ export class StargatePlugin implements InteropPlugin {
         (x) => x.eid,
         creditsReceived.srcEid,
       )
-      return StargateV2CreditsReceived.create(input.ctx, { $srcChain })
+      return [StargateV2CreditsReceived.create(input.ctx, { $srcChain })]
     }
 
     const busDriven = parseBusDriven(input.log, [network.tokenMessaging])
     if (busDriven) {
-      return StargateV2BusDriven.create(input.ctx, {
-        startTicketId: Number(busDriven.startTicketId),
-        numPassengers: busDriven.numPassengers,
-        guid: busDriven.guid,
-        destinationEid: busDriven.dstEid,
-        $dstChain: findChain(STARGATE_NETWORKS, (x) => x.eid, busDriven.dstEid),
-      })
+      return [
+        StargateV2BusDriven.create(input.ctx, {
+          startTicketId: Number(busDriven.startTicketId),
+          numPassengers: busDriven.numPassengers,
+          guid: busDriven.guid,
+          destinationEid: busDriven.dstEid,
+          $dstChain: findChain(
+            STARGATE_NETWORKS,
+            (x) => x.eid,
+            busDriven.dstEid,
+          ),
+        }),
+      ]
     }
   }
 
@@ -371,10 +396,10 @@ export class StargatePlugin implements InteropPlugin {
           Result.Transfer('stargate-v2-bus.Transfer', {
             srcEvent: oftSentBusRode,
             srcTokenAddress: oftSentBusRode.args.tokenAddress,
-            srcAmount: oftSentBusRode.args.amountSentLD.toString(),
+            srcAmount: oftSentBusRode.args.amountSentLD,
             dstEvent: matchedOftReceived,
             dstTokenAddress: matchedOftReceived.args.tokenAddress,
-            dstAmount: matchedOftReceived.args.amountReceivedLD.toString(),
+            dstAmount: matchedOftReceived.args.amountReceivedLD,
           }),
         )
       }
@@ -396,10 +421,10 @@ export class StargatePlugin implements InteropPlugin {
         Result.Transfer('stargate-v2-taxi.Transfer', {
           srcEvent: oftSentTaxi,
           srcTokenAddress: oftSentTaxi.args.tokenAddress,
-          srcAmount: oftSentTaxi.args.amountSentLD.toString(),
+          srcAmount: oftSentTaxi.args.amountSentLD,
           dstEvent: oftReceived,
           dstTokenAddress: oftReceived.args.tokenAddress,
-          dstAmount: oftReceived.args.amountReceivedLD.toString(),
+          dstAmount: oftReceived.args.amountReceivedLD,
         }),
       ]
     }

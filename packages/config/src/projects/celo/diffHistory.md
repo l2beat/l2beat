@@ -1,3 +1,91 @@
+Generated with discovered.json: 0x3c8db135156df3228c45dc6952a1104a9bdff355
+
+# Diff at Tue, 04 Nov 2025 11:32:29 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1761222915
+- current timestamp: 1761222915
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761222915 (main branch discovery), not current.
+
+```diff
+    contract PermissionedDisputeGame (eth:0x25c2e07A24a74F9FA54f7CA5ddAfedB2264a5d02) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sourceHashes.0:
+-        "0x7129ee348039f13e017c18c90ffcb319f67a8fdd3b4a5a28c39aabc8bf0c57f6"
++        "0x0a442058af95748cc6199d889a46c775f9f6f4d29a61df5124ceb93ff631074d"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xde1dd3a62e9db0a611ef7256805eb375a1fa1a6c8fa0ba6afc44df5b3cd7d8be"
++        "0x91eb7a11bc6b22871adb21c12699c6d110b59393d358aa82559927584f1bf804"
+    }
+```
+
+```diff
+    contract MIPS (eth:0xaA59A0777648BC75cd10364083e878c1cCd6112a) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes.0:
+-        "0x65fba25d8e4f3948f7d63aff835445e0f93ba92b8aa4e4f1bdfe6851a5d9476c"
++        "0xee3a1122871bc9fb46239036b055832fd091a7bb04a848208c582bf47b5d37a0"
+    }
+```
+
+```diff
+    contract FaultDisputeGame (eth:0xcc744008aD3306a716fED303b0A6eA5b5d0690a5) {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      sourceHashes.0:
+-        "0xf5a782e7a87f4bc9ee32a988e6e97e11e371861c87f91e4563897a8e73c92b2e"
++        "0x5998fb7556449af7ebb08bf75378bca0d91d65aba386c371d4c6773ed9eac54f"
+    }
+```
+
+Generated with discovered.json: 0x78742ee2e68a9c645b61d004e9a2ed67751f532c
+
+# Diff at Mon, 03 Nov 2025 17:45:42 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6b72018cd9706ce7cba8ec489b67d7193f34dc20 block: 1761222915
+- current timestamp: 1761222915
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761222915 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x1204884E697efD929729B9A717Ea14496298A689) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"eth:0x25c2e07A24a74F9FA54f7CA5ddAfedB2264a5d02","role":".proposer"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x6b145Ebf66602Ec524b196426B46631259689583) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"challenge","from":"eth:0x25c2e07A24a74F9FA54f7CA5ddAfedB2264a5d02","role":".challenger"}]
+    }
+```
+
 Generated with discovered.json: 0xb1dfff37fb0b0ebfa565534f810ad3878b8444b5
 
 # Diff at Mon, 20 Oct 2025 15:24:08 GMT:

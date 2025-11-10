@@ -25,6 +25,7 @@ Note that (TODO: )
 */
 
 import { BinaryReader } from '../../../tools/BinaryReader'
+import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
   Address32,
   createEventParser,
@@ -37,7 +38,8 @@ import {
   type MatchResult,
   Result,
 } from './types'
-import { LogMessagePublished, WORMHOLE_NETWORKS } from './wormhole'
+import { WormholeConfig } from './wormhole/wormhole.config'
+import { LogMessagePublished } from './wormhole/wormhole.plugin'
 import { Delivery } from './wormhole-relayer'
 
 /*
@@ -93,32 +95,41 @@ export const ReceivedRelayedMessage = createInteropEventType<{
 export class WormholeNTTPlugin implements InteropPlugin {
   name = 'wormhole-ntt'
 
+  constructor(private configs: InteropConfigStore) {}
+
   capture(input: LogToCapture) {
+    const wormholeNetworks = this.configs.get(WormholeConfig)
+    if (!wormholeNetworks) return
+
     const send = parseSendTransceiverMessage(input.log, null)
     if (send) {
-      return TransceiverMessage.create(input.ctx, {
-        sourceNttManagerAddress: send.message.sourceNttManagerAddress,
-        recipientNttManagerAddress: send.message.recipientNttManagerAddress,
-        nttManagerPayload: send.message.nttManagerPayload,
-        $dstChain: findChain(
-          WORMHOLE_NETWORKS,
-          (x) => x.wormholeChainId,
-          Number(send.recipientChain),
-        ),
-      })
+      return [
+        TransceiverMessage.create(input.ctx, {
+          sourceNttManagerAddress: send.message.sourceNttManagerAddress,
+          recipientNttManagerAddress: send.message.recipientNttManagerAddress,
+          nttManagerPayload: send.message.nttManagerPayload,
+          $dstChain: findChain(
+            wormholeNetworks,
+            (x) => x.wormholeChainId,
+            Number(send.recipientChain),
+          ),
+        }),
+      ]
     }
 
     const received = parseReceivedRelayedMessage(input.log, null)
     if (received) {
-      return ReceivedRelayedMessage.create(input.ctx, {
-        digest: received.digest,
-        emitterAddress: received.emitterAddress,
-        $srcChain: findChain(
-          WORMHOLE_NETWORKS,
-          (x) => x.wormholeChainId,
-          Number(received.emitterChainId),
-        ),
-      })
+      return [
+        ReceivedRelayedMessage.create(input.ctx, {
+          digest: received.digest,
+          emitterAddress: received.emitterAddress,
+          $srcChain: findChain(
+            wormholeNetworks,
+            (x) => x.wormholeChainId,
+            Number(received.emitterChainId),
+          ),
+        }),
+      ]
     }
   }
 
@@ -175,11 +186,11 @@ export class WormholeNTTPlugin implements InteropPlugin {
           dstEvent: received,
           srcTokenAddress: srcTokenAddress
             ? Address32.from(srcTokenAddress)
-            : Address32.ZERO,
+            : undefined,
           srcAmount: amount,
           dstTokenAddress: dstTokenAddress
             ? Address32.from(dstTokenAddress)
-            : Address32.ZERO, // TODO: Should extract token from dst NTT manager
+            : undefined, // TODO: Should extract token from dst NTT manager
           dstAmount: amount,
         }),
       ]
@@ -198,7 +209,7 @@ function decodeNTTManagerPayload(payload: string) {
     const reader2 = new BinaryReader(payloadData)
     const prefix = reader2.readBytes(4)
     const decimals = reader2.readBytes(1)
-    const amount = reader2.readUint64().toString()
+    const amount = reader2.readUint64()
     const sourceToken = reader2.readBytes(32)
     const toAddress = reader2.readBytes(32)
     const toChain = reader2.readBytes(2)

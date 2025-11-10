@@ -7,7 +7,6 @@
   "StakeManager_shibarium_blacklist": {
     "hash": "0xe2522e34d47444e7e217e066534ccc56536e24f4f582f8585897230965360291",
     "address": "eth:0x269C0ebb7a39995dB531Ccd61D015e431530b87A",
-    "chain": "ethereum",
     "blockNumber": 23439960
   }
 }

@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/shared-pure'
 import { solidityKeccak256 } from 'ethers/lib/utils'
 import { BinaryReader } from '../../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
@@ -43,6 +44,7 @@ export class LayerZeroV2Plugin implements InteropPlugin {
 
     const network = networks.find((x) => x.chain === input.ctx.chain)
     if (!network) return
+    assert(network.endpointV2, 'We capture only chains with endpoints')
 
     const packetSent = parsePacketSent(input.log, [network.endpointV2])
     if (packetSent) {
@@ -56,7 +58,7 @@ export class LayerZeroV2Plugin implements InteropPlugin {
         packet.header.receiver,
       )
       const $dstChain = findChain(networks, (x) => x.eid, packet.header.dstEid)
-      return PacketSent.create(input.ctx, { $dstChain, guid })
+      return [PacketSent.create(input.ctx, { $dstChain, guid })]
     }
 
     const packetDelivered = parsePacketDelivered(input.log, [
@@ -75,7 +77,7 @@ export class LayerZeroV2Plugin implements InteropPlugin {
         (x) => x.eid,
         packetDelivered.origin.srcEid,
       )
-      return PacketDelivered.create(input.ctx, { $srcChain, guid })
+      return [PacketDelivered.create(input.ctx, { $srcChain, guid })]
     }
   }
 

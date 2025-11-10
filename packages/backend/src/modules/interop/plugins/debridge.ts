@@ -88,14 +88,14 @@ export const DEBRIDGE_NETWORKS = defineNetworks('debridge', [
 export const Sent = createInteropEventType<{
   submissionId: `0x${string}`
   debridgeId: `0x${string}`
-  amount: string
+  amount: bigint
   $dstChain: string
 }>('debridge.Sent')
 
 export const Claimed = createInteropEventType<{
   submissionId: `0x${string}`
   debridgeId: `0x${string}`
-  amount: string
+  amount: bigint
   receiver: EthereumAddress
   $srcChain: string
 }>('debridge.Claimed')
@@ -106,31 +106,35 @@ export class DeBridgePlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     const sent = parseSent(input.log, null)
     if (sent) {
-      return Sent.create(input.ctx, {
-        submissionId: sent.submissionId,
-        debridgeId: sent.debridgeId,
-        amount: sent.amount.toString(),
-        $dstChain: findChain(
-          DEBRIDGE_NETWORKS,
-          (x) => x.chainId,
-          sent.chainIdTo.toString(),
-        ),
-      })
+      return [
+        Sent.create(input.ctx, {
+          submissionId: sent.submissionId,
+          debridgeId: sent.debridgeId,
+          amount: sent.amount,
+          $dstChain: findChain(
+            DEBRIDGE_NETWORKS,
+            (x) => x.chainId,
+            sent.chainIdTo.toString(),
+          ),
+        }),
+      ]
     }
 
     const claimed = parseClaimed(input.log, null)
     if (claimed) {
-      return Claimed.create(input.ctx, {
-        submissionId: claimed.submissionId,
-        debridgeId: claimed.debridgeId,
-        amount: claimed.amount.toString(),
-        receiver: EthereumAddress(claimed.receiver),
-        $srcChain: findChain(
-          DEBRIDGE_NETWORKS,
-          (x) => x.chainId,
-          claimed.chainIdFrom.toString(),
-        ),
-      })
+      return [
+        Claimed.create(input.ctx, {
+          submissionId: claimed.submissionId,
+          debridgeId: claimed.debridgeId,
+          amount: claimed.amount,
+          receiver: EthereumAddress(claimed.receiver),
+          $srcChain: findChain(
+            DEBRIDGE_NETWORKS,
+            (x) => x.chainId,
+            claimed.chainIdFrom.toString(),
+          ),
+        }),
+      ]
     }
   }
 
@@ -160,14 +164,14 @@ export class DeBridgePlugin implements InteropPlugin {
       results.push(
         Result.Transfer('debridge.Transfer', {
           srcEvent: sent,
-          srcTokenAddress:
-            DEBRIDGE_TOKENS.find((t) => t.tokenId === sent.args.debridgeId)
-              ?.tokenAddresses[sent.ctx.chain] ?? Address32.ZERO,
+          srcTokenAddress: DEBRIDGE_TOKENS.find(
+            (t) => t.tokenId === sent.args.debridgeId,
+          )?.tokenAddresses[sent.ctx.chain],
           srcAmount: claimed.args.amount,
           dstEvent: claimed,
-          dstTokenAddress:
-            DEBRIDGE_TOKENS.find((t) => t.tokenId === claimed.args.debridgeId)
-              ?.tokenAddresses[claimed.ctx.chain] ?? Address32.ZERO,
+          dstTokenAddress: DEBRIDGE_TOKENS.find(
+            (t) => t.tokenId === claimed.args.debridgeId,
+          )?.tokenAddresses[claimed.ctx.chain],
           dstAmount: claimed.args.amount,
         }),
       )

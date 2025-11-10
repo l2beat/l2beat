@@ -165,6 +165,14 @@ export const omni: Bridge = {
   },
   milestones: [
     {
+      title: 'Gnosis canonical bridges paused',
+      url: 'https://x.com/gnosisdotio/status/1985321081255891396',
+      date: '2025-11-03T00:00:00.00Z',
+      description:
+        'Bridging out from Gnosis Chain has been temporarily halted following the Balancer V2 exploit.',
+      type: 'incident',
+    },
+    {
       title: 'Plonky3 vulnerability patch',
       url: 'https://x.com/SuccinctLabs/status/1929773028034204121',
       date: '2025-06-04T00:00:00.00Z',

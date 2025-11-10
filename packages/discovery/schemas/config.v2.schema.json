@@ -12,6 +12,7 @@
       "additionalProperties": {
         "type": "object",
         "properties": {
+          "discoverLibraries": { "type": "boolean" },
           "initialAddresses": {
             "type": "array",
             "items": { "type": "string" }
@@ -24,6 +25,7 @@
             "additionalProperties": {
               "type": "object",
               "properties": {
+                "discoverLibraries": { "type": "boolean" },
                 "canActIndependently": { "type": "boolean" },
                 "ignoreDiscovery": { "type": "boolean" },
                 "proxyType": {

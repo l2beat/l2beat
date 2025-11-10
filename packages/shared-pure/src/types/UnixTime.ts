@@ -100,6 +100,9 @@ UnixTime.toYYYYMMDD = function toYYYYMMDD(timestamp: UnixTime): string {
   return UnixTime.toDate(timestamp).toISOString().slice(0, 10)
 }
 
+UnixTime.toYYYYMMDDHHMM = function toYYYYMMDDHHMM(timestamp: UnixTime): string {
+  return UnixTime.toDate(timestamp).toISOString().slice(0, 16)
+}
 UnixTime.toDays = function toDays(timestamp: UnixTime): number {
   if (timestamp % UnixTime.DAY !== 0) {
     throw new Error('Timestamp must be a full day')

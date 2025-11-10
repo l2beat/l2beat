@@ -70,8 +70,8 @@ export const LogOrderCreated = createInteropEventType<{
   orderHash: `0x${string}`
   fromToken: Address32
   toToken: Address32
-  fromAmount: string
-  fillAmount: string
+  fromAmount: bigint
+  fillAmount: bigint
   $dstChain: string
 }>('squid-coral.LogOrderCreated')
 
@@ -79,8 +79,8 @@ export const LogOrderFilled = createInteropEventType<{
   orderHash: `0x${string}`
   fromToken: Address32
   toToken: Address32
-  fromAmount: string
-  fillAmount: string
+  fromAmount: bigint
+  fillAmount: bigint
   $srcChain: string
 }>('squid-coral.LogOrderFilled')
 
@@ -90,34 +90,38 @@ export class SquidCoralPlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     const logOrderCreated = parseOrderCreated(input.log, null)
     if (logOrderCreated) {
-      return LogOrderCreated.create(input.ctx, {
-        orderHash: logOrderCreated.orderHash,
-        fromToken: Address32.from(logOrderCreated.order.fromToken),
-        toToken: Address32.from(logOrderCreated.order.toToken),
-        fromAmount: logOrderCreated.order.fromAmount.toString(),
-        fillAmount: logOrderCreated.order.fillAmount.toString(),
-        $dstChain: findChain(
-          SQUIDCORAL_NETWORKS,
-          (x) => x.chainId,
-          logOrderCreated.order.toChain.toString(),
-        ),
-      })
+      return [
+        LogOrderCreated.create(input.ctx, {
+          orderHash: logOrderCreated.orderHash,
+          fromToken: Address32.from(logOrderCreated.order.fromToken),
+          toToken: Address32.from(logOrderCreated.order.toToken),
+          fromAmount: logOrderCreated.order.fromAmount,
+          fillAmount: logOrderCreated.order.fillAmount,
+          $dstChain: findChain(
+            SQUIDCORAL_NETWORKS,
+            (x) => x.chainId,
+            logOrderCreated.order.toChain.toString(),
+          ),
+        }),
+      ]
     }
 
     const logOrderFilled = parseOrderFilled(input.log, null)
     if (logOrderFilled) {
-      return LogOrderFilled.create(input.ctx, {
-        orderHash: logOrderFilled.orderHash,
-        fromToken: Address32.from(logOrderFilled.order.fromToken),
-        toToken: Address32.from(logOrderFilled.order.toToken),
-        fromAmount: logOrderFilled.order.fromAmount.toString(),
-        fillAmount: logOrderFilled.order.fillAmount.toString(),
-        $srcChain: findChain(
-          SQUIDCORAL_NETWORKS,
-          (x) => x.chainId,
-          logOrderFilled.order.fromChain.toString(),
-        ),
-      })
+      return [
+        LogOrderFilled.create(input.ctx, {
+          orderHash: logOrderFilled.orderHash,
+          fromToken: Address32.from(logOrderFilled.order.fromToken),
+          toToken: Address32.from(logOrderFilled.order.toToken),
+          fromAmount: logOrderFilled.order.fromAmount,
+          fillAmount: logOrderFilled.order.fillAmount,
+          $srcChain: findChain(
+            SQUIDCORAL_NETWORKS,
+            (x) => x.chainId,
+            logOrderFilled.order.fromChain.toString(),
+          ),
+        }),
+      ]
     }
   }
 

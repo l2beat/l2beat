@@ -5,7 +5,7 @@ Mayan MCTP Protocol
 - swap: wormhole msg from Solana on dst is present, OrderFulfilled on dst is present, Wormhole msg on src to Solana is present with Order info (0xafd9b706, 0x1c59b7fc)
 */
 
-import { CCTPv1MessageReceived, CCTPv1MessageSent } from './cctp'
+import { CCTPv1MessageReceived, CCTPv1MessageSent } from './cctp/cctp-v1.plugin'
 import { MayanForwarded } from './mayan-forwarder'
 import {
   type InteropEvent,
@@ -14,7 +14,7 @@ import {
   type MatchResult,
   Result,
 } from './types'
-import { LogMessagePublished } from './wormhole'
+import { LogMessagePublished } from './wormhole/wormhole.plugin'
 
 export class MayanMctpPlugin implements InteropPlugin {
   name = 'mayan-mctp'

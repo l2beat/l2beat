@@ -47,16 +47,7 @@ const SERVER_CONFIG = {
   HEROKU_APP_NAME: z.string().optional(),
 
   LOG_LEVEL: z
-    .enum([
-      'NONE',
-      'CRITICAL',
-      'ERROR',
-      'WARN',
-      'INFO',
-      'DEBUG',
-      'TRACE',
-      'METRIC',
-    ])
+    .enum(['NONE', 'CRITICAL', 'ERROR', 'WARN', 'INFO', 'DEBUG', 'TRACE'])
     .default('INFO'),
 
   // Elastic Search

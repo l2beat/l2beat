@@ -3,7 +3,8 @@ Circle Gateway plugin
 Note - here the transfer of USDC is via burn/mint, but mint on DST happens before burn on SRC.
 */
 
-import { CCTP_NETWORKS } from './cctp'
+import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
+import { CCTPV2Config } from './cctp/cctp.config'
 import {
   Address32,
   createEventParser,
@@ -29,45 +30,57 @@ export const AttestationUsed = createInteropEventType<{
   token: Address32
   transferSpecHash: `0x${string}`
   $dstChain: string
-  value: string
+  value: bigint
 }>('circle-gateway.AttestationUsed')
 
 export const GatewayBurned = createInteropEventType<{
   token: Address32
   transferSpecHash: `0x${string}`
   $srcChain: string
-  value: string
+  value: bigint
 }>('circle-gateway.GatewayBurned')
 
 export class CircleGatewayPlugIn implements InteropPlugin {
   name = 'circle-gateway'
 
+  constructor(private configs: InteropConfigStore) {}
+
   capture(input: LogToCapture) {
+    const networks = this.configs.get(CCTPV2Config)
+    if (!networks) return
+
+    const network = networks.find((n) => n.chain === input.ctx.chain)
+    if (!network) return
+
     const gatewayBurned = parseGatewayBurned(input.log, null)
     if (gatewayBurned)
-      return GatewayBurned.create(input.ctx, {
-        token: Address32.from(gatewayBurned.token),
-        transferSpecHash: gatewayBurned.transferSpecHash,
-        $srcChain: findChain(
-          CCTP_NETWORKS,
-          (x) => x.cctpdomain,
-          Number(gatewayBurned.destinationDomain), // yes, that's not a mistake
-        ),
-        value: gatewayBurned.value.toString(),
-      })
+      return [
+        GatewayBurned.create(input.ctx, {
+          token: Address32.from(gatewayBurned.token),
+          transferSpecHash: gatewayBurned.transferSpecHash,
+          $srcChain: findChain(
+            networks,
+            (x) => x.domain,
+            Number(gatewayBurned.destinationDomain), // yes, that's not a mistake
+          ),
+          value: gatewayBurned.value,
+        }),
+      ]
 
     const attestationUsed = parseAttestationUsed(input.log, null)
     if (attestationUsed)
-      return AttestationUsed.create(input.ctx, {
-        token: Address32.from(attestationUsed.token),
-        transferSpecHash: attestationUsed.transferSpecHash,
-        $dstChain: findChain(
-          CCTP_NETWORKS,
-          (x) => x.cctpdomain,
-          Number(attestationUsed.sourceDomain), // yes, that's not a mistake
-        ),
-        value: attestationUsed.value.toString(),
-      })
+      return [
+        AttestationUsed.create(input.ctx, {
+          token: Address32.from(attestationUsed.token),
+          transferSpecHash: attestationUsed.transferSpecHash,
+          $dstChain: findChain(
+            networks,
+            (x) => x.domain,
+            Number(attestationUsed.sourceDomain), // yes, that's not a mistake
+          ),
+          value: attestationUsed.value,
+        }),
+      ]
   }
 
   matchTypes = [GatewayBurned]

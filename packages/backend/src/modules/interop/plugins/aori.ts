@@ -70,10 +70,12 @@ export class AoriPlugin implements InteropPlugin {
         (x) => x.eid,
         settleSent.srcEid, // yes
       )
-      return AoriSettleSent.create(input.ctx, {
-        $dstChain,
-        guid: settleSent.guid,
-      })
+      return [
+        AoriSettleSent.create(input.ctx, {
+          $dstChain,
+          guid: settleSent.guid,
+        }),
+      ]
     }
   }
 

@@ -14,7 +14,7 @@ const isForcedBatchDisallowed =
   discovery.getContractValue<string>('PolygonZkEVM', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
-const bridge = discovery.getContract('PolygonSharedBridge')
+const bridge = discovery.getContract('AgglayerBridge')
 
 const chainId = 1101
 
@@ -45,7 +45,7 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
         'https://discord.com/invite/0xpolygonRnD',
         'https://polygon.technology/blog',
       ],
-      rollupCodes: 'https://rollup.codes/polygon-zkevm',
+      other: ['https://rollup.codes/polygon-zkevm'],
     },
     liveness: {
       explanation:

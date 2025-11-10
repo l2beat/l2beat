@@ -1,4 +1,167 @@
-Generated with discovered.json: 0xeb1ba05fa52640de1664ba7d4bb58d55d147188a
+Generated with discovered.json: 0xc1be404bb437e7801bf9b3b36fe3de205f5dd562
+
+# Diff at Fri, 07 Nov 2025 09:03:39 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@4fc89c2b7ec1f3752b32fdd3573cd1b04749f1e8 block: 1762183851
+- current timestamp: 1762505590
+
+## Description
+
+Verified sources for ChainAssetHandler on Gateway, the smart contract is the same as on L1.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762183851 (main branch discovery), not current.
+
+```diff
+    contract ChainAssetHandler (gateway:0x000000000000000000000000000000000001000a) {
+    +++ description: Specialized contract for managing chain assets, i.e. chain migrations.
+      name:
+-        "ChainAssetHandler_unverified"
++        "ChainAssetHandler"
+      unverified:
+-        true
++++ severity: HIGH
+      values.migrationPaused:
++        false
++++ description: zk chain migrations that were started
++++ severity: HIGH
+      values.migrations:
++        []
+      values.owner:
++        "gateway:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"
++++ description: this 'paused' is unrelated to migrations and only used for initialization.
++++ severity: LOW
+      values.paused:
++        false
+      values.pendingOwner:
++        "gateway:0x0000000000000000000000000000000000000000"
+      implementationNames.gateway:0x000000000000000000000000000000000001000a:
+-        ""
++        "ChainAssetHandler"
+      template:
++        "shared-zk-stack/ChainAssetHandler"
+      sourceHashes:
++        ["0x0ae09698e3bbec162b9457ba33b3184a082d0d89367f001764f8b8b22a1f950d"]
+      description:
++        "Specialized contract for managing chain assets, i.e. chain migrations."
+      fieldMeta:
++        {"migrationPaused":{"severity":"HIGH"},"paused":{"severity":"LOW","description":"this 'paused' is unrelated to migrations and only used for initialization."},"migrations":{"severity":"HIGH","description":"zk chain migrations that were started"}}
+    }
+```
+
+```diff
+    EOA ProtocolUpgradeHandler_l2Alias (gateway:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"gateway:0x000000000000000000000000000000000001000a","description":"pause, resume chain migrations.","role":".owner"}
+    }
+```
+
+Generated with discovered.json: 0xf8c6d24bfea45a062594e056fdc4a63c1830a9c3
+
+# Diff at Tue, 04 Nov 2025 11:35:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1762183851
+- current timestamp: 1762183851
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762183851 (main branch discovery), not current.
+
+```diff
+    contract L1VerifierPlonk (gateway:0xfA7c56B328bEb5deB9218f3a4b60ADc59Bb6Ad8d) {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+      sourceHashes.0:
+-        "0x20269ba58e717388e68842ab5a0b73b744856b4b1fb48d57ac7dce36d0c3c765"
++        "0x4e306eb2936a09bd91390a0b661bfd8eda46b873600b8c7b4fb9be3cc3867a8d"
+    }
+```
+
+Generated with discovered.json: 0x7a13f4153e212350239f5c235de2f016d0064d83
+
+# Diff at Mon, 03 Nov 2025 16:50:08 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6b72018cd9706ce7cba8ec489b67d7193f34dc20 block: 1761643176
+- current timestamp: 1762183851
+
+## Description
+
+Upgraded BridgeHub and MessageRoot on gateway to v29. Could not identify the diff on L2AssetRouter, but source hash changed. Also deployed ChainAssetHandler that is not verified on Gateway.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761643176 (main branch discovery), not current.
+
+```diff
+    contract Bridgehub (gateway:0x0000000000000000000000000000000000010002) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
+      sourceHashes.0:
+-        "0x85a0337c9b2db31a1b7e623ed99509d22ead32ce301ae832247ee1240f43eccb"
++        "0x2a749098cea7b9243019ffc1193ad519dbadc55c43cf610962f7ba13beba3f21"
+      sinceTimestamp:
+-        1750953821
++        1761040360
+      sinceBlock:
+-        85
++        74512
+      values.chainAssetHandler:
++        "gateway:0x000000000000000000000000000000000001000a"
+    }
+```
+
+```diff
+    contract L2AssetRouter (gateway:0x0000000000000000000000000000000000010003) {
+    +++ description: Bridge routing contract that exists once on every zk stack chain and keeps mappings of assets to their escrows (asset handlers) and deployment trackers.
+      sourceHashes.0:
+-        "0xf172d1bbdbfdc509412a55599c12b6560db7d034e85921bf659002546beba891"
++        "0x90516fc3d3fdc8e2493843e947f1ece3b3298e4fd741555582c35093fa077f95"
+      sinceTimestamp:
+-        1750953821
++        1761040360
+      sinceBlock:
+-        85
++        74512
+    }
+```
+
+```diff
+    contract MessageRoot (gateway:0x0000000000000000000000000000000000010005) {
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+      sourceHashes.0:
+-        "0x9fe7372b4f7ead74634ad13ce858c9a6242995f2a40facaa212e524a02b506a2"
++        "0x515c1999e39bdd6435caf0c49791fcb515fb14c69a02e55dac0ff893f07bc6fe"
+      sinceTimestamp:
+-        1750953821
++        1761040360
+      sinceBlock:
+-        85
++        74512
+      values.L1_CHAIN_ID:
++        0
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ChainAssetHandler_unverified (gateway:0x000000000000000000000000000000000001000a)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x04af828839dc72895e319e7c8c46e988d2bfc019
 
 # Diff at Fri, 24 Oct 2025 09:13:45 GMT:
 

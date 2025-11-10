@@ -105,8 +105,10 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
         continue
       }
 
+      // NOTE(maciekzygmunt): we need to take record for range and latest before for each configuration
+      // to calculate interval for first record in time range
       const records =
-        await this.$.db.liveness.getByConfigurationIdWithinTimeRange(
+        await this.$.db.liveness.getRecordsInRangeWithLatestBefore(
           activeConfigs.map((c) => c.id),
           deviationRange,
           to,
@@ -189,11 +191,11 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
       return { anomalies: [], stats: undefined }
     }
 
-    // if the oldest record is newer than 2 * SYNC_RANGE -1 we can't calculate anomalies
+    // if the oldest record is newer than 2 * SYNC_RANGE we can't calculate anomalies
     const lastRecord = livenessRecords.at(-1)
     if (
       lastRecord?.timestamp &&
-      lastRecord.timestamp > to - 1 * (2 * this.SYNC_RANGE - 1) * UnixTime.DAY
+      lastRecord.timestamp > to - 2 * this.SYNC_RANGE * UnixTime.DAY
     )
       return { anomalies: [], stats: undefined }
 

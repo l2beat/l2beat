@@ -50,7 +50,7 @@ export const HwrTransferSentMerkly = createInteropEventType<{
   $dstChain: string
   destination: number
   recipient: Address32
-  amount: string
+  amount: bigint
   tokenAddress: Address32
 }>('hyperlane-merkly-tokenbridge.TransferSent')
 
@@ -76,14 +76,16 @@ export class HyperlaneMerklyTokenBridgePlugin implements InteropPlugin {
         Number(sentTransferRemote.destination),
       )
 
-      return HwrTransferSentMerkly.create(input.ctx, {
-        messageId,
-        $dstChain,
-        destination: Number(sentTransferRemote.destination),
-        recipient: Address32.from(sentTransferRemote.recipient),
-        amount: sentTransferRemote.amount.toString(),
-        tokenAddress: Address32.ZERO, // we assume ETH (empirically, contracts are unverified)
-      })
+      return [
+        HwrTransferSentMerkly.create(input.ctx, {
+          messageId,
+          $dstChain,
+          destination: Number(sentTransferRemote.destination),
+          recipient: Address32.from(sentTransferRemote.recipient),
+          amount: sentTransferRemote.amount,
+          tokenAddress: Address32.NATIVE, // we assume ETH (empirically, contracts are unverified)
+        }),
+      ]
     }
   }
 

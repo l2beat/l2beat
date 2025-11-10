@@ -1,27 +1,15 @@
 {
   "name": "taiko",
-  "timestamp": 1761550873,
+  "timestamp": 1762269183,
   "configHash": "0xfab89f75d053cae1a12bd233309b4f78f60b5a3821cbd44da3f00eca20de9a46",
   "entries": [
-    {
-      "address": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
-          "role": ".getOperatorCandidatesForCurrentEpoch"
-        }
-      ]
-    },
     {
       "name": "PEMCertChainLib",
       "address": "eth:0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169",
       "type": "Contract",
       "template": "taiko/PEMCertChainLib",
       "sourceHashes": [
-        "0x97476fc6413c58015ddf51b5d2e37c3fdfc6b85ced25779773a1652ecc154c77"
+        "0x59efc4927f69d03e199767bdde2f8a8ef3a544833cdbf8c2eecf9152b373dcbc"
       ],
       "proxyType": "immutable",
       "description": "Library for managing PEM certificate chains.",
@@ -398,68 +386,68 @@
           "ontakeForkHeight": 538304
         },
         "getLastSyncedTransition": {
-          "batchId_": 1337368,
-          "blockId_": 3006615,
+          "batchId_": 1338968,
+          "blockId_": 3110365,
           "ts_": {
-            "parentHash": "0x75f2808666b1adf2b9ae13f86e93cb2f574a14fe2d935123a26fd456402e09f4",
-            "blockHash": "0x7550c374ca5824a7760b084192429b6b50ae1620490be8661e22d3a449161ac4",
-            "stateRoot": "0x7193b9d52d4a478066ea31d54d9d94527d58317fbe5c1ddde6eed43f75945294",
-            "prover": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
+            "parentHash": "0x7232010a43afd38580ab0b748b9c612cbd19d78b05ff28e6d28008d276686ec1",
+            "blockHash": "0x6ab8fa6615962c22cba2703580b5c4f54ba66f34eec93993f7a0ff2000624c70",
+            "stateRoot": "0xffa26a9453a65ce2f6e8a5f58bedae2c5a60344cf0054e557967d194930496f2",
+            "prover": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
             "inProvingWindow": true,
-            "createdAt": 1761538019
+            "createdAt": 1762258427
           }
         },
         "getLastVerifiedBlock": {
-          "blockId_": 1337371,
-          "blockHash_": "0xcd47acf320e56717919f7ab054034fbcae38cb8b7f774985407f2fa60958f0ae",
+          "blockId_": 1338970,
+          "blockHash_": "0xdcba6363f95a9fbde9ad068de18ac5943c0a4e28bdc14933435a54cfd2fcb49e",
           "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "verifiedAt_": 1742041835
+          "verifiedAt_": 1742073959
         },
         "getLastVerifiedTransition": {
-          "batchId_": 1337371,
-          "blockId_": 3006812,
+          "batchId_": 1338970,
+          "blockId_": 3110469,
           "ts_": {
-            "parentHash": "0xfa070006bcd02447b36ea3e0f7277751b9b592efa27459d00c4615de8ec91b77",
-            "blockHash": "0xcd47acf320e56717919f7ab054034fbcae38cb8b7f774985407f2fa60958f0ae",
+            "parentHash": "0x2b0b3b76fe9b618f1ce9be093d490485bb25299e3c9d18415bcaa3cbe1a46929",
+            "blockHash": "0xdcba6363f95a9fbde9ad068de18ac5943c0a4e28bdc14933435a54cfd2fcb49e",
             "stateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "prover": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+            "prover": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
             "inProvingWindow": true,
-            "createdAt": 1761541175
+            "createdAt": 1762258571
           }
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 1337368,
-            "lastSynecdAt": 1761548723
+            "lastSyncedBlockId": 1338968,
+            "lastSynecdAt": 1762267799
           },
           {
-            "numBlocks": 1337396,
-            "lastVerifiedBlockId": 1337371,
+            "numBlocks": 1338992,
+            "lastVerifiedBlockId": 1338970,
             "provingPaused": false,
-            "lastProposedIn": 23667308,
+            "lastProposedIn": 23726735,
             "lastUnpausedAt": 1716571955
           }
         ],
         "getStats1": {
           "genesisHeight": 19923613,
           "__reserved2": 1716358991,
-          "lastSyncedBatchId": 1337368,
-          "lastSyncedAt": 1761548723
+          "lastSyncedBatchId": 1338968,
+          "lastSyncedAt": 1762267799
         },
         "getStats2": {
-          "numBatches": 1337396,
-          "lastVerifiedBatchId": 1337371,
+          "numBatches": 1338992,
+          "lastVerifiedBatchId": 1338970,
           "paused": false,
-          "lastProposedIn": 23667308,
+          "lastProposedIn": 23726735,
           "lastUnpausedAt": 1716571955
         },
         "impl": "eth:0xbB1f830636e1A017b81C3E38b7f6219344149Eb7",
         "inboxWrapper": "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
         "inNonReentrant": false,
         "isOnL1": true,
-        "lastProposedIn": 23667308,
+        "lastProposedIn": 23726735,
         "newFork": "eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8",
         "oldFork": "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
@@ -500,14 +488,14 @@
           "stats1": {
             "genesisHeight": 19923613,
             "__reserved2": 1716358991,
-            "lastSyncedBatchId": 1337368,
-            "lastSyncedAt": 1761548723
+            "lastSyncedBatchId": 1338968,
+            "lastSyncedAt": 1762267799
           },
           "stats2": {
-            "numBatches": 1337396,
-            "lastVerifiedBatchId": 1337371,
+            "numBatches": 1338992,
+            "lastVerifiedBatchId": 1338970,
             "paused": false,
-            "lastProposedIn": 23667308,
+            "lastProposedIn": 23726735,
             "lastUnpausedAt": 1716571955
           }
         },
@@ -625,7 +613,7 @@
       "template": "taiko/AutomataDcapV3Attestation",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x0568e673edec0254e0d0584958369ffcb951f679158dd2a7c167bbf5fcf2a5bf"
+        "0xb88d9a2a00b03d84804743d62f07486e1276d8e7c989cc3a3cfd8f0ae26b5cd9"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract managing SGX attestation certificates.",
@@ -728,7 +716,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1761550871,
+        "clock": 1762269179,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -1718,7 +1706,7 @@
       "template": "taiko/AutomataDcapV3Attestation",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0xac51975c574b128e9dc1e8542c616ed655d4a2abc91d3233648ac688e530c68c"
+        "0xf03ee5163c982d906a23e9650c5ca9a0f66fa6bf33b9496c71476ce91c8d32ec"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract managing SGX attestation certificates.",
@@ -2783,7 +2771,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 67,
+        "nonce": 68,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -3069,7 +3057,7 @@
         "impl": "eth:0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 37995,
+        "nextMessageId": 38002,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -3116,7 +3104,7 @@
           "proposalExpirationPeriod": 1209600
         },
         "pluginType": 0,
-        "proposalCount": 11,
+        "proposalCount": 12,
         "UPDATE_MULTISIG_SETTINGS_PERMISSION_ID": "0xb1750e46d35a0069c8465b8643e7838d2149a842a2db8ee233d9835590040cad",
         "UPGRADE_PLUGIN_PERMISSION_ID": "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5"
       },
@@ -3369,7 +3357,7 @@
         "0x93a254bb5914a81cd902577cdafd323639e44227fdae5e14aa14fd47e1440063"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 4 operators registered.",
+      "description": "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered.",
       "ignoreInWatchMode": [
         "getOperatorCandidatesForCurrentEpoch",
         "getOperatorCandidatesForNextEpoch",
@@ -3402,17 +3390,15 @@
         "getOperatorCandidatesForCurrentEpoch": [
           "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
           "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
-          "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
-          "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+          "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d"
         ],
         "getOperatorCandidatesForNextEpoch": [
           "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
           "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
-          "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
-          "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+          "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d"
         ],
         "getOperatorForCurrentEpoch": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
-        "getOperatorForNextEpoch": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
+        "getOperatorForNextEpoch": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
         "havingPerfectOperators": false,
         "impl": "eth:0x54FeDc114D78dcbDb8c7b2DeA433f9749E8fd0Fc",
         "inNonReentrant": false,
@@ -3424,23 +3410,19 @@
         "randomnessDelay": 2,
         "registeredOperators": [
           {
-            "proposer": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
-            "sequencer": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
-          },
-          {
-            "proposer": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
-            "sequencer": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"
+            "proposer": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+            "sequencer": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
           },
           {
             "proposer": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
             "sequencer": "eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"
           },
           {
-            "proposer": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
-            "sequencer": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+            "proposer": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
+            "sequencer": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"
           }
         ],
-        "registeredOperatorsCount": 4,
+        "registeredOperatorsCount": 3,
         "resolver": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
@@ -3684,7 +3666,7 @@
       "template": "taiko/TaikoAnchor",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0xd2bffd1aa4016a982cb8f166de6b32cfa89406896b754e2f5abb2f63e7defd5a"
+        "0x94dfc8c1aa6a1ce9447da9bf865b6e827ffe8c9cb0b08e4d7c7589b8c4193134"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Handles cross-layer message verification and manages EIP-1559 gas pricing for L2 operations. Anchors L1 block details to L2 for cross-layer communication.",
@@ -6235,6 +6217,6 @@
     "taiko/TaikoWrapper": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 23667357, "taiko": 3008693 },
-  "permissionsConfigHash": "0xa874cbc06f08e79346916c5254aae42b6e9da0ff5b3d432ac1f0869117a93f63"
+  "usedBlockNumbers": { "ethereum": 23726773, "taiko": 3112098 },
+  "permissionsConfigHash": "0x39d30aff7fd46a929f289b016938a06eda4817f632a12fac92b176777aa335df"
 }

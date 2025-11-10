@@ -366,6 +366,54 @@ describeDatabase(InteropEventRepository.name, (db) => {
     })
   })
 
+  describe('bigint handling in insertMany and getAll', () => {
+    it('handles simple bigint value field', async () => {
+      const record = event(
+        'plugin1',
+        'event1',
+        'deposit',
+        UnixTime(100),
+        UnixTime(200),
+        {
+          value: 123456789012345678901234567890n,
+        },
+      )
+
+      await repository.insertMany([record])
+      const result = await repository.getAll()
+
+      expect(result).toHaveLength(1)
+      expect(result[0]?.value).toEqual(123456789012345678901234567890n)
+    })
+
+    it('handles bigints inside args object', async () => {
+      const record = event(
+        'plugin1',
+        'event1',
+        'deposit',
+        UnixTime(100),
+        UnixTime(200),
+        {
+          args: {
+            amount: 999999999999999999999999n,
+            recipient: '0x1234567890123456789012345678901234567890',
+            fee: 1000000000000000000n,
+          },
+        },
+      )
+
+      await repository.insertMany([record])
+      const result = await repository.getAll()
+
+      expect(result).toHaveLength(1)
+      expect(result[0]?.args).toEqual({
+        amount: 999999999999999999999999n,
+        recipient: '0x1234567890123456789012345678901234567890',
+        fee: 1000000000000000000n,
+      })
+    })
+  })
+
   afterEach(async () => {
     await repository.deleteAll()
   })
@@ -389,7 +437,7 @@ function event(
     blockNumber: 12345,
     blockHash: `0x${eventId}blockhash`,
     txHash: `0x${eventId}txhash`,
-    value: '0x111111',
+    value: 111111n,
     txTo: EthereumAddress.random(),
     calldata: '0x',
     logIndex: 0,

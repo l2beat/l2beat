@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "forknet",
+  "import": ["../globalConfig.jsonc"],
+  "sharedModules": ["shared-polygon-cdk"],
+  "initialAddresses": [
+    "eth:0x6C82EEE75Bb8b957C12FaaF8CAb549BE4b0fD5af",
+    "eth:0x2f3d687e02dbe83B6cDaE02aeb66C0e8E69CcA4b"
+  ],
+  "overrides": {
+    "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC": {
+      "category": "spam",
+      "description": "Since this contract is deployed in the context of a neutered op stack system, the guardian role has no significance.",
+      "fields": {
+        "guardian": {
+          "permissions": []
+        }
+      }
+    }
+  }
+}

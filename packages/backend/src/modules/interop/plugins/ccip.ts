@@ -7,6 +7,7 @@ contracts are set up for every SRC-DST pair on each chain
 
 import { EthereumAddress } from '@l2beat/shared-pure'
 import {
+  Address32,
   createEventParser,
   createInteropEventType,
   defineNetworks,
@@ -64,6 +65,8 @@ const parseExecutionStateChanged = createEventParser(
 export const CCIPSendRequested = createInteropEventType<{
   messageId: `0x${string}`
   $dstChain: string
+  token: Address32
+  amount: bigint
 }>('ccip.CCIPSendRequested')
 
 export const ExecutionStateChanged = createInteropEventType<{
@@ -125,47 +128,69 @@ export class CCIPPlugIn implements InteropPlugin {
     const ccipSendRequested = parseCCIPSendRequested(input.log, null)
     if (ccipSendRequested) {
       const outboundLane = EthereumAddress(input.log.address)
-      return CCIPSendRequested.create(input.ctx, {
-        messageId: ccipSendRequested.message.messageId,
-        $dstChain:
-          Object.entries(network.outboundLanes).find(
-            ([_, address]) => address === outboundLane,
-          )?.[0] ?? `Unknown_${outboundLane}`,
-      })
+      return ccipSendRequested.message.tokenAmounts.map((ta) =>
+        CCIPSendRequested.create(input.ctx, {
+          messageId: ccipSendRequested.message.messageId,
+          token: Address32.from(ta.token),
+          amount: ta.amount,
+          $dstChain:
+            Object.entries(network.outboundLanes).find(
+              ([_, address]) => address === outboundLane,
+            )?.[0] ?? `Unknown_${outboundLane}`,
+        }),
+      )
     }
 
     const executionStateChanged = parseExecutionStateChanged(input.log, null)
     if (executionStateChanged) {
       const inboundLane = EthereumAddress(input.log.address)
-      return ExecutionStateChanged.create(input.ctx, {
-        messageId: executionStateChanged.messageId,
-        state: executionStateChanged.state,
-        $srcChain:
-          Object.entries(network.inboundLanes).find(
-            ([_, address]) => address === inboundLane,
-          )?.[0] ?? `Unknown_${inboundLane}`,
-      })
+      return [
+        ExecutionStateChanged.create(input.ctx, {
+          messageId: executionStateChanged.messageId,
+          state: executionStateChanged.state,
+          $srcChain:
+            Object.entries(network.inboundLanes).find(
+              ([_, address]) => address === inboundLane,
+            )?.[0] ?? `Unknown_${inboundLane}`,
+        }),
+      ]
     }
   }
 
   // TODO: match transfer
+  // TODO: If the token is USDC, transfer should not be double-counted
 
   matchTypes = [ExecutionStateChanged]
   match(delivery: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (ExecutionStateChanged.checkType(delivery)) {
-      const ccipSendRequested = db.find(CCIPSendRequested, {
+      const ccipSendRequests = db.findAll(CCIPSendRequested, {
         messageId: delivery.args.messageId,
       })
 
-      if (!ccipSendRequested) return
+      if (ccipSendRequests.length === 0) return
       if (delivery.args.state !== 2) return
-      return [
+      // For each token in token amounts create add TRANSFER to the Result
+      const result: MatchResult = []
+      for (const ccipSendRequested of ccipSendRequests) {
+        result.push(
+          Result.Transfer('ccip.Transfer', {
+            srcEvent: ccipSendRequested,
+            dstEvent: delivery,
+            srcTokenAddress: ccipSendRequested.args.token,
+            srcAmount: ccipSendRequested.args.amount,
+            // dstTokenAddress: ccipSendRequested.args.token, // this is the source data and contaminates the financials
+            // dstAmount: ccipSendRequested.args.amount,
+          }),
+        )
+      }
+      result.push(
         Result.Message('ccip.Message', {
-          app: 'unknown', // TODO: match transfer
-          srcEvent: ccipSendRequested,
+          app: 'CCIP Token Transfer',
+          srcEvent: ccipSendRequests[0],
           dstEvent: delivery,
         }),
-      ]
+      )
+      return result
     }
   }
 }

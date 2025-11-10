@@ -1,3 +1,66 @@
+Generated with discovered.json: 0xb64578924648dc2093bf307f6fc2ec1029124322
+
+# Diff at Tue, 04 Nov 2025 11:32:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1761222332
+- current timestamp: 1761222332
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761222332 (main branch discovery), not current.
+
+```diff
+    contract CollateralManager (ethereal:0x638D6DaC0550f30f37aC5784260309Ac89302faA) {
+    +++ description: Auxiliary contract of the ExchangeGateway.
+      sourceHashes.0:
+-        "0x9258c947756b825974889f3070e5a8764e1f1338f91f0955facc2537640ddee0"
++        "0x09b192ba7fe0c948d056b981a202a7c6bf2f7535255539908256c1914b716764"
+    }
+```
+
+```diff
+    contract ActionHandler (ethereal:0xA2308112941f9bc2843C41a971F56B3Ac6E2167a) {
+    +++ description: Auxiliary contract of the ExchangeGateway.
+      sourceHashes.0:
+-        "0xc614b9dee3c41cf413bf0676ec92b8506b7cde4ddf0fcaa64ba535cd4db50653"
++        "0x14594f4ec76a9468af01b5bd9b65a895ce8eeaec7e303d2c2953abbb6eb37fe2"
+    }
+```
+
+```diff
+    contract ExchangeGateway (ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc) {
+    +++ description: Main contract of the Ethereal DEX. Entrypoint for users to deposit and withdraw funds and for operators submit user actions.
+      sourceHashes.1:
+-        "0xb6c692aef340a10d30bcd0a9edff8392fe5adf829a55d81be3c755b10d84868c"
++        "0x4e74883670a055318a8d4bdb7d266c2d62a87f06d7ebac1e09659053810ddd70"
+    }
+```
+
+```diff
+    contract PerpEngine (ethereal:0xCc0385301a10191b7ac633A64742a34F2e4cFB37) {
+    +++ description: Auxiliary contract of the ExchangeGateway.
+      sourceHashes.0:
+-        "0xe74cf338ff299bbb081c4e688e1667a8480c8255cbed038eaeedddb3c5eb19af"
++        "0x1f2d6ea306a2ce3c1e94fee76d9184cd06fa8a76178bc2a973d42d495f56d3cf"
+    }
+```
+
+```diff
+    contract Liquidation (ethereal:0xF925Bf7d50abe2Abb21E832c81a6454D791Ad5c0) {
+    +++ description: Auxiliary contract of the ExchangeGateway.
+      sourceHashes.0:
+-        "0x76ac18478de588227556d0042ac2ded1e13a53717454987046bd11e5fd1dac79"
++        "0x9882e7baf79921bbc376de21ba5de774ccd2b47186ed8ba389a8ca85f3e94316"
+    }
+```
+
 Generated with discovered.json: 0x2502db7e651b56a054870633e3dc8f71a8c1cf43
 
 # Diff at Thu, 23 Oct 2025 15:11:46 GMT:

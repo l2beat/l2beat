@@ -75,7 +75,27 @@ describe('validate', () => {
     expect(Foo.safeValidate(1)).toEqual({
       success: false,
       path: '',
-      message: 'None of the union variants matched, got number.',
+      message:
+        'None of the union variants matched, got number. Variant 0: Expected string, got number. Variant 1: Expected null, got number.',
+    })
+  })
+
+  it('union with array', () => {
+    const Item = v.union([
+      v.null(),
+      v.array(v.object({ events: v.array(v.string()) })),
+    ])
+
+    expect(Item.safeValidate(null)).toEqual({ success: true, data: null })
+    expect(Item.safeValidate([{ events: ['foo', 'foo'] }])).toEqual({
+      success: true,
+      data: [{ events: ['foo', 'foo'] }],
+    })
+    expect(Item.safeValidate([{ events: ['foo', 123] }])).toEqual({
+      success: false,
+      path: '',
+      message:
+        'None of the union variants matched, got array. Variant 0: Expected null, got array. Variant 1 at [0].events[1]: Expected string, got number.',
     })
   })
 
@@ -133,6 +153,19 @@ describe('validate', () => {
     expect(Foo.safeValidate({ key1: undefined, key3: 'foo' })).toEqual({
       success: true,
       data: { key1: undefined, key3: 'foo' },
+    })
+  })
+
+  it('strict object', () => {
+    const Foo = v.strictObject({
+      key1: v.string(),
+      key2: v.string().optional(),
+    })
+
+    expect(Foo.safeValidate({ key1: 'bar', key3: 'foo' })).toEqual({
+      success: false,
+      path: '.key3',
+      message: 'Strict violation, unexpected key found.',
     })
   })
 

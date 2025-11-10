@@ -1,13 +1,20 @@
-import { getActivityChart } from './getActivityChart'
+import { getRecategorisedActivityChart } from './getRecategorisedActivityChart'
+import { countPerSecond } from './utils/countPerSecond'
 import type { ActivityProjectFilter } from './utils/projectFilterUtils'
 
 export type ActivityChartStats = {
-  tps: {
-    latestProjectsTxCount: number
+  uops: {
+    rollups: number
+    validiumsAndOptimiums: number
+    others: number
+    ethereum: number
     scalingFactor: number
   }
-  uops: {
-    latestProjectsTxCount: number
+  tps: {
+    rollups: number
+    validiumsAndOptimiums: number
+    others: number
+    ethereum: number
     scalingFactor: number
   }
 }
@@ -15,78 +22,99 @@ export type ActivityChartStats = {
 export async function getActivityChartStats(
   filter: ActivityProjectFilter,
 ): Promise<ActivityChartStats> {
-  // We should use the last 7 days but 30d is probably cached already so it's faster
-  const { data: chartData } = await getActivityChart({
-    filter,
-    range: { type: '30d' },
-  })
+  const { data: chartData } = await getRecategorisedActivityChart(filter, '30d')
 
-  const pointsWithData = chartData.filter(
-    ([_, projectsTx, ethereumTx, projectsUops, ethereumUops]) => {
-      return (
-        projectsTx !== null &&
-        ethereumTx !== null &&
-        projectsUops !== null &&
-        ethereumUops !== null
-      )
-    },
-  ) as [number, number, number, number, number][]
-  const latestData = pointsWithData.at(-1)
+  const latestData = chartData.at(-1)
   if (!latestData) {
     return {
-      tps: {
-        latestProjectsTxCount: 0,
+      uops: {
+        rollups: 0,
+        validiumsAndOptimiums: 0,
+        others: 0,
+        ethereum: 0,
         scalingFactor: 0,
       },
-      uops: {
-        latestProjectsTxCount: 0,
+      tps: {
+        rollups: 0,
+        validiumsAndOptimiums: 0,
+        others: 0,
+        ethereum: 0,
         scalingFactor: 0,
       },
     }
   }
 
   const totalTxs = chartData.slice(-7)?.reduce(
-    (acc, [_, projectsTx, ethereumTx, projectsUops, ethereumUops]) => {
-      acc.restTps = projectsTx !== null ? (acc.restTps ?? 0) + projectsTx : null
+    (acc, dataPoint) => {
+      const rollupsTps = dataPoint[5]
+      const rollupsUops = dataPoint[1]
+      const ethereumTps = dataPoint[8]
+      const ethereumUops = dataPoint[4]
+
+      acc.rollupsTps =
+        rollupsTps !== null ? (acc.rollupsTps ?? 0) + rollupsTps : null
       acc.ethereumTps =
-        ethereumTx !== null ? (acc.ethereumTps ?? 0) + ethereumTx : null
-      acc.restUops =
-        projectsUops !== null ? (acc.restUops ?? 0) + projectsUops : null
+        ethereumTps !== null ? (acc.ethereumTps ?? 0) + ethereumTps : null
+      acc.rollupsUops =
+        rollupsUops !== null ? (acc.rollupsUops ?? 0) + rollupsUops : null
       acc.ethereumUops =
         ethereumUops !== null ? (acc.ethereumUops ?? 0) + ethereumUops : null
       return acc
     },
     {
       ethereumTps: null,
-      restTps: null,
+      rollupsTps: null,
       ethereumUops: null,
-      restUops: null,
+      rollupsUops: null,
     } as {
       ethereumTps: number | null
-      restTps: number | null
+      rollupsTps: number | null
       ethereumUops: number | null
-      restUops: number | null
+      rollupsUops: number | null
     },
   )
 
+  const [
+    _,
+    rollupsUops,
+    validiumsAndOptimiumsUops,
+    othersUops,
+    ethereumUops,
+    rollupsTx,
+    validiumsAndOptimiumsTx,
+    othersTx,
+    ethereumTx,
+  ] = latestData
+
   return {
-    tps: {
-      latestProjectsTxCount: latestData[1],
-      scalingFactor:
-        totalTxs.ethereumTps === 0 ||
-        totalTxs.restTps === null ||
-        totalTxs.ethereumTps === null
-          ? 0
-          : (totalTxs.restTps + totalTxs.ethereumTps) / totalTxs.ethereumTps,
-    },
     uops: {
-      latestProjectsTxCount: latestData[3],
+      rollups: rollupsUops ? countPerSecond(rollupsUops) : 0,
+      validiumsAndOptimiums: validiumsAndOptimiumsUops
+        ? countPerSecond(validiumsAndOptimiumsUops)
+        : 0,
+      others: othersUops ? countPerSecond(othersUops) : 0,
+      ethereum: ethereumUops ? countPerSecond(ethereumUops) : 0,
       scalingFactor:
         totalTxs.ethereumUops === 0 ||
-        totalTxs.restUops === null ||
+        totalTxs.rollupsUops === null ||
         totalTxs.ethereumUops === null
           ? 0
-          : (totalTxs.restUops + totalTxs.ethereumUops) / totalTxs.ethereumUops,
+          : (totalTxs.rollupsUops + totalTxs.ethereumUops) /
+            totalTxs.ethereumUops,
+    },
+    tps: {
+      rollups: rollupsTx ? countPerSecond(rollupsTx) : 0,
+      validiumsAndOptimiums: validiumsAndOptimiumsTx
+        ? countPerSecond(validiumsAndOptimiumsTx)
+        : 0,
+      others: othersTx ? countPerSecond(othersTx) : 0,
+      ethereum: ethereumTx ? countPerSecond(ethereumTx) : 0,
+      scalingFactor:
+        totalTxs.ethereumTps === 0 ||
+        totalTxs.rollupsTps === null ||
+        totalTxs.ethereumTps === null
+          ? 0
+          : (totalTxs.rollupsTps + totalTxs.ethereumTps) / totalTxs.ethereumTps,
     },
   }
 }

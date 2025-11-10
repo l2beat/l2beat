@@ -20,9 +20,9 @@ export const AcrossFundsDeposited = createInteropEventType<{
   $dstChain: string
   originChainId: number
   destinationChainId: number
-  depositId: string
+  depositId: bigint
   tokenAddress: Address32
-  amount: string
+  amount: bigint
 }>('across.FundsDeposited')
 
 const parseFilledRelay = createEventParser(
@@ -36,9 +36,9 @@ export const AcrossFilledRelay = createInteropEventType<{
   $srcChain: string
   originChainId: number
   destinationChainId: number
-  depositId: string
+  depositId: bigint
   tokenAddress: Address32
-  amount: string
+  amount: bigint
 }>('across.FilledRelay')
 
 export class AcrossPlugin implements InteropPlugin {
@@ -55,50 +55,56 @@ export class AcrossPlugin implements InteropPlugin {
 
     const fundsDeposited = parseFundsDeposited(input.log, [network.spokePool])
     if (fundsDeposited) {
-      return AcrossFundsDeposited.create(input.ctx, {
-        $dstChain: findChain(
-          networks,
-          (x) => x.chainId,
-          Number(fundsDeposited.destinationChainId),
-        ),
-        originChainId: network.chainId,
-        destinationChainId: Number(fundsDeposited.destinationChainId),
-        depositId: fundsDeposited.depositId.toString(),
-        tokenAddress: Address32.from(fundsDeposited.inputToken),
-        amount: fundsDeposited.inputAmount.toString(),
-      })
+      return [
+        AcrossFundsDeposited.create(input.ctx, {
+          $dstChain: findChain(
+            networks,
+            (x) => x.chainId,
+            Number(fundsDeposited.destinationChainId),
+          ),
+          originChainId: network.chainId,
+          destinationChainId: Number(fundsDeposited.destinationChainId),
+          depositId: fundsDeposited.depositId,
+          tokenAddress: Address32.from(fundsDeposited.inputToken),
+          amount: fundsDeposited.inputAmount,
+        }),
+      ]
     }
 
     const filledRelay = parseFilledRelay(input.log, [network.spokePool])
     if (filledRelay) {
-      return AcrossFilledRelay.create(input.ctx, {
-        $srcChain: findChain(
-          networks,
-          (x) => x.chainId,
-          Number(filledRelay.originChainId),
-        ),
-        originChainId: Number(filledRelay.originChainId),
-        destinationChainId: network.chainId,
-        depositId: filledRelay.depositId.toString(),
-        tokenAddress: Address32.from(filledRelay.outputToken),
-        amount: filledRelay.outputAmount.toString(),
-      })
+      return [
+        AcrossFilledRelay.create(input.ctx, {
+          $srcChain: findChain(
+            networks,
+            (x) => x.chainId,
+            Number(filledRelay.originChainId),
+          ),
+          originChainId: Number(filledRelay.originChainId),
+          destinationChainId: network.chainId,
+          depositId: filledRelay.depositId,
+          tokenAddress: Address32.from(filledRelay.outputToken),
+          amount: filledRelay.outputAmount,
+        }),
+      ]
     }
 
     const filledV3Relay = parseFilledV3Relay(input.log, [network.spokePool])
     if (filledV3Relay) {
-      return AcrossFilledRelay.create(input.ctx, {
-        $srcChain: findChain(
-          networks,
-          (x) => x.chainId,
-          Number(filledV3Relay.originChainId),
-        ),
-        originChainId: Number(filledV3Relay.originChainId),
-        destinationChainId: network.chainId,
-        depositId: filledV3Relay.depositId.toString(),
-        tokenAddress: Address32.from(filledV3Relay.outputToken),
-        amount: filledV3Relay.outputAmount.toString(),
-      })
+      return [
+        AcrossFilledRelay.create(input.ctx, {
+          $srcChain: findChain(
+            networks,
+            (x) => x.chainId,
+            Number(filledV3Relay.originChainId),
+          ),
+          originChainId: Number(filledV3Relay.originChainId),
+          destinationChainId: network.chainId,
+          depositId: BigInt(filledV3Relay.depositId),
+          tokenAddress: Address32.from(filledV3Relay.outputToken),
+          amount: filledV3Relay.outputAmount,
+        }),
+      ]
     }
   }
 

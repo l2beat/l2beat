@@ -1,8 +1,11 @@
 import { HttpClient } from '@l2beat/shared'
+import { getTokenDbClient } from '@l2beat/token-backend'
 import { HourlyIndexer } from '../../../tools/HourlyIndexer'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../../types'
 import { createInteropPlugins } from '../plugins'
+import { RelayApiClient } from '../plugins/relay/RelayApiClient'
+import { RelayIndexer, RelayRootIndexer } from '../plugins/relay/relay.indexer'
 import { InteropBlockProcessor } from './capture/InteropBlockProcessor'
 import { InteropEventStore } from './capture/InteropEventStore'
 import { InteropCleanerLoop } from './cleaner/InteropCleanerLoop'
@@ -11,7 +14,6 @@ import { InteropConfigStore } from './config/InteropConfigStore'
 import { createInteropRouter } from './dashboard/InteropRouter'
 import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
 import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
-import { MockTokenDb } from './financials/TokenDb'
 import { InteropMatchingLoop } from './match/InteropMatchingLoop'
 
 export function createInteropModule({
@@ -66,6 +68,7 @@ export function createInteropModule({
     (c) => new InteropCompareLoop(db, c, logger),
   )
 
+  const indexerService = new IndexerService(db)
   const cleaner = new InteropCleanerLoop(eventStore, db, logger)
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
@@ -75,13 +78,32 @@ export function createInteropModule({
     logger,
     parents: [hourlyIndexer],
     minHeight: 1,
-    indexerService: new IndexerService(db),
+    indexerService,
   })
-  const tokenDb = new MockTokenDb()
+
+  const tokenDbClient = getTokenDbClient({
+    apiUrl: config.interop.financials.tokenDbApiUrl,
+    authToken: config.interop.financials.tokenDbAuthToken,
+    callSource: 'interop',
+  })
+
   const financialsService = new InteropFinancialsLoop(
     config.interop.capture.chains,
     db,
-    tokenDb,
+    tokenDbClient,
+    logger,
+  )
+
+  const relayApiClient = new RelayApiClient(new HttpClient())
+  const relayRootIndexer = new RelayRootIndexer(logger)
+  const relayIndexer = new RelayIndexer(
+    config.interop.config.chains,
+    config.interop.capture.chains.map((c) => c.name),
+    relayApiClient,
+    db,
+    eventStore,
+    relayRootIndexer,
+    indexerService,
     logger,
   )
 
@@ -91,6 +113,8 @@ export function createInteropModule({
     if (config.interop && config.interop.matching) {
       await eventStore.start()
       matcher.start()
+      await relayRootIndexer.start()
+      await relayIndexer.start()
     }
     if (config.interop && config.interop.compare.enabled) {
       for (const compareLoop of compareLoops) {

@@ -235,4 +235,47 @@ contract R1 is StringClass {
 }`,
     )
   })
+
+  it('top level errors, events and constants', () => {
+    const rootFile: FileContent = {
+      path: 'Root.sol',
+      content: String.raw`
+import "./Globals.sol";
+contract R1 {
+  function doSomething() public {
+    emit EventHappened(GLOBAL_VALUE, msg.sender);
+    revert CustomError(msg.sender);
+  }
+}
+`,
+    }
+
+    const c2File: FileContent = {
+      path: 'Globals.sol',
+      content: `
+          uint256 constant GLOBAL_VALUE = 42;
+          event EventHappened(uint256 value, address account);
+          error CustomError(address account);
+          `,
+    }
+
+    const flattened = flattenStartingFrom('R1', [rootFile, c2File], [], {
+      includeAll: true,
+    })
+
+    expect(flattened).toEqual(
+      String.raw`error CustomError(address account);
+
+uint256 constant GLOBAL_VALUE = 42;
+
+event EventHappened(uint256 value, address account);
+
+contract R1 {
+  function doSomething() public {
+    emit EventHappened(GLOBAL_VALUE, msg.sender);
+    revert CustomError(msg.sender);
+  }
+}`,
+    )
+  })
 })

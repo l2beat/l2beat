@@ -155,6 +155,8 @@ function getASTTopLevelChildName(child: ASTNode): string | undefined {
       return undefined
     case 'TypeDefinition':
       return child.name
+    case 'FileLevelConstant':
+      return child.name
     default: {
       assert(false, `Unhandled child type: ${child.type}`)
     }
