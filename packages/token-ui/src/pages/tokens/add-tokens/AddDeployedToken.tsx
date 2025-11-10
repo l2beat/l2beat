@@ -207,13 +207,40 @@ export function AddDeployedToken() {
               loading: areAbstractTokensLoading,
             }}
           >
-            <ButtonWithSpinner
-              isLoading={isPending}
-              className="w-full"
-              type="submit"
-            >
-              {queue.length > 0 ? 'Submit and add next' : 'Submit'}
-            </ButtonWithSpinner>
+            <div className="flex flex-col gap-4">
+              <ButtonWithSpinner
+                isLoading={isPending}
+                className="w-full"
+                type="submit"
+              >
+                {queue.length > 0 ? 'Submit and add next' : 'Submit'}
+              </ButtonWithSpinner>
+              {queue.length > 0 && (
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  type="button"
+                  onClick={() => {
+                    const next = queue.at(0)
+                    setQueue((prev) => prev.slice(1))
+
+                    if (next) {
+                      setSearchParams((prev) => {
+                        const newParams = new URLSearchParams(prev)
+                        newParams.set('chain', next.chain)
+                        newParams.set('address', next.address)
+                        return newParams
+                      })
+                    } else {
+                      clearQueryChain()
+                      clearQueryAddress()
+                    }
+                  }}
+                >
+                  Skip
+                </Button>
+              )}
+            </div>
           </DeployedTokenForm>
         </CardContent>
 
@@ -224,11 +251,8 @@ export function AddDeployedToken() {
           <CardContent>
             {queue.length > 0 ? (
               <ul className="list-inside list-decimal">
-                {queue.map((item) => (
-                  <li
-                    key={item.chain + item.address}
-                    className="truncate whitespace-nowrap"
-                  >
+                {queue.map((item, index) => (
+                  <li key={index} className="truncate whitespace-nowrap">
                     {item.chain} ({item.address})
                   </li>
                 ))}
