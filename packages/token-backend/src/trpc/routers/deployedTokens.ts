@@ -21,6 +21,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
   ) {
     const data = await coingeckoClient.getCoinList({ includePlatform: true })
     const chains = await db.chain.getAll()
+
     const chainToAliases = new Map(
       chains.map((chain) => [
         chain.name,
@@ -39,11 +40,13 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
     )
     if (!coin) return null
 
-    const aliasToChain = new Map(
-      chains.flatMap(
-        (chain) => chain.aliases?.map((alias) => [alias, chain.name]) ?? [],
+    const aliasToChain = new Map([
+      ...chains.map((chain) => [chain.name, chain.name] as const),
+      ...chains.flatMap(
+        (chain) =>
+          chain.aliases?.map((alias) => [alias, chain.name] as const) ?? [],
       ),
-    )
+    ])
 
     const otherChains = (
       await Promise.all(
