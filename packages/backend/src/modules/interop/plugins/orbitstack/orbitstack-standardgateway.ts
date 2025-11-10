@@ -143,7 +143,7 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
                 chain: network.chain,
                 position: Number(outBoxTx.transactionIndex),
                 l1Token: Address32.from(withdrawalFinalized.l1Token),
-                amount: withdrawalFinalized.amount,
+                amount: withdrawalFinalized._amount,
               }),
             ]
           }
