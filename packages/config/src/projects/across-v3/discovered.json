@@ -1106,21 +1106,6 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "name": "LpTokenFactory",
-      "address": "eth:0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x54ab5e1f981929fca37e28c313db9ab35343de3df6907dbaeb29dda3840aadcd"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1651576251,
-      "sinceBlock": 14704307,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d": "LpTokenFactory"
-      }
-    },
-    {
       "name": "Ink_Adapter",
       "address": "eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2",
       "type": "Contract",
@@ -1658,7 +1643,6 @@
       "sinceBlock": 14819537,
       "values": {
         "$immutable": true,
-        "$libraries": ["eth:0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d"],
         "Adapters": {
           "1": "eth:0x527E872a5c3f0C7c24Fe33F2593cFB890a285084",
           "10": "eth:0x3562e309C6C79626E5F0Cf746FB5Bf4f6b8EebE5",
@@ -3031,9 +3015,6 @@
       "function renounceMembership(uint256 roleId)",
       "function resetMember(uint256 roleId, address newMember)"
     ],
-    "eth:0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d": [
-      "function createLpToken(address l1Token) returns (address)"
-    ],
     "eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2": [
       "constructor(address _l1Weth, address _l1Usdc, address _crossDomainMessenger, address _l1StandardBridge, address _l1USDCBridge)",
       "event MessageRelayed(address target, bytes message)",
@@ -3681,5 +3662,5 @@
     "uma/VotingV2": "0x8f7872c0ad9d4612ce7305fb6318475b85db06d8406d8e835e88e5afc8367f64"
   },
   "usedBlockNumbers": { "ethereum": 23726384 },
-  "permissionsConfigHash": "0x80686c11998f1b8bb3f645976b214fae682fb7404ed884b7f3245eb7fbb392c5"
+  "permissionsConfigHash": "0x95c7dec47993af3a0ecff4e5e4f14a43048d8cf2795765df9aa39600da9c5006"
 }

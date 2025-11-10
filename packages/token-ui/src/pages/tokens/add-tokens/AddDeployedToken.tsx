@@ -1,7 +1,7 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import {
@@ -10,20 +10,23 @@ import {
   setDeployedTokenExistsError,
 } from '~/components/forms/DeployedTokenForm'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
+import { useQueryState } from '~/hooks/useQueryState'
 import { api } from '~/react-query/trpc'
 import { dateTimeInputToUnixTimestamp } from '~/utils/dateTimeInputToUnixTimestamp'
 import { validateResolver } from '~/utils/validateResolver'
 
 export function AddDeployedToken() {
-  const [searchParams] = useSearchParams()
+  const [abstractTokenId, , clearAbstractTokenId] = useQueryState(
+    'abstractTokenId',
+    '',
+  )
   const form = useForm<DeployedTokenSchema>({
     resolver: validateResolver(DeployedTokenSchema),
-    defaultValues: {
-      abstractTokenId: searchParams.get('abstractTokenId') ?? undefined,
-    },
   })
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
 
+  const { data: abstractTokens, isLoading: areAbstractTokensLoading } =
+    api.abstractTokens.getAll.useQuery()
   const { mutate: planMutate, isPending } = api.plan.generate.useMutation({
     onSuccess: (data) => {
       if (data.outcome === 'success') {
@@ -36,8 +39,8 @@ export function AddDeployedToken() {
 
   const chain = form.watch('chain')
   const address = form.watch('address')
-  const { data: deployedTokenExists, isLoading: deployedTokenExistsLoading } =
-    api.tokens.checkIfDeployedTokenExists.useQuery(
+  const { data: checks, isLoading: checksLoading } =
+    api.deployedTokens.checks.useQuery(
       {
         chain,
         address,
@@ -48,18 +51,47 @@ export function AddDeployedToken() {
     )
 
   useEffect(() => {
-    if (deployedTokenExistsLoading) return
-    if (deployedTokenExists) {
-      setDeployedTokenExistsError(form)
+    if (!checks || checksLoading) return
+    if (checks.error) {
+      form.setError('address', {
+        type: 'custom',
+        message: checks.error.message,
+      })
     } else {
       form.clearErrors('address')
-      form.clearErrors('chain')
     }
-  }, [deployedTokenExists, deployedTokenExistsLoading, form])
+    if (checks.data?.decimals) {
+      form.setValue('decimals', checks.data.decimals, { shouldDirty: true })
+    }
+    if (checks.data?.deploymentTimestamp) {
+      form.setValue(
+        'deploymentTimestamp',
+        UnixTime.toYYYYMMDDHHMM(checks.data.deploymentTimestamp),
+        { shouldDirty: true },
+      )
+    }
+    if (checks.data?.abstractTokenId) {
+      form.setValue('abstractTokenId', checks.data.abstractTokenId, {
+        shouldDirty: true,
+      })
+    }
+    if (checks.data?.symbol) {
+      form.setValue('symbol', checks.data.symbol, { shouldDirty: true })
+    }
+  }, [checks, checksLoading, form])
+
+  useEffect(() => {
+    const exists = abstractTokens?.find(
+      (abstractToken) => abstractToken.id === abstractTokenId,
+    )
+    if (abstractTokenId && exists) {
+      form.setValue('abstractTokenId', abstractTokenId, { shouldDirty: true })
+    }
+  }, [abstractTokenId, form.setValue, abstractTokens])
 
   function onSubmit(values: DeployedTokenSchema) {
-    if (deployedTokenExistsLoading) return
-    if (deployedTokenExists) {
+    if (checksLoading) return
+    if (checks?.error?.type === 'already-exists') {
       setDeployedTokenExistsError(form)
       return
     }
@@ -82,15 +114,22 @@ export function AddDeployedToken() {
       <PlanConfirmationDialog
         plan={plan}
         setPlan={setPlan}
-        onSuccess={form.reset}
+        onSuccess={() => {
+          form.reset()
+          clearAbstractTokenId()
+        }}
       />
       <DeployedTokenForm
         form={form}
         onSubmit={onSubmit}
         isFormDisabled={isPending}
-        deployedTokenCheck={{
-          exists: deployedTokenExists,
-          loading: deployedTokenExistsLoading,
+        tokenDetails={{
+          data: checks,
+          loading: checksLoading,
+        }}
+        abstractTokens={{
+          data: abstractTokens,
+          loading: areAbstractTokensLoading,
         }}
       >
         <ButtonWithSpinner

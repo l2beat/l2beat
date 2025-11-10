@@ -1,3 +1,73 @@
+Generated with discovered.json: 0xe624b01310ae6b9d258c0cc9695903ecafb609a2
+
+# Diff at Wed, 05 Nov 2025 12:46:40 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bc0ecd2e43db8badee0981759f26dbc0b38299e3 block: 1761318853
+- current timestamp: 1761318853
+
+## Description
+
+Libraries are opt-in
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761318853 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract EigenDACertVerificationUtilsLibrary (eth:0x5e29552239d9ACa88d2f410C35D8C0dE47483F37)
+    +++ description: None
+```
+
+```diff
+    contract EigenDADisperserRegistry (eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad) {
+    +++ description: Registry for EigenDA disperser info such as disperser key to address mapping.
+      values.$libraries:
+-        ["eth:0x8113823aEF00b8Ef4Dac4CF4D20B40D27b3d552f"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EigenDACertVerificationUtils (eth:0x8113823aEF00b8Ef4Dac4CF4D20B40D27b3d552f)
+    +++ description: None
+```
+
+```diff
+    contract PaymentVault (eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05) {
+    +++ description: Entrypoint for making reservations and on demand payments for EigenDA.
+      values.$libraries:
+-        ["eth:0x8113823aEF00b8Ef4Dac4CF4D20B40D27b3d552f"]
+    }
+```
+
+```diff
+    contract EigenDARelayRegistry (eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B) {
+    +++ description: Registry for EigenDA relay keys, maps key to address.
+      values.$libraries:
+-        ["eth:0x8113823aEF00b8Ef4Dac4CF4D20B40D27b3d552f"]
+    }
+```
+
+```diff
+    contract EigenDAThresholdRegistry (eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15) {
+    +++ description: Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)
+      values.$libraries:
+-        ["eth:0x8113823aEF00b8Ef4Dac4CF4D20B40D27b3d552f"]
+    }
+```
+
+```diff
+    contract EigenDACertVerifier (eth:0xE1Ae45810A738F13e70Ac8966354d7D0feCF7BD6) {
+    +++ description: A legacy DACert verifier contract. It is used to verify v2 DA certificates. New verifiers should use the new verifier router contract.
+      values.$libraries:
+-        ["eth:0x5e29552239d9ACa88d2f410C35D8C0dE47483F37"]
+    }
+```
+
 Generated with discovered.json: 0xa24d2e6983d9f00568e56b205adc43a4612f2994
 
 # Diff at Fri, 31 Oct 2025 14:49:59 GMT:

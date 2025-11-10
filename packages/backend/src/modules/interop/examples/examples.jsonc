@@ -74,6 +74,7 @@
     ]
   },
   "cctpv1": {
+    "loadConfigs": ["cctp-v1"],
     "txs": [
       {
         "chain": "base",
@@ -86,6 +87,7 @@
     ]
   },
   "cctpv2": {
+    "loadConfigs": ["cctp-v2"],
     "txs": [
       {
         "chain": "arbitrum",
@@ -504,7 +506,8 @@
       }
     ]
   },
-  "wormhole-token-bridge": {
+  "wormhole-tokenbridge": {
+    "loadConfigs": ["wormhole"],
     "txs": [
       {
         "chain": "ethereum",
@@ -579,9 +582,9 @@
   "layerzeromix": {
     "loadConfigs": ["layerzero-v2"],
     // Messages:
-    //   layerzero-v2.Message 5
+    //   layerzero-v2.Message 6
     // Transfers:
-    //   oftv2.Transfer 2
+    //   oftv2.Transfer 3
     //   stargate-v2-bus.Transfer 3
     //   stargate-v2-taxi.Transfer 1
     "txs": [
@@ -636,6 +639,14 @@
       {
         "chain": "ethereum",
         "tx": "0x17a8188cbc60c5fdea6160dd4f51b5c0be25f4e93d5bcfc9a53fda3047a4e1db"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x8237c97cc2c4a0406e99a201a81fd25d3c66a64c9dae214c179fb10d9b5678ad"
+      },
+      {
+        "chain": "base",
+        "tx": "0xda926e7dd4b35380b6c6ef3c90f207aa7766cbdb3efdb9d33a008be1d5eb62af"
       }
     ]
   },
@@ -1001,6 +1012,7 @@
     ]
   },
   "cctpv1-debug": {
+    "loadConfigs": ["cctp-v1", "cctp-v2"],
     // should be 4 cctpv1 message and a couple other ones. somehow these are not correctly tracked in prod but work locally
     "txs": [
       {

@@ -135,7 +135,7 @@ export class CCTPV2Plugin implements InteropPlugin {
             amount: burnMessage?.amount,
             tokenAddress: burnMessage
               ? Address32.from(burnMessage.burnToken)
-              : Address32.ZERO,
+              : undefined,
             messageHash: hashBurnMessage(message.messageBody),
           }),
         ]
@@ -186,11 +186,17 @@ export class CCTPV2Plugin implements InteropPlugin {
         Result.Message(
           messageSent.args.fast ? 'cctp-v2.FastMessage' : 'cctp-v2.SlowMessage',
           {
-            app: 'unknown',
+            app: 'cctp-v2',
             srcEvent: messageSent,
             dstEvent: messageReceived,
           },
         ),
+        Result.Transfer('cctp-v2.Transfer', {
+          srcEvent: messageSent,
+          srcTokenAddress: messageSent.args.tokenAddress,
+          srcAmount: messageSent.args.amount,
+          dstEvent: messageReceived,
+        }),
       ]
     }
   }

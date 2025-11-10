@@ -113,6 +113,7 @@ export class OneinchFusionPlusPlugin implements InteropPlugin {
         Result.Transfer('oneinch-fusion-plus.Transfer', {
           srcEvent: srcEscrowCreated,
           srcAmount: srcEscrowCreated.args.srcAmount,
+          // need 1inch token ID mapping
           dstEvent: dstEscrowCreated,
         }),
       ]

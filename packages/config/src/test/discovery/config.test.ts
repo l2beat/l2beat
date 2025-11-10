@@ -148,6 +148,24 @@ describe('discovery config.jsonc', () => {
     }
   })
 
+  describe('description is not default', () => {
+    for (const c of configs)
+      it(`project ${c.name} has a change descripition in diffHistory.md that's not the default one`, () => {
+        const description = configReader.readDiffLastDescription(c.name)
+
+        const defaultDescriptionDiscover =
+          'Provide description of changes. This section will be preserved.'
+
+        // TODO(radomski): Enable this when projects less projects have this as
+        // their last diffHistory.md description
+        //
+        // const defaultDescriptionRediscover =
+        //   'Discovery rerun on the same block number with only config-related changes.'
+
+        expect(description).not.toEqual(defaultDescriptionDiscover)
+      })
+  })
+
   it('discovery.json does not include errors', () => {
     for (const c of configs) {
       const discovery = configReader.readDiscovery(c.name)

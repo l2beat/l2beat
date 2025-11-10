@@ -3,5 +3,12 @@
   "name": "L1Mailbox",
   "description": "The L1Mailbox contract is used to send messages to the L2.",
   "ignoreMethods": ["estimateMsgFee", "getMsg"],
+  "ignoreInWatchMode": [
+    "feeBalance",
+    "nextFinalizeQueueIndex",
+    "nextMsgIndex",
+    "pendingQueueIndex",
+    "rollingHash"
+  ],
   "category": "core"
 }

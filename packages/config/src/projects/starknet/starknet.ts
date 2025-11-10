@@ -171,7 +171,7 @@ const escrowDAIMaxTotalBalanceString = formatMaxTotalBalanceString(
   18,
 )
 const escrowSTRKMaxTotalBalanceString = formatMaxTotalBalanceString(
-  'DAI',
+  'STRK',
   discovery.getContractValue<number>('STRKBridge', 'maxTotalBalance'),
   18,
 )

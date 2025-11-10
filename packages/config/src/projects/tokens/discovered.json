@@ -391,21 +391,6 @@
       }
     },
     {
-      "name": "SignatureChecker",
-      "address": "base:0x2D943E25e1859ED786AFe4AFB2B42e14EFAC691e",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xfb452b0284bb37c8567dbbf7e82ec155f2717595393d406a74b603c77947f7fc"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1702052437,
-      "sinceBlock": 7631545,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "base:0x2D943E25e1859ED786AFe4AFB2B42e14EFAC691e": "SignatureChecker"
-      }
-    },
-    {
       "address": "base:0x2f86c55c0557788c8b1AbC2685f14ED6be68F3A5",
       "type": "EOA",
       "proxyType": "EOA"
@@ -764,7 +749,6 @@
         "$admin": "base:0x4fc7850364958d97B4d3f5A08f79db2493f8cA44",
         "$immutable": false,
         "$implementation": "base:0x2Ce6311ddAE708829bc0784C967b7d77D19FD779",
-        "$libraries": ["base:0x2D943E25e1859ED786AFe4AFB2B42e14EFAC691e"],
         "$pastUpgrades": [
           [
             "2023-12-14T18:34:07.000Z",
@@ -1363,11 +1347,6 @@
       "values": {
         "$admin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "eth:0xDa22fA1CEa40d05Fe4CD536967afdD839586D546",
-        "$libraries": [
-          "eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9",
-          "eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72",
-          "eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9"
-        ],
         "$pastUpgrades": [
           [
             "2025-09-17T12:36:35.000Z",
@@ -1894,12 +1873,6 @@
       "values": {
         "$admin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "eth:0xe0B234f99E413E27D9Bc31aBba9A49A3e570Da97",
-        "$libraries": [
-          "eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9",
-          "eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72",
-          "eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9",
-          "eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9"
-        ],
         "$pastUpgrades": [
           [
             "2024-10-10T13:18:59.000Z",
@@ -1955,12 +1928,6 @@
       "values": {
         "$admin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "eth:0x6f09d2426c7405C5546413e6059F884D2D03f449",
-        "$libraries": [
-          "eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9",
-          "eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72",
-          "eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9",
-          "eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9"
-        ],
         "$pastUpgrades": [
           [
             "2024-10-10T13:18:59.000Z",
@@ -2029,7 +1996,6 @@
       "values": {
         "$immutable": false,
         "$implementation": "eth:0x6828b023e737f96B168aCd0b5c6351971a4F81aE",
-        "$libraries": ["eth:0x7e70De6D1877B3711b2bEDa7BA00013C7142d993"],
         "appId": "0x7071f283424072341f856ac9e947e7ec0eb68719f757a7e785979b6b8717579d",
         "exitPenaltyCutoffTimestamp": 1759074767,
         "getActiveNodeOperatorsCount": 37,
@@ -2181,21 +2147,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "QueueLib",
-      "address": "eth:0x6eFF460627b6798C2907409EA2Fdfb287Eaa2e55",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x4c21eaa017b8d370cd63c5d546103178a734f3dfb16da391906ece2926653bdf"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1758106187,
-      "sinceBlock": 23382311,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x6eFF460627b6798C2907409EA2Fdfb287Eaa2e55": "QueueLib"
-      }
-    },
-    {
       "name": "HashConsensus",
       "address": "eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4",
       "type": "Contract",
@@ -2216,11 +2167,6 @@
       "sinceBlock": 20935463,
       "values": {
         "$immutable": true,
-        "$libraries": [
-          "eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9",
-          "eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72",
-          "eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9"
-        ],
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -2328,21 +2274,6 @@
       "address": "eth:0x7D70b773374AB8F07d60a05f833f7039beB7406d",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "MinFirstAllocationStrategy",
-      "address": "eth:0x7e70De6D1877B3711b2bEDa7BA00013C7142d993",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xcbc96cc2a0f89aa6f2775f536d9110d182b88991cab71b9751e42afca52a8449"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1728395435,
-      "sinceBlock": 20921269,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x7e70De6D1877B3711b2bEDa7BA00013C7142d993": "MinFirstAllocationStrategy"
-      }
     },
     {
       "name": "Wrapped liquid staked Ether 2.0 Token",
@@ -2816,11 +2747,6 @@
       "values": {
         "$admin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "eth:0x25fdC3BE9977CD4da679dF72A64C8B6Bd5216A78",
-        "$libraries": [
-          "eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9",
-          "eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72",
-          "eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9"
-        ],
         "$pastUpgrades": [
           [
             "2025-09-17T12:31:59.000Z",
@@ -2874,28 +2800,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "AssetRecovererLib",
-      "address": "eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x261da7ede3b363d54f0c2c0ddf5dd43d153b0d8b7c1a7a8d005a4a133b99ad6f"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1728566339,
-      "sinceBlock": 20935462,
-      "values": {
-        "$immutable": true,
-        "$libraries": [
-          "eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9",
-          "eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72",
-          "eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9"
-        ]
-      },
-      "implementationNames": {
-        "eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9": "AssetRecovererLib"
-      }
-    },
-    {
       "name": "CSStrikes",
       "address": "eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f",
       "type": "Contract",
@@ -2911,11 +2815,6 @@
       "values": {
         "$admin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "eth:0x3E5021424c9e13FC853e523Cd68ebBec848956a0",
-        "$libraries": [
-          "eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9",
-          "eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72",
-          "eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9"
-        ],
         "$pastUpgrades": [
           [
             "2025-09-17T12:37:11.000Z",
@@ -3065,7 +2964,6 @@
       "values": {
         "$immutable": false,
         "$implementation": "eth:0x6828b023e737f96B168aCd0b5c6351971a4F81aE",
-        "$libraries": ["eth:0x7e70De6D1877B3711b2bEDa7BA00013C7142d993"],
         "appId": "0xe1635b63b5f7b5e545f2a637558a4029dea7905361a2f0fc28c66e9136cf86a4",
         "exitPenaltyCutoffTimestamp": 1759074767,
         "getActiveNodeOperatorsCount": 82,
@@ -3404,7 +3302,6 @@
       "sinceBlock": 23382852,
       "values": {
         "$immutable": true,
-        "$libraries": ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9"],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getResumeSinceTimestamp": 0,
         "isPaused": false,
@@ -3570,28 +3467,6 @@
       }
     },
     {
-      "name": "QueueLib",
-      "address": "eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xcb79907e27555e275b262b2b4b1c84c18c4c893c94dd342358fff18be11bfd7d"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1728566339,
-      "sinceBlock": 20935462,
-      "values": {
-        "$immutable": true,
-        "$libraries": [
-          "eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9",
-          "eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72",
-          "eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9"
-        ]
-      },
-      "implementationNames": {
-        "eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9": "QueueLib"
-      }
-    },
-    {
       "address": "eth:0xd4EF84b638B334699bcf5AF4B0410B8CCD71943f",
       "type": "EOA",
       "proxyType": "EOA"
@@ -3747,12 +3622,6 @@
       "values": {
         "$admin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "eth:0x5DCF7cF7c6645E9E822a379dF046a8b0390251A1",
-        "$libraries": [
-          "eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9",
-          "eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72",
-          "eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9",
-          "eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9"
-        ],
         "$pastUpgrades": [
           [
             "2024-10-10T13:19:11.000Z",
@@ -3807,14 +3676,6 @@
       "values": {
         "$admin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "eth:0x1eB6d4da13ca9566c17F526aE0715325d7a07665",
-        "$libraries": [
-          "eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9",
-          "eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72",
-          "eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9",
-          "eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9",
-          "eth:0xE4d5a7be8d7c3db15755061053F5a49b6a67fFfc",
-          "eth:0x6eFF460627b6798C2907409EA2Fdfb287Eaa2e55"
-        ],
         "$pastUpgrades": [
           [
             "2024-10-10T13:18:59.000Z",
@@ -3908,21 +3769,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "NOAddresses",
-      "address": "eth:0xE4d5a7be8d7c3db15755061053F5a49b6a67fFfc",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x34a15a823606d1b959ecb4dc11d4cceb49cc17861a23d5b7ce63f78f6b7e7ca2"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1758106199,
-      "sinceBlock": 23382312,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xE4d5a7be8d7c3db15755061053F5a49b6a67fFfc": "NOAddresses"
-      }
-    },
-    {
       "address": "eth:0xe57B3792aDCc5da47EF4fF588883F0ee0c9835C9",
       "type": "EOA",
       "proxyType": "EOA"
@@ -3967,28 +3813,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "NOAddresses",
-      "address": "eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x104f67c1fc6fb5a21d7fc8610028922496bffb5b75b8e5f1377b7319280be57d"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1728566339,
-      "sinceBlock": 20935462,
-      "values": {
-        "$immutable": true,
-        "$libraries": [
-          "eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9",
-          "eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72",
-          "eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9"
-        ]
-      },
-      "implementationNames": {
-        "eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72": "NOAddresses"
-      }
-    },
-    {
       "address": "eth:0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0",
       "type": "EOA",
       "proxyType": "EOA"
@@ -4017,7 +3841,6 @@
       "values": {
         "$admin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "eth:0x226f9265CBC37231882b7409658C18bB7738173A",
-        "$libraries": ["eth:0x7e70De6D1877B3711b2bEDa7BA00013C7142d993"],
         "$pastUpgrades": [
           [
             "2023-05-02T10:39:23.000Z",
@@ -4637,9 +4460,6 @@
       "function updatePauser(address _newPauser)",
       "function updateRescuer(address newRescuer)",
       "function version() pure returns (string)"
-    ],
-    "base:0x2D943E25e1859ED786AFe4AFB2B42e14EFAC691e": [
-      "function isValidSignatureNow(address signer, bytes32 digest, bytes signature) view returns (bool)"
     ],
     "base:0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971": [
       "constructor(address _singleton)"
@@ -6399,10 +6219,6 @@
       "event ScriptResult(address indexed executor, bytes script, bytes input, bytes returnData)",
       "event RecoverToVault(address indexed vault, address indexed token, uint256 amount)"
     ],
-    "eth:0x6eFF460627b6798C2907409EA2Fdfb287Eaa2e55": [
-      "error QueueIsEmpty()",
-      "error QueueLookupNoLimit()"
-    ],
     "eth:0x6f09d2426c7405C5546413e6059F884D2D03f449": [
       "constructor(address lidoLocator, address module, address _feeDistributor, uint256 minBondLockPeriod, uint256 maxBondLockPeriod)",
       "error AccessControlBadConfirmation()",
@@ -6727,9 +6543,6 @@
       "function recoverERC20(address _token, uint256 _amount)",
       "function recoverERC721(address _token, uint256 _tokenId)",
       "function withdrawWithdrawals(uint256 _amount)"
-    ],
-    "eth:0x7e70De6D1877B3711b2bEDa7BA00013C7142d993": [
-      "function allocate(uint256[] buckets, uint256[] capacities, uint256 allocationSize) pure returns (uint256 allocated, uint256[])"
     ],
     "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": [
       "constructor(address _stETH)",
@@ -7135,18 +6948,6 @@
       "function revokeUpgradeGovernor(address account)",
       "function setMintingAllowance(address token, address account, uint256 amount)"
     ],
-    "eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9": [
-      "error AddressEmptyCode(address target)",
-      "error AddressInsufficientBalance(address account)",
-      "error FailedInnerCall()",
-      "error FailedToSendEther()",
-      "error SafeERC20FailedOperation(address token)",
-      "event ERC1155Recovered(address indexed token, uint256 tokenId, address indexed recipient, uint256 amount)",
-      "event ERC20Recovered(address indexed token, address indexed recipient, uint256 amount)",
-      "event ERC721Recovered(address indexed token, uint256 tokenId, address indexed recipient)",
-      "event EtherRecovered(address indexed recipient, uint256 amount)",
-      "event StETHSharesRecovered(address indexed recipient, uint256 shares)"
-    ],
     "eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f": [
       "constructor(address implementation_, address admin_, bytes data_)",
       "error AddressEmptyCode(address target)",
@@ -7485,11 +7286,6 @@
       "function requestBurnSharesForCover(address _from, uint256 _sharesAmountToBurn)",
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
-    ],
-    "eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9": [
-      "error QueueIsEmpty()",
-      "error QueueLookupNoLimit()",
-      "event BatchEnqueued(uint256 indexed nodeOperatorId, uint256 count)"
     ],
     "eth:0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE": [
       "constructor(address messenger_, address wstETH_, address accountingOracle_, address tokenRateOracle_, uint32 l2GasLimitForPushingTokenRate_)",
@@ -7969,20 +7765,6 @@
       "function unfinalizedRequestNumber() view returns (uint256)",
       "function unfinalizedStETH() view returns (uint256)"
     ],
-    "eth:0xE4d5a7be8d7c3db15755061053F5a49b6a67fFfc": [
-      "error AlreadyProposed()",
-      "error MethodCallIsNotAllowed()",
-      "error NodeOperatorDoesNotExist()",
-      "error SameAddress()",
-      "error SenderIsNotManagerAddress()",
-      "error SenderIsNotProposedAddress()",
-      "error SenderIsNotRewardAddress()",
-      "error ZeroRewardAddress()",
-      "event NodeOperatorManagerAddressChangeProposed(uint256 indexed nodeOperatorId, address indexed oldProposedAddress, address indexed newProposedAddress)",
-      "event NodeOperatorManagerAddressChanged(uint256 indexed nodeOperatorId, address indexed oldAddress, address indexed newAddress)",
-      "event NodeOperatorRewardAddressChangeProposed(uint256 indexed nodeOperatorId, address indexed oldProposedAddress, address indexed newProposedAddress)",
-      "event NodeOperatorRewardAddressChanged(uint256 indexed nodeOperatorId, address indexed oldAddress, address indexed newAddress)"
-    ],
     "eth:0xe6793B9e4FbA7DE0ee833F9D02bba7DB5EB27823": [
       "constructor(address initialOwner_, address lido_)",
       "error ErrorAddExistedObserver()",
@@ -8102,19 +7884,6 @@
       "function submitReportExtraDataEmpty()",
       "function submitReportExtraDataList(bytes data)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
-    ],
-    "eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72": [
-      "error AlreadyProposed()",
-      "error MethodCallIsNotAllowed()",
-      "error NodeOperatorDoesNotExist()",
-      "error SameAddress()",
-      "error SenderIsNotManagerAddress()",
-      "error SenderIsNotProposedAddress()",
-      "error SenderIsNotRewardAddress()",
-      "event NodeOperatorManagerAddressChangeProposed(uint256 indexed nodeOperatorId, address indexed oldProposedAddress, address indexed newProposedAddress)",
-      "event NodeOperatorManagerAddressChanged(uint256 indexed nodeOperatorId, address indexed oldAddress, address indexed newAddress)",
-      "event NodeOperatorRewardAddressChangeProposed(uint256 indexed nodeOperatorId, address indexed oldProposedAddress, address indexed newProposedAddress)",
-      "event NodeOperatorRewardAddressChanged(uint256 indexed nodeOperatorId, address indexed oldAddress, address indexed newAddress)"
     ],
     "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999": [
       "constructor(address implementation_, address admin_, bytes data_)",
@@ -8236,5 +8005,5 @@
     "base": 37427179,
     "ethereum": 23675030
   },
-  "permissionsConfigHash": "0x8078c2e6a7ea3b3e184b6b02b5244ca688920f91fdb6340fcddab018d6dbe22a"
+  "permissionsConfigHash": "0x7884ad18ac23dc269f617186f453e5f9851b8b2449d52d711c9b9a3bb216c6c1"
 }

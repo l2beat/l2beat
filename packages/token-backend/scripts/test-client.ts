@@ -15,7 +15,13 @@ async function main() {
     authToken,
     callSource: 'test-script',
   })
-  const result = await client.tokens.getAllAbstractTokens.query()
+  // const result = await client.tokens.getAllAbstractTokens.query()
+  const result = await client.deployedTokens.getByChainAndAddress.query([
+    {
+      chain: 'celo',
+      address: '0xcebA9300f2b948710d2653dD7B07f33A8B32118C',
+    },
+  ])
   console.log(JSON.stringify(result, null, 2))
 }
 

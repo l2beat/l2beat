@@ -52,17 +52,16 @@ export function AbstractTokenForm({
   onSubmit,
   isFormDisabled,
   refreshId,
-  coingeckoFields,
+  checks,
   children,
 }: {
   form: UseFormReturn<AbstractTokenSchema, unknown, AbstractTokenSchema>
   onSubmit: SubmitHandler<AbstractTokenSchema>
   isFormDisabled: boolean
   refreshId?: () => void
-  coingeckoFields: {
+  checks?: {
     isLoading: boolean
     success: boolean
-    isListingTimestampLoading: boolean
   }
   children: React.ReactNode
 }) {
@@ -129,14 +128,12 @@ export function AbstractTokenForm({
           <FormField
             control={form.control}
             name="coingeckoId"
-            success={coingeckoFields.success}
+            success={!!checks?.success}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
                   Coingecko ID{' '}
-                  {coingeckoFields.isLoading && (
-                    <Spinner className="size-3.5" />
-                  )}
+                  {checks?.isLoading && <Spinner className="size-3.5" />}
                 </FormLabel>
                 <FormControl>
                   <div className="group flex items-center gap-2">
@@ -144,7 +141,7 @@ export function AbstractTokenForm({
                     <Link
                       to={`https://www.coingecko.com/en/coins/${field.value}`}
                       target="_blank"
-                      aria-disabled={!coingeckoFields.success}
+                      aria-disabled={!checks?.success}
                       className={buttonVariants({
                         variant: 'outline',
                         className: 'shrink-0',
@@ -163,7 +160,7 @@ export function AbstractTokenForm({
           <FormField
             control={form.control}
             name="iconUrl"
-            disabled={coingeckoFields.isLoading}
+            disabled={checks?.isLoading}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Icon URL</FormLabel>
@@ -192,12 +189,7 @@ export function AbstractTokenForm({
             name="coingeckoListingTimestamp"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>
-                  Coingecko Listing Timestamp{' '}
-                  {coingeckoFields.isListingTimestampLoading && (
-                    <Spinner className="size-3.5" />
-                  )}
-                </FormLabel>
+                <FormLabel>Coingecko Listing Timestamp</FormLabel>
                 <FormControl>
                   <Input type="date" {...field} />
                 </FormControl>

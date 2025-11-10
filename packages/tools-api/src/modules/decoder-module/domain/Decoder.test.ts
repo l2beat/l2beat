@@ -2,7 +2,12 @@ import { assert } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { expect } from 'earl'
 import { describe } from 'mocha'
-import { toFunctionSelector } from 'viem'
+import {
+  encodeAbiParameters,
+  encodeFunctionData,
+  parseAbi,
+  toFunctionSelector,
+} from 'viem'
 import { getShortChainName } from '../../../config/address'
 import chainList from '../../../config/chains.json'
 import { type Address, Chain } from '../../../config/types'
@@ -12,6 +17,7 @@ import type {
   IAddressService,
 } from './AddressService'
 import { Decoder } from './Decoder'
+import { decodeType } from './encoding'
 import type { ISignatureService } from './SignatureService'
 
 const ethereum = Chain.parse(chainList[0])
@@ -299,5 +305,152 @@ describe(Decoder.name, () => {
     expect(fromArg?.decoded?.type).toEqual('address')
     assert(fromArg?.decoded?.type === 'address')
     expect(fromArg.decoded.name).toEqual('FiatTokenV2_2')
+  })
+
+  it('decodes Taiko DAO execute actions', async () => {
+    const controller: Address = 'eth:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+    const targetA: Address = 'eth:0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'
+    const targetB: Address = 'eth:0xcccccccccccccccccccccccccccccccccccccccc'
+
+    addressService
+      .setAbi(controller, ['function execute(bytes _actions)'])
+      .setAbi(targetA, ['function nested(uint256 value)'])
+      .setAbi(targetB, ['function noop()'])
+
+    const executeSelector = signatureService.add(
+      'function execute(bytes _actions)',
+    )
+    const nestedSelector = signatureService.add(
+      'function nested(uint256 value)',
+    )
+    const noopSelector = signatureService.add('function noop()')
+
+    const nestedCallData = encodeFunctionData({
+      abi: parseAbi(['function nested(uint256 value)']),
+      functionName: 'nested',
+      args: [123n],
+    })
+
+    const noopCallData = encodeFunctionData({
+      abi: parseAbi(['function noop()']),
+      functionName: 'noop',
+    })
+
+    const actionsBytes = encodeAbiParameters(
+      [
+        {
+          name: 'actions',
+          type: 'tuple[]',
+          components: [
+            { name: 'target', type: 'address' },
+            { name: 'value', type: 'uint256' },
+            { name: 'data', type: 'bytes' },
+          ],
+        },
+      ],
+      [
+        [
+          {
+            target: targetA.split(':')[1] as `0x${string}`,
+            value: 123n,
+            data: nestedCallData,
+          },
+          {
+            target: targetB.split(':')[1] as `0x${string}`,
+            value: 0n,
+            data: noopCallData,
+          },
+        ],
+      ],
+    )
+
+    const preDecoded = decodeType(
+      '((address target, uint256 value, bytes data)[])',
+      actionsBytes,
+    )
+    expect(preDecoded.decoded.type).toEqual('array')
+
+    const data = encodeFunctionData({
+      abi: parseAbi(['function execute(bytes _actions)']),
+      functionName: 'execute',
+      args: [actionsBytes],
+    })
+
+    const result = await decoder.decode({
+      to: controller,
+      data,
+      chain: ethereum,
+    })
+
+    expect(result.data.decoded?.type).toEqual('call')
+    assert(result.data.decoded?.type === 'call')
+
+    const decodedCall = result.data.decoded
+    expect(decodedCall.selector).toEqual(executeSelector)
+
+    const actionsArg = decodedCall.arguments[0]
+    assert(actionsArg?.decoded?.type === 'array')
+    expect(actionsArg.abi).toEqual('(address, uint256, bytes)[]')
+    expect(actionsArg.decoded.values.length).toEqual(2)
+
+    const [firstAction, secondAction] = actionsArg.decoded.values
+    assert(firstAction?.decoded?.type === 'array')
+    assert(secondAction?.decoded?.type === 'array')
+
+    const [firstTarget, firstValue, firstData] = firstAction.decoded.values
+    assert(firstTarget?.decoded?.type === 'address')
+    assert(firstValue?.decoded?.type === 'amount')
+    assert(firstData?.decoded?.type === 'call')
+
+    expect(firstTarget.decoded.value).toEqual(targetA)
+    expect(firstValue.decoded.value).toEqual('123')
+    expect(firstValue.decoded.currency).toEqual('ETH')
+    expect(firstValue.decoded.decimals).toEqual(18)
+    expect(firstData.decoded.selector).toEqual(nestedSelector)
+    expect(firstData.decoded.arguments[0]?.decoded).toEqual({
+      hint: 'e18',
+      type: 'number',
+      value: '123',
+    })
+
+    const [secondTarget, secondValue, secondData] = secondAction.decoded.values
+    assert(secondTarget?.decoded?.type === 'address')
+    assert(secondValue?.decoded?.type === 'amount')
+    assert(secondData?.decoded?.type === 'call')
+
+    expect(secondTarget.decoded.value).toEqual(targetB)
+    expect(secondValue.decoded.value).toEqual('0')
+    expect(secondData.decoded.selector).toEqual(noopSelector)
+    expect(secondData.decoded.arguments).toEqual([])
+  })
+
+  it('leaves unrelated execute bytes untouched', async () => {
+    const controller: Address = 'eth:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+
+    addressService.setAbi(controller, ['function execute(bytes _actions)'])
+    const executeSelector = signatureService.add(
+      'function execute(bytes _actions)',
+    )
+
+    const payload: `0x${string}` = '0x1234'
+    const data = encodeFunctionData({
+      abi: parseAbi(['function execute(bytes _actions)']),
+      functionName: 'execute',
+      args: [payload],
+    })
+
+    const result = await decoder.decode({
+      to: controller,
+      data,
+      chain: ethereum,
+    })
+
+    expect(result.data.decoded?.type).toEqual('call')
+    assert(result.data.decoded?.type === 'call')
+    expect(result.data.decoded.selector).toEqual(executeSelector)
+
+    const argument = result.data.decoded.arguments[0]
+    assert(argument?.decoded?.type === 'bytes')
+    expect(argument.decoded.value).toEqual(payload)
   })
 })
