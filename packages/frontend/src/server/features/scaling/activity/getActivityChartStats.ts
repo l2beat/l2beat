@@ -44,6 +44,36 @@ export async function getActivityChartStats(
     }
   }
 
+  const totalTxs = chartData.slice(-7)?.reduce(
+    (acc, dataPoint) => {
+      const rollupsTps = dataPoint[5]
+      const rollupsUops = dataPoint[1]
+      const ethereumTps = dataPoint[8]
+      const ethereumUops = dataPoint[4]
+
+      acc.rollupsTps =
+        rollupsTps !== null ? (acc.rollupsTps ?? 0) + rollupsTps : null
+      acc.ethereumTps =
+        ethereumTps !== null ? (acc.ethereumTps ?? 0) + ethereumTps : null
+      acc.rollupsUops =
+        rollupsUops !== null ? (acc.rollupsUops ?? 0) + rollupsUops : null
+      acc.ethereumUops =
+        ethereumUops !== null ? (acc.ethereumUops ?? 0) + ethereumUops : null
+      return acc
+    },
+    {
+      ethereumTps: null,
+      rollupsTps: null,
+      ethereumUops: null,
+      rollupsUops: null,
+    } as {
+      ethereumTps: number | null
+      rollupsTps: number | null
+      ethereumUops: number | null
+      rollupsUops: number | null
+    },
+  )
+
   const [
     _,
     rollupsUops,
@@ -65,7 +95,12 @@ export async function getActivityChartStats(
       others: othersUops ? countPerSecond(othersUops) : 0,
       ethereum: ethereumUops ? countPerSecond(ethereumUops) : 0,
       scalingFactor:
-        rollupsUops && ethereumUops ? rollupsUops / ethereumUops : 0,
+        totalTxs.ethereumUops === 0 ||
+        totalTxs.rollupsUops === null ||
+        totalTxs.ethereumUops === null
+          ? 0
+          : (totalTxs.rollupsUops + totalTxs.ethereumUops) /
+            totalTxs.ethereumUops,
     },
     tps: {
       rollups: rollupsTx ? countPerSecond(rollupsTx) : 0,
@@ -74,7 +109,12 @@ export async function getActivityChartStats(
         : 0,
       others: othersTx ? countPerSecond(othersTx) : 0,
       ethereum: ethereumTx ? countPerSecond(ethereumTx) : 0,
-      scalingFactor: rollupsTx && ethereumTx ? rollupsTx / ethereumTx : 0,
+      scalingFactor:
+        totalTxs.ethereumTps === 0 ||
+        totalTxs.rollupsTps === null ||
+        totalTxs.ethereumTps === null
+          ? 0
+          : (totalTxs.rollupsTps + totalTxs.ethereumTps) / totalTxs.ethereumTps,
     },
   }
 }
