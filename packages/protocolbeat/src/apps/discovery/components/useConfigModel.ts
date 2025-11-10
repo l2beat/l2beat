@@ -21,26 +21,24 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     ConfigModel.fromRawJsonc(config ?? '{}'),
   )
 
-  const originalConfig = useMemo(() => {
-    return configModel.diff(configModel) ?? false
-  }, [configModel])
-
-  const isDirty = useMemo(() => {
-    return configModel.diff(configModel) ?? false
-  }, [configModel, originalConfig])
-
   useEffect(() => {
     setConfigModel(ConfigModel.fromRawJsonc(config ?? '{}'))
   }, [config])
 
   const setIgnoreMethods = (methods: string[]) => {
-    setConfigModel(configModel.setIgnoreMethods(selectedAddress, methods))
+    const newModel = configModel.setIgnoreMethods(selectedAddress, methods)
+    setConfigModel(newModel)
+    saveMutation.mutate(newModel.toString())
   }
   const setIgnoreRelatives = (relatives: string[]) => {
-    setConfigModel(configModel.setIgnoreRelatives(selectedAddress, relatives))
+    const newModel = configModel.setIgnoreRelatives(selectedAddress, relatives)
+    setConfigModel(newModel)
+    saveMutation.mutate(newModel.toString())
   }
   const setIgnoreInWatchMode = (methods: string[]) => {
-    setConfigModel(configModel.setIgnoreInWatchMode(selectedAddress, methods))
+    const newModel = configModel.setIgnoreInWatchMode(selectedAddress, methods)
+    setConfigModel(newModel)
+    saveMutation.mutate(newModel.toString())
   }
 
   const configString = useMemo(() => {
@@ -58,9 +56,14 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     },
   })
 
-  const save = useCallback(() => {
-    saveMutation.mutate(configString)
-  }, [saveMutation, configString])
+  const saveRaw = useCallback(
+    (configString: string) => {
+      const newModel = ConfigModel.fromRawJsonc(configString)
+      setConfigModel(newModel)
+      saveMutation.mutate(newModel.toString())
+    },
+    [project],
+  )
 
   const hasDefinition = useCallback(
     (method: string) => {
@@ -76,9 +79,7 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     setIgnoreInWatchMode,
     hasDefinition,
 
-    save,
-
-    isDirty,
+    save: saveRaw,
 
     configString,
 

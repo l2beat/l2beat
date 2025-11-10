@@ -4,38 +4,47 @@ import { writeTemplateFile } from '../../../api/api'
 import { ContractConfigModel } from './ConfigModel'
 
 type Props = {
-  templateId: string
-  template: string
+  project: string
+  templateId?: string
+  files: {
+    template: string
+    shapes?: string
+    criteria?: string
+  }
 }
 
-export function useTemplateModel({ templateId, template }: Props) {
+export function useTemplateModel({ templateId, files }: Props) {
   const queryClient = useQueryClient()
   const [templateModel, setTemplateModel] = useState(
-    ContractConfigModel.fromRawJsonc(template ?? '{}'),
+    ContractConfigModel.fromRawJsonc(files.template),
   )
 
   useEffect(() => {
-    setTemplateModel(ContractConfigModel.fromRawJsonc(template ?? '{}'))
-  }, [template])
-
-  // ??
-  const isDirty = useMemo(() => {
-    return templateModel.diff(templateModel) ?? false
-  }, [templateModel])
+    setTemplateModel(ContractConfigModel.fromRawJsonc(files.template))
+  }, [files.template])
 
   const setIgnoreMethods = (methods: string[]) => {
-    setTemplateModel(templateModel.setIgnoreMethods(methods))
+    const newModel = templateModel.setIgnoreMethods(methods)
+    setTemplateModel(newModel)
+    saveMutation.mutate(newModel.toString())
   }
   const setIgnoreRelatives = (relatives: string[]) => {
-    setTemplateModel(templateModel.setIgnoreRelatives(relatives))
+    const newModel = templateModel.setIgnoreRelatives(relatives)
+    setTemplateModel(newModel)
+    saveMutation.mutate(newModel.toString())
   }
   const setIgnoreInWatchMode = (methods: string[]) => {
-    setTemplateModel(templateModel.setIgnoreInWatchMode(methods))
+    const newModel = templateModel.setIgnoreInWatchMode(methods)
+    setTemplateModel(newModel)
+    saveMutation.mutate(newModel.toString())
   }
 
   const saveMutation = useMutation({
-    mutationFn: async () => {
-      await writeTemplateFile(templateId, templateString)
+    mutationFn: async (content?: string) => {
+      if (!templateId) {
+        return
+      }
+      await writeTemplateFile(templateId, content ? content : templateString)
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
@@ -44,16 +53,25 @@ export function useTemplateModel({ templateId, template }: Props) {
     },
   })
 
+  const saveRaw = useCallback(
+    (content: string) => {
+      const newModel = ContractConfigModel.fromRawJsonc(content)
+      setTemplateModel(newModel)
+      saveMutation.mutate(newModel.toString())
+    },
+    [templateId],
+  )
+
+  const templateString = useMemo(() => {
+    return templateModel.toString()
+  }, [templateModel])
+
   const hasDefinition = useCallback(
     (method: string) => {
       return templateModel.hasDefinition(method)
     },
     [templateModel],
   )
-
-  const templateString = useMemo(() => {
-    return templateModel.toString()
-  }, [templateModel])
 
   return {
     templateModel,
@@ -62,11 +80,17 @@ export function useTemplateModel({ templateId, template }: Props) {
     setIgnoreInWatchMode,
     hasDefinition,
 
-    save: saveMutation.mutate,
-
-    isDirty,
+    save: saveRaw,
 
     templateString,
+
+    hasTemplate: templateId,
+
+    files: {
+      template: templateString,
+      shapes: files.shapes,
+      criteria: files.criteria,
+    },
 
     ignoreMethods: templateModel.ignoreMethods,
     ignoreRelatives: templateModel.ignoreRelatives,

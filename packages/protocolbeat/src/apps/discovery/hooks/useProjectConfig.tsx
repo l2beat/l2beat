@@ -5,8 +5,8 @@ import { useCurrentConfig } from './useCurrentConfig'
 import { useCurrentTemplate } from './useCurrentTemplate'
 import { useProjectData } from './useProjectData'
 
-type ConfigModels = ReturnType<typeof _useProjectConfigModels>
-const Context = createContext<ConfigModels | null>(null)
+export type ProjectConfigModels = ReturnType<typeof _useProjectConfigModels>
+const Context = createContext<ProjectConfigModels | null>(null)
 
 export function ProjectConfigProvider({
   children,
@@ -37,7 +37,7 @@ function _useProjectConfigModels() {
   } = useProjectData()
   const {
     templateId,
-    templateContent: template,
+    files: templateFiles,
     isLoading: isTemplateLoading,
     isError: isTemplateError,
   } = useCurrentTemplate()
@@ -56,8 +56,13 @@ function _useProjectConfigModels() {
     selectedAddress: selectedAddress ?? '',
   })
   const templateModel = useTemplateModel({
-    templateId: templateId ?? '',
-    template: template ?? '{}',
+    project,
+    templateId,
+    files: {
+      template: templateFiles?.template ?? '{}',
+      shapes: templateFiles?.shapes,
+      criteria: templateFiles?.criteria,
+    },
   })
 
   return {

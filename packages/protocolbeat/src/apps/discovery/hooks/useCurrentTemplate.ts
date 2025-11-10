@@ -13,7 +13,7 @@ export function useCurrentTemplate() {
   )
 
   const templateResponse = useQuery({
-    queryKey: ['projects', project, 'template', selectedAddress],
+    queryKey: ['projects', project, 'template', templateId, selectedAddress],
     queryFn: () => {
       if (!templateId) {
         return null
@@ -26,7 +26,7 @@ export function useCurrentTemplate() {
     if (!templateId) {
       return null
     }
-    return templateResponse.data?.template
+    return templateResponse.data
   }, [templateResponse.data])
 
   const isLoading = projectResponse.isPending || templateResponse.isPending
@@ -35,7 +35,7 @@ export function useCurrentTemplate() {
   return {
     isLoading,
     isError,
-    templateContent,
+    files: templateContent,
     templateId,
   }
 }
