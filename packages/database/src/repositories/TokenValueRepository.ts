@@ -265,6 +265,110 @@ export class TokenValueRepository extends BaseRepository {
     }))
   }
 
+  async getSummedByTimestampWithProjectsRanges(
+    projectsWithRanges: Array<{
+      projectId: string
+      sinceTimestamp: UnixTime
+      untilTimestamp?: UnixTime
+    }>,
+    opts: {
+      range: [UnixTime | null, UnixTime]
+      forSummary: boolean
+      excludeAssociated: boolean
+      includeRwaRestrictedTokens: boolean
+    },
+  ): Promise<
+    {
+      timestamp: UnixTime
+      value: number
+      canonical: number
+      external: number
+      native: number
+      ether: number
+      stablecoin: number
+      btc: number
+      rwaRestricted: number
+      rwaPublic: number
+      other: number
+    }[]
+  > {
+    if (projectsWithRanges.length === 0) {
+      return []
+    }
+
+    const valueField = opts.forSummary ? 'valueForSummary' : 'valueForProject'
+
+    let query = this.db
+      .selectFrom('TokenValue')
+      .innerJoin('TokenMetadata', 'TokenValue.tokenId', 'TokenMetadata.tokenId')
+      .select((eb) => [
+        'TokenValue.timestamp',
+        eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
+        // Source breakdown
+        sumBySource(eb, valueField, 'canonical'),
+        sumBySource(eb, valueField, 'external'),
+        sumBySource(eb, valueField, 'native'),
+        // Category breakdown
+        sumByCategory(eb, valueField, 'ether'),
+        sumByCategory(eb, valueField, 'stablecoin'),
+        sumByCategory(eb, valueField, 'btc'),
+        sumByCategory(eb, valueField, 'rwaRestricted'),
+        sumByCategory(eb, valueField, 'rwaPublic'),
+        sumByCategory(eb, valueField, 'other'),
+      ])
+      .where((eb) =>
+        eb.or(
+          projectsWithRanges.map((project) => {
+            const conditions = [
+              eb('TokenValue.projectId', '=', project.projectId),
+              eb('timestamp', '>=', UnixTime.toDate(project.sinceTimestamp)),
+            ]
+            if (project.untilTimestamp) {
+              conditions.push(
+                eb('timestamp', '<=', UnixTime.toDate(project.untilTimestamp)),
+              )
+            }
+            return eb.and(conditions)
+          }),
+        ),
+      )
+      .groupBy('TokenValue.timestamp')
+
+    const [fromInclusive, toInclusive] = opts.range
+
+    if (fromInclusive) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+    }
+
+    if (toInclusive) {
+      query = query.where('timestamp', '<=', UnixTime.toDate(toInclusive))
+    }
+
+    if (opts.excludeAssociated) {
+      query = query.where('TokenMetadata.isAssociated', '=', false)
+    }
+
+    if (!opts.includeRwaRestrictedTokens) {
+      query = query.where('TokenMetadata.category', '!=', 'rwaRestricted')
+    }
+
+    const rows = await query.execute()
+
+    return rows.map((row) => ({
+      timestamp: UnixTime.fromDate(row.timestamp),
+      value: Number(row.value),
+      canonical: Number(row.canonical),
+      external: Number(row.external),
+      native: Number(row.native),
+      ether: Number(row.ether),
+      stablecoin: Number(row.stablecoin),
+      btc: Number(row.btc),
+      rwaRestricted: Number(row.rwaRestricted),
+      rwaPublic: Number(row.rwaPublic),
+      other: Number(row.other),
+    }))
+  }
+
   async getSummedAtTimestampsByProjects(
     oldestTimestamp: number,
     latestTimestamp: number,
