@@ -1,3 +1,4 @@
+import type { Milestone } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { AreaChart, type TooltipProps } from 'recharts'
@@ -74,9 +75,14 @@ const chartMeta = {
 interface Props {
   data: RecategorisedActivityChartData | undefined
   isLoading: boolean
+  milestones: Milestone[]
 }
 
-export function ScalingRecategorizedActivityChart({ data, isLoading }: Props) {
+export function ScalingRecategorizedActivityChart({
+  data,
+  isLoading,
+  milestones,
+}: Props) {
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
   const { metric } = useActivityMetricContext()
 
@@ -124,6 +130,7 @@ export function ScalingRecategorizedActivityChart({ data, isLoading }: Props) {
         onItemClick: toggleDataKey,
         disableOnboarding: true,
       }}
+      milestones={milestones}
     >
       <AreaChart data={chartData} margin={{ top: 20 }}>
         <defs>

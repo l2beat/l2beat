@@ -49,7 +49,11 @@ export function ScalingActivityChart({ milestones, entries }: Props) {
       <div className="mt-1 mb-2">
         <ChartTimeRange range={chartRange} />
       </div>
-      <ScalingRecategorizedActivityChart data={data} isLoading={isLoading} />
+      <ScalingRecategorizedActivityChart
+        data={data}
+        isLoading={isLoading}
+        milestones={milestones}
+      />
       <ActivityRatioChart
         data={ratioData}
         isLoading={isLoading}
