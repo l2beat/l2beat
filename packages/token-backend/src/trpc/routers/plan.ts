@@ -6,9 +6,9 @@ import { router } from '../trpc'
 
 export const planRouter = router({
   generate: readWriteProcedure.input(Intent).mutation(({ input, ctx }) => {
-    return generatePlan(ctx.db, input, { meta: { email: ctx.email } })
+    return generatePlan(ctx.db, input, { meta: { email: ctx.session.email } })
   }),
   execute: readWriteProcedure.input(Plan).mutation(({ input, ctx }) => {
-    return executePlan(ctx.db, input, { email: ctx.email })
+    return executePlan(ctx.db, input, { email: ctx.session.email })
   }),
 })
