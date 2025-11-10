@@ -20,7 +20,8 @@
     "eth:0xa42baa160DB5Aea58a1800ac6a33a92488288767": "TokenPool",
     "eth:0x3690367eDd22eDE1FE827258352F900fBD05b8Dc": "TokenPool",
     "eth:0x80E873D80ed41ED0a3aAeEb6efbaA01839f2111b": "TokenPool",
-    "eth:0x02E87189512d1Bdc3Ca7795CAb68A8311703B88C": "TokenPool"
+    "eth:0x02E87189512d1Bdc3Ca7795CAb68A8311703B88C": "TokenPool",
+    "eth:0xbc7b13D6E42D5D0ce14Af43482aE8aF7A5927c06": "TokenPool"
   },
   "overrides": {
     "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA": {

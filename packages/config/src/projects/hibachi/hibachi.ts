@@ -22,6 +22,7 @@ export const hibachi = {
     links: {
       websites: ['https://hibachi.xyz/trade'],
       documentation: ['https://docs.hibachi.xyz/'],
+      repositories: ['https://github.com/hibachi-xyz/hibachi_sdk'],
       socialMedia: ['https://x.com/hibachi_xyz'],
     },
   },
