@@ -1451,7 +1451,6 @@ function getDAProvider(
   hostChainDA?: DAProvider,
 ): DAProvider {
   const postsToCelestia =
-    templateVars.usesEthereumBlobs ??
     templateVars.discovery.getContractValue<{
       isUsingCelestia: boolean
     }>('SystemConfig', 'opStackDA').isUsingCelestia
@@ -1719,7 +1718,6 @@ function getTrackedTxs(
 
 function postsToEthereum(templateVars: OpStackConfigCommon): boolean {
   const postsToCelestia =
-    templateVars.usesEthereumBlobs ??
     templateVars.discovery.getContractValue<{
       isUsingCelestia: boolean
     }>('SystemConfig', 'opStackDA').isUsingCelestia
