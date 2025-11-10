@@ -56,3 +56,23 @@ export const protectedProcedure = (options?: {
       ctx: { email: payload.email as string, permissions: ['read', 'write'] },
     })
   })
+
+export const readOnlyProcedure = protectedProcedure().use((opts) => {
+  if (!opts.ctx.permissions.includes('read')) {
+    throw new TRPCError({
+      code: 'UNAUTHORIZED',
+      cause: 'insufficient access',
+    })
+  }
+  return opts.next()
+})
+
+export const readWriteProcedure = protectedProcedure().use((opts) => {
+  if (!opts.ctx.permissions.includes('write')) {
+    throw new TRPCError({
+      code: 'UNAUTHORIZED',
+      cause: 'insufficient access',
+    })
+  }
+  return opts.next()
+})

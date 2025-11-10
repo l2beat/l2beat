@@ -1,6 +1,7 @@
 import { v } from '@l2beat/validate'
 import fuzzysort from 'fuzzysort'
-import { readOnlyProcedure, router } from '../trpc'
+import { readOnlyProcedure } from '../procedures'
+import { router } from '../trpc'
 
 export const searchRouter = router({
   tokens: readOnlyProcedure.input(v.string()).query(async ({ ctx, input }) => {

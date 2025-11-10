@@ -3,7 +3,8 @@ import { assert, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { Chain } from '../../chains/Chain'
 import type { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
-import { readOnlyProcedure, router } from '../trpc'
+import { readOnlyProcedure } from '../procedures'
+import { router } from '../trpc'
 
 export interface DeployedTokensRouterDeps {
   coingeckoClient: CoingeckoClient

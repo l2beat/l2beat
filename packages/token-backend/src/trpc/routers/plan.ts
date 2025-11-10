@@ -1,7 +1,8 @@
 import { executePlan } from '../../execution'
 import { Intent } from '../../intents'
 import { generatePlan, Plan } from '../../planning'
-import { readWriteProcedure, router } from '../trpc'
+import { readWriteProcedure } from '../procedures'
+import { router } from '../trpc'
 
 export const planRouter = router({
   generate: readWriteProcedure.input(Intent).mutation(({ input, ctx }) => {

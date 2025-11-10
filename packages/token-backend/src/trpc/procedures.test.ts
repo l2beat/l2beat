@@ -2,7 +2,7 @@ import type { TokenDatabase } from '@l2beat/database'
 import { expect, mockObject } from 'earl'
 import type { jwtVerify } from 'jose'
 import type { AuthConfig, Config } from '../config/Config'
-import { protectedProcedure } from './protectedProcedure'
+import { protectedProcedure } from './procedures'
 import { createCallerFactory, trcpRoot } from './trpc'
 
 const READ_ONLY_TOKEN = 'read-only-token-abcd-1234'
