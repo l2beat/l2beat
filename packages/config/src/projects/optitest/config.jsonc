@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "optitest",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["oeth:0x94b008aA00579c1307B0EF2c499aD98a8ce58e58"] // USDT token
+}
