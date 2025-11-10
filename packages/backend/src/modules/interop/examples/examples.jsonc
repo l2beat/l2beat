@@ -906,6 +906,23 @@
       }
     ]
   },
+  "orbitstack-customgateway": {
+    "txs": [
+      // ethereum -> arbitrum (dai deposit)
+      {
+        "chain": "ethereum",
+        "tx": "0xb363640ecdff6a54f7dbd37a08eb7be3b18b2c61b0ec291999f915926c6d6806"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x9d72d3c0741fde0c17f500fe6bbf9466b4a75c5eea72784bb6b1e131c198dfe9"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x7cd3bd135f9d5aaf5c1d19ceba5caba6241e69abbd5ffdd935acd44ec5bd6335"
+      }
+    ]
+  },
   "orbitstack-wethgateway": {
     "txs": [
       // ethereum -> arbitrum (weth deposit via unwrap/rewrap)
