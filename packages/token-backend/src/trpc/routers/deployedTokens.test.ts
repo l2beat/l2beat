@@ -282,6 +282,7 @@ describe('deployedTokensRouter', () => {
       const mockDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
+          getByChainsAndAddresses: mockFn().resolvesTo([]),
         }),
         chain: mockObject<ChainRepository>({
           findByName: mockFn().resolvesTo(chainRecord),
@@ -348,6 +349,7 @@ describe('deployedTokensRouter', () => {
       const mockDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
+          getByChainsAndAddresses: mockFn().resolvesTo([]),
         }),
         chain: mockObject<ChainRepository>({
           findByName: mockFn().resolvesTo(chainRecord),
@@ -414,6 +416,7 @@ describe('deployedTokensRouter', () => {
               abstractTokenId: null,
               deploymentTimestamp: 0,
             }),
+          getByChainsAndAddresses: mockFn().resolvesTo([]),
         }),
         chain: mockObject<ChainRepository>({
           findByName: mockFn().resolvesTo(chainRecord),
@@ -478,6 +481,7 @@ describe('deployedTokensRouter', () => {
       const mockDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
+          getByChainsAndAddresses: mockFn().resolvesTo([]),
         }),
         chain: mockObject<ChainRepository>({
           findByName: mockFn().resolvesTo(chainRecord),
