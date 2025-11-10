@@ -9,6 +9,11 @@ export class ConfigModel {
   private readonly config: DiscoveryConfigSchema
   private readonly overrides: Record<string, ContractConfigModel> = {}
 
+  static fromRawJsonc(jsonc: string) {
+    const parsed = parse(jsonc) as unknown as DiscoveryConfigSchema
+    return new ConfigModel(parsed)
+  }
+
   constructor(config: DiscoveryConfigSchema) {
     this.config = clone(config)
 
@@ -17,15 +22,6 @@ export class ConfigModel {
     )) {
       this.overrides[address] = new ContractConfigModel(contractConfig)
     }
-  }
-
-  static fromRawJsonc(jsonc: string) {
-    const parsed = parse(jsonc) as unknown as DiscoveryConfigSchema
-    return new ConfigModel(parsed)
-  }
-
-  static fromPeek(config: DiscoveryConfigSchema) {
-    return new ConfigModel(config)
   }
 
   peek(): DiscoveryConfigSchema {
@@ -44,26 +40,6 @@ export class ConfigModel {
 
   diff(other: ConfigModel) {
     return stringify(this.peek()) !== stringify(other.peek())
-  }
-
-  private getOverride(id: string) {
-    if (!this.overrides[id]) {
-      return new ContractConfigModel({} as ContractConfigSchema)
-    }
-
-    return this.overrides[id]
-  }
-
-  private buildOverrides(
-    overrides: Record<string, ContractConfigModel>,
-  ): Record<string, ContractConfigSchema> {
-    const result: Record<string, ContractConfigSchema> = {}
-    for (const [address, contractConfig] of Object.entries(overrides)) {
-      if (!contractConfig.isEmpty()) {
-        result[address] = contractConfig.peek()
-      }
-    }
-    return result
   }
 
   addToIgnoredMethods(id: string, method: string) {
@@ -123,7 +99,7 @@ export class ConfigModel {
   patch(patch: Partial<DiscoveryConfigSchema>) {
     const newConfig = clone(this.config)
     assign(newConfig, patch)
-    return ConfigModel.fromPeek(newConfig)
+    return new ConfigModel(newConfig)
   }
 
   patchOverride(
@@ -146,21 +122,38 @@ export class ConfigModel {
   getIgnoreInWatchMode(id: string) {
     return this.overrides[id]?.ignoreInWatchMode
   }
+
+  private getOverride(id: string) {
+    if (!this.overrides[id]) {
+      return new ContractConfigModel({} as ContractConfigSchema)
+    }
+
+    return this.overrides[id]
+  }
+
+  private buildOverrides(
+    overrides: Record<string, ContractConfigModel>,
+  ): Record<string, ContractConfigSchema> {
+    const result: Record<string, ContractConfigSchema> = {}
+    for (const [address, contractConfig] of Object.entries(overrides)) {
+      if (!contractConfig.isEmpty()) {
+        result[address] = contractConfig.peek()
+      }
+    }
+    return result
+  }
 }
 
 export class ContractConfigModel {
   private readonly config: ContractConfigSchema
-  constructor(config: ContractConfigSchema) {
-    this.config = clone(config)
-  }
 
   static fromRawJsonc(jsonc: string) {
     const parsed = parse(jsonc) as unknown as ContractConfigSchema
     return new ContractConfigModel(parsed)
   }
 
-  static fromPeek(config: ContractConfigSchema) {
-    return new ContractConfigModel(config)
+  constructor(config: ContractConfigSchema) {
+    this.config = clone(config)
   }
 
   isEmpty() {
@@ -226,7 +219,7 @@ export class ContractConfigModel {
   private patch(patch: Partial<ContractConfigSchema>) {
     const newConfig = clone(this.config)
     assign(newConfig, patch)
-    return ContractConfigModel.fromPeek(newConfig)
+    return new ContractConfigModel(newConfig)
   }
 
   private addToArray(
