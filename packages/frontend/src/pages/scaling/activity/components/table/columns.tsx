@@ -1,7 +1,7 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
+import { Badge } from '~/components/badge/Badge'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
-import { UnderReviewBadge } from '~/components/badge/UnderReviewBadge'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { PrimaryValueCell } from '~/components/table/cells/PrimaryValueCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
@@ -60,7 +60,11 @@ export const getScalingActivityColumns = (
       if (id === ProjectId.ETHEREUM) {
         content = EM_DASH
       } else if (!type) {
-        content = <UnderReviewBadge />
+        content = (
+          <Badge type="gray" size="small">
+            Unknown
+          </Badge>
+        )
       } else {
         content = type
       }
