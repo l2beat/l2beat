@@ -30,16 +30,7 @@ export class ConfigModel {
 
   peek(): DiscoveryConfigSchema {
     const cloned = clone(this.config)
-
-    const overrides: Record<string, ContractConfigSchema> = {}
-    for (const [address, contractConfig] of Object.entries(this.overrides)) {
-      if (!contractConfig.isEmpty()) {
-        overrides[address] = contractConfig.peek()
-      }
-    }
-
-    assign(cloned, { overrides })
-
+    assign(cloned, { overrides: this.buildOverrides(this.overrides) })
     return cloned
   }
 
@@ -61,6 +52,18 @@ export class ConfigModel {
     }
 
     return this.overrides[id]
+  }
+
+  private buildOverrides(
+    overrides: Record<string, ContractConfigModel>,
+  ): Record<string, ContractConfigSchema> {
+    const result: Record<string, ContractConfigSchema> = {}
+    for (const [address, contractConfig] of Object.entries(overrides)) {
+      if (!contractConfig.isEmpty()) {
+        result[address] = contractConfig.peek()
+      }
+    }
+    return result
   }
 
   addToIgnoredMethods(id: string, method: string) {
@@ -117,25 +120,19 @@ export class ConfigModel {
     )
   }
 
+  patch(patch: Partial<DiscoveryConfigSchema>) {
+    const newConfig = clone(this.config)
+    assign(newConfig, patch)
+    return ConfigModel.fromPeek(newConfig)
+  }
+
   patchOverride(
     id: string,
     patch: (override: ContractConfigModel) => ContractConfigModel,
   ) {
     const newOverride = patch(this.getOverride(id))
     const overrides = { ...this.overrides, [id]: newOverride }
-
-    const newConfig = clone(this.config)
-
-    const newOverrides: Record<string, ContractConfigSchema> = {}
-    for (const [address, contractConfig] of Object.entries(overrides)) {
-      if (!contractConfig.isEmpty()) {
-        newOverrides[address] = contractConfig.peek()
-      }
-    }
-
-    assign(newConfig, { overrides: newOverrides })
-
-    return new ConfigModel(newConfig)
+    return this.patch({ overrides: this.buildOverrides(overrides) })
   }
 
   getIgnoredMethods(id: string) {
