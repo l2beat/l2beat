@@ -19,7 +19,7 @@ import {
 } from '../../core/tooltip/Tooltip'
 
 interface TypeInfoProps {
-  children: string | undefined
+  children: React.ReactNode | undefined
   stacks?: ProjectScalingStack[]
 }
 

@@ -246,6 +246,26 @@ describeTokenDatabase(ChainRepository.name, (db) => {
     })
   })
 
+  describe(ChainRepository.prototype.findByName.name, () => {
+    it('returns undefined when chain does not exist', async () => {
+      const result = await repository.findByName('nonexistent')
+      expect(result).toEqual(undefined)
+    })
+
+    it('finds a chain by name', async () => {
+      const records = [
+        mockChain({ name: 'ethereum', chainId: 1 }),
+        mockChain({ name: 'polygon', chainId: 137 }),
+        mockChain({ name: 'arbitrum', chainId: 42161 }),
+      ]
+
+      await repository.insertMany(records)
+
+      const result = await repository.findByName('polygon')
+      expect(result).toEqual(records[1])
+    })
+  })
+
   describe(ChainRepository.prototype.deleteAll.name, () => {
     it('deletes all records', async () => {
       await repository.insertMany([

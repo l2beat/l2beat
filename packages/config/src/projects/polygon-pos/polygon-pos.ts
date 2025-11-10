@@ -161,6 +161,7 @@ export const polygonpos: ScalingProject = {
     chainId,
     explorerUrl: 'https://polygonscan.com',
     sinceTimestamp: UnixTime(1590856200),
+    coingeckoPlatform: 'polygon-pos',
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
