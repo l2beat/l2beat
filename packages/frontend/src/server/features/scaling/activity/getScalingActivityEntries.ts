@@ -1,4 +1,8 @@
-import type { Project } from '@l2beat/config'
+import type {
+  Project,
+  ProjectScalingCategory,
+  ProjectScalingStack,
+} from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
@@ -45,6 +49,8 @@ export async function getScalingActivityEntries() {
 }
 
 export interface ScalingActivityEntry extends CommonScalingEntry {
+  type: ProjectScalingCategory | undefined
+  stacks: ProjectScalingStack[] | undefined
   data:
     | {
         tps: ActivityData
@@ -81,6 +87,8 @@ function getScalingProjectActivityEntry(
 
   return {
     ...getCommonScalingEntry({ project, changes, syncWarning }),
+    type: project.scalingInfo.type,
+    stacks: project.scalingInfo.stacks,
     data: {
       tps: data.tps,
       uops: data.uops,
@@ -102,6 +110,8 @@ function getEthereumEntry(
     isLayer3: false,
     slug: 'ethereum',
     tab: 'rollups',
+    stacks: undefined,
+    type: undefined,
     filterable: undefined,
     backgroundColor: 'blue',
     data: {
