@@ -1,0 +1,189 @@
+{
+  "name": "cartesi-prt-honeypot-v2",
+  "timestamp": 1762806204,
+  "configHash": "0x9d5c2098619b50c3befaf283ed707629447605d49363d5c08da923719cc8ed50",
+  "entries": [
+    {
+      "name": "InputBox",
+      "address": "eth:0x1b51e2992A2755Ba4D6F7094032DF91991a0Cfac",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x9666c4a510c5491dc54f36666f93eea759e234b0459494dfb5b9f2f9cc5bff21"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762263971,
+      "sinceBlock": 23726342,
+      "values": { "$immutable": true, "getDeploymentBlockNumber": 23726342 },
+      "implementationNames": {
+        "eth:0x1b51e2992A2755Ba4D6F7094032DF91991a0Cfac": "InputBox"
+      }
+    },
+    {
+      "name": "MultiLevelTournamentFactory",
+      "address": "eth:0xa02997f69Dc5F1A727abE12ee36f87E28BBdEa6b",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x25a073fa8192c05534ce1d9d90a1465b618ee932fc4583710d357ffd10954bbb"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762446503,
+      "sinceBlock": 23741430,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xa02997f69Dc5F1A727abE12ee36f87E28BBdEa6b": "MultiLevelTournamentFactory"
+      }
+    },
+    {
+      "name": "ERC20Portal",
+      "address": "eth:0xACA6586A0Cf05bD831f2501E7B4aea550dA6562D",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xd247a27e2ff1305d4e59398e751d29f123c3cdaee809316af6ffa7e040d37dcf"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762264055,
+      "sinceBlock": 23726349,
+      "values": {
+        "$immutable": true,
+        "getInputBox": "eth:0x1b51e2992A2755Ba4D6F7094032DF91991a0Cfac"
+      },
+      "implementationNames": {
+        "eth:0xACA6586A0Cf05bD831f2501E7B4aea550dA6562D": "ERC20Portal"
+      }
+    },
+    {
+      "name": "DaveConsensus",
+      "address": "eth:0xF0D8374F8446E87e013Ec1435C7245E05f439259",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x8ac2d62859fb202129c58e8e04fab24de739b3f91de2dec7c98c012ad2466e89"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762562699,
+      "sinceBlock": 23751050,
+      "values": {
+        "$immutable": true,
+        "canSettle": {
+          "isFinished": false,
+          "epochNumber": 0,
+          "winnerCommitment": "0x0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "getApplicationContract": "eth:0xfDDF68726a28e418fA0c2a52c3134904a8c3e998",
+        "getCurrentSealedEpoch": {
+          "epochNumber": 0,
+          "inputIndexLowerBound": 0,
+          "inputIndexUpperBound": 0,
+          "tournament": "eth:0xA2835312696Afa86c969e40831857dbB1412627f"
+        },
+        "getDeploymentBlockNumber": 23751050,
+        "getInputBox": "eth:0x1b51e2992A2755Ba4D6F7094032DF91991a0Cfac",
+        "getTournamentFactory": "eth:0xa02997f69Dc5F1A727abE12ee36f87E28BBdEa6b"
+      },
+      "implementationNames": {
+        "eth:0xF0D8374F8446E87e013Ec1435C7245E05f439259": "DaveConsensus"
+      }
+    },
+    {
+      "name": "Application",
+      "address": "eth:0xfDDF68726a28e418fA0c2a52c3134904a8c3e998",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x9a732e55de9aeae2ead7314600feb957c1d7d92daaac68f6d61fdcf0e3bbed2d"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762562699,
+      "sinceBlock": 23751050,
+      "values": {
+        "$immutable": true,
+        "getDataAvailability": "0xb12c9ede0000000000000000000000001b51e2992a2755ba4d6f7094032df91991a0cfac",
+        "getDeploymentBlockNumber": 23751050,
+        "getNumberOfExecutedOutputs": 0,
+        "getOutputsMerkleRootValidator": "eth:0xF0D8374F8446E87e013Ec1435C7245E05f439259",
+        "getTemplateHash": "0x144d45af1181b35f2b11c4b1150d6cb16934c28093707fb97c911ff16b3fe609",
+        "owner": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0xfDDF68726a28e418fA0c2a52c3134904a8c3e998": "Application"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x1b51e2992A2755Ba4D6F7094032DF91991a0Cfac": [
+      "error InputTooLarge(address appContract, uint256 inputLength, uint256 maxInputLength)",
+      "event InputAdded(address indexed appContract, uint256 indexed index, bytes input)",
+      "function addInput(address appContract, bytes payload) returns (bytes32)",
+      "function getDeploymentBlockNumber() view returns (uint256)",
+      "function getInputHash(address appContract, uint256 index) view returns (bytes32)",
+      "function getNumberOfInputs(address appContract) view returns (uint256)"
+    ],
+    "eth:0xa02997f69Dc5F1A727abE12ee36f87E28BBdEa6b": [
+      "constructor(address _topFactory, address _middleFactory, address _bottomFactory, address _tournamentParametersProvider, address _stateTransition)",
+      "event TournamentCreated(address tournament)",
+      "function instantiate(bytes32 _initialHash, address _provider) returns (address)",
+      "function instantiateBottom(bytes32 _initialHash, bytes32 _contestedCommitmentOne, bytes32 _contestedFinalStateOne, bytes32 _contestedCommitmentTwo, bytes32 _contestedFinalStateTwo, uint64 _allowance, uint256 _startCycle, uint64 _level, address _provider) returns (address)",
+      "function instantiateMiddle(bytes32 _initialHash, bytes32 _contestedCommitmentOne, bytes32 _contestedFinalStateOne, bytes32 _contestedCommitmentTwo, bytes32 _contestedFinalStateTwo, uint64 _allowance, uint256 _startCycle, uint64 _level, address _provider) returns (address)",
+      "function instantiateTop(bytes32 _initialHash, address _provider) returns (address)"
+    ],
+    "eth:0xACA6586A0Cf05bD831f2501E7B4aea550dA6562D": [
+      "constructor(address inputBox)",
+      "error ERC20TransferFailed()",
+      "function depositERC20Tokens(address token, address appContract, uint256 value, bytes execLayerData)",
+      "function getInputBox() view returns (address)"
+    ],
+    "eth:0xF0D8374F8446E87e013Ec1435C7245E05f439259": [
+      "constructor(address inputBox, address appContract, address tournamentFactory, bytes32 initialMachineStateHash)",
+      "error ApplicationMismatch(address expected, address received)",
+      "error IncorrectEpochNumber(uint256 received, uint256 actual)",
+      "error InputHashMismatch(bytes32 fromReceivedInput, bytes32 fromInputBox)",
+      "error InvalidOutputsMerkleRootProof(bytes32 settledState)",
+      "error InvalidOutputsMerkleRootProofSize(uint256 suppliedProofSize)",
+      "error TournamentNotFinishedYet()",
+      "event ConsensusCreation(address inputBox, address appContract, address tournamentFactory)",
+      "event EpochSealed(uint256 epochNumber, uint256 inputIndexLowerBound, uint256 inputIndexUpperBound, bytes32 initialMachineStateHash, bytes32 outputsMerkleRoot, address tournament)",
+      "function canSettle() view returns (bool isFinished, uint256 epochNumber, bytes32 winnerCommitment)",
+      "function getApplicationContract() view returns (address)",
+      "function getCurrentSealedEpoch() view returns (uint256 epochNumber, uint256 inputIndexLowerBound, uint256 inputIndexUpperBound, address tournament)",
+      "function getDeploymentBlockNumber() view returns (uint256)",
+      "function getInputBox() view returns (address)",
+      "function getTournamentFactory() view returns (address)",
+      "function isOutputsMerkleRootValid(address appContract, bytes32 outputsMerkleRoot) view returns (bool)",
+      "function provideMerkleRootOfInput(uint256 inputIndexWithinEpoch, bytes input) view returns (bytes32)",
+      "function settle(uint256 epochNumber, bytes32 outputsMerkleRoot, bytes32[] proof)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+    ],
+    "eth:0xfDDF68726a28e418fA0c2a52c3134904a8c3e998": [
+      "constructor(address outputsMerkleRootValidator, address initialOwner, bytes32 templateHash, bytes dataAvailability)",
+      "error InsufficientFunds(uint256 value, uint256 balance)",
+      "error InvalidOutputHashesSiblingsArrayLength()",
+      "error InvalidOutputsMerkleRoot(bytes32 outputsMerkleRoot)",
+      "error OutputNotExecutable(bytes output)",
+      "error OutputNotReexecutable(bytes output)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error ReentrancyGuardReentrantCall()",
+      "event OutputExecuted(uint64 outputIndex, bytes output)",
+      "event OutputsMerkleRootValidatorChanged(address newOutputsMerkleRootValidator)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function executeOutput(bytes output, tuple(uint64 outputIndex, bytes32[] outputHashesSiblings) proof)",
+      "function getDataAvailability() view returns (bytes)",
+      "function getDeploymentBlockNumber() view returns (uint256)",
+      "function getNumberOfExecutedOutputs() view returns (uint256)",
+      "function getOutputsMerkleRootValidator() view returns (address)",
+      "function getTemplateHash() view returns (bytes32)",
+      "function migrateToOutputsMerkleRootValidator(address newOutputsMerkleRootValidator)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function validateOutput(bytes output, tuple(uint64 outputIndex, bytes32[] outputHashesSiblings) proof) view",
+      "function validateOutputHash(bytes32 outputHash, tuple(uint64 outputIndex, bytes32[] outputHashesSiblings) proof) view",
+      "function wasOutputExecuted(uint256 outputIndex) view returns (bool)"
+    ]
+  },
+  "usedTemplates": {},
+  "usedBlockNumbers": { "ethereum": 23771217 },
+  "permissionsConfigHash": "0x60330849f4962e5441420d99a66de3e52a6a99ec4172aa9c92b0ed0fc92df5e4"
+}
