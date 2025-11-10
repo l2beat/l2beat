@@ -31,7 +31,7 @@ export function ScalingActivityCard(props: Props) {
         <UopsExplorerLink />
       </div>
 
-      <PrimaryCard className="mt-2">
+      <PrimaryCard className="mt-4">
         <ScalingActivityChart entries={entries} milestones={props.milestones} />
         <HorizontalSeparator className="mt-5 mb-3" />
         <TableSortingProvider initialSort={initialSort}>
