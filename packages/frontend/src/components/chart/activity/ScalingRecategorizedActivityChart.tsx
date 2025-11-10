@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { AreaChart, type TooltipProps } from 'recharts'
 import {
@@ -27,7 +27,6 @@ import {
   YellowFillGradientDef,
   YellowStrokeGradientDef,
 } from '~/components/core/chart/defs/YellowGradientDef'
-import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -41,7 +40,7 @@ import { formatRange } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 
-const chartMeta = {
+export const RECATEGORISED_ACTIVITY_CHART_META = {
   rollups: {
     label: 'Rollups',
     color: 'var(--chart-pink)',
@@ -76,14 +75,20 @@ interface Props {
   data: RecategorisedActivityChartData | undefined
   isLoading: boolean
   milestones: Milestone[]
+  chartMeta: ChartMeta
+  interactiveLegend: {
+    dataKeys: string[]
+    onItemClick: (dataKey: string) => void
+  }
 }
 
 export function ScalingRecategorizedActivityChart({
   data,
   isLoading,
   milestones,
+  chartMeta,
+  interactiveLegend: { dataKeys, onItemClick },
 }: Props) {
-  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
   const { metric } = useActivityMetricContext()
 
   const chartData = useMemo(() => {
@@ -127,7 +132,7 @@ export function ScalingRecategorizedActivityChart({
       isLoading={isLoading}
       interactiveLegend={{
         dataKeys,
-        onItemClick: toggleDataKey,
+        onItemClick,
         disableOnboarding: true,
       }}
       milestones={milestones}
@@ -174,7 +179,11 @@ export function ScalingRecategorizedActivityChart({
         })}
         <ChartTooltip
           content={
-            <CustomTooltip syncedUntil={data?.syncedUntil} metric={metric} />
+            <CustomTooltip
+              syncedUntil={data?.syncedUntil}
+              metric={metric}
+              chartMeta={chartMeta}
+            />
           }
         />
         {getCommonChartComponents({
@@ -197,9 +206,11 @@ function CustomTooltip({
   label,
   syncedUntil,
   metric,
+  chartMeta,
 }: TooltipProps<number, string> & {
   syncedUntil: number | undefined
   metric: ActivityMetric
+  chartMeta: ChartMeta
 }) {
   if (!active || !payload || typeof label !== 'number') return null
 
@@ -215,6 +226,8 @@ function CustomTooltip({
           {payload.map((entry) => {
             if (entry.type === 'none') return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
+            assert(config, 'No config')
+
             return (
               <div
                 key={entry.name}
@@ -252,6 +265,7 @@ function CustomTooltip({
             )
               return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
+            assert(config, 'No config')
             return (
               <div
                 key={entry.name}

@@ -2,6 +2,7 @@ import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -15,7 +16,10 @@ import { api } from '~/trpc/React'
 import type { ChartScale } from '../types'
 import { ActivityChartHeader } from './ActivityChartHeader'
 import { ActivityRatioChart } from './ActivityRatioChart'
-import { ScalingRecategorizedActivityChart } from './ScalingRecategorizedActivityChart'
+import {
+  RECATEGORISED_ACTIVITY_CHART_META,
+  ScalingRecategorizedActivityChart,
+} from './ScalingRecategorizedActivityChart'
 import { ScalingRecategorizedActivityStats } from './ScalingRecategorizedActivityStats'
 import { getRatioChartData } from './utils/getRatioChartData'
 
@@ -29,6 +33,9 @@ export function ScalingActivityChart({ milestones, entries }: Props) {
   const [scale, setScale] = useLocalStorage<ChartScale>(
     'scaling-activity-scale',
     'lin',
+  )
+  const { dataKeys, toggleDataKey } = useChartDataKeys(
+    RECATEGORISED_ACTIVITY_CHART_META,
   )
 
   const { data, isLoading } = api.activity.recategorisedChart.useQuery({
@@ -53,6 +60,11 @@ export function ScalingActivityChart({ milestones, entries }: Props) {
         data={data}
         isLoading={isLoading}
         milestones={milestones}
+        chartMeta={RECATEGORISED_ACTIVITY_CHART_META}
+        interactiveLegend={{
+          dataKeys,
+          onItemClick: toggleDataKey,
+        }}
       />
       <ActivityRatioChart
         data={ratioData}
