@@ -267,6 +267,7 @@ describe('deployedTokensRouter', () => {
           decimals: undefined,
           deploymentTimestamp: undefined,
           abstractTokenId: undefined,
+          coingeckoId: undefined,
         },
       })
     })
@@ -333,6 +334,7 @@ describe('deployedTokensRouter', () => {
         deploymentTimestamp: undefined,
         abstractTokenId: '1',
         otherChains: [],
+        coingeckoId: 'usd-coin',
       })
     })
 
