@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
-import { CheckIcon, ListPlusIcon, PlusIcon } from 'lucide-react'
+import { CheckIcon, CoinsIcon, ListPlusIcon, PlusIcon } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useSearchParams } from 'react-router-dom'
@@ -11,15 +11,23 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '~/components/core/Card'
+import {
+  Empty,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from '~/components/core/Empty'
 import {
   DeployedTokenForm,
   DeployedTokenSchema,
   setDeployedTokenExistsError,
 } from '~/components/forms/DeployedTokenForm'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
+import { TokenImportDialog } from '~/components/TokenImportDialog'
 import { useQueryState } from '~/hooks/useQueryState'
 import { api } from '~/react-query/trpc'
 import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
@@ -45,6 +53,7 @@ export function AddDeployedToken() {
     resolver: validateResolver(DeployedTokenSchema),
   })
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
+  const [isImportDialogOpen, setIsImportDialogOpen] = useState(false)
 
   const { data: abstractTokens, isLoading: areAbstractTokensLoading } =
     api.abstractTokens.getAll.useQuery()
@@ -139,6 +148,22 @@ export function AddDeployedToken() {
     })
   }
 
+  function handleImport(tokens: { chain: string; address: string }[]) {
+    if (!chain && !address) {
+      const first = tokens.shift()
+      if (!first) return
+
+      setSearchParams((prev) => {
+        const newParams = new URLSearchParams(prev)
+        newParams.set('chain', first.chain)
+        newParams.set('address', first.address)
+        return newParams
+      })
+    }
+
+    setQueue((prev) => [...prev, ...tokens])
+  }
+
   return (
     <>
       <PlanConfirmationDialog
@@ -161,6 +186,11 @@ export function AddDeployedToken() {
             setQueue(queue.slice(1))
           }
         }}
+      />
+      <TokenImportDialog
+        open={isImportDialogOpen}
+        onOpenChange={setIsImportDialogOpen}
+        onImport={handleImport}
       />
       <Card className="relative">
         <CardContent>
@@ -187,12 +217,12 @@ export function AddDeployedToken() {
           </DeployedTokenForm>
         </CardContent>
 
-        {queue.length > 0 && (
-          <Card className="absolute top-0 left-full ml-4 w-full max-w-xs">
-            <CardHeader>
-              <CardTitle>Queue</CardTitle>
-            </CardHeader>
-            <CardContent>
+        <Card className="absolute top-0 left-full ml-4 max-h-[400px] w-full max-w-xs overflow-y-auto">
+          <CardHeader>
+            <CardTitle>Queue</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {queue.length > 0 ? (
               <ul className="list-inside list-decimal">
                 {queue.map((item) => (
                   <li
@@ -203,9 +233,26 @@ export function AddDeployedToken() {
                   </li>
                 ))}
               </ul>
-            </CardContent>
-          </Card>
-        )}
+            ) : (
+              <Empty>
+                <EmptyHeader>
+                  <EmptyMedia variant="icon">
+                    <CoinsIcon />
+                  </EmptyMedia>
+                  <EmptyTitle>No tokens in queue</EmptyTitle>
+                </EmptyHeader>
+              </Empty>
+            )}
+          </CardContent>
+          <CardFooter>
+            <Button
+              className="w-full"
+              onClick={() => setIsImportDialogOpen(true)}
+            >
+              Import
+            </Button>
+          </CardFooter>
+        </Card>
       </Card>
       {checks?.data?.suggestions && checks.data.suggestions.length !== 0 && (
         <Card className="mt-4">
