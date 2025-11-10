@@ -23,7 +23,10 @@ function main() {
   app.use(
     '/trpc',
     trpcExpress.createExpressMiddleware({
-      router: createAppRouter({ coingeckoClient }),
+      router: createAppRouter({
+        coingeckoClient,
+        etherscanApiKey: config.etherscanApiKey,
+      }),
       createContext: ({ req }) =>
         createTRPCContext({
           headers: new Headers(req.headers as Record<string, string>),

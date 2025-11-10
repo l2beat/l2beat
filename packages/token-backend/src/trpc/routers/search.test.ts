@@ -2,7 +2,6 @@ import type { TokenDatabase } from '@l2beat/database'
 import type { AbstractTokenRepository } from '@l2beat/database/dist/repositories/AbstractTokenRepository'
 import type { DeployedTokenRepository } from '@l2beat/database/dist/repositories/DeployedTokenRepository'
 import { expect, mockFn, mockObject } from 'earl'
-import type { Config } from '../../config/Config'
 import { createCallerFactory } from '../trpc'
 import { searchRouter } from './search'
 
@@ -193,7 +192,10 @@ function createRouter(mockDb: TokenDatabase) {
   const callerFactory = createCallerFactory(searchRouter)
   return callerFactory({
     headers: new Headers(),
-    config: mockObject<Config>({ auth: false }),
+    session: {
+      email: 'test@example.com',
+      permissions: ['read', 'write'],
+    },
     db: mockDb,
   })
 }

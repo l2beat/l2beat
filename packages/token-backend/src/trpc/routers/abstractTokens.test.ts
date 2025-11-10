@@ -3,7 +3,6 @@ import type { AbstractTokenRepository } from '@l2beat/database/dist/repositories
 import type { DeployedTokenRepository } from '@l2beat/database/dist/repositories/DeployedTokenRepository'
 import { expect, mockFn, mockObject } from 'earl'
 import type { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
-import type { Config } from '../../config/Config'
 import { createCallerFactory } from '../trpc'
 import { abstractTokensRouter } from './abstractTokens'
 
@@ -336,7 +335,10 @@ function createRouter(
   const callerFactory = createCallerFactory(router)
   return callerFactory({
     headers: new Headers(),
-    config: mockObject<Config>({ auth: false }),
+    session: {
+      email: 'test@example.com',
+      permissions: ['read', 'write'],
+    },
     db: mockDb,
   })
 }

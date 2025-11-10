@@ -7,16 +7,20 @@ import { planRouter } from './routers/plan'
 import { searchRouter } from './routers/search'
 import { router } from './trpc'
 
+interface AppRouterDeps {
+  coingeckoClient: CoingeckoClient
+  etherscanApiKey: string | undefined
+}
+
 export function createAppRouter({
   coingeckoClient,
-}: {
-  coingeckoClient: CoingeckoClient
-}) {
+  etherscanApiKey,
+}: AppRouterDeps) {
   return router({
     plan: planRouter,
     chains: chainsRouter,
     abstractTokens: abstractTokensRouter({ coingeckoClient }),
-    deployedTokens: deployedTokensRouter({ coingeckoClient }),
+    deployedTokens: deployedTokensRouter({ coingeckoClient, etherscanApiKey }),
     search: searchRouter,
   })
 }

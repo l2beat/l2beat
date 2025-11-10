@@ -4,7 +4,6 @@ import type { ChainRepository } from '@l2beat/database/dist/repositories/ChainRe
 import type { DeployedTokenRepository } from '@l2beat/database/dist/repositories/DeployedTokenRepository'
 import { expect, mockFn, mockObject } from 'earl'
 import type { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
-import type { Config } from '../../config/Config'
 import { createCallerFactory } from '../trpc'
 import { deployedTokensRouter } from './deployedTokens'
 
@@ -528,15 +527,16 @@ function createRouter(
 ) {
   const router = deployedTokensRouter({
     coingeckoClient: mockCoingeckoClient,
+    etherscanApiKey: 'test-api-key',
   })
 
   const callerFactory = createCallerFactory(router)
   return callerFactory({
     headers: new Headers(),
-    config: mockObject<Config>({
-      auth: false,
-      etherscanApiKey: 'test-api-key',
-    }),
+    session: {
+      email: 'test@example.com',
+      permissions: ['read', 'write'],
+    },
     db: mockDb,
   })
 }

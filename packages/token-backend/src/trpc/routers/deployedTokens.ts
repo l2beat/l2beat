@@ -8,10 +8,11 @@ import { router } from '../trpc'
 
 export interface DeployedTokensRouterDeps {
   coingeckoClient: CoingeckoClient
+  etherscanApiKey: string | undefined
 }
 
 export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
-  const { coingeckoClient } = deps
+  const { coingeckoClient, etherscanApiKey } = deps
 
   async function getCoinByChainAndAddress(
     db: TokenDatabase,
@@ -128,7 +129,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
         assert(chainRecord, 'Chain not found')
 
         const chain = new Chain(chainRecord, {
-          etherscanApiKey: ctx.config.etherscanApiKey,
+          etherscanApiKey,
         })
 
         let decimals: number | undefined

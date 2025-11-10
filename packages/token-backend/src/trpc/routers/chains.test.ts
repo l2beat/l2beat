@@ -4,7 +4,6 @@ import type {
   ChainRepository,
 } from '@l2beat/database/dist/repositories/ChainRepository'
 import { expect, mockFn, mockObject } from 'earl'
-import type { Config } from '../../config/Config'
 import { createCallerFactory } from '../trpc'
 import { chainsRouter } from './chains'
 
@@ -58,7 +57,10 @@ function createRouter(mockDb: TokenDatabase) {
   const callerFactory = createCallerFactory(chainsRouter)
   return callerFactory({
     headers: new Headers(),
-    config: mockObject<Config>({ auth: false }),
+    session: {
+      email: 'test@example.com',
+      permissions: ['read', 'write'],
+    },
     db: mockDb,
   })
 }
