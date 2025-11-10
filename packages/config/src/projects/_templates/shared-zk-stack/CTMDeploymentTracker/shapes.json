@@ -7,7 +7,6 @@
   "CTMDeploymentTracker_v29": {
     "hash": "0xfd2eb86126d27fd1027643f37fdf17726d5043abf02f5a0d31f4337a5c400ea5",
     "address": "eth:0x00e9d8A4b35C32880A10Feb391aDEDA0D3F90991",
-    "chain": "ethereum",
     "blockNumber": 23588465
   }
 }

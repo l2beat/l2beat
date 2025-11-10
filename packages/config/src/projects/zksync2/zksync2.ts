@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import { ESCROW } from '../../common'
+import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
@@ -17,6 +18,7 @@ const chainId = 324
 
 export const zksync2: ScalingProject = zkStackL2({
   addedAt: UnixTime(1679616000), // 2023-03-24T00:00:00Z
+  additionalBadges: [BADGES.Other.Governance],
   discovery,
   display: {
     name: 'ZKsync Era',
@@ -41,7 +43,7 @@ export const zksync2: ScalingProject = zkStackL2({
         'https://twitter.com/zksync',
         'https://twitter.com/zkSyncDevs',
       ],
-      rollupCodes: 'https://rollup.codes/zksync-era',
+      other: ['https://rollup.codes/zksync-era'],
     },
   },
   diamondContract: discovery.getContract('ZKsync'),

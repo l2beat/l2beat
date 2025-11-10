@@ -7,7 +7,6 @@
   "CSFeeOracle_v2": {
     "hash": "0xe9044668de5a790902b6bfed112ac2d764965db11a13b730c985ceff09edff4d",
     "address": "eth:0xe0B234f99E413E27D9Bc31aBba9A49A3e570Da97",
-    "chain": "ethereum",
     "blockNumber": 23519375
   }
 }

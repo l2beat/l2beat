@@ -58,10 +58,21 @@ export class CelestiaDaProvider implements DaBlobProvider {
 }
 
 function getAttributeValue<T>(
-  event: { attributes: { key: string; value?: string }[] },
-  key: string,
+  event: { attributes: { key: string; value?: string | null }[] },
+  key: 'namespaces' | 'blob_sizes',
 ): T {
   const attribute = event.attributes.find((a) => a.key === key)
-  assert(attribute && attribute.value, `${key} should be defined`)
+  if (!attribute) {
+    // if we cant find attribute as plain text we try to find it as base64 encoded
+    const base64Attribute = event.attributes.find(
+      (a) => key === Buffer.from(a.key, 'base64').toString(),
+    )
+    assert(base64Attribute && base64Attribute.value, `${key} should be defined`)
+    return JSON.parse(
+      Buffer.from(base64Attribute.value, 'base64').toString(),
+    ) as T
+  }
+  assert(attribute.value, `${key} should be defined`)
+
   return JSON.parse(attribute.value) as T
 }

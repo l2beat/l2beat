@@ -14,10 +14,11 @@ export class Cache {
     redisUrl: string,
     private readonly packageHash: string,
   ) {
+    const tls = redisUrl.startsWith('rediss')
     this.client = createClient({
       url: redisUrl,
       socket: {
-        tls: true,
+        tls,
         rejectUnauthorized: false,
       },
     })

@@ -37,6 +37,7 @@ export const zkspace: ScalingProject = {
   id: ProjectId('zkspace'),
   capability: 'appchain',
   addedAt: UnixTime(1629199654), // 2021-08-17T11:27:34Z
+  archivedAt: UnixTime(1761560995),
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.EthereumCalldata,

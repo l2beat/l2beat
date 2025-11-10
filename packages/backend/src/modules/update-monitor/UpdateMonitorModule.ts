@@ -47,7 +47,6 @@ export function createUpdateMonitorModule({
     logger,
     updateMessagesService,
     projectService,
-    config.updateMonitor.disabledChains,
   )
   const updateDiffer = config.updateMonitor.updateDifferEnabled
     ? new UpdateDiffer(

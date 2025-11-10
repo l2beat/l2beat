@@ -1,6 +1,6 @@
 {
   "name": "hyperlane",
-  "timestamp": 1760089860,
+  "timestamp": 1762264513,
   "configHash": "0x15e53bf5053f875f8eb85230e26381fad8ac41c5fdf36a8eb38a1f35b58c7b08",
   "entries": [
     {
@@ -217,7 +217,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 70,
+        "nonce": 71,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -388,7 +388,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 10 (60%)",
-        "nonce": 19,
+        "nonce": 22,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -529,17 +529,17 @@
       }
     },
     {
-      "address": "eth:0x7C96179df8619E49B389784ECDBBcA7090a5D08F",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x7f03DFC538Df4f6893D6f1AE3089eafF8924D898",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "eth:0x82950a6356316272dF1928C72F5F0A44D9673c88",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x83954FBd07f8A868F4A72103e7bBCc8Ec59CeA1C",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -647,7 +647,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 2079,
+        "nonce": 2086,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -793,7 +793,7 @@
           "eth:0x95A2115018b84cfe0630C16CCA277E1569a84BEf",
           "eth:0x4A4e996Dd8F36Dcf46b30A7F97877da922323EEb",
           "eth:0x3DE2da610996eA5A72B9Af7cB8740caC48A9329f",
-          "eth:0x7C96179df8619E49B389784ECDBBcA7090a5D08F",
+          "eth:0x83954FBd07f8A868F4A72103e7bBCc8Ec59CeA1C",
           "eth:0x544bDcBb88F2756000De227580aaad7376f3794E",
           "eth:0x9eaC7114D1a1EaBc4732A886795cFD9E6E35843f"
         ],
@@ -802,7 +802,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 231,
+        "nonce": 243,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1556,6 +1556,6 @@
     "hyperlane/Mailbox": "0xe22d3d5e3098b17b9c38a147e885155b739913b845a7ce90bdb7c76debbf8674",
     "hyperlane/StaticAggregationIsm": "0x2d6b11f237adf34ab464f429543446907842de31b085be3d3676ddc30bcf6449"
   },
-  "usedBlockNumbers": { "ethereum": 23546549 },
-  "permissionsConfigHash": "0x59c652efa73021e8e8a124d5b57c2fae43db5ec423b43fbe7f2708d9ec37e1db"
+  "usedBlockNumbers": { "ethereum": 23726386 },
+  "permissionsConfigHash": "0x1932b118a4a87c1d1714b37726f0b1a0dac168b6a92cfbb1563bb3a6e86c10b7"
 }

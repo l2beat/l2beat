@@ -71,9 +71,11 @@ export class SuperformPlugin implements InteropPlugin {
         (x) => BigInt(x.chainId),
         crossChainInitiatedDepositMulti.dstChainId,
       )
-      return SuperformCrosschainAction.create(input.ctx, {
-        $dstChain,
-      })
+      return [
+        SuperformCrosschainAction.create(input.ctx, {
+          $dstChain,
+        }),
+      ]
     }
     const crossChainInitiatedDepositSingle =
       parseCrossChainInitiatedDepositSingle(input.log, [network.address])
@@ -83,9 +85,11 @@ export class SuperformPlugin implements InteropPlugin {
         (x) => BigInt(x.chainId),
         crossChainInitiatedDepositSingle.dstChainId,
       )
-      return SuperformCrosschainAction.create(input.ctx, {
-        $dstChain,
-      })
+      return [
+        SuperformCrosschainAction.create(input.ctx, {
+          $dstChain,
+        }),
+      ]
     }
     const crossChainInitiatedWithdrawMulti =
       parseCrossChainInitiatedWithdrawMulti(input.log, [network.address])
@@ -95,9 +99,11 @@ export class SuperformPlugin implements InteropPlugin {
         (x) => BigInt(x.chainId),
         crossChainInitiatedWithdrawMulti.dstChainId,
       )
-      return SuperformCrosschainAction.create(input.ctx, {
-        $dstChain,
-      })
+      return [
+        SuperformCrosschainAction.create(input.ctx, {
+          $dstChain,
+        }),
+      ]
     }
     const crossChainInitiatedWithdrawSingle =
       parseCrossChainInitiatedWithdrawSingle(input.log, [network.address])
@@ -107,9 +113,11 @@ export class SuperformPlugin implements InteropPlugin {
         (x) => BigInt(x.chainId),
         crossChainInitiatedWithdrawSingle.dstChainId,
       )
-      return SuperformCrosschainAction.create(input.ctx, {
-        $dstChain,
-      })
+      return [
+        SuperformCrosschainAction.create(input.ctx, {
+          $dstChain,
+        }),
+      ]
     }
   }
 

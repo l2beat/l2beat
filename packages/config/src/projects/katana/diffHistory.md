@@ -1,3 +1,336 @@
+Generated with discovered.json: 0x2841529776b042045de62632501c9feaf74f7368
+
+# Diff at Tue, 04 Nov 2025 13:55:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f12d06bbf120eab9f5356a235918d4d6b2484290 block: 1761895573
+- current timestamp: 1762264436
+
+## Description
+
+ms signer added.
+
+## Watched changes
+
+```diff
+    contract Katana Steakhouse Financial / Morpho Multisig (eth:0x827e86072B06674a077f592A531dcE4590aDeCdB) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x8AE8EE5ad6EaE89836B0070Ebc47AF06E3D7422b"
+      values.multisigThreshold:
+-        "2 of 4 (50%)"
++        "2 of 5 (40%)"
+    }
+```
+
+Generated with discovered.json: 0xe88f397606c7e20474b3e8f173408bfa1c4b0a9d
+
+# Diff at Tue, 04 Nov 2025 12:50:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@6b9a294e84c4d5ca84a7b377bd638098bb461624 block: 1761895573
+- current timestamp: 1761895573
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761895573 (main branch discovery), not current.
+
+```diff
+    contract PermissionedDisputeGame (eth:0x667b7DA73DA7B2A75286378FF45637eEaE9B4793) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger. In the context of this permissioned aggkit deployment, there are no state proposals made here and the op stack fault proof system is not used.
+      sourceHashes.0:
+-        "0x7129ee348039f13e017c18c90ffcb319f67a8fdd3b4a5a28c39aabc8bf0c57f6"
++        "0x0a442058af95748cc6199d889a46c775f9f6f4d29a61df5124ceb93ff631074d"
+    }
+```
+
+```diff
+    contract MIPS (eth:0xF027F4A985560fb13324e943edf55ad6F1d15Dc1) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes.0:
+-        "0x115725ab57eeed11f754138c0ec5f9bfba41e494b2336c2cd4745778eb26f776"
++        "0xd693f0cc376e99425037555be4a61adb70c597ad1485e838c475743c79a41fa0"
+    }
+```
+
+Generated with discovered.json: 0xd711d26e0acafacaf8e87ddc2745943abf94b387
+
+# Diff at Tue, 04 Nov 2025 09:10:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c52d5c1cf2092208997feb6320a35c565d7e0b0b block: 1761895573
+- current timestamp: 1761895573
+
+## Description
+
+config: hide proposer/challenger perms with custom criteria template for the dispute game contract.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761895573 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"challenge","from":"eth:0x667b7DA73DA7B2A75286378FF45637eEaE9B4793","role":".challenger"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x4A6f5889409Bf4Bf3Bff0Fef585D7A29FdA64258) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"propose","from":"eth:0x667b7DA73DA7B2A75286378FF45637eEaE9B4793","role":".proposer"}]
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0x667b7DA73DA7B2A75286378FF45637eEaE9B4793) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger. In the context of this permissioned aggkit deployment, there are no state proposals made here and the op stack fault proof system is not used.
+      template:
+-        "opstack/PermissionedDisputeGame"
++        "polygon-cdk/PermissionedDisputeGameUnused"
+      description:
+-        "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger."
++        "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger. In the context of this permissioned aggkit deployment, there are no state proposals made here and the op stack fault proof system is not used."
+    }
+```
+
+Generated with discovered.json: 0xa954e75854d6138c7e6f20c3e2b7e2d0ca8a3896
+
+# Diff at Mon, 03 Nov 2025 17:47:30 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6b72018cd9706ce7cba8ec489b67d7193f34dc20 block: 1761895573
+- current timestamp: 1761895573
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761895573 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"challenge","from":"eth:0x667b7DA73DA7B2A75286378FF45637eEaE9B4793","role":".challenger"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x4A6f5889409Bf4Bf3Bff0Fef585D7A29FdA64258) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"eth:0x667b7DA73DA7B2A75286378FF45637eEaE9B4793","role":".proposer"}]
+    }
+```
+
+Generated with discovered.json: 0x7f972cfc07a9051463a8b73abd6ad4365e0b992d
+
+# Diff at Fri, 31 Oct 2025 13:46:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@68eb98b0468d176aa44713dcaed98f67b2a200a0 block: 1759480843
+- current timestamp: 1761895573
+
+## Description
+
+Agglayer 0.3.5 upgrade:
+
+AggchainFEP - https://disco.l2beat.com/diff/eth:0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682/eth:0x9532A2F35fc9B18BD4FE8315D9C5B1C1Cf6Ac660
+- aggchainManager added
+- vkey manager removed, new aggchainManager has inherited their permissions
+- oppsuccinctConfig is now a single struct with range, agg vkeys and the confighash (all keys changed)
+- aggchainVkey changed, still defined in the AgglayerGateway and not in this contract
+
+## Watched changes
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      template:
+-        "polygon-cdk/AggchainFEP"
++        "katana/AggchainFEP_post035"
+      sourceHashes.1:
+-        "0xe893ad152fe92e36431300818c1be2ef9c1d514a53c4ea4beba3dc0f4f9b8e4f"
++        "0xd4a4d01788e8425e9dc0f2cd6f1954d521d3d0b021487bb0daeec6d8e26091c9"
+      description:
+-        "The main system contract defining the katana Layer 2 logic. As this contract is based on the OP-Succinct L2OutputOracle, OP stack outputRoots (L2 state roots) are saved here."
++        "The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here."
+      values.$implementation:
+-        "eth:0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682"
++        "eth:0x9532A2F35fc9B18BD4FE8315D9C5B1C1Cf6Ac660"
+      values.$pastUpgrades.3:
++        ["2025-10-29T14:11:11.000Z","0x7be3301b763f904f5076e22914b0ea13e101ed3cff6480b23a7757e7b9875939",["eth:0x9532A2F35fc9B18BD4FE8315D9C5B1C1Cf6Ac660"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.pendingVKeyManager:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.useDefaultGateway:
+-        true
+      values.version:
+-        "v2.0.0"
++        "v3.0.0"
+      values.vKeyManager:
+-        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+      values._legacypendingVKeyManager:
++        "eth:0x0000000000000000000000000000000000000000"
+      values._legacyvKeyManager:
++        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+      values.AGGCHAIN_FEP_VERSION:
++        "v3.0.0"
+      values.aggchainMetadataManager:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.aggchainMultisigHash:
++        "0xa57d26181a2caeea2b3fd5057d852d665445bd502aac8281622f922335bcc7d7"
+      values.aggchainSigners:
++        ["eth:0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439"]
+      values.GENESIS_CONFIG_NAME:
++        "0xae8304f40f7123e0c87b97f8a600e94ff3a3a25be588fc66b8a3717c8959ce77"
+      values.getAggchainMultisigHash:
++        "0xa57d26181a2caeea2b3fd5057d852d665445bd502aac8281622f922335bcc7d7"
+      values.getAggchainSignerInfos:
++        [{"addr":"eth:0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439","url":"https://rpc.katanarpc.com"}]
+      values.getAggchainSigners:
++        ["eth:0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439"]
+      values.getAggchainSignersCount:
++        1
+      values.getThreshold:
++        1
+      values.MAX_AGGCHAIN_SIGNERS:
++        255
+      values.selectedOpSuccinctConfig:
++        {"aggregationVkey":"0x00afb45d8064ae10aa6a1793b8f39a24c27268efae2917b5c02950b2377fbf00","rangeVkeyCommitment":"0x416d710344b6b6fa2a0b1a1445f3d6ba4fdd5ab43f0e863b1c522db20f28ad9b","rollupConfigHash":"0x6cd1b72f40b6ddf464897d8d1b084241f38ae5fda17175ff45afb3307b2523e9"}
++++ description: currently enforced OpSuccinctConfig. update the call handler for the full config if this changes.
++++ severity: HIGH
+      values.selectedOpSuccinctConfigName:
++        "0x622142ba8035695383551428b698950d3d4a6a53629c90a86d7192cfb221ae4e"
+      values.threshold:
++        1
++++ severity: HIGH
+      values.useDefaultSigners:
++        false
++++ severity: HIGH
+      values.useDefaultVkeys:
++        true
+      fieldMeta.optimisticMode.description:
+-        "degrades the system into a permissioned finalization mode without validity proofs. the state root in the aggchain proof in optimistic mode does not need an op succinct validity proof, but only a signature of the trustedSequencer."
++        "degrades the system into a permissioned finalization mode without validity proofs. The state root in the aggchain proof in optimistic mode does not need an op succinct validity proof, but only a signature of the trustedSequencer."
+      fieldMeta.aggregationVkey.severity:
+-        "HIGH"
++        "LOW"
+      fieldMeta.aggregationVkey.description:
+-        "Verification key for the aggregation step which aggregates multiple range proofs into a single proof. The aggregation proof ensures that all range proofs in a given block range are linked and use the `rangeVkeyCommitment` as the verification key. This proof is in turn wrapped by the aggchainVkey."
++        "DEPRECATED - Verification key for the aggregation step which aggregates multiple range proofs into a single proof. The aggregation proof ensures that all range proofs in a given block range are linked and use the `rangeVkeyCommitment` as the verification key. This proof is in turn wrapped by the aggchainVkey."
+      fieldMeta.rangeVkeyCommitment.severity:
+-        "HIGH"
++        "LOW"
+      fieldMeta.rangeVkeyCommitment.description:
+-        "Verification key for the OP Stack derivation + STF proof for a range of blocks. This proof is the bottom level proof, wrapped by the aggregationVkey."
++        "DEPRECATED - Verification key for the OP Stack derivation + STF proof for a range of blocks. This proof is the bottom level proof, wrapped by the aggregationVkey."
+      fieldMeta.useDefaultGateway:
+-        {"severity":"HIGH","description":"If set to false then aggchainVKey will be loaded from this contract and not from AggLayerGateway. In this case you can uncomment two handlers in this template to track ownedAggchainVKeys."}
+      fieldMeta.aggchainMultisigHash:
++        {"severity":"HIGH"}
+      fieldMeta.selectedOpSuccinctConfigName:
++        {"severity":"HIGH","description":"currently enforced OpSuccinctConfig. update the call handler for the full config if this changes."}
+      fieldMeta.useDefaultSigners:
++        {"severity":"HIGH"}
+      fieldMeta.useDefaultVkeys:
++        {"severity":"HIGH"}
+      implementationNames.eth:0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682:
+-        "AggchainFEP"
+      implementationNames.eth:0x9532A2F35fc9B18BD4FE8315D9C5B1C1Cf6Ac660:
++        "AggchainFEP"
+    }
+```
+
+```diff
+    contract Katana Foundation Engineering/Security Multisig (eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "change the op-succinct related verification keys (aggregationVkey, rangeVkeyCommitment) and the rollupConfigHash."
++        "change verification keys (aggregationVkey, rangeVkeyCommitment, aggchainVkey) and the rollupConfigHash, manage multisig signers for permissioned state transitions and change critical configs for state validation."
+    }
+```
+
+```diff
+    EOA  (eth:0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439) {
+    +++ description: None
+      receivedPermissions.0.role:
+-        ".trustedSequencer"
++        ".aggchainSigners"
+      receivedPermissions.0.description:
+-        "finalize any state root with only their signature."
++        "sign state transitions (replaces state validation for this aggchain)."
+    }
+```
+
+## Source code changes
+
+```diff
+.../AggchainFEP/AggchainFEP.sol                    | 1448 +++++++++++++++-----
+ 1 file changed, 1136 insertions(+), 312 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759480843 (main branch discovery), not current.
+
+```diff
+    reference AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) {
+    +++ description: None
+      name:
+-        "AggLayerGateway"
++        "AgglayerGateway"
+    }
+```
+
+```diff
+    reference AgglayerBridge (eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: None
+      name:
+-        "PolygonSharedBridge"
++        "AgglayerBridge"
+    }
+```
+
+```diff
+    reference AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      name:
+-        "PolygonRollupManager"
++        "AgglayerManager"
+    }
+```
+
+```diff
+    reference AgglayerGER (eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: None
+      name:
+-        "PolygonGlobalExitRootV2"
++        "AgglayerGER"
+    }
+```
+
 Generated with discovered.json: 0xd9c2099b68f8527d6a640777732122bfe2d0affd
 
 # Diff at Fri, 03 Oct 2025 08:42:02 GMT:

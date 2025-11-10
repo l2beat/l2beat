@@ -1,9 +1,9 @@
 import { inspect } from 'util'
-import type { LogFormatter, LoggerTransport, LogLevel } from './types'
+import type { LogEntry, LoggerTransport } from './types'
 import { safeToJSON, tagService } from './utils'
 
 export class ConsoleTransport implements LoggerTransport {
-  constructor(private format: LogFormatter) {}
+  constructor(private format: (entry: LogEntry) => string) {}
 
   static JSON = new ConsoleTransport(formatJson)
   static PLAIN = new ConsoleTransport(formatPlain(localTime))
@@ -11,14 +11,9 @@ export class ConsoleTransport implements LoggerTransport {
   static PRETTY = new ConsoleTransport(formatPretty(localTime))
   static PRETTY_UTC = new ConsoleTransport(formatPretty(utcTime))
 
-  log(
-    time: Date,
-    level: LogLevel,
-    message: string,
-    parameters: Record<string, unknown>,
-  ): void {
-    const formatted = this.format(time, level, message, parameters)
-    switch (level) {
+  log(entry: LogEntry): void {
+    const formatted = this.format(entry)
+    switch (entry.level) {
       case 'CRITICAL':
       case 'ERROR':
         console.error(formatted)
@@ -39,18 +34,13 @@ export class ConsoleTransport implements LoggerTransport {
   flush(): void {}
 }
 
-export function formatJson(
-  time: Date,
-  level: LogLevel,
-  message: string,
-  parameters: Record<string, unknown>,
-): string {
-  const { service, tag, error, ...rest } = parameters
+export function formatJson(entry: LogEntry): string {
+  const { service, tag, error, ...rest } = entry.parameters
   const core = {
-    time: time.toISOString(),
-    level: level,
+    time: entry.time.toISOString(),
+    level: entry.level,
     service: tagService(service, tag),
-    message: message,
+    message: entry.message,
     error,
   }
   return safeToJSON({ ...core, parameters: rest })
@@ -80,18 +70,13 @@ function withError(parameters: Record<string, unknown>, error: unknown) {
 }
 
 export function formatPlain(formatTime: (time: Date) => string) {
-  return function formatPlain(
-    time: Date,
-    level: LogLevel,
-    message: string,
-    parameters: Record<string, unknown>,
-  ): string {
-    const { service, tag, error, ...rest } = parameters
+  return function formatPlain(entry: LogEntry): string {
+    const { service, tag, error, ...rest } = entry.parameters
     const tagged = tagService(service, tag)
     const serviceFmt = tagged ? ` [${tagged}]` : ''
     const restJson = safeToJSON(withError(rest, error))
     const restFmt = restJson !== '{}' ? ` ${restJson}` : ''
-    return `${formatTime(time)} ${level}${serviceFmt} ${message}${restFmt}`
+    return `${formatTime(entry.time)} ${entry.level}${serviceFmt} ${entry.message}${restFmt}`
   }
 }
 
@@ -110,13 +95,8 @@ const LEVEL_COLOR = {
 }
 
 export function formatPretty(formatTime: (time: Date) => string) {
-  return function formatPretty(
-    time: Date,
-    level: LogLevel,
-    message: string,
-    parameters: Record<string, unknown>,
-  ): string {
-    const { service, tag, error, ...rest } = parameters
+  return function formatPretty(entry: LogEntry): string {
+    const { service, tag, error, ...rest } = entry.parameters
     const tagged = tagService(service, tag)
     const serviceFmt = tagged
       ? ` ${COLOR_GRAY}[${COLOR_YELLOW}${tagged}${COLOR_GRAY}]${COLOR_RESET}`
@@ -124,9 +104,9 @@ export function formatPretty(formatTime: (time: Date) => string) {
     const restFmt = formatParametersPretty(
       JSON.parse(safeToJSON(withError(rest, error))),
     )
-    const timeFmt = `${COLOR_GRAY}${formatTime(time)}${COLOR_RESET}`
-    const levelFmt = LEVEL_COLOR[level]
-    return `${timeFmt} ${levelFmt}${serviceFmt} ${message}${restFmt}`
+    const timeFmt = `${COLOR_GRAY}${formatTime(entry.time)}${COLOR_RESET}`
+    const levelFmt = LEVEL_COLOR[entry.level]
+    return `${timeFmt} ${levelFmt}${serviceFmt} ${entry.message}${restFmt}`
   }
 }
 

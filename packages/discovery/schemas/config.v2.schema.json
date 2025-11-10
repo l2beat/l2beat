@@ -6,6 +6,7 @@
     "import": { "type": "array", "items": { "type": "string" } },
     "archived": { "type": "boolean" },
     "modelCrossChainPermissions": { "type": "boolean" },
+    "discoverLibraries": { "type": "boolean" },
     "initialAddresses": { "type": "array", "items": { "type": "string" } },
     "maxAddresses": { "type": "number" },
     "maxDepth": { "type": "number" },
@@ -15,6 +16,7 @@
       "additionalProperties": {
         "type": "object",
         "properties": {
+          "discoverLibraries": { "type": "boolean" },
           "canActIndependently": { "type": "boolean" },
           "ignoreDiscovery": { "type": "boolean" },
           "proxyType": {

@@ -14,7 +14,7 @@ const isForcedBatchDisallowed =
   discovery.getContractValue<string>('PolygonZkEVM', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
-const bridge = discovery.getContract('PolygonSharedBridge')
+const bridge = discovery.getContract('AgglayerBridge')
 
 const chainId = 1101
 
@@ -45,7 +45,7 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
         'https://discord.com/invite/0xpolygonRnD',
         'https://polygon.technology/blog',
       ],
-      rollupCodes: 'https://rollup.codes/polygon-zkevm',
+      other: ['https://rollup.codes/polygon-zkevm'],
     },
     liveness: {
       explanation:
@@ -135,7 +135,7 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
         address: EthereumAddress('0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2'),
         selector: '0x621dd411',
         functionSignature:
-          'function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) ',
+          'function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof)',
         sinceTimestamp: UnixTime(1679653163),
         untilTimestamp: UnixTime(1707822059),
       },

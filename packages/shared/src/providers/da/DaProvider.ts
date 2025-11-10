@@ -8,11 +8,7 @@ export interface LogsFilter {
 
 export interface DaBlobProvider {
   daLayer: string
-  getBlobs(
-    from: number,
-    to: number,
-    logFilters?: LogsFilter[],
-  ): Promise<DaBlob[]>
+  getBlobs(from: number, to: number): Promise<DaBlob[]>
 }
 
 export class DaProvider {

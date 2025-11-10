@@ -1,3 +1,82 @@
+Generated with discovered.json: 0x0e4a40b0edeb2cfc6f59226171a6d1297cc01905
+
+# Diff at Tue, 04 Nov 2025 11:33:57 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1743765215
+- current timestamp: 1743765215
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1743765215 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (eth:0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x958268b83f73163b36af36fa55f5c0905421c07369bff2791652da02fa692a42"
++        "0xd11ebc38ae875b9412d457a72f0a1fcd3e10098f5c74ff8d7139c4afd4edcf27"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0xC5D5B6fCD5FdBdA41Ae640aC9881dC949aEd36d0) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sourceHashes.0:
+-        "0x95275ddb3e393113e19b284d6806675c79ab6698047f0cf6bdf7bb5ca1568c6d"
++        "0x58864ca785ad0e38e611f758e06007a088cbf2a5879db0007cd97d598af27a2c"
+    }
+```
+
+```diff
+    contract FaultDisputeGame (eth:0xFED2F84E3e18e24EE6aa5f375edBA79782FDA6D2) {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      sourceHashes.0:
+-        "0xfcfd8e9eb9d6ec1518326de5385476d4d26b0682d70267add0084193ae403652"
++        "0xdb01a01fb5143b496ce6858f53dfad238652f6662be66a7b56c75807b5cbfb6a"
+    }
+```
+
+Generated with discovered.json: 0xb51dd7db6d14ee2b4f4f189073db4c63d48e0e08
+
+# Diff at Mon, 03 Nov 2025 17:51:17 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6b72018cd9706ce7cba8ec489b67d7193f34dc20 block: 1743765215
+- current timestamp: 1743765215
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1743765215 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x0F7A7ca8f7673D9D219766a962856371e1Ed27FF) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"eth:0xC5D5B6fCD5FdBdA41Ae640aC9881dC949aEd36d0","role":".proposer"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x79DdF0745D14783cDC2a05624c585Ddce07F4A02) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"challenge","from":"eth:0xC5D5B6fCD5FdBdA41Ae640aC9881dC949aEd36d0","role":".challenger"}
+    }
+```
+
 Generated with discovered.json: 0xe4b35e1f0426bfa2c290c3dbb86e11abb213c75d
 
 # Diff at Mon, 15 Sep 2025 09:50:32 GMT:

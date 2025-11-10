@@ -171,7 +171,7 @@ const escrowDAIMaxTotalBalanceString = formatMaxTotalBalanceString(
   18,
 )
 const escrowSTRKMaxTotalBalanceString = formatMaxTotalBalanceString(
-  'DAI',
+  'STRK',
   discovery.getContractValue<number>('STRKBridge', 'maxTotalBalance'),
   18,
 )
@@ -239,7 +239,7 @@ export const starknet: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('stone'),
+    zkCatalogId: ProjectId('stwo'),
   },
   chainConfig: {
     name: 'starknet',
@@ -412,6 +412,14 @@ The Operator role in the Starknet contract is permissioned to update the state o
 All bridge escrows allow enabling a withdrawal throttle of 5% of the locked funds per 24h period. Enabling it is permissioned to a Multisig while disabling it in the core bridge escrows (STRKBridge, ETHBridge) can be done by a ${discovery.getMultisigStats('Starkware SCMinority Multisig')} minority of the Security Council.
 `,
   milestones: [
+    {
+      title: 'Starknet upgrades its proving system to Stwo',
+      url: 'https://etherscan.io/tx/0x7b4a25af246b28b6d5bed86942696273a84e57abc629b83072be370df2bdb797',
+      date: '2025-10-19T00:00:00.00Z',
+      description:
+        'Starknet switches to the next-generation prover Stwo to prove its STF on Ethereum L1.',
+      type: 'general',
+    },
     {
       title: 'Starknet is down for several hours',
       url: 'https://x.com/Starknet/status/1962740091937317247',

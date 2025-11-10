@@ -1,4 +1,99 @@
-Generated with discovered.json: 0xc5942ce55fc291e47306115ef287af6ee0764b1e
+Generated with discovered.json: 0x449cd90166c738a1ee66070e753a22da0a557883
+
+# Diff at Fri, 07 Nov 2025 12:12:19 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@13bc02ee5170e2fdf5ee8d6add3be941d055d545 block: 1762276356
+- current timestamp: 1762517461
+
+## Description
+
+gas limit change.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        90000000
++        95000000
+    }
+```
+
+Generated with discovered.json: 0x8a8a92133c65368d467df3d5c81c9a42a29b068c
+
+# Diff at Tue, 04 Nov 2025 17:13:54 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@247fa0b26d8d13bf9c509f1c360df6ee053d13ee block: 1761223334
+- current timestamp: 1762276356
+
+## Description
+
+gas limit changes.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        85000000
++        90000000
+    }
+```
+
+Generated with discovered.json: 0xa51b4afda975dece579d6c0b607ba86e7db5d17f
+
+# Diff at Tue, 04 Nov 2025 11:34:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1761223334
+- current timestamp: 1761223334
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761223334 (main branch discovery), not current.
+
+```diff
+    contract PermissionedDisputeGame (eth:0x55E6125F946F3cB24FC3E07dd7242f96Ce512BD9) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sourceHashes.0:
+-        "0x36b6d01ce1c06ddc49ae1e3fcb2954cf2bfba1c55fd1174fce55ebd20e3dbe13"
++        "0x8738d176c361d44d45a0045debf90812ce2af53a3ca1a6483afd9d85d5f95883"
+    }
+```
+
+```diff
+    contract MIPS (eth:0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes.0:
+-        "0xa2e4c062c9c44866846c9caf76340a103baaf77ec936f0e8fd29e5de6bdeb779"
++        "0xbb3cae27c16856a4265d2e2e2614765c1254c07cf3bb84574cd46e033524f1c8"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xc7135dbd2a53312d36df3f3ee91ce0a5a459ab8fc7725880a3a9c55a5fa0ed6c"
++        "0xf2ca03f1fb80fdb3c1281ea41b46245c8e6811a03a9ad7129f60cfedaac0e231"
+    }
+```
+
+Generated with discovered.json: 0xbdc5980a3889000e069bc69f03983c5e76c7299f
 
 # Diff at Thu, 23 Oct 2025 12:44:48 GMT:
 

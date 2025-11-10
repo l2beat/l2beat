@@ -5,7 +5,7 @@ import type { InteropTransfer } from '../kysely/generated/types'
 
 export interface InteropTransferRecord {
   plugin: string
-  messageId: string
+  transferId: string
   type: string
   duration: number | undefined
   timestamp: UnixTime
@@ -38,13 +38,22 @@ export interface InteropTransferRecord {
 
 export interface InteropTransferUpdate {
   srcAbstractTokenId?: string
+  srcSymbol?: string
   srcPrice?: number
   srcAmount?: number
   srcValueUsd?: number
   dstAbstractTokenId?: string
+  dstSymbol?: string
   dstPrice?: number
   dstAmount?: number
   dstValueUsd?: number
+}
+
+export interface InteropMissingTokenInfo {
+  chain: string
+  tokenAddress: string
+  count: number
+  plugins: string[]
 }
 
 export function toRecord(
@@ -52,7 +61,7 @@ export function toRecord(
 ): InteropTransferRecord {
   return {
     plugin: row.plugin,
-    messageId: row.transferId,
+    transferId: row.transferId,
     type: row.type,
     duration: row.duration ?? undefined,
     timestamp: UnixTime.fromDate(row.timestamp),
@@ -64,7 +73,7 @@ export function toRecord(
     srcTokenAddress: row.srcTokenAddress ?? undefined,
     srcRawAmount: row.srcRawAmount ? BigInt(row.srcRawAmount) : undefined,
     srcAbstractTokenId: row.srcAbstractTokenId ?? undefined,
-    srcSymbol: undefined,
+    srcSymbol: row.srcSymbol ?? undefined,
     srcAmount: row.srcAmount ?? undefined,
     srcPrice: row.srcPrice ?? undefined,
     srcValueUsd: row.srcValueUsd ?? undefined,
@@ -76,7 +85,7 @@ export function toRecord(
     dstTokenAddress: row.dstTokenAddress ?? undefined,
     dstRawAmount: row.dstRawAmount ? BigInt(row.dstRawAmount) : undefined,
     dstAbstractTokenId: row.dstAbstractTokenId ?? undefined,
-    dstSymbol: undefined,
+    dstSymbol: row.dstSymbol ?? undefined,
     dstAmount: row.dstAmount ?? undefined,
     dstPrice: row.dstPrice ?? undefined,
     dstValueUsd: row.dstValueUsd ?? undefined,
@@ -89,7 +98,7 @@ export function toRow(
 ): Insertable<InteropTransfer> {
   return {
     plugin: record.plugin,
-    transferId: record.messageId,
+    transferId: record.transferId,
     type: record.type,
     duration: record.duration,
     timestamp: UnixTime.toDate(record.timestamp),
@@ -102,6 +111,7 @@ export function toRow(
     srcTokenAddress: record.srcTokenAddress,
     srcRawAmount: record.srcRawAmount?.toString(),
     srcAbstractTokenId: record.srcAbstractTokenId,
+    srcSymbol: record.srcSymbol,
     srcAmount: record.srcAmount,
     srcPrice: record.srcPrice,
     srcValueUsd: record.srcValueUsd,
@@ -114,6 +124,7 @@ export function toRow(
     dstTokenAddress: record.dstTokenAddress,
     dstRawAmount: record.dstRawAmount?.toString(),
     dstAbstractTokenId: record.dstAbstractTokenId,
+    dstSymbol: record.dstSymbol,
     dstAmount: record.dstAmount,
     dstPrice: record.dstPrice,
     dstValueUsd: record.dstValueUsd,
@@ -288,5 +299,66 @@ export class InteropTransferRepository extends BaseRepository {
       .deleteFrom('InteropTransfer')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
+  }
+
+  async getMissingTokensInfo(): Promise<InteropMissingTokenInfo[]> {
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .select([
+        'plugin',
+        'srcValueUsd',
+        'dstValueUsd',
+        'srcChain',
+        'srcTokenAddress',
+        'dstChain',
+        'dstTokenAddress',
+      ])
+      .where('isProcessed', '=', true)
+      .where((eb) =>
+        eb.or([eb('srcValueUsd', 'is', null), eb('dstValueUsd', 'is', null)]),
+      )
+      .execute()
+
+    const chainAddressCounts = new Map<string, number>()
+    const chainAddressPlugins = new Map<string, Set<string>>()
+
+    for (const row of rows) {
+      if (row.srcValueUsd === null && row.srcChain && row.srcTokenAddress) {
+        const key = `${row.srcChain}:${row.srcTokenAddress}`
+        chainAddressCounts.set(key, (chainAddressCounts.get(key) || 0) + 1)
+        const plugins = chainAddressPlugins.get(key)
+        if (!plugins) {
+          chainAddressPlugins.set(key, new Set())
+        } else {
+          plugins.add(row.plugin)
+        }
+      }
+      if (row.dstValueUsd === null && row.dstChain && row.dstTokenAddress) {
+        const key = `${row.dstChain}:${row.dstTokenAddress}`
+        chainAddressCounts.set(key, (chainAddressCounts.get(key) || 0) + 1)
+        const plugins = chainAddressPlugins.get(key)
+        if (!plugins) {
+          chainAddressPlugins.set(key, new Set())
+        } else {
+          plugins.add(row.plugin)
+        }
+      }
+    }
+
+    const result: InteropMissingTokenInfo[] = []
+    for (const [key, count] of chainAddressCounts) {
+      const [chain, tokenAddress] = key.split(':')
+      const plugins = Array.from(
+        chainAddressPlugins.get(key) || new Set<string>(),
+      ).sort()
+      result.push({
+        chain: chain as string,
+        tokenAddress: tokenAddress as string,
+        count,
+        plugins,
+      })
+    }
+
+    return result
   }
 }
