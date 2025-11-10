@@ -37,7 +37,7 @@ export async function getScalingActivityEntries() {
         activityData[project.id],
       ),
     )
-    .concat(getEthereumEntry(ethereumData, 'rollups'))
+    .concat(getEthereumEntry(ethereumData))
     .filter((p) => p !== undefined)
     .sort(compareActivityEntry)
 
@@ -92,7 +92,6 @@ function getScalingProjectActivityEntry(
 
 function getEthereumEntry(
   data: ActivityProjectTableData,
-  tab: CommonScalingEntry['tab'],
 ): ScalingActivityEntry {
   const syncWarning = getActivitySyncWarning(data.syncState)
   return {
@@ -102,7 +101,7 @@ function getEthereumEntry(
     icon: getProjectIcon('ethereum'),
     isLayer3: false,
     slug: 'ethereum',
-    tab,
+    tab: 'rollups',
     filterable: undefined,
     backgroundColor: 'blue',
     data: {
