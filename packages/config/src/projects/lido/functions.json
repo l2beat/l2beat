@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-11-06T14:22:36.686Z",
+  "lastModified": "2025-11-10T13:25:42.729Z",
   "contracts": {
     "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": {
       "functions": [
@@ -131,7 +131,7 @@
           "isPermissioned": true,
           "checked": true,
           "score": "high-risk",
-          "likelihood": "high",
+          "likelihood": "low",
           "description": "Deposits ETH into a given validator using `Lido.deposit`. The message must include at least 4/6 signatures from guardians for it to be valid.",
           "ownerDefinitions": [
             {
@@ -143,7 +143,7 @@
               "contractAddress": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa"
             }
           ],
-          "timestamp": "2025-11-05T18:19:52.647Z"
+          "timestamp": "2025-11-10T13:24:04.229Z"
         },
         {
           "functionName": "unvetSigningKeys",
@@ -1289,12 +1289,15 @@
         {
           "functionName": "proxy__changeAdmin",
           "isPermissioned": true,
-          "timestamp": "2025-10-08T14:06:47.589Z",
+          "checked": false,
+          "score": "medium-risk",
+          "description": "",
           "ownerDefinitions": [
             {
               "path": "$self.$admin"
             }
-          ]
+          ],
+          "timestamp": "2025-11-10T13:25:42.729Z"
         },
         {
           "functionName": "proxy__upgradeTo",

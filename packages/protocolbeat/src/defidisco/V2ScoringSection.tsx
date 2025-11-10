@@ -3,6 +3,7 @@ import { getV2Score } from '../api/api'
 import type { LetterGrade, ModuleScore } from '../api/types'
 import { FunctionBreakdown } from './FunctionBreakdown'
 import { DependencyInventoryBreakdown } from './DependencyInventoryBreakdown'
+import { AdminsInventoryBreakdown } from './AdminsInventoryBreakdown'
 
 interface V2ScoringSectionProps {
   project: string
@@ -111,8 +112,7 @@ export function V2ScoringSection({ project }: V2ScoringSectionProps) {
             <DependencyInventoryBreakdown
               score={scoreData.inventory.dependencies}
             />
-            <InventoryItem
-              label="Admins"
+            <AdminsInventoryBreakdown
               score={scoreData.inventory.admins}
             />
           </div>

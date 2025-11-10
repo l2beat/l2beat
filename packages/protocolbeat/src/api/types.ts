@@ -32,6 +32,21 @@ export interface DependencyDetail {
   }[]
 }
 
+// Admin detail for admin scoring breakdown
+export interface AdminDetail {
+  adminAddress: string
+  adminName: string
+  adminType: ApiAddressType
+  likelihood?: Likelihood
+  functions: {
+    contractAddress: string
+    contractName: string
+    functionName: string
+    impact: Impact
+    grade?: LetterGrade  // Only present if both impact and likelihood exist
+  }[]
+}
+
 export type ApiProjectsResponse = ApiProjectEntry[]
 
 export interface ApiProjectEntry {
@@ -322,12 +337,16 @@ export interface DependencyModuleScore extends ModuleScore {
   breakdown?: DependencyDetail[]
 }
 
+export interface AdminModuleScore extends ModuleScore {
+  breakdown?: AdminDetail[]
+}
+
 export interface ApiV2ScoreResponse {
   inventory: {
     contracts: ModuleScore
     functions: FunctionModuleScore
     dependencies: DependencyModuleScore
-    admins: ModuleScore
+    admins: AdminModuleScore
   }
   finalScore: LetterGrade
 }

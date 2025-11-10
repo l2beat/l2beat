@@ -1,8 +1,8 @@
 import type { ConfigReader, DiscoveryPaths, TemplateService } from '@l2beat/discovery'
 import { getProject } from '../getProject'
-import { getFunctions } from './functions'
+import { getFunctions, resolveOwnersFromDiscovered } from './functions'
 import { getContractTags } from './contractTags'
-import type { Impact, Likelihood, Severity, FunctionDetail, DependencyDetail, LetterGrade as ImportedLetterGrade } from './types'
+import type { Impact, Likelihood, Severity, FunctionDetail, DependencyDetail, AdminDetail, LetterGrade as ImportedLetterGrade, ApiAddressType } from './types'
 
 // ============================================================================
 // Type Definitions
@@ -21,6 +21,10 @@ export interface FunctionModuleScore extends ModuleScore {
 
 export interface DependencyModuleScore extends ModuleScore {
   breakdown?: DependencyDetail[]
+}
+
+export interface AdminModuleScore extends ModuleScore {
+  breakdown?: AdminDetail[]
 }
 
 // ============================================================================
@@ -136,7 +140,7 @@ export interface V2ScoreResult {
     contracts: ModuleScore
     functions: FunctionModuleScore
     dependencies: DependencyModuleScore
-    admins: ModuleScore
+    admins: AdminModuleScore
   }
   finalScore: LetterGrade
 }
@@ -146,6 +150,8 @@ interface ScoringData {
   permissionOverrides: any
   contractTags: any
   functions: any
+  paths: DiscoveryPaths
+  projectName: string
 }
 
 // ============================================================================
@@ -208,7 +214,7 @@ export function aggregateGrades(grades: LetterGrade[]): LetterGrade {
  */
 interface ScoringModule {
   name: string
-  calculate(data: ScoringData): ModuleScore | FunctionModuleScore | DependencyModuleScore
+  calculate(data: ScoringData): ModuleScore | FunctionModuleScore | DependencyModuleScore | AdminModuleScore
 }
 
 /**
@@ -508,59 +514,186 @@ class DependencyInventoryModule {
 
 /**
  * Admin Inventory Module
- * Counts unique admin addresses from owner definitions in permissioned functions
- * Scoring: fewer unique admins = better grade (more centralized but simpler)
  *
- * NOTE: This currently uses PLACEHOLDER logic that counts contracts with permissioned
- * functions as a proxy for admin count. Full owner resolution requires walking the
- * data structure which would duplicate logic from frontend/report generation.
- *
- * TODO: Implement proper admin resolution or share the resolution logic.
- *
- * NOTE: Thresholds below are TEMPORARY PLACEHOLDER logic and will be replaced
- * with proper V2 framework scoring criteria in the future.
+ * Resolves permission owners from ownerDefinitions and groups functions by admin address.
+ * Calculates Impact × Likelihood scores for each admin-function combination.
  */
 class AdminInventoryModule implements ScoringModule {
   name = 'admins'
 
-  calculate(data: ScoringData): ModuleScore {
-    // PLACEHOLDER LOGIC: count contracts with permissioned functions as proxy for admin count
-    // In reality, would need to resolve owner definitions to unique addresses
-    const uniqueAdmins = new Set<string>()
+  calculate(data: ScoringData): AdminModuleScore {
+    // Build contract name and type lookup maps
+    const contractNameMap = new Map<string, string>()
+    const contractTypeMap = new Map<string, ApiAddressType>()
 
-    if (data.permissionOverrides?.contracts) {
-      Object.keys(data.permissionOverrides.contracts).forEach((contractAddress: string) => {
-        const contractData = data.permissionOverrides.contracts[contractAddress]
-        const hasPermissionedFunctions = contractData.functions?.some(
-          (func: any) => func.isPermissioned === true
-        )
+    data.projectData.entries?.forEach((entry: any) => {
+      const allContracts = [...(entry.initialContracts || []), ...(entry.discoveredContracts || [])]
+      allContracts.forEach((contract: any) => {
+        contractNameMap.set(contract.address, contract.name || 'Unknown Contract')
+        contractTypeMap.set(contract.address, contract.type || 'Contract')
+      })
 
-        if (hasPermissionedFunctions) {
-          // Placeholder: treat each contract with permissioned functions as having an admin
-          uniqueAdmins.add(contractAddress)
-        }
+      // Also add EOAs
+      entry.eoas?.forEach((eoa: any) => {
+        contractNameMap.set(eoa.address, eoa.name || 'Unknown EOA')
+        contractTypeMap.set(eoa.address, eoa.type || 'EOA')
+      })
+    })
+
+    // Group functions by admin address with caching optimization
+    const adminsMap = new Map<string, AdminDetail>()
+    const allGrades: LetterGrade[] = []
+    const ownerResolutionCache = new Map<string, string[]>()
+
+    if (data.functions?.contracts) {
+      Object.entries(data.functions.contracts).forEach(([contractAddress, contractData]: [string, any]) => {
+        contractData.functions.forEach((func: any) => {
+          // Only process permissioned functions
+          if (!func.isPermissioned || !func.ownerDefinitions || func.ownerDefinitions.length === 0) {
+            return
+          }
+
+          // Convert score to impact
+          const impact = this.scoreToImpact(func.score)
+
+          // Create cache key from owner definitions
+          const cacheKey = JSON.stringify(func.ownerDefinitions)
+
+          // Check cache first
+          let adminAddresses = ownerResolutionCache.get(cacheKey)
+          if (!adminAddresses) {
+            // Cache miss - resolve and store
+            const resolved = resolveOwnersFromDiscovered(
+              data.paths,
+              data.projectName,
+              contractAddress,
+              func.ownerDefinitions
+            )
+            // Extract all addresses from resolved owners
+            adminAddresses = this.extractAddresses(resolved)
+            ownerResolutionCache.set(cacheKey, adminAddresses)
+          }
+
+          // Process each admin address
+          adminAddresses.forEach((adminAddr: string) => {
+            // Get or create admin entry
+            if (!adminsMap.has(adminAddr)) {
+              // Look up likelihood from contract tags
+              const normalizedAddr = adminAddr.toLowerCase()
+              const tag = data.contractTags?.tags?.find((tag: any) =>
+                tag.contractAddress.toLowerCase() === normalizedAddr
+              )
+
+              adminsMap.set(adminAddr, {
+                adminAddress: adminAddr,
+                adminName: contractNameMap.get(adminAddr) || adminAddr,
+                adminType: contractTypeMap.get(adminAddr) || 'Unknown',
+                likelihood: tag?.likelihood,
+                functions: []
+              })
+            }
+
+            const admin = adminsMap.get(adminAddr)!
+
+            // Calculate grade if both impact and likelihood exist
+            let grade: LetterGrade | undefined = undefined
+            if (impact && admin.likelihood) {
+              grade = getSeverityGrade(impact, admin.likelihood)
+              allGrades.push(grade)
+            }
+
+            // Add function to admin's list
+            admin.functions.push({
+              contractAddress,
+              contractName: contractNameMap.get(contractAddress) || 'Unknown Contract',
+              functionName: func.functionName,
+              impact: impact || 'low', // Default to low if no impact set
+              grade
+            })
+          })
+        })
       })
     }
 
-    const adminCount = uniqueAdmins.size
+    // Calculate worst grade and count
+    const worstGrade = allGrades.length > 0
+      ? allGrades.reduce((worst, current) =>
+          GRADE_TO_NUMERIC[current] < GRADE_TO_NUMERIC[worst] ? current : worst
+        )
+      : 'AAA' // Default grade if no graded admins
 
-    // TEMPORARY PLACEHOLDER THRESHOLDS - will be replaced with proper V2 logic
-    const grade = this.countToGrade(adminCount)
-
-    return { grade, inventory: adminCount }
+    return {
+      grade: worstGrade,
+      inventory: adminsMap.size,
+      breakdown: Array.from(adminsMap.values())
+    }
   }
 
-  private countToGrade(count: number): LetterGrade {
-    if (count < 2) return 'AAA'
-    if (count < 3) return 'AA'
-    if (count < 5) return 'A'
-    if (count < 8) return 'BBB'
-    if (count < 12) return 'BB'
-    if (count < 16) return 'B'
-    if (count < 20) return 'CCC'
-    if (count < 25) return 'CC'
-    if (count < 35) return 'C'
-    return 'D'
+  /**
+   * Extract all addresses from resolved owners (recursive)
+   */
+  private extractAddresses(resolved: any[]): string[] {
+    const addresses: string[] = []
+
+    for (const owner of resolved) {
+      if (!owner.isResolved) continue
+
+      // Add the primary address
+      if (owner.address && owner.address !== 'DISCOVERY_NOT_FOUND') {
+        addresses.push(owner.address)
+      }
+
+      // If there's a structured value, recursively extract addresses
+      if (owner.structuredValue) {
+        this.extractAddressesFromValue(owner.structuredValue, addresses)
+      }
+    }
+
+    return addresses
+  }
+
+  /**
+   * Recursively extract addresses from any value
+   */
+  private extractAddressesFromValue(value: any, addresses: string[]): void {
+    if (!value) return
+
+    // If it's an address-like string
+    if (typeof value === 'string' && value.match(/^(eth:)?0x[a-fA-F0-9]{40}$/)) {
+      addresses.push(value)
+      return
+    }
+
+    // If it's an array
+    if (Array.isArray(value)) {
+      value.forEach(item => this.extractAddressesFromValue(item, addresses))
+      return
+    }
+
+    // If it's an object
+    if (typeof value === 'object') {
+      Object.values(value).forEach(v => this.extractAddressesFromValue(v, addresses))
+    }
+  }
+
+  /**
+   * Convert score string to Impact type
+   */
+  private scoreToImpact(score: string | undefined): Impact | undefined {
+    if (!score) return undefined
+
+    switch (score) {
+      case 'low-risk':
+        return 'low'
+      case 'medium-risk':
+        return 'medium'
+      case 'high-risk':
+        return 'high'
+      case 'critical':
+        return 'critical'
+      default:
+        return undefined
+    }
   }
 }
 
@@ -602,6 +735,8 @@ export class ScoreCalculator {
       permissionOverrides,
       contractTags,
       functions,
+      paths: this.paths,
+      projectName,
     }
 
     // Calculate each module score

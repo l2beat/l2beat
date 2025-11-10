@@ -33,6 +33,21 @@ export interface DependencyDetail {
   }[]
 }
 
+// Admin detail for admin scoring breakdown
+export interface AdminDetail {
+  adminAddress: string
+  adminName: string
+  adminType: ApiAddressType
+  likelihood?: Likelihood
+  functions: {
+    contractAddress: string
+    contractName: string
+    functionName: string
+    impact: Impact
+    grade?: LetterGrade  // Only present if both impact and likelihood exist
+  }[]
+}
+
 export type ApiProjectsResponse = ApiProjectEntry[]
 
 export interface ApiProjectEntry {
