@@ -72,6 +72,7 @@ import { grvt } from '../projects/grvt/grvt'
 import { gwyneth } from '../projects/gwyneth/gwyneth'
 import { happychain } from '../projects/happychain/happychain'
 import { hashkey } from '../projects/hashkey/hashkey'
+import { haust } from '../projects/haust/haust'
 import { hemi } from '../projects/hemi/hemi'
 import { hermez } from '../projects/hermez/hermez'
 import { honeypot } from '../projects/honeypot/honeypot'
@@ -301,6 +302,7 @@ export const layer2s: ScalingProject[] = [
   gwyneth,
   happychain,
   hashkey,
+  haust,
   hemi,
   hermez,
   honeypot,
