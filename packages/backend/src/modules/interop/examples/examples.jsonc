@@ -911,15 +911,15 @@
       // ethereum -> arbitrum (dai deposit)
       {
         "chain": "ethereum",
-        "tx": "0xb363640ecdff6a54f7dbd37a08eb7be3b18b2c61b0ec291999f915926c6d6806"
+        "tx": "0xbd77763bd0c6ff499200d677768c918227419ecfb82b8ad32839fba441ffe7a5"
       },
       {
         "chain": "arbitrum",
-        "tx": "0x9d72d3c0741fde0c17f500fe6bbf9466b4a75c5eea72784bb6b1e131c198dfe9"
+        "tx": "0x52c3379f5891baa8e6faa9330ec62a627f5ec5e3eadde2fb758e85dc0faf1958"
       },
       {
         "chain": "arbitrum",
-        "tx": "0x7cd3bd135f9d5aaf5c1d19ceba5caba6241e69abbd5ffdd935acd44ec5bd6335"
+        "tx": "0xd62cb8b7c1b421a45d38ba3ccbc09c8039de48963c1fb78bf4dfccb4b4b112ba"
       },
       // arbitrum -> ethereum (dai withdrawal)
       {
