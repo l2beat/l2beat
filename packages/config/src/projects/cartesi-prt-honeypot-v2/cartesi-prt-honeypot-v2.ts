@@ -49,7 +49,7 @@ export const cartesiprthoneypotv2: ScalingProject = {
   ],
   display: {
     name: 'Cartesi PRT Honeypot v2',
-    shortName: 'Cartesi PRT Honeypot v2',
+    shortName: 'Honeypot v2',
     warning: 'The challenge protocol can be subject to delay attacks.',
     slug: 'cartesi-prt-honeypot-v2',
     stacks: ['Cartesi Rollups'],
