@@ -289,7 +289,11 @@ struct ChallengeEdge {
     /// @notice Set to true when the staker has been refunded. Can only be set to true if the status is Confirmed
     ///         and the staker is non zero.
     bool refunded;
-    /// @notice TODO
+    /// @notice Cached total time (in blocks) that this edge has been unrivaled, i.e., without a competing edge.
+    ///         This value is used to determine if an edge can be confirmed by time when it exceeds the confirmation
+    ///         threshold. The cache can be updated through `updateTimerCacheByClaim` and `updateTimerCacheByChildren`
+    ///         to account for time inheritance from child edges or higher-level edges. If an edge is confirmed via
+    ///         one-step proof, this value is set to `type(uint64).max`.
     uint64 totalTimeUnrivaledCache;
 }
 ```
