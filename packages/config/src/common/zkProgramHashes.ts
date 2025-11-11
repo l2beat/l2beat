@@ -41,7 +41,7 @@ const zkProgramHashes: Record<
 Prepare:
 
 1. Install cargo make: \`cargo install --debug --locked cargo-make\`
-2. Install sp1 toolchain: \`curl -L [https://sp1up.succinct.xyz](https://sp1up.succinct.xyz/) | bash\`, then \`sp1up\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
 3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
 
 Verify:
@@ -87,7 +87,7 @@ Verify:
 Prepare:
 
 1. Install cargo make: \`cargo install --debug --locked cargo-make\`
-2. Install sp1 toolchain: \`curl -L [https://sp1up.succinct.xyz](https://sp1up.succinct.xyz/) | bash\`, then \`sp1up\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
 3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
 
 Verify:
@@ -229,12 +229,14 @@ Verify:
       proverSystemProject: ProjectId('stwo'),
       verificationStatus: 'successful',
       verificationSteps: `
+Steps:
+
 1. Install python and pip.
 2. Checkout the correct branch in [cairo-lang](https://github.com/starkware-libs/cairo-lang) repo: \`git checkout tag: v0.14.0.1\`. Commit hash should be \`66355d7d99f1962ff9ccba8d0dbacbce3bd79bf8\`.
 3. Install the correct version of Cairo-lang toolkit: \`pip install cairo-lang==0.14.0.1\`.
 4. From the root dir of the repo, compile the aggregation program sources into JSON using the installed cairo-compile: \`cairo-compile src/starkware/starknet/core/aggregator/main.cairo --cairo_path=src --output agg_compiled.json\`.
 5. From the same dir, call the installed cairo-hash-program to compute program hash of the compiled aggregation program JSON: \`cairo-hash-program --program agg_compiled.json\`.
-6. Convert the hex output into dec, e.g. by running \`python -c 'print(int("0x181986bfe23bbfdac56c40522bd5c2b1b64c824c74bd6722a3ccacc8cc888e2", 16))'\`  (you can replace \`0x1c...\` with your output of \`cairo-hash-program\`).
+6. Convert the hex output into dec, e.g. by running \`python -c 'print(int("0x181...", 16))'\`  (you can replace \`0x181...\` with your output of \`cairo-hash-program\`).
 7. Aggregator prefix must be added to the computed dec hash (see [here](https://github.com/starkware-libs/cairo-lang/blob/66355d7d99f1962ff9ccba8d0dbacbce3bd79bf8/src/starkware/cairo/bootloaders/aggregator_utils.py#L4)). You can do this by executing the following python script: 
 \`from starkware.cairo.lang.vm.crypto import pedersen_hash
 from starkware.python.utils import from_bytes
@@ -253,12 +255,14 @@ The output should be the aggregation program hash in dec.
         'https://github.com/starkware-libs/cairo-lang/tree/v0.14.0.1/src/starkware/starknet/core/os',
       verificationStatus: 'successful',
       verificationSteps: `
+Steps: 
+
 1. Install python and pip.
 2. Checkout the correct branch in [cairo-lang](https://github.com/starkware-libs/cairo-lang) repo: \`git checkout tag: v0.14.0.1\`. Commit hash should be \`66355d7d99f1962ff9ccba8d0dbacbce3bd79bf8\`.
 3. Install the correct version of Cairo-lang toolkit: \`pip install cairo-lang==0.14.0.1\`.
 4. From the root dir of the repo, compile the StarkNet OS sources into JSON using the installed cairo-compile: \`cairo-compile src/starkware/starknet/core/os/os.cairo --cairo_path=src --output os_compiled.json\`.
 5. From the same dir, call the installed cairo-hash-program to compute program hash of the compiled StarkNet OS JSON: \`cairo-hash-program --program os_compiled.json\`.
-6. Convert the hex output into dec, e.g. by running \`python -c 'print(int("0x1c128b765f47ce1dbf6b0d648cd73df8ae34ace6b96de774abf4559fe49871f", 16))'\`  (you can replace \`0x1c...\` with your output of \`cairo-hash-program\`).
+6. Convert the hex output into dec, e.g. by running \`python -c 'print(int("0x1c...", 16))'\`  (you can replace \`0x1c...\` with your output of \`cairo-hash-program\`).
       `,
     },
   '273279642033703284306509103355536170486431195329675679055627933497997642494':
