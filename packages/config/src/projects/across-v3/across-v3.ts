@@ -164,7 +164,7 @@ export const acrossV3: Bridge = {
       'Scroll',
       'Blast',
       'Mode',
-      'ZkSync Era',
+      'ZKsync Era',
     ],
     principleOfOperation: {
       name: 'Principle of operation',
