@@ -85,8 +85,7 @@ export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
     if (input.ctx.chain === 'ethereum') {
       const network = ORBITSTACK_NETWORKS.find((network) =>
         network.customGateways?.some(
-          (gateway) =>
-            gateway.l1Gateway === EthereumAddress(input.log.address),
+          (gateway) => gateway.l1Gateway === EthereumAddress(input.log.address),
         ),
       )
       if (!network) return

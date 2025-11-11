@@ -95,13 +95,21 @@ export const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
     customGateways: [
       {
         key: 'custom',
-        l1Gateway: EthereumAddress('0xcee284f754e854890e311e3280b767f80797180d'),
-        l2Gateway: EthereumAddress('0x096760f208390250649e3e8763348e783aef5562'),
+        l1Gateway: EthereumAddress(
+          '0xcee284f754e854890e311e3280b767f80797180d',
+        ),
+        l2Gateway: EthereumAddress(
+          '0x096760f208390250649e3e8763348e783aef5562',
+        ),
       },
       {
         key: 'dai',
-        l1Gateway: EthereumAddress('0xd3b5b60020504bc3489d6949d545893982ba3011'),
-        l2Gateway: EthereumAddress('0x467194771dae2967aef3ecbedd3bf9a310c76c65'),
+        l1Gateway: EthereumAddress(
+          '0xd3b5b60020504bc3489d6949d545893982ba3011',
+        ),
+        l2Gateway: EthereumAddress(
+          '0x467194771dae2967aef3ecbedd3bf9a310c76c65',
+        ),
       },
     ],
   },
