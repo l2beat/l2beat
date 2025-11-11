@@ -412,6 +412,22 @@ export const celestia: BaseProject = {
         ],
       },
       {
+        projectId: ProjectId('xo-market'),
+        name: 'XO Market',
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 8164261,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAACnGTcXcpKRnenc=',
+          },
+          {
+            type: 'celestia',
+            sinceBlock: 8383370,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAEjr00EdZDGvoMU=',
+          },
+        ],
+      },
+      {
         projectId: ProjectId('yominet'),
         name: 'Yominet',
         daTrackingConfig: [
