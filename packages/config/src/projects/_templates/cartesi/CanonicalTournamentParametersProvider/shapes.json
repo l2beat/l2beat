@@ -3,5 +3,11 @@
     "hash": "0x7ed0779ae4b12f1654a45c0513dde6eea5def66d068f43599eccfb05b69c71b5",
     "address": "eth:0xcC0a49320891Bf35bca834aF1045ab89Ecd44c0c",
     "blockNumber": 22716869
+  },
+  "CanonicalTournamentParametersProvider.sol": {
+    "hash": "0x9dbc469370fa5c8a907d7dcced0b3f2bb5509cb20dc46d9433a44f5f77be4128",
+    "address": "eth:0xc8d8639C3ec8925A00d4F262299807DC632c3113",
+    "chain": "ethereum",
+    "blockNumber": 23775846
   }
 }

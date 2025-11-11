@@ -29,7 +29,11 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('cartesi-prt-honeypot-v2')
 
-const minChallengePeriodSeconds = 60 * 60 * 24 * 7 + 60 * 60
+const minChallengePeriodBlocks = discovery.getContractValue<number>(
+  'CanonicalTournamentParametersProvider',
+  'minChallengePeriodBlocks',
+)
+const minChallengePeriodSeconds = minChallengePeriodBlocks * 12
 const topLevelTournamentBond = BigNumber.from('232198050000000000') // in wei
 
 export const cartesiprthoneypotv2: ScalingProject = {

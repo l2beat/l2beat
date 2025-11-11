@@ -3,5 +3,11 @@
     "hash": "0xe052c2a0aba497d7180bf0cc26ad2be121158040020ffaaa3c9266cb3986351b",
     "address": "eth:0x71C6A5fF7f4f31451CcB5bE312Fa1C5F2a060d5c",
     "blockNumber": 22716598
+  },
+  "TopTournamentFactory.sol": {
+    "hash": "0x28d0c882215531e4b36ca8c7570bf961b1065c0e6e8fd2f7201de3ba5cbd245c",
+    "address": "eth:0xfdF16a7D9143f5E3B7B056b761a7eF8Ce18dc6eF",
+    "chain": "ethereum",
+    "blockNumber": 23775846
   }
 }

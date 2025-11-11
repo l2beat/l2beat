@@ -3,5 +3,11 @@
     "hash": "0x4d9461f610606f687a0d0180aa13890df326becb8f2e8ff8acdd713c311ceae9",
     "address": "eth:0xc700D6aDd016eECd59d989C028214Eaa0fCC0051",
     "blockNumber": 22709685
+  },
+  "ERC20Portal.sol": {
+    "hash": "0xd247a27e2ff1305d4e59398e751d29f123c3cdaee809316af6ffa7e040d37dcf",
+    "address": "eth:0xACA6586A0Cf05bD831f2501E7B4aea550dA6562D",
+    "chain": "ethereum",
+    "blockNumber": 23775846
   }
 }
