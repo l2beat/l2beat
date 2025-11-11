@@ -25,6 +25,7 @@ const zkProgramHashes: Record<
     description:
       'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
     proverSystemProject: ProjectId('sp1'),
+    programUrl: 'https://github.com/succinctlabs/op-succinct/tree/v2.3.1/programs/aggregation',
     verificationStatus: 'notVerified',
   },
   '0x00afb45d8064ae10aa6a1793b8f39a24c27268efae2917b5c02950b2377fbf00': {
@@ -32,7 +33,22 @@ const zkProgramHashes: Record<
     description:
       'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    programUrl: 'https://github.com/agglayer/op-succinct/tree/v3.1.0-agglayer/programs/aggregation',
+    verificationStatus: 'successful',
+    verificationSteps:`
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L [https://sp1up.succinct.xyz](https://sp1up.succinct.xyz/) | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [agglayer/op-succinct](https://github.com/agglayer/op-succinct) repo:  \`git checkout v3.1.0-agglayer \` . Commit hash should be  \`9af9cecad2c7f6ee17c87e9bba616ef4d638c958 \`.
+2. Make sure docker is running by running  \`docker ps \`
+3. From the  \`op-succinct/programs/aggregation \` dir:  \`cargo prove build --elf-name aggregation-elf --docker --tag v5.1.0 --output-directory ../../elf \` to generate aggregation program elf from sources
+4. From op-succinct/elf dir:  \`cargo prove vkey --elf aggregation-elf \` to check the verification key of this elf.
+    `
   },
   '0x490685ea27adbbb83301073734f40a5656c984fe352359d54dd637e828e66872': {
     title: 'Range program of OP Succinct',
@@ -53,6 +69,7 @@ const zkProgramHashes: Record<
     description:
       'Verifies that a chain connected to Polygon Agglayer does not bridge out more tokens that were bridged in, thus preventing stealing tokens from other Agglayer chains. Also verifies aggchain proof for this chain.',
     proverSystemProject: ProjectId('sp1'),
+    programUrl: 'https://github.com/agglayer/agglayer/tree/v0.3.3-post.4/crates/pessimistic-proof-program',
     verificationStatus: 'notVerified',
   },
   '0x000055f14384bdb5bb092fd7e5152ec31856321c5a30306ab95836bdf5cdb639': {
@@ -60,7 +77,22 @@ const zkProgramHashes: Record<
     description:
       'Verifies that a chain connected to Polygon Agglayer does not bridge out more tokens that were bridged in, thus preventing stealing tokens from other Agglayer chains. Also verifies aggchain proof for this chain.',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    programUrl: 'https://github.com/agglayer/agglayer/tree/v0.4.4/crates/pessimistic-proof',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L [https://sp1up.succinct.xyz](https://sp1up.succinct.xyz/) | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [agglayer repo](https://github.com/agglayer/agglayer/tree/main): \`git checkout v0.4.4\`. Commit hash should be \`caac9f06bc7cb1cf89912dbb4dffa4d594a00bd5\`.
+2. Make sure docker is running by running \`docker ps\`
+3. From the root dir: \`cargo make pp-elf\` to generate pessimistic program elf from sources
+4. From the pessimistic-proof/elf dir: \`cargo prove vkey --elf riscv32im-succinct-zkvm-elf\` to check the verification key of this elf.
+    `,
   },
   '0x713f8a687452545141b6cd852472c67742a5c61474b97a136d0d107804affa1f': {
     title: 'Aggchain program of agglayer',
@@ -74,6 +106,7 @@ const zkProgramHashes: Record<
     description:
       'Verifies state transition of an Agglayer-based chain either by checking a full validity proof or just by checking a registered multisig signature. Also checks that L1 information on the chain aligns with the values stored on Agglayer.',
     proverSystemProject: ProjectId('sp1'),
+    programUrl: 'https://github.com/agglayer/provers/tree/v1.5.0/crates/aggchain-proof-program',
     verificationStatus: 'notVerified',
   },
   '0x00de39c136b88dfeacb832629e21a9667935bc0e74aaa21292e4f237d79d0bef': {
@@ -186,8 +219,23 @@ const zkProgramHashes: Record<
       title: 'Aggregation program for SHARP prover',
       description:
         'Cairo program that squashes the state diffs of several blocks',
+      programUrl: 'https://github.com/starkware-libs/cairo-lang/tree/v0.14.0.1/src/starkware/starknet/core/aggregator',
       proverSystemProject: ProjectId('stwo'),
-      verificationStatus: 'notVerified',
+      verificationStatus: 'successful',
+      verificationSteps: `
+1. Install python and pip.
+2. Checkout the correct branch in [cairo-lang](https://github.com/starkware-libs/cairo-lang) repo: \`git checkout tag: v0.14.0.1\`. Commit hash should be \`66355d7d99f1962ff9ccba8d0dbacbce3bd79bf8\`.
+3. Install the correct version of Cairo-lang toolkit: \`pip install cairo-lang==0.14.0.1\`.
+4. From the root dir of the repo, compile the aggregation program sources into JSON using the installed cairo-compile: \`cairo-compile src/starkware/starknet/core/aggregator/main.cairo --cairo_path=src --output agg_compiled.json\`.
+5. From the same dir, call the installed cairo-hash-program to compute program hash of the compiled aggregation program JSON: \`cairo-hash-program --program agg_compiled.json\`.
+6. Convert the hex output into dec, e.g. by running \`python -c 'print(int("0x181986bfe23bbfdac56c40522bd5c2b1b64c824c74bd6722a3ccacc8cc888e2", 16))'\`  (you can replace \`0x1c...\` with your output of \`cairo-hash-program\`).
+7. Aggregator prefix must be added to the computed dec hash (see [here](https://github.com/starkware-libs/cairo-lang/blob/66355d7d99f1962ff9ccba8d0dbacbce3bd79bf8/src/starkware/cairo/bootloaders/aggregator_utils.py#L4)). You can do this by executing the following python script: 
+\`from starkware.cairo.lang.vm.crypto import pedersen_hash
+from starkware.python.utils import from_bytes
+program_hash = {use the value obtained in step 6}
+print(pedersen_hash(from_bytes(b"AGGREGATOR"), program_hash))\`
+The output should be the aggregation program hash in dec.
+      `
     },
   '793595346346724189681221050719974054861327641387231526786912662354259445535':
     {
@@ -195,7 +243,16 @@ const zkProgramHashes: Record<
       proverSystemProject: ProjectId('stwo'),
       description:
         'Proves correct state transition for a range of consecutive Starknet transactions.',
-      verificationStatus: 'notVerified',
+      programUrl: 'https://github.com/starkware-libs/cairo-lang/tree/v0.14.0.1/src/starkware/starknet/core/os',
+      verificationStatus: 'successful',
+      verificationSteps: `
+1. Install python and pip.
+2. Checkout the correct branch in [cairo-lang](https://github.com/starkware-libs/cairo-lang) repo: \`git checkout tag: v0.14.0.1\`. Commit hash should be \`66355d7d99f1962ff9ccba8d0dbacbce3bd79bf8\`.
+3. Install the correct version of Cairo-lang toolkit: \`pip install cairo-lang==0.14.0.1\`.
+4. From the root dir of the repo, compile the StarkNet OS sources into JSON using the installed cairo-compile: \`cairo-compile src/starkware/starknet/core/os/os.cairo --cairo_path=src --output os_compiled.json\`.
+5. From the same dir, call the installed cairo-hash-program to compute program hash of the compiled StarkNet OS JSON: \`cairo-hash-program --program os_compiled.json\`.
+6. Convert the hex output into dec, e.g. by running \`python -c 'print(int("0x1c128b765f47ce1dbf6b0d648cd73df8ae34ace6b96de774abf4559fe49871f", 16))'\`  (you can replace \`0x1c...\` with your output of \`cairo-hash-program\`).
+      `
     },
   '273279642033703284306509103355536170486431195329675679055627933497997642494':
     {
@@ -255,15 +312,41 @@ const zkProgramHashes: Record<
     title: 'Boojum L2 Bootloader program',
     description:
       'EraVM program that proves the correct execution of a batch of ZK Stack L2 blocks.',
+    programUrl: 'https://github.com/matter-labs/era-contracts/blob/v0.28.0/system-contracts/bootloader/bootloader.yul',
     proverSystemProject: ProjectId('boojum'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install npm and yarn: \`npm install --global yarn\`
+2. Install hardhat: \`npm install -g hardhat\`
+3. Install foundry-zksync: \`curl -L https://raw.githubusercontent.com/matter-labs/foundry-zksync/main/install-foundry-zksync | bash\`  from [here](https://foundry-book.zksync.io/introduction/installation/).
+
+Verify:
+
+1. Checkout the correct branch in [era-contracts](https://github.com/matter-labs/era-contracts) repo: \`git checkout v0.28.0\`. Commit hash should be \`cfd77cb6bc9ab3d751d42c6161f1b393a9c51647\`.
+2. Execute recompute_hashes.sh script: \`chmod +x recompute_hashes.sh\`  and \`./recompute_hashes.sh\`. Note that the script may require a specific version of \`foundryup-zksync\` and it will suggest the command to install it. However you might need to manually clear git working tree in the repo foundry-zksync (probably in ~/.foundry/matter-labs/foundry-zksync) to change versions.
+    `
   },
   '0x0100088580465d88420e6369230ee94a32ff356dbcdd407a4be49fc8009b2a81': {
     title: 'Boojum L2 Bootloader program',
     description:
       'EraVM program that proves the correct execution of a batch of ZK Stack L2 blocks.',
+    programUrl: 'https://github.com/matter-labs/era-contracts/blob/release-v26/system-contracts/bootloader/bootloader.yul',
     proverSystemProject: ProjectId('boojum'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install npm and yarn: \`npm install --global yarn\`
+2. Install hardhat: \`npm install -g hardhat\`
+3. Install foundry-zksync: \`curl -L https://raw.githubusercontent.com/matter-labs/foundry-zksync/main/install-foundry-zksync | bash\`  from [here](https://foundry-book.zksync.io/introduction/installation/).
+
+Verify:
+
+1. Checkout the correct branch in [era-contracts](https://github.com/matter-labs/era-contracts) repo: \`git checkout release-v26\`. Commit hash should be \`f7ecdb91f7941a3be01ce08bf6a2e4a5fb02a8d5\`.
+2. Execute \`pushd da-contracts && forge clean && popd && pushd l1-contracts && yarn clean && forge clean && popd && pushd l2-contracts && yarn clean && forge clean && popd && pushd system-contracts && yarn clean && forge clean && popd && pushd da-contracts && yarn build:foundry && popd && pushd l1-contracts && yarn build:foundry && popd && pushd l2-contracts && yarn build:foundry && popd && pushd system-contracts && yarn build:foundry && popd && yarn calculate-hashes:fix\`  to recompile all contracts and compare their hashes with the ones recorded in \`AllContractsHashes.json\` (note that script output calls this file \`SystemContractsHashes.json\`).
+    `
   },
   // v29 upgrade, added by basti without knowing what he is doing https://www.tally.xyz/gov/zksync/proposal/40562439712311128665286075271414168289029475306445402072499591795343687723101?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f
   // Turned out to be exactly correct
@@ -271,7 +354,20 @@ const zkProgramHashes: Record<
     title: 'Boojum L2 Bootloader program',
     description:
       'EraVM program that proves the correct execution of a batch of ZK Stack L2 blocks.',
+    programUrl: 'https://github.com/matter-labs/era-contracts/blob/v0.29.2/system-contracts/bootloader/bootloader.yul',
     proverSystemProject: ProjectId('boojum'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install npm and yarn: \`npm install --global yarn\`
+2. Install hardhat: \`npm install -g hardhat\`
+3. Install foundry-zksync: \`curl -L https://raw.githubusercontent.com/matter-labs/foundry-zksync/main/install-foundry-zksync | bash\`  from [here](https://foundry-book.zksync.io/introduction/installation/).
+
+Verify:
+
+1. Checkout the correct branch in [era-contracts](https://github.com/matter-labs/era-contracts) repo: \`git checkout v0.29.2\`. Commit hash should be \`dbfc9b5a40d68007dc405a9b669230104c1646e4\`.
+2. Execute recompute_hashes.sh script: \`chmod +x recompute_hashes.sh\`  and \`./recompute_hashes.sh\`. Note that the script may require a specific version of \`foundryup-zksync\` and it will suggest the command to install it. However you might need to manually clear git working tree in the repo foundry-zksync (probably in ~/.foundry/matter-labs/foundry-zksync) to change versions.
+    `
   },
 }
