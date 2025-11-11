@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-11-10T19:15:35.143Z",
+  "lastModified": "2025-11-11T16:40:58.835Z",
   "contracts": {
     "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": {
       "functions": [
@@ -1891,7 +1891,6 @@
         {
           "functionName": "changeController",
           "isPermissioned": true,
-          "timestamp": "2025-10-08T16:32:53.157Z",
           "checked": true,
           "score": "high-risk",
           "description": "Changes the controller contract. The controller (currently TokenManager) can arbitrarily mint and burn LDO tokens from and to any user. This could put the governance and entire protocol at risk since LDO tokens are used to vote.\t",
@@ -1899,12 +1898,12 @@
             {
               "path": "$self.controller"
             }
-          ]
+          ],
+          "timestamp": "2025-11-11T16:40:58.776Z"
         },
         {
           "functionName": "generateTokens",
           "isPermissioned": true,
-          "timestamp": "2025-10-08T16:32:26.125Z",
           "checked": true,
           "score": "high-risk",
           "description": "Generates (mints) new LDO to a specific address.\t",
@@ -1912,12 +1911,12 @@
             {
               "path": "$self.controller"
             }
-          ]
+          ],
+          "timestamp": "2025-11-11T16:40:58.788Z"
         },
         {
           "functionName": "destroyTokens",
           "isPermissioned": true,
-          "timestamp": "2025-10-08T16:32:39.777Z",
           "checked": true,
           "score": "high-risk",
           "description": "Destroys (burns) LDO tokens from a given arbitrary address.\t",
@@ -1925,12 +1924,12 @@
             {
               "path": "$self.controller"
             }
-          ]
+          ],
+          "timestamp": "2025-11-11T16:40:58.797Z"
         },
         {
           "functionName": "enableTransfers",
           "isPermissioned": true,
-          "timestamp": "2025-10-08T16:33:30.402Z",
           "checked": true,
           "score": "high-risk",
           "description": "Enables or disables transfer of LDO tokens.\t",
@@ -1938,12 +1937,12 @@
             {
               "path": "$self.controller"
             }
-          ]
+          ],
+          "timestamp": "2025-11-11T16:40:58.814Z"
         },
         {
           "functionName": "claimTokens",
           "isPermissioned": true,
-          "timestamp": "2025-10-08T16:33:14.732Z",
           "checked": true,
           "score": "low-risk",
           "description": "Transfers any given token held in the contract to the TokenManager. This is meant to recover funds sent to the contract by mistake.\t",
@@ -1951,7 +1950,8 @@
             {
               "path": "$self.controller"
             }
-          ]
+          ],
+          "timestamp": "2025-11-11T16:40:58.824Z"
         }
       ]
     },

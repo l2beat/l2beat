@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-11-10T18:29:54.333Z",
+  "lastModified": "2025-11-11T16:48:37.577Z",
   "tags": [
     {
       "contractAddress": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
@@ -116,6 +116,26 @@
       "isExternal": false,
       "timestamp": "2025-11-10T18:28:27.038Z",
       "likelihood": "mitigated"
+    },
+    {
+      "contractAddress": "eth:0x6232397ebac4f5772e53285B26c47914E9461E75",
+      "isExternal": false,
+      "timestamp": "2025-11-11T14:59:02.854Z"
+    },
+    {
+      "contractAddress": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
+      "isExternal": false,
+      "timestamp": "2025-11-11T16:48:37.568Z"
+    },
+    {
+      "contractAddress": "eth:0x909d05F384D0663eD4BE59863815aB43b4f347Ec",
+      "isExternal": false,
+      "timestamp": "2025-11-11T16:48:37.577Z"
+    },
+    {
+      "contractAddress": "eth:0x294ED1f214F4e0ecAE31C3Eae4F04EBB3b36C9d0",
+      "isExternal": false,
+      "timestamp": "2025-11-11T16:15:10.291Z"
     }
   ]
 }

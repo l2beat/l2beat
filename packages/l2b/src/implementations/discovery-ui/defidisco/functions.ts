@@ -65,6 +65,27 @@ export function getFunctions(
   }
 }
 
+/**
+ * Checks if a function entry is "empty" (no manual overrides) and should be cleaned up.
+ * A function entry is considered empty if it has no meaningful user-provided data.
+ */
+function isFunctionEntryEmpty(func: FunctionEntry): boolean {
+  // Check if function has any manual overrides
+  const hasManualOverrides =
+    func.isPermissioned === true ||  // Explicitly marked as permissioned
+    func.checked !== undefined ||
+    func.score !== undefined ||
+    func.likelihood !== undefined ||
+    func.reason !== undefined ||
+    func.description !== undefined ||
+    func.constraints !== undefined ||
+    (func.ownerDefinitions !== undefined && func.ownerDefinitions.length > 0) ||
+    func.delay !== undefined ||
+    (func.dependencies !== undefined && func.dependencies.length > 0)
+
+  return !hasManualOverrides
+}
+
 export function updateFunction(
   paths: DiscoveryPaths,
   project: string,
@@ -120,11 +141,27 @@ export function updateFunction(
     timestamp: new Date().toISOString(),
   }
 
-  // Update or add the function entry
-  if (existingFunctionIndex >= 0) {
-    userContracts[contractAddress].functions[existingFunctionIndex] = newFunction
+  // Check if function entry should be cleaned up (no manual overrides)
+  const shouldCleanup = isFunctionEntryEmpty(newFunction)
+
+  if (shouldCleanup) {
+    // Remove the function entry entirely
+    if (existingFunctionIndex >= 0) {
+      userContracts[contractAddress].functions.splice(existingFunctionIndex, 1)
+    }
+    // Don't add if it was a new function that would be empty
+
+    // If contract has no functions left, remove contract entry
+    if (userContracts[contractAddress].functions.length === 0) {
+      delete userContracts[contractAddress]
+    }
   } else {
-    userContracts[contractAddress].functions.push(newFunction)
+    // Update or add the function entry
+    if (existingFunctionIndex >= 0) {
+      userContracts[contractAddress].functions[existingFunctionIndex] = newFunction
+    } else {
+      userContracts[contractAddress].functions.push(newFunction)
+    }
   }
 
   // Create updated data
