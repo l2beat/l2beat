@@ -62,6 +62,7 @@ export function DeFiScanPanel() {
         </div>
       </div>
       <div className="overflow-auto">
+        <V2ScoringSection project={project} />
         <StatusOfReviewSection
           projectData={response.data}
           contractTags={contractTags}
@@ -72,7 +73,6 @@ export function DeFiScanPanel() {
           functions={filteredFunctions}
           contractTags={contractTags}
         />
-        <V2ScoringSection project={project} />
       </div>
     </div>
   )
@@ -132,8 +132,8 @@ function StatusOfReviewSection({ projectData, contractTags, functions }: { proje
 
   allContracts.forEach((contract) => {
     // Check if contract is explicitly marked as external in contract tags
-    // Need to handle address format differences: contracts have 'eth:0x...' but tags have '0x...'
-    const contractAddr = contract.address.replace('eth:', '').toLowerCase()
+    // Both contracts and tags use 'eth:0x...' format - just normalize to lowercase
+    const contractAddr = contract.address.toLowerCase()
     const tag = contractTags.tags.find((tag: any) =>
       tag.contractAddress.toLowerCase() === contractAddr
     )
