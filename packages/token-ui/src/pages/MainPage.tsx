@@ -20,7 +20,7 @@ import { getDeployedTokenDisplayId } from '~/utils/getDisplayId'
 
 export function MainPage() {
   const { data, isLoading: isAbstractTokensLoading } =
-    api.tokens.getAllAbstractTokensWithDeployedTokens.useQuery()
+    api.abstractTokens.getAllWithDeployedTokens.useQuery()
 
   const [selectedAbstractToken, setSelectedAbstractToken] = useState<
     AbstractToken | undefined

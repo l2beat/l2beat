@@ -1,3 +1,25 @@
+Generated with discovered.json: 0x2ed9ffadb7c9ba5aadebefd4c7c3dcb4b02bf708
+
+# Diff at Mon, 10 Nov 2025 13:05:36 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@e5b98f73e765185048172a39ccf6cdf19ca5fe79 block: 1762349131
+- current timestamp: 1762779859
+
+## Description
+
+Part of [TPP-12](https://www.tally.xyz/gov/zksync/proposal/97314764080859415498674952864578860560861880297360481348949362100730414449748?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746) execution: `Zk_StakingPilot_2025` (0xb1c5f8ea8cE447FDaFB234D85EAD8c8A83b6306B) was granted the minter role on ZK token.
+
+## Watched changes
+
+```diff
+    contract ZkToken (zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+      values.accessControl.MINTER_ROLE.members.16:
++        "zksync:0xb1c5f8ea8cE447FDaFB234D85EAD8c8A83b6306B"
+    }
+```
+
 Generated with discovered.json: 0x5962fc0632a9211b2a4bb5cfa30da6aa5b533dce
 
 # Diff at Wed, 05 Nov 2025 13:27:46 GMT:

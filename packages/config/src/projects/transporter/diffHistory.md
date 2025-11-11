@@ -1,3 +1,131 @@
+Generated with discovered.json: 0x8b8f1ead9b67756615f02ac6a3607e9000aa927c
+
+# Diff at Mon, 10 Nov 2025 09:33:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c7b384345bf6076e020559556d64e4e6add0bee0 block: 1762264674
+- current timestamp: 1762765918
+
+## Description
+
+New tokenpools, added templates.
+
+## Watched changes
+
+```diff
+    contract LockReleaseTokenPool (eth:0x20B79D39Bd44dEee4F89B1e9d0e3b945fde06491) {
+    +++ description: None
+      values.getSupportedChains.3:
++        "2442541497099098535"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (eth:0x3E8Ac93aBbD46e5BD4C3641D942f61ed6D858529)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0x697f6b0658B9f146701379eb5394a4BAe627c8B9)
+    +++ description: None
+```
+
+```diff
+    contract Router (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.88:
++        {"sourceChainSelector":"8481857512324358265","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"}
+      values.onRamps.241851231317828981:
+-        "eth:0x20fD5ab74D519df395f41c958D982BecB6b64432"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.onRamps.8481857512324358265:
+-        "eth:0xffBD6B0146C9E16A9f9E77DC8898cbfF6E2AA389"
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0x9aCd2ffD56E278a560Cc4E12dCA2B7D2B3359Ac2) {
+    +++ description: None
+      values.getSupportedChains.2:
++        "9335212494177455608"
+    }
+```
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.235:
+-        "eth:0x3E8Ac93aBbD46e5BD4C3641D942f61ed6D858529"
++        "eth:0x36C036E22C350442F63A189352345c4A7534bbdC"
+      values.pools.282:
++        "eth:0xeE17B5467f0D9F938d9993b982941E4720a94b10"
+      values.pools.283:
++        "eth:0xbc7b13D6E42D5D0ce14Af43482aE8aF7A5927c06"
+      values.poolsMap.eth:0x6eb935F5b649fc98BC7a3079F0211f5255C8B3eA:
+-        "eth:0x3E8Ac93aBbD46e5BD4C3641D942f61ed6D858529"
++        "eth:0x36C036E22C350442F63A189352345c4A7534bbdC"
+      values.poolsMap.eth:0x833E53F1e2D320e0768671Dee5CEc88b2d93330F:
++        "eth:0xeE17B5467f0D9F938d9993b982941E4720a94b10"
+      values.poolsMap.eth:0xb706b81B495aaAAA802CC8547d03ad6Fa1bD7012:
++        "eth:0xbc7b13D6E42D5D0ce14Af43482aE8aF7A5927c06"
+    }
+```
+
+```diff
+    contract LombardTokenPoolV2 (eth:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0) {
+    +++ description: None
+      values.getSupportedChains.1:
++        "6433500567565415381"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (eth:0xEcf61D6fAA3B9faE7195AF3bc9891450C1733f78) {
+    +++ description: None
+      values.getSupportedChains.1:
++        "17673274061779414707"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (eth:0xf05a207442f14E446b0e32b12D2043bfc68Cb1C9) {
+    +++ description: None
+      values.getSupportedChains.8:
++        "9335212494177455608"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x36C036E22C350442F63A189352345c4A7534bbdC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenPool (eth:0xbc7b13D6E42D5D0ce14Af43482aE8aF7A5927c06)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0xeE17B5467f0D9F938d9993b982941E4720a94b10)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0x36C036E22C350442F63A189352345c4A7534bbdC.sol} |  651 ++----
+ ...:0xeE17B5467f0D9F938d9993b982941E4720a94b10.sol | 2132 ++++++++++++++++++++
+ .../.flat@1762264674/Safe/Safe.sol => /dev/null    | 1088 ----------
+ .../Safe/SafeProxy.p.sol => /dev/null              |   37 -
+ 4 files changed, 2285 insertions(+), 1623 deletions(-)
+```
+
 Generated with discovered.json: 0xac425cfbd5a241f700c17be7787cedf50065979c
 
 # Diff at Tue, 04 Nov 2025 14:07:29 GMT:

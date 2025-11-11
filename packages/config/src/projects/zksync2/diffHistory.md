@@ -1,3 +1,66 @@
+Generated with discovered.json: 0xc1be404bb437e7801bf9b3b36fe3de205f5dd562
+
+# Diff at Fri, 07 Nov 2025 09:03:39 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@4fc89c2b7ec1f3752b32fdd3573cd1b04749f1e8 block: 1762183851
+- current timestamp: 1762505590
+
+## Description
+
+Verified sources for ChainAssetHandler on Gateway, the smart contract is the same as on L1.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762183851 (main branch discovery), not current.
+
+```diff
+    contract ChainAssetHandler (gateway:0x000000000000000000000000000000000001000a) {
+    +++ description: Specialized contract for managing chain assets, i.e. chain migrations.
+      name:
+-        "ChainAssetHandler_unverified"
++        "ChainAssetHandler"
+      unverified:
+-        true
++++ severity: HIGH
+      values.migrationPaused:
++        false
++++ description: zk chain migrations that were started
++++ severity: HIGH
+      values.migrations:
++        []
+      values.owner:
++        "gateway:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"
++++ description: this 'paused' is unrelated to migrations and only used for initialization.
++++ severity: LOW
+      values.paused:
++        false
+      values.pendingOwner:
++        "gateway:0x0000000000000000000000000000000000000000"
+      implementationNames.gateway:0x000000000000000000000000000000000001000a:
+-        ""
++        "ChainAssetHandler"
+      template:
++        "shared-zk-stack/ChainAssetHandler"
+      sourceHashes:
++        ["0x0ae09698e3bbec162b9457ba33b3184a082d0d89367f001764f8b8b22a1f950d"]
+      description:
++        "Specialized contract for managing chain assets, i.e. chain migrations."
+      fieldMeta:
++        {"migrationPaused":{"severity":"HIGH"},"paused":{"severity":"LOW","description":"this 'paused' is unrelated to migrations and only used for initialization."},"migrations":{"severity":"HIGH","description":"zk chain migrations that were started"}}
+    }
+```
+
+```diff
+    EOA ProtocolUpgradeHandler_l2Alias (gateway:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"gateway:0x000000000000000000000000000000000001000a","description":"pause, resume chain migrations.","role":".owner"}
+    }
+```
+
 Generated with discovered.json: 0xf8c6d24bfea45a062594e056fdc4a63c1830a9c3
 
 # Diff at Tue, 04 Nov 2025 11:35:04 GMT:

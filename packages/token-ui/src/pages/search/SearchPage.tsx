@@ -31,7 +31,7 @@ import { getDeployedTokenDisplayId } from '~/utils/getDisplayId'
 
 export function SearchPage() {
   const { search } = useParams()
-  const { data } = api.tokens.search.useQuery(search ?? '', {
+  const { data } = api.search.tokens.useQuery(search ?? '', {
     enabled: search !== '',
   })
 

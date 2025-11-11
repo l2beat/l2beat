@@ -209,5 +209,11 @@
     "address": "eth:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0",
     "chain": "ethereum",
     "blockNumber": 23726399
+  },
+  "BurnMintTokenPool7.sol": {
+    "hash": "0x947fe96d0e62740a79e8289cc4674caa9c541ee30847c832d9c9bfeb4a7caec1",
+    "address": "eth:0x36C036E22C350442F63A189352345c4A7534bbdC",
+    "chain": "ethereum",
+    "blockNumber": 23767885
   }
 }

@@ -27,5 +27,8 @@ function parseParam(param: unknown): string {
   if (typeof param === 'boolean') {
     return param.toString()
   }
+  if (typeof param === 'object') {
+    return JSON.stringify(param)
+  }
   throw new Error(`Unknown param type: ${typeof param}`)
 }

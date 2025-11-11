@@ -199,4 +199,14 @@ export const intmax: ScalingProject = {
   permissions: {
     ...discovery.getDiscoveredPermissions(),
   },
+  milestones: [
+    {
+      title: 'INTMAX mainnet officially launched',
+      url: 'https://www.linkedin.com/posts/intmax_june-26-2025-marked-a-turning-point-activity-7346176278313476097-8bUL/',
+      date: '2025-06-26T00:00:00Z',
+      description:
+        'After a testnet launch in December 2024, INTMAX publicly launches its mainnet.',
+      type: 'general',
+    },
+  ],
 }
