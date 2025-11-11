@@ -35,6 +35,7 @@ export const reya: ScalingProject = orbitStackL2({
         'https://twitter.com/Reya_xyz',
         'https://discord.gg/reyaxyz',
         'https://medium.com/@reyalabs123',
+        'https://t.me/+gy0MV_67RKs1YTM5',
       ],
     },
   },
