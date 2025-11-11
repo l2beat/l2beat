@@ -920,6 +920,15 @@
       {
         "chain": "arbitrum",
         "tx": "0x7cd3bd135f9d5aaf5c1d19ceba5caba6241e69abbd5ffdd935acd44ec5bd6335"
+      },
+      // arbitrum -> ethereum (dai withdrawal)
+      {
+        "chain": "arbitrum",
+        "tx": "0xe6dd81265933e6c98dd078304791bf07e0532735b60cc035cd5abd61a679ffcc"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x4f6ffd7cec7fe0b7c5fa414cb842750750e3cdd406cd27761d3095adbbc94b9b"
       }
     ]
   },
