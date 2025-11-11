@@ -2,5 +2,6 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "name": "L1ETHBridge",
   "description": "The L1ETHBridge contract is used to bridge ETH between the L1 and L2.",
+  "ignoreInWatchMode": ["balance"],
   "category": "bridge-canonical"
 }

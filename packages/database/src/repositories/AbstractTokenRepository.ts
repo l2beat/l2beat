@@ -28,6 +28,7 @@ function toRecord(row: Selectable<AbstractToken>): AbstractTokenRecord {
     coingeckoListingTimestamp: toTimestamp(row.coingeckoListingTimestamp),
   }
 }
+export { toRecord as toAbstractTokenRecord }
 
 function toRow(record: AbstractTokenRecord): Insertable<AbstractToken> {
   return {
@@ -89,6 +90,18 @@ export class AbstractTokenRepository extends BaseRepository {
       .selectAll()
       .where('issuer', '=', issuer)
       .where('symbol', '=', symbol)
+      .executeTakeFirst()
+
+    return result ? toRecord(result) : undefined
+  }
+
+  async findByCoingeckoId(
+    coingeckoId: string,
+  ): Promise<AbstractTokenRecord | undefined> {
+    const result = await this.db
+      .selectFrom('AbstractToken')
+      .selectAll()
+      .where('coingeckoId', '=', coingeckoId)
       .executeTakeFirst()
 
     return result ? toRecord(result) : undefined

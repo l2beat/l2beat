@@ -161,7 +161,7 @@ export class CCTPV1Plugin implements InteropPlugin {
       if (!messageSent) return
       return [
         Result.Message('cctp-v1.Message', {
-          app: 'unknown',
+          app: 'cctp-v1',
           srcEvent: messageSent,
           dstEvent: messageReceived,
         }),

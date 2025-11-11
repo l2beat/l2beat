@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -57,13 +57,21 @@ The proof system operates on Lighter STF circuits, desert mode circuits and stat
         ...TRUSTED_SETUPS.AztecIgnition,
       },
     ],
+    projectsForTvs: [
+      {
+        projectId: ProjectId('lighter'),
+        sinceTimestamp: UnixTime(1759356000),
+      },
+    ],
     verifierHashes: [
       {
         hash: '0x1653e6bc18d8da44afcae150e9c675f46e41a727c2867289b00cbe1afaed0316',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
-            address: '0x9a3Cc15b31Aec100d0C49B16cC401eaEf5A0A500',
+            address: EthereumAddress(
+              '0x9a3Cc15b31Aec100d0C49B16cC401eaEf5A0A500',
+            ),
             chain: 'ethereum',
           },
         ],

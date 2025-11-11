@@ -6,7 +6,6 @@ export type LinkName =
   | 'Repository'
   | 'Social'
   | 'Other'
-  | 'rollup.codes'
 
 export interface ProjectLink {
   name: LinkName

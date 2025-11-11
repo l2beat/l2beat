@@ -31,18 +31,18 @@ export function PlanConfirmationDialog({
   const navigate = useNavigate()
 
   function invalidateAbstractTokenQueries() {
-    utils.tokens.getAllAbstractTokens.invalidate()
-    utils.tokens.getAllAbstractTokensWithDeployedTokens.invalidate()
-    utils.tokens.getAbstractById.invalidate()
-    utils.tokens.search.invalidate()
+    utils.abstractTokens.getAll.invalidate()
+    utils.abstractTokens.getAllWithDeployedTokens.invalidate()
+    utils.abstractTokens.getById.invalidate()
+    utils.search.tokens.invalidate()
   }
 
   function invalidateDeployedTokenQueries() {
-    utils.tokens.getAllAbstractTokensWithDeployedTokens.invalidate()
-    utils.tokens.getAbstractById.invalidate()
-    utils.tokens.getDeployedByChainAndAddress.invalidate()
-    utils.tokens.search.invalidate()
-    utils.tokens.checkIfDeployedTokenExists.invalidate()
+    utils.abstractTokens.getAllWithDeployedTokens.invalidate()
+    utils.abstractTokens.getById.invalidate()
+    utils.deployedTokens.findByChainAndAddress.invalidate()
+    utils.search.tokens.invalidate()
+    utils.deployedTokens.checkIfExists.invalidate()
   }
 
   const { mutate: executePlan, isPending } = api.plan.execute.useMutation({

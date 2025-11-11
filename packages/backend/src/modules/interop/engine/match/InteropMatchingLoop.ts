@@ -224,7 +224,7 @@ function toMessageRecord(message: InteropMessage): InteropMessageRecord {
 function toTransferRecord(transfer: InteropTransfer): InteropTransferRecord {
   return {
     plugin: transfer.plugin,
-    messageId: generateId('T'),
+    transferId: generateId('T'),
     type: transfer.type,
     duration: Math.max(
       transfer.dst.event.ctx.timestamp - transfer.src.event.ctx.timestamp,

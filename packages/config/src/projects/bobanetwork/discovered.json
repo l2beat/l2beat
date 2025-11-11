@@ -1,6 +1,6 @@
 {
   "name": "bobanetwork",
-  "timestamp": 1762276576,
+  "timestamp": 1762517395,
   "configHash": "0xc3ba7d5d34760a946151a3e021df69cb66e1f34cba3c60d53b9639f56d7b1e5b",
   "entries": [
     {
@@ -115,11 +115,6 @@
         "eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375": "SystemConfig"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "address": "eth:0x33A0B6C2Bd60A592C5e91dCCd5E5f403693F0AC1",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x3A0d08CE95984B5dB59E604671e92A73C7897EB7",
@@ -332,14 +327,14 @@
         "$members": [
           "eth:0xCCDEbe62f7378D5A931970A847cdf1EcFfc71C63",
           "eth:0x6976498e37E4941E167161fC3BC5191EEDc302ab",
-          "eth:0x33A0B6C2Bd60A592C5e91dCCd5E5f403693F0AC1"
+          "eth:0xBEC9D08ddfb46F20f3a847180E6bC04c8Dc8aCb4"
         ],
         "$threshold": 2,
         "domainSeparator": "0x3e1e6f01b53c63c1d9a6768542de75a2e5a4de16021b351a4e90bd9a948f99be",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 30,
+        "nonce": 31,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -588,7 +583,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 100000,
-          "prevBlockNum": 23727136
+          "prevBlockNum": 23740302
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -875,6 +870,11 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "eth:0xBEC9D08ddfb46F20f3a847180E6bC04c8Dc8aCb4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xCCDEbe62f7378D5A931970A847cdf1EcFfc71C63",
       "type": "EOA",
       "proxyType": "EOA"
@@ -997,7 +997,7 @@
         ],
         "$upgradeCount": 1,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 3136,
+        "gameCount": 3202,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x97e8B3e46a251A657A56CEe8c24E4C0F1864be64",
@@ -1009,7 +1009,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x56121a8612474C3eB65D69a3b871f284705b9bC4",
-        "permissionedGamesTotal": 3136,
+        "permissionedGamesTotal": 3202,
         "version": "1.0.0"
       },
       "fieldMeta": {
@@ -1652,6 +1652,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23727384 },
-  "permissionsConfigHash": "0xa87092fee49f907d789ad9acf88cd3ff671704e19095c2707f51a82164727f5a"
+  "usedBlockNumbers": { "ethereum": 23747297 },
+  "permissionsConfigHash": "0x67550f73ff8c50698dc50feb53d32ffe50e99f2ce326f0d5a99b78f0be78a845"
 }

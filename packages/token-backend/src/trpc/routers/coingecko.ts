@@ -1,78 +1,42 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
 import { config } from '../../config'
-import { getUrlWithParams } from '../../utils/getUrlWithParams'
-import { protectedProcedure, router } from '../trpc'
+import { readOnlyProcedure, router } from '../trpc'
 
-export type Coin = v.infer<typeof CoinSchema>
-const CoinSchema = v.object({
-  id: v.string(),
-  image: v.object({
-    large: v.string(),
-  }),
-})
-
-const HistoricalChartSchema = v.object({
-  prices: v.array(v.tuple([v.number(), v.number()])),
+const coingeckoClient = new CoingeckoClient({
+  apiKey: config.coingeckoApiKey,
 })
 
 export const coingeckoRouter = router({
-  getCoinById: protectedProcedure.input(v.string()).query(async ({ input }) => {
+  getCoinById: readOnlyProcedure.input(v.string()).query(async ({ input }) => {
     try {
-      const url = getUrlWithParams(
-        `https://pro-api.coingecko.com/api/v3/coins/${input}`,
-        {
-          localization: 'false',
-          tickers: 'false',
-          market_data: 'false',
-          community_data: 'false',
-          developer_data: 'false',
-          sparkline: 'false',
-        },
-      )
-      const options = {
-        method: 'GET',
-        headers: {
-          'x-cg-pro-api-key': config.coingeckoApiKey,
-        },
-      }
-      const response = await fetch(url, options)
-      const data = await response.json()
-      return CoinSchema.parse(data)
-    } catch {
+      const coin = await coingeckoClient.getCoinDataById(input)
+      return coin
+    } catch (error) {
+      console.error(error)
       return null
     }
   }),
-  getListingTimestamp: protectedProcedure
+  getListingTimestamp: readOnlyProcedure
     .input(v.string())
     .query(async ({ input }) => {
       try {
-        const url = getUrlWithParams(
-          `https://pro-api.coingecko.com/api/v3/coins/${input}/market_chart/range`,
-          {
-            vs_currency: 'usd',
-            from: '2000-01-01',
-            to: UnixTime.toYYYYMMDD(UnixTime.fromDate(new Date())),
-            precision: '0',
-          },
+        const marketChart = await coingeckoClient.getCoinMarketChartRange(
+          input,
+          'usd',
+          UnixTime.fromDate(new Date('2000-01-01')),
+          UnixTime.fromDate(new Date()),
         )
-        const options = {
-          method: 'GET',
-          headers: {
-            'x-cg-pro-api-key': config.coingeckoApiKey,
-          },
-        }
-        const response = await fetch(url, options)
-        const data = await response.json()
-        const parsed = HistoricalChartSchema.parse(data)
-        const [firstPrice] = parsed.prices
+        const [firstPrice] = marketChart.prices
 
         if (!firstPrice) {
           return null
         }
 
-        return UnixTime(Math.floor(firstPrice[0] / 1000))
-      } catch {
+        return UnixTime(Math.floor(firstPrice.date.getTime() / 1000))
+      } catch (error) {
+        console.error(error)
         return null
       }
     }),

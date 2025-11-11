@@ -186,7 +186,7 @@ export class CCTPV2Plugin implements InteropPlugin {
         Result.Message(
           messageSent.args.fast ? 'cctp-v2.FastMessage' : 'cctp-v2.SlowMessage',
           {
-            app: 'unknown',
+            app: 'cctp-v2',
             srcEvent: messageSent,
             dstEvent: messageReceived,
           },
