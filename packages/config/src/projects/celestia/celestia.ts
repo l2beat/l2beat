@@ -31,7 +31,7 @@ export const celestia: BaseProject = {
         'https://x.com/Celestia',
         'https://discord.com/invite/YsnTPcSfWQ',
         'https://t.me/CelestiaCommunity',
-        'https://www.youtube.com/@CelestiaNetwork',
+        'https://youtube.com/@CelestiaNetwork',
       ],
     },
     badges: [],
