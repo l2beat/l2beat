@@ -1,7 +1,7 @@
 import { getTestQuery } from './test/getTestQuery'
 import { getAtTimestampsPerProjectQuery } from './tvl/getAtTimestampsPerProjectQuery'
 import { getSummedByTimestampTvsValuesQuery } from './tvl/getSummedByTimestampTvsValuesQuery'
-import { getSummedByTimestampWithProjectsRangesTvsValuesQuery } from './tvl/getSummedByTimestampTvsValuesWithProjectRangesQuery'
+import { getSummedByTimestampWithProjectsRangesTvsValuesQuery } from './tvl/getSummedByTimestampWithProjectsRangesTvsValuesQuery'
 import type { DropFirst } from './types'
 
 export type Queries = typeof queries
