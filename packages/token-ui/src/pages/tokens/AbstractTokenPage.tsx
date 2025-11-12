@@ -10,7 +10,6 @@ import { Button } from '~/components/core/Button'
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from '~/components/core/Card'
@@ -21,6 +20,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from '~/components/core/Empty'
+import { Spinner } from '~/components/core/Spinner'
 import {
   AbstractTokenForm,
   AbstractTokenSchema,
@@ -82,7 +82,7 @@ function AbstractTokenView({
     },
   })
 
-  const { data: suggestions } =
+  const { data: suggestions, isLoading: isLoadingSuggestions } =
     api.deployedTokens.getSuggestionsByCoingeckoId.useQuery(
       token.coingeckoId ?? '',
       {
@@ -145,16 +145,21 @@ function AbstractTokenView({
               </AbstractTokenForm>
             </CardContent>
           </Card>
-          {suggestions && suggestions.length !== 0 && (
-            <Card className="mt-4">
-              <CardHeader>
-                <CardTitle>Suggestions</CardTitle>
-                <CardDescription>
-                  We've found this token on other chains and thought you may
-                  want to add it.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
+          <Card className="mt-4">
+            <CardHeader>
+              <CardTitle>Suggestions</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {isLoadingSuggestions ? (
+                <Empty>
+                  <EmptyHeader>
+                    <EmptyMedia variant="icon">
+                      <Spinner />
+                    </EmptyMedia>
+                    <EmptyTitle>Loading suggestions...</EmptyTitle>
+                  </EmptyHeader>
+                </Empty>
+              ) : suggestions && suggestions.length !== 0 ? (
                 <div className="-mx-6 flex flex-col gap-2">
                   {suggestions.map((suggestion) => {
                     return (
@@ -179,9 +184,18 @@ function AbstractTokenView({
                     )
                   })}
                 </div>
-              </CardContent>
-            </Card>
-          )}
+              ) : (
+                <Empty>
+                  <EmptyHeader>
+                    <EmptyMedia variant="icon">
+                      <CoinsIcon />
+                    </EmptyMedia>
+                    <EmptyTitle>No suggestions found</EmptyTitle>
+                  </EmptyHeader>
+                </Empty>
+              )}
+            </CardContent>
+          </Card>
 
           <Card>
             <CardHeader>

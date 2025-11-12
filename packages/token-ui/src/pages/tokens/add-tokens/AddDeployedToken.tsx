@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
-import { CheckIcon, CoinsIcon, ListPlusIcon, PlusIcon } from 'lucide-react'
+import { CheckIcon, ListPlusIcon, ListXIcon, PlusIcon } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useSearchParams } from 'react-router-dom'
@@ -232,8 +232,12 @@ export function AddDeployedToken() {
                         return newParams
                       })
                     } else {
-                      clearQueryChain()
-                      clearQueryAddress()
+                      setSearchParams((prev) => {
+                        const newParams = new URLSearchParams(prev)
+                        newParams.delete('chain')
+                        newParams.delete('address')
+                        return newParams
+                      })
                     }
                   }}
                 >
@@ -261,7 +265,7 @@ export function AddDeployedToken() {
               <Empty>
                 <EmptyHeader>
                   <EmptyMedia variant="icon">
-                    <CoinsIcon />
+                    <ListXIcon />
                   </EmptyMedia>
                   <EmptyTitle>No tokens in queue</EmptyTitle>
                 </EmptyHeader>
