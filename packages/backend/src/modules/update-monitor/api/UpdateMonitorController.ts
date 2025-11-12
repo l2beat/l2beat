@@ -32,7 +32,14 @@ export class UpdateMonitorController {
     )
 
     const projectConfigs = await this.getProjectConfigs()
-    return renderDashboardPage(projects, projectConfigs)
+    const projectsWithHighSeverityChanges = new Set(
+      (await this.db.updateDiff.getAll()).map((diff) => diff.projectId),
+    )
+    return renderDashboardPage(
+      projects,
+      projectConfigs,
+      projectsWithHighSeverityChanges,
+    )
   }
 
   async getUpdates() {

@@ -10,9 +10,13 @@ import { type Group, groupProjects } from './groupProjects'
 
 interface DashboardPageProps {
   groups: Group[]
+  projectsWithHighSeverityChanges: Set<string>
 }
 
-function DashboardPage({ groups }: DashboardPageProps) {
+function DashboardPage({
+  groups,
+  projectsWithHighSeverityChanges,
+}: DashboardPageProps) {
   return (
     <Page title="Discovery">
       <div
@@ -24,14 +28,24 @@ function DashboardPage({ groups }: DashboardPageProps) {
         }}
       >
         {groups.map((group) => (
-          <Group key={group.name} {...group} />
+          <Group
+            key={group.name}
+            {...group}
+            projectsWithHighSeverityChanges={projectsWithHighSeverityChanges}
+          />
         ))}
       </div>
     </Page>
   )
 }
 
-function Group({ name, assignees, projects, variant }: Group) {
+function Group({
+  name,
+  assignees,
+  projects,
+  variant,
+  projectsWithHighSeverityChanges,
+}: Group & { projectsWithHighSeverityChanges: Set<string> }) {
   const inlineLabel = variant === 'single' && projects.length === 1
   const header =
     assignees.length > 0 ? `${name} :: ${assignees.join(' ')}` : name
@@ -74,6 +88,7 @@ function Group({ name, assignees, projects, variant }: Group) {
             assignees={assignees}
             inlineLabel={inlineLabel}
             isFirst={index === 0}
+            hasHSC={projectsWithHighSeverityChanges.has(project.name)}
           />
         ))}
       </div>
@@ -86,11 +101,13 @@ function ProjectRow({
   assignees,
   inlineLabel,
   isFirst,
+  hasHSC,
 }: {
   project: DashboardProject
   assignees: readonly string[]
   inlineLabel: boolean
   isFirst: boolean
+  hasHSC: boolean
 }) {
   const hasChanges = (project.changes.diff?.length ?? 0) > 0
   const statusColors = hasChanges
@@ -181,6 +198,19 @@ function ProjectRow({
             textTransform: 'uppercase',
           }}
         >
+          {hasHSC && (
+            <span
+              style={{
+                color: '#ff5a64',
+                fontWeight: 600,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+              }}
+            >
+              High severity change <span style={{ fontSize: '14px' }}>🔥</span>
+            </span>
+          )}
           <span
             style={{
               color: '#fef4d0',
@@ -224,6 +254,7 @@ function ProjectRow({
           project={project}
           trackedTxsAffected={project.changes.trackedTxsAffected}
           summary={summaryWrapper}
+          hasHSC={hasHSC}
         />
       ) : (
         <div
@@ -253,15 +284,20 @@ function ChangedDetectedDropdown({
   project,
   summary,
   trackedTxsAffected,
+  hasHSC,
 }: {
   project: DashboardProject
   summary: ReactNode
   trackedTxsAffected?: boolean
+  hasHSC: boolean
 }) {
   const hasDiff = (project.changes.diff?.length ?? 0) > 0
   if (!hasDiff) {
     return null
   }
+
+  const severityAccent = hasHSC ? '#ff5a64' : '#ffb155'
+  const summaryColor = hasHSC ? '#ffe2e3' : '#f8f7f2'
 
   return (
     <details
@@ -270,13 +306,13 @@ function ChangedDetectedDropdown({
         margin: 0,
         padding: 0,
         width: '100%',
-        borderLeft: '3px solid #ffb155',
+        borderLeft: `3px solid ${severityAccent}`,
       }}
     >
       <summary
         style={{
           cursor: 'pointer',
-          color: '#f8f7f2',
+          color: summaryColor,
           outline: 'none',
         }}
       >
@@ -393,7 +429,13 @@ function ChangedDetectedDropdown({
 export function renderDashboardPage(
   projects: DashboardProject[],
   projectConfigs: Project<never, 'scalingInfo' | 'isBridge' | 'isDaLayer'>[],
+  projectsWithHighSeverityChanges: Set<string>,
 ) {
   const groups = groupProjects(projects, projectConfigs)
-  return reactToHtml(<DashboardPage groups={groups} />)
+  return reactToHtml(
+    <DashboardPage
+      groups={groups}
+      projectsWithHighSeverityChanges={projectsWithHighSeverityChanges}
+    />,
+  )
 }
