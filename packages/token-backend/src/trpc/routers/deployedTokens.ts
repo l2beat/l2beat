@@ -189,7 +189,9 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
             const contractCreation = await chain.blockscout.getContractCreation(
               input.address,
             )
-            deploymentTimestamp = contractCreation[0].timestamp
+            const txHash = contractCreation[0].txHash
+            const txInfo = await chain.blockscout.getTransactionInfo(txHash)
+            deploymentTimestamp = txInfo.timeStamp
           } catch (error) {
             console.error(error)
           }
