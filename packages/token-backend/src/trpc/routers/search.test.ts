@@ -45,6 +45,44 @@ describe('searchRouter', () => {
       })
     })
 
+    it('returns deployed tokens matching address case-insensitively', async () => {
+      const deployedTokens = [
+        {
+          chain: 'ethereum',
+          address: '0xABCDEFABCDEFABCDEFABCDEFABCDEFABCDEFABCD',
+          symbol: 'USDC',
+          decimals: 6,
+          comment: null,
+          abstractTokenId: null,
+          deploymentTimestamp: 0,
+        },
+        {
+          chain: 'arbitrum',
+          address: '0x1234567890123456789012345678901234567890',
+          symbol: 'USDT',
+          decimals: 6,
+          comment: null,
+          abstractTokenId: null,
+          deploymentTimestamp: 0,
+        },
+      ]
+      const mockDb = mockObject<TokenDatabase>({
+        deployedToken: mockObject<DeployedTokenRepository>({
+          getAll: mockFn().resolvesTo(deployedTokens),
+        }),
+      })
+
+      const caller = createRouter(mockDb)
+      const result = await caller.tokens(
+        '0xabcdefabcdefabcdefabcdefabcdefabcdefabcd',
+      )
+
+      expect(result).toEqual({
+        deployedTokens: [deployedTokens[0]],
+        abstractTokens: [],
+      })
+    })
+
     it('returns empty arrays when address does not match', async () => {
       const deployedTokens = [
         {

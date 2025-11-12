@@ -8,7 +8,9 @@ export const searchRouter = router({
     const deployedTokens = await ctx.db.deployedToken.getAll()
     if (input.startsWith('0x')) {
       return {
-        deployedTokens: deployedTokens.filter((t) => t.address === input),
+        deployedTokens: deployedTokens.filter(
+          (t) => t.address.toLowerCase() === input.toLowerCase(),
+        ),
         abstractTokens: [],
       }
     }
