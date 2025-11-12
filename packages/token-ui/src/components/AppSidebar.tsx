@@ -41,7 +41,7 @@ const items = [
       },
       {
         title: 'Add',
-        url: '#',
+        url: '/chains/new',
         icon: CirclePlusIcon,
       },
     ],
