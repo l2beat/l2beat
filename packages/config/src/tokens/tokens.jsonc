@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "HAUST",
+      "address": "0xec3502A9f98f151aF52EE6CB423a0afE7bBF5A19"
+    },
+    {
       "symbol": "USTB",
       "address": "0x43415eB6ff9DB7E26A15b704e7A3eDCe97d31C4e",
       "category": "rwaRestricted" // reason: whitelist
