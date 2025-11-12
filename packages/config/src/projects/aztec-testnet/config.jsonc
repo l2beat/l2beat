@@ -2,5 +2,5 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "aztec-testnet",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["sep:0xc2F24280F5c7F4897370dFDEb30f79Ded14f1c81"]
+  "initialAddresses": ["sep:0xc2F24280F5c7F4897370dFDEb30f79Ded14f1c81", "sep:0xebD99FF0Ff6677205509AE73F93d0Ca52AC85D67"]
 }

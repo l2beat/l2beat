@@ -1,7 +1,7 @@
 {
   "name": "aztec-testnet",
-  "timestamp": 1761637405,
-  "configHash": "0xe4243e6cc5f019f429b93ed5c0006142dc24b00dbd7d2696823e05572f1c28f2",
+  "timestamp": 1762794445,
+  "configHash": "0x2d8c331cba54a7b1b184b314c6cc84f17b69db30f9d5ab74f595c97835badc3c",
   "entries": [
     {
       "address": "sep:0x0000000000000000000000000000000000000000",
@@ -9,9 +9,238 @@
       "proxyType": "EOA"
     },
     {
+      "name": "Outbox",
+      "address": "sep:0x062E226f244536F5Ab2b875cD28dF4f5DbEA8266",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xe9ea050e1b0b8a10d023bae844d6efe6d644671b0bef1bffa83987dacfed72a7"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762377660,
+      "sinceBlock": 9568520,
+      "values": {
+        "$immutable": true,
+        "getRootData": [
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000"
+        ],
+        "ROLLUP": "sep:0xebD99FF0Ff6677205509AE73F93d0Ca52AC85D67",
+        "VERSION": 845231713
+      },
+      "errors": { "getRootData": "Processing error occurred." },
+      "implementationNames": {
+        "sep:0x062E226f244536F5Ab2b875cD28dF4f5DbEA8266": "Outbox"
+      }
+    },
+    {
+      "address": "sep:0x0Da92bEBC86841eA2cd4CB1343f259a09e9fa28D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "sep:0x0Fb6215099f48D723CfB89434C2cb887357Bc871",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "TestERC20",
+      "address": "sep:0x139d2a7a0881e16332d7D1F8DB383A4507E1Ea7A",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xfa3be345de0987c2c71e0ff7fcc9b00e992244e56ac2e2a8ea467b9e1ebe50a7"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762377552,
+      "sinceBlock": 9568511,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "name": "Staking",
+        "owner": "sep:0xdfe19Da6a717b7088621d8bBB66be59F2d78e924",
+        "pendingOwner": "sep:0x0000000000000000000000000000000000000000",
+        "symbol": "STK",
+        "totalSupply": "1010010800000000000000000000000"
+      },
+      "implementationNames": {
+        "sep:0x139d2a7a0881e16332d7D1F8DB383A4507E1Ea7A": "TestERC20"
+      }
+    },
+    {
       "address": "sep:0x17651b08d54B770f50C0c4e46752dF73ee013e74",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "Governance",
+      "address": "sep:0x1b5dAD737609A548543ce32A71377900b5fd5584",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x7a2e1cf86fe50ac900804d2614b6fbacf40b7ac4b67e234f386e1fd81e00ae35"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762377564,
+      "sinceBlock": 9568512,
+      "values": {
+        "$immutable": true,
+        "ASSET": "sep:0x139d2a7a0881e16332d7D1F8DB383A4507E1Ea7A",
+        "getConfiguration": {
+          "proposeConfig": {
+            "lockDelay": 2592000,
+            "lockAmount": "250000000000000000000000000"
+          },
+          "votingDelay": 43200,
+          "votingDuration": 86400,
+          "executionDelay": 43200,
+          "gracePeriod": 86400,
+          "quorum": "200000000000000000",
+          "requiredYeaMargin": "100000000000000000",
+          "minimumVotes": "20000000000000000000000000"
+        },
+        "getProposal": [
+          [
+            [0, 0, 0, 0, 0, 0, 0],
+            0,
+            "sep:0x0000000000000000000000000000000000000000",
+            "sep:0x0000000000000000000000000000000000000000",
+            0,
+            [0, 0]
+          ],
+          [
+            [0, 0, 0, 0, 0, 0, 0],
+            0,
+            "sep:0x0000000000000000000000000000000000000000",
+            "sep:0x0000000000000000000000000000000000000000",
+            0,
+            [0, 0]
+          ],
+          [
+            [0, 0, 0, 0, 0, 0, 0],
+            0,
+            "sep:0x0000000000000000000000000000000000000000",
+            "sep:0x0000000000000000000000000000000000000000",
+            0,
+            [0, 0]
+          ],
+          [
+            [0, 0, 0, 0, 0, 0, 0],
+            0,
+            "sep:0x0000000000000000000000000000000000000000",
+            "sep:0x0000000000000000000000000000000000000000",
+            0,
+            [0, 0]
+          ],
+          [
+            [0, 0, 0, 0, 0, 0, 0],
+            0,
+            "sep:0x0000000000000000000000000000000000000000",
+            "sep:0x0000000000000000000000000000000000000000",
+            0,
+            [0, 0]
+          ]
+        ],
+        "getProposalState": [],
+        "getWithdrawal": [
+          [
+            "2000000000000000000000",
+            1762810812,
+            "sep:0xebD99FF0Ff6677205509AE73F93d0Ca52AC85D67",
+            false
+          ],
+          [
+            "2000000000000000000000",
+            1762810812,
+            "sep:0xebD99FF0Ff6677205509AE73F93d0Ca52AC85D67",
+            false
+          ],
+          [
+            "2000000000000000000000",
+            1762810812,
+            "sep:0xebD99FF0Ff6677205509AE73F93d0Ca52AC85D67",
+            false
+          ],
+          [
+            "2000000000000000000000",
+            1762810812,
+            "sep:0xebD99FF0Ff6677205509AE73F93d0Ca52AC85D67",
+            false
+          ],
+          [
+            "2000000000000000000000",
+            1762810812,
+            "sep:0xebD99FF0Ff6677205509AE73F93d0Ca52AC85D67",
+            false
+          ]
+        ],
+        "governanceProposer": "sep:0xef1B0D8aaCa52F70323CBB91b0103bCe75E9c533",
+        "isAllBeneficiariesAllowed": false,
+        "proposalCount": 0,
+        "totalPowerAt": [0, 0, 0, 0, 0],
+        "totalPowerNow": "94170000000000000000000000",
+        "withdrawalCount": 15
+      },
+      "errors": {
+        "getProposal": "Processing error occurred.",
+        "getWithdrawal": "Processing error occurred.",
+        "totalPowerAt": "Processing error occurred."
+      },
+      "implementationNames": {
+        "sep:0x1b5dAD737609A548543ce32A71377900b5fd5584": "Governance"
+      }
+    },
+    {
+      "name": "TallySlashingProposer",
+      "address": "sep:0x1d78c05369d4fd947b90De0B7727737c19636d4D",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x0719e54ee88f5ce92da40fb001910a2ae3aad7da053673b8a0c938ee3a01544a"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762377660,
+      "sinceBlock": 9568520,
+      "values": {
+        "$immutable": true,
+        "COMMITTEE_SIZE": 24,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "TallySlashingProposer",
+          "version": "1",
+          "chainId": 11155111,
+          "verifyingContract": "sep:0x1d78c05369d4fd947b90De0B7727737c19636d4D",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "EXECUTION_DELAY_IN_ROUNDS": 28,
+        "getCurrentRound": 45,
+        "getRound": [
+          [false, false, 0],
+          [false, false, 0],
+          [false, false, 0],
+          [true, false, 128],
+          [false, false, 0]
+        ],
+        "INSTANCE": "sep:0xebD99FF0Ff6677205509AE73F93d0Ca52AC85D67",
+        "LIFETIME_IN_ROUNDS": 34,
+        "MAX_ROUND_SIZE": 1024,
+        "QUORUM": 65,
+        "ROUND_SIZE": 128,
+        "ROUND_SIZE_IN_EPOCHS": 4,
+        "ROUNDABOUT_SIZE": 128,
+        "SLASH_AMOUNT_LARGE": "2000000000000000000000",
+        "SLASH_AMOUNT_MEDIUM": "2000000000000000000000",
+        "SLASH_AMOUNT_SMALL": "2000000000000000000000",
+        "SLASH_OFFSET_IN_ROUNDS": 2,
+        "SLASH_PAYLOAD_IMPLEMENTATION": "sep:0x552b589DAb233f3eE75de4788f2Ac280ec00401c",
+        "SLASHER": "sep:0x82dB5507a89E30Cae2Cf34B759E5aeFf80c635BC",
+        "SLASHING_PROPOSER_TYPE": 1,
+        "VOTE_TYPEHASH": "0x18b6b90f234e6d028d4c9800043cedef34624eedddd14e60eba01934728014fe"
+      },
+      "errors": { "getRound": "Processing error occurred." },
+      "implementationNames": {
+        "sep:0x1d78c05369d4fd947b90De0B7727737c19636d4D": "TallySlashingProposer"
+      }
     },
     {
       "address": "sep:0x277289430297c0c1a83719062dA1A5b4Fb46f5F8",
@@ -50,7 +279,7 @@
           "extensions": []
         },
         "getActivationThreshold": "100000000000000000000",
-        "getActiveAttesterCount": 23761,
+        "getActiveAttesterCount": 23844,
         "getAttesterAtIndex": [
           "sep:0xab218dac919E678AAA037f11a10Bda96b9e317Dc",
           "sep:0xAb3DC47924b69F35DA64E5Dda42568620bC46E9D",
@@ -110,12 +339,12 @@
         "getBurnAddress": "sep:0x4355415548584943414c4c490000000000000000",
         "getCollectiveProverRewardsForEpoch": [0, 0, 0, 0, 0],
         "getCurrentBlobCommitmentsHash": "0x003249e5ce97f9b0c46ed04e5ae858d6e4ec08ad39be1917c0d67eb81eed4890",
-        "getCurrentEpoch": 3050,
-        "getCurrentSampleSeed": "1199045158885698265919764969098399823101449428729273117595417458687343220087",
-        "getCurrentSlot": 97624,
+        "getCurrentEpoch": 4055,
+        "getCurrentSampleSeed": "37477788851519304148951398724905152090176383661836580384241057150401896865277",
+        "getCurrentSlot": 129764,
         "getEjectionThreshold": "50000000000000000000",
         "getEntryQueueFlushSize": 32,
-        "getEntryQueueLength": 0,
+        "getEntryQueueLength": 18,
         "getEpochAt": [],
         "getEpochAtSlot": [0, 0, 0, 0, 0],
         "getEpochDuration": 32,
@@ -131,7 +360,7 @@
         "getL1FeesAt": [],
         "getManaLimit": 20000000000,
         "getManaTarget": 10000000000,
-        "getNextFlushableEpoch": 3051,
+        "getNextFlushableEpoch": 3815,
         "getOutbox": "sep:0x3aEbEd9BF5F4303401547aE68DA04A124c100bC1",
         "getPendingBlockNumber": 41566,
         "getProofSubmissionEpochs": 1,
@@ -229,6 +458,34 @@
       }
     },
     {
+      "name": "TestERC20",
+      "address": "sep:0x31785fDCBC5C5CCfB0726382132BCa6343ee8652",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xfa3be345de0987c2c71e0ff7fcc9b00e992244e56ac2e2a8ea467b9e1ebe50a7"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762377552,
+      "sinceBlock": 9568511,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "name": "FeeJuice",
+        "owner": "sep:0xfe3DAD94f934d7ec90158E4A378Ad552e02e9E63",
+        "pendingOwner": "sep:0x0000000000000000000000000000000000000000",
+        "symbol": "FEE",
+        "totalSupply": "300030004000000000000000000"
+      },
+      "implementationNames": {
+        "sep:0x31785fDCBC5C5CCfB0726382132BCa6343ee8652": "TestERC20"
+      }
+    },
+    {
+      "address": "sep:0x32e90E88bb2E6Ee4382e6884cC5c299a6bA27920",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Outbox",
       "address": "sep:0x3aEbEd9BF5F4303401547aE68DA04A124c100bC1",
       "type": "Contract",
@@ -256,7 +513,67 @@
       }
     },
     {
+      "address": "sep:0x4271bcaB8b06eF5a60D54A96ee47B9bb7CC4AFA0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "sep:0x4355415548584943414c4c490000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Registry",
+      "address": "sep:0x459498e6BF7967BAD0966353b691Ef4395432479",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x2668189921df08d463ad0d3e7381bb520057ff2a687d45bed1ec160de02a6c87"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762377564,
+      "sinceBlock": 9568512,
+      "values": {
+        "$immutable": true,
+        "getCanonicalRollup": "sep:0xebD99FF0Ff6677205509AE73F93d0Ca52AC85D67",
+        "getGovernance": "sep:0x1b5dAD737609A548543ce32A71377900b5fd5584",
+        "getRewardDistributor": "sep:0xA0122560afeEC5ef45a950D5c49a3cc5C5549E2B",
+        "getRollup": [],
+        "getVersion": [845231713],
+        "numberOfVersions": 1,
+        "owner": "sep:0x1b5dAD737609A548543ce32A71377900b5fd5584"
+      },
+      "implementationNames": {
+        "sep:0x459498e6BF7967BAD0966353b691Ef4395432479": "Registry"
+      }
+    },
+    {
+      "name": "",
+      "address": "sep:0x552b589DAb233f3eE75de4788f2Ac280ec00401c",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762377660,
+      "sinceBlock": 9568520,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "sep:0x552b589DAb233f3eE75de4788f2Ac280ec00401c": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "sep:0x569eCF62E63223616d77AB44c8CcC3597265eE0A",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1761751140,
+      "sinceBlock": 9516508,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "sep:0x569eCF62E63223616d77AB44c8CcC3597265eE0A": ""
+      }
+    },
+    {
+      "address": "sep:0x655b9ece565402F9994AEaD831AE651B99Af4914",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -277,7 +594,7 @@
         "owner": "sep:0xdfe19Da6a717b7088621d8bBB66be59F2d78e924",
         "pendingOwner": "sep:0x0000000000000000000000000000000000000000",
         "symbol": "STK",
-        "totalSupply": "612863400000000000000000000"
+        "totalSupply": "612963400000000000000000000"
       },
       "implementationNames": {
         "sep:0x6732CEDafCBF85Afa9B5C83f0385967840BBCe47": "TestERC20"
@@ -310,7 +627,7 @@
           "sep:0x0000000000000000000000000000000000000000"
         ],
         "owner": "sep:0x6f4f1f5e6D96B08530043830725f3ebCB95908D5",
-        "totalSupply": "2287620000000000000000000"
+        "totalSupply": "2295920000000000000000000"
       },
       "errors": { "getLatestRollupAt": "Processing error occurred." },
       "implementationNames": {
@@ -330,13 +647,26 @@
       "values": {
         "$immutable": true,
         "ASSET": "sep:0xAAB785EEa290AEAE003732e603987979E63955E2",
-        "mintAvailable": "3514512000000000000000000000000",
+        "mintAvailable": "4671576000000000000000000000000",
         "owner": "sep:0x6f4f1f5e6D96B08530043830725f3ebCB95908D5",
         "RATE": "1000000000000000000000000",
         "timeOfLastMint": 1758122868
       },
       "implementationNames": {
         "sep:0x6AA988BD21A8b3BE6A57cE89B7fe4dE2B0Bf2D2C": "CoinIssuer"
+      }
+    },
+    {
+      "name": "",
+      "address": "sep:0x6E8981E79957351EB7147e7e000063e0caD3Dd63",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762377660,
+      "sinceBlock": 9568520,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "sep:0x6E8981E79957351EB7147e7e000063e0caD3Dd63": ""
       }
     },
     {
@@ -399,12 +729,20 @@
             [0, 0]
           ],
           [
-            [0, 0, 0, 0, 0, 0, 0],
+            [
+              43200,
+              86400,
+              43200,
+              86400,
+              "200000000000000000",
+              "100000000000000000",
+              "250000000000000000000000000"
+            ],
             0,
-            "sep:0x0000000000000000000000000000000000000000",
-            "sep:0x0000000000000000000000000000000000000000",
-            0,
-            [0, 0]
+            "sep:0x569eCF62E63223616d77AB44c8CcC3597265eE0A",
+            "sep:0xB973B3D5884e0B8DA179d808308f7702d317b280",
+            1761751140,
+            ["2290720000000000000000000", 0]
           ],
           [
             [0, 0, 0, 0, 0, 0, 0],
@@ -423,7 +761,7 @@
             [0, 0]
           ]
         ],
-        "getProposalState": [4, 4],
+        "getProposalState": [4, 4, 4],
         "getWithdrawal": [
           [
             "20000000000000000000",
@@ -458,9 +796,9 @@
         ],
         "governanceProposer": "sep:0xB973B3D5884e0B8DA179d808308f7702d317b280",
         "isAllBeneficiariesAllowed": false,
-        "proposalCount": 2,
+        "proposalCount": 3,
         "totalPowerAt": [0, 0, 0, 0, 0],
-        "totalPowerNow": "2287620000000000000000000",
+        "totalPowerNow": "2295920000000000000000000",
         "withdrawalCount": 10417
       },
       "errors": {
@@ -470,6 +808,44 @@
       },
       "implementationNames": {
         "sep:0x6f4f1f5e6D96B08530043830725f3ebCB95908D5": "Governance"
+      }
+    },
+    {
+      "address": "sep:0x756E657Cf072E69E571bB73b420Fa190543571E6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "sep:0x7EAbE4F636B937628A7Fe503bD7F06772C047FEe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "sep:0x81062F03742B88923eaB121243B69D0a0092089e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Slasher",
+      "address": "sep:0x82dB5507a89E30Cae2Cf34B759E5aeFf80c635BC",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xb389fc4f97aaa4911b22a8cc60478f1216452f68747a3d0bd1305320a8f213a9"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762377660,
+      "sinceBlock": 9568520,
+      "values": {
+        "$immutable": true,
+        "GOVERNANCE": "sep:0xdfe19Da6a717b7088621d8bBB66be59F2d78e924",
+        "isSlashingEnabled": true,
+        "PROPOSER": "sep:0x1d78c05369d4fd947b90De0B7727737c19636d4D",
+        "SLASHING_DISABLE_DURATION": 432000,
+        "slashingDisabledUntil": 0,
+        "VETOER": "sep:0xBbB4aF368d02827945748b28CD4b2D42e4A37480"
+      },
+      "implementationNames": {
+        "sep:0x82dB5507a89E30Cae2Cf34B759E5aeFf80c635BC": "Slasher"
       }
     },
     {
@@ -486,7 +862,7 @@
         "$immutable": true,
         "FEE_ASSET_PORTAL": "sep:0x96109891056303267969f58e1B5a61b87Da47129",
         "getFeeAssetPortal": "sep:0x96109891056303267969f58e1B5a61b87Da47129",
-        "getInProgress": 41570,
+        "getInProgress": 41574,
         "getRoot": [
           "0x00089a9d421a82c4a25f7acbebe69e638d5b064fa8a60e018793dcb0be53752c",
           "0x00089a9d421a82c4a25f7acbebe69e638d5b064fa8a60e018793dcb0be53752c",
@@ -495,11 +871,11 @@
           "0x00089a9d421a82c4a25f7acbebe69e638d5b064fa8a60e018793dcb0be53752c"
         ],
         "getState": {
-          "rollingHash": "0xa49196d58edc552be5233a9e6594e233",
-          "totalMessagesInserted": 156,
-          "inProgress": 41570
+          "rollingHash": "0xf7657bf3479db2b12c9e2994686b9455",
+          "totalMessagesInserted": 232,
+          "inProgress": 41574
         },
-        "getTotalMessagesInserted": 156,
+        "getTotalMessagesInserted": 232,
         "ROLLUP": "sep:0x29Fa27E173f058d0f5F618F5AbAd2757747f673f",
         "trees": [0, 0, 0, 0, 0],
         "VERSION": 1714840162
@@ -510,6 +886,19 @@
       },
       "implementationNames": {
         "sep:0x8F4D9A05374C1d99825FDb291340021B9A7dC6d2": "Inbox"
+      }
+    },
+    {
+      "name": "",
+      "address": "sep:0x903bB16320A3CE16a9DF880CFB8f2abd74261fA1",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762377660,
+      "sinceBlock": 9568520,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "sep:0x903bB16320A3CE16a9DF880CFB8f2abd74261fA1": ""
       }
     },
     {
@@ -535,7 +924,7 @@
       "address": "sep:0x9A5fC69F737d152a187DfdcE5743077e4d357081",
       "type": "Contract",
       "sourceHashes": [
-        "0xda60bf61f6442d61772400c8acf7a9298bb5bf8359c7dcdfb22c02157db10a18"
+        "0xe08cc1fccae12a6189d53d66680787955f2f5510d796fa08d135d8ef21cdf84a"
       ],
       "proxyType": "immutable",
       "sinceTimestamp": 1758122916,
@@ -553,7 +942,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 1,
-        "getCurrentRound": 762,
+        "getCurrentRound": 1013,
         "getRound": [],
         "INSTANCE": "sep:0x29Fa27E173f058d0f5F618F5AbAd2757747f673f",
         "LIFETIME_IN_ROUNDS": 5,
@@ -586,6 +975,19 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "sep:0x9D8869D17Af6B899AFf1d93F23f863FF41ddc4fa": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "sep:0xA0122560afeEC5ef45a950D5c49a3cc5C5549E2B",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762377564,
+      "sinceBlock": 9568512,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "sep:0xA0122560afeEC5ef45a950D5c49a3cc5C5549E2B": ""
       }
     },
     {
@@ -640,6 +1042,31 @@
       "proxyType": "EOA"
     },
     {
+      "address": "sep:0xB216FcaF63c6C0f73a557B342e1Da9710C95DA81",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "sep:0xb31e6d9661720A93d54AF7D1815d9bb399280629",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "sep:0xb33a08eF4624eE8F409F749Ee73766E225bEd0F4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "sep:0xb556cbAd61c51c976f4C07BF5bD6ef73c6959dad",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "sep:0xb6Da7B7a0d8c7349630183f4Bd6F13D4a8AD9216",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "GovernanceProposer",
       "address": "sep:0xB973B3D5884e0B8DA179d808308f7702d317b280",
       "type": "Contract",
@@ -662,13 +1089,13 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 0,
-        "getCurrentRound": 325,
+        "getCurrentRound": 432,
         "getGovernance": "sep:0x6f4f1f5e6D96B08530043830725f3ebCB95908D5",
         "getInstance": "sep:0x29Fa27E173f058d0f5F618F5AbAd2757747f673f",
         "getProposalProposer": [
           "sep:0x0000000000000000000000000000000000000000",
           "sep:0x0000000000000000000000000000000000000000",
-          "sep:0x0000000000000000000000000000000000000000",
+          "sep:0x29Fa27E173f058d0f5F618F5AbAd2757747f673f",
           "sep:0x0000000000000000000000000000000000000000",
           "sep:0x0000000000000000000000000000000000000000"
         ],
@@ -685,6 +1112,59 @@
       },
       "implementationNames": {
         "sep:0xB973B3D5884e0B8DA179d808308f7702d317b280": "GovernanceProposer"
+      }
+    },
+    {
+      "name": "SafeL2",
+      "address": "sep:0xBbB4aF368d02827945748b28CD4b2D42e4A37480",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1762194876,
+      "sinceBlock": 9553406,
+      "values": {
+        "$immutable": false,
+        "$implementation": "sep:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "sep:0xb33a08eF4624eE8F409F749Ee73766E225bEd0F4",
+          "sep:0xb6Da7B7a0d8c7349630183f4Bd6F13D4a8AD9216",
+          "sep:0xB216FcaF63c6C0f73a557B342e1Da9710C95DA81",
+          "sep:0x81062F03742B88923eaB121243B69D0a0092089e",
+          "sep:0x32e90E88bb2E6Ee4382e6884cC5c299a6bA27920",
+          "sep:0x655b9ece565402F9994AEaD831AE651B99Af4914",
+          "sep:0xb31e6d9661720A93d54AF7D1815d9bb399280629",
+          "sep:0x0Fb6215099f48D723CfB89434C2cb887357Bc871",
+          "sep:0x7EAbE4F636B937628A7Fe503bD7F06772C047FEe"
+        ],
+        "$threshold": 5,
+        "domainSeparator": "0xc0543c8c70050c6f16ce96bb76b609d0ac1e4f413d98f7321c268a6c6e805f62",
+        "getChainId": 11155111,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "5 of 9 (56%)",
+        "nonce": 1,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "sep:0xBbB4aF368d02827945748b28CD4b2D42e4A37480": "SafeProxy",
+        "sep:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
+    },
+    {
+      "name": "",
+      "address": "sep:0xbd28f1d3Ed9f919AA368d33Cbf8C18FCe3E03509",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762377792,
+      "sinceBlock": 9568530,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "sep:0xbd28f1d3Ed9f919AA368d33Cbf8C18FCe3E03509": ""
       }
     },
     {
@@ -725,6 +1205,46 @@
       }
     },
     {
+      "name": "Inbox",
+      "address": "sep:0xd7610c91d5869a40E229719d41dE2ac6374789eD",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x1d730495f5adaba8d5051f7f6ff89bb87ed039b2f192e27b9f80ef175ed92534"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762377660,
+      "sinceBlock": 9568520,
+      "values": {
+        "$immutable": true,
+        "FEE_ASSET_PORTAL": "sep:0x903bB16320A3CE16a9DF880CFB8f2abd74261fA1",
+        "getFeeAssetPortal": "sep:0x903bB16320A3CE16a9DF880CFB8f2abd74261fA1",
+        "getInProgress": 2,
+        "getRoot": [
+          "0x00089a9d421a82c4a25f7acbebe69e638d5b064fa8a60e018793dcb0be53752c",
+          "0x00089a9d421a82c4a25f7acbebe69e638d5b064fa8a60e018793dcb0be53752c",
+          "0x00089a9d421a82c4a25f7acbebe69e638d5b064fa8a60e018793dcb0be53752c",
+          "0x00089a9d421a82c4a25f7acbebe69e638d5b064fa8a60e018793dcb0be53752c",
+          "0x00089a9d421a82c4a25f7acbebe69e638d5b064fa8a60e018793dcb0be53752c"
+        ],
+        "getState": {
+          "rollingHash": "0x00000000000000000000000000000000",
+          "totalMessagesInserted": 0,
+          "inProgress": 2
+        },
+        "getTotalMessagesInserted": 0,
+        "ROLLUP": "sep:0xebD99FF0Ff6677205509AE73F93d0Ca52AC85D67",
+        "trees": [0, 0, 0, 0, 0],
+        "VERSION": 845231713
+      },
+      "errors": {
+        "getRoot": "Processing error occurred.",
+        "trees": "Processing error occurred."
+      },
+      "implementationNames": {
+        "sep:0xd7610c91d5869a40E229719d41dE2ac6374789eD": "Inbox"
+      }
+    },
+    {
       "address": "sep:0xdfe19Da6a717b7088621d8bBB66be59F2d78e924",
       "type": "EOA",
       "proxyType": "EOA"
@@ -748,9 +1268,574 @@
       "implementationNames": {
         "sep:0xe0927107Db2f45d1f9C4F6E591636Da528Cf9F4d": "Slasher"
       }
+    },
+    {
+      "name": "Rollup",
+      "address": "sep:0xebD99FF0Ff6677205509AE73F93d0Ca52AC85D67",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x9e0492ae418d4e45cc01217edc5aeb77d8ece275d860a9fa8260687a012c7710"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762377660,
+      "sinceBlock": 9568520,
+      "values": {
+        "$immutable": true,
+        "archive": "0x00f1fa04f80ff36dd65d9d5c68e990d94cc9c81b2354b397dab95d0e34af575c",
+        "archiveAt": [
+          "0x1fa3de2e35ec7d3dce2bbd63848d90ea140a98b5db8cfd531e7a50776976d1ec",
+          "0x2fd20891be3512bbc6bcf660051750910b9d8e32bcea66e321a812a008b2acb2",
+          "0x1e7d3f91689eb53b6e355f813ec7a3a0b4095ed54f7ffdb45647a73b479c830d",
+          "0x20b2e7274135601f0359db600929bcb6337954a5cbebdd08ecf62daf391788b9",
+          "0x204fc66807b628a0764acb0c1597538055e7e29eee1fee6b3be48b54feaddc03"
+        ],
+        "canPruneAtTime": [],
+        "checkBlob": true,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "Aztec Rollup",
+          "version": "1",
+          "chainId": 11155111,
+          "verifyingContract": "sep:0xebD99FF0Ff6677205509AE73F93d0Ca52AC85D67",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "getActivationThreshold": "200000000000000000000000",
+        "getActiveAttesterCount": 471,
+        "getAttesterAtIndex": [
+          "sep:0xab218dac919E678AAA037f11a10Bda96b9e317Dc",
+          "sep:0xAb3DC47924b69F35DA64E5Dda42568620bC46E9D",
+          "sep:0x277289430297c0c1a83719062dA1A5b4Fb46f5F8",
+          "sep:0xaEA577d3c40C583c90604aD0407a74AE0C3Cb626",
+          "sep:0x17651b08d54B770f50C0c4e46752dF73ee013e74"
+        ],
+        "getAvailableValidatorFlushes": 0,
+        "getBlobCommitmentsHash": [],
+        "getBlock": [],
+        "getBlockReward": "500000000000000000000",
+        "getBurnAddress": "sep:0x4355415548584943414c4c490000000000000000",
+        "getCollectiveProverRewardsForEpoch": [0, 0, 0, 0, 0],
+        "getCurrentBlobCommitmentsHash": "0x00a4dd4e9ea06df59cc42cb227e5d65ff504fb407c35d73a442be1f672465cb9",
+        "getCurrentEpoch": 180,
+        "getCurrentSampleSeed": "115001560937607186403925803988377725524246697875379797273525743221368719058096",
+        "getCurrentSlot": 5788,
+        "getEarliestRewardsClaimableTimestamp": 0,
+        "getEjectionThreshold": "100000000000000000000000",
+        "getEntryQueueAt": [
+          [
+            "sep:0xf61c0bbF0d8fE79eD796dCF5ed82e78Fcf14DB58",
+            "sep:0xf61c0bbF0d8fE79eD796dCF5ed82e78Fcf14DB58",
+            [
+              "7737144495374123224822989002081797573006517484235393317857403772809729321544",
+              "11036689162242042567638353557161319061248571130898975564490937973038834843230"
+            ],
+            [
+              "262259567975737852463376245361561757484197819379666086644007306696550617040",
+              "15323714769829111457676723743776888569736149464442864727138942234847068301494",
+              "20335259146679059414832832328050702258627219249589587332591063142540961507413",
+              "10354234915438111093379519600170824365500055427803123691567972306779246892940"
+            ],
+            [
+              "15562423666937330316881636968802115999434013605431691885233742897355505822565",
+              "8540591536219391739281652702188282069900118805649305203382406855512520409208"
+            ],
+            true
+          ],
+          [
+            "sep:0xb556cbAd61c51c976f4C07BF5bD6ef73c6959dad",
+            "sep:0xb556cbAd61c51c976f4C07BF5bD6ef73c6959dad",
+            [
+              "6891629073001551503964071489236129016757113731268783821412175058337781385354",
+              "4729536671047445858226618568890136981747928203024472976658229312859904885702"
+            ],
+            [
+              "20039154982170151005282942550120137101024351279828444095722283058758758700615",
+              "21296095121585703945444349026817430866402101050118914844317245536234336648051",
+              "4474805897917686632608913904494236018403578827815214545471026761527487585266",
+              "3964978429890145935423726035964524952363242721320818274739796110036664456383"
+            ],
+            [
+              "747769543406151923214261380686265526567848926876446081516178144523373631303",
+              "16155116555501513024150467682984795791891697930402004252953053592409893611817"
+            ],
+            true
+          ],
+          [
+            "sep:0x756E657Cf072E69E571bB73b420Fa190543571E6",
+            "sep:0x756E657Cf072E69E571bB73b420Fa190543571E6",
+            [
+              "6681424123098236531481467826454034050872396864570910460935630649739633564047",
+              "21123988766896079744389006600107330773372401540605482422380907508358039885450"
+            ],
+            [
+              "15365897850008910487730480110329031150628011439606073448131336316583492389693",
+              "6387753683117789336786892012924325283689262835754911025158326646074821275930",
+              "15178977324710829330696638984001872171706886237068387150588222205928385873475",
+              "14912980527473924389507532574638385850582974117559048629676073553707025741402"
+            ],
+            [
+              "12280582677587306668063994842127925593757511071404153283020576113835600722291",
+              "17786374879254436287991098852556737562794806379034040128809230434011680954388"
+            ],
+            true
+          ],
+          [
+            "sep:0x0Da92bEBC86841eA2cd4CB1343f259a09e9fa28D",
+            "sep:0x0Da92bEBC86841eA2cd4CB1343f259a09e9fa28D",
+            [
+              "1243503395426369907513179082963304268088962335874791961998653399650990185932",
+              "19626997777273995353217023866723205859113288980425149683862255190031398851397"
+            ],
+            [
+              "13922548083437991066639476584447968360046745295580388536150927152537931631869",
+              "18558471824298469645884156947112116342358603492578451148779724822531578324995",
+              "12181237264656094257223517365041126805998901940301213686949676971599198387174",
+              "10950354299686991434182823342792640358055866422718116318997449754503863952362"
+            ],
+            [
+              "2856096245988706470306933890763539585153759520150928567736142565893236893730",
+              "10543737360003685754747384775596188553466314895198050853283053253536930220104"
+            ],
+            true
+          ],
+          [
+            "sep:0x4271bcaB8b06eF5a60D54A96ee47B9bb7CC4AFA0",
+            "sep:0x4271bcaB8b06eF5a60D54A96ee47B9bb7CC4AFA0",
+            [
+              "4772660762316348748876603417518368325217287694627584828684519625695668246700",
+              "12344072091192935597731716591802403771883710838804223380448318537634131329444"
+            ],
+            [
+              "7237468323137703698916659456849129003054093796484187372445904093234781264813",
+              "9595752719622010734070840597421878627624946360302153600497627252292976821183",
+              "15377443286608010726775698840355471189730214217163990550908286906343129064871",
+              "9522700440966514627981966131515421058988072038575889680762476274702155969634"
+            ],
+            [
+              "16977803502198179092677205231978699410579319132639355929402806099946533835171",
+              "19616162793732327411653942540615018099629869545918171692676038812566976293113"
+            ],
+            true
+          ]
+        ],
+        "getEntryQueueFlushSize": 4,
+        "getEntryQueueLength": 7744,
+        "getEpochAt": [],
+        "getEpochAtSlot": [0, 0, 0, 0, 0],
+        "getEpochDuration": 32,
+        "getEpochForBlock": [],
+        "getExitDelay": 345600,
+        "getFeeAsset": "sep:0x31785fDCBC5C5CCfB0726382132BCa6343ee8652",
+        "getFeeAssetPerEth": 10000000000,
+        "getFeeAssetPortal": "sep:0x903bB16320A3CE16a9DF880CFB8f2abd74261fA1",
+        "getFeeHeader": [],
+        "getGenesisTime": 1762377660,
+        "getGSE": "sep:0xFb243b9112Bb65785A4A8eDAf32529accf003614",
+        "getInbox": "sep:0xd7610c91d5869a40E229719d41dE2ac6374789eD",
+        "getIsBootstrapped": true,
+        "getL1FeesAt": [],
+        "getLagInEpochs": 2,
+        "getLocalEjectionThreshold": "198000000000000000000000",
+        "getManaLimit": 0,
+        "getManaTarget": 0,
+        "getNextFlushableEpoch": 181,
+        "getOutbox": "sep:0x062E226f244536F5Ab2b875cD28dF4f5DbEA8266",
+        "getPendingBlockNumber": 5065,
+        "getProofSubmissionEpochs": 1,
+        "getProvenBlockNumber": 5046,
+        "getProvingCostPerManaInEth": 0,
+        "getProvingCostPerManaInFeeAsset": 0,
+        "getRewardConfig": {
+          "rewardDistributor": "sep:0xA0122560afeEC5ef45a950D5c49a3cc5C5549E2B",
+          "sequencerBps": 8000,
+          "booster": "sep:0x6E8981E79957351EB7147e7e000063e0caD3Dd63",
+          "blockReward": "500000000000000000000"
+        },
+        "getRewardDistributor": "sep:0xA0122560afeEC5ef45a950D5c49a3cc5C5549E2B",
+        "getSampleSeedAt": [],
+        "getSamplingSizeAt": [],
+        "getSlasher": "sep:0x82dB5507a89E30Cae2Cf34B759E5aeFf80c635BC",
+        "getSlotAt": [],
+        "getSlotDuration": 72,
+        "getStakingAsset": "sep:0x139d2a7a0881e16332d7D1F8DB383A4507E1Ea7A",
+        "getTargetCommitteeSize": 24,
+        "getTimestampForSlot": [
+          1762377660, 1762377732, 1762377804, 1762377876, 1762377948
+        ],
+        "getTips": { "pendingBlockNumber": 5065, "provenBlockNumber": 5046 },
+        "getVersion": 845231713,
+        "isRewardsClaimable": false,
+        "L1_BLOCK_AT_GENESIS": 9568520,
+        "owner": "sep:0x1b5dAD737609A548543ce32A71377900b5fd5584",
+        "status": [
+          [
+            5046,
+            "0x2e95f5d3dac60e7b177a8271436a0e2dcd3ac5f37333e312146c607ea52d1c83",
+            5065,
+            "0x00f1fa04f80ff36dd65d9d5c68e990d94cc9c81b2354b397dab95d0e34af575c",
+            "0x1fa3de2e35ec7d3dce2bbd63848d90ea140a98b5db8cfd531e7a50776976d1ec",
+            179
+          ],
+          [
+            5046,
+            "0x2e95f5d3dac60e7b177a8271436a0e2dcd3ac5f37333e312146c607ea52d1c83",
+            5065,
+            "0x00f1fa04f80ff36dd65d9d5c68e990d94cc9c81b2354b397dab95d0e34af575c",
+            "0x2fd20891be3512bbc6bcf660051750910b9d8e32bcea66e321a812a008b2acb2",
+            179
+          ],
+          [
+            5046,
+            "0x2e95f5d3dac60e7b177a8271436a0e2dcd3ac5f37333e312146c607ea52d1c83",
+            5065,
+            "0x00f1fa04f80ff36dd65d9d5c68e990d94cc9c81b2354b397dab95d0e34af575c",
+            "0x1e7d3f91689eb53b6e355f813ec7a3a0b4095ed54f7ffdb45647a73b479c830d",
+            179
+          ],
+          [
+            5046,
+            "0x2e95f5d3dac60e7b177a8271436a0e2dcd3ac5f37333e312146c607ea52d1c83",
+            5065,
+            "0x00f1fa04f80ff36dd65d9d5c68e990d94cc9c81b2354b397dab95d0e34af575c",
+            "0x20b2e7274135601f0359db600929bcb6337954a5cbebdd08ecf62daf391788b9",
+            179
+          ],
+          [
+            5046,
+            "0x2e95f5d3dac60e7b177a8271436a0e2dcd3ac5f37333e312146c607ea52d1c83",
+            5065,
+            "0x00f1fa04f80ff36dd65d9d5c68e990d94cc9c81b2354b397dab95d0e34af575c",
+            "0x204fc66807b628a0764acb0c1597538055e7e29eee1fee6b3be48b54feaddc03",
+            179
+          ]
+        ]
+      },
+      "errors": {
+        "archiveAt": "Processing error occurred.",
+        "getAttesterAtIndex": "Processing error occurred.",
+        "getCollectiveProverRewardsForEpoch": "Processing error occurred.",
+        "getEntryQueueAt": "Processing error occurred.",
+        "getEpochAtSlot": "Processing error occurred.",
+        "getTimestampForSlot": "Processing error occurred.",
+        "status": "Processing error occurred."
+      },
+      "implementationNames": {
+        "sep:0xebD99FF0Ff6677205509AE73F93d0Ca52AC85D67": "Rollup"
+      }
+    },
+    {
+      "name": "GovernanceProposer",
+      "address": "sep:0xef1B0D8aaCa52F70323CBB91b0103bCe75E9c533",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xeb9822412b46a046ea4ec90f21b7bfbd0bd8d306f72e39ef7ead39770e05f81e"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762377564,
+      "sinceBlock": 9568512,
+      "values": {
+        "$immutable": true,
+        "computeRound": [0, 0, 0, 0, 0],
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EmpireBase",
+          "version": "1",
+          "chainId": 11155111,
+          "verifyingContract": "sep:0xef1B0D8aaCa52F70323CBB91b0103bCe75E9c533",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "EXECUTION_DELAY_IN_ROUNDS": 0,
+        "getCurrentRound": 19,
+        "getGovernance": "sep:0x1b5dAD737609A548543ce32A71377900b5fd5584",
+        "getInstance": "sep:0xebD99FF0Ff6677205509AE73F93d0Ca52AC85D67",
+        "getProposalProposer": [
+          "sep:0x0000000000000000000000000000000000000000",
+          "sep:0x0000000000000000000000000000000000000000",
+          "sep:0x0000000000000000000000000000000000000000",
+          "sep:0x0000000000000000000000000000000000000000",
+          "sep:0x0000000000000000000000000000000000000000"
+        ],
+        "GSE": "sep:0xFb243b9112Bb65785A4A8eDAf32529accf003614",
+        "LIFETIME_IN_ROUNDS": 5,
+        "QUORUM_SIZE": 151,
+        "REGISTRY": "sep:0x459498e6BF7967BAD0966353b691Ef4395432479",
+        "ROUND_SIZE": 300,
+        "SIGNAL_TYPEHASH": "0xdec0bfc6a67146d790874e4994d7a4662b60c6400491f3d945793c73ea05ebb7"
+      },
+      "errors": {
+        "computeRound": "Processing error occurred.",
+        "getProposalProposer": "Processing error occurred."
+      },
+      "implementationNames": {
+        "sep:0xef1B0D8aaCa52F70323CBB91b0103bCe75E9c533": "GovernanceProposer"
+      }
+    },
+    {
+      "address": "sep:0xf61c0bbF0d8fE79eD796dCF5ed82e78Fcf14DB58",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GSE",
+      "address": "sep:0xFb243b9112Bb65785A4A8eDAf32529accf003614",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x81c477393741d6c4f394d376459f70d43d9509ce76fe3abffb81415da0a5021d"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762377564,
+      "sinceBlock": 9568512,
+      "values": {
+        "$immutable": true,
+        "ACTIVATION_THRESHOLD": "200000000000000000000000",
+        "ASSET": "sep:0x139d2a7a0881e16332d7D1F8DB383A4507E1Ea7A",
+        "BONUS_INSTANCE_ADDRESS": "sep:0x9064Fb41156D300196d5Eb95E0B3c1f08eBc39a8",
+        "EJECTION_THRESHOLD": "100000000000000000000000",
+        "getBonusInstanceAddress": "sep:0x9064Fb41156D300196d5Eb95E0B3c1f08eBc39a8",
+        "getGovernance": "sep:0x1b5dAD737609A548543ce32A71377900b5fd5584",
+        "getLatestRollup": "sep:0xebD99FF0Ff6677205509AE73F93d0Ca52AC85D67",
+        "getLatestRollupAt": [
+          "sep:0x0000000000000000000000000000000000000000",
+          "sep:0x0000000000000000000000000000000000000000",
+          "sep:0x0000000000000000000000000000000000000000",
+          "sep:0x0000000000000000000000000000000000000000",
+          "sep:0x0000000000000000000000000000000000000000"
+        ],
+        "owner": "sep:0x1b5dAD737609A548543ce32A71377900b5fd5584",
+        "proofOfPossessionGasLimit": 250000,
+        "totalSupply": "94170000000000000000000000"
+      },
+      "errors": { "getLatestRollupAt": "Processing error occurred." },
+      "implementationNames": {
+        "sep:0xFb243b9112Bb65785A4A8eDAf32529accf003614": "GSE"
+      }
+    },
+    {
+      "name": "CoinIssuer",
+      "address": "sep:0xfe3DAD94f934d7ec90158E4A378Ad552e02e9E63",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xa4f3bbaa9fb563fd7e37fc9a04d3c9f85603ad6dc3c53ee6e21fc0b91583cf51"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762377624,
+      "sinceBlock": 9568517,
+      "values": {
+        "$immutable": true,
+        "ASSET": "sep:0x31785fDCBC5C5CCfB0726382132BCa6343ee8652",
+        "cachedBudget": "400000000000000000",
+        "cachedBudgetYear": 0,
+        "DEPLOYMENT_TIME": 1762377624,
+        "mintAvailable": "400000000000000000",
+        "NOMINAL_ANNUAL_PERCENTAGE_CAP": "200000000000000000",
+        "owner": "sep:0xbd28f1d3Ed9f919AA368d33Cbf8C18FCe3E03509"
+      },
+      "implementationNames": {
+        "sep:0xfe3DAD94f934d7ec90158E4A378Ad552e02e9E63": "CoinIssuer"
+      }
     }
   ],
   "abis": {
+    "sep:0x062E226f244536F5Ab2b875cD28dF4f5DbEA8266": [
+      "constructor(address _rollup, uint256 _version)",
+      "error MerkleLib__InvalidIndexForPathLength()",
+      "error MerkleLib__InvalidRoot(bytes32 expected, bytes32 actual, bytes32 leaf, uint256 leafIndex)",
+      "error Outbox__AlreadyNullified(uint256 l2BlockNumber, uint256 leafIndex)",
+      "error Outbox__BlockAlreadyProven(uint256 l2BlockNumber)",
+      "error Outbox__BlockNotProven(uint256 l2BlockNumber)",
+      "error Outbox__InvalidChainId()",
+      "error Outbox__InvalidRecipient(address expected, address actual)",
+      "error Outbox__LeafIndexOutOfBounds(uint256 leafIndex, uint256 pathLength)",
+      "error Outbox__NothingToConsumeAtBlock(uint256 l2BlockNumber)",
+      "error Outbox__PathTooLong()",
+      "error Outbox__Unauthorized()",
+      "error Outbox__VersionMismatch(uint256 expected, uint256 actual)",
+      "event MessageConsumed(uint256 indexed l2BlockNumber, bytes32 indexed root, bytes32 indexed messageHash, uint256 leafId)",
+      "event RootAdded(uint256 indexed l2BlockNumber, bytes32 indexed root)",
+      "function ROLLUP() view returns (address)",
+      "function VERSION() view returns (uint256)",
+      "function consume(tuple(tuple(bytes32 actor, uint256 version) sender, tuple(address actor, uint256 chainId) recipient, bytes32 content) _message, uint256 _l2BlockNumber, uint256 _leafIndex, bytes32[] _path)",
+      "function getRootData(uint256 _l2BlockNumber) view returns (bytes32)",
+      "function hasMessageBeenConsumedAtBlock(uint256 _l2BlockNumber, uint256 _leafId) view returns (bool)",
+      "function insert(uint256 _l2BlockNumber, bytes32 _root)"
+    ],
+    "sep:0x139d2a7a0881e16332d7D1F8DB383A4507E1Ea7A": [
+      "constructor(string _name, string _symbol, address _owner)",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "error ERC20InvalidApprover(address approver)",
+      "error ERC20InvalidReceiver(address receiver)",
+      "error ERC20InvalidSender(address sender)",
+      "error ERC20InvalidSpender(address spender)",
+      "error NotMinter(address caller)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event MinterAdded(address indexed minter)",
+      "event MinterRemoved(address indexed minter)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function acceptOwnership()",
+      "function addMinter(address _minter)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function mint(address _to, uint256 _amount)",
+      "function minters(address minter) view returns (bool isMinter)",
+      "function name() view returns (string)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function removeMinter(address _minter)",
+      "function renounceOwnership()",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "sep:0x1b5dAD737609A548543ce32A71377900b5fd5584": [
+      "constructor(address _asset, address _governanceProposer, address _beneficiary, tuple(tuple(uint256 lockDelay, uint256 lockAmount) proposeConfig, uint256 votingDelay, uint256 votingDuration, uint256 executionDelay, uint256 gracePeriod, uint256 quorum, uint256 requiredYeaMargin, uint256 minimumVotes) _configuration)",
+      "error CheckpointUnorderedInsertion()",
+      "error Governance__CallFailed(address target)",
+      "error Governance__CallerCannotBeSelf()",
+      "error Governance__CallerNotGovernanceProposer(address caller, address governanceProposer)",
+      "error Governance__CallerNotSelf(address caller, address self)",
+      "error Governance__CannotCallAsset()",
+      "error Governance__CannotWithdrawToAddressZero()",
+      "error Governance__CheckpointedUintLib__InsufficientValue(address owner, uint256 have, uint256 required)",
+      "error Governance__CheckpointedUintLib__NotInPast()",
+      "error Governance__ConfigurationLib__InvalidMinimumVotes()",
+      "error Governance__ConfigurationLib__LockAmountTooBig()",
+      "error Governance__ConfigurationLib__LockAmountTooSmall()",
+      "error Governance__ConfigurationLib__QuorumTooBig()",
+      "error Governance__ConfigurationLib__QuorumTooSmall()",
+      "error Governance__ConfigurationLib__RequiredYeaMarginTooBig()",
+      "error Governance__ConfigurationLib__TimeTooBig(string name)",
+      "error Governance__ConfigurationLib__TimeTooSmall(string name)",
+      "error Governance__DepositNotAllowed()",
+      "error Governance__GovernanceProposerCannotBeSelf()",
+      "error Governance__InsufficientPower(address voter, uint256 have, uint256 required)",
+      "error Governance__ProposalAlreadyDropped()",
+      "error Governance__ProposalCannotBeDropped()",
+      "error Governance__ProposalDoesNotExists(uint256 proposalId)",
+      "error Governance__ProposalNotActive()",
+      "error Governance__ProposalNotExecutable()",
+      "error Governance__WithdrawalAlreadyClaimed()",
+      "error Governance__WithdrawalNotInitiated()",
+      "error Governance__WithdrawalNotUnlockedYet(uint256 currentTime, uint256 unlocksAt)",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error SafeERC20FailedOperation(address token)",
+      "event BeneficiaryAdded(address beneficiary)",
+      "event ConfigurationUpdated(uint256 indexed time)",
+      "event Deposit(address indexed depositor, address indexed onBehalfOf, uint256 amount)",
+      "event FloodGatesOpened()",
+      "event GovernanceProposerUpdated(address indexed governanceProposer)",
+      "event ProposalDropped(uint256 indexed proposalId)",
+      "event ProposalExecuted(uint256 indexed proposalId)",
+      "event Proposed(uint256 indexed proposalId, address indexed proposal)",
+      "event VoteCast(uint256 indexed proposalId, address indexed voter, bool support, uint256 amount)",
+      "event WithdrawFinalized(uint256 indexed withdrawalId)",
+      "event WithdrawInitiated(uint256 indexed withdrawalId, address indexed recipient, uint256 amount)",
+      "function ASSET() view returns (address)",
+      "function addBeneficiary(address _beneficiary)",
+      "function deposit(address _beneficiary, uint256 _amount)",
+      "function dropProposal(uint256 _proposalId)",
+      "function execute(uint256 _proposalId)",
+      "function finalizeWithdraw(uint256 _withdrawalId)",
+      "function getBallot(uint256 _proposalId, address _user) view returns (tuple(uint256 yea, uint256 nay))",
+      "function getConfiguration() view returns (tuple(tuple(uint256 lockDelay, uint256 lockAmount) proposeConfig, uint256 votingDelay, uint256 votingDuration, uint256 executionDelay, uint256 gracePeriod, uint256 quorum, uint256 requiredYeaMargin, uint256 minimumVotes))",
+      "function getProposal(uint256 _proposalId) view returns (tuple(tuple(uint256 votingDelay, uint256 votingDuration, uint256 executionDelay, uint256 gracePeriod, uint256 quorum, uint256 requiredYeaMargin, uint256 minimumVotes) config, uint8 cachedState, address payload, address proposer, uint256 creation, tuple(uint256 yea, uint256 nay) summedBallot))",
+      "function getProposalState(uint256 _proposalId) view returns (uint8)",
+      "function getWithdrawal(uint256 _withdrawalId) view returns (tuple(uint256 amount, uint256 unlocksAt, address recipient, bool claimed))",
+      "function governanceProposer() view returns (address)",
+      "function initiateWithdraw(address _to, uint256 _amount) returns (uint256)",
+      "function isAllBeneficiariesAllowed() view returns (bool)",
+      "function isPermittedInGovernance(address _beneficiary) view returns (bool)",
+      "function openFloodgates()",
+      "function powerAt(address _owner, uint256 _ts) view returns (uint256)",
+      "function powerNow(address _owner) view returns (uint256)",
+      "function proposalCount() view returns (uint256)",
+      "function propose(address _proposal) returns (uint256)",
+      "function proposeWithLock(address _proposal, address _to) returns (uint256)",
+      "function totalPowerAt(uint256 _ts) view returns (uint256)",
+      "function totalPowerNow() view returns (uint256)",
+      "function updateConfiguration(tuple(tuple(uint256 lockDelay, uint256 lockAmount) proposeConfig, uint256 votingDelay, uint256 votingDuration, uint256 executionDelay, uint256 gracePeriod, uint256 quorum, uint256 requiredYeaMargin, uint256 minimumVotes) _configuration)",
+      "function updateGovernanceProposer(address _governanceProposer)",
+      "function vote(uint256 _proposalId, uint256 _amount, bool _support)",
+      "function withdrawalCount() view returns (uint256)"
+    ],
+    "sep:0x1d78c05369d4fd947b90De0B7727737c19636d4D": [
+      "constructor(address _instance, address _slasher, uint256 _quorum, uint256 _roundSize, uint256 _lifetimeInRounds, uint256 _executionDelayInRounds, uint256[3] _slashAmounts, uint256 _committeeSize, uint256 _epochDuration, uint256 _slashOffsetInRounds)",
+      "error CloneArgumentsTooLong()",
+      "error Create2EmptyBytecode()",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error FailedDeployment()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "error InvalidShortString()",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error SignatureLib__InvalidSignature(address, address)",
+      "error SlashPayload_ArraySizeMismatch(uint256 expected, uint256 actual)",
+      "error StringTooLong(string str)",
+      "error TallySlashingProposer__CommitteeSizeMustBeGreaterThanZero(uint256 committeeSize)",
+      "error TallySlashingProposer__InvalidCommitteeCommitment()",
+      "error TallySlashingProposer__InvalidEpochIndex(uint256 epochIndex, uint256 roundSizeInEpochs)",
+      "error TallySlashingProposer__InvalidNumberOfCommittees(uint256 expected, uint256 actual)",
+      "error TallySlashingProposer__InvalidQuorumAndRoundSize(uint256 quorum, uint256 roundSize)",
+      "error TallySlashingProposer__InvalidSignature()",
+      "error TallySlashingProposer__InvalidSlashAmounts(uint256[3] slashAmounts)",
+      "error TallySlashingProposer__InvalidVoteLength(uint256 expected, uint256 actual)",
+      "error TallySlashingProposer__LifetimeMustBeGreaterThanExecutionDelay(uint256 lifetime, uint256 executionDelay)",
+      "error TallySlashingProposer__LifetimeMustBeLessThanRoundabout(uint256 lifetime, uint256 roundabout)",
+      "error TallySlashingProposer__QuorumMustBeGreaterThanZero()",
+      "error TallySlashingProposer__RoundAlreadyExecuted(uint256 round)",
+      "error TallySlashingProposer__RoundNotComplete(uint256 round)",
+      "error TallySlashingProposer__RoundOutOfRange(uint256 round, uint256 currentRound)",
+      "error TallySlashingProposer__RoundSizeInEpochsMustBeGreaterThanZero(uint256 roundSizeInEpochs)",
+      "error TallySlashingProposer__RoundSizeMustBeMultipleOfEpochDuration(uint256 roundSize, uint256 epochDuration)",
+      "error TallySlashingProposer__RoundSizeTooLarge(uint256 roundSize, uint256 maxRoundSize)",
+      "error TallySlashingProposer__SlashAmountTooLarge()",
+      "error TallySlashingProposer__SlashOffsetMustBeGreaterThanZero(uint256 slashOffset)",
+      "error TallySlashingProposer__VoteAlreadyCastInCurrentSlot(uint256 slot)",
+      "error TallySlashingProposer__VoteSizeTooBig(uint256 voteSize, uint256 maxSize)",
+      "error TallySlashingProposer__VotesMustBeMultipleOf4(uint256 votes)",
+      "error TallySlashingProposer__VotingNotOpen(uint256 currentRound)",
+      "event EIP712DomainChanged()",
+      "event RoundExecuted(uint256 indexed round, uint256 slashCount)",
+      "event VoteCast(uint256 indexed round, uint256 indexed slot, address indexed proposer)",
+      "function COMMITTEE_SIZE() view returns (uint256)",
+      "function EXECUTION_DELAY_IN_ROUNDS() view returns (uint256)",
+      "function INSTANCE() view returns (address)",
+      "function LIFETIME_IN_ROUNDS() view returns (uint256)",
+      "function MAX_ROUND_SIZE() view returns (uint256)",
+      "function QUORUM() view returns (uint256)",
+      "function ROUNDABOUT_SIZE() view returns (uint256)",
+      "function ROUND_SIZE() view returns (uint256)",
+      "function ROUND_SIZE_IN_EPOCHS() view returns (uint256)",
+      "function SLASHER() view returns (address)",
+      "function SLASHING_PROPOSER_TYPE() view returns (uint8)",
+      "function SLASH_AMOUNT_LARGE() view returns (uint256)",
+      "function SLASH_AMOUNT_MEDIUM() view returns (uint256)",
+      "function SLASH_AMOUNT_SMALL() view returns (uint256)",
+      "function SLASH_OFFSET_IN_ROUNDS() view returns (uint256)",
+      "function SLASH_PAYLOAD_IMPLEMENTATION() view returns (address)",
+      "function VOTE_TYPEHASH() view returns (bytes32)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function executeRound(uint256 _round, address[][] _committees)",
+      "function getCurrentRound() view returns (uint256)",
+      "function getPayloadAddress(uint256 _round, tuple(address validator, uint256 slashAmount)[] _actions) view returns (address)",
+      "function getRound(uint256 _round) view returns (bool isExecuted, bool readyToExecute, uint256 voteCount)",
+      "function getSlashTargetCommittees(uint256 _round) returns (address[][] committees)",
+      "function getSlashTargetEpoch(uint256 _round, uint256 _epochIndex) view returns (uint256 epochNumber)",
+      "function getTally(uint256 _round, address[][] _committees) view returns (tuple(address validator, uint256 slashAmount)[])",
+      "function getVoteSignatureDigest(bytes _votes, uint256 _slot) view returns (bytes32)",
+      "function getVotes(uint256 _round, uint256 _index) view returns (bytes)",
+      "function vote(bytes _votes, tuple(uint8 v, bytes32 r, bytes32 s) _sig)"
+    ],
     "sep:0x29Fa27E173f058d0f5F618F5AbAd2757747f673f": [
       "constructor(address _feeAsset, address _stakingAsset, address _gse, address _epochProofVerifier, address _governance, tuple(bytes32 vkTreeRoot, bytes32 protocolContractTreeRoot, bytes32 genesisArchiveRoot) _genesisState, tuple(uint256 aztecSlotDuration, uint256 aztecEpochDuration, uint256 targetCommitteeSize, uint256 aztecProofSubmissionEpochs, uint256 slashingQuorum, uint256 slashingRoundSize, uint256 slashingLifetimeInRounds, uint256 slashingExecutionDelayInRounds, uint256[3] slashAmounts, uint256 slashingOffsetInRounds, uint8 slasherFlavor, address slashingVetoer, uint256 manaTarget, uint256 exitDelaySeconds, uint32 version, uint256 provingCostPerMana, tuple(address rewardDistributor, uint32 sequencerBps, address booster, uint96 blockReward) rewardConfig, tuple(uint32 increment, uint32 maxScore, uint32 a, uint32 minimum, uint32 k) rewardBoostConfig, tuple(uint256 bootstrapValidatorSetSize, uint256 bootstrapFlushSize, uint256 normalFlushSizeMin, uint256 normalFlushSizeQuotient, uint256 maxQueueFlushSize) stakingQueueConfig) _config)",
       "error InvalidShortString()",
@@ -887,6 +1972,91 @@
       "function validateHeaderWithAttestations(tuple(bytes32 lastArchiveRoot, tuple(bytes32 blobsHash, bytes32 inHash, bytes32 outHash) contentCommitment, uint256 slotNumber, uint256 timestamp, address coinbase, bytes32 feeRecipient, tuple(uint128 feePerDaGas, uint128 feePerL2Gas) gasFees, uint256 totalManaUsed) _header, tuple(bytes signatureIndices, bytes signaturesOrAddresses) _attestations, address[] _signers, bytes32 _digest, bytes32 _blobsHash, tuple(bool ignoreDA) _flags)",
       "function vote(uint256 _proposalId)"
     ],
+    "sep:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "sep:0x31785fDCBC5C5CCfB0726382132BCa6343ee8652": [
+      "constructor(string _name, string _symbol, address _owner)",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "error ERC20InvalidApprover(address approver)",
+      "error ERC20InvalidReceiver(address receiver)",
+      "error ERC20InvalidSender(address sender)",
+      "error ERC20InvalidSpender(address spender)",
+      "error NotMinter(address caller)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event MinterAdded(address indexed minter)",
+      "event MinterRemoved(address indexed minter)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function acceptOwnership()",
+      "function addMinter(address _minter)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function mint(address _to, uint256 _amount)",
+      "function minters(address minter) view returns (bool isMinter)",
+      "function name() view returns (string)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function removeMinter(address _minter)",
+      "function renounceOwnership()",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function transferOwnership(address newOwner)"
+    ],
     "sep:0x3aEbEd9BF5F4303401547aE68DA04A124c100bC1": [
       "constructor(address _rollup, uint256 _version)",
       "error MerkleLib__InvalidIndexForPathLength()",
@@ -906,6 +2076,28 @@
       "function getRootData(uint256 _l2BlockNumber) view returns (bytes32)",
       "function hasMessageBeenConsumedAtBlock(uint256 _l2BlockNumber, uint256 _leafId) view returns (bool)",
       "function insert(uint256 _l2BlockNumber, bytes32 _root)"
+    ],
+    "sep:0x459498e6BF7967BAD0966353b691Ef4395432479": [
+      "constructor(address _owner, address _rewardAsset)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error Registry__NoRollupsRegistered()",
+      "error Registry__RollupAlreadyRegistered(address rollup)",
+      "error Registry__RollupNotRegistered(uint256 version)",
+      "event CanonicalRollupUpdated(address indexed instance, uint256 indexed version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RewardDistributorUpdated(address indexed rewardDistributor)",
+      "function addRollup(address _rollup)",
+      "function getCanonicalRollup() view returns (address)",
+      "function getGovernance() view returns (address)",
+      "function getRewardDistributor() view returns (address)",
+      "function getRollup(uint256 _version) view returns (address)",
+      "function getVersion(uint256 _index) view returns (uint256)",
+      "function numberOfVersions() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function updateRewardDistributor(address _rewardDistributor)"
     ],
     "sep:0x6732CEDafCBF85Afa9B5C83f0385967840BBCe47": [
       "constructor(string _name, string _symbol, address _owner)",
@@ -1106,6 +2298,29 @@
       "function vote(uint256 _proposalId, uint256 _amount, bool _support) returns (bool)",
       "function withdrawalCount() view returns (uint256)"
     ],
+    "sep:0x82dB5507a89E30Cae2Cf34B759E5aeFf80c635BC": [
+      "constructor(address _vetoer, address _governance, uint256 _slashingDisableDuration)",
+      "error Slasher__AlreadyInitialized()",
+      "error Slasher__CallerNotAuthorizedToSlash(address caller)",
+      "error Slasher__CallerNotVetoer(address caller, address vetoer)",
+      "error Slasher__PayloadVetoed(address payload)",
+      "error Slasher__ProposerZeroAddress()",
+      "error Slasher__SlashFailed(address target, bytes data, bytes returnData)",
+      "error Slasher__SlashingDisabled()",
+      "event SlashingDisabled(uint256 disabledUntil)",
+      "event VetoedPayload(address indexed payload)",
+      "function GOVERNANCE() view returns (address)",
+      "function PROPOSER() view returns (address)",
+      "function SLASHING_DISABLE_DURATION() view returns (uint256)",
+      "function VETOER() view returns (address)",
+      "function initializeProposer(address _proposer)",
+      "function isSlashingEnabled() view returns (bool)",
+      "function setSlashingEnabled(bool _enabled)",
+      "function slash(address _payload) returns (bool)",
+      "function slashingDisabledUntil() view returns (uint256)",
+      "function vetoPayload(address _payload) returns (bool)",
+      "function vetoedPayloads(address payload) view returns (bool vetoed)"
+    ],
     "sep:0x8F4D9A05374C1d99825FDb291340021B9A7dC6d2": [
       "constructor(address _rollup, address _feeAsset, uint256 _version, uint256 _height)",
       "error Inbox__ActorTooLarge(bytes32 actor)",
@@ -1281,6 +2496,9 @@
       "function signalWithSig(address _payload, tuple(uint8 v, bytes32 r, bytes32 s) _sig) returns (bool)",
       "function submitRoundWinner(uint256 _roundNumber) returns (bool)"
     ],
+    "sep:0xBbB4aF368d02827945748b28CD4b2D42e4A37480": [
+      "constructor(address _singleton)"
+    ],
     "sep:0xc2F24280F5c7F4897370dFDEb30f79Ded14f1c81": [
       "constructor(address _owner, address _rewardAsset)",
       "error OwnableInvalidOwner(address owner)",
@@ -1303,6 +2521,31 @@
       "function transferOwnership(address newOwner)",
       "function updateRewardDistributor(address _rewardDistributor)"
     ],
+    "sep:0xd7610c91d5869a40E229719d41dE2ac6374789eD": [
+      "constructor(address _rollup, address _feeAsset, uint256 _version, uint256 _height)",
+      "error Inbox__ActorTooLarge(bytes32 actor)",
+      "error Inbox__ContentTooLarge(bytes32 content)",
+      "error Inbox__Ignition()",
+      "error Inbox__MustBuildBeforeConsume()",
+      "error Inbox__SecretHashTooLarge(bytes32 secretHash)",
+      "error Inbox__Unauthorized()",
+      "error Inbox__VersionMismatch(uint256 expected, uint256 actual)",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "event InboxSynchronized(uint256 indexed inProgress)",
+      "event MessageSent(uint256 indexed l2BlockNumber, uint256 index, bytes32 indexed hash, bytes16 rollingHash)",
+      "function FEE_ASSET_PORTAL() view returns (address)",
+      "function ROLLUP() view returns (address)",
+      "function VERSION() view returns (uint256)",
+      "function catchUp(uint256 _pendingBlockNumber)",
+      "function consume(uint256 _toConsume) returns (bytes32)",
+      "function getFeeAssetPortal() view returns (address)",
+      "function getInProgress() view returns (uint64)",
+      "function getRoot(uint256 _blockNumber) view returns (bytes32)",
+      "function getState() view returns (tuple(bytes16 rollingHash, uint64 totalMessagesInserted, uint64 inProgress))",
+      "function getTotalMessagesInserted() view returns (uint64)",
+      "function sendL2Message(tuple(bytes32 actor, uint256 version) _recipient, bytes32 _content, bytes32 _secretHash) returns (bytes32, uint256)",
+      "function trees(uint256 blockNumber) view returns (uint256 nextIndex)"
+    ],
     "sep:0xe0927107Db2f45d1f9C4F6E591636Da528Cf9F4d": [
       "constructor(address _vetoer, address _governance)",
       "error Slasher__AlreadyInitialized()",
@@ -1319,9 +2562,293 @@
       "function slash(address _payload) returns (bool)",
       "function vetoPayload(address _payload) returns (bool)",
       "function vetoedPayloads(address payload) view returns (bool vetoed)"
+    ],
+    "sep:0xebD99FF0Ff6677205509AE73F93d0Ca52AC85D67": [
+      "constructor(address _feeAsset, address _stakingAsset, address _gse, address _epochProofVerifier, address _governance, tuple(bytes32 vkTreeRoot, bytes32 protocolContractTreeRoot, bytes32 genesisArchiveRoot) _genesisState, tuple(uint256 aztecSlotDuration, uint256 aztecEpochDuration, uint256 targetCommitteeSize, uint256 lagInEpochs, uint256 aztecProofSubmissionEpochs, uint256 slashingQuorum, uint256 slashingRoundSize, uint256 slashingLifetimeInRounds, uint256 slashingExecutionDelayInRounds, uint256[3] slashAmounts, uint256 slashingOffsetInRounds, uint8 slasherFlavor, address slashingVetoer, uint256 slashingDisableDuration, uint256 manaTarget, uint256 exitDelaySeconds, uint32 version, uint256 provingCostPerMana, tuple(address rewardDistributor, uint32 sequencerBps, address booster, uint96 blockReward) rewardConfig, tuple(uint32 increment, uint32 maxScore, uint32 a, uint32 minimum, uint32 k) rewardBoostConfig, tuple(uint256 bootstrapValidatorSetSize, uint256 bootstrapFlushSize, uint256 normalFlushSizeMin, uint256 normalFlushSizeQuotient, uint256 maxQueueFlushSize) stakingQueueConfig, uint256 localEjectionThreshold, uint256 earliestRewardsClaimableTimestamp) _config)",
+      "error InvalidShortString()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error Rollup__InvalidBlockNumber(uint256 expected, uint256 actual)",
+      "error Rollup__InvalidManaTarget(uint256 minimum, uint256 provided)",
+      "error Rollup__UnavailableTempBlockLog(uint256 blockNumber, uint256 pendingBlockNumber, uint256 upperLimit)",
+      "error SafeCastOverflowedIntToUint(int256 value)",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error Staking__InvalidNormalFlushSizeQuotient()",
+      "error Staking__InvalidStakingQueueConfig()",
+      "error StringTooLong(string str)",
+      "event BlockInvalidated(uint256 indexed blockNumber)",
+      "event Deposit(address indexed attester, address indexed withdrawer, tuple(uint256 x, uint256 y) publicKeyInG1, tuple(uint256 x0, uint256 x1, uint256 y0, uint256 y1) publicKeyInG2, tuple(uint256 x, uint256 y) proofOfPossession, uint256 amount)",
+      "event EIP712DomainChanged()",
+      "event FailedDeposit(address indexed attester, address indexed withdrawer, tuple(uint256 x, uint256 y) publicKeyInG1, tuple(uint256 x0, uint256 x1, uint256 y0, uint256 y1) publicKeyInG2, tuple(uint256 x, uint256 y) proofOfPossession)",
+      "event L2BlockProposed(uint256 indexed blockNumber, bytes32 indexed archive, bytes32[] versionedBlobHashes)",
+      "event L2ProofVerified(uint256 indexed blockNumber, address indexed proverId)",
+      "event LocalEjectionThresholdUpdated(uint256 indexed oldLocalEjectionThreshold, uint256 indexed newLocalEjectionThreshold)",
+      "event ManaTargetUpdated(uint256 indexed manaTarget)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PrunedPending(uint256 provenBlockNumber, uint256 pendingBlockNumber)",
+      "event RewardConfigUpdated(tuple(address rewardDistributor, uint32 sequencerBps, address booster, uint96 blockReward) rewardConfig)",
+      "event RewardsClaimableUpdated(bool isRewardsClaimable)",
+      "event Slashed(address indexed attester, uint256 amount)",
+      "event SlasherUpdated(address indexed oldSlasher, address indexed newSlasher)",
+      "event StakingQueueConfigUpdated(tuple(uint256 bootstrapValidatorSetSize, uint256 bootstrapFlushSize, uint256 normalFlushSizeMin, uint256 normalFlushSizeQuotient, uint256 maxQueueFlushSize) config)",
+      "event ValidatorQueued(address indexed attester, address indexed withdrawer)",
+      "event WithdrawFinalized(address indexed attester, address indexed recipient, uint256 amount)",
+      "event WithdrawInitiated(address indexed attester, address indexed recipient, uint256 amount)",
+      "function L1_BLOCK_AT_GENESIS() view returns (uint256)",
+      "function archive() view returns (bytes32)",
+      "function archiveAt(uint256 _blockNumber) view returns (bytes32)",
+      "function canProposeAtTime(uint256 _ts, bytes32 _archive, address _who) returns (uint256, uint256)",
+      "function canPruneAtTime(uint256 _ts) view returns (bool)",
+      "function checkBlob() view returns (bool)",
+      "function checkpointRandao()",
+      "function claimProverRewards(address _coinbase, uint256[] _epochs) returns (uint256)",
+      "function claimSequencerRewards(address _coinbase) returns (uint256)",
+      "function deposit(address _attester, address _withdrawer, tuple(uint256 x, uint256 y) _publicKeyInG1, tuple(uint256 x0, uint256 x1, uint256 y0, uint256 y1) _publicKeyInG2, tuple(uint256 x, uint256 y) _proofOfPossession, bool _moveWithLatestRollup)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function finalizeWithdraw(address _attester)",
+      "function flushEntryQueue()",
+      "function flushEntryQueue(uint256 _toAdd)",
+      "function getActivationThreshold() view returns (uint256)",
+      "function getActiveAttesterCount() view returns (uint256)",
+      "function getAttesterAtIndex(uint256 _index) view returns (address)",
+      "function getAttesterView(address _attester) view returns (tuple(uint8 status, uint256 effectiveBalance, tuple(uint256 withdrawalId, uint256 amount, uint256 exitableAt, address recipientOrWithdrawer, bool isRecipient, bool exists) exit, tuple(tuple(uint256 x, uint256 y) publicKey, address withdrawer) config))",
+      "function getAvailableValidatorFlushes() view returns (uint256)",
+      "function getBlobCommitmentsHash(uint256 _blockNumber) view returns (bytes32)",
+      "function getBlock(uint256 _blockNumber) view returns (tuple(bytes32 archive, bytes32 headerHash, bytes32 blobCommitmentsHash, bytes32 attestationsHash, bytes32 payloadDigest, uint256 slotNumber, tuple(uint256 excessMana, uint256 manaUsed, uint256 feeAssetPriceNumerator, uint256 congestionCost, uint256 proverCost) feeHeader))",
+      "function getBlockReward() view returns (uint256)",
+      "function getBurnAddress() pure returns (address)",
+      "function getCollectiveProverRewardsForEpoch(uint256 _epoch) view returns (uint256)",
+      "function getCommitteeAt(uint256 _ts) returns (address[])",
+      "function getCommitteeCommitmentAt(uint256 _ts) returns (bytes32, uint256)",
+      "function getConfig(address _attester) view returns (tuple(tuple(uint256 x, uint256 y) publicKey, address withdrawer))",
+      "function getCurrentBlobCommitmentsHash() view returns (bytes32)",
+      "function getCurrentEpoch() view returns (uint256)",
+      "function getCurrentEpochCommittee() returns (address[])",
+      "function getCurrentProposer() returns (address)",
+      "function getCurrentSampleSeed() view returns (uint256)",
+      "function getCurrentSlot() view returns (uint256)",
+      "function getEarliestRewardsClaimableTimestamp() view returns (uint256)",
+      "function getEjectionThreshold() view returns (uint256)",
+      "function getEntryQueueAt(uint256 _index) view returns (tuple(address attester, address withdrawer, tuple(uint256 x, uint256 y) publicKeyInG1, tuple(uint256 x0, uint256 x1, uint256 y0, uint256 y1) publicKeyInG2, tuple(uint256 x, uint256 y) proofOfPossession, bool moveWithLatestRollup))",
+      "function getEntryQueueFlushSize() view returns (uint256)",
+      "function getEntryQueueLength() view returns (uint256)",
+      "function getEpochAt(uint256 _ts) view returns (uint256)",
+      "function getEpochAtSlot(uint256 _slotNumber) view returns (uint256)",
+      "function getEpochCommittee(uint256 _epoch) returns (address[])",
+      "function getEpochCommitteeCommitment(uint256 _epoch) returns (bytes32, uint256)",
+      "function getEpochDuration() view returns (uint256)",
+      "function getEpochForBlock(uint256 _blockNumber) view returns (uint256)",
+      "function getEpochProofPublicInputs(uint256 _start, uint256 _end, tuple(bytes32 previousArchive, bytes32 endArchive, address proverId) _args, bytes32[] _fees, bytes _blobPublicInputs) view returns (bytes32[])",
+      "function getExit(address _attester) view returns (tuple(uint256 withdrawalId, uint256 amount, uint256 exitableAt, address recipientOrWithdrawer, bool isRecipient, bool exists))",
+      "function getExitDelay() view returns (uint256)",
+      "function getFeeAsset() view returns (address)",
+      "function getFeeAssetPerEth() view returns (uint256)",
+      "function getFeeAssetPortal() view returns (address)",
+      "function getFeeHeader(uint256 _blockNumber) view returns (tuple(uint256 excessMana, uint256 manaUsed, uint256 feeAssetPriceNumerator, uint256 congestionCost, uint256 proverCost))",
+      "function getGSE() view returns (address)",
+      "function getGenesisTime() view returns (uint256)",
+      "function getHasClaimed(address _prover, uint256 _epoch) view returns (bool)",
+      "function getHasSubmitted(uint256 _epoch, uint256 _length, address _prover) view returns (bool)",
+      "function getInbox() view returns (address)",
+      "function getIsBootstrapped() view returns (bool)",
+      "function getL1FeesAt(uint256 _timestamp) view returns (tuple(uint256 baseFee, uint256 blobFee))",
+      "function getLagInEpochs() view returns (uint256)",
+      "function getLocalEjectionThreshold() view returns (uint256)",
+      "function getManaBaseFeeAt(uint256 _timestamp, bool _inFeeAsset) view returns (uint256)",
+      "function getManaBaseFeeComponentsAt(uint256 _timestamp, bool _inFeeAsset) view returns (tuple(uint256 congestionCost, uint256 congestionMultiplier, uint256 sequencerCost, uint256 proverCost))",
+      "function getManaLimit() view returns (uint256)",
+      "function getManaTarget() view returns (uint256)",
+      "function getNextFlushableEpoch() view returns (uint256)",
+      "function getOutbox() view returns (address)",
+      "function getPendingBlockNumber() view returns (uint256)",
+      "function getProofSubmissionEpochs() view returns (uint256)",
+      "function getProposerAt(uint256 _ts) returns (address)",
+      "function getProvenBlockNumber() view returns (uint256)",
+      "function getProvingCostPerManaInEth() view returns (uint256)",
+      "function getProvingCostPerManaInFeeAsset() view returns (uint256)",
+      "function getRewardConfig() view returns (tuple(address rewardDistributor, uint32 sequencerBps, address booster, uint96 blockReward))",
+      "function getRewardDistributor() view returns (address)",
+      "function getSampleSeedAt(uint256 _ts) view returns (uint256)",
+      "function getSamplingSizeAt(uint256 _ts) view returns (uint256)",
+      "function getSequencerRewards(address _sequencer) view returns (uint256)",
+      "function getSharesFor(address _prover) view returns (uint256)",
+      "function getSlasher() view returns (address)",
+      "function getSlotAt(uint256 _ts) view returns (uint256)",
+      "function getSlotDuration() view returns (uint256)",
+      "function getSpecificProverRewardsForEpoch(uint256 _epoch, address _prover) view returns (uint256)",
+      "function getStakingAsset() view returns (address)",
+      "function getStatus(address _attester) view returns (uint8)",
+      "function getTargetCommitteeSize() view returns (uint256)",
+      "function getTimestampForSlot(uint256 _slotNumber) view returns (uint256)",
+      "function getTips() view returns (tuple(uint256 pendingBlockNumber, uint256 provenBlockNumber))",
+      "function getVersion() view returns (uint256)",
+      "function initiateWithdraw(address _attester, address _recipient) returns (bool)",
+      "function invalidateBadAttestation(uint256 _blockNumber, tuple(bytes signatureIndices, bytes signaturesOrAddresses) _attestations, address[] _committee, uint256 _invalidIndex)",
+      "function invalidateInsufficientAttestations(uint256 _blockNumber, tuple(bytes signatureIndices, bytes signaturesOrAddresses) _attestations, address[] _committee)",
+      "function isRewardsClaimable() view returns (bool)",
+      "function owner() view returns (address)",
+      "function propose(tuple(bytes32 archive, tuple(tuple(bytes32 root, uint32 nextAvailableLeafIndex) l1ToL2MessageTree, tuple(tuple(bytes32 root, uint32 nextAvailableLeafIndex) noteHashTree, tuple(bytes32 root, uint32 nextAvailableLeafIndex) nullifierTree, tuple(bytes32 root, uint32 nextAvailableLeafIndex) publicDataTree) partialStateReference) stateReference, tuple(int256 feeAssetPriceModifier) oracleInput, tuple(bytes32 lastArchiveRoot, tuple(bytes32 blobsHash, bytes32 inHash, bytes32 outHash) contentCommitment, uint256 slotNumber, uint256 timestamp, address coinbase, bytes32 feeRecipient, tuple(uint128 feePerDaGas, uint128 feePerL2Gas) gasFees, uint256 totalManaUsed) header) _args, tuple(bytes signatureIndices, bytes signaturesOrAddresses) _attestations, address[] _signers, tuple(uint8 v, bytes32 r, bytes32 s) _attestationsAndSignersSignature, bytes _blobInput)",
+      "function prune()",
+      "function renounceOwnership()",
+      "function setLocalEjectionThreshold(uint256 _localEjectionThreshold)",
+      "function setProvingCostPerMana(uint256 _provingCostPerMana)",
+      "function setRewardConfig(tuple(address rewardDistributor, uint32 sequencerBps, address booster, uint96 blockReward) _config)",
+      "function setRewardsClaimable(bool _isRewardsClaimable)",
+      "function setSlasher(address _slasher)",
+      "function setupEpoch()",
+      "function slash(address _attester, uint256 _amount) returns (bool)",
+      "function status(uint256 _myHeaderBlockNumber) view returns (uint256 provenBlockNumber, bytes32 provenArchive, uint256 pendingBlockNumber, bytes32 pendingArchive, bytes32 archiveOfMyBlock, uint256 provenEpochNumber)",
+      "function submitEpochRootProof(tuple(uint256 start, uint256 end, tuple(bytes32 previousArchive, bytes32 endArchive, address proverId) args, bytes32[] fees, tuple(bytes signatureIndices, bytes signaturesOrAddresses) attestations, bytes blobInputs, bytes proof) _args)",
+      "function transferOwnership(address newOwner)",
+      "function updateL1GasFeeOracle()",
+      "function updateManaTarget(uint256 _manaTarget)",
+      "function updateStakingQueueConfig(tuple(uint256 bootstrapValidatorSetSize, uint256 bootstrapFlushSize, uint256 normalFlushSizeMin, uint256 normalFlushSizeQuotient, uint256 maxQueueFlushSize) _config)",
+      "function validateBlobs(bytes _blobsInput) view returns (bytes32[], bytes32, bytes[])",
+      "function validateHeaderWithAttestations(tuple(bytes32 lastArchiveRoot, tuple(bytes32 blobsHash, bytes32 inHash, bytes32 outHash) contentCommitment, uint256 slotNumber, uint256 timestamp, address coinbase, bytes32 feeRecipient, tuple(uint128 feePerDaGas, uint128 feePerL2Gas) gasFees, uint256 totalManaUsed) _header, tuple(bytes signatureIndices, bytes signaturesOrAddresses) _attestations, address[] _signers, tuple(uint8 v, bytes32 r, bytes32 s) _attestationsAndSignersSignature, bytes32 _digest, bytes32 _blobsHash, tuple(bool ignoreDA) _flags)",
+      "function vote(uint256 _proposalId)"
+    ],
+    "sep:0xef1B0D8aaCa52F70323CBB91b0103bCe75E9c533": [
+      "constructor(address _registry, address _gse, uint256 _quorumSize, uint256 _roundSize)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error EmpireBase__FailedToSubmitRoundWinner(address payload)",
+      "error EmpireBase__InstanceHaveNoCode(address instance)",
+      "error EmpireBase__InsufficientSignals(uint256 signalsCast, uint256 signalsNeeded)",
+      "error EmpireBase__InvalidLifetimeAndExecutionDelay(uint256 lifetimeInRounds, uint256 executionDelayInRounds)",
+      "error EmpireBase__InvalidQuorumAndRoundSize(uint256 quorumSize, uint256 roundSize)",
+      "error EmpireBase__OnlyProposerCanSignal(address caller, address proposer)",
+      "error EmpireBase__PayloadAlreadySubmitted(uint256 roundNumber)",
+      "error EmpireBase__PayloadCannotBeAddressZero()",
+      "error EmpireBase__QuorumCannotBeLargerThanRoundSize(uint256 quorumSize, uint256 roundSize)",
+      "error EmpireBase__RoundTooNew(uint256 roundNumber, uint256 currentRoundNumber)",
+      "error EmpireBase__RoundTooOld(uint256 roundNumber, uint256 currentRoundNumber)",
+      "error EmpireBase__SignalAlreadyCastForSlot(uint256 slot)",
+      "error InvalidShortString()",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error SignatureLib__InvalidSignature(address, address)",
+      "error StringTooLong(string str)",
+      "event EIP712DomainChanged()",
+      "event PayloadSubmittable(address indexed payload, uint256 indexed round)",
+      "event PayloadSubmitted(address indexed payload, uint256 indexed round)",
+      "event SignalCast(address indexed payload, uint256 indexed round, address indexed signaler)",
+      "function EXECUTION_DELAY_IN_ROUNDS() view returns (uint256)",
+      "function GSE() view returns (address)",
+      "function LIFETIME_IN_ROUNDS() view returns (uint256)",
+      "function QUORUM_SIZE() view returns (uint256)",
+      "function REGISTRY() view returns (address)",
+      "function ROUND_SIZE() view returns (uint256)",
+      "function SIGNAL_TYPEHASH() view returns (bytes32)",
+      "function computeRound(uint256 _slot) view returns (uint256)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function getCurrentRound() view returns (uint256)",
+      "function getGovernance() view returns (address)",
+      "function getInstance() view returns (address)",
+      "function getProposalProposer(uint256 _proposalId) view returns (address)",
+      "function getRoundData(address _instance, uint256 _round) view returns (tuple(uint256 lastSignalSlot, address payloadWithMostSignals, bool executed))",
+      "function getSignalSignatureDigest(address _payload, uint256 _slot) view returns (bytes32)",
+      "function signal(address _payload) returns (bool)",
+      "function signalCount(address _instance, uint256 _round, address _payload) view returns (uint256)",
+      "function signalWithSig(address _payload, tuple(uint8 v, bytes32 r, bytes32 s) _sig) returns (bool)",
+      "function submitRoundWinner(uint256 _roundNumber) returns (bool)"
+    ],
+    "sep:0xFb243b9112Bb65785A4A8eDAf32529accf003614": [
+      "constructor(address __owner, address _asset, uint256 _activationThreshold, uint256 _ejectionThreshold)",
+      "error AddressSnapshotLib__CannotAddAddressZero()",
+      "error AddressSnapshotLib__IndexOutOfBounds(uint256 index, uint256 size)",
+      "error CheckpointUnorderedInsertion()",
+      "error Delegation__InsufficientPower(address, uint256, uint256)",
+      "error GSE__AlreadyRegistered(address, address)",
+      "error GSE__CannotChangePublicKeys(uint256 existingPk1x, uint256 existingPk1y)",
+      "error GSE__FailedToRemove(address)",
+      "error GSE__FatalError(string)",
+      "error GSE__GovernanceAlreadySet()",
+      "error GSE__InstanceDoesNotExist(address)",
+      "error GSE__InsufficientBalance(uint256, uint256)",
+      "error GSE__InvalidProofOfPossession()",
+      "error GSE__InvalidRollupAddress(address)",
+      "error GSE__NotLatestRollup(address)",
+      "error GSE__NotRollup(address)",
+      "error GSE__NotWithdrawer(address, address)",
+      "error GSE__NothingToExit(address)",
+      "error GSE__OutOfBounds(uint256, uint256)",
+      "error GSE__ProofOfPossessionAlreadySeen(bytes32 hashedPK1)",
+      "error GSE__RollupAlreadyRegistered(address)",
+      "error Governance__CheckpointedUintLib__InsufficientValue(address owner, uint256 have, uint256 required)",
+      "error Governance__CheckpointedUintLib__NotInPast()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error SafeERC20FailedOperation(address token)",
+      "event DelegateChanged(address indexed attester, address oldDelegatee, address newDelegatee)",
+      "event DelegateVotesChanged(address indexed delegatee, uint256 oldValue, uint256 newValue)",
+      "event Deposit(address indexed instance, address indexed attester, address withdrawer)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function ACTIVATION_THRESHOLD() view returns (uint256)",
+      "function ASSET() view returns (address)",
+      "function BONUS_INSTANCE_ADDRESS() view returns (address)",
+      "function EJECTION_THRESHOLD() view returns (uint256)",
+      "function addRollup(address _rollup)",
+      "function balanceOf(address _instance, address _attester) view returns (uint256)",
+      "function delegate(address _instance, address _attester, address _delegatee)",
+      "function deposit(address _attester, address _withdrawer, tuple(uint256 x, uint256 y) _publicKeyInG1, tuple(uint256 x0, uint256 x1, uint256 y0, uint256 y1) _publicKeyInG2, tuple(uint256 x, uint256 y) _proofOfPossession, bool _moveWithLatestRollup)",
+      "function effectiveBalanceOf(address _instance, address _attester) view returns (uint256)",
+      "function finalizeWithdraw(uint256 _withdrawalId)",
+      "function getAttesterCountAtTime(address _instance, uint256 _timestamp) view returns (uint256)",
+      "function getAttesterFromIndexAtTime(address _instance, uint256 _index, uint256 _timestamp) view returns (address)",
+      "function getAttestersFromIndicesAtTime(address _instance, uint256 _timestamp, uint256[] _indices) view returns (address[])",
+      "function getBonusInstanceAddress() pure returns (address)",
+      "function getConfig(address _attester) view returns (tuple(tuple(uint256 x, uint256 y) publicKey, address withdrawer))",
+      "function getDelegatee(address _instance, address _attester) view returns (address)",
+      "function getG1PublicKeysFromAddresses(address[] _attesters) view returns (tuple(uint256 x, uint256 y)[])",
+      "function getGovernance() view returns (address)",
+      "function getLatestRollup() view returns (address)",
+      "function getLatestRollupAt(uint256 _timestamp) view returns (address)",
+      "function getPowerUsed(address _delegatee, uint256 _proposalId) view returns (uint256)",
+      "function getRegistrationDigest(tuple(uint256 x, uint256 y) _publicKey) view returns (tuple(uint256 x, uint256 y))",
+      "function getVotingPower(address _delegatee) view returns (uint256)",
+      "function getVotingPowerAt(address _delegatee, uint256 _timestamp) view returns (uint256)",
+      "function getWithdrawer(address _attester) view returns (address withdrawer)",
+      "function isRegistered(address _instance, address _attester) view returns (bool)",
+      "function isRollupRegistered(address _instance) view returns (bool)",
+      "function ownedPKs(bytes32 hashedPK1) view returns (bool isRegistered)",
+      "function owner() view returns (address)",
+      "function proofOfPossessionGasLimit() view returns (uint64)",
+      "function proposeWithLock(address _payload, address _to) returns (uint256)",
+      "function renounceOwnership()",
+      "function setGovernance(address _governance)",
+      "function setProofOfPossessionGasLimit(uint64 _proofOfPossessionGasLimit)",
+      "function supplyOf(address _instance) view returns (uint256)",
+      "function totalSupply() view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function vote(uint256 _proposalId, uint256 _amount, bool _support)",
+      "function voteWithBonus(uint256 _proposalId, uint256 _amount, bool _support)",
+      "function withdraw(address _attester, uint256 _amount) returns (uint256, bool, uint256)"
+    ],
+    "sep:0xfe3DAD94f934d7ec90158E4A378Ad552e02e9E63": [
+      "constructor(address _asset, uint256 _annualPercentage, address _owner)",
+      "error CoinIssuer__InsufficientMintAvailable(uint256 available, uint256 needed)",
+      "error CoinIssuer__InvalidConfiguration()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event BudgetReset(uint256 indexed newYear, uint256 newBudget)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function ASSET() view returns (address)",
+      "function DEPLOYMENT_TIME() view returns (uint256)",
+      "function NOMINAL_ANNUAL_PERCENTAGE_CAP() view returns (uint256)",
+      "function acceptTokenOwnership()",
+      "function cachedBudget() view returns (uint256)",
+      "function cachedBudgetYear() view returns (uint256)",
+      "function mint(address _to, uint256 _amount)",
+      "function mintAvailable() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)"
     ]
   },
-  "usedTemplates": {},
-  "usedBlockNumbers": { "sepolia": 9507145 },
-  "permissionsConfigHash": "0x5950204a1cf2b7d0e402096c403e210028f29d33ce8e538928867a89adb31e49"
+  "usedTemplates": {
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+  },
+  "usedBlockNumbers": { "sepolia": 9601110 },
+  "permissionsConfigHash": "0xed99ea5dcc633e9b010fef97fcf73dcf1dab3643176c67837764d22e7396d707"
 }
