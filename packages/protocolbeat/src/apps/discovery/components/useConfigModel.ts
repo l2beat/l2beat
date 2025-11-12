@@ -1,13 +1,8 @@
-import type { DiscoveryConfigSchema } from '@l2beat/discovery'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { parse } from 'comment-json'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { updateConfigFile } from '../../../api/api'
+import { toggleInList } from '../../../utils/toggleInList'
 import { ConfigModel } from './ConfigModel'
-
-export function toConfigModel(config: string): DiscoveryConfigSchema {
-  return parse(config) as unknown as DiscoveryConfigSchema
-}
 
 type Props = {
   project: string
@@ -25,18 +20,26 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     setConfigModel(ConfigModel.fromRawJsonc(config ?? '{}'))
   }, [config])
 
-  const setIgnoreMethods = (methods: string[]) => {
-    const newModel = configModel.setIgnoreMethods(selectedAddress, methods)
+  const toggleIgnoreMethods = (fieldName: string) => {
+    const current = configModel.getIgnoredMethods(selectedAddress) ?? []
+    const updated = toggleInList(fieldName, current)
+    const newModel = configModel.setIgnoreMethods(selectedAddress, updated)
     setConfigModel(newModel)
     saveMutation.mutate(newModel.toString())
   }
-  const setIgnoreRelatives = (relatives: string[]) => {
-    const newModel = configModel.setIgnoreRelatives(selectedAddress, relatives)
+
+  const toggleIgnoreRelatives = (fieldName: string) => {
+    const current = configModel.getIgnoreRelatives(selectedAddress) ?? []
+    const updated = toggleInList(fieldName, current)
+    const newModel = configModel.setIgnoreRelatives(selectedAddress, updated)
     setConfigModel(newModel)
     saveMutation.mutate(newModel.toString())
   }
-  const setIgnoreInWatchMode = (methods: string[]) => {
-    const newModel = configModel.setIgnoreInWatchMode(selectedAddress, methods)
+
+  const toggleIgnoreInWatchMode = (fieldName: string) => {
+    const current = configModel.getIgnoreInWatchMode(selectedAddress) ?? []
+    const updated = toggleInList(fieldName, current)
+    const newModel = configModel.setIgnoreInWatchMode(selectedAddress, updated)
     setConfigModel(newModel)
     saveMutation.mutate(newModel.toString())
   }
@@ -67,9 +70,9 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
 
   return {
     configModel,
-    setIgnoreMethods,
-    setIgnoreRelatives,
-    setIgnoreInWatchMode,
+    toggleIgnoreMethods,
+    toggleIgnoreRelatives,
+    toggleIgnoreInWatchMode,
 
     save: saveRaw,
 

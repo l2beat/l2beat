@@ -8,148 +8,94 @@ export interface FieldDisplayProps {
 }
 
 export function FieldDisplay({ field }: FieldDisplayProps) {
-  const { configModel, templateModel, canModify } = useProjectConfigModels()
+  const {
+    configModel,
+    templateModel,
+    canModify: canModifyModel,
+  } = useProjectConfigModels()
 
   const templateTags = [
     {
-      tag: 'T:ignore:methods',
+      tag: 'M',
       isIgnored: templateModel.ignoreMethods?.includes(field.name),
-      onClick: () => {
-        if (templateModel.ignoreMethods?.includes(field.name)) {
-          templateModel.setIgnoreMethods(
-            templateModel.ignoreMethods.filter((x) => x !== field.name),
-          )
-        } else {
-          templateModel.setIgnoreMethods([
-            ...(templateModel.ignoreMethods ?? []),
-            field.name,
-          ])
-        }
-      },
+      onClick: () => templateModel.toggleIgnoreMethods(field.name),
     },
     {
-      tag: 'T:ignore:relatives',
+      tag: 'R',
       isIgnored: templateModel.ignoreRelatives?.includes(field.name),
-      onClick: () => {
-        if (templateModel.ignoreRelatives?.includes(field.name)) {
-          templateModel.setIgnoreRelatives(
-            templateModel.ignoreRelatives.filter((x) => x !== field.name),
-          )
-        } else {
-          templateModel.setIgnoreRelatives([
-            ...(templateModel.ignoreRelatives ?? []),
-            field.name,
-          ])
-        }
-      },
+      onClick: () => templateModel.toggleIgnoreRelatives(field.name),
     },
     {
-      tag: 'T:ignore:watchmode',
+      tag: 'WM',
       isIgnored: templateModel.ignoreInWatchMode?.includes(field.name),
-      onClick: () => {
-        if (templateModel.ignoreInWatchMode?.includes(field.name)) {
-          templateModel.setIgnoreInWatchMode(
-            templateModel.ignoreInWatchMode.filter((x) => x !== field.name),
-          )
-        } else {
-          templateModel.setIgnoreInWatchMode([
-            ...(templateModel.ignoreInWatchMode ?? []),
-            field.name,
-          ])
-        }
-      },
+      onClick: () => templateModel.toggleIgnoreInWatchMode(field.name),
     },
   ] as const
 
   const configTags = [
     {
-      tag: 'C:ignore:methods',
+      tag: 'M',
       isIgnored: configModel.ignoreMethods?.includes(field.name),
-      onClick: () => {
-        if (configModel.ignoreMethods?.includes(field.name)) {
-          configModel.setIgnoreMethods(
-            configModel.ignoreMethods.filter((x) => x !== field.name),
-          )
-        } else {
-          configModel.setIgnoreMethods([
-            ...(configModel.ignoreMethods ?? []),
-            field.name,
-          ])
-        }
-      },
+      onClick: () => configModel.toggleIgnoreMethods(field.name),
     },
     {
-      tag: 'C:ignore:relatives',
+      tag: 'R',
       isIgnored: configModel.ignoreRelatives?.includes(field.name),
-      onClick: () => {
-        if (configModel.ignoreRelatives?.includes(field.name)) {
-          configModel.setIgnoreRelatives(
-            configModel.ignoreRelatives.filter((x) => x !== field.name),
-          )
-        } else {
-          configModel.setIgnoreRelatives([
-            ...(configModel.ignoreRelatives ?? []),
-            field.name,
-          ])
-        }
-      },
+      onClick: () => configModel.toggleIgnoreRelatives(field.name),
     },
     {
-      tag: 'C:ignore:watchmode',
+      tag: 'WM',
       isIgnored: configModel.ignoreInWatchMode?.includes(field.name),
-      onClick: () => {
-        console.log(
-          'configModel.ignoreInWatchMode',
-          configModel.ignoreInWatchMode,
-        )
-        if (configModel.ignoreInWatchMode?.includes(field.name)) {
-          configModel.setIgnoreInWatchMode(
-            configModel.ignoreInWatchMode.filter((x) => x !== field.name),
-          )
-        } else {
-          configModel.setIgnoreInWatchMode([
-            ...(configModel.ignoreInWatchMode ?? []),
-            field.name,
-          ])
-        }
-      },
+      onClick: () => configModel.toggleIgnoreInWatchMode(field.name),
     },
   ] as const
+
+  const canModify = canModifyField(field) && canModifyModel
 
   const tags = getFieldTags(field)
   return (
     <li className="mb-1 truncate text-sm last:mb-0">
-      <div className="flex flex-wrap gap-2 px-5 py-1 font-bold text-xs">
-        {field.name}
-        {tags.map((x, i) => (
-          <span
-            className="bg-aux-blue px-1 text-[10px] text-black uppercase"
-            key={i}
-          >
-            {x}
-          </span>
-        ))}
-        {canModify &&
-          templateTags.map((x, i) => (
-            <FieldTag
+      <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-1 font-bold text-xs">
+        <div className="flex flex-wrap items-center gap-1 leading-none">
+          {field.name}
+          {tags.map((x, i) => (
+            <span
+              className="bg-aux-blue px-1 py-1 text-[10px] text-black uppercase"
               key={i}
-              tag={x.tag}
-              onClick={x.onClick}
-              state={x.isIgnored ? 'ignored' : 'active'}
-            />
+            >
+              {x}
+            </span>
           ))}
-        {canModify &&
-          configTags.map((x, i) => (
-            <FieldTag
-              key={i}
-              tag={x.tag}
-              onClick={x.onClick}
-              state={x.isIgnored ? 'ignored' : 'active'}
-            />
-          ))}
+        </div>
+        <div className="flex gap-1">
+          {canModify && templateModel.hasTemplate && (
+            <BadgeWrapper text="Template">
+              {templateTags.map((x, i) => (
+                <FieldTag
+                  key={i}
+                  tag={x.tag}
+                  onClick={x.onClick}
+                  state={x.isIgnored ? 'enabled' : 'disabled'}
+                />
+              ))}
+            </BadgeWrapper>
+          )}
+          {canModify && (
+            <BadgeWrapper text="Config">
+              {configTags.map((x, i) => (
+                <FieldTag
+                  key={i}
+                  tag={x.tag}
+                  onClick={x.onClick}
+                  state={x.isIgnored ? 'enabled' : 'disabled'}
+                />
+              ))}
+            </BadgeWrapper>
+          )}
+        </div>
       </div>
       {field.description && (
-        <div className="-mt-0.5 px-5 pb-1 font-serif italic">
+        <div className="-mt-0.5 word-break-break-word px-5 pb-1 font-serif italic">
           {field.description}
         </div>
       )}
@@ -163,20 +109,20 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
 type FieldTagProps = {
   tag: string
   onClick: () => void
-  state: 'ignored' | 'active'
+  state: 'enabled' | 'disabled'
 }
 
 const fieldTagVariants = cva(
-  'cursor-pointer text-[10px] text-black uppercase',
+  'cursor-pointer p-0.5 text-[10px] text-black uppercase',
   {
     variants: {
       state: {
-        ignored: 'bg-aux-blue',
-        active: 'bg-coffee-400/40',
+        enabled: 'bg-aux-blue',
+        disabled: 'bg-coffee-400/40',
       },
     },
     defaultVariants: {
-      state: 'active',
+      state: 'disabled',
     },
   },
 )
@@ -204,4 +150,21 @@ function getFieldTags(field: Field) {
     tags.push(`severity:${field.severity.toLowerCase()}`)
   }
   return tags
+}
+
+function BadgeWrapper(props: {
+  text: string
+  children: React.ReactNode
+  className?: string
+}) {
+  return (
+    <span className="flex max-w-fit items-center justify-center gap-1 border border-coffee-400 px-2 py-0.5 text-xs">
+      {props.text}
+      {props.children}
+    </span>
+  )
+}
+
+function canModifyField(field: Field) {
+  return !field.name.startsWith('$')
 }

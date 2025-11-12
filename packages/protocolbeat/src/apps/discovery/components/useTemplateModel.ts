@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { writeTemplateFile } from '../../../api/api'
+import { toggleInList } from '../../../utils/toggleInList'
 import { ContractConfigModel } from './ConfigModel'
 
 type Props = {
@@ -23,18 +24,26 @@ export function useTemplateModel({ templateId, files }: Props) {
     setTemplateModel(ContractConfigModel.fromRawJsonc(files.template))
   }, [files.template])
 
-  const setIgnoreMethods = (methods: string[]) => {
-    const newModel = templateModel.setIgnoreMethods(methods)
+  const toggleIgnoreMethods = (fieldName: string) => {
+    const current = templateModel.ignoreMethods ?? []
+    const updated = toggleInList(fieldName, current)
+    const newModel = templateModel.setIgnoreMethods(updated)
     setTemplateModel(newModel)
     saveMutation.mutate(newModel.toString())
   }
-  const setIgnoreRelatives = (relatives: string[]) => {
-    const newModel = templateModel.setIgnoreRelatives(relatives)
+
+  const toggleIgnoreRelatives = (fieldName: string) => {
+    const current = templateModel.ignoreRelatives ?? []
+    const updated = toggleInList(fieldName, current)
+    const newModel = templateModel.setIgnoreRelatives(updated)
     setTemplateModel(newModel)
     saveMutation.mutate(newModel.toString())
   }
-  const setIgnoreInWatchMode = (methods: string[]) => {
-    const newModel = templateModel.setIgnoreInWatchMode(methods)
+
+  const toggleIgnoreInWatchMode = (fieldName: string) => {
+    const current = templateModel.ignoreInWatchMode ?? []
+    const updated = toggleInList(fieldName, current)
+    const newModel = templateModel.setIgnoreInWatchMode(updated)
     setTemplateModel(newModel)
     saveMutation.mutate(newModel.toString())
   }
@@ -68,9 +77,9 @@ export function useTemplateModel({ templateId, files }: Props) {
 
   return {
     templateModel,
-    setIgnoreMethods,
-    setIgnoreRelatives,
-    setIgnoreInWatchMode,
+    toggleIgnoreMethods,
+    toggleIgnoreRelatives,
+    toggleIgnoreInWatchMode,
 
     save: saveRaw,
 
