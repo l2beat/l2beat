@@ -5,10 +5,13 @@ import type { DashboardProject } from '../props/getDashboardProjects'
 // NOTE(radomski): For brevity so we can have all logic on a single line per group
 type DP = DashboardProject
 
+export type GroupVariant = 'single'
+
 export interface Group {
   name: string
   assignees: readonly string[]
   projects: DashboardProject[]
+  variant?: GroupVariant
 }
 
 export function groupProjects(
@@ -31,37 +34,75 @@ export function groupProjects(
       .get(name)
       ?.stacks.some((projectStack) => stacks.includes(projectStack)) ?? false
 
-  const groupConfigs = [
-    ['Scroll', ['🐿', '🐱'], (p: DP) => p.name === 'scroll'],
-    ['Taiko', ['🐻', '🐱'], (p: DP) => p.name === 'taiko'],
-    ['Linea', ['🐝', '🐱'], (p: DP) => p.name === 'linea'],
-    ['OP Stack', ['🐿', '🐱'], (p: DP) => isStack(p.name, 'OP Stack')],
-    [
-      'Orbit/Arbitrum Stack',
-      ['🐿', '🐱'],
-      (p: DP) => isStack(p.name, 'Arbitrum'),
-    ],
-    ['Polygon Stack', ['🐿', '🐻'], (p: DP) => isStack(p.name, 'Agglayer CDK')],
-    ['ZK Stack', ['🐝', '🐻'], (p: DP) => isStack(p.name, 'ZK Stack')],
-    [
-      'Starknet & Starkexes',
-      ['🐝', '🐻'],
-      (p: DP) => isStack(p.name, 'StarkEx', 'SN Stack'),
-    ],
-    ['DA Projects', ['🐿', '🐱'], (p: DP) => projectMap.get(p.name)?.isDaLayer],
-    [
-      'Bridge Projects',
-      ['🐿', '🐻'],
-      (p: DP) => projectMap.get(p.name)?.isBridge,
-    ],
-  ] as const
+  type GroupConfig = {
+    name: string
+    assignees: readonly string[]
+    predicate: (p: DP) => boolean
+    variant?: GroupVariant
+  }
+
+  const groupConfigs: GroupConfig[] = [
+    // Stacks first
+    { name: 'OP Stack', assignees: ['🐿', '🐱'], predicate: (p: DP) => isStack(p.name, 'OP Stack') },
+    {
+      name: 'Orbit/Arbitrum Stack',
+      assignees: ['🐿', '🐱'],
+      predicate: (p: DP) => isStack(p.name, 'Arbitrum'),
+    },
+    {
+      name: 'Polygon Stack',
+      assignees: ['🐿', '🐻'],
+      predicate: (p: DP) => isStack(p.name, 'Agglayer CDK'),
+    },
+    {
+      name: 'ZK Stack',
+      assignees: ['🐝', '🐻'],
+      predicate: (p: DP) => isStack(p.name, 'ZK Stack'),
+    },
+    {
+      name: 'Starknet & Starkexes',
+      assignees: ['🐝', '🐻'],
+      predicate: (p: DP) => isStack(p.name, 'StarkEx', 'SN Stack'),
+    },
+    // Then the broader categories
+    {
+      name: 'DA Projects',
+      assignees: ['🐿', '🐱'],
+      predicate: (p: DP) => projectMap.get(p.name)?.isDaLayer ?? false,
+    },
+    {
+      name: 'Bridge Projects',
+      assignees: ['🐿', '🐻'],
+      predicate: (p: DP) => projectMap.get(p.name)?.isBridge ?? false,
+    },
+    // Finally individual projects so they can show inline labels
+    {
+      name: 'Scroll',
+      assignees: ['🐿', '🐱'],
+      predicate: (p: DP) => p.name === 'scroll',
+      variant: 'single',
+    },
+    {
+      name: 'Taiko',
+      assignees: ['🐻', '🐱'],
+      predicate: (p: DP) => p.name === 'taiko',
+      variant: 'single',
+    },
+    {
+      name: 'Linea',
+      assignees: ['🐝', '🐱'],
+      predicate: (p: DP) => p.name === 'linea',
+      variant: 'single',
+    },
+  ]
 
   let remaining = projects
   const result: Group[] = []
 
-  for (const [key, assignees, pred] of groupConfigs) {
-    const [group, rest] = partition(remaining, pred)
-    if (group.length) result.push({ name: key, assignees, projects: group })
+  for (const { name, assignees, predicate, variant } of groupConfigs) {
+    const [group, rest] = partition(remaining, predicate)
+    if (group.length)
+      result.push({ name, assignees, projects: group, variant })
     remaining = rest
   }
 
