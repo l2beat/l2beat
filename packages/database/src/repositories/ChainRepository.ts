@@ -39,6 +39,7 @@ type RpcChainApi = {
 export type ChainRecord = {
   name: string
   chainId: number
+  explorerUrl: string | null
   aliases: string[] | null
   apis: ChainApi[] | null
 }
