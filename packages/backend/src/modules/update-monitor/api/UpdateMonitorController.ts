@@ -1,4 +1,4 @@
-import type { ProjectService } from '@l2beat/config'
+import { type Project, ProjectService } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import type { ConfigReader, ConfigRegistry } from '@l2beat/discovery'
 import {
@@ -9,6 +9,9 @@ import { renderDashboardPage } from './view/DashboardPage'
 
 export class UpdateMonitorController {
   private readonly onDiskConfigs: ConfigRegistry[] = []
+  private projectConfigs:
+    | Project<never, 'scalingInfo' | 'isBridge' | 'isDaLayer'>[]
+    | undefined
 
   constructor(
     private readonly db: Database,
@@ -28,7 +31,8 @@ export class UpdateMonitorController {
       this.projectService,
     )
 
-    return renderDashboardPage({ projects })
+    const projectConfigs = await this.getProjectConfigs()
+    return renderDashboardPage(projects, projectConfigs)
   }
 
   async getUpdates() {
@@ -38,5 +42,17 @@ export class UpdateMonitorController {
       ...entry,
       timestamp: entry.timestamp,
     }))
+  }
+
+  private async getProjectConfigs() {
+    if (this.projectConfigs) return this.projectConfigs
+
+    const ps = new ProjectService()
+    this.projectConfigs = await ps.getProjects({
+      optional: ['scalingInfo', 'isBridge', 'isDaLayer'],
+      whereNot: ['isUpcoming', 'archivedAt'],
+    })
+
+    return this.projectConfigs
   }
 }

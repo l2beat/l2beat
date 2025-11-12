@@ -1,3 +1,4 @@
+import type { Project } from '@l2beat/config'
 import { sortBySeverity } from '@l2beat/discovery'
 import React, { type ReactNode } from 'react'
 import { getQuickAccess } from '../../utils/getQuickAccess'
@@ -6,18 +7,46 @@ import { TableData } from './components/Components'
 import { Diff } from './components/Diff'
 import { Page } from './components/Page'
 import { reactToHtml } from './components/reactToHtml'
+import { type Group, groupProjects } from './groupProjects'
 
 interface DashboardPageProps {
-  projects: DashboardProject[]
+  groups: Group[]
 }
 
-function DashboardPage(props: DashboardPageProps) {
+function DashboardPage({ groups }: DashboardPageProps) {
   return (
     <Page title="Discovery">
+      {groups.map(({ name, assignees, projects }) => (
+        <Group
+          key={name}
+          name={name}
+          assignees={assignees}
+          projects={projects}
+        />
+      ))}
+    </Page>
+  )
+}
+
+function Group({
+  name,
+  assignees,
+  projects,
+}: {
+  name: string
+  assignees: readonly string[]
+  projects: DashboardProject[]
+}) {
+  const header =
+    assignees.length > 0 ? `${name} :: ${assignees.join(', ')}` : name
+
+  return (
+    <div>
+      <h2 style={{ marginTop: '0px' }}>{header}</h2>
       <table style={{ width: '100%', wordBreak: 'break-word' }}>
         <tbody>
           <>
-            {props.projects.map((project, index) => (
+            {projects.map((project, index) => (
               <tr
                 key={index}
                 style={{ padding: '0px', textAlign: 'left', width: '100%' }}
@@ -44,7 +73,7 @@ function DashboardPage(props: DashboardPageProps) {
           </>
         </tbody>
       </table>
-    </Page>
+    </div>
   )
 }
 
@@ -165,6 +194,10 @@ function ChangedDetectedDropdown({
   )
 }
 
-export function renderDashboardPage(props: DashboardPageProps) {
-  return reactToHtml(<DashboardPage {...props} />)
+export function renderDashboardPage(
+  projects: DashboardProject[],
+  projectConfigs: Project<never, 'scalingInfo' | 'isBridge' | 'isDaLayer'>[],
+) {
+  const groups = groupProjects(projects, projectConfigs)
+  return reactToHtml(<DashboardPage groups={groups} />)
 }
