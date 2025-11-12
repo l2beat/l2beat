@@ -31,20 +31,27 @@ export const parseRareOFTSent = createEventParser(
 export const parseOFTReceived = createEventParser(
   'event OFTReceived(bytes32 indexed guid, uint32 srcEid, address indexed toAddress, uint256 amountReceivedLD)',
 )
+const parseTransfer = createEventParser(
+  'event Transfer(address indexed from, address indexed to, uint256 value)',
+)
 
 const OFTSentPacketSent = createInteropEventType<{
   $dstChain: string
   guid: string
   amountSentLD: bigint
   amountReceivedLD: bigint
-  tokenAddress: Address32
+  oappAddress: Address32
+  srcTokenAddress?: Address32
+  srcAmount?: bigint
 }>('layerzero-v2.PacketOFTSent')
 
 const OFTReceivedPacketDelivered = createInteropEventType<{
   $srcChain: string
   guid: string
   amountReceivedLD: bigint
-  tokenAddress: Address32
+  oappAddress: Address32
+  dstTokenAddress?: Address32
+  dstAmount?: bigint
 }>('layerzero-v2.PacketOFTDelivered')
 
 export class LayerZeroV2OFTsPlugin implements InteropPlugin {
@@ -96,13 +103,40 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
               (x) => x.eid,
               packet.header.dstEid,
             )
+
+            // Find Transfer event before OFTSent by searching through all preceding logs in the worst case
+            let srcTokenAddress: Address32 | undefined
+            let srcAmount: bigint | undefined
+
+            for (
+              let offset = 1;
+              // biome-ignore lint/style/noNonNullAssertion: It's there
+              offset <= input.log.logIndex!;
+              offset++
+            ) {
+              const precedingLog = input.txLogs.find(
+                // biome-ignore lint/style/noNonNullAssertion: It's there
+                (x) => x.logIndex === input.log.logIndex! - offset,
+              )
+              if (!precedingLog) break
+
+              const transfer = parseTransfer(precedingLog, null)
+              if (transfer) {
+                srcTokenAddress = Address32.from(precedingLog.address)
+                srcAmount = transfer.value
+                break
+              }
+            }
+
             return [
               OFTSentPacketSent.create(input.ctx, {
                 $dstChain,
                 guid,
                 amountSentLD: normalized.amountSentLD,
                 amountReceivedLD: normalized.amountReceivedLD,
-                tokenAddress: Address32.from(input.log.address),
+                oappAddress: Address32.from(input.log.address),
+                srcTokenAddress,
+                srcAmount,
               }),
             ]
           }
@@ -133,13 +167,23 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
             (x) => x.eid,
             packetDelivered.origin.srcEid,
           )
+          // use erc20 transfer event instead (fragile becaus it might not be 2 logs before)
+          const previousLog = input.txLogs.find(
+            // biome-ignore lint/style/noNonNullAssertion: It's there
+            (x) => x.logIndex === input.log.logIndex! - 1,
+          )
+          const transfer = previousLog && parseTransfer(previousLog, null)
           return [
             OFTReceivedPacketDelivered.create(input.ctx, {
               $srcChain,
               guid,
               amountReceivedLD: oftReceived.amountReceivedLD,
               // TODO: OFT log emitter is not always the token contract (needs effects)
-              tokenAddress: Address32.from(input.log.address),
+              oappAddress: Address32.from(input.log.address),
+              dstTokenAddress: previousLog
+                ? Address32.from(previousLog.address)
+                : undefined,
+              dstAmount: transfer?.value ?? undefined,
             }),
           ]
         }
@@ -174,12 +218,11 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
       }),
       Result.Transfer('oftv2.Transfer', {
         srcEvent: oftSentPacketSent,
-        srcAmount: oftSentPacketSent.args.amountSentLD,
-        srcTokenAddress: oftSentPacketSent.args.tokenAddress,
+        srcAmount: oftSentPacketSent.args.amountSentLD, // we also have oftSentPacketSent.args.srcAmount
+        srcTokenAddress: oftSentPacketSent.args.srcTokenAddress,
         dstEvent: oftReceivedPacketDelivered,
-        dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD,
-        // TODO: OFT log emitter is not always the token contract (needs effects)
-        dstTokenAddress: oftReceivedPacketDelivered.args.tokenAddress,
+        dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD, // we also have oftReceivedPacketDelivered.args.dstAmount
+        dstTokenAddress: oftReceivedPacketDelivered.args.dstTokenAddress,
       }),
     ]
   }
