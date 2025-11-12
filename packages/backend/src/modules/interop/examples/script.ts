@@ -425,6 +425,7 @@ function calculateFinancials(
     1_000_000
 
   return {
+    symbol: tokenInfo.symbol,
     price: price.price,
     amount,
     value: price.price * amount,
