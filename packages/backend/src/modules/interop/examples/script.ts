@@ -338,6 +338,7 @@ async function runExample(example: Example): Promise<RunResult> {
     })),
     transfers: transfersWithFinancials.map((t) => ({
       ...t,
+      events: t.events.map((e) => ({ ...e, chain: e.ctx.chain })),
       src: { ...t.src, chain: t.src.event.ctx.chain },
       dst: { ...t.dst, chain: t.dst.event.ctx.chain },
     })),
