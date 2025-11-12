@@ -18,7 +18,7 @@ export const ozean: ScalingProject = upcomingL2({
       websites: ['https://ozean.finance/'],
       documentation: ['https://docs.ozean.finance/'],
       bridges: ['https://poseidon-testnet.bridge.caldera.xyz/'],
-      explorers: ['https://poseidon-testnet.explorer.caldera.xyz/'],
+      explorers: [],
       repositories: ['https://github.com/clearpool-finance'],
       socialMedia: [
         'https://twitter.com/ClearpoolFin',
