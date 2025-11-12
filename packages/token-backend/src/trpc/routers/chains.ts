@@ -24,20 +24,10 @@ export const chainsRouter = router({
         update: ChainUpdateSchema,
       }),
     )
-    .mutation(async ({ input, ctx }) => {
-      const result = await ctx.db.chain.updateByName(input.name, input.update)
-      if (result === 0) {
-        throw new Error(`Chain with name "${input.name}" not found`)
-      }
-      return { success: true }
-    }),
+    .mutation(async ({ input, ctx }) =>
+      ctx.db.chain.updateByName(input.name, input.update),
+    ),
   delete: readWriteProcedure
     .input(v.object({ name: v.string() }))
-    .mutation(async ({ input, ctx }) => {
-      const result = await ctx.db.chain.deleteByName(input.name)
-      if (result === 0) {
-        throw new Error(`Chain with name "${input.name}" not found`)
-      }
-      return { success: true }
-    }),
+    .mutation(async ({ input, ctx }) => ctx.db.chain.deleteByName(input.name)),
 })

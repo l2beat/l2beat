@@ -44,3 +44,5 @@ export const ChainUpdateSchema = v.object({
   aliases: v.union([v.array(v.string()), v.null()]).optional(),
   apis: v.union([v.array(ChainApiSchema), v.null()]).optional(),
 })
+
+export type ChainUpdate = v.infer<typeof ChainUpdateSchema>
