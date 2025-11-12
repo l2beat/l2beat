@@ -223,7 +223,7 @@ export const starknet: ScalingProject = {
       explorers: [
         'https://voyager.online/',
         'https://starkscan.co/',
-        'http://oklink.com/starknet',
+        'https://oklink.com/starknet',
         'https://viewblock.io/starknet',
       ],
       repositories: ['https://github.com/starkware-libs'],
