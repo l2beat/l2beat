@@ -13,7 +13,7 @@ export function useCurrentConfig() {
   })
 
   return {
-    isLoading: configResponse.isPending,
+    isPending: configResponse.isPending,
     isError: configResponse.isError,
     configContent: configResponse.data?.config,
   }

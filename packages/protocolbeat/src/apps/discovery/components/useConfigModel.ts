@@ -65,23 +65,17 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     [project],
   )
 
-  const hasDefinition = useCallback(
-    (method: string) => {
-      return configModel.hasOverrideDefinition(selectedAddress, method)
-    },
-    [configModel, selectedAddress],
-  )
-
   return {
     configModel,
     setIgnoreMethods,
     setIgnoreRelatives,
     setIgnoreInWatchMode,
-    hasDefinition,
 
     save: saveRaw,
 
-    configString,
+    files: {
+      config: configString,
+    },
 
     ignoreMethods: configModel.getIgnoredMethods(selectedAddress),
     ignoreRelatives: configModel.getIgnoreRelatives(selectedAddress),

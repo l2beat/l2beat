@@ -1,4 +1,6 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useMemo } from 'react'
+import { IS_READONLY } from '../../../config/readonly'
+import { isInRootDiscovery } from '../../../utils/findChainForAddress'
 import { useConfigModel } from '../components/useConfigModel'
 import { useTemplateModel } from '../components/useTemplateModel'
 import { useCurrentConfig } from './useCurrentConfig'
@@ -30,25 +32,40 @@ export function useProjectConfigModels() {
 
 function _useProjectConfigModels() {
   const {
-    isLoading: isProjectLoading,
+    isPending: isProjectPending,
     isError: isProjectError,
     selectedAddress,
     project,
+    projectResponse,
   } = useProjectData()
   const {
     templateId,
     files: templateFiles,
-    isLoading: isTemplateLoading,
+    isPending: isTemplatePending,
     isError: isTemplateError,
   } = useCurrentTemplate()
   const {
     configContent: config,
-    isLoading: isConfigLoading,
+    isPending: isConfigPending,
     isError: isConfigError,
   } = useCurrentConfig()
 
-  const isLoading = isProjectLoading || isTemplateLoading || isConfigLoading
+  const isLoading = isProjectPending || isTemplatePending || isConfigPending
   const isError = isProjectError || isTemplateError || isConfigError
+
+  const isSelectedInRootDiscovery = useMemo(
+    () =>
+      isInRootDiscovery(
+        project,
+        projectResponse.data?.entries ?? [],
+        selectedAddress,
+      ),
+    [project, projectResponse.data?.entries, selectedAddress],
+  )
+
+  const canModify = useMemo(() => {
+    return !IS_READONLY && isSelectedInRootDiscovery
+  }, [isInRootDiscovery, isSelectedInRootDiscovery])
 
   const configModel = useConfigModel({
     project,
@@ -66,6 +83,7 @@ function _useProjectConfigModels() {
   })
 
   return {
+    canModify,
     configModel,
     templateModel,
     isError,

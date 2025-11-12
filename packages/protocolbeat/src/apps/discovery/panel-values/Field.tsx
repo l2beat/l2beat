@@ -8,7 +8,7 @@ export interface FieldDisplayProps {
 }
 
 export function FieldDisplay({ field }: FieldDisplayProps) {
-  const { configModel, templateModel } = useProjectConfigModels()
+  const { configModel, templateModel, canModify } = useProjectConfigModels()
 
   const templateTags = [
     {
@@ -129,22 +129,24 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
             {x}
           </span>
         ))}
-        {templateTags.map((x, i) => (
-          <FieldTag
-            key={i}
-            tag={x.tag}
-            onClick={x.onClick}
-            state={x.isIgnored ? 'ignored' : 'active'}
-          />
-        ))}
-        {configTags.map((x, i) => (
-          <FieldTag
-            key={i}
-            tag={x.tag}
-            onClick={x.onClick}
-            state={x.isIgnored ? 'ignored' : 'active'}
-          />
-        ))}
+        {canModify &&
+          templateTags.map((x, i) => (
+            <FieldTag
+              key={i}
+              tag={x.tag}
+              onClick={x.onClick}
+              state={x.isIgnored ? 'ignored' : 'active'}
+            />
+          ))}
+        {canModify &&
+          configTags.map((x, i) => (
+            <FieldTag
+              key={i}
+              tag={x.tag}
+              onClick={x.onClick}
+              state={x.isIgnored ? 'ignored' : 'active'}
+            />
+          ))}
       </div>
       {field.description && (
         <div className="-mt-0.5 px-5 pb-1 font-serif italic">

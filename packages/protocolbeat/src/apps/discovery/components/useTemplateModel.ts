@@ -66,23 +66,13 @@ export function useTemplateModel({ templateId, files }: Props) {
     return templateModel.toString()
   }, [templateModel])
 
-  const hasDefinition = useCallback(
-    (method: string) => {
-      return templateModel.hasDefinition(method)
-    },
-    [templateModel],
-  )
-
   return {
     templateModel,
     setIgnoreMethods,
     setIgnoreRelatives,
     setIgnoreInWatchMode,
-    hasDefinition,
 
     save: saveRaw,
-
-    templateString,
 
     hasTemplate: templateId,
 

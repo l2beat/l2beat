@@ -14,12 +14,11 @@ import {
 import { useProjectData } from '../hooks/useProjectData'
 
 export function ConfigPanel() {
-  const { project, projectResponse } = useProjectData()
+  const { project } = useProjectData()
   const configModels = useProjectConfigModels()
 
   // TODO: move this to backend/editor or replace with gui
   const onSaveCallback = (content: string): string => {
-    console.log('onSaveCallback - config', content)
     try {
       content = formatJson(JSON.parse(removeJSONTrailingCommas(content)))
     } catch {}
@@ -34,11 +33,11 @@ export function ConfigPanel() {
     [project, configModels],
   )
 
-  if (projectResponse.isError) {
+  if (configModels.isError) {
     return <ErrorState />
   }
 
-  if (projectResponse.isPending) {
+  if (configModels.isLoading) {
     return <LoadingState />
   }
 
@@ -53,26 +52,14 @@ export function ConfigPanel() {
 
 function getConfigFiles(
   project: string,
-  configModels: ProjectConfigModels,
+  { configModel }: ProjectConfigModels,
 ): EditorFile[] {
-  if (configModels.isLoading) {
-    return [
-      {
-        id: 'config',
-        name: 'config.jsonc',
-        content: '// Loading',
-        language: 'json',
-        readOnly: true,
-      },
-    ]
-  }
-
   const sources: EditorFile[] = []
 
   sources.push({
     id: `config-${project}`,
     name: 'config.jsonc',
-    content: configModels.configModel.configString,
+    content: configModel.files.config,
     language: 'json',
     readOnly: IS_READONLY,
   })

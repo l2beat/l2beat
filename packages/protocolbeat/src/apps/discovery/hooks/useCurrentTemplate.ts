@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { readTemplateFile } from '../../../api/api'
-import { findTemplateId } from '../panel-template/TemplatePanel'
+import { findTemplateId } from '../../../utils/findTemplateId'
 import { useProjectData } from './useProjectData'
 
 export function useCurrentTemplate() {
@@ -29,12 +29,9 @@ export function useCurrentTemplate() {
     return templateResponse.data
   }, [templateResponse.data])
 
-  const isLoading = projectResponse.isPending || templateResponse.isPending
-  const isError = projectResponse.isError || templateResponse.isError
-
   return {
-    isLoading,
-    isError,
+    isPending: templateResponse.isPending || projectResponse.isPending,
+    isError: templateResponse.isError || projectResponse.isError,
     files: templateContent,
     templateId,
   }
