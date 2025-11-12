@@ -167,7 +167,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
             (x) => x.eid,
             packetDelivered.origin.srcEid,
           )
-          // use erc20 transfer event instead (fragile becaus it might not be 2 logs before)
+          // use erc20 transfer event instead (fragile because it might not be 1 log before)
           const previousLog = input.txLogs.find(
             // biome-ignore lint/style/noNonNullAssertion: It's there
             (x) => x.logIndex === input.log.logIndex! - 1,

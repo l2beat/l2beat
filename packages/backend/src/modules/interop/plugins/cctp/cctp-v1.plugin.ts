@@ -138,7 +138,7 @@ export class CCTPV1Plugin implements InteropPlugin {
     if (v1MessageReceived) {
       // const messageBody = decodeMessageBody(v1MessageReceived.messageBody) // only encodes the source token, so no value to us
       // if (!messageBody) return
-      // use erc20 transfer event instead (fragile becaus it might not be 2 logs before)
+      // use erc20 transfer event instead (fragile because it might not be 2 logs before)
       const previouspreviousLog = input.txLogs.find(
         // biome-ignore lint/style/noNonNullAssertion: It's there
         (x) => x.logIndex === input.log.logIndex! - 2,
