@@ -22,22 +22,18 @@ import {
 import { minLengthCheck, urlCheck } from '~/utils/checks'
 import { Card, CardContent } from '../core/Card'
 
-const apiTypeValues = [
-  'rpc',
-  'etherscan',
-  'blockscout',
-  'blockscoutV2',
-  'routescan',
-] as const
+const withoutURL = ['etherscan'] as const
+const withURL = ['rpc', 'blockscout', 'blockscoutV2', 'routescan'] as const
+const apiTypeValues = [...withoutURL, ...withURL] as const
 
 export type ChainApiSchema = v.infer<typeof ChainApiSchema>
 export const ChainApiSchema = v.union([
   v.object({
-    type: v.literal('etherscan'),
+    type: v.enum(withoutURL),
     callsPerMinute: v.number().optional(),
   }),
   v.object({
-    type: v.enum(['rpc', 'blockscout', 'blockscoutV2', 'routescan']),
+    type: v.enum(withURL),
     url: v.string().check(urlCheck),
     callsPerMinute: v.number().optional(),
   }),
