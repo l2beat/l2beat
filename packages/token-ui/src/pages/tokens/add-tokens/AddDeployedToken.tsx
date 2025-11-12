@@ -248,101 +248,126 @@ export function AddDeployedToken() {
           </DeployedTokenForm>
         </CardContent>
 
-        <Card className="absolute top-0 left-full ml-4 max-h-[400px] w-full max-w-xs overflow-y-auto">
-          <CardHeader>
-            <CardTitle>Queue</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {queue.length > 0 ? (
-              <ul className="list-inside list-decimal">
-                {queue.map((item, index) => (
-                  <li key={index} className="truncate whitespace-nowrap">
-                    {item.chain} ({item.address})
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <Empty>
-                <EmptyHeader>
-                  <EmptyMedia variant="icon">
-                    <ListXIcon />
-                  </EmptyMedia>
-                  <EmptyTitle>No tokens in queue</EmptyTitle>
-                </EmptyHeader>
-              </Empty>
-            )}
-          </CardContent>
-          <CardFooter>
-            <Button
-              className="w-full"
-              onClick={() => setIsImportDialogOpen(true)}
-            >
-              Import
-            </Button>
-          </CardFooter>
-        </Card>
+        <Queue queue={queue} setIsImportDialogOpen={setIsImportDialogOpen} />
       </Card>
       {checks?.data?.suggestions && checks.data.suggestions.length !== 0 && (
-        <Card className="mt-4">
-          <CardHeader>
-            <CardTitle>Suggestions</CardTitle>
-            <CardDescription>
-              We've found this token on other chains and thought you may want to
-              add it.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="-mx-6 flex flex-col gap-2">
-              {checks.data.suggestions.map((suggestion) => {
-                const isInQueue = queue.some(
-                  (q) =>
-                    q.chain === suggestion.chain &&
-                    q.address === suggestion.address,
-                )
-                return (
-                  <div
-                    key={suggestion.chain}
-                    className="flex items-center justify-between gap-2 px-6 odd:bg-muted"
-                  >
-                    {suggestion.chain} ({suggestion.address})
-                    <div className="flex items-center">
-                      {isInQueue ? (
-                        <div className={buttonVariants({ variant: 'link' })}>
-                          <CheckIcon
-                            className={cn('size-4 stroke-green-500')}
-                          />
-                        </div>
-                      ) : (
-                        <Button
-                          variant="link"
-                          onClick={() =>
-                            addToQueue(suggestion.chain, suggestion.address)
-                          }
-                        >
-                          <ListPlusIcon />
-                        </Button>
-                      )}
-
-                      <Button variant="link" asChild>
-                        <Link
-                          to={buildUrlWithParams('/tokens/new', {
-                            tab: 'deployed',
-                            chain: suggestion.chain,
-                            address: suggestion.address,
-                          })}
-                          target="_blank"
-                        >
-                          <PlusIcon />
-                        </Link>
-                      </Button>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </CardContent>
-        </Card>
+        <Suggestions
+          suggestions={checks.data.suggestions}
+          queue={queue}
+          addToQueue={addToQueue}
+        />
       )}
     </>
+  )
+}
+
+function Queue({
+  queue,
+  setIsImportDialogOpen,
+}: {
+  queue: { chain: string; address: string }[]
+  setIsImportDialogOpen: (open: boolean) => void
+}) {
+  return (
+    <Card className="absolute top-0 left-full ml-4 max-h-[400px] w-full max-w-xs overflow-y-auto">
+      <CardHeader>
+        <CardTitle>Queue</CardTitle>
+      </CardHeader>
+      <CardContent>
+        {queue.length > 0 ? (
+          <ul className="list-inside list-decimal">
+            {queue.map((item, index) => (
+              <li key={index} className="truncate whitespace-nowrap">
+                {item.chain} ({item.address})
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <Empty>
+            <EmptyHeader>
+              <EmptyMedia variant="icon">
+                <ListXIcon />
+              </EmptyMedia>
+              <EmptyTitle>No tokens in queue</EmptyTitle>
+            </EmptyHeader>
+          </Empty>
+        )}
+      </CardContent>
+      <CardFooter>
+        <Button className="w-full" onClick={() => setIsImportDialogOpen(true)}>
+          Import
+        </Button>
+      </CardFooter>
+    </Card>
+  )
+}
+
+function Suggestions({
+  suggestions,
+  queue,
+  addToQueue,
+}: {
+  suggestions: { chain: string; address: string }[]
+  queue: { chain: string; address: string }[]
+  addToQueue: (chain: string, address: string) => void
+}) {
+  return (
+    <Card className="mt-4">
+      <CardHeader>
+        <CardTitle>Suggestions</CardTitle>
+        <CardDescription>
+          We've found this token on other chains and thought you may want to add
+          it.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="-mx-6 flex flex-col gap-2">
+          {suggestions.map((suggestion) => {
+            const isInQueue = queue.some(
+              (q) =>
+                q.chain === suggestion.chain &&
+                q.address === suggestion.address,
+            )
+            return (
+              <div
+                key={suggestion.chain}
+                className="flex items-center justify-between gap-2 px-6 odd:bg-muted"
+              >
+                {suggestion.chain} ({suggestion.address})
+                <div className="flex items-center">
+                  {isInQueue ? (
+                    <div className={buttonVariants({ variant: 'link' })}>
+                      <CheckIcon className={cn('size-4 stroke-green-500')} />
+                    </div>
+                  ) : (
+                    <Button
+                      variant="link"
+                      onClick={() =>
+                        addToQueue(suggestion.chain, suggestion.address)
+                      }
+                    >
+                      <ListPlusIcon />
+                    </Button>
+                  )}
+
+                  <Button variant="link" asChild>
+                    <Link
+                      to={buildUrlWithParams('/tokens/new', {
+                        tab: 'deployed',
+                        chain: suggestion.chain,
+                        address: suggestion.address,
+                      })}
+                      target="_blank"
+                    >
+                      <PlusIcon />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </CardContent>
+    </Card>
   )
 }
