@@ -38,8 +38,9 @@ export async function getSummedByTimestampTvsValuesQuery(
   const tvsRecords = projectsWithRanges.success
     ? await db.tvsTokenValue.getSummedByTimestampWithProjectsRanges(
         projectsWithRanges.data,
+        range[0],
+        range[1],
         {
-          range,
           forSummary,
           excludeAssociated,
           includeRwaRestrictedTokens,

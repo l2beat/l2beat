@@ -266,13 +266,14 @@ export class TokenValueRepository extends BaseRepository {
   }
 
   async getSummedByTimestampWithProjectsRanges(
-    projectsWithRanges: Array<{
+    projectsWithRanges: {
       projectId: string
       sinceTimestamp: UnixTime
       untilTimestamp?: UnixTime
-    }>,
+    }[],
+    fromInclusive: UnixTime | null,
+    toInclusive: UnixTime | null,
     opts: {
-      range: [UnixTime | null, UnixTime]
       forSummary: boolean
       excludeAssociated: boolean
       includeRwaRestrictedTokens: boolean
@@ -333,8 +334,6 @@ export class TokenValueRepository extends BaseRepository {
         ),
       )
       .groupBy('TokenValue.timestamp')
-
-    const [fromInclusive, toInclusive] = opts.range
 
     if (fromInclusive) {
       query = query.where('timestamp', '>=', UnixTime.toDate(fromInclusive))
