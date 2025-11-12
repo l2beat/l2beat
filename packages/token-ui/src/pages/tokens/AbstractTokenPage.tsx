@@ -156,7 +156,7 @@ function AbstractTokenView({
                     <EmptyMedia variant="icon">
                       <Spinner />
                     </EmptyMedia>
-                    <EmptyTitle>Loading suggestions...</EmptyTitle>
+                    <EmptyTitle>Loading...</EmptyTitle>
                   </EmptyHeader>
                 </Empty>
               ) : suggestions && suggestions.length !== 0 ? (
