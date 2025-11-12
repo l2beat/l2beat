@@ -4,7 +4,7 @@ import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import { getLogger } from '~/server/utils/logger'
 
 export function getZkCatalogTvsSection(
-  project: Project<'zkCatalogInfo', 'tvsInfo'>,
+  project: Project<'zkCatalogInfo', 'tvsInfo' | 'milestones'>,
   allProjects: Project<
     never,
     'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
@@ -37,7 +37,7 @@ export function getZkCatalogTvsSection(
 
   return {
     defaultRange: '1y',
-    milestones: [],
+    milestones: project.milestones ?? [],
     tvsInfo: project.tvsInfo ?? undefined,
     project,
     projectsForTvs,
