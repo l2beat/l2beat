@@ -1,11 +1,11 @@
 import { v } from '@l2beat/validate'
 import fuzzysort from 'fuzzysort'
-import { db } from '../../database/db'
-import { readOnlyProcedure, router } from '../trpc'
+import { readOnlyProcedure } from '../procedures'
+import { router } from '../trpc'
 
 export const searchRouter = router({
-  tokens: readOnlyProcedure.input(v.string()).query(async ({ input }) => {
-    const deployedTokens = await db.deployedToken.getAll()
+  tokens: readOnlyProcedure.input(v.string()).query(async ({ ctx, input }) => {
+    const deployedTokens = await ctx.db.deployedToken.getAll()
     if (input.startsWith('0x')) {
       return {
         deployedTokens: deployedTokens.filter((t) => t.address === input),
@@ -13,7 +13,7 @@ export const searchRouter = router({
       }
     }
 
-    const abstractTokens = await db.abstractToken.getAll()
+    const abstractTokens = await ctx.db.abstractToken.getAll()
 
     const abstractResult = fuzzysort.go(input, abstractTokens, {
       limit: 15,

@@ -1,4 +1,11 @@
-import { createTokenDatabase } from '@l2beat/database'
-import { config } from '../config'
+import { createTokenDatabase, type TokenDatabase } from '@l2beat/database'
+import type { Config } from '../config/Config'
 
-export const db = createTokenDatabase(config.database)
+let db: TokenDatabase | undefined
+
+export function getDb(config: Config) {
+  if (!db) {
+    db = createTokenDatabase(config.database)
+  }
+  return db
+}
