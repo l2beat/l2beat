@@ -43,7 +43,11 @@ export function groupProjects(
 
   const groupConfigs: GroupConfig[] = [
     // Stacks first
-    { name: 'OP Stack', assignees: ['🐿', '🐱'], predicate: (p: DP) => isStack(p.name, 'OP Stack') },
+    {
+      name: 'OP Stack',
+      assignees: ['🐿', '🐱'],
+      predicate: (p: DP) => isStack(p.name, 'OP Stack'),
+    },
     {
       name: 'Orbit/Arbitrum Stack',
       assignees: ['🐿', '🐱'],
@@ -101,8 +105,7 @@ export function groupProjects(
 
   for (const { name, assignees, predicate, variant } of groupConfigs) {
     const [group, rest] = partition(remaining, predicate)
-    if (group.length)
-      result.push({ name, assignees, projects: group, variant })
+    if (group.length) result.push({ name, assignees, projects: group, variant })
     remaining = rest
   }
 
