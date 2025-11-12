@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import { Card, CardContent } from '~/components/core/Card'
@@ -9,7 +9,6 @@ import { api } from '~/react-query/trpc'
 import { validateResolver } from '~/utils/validateResolver'
 
 export function AddChain({ defaultValues }: { defaultValues?: ChainSchema }) {
-  const navigate = useNavigate()
   const utils = api.useUtils()
   const form = useForm<ChainSchema>({
     resolver: validateResolver(ChainSchema),
@@ -20,11 +19,17 @@ export function AddChain({ defaultValues }: { defaultValues?: ChainSchema }) {
 
   const { mutate: insertChain, isPending } = api.chains.insert.useMutation({
     onSuccess: (_, vars) => {
-      toast.success('Chain added successfully')
+      toast.success(
+        <span>
+          Chain added successfully.{' '}
+          <Link to={`/chains/${vars.name}`} className="underline">
+            View chain
+          </Link>
+        </span>,
+      )
       utils.chains.getAll.invalidate()
       utils.search.all.invalidate()
       form.reset()
-      navigate(`/chains/${vars.name}`)
     },
     onError: (error: { message?: string }) => {
       toast.error(error.message || 'Failed to add chain')
