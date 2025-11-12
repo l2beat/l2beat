@@ -26,8 +26,8 @@ export const t3rn: ScalingProject = underReviewL3({
       bridges: ['https://bridge.t3rn.io/'],
       documentation: ['https://docs.t3rn.io/'],
       explorers: ['https://explorer.t3rn.io/'],
-      repositories: ['https://github.com/t3rn'],
-      socialMedia: ['https://x.com/t3rn_io', 'https://github.com/t3rn/t3rn'],
+      repositories: ['https://github.com/t3rn', 'https://github.com/t3rn/t3rn'],
+      socialMedia: ['https://x.com/t3rn_io'],
     },
   },
   proofSystem: {
