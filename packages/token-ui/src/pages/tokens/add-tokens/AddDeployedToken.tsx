@@ -1,6 +1,12 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
-import { CheckIcon, ListPlusIcon, ListXIcon, PlusIcon } from 'lucide-react'
+import {
+  CheckIcon,
+  ListIcon,
+  ListPlusIcon,
+  ListXIcon,
+  PlusIcon,
+} from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useSearchParams } from 'react-router-dom'
@@ -11,7 +17,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '~/components/core/Card'
@@ -22,12 +27,20 @@ import {
   EmptyTitle,
 } from '~/components/core/Empty'
 import {
+  Sheet,
+  SheetContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '~/components/core/Sheet'
+import { Textarea } from '~/components/core/TextArea'
+import {
   DeployedTokenForm,
   DeployedTokenSchema,
   setDeployedTokenExistsError,
 } from '~/components/forms/DeployedTokenForm'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
-import { TokenImportDialog } from '~/components/TokenImportDialog'
 import { useQueryState } from '~/hooks/useQueryState'
 import { api } from '~/react-query/trpc'
 import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
@@ -37,12 +50,9 @@ import { validateResolver } from '~/utils/validateResolver'
 
 export function AddDeployedToken() {
   const [, setSearchParams] = useSearchParams()
-  const [queryChain, , clearQueryChain] = useQueryState('chain', '')
-  const [queryAddress, , clearQueryAddress] = useQueryState('address', '')
-  const [abstractTokenId, , clearAbstractTokenId] = useQueryState(
-    'abstractTokenId',
-    '',
-  )
+  const [queryChain] = useQueryState('chain', '')
+  const [queryAddress] = useQueryState('address', '')
+  const [abstractTokenId] = useQueryState('abstractTokenId', '')
 
   const [queue, setQueue] = useState<{ chain: string; address: string }[]>([])
   const addToQueue = useCallback((chain: string, address: string) => {
@@ -53,7 +63,7 @@ export function AddDeployedToken() {
     resolver: validateResolver(DeployedTokenSchema),
   })
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
-  const [isImportDialogOpen, setIsImportDialogOpen] = useState(false)
+  const [isQueueSheetOpen, setIsQueueSheetOpen] = useState(false)
 
   const { data: abstractTokens, isLoading: areAbstractTokensLoading } =
     api.abstractTokens.getAll.useQuery()
@@ -171,26 +181,26 @@ export function AddDeployedToken() {
         setPlan={setPlan}
         onSuccess={() => {
           form.reset()
-          clearAbstractTokenId()
           const queueItem = queue[0]
           if (!queueItem) {
-            clearQueryChain()
-            clearQueryAddress()
+            setSearchParams((prev) => {
+              const newParams = new URLSearchParams(prev)
+              newParams.delete('chain')
+              newParams.delete('address')
+              newParams.delete('abstractTokenId')
+              return newParams
+            })
           } else {
             setSearchParams((prev) => {
               const newParams = new URLSearchParams(prev)
               newParams.set('chain', queueItem.chain)
               newParams.set('address', queueItem.address)
+              newParams.delete('abstractTokenId')
               return newParams
             })
             setQueue(queue.slice(1))
           }
         }}
-      />
-      <TokenImportDialog
-        open={isImportDialogOpen}
-        onOpenChange={setIsImportDialogOpen}
-        onImport={handleImport}
       />
       <Card className="relative">
         <CardContent>
@@ -208,13 +218,15 @@ export function AddDeployedToken() {
             }}
           >
             <div className="flex flex-col gap-4">
-              <ButtonWithSpinner
-                isLoading={isPending}
-                className="w-full"
-                type="submit"
-              >
-                {queue.length > 0 ? 'Submit and add next' : 'Submit'}
-              </ButtonWithSpinner>
+              <div className="flex gap-2">
+                <ButtonWithSpinner
+                  isLoading={isPending}
+                  className="flex-1"
+                  type="submit"
+                >
+                  {queue.length > 0 ? 'Submit and add next' : 'Submit'}
+                </ButtonWithSpinner>
+              </div>
               {queue.length > 0 && (
                 <Button
                   variant="outline"
@@ -247,8 +259,23 @@ export function AddDeployedToken() {
             </div>
           </DeployedTokenForm>
         </CardContent>
-
-        <Queue queue={queue} setIsImportDialogOpen={setIsImportDialogOpen} />
+        <Sheet open={isQueueSheetOpen} onOpenChange={setIsQueueSheetOpen}>
+          <SheetTrigger asChild>
+            <Button
+              variant="outline"
+              type="button"
+              className="absolute top-2 left-full ml-2"
+            >
+              <ListIcon className="size-4" />
+              {queue.length > 0 && (
+                <span className="-right-2 -bottom-2 absolute flex size-5 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs">
+                  {queue.length}
+                </span>
+              )}
+            </Button>
+          </SheetTrigger>
+          <Queue queue={queue} onImport={handleImport} />
+        </Sheet>
       </Card>
       {checks?.data?.suggestions && checks.data.suggestions.length !== 0 && (
         <Suggestions
@@ -258,47 +285,6 @@ export function AddDeployedToken() {
         />
       )}
     </>
-  )
-}
-
-function Queue({
-  queue,
-  setIsImportDialogOpen,
-}: {
-  queue: { chain: string; address: string }[]
-  setIsImportDialogOpen: (open: boolean) => void
-}) {
-  return (
-    <Card className="absolute top-0 left-full ml-4 max-h-[400px] w-full max-w-xs overflow-y-auto">
-      <CardHeader>
-        <CardTitle>Queue</CardTitle>
-      </CardHeader>
-      <CardContent>
-        {queue.length > 0 ? (
-          <ul className="list-inside list-decimal">
-            {queue.map((item, index) => (
-              <li key={index} className="truncate whitespace-nowrap">
-                {item.chain} ({item.address})
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <Empty>
-            <EmptyHeader>
-              <EmptyMedia variant="icon">
-                <ListXIcon />
-              </EmptyMedia>
-              <EmptyTitle>No tokens in queue</EmptyTitle>
-            </EmptyHeader>
-          </Empty>
-        )}
-      </CardContent>
-      <CardFooter>
-        <Button className="w-full" onClick={() => setIsImportDialogOpen(true)}>
-          Import
-        </Button>
-      </CardFooter>
-    </Card>
   )
 }
 
@@ -370,4 +356,114 @@ function Suggestions({
       </CardContent>
     </Card>
   )
+}
+
+function Queue({
+  queue,
+  onImport,
+}: {
+  queue: { chain: string; address: string }[]
+  onImport: (tokens: { chain: string; address: string }[]) => void
+}) {
+  const [csvInput, setCsvInput] = useState('')
+  const [error, setError] = useState<string | null>(null)
+
+  function handleImport() {
+    try {
+      setError(null)
+      if (!csvInput.trim()) {
+        setError('Please enter at least one token')
+        return
+      }
+
+      const tokens = parseCSV(csvInput)
+      if (tokens.length === 0) {
+        setError('No valid tokens found')
+        return
+      }
+
+      toast.success(`Successfully imported ${tokens.length} token(s) to queue`)
+      onImport(tokens)
+      setCsvInput('')
+      setError(null)
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Failed to parse CSV'
+      setError(message)
+    }
+  }
+
+  return (
+    <SheetContent side="right" className="flex flex-col">
+      <SheetHeader>
+        <SheetTitle>Queue</SheetTitle>
+      </SheetHeader>
+      <div className="flex-1 overflow-y-auto px-4">
+        {queue.length > 0 ? (
+          <ul className="list-inside list-decimal space-y-2">
+            {queue.map((item, index) => (
+              <li
+                key={index}
+                className="truncate whitespace-nowrap even:bg-muted"
+              >
+                {item.chain} ({item.address})
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <Empty>
+            <EmptyHeader>
+              <EmptyMedia variant="icon">
+                <ListXIcon />
+              </EmptyMedia>
+              <EmptyTitle>No tokens in queue</EmptyTitle>
+            </EmptyHeader>
+          </Empty>
+        )}
+      </div>
+      <SheetFooter>
+        <div className="space-y-2">
+          <Textarea
+            value={csvInput}
+            onChange={(e) => {
+              setCsvInput(e.target.value)
+              setError(null)
+            }}
+            placeholder="ethereum,0x1234567890123456789012345678901234567890&#10;arbitrum,0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"
+            rows={10}
+            className="font-mono text-sm"
+          />
+          {error && <p className="text-destructive text-sm">{error}</p>}
+        </div>
+        <Button className="w-full" onClick={handleImport}>
+          Import
+        </Button>
+      </SheetFooter>
+    </SheetContent>
+  )
+}
+
+function parseCSV(csv: string): { chain: string; address: string }[] {
+  const lines = csv.trim().split('\n')
+  const tokens: { chain: string; address: string }[] = []
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i]?.trim()
+    if (!line) continue // Skip empty lines
+
+    const parts = line.split(',').map((part) => part.trim())
+    if (parts.length !== 2) {
+      throw new Error(
+        `Line ${i + 1}: Expected format "chain,address", got "${line}"`,
+      )
+    }
+
+    const [chain, address] = parts
+    if (!chain || !address) {
+      throw new Error(`Line ${i + 1}: Both chain and address are required`)
+    }
+
+    tokens.push({ chain, address })
+  }
+
+  return tokens
 }
