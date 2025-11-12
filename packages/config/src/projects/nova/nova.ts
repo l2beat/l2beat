@@ -142,10 +142,7 @@ export const nova: ScalingProject = orbitStackL2({
         'https://developer.arbitrum.io/',
         'https://developer.arbitrum.io/inside-arbitrum-nitro/#inside-anytrust',
       ],
-      explorers: [
-        'https://nova.arbiscan.io/',
-        'https://nova-explorer.arbitrum.io/',
-      ],
+      explorers: ['https://nova.arbiscan.io/'],
       repositories: [
         'https://github.com/ArbitrumFoundation/docs',
         'https://github.com/ArbitrumFoundation/governance',
