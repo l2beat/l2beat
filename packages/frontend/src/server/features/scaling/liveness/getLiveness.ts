@@ -28,7 +28,7 @@ export async function getLiveness(projectId?: ProjectId) {
     return getMockLivenessData()
   }
 
-  return await getLivenessData(projectId)
+  return getLivenessData(projectId)
 }
 
 async function getLivenessData(projectId?: ProjectId) {
