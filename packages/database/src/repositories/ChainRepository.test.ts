@@ -511,7 +511,6 @@ function mockChain(
     chainId: overrides.chainId,
     explorerUrl: overrides.explorerUrl ?? null,
     aliases: overrides.aliases ?? null,
-    explorerUrl: overrides.explorerUrl ?? null,
     apis: overrides.apis ?? null,
   }
 }
