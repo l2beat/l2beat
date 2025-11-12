@@ -1,3 +1,70 @@
+Generated with discovered.json: 0x17d305bb1cd2e10751f16a70fea702221904cd5c
+
+# Diff at Tue, 11 Nov 2025 13:13:57 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b1f047143f23a2eb66cb8ee546e40e8456ba2c8c block: 1762779859
+- current timestamp: 1762866771
+
+## Description
+
+New proposal on ZkTokenGovernor: https://www.tally.xyz/gov/zksync/proposal/68452231205260788796569713423066878142593117468039270123415287058789227565934?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746. This proposal will shorten votingDelay from 7 to 3 days and lateQuorumVoteExtension from 7 to 2 days for Token Program Proposals.
+
+New proposal on ZkProtocolGovernor: https://www.tally.xyz/gov/zksync/proposal/56697539346434504259886089137844919991955896472242107434527974192173343556352?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f. This proposal will upgrade ZK token on zksync to ZKTokenV3, introducing role-gated burnFrom, permissionless burn of owned tokens and max supply.
+
+New proposal on ZkGovOpsGovernor: https://www.tally.xyz/gov/zksync/proposal/106273763076555939732473066377698909735843793351966221159383225521787704405222?govId=eip155:324:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160. This proposal will shorten votingDelay from 7 to 3 days and lateQuorumVoteExtension from 7 to 2 days for Governance Advisory Proposals.
+
+## Watched changes
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        14
++        15
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        13
++        14
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor (zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        1
++        2
+    }
+```
+
+Generated with discovered.json: 0x2ed9ffadb7c9ba5aadebefd4c7c3dcb4b02bf708
+
+# Diff at Mon, 10 Nov 2025 13:05:36 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@e5b98f73e765185048172a39ccf6cdf19ca5fe79 block: 1762349131
+- current timestamp: 1762779859
+
+## Description
+
+Part of [TPP-12](https://www.tally.xyz/gov/zksync/proposal/97314764080859415498674952864578860560861880297360481348949362100730414449748?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746) execution: `Zk_StakingPilot_2025` (0xb1c5f8ea8cE447FDaFB234D85EAD8c8A83b6306B) was granted the minter role on ZK token.
+
+## Watched changes
+
+```diff
+    contract ZkToken (zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+      values.accessControl.MINTER_ROLE.members.16:
++        "zksync:0xb1c5f8ea8cE447FDaFB234D85EAD8c8A83b6306B"
+    }
+```
+
 Generated with discovered.json: 0x5962fc0632a9211b2a4bb5cfa30da6aa5b533dce
 
 # Diff at Wed, 05 Nov 2025 13:27:46 GMT:

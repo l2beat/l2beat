@@ -1,4 +1,5 @@
 import type { TokenDatabase } from '@l2beat/database'
+import type { TokenDatabase } from '@l2beat/database'
 import { assert, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { Chain } from '../../chains/Chain'
@@ -161,7 +162,13 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
                 type: 'not-found-on-chain' as const,
                 message: 'Token not found on chain',
               },
-              data: undefined,
+              data: {
+                symbol: undefined,
+                otherChains: undefined,
+                decimals: undefined,
+                deploymentTimestamp: undefined,
+                abstractTokenId: undefined,
+              },
             }
           }
         }

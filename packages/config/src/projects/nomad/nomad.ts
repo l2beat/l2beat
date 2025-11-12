@@ -28,7 +28,8 @@ export const nomad: Bridge = {
       'The Nomad token bridge contract has recently been exploited and currently is not operational.',
     category: 'Token Bridge',
     links: {
-      websites: ['https://app.nomad.xyz/', 'https://docs.nomad.xyz/'],
+      websites: ['https://app.nomad.xyz/'],
+      documentation: ['https://docs.nomad.xyz/'],
       repositories: ['https://github.com/nomad-xyz/monorepo'],
       socialMedia: [
         'https://twitter.com/nomadxyz_',
