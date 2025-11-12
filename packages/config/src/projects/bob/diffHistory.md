@@ -600,7 +600,7 @@ Generated with discovered.json: 0x062861cee1e1bf6aa963ec55b86fe36d2c4e03cc
 - proofMaturityDelaySeconds: 7d->1d
 - disputeGameFinalityDelaySeconds: 3.5d->1d 
 
-Upgrade to standard OP stack v3 contracts (OptiPortal2) with [KAILUA Hybrid mode](https://boundless-xyz.github.io/kailua/design.html) as respected dispute game. Kailua is configured in [Vanguard mode](https://risc0.github.io/kailua/parameters.html?highlight=vanguard#vanguard-advantage).
+Upgrade to standard OP stack v3 contracts (OptiPortal2) with [KAILUA Hybrid mode](https://boundless-xyz.github.io/kailua/design.html) as respected dispute game. Kailua is configured in [Vanguard mode](https://boundless-xyz.github.io/kailua/parameters.html?highlight=vanguard#vanguard-advantage).
 
 summary:
 - standard op stack contracts
