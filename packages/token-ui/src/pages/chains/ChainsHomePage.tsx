@@ -1,5 +1,6 @@
 import { LinkIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import {
   Card,
@@ -25,7 +26,6 @@ import {
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
 import type { ChainApi } from '../../../../database/dist/repositories/ChainRepository'
-import { Badge } from '~/components/core/Badge'
 
 export function ChainsHomePage() {
   const { data, isLoading: isChainsLoading } = api.chains.getAll.useQuery()
@@ -71,7 +71,14 @@ export function ChainsHomePage() {
                 </TableRow>
                 {data?.map((chain) => (
                   <TableRow key={chain.name}>
-                    <TableCell>{chain.name}</TableCell>
+                    <TableCell>
+                      <Link
+                        to={`/chains/${chain.name}`}
+                        className="hover:underline"
+                      >
+                        {chain.name}
+                      </Link>
+                    </TableCell>
                     <TableCell>{chain.chainId}</TableCell>
                     <TableCell>{chain.explorerUrl}</TableCell>
                     <TableCell>{chain.aliases}</TableCell>

@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { SidebarProvider } from './components/core/Sidebar'
 import { Toaster } from './components/core/Sonner'
 import { AddChain } from './pages/chains/AddChain'
+import { ChainPage } from './pages/chains/ChainPage'
 import { ChainsHomePage } from './pages/chains/ChainsHomePage'
 import { MainPage } from './pages/MainPage'
 import { NotFoundPage } from './pages/NotFoundPage'
@@ -28,6 +29,7 @@ export function App() {
             />
             <Route path="/chains" element={<ChainsHomePage />} />
             <Route path="/chains/new" element={<AddChain />} />
+            <Route path="/chains/:name" element={<ChainPage />} />
             <Route path="/not-found" element={<NotFoundPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
