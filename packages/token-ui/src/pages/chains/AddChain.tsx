@@ -22,6 +22,7 @@ export function AddChain({ defaultValues }: { defaultValues?: ChainSchema }) {
     onSuccess: (_, vars) => {
       toast.success('Chain added successfully')
       utils.chains.getAll.invalidate()
+      utils.search.all.invalidate()
       form.reset()
       navigate(`/chains/${vars.name}`)
     },
