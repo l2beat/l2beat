@@ -34,6 +34,7 @@ export const popapex: ScalingProject = orbitStackL3({
         'https://bridge.arbitrum.io/?destinationChain=pop-apex&sourceChain=arbitrum-one',
         'https://piratenation.game/',
       ],
+      documentation: ['https://docs.proofofplay.com/introduction']
       explorers: ['https://explorer.apex.proofofplay.com'],
       repositories: ['https://github.com/proofofplay'],
       socialMedia: [
