@@ -95,6 +95,7 @@ export const paradex: ScalingProject = {
       socialMedia: [
         'https://twitter.com/tradeparadex',
         'https://discord.com/invite/paradex',
+        'https://t.me/paradex',
       ],
     },
     liveness: {
