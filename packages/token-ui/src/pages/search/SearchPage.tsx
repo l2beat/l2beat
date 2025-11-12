@@ -156,11 +156,10 @@ function AbstractTokensTable({ tokens }: { tokens: AbstractToken[] }) {
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">Id</TableHead>
+          <TableHead>Issuer</TableHead>
           <TableHead>Symbol</TableHead>
           <TableHead>Category</TableHead>
           <TableHead>Coingecko Id</TableHead>
-          <TableHead>Issuer</TableHead>
-          <TableHead>Icon Url</TableHead>
           <TableHead>Coingecko Listing Timestamp</TableHead>
         </TableRow>
       </TableHeader>
@@ -173,11 +172,18 @@ function AbstractTokensTable({ tokens }: { tokens: AbstractToken[] }) {
                   {token.id}
                 </Link>
               </TableCell>
-              <TableCell>{token.symbol}</TableCell>
+              <TableCell>{token.issuer ?? 'unknown'}</TableCell>
+              <TableCell>
+                <img
+                  src={token.iconUrl ?? '/images/token-placeholder.png'}
+                  width={24}
+                  height={24}
+                  className="mr-2 inline rounded-full"
+                />
+                <span>{token.symbol}</span>
+              </TableCell>
               <TableCell>{token.category}</TableCell>
               <TableCell>{token.coingeckoId ?? '-'}</TableCell>
-              <TableCell>{token.issuer ?? 'unknown'}</TableCell>
-              <TableCell>{token.iconUrl ?? '-'}</TableCell>
               <TableCell>
                 {token.coingeckoListingTimestamp !== null
                   ? UnixTime.toYYYYMMDD(token.coingeckoListingTimestamp)
@@ -214,9 +220,9 @@ function DeployedTokensTable({ tokens }: { tokens: DeployedToken[] }) {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Symbol</TableHead>
           <TableHead>Chain</TableHead>
           <TableHead>Address</TableHead>
+          <TableHead>Symbol</TableHead>
           <TableHead>Abstract Token Id</TableHead>
           <TableHead>Decimals</TableHead>
           <TableHead>Deployment Timestamp</TableHead>
@@ -236,6 +242,7 @@ function DeployedTokensTable({ tokens }: { tokens: DeployedToken[] }) {
               </TableCell>
               <TableCell>{token.chain}</TableCell>
               <TableCell>{token.address}</TableCell>
+              <TableCell>{token.symbol}</TableCell>
               <TableCell>
                 {token.abstractTokenId ? (
                   <Link

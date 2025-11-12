@@ -6,6 +6,7 @@ export const CoinSchema = v.object({
   image: v.object({
     large: v.string(),
   }),
+  platforms: v.record(v.string(), v.string()),
 })
 
 export type CoinListEntry = v.infer<typeof CoinListEntrySchema>

@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x51989eaefe0e7500ae77ab4f3051bed7489b5f3d
+
+# Diff at Wed, 12 Nov 2025 13:26:45 GMT:
+
+- author: unknown (<unknown>)
+- comparing to: main@27e0954e328a1da641bdbcd0ceed6c44d77f2b96 block: 1762880768
+- current timestamp: 1762953905
+
+## Description
+
+Discovery to fix sequencerVersion.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2) {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
+      values.sequencerVersion:
+-        "0x88"
++        "0x63"
+    }
+```
+
 Generated with discovered.json: 0xab6fb090ee377c146c2c4d0c7e6d751bd90e2a8d
 
 # Diff at Tue, 11 Nov 2025 17:07:40 GMT:

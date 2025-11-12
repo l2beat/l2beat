@@ -1,4 +1,3 @@
-import { Card, CardContent } from '~/components/core/Card'
 import {
   Tabs,
   TabsContent,
@@ -28,22 +27,14 @@ export function AddTokensPage() {
           forceMount
           className="data-[state=inactive]:hidden"
         >
-          <Card>
-            <CardContent>
-              <AddDeployedToken />
-            </CardContent>
-          </Card>
+          <AddDeployedToken />
         </TabsContent>
         <TabsContent
           value="abstract"
           forceMount
           className="data-[state=inactive]:hidden"
         >
-          <Card>
-            <CardContent>
-              <AddAbstractToken />
-            </CardContent>
-          </Card>
+          <AddAbstractToken />
         </TabsContent>
       </Tabs>
     </AppLayout>

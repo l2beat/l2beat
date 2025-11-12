@@ -21,6 +21,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
   ) {
     const data = await coingeckoClient.getCoinList({ includePlatform: true })
     const chains = await db.chain.getAll()
+
     const chainToAliases = new Map(
       chains.map((chain) => [
         chain.name,
@@ -39,38 +40,55 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
     )
     if (!coin) return null
 
-    const aliasToChain = new Map(
-      chains.flatMap(
-        (chain) => chain.aliases?.map((alias) => [alias, chain.name]) ?? [],
+    const aliasToChain = new Map([
+      ...chains.map((chain) => [chain.name, chain.name] as const),
+      ...chains.flatMap(
+        (chain) =>
+          chain.aliases?.map((alias) => [alias, chain.name] as const) ?? [],
       ),
-    )
+    ])
 
-    const otherChains = (
-      await Promise.all(
-        Object.entries(coin.platforms).map(async ([platform, address]) => {
+    const deployedTokens = await db.deployedToken.getByChainsAndAddresses(
+      Object.entries(coin.platforms)
+        .map(([platform, address]) => {
           const platformChain = aliasToChain.get(platform)
-          if (!platformChain || !address || platformChain === chain)
-            return undefined
-
-          const record = await db.deployedToken.findByChainAndAddress({
-            chain: platformChain,
-            address,
-          })
-
+          if (!platformChain || !address) return undefined
           return {
             chain: platformChain,
             address,
-            exists: !!record,
           }
-        }),
-      )
-    ).filter((x) => x !== undefined)
+        })
+        .filter((x) => x !== undefined),
+    )
+
+    const suggestions = Object.entries(coin.platforms)
+      .map(([platform, address]) => {
+        const platformChain = aliasToChain.get(platform)
+        if (!platformChain || !address || platformChain === chain)
+          return undefined
+
+        const record = deployedTokens.find(
+          (x) =>
+            x.chain === platformChain &&
+            x.address.toLowerCase() === address.toLowerCase(),
+        )
+
+        if (record) {
+          return undefined
+        }
+
+        return {
+          chain: platformChain,
+          address,
+        }
+      })
+      .filter((x) => x !== undefined)
 
     return {
       id: coin.id,
       name: coin.name,
       symbol: coin.symbol,
-      otherChains,
+      suggestions,
     }
   }
 
@@ -190,7 +208,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
             },
             data: {
               symbol: undefined,
-              otherChains: undefined,
+              suggestions: undefined,
               decimals,
               deploymentTimestamp,
               abstractTokenId: undefined,
@@ -210,10 +228,68 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
             decimals,
             deploymentTimestamp,
             abstractTokenId: abstractToken?.id,
-            otherChains: coin.otherChains,
+            suggestions: coin.suggestions,
             coingeckoId: coin.id,
           },
         }
+      }),
+
+    getSuggestionsByCoingeckoId: readOnlyProcedure
+      .input(v.string())
+      .query(async ({ input, ctx }) => {
+        const coin = await coingeckoClient.getCoinDataById(input)
+
+        if (!coin) {
+          return []
+        }
+        const chains = await ctx.db.chain.getAll()
+
+        const aliasToChain = new Map([
+          ...chains.map((chain) => [chain.name, chain.name] as const),
+          ...chains.flatMap(
+            (chain) =>
+              chain.aliases?.map((alias) => [alias, chain.name] as const) ?? [],
+          ),
+        ])
+
+        const deployedTokens =
+          await ctx.db.deployedToken.getByChainsAndAddresses(
+            Object.entries(coin.platforms)
+              .map(([platform, address]) => {
+                const chain = aliasToChain.get(platform)
+                if (!chain || !address) return undefined
+                return {
+                  chain,
+                  address,
+                }
+              })
+              .filter((x) => x !== undefined),
+          )
+
+        const suggestions = Object.entries(coin.platforms)
+          .map(([platform, address]) => {
+            const chain = aliasToChain.get(platform)
+
+            if (!chain || !address) return undefined
+
+            const record = deployedTokens.find(
+              (x) =>
+                x.chain === chain &&
+                x.address.toLowerCase() === address.toLowerCase(),
+            )
+
+            if (record) {
+              return undefined
+            }
+
+            return {
+              chain: chain,
+              address,
+            }
+          })
+          .filter((x) => x !== undefined)
+
+        return suggestions
       }),
   })
 }

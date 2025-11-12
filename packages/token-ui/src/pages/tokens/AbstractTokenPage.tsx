@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
-import { ArrowRightIcon, CoinsIcon, TrashIcon } from 'lucide-react'
+import { ArrowRightIcon, CoinsIcon, PlusIcon, TrashIcon } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, Navigate, useParams } from 'react-router-dom'
@@ -20,6 +20,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from '~/components/core/Empty'
+import { Spinner } from '~/components/core/Spinner'
 import {
   AbstractTokenForm,
   AbstractTokenSchema,
@@ -29,6 +30,7 @@ import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractTokenWithDeployedTokens } from '~/mock/types'
 import { api } from '~/react-query/trpc'
+import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
 import { getDeployedTokenDisplayId } from '~/utils/getDisplayId'
 import { validateResolver } from '~/utils/validateResolver'
 
@@ -79,6 +81,14 @@ function AbstractTokenView({
       }
     },
   })
+
+  const { data: suggestions, isLoading: isLoadingSuggestions } =
+    api.deployedTokens.getSuggestionsByCoingeckoId.useQuery(
+      token.coingeckoId ?? '',
+      {
+        enabled: !!token.coingeckoId,
+      },
+    )
 
   return (
     <>
@@ -135,6 +145,58 @@ function AbstractTokenView({
               </AbstractTokenForm>
             </CardContent>
           </Card>
+          <Card className="mt-4">
+            <CardHeader>
+              <CardTitle>Suggestions</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {isLoadingSuggestions ? (
+                <Empty>
+                  <EmptyHeader>
+                    <EmptyMedia variant="icon">
+                      <Spinner />
+                    </EmptyMedia>
+                    <EmptyTitle>Loading...</EmptyTitle>
+                  </EmptyHeader>
+                </Empty>
+              ) : suggestions && suggestions.length !== 0 ? (
+                <div className="-mx-6 flex flex-col gap-2">
+                  {suggestions.map((suggestion) => {
+                    return (
+                      <div
+                        key={suggestion.chain}
+                        className="flex items-center justify-between gap-2 px-6 odd:bg-muted"
+                      >
+                        {suggestion.chain} ({suggestion.address})
+                        <Button variant="link" asChild>
+                          <Link
+                            to={buildUrlWithParams('/tokens/new', {
+                              tab: 'deployed',
+                              chain: suggestion.chain,
+                              address: suggestion.address,
+                            })}
+                            target="_blank"
+                          >
+                            <PlusIcon />
+                          </Link>
+                        </Button>
+                      </div>
+                    )
+                  })}
+                </div>
+              ) : (
+                <Empty>
+                  <EmptyHeader>
+                    <EmptyMedia variant="icon">
+                      <CoinsIcon />
+                    </EmptyMedia>
+                    <EmptyTitle>No suggestions found</EmptyTitle>
+                  </EmptyHeader>
+                </Empty>
+              )}
+            </CardContent>
+          </Card>
+
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
