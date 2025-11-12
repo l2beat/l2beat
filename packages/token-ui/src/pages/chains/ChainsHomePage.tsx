@@ -72,10 +72,7 @@ export function ChainsHomePage() {
                 {data?.map((chain) => (
                   <TableRow key={chain.name}>
                     <TableCell>
-                      <Link
-                        to={`/chains/${chain.name}`}
-                        className="hover:underline"
-                      >
+                      <Link to={`/chains/${chain.name}`} className="underline">
                         {chain.name}
                       </Link>
                     </TableCell>
