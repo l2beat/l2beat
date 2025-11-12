@@ -46,6 +46,7 @@ export const optimism: ScalingProject = opStackL2({
         'https://youtube.com/playlist?list=PLX_rXoLYCf5HqTWygUfoMfzRirGz5lekH',
         'https://twitch.tv/optimismpbc',
         'https://discord.gg/optimism',
+        'https://linkedin.com/company/optimism-foundation',
       ],
       other: ['https://rollup.codes/optimism'],
     },
