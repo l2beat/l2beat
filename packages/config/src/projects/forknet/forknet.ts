@@ -7,6 +7,7 @@ import {
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
 } from '../../common'
+import { BADGES } from '../../common/badges'
 import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -24,6 +25,7 @@ export const forknet: ScalingProject = {
   addedAt: UnixTime(1756724480), // 2025-09-01T12:01:20Z
   proofSystem: undefined,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  badges: [BADGES.DA.CustomDA, BADGES.Infra.Agglayer],
   id: ProjectId('forknet'),
   type: 'layer2',
   display: {
