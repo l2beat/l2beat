@@ -38,7 +38,7 @@ export const ChainRecord = v.object({
 export type ChainRecord = v.infer<typeof ChainRecord>
 
 export const ChainUpdateSchema = v.object({
-  name: v.string().optional(),
+  name: v.string(),
   chainId: v.number().optional(),
   explorerUrl: v.union([v.string(), v.null()]).optional(),
   aliases: v.union([v.array(v.string()), v.null()]).optional(),
