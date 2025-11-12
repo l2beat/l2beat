@@ -72,6 +72,7 @@ export const haust: ScalingProject = {
             '0x5a77f1443d16ee5761d310e38b62f77f726bc71c',
           ),
           tokensToAssignFromL1: ['HAUST'],
+          // currently uses a bad custom .json config for HAUST TVS that only counts the WHAUST on L2 because circ supply is unknown and there is a massive premint/-bridge on L1/L2 and the rpc censors the preminted balance
         },
       }),
     ],

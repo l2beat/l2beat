@@ -36,34 +36,16 @@
         "sinceTimestamp": 1761523200
       },
       "valueForProject": {
-        "type": "calculation",
-        "operator": "diff",
-        "arguments": [
-          {
-            "type": "value",
-            "priceId": "haust",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0xec3502A9f98f151aF52EE6CB423a0afE7bBF5A19",
-              "chain": "ethereum",
-              "escrowAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-              "decimals": 18,
-              "sinceTimestamp": 1761523200
-            }
-          },
-          {
-            "type": "value",
-            "priceId": "haust",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "native",
-              "chain": "haust",
-              "escrowAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-              "decimals": 18,
-              "sinceTimestamp": 1761523200
-            }
-          }
-        ]
+        "type": "value",
+        "priceId": "haust",
+        "amount": {
+          "type": "balanceOfEscrow",
+          "address": "native",
+          "chain": "haust",
+          "escrowAddress": "0x6C25C1Cb4b8677982791328471be1bFB187687c1",
+          "decimals": 18,
+          "sinceTimestamp": 1761523200
+        }
       },
       "category": "other",
       "source": "canonical",
