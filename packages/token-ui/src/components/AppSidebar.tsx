@@ -36,7 +36,7 @@ const items = [
     items: [
       {
         title: 'Home',
-        url: '#',
+        url: '/chains',
         icon: HomeIcon,
       },
       {
