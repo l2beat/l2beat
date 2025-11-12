@@ -9,6 +9,7 @@ export class ConsoleTransport implements LoggerTransport {
   static PLAIN = new ConsoleTransport(formatPlain(localTime))
   static PLAIN_UTC = new ConsoleTransport(formatPlain(utcTime))
   static PRETTY = new ConsoleTransport(formatPretty(localTime))
+  static PRETTY_UTC = new ConsoleTransport(formatPretty(utcTime))
   static RAW = new ConsoleTransport(formatRaw())
 
   log(entry: LogEntry): void {
