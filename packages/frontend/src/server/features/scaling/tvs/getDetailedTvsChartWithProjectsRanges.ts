@@ -1,11 +1,13 @@
-import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { getTimestampedValuesRange } from '~/utils/range/range'
 import { getEthPrices } from './utils/getEthPrices'
-import type { SummedTvsValues } from './utils/getSummedTvsValues'
-import { getSummedTvsValuesWithProjectsRanges } from './utils/getSummedTvsValuesWithProjectsRanges'
+import {
+  getSummedTvsValues,
+  type SummedTvsValues,
+} from './utils/getSummedTvsValues'
 import { rangeToResolution, TvsChartRange } from './utils/range'
 
 export const TvsChartWithProjectsRangesDataParams = v.object({
@@ -67,12 +69,8 @@ export async function getDetailedTvsChartWithProjectsRanges({
   }
   const [ethPrices, values] = await Promise.all([
     getEthPrices(),
-    getSummedTvsValuesWithProjectsRanges(
-      projects as {
-        projectId: ProjectId
-        sinceTimestamp: UnixTime
-        untilTimestamp?: UnixTime
-      }[],
+    getSummedTvsValues(
+      projects,
       { type: range },
       {
         forSummary: false,
