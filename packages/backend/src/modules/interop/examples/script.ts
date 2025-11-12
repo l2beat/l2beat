@@ -308,25 +308,39 @@ async function runExample(example: Example): Promise<RunResult> {
   for (const transfer of transfers) {
     transfersWithFinancials.push({
       ...transfer.transfer,
-      srcFinancials: calculateFinancials(
-        transfer.srcId,
-        transfer.transfer.src.tokenAmount,
-        tokenInfos,
-        prices,
-      ),
-      dstFinancials: calculateFinancials(
-        transfer.srcId,
-        transfer.transfer.src.tokenAmount,
-        tokenInfos,
-        prices,
-      ),
+      src: {
+        ...transfer.transfer.src,
+        financials: calculateFinancials(
+          transfer.srcId,
+          transfer.transfer.src.tokenAmount,
+          tokenInfos,
+          prices,
+        ),
+      },
+      dst: {
+        ...transfer.transfer.dst,
+        financials: calculateFinancials(
+          transfer.dstId,
+          transfer.transfer.dst.tokenAmount,
+          tokenInfos,
+          prices,
+        ),
+      },
     })
   }
 
   return {
-    events,
-    messages: result.messages,
-    transfers: transfersWithFinancials,
+    events: events.map((e) => ({ ...e, chain: e.ctx.chain })),
+    messages: result.messages.map((m) => ({
+      ...m,
+      src: { ...m.src, chain: m.src.ctx.chain },
+      dst: { ...m.dst, chain: m.dst.ctx.chain },
+    })),
+    transfers: transfersWithFinancials.map((t) => ({
+      ...t,
+      src: { ...t.src, chain: t.src.event.ctx.chain },
+      dst: { ...t.dst, chain: t.dst.event.ctx.chain },
+    })),
   }
 }
 
