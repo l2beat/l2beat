@@ -160,12 +160,6 @@ export function ChainForm({
               </Button>
             </div>
 
-            {fields.length === 0 && (
-              <p className="text-muted-foreground text-sm">
-                No APIs added. Click "Add API" to add one.
-              </p>
-            )}
-
             {fields.map((field, index) => (
               <Card key={field.id} className="relative">
                 <Button
