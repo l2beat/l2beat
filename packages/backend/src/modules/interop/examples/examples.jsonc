@@ -20,7 +20,7 @@
       "allbridge.TokensSent",
       "allbridge.TokensReceived"
     ],
-    "messages": ["allbridge.Message.allbridgeswap"],
+    "messages": ["allbridge.Message"],
     "transfers": ["allbridge.Transfer"]
   },
   "ccip": {
