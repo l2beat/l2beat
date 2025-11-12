@@ -38,7 +38,7 @@ export function getZkCatalogTvsSection(
   return {
     defaultRange: '1y',
     milestones: project.milestones ?? [],
-    tvsInfo: project.tvsInfo ?? undefined,
+    tvsInfo: project.tvsInfo,
     project,
     projectsForTvs,
   }
