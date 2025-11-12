@@ -13339,6 +13339,28 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Syrup USDC",
+      "coingeckoId": "syrupusdc",
+      "address": "0x41CA7586cC1311807B4605fBB748a3B8862b42b5",
+      "symbol": "syrupUSDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1753290053,
+      "coingeckoListingTimestamp": 1740873600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54658/large/syrupUSDC.png?1761824955",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "name": "Talos",
       "coingeckoId": "talos-2",
       "address": "0x30a538eFFD91ACeFb1b12CE9Bc0074eD18c9dFc9",
