@@ -65,5 +65,5 @@ jobs:
         run: |
           curl -sS \
             -H "Content-Type: application/json" \
-            -d "{\"content\": \"DB Migration workflow failure at $GITHUB_REF_NAME! Defails: https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID\"}" \
+            -d "{\"content\": \"DB Migration workflow failure at $GITHUB_REF_NAME! Details: https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID\"}" \
             "${DISCORD_WEBHOOK_URL}"
