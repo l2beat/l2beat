@@ -117,7 +117,7 @@ export async function getZkCatalogProjectEntry(
       type: 'ZkCatalogTvsSection',
       props: {
         id: 'tvs',
-        title: 'TVS',
+        title: 'Value Secured',
         ...zkCatalogTvsSection,
       },
     })
