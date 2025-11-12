@@ -28,12 +28,14 @@ describe('chainRouter', () => {
           name: 'ethereum',
           chainId: 1,
           aliases: ['eth'],
+          explorerUrl: 'https://etherscan.io',
           apis: [{ type: 'etherscan' }],
         },
         {
           name: 'arbitrum',
           chainId: 42161,
           aliases: ['arb'],
+          explorerUrl: 'https://arbiscan.io',
           apis: [{ type: 'etherscan' }],
         },
       ]
