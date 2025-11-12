@@ -11,7 +11,7 @@ export function TvsProjectStats({
   projectId,
 }: {
   tvsBreakdownUrl?: string
-  tvsInfo: ProjectTvsInfo
+  tvsInfo: ProjectTvsInfo | undefined
   projectId: string
 }) {
   const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
