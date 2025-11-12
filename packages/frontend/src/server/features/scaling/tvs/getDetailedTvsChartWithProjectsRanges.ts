@@ -1,3 +1,4 @@
+import type { ProjectWithRanges } from '@l2beat/dal'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
@@ -70,7 +71,7 @@ export async function getDetailedTvsChartWithProjectsRanges({
   const [ethPrices, values] = await Promise.all([
     getEthPrices(),
     getSummedTvsValues(
-      projects,
+      projects as ProjectWithRanges[],
       { type: range },
       {
         forSummary: false,
