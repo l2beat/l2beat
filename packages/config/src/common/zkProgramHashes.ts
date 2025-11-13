@@ -27,7 +27,7 @@ const zkProgramHashes: Record<
     proverSystemProject: ProjectId('sp1'),
     programUrl:
       'https://github.com/succinctlabs/op-succinct/tree/v2.3.1/programs/aggregation',
-    verificationStatus: 'unsuccessful',
+    verificationStatus: 'notVerified',
   },
   '0x00afb45d8064ae10aa6a1793b8f39a24c27268efae2917b5c02950b2377fbf00': {
     title: 'Aggregation program of OP Succinct',
@@ -77,7 +77,7 @@ Verify:
     proverSystemProject: ProjectId('sp1'),
     programUrl:
       'https://github.com/agglayer/agglayer/tree/v0.3.3-post.4/crates/pessimistic-proof-program',
-    verificationStatus: 'unsuccessful',
+    verificationStatus: 'notVerified',
   },
   '0x000055f14384bdb5bb092fd7e5152ec31856321c5a30306ab95836bdf5cdb639': {
     title: 'Pessimistic program of agglayer',
@@ -118,7 +118,7 @@ Verify:
     proverSystemProject: ProjectId('sp1'),
     programUrl:
       'https://github.com/agglayer/provers/tree/v1.5.0/crates/aggchain-proof-program',
-    verificationStatus: 'unsuccessful',
+    verificationStatus: 'notVerified',
   },
   '0x00de39c136b88dfeacb832629e21a9667935bc0e74aaa21292e4f237d79d0bef': {
     title: 'Celestia Blobstream DA bridge program',
@@ -357,6 +357,31 @@ Steps:
       'https://github.com/scroll-tech/zkvm-prover/tree/v0.6.0-rc.1/crates/circuits/bundle-circuit',
     proverSystemProject: ProjectId('openvmprover'),
     verificationStatus: 'unsuccessful',
+    verificationSteps: `
+Failed to generate the correct digest from the commitment array \`[1948048916, 1022190518, 1051765913, 997565840, 1008935769, 1678268764, 1464235949, 1741788930]\` using a sample rust implementation: 
+    \`\`\`
+use openvm_stark_sdk::p3_baby_bear::BabyBear;
+use openvm_stark_sdk::p3_bn254_fr::Bn254Fr;
+use openvm_stark_sdk::openvm_stark_backend::p3_field::FieldAlgebra;
+use openvm_stark_sdk::openvm_stark_backend::p3_field::PrimeField32;
+
+fn compress_commitment(commitment: &[u32; 8]) -> Bn254Fr {
+    let order = Bn254Fr::from_canonical_u64(BabyBear::ORDER_U32 as u64);
+
+    let mut base = Bn254Fr::ONE;      // from PrimeCharacteristicRing
+    let mut compressed = Bn254Fr::ZERO; // from PrimeCharacteristicRing
+
+    for val in commitment {
+        compressed += Bn254Fr::from_canonical_u64(*val as u64) * base;
+        base *= order;
+    }
+
+    compressed
+} 
+\`\`\`
+
+Obtained digest is \`0x0084295026281661b88e94d0f66ddc307ba85e577c5325408145b52d6a741f57\`.
+    `,
   },
   '0x009305f0762291e3cdd805ff6d6e81f1d135dbfdeb3ecf30ad82c3855dde7909': {
     title: 'Config of the Scroll bundle program',
