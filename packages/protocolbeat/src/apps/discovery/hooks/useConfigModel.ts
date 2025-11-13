@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { updateConfigFile } from '../../../api/api'
 import { toggleInList } from '../../../utils/toggleInList'
-import { ConfigModel } from './ConfigModel'
+import { ConfigModel } from '../components/ConfigModel'
 
 type Props = {
   project: string

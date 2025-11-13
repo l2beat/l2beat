@@ -1,11 +1,11 @@
 import { createContext, useContext, useMemo } from 'react'
 import { IS_READONLY } from '../../../config/readonly'
 import { isInRootDiscovery } from '../../../utils/findChainForAddress'
-import { useConfigModel } from '../components/useConfigModel'
-import { useTemplateModel } from '../components/useTemplateModel'
+import { useConfigModel } from './useConfigModel'
 import { useCurrentConfig } from './useCurrentConfig'
 import { useCurrentTemplate } from './useCurrentTemplate'
 import { useProjectData } from './useProjectData'
+import { useTemplateModel } from './useTemplateModel'
 
 export type ConfigModels = ReturnType<typeof _useConfigModels>
 const Context = createContext<ConfigModels | null>(null)
