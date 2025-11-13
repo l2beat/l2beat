@@ -18,13 +18,13 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from '~/components/core/Empty'
+import { Spinner } from '~/components/core/Spinner'
 import {
   DeployedTokenForm,
   DeployedTokenSchema,
   setDeployedTokenExistsError,
 } from '~/components/forms/DeployedTokenForm'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
-import { Spinner } from '~/components/core/Spinner'
 import { useQueryState } from '~/hooks/useQueryState'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { DeployedToken } from '~/mock/types'
