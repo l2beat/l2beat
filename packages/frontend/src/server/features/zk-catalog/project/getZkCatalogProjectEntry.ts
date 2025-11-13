@@ -2,7 +2,6 @@ import type { Project, ProjectZkCatalogInfo } from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getProgramHashesSection } from '~/utils/project/getProgramHashesSection'
@@ -161,7 +160,7 @@ export async function getZkCatalogProjectEntry(
     project,
     allProjectsWithContracts,
   )
-  if (programHashesSection && env.CLIENT_SIDE_PROGRAM_HASHES) {
+  if (programHashesSection) {
     sections.push({
       type: 'ProgramHashesSection',
       props: {
