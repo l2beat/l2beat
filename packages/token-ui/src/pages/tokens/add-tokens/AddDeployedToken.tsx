@@ -38,6 +38,7 @@ import { Textarea } from '~/components/core/TextArea'
 import {
   DeployedTokenForm,
   DeployedTokenSchema,
+  fieldToDataSource,
   setDeployedTokenExistsError,
 } from '~/components/forms/DeployedTokenForm'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
@@ -76,6 +77,9 @@ export function AddDeployedToken() {
       }
     },
   })
+
+  const { data: chains, isLoading: isLoadingChains } =
+    api.chains.getAll.useQuery()
 
   const chain = form.watch('chain')
   const address = form.watch('address')
@@ -174,6 +178,8 @@ export function AddDeployedToken() {
     setQueue((prev) => [...prev, ...tokens])
   }
 
+  const chainRecord = chains?.find((c) => c.name === chain)
+
   return (
     <>
       <PlanConfirmationDialog
@@ -208,6 +214,10 @@ export function AddDeployedToken() {
             form={form}
             onSubmit={onSubmit}
             isFormDisabled={isPending}
+            chains={{
+              data: chains,
+              loading: isLoadingChains,
+            }}
             tokenDetails={{
               data: checks,
               loading: checksLoading,
@@ -215,6 +225,16 @@ export function AddDeployedToken() {
             abstractTokens={{
               data: abstractTokens,
               loading: areAbstractTokensLoading,
+            }}
+            autofill={{
+              symbol: true,
+              decimals: !!chainRecord?.apis?.some((api) =>
+                fieldToDataSource.decimals.includes(api.type),
+              ),
+              deploymentTimestamp: !!chainRecord?.apis?.some((api) =>
+                fieldToDataSource.deploymentTimestamp.includes(api.type),
+              ),
+              abstractTokenId: true,
             }}
           >
             <div className="flex flex-col gap-4">

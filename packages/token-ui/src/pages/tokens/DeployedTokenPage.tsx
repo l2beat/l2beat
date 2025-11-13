@@ -89,6 +89,9 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
       },
     })
 
+  const { data: chains, isLoading: isLoadingChains } =
+    api.chains.getAll.useQuery()
+
   function onSubmit(values: DeployedTokenSchema) {
     if (deployedTokenExistsLoading) return
     if (deployedTokenExists) {
@@ -191,6 +194,11 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
                 data: abstractTokens,
                 loading: areAbstractTokensLoading,
               }}
+              chains={{
+                data: chains,
+                loading: isLoadingChains,
+              }}
+              autofill={undefined}
             >
               <ButtonWithSpinner
                 isLoading={isPending}

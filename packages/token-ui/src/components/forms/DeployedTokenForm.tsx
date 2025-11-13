@@ -33,12 +33,37 @@ import {
 } from '~/components/core/Popover'
 import { Spinner } from '~/components/core/Spinner'
 import { Textarea } from '~/components/core/TextArea'
-import { api } from '~/react-query/trpc'
 import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
 import { minLengthCheck, minNumberCheck } from '~/utils/checks'
 import { cn } from '~/utils/cn'
 import { getAbstractTokenDisplayId } from '~/utils/getDisplayId'
+import type {
+  ChainApi,
+  ChainRecord,
+} from '../../../../database/dist/repositories/ChainRepository'
+import { AutoFillIndicator } from '../AutoFillIndicator'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../core/Tooltip'
+
+export type DataSource = 'coingecko' | ChainApi['type']
+
+export const fieldToDataSource: Record<
+  'symbol' | 'decimals' | 'deploymentTimestamp' | 'abstractTokenId',
+  DataSource[]
+> = {
+  symbol: ['coingecko'],
+  decimals: ['rpc'],
+  deploymentTimestamp: ['etherscan', 'blockscout'],
+  abstractTokenId: ['coingecko'],
+}
+
+export const dataSourceToLabel: Record<DataSource, string> = {
+  coingecko: 'Coingecko',
+  rpc: 'RPC',
+  etherscan: 'Etherscan',
+  blockscout: 'Blockscout',
+  blockscoutV2: 'Blockscout V2',
+  routescan: 'Routescan',
+}
 
 export type DeployedTokenSchema = v.infer<typeof DeployedTokenSchema>
 export const DeployedTokenSchema = v.object({
@@ -63,6 +88,18 @@ interface Props {
     data: AbstractTokenRecord[] | undefined
     loading: boolean
   }
+  chains: {
+    data: ChainRecord[] | undefined
+    loading: boolean
+  }
+  autofill:
+    | {
+        symbol: boolean
+        decimals: boolean
+        deploymentTimestamp: boolean
+        abstractTokenId: boolean
+      }
+    | undefined
   children: React.ReactNode
 }
 
@@ -72,11 +109,10 @@ export function DeployedTokenForm({
   isFormDisabled,
   tokenDetails,
   abstractTokens,
+  chains,
+  autofill,
   children,
 }: Props) {
-  const { data: chains, isLoading: areChainsLoading } =
-    api.chains.getAll.useQuery()
-
   const abstractTokenId = form.watch('abstractTokenId')
   const abstractToken = abstractTokens.data?.find(
     (abstractToken) => abstractToken.id === abstractTokenId,
@@ -106,7 +142,7 @@ export function DeployedTokenForm({
                       <PopoverTrigger asChild>
                         <FormControl className="flex-1">
                           <Button
-                            disabled={areChainsLoading}
+                            disabled={chains.loading}
                             variant="outline"
                             role="combobox"
                             className={cn(
@@ -115,7 +151,7 @@ export function DeployedTokenForm({
                             )}
                           >
                             {field.value
-                              ? (chains?.find(
+                              ? (chains.data?.find(
                                   (chain) => chain.name === field.value,
                                 )?.name ?? form.formState.defaultValues?.chain)
                               : 'Select chain'}
@@ -132,7 +168,7 @@ export function DeployedTokenForm({
                           <CommandList>
                             <CommandEmpty>No chain found.</CommandEmpty>
                             <CommandGroup>
-                              {chains?.map((chain) => (
+                              {chains.data?.map((chain) => (
                                 <CommandItem
                                   value={chain.name}
                                   key={chain.name}
@@ -200,7 +236,18 @@ export function DeployedTokenForm({
             name="symbol"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Symbol</FormLabel>
+                <FormLabel>
+                  Symbol{' '}
+                  {autofill && chainValue && (
+                    <AutoFillIndicator
+                      sources={fieldToDataSource.symbol.map(
+                        (dS) => dataSourceToLabel[dS],
+                      )}
+                      available={autofill.symbol}
+                      chainName={chainValue}
+                    />
+                  )}
+                </FormLabel>
                 <FormControl>
                   <Input {...field} disabled={tokenDetails.loading} />
                 </FormControl>
@@ -213,7 +260,18 @@ export function DeployedTokenForm({
             name="decimals"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Decimals</FormLabel>
+                <FormLabel>
+                  Decimals{' '}
+                  {autofill && chainValue && (
+                    <AutoFillIndicator
+                      sources={fieldToDataSource.decimals.map(
+                        (dS) => dataSourceToLabel[dS],
+                      )}
+                      available={autofill.decimals}
+                      chainName={chainValue}
+                    />
+                  )}
+                </FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -232,7 +290,18 @@ export function DeployedTokenForm({
             name="deploymentTimestamp"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Deployment Timestamp</FormLabel>
+                <FormLabel>
+                  Deployment Timestamp{' '}
+                  {autofill && chainValue && (
+                    <AutoFillIndicator
+                      sources={fieldToDataSource.deploymentTimestamp.map(
+                        (dS) => dataSourceToLabel[dS],
+                      )}
+                      available={autofill.deploymentTimestamp}
+                      chainName={chainValue}
+                    />
+                  )}
+                </FormLabel>
                 <FormControl>
                   <Input
                     type="datetime-local"
@@ -249,7 +318,18 @@ export function DeployedTokenForm({
             name="abstractTokenId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Abstract Token ID</FormLabel>
+                <FormLabel>
+                  Abstract Token ID{' '}
+                  {autofill && chainValue && (
+                    <AutoFillIndicator
+                      sources={fieldToDataSource.abstractTokenId.map(
+                        (dS) => dataSourceToLabel[dS],
+                      )}
+                      available={autofill.abstractTokenId}
+                      chainName={chainValue}
+                    />
+                  )}
+                </FormLabel>
                 <div className="flex items-center gap-2">
                   <Popover>
                     <PopoverTrigger asChild>
