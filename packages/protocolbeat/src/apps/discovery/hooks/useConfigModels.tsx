@@ -65,7 +65,7 @@ function _useConfigModels() {
 
   const canModify = useMemo(() => {
     return !IS_READONLY && isSelectedInRootDiscovery
-  }, [isInRootDiscovery, isSelectedInRootDiscovery])
+  }, [isSelectedInRootDiscovery])
 
   const configModel = useConfigModel({
     project,
