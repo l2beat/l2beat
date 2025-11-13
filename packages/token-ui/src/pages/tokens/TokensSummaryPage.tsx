@@ -18,7 +18,7 @@ import { api } from '~/react-query/trpc'
 import { cn } from '~/utils/cn'
 import { getDeployedTokenDisplayId } from '~/utils/getDisplayId'
 
-export function MainPage() {
+export function TokensSummaryPage() {
   const { data, isLoading: isAbstractTokensLoading } =
     api.abstractTokens.getAllWithDeployedTokens.useQuery()
 

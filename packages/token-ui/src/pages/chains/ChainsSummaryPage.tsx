@@ -27,7 +27,7 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
 import type { ChainApi } from '../../../../database/dist/repositories/ChainRepository'
 
-export function ChainsHomePage() {
+export function ChainsSummaryPage() {
   const { data, isLoading: isChainsLoading } = api.chains.getAll.useQuery()
   return (
     <AppLayout>

@@ -1,4 +1,4 @@
-import { CirclePlusIcon, HomeIcon } from 'lucide-react'
+import { CirclePlusIcon, PanelsTopLeftIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 import {
@@ -20,9 +20,9 @@ const items = [
     title: 'Tokens',
     items: [
       {
-        title: 'Home',
+        title: 'Summary',
         url: '/',
-        icon: HomeIcon,
+        icon: PanelsTopLeftIcon,
       },
       {
         title: 'Add',
@@ -35,9 +35,9 @@ const items = [
     title: 'Chains',
     items: [
       {
-        title: 'Home',
+        title: 'Summary',
         url: '/chains',
-        icon: HomeIcon,
+        icon: PanelsTopLeftIcon,
       },
       {
         title: 'Add',
