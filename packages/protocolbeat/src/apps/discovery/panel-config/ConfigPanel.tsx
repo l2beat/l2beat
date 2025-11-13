@@ -34,7 +34,7 @@ export function ConfigPanel() {
     return <ErrorState />
   }
 
-  if (configModels.isLoading) {
+  if (configModels.isPending) {
     return <LoadingState />
   }
 

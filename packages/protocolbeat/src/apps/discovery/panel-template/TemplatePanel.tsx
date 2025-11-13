@@ -33,7 +33,7 @@ export function TemplatePanel() {
     return <ErrorState />
   }
 
-  if (configModels.isLoading) {
+  if (configModels.isPending) {
     return <LoadingState />
   }
 

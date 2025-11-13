@@ -50,7 +50,7 @@ function _useConfigModels() {
     isError: isConfigError,
   } = useCurrentConfig()
 
-  const isLoading = isProjectPending || isTemplatePending || isConfigPending
+  const isPending = isProjectPending || isTemplatePending || isConfigPending
   const isError = isProjectError || isTemplateError || isConfigError
 
   const isSelectedInRootDiscovery = useMemo(
@@ -87,6 +87,6 @@ function _useConfigModels() {
     configModel,
     templateModel,
     isError,
-    isLoading,
+    isPending,
   }
 }
