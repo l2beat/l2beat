@@ -4,6 +4,9 @@ import type {
   ChainRepository,
 } from '@l2beat/database/dist/repositories/ChainRepository'
 import { expect, mockFn, mockObject } from 'earl'
+import type { BlockscoutClient } from '../../chains/clients/blockscout/BlockscoutClient'
+import type { EtherscanClient } from '../../chains/clients/etherscan/EtherscanClient'
+import type { RpcClient } from '../../chains/clients/rpc/RpcClient'
 import type { ChainUpdate } from '../../schemas/Chain'
 import { createCallerFactory } from '../trpc'
 import { chainsRouter } from './chains'
@@ -256,10 +259,210 @@ describe('chainRouter', () => {
       expect(mockDeleteByName).toHaveBeenCalledWith('ethereum')
     })
   })
+
+  describe('testApi', () => {
+    describe('rpc', () => {
+      it('returns success when RPC API is working', async () => {
+        const mockRpcClient = mockObject<RpcClient>({
+          test: mockFn().resolvesTo({ success: true }),
+        })
+
+        const mockDb = mockObject<TokenDatabase>({
+          chain: mockObject<ChainRepository>({}),
+        })
+
+        const caller = createRouter(mockDb, {
+          createRpcClient: () => mockRpcClient,
+        })
+        const result = await caller.testApi({
+          type: 'rpc',
+          url: 'https://rpc.example.com',
+        })
+
+        expect(result).toEqual({ success: true })
+        expect(mockRpcClient.test).toHaveBeenCalledWith()
+      })
+
+      it('returns failure when RPC API returns error', async () => {
+        const mockRpcClient = mockObject<RpcClient>({
+          test: mockFn().resolvesTo({
+            success: false,
+            error: 'Error message',
+          }),
+        })
+
+        const mockDb = mockObject<TokenDatabase>({
+          chain: mockObject<ChainRepository>({}),
+        })
+
+        const caller = createRouter(mockDb, {
+          createRpcClient: () => mockRpcClient,
+        })
+        const result = await caller.testApi({
+          type: 'rpc',
+          url: 'https://rpc.example.com',
+        })
+
+        expect(result).toEqual({ success: false, error: 'Error message' })
+      })
+    })
+
+    describe('blockscout', () => {
+      it('returns success when Blockscout API is working', async () => {
+        const mockBlockscoutClient = mockObject<BlockscoutClient>({
+          test: mockFn().resolvesTo({ success: true }),
+        })
+
+        const mockDb = mockObject<TokenDatabase>({
+          chain: mockObject<ChainRepository>({}),
+        })
+
+        const caller = createRouter(mockDb, {
+          createBlockscoutClient: () => mockBlockscoutClient,
+        })
+        const result = await caller.testApi({
+          type: 'blockscout',
+          url: 'https://blockscout.example.com',
+        })
+
+        expect(result).toEqual({ success: true })
+        expect(mockBlockscoutClient.test).toHaveBeenCalledWith()
+      })
+
+      it('returns failure when Blockscout API returns error', async () => {
+        const mockBlockscoutClient = mockObject<BlockscoutClient>({
+          test: mockFn().resolvesTo({
+            success: false,
+            error: 'Error message',
+          }),
+        })
+
+        const mockDb = mockObject<TokenDatabase>({
+          chain: mockObject<ChainRepository>({}),
+        })
+
+        const caller = createRouter(mockDb, {
+          createBlockscoutClient: () => mockBlockscoutClient,
+        })
+        const result = await caller.testApi({
+          type: 'blockscout',
+          url: 'https://blockscout.example.com',
+        })
+
+        expect(result).toEqual({ success: false, error: 'Error message' })
+      })
+    })
+
+    describe('etherscan', () => {
+      it('returns success when Etherscan API is working', async () => {
+        const mockEtherscanClient = mockObject<EtherscanClient>({
+          test: mockFn().resolvesTo({ success: true }),
+        })
+
+        const mockDb = mockObject<TokenDatabase>({
+          chain: mockObject<ChainRepository>({}),
+        })
+
+        const caller = createRouterWithEtherscanKey(mockDb, 'test-api-key', {
+          createEtherscanClient: () => mockEtherscanClient,
+        })
+        const result = await caller.testApi({
+          type: 'etherscan',
+          chainId: 1,
+        })
+
+        expect(result).toEqual({ success: true })
+        expect(mockEtherscanClient.test).toHaveBeenCalledWith()
+      })
+
+      it('returns failure when API key is not configured', async () => {
+        const mockDb = mockObject<TokenDatabase>({
+          chain: mockObject<ChainRepository>({}),
+        })
+
+        const caller = createRouter(mockDb)
+        const result = await caller.testApi({
+          type: 'etherscan',
+          chainId: 1,
+        })
+
+        expect(result).toEqual({
+          success: false,
+          error: 'API key not configured',
+        })
+      })
+
+      it('returns failure when Etherscan API returns error', async () => {
+        const mockEtherscanClient = mockObject<EtherscanClient>({
+          test: mockFn().resolvesTo({
+            success: false,
+            error: 'Error message',
+          }),
+        })
+
+        const mockDb = mockObject<TokenDatabase>({
+          chain: mockObject<ChainRepository>({}),
+        })
+
+        const caller = createRouterWithEtherscanKey(mockDb, 'test-api-key', {
+          createEtherscanClient: () => mockEtherscanClient,
+        })
+        const result = await caller.testApi({
+          type: 'etherscan',
+          chainId: 1,
+        })
+
+        expect(result).toEqual({ success: false, error: 'Error message' })
+      })
+    })
+  })
 })
 
-function createRouter(mockDb: TokenDatabase) {
-  const callerFactory = createCallerFactory(chainsRouter)
+function createRouter(
+  mockDb: TokenDatabase,
+  clientFactories?: {
+    createRpcClient?: (config: { url: string }) => RpcClient
+    createBlockscoutClient?: (config: { url: string }) => BlockscoutClient
+    createEtherscanClient?: (
+      config: { apiKey: string },
+      chainId: number,
+    ) => EtherscanClient
+  },
+) {
+  const callerFactory = createCallerFactory(
+    chainsRouter({
+      etherscanApiKey: undefined,
+      ...clientFactories,
+    }),
+  )
+  return callerFactory({
+    headers: new Headers(),
+    session: {
+      email: 'test@example.com',
+      permissions: ['read', 'write'],
+    },
+    db: mockDb,
+  })
+}
+
+function createRouterWithEtherscanKey(
+  mockDb: TokenDatabase,
+  etherscanApiKey: string,
+  clientFactories?: {
+    createRpcClient?: (config: { url: string }) => RpcClient
+    createBlockscoutClient?: (config: { url: string }) => BlockscoutClient
+    createEtherscanClient?: (
+      config: { apiKey: string },
+      chainId: number,
+    ) => EtherscanClient
+  },
+) {
+  const callerFactory = createCallerFactory(
+    chainsRouter({
+      etherscanApiKey,
+      ...clientFactories,
+    }),
+  )
   return callerFactory({
     headers: new Headers(),
     session: {

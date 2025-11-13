@@ -18,7 +18,7 @@ export function createAppRouter({
 }: AppRouterDeps) {
   return router({
     plan: planRouter,
-    chains: chainsRouter,
+    chains: chainsRouter({ etherscanApiKey }),
     abstractTokens: abstractTokensRouter({ coingeckoClient }),
     deployedTokens: deployedTokensRouter({ coingeckoClient, etherscanApiKey }),
     search: searchRouter,

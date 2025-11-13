@@ -1,6 +1,6 @@
 import { v } from '@l2beat/validate'
 
-const ChainApiSchema = v.union([
+export const ChainApiSchema = v.union([
   v.object({
     type: v.literal('rpc'),
     url: v.string(),
