@@ -24,6 +24,9 @@ describe('searchRouter', () => {
         deployedToken: mockObject<DeployedTokenRepository>({
           getAll: mockFn().resolvesTo(deployedTokens),
         }),
+        abstractToken: mockObject<AbstractTokenRepository>({
+          getAll: mockFn().resolvesTo([]),
+        }),
         chain: mockObject<ChainRepository>({
           getAll: mockFn().resolvesTo([]),
         }),
