@@ -17,7 +17,7 @@ export function AutoFillIndicator({
     return (
       <Tooltip>
         <TooltipTrigger asChild>
-          <SparklesIcon className="size-[1lh] text-green-500" />
+          <SparklesIcon className="size-[1lh]" />
         </TooltipTrigger>
         <TooltipContent>
           Autofill available (using {sourcesString})
