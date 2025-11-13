@@ -7,30 +7,30 @@ import { useCurrentConfig } from './useCurrentConfig'
 import { useCurrentTemplate } from './useCurrentTemplate'
 import { useProjectData } from './useProjectData'
 
-export type ProjectConfigModels = ReturnType<typeof _useProjectConfigModels>
-const Context = createContext<ProjectConfigModels | null>(null)
+export type ConfigModels = ReturnType<typeof _useConfigModels>
+const Context = createContext<ConfigModels | null>(null)
 
-export function ProjectConfigProvider({
+export function ConfigModelsProvider({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const configModels = _useProjectConfigModels()
+  const configModels = _useConfigModels()
 
   return <Context.Provider value={configModels}>{children}</Context.Provider>
 }
 
-export function useProjectConfigModels() {
+export function useConfigModels() {
   const context = useContext(Context)
   if (!context) {
     throw new Error(
-      'useProjectConfigModels must be used within a ProjectConfigProvider',
+      'useConfigModels must be used within a ConfigModelsProvider',
     )
   }
   return context
 }
 
-function _useProjectConfigModels() {
+function _useConfigModels() {
   const {
     isPending: isProjectPending,
     isError: isProjectError,

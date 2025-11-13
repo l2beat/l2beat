@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import type { Field } from '../../../api/types'
-import { useProjectConfigModels } from '../hooks/useProjectConfig'
+import { useConfigModels } from '../hooks/useConfigModels'
 import { FieldValueDisplay } from './FieldValueDisplay'
 
 export interface FieldDisplayProps {
@@ -12,7 +12,7 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
     configModel,
     templateModel,
     canModify: canModifyModel,
-  } = useProjectConfigModels()
+  } = useConfigModels()
 
   const templateTags = [
     {

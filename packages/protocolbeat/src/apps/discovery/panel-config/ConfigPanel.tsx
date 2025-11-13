@@ -7,15 +7,12 @@ import { LoadingState } from '../../../components/LoadingState'
 import { IS_READONLY } from '../../../config/readonly'
 import { formatJson } from '../../../utils/formatJson'
 import { removeJSONTrailingCommas } from '../../../utils/removeJSONTrailingCommas'
-import {
-  type ProjectConfigModels,
-  useProjectConfigModels,
-} from '../hooks/useProjectConfig'
+import { type ConfigModels, useConfigModels } from '../hooks/useConfigModels'
 import { useProjectData } from '../hooks/useProjectData'
 
 export function ConfigPanel() {
   const { project } = useProjectData()
-  const configModels = useProjectConfigModels()
+  const configModels = useConfigModels()
 
   // TODO: move this to backend/editor or replace with gui
   const onSaveCallback = (content: string): string => {
@@ -52,7 +49,7 @@ export function ConfigPanel() {
 
 function getConfigFiles(
   project: string,
-  { configModel }: ProjectConfigModels,
+  { configModel }: ConfigModels,
 ): EditorFile[] {
   const sources: EditorFile[] = []
 
