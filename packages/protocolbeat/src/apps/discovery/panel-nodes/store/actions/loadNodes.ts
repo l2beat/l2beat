@@ -64,13 +64,19 @@ export function loadNodes(
   })
 
   const allNodes = existing.concat(added)
+  const allNodeIds = new Set(allNodes.map((node) => node.id))
   const unknownNodeIds = state.userPreferences.hideUnknownOnLoad
     ? allNodes
         .filter((node) => node.addressType === 'Unknown')
         .map((node) => node.id)
     : []
 
-  const hiddenNodes = [...new Set([...state.hidden, ...unknownNodeIds])]
+  const savedHiddenNodes = saved?.hiddenNodes ?? []
+  const shouldReuseCurrentHidden = state.projectId === projectId
+  const baseHiddenNodes = shouldReuseCurrentHidden ? state.hidden : []
+  const hiddenNodes = [
+    ...new Set([...savedHiddenNodes, ...baseHiddenNodes, ...unknownNodeIds]),
+  ].filter((id) => allNodeIds.has(id))
   const visibleNodes = allNodes.filter((node) => !hiddenNodes.includes(node.id))
   const hasSavedLayout =
     !!saved && allNodes.some((node) => saved.locations[node.id] !== undefined)
