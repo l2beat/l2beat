@@ -81,7 +81,7 @@ export function DeployedTokenForm({
   const abstractToken = abstractTokens.data?.find(
     (abstractToken) => abstractToken.id === abstractTokenId,
   )
-  const chain = form.watch('chain')
+  const chainValue = form.watch('chain')
 
   const success =
     tokenDetails.data && tokenDetails.data?.error?.type !== 'already-exists'
@@ -158,9 +158,9 @@ export function DeployedTokenForm({
                         </Command>
                       </PopoverContent>
                     </Popover>
-                    {chain && (
+                    {chainValue && (
                       <Link
-                        to={`/chains/${chain}`}
+                        to={`/chains/${chainValue}`}
                         target="_blank"
                         className={buttonVariants({
                           variant: 'outline',
