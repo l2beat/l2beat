@@ -1,5 +1,4 @@
-import type { ProjectWithRanges } from '@l2beat/dal'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
@@ -17,7 +16,7 @@ export const TvsChartWithProjectsRangesDataParams = v.object({
   includeRwaRestrictedTokens: v.boolean(),
   projects: v.array(
     v.object({
-      projectId: v.string(),
+      projectId: v.string().transform((value) => value as ProjectId),
       sinceTimestamp: v.number(),
       untilTimestamp: v.number().optional(),
     }),
@@ -71,7 +70,7 @@ export async function getDetailedTvsChartWithProjectsRanges({
   const [ethPrices, values] = await Promise.all([
     getEthPrices(),
     getSummedTvsValues(
-      projects as ProjectWithRanges[],
+      projects,
       { type: range },
       {
         forSummary: false,
