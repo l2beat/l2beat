@@ -344,6 +344,8 @@ Steps:
     title: 'Config of the Scroll bundle program',
     description:
       'This is not a ZK program, but a commitment to the config of Scroll bundle program (bundle leaf commitment). It also needs to be checked to verify the expected ZK verification.',
+    programUrl:
+      'https://github.com/scroll-tech/zkvm-prover/tree/v0.2.0/crates/circuits/bundle-circuit',
     proverSystemProject: ProjectId('openvmprover'),
     verificationStatus: 'notVerified',
   },
@@ -354,7 +356,7 @@ Steps:
     programUrl:
       'https://github.com/scroll-tech/zkvm-prover/tree/v0.6.0-rc.1/crates/circuits/bundle-circuit',
     proverSystemProject: ProjectId('openvmprover'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'unsuccessful',
   },
   '0x009305f0762291e3cdd805ff6d6e81f1d135dbfdeb3ecf30ad82c3855dde7909': {
     title: 'Config of the Scroll bundle program',
@@ -363,7 +365,35 @@ Steps:
     programUrl:
       'https://github.com/scroll-tech/zkvm-prover/tree/v0.6.0-rc.1/crates/circuits/bundle-circuit',
     proverSystemProject: ProjectId('openvmprover'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Steps due to the guide here: [https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174](https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174).
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/) and make sure it is running \`docker ps\`.
+2. Checkout the correct branch in [zkvm-prover](https://github.com/scroll-tech/zkvm-prover/tree/master) repo: \`git checkout v0.6.0-rc.1.\` Commit hash should be \`c33fad134f9d662ccf1ed1bac33d258b0ea1cf2b\`.
+3. Build the guest programs from the root repo dir: \`make build-guest\`. It will regenerate \`bundle_vm_commit.rs\`. 
+4. Run \`compress_commitment\` function from [https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174](https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174) on the \`COMMIT\` array from the previous step to generate \`digest_2\` value. A sample rust implementation is: 
+    \`\`\`
+use openvm_stark_sdk::p3_baby_bear::BabyBear;
+use openvm_stark_sdk::p3_bn254_fr::Bn254Fr;
+use openvm_stark_sdk::openvm_stark_backend::p3_field::FieldAlgebra;
+use openvm_stark_sdk::openvm_stark_backend::p3_field::PrimeField32;
+
+fn compress_commitment(commitment: &[u32; 8]) -> Bn254Fr {
+    let order = Bn254Fr::from_canonical_u64(BabyBear::ORDER_U32 as u64);
+
+    let mut base = Bn254Fr::ONE;      // from PrimeCharacteristicRing
+    let mut compressed = Bn254Fr::ZERO; // from PrimeCharacteristicRing
+
+    for val in commitment {
+        compressed += Bn254Fr::from_canonical_u64(*val as u64) * base;
+        base *= order;
+    }
+
+    compressed
+} 
+\`\`\`
+    `,
   },
   '0x0100085f9382a7928dd83bfc529121827b5f29f18b9aa10d18aa68e1be7ddc35': {
     title: 'Boojum L2 Bootloader program',
