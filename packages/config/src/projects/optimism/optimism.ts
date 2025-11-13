@@ -31,6 +31,7 @@ export const optimism: ScalingProject = opStackL2({
       bridges: ['https://app.optimism.io'],
       documentation: [
         'https://docs.optimism.io/',
+        'https://specs.optimism.io/',
         'https://community.optimism.io',
       ],
       explorers: [
