@@ -81,6 +81,7 @@ export function DeployedTokenForm({
   const abstractToken = abstractTokens.data?.find(
     (abstractToken) => abstractToken.id === abstractTokenId,
   )
+  const chain = form.watch('chain')
 
   const success =
     tokenDetails.data && tokenDetails.data?.error?.type !== 'already-exists'
@@ -100,62 +101,76 @@ export function DeployedTokenForm({
                     Chain{' '}
                     {tokenDetails.loading && <Spinner className="size-3.5" />}
                   </FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          disabled={areChainsLoading}
-                          variant="outline"
-                          role="combobox"
-                          className={cn(
-                            'justify-between',
-                            !field.value && 'text-muted-foreground',
-                          )}
-                        >
-                          {field.value
-                            ? (chains?.find(
-                                (chain) => chain.name === field.value,
-                              )?.name ?? form.formState.defaultValues?.chain)
-                            : 'Select chain'}
-                          <ChevronsUpDownIcon className="opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-[200px] p-0" align="start">
-                      <Command>
-                        <CommandInput
-                          placeholder="Search chain..."
-                          className="h-9"
-                        />
-                        <CommandList>
-                          <CommandEmpty>No chain found.</CommandEmpty>
-                          <CommandGroup>
-                            {chains?.map((chain) => (
-                              <CommandItem
-                                value={chain.name}
-                                key={chain.name}
-                                onSelect={() => {
-                                  form.setValue('chain', chain.name, {
-                                    shouldDirty: true,
-                                  })
-                                }}
-                              >
-                                {chain.name}
-                                <CheckIcon
-                                  className={cn(
-                                    'ml-auto',
-                                    chain.name === field.value
-                                      ? 'opacity-100'
-                                      : 'opacity-0',
-                                  )}
-                                />
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                        </CommandList>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
+                  <div className="flex items-center gap-2">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl className="flex-1">
+                          <Button
+                            disabled={areChainsLoading}
+                            variant="outline"
+                            role="combobox"
+                            className={cn(
+                              'justify-between',
+                              !field.value && 'text-muted-foreground',
+                            )}
+                          >
+                            {field.value
+                              ? (chains?.find(
+                                  (chain) => chain.name === field.value,
+                                )?.name ?? form.formState.defaultValues?.chain)
+                              : 'Select chain'}
+                            <ChevronsUpDownIcon className="opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[200px] p-0" align="start">
+                        <Command>
+                          <CommandInput
+                            placeholder="Search chain..."
+                            className="h-9"
+                          />
+                          <CommandList>
+                            <CommandEmpty>No chain found.</CommandEmpty>
+                            <CommandGroup>
+                              {chains?.map((chain) => (
+                                <CommandItem
+                                  value={chain.name}
+                                  key={chain.name}
+                                  onSelect={() => {
+                                    form.setValue('chain', chain.name, {
+                                      shouldDirty: true,
+                                    })
+                                  }}
+                                >
+                                  {chain.name}
+                                  <CheckIcon
+                                    className={cn(
+                                      'ml-auto',
+                                      chain.name === field.value
+                                        ? 'opacity-100'
+                                        : 'opacity-0',
+                                    )}
+                                  />
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    {chain && (
+                      <Link
+                        to={`/chains/${chain}`}
+                        target="_blank"
+                        className={buttonVariants({
+                          variant: 'outline',
+                          className: 'shrink-0',
+                        })}
+                      >
+                        <ArrowRightIcon />
+                      </Link>
+                    )}
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}
