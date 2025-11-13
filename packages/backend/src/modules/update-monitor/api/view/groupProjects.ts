@@ -42,7 +42,7 @@ export function groupProjects(
     // Stacks first
     {
       name: 'OP Stack',
-      assignees: ['🐿', '🐱'],
+      assignees: ['🐱', '🐿'],
       predicate: (p) => isStack(p.name, 'OP Stack'),
     },
     {
@@ -52,7 +52,7 @@ export function groupProjects(
     },
     {
       name: 'Polygon Stack',
-      assignees: ['🐿', '🐻'],
+      assignees: ['🐻', '🐝'],
       predicate: (p) => isStack(p.name, 'Agglayer CDK'),
     },
     {
@@ -73,7 +73,7 @@ export function groupProjects(
     },
     {
       name: 'Bridge Projects',
-      assignees: ['🐿', '🐻'],
+      assignees: ['🐻', '🐿'],
       predicate: (p) => projectMap.get(p.name)?.isBridge ?? false,
     },
     // Finally individual projects so they can show inline labels
@@ -91,7 +91,7 @@ export function groupProjects(
     },
     {
       name: 'Linea',
-      assignees: ['🐝', '🐱'],
+      assignees: ['🐱', '🐝'],
       predicate: (p) => p.name === 'linea',
       variant: 'single',
     },
