@@ -2,9 +2,6 @@ import type { Project, ProjectScalingStack } from '@l2beat/config'
 import partition from 'lodash/partition'
 import type { DashboardProject } from '../props/getDashboardProjects'
 
-// NOTE(radomski): For brevity so we can have all logic on a single line per group
-type DP = DashboardProject
-
 export type GroupVariant = 'single'
 
 export interface Group {
@@ -37,7 +34,7 @@ export function groupProjects(
   type GroupConfig = {
     name: string
     assignees: readonly string[]
-    predicate: (p: DP) => boolean
+    predicate: (p: DashboardProject) => boolean
     variant?: GroupVariant
   }
 
@@ -46,56 +43,56 @@ export function groupProjects(
     {
       name: 'OP Stack',
       assignees: ['🐿', '🐱'],
-      predicate: (p: DP) => isStack(p.name, 'OP Stack'),
+      predicate: (p) => isStack(p.name, 'OP Stack'),
     },
     {
       name: 'Orbit/Arbitrum Stack',
       assignees: ['🐿', '🐱'],
-      predicate: (p: DP) => isStack(p.name, 'Arbitrum'),
+      predicate: (p) => isStack(p.name, 'Arbitrum'),
     },
     {
       name: 'Polygon Stack',
       assignees: ['🐿', '🐻'],
-      predicate: (p: DP) => isStack(p.name, 'Agglayer CDK'),
+      predicate: (p) => isStack(p.name, 'Agglayer CDK'),
     },
     {
       name: 'ZK Stack',
       assignees: ['🐝', '🐻'],
-      predicate: (p: DP) => isStack(p.name, 'ZK Stack'),
+      predicate: (p) => isStack(p.name, 'ZK Stack'),
     },
     {
       name: 'Starknet & Starkexes',
       assignees: ['🐝', '🐻'],
-      predicate: (p: DP) => isStack(p.name, 'StarkEx', 'SN Stack'),
+      predicate: (p) => isStack(p.name, 'StarkEx', 'SN Stack'),
     },
     // Then the broader categories
     {
       name: 'DA Projects',
       assignees: ['🐿', '🐱'],
-      predicate: (p: DP) => projectMap.get(p.name)?.isDaLayer ?? false,
+      predicate: (p) => projectMap.get(p.name)?.isDaLayer ?? false,
     },
     {
       name: 'Bridge Projects',
       assignees: ['🐿', '🐻'],
-      predicate: (p: DP) => projectMap.get(p.name)?.isBridge ?? false,
+      predicate: (p) => projectMap.get(p.name)?.isBridge ?? false,
     },
     // Finally individual projects so they can show inline labels
     {
       name: 'Scroll',
       assignees: ['🐿', '🐱'],
-      predicate: (p: DP) => p.name === 'scroll',
+      predicate: (p) => p.name === 'scroll',
       variant: 'single',
     },
     {
       name: 'Taiko',
       assignees: ['🐻', '🐱'],
-      predicate: (p: DP) => p.name === 'taiko',
+      predicate: (p) => p.name === 'taiko',
       variant: 'single',
     },
     {
       name: 'Linea',
       assignees: ['🐝', '🐱'],
-      predicate: (p: DP) => p.name === 'linea',
+      predicate: (p) => p.name === 'linea',
       variant: 'single',
     },
   ]

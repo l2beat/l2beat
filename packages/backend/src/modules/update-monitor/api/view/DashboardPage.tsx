@@ -214,13 +214,10 @@ function ProjectRow({
           <span
             style={{
               color: '#fef4d0',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '4px',
+              fontWeight: 600,
             }}
           >
             Click to expand
-            <span style={{ fontSize: '14px' }}>▸</span>
           </span>
           {statusChip}
         </div>
@@ -231,7 +228,9 @@ function ProjectRow({
   const summaryWrapper = (
     <div
       style={{
+        display: 'inline-block',
         width: '100%',
+        boxSizing: 'border-box',
         padding: hasChanges ? '8px 10px' : '2px 0px',
         border: hasChanges ? '1px solid #3d2b12' : undefined,
         backgroundColor: hasChanges ? '#1a1309' : 'transparent',
@@ -247,6 +246,7 @@ function ProjectRow({
       style={{
         paddingTop: isFirst ? '0px' : '6px',
         borderTop: isFirst ? undefined : '1px solid #1c202d',
+        paddingRight: '8px',
       }}
     >
       {hasChanges ? (
@@ -314,6 +314,7 @@ function ChangedDetectedDropdown({
           cursor: 'pointer',
           color: summaryColor,
           outline: 'none',
+          display: 'block',
         }}
       >
         {summary}
