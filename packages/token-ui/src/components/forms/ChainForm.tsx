@@ -21,6 +21,7 @@ import {
 } from '~/components/core/Select'
 import { minLengthCheck, urlCheck } from '~/utils/checks'
 import { Card, CardContent } from '../core/Card'
+import { TestApiButton } from './TestApiButton'
 
 const withoutURL = ['etherscan'] as const
 const withURL = ['rpc', 'blockscout', 'blockscoutV2', 'routescan'] as const
@@ -156,111 +157,127 @@ export function ChainForm({
               </Button>
             </div>
 
-            {fields.map((field, index) => (
-              <Card key={field.id} className="relative">
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="absolute top-6 right-6"
-                  onClick={() => remove(index)}
-                >
-                  <TrashIcon className="size-4" />
-                </Button>
-                <CardContent className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name={`apis.${index}.type`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Type</FormLabel>
-                        <Select
-                          onValueChange={(value) => {
-                            field.onChange(value)
-                            // Clear URL when switching to etherscan
-                            if (value === 'etherscan') {
-                              form.setValue(`apis.${index}.url`, '')
-                            }
-                          }}
-                          value={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select API type" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {apiTypeValues.map((type) => (
-                              <SelectItem key={type} value={type}>
-                                {type}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  {form.watch(`apis.${index}.type`) !== 'etherscan' && (
+            {fields.map((field, index) => {
+              const apiType = form.watch(`apis.${index}.type`)
+              const url = form.watch(`apis.${index}.url`)
+              const chainId = form.watch('chainId')
+              return (
+                <Card key={field.id} className="relative">
+                  <div className="absolute top-6 right-6">
+                    {apiType &&
+                      (apiType === 'rpc' ||
+                        apiType === 'etherscan' ||
+                        apiType === 'blockscout') && (
+                        <TestApiButton
+                          type={apiType}
+                          url={url || undefined}
+                          chainId={chainId || undefined}
+                        />
+                      )}
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => remove(index)}
+                    >
+                      <TrashIcon className="size-4" />
+                    </Button>
+                  </div>
+                  <CardContent className="space-y-4">
                     <FormField
                       control={form.control}
-                      name={`apis.${index}.url`}
-                      rules={{
-                        required: 'URL is required for this API type',
-                        validate: (value) => {
-                          if (!value) {
-                            return 'URL is required for this API type'
-                          }
-                          return urlCheck(value)
-                        },
-                      }}
+                      name={`apis.${index}.type`}
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>URL *</FormLabel>
+                          <FormLabel>Type</FormLabel>
+                          <Select
+                            onValueChange={(value) => {
+                              field.onChange(value)
+                              // Clear URL when switching to etherscan
+                              if (value === 'etherscan') {
+                                form.setValue(`apis.${index}.url`, '')
+                              }
+                            }}
+                            value={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select API type" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {apiTypeValues.map((type) => (
+                                <SelectItem key={type} value={type}>
+                                  {type}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    {form.watch(`apis.${index}.type`) !== 'etherscan' && (
+                      <FormField
+                        control={form.control}
+                        name={`apis.${index}.url`}
+                        rules={{
+                          required: 'URL is required for this API type',
+                          validate: (value) => {
+                            if (!value) {
+                              return 'URL is required for this API type'
+                            }
+                            return urlCheck(value)
+                          },
+                        }}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>URL *</FormLabel>
+                            <FormControl>
+                              <Input
+                                {...field}
+                                value={field.value ?? ''}
+                                onChange={(e) => {
+                                  const value = e.target.value
+                                  field.onChange(value === '' ? null : value)
+                                }}
+                                placeholder="https://..."
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    )}
+
+                    <FormField
+                      control={form.control}
+                      name={`apis.${index}.callsPerMinute`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Calls Per Minute (optional)</FormLabel>
                           <FormControl>
                             <Input
                               {...field}
-                              value={field.value ?? ''}
+                              type="number"
                               onChange={(e) => {
                                 const value = e.target.value
-                                field.onChange(value === '' ? null : value)
+                                field.onChange(
+                                  value === '' ? undefined : Number(value),
+                                )
                               }}
-                              placeholder="https://..."
+                              value={field.value ?? ''}
                             />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
-                  )}
-
-                  <FormField
-                    control={form.control}
-                    name={`apis.${index}.callsPerMinute`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Calls Per Minute (optional)</FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            type="number"
-                            onChange={(e) => {
-                              const value = e.target.value
-                              field.onChange(
-                                value === '' ? undefined : Number(value),
-                              )
-                            }}
-                            value={field.value ?? ''}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              )
+            })}
           </div>
 
           {children}
