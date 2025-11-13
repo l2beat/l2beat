@@ -78,6 +78,10 @@ function TransfersTable(props: {
                       )}
                     </a>
                   )}
+                {
+                  e.srcTokenAddress === 'native' && (
+                    <span>NATIVE</span>
+                  )}
               </td>
               <td>{e.dstChain}</td>
               <td>
