@@ -13,12 +13,18 @@ import {
   CardTitle,
 } from '~/components/core/Card'
 import {
+  Empty,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from '~/components/core/Empty'
+import {
   DeployedTokenForm,
   DeployedTokenSchema,
   setDeployedTokenExistsError,
 } from '~/components/forms/DeployedTokenForm'
-import { LoadingText } from '~/components/LoadingText'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
+import { Spinner } from '~/components/core/Spinner'
 import { useQueryState } from '~/hooks/useQueryState'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { DeployedToken } from '~/mock/types'
@@ -45,7 +51,14 @@ export function DeployedTokenPage() {
   return (
     <AppLayout>
       {data === undefined ? (
-        <LoadingText />
+        <Empty className="h-full">
+          <EmptyHeader>
+            <EmptyMedia variant="icon">
+              <Spinner />
+            </EmptyMedia>
+            <EmptyTitle>Loading...</EmptyTitle>
+          </EmptyHeader>
+        </Empty>
       ) : (
         <DeployedTokenView token={data} />
       )}

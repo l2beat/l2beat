@@ -25,7 +25,6 @@ import {
   AbstractTokenForm,
   AbstractTokenSchema,
 } from '~/components/forms/AbstractTokenForm'
-import { LoadingText } from '~/components/LoadingText'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractTokenWithDeployedTokens } from '~/mock/types'
@@ -46,7 +45,18 @@ export function AbstractTokenPage() {
 
   return (
     <AppLayout>
-      {data ? <AbstractTokenView token={data} /> : <LoadingText />}
+      {data ? (
+        <AbstractTokenView token={data} />
+      ) : (
+        <Empty className="h-full">
+          <EmptyHeader>
+            <EmptyMedia variant="icon">
+              <Spinner />
+            </EmptyMedia>
+            <EmptyTitle>Loading...</EmptyTitle>
+          </EmptyHeader>
+        </Empty>
+      )}
     </AppLayout>
   )
 }

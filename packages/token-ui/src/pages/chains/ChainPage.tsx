@@ -9,8 +9,14 @@ import {
   CardHeader,
   CardTitle,
 } from '~/components/core/Card'
+import {
+  Empty,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from '~/components/core/Empty'
+import { Spinner } from '~/components/core/Spinner'
 import { ChainForm, ChainSchema } from '~/components/forms/ChainForm'
-import { LoadingText } from '~/components/LoadingText'
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
 import { validateResolver } from '~/utils/validateResolver'
@@ -27,7 +33,20 @@ export function ChainPage() {
   }
 
   return (
-    <AppLayout>{data ? <ChainView chain={data} /> : <LoadingText />}</AppLayout>
+    <AppLayout>
+      {data ? (
+        <ChainView chain={data} />
+      ) : (
+        <Empty className="h-full">
+          <EmptyHeader>
+            <EmptyMedia variant="icon">
+              <Spinner />
+            </EmptyMedia>
+            <EmptyTitle>Loading...</EmptyTitle>
+          </EmptyHeader>
+        </Empty>
+      )}
+    </AppLayout>
   )
 }
 

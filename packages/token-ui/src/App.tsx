@@ -11,12 +11,15 @@ import { AddTokensPage } from './pages/tokens/add-tokens/AddTokensPage'
 import { DeployedTokenPage } from './pages/tokens/DeployedTokenPage'
 import { TokensSummaryPage } from './pages/tokens/TokensSummaryPage'
 import { TRPCReactProvider } from './react-query/trpc'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 export function App() {
   return (
     <TRPCReactProvider>
       <SidebarProvider>
         <BrowserRouter>
+          <ReactQueryDevtools initialIsOpen={false} />
+
           <Toaster />
           <Routes>
             <Route path="/" element={<TokensSummaryPage />} />
