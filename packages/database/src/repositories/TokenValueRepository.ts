@@ -18,6 +18,20 @@ export interface TokenValueRecord {
   priceUsd: number
 }
 
+interface SummedByTimestampTokenValueRecord {
+  timestamp: UnixTime
+  value: number
+  canonical: number
+  external: number
+  native: number
+  ether: number
+  stablecoin: number
+  btc: number
+  rwaRestricted: number
+  rwaPublic: number
+  other: number
+}
+
 export function toRecord(row: Selectable<TokenValue>): TokenValueRecord {
   return {
     ...row,
@@ -194,21 +208,7 @@ export class TokenValueRepository extends BaseRepository {
       excludeAssociated: boolean
       includeRwaRestrictedTokens: boolean
     },
-  ): Promise<
-    {
-      timestamp: UnixTime
-      value: number
-      canonical: number
-      external: number
-      native: number
-      ether: number
-      stablecoin: number
-      btc: number
-      rwaRestricted: number
-      rwaPublic: number
-      other: number
-    }[]
-  > {
+  ): Promise<SummedByTimestampTokenValueRecord[]> {
     const valueField = opts.forSummary ? 'valueForSummary' : 'valueForProject'
 
     let query = this.db
@@ -278,21 +278,7 @@ export class TokenValueRepository extends BaseRepository {
       excludeAssociated: boolean
       includeRwaRestrictedTokens: boolean
     },
-  ): Promise<
-    {
-      timestamp: UnixTime
-      value: number
-      canonical: number
-      external: number
-      native: number
-      ether: number
-      stablecoin: number
-      btc: number
-      rwaRestricted: number
-      rwaPublic: number
-      other: number
-    }[]
-  > {
+  ): Promise<SummedByTimestampTokenValueRecord[]> {
     if (projectsWithRanges.length === 0) {
       return []
     }
