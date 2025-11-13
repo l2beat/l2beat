@@ -52,6 +52,8 @@ export const swell = opStackL2({
         'https://x.com/swellnetworkio',
         'https://discord.com/invite/swellnetworkdao',
         'https://swellnetwork.io/blog',
+        'https://reddit.com/r/SwellNetwork/',
+        'https://linkedin.com/company/swellnetworkio',
       ],
     },
   },
