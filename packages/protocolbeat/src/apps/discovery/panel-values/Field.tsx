@@ -149,7 +149,7 @@ function BadgeWrapper(props: {
   className?: string
 }) {
   return (
-    <span className="flex max-w-fit items-center justify-center gap-1 border border-coffee-400 px-2 py-0.5 text-xs">
+    <span className="flex max-w-fit items-center justify-center gap-1 border border-coffee-400/40 px-1 py-0.5 text-coffee-400">
       {props.text}
       {props.children}
     </span>
