@@ -1,4 +1,4 @@
-import { cva } from 'class-variance-authority'
+import clsx from 'clsx'
 import type { Field } from '../../../api/types'
 import { useProjectConfigModels } from '../hooks/useProjectConfig'
 import { FieldValueDisplay } from './FieldValueDisplay'
@@ -112,24 +112,15 @@ type FieldTagProps = {
   state: 'enabled' | 'disabled'
 }
 
-const fieldTagVariants = cva(
-  'cursor-pointer p-0.5 text-[10px] text-black uppercase',
-  {
-    variants: {
-      state: {
-        enabled: 'bg-aux-blue',
-        disabled: 'bg-coffee-400/40',
-      },
-    },
-    defaultVariants: {
-      state: 'disabled',
-    },
-  },
-)
-
 function FieldTag({ tag, onClick, state }: FieldTagProps) {
   return (
-    <span className={fieldTagVariants({ state })} onClick={onClick}>
+    <span
+      className={clsx(
+        'cursor-pointer p-0.5 text-[10px] text-black uppercase',
+        state === 'enabled' ? 'bg-aux-blue' : 'bg-coffee-400/40',
+      )}
+      onClick={onClick}
+    >
       {tag}
     </span>
   )
