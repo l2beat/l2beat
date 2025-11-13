@@ -2,6 +2,7 @@ import {
   type BlockscoutClientConfig,
   BlockscoutResponseSchema,
   ContractCreationResultSchema,
+  TransactionInfoSchema,
 } from './types'
 
 export class BlockscoutClient {
@@ -11,8 +12,14 @@ export class BlockscoutClient {
     const data = await this.call('contract', 'getcontractcreation', {
       contractaddresses: address,
     })
-
     return ContractCreationResultSchema.parse(data)
+  }
+
+  async getTransactionInfo(txHash: string) {
+    const data = await this.call('transaction', 'gettxinfo', {
+      txhash: txHash,
+    })
+    return TransactionInfoSchema.parse(data)
   }
 
   private async call(
