@@ -155,22 +155,30 @@ export class RelayIndexer extends ManagedChildIndexer {
       }
       if (srcTx && srcTx.hash && srcTx.hash.length === 66) {
         const srcToken = item.data.metadata?.currencyIn
+        let address = Address32.fromOrUndefined(srcToken?.currency?.address)
+        if (address === Address32.ZERO) {
+          address = Address32.NATIVE
+        }
         const event = TokenSent.create(txToCtx(srcTx, srcChain, createTime), {
           id: item.id,
           amount: srcToken?.amount,
-          token: Address32.fromOrUndefined(srcToken?.currency?.address),
+          token: address,
           $dstChain: dstChain,
         })
         events.push({ ...event, plugin: 'relay' })
       }
       if (dstTx && dstTx.hash && dstTx.hash.length === 66) {
-        const dstToken = item.data.metadata?.currencyIn
+        const dstToken = item.data.metadata?.currencyOut
+        let address = Address32.fromOrUndefined(dstToken?.currency?.address)
+        if (address === Address32.ZERO) {
+          address = Address32.NATIVE
+        }
         const event = TokenReceived.create(
           txToCtx(dstTx, dstChain, updateTime),
           {
             id: item.id,
             amount: dstToken?.amount,
-            token: Address32.fromOrUndefined(dstToken?.currency?.address),
+            token: address,
             $srcChain: srcChain,
           },
         )
