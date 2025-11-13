@@ -151,7 +151,7 @@ export const haust: ScalingProject = {
     {
       title: 'Haust Public Launch',
       url: 'https://x.com/HaustNetwork/status/1982805150260666681',
-      date: '2024-09-27',
+      date: '2025-09-27',
       description: 'Haust is live on mainnet, integrated with Agglayer.',
       type: 'general',
     },
