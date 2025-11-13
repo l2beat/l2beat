@@ -26,7 +26,10 @@ export const zora: ScalingProject = opStackL2({
     links: {
       websites: ['https://zora.energy/', 'https://zora.co/'],
       bridges: ['https://bridge.zora.energy/'],
-      documentation: ['https://docs.zora.co'],
+      documentation: [
+        'https://docs.zora.co',
+        'https://github.com/ourzora/zora-protocol/tree/main/docs',
+      ],
       explorers: ['https://explorer.zora.energy/', 'https://zorascan.xyz'],
       repositories: ['https://github.com/ourzora/optimism'],
       socialMedia: [
