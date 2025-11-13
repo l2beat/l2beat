@@ -1110,7 +1110,8 @@ function getDAProviders(
   const isUsingValidBlobstreamWmr =
     wmrValidForBlobstream.includes(wasmModuleRoot)
 
-  if (isUsingValidBlobstreamWmr) {
+  // Only add Celestia if NOT posting to DAC (sequencerVersion !== 0x88)
+  if (isUsingValidBlobstreamWmr && !postsToDAC(templateVars)) {
     if (templateVars.celestiaProofSystemInactive) {
       result.push({
         riskViewDA: RISK_VIEW.DATA_CELESTIA(false),
