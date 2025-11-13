@@ -67,7 +67,7 @@ export class BlockscoutClient {
     const data = BlockscoutResponseSchema.parse(json)
     if (data.status !== '1' || data.message !== 'OK') {
       throw new Error(
-        `Blockscout API error: ${data.message ?? 'Unknown error'}`,
+        `Blockscout API error: ${data.message ?? 'Unknown error'}. ${data.result}`,
       )
     }
 
