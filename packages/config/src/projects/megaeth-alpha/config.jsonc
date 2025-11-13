@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
-  "name": "aztec",
+  "name": "megaeth-alpha",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298"]
+  "initialAddresses": ["eth:0x0CA3A2FBC3D770b578223FBB6b062fa875a2eE75"]
 }

@@ -1,3 +1,233 @@
+Generated with discovered.json: 0x5ff83613268252547ec5a49850b83ba4c0cdf2ab
+
+# Diff at Thu, 13 Nov 2025 15:12:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ba965abcb8538a66712660114f6cd9a7ffaf80a4 block: 1747043363
+- current timestamp: 1763046674
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract Registry (eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      name:
++        "Registry"
+      sourceHashes:
++        ["0x2668189921df08d463ad0d3e7381bb520057ff2a687d45bed1ec160de02a6c87"]
+      sinceTimestamp:
++        1762995047
+      sinceBlock:
++        23786827
+      values:
++        {"$immutable":true,"getCanonicalRollup":"eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12","getGovernance":"eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e","getRewardDistributor":"eth:0x3D6A1B00C830C5f278FC5dFb3f6Ff0b74Db6dfe0","getRollup":["eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12"],"getVersion":[0],"numberOfVersions":1,"owner":"eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e"}
+      implementationNames:
++        {"eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298":"Registry"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CoinIssuer (eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakingRegistry (eth:0x042dF8f42790d6943F41C25C2132400fd727f452)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GovernanceProposer (eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Governance (eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x15c718C05B8c0dbec4D648b6711d6Ce8793969Ee)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ATPWithdrawableAndClaimableStaker (eth:0x25cFb57E45F6A7b63eE33B94420407048EED844e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RewardDistributor (eth:0x3D6A1B00C830C5f278FC5dFb3f6Ff0b74Db6dfe0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Rollup (eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProtocolTreasury (eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PullSplitFactory (eth:0x6B9118074aB15142d7524E8c4ea8f62A3Bdb98f1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x7101a6703491A4D808aeAbE9F62bC1Dc6a20bdf4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BaseStaker (eth:0x79075C8E314Ab4A84d54F90b1c7032Dc5469082d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SplitsWarehouse (eth:0x8fb66F38cF86A3d5e8768f8F1754A24A6c661Fb8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x90e7b822a5Ac10edC381aBc03d94b866e4B985A1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x91A3745c685c220595B997E53311EbF660144889)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PullSplit (eth:0x98254AeDb6B2c30b70483064367f0BA24ca86244)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Aztec (eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GSE (eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Registry (eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0xe05dc9D5969272831757181fFf1532B066254bf1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0xe61Af8EcFC516c5e493ff76d708F4C107E924Ca6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0xf006c41097861AFeb18b05e586B921c081411Ee9)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ATPWithdrawableAndClaimableStaker.sol          |  1392 +++
+ /dev/null => ./src/projects/aztec/.flat/Aztec.sol  |  3794 ++++++
+ .../src/projects/aztec/.flat/BaseStaker.sol        |   636 +
+ .../src/projects/aztec/.flat/CoinIssuer.sol        |   283 +
+ /dev/null => ./src/projects/aztec/.flat/GSE.sol    |  4348 +++++++
+ .../src/projects/aztec/.flat/Governance.sol        |  4119 +++++++
+ .../projects/aztec/.flat/GovernanceProposer.sol    |  3519 ++++++
+ .../src/projects/aztec/.flat/ProtocolTreasury.sol  |   306 +
+ .../src/projects/aztec/.flat/PullSplit.sol         |  2143 ++++
+ .../src/projects/aztec/.flat/PullSplitFactory.sol  |   510 +
+ ...:0x35b22e09Ee0390539439E24f06Da43D83f90e298.sol |   294 +
+ ...:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80.sol |   832 ++
+ .../src/projects/aztec/.flat/RewardDistributor.sol |   309 +
+ /dev/null => ./src/projects/aztec/.flat/Rollup.sol | 11593 +++++++++++++++++++
+ .../src/projects/aztec/.flat/Safe/Safe.sol         |  1088 ++
+ .../src/projects/aztec/.flat/Safe/SafeProxy.p.sol  |    37 +
+ .../src/projects/aztec/.flat/SplitsWarehouse.sol   |  2331 ++++
+ .../src/projects/aztec/.flat/StakingRegistry.sol   |   919 ++
+ 18 files changed, 38453 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1747043363 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract AztecFeeDistributor (eth:0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734)
+    +++ description: Contract responsible for collecting transaction fees and reimbursing gas to whitelisted Rollup Providers.
+```
+
+```diff
+-   Status: DELETED
+    contract TurboVerifier (eth:0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8)
+    +++ description: Turbo Plonk ZK verifier.
+```
+
+```diff
+-   Status: DELETED
+    contract RollupProcessor (eth:0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Aztec Multisig (eth:0xE298a76986336686CC3566469e3520d23D1a8aaD)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    EOA FirstAnvilAddress (eth:0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x5b754b49ce734257b97900530a11e5b958bf7ef9
 
 # Diff at Wed, 05 Nov 2025 12:46:28 GMT:
