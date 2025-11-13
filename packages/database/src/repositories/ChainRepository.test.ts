@@ -266,6 +266,222 @@ describeTokenDatabase(ChainRepository.name, (db) => {
     })
   })
 
+  describe(ChainRepository.prototype.updateByName.name, () => {
+    it('updates chainId', async () => {
+      const record = mockChain({ name: 'ethereum', chainId: 1 })
+      await repository.insert(record)
+
+      const updated = await repository.updateByName('ethereum', {
+        name: 'ethereum',
+        chainId: 2,
+      })
+      expect(updated).toEqual(1)
+
+      const result = await repository.findByName('ethereum')
+      expect(result?.chainId).toEqual(2)
+      expect(result?.name).toEqual('ethereum')
+    })
+
+    it('updates explorerUrl', async () => {
+      const record = mockChain({
+        name: 'ethereum',
+        chainId: 1,
+        explorerUrl: null,
+      })
+      await repository.insert(record)
+
+      const updated = await repository.updateByName('ethereum', {
+        name: 'ethereum',
+        explorerUrl: 'https://etherscan.io',
+      })
+      expect(updated).toEqual(1)
+
+      const result = await repository.findByName('ethereum')
+      expect(result?.explorerUrl).toEqual('https://etherscan.io')
+    })
+
+    it('updates explorerUrl to null', async () => {
+      const record = mockChain({
+        name: 'ethereum',
+        chainId: 1,
+        explorerUrl: 'https://etherscan.io',
+      })
+      await repository.insert(record)
+
+      const updated = await repository.updateByName('ethereum', {
+        name: 'ethereum',
+        explorerUrl: null,
+      })
+      expect(updated).toEqual(1)
+
+      const result = await repository.findByName('ethereum')
+      expect(result?.explorerUrl).toEqual(null)
+    })
+
+    it('updates aliases', async () => {
+      const record = mockChain({
+        name: 'ethereum',
+        chainId: 1,
+        aliases: null,
+      })
+      await repository.insert(record)
+
+      const updated = await repository.updateByName('ethereum', {
+        name: 'ethereum',
+        aliases: ['eth', 'mainnet'],
+      })
+      expect(updated).toEqual(1)
+
+      const result = await repository.findByName('ethereum')
+      expect(result?.aliases).toEqual(['eth', 'mainnet'])
+    })
+
+    it('updates aliases to null', async () => {
+      const record = mockChain({
+        name: 'ethereum',
+        chainId: 1,
+        aliases: ['eth'],
+      })
+      await repository.insert(record)
+
+      const updated = await repository.updateByName('ethereum', {
+        name: 'ethereum',
+        aliases: null,
+      })
+      expect(updated).toEqual(1)
+
+      const result = await repository.findByName('ethereum')
+      expect(result?.aliases).toEqual(null)
+    })
+
+    it('updates apis', async () => {
+      const record = mockChain({
+        name: 'ethereum',
+        chainId: 1,
+        apis: null,
+      })
+      await repository.insert(record)
+
+      const updated = await repository.updateByName('ethereum', {
+        name: 'ethereum',
+        apis: [
+          { type: 'etherscan' },
+          { type: 'rpc', url: 'https://rpc.example.com' },
+        ],
+      })
+      expect(updated).toEqual(1)
+
+      const result = await repository.findByName('ethereum')
+      expect(result?.apis).toEqual([
+        { type: 'etherscan' },
+        { type: 'rpc', url: 'https://rpc.example.com' },
+      ])
+    })
+
+    it('updates apis to null', async () => {
+      const record = mockChain({
+        name: 'ethereum',
+        chainId: 1,
+        apis: [{ type: 'etherscan' }],
+      })
+      await repository.insert(record)
+
+      const updated = await repository.updateByName('ethereum', {
+        name: 'ethereum',
+        apis: null,
+      })
+      expect(updated).toEqual(1)
+
+      const result = await repository.findByName('ethereum')
+      expect(result?.apis).toEqual(null)
+    })
+
+    it('updates multiple fields at once', async () => {
+      const record = mockChain({
+        name: 'ethereum',
+        chainId: 1,
+        explorerUrl: null,
+        aliases: null,
+        apis: null,
+      })
+      await repository.insert(record)
+
+      const updated = await repository.updateByName('ethereum', {
+        name: 'ethereum',
+        chainId: 2,
+        explorerUrl: 'https://etherscan.io',
+        aliases: ['eth'],
+        apis: [{ type: 'etherscan' }],
+      })
+      expect(updated).toEqual(1)
+
+      const result = await repository.findByName('ethereum')
+      expect(result).toEqual({
+        name: 'ethereum',
+        chainId: 2,
+        explorerUrl: 'https://etherscan.io',
+        aliases: ['eth'],
+        apis: [{ type: 'etherscan' }],
+      })
+    })
+  })
+
+  describe(ChainRepository.prototype.deleteByName.name, () => {
+    it('deletes a chain by name', async () => {
+      const records = [
+        mockChain({ name: 'ethereum', chainId: 1 }),
+        mockChain({ name: 'polygon', chainId: 137 }),
+        mockChain({ name: 'arbitrum', chainId: 42161 }),
+      ] as const satisfies ChainRecord[]
+      await repository.insertMany(records)
+
+      const deleted = await repository.deleteByName('polygon')
+      expect(deleted).toEqual(1)
+
+      const all = await repository.getAll()
+      expect(all).toEqualUnsorted([records[0], records[2]])
+    })
+
+    it('returns 0 when chain does not exist', async () => {
+      const deleted = await repository.deleteByName('nonexistent')
+      expect(deleted).toEqual(0)
+    })
+
+    it('deletes chain with all fields populated', async () => {
+      const record = mockChain({
+        name: 'ethereum',
+        chainId: 1,
+        explorerUrl: 'https://etherscan.io',
+        aliases: ['eth', 'mainnet'],
+        apis: [
+          { type: 'etherscan' },
+          { type: 'rpc', url: 'https://rpc.example.com' },
+        ],
+      })
+      await repository.insert(record)
+
+      const deleted = await repository.deleteByName('ethereum')
+      expect(deleted).toEqual(1)
+
+      const result = await repository.findByName('ethereum')
+      expect(result).toEqual(undefined)
+    })
+
+    it('does not affect other chains', async () => {
+      const records = [
+        mockChain({ name: 'ethereum', chainId: 1 }),
+        mockChain({ name: 'polygon', chainId: 137 }),
+      ] as const satisfies ChainRecord[]
+      await repository.insertMany(records)
+
+      const deleted = await repository.deleteByName('ethereum')
+      expect(deleted).toEqual(1)
+
+      const all = await repository.getAll()
+      expect(all).toEqual([records[1]])
+    })
+  })
+
   describe(ChainRepository.prototype.deleteAll.name, () => {
     it('deletes all records', async () => {
       await repository.insertMany([
@@ -293,8 +509,8 @@ function mockChain(
   return {
     name: overrides.name,
     chainId: overrides.chainId,
-    aliases: overrides.aliases ?? null,
     explorerUrl: overrides.explorerUrl ?? null,
+    aliases: overrides.aliases ?? null,
     apis: overrides.apis ?? null,
   }
 }

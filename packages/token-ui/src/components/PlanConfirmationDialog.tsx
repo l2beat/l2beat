@@ -32,13 +32,13 @@ export function PlanConfirmationDialog({
 
   function invalidateAbstractTokenQueries() {
     utils.abstractTokens.invalidate()
-    utils.search.tokens.invalidate()
+    utils.search.invalidate()
   }
 
   function invalidateDeployedTokenQueries() {
     utils.abstractTokens.invalidate()
     utils.deployedTokens.invalidate()
-    utils.search.tokens.invalidate()
+    utils.search.invalidate()
   }
 
   const { mutate: executePlan, isPending } = api.plan.execute.useMutation({
