@@ -104,12 +104,10 @@ export const facet: ScalingProject = {
   ),
   discoveryInfo: getDiscoveryInfo([discovery]),
   display: {
-    name: 'Facet Bluebird',
+    name: 'Facet v1',
     slug: 'facet',
     description:
-      'Facet Bluebird is a based rollup built on OP-Succinct. It uses FCT as its native gas token, which is mintable by burning ETH on L1.',
-    headerWarning:
-      'The vast majority of funds bridged to Facet are via external, non-canonical bridges. This page’s Stage and risk rosette evaluate the rollup’s proof system and protocol-level mechanisms that secure L2 state (e.g., proofs, challenge/exit windows, censorship-escape/self-propose). External bridges do not necessarily inherit these exit properties unless their exits route through this proof path. Users should review each bridge’s trust assumptions. L2BEAT is working on a TVS and asset framework to assess the risks of individual tokens, you can follow the latest updates [here](https://forum.l2beat.com/t/assets-bridges-and-tvs/388).',
+      'Facet v1 is a based rollup built on OP-Succinct. It uses FCT as its native gas token, which is mintable by burning ETH on L1.',
     purposes: ['Universal'],
     links: {
       websites: ['https://facet.org/'],

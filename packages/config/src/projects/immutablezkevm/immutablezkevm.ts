@@ -47,8 +47,15 @@ export const immutablezkevm: ScalingProject = {
     links: {
       websites: ['https://immutable.com/products/immutable-zkevm'],
       documentation: ['https://docs.x.immutable.com/docs/zkEVM/overview'],
-      socialMedia: ['https://twitter.com/Immutable'],
       explorers: ['https://explorer.immutable.com/'],
+      socialMedia: [
+        'https://twitter.com/Immutable',
+        'https://discord.com/invite/immutable-play',
+        'https://reddit.com/r/ImmutableX/',
+        'https://instagram.com/lifeatimmutable/',
+        'https://linkedin.com/company/immutable-1/',
+        'https://youtube.com/channel/UCR_WlrGou7hm0ACXYpldcuA',
+      ],
     },
   },
   proofSystem: undefined,

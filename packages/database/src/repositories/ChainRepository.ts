@@ -39,6 +39,7 @@ type RpcChainApi = {
 export type ChainRecord = {
   name: string
   chainId: number
+  explorerUrl: string | null
   aliases: string[] | null
   apis: ChainApi[] | null
 }
@@ -54,6 +55,20 @@ const toRecord = (record: Chain): ChainRecord => {
 const toRow = (record: ChainRecord): Insertable<Chain> => {
   return {
     ...record,
+    aliases: record.aliases !== null ? JSON.stringify(record.aliases) : null,
+    apis: record.apis !== null ? JSON.stringify(record.apis) : null,
+  }
+}
+
+export type ChainUpdateable = Partial<Omit<ChainRecord, 'name'>> & {
+  name: string
+}
+
+const toUpdateRow = (record: ChainUpdateable): Partial<Insertable<Chain>> => {
+  return {
+    name: record.name,
+    chainId: record.chainId,
+    explorerUrl: record.explorerUrl,
     aliases: record.aliases !== null ? JSON.stringify(record.aliases) : null,
     apis: record.apis !== null ? JSON.stringify(record.apis) : null,
   }
@@ -81,6 +96,26 @@ export class ChainRepository extends BaseRepository {
       .where('name', '=', name)
       .executeTakeFirst()
     return row ? toRecord(row) : undefined
+  }
+
+  async updateByName(name: string, patch: ChainUpdateable): Promise<number> {
+    const updateRow = toUpdateRow(patch)
+
+    const result = await this.db
+      .updateTable('Chain')
+      .set(updateRow)
+      .where('name', '=', name)
+      .executeTakeFirst()
+
+    return Number(result.numUpdatedRows)
+  }
+
+  async deleteByName(name: string): Promise<number> {
+    const result = await this.db
+      .deleteFrom('Chain')
+      .where('name', '=', name)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   async deleteAll(): Promise<number> {

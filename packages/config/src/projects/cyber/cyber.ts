@@ -77,7 +77,7 @@ export const cyber: ScalingProject = opStackL2({
         'https://wallet.cyber.co/',
       ],
       documentation: ['https://docs.cyber.co/'],
-      explorers: ['https://cyberscan.co/', 'https://7560.routescan.io/'],
+      explorers: ['https://cyberscan.co/'],
       repositories: ['https://github.com/cyberconnecthq'],
       socialMedia: [
         'https://twitter.com/cyberconnecthq',

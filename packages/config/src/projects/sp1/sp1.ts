@@ -207,6 +207,10 @@ export const sp1: BaseProject = {
         projectId: ProjectId('kroma'),
         sinceTimestamp: UnixTime(1739228400),
       },
+      {
+        projectId: ProjectId('haust'),
+        sinceTimestamp: UnixTime(1756808195),
+      },
     ],
     verifierHashes: [
       {

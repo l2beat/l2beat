@@ -2299,6 +2299,32 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-EARNM",
+      "priceId": "earnm",
+      "symbol": "EARNM",
+      "name": "EARNM",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52925/large/earnm.jpg?1734706204",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x3e62fED35c97145e6B445704B8CE74B2544776A9",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1734652800
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-EDU",
       "priceId": "edu-coin",
       "symbol": "EDU",
@@ -6247,6 +6273,39 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-PLUME",
+      "priceId": "plume",
+      "symbol": "PLUME",
+      "name": "Plume",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53623/large/plume-token.png?1736896935",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4C1746A800D224393fE2470C70A35717eD4eA5F1",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1737417600
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4C1746A800D224393fE2470C70A35717eD4eA5F1",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1737417600
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-PMON",
       "priceId": "polychain-monsters",
       "symbol": "PMON",
@@ -8270,6 +8329,32 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-syrupUSDC",
+      "priceId": "syrupusdc",
+      "symbol": "syrupUSDC",
+      "name": "Syrup USDC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54658/large/syrupUSDC.png?1761824955",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x41CA7586cC1311807B4605fBB748a3B8862b42b5",
+        "chain": "arbitrum",
+        "decimals": 6,
+        "sinceTimestamp": 1753290053
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
