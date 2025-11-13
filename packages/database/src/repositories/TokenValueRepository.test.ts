@@ -1238,6 +1238,43 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
           expect(result).toEqual([])
         })
+
+        it('excludes associated tokens when excludeAssociated is true', async () => {
+          const result =
+            await repository.getSummedByTimestampWithProjectsRanges(
+              [
+                {
+                  projectId: 'ethereum',
+                  sinceTimestamp: UnixTime(100),
+                  untilTimestamp: UnixTime(100),
+                },
+              ],
+              null,
+              null,
+              {
+                forSummary: false,
+                excludeAssociated: true,
+                includeRwaRestrictedTokens: true,
+              },
+            )
+
+          expect(result).toEqualUnsorted([
+            {
+              timestamp: UnixTime(100),
+              // Excludes token 'e' (associated token with valueForProject 800.25)
+              value: 8000.5 + 16000.25 + 4000.75 + 2400.5, // a + b + c + d
+              canonical: 8000.5 + 16000.25, // a + b
+              external: 4000.75, // c
+              native: 2400.5, // d
+              ether: 8000.5, // a
+              stablecoin: 16000.25, // b
+              btc: 4000.75, // c
+              rwaRestricted: 0,
+              rwaPublic: 0,
+              other: 2400.5, // d
+            },
+          ])
+        })
       },
     )
 
