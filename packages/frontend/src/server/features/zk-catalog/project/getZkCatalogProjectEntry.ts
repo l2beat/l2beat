@@ -19,6 +19,7 @@ import {
   type TrustedSetupsByProofSystem,
 } from '../utils/getTrustedSetupsWithVerifiersAndAttesters'
 import { getZkCatalogProjectTvs } from '../utils/getZkCatalogProjectTvs'
+import { getZkCatalogTvsSection } from '../utils/getZkCatalogTvsSection'
 
 export interface ProjectZkCatalogEntry {
   name: string
@@ -47,7 +48,7 @@ export interface ProjectZkCatalogEntry {
 export async function getZkCatalogProjectEntry(
   project: Project<
     'display' | 'zkCatalogInfo' | 'statuses',
-    'archivedAt' | 'milestones'
+    'archivedAt' | 'milestones' | 'tvsInfo'
   >,
 ): Promise<ProjectZkCatalogEntry> {
   const [allProjects, allProjectsWithContracts, tvs, contractUtils] =
@@ -58,7 +59,7 @@ export async function getZkCatalogProjectEntry(
       ps.getProjects({
         select: ['contracts'],
       }),
-      get7dTvsBreakdown({ type: 'layer2' }),
+      get7dTvsBreakdown({ type: 'all' }),
       getContractUtils(),
     ])
 
@@ -72,7 +73,6 @@ export async function getZkCatalogProjectEntry(
     project,
     allProjects,
     tvs,
-    contractUtils,
   )
 
   const sortedMilestones =
@@ -109,6 +109,18 @@ export async function getZkCatalogProjectEntry(
   }
 
   const sections: ProjectDetailsSection[] = []
+
+  const zkCatalogTvsSection = getZkCatalogTvsSection(project, allProjects)
+  if (zkCatalogTvsSection) {
+    sections.push({
+      type: 'ZkCatalogTvsSection',
+      props: {
+        id: 'tvs',
+        title: 'Value Secured',
+        ...zkCatalogTvsSection,
+      },
+    })
+  }
 
   if (project.zkCatalogInfo.proofSystemInfo) {
     sections.push({
