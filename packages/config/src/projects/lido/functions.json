@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-11-11T16:40:58.835Z",
+  "lastModified": "2025-11-13T14:47:00.496Z",
   "contracts": {
     "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": {
       "functions": [
@@ -3253,6 +3253,79 @@
             }
           ],
           "timestamp": "2025-11-03T21:10:08.513Z"
+        }
+      ]
+    },
+    "eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24": {
+      "functions": [
+        {
+          "functionName": "reseal",
+          "isPermissioned": true,
+          "likelihood": "mitigated",
+          "ownerDefinitions": [
+            {
+              "path": "@EMERGENCY_PROTECTED_TIMELOCK.governance"
+            }
+          ],
+          "timestamp": "2025-11-13T14:26:01.394Z"
+        },
+        {
+          "functionName": "resume",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@EMERGENCY_PROTECTED_TIMELOCK.governance"
+            }
+          ],
+          "timestamp": "2025-11-13T14:26:01.396Z"
+        }
+      ]
+    },
+    "eth:0x175742c3DDD88B0192df3EcF98f180A79cb259D0": {
+      "functions": [
+        {
+          "functionName": "scheduleProposal",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-11-13T14:22:37.209Z"
+        },
+        {
+          "functionName": "sealableResume",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-11-13T14:22:37.216Z"
+        }
+      ]
+    },
+    "eth:0xf65614d73952Be91ce0aE7Dd9cFf25Ba15bEE2f5": {
+      "functions": [
+        {
+          "functionName": "scheduleProposal",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-11-13T14:47:00.489Z"
+        },
+        {
+          "functionName": "sealableResume",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-11-13T14:47:00.496Z"
         }
       ]
     }
