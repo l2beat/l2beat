@@ -54,7 +54,7 @@ export const immutablezkevm: ScalingProject = {
         'https://reddit.com/r/ImmutableX/',
         'https://instagram.com/lifeatimmutable/',
         'https://linkedin.com/company/immutable-1/',
-        'https://youtube.com/channel/UCR_WlrGou7hm0ACXYpldcuA/featured',
+        'https://youtube.com/channel/UCR_WlrGou7hm0ACXYpldcuA',
       ],
     },
   },
