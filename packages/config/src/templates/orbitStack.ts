@@ -700,7 +700,7 @@ function orbitStackCommon(
       })(),
     milestones: templateVars.milestones ?? [],
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
-    customDa: templateVars.customDa,
+    customDa: postsToDAC(templateVars) ? templateVars.customDa : undefined,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     dataAvailability: extractDAs(daProviders),
     scopeOfAssessment: templateVars.scopeOfAssessment,
