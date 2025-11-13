@@ -2691,6 +2691,20 @@
       "supply": "zero"
     },
     {
+      "name": "HAUST",
+      "coingeckoId": "haust",
+      "address": "0xec3502A9f98f151aF52EE6CB423a0afE7bBF5A19",
+      "symbol": "HAUST",
+      "decimals": 18,
+      "deploymentTimestamp": 1725525707,
+      "coingeckoListingTimestamp": 1761523200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52141/large/chain-logo-200.png?1732643394",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Hegic",
       "coingeckoId": "hegic",
       "address": "0x584bC13c7D411c00c01A62e8019472dE68768430",
