@@ -700,7 +700,7 @@ function orbitStackCommon(
       })(),
     milestones: templateVars.milestones ?? [],
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
-    customDa: templateVars.customDa,
+    customDa: postsToDAC(templateVars) ? templateVars.customDa : undefined,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     dataAvailability: extractDAs(daProviders),
     scopeOfAssessment: templateVars.scopeOfAssessment,
@@ -1110,7 +1110,8 @@ function getDAProviders(
   const isUsingValidBlobstreamWmr =
     wmrValidForBlobstream.includes(wasmModuleRoot)
 
-  if (isUsingValidBlobstreamWmr) {
+  // Only add Celestia if NOT posting to DAC (sequencerVersion !== 0x88)
+  if (isUsingValidBlobstreamWmr && !postsToDAC(templateVars)) {
     if (templateVars.celestiaProofSystemInactive) {
       result.push({
         riskViewDA: RISK_VIEW.DATA_CELESTIA(false),

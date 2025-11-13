@@ -787,7 +787,7 @@ The **Vanguard** is a privileged actor who can always make the first child propo
               },
               {
                 title: 'Vanguard - Kailua Docs',
-                url: 'https://risc0.github.io/kailua/parameters.html#vanguard-advantage',
+                url: 'https://boundless-xyz.github.io/kailua/parameters.html#vanguard-advantage',
               },
             ],
           },

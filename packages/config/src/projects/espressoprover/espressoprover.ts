@@ -13,6 +13,7 @@ export const espressoprover: BaseProject = {
     description:
       'Espresso Light Client prover generates a Plonk proof of the HotShot consenus of Espresso network.',
     links: {
+      websites: ['https://www.espressosys.com/'],
       documentation: [
         'https://docs.espressosys.com/network/learn/the-espresso-network/internal-functionality/light-client',
       ],

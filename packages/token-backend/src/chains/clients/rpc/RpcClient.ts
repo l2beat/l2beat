@@ -17,10 +17,27 @@ const RpcResponseSchema = v.object({
 })
 
 export class RpcClient {
-  constructor(
-    private readonly config: RpcClientConfig,
-    private readonly chain: string,
-  ) {}
+  constructor(private readonly config: RpcClientConfig) {}
+
+  async test(): Promise<{ success: boolean; error?: string }> {
+    try {
+      const response = await this.query('eth_blockNumber', [])
+      return {
+        success: response.result !== undefined && !response.error,
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        return {
+          success: false,
+          error: error.message,
+        }
+      }
+      return {
+        success: false,
+        error: 'Unknown error',
+      }
+    }
+  }
 
   async getDecimals(address: string): Promise<number> {
     const callData = {
@@ -32,7 +49,7 @@ export class RpcClient {
 
     if (!response.result || response.result === '0x') {
       throw new Error(
-        `Could not get decimals for token ${address} on ${this.chain}`,
+        `Could not get decimals for token ${address} for URL ${this.config.url}`,
       )
     }
 
@@ -48,7 +65,7 @@ export class RpcClient {
 
     if (Number.isNaN(decimals)) {
       throw new Error(
-        `Invalid decimals response for token ${address} on ${this.chain}: ${response.result}`,
+        `Invalid decimals response for token ${address} for URL ${this.config.url}: ${response.result}`,
       )
     }
 
@@ -62,11 +79,15 @@ export class RpcClient {
     const blockParam =
       blockNumber === 'latest' ? 'latest' : `0x${blockNumber.toString(16)}`
 
+    return await this.query('eth_call', [callData, blockParam])
+  }
+
+  private async query(method: string, params: unknown[]): Promise<RpcResponse> {
     const body = {
       jsonrpc: '2.0',
       id: 1,
-      method: 'eth_call',
-      params: [callData, blockParam],
+      method,
+      params,
     }
 
     const response = await fetch(this.config.url, {

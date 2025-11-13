@@ -122,6 +122,10 @@ export {
   flatteningHash,
   getHashToBeMatched,
 } from './flatten/utils'
+export {
+  type ContractConfigSchema,
+  type DiscoveryConfigSchema,
+} from './schemas/schemas'
 export { EtherscanClient } from './utils/EtherscanClient'
 export { getErrorMessage } from './utils/getErrorMessage'
 export {

@@ -29,7 +29,11 @@ export const optimism: ScalingProject = opStackL2({
     links: {
       websites: ['https://optimism.io/'],
       bridges: ['https://app.optimism.io'],
-      documentation: ['https://community.optimism.io'],
+      documentation: [
+        'https://docs.optimism.io/',
+        'https://specs.optimism.io/',
+        'https://community.optimism.io',
+      ],
       explorers: [
         'https://optimistic.etherscan.io',
         'https://optimism.blockscout.com/',

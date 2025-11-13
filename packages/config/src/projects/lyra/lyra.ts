@@ -37,6 +37,8 @@ export const lyra: ScalingProject = opStackL2({
         'https://x.com/derivexyz',
         'https://warpcast.com/lyra.eth',
         'https://discord.gg/Derive',
+        'https://youtube.com/@derivexyz',
+        'https://linkedin.com/company/derivelabs',
       ],
     },
   },

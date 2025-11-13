@@ -25,12 +25,14 @@ const NodeColors = v.record(
 )
 
 const NodeHiddenFields = v.record(v.string(), v.array(v.string()))
+const HiddenNodes = v.array(v.string())
 
 const StoredNodeLayout = v.object({
   projectId: v.string(),
   locations: NodeLocations,
   colors: NodeColors.optional(),
   hiddenFields: NodeHiddenFields.optional(),
+  hiddenNodes: HiddenNodes.optional(),
 })
 
 export type NodeLocations = v.infer<typeof NodeLocations>
@@ -53,6 +55,7 @@ export function persistNodeLayout(state: State): void {
         .filter((n) => n.hiddenFields.length > 0)
         .map((n) => [n.id, n.hiddenFields]),
     ),
+    hiddenNodes: state.hidden,
   }
   localStorage.setItem(
     getLayoutStorageKey(state.projectId),

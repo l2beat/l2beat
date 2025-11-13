@@ -7,10 +7,17 @@ interface DiffProps {
 
 export function Diff(props: DiffProps) {
   const grayedOutStyle = { opacity: 0.5 }
+  const contentStyle = {
+    lineHeight: '1.35',
+    whiteSpace: 'pre-wrap',
+    overflowWrap: 'anywhere',
+    wordBreak: 'break-word',
+    maxWidth: '100%',
+  } as const
 
   return (
     <p>
-      <div style={{ lineHeight: '1.35' }}>
+      <div style={contentStyle}>
         {props.diff.key} <br />
         <div style={grayedOutStyle}>
           {props.diff.type ? (

@@ -27,6 +27,7 @@ export const fraxferry: Bridge = {
     slug: 'fraxferry',
     links: {
       websites: ['https://frax.com/'],
+      documentation: ['https://docs.frax.com/'],
       bridges: ['https://mainnet.frax.com/tools/bridge/'],
       repositories: ['https://github.com/FraxFinance/frax-solidity'],
       socialMedia: ['https://twitter.com/fraxfinance'],

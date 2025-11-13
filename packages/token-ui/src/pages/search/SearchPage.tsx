@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { ArrowRightIcon, CoinsIcon } from 'lucide-react'
+import { CoinsIcon, LinkIcon } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
 import { Button } from '~/components/core/Button'
 import {
@@ -28,15 +28,16 @@ import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractToken, DeployedToken } from '~/mock/types'
 import { api } from '~/react-query/trpc'
 import { getDeployedTokenDisplayId } from '~/utils/getDisplayId'
+import type { ChainRecord } from '../../../../database/dist/repositories/ChainRepository'
 
 export function SearchPage() {
   const { search } = useParams()
-  const { data } = api.search.tokens.useQuery(search ?? '', {
+  const { data } = api.search.all.useQuery(search ?? '', {
     enabled: search !== '',
   })
 
   return (
-    <AppLayout>
+    <AppLayout className="space-y-2">
       <Card>
         <CardHeader>
           <CardTitle>Abstract Tokens</CardTitle>
@@ -49,7 +50,7 @@ export function SearchPage() {
           )}
         </CardContent>
       </Card>
-      <Card className="mt-2">
+      <Card>
         <CardHeader>
           <CardTitle>Deployed Tokens</CardTitle>
         </CardHeader>
@@ -61,7 +62,73 @@ export function SearchPage() {
           )}
         </CardContent>
       </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Chains</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {data?.chains ? (
+            <ChainsTable chains={data.chains} />
+          ) : (
+            <LoadingText />
+          )}
+        </CardContent>
+      </Card>
     </AppLayout>
+  )
+}
+
+function ChainsTable({ chains }: { chains: ChainRecord[] }) {
+  if (chains.length === 0) {
+    return (
+      <Empty>
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
+            <LinkIcon />
+          </EmptyMedia>
+          <EmptyTitle>No Chains</EmptyTitle>
+          <EmptyContent>
+            <Button asChild>
+              <Link to="/chains/new">Add new</Link>
+            </Button>
+          </EmptyContent>
+        </EmptyHeader>
+      </Empty>
+    )
+  }
+
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Name</TableHead>
+          <TableHead>Chain ID</TableHead>
+          <TableHead>Explorer URL</TableHead>
+          <TableHead>Aliases</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {chains.map((chain) => {
+          return (
+            <TableRow key={chain.name}>
+              <TableCell>
+                <Link to={`/chains/${chain.name}`} className="underline">
+                  {chain.name}
+                </Link>
+              </TableCell>
+              <TableCell>{chain.chainId}</TableCell>
+              <TableCell>{chain.explorerUrl ?? '-'}</TableCell>
+              <TableCell>
+                {chain.aliases && chain.aliases.length > 0
+                  ? chain.aliases.join(', ')
+                  : '-'}
+              </TableCell>
+            </TableRow>
+          )
+        })}
+      </TableBody>
+    </Table>
   )
 }
 
@@ -89,36 +156,38 @@ function AbstractTokensTable({ tokens }: { tokens: AbstractToken[] }) {
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">Id</TableHead>
+          <TableHead>Issuer</TableHead>
           <TableHead>Symbol</TableHead>
           <TableHead>Category</TableHead>
           <TableHead>Coingecko Id</TableHead>
-          <TableHead>Issuer</TableHead>
-          <TableHead>Icon Url</TableHead>
           <TableHead>Coingecko Listing Timestamp</TableHead>
-          <TableHead />
         </TableRow>
       </TableHeader>
       <TableBody>
         {tokens.map((token) => {
           return (
             <TableRow key={token.id}>
-              <TableCell>{token.id}</TableCell>
-              <TableCell>{token.symbol}</TableCell>
+              <TableCell>
+                <Link to={`/tokens/${token.id}`} className="underline">
+                  {token.id}
+                </Link>
+              </TableCell>
+              <TableCell>{token.issuer ?? 'unknown'}</TableCell>
+              <TableCell>
+                <img
+                  src={token.iconUrl ?? '/images/token-placeholder.png'}
+                  width={24}
+                  height={24}
+                  className="mr-2 inline rounded-full"
+                />
+                <span>{token.symbol}</span>
+              </TableCell>
               <TableCell>{token.category}</TableCell>
               <TableCell>{token.coingeckoId ?? '-'}</TableCell>
-              <TableCell>{token.issuer ?? 'unknown'}</TableCell>
-              <TableCell>{token.iconUrl ?? '-'}</TableCell>
               <TableCell>
                 {token.coingeckoListingTimestamp !== null
                   ? UnixTime.toYYYYMMDD(token.coingeckoListingTimestamp)
                   : '-'}
-              </TableCell>
-              <TableCell>
-                <Button asChild variant="outline">
-                  <Link to={`/tokens/${token.id}`}>
-                    <ArrowRightIcon />
-                  </Link>
-                </Button>
               </TableCell>
             </TableRow>
           )
@@ -151,22 +220,29 @@ function DeployedTokensTable({ tokens }: { tokens: DeployedToken[] }) {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Symbol</TableHead>
           <TableHead>Chain</TableHead>
           <TableHead>Address</TableHead>
+          <TableHead>Symbol</TableHead>
           <TableHead>Abstract Token Id</TableHead>
           <TableHead>Decimals</TableHead>
           <TableHead>Deployment Timestamp</TableHead>
-          <TableHead />
         </TableRow>
       </TableHeader>
       <TableBody>
         {tokens.map((token) => {
           return (
             <TableRow key={getDeployedTokenDisplayId(token)}>
-              <TableCell>{token.symbol}</TableCell>
+              <TableCell>
+                <Link
+                  to={`/tokens/${token.chain}/${token.address}`}
+                  className="underline"
+                >
+                  {token.symbol}
+                </Link>
+              </TableCell>
               <TableCell>{token.chain}</TableCell>
               <TableCell>{token.address}</TableCell>
+              <TableCell>{token.symbol}</TableCell>
               <TableCell>
                 {token.abstractTokenId ? (
                   <Link
@@ -182,13 +258,6 @@ function DeployedTokensTable({ tokens }: { tokens: DeployedToken[] }) {
               <TableCell>{token.decimals}</TableCell>
               <TableCell>
                 {UnixTime.toDate(token.deploymentTimestamp).toISOString()}
-              </TableCell>
-              <TableCell>
-                <Button asChild variant="link">
-                  <Link to={`/tokens/${token.chain}/${token.address}`}>
-                    <ArrowRightIcon />
-                  </Link>
-                </Button>
               </TableCell>
             </TableRow>
           )
