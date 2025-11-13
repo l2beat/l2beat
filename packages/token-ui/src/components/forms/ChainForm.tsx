@@ -170,8 +170,8 @@ export function ChainForm({
                         apiType === 'blockscout') && (
                         <TestApiButton
                           type={apiType}
-                          url={url}
-                          chainId={chainId}
+                          url={url || undefined}
+                          chainId={chainId || undefined}
                         />
                       )}
                     <Button
