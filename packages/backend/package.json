@@ -36,7 +36,8 @@
     "tvs:translate-id": "ts-node ./scripts/tvs/translate-id.ts",
     "anomalies": "ts-node ./scripts/anomalies/anomalies.ts",
     "interop:example": "ts-node ./src/modules/interop/examples/script.ts",
-    "interop:compare": "ts-node ./src/modules/interop/compare/script.ts"
+    "interop:compare": "ts-node ./src/modules/interop/compare/script.ts",
+    "script": "ts-node src/modules/interop/script.ts"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.13.1",
