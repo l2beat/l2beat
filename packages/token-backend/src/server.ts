@@ -27,7 +27,7 @@ function main() {
         coingeckoClient,
         etherscanApiKey: config.etherscanApiKey,
       }),
-      allowMethodOverride: true,
+      allowMethodOverride: true, // Allow POST for GET queries due to large payload
       createContext: ({ req }) =>
         createTRPCContext({
           headers: new Headers(req.headers as Record<string, string>),
