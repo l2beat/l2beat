@@ -218,7 +218,7 @@ export const starknet: ScalingProject = {
       ],
       documentation: [
         'https://docs.starknet.io',
-        'https://starknet.io/cairo-book/',
+        'https://starknet.io/cairo-book',
       ],
       explorers: [
         'https://voyager.online/',
