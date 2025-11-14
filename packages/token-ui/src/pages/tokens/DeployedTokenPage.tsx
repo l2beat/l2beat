@@ -17,7 +17,7 @@ import {
   DeployedTokenSchema,
   setDeployedTokenExistsError,
 } from '~/components/forms/DeployedTokenForm'
-import { LoadingText } from '~/components/LoadingText'
+import { LoadingState } from '~/components/LoadingState'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { useQueryState } from '~/hooks/useQueryState'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -45,7 +45,7 @@ export function DeployedTokenPage() {
   return (
     <AppLayout>
       {data === undefined ? (
-        <LoadingText />
+        <LoadingState className="h-full" />
       ) : (
         <DeployedTokenView token={data} />
       )}

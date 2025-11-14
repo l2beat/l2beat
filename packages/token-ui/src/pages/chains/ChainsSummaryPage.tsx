@@ -15,7 +15,6 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from '~/components/core/Empty'
-import { Spinner } from '~/components/core/Spinner'
 import {
   Table,
   TableCell,
@@ -23,6 +22,7 @@ import {
   TableHeader,
   TableRow,
 } from '~/components/core/Table'
+import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
 import type { ChainApi } from '../../../../database/dist/repositories/ChainRepository'
@@ -37,14 +37,7 @@ export function ChainsSummaryPage() {
         </CardHeader>
         <CardContent className="h-full">
           {isChainsLoading ? (
-            <Empty className="h-full">
-              <EmptyHeader>
-                <EmptyMedia variant="icon">
-                  <Spinner />
-                </EmptyMedia>
-                <EmptyTitle>Loading...</EmptyTitle>
-              </EmptyHeader>
-            </Empty>
+            <LoadingState className="h-full" />
           ) : data?.length === 0 ? (
             <Empty>
               <EmptyHeader>
