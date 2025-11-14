@@ -38,7 +38,7 @@ import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
 import { minLengthCheck, minNumberCheck } from '~/utils/checks'
 import { cn } from '~/utils/cn'
 import { getAbstractTokenDisplayId } from '~/utils/getDisplayId'
-import { parseDateTimePaste } from '~/utils/parseDateTimePaste'
+import { parseDateTimePaste } from '~/utils/parseDate'
 import type {
   ChainApi,
   ChainRecord,

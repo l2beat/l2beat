@@ -23,7 +23,7 @@ import {
 import { Spinner } from '~/components/core/Spinner'
 import { Textarea } from '~/components/core/TextArea'
 import { minLengthCheck, urlCheck } from '~/utils/checks'
-import { parseDatePaste } from '~/utils/parseDateTimePaste'
+import { parseDatePaste } from '~/utils/parseDate'
 import { Checkbox } from '../core/Checkbox'
 
 const categoryValues = ['btc', 'ether', 'stablecoin', 'other'] as const
