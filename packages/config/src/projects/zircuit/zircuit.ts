@@ -14,6 +14,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
+  OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -32,6 +33,7 @@ import {
   safeGetImplementation,
 } from '../../templates/utils'
 import type { ProjectScalingStateValidationCategory } from '../../types'
+import { HARDCODED } from '../../discovery/values/hardcoded'
 
 const discovery = new ProjectDiscovery('zircuit')
 
@@ -126,6 +128,16 @@ export const zircuit: ScalingProject = {
       other: ['https://rollup.codes/zircuit'],
     },
     architectureImage: 'zircuit',
+    liveness: {
+        warnings: {
+          stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+        },
+        explanation: `Zircuit is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
+          HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+        )} or until it gets published. The state root is settled ${formatSeconds(
+          ZIRCUIT_FINALIZATION_PERIOD_SECONDS,
+        )} after it has been posted.`,
+      }
   },
   stage: getStage(
     {
