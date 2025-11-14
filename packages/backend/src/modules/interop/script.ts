@@ -175,6 +175,8 @@ async function main() {
     console.log('saving events', chain.name)
     await db.interopEvent.insertMany(events.map(toDbRecord))
   }
+
+  await db.close()
 }
 
 main().catch((e: unknown) => {
