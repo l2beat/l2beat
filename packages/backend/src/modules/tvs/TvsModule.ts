@@ -9,15 +9,11 @@ import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BlockTimestampIndexer } from './indexers/BlockTimestampIndexer'
 import { CirculatingSupplyAmountIndexer } from './indexers/CirculatingSupplyAmountIndexer'
 import { OnchainAmountIndexer } from './indexers/OnchainAmountIndexer'
-import { ProjectValueIndexer } from './indexers/ProjectValueIndexer'
 import { TokenValueIndexer } from './indexers/TokenValueIndexer'
 import { TvsPriceIndexer } from './indexers/TvsPriceIndexer'
 import { ValueService } from './services/ValueService'
 import { DBStorage } from './tools/DBStorage'
-import {
-  createAmountConfig,
-  generateConfigurationId,
-} from './tools/extractPricesAndAmounts'
+import { createAmountConfig } from './tools/extractPricesAndAmounts'
 import { getTokenSyncRange } from './tools/getTokenSyncRange'
 import { SyncOptimizer } from './tools/SyncOptimizer'
 import { isOnchainAmountConfig, type ProjectTvsConfig } from './types'
@@ -206,38 +202,6 @@ export function initTvsModule({
     })
 
     valueIndexers.push(tokenValueIndexer)
-
-    const { since, until } = getProjectSyncRange(tokensWithRanges)
-
-    const id = generateConfigurationId(
-      [...tokensWithRanges]
-        .sort((a, b) => a.id.localeCompare(b.id))
-        .flatMap((t) => [
-          TokenValueIndexer.idToConfigurationId(t),
-          t.sinceTimestamp.toString(),
-          t.untilTimestamp?.toString() ?? 'undefined',
-        ]),
-    )
-
-    const projectValueIndexer = new ProjectValueIndexer({
-      syncOptimizer,
-      tokens: new Map(project.tokens.map((t) => [t.id, t])),
-      maxTimestampsToProcessAtOnce: 500,
-      parents: [tokenValueIndexer],
-      indexerService,
-      configurations: [
-        {
-          id,
-          minHeight: since,
-          maxHeight: until,
-          properties: { project: project.projectId },
-        },
-      ],
-      db: db,
-      logger,
-    })
-
-    valueIndexers.push(projectValueIndexer)
   }
 
   const tvsProjects = config.tvs.projects
