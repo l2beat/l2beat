@@ -82,38 +82,47 @@ export class DeployedTokenRepository extends BaseRepository {
       return []
     }
 
-    const result = await this.db
-      .selectFrom('DeployedToken')
-      .leftJoin(
-        'AbstractToken',
-        'AbstractToken.id',
-        'DeployedToken.abstractTokenId',
-      )
-      .selectAll('DeployedToken')
-      .select([
-        'AbstractToken.id as AbstractToken_id',
-        'AbstractToken.issuer as AbstractToken_issuer',
-        'AbstractToken.category as AbstractToken_category',
-        'AbstractToken.iconUrl as AbstractToken_iconUrl',
-        'AbstractToken.coingeckoId as AbstractToken_coingeckoId',
-        'AbstractToken.coingeckoListingTimestamp as AbstractToken_coingeckoListingTimestamp',
-        'AbstractToken.symbol as AbstractToken_symbol',
-        'AbstractToken.comment as AbstractToken_comment',
-        'AbstractToken.reviewed as AbstractToken_reviewed',
-      ])
-      .where((eb) =>
-        eb.or(
-          pks.map((pk) =>
-            eb.and([
-              eb('chain', '=', pk.chain),
-              eb('address', '=', pk.address),
-            ]),
-          ),
-        ),
-      )
-      .execute()
+    const BATCH_SIZE = 50
+    const results = []
 
-    return result.map((row) => ({
+    for (let i = 0; i < pks.length; i += BATCH_SIZE) {
+      const batch = pks.slice(i, i + BATCH_SIZE)
+
+      const batchResult = await this.db
+        .selectFrom('DeployedToken')
+        .leftJoin(
+          'AbstractToken',
+          'AbstractToken.id',
+          'DeployedToken.abstractTokenId',
+        )
+        .selectAll('DeployedToken')
+        .select([
+          'AbstractToken.id as AbstractToken_id',
+          'AbstractToken.issuer as AbstractToken_issuer',
+          'AbstractToken.category as AbstractToken_category',
+          'AbstractToken.iconUrl as AbstractToken_iconUrl',
+          'AbstractToken.coingeckoId as AbstractToken_coingeckoId',
+          'AbstractToken.coingeckoListingTimestamp as AbstractToken_coingeckoListingTimestamp',
+          'AbstractToken.symbol as AbstractToken_symbol',
+          'AbstractToken.comment as AbstractToken_comment',
+          'AbstractToken.reviewed as AbstractToken_reviewed',
+        ])
+        .where((eb) =>
+          eb.or(
+            batch.map((pk) =>
+              eb.and([
+                eb('chain', '=', pk.chain),
+                eb('address', '=', pk.address),
+              ]),
+            ),
+          ),
+        )
+        .execute()
+
+      results.push(...batchResult)
+    }
+
+    return results.map((row) => ({
       deployedToken: toRecord({
         symbol: row.symbol,
         comment: row.comment,
