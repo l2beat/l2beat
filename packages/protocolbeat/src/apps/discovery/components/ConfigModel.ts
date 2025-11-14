@@ -189,7 +189,7 @@ export class ContractConfigModel {
   }
 
   setIgnoreMethods(methods: string[]) {
-    return this.patch({ ignoreMethods: methods })
+    return this.patch({ ignoreMethods: undefinedIfEmpty(methods) })
   }
 
   addToIgnoredRelatives(relative: string) {
@@ -201,7 +201,7 @@ export class ContractConfigModel {
   }
 
   setIgnoreRelatives(relatives: string[]) {
-    return this.patch({ ignoreRelatives: relatives })
+    return this.patch({ ignoreRelatives: undefinedIfEmpty(relatives) })
   }
 
   addToIgnoredInWatchMode(method: string) {
@@ -213,7 +213,7 @@ export class ContractConfigModel {
   }
 
   setIgnoreInWatchMode(methods: string[]) {
-    return this.patch({ ignoreInWatchMode: methods })
+    return this.patch({ ignoreInWatchMode: undefinedIfEmpty(methods) })
   }
 
   private patch(patch: Partial<ContractConfigSchema>) {
