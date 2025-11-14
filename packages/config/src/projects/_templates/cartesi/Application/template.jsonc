@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
   "description": "Main dApp contract that escrows assets and executes the verified results (outputs) from off-chain computation. It relies on the {{getOutputsMerkleRootValidator}} contract to validate outputs before releasing assets or triggering on-chain actions. The immutable template hash of the dApp is `{{getTemplateHash}}`.",
   "ignoreMethods": ["wasOutputExecuted"],
   "fields": {

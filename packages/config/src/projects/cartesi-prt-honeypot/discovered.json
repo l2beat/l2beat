@@ -82,7 +82,8 @@
       },
       "implementationNames": {
         "eth:0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c": "Application"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "BottomTournamentFactory",
@@ -188,7 +189,8 @@
       },
       "implementationNames": {
         "eth:0x6CE590b9F0697327f18c601DF6f0baE4a0801B68": "DaveConsensus"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "TopTournamentFactory",
@@ -275,7 +277,8 @@
       "values": { "$immutable": true, "getDeploymentBlockNumber": 22595776 },
       "implementationNames": {
         "eth:0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051": "InputBox"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "ERC20Portal",

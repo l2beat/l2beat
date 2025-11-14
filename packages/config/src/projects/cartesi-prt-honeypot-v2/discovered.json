@@ -1,7 +1,7 @@
 {
   "name": "cartesi-prt-honeypot-v2",
   "timestamp": 1763109405,
-  "configHash": "0x3ea270d6e41ec7318ff026e1463c3f3cff770774610bf37febb7a33b8d4e9d4f",
+  "configHash": "0x35e5569caf8d204dfe642daa1340186cbf26489c0f145e357c45ebf39353c555",
   "entries": [
     {
       "name": "MiddleTournament",
@@ -35,7 +35,8 @@
       "values": { "$immutable": true, "getDeploymentBlockNumber": 23726342 },
       "implementationNames": {
         "eth:0x1b51e2992A2755Ba4D6F7094032DF91991a0Cfac": "InputBox"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "CartesiStateTransition",
@@ -69,7 +70,8 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x367Ff3c21E189645aaf17bDD41D4C186686CfE53": "TopTournament"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "MiddleTournamentFactory",
@@ -366,7 +368,8 @@
       },
       "implementationNames": {
         "eth:0xF0D8374F8446E87e013Ec1435C7245E05f439259": "DaveConsensus"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0xF4554F08Ed918893996DC36428Cb9DCbF2De990E",
@@ -397,7 +400,8 @@
       },
       "implementationNames": {
         "eth:0xfDDF68726a28e418fA0c2a52c3134904a8c3e998": "Application"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "TopTournamentFactory",

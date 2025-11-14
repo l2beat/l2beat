@@ -14,6 +14,8 @@
   "overrides": {
     "eth:0xfdF16a7D9143f5E3B7B056b761a7eF8Ce18dc6eF": { "category": "spam" },
     "eth:0x47c7f40841F842f7691cB9Fd6Cd63673B79dCe79": { "category": "spam" },
-    "eth:0x6ccb8955afFA2aE4A88a4fC30916b41074d1F2B6": { "category": "spam" }
+    "eth:0x6ccb8955afFA2aE4A88a4fC30916b41074d1F2B6": { "category": "spam" },
+    // hide TopTourn in favor of the example
+    "eth:0x367Ff3c21E189645aaf17bDD41D4C186686CfE53": { "category": "spam" }
   }
 }
