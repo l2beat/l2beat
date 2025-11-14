@@ -154,6 +154,25 @@ describe('ContractConfigModel', () => {
       expect(updated.isEmpty()).toEqual(true)
     })
   })
+
+  describe('hasComments', () => {
+    it('returns true when config has comments', () => {
+      const jsonc = `{
+        // This is a comment
+        "ignoreMethods": ["method1"]
+      }`
+      const model = ContractConfigModel.fromRawJsonc(jsonc)
+
+      expect(model.hasComments()).toEqual(true)
+    })
+
+    it('returns false when config has no comments', () => {
+      const jsonc = `{ "ignoreMethods": ["method1"] }`
+      const model = ContractConfigModel.fromRawJsonc(jsonc)
+
+      expect(model.hasComments()).toEqual(false)
+    })
+  })
 })
 
 describe('ConfigModel', () => {
@@ -365,6 +384,40 @@ describe('ConfigModel', () => {
       const model2 = ConfigModel.fromRawJsonc(jsonc)
 
       expect(model1.diff(model2)).toEqual(false)
+    })
+  })
+
+  describe('hasComments', () => {
+    it('returns true when config has top-level comments', () => {
+      const jsonc = `{
+        // Top-level comment
+        "name": "test-project"
+      }`
+      const model = ConfigModel.fromRawJsonc(jsonc)
+
+      expect(model.hasComments()).toEqual(true)
+    })
+
+    it('returns true when config has nested comments in overrides', () => {
+      const jsonc = `{
+        "name": "test-project",
+        "overrides": {
+          "0xContract": {
+            // Comment in override
+            "ignoreMethods": ["method1"]
+          }
+        }
+      }`
+      const model = ConfigModel.fromRawJsonc(jsonc)
+
+      expect(model.hasComments()).toEqual(true)
+    })
+
+    it('returns false when config has no comments', () => {
+      const jsonc = `{ "name": "test-project", "overrides": { "0xContract": { "ignoreMethods": ["method1"] } } }`
+      const model = ConfigModel.fromRawJsonc(jsonc)
+
+      expect(model.hasComments()).toEqual(false)
     })
   })
 
