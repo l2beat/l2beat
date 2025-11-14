@@ -162,6 +162,11 @@ export const cartesiprthoneypotv2: ScalingProject = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT(minChallengePeriodSeconds),
+      description:
+        RISK_VIEW.STATE_FP_INT(minChallengePeriodSeconds).description +
+        `The initial bond for joining the tournament is set to ${utils.formatEther(
+          topLevelTournamentBond,
+        )} ETH.`,
       initialBond: utils.formatEther(topLevelTournamentBond),
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
