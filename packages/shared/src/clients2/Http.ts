@@ -66,6 +66,7 @@ export function makeHttpResponse(
 
 export class MockHttp extends Http {
   private queue: (HttpResponse | 'NETWORK_ERROR')[] = []
+  lastFetch?: { url: string; init: RequestInit }
 
   queueResponse(status: number, body: string, headers = new Headers()) {
     this.queue.push(makeHttpResponse(status, body, headers))
@@ -76,7 +77,8 @@ export class MockHttp extends Http {
     this.queue.push('NETWORK_ERROR')
   }
 
-  override fetch(_url: string, _init: RequestInit) {
+  override fetch(url: string, init: RequestInit) {
+    this.lastFetch = { url, init }
     const res = this.queue.shift()
     if (res === 'NETWORK_ERROR') {
       throw new Error('Failed to fetch: network error.')
