@@ -125,7 +125,6 @@ export const zircuit: ScalingProject = {
       ],
       other: ['https://rollup.codes/zircuit'],
     },
-    architectureImage: 'zircuit',
   },
   stage: getStage(
     {
@@ -302,6 +301,7 @@ export const zircuit: ScalingProject = {
   chainConfig: {
     name: 'zircuit',
     chainId: 48900,
+    gasTokens: ['ETH'],
     coingeckoPlatform: 'zircuit',
     sinceTimestamp: UnixTime(1719936217),
     apis: [
