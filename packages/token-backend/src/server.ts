@@ -27,6 +27,7 @@ function main() {
         coingeckoClient,
         etherscanApiKey: config.etherscanApiKey,
       }),
+      allowMethodOverride: true,
       createContext: ({ req }) =>
         createTRPCContext({
           headers: new Headers(req.headers as Record<string, string>),
