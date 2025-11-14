@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xf955049ad035bc5a94ed6ecded389e4901690e85
+
+# Diff at Fri, 14 Nov 2025 10:01:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ba965abcb8538a66712660114f6cd9a7ffaf80a4 block: 1750257587
+- current timestamp: 1763114428
+
+## Description
+
+Config: description wording.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1750257587 (main branch discovery), not current.
+
+```diff
+    contract DaveConsensus (eth:0x6CE590b9F0697327f18c601DF6f0baE4a0801B68) {
+    +++ description: Contract managing PRT fraud-proof tournaments, application epochs and input validation, as well as settlement and challenge periods. Dispute tournaments are started here and the final, verified computation result (as an `outputsMerkleRoot`) is recorded when they are resolved.
+      description:
+-        "Contract managing PRT fraud-proof tournaments, managing application epochs and input validation, as well as settlement and challenge periods. Dispute tournaments are started here and the final, verified computation result (as an `outputsMerkleRoot`) is recorded when they are resolved."
++        "Contract managing PRT fraud-proof tournaments, application epochs and input validation, as well as settlement and challenge periods. Dispute tournaments are started here and the final, verified computation result (as an `outputsMerkleRoot`) is recorded when they are resolved."
+    }
+```
+
 Generated with discovered.json: 0xd6922745a7e738d42fe92f9c61efe6cb68cd485d
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

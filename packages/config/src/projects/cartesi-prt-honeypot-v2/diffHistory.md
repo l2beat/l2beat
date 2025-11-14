@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x707bdb001fc06f8469c22c76f28be97706adbb06
+Generated with discovered.json: 0x07177b21ccc411bd8c04475ecd6596c69e090469
 
-# Diff at Fri, 14 Nov 2025 08:38:01 GMT:
+# Diff at Fri, 14 Nov 2025 11:13:55 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current timestamp: 1763109405
@@ -13,6 +13,9 @@ Diff against honeypot v1:
 - [InputBox](https://disco.l2beat.com/diff/eth:0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051/eth:0x1b51e2992A2755Ba4D6F7094032DF91991a0Cfac): aesthetic changes.
 - [ERC20Portal](https://disco.l2beat.com/diff/eth:0xc700D6aDd016eECd59d989C028214Eaa0fCC0051/eth:0xACA6586A0Cf05bD831f2501E7B4aea550dA6562D): aesthetic changes.
 - [MultiLevelTournamentFactory](https://disco.l2beat.com/diff/eth:0xA31C2aCfF3464658866960c0fBD3d798310272D7/eth:0xa02997f69Dc5F1A727abE12ee36f87E28BBdEa6b): main change i notice is the additional of a `height` value in many functions.
+- [BottomTournament](https://disco.l2beat.com/diff/eth:0x18256941eC7B661F9F46C228b74e775b581e63f8/eth:0xe6B4444d324E0B403c9C43C5d7c8B2C3d5d02962)
+- [MiddleTournament](https://disco.l2beat.com/diff/eth:0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE/eth:0x0a88360f41D0f643ea63ade00c0A1a795395d2D9)
+- [TopTournament](https://disco.l2beat.com/diff/eth:0x09114973AE4bf3Af3896E4e541082C73f224F8Aa/eth:0x367Ff3c21E189645aaf17bDD41D4C186686CfE53): obligatory bondValue added (gas dependent) that must be paid on joinTournament(), can be used for gas refunds and be claimed by tournament winner
 - No significant changes in the Top/Middle/Bottom tournament factories.
 
 ## Initial discovery
@@ -67,6 +70,12 @@ Diff against honeypot v1:
 
 ```diff
 +   Status: CREATED
+    contract TopTournament_example (eth:0xA2835312696Afa86c969e40831857dbB1412627f)
+    +++ description: Represents the entry point and highest level of a dispute in PRT. Disagreeing validators join this tournament to resolve conflicts over the entire computation trace through a bisection game. The required bond amount for joining the Tournament is calculated from worst case gas estimates and currently is 0.23219805 ETH.
+```
+
+```diff
++   Status: CREATED
     contract ERC20Portal (eth:0xACA6586A0Cf05bD831f2501E7B4aea550dA6562D)
     +++ description: Contract that allows anyone to perform transfers of ERC-20 tokens to Cartesi DApps.
 ```
@@ -86,7 +95,7 @@ Diff against honeypot v1:
 ```diff
 +   Status: CREATED
     contract DaveConsensus (eth:0xF0D8374F8446E87e013Ec1435C7245E05f439259)
-    +++ description: None
+    +++ description: Contract managing PRT fraud-proof tournaments, application epochs and input validation, as well as settlement and challenge periods. Dispute tournaments are started here and the final, verified computation result (as an `outputsMerkleRoot`) is recorded when they are resolved.
 ```
 
 ```diff

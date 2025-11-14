@@ -5,7 +5,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { BigNumber, utils } from 'ethers'
+import { utils } from 'ethers'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -34,7 +34,10 @@ const minChallengePeriodBlocks = discovery.getContractValue<number>(
   'minChallengePeriodBlocks',
 )
 const minChallengePeriodSeconds = minChallengePeriodBlocks * 12
-const topLevelTournamentBond = BigNumber.from('232198050000000000') // in wei
+const topLevelTournamentBond = discovery.getContractValue<number>(
+  'TopTournament_example',
+  'bondValue',
+)
 
 export const cartesiprthoneypotv2: ScalingProject = {
   type: 'layer2',
@@ -146,7 +149,7 @@ export const cartesiprthoneypotv2: ScalingProject = {
           selector: '0x8bca2e0c',
           functionSignature:
             'function settle(uint256 epochNumber, bytes32 outputsMerkleRoot, bytes32[] calldata proof)',
-          sinceTimestamp: UnixTime(1749510479),
+          sinceTimestamp: UnixTime(1762263971),
         },
       },
     ],

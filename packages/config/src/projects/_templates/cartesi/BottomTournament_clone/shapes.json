@@ -3,5 +3,11 @@
     "hash": "0x6b6cbba3169b7d3ac68d947550768c2706ae97d1c4c8bb97d6d0cf6951349236",
     "address": "eth:0x18256941eC7B661F9F46C228b74e775b581e63f8",
     "blockNumber": 22670005
+  },
+  "BottomTournament_v2.sol": {
+    "hash": "0x560658f241ee1523cfa020a0cd045514b915a18257c4df584af7846ed705162e",
+    "address": "eth:0xe6B4444d324E0B403c9C43C5d7c8B2C3d5d02962",
+    "chain": "ethereum",
+    "blockNumber": 23796277
   }
 }

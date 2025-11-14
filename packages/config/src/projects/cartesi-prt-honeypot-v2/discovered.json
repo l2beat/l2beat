@@ -1,13 +1,13 @@
 {
   "name": "cartesi-prt-honeypot-v2",
   "timestamp": 1763109405,
-  "configHash": "0x9d5c2098619b50c3befaf283ed707629447605d49363d5c08da923719cc8ed50",
+  "configHash": "0x3ea270d6e41ec7318ff026e1463c3f3cff770774610bf37febb7a33b8d4e9d4f",
   "entries": [
     {
       "name": "MiddleTournament",
       "address": "eth:0x0a88360f41D0f643ea63ade00c0A1a795395d2D9",
       "type": "Contract",
-      "template": "cartesi/MiddleTournament",
+      "template": "cartesi/MiddleTournament_clone",
       "sourceHashes": [
         "0xc8a4de8f0bd4227203c659054d07e5fa9d219e2368a08706eaa6c3158e5eb18f"
       ],
@@ -16,17 +16,6 @@
       "sinceTimestamp": 1762445519,
       "sinceBlock": 23741349,
       "values": { "$immutable": true },
-      "errors": {
-        "arbitrationResult": "Processing error occurred.",
-        "bondValue": "Processing error occurred.",
-        "canBeEliminated": "Processing error occurred.",
-        "innerTournamentWinner": "Processing error occurred.",
-        "isClosed": "Processing error occurred.",
-        "isFinished": "Processing error occurred.",
-        "timeFinished": "Processing error occurred.",
-        "tournamentArguments": "Processing error occurred.",
-        "tournamentLevelConstants": "Processing error occurred."
-      },
       "implementationNames": {
         "eth:0x0a88360f41D0f643ea63ade00c0A1a795395d2D9": "MiddleTournament"
       }
@@ -69,7 +58,7 @@
       "name": "TopTournament",
       "address": "eth:0x367Ff3c21E189645aaf17bDD41D4C186686CfE53",
       "type": "Contract",
-      "template": "cartesi/TopTournament",
+      "template": "cartesi/TopTournament_clone",
       "sourceHashes": [
         "0x70778e9754ab74f6e22ac503e0ff09adde5117c89924e9f3e6be192af3680e18"
       ],
@@ -78,17 +67,6 @@
       "sinceTimestamp": 1762446467,
       "sinceBlock": 23741427,
       "values": { "$immutable": true },
-      "errors": {
-        "arbitrationResult": "Processing error occurred.",
-        "bondValue": "Processing error occurred.",
-        "canBeEliminated": "Processing error occurred.",
-        "innerTournamentWinner": "Processing error occurred.",
-        "isClosed": "Processing error occurred.",
-        "isFinished": "Processing error occurred.",
-        "timeFinished": "Processing error occurred.",
-        "tournamentArguments": "Processing error occurred.",
-        "tournamentLevelConstants": "Processing error occurred."
-      },
       "implementationNames": {
         "eth:0x367Ff3c21E189645aaf17bDD41D4C186686CfE53": "TopTournament"
       }
@@ -214,6 +192,59 @@
       }
     },
     {
+      "name": "TopTournament_example",
+      "address": "eth:0xA2835312696Afa86c969e40831857dbB1412627f",
+      "type": "Contract",
+      "template": "cartesi/TopTournament",
+      "sourceHashes": [
+        "0x70778e9754ab74f6e22ac503e0ff09adde5117c89924e9f3e6be192af3680e18",
+        "0x70778e9754ab74f6e22ac503e0ff09adde5117c89924e9f3e6be192af3680e18"
+      ],
+      "proxyType": "EIP1167 proxy",
+      "description": "Represents the entry point and highest level of a dispute in PRT. Disagreeing validators join this tournament to resolve conflicts over the entire computation trace through a bisection game. The required bond amount for joining the Tournament is calculated from worst case gas estimates and currently is 0.23219805 ETH.",
+      "sinceTimestamp": 1762562699,
+      "sinceBlock": 23751050,
+      "values": {
+        "$implementation": "eth:0x367Ff3c21E189645aaf17bDD41D4C186686CfE53",
+        "arbitrationResult": [
+          false,
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000"
+        ],
+        "bondValue": "232198050000000000",
+        "bondValueFmt": "0.23219805",
+        "isClosed": false,
+        "isFinished": false,
+        "timeFinished": [false, 0],
+        "tournamentArguments": {
+          "commitmentArgs": {
+            "initialHash": "0x144d45af1181b35f2b11c4b1150d6cb16934c28093707fb97c911ff16b3fe609",
+            "startCycle": 0,
+            "log2step": 44,
+            "height": 48
+          },
+          "level": 0,
+          "levels": 3,
+          "startInstant": 23751050,
+          "allowance": 50700,
+          "maxAllowance": 50700,
+          "matchEffort": 2300,
+          "provider": "eth:0xF0D8374F8446E87e013Ec1435C7245E05f439259"
+        },
+        "tournamentLevelConstants": {
+          "_maxLevel": 3,
+          "_level": 0,
+          "_log2step": 44,
+          "_height": 48
+        }
+      },
+      "implementationNames": {
+        "eth:0xA2835312696Afa86c969e40831857dbB1412627f": "TopTournament",
+        "eth:0x367Ff3c21E189645aaf17bDD41D4C186686CfE53": "TopTournament"
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
+    },
+    {
       "address": "eth:0xA7Dd0A6AF60ae9Accc7533d016dc7B68Db3324b1",
       "type": "EOA",
       "proxyType": "EOA"
@@ -289,7 +320,7 @@
       "name": "BottomTournament",
       "address": "eth:0xe6B4444d324E0B403c9C43C5d7c8B2C3d5d02962",
       "type": "Contract",
-      "template": "cartesi/BottomTournament",
+      "template": "cartesi/BottomTournament_clone",
       "sourceHashes": [
         "0x560658f241ee1523cfa020a0cd045514b915a18257c4df584af7846ed705162e"
       ],
@@ -298,17 +329,6 @@
       "sinceTimestamp": 1762445471,
       "sinceBlock": 23741346,
       "values": { "$immutable": true },
-      "errors": {
-        "arbitrationResult": "Processing error occurred.",
-        "bondValue": "Processing error occurred.",
-        "canBeEliminated": "Processing error occurred.",
-        "innerTournamentWinner": "Processing error occurred.",
-        "isClosed": "Processing error occurred.",
-        "isFinished": "Processing error occurred.",
-        "timeFinished": "Processing error occurred.",
-        "tournamentArguments": "Processing error occurred.",
-        "tournamentLevelConstants": "Processing error occurred."
-      },
       "implementationNames": {
         "eth:0xe6B4444d324E0B403c9C43C5d7c8B2C3d5d02962": "BottomTournament"
       }
@@ -317,10 +337,13 @@
       "name": "DaveConsensus",
       "address": "eth:0xF0D8374F8446E87e013Ec1435C7245E05f439259",
       "type": "Contract",
+      "template": "cartesi/DaveConsensus",
       "sourceHashes": [
         "0x8ac2d62859fb202129c58e8e04fab24de739b3f91de2dec7c98c012ad2466e89"
       ],
       "proxyType": "immutable",
+      "description": "Contract managing PRT fraud-proof tournaments, application epochs and input validation, as well as settlement and challenge periods. Dispute tournaments are started here and the final, verified computation result (as an `outputsMerkleRoot`) is recorded when they are resolved.",
+      "ignoreInWatchMode": ["canSettle", "getCurrentSealedEpoch"],
       "sinceTimestamp": 1762562699,
       "sinceBlock": 23751050,
       "values": {
@@ -550,6 +573,62 @@
       "function instantiateMiddle(bytes32 _initialHash, bytes32 _contestedCommitmentOne, bytes32 _contestedFinalStateOne, bytes32 _contestedCommitmentTwo, bytes32 _contestedFinalStateTwo, uint64 _allowance, uint256 _startCycle, uint64 _level, address _provider) returns (address)",
       "function instantiateTop(bytes32 _initialHash, address _provider) returns (address)"
     ],
+    "eth:0xA2835312696Afa86c969e40831857dbB1412627f": [
+      "error BothClocksHaveNotTimedOut()",
+      "error ChildTournamentCannotBeEliminated()",
+      "error ChildTournamentMustBeEliminated()",
+      "error ChildTournamentNotFinished()",
+      "error ClockNotTimedOut()",
+      "error CommitmentFinalStateMismatch(bytes32 received, bytes32 expected)",
+      "error CommitmentProofWrongSize(uint256 received, uint256 expected)",
+      "error CommitmentStateMismatch(bytes32 received, bytes32 expected)",
+      "error IncorrectAgreeState(bytes32 initialState, bytes32 agreeState)",
+      "error InsufficientBond()",
+      "error InvalidContestedFinalState(bytes32 contestedFinalStateOne, bytes32 contestedFinalStateTwo, bytes32 finalState)",
+      "error InvalidTournamentWinner(bytes32 winner)",
+      "error InvalidWinnerCommitment(uint8 winnerCommitment)",
+      "error LengthMismatch(uint64 treeHeight, uint64 siblingsLength)",
+      "error NoWinner()",
+      "error NotImplemented()",
+      "error ReentrancyDetected()",
+      "error TournamentFailedNoWinner()",
+      "error TournamentIsClosed()",
+      "error TournamentIsFinished()",
+      "error TournamentNotFinished()",
+      "error WrongChildren(uint256 commitment, bytes32 parent, bytes32 left, bytes32 right)",
+      "error WrongFinalState(uint256 commitment, bytes32 computed, bytes32 claimed)",
+      "error WrongNodesForStep()",
+      "error WrongTournamentWinner(bytes32 commitmentRoot, bytes32 winner)",
+      "event CommitmentJoined(bytes32 commitment, bytes32 finalStateHash, address indexed submitter)",
+      "event MatchAdvanced(bytes32 indexed matchIdHash, bytes32 otherParent, bytes32 leftNode)",
+      "event MatchCreated(bytes32 indexed matchIdHash, bytes32 indexed one, bytes32 indexed two, bytes32 leftOfTwo)",
+      "event MatchDeleted(bytes32 indexed matchIdHash, bytes32 indexed one, bytes32 indexed two, uint8 reason, uint8 winnerCommitment)",
+      "event NewInnerTournament(bytes32 indexed matchIdHash, address indexed childTournament)",
+      "event PartialBondRefund(address indexed recipient, uint256 value, bool indexed success, bytes ret)",
+      "function advanceMatch(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId, bytes32 _leftNode, bytes32 _rightNode, bytes32 _newLeftNode, bytes32 _newRightNode)",
+      "function arbitrationResult() view returns (bool, bytes32, bytes32)",
+      "function bondValue() view returns (uint256)",
+      "function canBeEliminated() pure returns (bool)",
+      "function canWinMatchByTimeout(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId) view returns (bool)",
+      "function eliminateInnerTournament(address _childTournament)",
+      "function eliminateMatchByTimeout(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId)",
+      "function getCommitment(bytes32 _commitmentRoot) view returns (tuple(uint64 allowance, uint64 startInstant), bytes32)",
+      "function getMatch(bytes32 _matchIdHash) view returns (tuple(bytes32 otherParent, bytes32 leftNode, bytes32 rightNode, uint256 runningLeafPosition, uint64 currentHeight, bool isInit))",
+      "function getMatchCycle(bytes32 _matchIdHash) view returns (uint256)",
+      "function innerTournamentWinner() pure returns (bool, bytes32, bytes32, tuple(uint64 allowance, uint64 startInstant))",
+      "function isClosed() view returns (bool)",
+      "function isFinished() view returns (bool)",
+      "function joinTournament(bytes32 _finalState, bytes32[] _proof, bytes32 _leftNode, bytes32 _rightNode) payable",
+      "function sealInnerMatchAndCreateInnerTournament(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId, bytes32 _leftLeaf, bytes32 _rightLeaf, bytes32 _agreeHash, bytes32[] _agreeHashProof)",
+      "function sealLeafMatch(tuple(bytes32 commitmentOne, bytes32 commitmentTwo), bytes32, bytes32, bytes32, bytes32[]) pure",
+      "function timeFinished() view returns (bool, uint64)",
+      "function tournamentArguments() view returns (tuple(tuple(bytes32 initialHash, uint256 startCycle, uint64 log2step, uint64 height) commitmentArgs, uint64 level, uint64 levels, uint64 startInstant, uint64 allowance, uint64 maxAllowance, uint64 matchEffort, address provider))",
+      "function tournamentLevelConstants() view returns (uint64 _maxLevel, uint64 _level, uint64 _log2step, uint64 _height)",
+      "function tryRecoveringBond() returns (bool)",
+      "function winInnerTournament(address _childTournament, bytes32 _leftNode, bytes32 _rightNode)",
+      "function winLeafMatch(tuple(bytes32 commitmentOne, bytes32 commitmentTwo), bytes32, bytes32, bytes) pure",
+      "function winMatchByTimeout(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId, bytes32 _leftNode, bytes32 _rightNode)"
+    ],
     "eth:0xACA6586A0Cf05bD831f2501E7B4aea550dA6562D": [
       "constructor(address inputBox)",
       "error ERC20TransferFailed()",
@@ -727,19 +806,21 @@
   },
   "usedTemplates": {
     "cartesi/Application": "0x25cf6358cdb4ce6f1ad6666a17c67fa6597c997ad826e59ea5d26b4e22371d98",
-    "cartesi/BottomTournament": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "cartesi/BottomTournament_clone": "0x5e2031ecddb58d746b76b12f287e57e33f48d7b509f6409fcee1f5b8f1e19070",
     "cartesi/BottomTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
     "cartesi/CanonicalTournamentParametersProvider": "0x8364633bedcaf40a3dffcf8d3f6a21ef89b781e066a844406cde84f2538e8ca3",
     "cartesi/CartesiStateTransition": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "cartesi/DaveConsensus": "0xada999c77c97d3602c1a6045a54d53e8a0393b1726ad34bda9ba2b71d6662384",
     "cartesi/ERC20Portal": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "cartesi/InputBox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "cartesi/MiddleTournament": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "cartesi/MiddleTournament_clone": "0x5e2031ecddb58d746b76b12f287e57e33f48d7b509f6409fcee1f5b8f1e19070",
     "cartesi/MiddleTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
     "cartesi/MultiLevelTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
-    "cartesi/TopTournament": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "cartesi/TopTournament": "0xbd083fb1c65455271f875f433e772fdecce43eb614fc3d12775dc903854e6905",
+    "cartesi/TopTournament_clone": "0x5e2031ecddb58d746b76b12f287e57e33f48d7b509f6409fcee1f5b8f1e19070",
     "cartesi/TopTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 23796277 },
-  "permissionsConfigHash": "0x1d8a3eed0852af04fb8f40ea38ec60451134690ac189dfe1aed32388b71ea5cb"
+  "permissionsConfigHash": "0xb74b86ac9276383afaab7b494020f9d9ec8d483519b16e24e5a40b58fa09ed70"
 }
