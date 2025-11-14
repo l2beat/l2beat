@@ -157,5 +157,5 @@ function BadgeWrapper(props: {
 }
 
 function canModifyField(field: Field) {
-  return !field.name.startsWith('$')
+  return !field.name.startsWith('$') && !field.handler
 }

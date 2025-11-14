@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { writeTemplateFile } from '../../../api/api'
+import { formatJson } from '../../../utils/formatJson'
 import { toggleInList } from '../../../utils/toggleInList'
 import { ContractConfigModel } from '../components/ConfigModel'
 
@@ -29,7 +30,7 @@ export function useTemplateModel({ templateId, files }: Props) {
     const updated = toggleInList(fieldName, current)
     const newModel = templateModel.setIgnoreMethods(updated)
     setTemplateModel(newModel)
-    saveMutation.mutate(newModel.toString())
+    saveModelContents(newModel)
   }
 
   const toggleIgnoreRelatives = (fieldName: string) => {
@@ -37,7 +38,7 @@ export function useTemplateModel({ templateId, files }: Props) {
     const updated = toggleInList(fieldName, current)
     const newModel = templateModel.setIgnoreRelatives(updated)
     setTemplateModel(newModel)
-    saveMutation.mutate(newModel.toString())
+    saveModelContents(newModel)
   }
 
   const toggleIgnoreInWatchMode = (fieldName: string) => {
@@ -45,7 +46,7 @@ export function useTemplateModel({ templateId, files }: Props) {
     const updated = toggleInList(fieldName, current)
     const newModel = templateModel.setIgnoreInWatchMode(updated)
     setTemplateModel(newModel)
-    saveMutation.mutate(newModel.toString())
+    saveModelContents(newModel)
   }
 
   const saveMutation = useMutation({
@@ -62,11 +63,19 @@ export function useTemplateModel({ templateId, files }: Props) {
     },
   })
 
+  const saveModelContents = (model: ContractConfigModel) => {
+    if (model.hasComments()) {
+      saveMutation.mutate(model.toString())
+    } else {
+      saveMutation.mutate(formatJson(model.peek()))
+    }
+  }
+
   const saveRaw = useCallback(
     (content: string) => {
       const newModel = ContractConfigModel.fromRawJsonc(content)
       setTemplateModel(newModel)
-      saveMutation.mutate(newModel.toString())
+      saveModelContents(newModel)
     },
     [templateId],
   )

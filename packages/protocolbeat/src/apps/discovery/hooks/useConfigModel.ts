@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { updateConfigFile } from '../../../api/api'
+import { formatJson } from '../../../utils/formatJson'
 import { toggleInList } from '../../../utils/toggleInList'
 import { ConfigModel } from '../components/ConfigModel'
 
@@ -25,7 +26,7 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     const updated = toggleInList(fieldName, current)
     const newModel = configModel.setIgnoreMethods(selectedAddress, updated)
     setConfigModel(newModel)
-    saveMutation.mutate(newModel.toString())
+    saveModelContents(newModel)
   }
 
   const toggleIgnoreRelatives = (fieldName: string) => {
@@ -33,7 +34,7 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     const updated = toggleInList(fieldName, current)
     const newModel = configModel.setIgnoreRelatives(selectedAddress, updated)
     setConfigModel(newModel)
-    saveMutation.mutate(newModel.toString())
+    saveModelContents(newModel)
   }
 
   const toggleIgnoreInWatchMode = (fieldName: string) => {
@@ -41,7 +42,7 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     const updated = toggleInList(fieldName, current)
     const newModel = configModel.setIgnoreInWatchMode(selectedAddress, updated)
     setConfigModel(newModel)
-    saveMutation.mutate(newModel.toString())
+    saveModelContents(newModel)
   }
 
   const configString = useMemo(() => {
@@ -59,11 +60,19 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     },
   })
 
+  const saveModelContents = (model: ConfigModel) => {
+    if (model.hasComments()) {
+      saveMutation.mutate(model.toString())
+    } else {
+      saveMutation.mutate(formatJson(model.peek()))
+    }
+  }
+
   const saveRaw = useCallback(
     (configString: string) => {
       const newModel = ConfigModel.fromRawJsonc(configString)
       setConfigModel(newModel)
-      saveMutation.mutate(newModel.toString())
+      saveModelContents(newModel)
     },
     [project],
   )

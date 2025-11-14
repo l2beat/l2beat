@@ -30,6 +30,10 @@ export class ConfigModel {
     return cloned
   }
 
+  hasComments(): boolean {
+    return hasCommentsRecursive(this.config)
+  }
+
   hasOverrideDefinition(id: string, key: string) {
     return this.overrides[id]?.hasDefinition(key) ?? false
   }
@@ -163,6 +167,10 @@ export class ContractConfigModel {
     )
   }
 
+  hasComments(): boolean {
+    return hasCommentsRecursive(this.config)
+  }
+
   peek() {
     return clone(this.config)
   }
@@ -255,4 +263,29 @@ export class ContractConfigModel {
 
 function undefinedIfEmpty<T>(arr: T[]): T[] | undefined {
   return arr.length === 0 ? undefined : arr
+}
+
+function hasCommentsRecursive(obj: unknown): boolean {
+  if (obj === null || obj === undefined) {
+    return false
+  }
+
+  if (typeof obj !== 'object') {
+    return false
+  }
+
+  // Pretty lame but we always call this function with what we get from parser, so it's fine
+  // Yes, each comment is a symbol.
+  const symbols = Object.getOwnPropertySymbols(obj)
+  if (symbols.length > 0) {
+    return true
+  }
+
+  for (const value of Object.values(obj)) {
+    if (hasCommentsRecursive(value)) {
+      return true
+    }
+  }
+
+  return false
 }
