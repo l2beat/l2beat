@@ -880,7 +880,7 @@ The Kailua state validation system is primarily optimistically resolved, so no v
               },
               {
                 category: 'Funds can be frozen if',
-                text: 'in non-optimistic mode, the SuccinctGateway is unable to route proof verification to a valid verifier.',
+                text: 'in non-optimistic mode, the SP1VerifierGateway is unable to route proof verification to a valid verifier.',
               },
             ],
           },
