@@ -226,16 +226,20 @@ export function AddDeployedToken() {
               data: abstractTokens,
               loading: areAbstractTokensLoading,
             }}
-            autofill={{
-              symbol: true,
-              decimals: !!chainRecord?.apis?.some((api) =>
-                fieldToDataSource.decimals.includes(api.type),
-              ),
-              deploymentTimestamp: !!chainRecord?.apis?.some((api) =>
-                fieldToDataSource.deploymentTimestamp.includes(api.type),
-              ),
-              abstractTokenId: true,
-            }}
+            autofill={
+              chainRecord
+                ? {
+                    symbol: true,
+                    decimals: !!chainRecord.apis?.some((api) =>
+                      fieldToDataSource.decimals.includes(api.type),
+                    ),
+                    deploymentTimestamp: !!chainRecord.apis?.some((api) =>
+                      fieldToDataSource.deploymentTimestamp.includes(api.type),
+                    ),
+                    abstractTokenId: true,
+                  }
+                : undefined
+            }
           >
             <div className="flex flex-col gap-4">
               <div className="flex gap-2">
