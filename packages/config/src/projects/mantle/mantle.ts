@@ -35,6 +35,7 @@ export const mantle: ScalingProject = opStackL2({
         'https://medium.com/0xmantle',
         'https://t.me/mantlenetwork',
       ],
+      other: ['https://growthepie.com/chains/mantle'],
     },
   },
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'FBTC'],
