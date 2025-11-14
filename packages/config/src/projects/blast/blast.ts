@@ -30,7 +30,11 @@ export const blast: ScalingProject = opStackL2({
         'https://blastexplorer.io',
       ],
       repositories: ['https://github.com/blast-io'],
-      socialMedia: ['https://twitter.com/blast', 'https://discord.gg/blast-l2'],
+      socialMedia: [
+        'https://twitter.com/blast',
+        'https://discord.com/invite/blast-l2',
+        'https://discord.com/invite/blastdevelopers',
+      ],
       other: ['https://rollup.codes/blast'],
     },
     tvsWarning: {

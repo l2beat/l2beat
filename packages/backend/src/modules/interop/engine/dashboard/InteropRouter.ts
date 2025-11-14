@@ -33,6 +33,12 @@ export function createInteropRouter(
     })
   })
 
+  router.get('/interop/configs', async (ctx) => {
+    const configs = await db.interopConfig.getAllLatest()
+
+    ctx.body = configs
+  })
+
   router.get('/interop.json', async (ctx) => {
     const events = await db.interopEvent.getStats()
     const messages = await db.interopMessage.getStats()

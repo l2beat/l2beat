@@ -5,10 +5,14 @@ export interface BlockscoutClientConfig {
 }
 
 export const ContractCreationSchema = v.object({
-  timestamp: v.string().transform(Number),
+  txHash: v.string(),
 })
 
 export const ContractCreationResultSchema = v.array(ContractCreationSchema)
+
+export const TransactionInfoSchema = v.object({
+  timeStamp: v.string().transform(Number),
+})
 
 export const BlockscoutResponseSchema = v.object({
   status: v.string(),

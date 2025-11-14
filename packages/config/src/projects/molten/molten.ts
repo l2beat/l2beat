@@ -4,6 +4,7 @@ import { BADGES } from '../../common/badges'
 import { ESPRESSO } from '../../common/sequencing'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('molten')
@@ -41,6 +42,7 @@ export const molten: ScalingProject = orbitStackL3({
     sinceBlock: 5305699,
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpNR57blEA=',
   },
+  customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
   associatedTokens: ['MOLTEN'],
   chainConfig: {
     name: 'molten',

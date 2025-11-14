@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "HAUST",
+      "address": "0xec3502A9f98f151aF52EE6CB423a0afE7bBF5A19"
+    },
+    {
       "symbol": "USTB",
       "address": "0x43415eB6ff9DB7E26A15b704e7A3eDCe97d31C4e",
       "category": "rwaRestricted" // reason: whitelist
@@ -2257,6 +2261,21 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "syrupUSDC",
+      "address": "0x41CA7586cC1311807B4605fBB748a3B8862b42b5",
+      "source": "external",
+      "category": "stablecoin",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
     {
       "symbol": "EARNM",
       "address": "0x3e62fed35c97145e6b445704b8ce74b2544776a9",

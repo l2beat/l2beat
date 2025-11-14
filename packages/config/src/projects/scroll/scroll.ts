@@ -24,6 +24,7 @@ import { BADGES } from '../../common/badges'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { PROOFS } from '../../common/proofSystems'
 import { getStage } from '../../common/stages/getStage'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -631,6 +632,7 @@ export const scroll: ScalingProject = {
       ...discovery.getDiscoveredContracts(),
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    zkProgramHashes: getScrollVKeys().map((el) => ZK_PROGRAM_HASHES(el)),
   },
   permissions: {
     ...discovery.getDiscoveredPermissions(),
@@ -732,4 +734,27 @@ export const scroll: ScalingProject = {
     },
   ],
   discoveryInfo: getDiscoveryInfo([discovery]),
+}
+
+function getScrollVKeys(): string[] {
+  const vKeys = new Set<string>()
+  const verifiers = discovery.getContractValue<
+    { startBatchIndex: number; verifier: string }[]
+  >('MultipleVersionRollupVerifier', 'latestVerifier')
+  for (const verifier of verifiers) {
+    for (const digestType of [
+      'verifierDigest',
+      'verifierDigest1',
+      'verifierDigest2',
+    ]) {
+      const digest = discovery.getContractValueOrUndefined<string>(
+        verifier.verifier,
+        digestType,
+      )
+      if (digest !== undefined) {
+        vKeys.add(digest)
+      }
+    }
+  }
+  return Array.from(vKeys)
 }

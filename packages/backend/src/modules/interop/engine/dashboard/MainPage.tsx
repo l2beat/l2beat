@@ -430,65 +430,70 @@ function MainPageLayout(props: {
   )
 
   return (
-    <DataTablePage
-      showHome={false}
-      tables={[
-        {
-          title: 'Events',
-          table: eventsTable,
-          tableId: 'eventsTable',
-          dataTableOptions: {
-            order: [[0, 'asc']],
+    <>
+      <a href="/interop/configs" target="_blank">
+        Automated configs
+      </a>
+      <DataTablePage
+        showHome={false}
+        tables={[
+          {
+            title: 'Events',
+            table: eventsTable,
+            tableId: 'eventsTable',
+            dataTableOptions: {
+              order: [[0, 'asc']],
+            },
           },
-        },
-        {
-          title: 'Messages',
-          table: messagesTable,
-          tableId: 'messagesTable',
-          dataTableOptions: {
-            order: [[0, 'asc']],
+          {
+            title: 'Messages',
+            table: messagesTable,
+            tableId: 'messagesTable',
+            dataTableOptions: {
+              order: [[0, 'asc']],
+            },
           },
-        },
-        {
-          title: 'Transfers',
-          table: transfersTable,
-          tableId: 'transfersTable',
-          dataTableOptions: {
-            order: [[0, 'asc']],
+          {
+            title: 'Transfers',
+            table: transfersTable,
+            tableId: 'transfersTable',
+            dataTableOptions: {
+              order: [[0, 'asc']],
+            },
           },
-        },
-        {
-          title: 'Missing Tokens',
-          table: missingTokensTable,
-          tableId: 'missingTokensTable',
-          dataTableOptions: {
-            order: [[2, 'desc']],
-            pageLength: 25,
+          {
+            title: 'Missing Tokens',
+            table: missingTokensTable,
+            tableId: 'missingTokensTable',
+            dataTableOptions: {
+              order: [[2, 'desc']],
+              pageLength: 25,
+            },
           },
-        },
-      ]}
-      footer={
-        <>
+        ]}
+        footer={
           <>
-            <h3> Apps for message types </h3>
-            {props.messages.map(
-              (m) =>
-                m.knownApps.length > 0 && (
-                  <div key={m.type}>
-                    <h4>{m.type}</h4>
-                    <ul>
-                      {m.knownApps.map((app) => (
-                        <li key={app}>{app}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ),
-            )}
+            <>
+              <h3> Apps for message types </h3>
+              {props.messages.map(
+                (m) =>
+                  m.knownApps.length > 0 && (
+                    <div key={m.type}>
+                      <h4>{m.type}</h4>
+                      <ul>
+                        {m.knownApps.map((app) => (
+                          <li key={app}>{app}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ),
+              )}
+            </>
+            <ProcessorsStatusTable processors={props.status} />
           </>
-          <ProcessorsStatusTable processors={props.status} />
-        </>
-      }
-    />
+        }
+      />
+    </>
   )
 }
 
