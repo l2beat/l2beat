@@ -5,7 +5,7 @@ import { findTemplateId } from '../../../utils/findTemplateId'
 import { useProjectData } from './useProjectData'
 
 export function useCurrentTemplate() {
-  const { project, selectedAddress, projectResponse } = useProjectData()
+  const { selectedAddress, projectResponse } = useProjectData()
 
   const templateId = findTemplateId(
     projectResponse.data?.entries ?? [],
@@ -13,7 +13,7 @@ export function useCurrentTemplate() {
   )
 
   const templateResponse = useQuery({
-    queryKey: ['projects', project, 'template', templateId, selectedAddress],
+    queryKey: ['template', templateId],
     queryFn: () => {
       if (!templateId) {
         return null
