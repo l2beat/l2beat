@@ -10,14 +10,8 @@ import {
   CardHeader,
   CardTitle,
 } from '~/components/core/Card'
-import {
-  Empty,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-} from '~/components/core/Empty'
 import { Separator } from '~/components/core/Separator'
-import { Spinner } from '~/components/core/Spinner'
+import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractToken, DeployedToken } from '~/mock/types'
 import { api } from '~/react-query/trpc'
@@ -44,14 +38,7 @@ export function TokensSummaryPage() {
           <CardContent className="h-full">
             <div className="flex h-full flex-col gap-2">
               {isAbstractTokensLoading ? (
-                <Empty className="h-full">
-                  <EmptyHeader>
-                    <EmptyMedia variant="icon">
-                      <Spinner />
-                    </EmptyMedia>
-                    <EmptyTitle>Loading...</EmptyTitle>
-                  </EmptyHeader>
-                </Empty>
+                <LoadingState className="h-full" />
               ) : (
                 <>
                   {data?.abstractTokens.map((token) => (

@@ -13,17 +13,11 @@ import {
   CardTitle,
 } from '~/components/core/Card'
 import {
-  Empty,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-} from '~/components/core/Empty'
-import { Spinner } from '~/components/core/Spinner'
-import {
   DeployedTokenForm,
   DeployedTokenSchema,
   setDeployedTokenExistsError,
 } from '~/components/forms/DeployedTokenForm'
+import { LoadingState } from '~/components/LoadingState'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { useQueryState } from '~/hooks/useQueryState'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -51,14 +45,7 @@ export function DeployedTokenPage() {
   return (
     <AppLayout>
       {data === undefined ? (
-        <Empty className="h-full">
-          <EmptyHeader>
-            <EmptyMedia variant="icon">
-              <Spinner />
-            </EmptyMedia>
-            <EmptyTitle>Loading...</EmptyTitle>
-          </EmptyHeader>
-        </Empty>
+        <LoadingState className="h-full" />
       ) : (
         <DeployedTokenView token={data} />
       )}

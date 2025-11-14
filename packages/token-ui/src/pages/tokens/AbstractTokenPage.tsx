@@ -20,11 +20,11 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from '~/components/core/Empty'
-import { Spinner } from '~/components/core/Spinner'
 import {
   AbstractTokenForm,
   AbstractTokenSchema,
 } from '~/components/forms/AbstractTokenForm'
+import { LoadingState } from '~/components/LoadingState'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractTokenWithDeployedTokens } from '~/mock/types'
@@ -48,14 +48,7 @@ export function AbstractTokenPage() {
       {data ? (
         <AbstractTokenView token={data} />
       ) : (
-        <Empty className="h-full">
-          <EmptyHeader>
-            <EmptyMedia variant="icon">
-              <Spinner />
-            </EmptyMedia>
-            <EmptyTitle>Loading...</EmptyTitle>
-          </EmptyHeader>
-        </Empty>
+        <LoadingState className="h-full" />
       )}
     </AppLayout>
   )
@@ -161,14 +154,7 @@ function AbstractTokenView({
             </CardHeader>
             <CardContent>
               {isLoadingSuggestions ? (
-                <Empty>
-                  <EmptyHeader>
-                    <EmptyMedia variant="icon">
-                      <Spinner />
-                    </EmptyMedia>
-                    <EmptyTitle>Loading...</EmptyTitle>
-                  </EmptyHeader>
-                </Empty>
+                <LoadingState />
               ) : suggestions && suggestions.length !== 0 ? (
                 <div className="-mx-6 flex flex-col gap-2">
                   {suggestions.map((suggestion) => {
