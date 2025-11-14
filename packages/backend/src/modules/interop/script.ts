@@ -1,7 +1,7 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
+import { createDatabase, type InteropEventRecord } from '@l2beat/database'
 import { type EVMLog, HttpClient, RpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import { writeFileSync } from 'fs'
 import { encodeEventTopics, parseAbi } from 'viem'
 import { logToViemLog } from './engine/capture/InteropBlockProcessor'
 import { OpStackPlugin } from './plugins/opstack/opstack'
@@ -51,6 +51,15 @@ const ABI = parseAbi([
 async function main() {
   const env = getEnv()
 
+  const db = createDatabase({
+    connectionString:
+      'postgresql://postgres:password@localhost:5432/l2beat_local',
+    application_name: 'EVENT-SCRIPT',
+    min: 2,
+    max: 10,
+    keepAlive: false,
+  })
+
   const chains = [
     { name: 'ethereum', start: 23682910, end: 23783007 + 100 },
     { name: 'base', start: 37474926, end: 38079726 + 100 },
@@ -65,7 +74,9 @@ async function main() {
       retryStrategy: 'RELIABLE',
       url: env.string(`${chain.name.toUpperCase()}_RPC_URL`),
       chain: chain.name,
-      callsPerMinute: 120,
+      callsPerMinute: env.integer(
+        `${chain.name.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
+      ),
     })
 
     const uniqueBlocks = new Set<number>()
@@ -97,53 +108,72 @@ async function main() {
 
     const events: InteropEvent[] = []
 
-    for (const b of blocks) {
-      console.log('Capturing', chain.name, 'block: ', b)
-      const block = await rpc.getBlockWithTransactions(b)
-      const logs = await rpc.getLogs(b, b)
+    const BATCH_SIZE = 100
 
-      for (const tx of block.transactions) {
-        assert(tx.hash)
-        const txLogs = logs
-          .filter((l) => l.transactionHash === tx.hash)
-          .map(logToViemLog)
+    for (let i = 0; i < blocks.length; i += BATCH_SIZE) {
+      const batch = blocks.slice(i, i + BATCH_SIZE)
 
-        const ctx = {
-          timestamp: block.timestamp,
-          chain: chain.name,
-          blockNumber: block.number,
-          blockHash: block.hash,
-          txHash: tx.hash,
-          txValue: tx.value,
-          txTo: tx.to ? Address32.from(tx.to) : undefined,
-          txFrom: tx.from ? Address32.from(tx.from) : undefined,
-          txData: (tx.data ?? '') as string,
-          logIndex: -1,
-        }
+      console.log(
+        'Capturing',
+        chain.name,
+        `batch ${i / BATCH_SIZE + 1} of ${Math.ceil(blocks.length / BATCH_SIZE)}`,
+      )
 
-        for (const log of txLogs) {
-          for (const plugin of plugins) {
-            if (!plugin.capture) {
-              continue
+      await Promise.all(
+        batch.map(async (b) => {
+          const block = await rpc.getBlockWithTransactions(b)
+          const logs = await rpc.getLogs(b, b)
+
+          for (const tx of block.transactions) {
+            assert(tx.hash)
+            const txLogs = logs
+              .filter((l) => l.transactionHash === tx.hash)
+              .map(logToViemLog)
+
+            const ctx = {
+              timestamp: block.timestamp,
+              chain: chain.name,
+              blockNumber: block.number,
+              blockHash: block.hash,
+              txHash: tx.hash,
+              txValue: tx.value,
+              txTo: tx.to ? Address32.from(tx.to) : undefined,
+              txFrom: tx.from ? Address32.from(tx.from) : undefined,
+              txData: (tx.data ?? '') as string,
+              logIndex: -1,
             }
-            const captured = plugin.capture({
-              log: log,
-              txLogs: txLogs,
-              ctx: { ...ctx, logIndex: log.logIndex ?? -1 },
-            })
-            if (captured) {
-              console.log('Captured', plugin.name, 'events: ', captured.length)
 
-              events.push(
-                ...captured.map((c) => ({ ...c, plugin: plugin.name })),
-              )
-              break
+            for (const log of txLogs) {
+              for (const plugin of plugins) {
+                if (!plugin.capture) {
+                  continue
+                }
+                const captured = plugin.capture({
+                  log: log,
+                  txLogs: txLogs,
+                  ctx: { ...ctx, logIndex: log.logIndex ?? -1 },
+                })
+                if (captured) {
+                  console.log(
+                    'Captured',
+                    plugin.name,
+                    'events: ',
+                    captured.length,
+                  )
+
+                  events.push(
+                    ...captured.map((c) => ({ ...c, plugin: plugin.name })),
+                  )
+                  break
+                }
+              }
             }
           }
-        }
-      }
+        }),
+      )
     }
-    writeFileSync(`./${chain.name}.json`, JSON.stringify({ events }, null, 2))
+    console.log('saving events', chain.name)
+    await db.interopEvent.insertMany(events.map(toDbRecord))
   }
 }
 
@@ -178,5 +208,26 @@ async function getAllLogs(
       return a.concat(b)
     }
     throw e
+  }
+}
+
+function toDbRecord(event: InteropEvent): InteropEventRecord {
+  return {
+    plugin: event.plugin,
+    eventId: event.eventId,
+    type: event.type,
+    expiresAt: event.expiresAt,
+    args: event.args,
+    chain: event.ctx.chain,
+    blockHash: event.ctx.blockHash,
+    blockNumber: event.ctx.blockNumber,
+    logIndex: event.ctx.logIndex,
+    timestamp: event.ctx.timestamp,
+    txHash: event.ctx.txHash,
+    value: event.ctx.txValue,
+    txTo: event.ctx.txTo,
+    calldata: event.ctx.txData,
+    matched: false,
+    unsupported: false,
   }
 }
