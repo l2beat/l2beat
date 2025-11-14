@@ -3,5 +3,11 @@
     "hash": "0x55b4084f8591b2c3c51011b50fe478e7761ce2cab412359b4df3b6941fcba322",
     "address": "eth:0x1BafAF26d236FbEA3E86075370B554eC0477bFD0",
     "blockNumber": 22872700
+  },
+  "ServiceManager.sol": {
+    "hash": "0x64a4c29e61f52080da22207fe5295d233b6450ecc65dbf2852a0b0383fd74f63",
+    "address": "eth:0x7FC138988d13deD38FA22aBc4e15e855c92b092E",
+    "chain": "ethereum",
+    "blockNumber": 23789926
   }
 }
