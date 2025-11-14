@@ -314,6 +314,7 @@ export const zircuit: ScalingProject = {
   chainConfig: {
     name: 'zircuit',
     chainId: 48900,
+    gasTokens: ['ETH'],
     coingeckoPlatform: 'zircuit',
     sinceTimestamp: UnixTime(1719936217),
     apis: [
