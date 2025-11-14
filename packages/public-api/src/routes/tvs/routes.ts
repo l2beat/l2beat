@@ -1,5 +1,5 @@
 import type { ProjectService } from '@l2beat/config'
-import type { Database } from '@l2beat/database'
+import type { QueryExecutor } from '@l2beat/dal'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { InMemoryCache } from '../../cache/InMemoryCache'
@@ -11,7 +11,7 @@ import { TvsRangeSchema, TvsResultSchema } from './types'
 export function addTvsRoutes(
   openapi: OpenApi,
   ps: ProjectService,
-  db: Database,
+  queryExecutor: QueryExecutor,
   cache: InMemoryCache,
 ) {
   openapi.get(
@@ -36,7 +36,7 @@ export function addTvsRoutes(
         async () => {
           const projectIds = await getTvsProjects(ps)
 
-          return getTvsData(db, range, projectIds)
+          return getTvsData(queryExecutor, range, projectIds)
         },
       )
 
@@ -82,7 +82,7 @@ export function addTvsRoutes(
           ttl: 5 * UnixTime.MINUTE,
           staleWhileRevalidate: 5 * UnixTime.MINUTE,
         },
-        () => getTvsData(db, range, [project.id]),
+        () => getTvsData(queryExecutor, range, [project.id]),
       )
 
       res.json(data)
