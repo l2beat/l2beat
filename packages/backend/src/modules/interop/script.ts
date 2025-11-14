@@ -70,18 +70,19 @@ async function main() {
 
     const uniqueBlocks = new Set<number>()
 
-    for (const a of ABI) {
-      console.log('Fetching', chain.name, a.name)
-      const topic = encodeEventTopics({ abi: [a] })
+    await Promise.all(
+      ABI.map(async (a) => {
+        const topic = encodeEventTopics({ abi: [a] })
 
-      const logs = await getAllLogs(rpc, [topic[0]], chain.start, chain.end)
+        const logs = await getAllLogs(rpc, [topic[0]], chain.start, chain.end)
 
-      console.log('Fetched', logs.length)
+        console.log('Fetched', chain.name, a.name, logs.length)
 
-      for (const l of logs) {
-        uniqueBlocks.add(l.blockNumber)
-      }
-    }
+        for (const l of logs) {
+          uniqueBlocks.add(l.blockNumber)
+        }
+      }),
+    )
 
     const blocks = Array.from(uniqueBlocks.values()).sort((a, b) => a - b)
 
@@ -94,9 +95,9 @@ async function main() {
       new OpStackPlugin(),
     ]
 
-    for (const b of blocks) {
-      const events: InteropEvent[] = []
+    const events: InteropEvent[] = []
 
+    for (const b of blocks) {
       console.log('Capturing', chain.name, 'block: ', b)
       const block = await rpc.getBlockWithTransactions(b)
       const logs = await rpc.getLogs(b, b)
@@ -141,9 +142,8 @@ async function main() {
           }
         }
       }
-
-      writeFileSync(`./${chain.name}.json`, JSON.stringify({ events }, null, 2))
     }
+    writeFileSync(`./${chain.name}.json`, JSON.stringify({ events }, null, 2))
   }
 }
 
