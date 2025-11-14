@@ -8,7 +8,19 @@ export function createUpdateMonitorRouter(
   const router = new Router()
 
   router.get('/status/discovery', async (ctx) => {
-    ctx.body = await updateMonitorController.getDiscoveryDashboard()
+    const queryEmoji = ctx.query.emoji
+    const rawEmoji =
+      typeof queryEmoji === 'string'
+        ? queryEmoji
+        : Array.isArray(queryEmoji) && queryEmoji.length > 0
+          ? queryEmoji[0]
+          : undefined
+    const trimmedEmoji = rawEmoji?.trim()
+    const selectedEmoji =
+      trimmedEmoji && trimmedEmoji.length > 0 ? trimmedEmoji : undefined
+
+    ctx.body =
+      await updateMonitorController.getDiscoveryDashboard(selectedEmoji)
   })
 
   router.get('/discovery/changes', async (ctx) => {
