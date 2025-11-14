@@ -19,10 +19,19 @@ export interface TransactionParameter {
   input?: string
 }
 
+export interface FilterParameter {
+  fromBlock?: BlockParameter
+  toBlock?: BlockParameter
+  address?: EthereumAddress
+  topics?: (string | null | (string | null)[])[]
+  blockHash?: string
+}
+
 export class EthRpcClient {
   constructor(
     private http: Http,
     private url: string,
+    private nextId: () => string | number = randomId,
   ) {}
 
   async chainId(): Promise<bigint> {
@@ -89,18 +98,6 @@ export class EthRpcClient {
     return vQuantity.parse(data)
   }
 
-  async getUncleCountByBlockHash(hash: string): Promise<bigint> {
-    const data = await this._call('eth_getUncleCountByBlockHash', [hash])
-    return vQuantity.parse(data)
-  }
-
-  async getUncleCountByBlockNumber(block: BlockParameter): Promise<bigint> {
-    const data = await this._call('eth_getUncleCountByBlockNumber', [
-      encodeBlock(block),
-    ])
-    return vQuantity.parse(data)
-  }
-
   async getCode(
     address: EthereumAddress,
     block: BlockParameter,
@@ -117,12 +114,26 @@ export class EthRpcClient {
   async call(
     transaction: TransactionParameter,
     block: BlockParameter,
-  ): Promise<{ reverted: boolean; data: string }> {
-    const data = await this._call('eth_call', [
-      encodeTransaction(transaction),
-      encodeBlock(block),
-    ])
-    // TODO: handle revert
+  ): Promise<{ reverted: false; data: string } | { reverted: true }> {
+    let data: unknown
+    try {
+      data = await this._call('eth_call', [
+        encodeTransaction(transaction),
+        encodeBlock(block),
+      ])
+    } catch (e) {
+      if (
+        e instanceof Error &&
+        e.message.startsWith('RPC call failed') &&
+        (e.message.includes('invalid opcode: INVALID') ||
+          e.message.includes('CALL_EXCEPTION') ||
+          e.message.includes('revert') ||
+          e.message.includes('reverted'))
+      ) {
+        return { reverted: true }
+      }
+      throw e
+    }
     const result = BytesResponse.parse(data)
     return { reverted: false, data: result }
   }
@@ -202,19 +213,31 @@ export class EthRpcClient {
     return ReceiptResponse.parse(data)
   }
 
+  async getLogs(filter: FilterParameter): Promise<RpcLog[]> {
+    const data = await this._call('eth_getLogs', [encodeFilter(filter)])
+    return LogsResponse.parse(data)
+  }
+
   private async _call(method: string, params: unknown = []) {
-    const id = randomId()
+    const id = this.nextId()
     const response = await this.http.fetch(this.url, {
       body: JSON.stringify({
         jsonrpc: '2.0',
+        id,
         method,
         params,
-        id,
       }),
       headers: { 'Content-Type': 'application/json' },
     })
-    const parsed = JsonRpcResponse.safeValidate(JSON.parse(response.body))
-    if (!parsed.success) {
+    let data: unknown
+    let jsonSuccess = true
+    try {
+      data = JSON.parse(response.body)
+    } catch {
+      jsonSuccess = false
+    }
+    const parsed = JsonRpcResponse.safeValidate(data)
+    if (!jsonSuccess || !parsed.success) {
       throw new Error(
         `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
       )
@@ -247,24 +270,43 @@ function encodeQuantity(value: bigint) {
 }
 
 function encodeTransaction(transaction: TransactionParameter) {
-  const encodedTransacton: Record<string, string> = {}
+  const encoded: Record<string, string> = {}
   if (transaction.from) {
-    encodedTransacton.from = transaction.from
+    encoded.from = transaction.from
   }
-  encodedTransacton.to = transaction.to
+  encoded.to = transaction.to
   if (transaction.gas !== undefined) {
-    encodedTransacton.gas = encodeQuantity(transaction.gas)
+    encoded.gas = encodeQuantity(transaction.gas)
   }
   if (transaction.gasPrice !== undefined) {
-    encodedTransacton.gasPrice = encodeQuantity(transaction.gasPrice)
+    encoded.gasPrice = encodeQuantity(transaction.gasPrice)
   }
   if (transaction.value !== undefined) {
-    encodedTransacton.value = encodeQuantity(transaction.value)
+    encoded.value = encodeQuantity(transaction.value)
   }
   if (transaction.input !== undefined) {
-    encodedTransacton.input = transaction.input
+    encoded.input = transaction.input
   }
-  return encodeTransaction
+  return encoded
+}
+
+function encodeFilter(filter: FilterParameter) {
+  const encoded: Record<string, unknown> = {}
+  if (filter.fromBlock) {
+    encoded.fromBlock = encodeBlock(filter.fromBlock)
+  }
+  if (filter.toBlock) {
+    encoded.toBlock = encodeBlock(filter.toBlock)
+  }
+  if (filter.address) {
+    encoded.address = filter.address
+  }
+  if (filter.topics) {
+    encoded.topics = filter.topics
+  }
+  if (filter.blockHash) {
+    encoded.blockHash = filter.blockHash
+  }
 }
 
 const vQuantity = v.string().transform((value: string) => {
@@ -342,6 +384,20 @@ const RpcBlockWithTransactions = v.object({
   transactions: v.array(RpcTransaction),
 })
 
+export type RpcLog = v.infer<typeof RpcLog>
+const RpcLog = v.object({
+  removed: v.boolean(),
+  logIndex: v.union([v.null(), vQuantity]),
+  transactionIndex: v.union([v.null(), vQuantity]),
+  transactionHash: v.union([v.null(), vData(32)]),
+  blockHash: v.union([v.null(), vData(32)]),
+  blockNumber: v.union([v.null(), vQuantity]),
+  address: vAddress,
+  data: vData(),
+  topics: v.array(vData(32)),
+  // TODO: non-standard fields from other chains
+})
+
 export type RpcReceipt = v.infer<typeof RpcReceipt>
 const RpcReceipt = v.object({
   transactionHash: vData(32),
@@ -354,7 +410,7 @@ const RpcReceipt = v.object({
   effectiveGasPrice: vQuantity,
   gasUsed: vQuantity,
   contractAddress: v.union([v.null(), vAddress]),
-  // TODO: logs: Array - Array of log objects, which this transaction generated.
+  logs: v.array(RpcLog),
   logsBloom: vData(256),
   type: vQuantity,
   root: vData(32).optional(),
@@ -371,6 +427,7 @@ const BlockWithTransactionsResponse = v.union([
   RpcBlockWithTransactions,
 ])
 const ReceiptResponse = v.union([v.null(), RpcReceipt])
+const LogsResponse = v.array(RpcLog)
 
 const JsonRpcResponse = v.union([
   v.strictObject({
