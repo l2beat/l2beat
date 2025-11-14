@@ -8,6 +8,7 @@ import {
 } from 'lucide-react'
 import type { SubmitHandler, UseFormReturn } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import { toast } from 'sonner'
 import { Button, buttonVariants } from '~/components/core/Button'
 import {
   Command,
@@ -37,6 +38,7 @@ import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
 import { minLengthCheck, minNumberCheck } from '~/utils/checks'
 import { cn } from '~/utils/cn'
 import { getAbstractTokenDisplayId } from '~/utils/getDisplayId'
+import { parseDateTimePaste } from '~/utils/parseDate'
 import type {
   ChainApi,
   ChainRecord,
@@ -307,6 +309,18 @@ export function DeployedTokenForm({
                     type="datetime-local"
                     {...field}
                     disabled={tokenDetails.loading}
+                    onPaste={(e) => {
+                      e.preventDefault()
+                      const pastedText = e.clipboardData.getData('text')
+                      const parsedDate = parseDateTimePaste(pastedText)
+                      if (parsedDate) {
+                        field.onChange(parsedDate)
+                      } else {
+                        toast.error(
+                          `Invalid date format. If you think it's correct, please report to dev team. Input: ${pastedText}`,
+                        )
+                      }
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
