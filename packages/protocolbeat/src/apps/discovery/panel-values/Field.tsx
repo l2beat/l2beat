@@ -95,7 +95,7 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
         </div>
       </div>
       {field.description && (
-        <div className="-mt-0.5 word-break-break-word px-5 pb-1 font-serif italic">
+        <div className="-mt-0.5 px-5 pb-1 font-serif italic">
           {field.description}
         </div>
       )}
