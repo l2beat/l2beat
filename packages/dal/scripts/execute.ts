@@ -70,9 +70,8 @@ export function getDb() {
 
 export function getCache() {
   const env = getEnv()
+  const dbUrl = env.string('DB_URL')
+  const packageHash = getPackageHash(dbUrl)
   const redisUrl = env.string('REDIS_URL')
-  const packageHash = getPackageHash({
-    redisUrl,
-  })
   return new Cache(redisUrl, packageHash)
 }
