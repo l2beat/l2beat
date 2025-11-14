@@ -197,11 +197,7 @@ function getASTTopLevelChildName(child: ASTNode): string | undefined {
   }
 }
 
-export type Readable =
-  | string
-  | number
-  | boolean
-  | Readable[]
+export type Readable = string | number | boolean | Readable[]
 
 function toReadable(value: utils.Result): Readable {
   if (Array.isArray(value)) {
