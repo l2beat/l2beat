@@ -40,6 +40,7 @@ export const lyra: ScalingProject = opStackL2({
         'https://youtube.com/@derivexyz',
         'https://linkedin.com/company/derivelabs',
       ],
+      other: ['https://growthepie.com/chains/derive'],
     },
   },
   genesisTimestamp: UnixTime(1700022479),

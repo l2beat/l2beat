@@ -35,6 +35,7 @@ export const mantapacific: ScalingProject = opStackL2({
         'https://mantanetwork.medium.com/',
         'https://t.me/mantanetworkofficial',
       ],
+      other: ['https://growthepie.com/chains/manta'],
     },
     architectureImage: 'mantapacific',
   },
