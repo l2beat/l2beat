@@ -482,6 +482,7 @@ model DeployedToken {
   deploymentTimestamp DateTime @db.Timestamp(6)
   comment             String?  @db.Text
 
+  chainRelation   Chain?            @relation(fields: [chain], references: [name], onDelete: Restrict)
   abstractToken   AbstractToken?    @relation(fields: [abstractTokenId], references: [id], onDelete: Restrict)
   connectionsFrom TokenConnection[] @relation("TokenConnection_tokenFrom")
   connectionsTo   TokenConnection[] @relation("TokenConnection_tokenTo")
@@ -530,4 +531,6 @@ model Chain {
   explorerUrl String? @db.VarChar(255)
   aliases     Json?
   apis        Json?
+
+  deployedTokens DeployedToken[]
 }
