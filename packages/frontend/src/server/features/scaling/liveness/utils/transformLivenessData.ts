@@ -6,9 +6,9 @@ import type {
 } from '../types'
 
 interface LivenessTypeData {
-  '30d': LivenessDataPoint | undefined
-  '90d': LivenessDataPoint | undefined
-  max: LivenessDataPoint | undefined
+  '30d': LivenessDataPoint | undefined | null
+  '90d': LivenessDataPoint | undefined | null
+  max: LivenessDataPoint | undefined | null
   warning: string | undefined
 }
 
@@ -45,7 +45,7 @@ function getSubTypeData(
   data: LivenessDetails | undefined,
   warning: string | undefined,
 ): LivenessTypeData | undefined {
-  if (!data) return undefined
+  if (data === undefined) return undefined
   return {
     '30d': data['30d'],
     '90d': data['90d'],

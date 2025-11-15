@@ -3,9 +3,10 @@ import React, { type ReactNode } from 'react'
 export interface PageProps {
   title: string
   children: ReactNode
+  headerRight?: ReactNode
 }
 
-export function Page({ title, children }: PageProps) {
+export function Page({ title, children, headerRight }: PageProps) {
   return (
     <html lang="en" style={{ backgroundColor: '#090c12', color: '#f7f5f0' }}>
       <head>
@@ -39,27 +40,55 @@ export function Page({ title, children }: PageProps) {
               paddingBottom: '16px',
             }}
           >
-            <h1
+            <div
               style={{
-                margin: 0,
-                fontSize: '34px',
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
+                display: 'flex',
+                justifyContent: 'space-between',
+                gap: '16px',
+                alignItems: 'flex-end',
+                flexWrap: 'wrap',
               }}
             >
-              {title}
-            </h1>
-            <p
-              style={{
-                margin: '8px 0 0',
-                textTransform: 'uppercase',
-                letterSpacing: '0.1em',
-                fontSize: '12px',
-                color: '#c3c0b8',
-              }}
-            >
-              update monitor dashboard
-            </p>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '8px',
+                  flex: '1 1 auto',
+                }}
+              >
+                <h1
+                  style={{
+                    margin: 0,
+                    fontSize: '34px',
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  {title}
+                </h1>
+                <p
+                  style={{
+                    margin: 0,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.1em',
+                    fontSize: '12px',
+                    color: '#c3c0b8',
+                  }}
+                >
+                  update monitor dashboard
+                </p>
+              </div>
+              {headerRight && (
+                <div
+                  style={{
+                    flexShrink: 0,
+                  }}
+                >
+                  {headerRight}
+                </div>
+              )}
+            </div>
           </header>
           {children}
         </div>

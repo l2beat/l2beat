@@ -261,6 +261,7 @@ export async function getScalingProjectEntry(
     contractUtils,
     tvsStats,
     allProjects,
+    allProjectsWithContracts,
   )
 
   const common = {

@@ -1,3 +1,4 @@
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { SidebarProvider } from './components/core/Sidebar'
 import { Toaster } from './components/core/Sonner'
@@ -17,6 +18,8 @@ export function App() {
     <TRPCReactProvider>
       <SidebarProvider>
         <BrowserRouter>
+          <ReactQueryDevtools initialIsOpen={false} />
+
           <Toaster />
           <Routes>
             <Route path="/" element={<TokensSummaryPage />} />

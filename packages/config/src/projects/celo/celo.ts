@@ -49,6 +49,7 @@ export const celo: ScalingProject = opStackL2({
         'https://discord.com/invite/celo',
         'https://blog.celo.org/',
       ],
+      other: ['https://growthepie.com/chains/celo'],
     },
   },
   hasSuperchainScUpgrades: true,
