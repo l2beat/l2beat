@@ -5996,7 +5996,7 @@ discovery. Values are for block 22574521 (main branch discovery), not current.
     contract Scroll Security Council (0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) {
     +++ description: None
       references.0.href:
--        "https://scroll.io/gov-docs/content/security-council"
+-        "https://scroll.io/gov-docs/content/what-is-security-council"
 +        "https://scroll-governance-documentation.vercel.app/gov-docs/content/what-is-security-council"
     }
 ```
@@ -9465,7 +9465,7 @@ discovery. Values are for block 21679349 (main branch discovery), not current.
     contract SecurityCouncil (0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) {
     +++ description: None
       references:
-+        [{"text":"Security Council members - Scroll Docs","href":"https://scroll.io/gov-docs/content/security-council"}]
++        [{"text":"Security Council members - Scroll Docs","href":"https://scroll.io/gov-docs/content/what-is-security-council"}]
     }
 ```
 
