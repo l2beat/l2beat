@@ -45,7 +45,7 @@ const STARKNET_ON_CHAIN = (usesBlobs = false): ProjectTechnologyChoice => {
   const blobOr = usesBlobs ? 'blob or ' : ''
   return {
     name: 'All data required to reconstruct rollup state is published on chain',
-    description: `State diffs are publish onchain as ${blobOr}calldata on every state update. The state diffs contain information on every contact whose storage was updated, and additional information on contract deployments. From diffs full system state can be recovered. Contracts' code is not published on L1, but can be trustlessly verified if available elsewhere.`,
+    description: `State diffs are published onchain as ${blobOr}calldata on every state update. The state diffs contain information on every contract whose storage was updated, and additional information on contract deployments. From diffs full system state can be recovered. Contracts' code is not published on L1, but can be trustlessly verified if available elsewhere.`,
     risks: [],
     references: [
       {
@@ -201,8 +201,8 @@ function EIGENDA_OFF_CHAIN(
   } else {
     // v2 and v3 both use EigenDA v2
     additionalDescription = isUsingDACertVerifier
-      ? 'The sequecencer is publishing data to EigenDA v2. The DACert Verifier is used to verify attestations from the EigenDA operator set that the data is indeed available.'
-      : 'The sequecencer is publishing data to EigenDA v2. Since the DACert Verifier is not used, availability of the data is not verified against EigenDA operators, meaning that the Sequencer can single-handedly publish unavailable commitments.'
+      ? 'The sequencer is publishing data to EigenDA v2. The DACert Verifier is used to verify attestations from the EigenDA operator set that the data is indeed available.'
+      : 'The sequencer is publishing data to EigenDA v2. Since the DACert Verifier is not used, availability of the data is not verified against EigenDA operators, meaning that the Sequencer can single-handedly publish unavailable commitments.'
   }
 
   return {
