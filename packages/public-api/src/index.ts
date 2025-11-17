@@ -27,7 +27,6 @@ function main() {
     redisUrl: env.optionalString('REDIS_URL'),
     db,
     logger,
-    env: {}, // TODO: add env
     ci: process.env.CI === 'true',
   })
 
