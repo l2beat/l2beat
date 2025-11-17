@@ -130,7 +130,10 @@ export function onlyConsistent(blocks: Block[], logs: Log[]) {
     const blockLogs = logs.filter((l) => l.blockHash === block.hash)
     const hasLogs = blockLogs.length > 0
     const shouldHaveLogs = block.logsBloom !== LOGS_BLOOM_ZERO
-    if (hasLogs !== shouldHaveLogs) {
+    const isBlockValid =
+      hasLogs === shouldHaveLogs ||
+      logs.every((log) => (log.blockHash = block.hash))
+    if (!isBlockValid) {
       break
     }
     result.push({ block, logs: blockLogs })
