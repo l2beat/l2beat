@@ -128,14 +128,15 @@ export function onlyConsistent(blocks: Block[], logs: Log[]) {
   const result: { block: Block; logs: Log[] }[] = []
   for (const block of blocks) {
     const blockLogs = logs.filter((l) => l.blockHash === block.hash)
-    const hasLogs = blockLogs.length > 0
-    const shouldHaveLogs = block.logsBloom !== LOGS_BLOOM_ZERO
+
     const isBlockValid =
-      hasLogs === shouldHaveLogs ||
-      logs.every((log) => (log.blockHash = block.hash))
+      (logs.length === 0 && block.logsBloom === LOGS_BLOOM_ZERO) ||
+      logs.every((log) => log.blockHash === block.hash)
+
     if (!isBlockValid) {
       break
     }
+
     result.push({ block, logs: blockLogs })
   }
   return result
