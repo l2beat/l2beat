@@ -129,6 +129,8 @@ export function onlyConsistent(blocks: Block[], logs: Log[]) {
   for (const block of blocks) {
     const blockLogs = logs.filter((l) => l.blockHash === block.hash)
 
+    // https://polygonscan.com/block/79061984 this block has logs bloom ZERO - although it has transaction with 10 logs.
+    // This broke our validation logic. We decided to update our validation scheme to accommodate this issue.
     const isBlockValid =
       (logs.length === 0 && block.logsBloom === LOGS_BLOOM_ZERO) ||
       logs.every((log) => log.blockHash === block.hash)
