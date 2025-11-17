@@ -1,4 +1,5 @@
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
@@ -20,7 +21,7 @@ type ActivityProjectStats = Awaited<
 >
 async function getActivityProjectStatsData(projectId: ProjectId) {
   const db = getDb()
-  const range = await getFullySyncedActivityRange({ type: '30d' })
+  const range = await getFullySyncedActivityRange(optionToRange('30d'))
   const [counts, syncMetadata] = await Promise.all([
     db.activity.getByProjectAndTimeRange(projectId, range),
     db.syncMetadata.getByFeatureAndId('activity', projectId),

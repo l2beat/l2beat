@@ -4,6 +4,7 @@ import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { ThroughputSectionChart } from '~/components/chart/data-availability/ThroughputSectionChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { ClockIcon } from '~/icons/Clock'
 import {
@@ -76,7 +77,7 @@ function ThroughputChartStats({
 }) {
   const { includeScalingOnly } = useIncludeScalingOnly()
   const { data, isLoading } = api.da.projectCharts.useQuery({
-    range: { type: '1y' },
+    range: optionToRange('1y'),
     projectId,
     includeScalingOnly,
   })

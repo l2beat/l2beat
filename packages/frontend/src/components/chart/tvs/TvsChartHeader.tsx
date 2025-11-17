@@ -22,7 +22,7 @@ export function TvsChartHeader({
   timeRange,
 }: Props) {
   const changeOverTime =
-    range === 'max' ? (
+    range.from === null ? (
       INFINITY
     ) : change !== undefined ? (
       <PercentChange value={change} textClassName="lg:w-[63px] lg:text-base" />

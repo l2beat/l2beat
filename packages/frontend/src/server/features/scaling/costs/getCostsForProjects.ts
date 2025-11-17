@@ -13,7 +13,7 @@ export async function getCostsForProjects(
 ) {
   const db = getDb()
   const response: LatestCostsResponse = {}
-  const range = getCostsRange({ type: timeRange })
+  const range = getCostsRange(timeRange)
 
   const configurations = await db.indexerConfiguration.getByIndexerId(
     'tracked_txs_indexer',

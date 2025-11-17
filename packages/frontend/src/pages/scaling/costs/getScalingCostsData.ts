@@ -1,6 +1,7 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import type { ICache } from '~/server/cache/ICache'
 import { getScalingCostsEntries } from '~/server/features/scaling/costs/getScalingCostsEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -73,7 +74,7 @@ async function getQueryState(tab: 'rollups' | 'others') {
   const helpers = getSsrHelpers()
 
   await helpers.costs.chart.prefetch({
-    range: '30d',
+    range: optionToRange('30d'),
     filter: { type: tab },
   })
   return helpers.dehydrate()

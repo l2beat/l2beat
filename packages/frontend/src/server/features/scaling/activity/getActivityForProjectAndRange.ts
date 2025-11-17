@@ -13,7 +13,7 @@ export async function getActivityForProjectAndRange(
   }
 
   const db = getDb()
-  const fullySyncedRange = await getFullySyncedActivityRange({ type: range })
+  const fullySyncedRange = await getFullySyncedActivityRange(range)
 
   return db.activity.getByProjectAndTimeRange(
     ProjectId(projectId),

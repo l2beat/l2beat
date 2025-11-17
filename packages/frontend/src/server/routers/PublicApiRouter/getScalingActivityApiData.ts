@@ -18,7 +18,7 @@ export async function getScalingActivityApiData({
 }: Params) {
   const params: ActivityChartParams = {
     filter: type === 'projects' ? { type: 'projects', projectIds } : { type },
-    range: { type: range },
+    range,
   }
 
   const { data } = await getActivityChart(params)

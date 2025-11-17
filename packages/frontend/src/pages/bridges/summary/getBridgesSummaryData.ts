@@ -1,4 +1,5 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import { getBridgesSummaryEntries } from '~/server/features/bridges/getBridgesSummaryEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -15,7 +16,7 @@ export async function getBridgesSummaryData(
     getAppLayoutProps(),
     getBridgesSummaryEntries(),
     helpers.tvs.chart.prefetch({
-      range: { type: '1y' },
+      range: optionToRange('1y'),
       filter: { type: 'bridge' },
       excludeAssociatedTokens: false,
       includeRwaRestrictedTokens: false,

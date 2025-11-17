@@ -3,7 +3,11 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
-import { ChartTimeRangeControls } from '~/components/core/chart/ChartTimeRangeControls'
+import {
+  ChartTimeRangeControls,
+  type ChartTimeRangeValue,
+  optionToRange,
+} from '~/components/core/chart/ChartTimeRangeControls'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import type { ProjectDaThroughputChartPoint } from '~/server/features/data-availability/throughput/getProjectDaThroughputChartData'
@@ -13,6 +17,7 @@ import {
   rangeToResolution,
 } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
+import { rangeToDays } from '~/utils/range/rangeToDays'
 import { ChartDataSourceInfo } from '../ChartDataSourceInfo'
 import { DaThroughputByProjectChart } from './DaThroughputByProjectChart'
 import { EthereumProjectsOnlyCheckbox } from './EthereumProjectsOnlyCheckbox'
@@ -28,6 +33,30 @@ interface Props {
   milestones: Milestone[]
 }
 
+function rangeToDaThroughputRangeForDisplay(
+  range: ChartTimeRangeValue,
+): '7d' | '30d' | '90d' | '180d' | '1y' | 'max' {
+  if (range.from === null) {
+    return 'max'
+  }
+  const days = rangeToDays(range)
+  if (days === null) {
+    return 'max'
+  }
+  if (days === 7) return '7d'
+  if (days === 30) return '30d'
+  if (days === 90) return '90d'
+  if (days === 180) return '180d'
+  if (days === 365) return '1y'
+  // Default to closest option for custom ranges
+  if (days < 7) return '7d'
+  if (days < 30) return '30d'
+  if (days < 90) return '90d'
+  if (days < 180) return '180d'
+  if (days < 365) return '1y'
+  return 'max'
+}
+
 export function ThroughputSectionChart({
   project,
   configuredThroughputs,
@@ -35,17 +64,21 @@ export function ThroughputSectionChart({
   milestones,
 }: Props) {
   const { includeScalingOnly, setIncludeScalingOnly } = useIncludeScalingOnly()
-  const [range, setRange] = useState<DaThroughputTimeRange>('1y')
+  const [range, setRange] = useState<ChartTimeRangeValue>(optionToRange('1y'))
 
   const { data, isLoading } = api.da.projectCharts.useQuery({
-    range: { type: range },
+    range,
     projectId: project.id,
     includeScalingOnly,
   })
+  const displayRange = useMemo(
+    () => rangeToDaThroughputRangeForDisplay(range),
+    [range],
+  )
   const dataWithConfiguredThroughputs = getDataWithConfiguredThroughputs(
     data?.totalChart.data,
     configuredThroughputs,
-    range,
+    displayRange,
   )
 
   const chartRange = useMemo(
@@ -56,7 +89,10 @@ export function ThroughputSectionChart({
     [data],
   )
 
-  const resolution = useMemo(() => rangeToResolution({ type: range }), [range])
+  const resolution = useMemo(
+    () => rangeToResolution(range as DaThroughputTimeRange),
+    [range],
+  )
 
   return (
     <div>
@@ -106,7 +142,7 @@ export function ThroughputSectionChart({
 function getDataWithConfiguredThroughputs(
   data: ProjectDaThroughputChartPoint[] | undefined,
   configuredThroughputs: DaLayerThroughput[],
-  range: DaThroughputTimeRange,
+  range: '7d' | '30d' | '90d' | '180d' | '1y' | 'max',
 ): ProjectChartDataWithConfiguredThroughput[] | undefined {
   const processedConfigs = configuredThroughputs
     .sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
@@ -139,7 +175,7 @@ function getDataWithConfiguredThroughputs(
 }
 
 function adjustThoughputToRange(
-  range: DaThroughputTimeRange,
+  range: '7d' | '30d' | '90d' | '180d' | '1y' | 'max',
   throughput: number | null | undefined,
 ) {
   if (!throughput) return null

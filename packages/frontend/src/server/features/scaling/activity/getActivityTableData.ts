@@ -2,6 +2,7 @@ import type { Project } from '@l2beat/config'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import partition from 'lodash/partition'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
@@ -44,7 +45,8 @@ export async function getActivityTable(
   }
 
   const db = getDb()
-  const [from, to] = await getFullySyncedActivityRange({ type: '30d' })
+  const range = optionToRange('30d')
+  const [from, to] = await getFullySyncedActivityRange(range)
   assert(from !== null, 'its null')
   const [records, maxCounts, syncMetadataRecords] = await Promise.all([
     db.activity.getByProjectsAndTimeRange(

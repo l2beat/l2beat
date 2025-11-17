@@ -4,6 +4,7 @@ import { assert, type TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import groupBy from 'lodash/groupBy'
 import { getDefaultSubtype } from '~/components/chart/liveness/getDefaultSubtype'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import type { LivenessSectionProps } from '~/components/projects/sections/LivenessSection'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { LivenessProject } from '~/server/features/scaling/liveness/types'
@@ -45,13 +46,17 @@ export async function getLivenessSection(
     ...Object.keys(configSubtypes),
     duplicatedData,
   ]) as TrackedTxsConfigSubtype[]
-
+  console.log('configuredSubtypes', configuredSubtypes)
+  const range = optionToRange('max')
+  console.log('range', range)
+  const subtype = getDefaultSubtype(configuredSubtypes)
+  console.log('subtype', subtype)
   const data = await helpers.liveness.projectChart.fetch({
     projectId: project.id,
-    range: 'max',
-    subtype: getDefaultSubtype(configuredSubtypes),
+    range,
+    subtype,
   })
-
+  console.log('data', data)
   if (data.data.length === 0) return undefined
 
   const hasTrackedContractsChanged = project.trackedTxsConfig
@@ -66,7 +71,9 @@ export async function getLivenessSection(
     anomalies: liveness?.anomalies ?? [],
     hasTrackedContractsChanged,
     trackedTransactions,
-    defaultRange: project.archivedAt ? 'max' : '30d',
+    defaultRange: project.archivedAt
+      ? optionToRange('max')
+      : optionToRange('30d'),
     isArchived: project.archivedAt !== undefined,
   }
 }

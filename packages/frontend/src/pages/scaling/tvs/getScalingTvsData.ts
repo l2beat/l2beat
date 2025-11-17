@@ -1,6 +1,7 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import type { ICache } from '~/server/cache/ICache'
 import { getScalingTvsEntries } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -91,7 +92,7 @@ async function getQueryState(
       filter: {
         type: tab,
       },
-      range: '1y',
+      range: optionToRange('1y'),
       excludeAssociatedTokens: false,
       includeRwaRestrictedTokens: false,
     }),

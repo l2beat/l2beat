@@ -39,7 +39,7 @@ export function ProjectActivityChart({
   const [scale, setScale] = useState<ChartScale>('lin')
 
   const { data: chart, isLoading } = api.activity.chart.useQuery({
-    range: { type: timeRange },
+    range: timeRange,
     filter: {
       type: 'projects',
       projectIds: [project.id],

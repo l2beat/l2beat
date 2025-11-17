@@ -28,7 +28,7 @@ export async function getScalingTvsProjectApiData({
   }
 
   const data = await getTvsChart({
-    range: { type: range },
+    range,
     filter: { type: 'projects', projectIds: [project.id] },
     excludeAssociatedTokens,
     includeRwaRestrictedTokens,

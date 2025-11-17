@@ -22,16 +22,7 @@ import {
 export type ActivityChartParams = v.infer<typeof ActivityChartParams>
 export const ActivityChartParams = v.object({
   filter: ActivityProjectFilter,
-  range: v.union([
-    v.object({
-      type: ActivityTimeRange,
-    }),
-    v.object({
-      type: v.literal('custom'),
-      from: v.number(),
-      to: v.number(),
-    }),
-  ]),
+  range: ActivityTimeRange,
 })
 
 type ActivityChartDataPoint = [
@@ -215,11 +206,11 @@ function getActivityChartStats(
 function getMockActivityChart({
   range,
 }: ActivityChartParams): ActivityChartData {
-  const [from, to] = getBucketValuesRange(range, 'daily')
-  const adjustedRange: [UnixTime, UnixTime] = [
-    range.type === 'custom' ? range.from : (from ?? 1590883200),
-    range.type === 'custom' ? range.to : to,
-  ]
+  const [from, to] = getBucketValuesRange(
+    { from: range.from, to: range.to },
+    'daily',
+  )
+  const adjustedRange: [UnixTime, UnixTime] = [from ?? 1590883200, to]
   const timestamps = generateTimestamps(adjustedRange, 'daily')
 
   return {

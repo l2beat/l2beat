@@ -1,5 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import type { ScalingTvsSectionProps } from '~/components/projects/sections/tvs/ScalingTvsSection'
 import { checkIfTvsExist } from '~/server/features/scaling/tvs/utils/checkIfTvsExist'
 
@@ -16,6 +17,8 @@ export async function getScalingTvsSection(
   }
 
   return {
-    defaultRange: project.archivedAt ? 'max' : '1y',
+    defaultRange: project.archivedAt
+      ? optionToRange('max')
+      : optionToRange('1y'),
   }
 }

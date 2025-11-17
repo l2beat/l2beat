@@ -1,6 +1,7 @@
 import type { Project } from '@l2beat/config'
 import { notUndefined, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
@@ -29,7 +30,9 @@ export async function getActivityLatestUops(
   const db = getDb()
   // Range here is 1y because we want to match the range of the
   // activity chart on summary page to show relevant data
-  const timeRange = await getFullySyncedActivityRange(range ?? { type: '1y' })
+  const timeRange = await getFullySyncedActivityRange(
+    range ?? optionToRange('1y'),
+  )
   const [records, syncMetadataRecords] = await Promise.all([
     db.activity.getByProjectsAndTimeRange(
       projects.map((p) => p.id),

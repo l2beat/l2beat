@@ -213,9 +213,9 @@ function DeployedTokensTable({ tokens }: { tokens: DeployedToken[] }) {
     <Table>
       <TableHeader>
         <TableRow>
+          <TableHead>Symbol</TableHead>
           <TableHead>Chain</TableHead>
           <TableHead>Address</TableHead>
-          <TableHead>Symbol</TableHead>
           <TableHead>Abstract Token Id</TableHead>
           <TableHead>Decimals</TableHead>
           <TableHead>Deployment Timestamp</TableHead>
@@ -235,7 +235,6 @@ function DeployedTokensTable({ tokens }: { tokens: DeployedToken[] }) {
               </TableCell>
               <TableCell>{token.chain}</TableCell>
               <TableCell>{token.address}</TableCell>
-              <TableCell>{token.symbol}</TableCell>
               <TableCell>
                 {token.abstractTokenId ? (
                   <Link

@@ -72,33 +72,21 @@ export async function getRecategorisedTvsChart({
 
   const [rollupValues, validiumAndOptimiumsValues, othersValues] =
     await Promise.all([
-      getSummedTvsValues(
-        rollups,
-        { type: range },
-        {
-          forSummary: true,
-          excludeAssociatedTokens: false,
-          includeRwaRestrictedTokens: false,
-        },
-      ),
-      getSummedTvsValues(
-        validiumsAndOptimiums,
-        { type: range },
-        {
-          forSummary: true,
-          excludeAssociatedTokens: false,
-          includeRwaRestrictedTokens: false,
-        },
-      ),
-      getSummedTvsValues(
-        others,
-        { type: range },
-        {
-          forSummary: true,
-          excludeAssociatedTokens: false,
-          includeRwaRestrictedTokens: false,
-        },
-      ),
+      getSummedTvsValues(rollups, range, {
+        forSummary: true,
+        excludeAssociatedTokens: false,
+        includeRwaRestrictedTokens: false,
+      }),
+      getSummedTvsValues(validiumsAndOptimiums, range, {
+        forSummary: true,
+        excludeAssociatedTokens: false,
+        includeRwaRestrictedTokens: false,
+      }),
+      getSummedTvsValues(others, range, {
+        forSummary: true,
+        excludeAssociatedTokens: false,
+        includeRwaRestrictedTokens: false,
+      }),
     ])
 
   const chart = getChartData(
@@ -172,8 +160,8 @@ function getChartData(
 function getMockTvsChartData({
   range,
 }: RecategorisedTvsChartDataParams): RecategorisedTvsChartData {
-  const resolution = rangeToResolution({ type: range })
-  const [from, to] = getTimestampedValuesRange({ type: range }, resolution)
+  const resolution = rangeToResolution(range)
+  const [from, to] = getTimestampedValuesRange(range, resolution)
   const timestamps = generateTimestamps([from ?? 1573776000, to], resolution)
 
   return {

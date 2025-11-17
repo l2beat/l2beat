@@ -45,8 +45,8 @@ export async function getDaThroughputChart({
     return { data: getMockDaThroughputChartData({ range, includeScalingOnly }) }
   }
   const db = getDb()
-  const resolution = rangeToResolution({ type: range })
-  const [from, to] = getThroughputRange({ type: range })
+  const resolution = rangeToResolution(range)
+  const [from, to] = getThroughputRange(range)
   const daLayers = await ps.getProjects({
     select: ['daLayer'],
   })
@@ -192,9 +192,10 @@ export function groupByTimestampAndDaLayerId(
 function getMockDaThroughputChartData({
   range,
 }: DaThroughputChartParams): DaThroughputDataPoint[] {
-  const days = rangeToDays({ type: range }) ?? 730
+  const days = rangeToDays(range)
+  const actualDays = days ?? 730
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
-  const from = to - days * UnixTime.DAY
+  const from = range.from ?? to - actualDays * UnixTime.DAY
 
   const timestamps = generateTimestamps([from, to], 'daily')
   return timestamps.map((timestamp) => {

@@ -69,15 +69,11 @@ export async function getDetailedTvsChartWithProjectsRanges({
   }
   const [ethPrices, values] = await Promise.all([
     getEthPrices(),
-    getSummedTvsValues(
-      projects,
-      { type: range },
-      {
-        forSummary: false,
-        excludeAssociatedTokens,
-        includeRwaRestrictedTokens,
-      },
-    ),
+    getSummedTvsValues(projects, range, {
+      forSummary: false,
+      excludeAssociatedTokens,
+      includeRwaRestrictedTokens,
+    }),
   ])
 
   return getChartData(values, ethPrices)
@@ -145,8 +141,8 @@ function getChartData(
 function getMockDetailedTvsChartWithProjectsRangesData({
   range,
 }: TvsChartWithProjectsRangesDataParams): DetailedTvsChartWithProjectsRangesData {
-  const resolution = rangeToResolution({ type: range })
-  const [from, to] = getTimestampedValuesRange({ type: range }, resolution)
+  const resolution = rangeToResolution(range)
+  const [from, to] = getTimestampedValuesRange(range, resolution)
   const timestamps = generateTimestamps([from ?? 1573776000, to], resolution)
 
   return {

@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { DataPostedTimeRangeControls } from '~/pages/scaling/data-posted/DataPostedTimeRangeControls'
-import { rangeToResolution } from '~/server/features/scaling/costs/utils/range'
+import { rangeToResolution } from '~/server/features/data-availability/throughput/utils/range'
 import type { DataPostedTimeRange } from '~/server/features/scaling/data-posted/range'
 import { api } from '~/trpc/React'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
@@ -58,7 +58,7 @@ export function ProjectDataPostedChart({
       </ChartControlsWrapper>
       <DataPostedChart
         milestones={milestones}
-        resolution={rangeToResolution({ type: timeRange })}
+        resolution={rangeToResolution(timeRange)}
         data={chartData}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}

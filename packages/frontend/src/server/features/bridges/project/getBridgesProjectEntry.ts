@@ -8,6 +8,7 @@ import type {
 } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -176,7 +177,9 @@ export async function getBridgesProjectEntry(
         project: getChartProject(project),
         tokens: tokens,
         milestones: project.milestones ?? [],
-        defaultRange: project.archivedAt ? 'max' : '1y',
+        defaultRange: project.archivedAt
+          ? optionToRange('max')
+          : optionToRange('1y'),
       },
     })
   }

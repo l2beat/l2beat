@@ -1,4 +1,5 @@
 import type { Project } from '@l2beat/config'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import type { ZkCatalogTvsSectionProps } from '~/components/projects/sections/tvs/ZkCatalogTvsSection'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import { getLogger } from '~/server/utils/logger'
@@ -36,7 +37,7 @@ export function getZkCatalogTvsSection(
   }
 
   return {
-    defaultRange: '1y',
+    defaultRange: optionToRange('1y'),
     milestones: project.milestones ?? [],
     tvsInfo: project.tvsInfo,
     project,

@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import { INFINITY } from '~/consts/characters'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
@@ -21,10 +22,10 @@ export function BridgesTvsChart() {
     'bridges-summary-unit',
     'usd',
   )
-  const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
+  const [timeRange, setTimeRange] = useState<TvsChartRange>(optionToRange('1y'))
 
   const { data, isLoading } = api.tvs.chart.useQuery({
-    range: { type: timeRange },
+    range: timeRange,
     filter: { type: 'bridge' },
     excludeAssociatedTokens: false,
     includeRwaRestrictedTokens: false,
@@ -90,7 +91,7 @@ function BridgesChartHeader({
   timeRange: [number, number] | undefined
 }) {
   const changeOverTime =
-    range === 'max' ? (
+    range.from === null ? (
       INFINITY
     ) : change ? (
       <PercentChange value={change} textClassName="lg:w-[63px] lg:text-base" />

@@ -1,7 +1,6 @@
 import type { Project } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { v } from '@l2beat/validate'
 import partition from 'lodash/partition'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -11,11 +10,7 @@ import { generateTimestamps } from '../../utils/generateTimestamps'
 import type { ProjectDaThroughputChartParams } from './getProjectDaThroughputChart'
 import { isThroughputSynced } from './isThroughputSynced'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
-import {
-  DaThroughputTimeRange,
-  getThroughputRange,
-  rangeToResolution,
-} from './utils/range'
+import { getThroughputRange, rangeToResolution } from './utils/range'
 import { sumByResolutionAndProject } from './utils/sumByResolutionAndProject'
 
 export type DaThroughputChartDataPoint = [
@@ -28,15 +23,6 @@ export type DaThroughputChartDataByChart = {
   syncedUntil: number
   sovereignProjects: string[]
 }
-
-export const DaThroughputChartByProjectParams = v.object({
-  projectId: v.string(),
-  range: DaThroughputTimeRange,
-  includeScalingOnly: v.boolean(),
-})
-export type DaThroughputChartByProjectParams = v.infer<
-  typeof DaThroughputChartByProjectParams
->
 
 export async function getDaThroughputChartByProject(
   params: ProjectDaThroughputChartParams,
@@ -231,7 +217,7 @@ async function getMockDaThroughputChartByProject({
 }: ProjectDaThroughputChartParams): Promise<DaThroughputChartDataByChart> {
   const days = rangeToDays(range) ?? 730
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
-  const from = to - days * UnixTime.DAY
+  const from = range.from ?? to - days * UnixTime.DAY
 
   const timestamps = generateTimestamps([from, to], 'daily')
   const value = () => Math.random() * 900_000_000 + 90_000_000

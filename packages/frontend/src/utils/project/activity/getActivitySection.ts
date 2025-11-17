@@ -1,4 +1,5 @@
 import type { Project } from '@l2beat/config'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import type { ActivitySectionProps } from '~/components/projects/sections/ActivitySection'
 
 import { isActivityChartDataEmpty } from '~/server/features/utils/isChartDataEmpty'
@@ -12,9 +13,10 @@ export async function getActivitySection(
 > {
   if (!project.activityConfig) return undefined
 
-  const range = project.archivedAt ? 'max' : '1y'
+  const rangeOption = project.archivedAt ? 'max' : '1y'
+  const range = optionToRange(rangeOption)
   const data = await helpers.activity.chart.fetch({
-    range: { type: range },
+    range,
     filter: { type: 'projects', projectIds: [project.id] },
   })
 

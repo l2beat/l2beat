@@ -61,7 +61,7 @@ export async function getRecategorisedActivityChart(
     .filter((p) => p.scalingInfo.type === 'Other')
     .map((p) => p.id)
 
-  const adjustedRange = await getFullySyncedActivityRange({ type: range })
+  const adjustedRange = await getFullySyncedActivityRange(range)
   const [
     rollupsEntries,
     validiumsAndOptimiumsEntries,
@@ -153,7 +153,7 @@ function getMockRecategorisedActivityChart(
   _: ActivityProjectFilter,
   timeRange: ActivityTimeRange,
 ): RecategorisedActivityChartData {
-  const [from, to] = getBucketValuesRange({ type: timeRange }, 'daily')
+  const [from, to] = getBucketValuesRange(timeRange, 'daily')
   const adjustedRange: [UnixTime, UnixTime] = [from ?? 1590883200, to]
   const timestamps = generateTimestamps(adjustedRange, 'daily')
 

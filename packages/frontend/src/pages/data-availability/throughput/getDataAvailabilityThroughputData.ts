@@ -1,4 +1,5 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import { getDaThroughputEntries } from '~/server/features/data-availability/throughput/getDaThroughputEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -13,7 +14,10 @@ export async function getDataAvailabilityThroughputData(
   const [appLayoutProps, entries] = await Promise.all([
     getAppLayoutProps(),
     getDaThroughputEntries(),
-    helpers.da.chart.prefetch({ range: '1y', includeScalingOnly: true }),
+    helpers.da.chart.prefetch({
+      range: optionToRange('1y'),
+      includeScalingOnly: true,
+    }),
   ])
 
   return {

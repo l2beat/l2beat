@@ -23,7 +23,7 @@ export function ProjectTvsChart({ project, milestones, defaultRange }: Props) {
   const [timeRange, setTimeRange] = useState<TvsChartRange>(defaultRange)
 
   const { data, isLoading } = api.tvs.chart.useQuery({
-    range: { type: timeRange },
+    range: timeRange,
     filter: { type: 'projects', projectIds: [project.id] },
     excludeAssociatedTokens: false,
     includeRwaRestrictedTokens: false,

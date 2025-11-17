@@ -145,7 +145,7 @@ export function CostsChart({
     THROUGHPUT_ENABLED_DA_LAYERS as (keyof typeof chartMeta)[],
   )
 
-  const resolution = rangeToResolution({ type: range })
+  const resolution = rangeToResolution(range)
 
   return (
     <ChartContainer

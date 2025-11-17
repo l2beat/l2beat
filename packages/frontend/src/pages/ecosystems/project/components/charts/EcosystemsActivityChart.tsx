@@ -9,6 +9,7 @@ import {
   ChartLegendContent,
   ChartTooltip,
 } from '~/components/core/chart/Chart'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import {
   EthereumFillGradientDef,
@@ -71,10 +72,12 @@ export function EcosystemsActivityChart({
     chartMeta,
     hiddenDataKeys,
   )
-  const [timeRange, setTimeRange] = useState<ActivityTimeRange>('1y')
+  const [timeRange, setTimeRange] = useState<ActivityTimeRange>(
+    optionToRange('1y'),
+  )
 
   const { data, isLoading } = api.activity.chart.useQuery({
-    range: { type: timeRange },
+    range: timeRange,
     filter: {
       type: 'projects',
       projectIds: entries.map((project) => project.id).toSorted(),

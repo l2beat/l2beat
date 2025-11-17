@@ -43,9 +43,9 @@ export async function getTokenTvsChart({
   }
 
   const db = getDb()
-  const resolution = rangeToResolution({ type: range })
+  const resolution = rangeToResolution(range)
 
-  const [from, to] = getTimestampedValuesRange({ type: range }, resolution, {
+  const [from, to] = getTimestampedValuesRange(range, resolution, {
     offset: -UnixTime.HOUR - 15 * UnixTime.MINUTE,
   })
 
@@ -100,8 +100,8 @@ export async function getTokenTvsChart({
 function getMockTokenTvsChartData(
   params: TokenTvsChartParams,
 ): TokenTvsChartData {
-  const resolution = rangeToResolution({ type: params.range })
-  const [from, to] = getBucketValuesRange({ type: params.range }, 'hourly')
+  const resolution = rangeToResolution(params.range)
+  const [from, to] = getBucketValuesRange(params.range, 'hourly')
   const adjustedRange: [UnixTime, UnixTime] = [
     from ?? to - 730 * UnixTime.DAY,
     to,

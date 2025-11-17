@@ -4,7 +4,7 @@ import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
 import type { ProjectCostsChartResponse } from '~/server/features/scaling/costs/getProjectCostsChart'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
-import { rangeToLabel } from '~/utils/project/rangeToLabel'
+import { rangeToDays } from '~/utils/range/rangeToDays'
 
 export function ProjectCostsChartStats({
   range,
@@ -17,13 +17,15 @@ export function ProjectCostsChartStats({
   isLoading: boolean
   data: ProjectCostsChartResponse | undefined
 }) {
+  const days = rangeToDays(range)
+  const isMax = range.from === null
   return (
     <ChartStats className="mt-4 lg:grid-cols-3">
       <ChartStatsItem
         label={
-          range === 'max'
+          isMax
             ? `Total ${unitToLabel(unit)}`
-            : `${rangeToLabel(range)} total ${unitToLabel(unit)}`
+            : `${days !== null ? `${days} days` : 'All time'} total ${unitToLabel(unit)}`
         }
         className="max-md:h-7"
         tooltip="The total cost for the selected time period that the project paid to Ethereum. This includes the costs for calldata, computation, blobs, and overhead."

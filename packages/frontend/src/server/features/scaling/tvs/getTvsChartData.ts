@@ -16,16 +16,7 @@ import {
 import { rangeToResolution, TvsChartRange } from './utils/range'
 
 export const TvsChartDataParams = v.object({
-  range: v.union([
-    v.object({
-      type: TvsChartRange,
-    }),
-    v.object({
-      type: v.literal('custom'),
-      from: v.number(),
-      to: v.number(),
-    }),
-  ]),
+  range: TvsChartRange,
   filter: TvsProjectFilter,
   excludeAssociatedTokens: v.boolean(),
   includeRwaRestrictedTokens: v.boolean(),

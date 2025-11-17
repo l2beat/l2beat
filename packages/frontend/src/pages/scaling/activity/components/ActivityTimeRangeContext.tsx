@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from 'react'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 
 type ActivityTimeRangeContextValue = {
@@ -14,7 +15,9 @@ interface Props {
 }
 
 export function ActivityTimeRangeContextProvider({ children }: Props) {
-  const [timeRange, setTimeRange] = useState<ActivityTimeRange>('1y')
+  const [timeRange, setTimeRange] = useState<ActivityTimeRange>(
+    optionToRange('1y'),
+  )
   return (
     <ActivityTimeRangeContext.Provider
       value={{

@@ -5,7 +5,6 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { rangeToDays } from '~/utils/range/rangeToDays'
-import { CostsTimeRange } from '../../scaling/costs/utils/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { isThroughputSynced } from './isThroughputSynced'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
@@ -26,16 +25,7 @@ export type ProjectDaThroughputChartPoint = [
 ]
 
 export const ProjectDaThroughputChartParams = v.object({
-  range: v.union([
-    v.object({
-      type: v.union([DaThroughputTimeRange, CostsTimeRange]),
-    }),
-    v.object({
-      type: v.literal('custom'),
-      from: v.number(),
-      to: v.number(),
-    }),
-  ]),
+  range: DaThroughputTimeRange,
   includeScalingOnly: v.boolean(),
   projectId: v.string(),
 })
@@ -107,10 +97,7 @@ export async function getProjectDaThroughputChartData(
     resolution,
   )
 
-  const expectedTo = getThroughputExpectedTimestamp(
-    resolution,
-    params.range.type === 'custom' ? params.range.to : undefined,
-  )
+  const expectedTo = getThroughputExpectedTimestamp(resolution, params.range.to)
 
   const adjustedTo = isThroughputSynced(syncedUntil, false)
     ? maxTimestamp
@@ -175,7 +162,7 @@ function getMockProjectDaThroughputChart({
 }: ProjectDaThroughputChartParams): ProjectDaThroughputChart {
   const days = rangeToDays(range) ?? 730
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
-  const from = to - days * UnixTime.DAY
+  const from = range.from ?? to - days * UnixTime.DAY
 
   if (!['ethereum', 'celestia', 'avail', 'eigenda'].includes(projectId)) {
     return {

@@ -13,6 +13,7 @@ import {
   ChartTooltip,
 } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
@@ -45,12 +46,10 @@ export function EcosystemsTvsChart({
   ecosystemMilestones: EcosystemMilestone[]
 }) {
   const [unit, setUnit] = useState<ChartUnit>('usd')
-  const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
+  const [timeRange, setTimeRange] = useState<TvsChartRange>(optionToRange('1y'))
 
   const { data, isLoading } = api.tvs.chart.useQuery({
-    range: {
-      type: timeRange,
-    },
+    range: timeRange,
     excludeAssociatedTokens: false,
     includeRwaRestrictedTokens: false,
     filter: {

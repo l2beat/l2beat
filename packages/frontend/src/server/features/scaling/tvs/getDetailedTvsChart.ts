@@ -78,7 +78,7 @@ export async function getDetailedTvsChart({
     getEthPrices(),
     getSummedTvsValues(
       tvsProjects.map((p) => p.projectId),
-      { type: range },
+      range,
       {
         forSummary,
         excludeAssociatedTokens,
@@ -152,8 +152,8 @@ function getChartData(
 function getMockDetailedTvsChartData({
   range,
 }: DetailedTvsChartDataParams): DetailedTvsChartData {
-  const resolution = rangeToResolution({ type: range })
-  const [from, to] = getTimestampedValuesRange({ type: range }, resolution)
+  const resolution = rangeToResolution(range)
+  const [from, to] = getTimestampedValuesRange(range, resolution)
   const timestamps = generateTimestamps([from ?? 1573776000, to], resolution)
 
   return {

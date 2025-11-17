@@ -35,7 +35,8 @@ export function MonthlyUpdateThroughputChart({
 }) {
   const fillId = useId()
   const { data, isLoading } = api.da.projectChart.useQuery({
-    range: { type: 'custom', from, to: to + UnixTime.DAY },
+    // TODO (ranges refactor): whaat?
+    range: { from, to: to + UnixTime.DAY },
     projectId: id,
     includeScalingOnly: false,
   })
@@ -110,7 +111,7 @@ export function MonthlyUpdateThroughputChart({
             content={
               <ProjectDaThroughputCustomTooltip
                 unit={unit}
-                resolution={rangeToResolution({ type: 'custom', from, to })}
+                resolution={rangeToResolution({ from, to })}
               />
             }
           />

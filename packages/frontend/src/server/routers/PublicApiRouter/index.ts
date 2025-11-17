@@ -1,5 +1,6 @@
 import { v } from '@l2beat/validate'
 import express from 'express'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import { ActivityProjectFilterType } from '~/server/features/scaling/activity/utils/projectFilterUtils'
 import { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { TvsProjectFilterType } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
@@ -34,7 +35,7 @@ export function createPublicApiRouter() {
       }
 
       const data = await getScalingActivityApiData({
-        range: range ?? '30d',
+        range: range ?? optionToRange('30d'),
         type: type ?? 'all',
         projectIds: projectIds?.split(',') ?? [],
       })
@@ -55,7 +56,7 @@ export function createPublicApiRouter() {
 
       const data = await getScalingActivityProjectApiData({
         slug,
-        range: range ?? '30d',
+        range: range ?? optionToRange('30d'),
       })
       res.json(data)
     },
@@ -82,7 +83,7 @@ export function createPublicApiRouter() {
       } = req.query
 
       const data = await getScalingTvsApiData({
-        range: range ?? '30d',
+        range: range ?? optionToRange('30d'),
         type: type ?? 'layer2',
         projectIds: projectIds?.split(',') ?? [],
         excludeAssociatedTokens: excludeAssociatedTokens === 'true',
@@ -109,7 +110,7 @@ export function createPublicApiRouter() {
 
       const data = await getScalingTvsProjectApiData({
         slug,
-        range: range ?? '30d',
+        range: range ?? optionToRange('30d'),
         excludeAssociatedTokens: excludeAssociatedTokens === 'true',
         includeRwaRestrictedTokens: includeRwaRestrictedTokens === 'true',
       })

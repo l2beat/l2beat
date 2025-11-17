@@ -38,7 +38,7 @@ export function MonthlyUpdateActivityChart({
 }) {
   const id = useId()
   const { data, isLoading } = api.activity.chart.useQuery({
-    range: { type: 'custom', from, to },
+    range: { from, to },
     filter: {
       type: 'projects',
       projectIds: entries,

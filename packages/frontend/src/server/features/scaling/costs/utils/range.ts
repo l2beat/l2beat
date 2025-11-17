@@ -3,21 +3,14 @@ import { v } from '@l2beat/validate'
 import { getBucketValuesRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 
-export const CostsTimeRange = v.union([
-  v.literal('1d'),
-  v.literal('7d'),
-  v.literal('30d'),
-  v.literal('90d'),
-  v.literal('180d'),
-  v.literal('1y'),
-  v.literal('max'),
-])
 export type CostsTimeRange = v.infer<typeof CostsTimeRange>
+export const CostsTimeRange = v.object({
+  from: v.union([v.number(), v.null()]),
+  to: v.number(),
+})
 
 export function getCostsRange(
-  range:
-    | { type: CostsTimeRange }
-    | { type: 'custom'; from: number; to: number },
+  range: CostsTimeRange,
 ): [UnixTime | null, UnixTime] {
   return getBucketValuesRange(range, rangeToResolution(range), {
     offset: -UnixTime.HOUR - 15 * UnixTime.MINUTE,
@@ -25,11 +18,7 @@ export function getCostsRange(
 }
 
 export type CostsResolution = ReturnType<typeof rangeToResolution>
-export function rangeToResolution(
-  value:
-    | { type: CostsTimeRange }
-    | { type: 'custom'; from: number; to: number },
-) {
+export function rangeToResolution(value: CostsTimeRange) {
   const days = rangeToDays(value)
   if (days && days < 30) {
     return 'hourly'

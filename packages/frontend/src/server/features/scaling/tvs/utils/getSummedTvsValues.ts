@@ -27,7 +27,7 @@ export type SummedTvsValues = {
 
 export async function getSummedTvsValues(
   projects: ProjectId[] | ProjectWithRanges[],
-  range: { type: TvsChartRange } | { type: 'custom'; from: number; to: number },
+  range: TvsChartRange,
   {
     forSummary,
     excludeAssociatedTokens,

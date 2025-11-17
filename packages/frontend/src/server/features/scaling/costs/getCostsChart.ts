@@ -59,8 +59,8 @@ export async function getCostsChart({
   if (projects.length === 0) {
     return { chart: [], hasBlobs: false, syncedUntil: Number.POSITIVE_INFINITY }
   }
-  const resolution = rangeToResolution({ type: timeRange })
-  const [from, to] = getCostsRange({ type: timeRange })
+  const resolution = rangeToResolution(timeRange)
+  const [from, to] = getCostsRange(timeRange)
 
   const data = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
     projects.map((p) => p.id),
@@ -136,11 +136,8 @@ export async function getCostsChart({
 function getMockCostsChartData({
   range: timeRange,
 }: CostsChartParams): CostsChartData {
-  const resolution = rangeToResolution({ type: timeRange })
-  const [from, to] = getBucketValuesRange(
-    timeRange === 'max' ? { type: '1y' } : { type: timeRange },
-    resolution,
-  )
+  const resolution = rangeToResolution(timeRange)
+  const [from, to] = getBucketValuesRange(timeRange, resolution)
 
   const timestamps = generateTimestamps([from ?? 1573776000, to], resolution)
 

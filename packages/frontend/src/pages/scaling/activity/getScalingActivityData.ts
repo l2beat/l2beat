@@ -1,6 +1,7 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import type { ICache } from '~/server/cache/ICache'
 import { getScalingActivityEntries } from '~/server/features/scaling/activity/getScalingActivityEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -56,7 +57,7 @@ async function getCachedData() {
 
   await Promise.all([
     helpers.activity.recategorisedChart.prefetch({
-      range: '1y',
+      range: optionToRange('1y'),
       filter: {
         type: 'projects',
         projectIds: entries.map((entry) => entry.id),

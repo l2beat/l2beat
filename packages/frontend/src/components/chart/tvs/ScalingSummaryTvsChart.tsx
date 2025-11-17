@@ -37,6 +37,7 @@ import { api } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartUnit } from '../types'
+import { tvsRangeToReadable } from './tvsRangeToReadable'
 
 const chartMeta = {
   rollups: {
@@ -276,7 +277,10 @@ function Header({ total, unit, change, timeRange }: Props) {
         ) : (
           <p className="whitespace-nowrap text-right text-xs">
             <PercentChange value={change} />
-            <span className="text-secondary"> / {timeRange}</span>
+            <span className="text-secondary">
+              {' '}
+              / {tvsRangeToReadable(timeRange)}
+            </span>
           </p>
         )}
       </div>

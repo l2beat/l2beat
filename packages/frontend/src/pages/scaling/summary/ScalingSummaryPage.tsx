@@ -2,6 +2,7 @@ import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { ScalingSummaryActivityChart } from '~/components/chart/activity/ScalingSummaryActivityChart'
 import { ScalingSummaryTvsChart } from '~/components/chart/tvs/ScalingSummaryTvsChart'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
@@ -15,7 +16,7 @@ import { ScalingRwaRestrictedTokensContextProvider } from '../components/Scaling
 import { ChartTabs } from './components/ChartTabs'
 import { ScalingSummaryTables } from './components/ScalingSummaryTables'
 
-export const SCALING_SUMMARY_TIME_RANGE = '1y'
+export const SCALING_SUMMARY_TIME_RANGE = optionToRange('1y')
 const SCALING_SUMMARY_UNIT = 'usd'
 
 interface Props extends AppLayoutProps {

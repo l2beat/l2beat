@@ -28,7 +28,7 @@ export async function getScalingActivityProjectApiData({
     filter: isEthereum
       ? { type: 'all' }
       : { type: 'projects', projectIds: project ? [project.id] : [] },
-    range: { type: range },
+    range: range,
   })
 
   const oldestProjectData = data.at(0)

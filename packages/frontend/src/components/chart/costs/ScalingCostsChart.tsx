@@ -1,5 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useTableFilterContext } from '~/components/table/filters/TableFilterContext'
@@ -14,6 +15,7 @@ import type { ScalingCostsEntry } from '~/server/features/scaling/costs/getScali
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsProjectsFilter } from '~/server/features/scaling/costs/utils/getCostsProjects'
 import { api } from '~/trpc/React'
+import { rangeToDays } from '~/utils/range/rangeToDays'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
@@ -34,8 +36,13 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
 
   const onMetricChange = (metric: CostsMetric) => {
     setMetric(metric)
-    if (metric === 'per-l2-uop' && (range === '1d' || range === '7d')) {
-      setRange('30d')
+    const days = rangeToDays(range)
+    if (
+      metric === 'per-l2-uop' &&
+      days !== null &&
+      (days === 1 || days === 7)
+    ) {
+      setRange(optionToRange('30d'))
     }
   }
 

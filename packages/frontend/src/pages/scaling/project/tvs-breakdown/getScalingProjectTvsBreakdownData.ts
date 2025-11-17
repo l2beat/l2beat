@@ -1,4 +1,5 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import { getScalingProjectTvsBreakdown } from '~/server/features/scaling/project/getScalingProjectTvsBreakdown'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -18,7 +19,9 @@ export async function getScalingProjectTvsBreakdownData(
     return undefined
   }
 
-  const range = tvsBreakdownData.project.archivedAt ? 'max' : '1y'
+  const range = tvsBreakdownData.project.archivedAt
+    ? optionToRange('max')
+    : optionToRange('1y')
 
   return {
     head: {

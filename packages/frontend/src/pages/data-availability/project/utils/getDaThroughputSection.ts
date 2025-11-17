@@ -1,4 +1,5 @@
 import type { Project } from '@l2beat/config'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 import { getThroughputSyncWarning } from '~/server/features/data-availability/throughput/isThroughputSynced'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from '~/server/features/data-availability/throughput/utils/consts'
@@ -19,7 +20,7 @@ export async function getDaThroughputSection(
 
   const [charts, projectsWithColors] = await Promise.all([
     helpers.da.projectCharts.fetch({
-      range: { type: '1y' },
+      range: optionToRange('1y'),
       projectId: project.id,
       includeScalingOnly: true,
     }),

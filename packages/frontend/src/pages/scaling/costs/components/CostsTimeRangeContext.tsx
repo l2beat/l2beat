@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from 'react'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 
 type CostsTimeRangeContextValue = {
@@ -15,7 +16,7 @@ interface Props {
 }
 
 export function CostsTimeRangeContextProvider({ children }: Props) {
-  const [range, setRange] = useState<CostsTimeRange>('30d')
+  const [range, setRange] = useState<CostsTimeRange>(optionToRange('30d'))
   return (
     <CostsTimeRangeContext.Provider
       value={{

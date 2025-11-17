@@ -10,7 +10,11 @@ import { generateTimestamps } from '../../utils/generateTimestamps'
 import { isThroughputSynced } from './isThroughputSynced'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
-import { getThroughputRange, rangeToResolution } from './utils/range'
+import {
+  type DaThroughputTimeRange,
+  getThroughputRange,
+  rangeToResolution,
+} from './utils/range'
 
 export type ScalingProjectDaThroughputChart = {
   chart: ScalingProjectDaThroughputChartPoint[]
@@ -45,9 +49,9 @@ export async function getScalingProjectDaThroughputChart(
   }
 
   const db = getDb()
-  const resolution = rangeToResolution({ type: params.range })
+  const resolution = rangeToResolution(params.range as DaThroughputTimeRange)
 
-  const range = getThroughputRange({ type: params.range })
+  const range = getThroughputRange(params.range as DaThroughputTimeRange)
   const [throughput, activityRecords] = await Promise.all([
     db.dataAvailability.getByProjectIdsAndTimeRange([params.projectId], range),
     getActivityForProjectAndRange(params.projectId, params.range),
@@ -191,9 +195,9 @@ function groupByTimestamp(
 function getMockScalingProjectDaThroughputChart({
   range,
 }: ScalingProjectDaThroughputChartParams): ScalingProjectDaThroughputChart {
-  const days = rangeToDays({ type: range }) ?? 730
+  const days = rangeToDays(range) ?? 730
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
-  const from = to - days * UnixTime.DAY
+  const from = range.from ?? to - days * UnixTime.DAY
 
   const timestamps = generateTimestamps([from, to], 'daily')
 

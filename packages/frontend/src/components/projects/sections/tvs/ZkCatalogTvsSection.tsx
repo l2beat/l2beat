@@ -6,6 +6,7 @@ import { ZkCatalogAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/z
 import { ZkCatalogBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/zk-catalog/ZkCatalogBridgeTypeTvsChart'
 import { TvsChartControls } from '~/components/chart/tvs/TvsChartControls'
 import type { ChartProject } from '~/components/core/chart/Chart'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { IncludeRwaRestrictedTokensCheckbox } from '~/pages/scaling/components/IncludeRwaRestrictedTokensCheckbox'
@@ -122,7 +123,7 @@ function TvsProjectStats({
   const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { data, isLoading } = api.tvs.detailedChartWithProjectsRanges.useQuery({
     projects: projectsForTvs,
-    range: '7d',
+    range: optionToRange('7d'),
     excludeAssociatedTokens: false,
     includeRwaRestrictedTokens,
   })

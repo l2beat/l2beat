@@ -1,5 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import type { DataPostedSectionProps } from '~/components/projects/sections/data-posted/DataPostedSection'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
@@ -17,7 +18,7 @@ export async function getDataPostedSection(
 > {
   if (!project.daTrackingConfig) return undefined
 
-  const range = project.archivedAt ? 'max' : '1y'
+  const range = project.archivedAt ? optionToRange('max') : optionToRange('1y')
   const [data, daLayers] = await Promise.all([
     helpers.da.scalingProjectChart.fetch({
       range,

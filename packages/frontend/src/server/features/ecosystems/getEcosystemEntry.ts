@@ -6,6 +6,7 @@ import type {
 } from '@l2beat/config'
 import { assert, type ProjectId } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
+import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import { getCollection } from '~/content/getCollection'
@@ -176,7 +177,7 @@ export async function getEcosystemEntry(
     getBlobsData(liveProjects),
     getEcosystemToken(ecosystem, liveProjects),
     helpers.activity.chart.prefetch({
-      range: { type: '1y' },
+      range: optionToRange('1y'),
       filter: {
         type: 'projects',
         projectIds: liveProjects.map((project) => project.id),
