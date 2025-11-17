@@ -246,8 +246,7 @@ export const termstructure: ScalingProject = {
           },
           {
             title: 'Withdraw - Term Structure documentation',
-            url: 'https://tutorials.ts.finance/how-to-use-term-structure/onboarding-guide/withdraw
-',
+            url: 'https://tutorials.ts.finance/how-to-use-term-structure/onboarding-guide/withdraw',
           },
         ],
       },
