@@ -46,17 +46,15 @@ export async function getLivenessSection(
     ...Object.keys(configSubtypes),
     duplicatedData,
   ]) as TrackedTxsConfigSubtype[]
-  console.log('configuredSubtypes', configuredSubtypes)
   const range = optionToRange('max')
-  console.log('range', range)
   const subtype = getDefaultSubtype(configuredSubtypes)
-  console.log('subtype', subtype)
+
   const data = await helpers.liveness.projectChart.fetch({
     projectId: project.id,
     range,
     subtype,
   })
-  console.log('data', data)
+
   if (data.data.length === 0) return undefined
 
   const hasTrackedContractsChanged = project.trackedTxsConfig

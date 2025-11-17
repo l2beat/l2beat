@@ -402,7 +402,6 @@ export async function getScalingProjectEntry(
     projectLiveness,
     projectsChangeReport.projects[project.id],
   )
-  console.log('livenessSection', livenessSection)
   if (livenessSection) {
     sections.push({
       type: 'LivenessSection',

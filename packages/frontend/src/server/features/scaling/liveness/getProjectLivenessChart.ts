@@ -46,7 +46,6 @@ export async function getProjectLivenessChart({
     return getMockProjectLivenessChartData({ range, subtype, projectId })
   }
   const db = getDb()
-  console.log('db')
   const resolution = rangeToResolution(range)
   const [from, to] = getBucketValuesRange(range, resolution, {
     offset: -UnixTime.HOUR - 15 * UnixTime.MINUTE,
@@ -57,12 +56,10 @@ export async function getProjectLivenessChart({
     optional: ['livenessConfig'],
   })
   const livenessConfig = livenessProject?.livenessConfig
-  console.log('livenessConfig', livenessConfig)
   let effectiveSubtype = subtype
   if (livenessConfig?.duplicateData.to === subtype) {
     effectiveSubtype = livenessConfig.duplicateData.from
   }
-  console.log('effectiveSubtype', effectiveSubtype)
   const [chartEntries, subtypeAverages] = await Promise.all([
     db.aggregatedLiveness.getByProjectAndSubtypeInTimeRange(
       ProjectId(projectId),
@@ -147,9 +144,6 @@ function calculateLivenessStats(entries: AggregatedLivenessRecord[]) {
     totalCount += entry.numberOfRecords
   }
   const avg = totalCount === 0 ? null : Math.round(weightedSum / totalCount)
-  console.log('min', min)
-  console.log('max', max)
-  console.log('avg', avg)
   return {
     min: min === Number.POSITIVE_INFINITY ? null : min,
     max: max === Number.NEGATIVE_INFINITY ? null : max,

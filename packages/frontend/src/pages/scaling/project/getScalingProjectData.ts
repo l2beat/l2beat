@@ -51,7 +51,6 @@ export async function getScalingProjectData(
     getAppLayoutProps(),
     getScalingProjectEntry(project, helpers),
   ])
-  console.log('dupa', projectEntry)
   return {
     head: {
       manifest,
