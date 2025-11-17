@@ -70,7 +70,10 @@ export const xterio: ScalingProject = opStackL2({
     links: {
       websites: ['https://xter.io/'],
       bridges: ['https://xter.io/', 'https://eth-bridge.xter.io/'],
-      documentation: ['https://stack.optimism.io/'],
+      documentation: [
+        'https://stack.optimism.io/',
+        'https://specs.optimism.io/',
+      ],
       explorers: ['https://eth.xterscan.io/'],
       repositories: ['https://github.com/XterioTech'],
       socialMedia: [
