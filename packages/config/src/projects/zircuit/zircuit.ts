@@ -117,7 +117,7 @@ export const zircuit: ScalingProject = {
       websites: ['https://zircuit.com/'],
       bridges: ['https://bridge.zircuit.com/', 'https://app.zircuit.com/'],
       documentation: ['https://docs.zircuit.com/'],
-      explorers: [explorerUrl],
+      explorers: ['https://explorer.zircuit.com/'],
       repositories: ['https://github.com/zircuit-labs'],
       socialMedia: [
         'https://x.com/ZircuitL2',
