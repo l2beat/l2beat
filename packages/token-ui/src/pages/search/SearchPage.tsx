@@ -23,7 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from '~/components/core/Table'
-import { LoadingText } from '~/components/LoadingText'
+import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractToken, DeployedToken } from '~/mock/types'
 import { api } from '~/react-query/trpc'
@@ -38,43 +38,36 @@ export function SearchPage() {
 
   return (
     <AppLayout className="space-y-2">
-      <Card>
-        <CardHeader>
-          <CardTitle>Abstract Tokens</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {data?.abstractTokens ? (
-            <AbstractTokensTable tokens={data.abstractTokens} />
-          ) : (
-            <LoadingText />
-          )}
-        </CardContent>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle>Deployed Tokens</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {data?.deployedTokens ? (
-            <DeployedTokensTable tokens={data.deployedTokens} />
-          ) : (
-            <LoadingText />
-          )}
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Chains</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {data?.chains ? (
-            <ChainsTable chains={data.chains} />
-          ) : (
-            <LoadingText />
-          )}
-        </CardContent>
-      </Card>
+      {!data ? (
+        <LoadingState className="h-full" />
+      ) : (
+        <>
+          <Card>
+            <CardHeader>
+              <CardTitle>Abstract Tokens</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <AbstractTokensTable tokens={data.abstractTokens} />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Deployed Tokens</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <DeployedTokensTable tokens={data.deployedTokens} />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Chains</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ChainsTable chains={data.chains} />
+            </CardContent>
+          </Card>
+        </>
+      )}
     </AppLayout>
   )
 }

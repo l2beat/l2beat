@@ -226,6 +226,7 @@ export const starknet: ScalingProject = {
         'https://starkware.co/',
         'https://youtube.com/channel/UCnDWguR8mE2oDBsjhQkgbvg',
       ],
+      other: ['https://growthepie.com/chains/starknet'],
     },
     liveness: {
       explanation:

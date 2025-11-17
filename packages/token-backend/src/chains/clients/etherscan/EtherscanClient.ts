@@ -65,7 +65,9 @@ export class EtherscanClient {
     const json = await response.json()
     const data = EtherscanResponseSchema.parse(json)
     if (data.status !== '1' || data.message !== 'OK') {
-      throw new Error(`Etherscan API error: ${data.message ?? 'Unknown error'}`)
+      throw new Error(
+        `Etherscan API error: ${data.message ?? 'Unknown error'}. ${data.result}`,
+      )
     }
 
     return data.result

@@ -197,6 +197,10 @@ export function getInteropChains() {
     { name: 'arbitrum', type: 'evm' as const },
     { name: 'base', type: 'evm' as const },
     { name: 'optimism', type: 'evm' as const },
+    { name: 'apechain', type: 'evm' as const },
+    { name: 'polygonpos', type: 'evm' as const },
+    { name: 'zksync2', type: 'evm' as const },
+    { name: 'abstract', type: 'evm' as const },
   ]
 }
 

@@ -76,6 +76,7 @@ export const loopring: ScalingProject = {
         'https://reddit.com/r/loopringorg/',
         'https://loopring.substack.com/',
       ],
+      other: ['https://growthepie.com/chains/loopring'],
     },
     liveness: {
       explanation:
