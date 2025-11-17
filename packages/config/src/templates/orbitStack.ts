@@ -275,7 +275,7 @@ function defaultStateValidation(
       references: [
         {
           title: 'How is fraud proven - Arbitrum documentation FAQ',
-          url: 'https://docs.arbitrum.io/how-arbitrum-works/bold/gentle-introduction',
+          url: 'https://docs.arbitrum.io/get-started/arbitrum-introduction',
         },
       ],
     },
