@@ -24,7 +24,7 @@ export class BlockIndexer extends ManagedChildIndexer {
       name: 'block_indexer',
       tags: {
         tag: $.source,
-        project: $.source,
+        chain: $.source,
       },
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
