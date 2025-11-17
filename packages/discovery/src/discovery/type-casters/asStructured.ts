@@ -2,24 +2,23 @@ import { assert } from '@l2beat/shared-pure'
 import type { utils } from 'ethers'
 import type { ContractValue } from '../output/types'
 import {
-  getReturnType,
   type TupleType,
   type Type,
+  toInternalType,
 } from '../utils/parseReturnType'
 
-export function applyReturnFragment(
+export function asStructured(
   value: ContractValue,
-  returnFragment?: utils.FunctionFragment,
+  args?: utils.ParamType[],
 ): ContractValue {
-  if (returnFragment === undefined || returnFragment.outputs === undefined) {
+  if (args === undefined) {
     return value
   }
 
-  const type = getReturnType(returnFragment)
-  return reencodeWithReturnType(value, type)
+  return reencodeWithInternalType(value, toInternalType(args))
 }
 
-function reencodeWithReturnType(
+function reencodeWithInternalType(
   value: ContractValue,
   type: TupleType,
 ): ContractValue {
