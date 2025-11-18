@@ -70,7 +70,17 @@ export function ChainsSummaryPage() {
                       </Link>
                     </TableCell>
                     <TableCell>{chain.chainId}</TableCell>
-                    <TableCell>{chain.explorerUrl}</TableCell>
+                    <TableCell>
+                      {chain.explorerUrl && (
+                        <Link
+                          to={chain.explorerUrl}
+                          target="_blank"
+                          className="text-blue-500 underline hover:text-blue-600"
+                        >
+                          {chain.explorerUrl}
+                        </Link>
+                      )}
+                    </TableCell>
                     <TableCell>{chain.aliases}</TableCell>
                     <TableCell>
                       <ApiCell api={chain.apis} />
