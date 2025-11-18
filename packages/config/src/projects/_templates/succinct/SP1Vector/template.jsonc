@@ -24,7 +24,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "can call commitHeaderRange() to commit block ranges to the Vector contract."
+          "description": "it is a ‘Relayer’ and can call commitHeaderRange() to commit block ranges to the Vector contract. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
         }
       ]
     },

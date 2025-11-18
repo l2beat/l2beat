@@ -1,6 +1,6 @@
 {
   "name": "vector",
-  "timestamp": 1763482171,
+  "timestamp": 1763483689,
   "configHash": "0xa4d377d56337c2b5c2d062b7b470671d037c0a6e44d6d1e7a713e9bdfdd974c9",
   "sharedModules": ["shared-sp1"],
   "entries": [
@@ -193,7 +193,7 @@
         {
           "permission": "interact",
           "from": "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d",
-          "description": "can call commitHeaderRange() to commit block ranges to the Vector contract.",
+          "description": "it is a ‘Relayer’ and can call commitHeaderRange() to commit block ranges to the Vector contract. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
           "role": ".relayers"
         }
       ]
@@ -763,6 +763,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Vector": "0xfa432768402e63bf3829db629a75b9b795d90d28bde6ae5d3971689687185dd9"
   },
-  "usedBlockNumbers": { "ethereum": 23827095 },
-  "permissionsConfigHash": "0xdf008c8d1c6172867e0f0a2658289375048a155223630d07a80c9f0a6a160fe1"
+  "usedBlockNumbers": { "ethereum": 23827222 },
+  "permissionsConfigHash": "0x0d54b47320dab9ec3ed2c0783045318923a36c8243db89727a0531c06efa676d"
 }
