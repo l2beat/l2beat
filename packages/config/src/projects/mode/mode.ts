@@ -35,6 +35,7 @@ export const mode: ScalingProject = opStackL2({
         'https://mode.mirror.xyz/',
         'https://t.me/ModeNetworkOfficial',
       ],
+      other: ['https://growthepie.com/chains/mode'],
     },
   },
   hasSuperchainScUpgrades: true,

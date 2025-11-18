@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from '~/components/core/Card'
 import { ChainForm, ChainSchema } from '~/components/forms/ChainForm'
-import { LoadingText } from '~/components/LoadingText'
+import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
 import { validateResolver } from '~/utils/validateResolver'
@@ -27,7 +27,9 @@ export function ChainPage() {
   }
 
   return (
-    <AppLayout>{data ? <ChainView chain={data} /> : <LoadingText />}</AppLayout>
+    <AppLayout>
+      {data ? <ChainView chain={data} /> : <LoadingState className="h-full" />}
+    </AppLayout>
   )
 }
 

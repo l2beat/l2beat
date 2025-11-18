@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x2046474c87cb86a7c7c9d3f8682fb6192278dcf1
+
+# Diff at Fri, 14 Nov 2025 10:08:40 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@5bc62913a02c984746277cc77b068de667a31c5c block: 1762276375
+- current timestamp: 1762276375
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes: updated L2OutputOracle description.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762276375 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition. If allowBootstrapKeepalive is set to true (currently false), then this contract accepts a state root without proof if the operator has not updated the state in 4h. Users can 'escape' their funds after 1mo of no state updates by supplying merkle proofs or using a resolver.
+      description:
+-        "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h. Additionally, users can 'escape' their funds after 1mo of no state updates by supplying merkle proofs or using a resolver."
++        "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition. If allowBootstrapKeepalive is set to true (currently false), then this contract accepts a state root without proof if the operator has not updated the state in 4h. Users can 'escape' their funds after 1mo of no state updates by supplying merkle proofs or using a resolver."
+      fieldMeta.allowBootstrapKeepalive:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0x190130439109a53a8f289265895685b4fe65d0bd
 
 # Diff at Wed, 05 Nov 2025 12:48:24 GMT:

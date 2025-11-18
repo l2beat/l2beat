@@ -45,7 +45,10 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
         'https://discord.com/invite/0xpolygonRnD',
         'https://polygon.technology/blog',
       ],
-      other: ['https://rollup.codes/polygon-zkevm'],
+      other: [
+        'https://rollup.codes/polygon-zkevm',
+        'https://growthepie.com/chains/polygon-zkevm',
+      ],
     },
     liveness: {
       explanation:
