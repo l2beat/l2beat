@@ -156,6 +156,31 @@ export class DeployedTokenRepository extends BaseRepository {
     return row ? toRecord(row) : undefined
   }
 
+  async getByChainsAndAddresses(
+    pks: DeployedTokenPrimaryKey[],
+  ): Promise<DeployedTokenRecord[]> {
+    if (pks.length === 0) {
+      return []
+    }
+
+    const rows = await this.db
+      .selectFrom('DeployedToken')
+      .selectAll()
+      .where((eb) =>
+        eb.or(
+          pks.map((pk) =>
+            eb.and([
+              eb('chain', '=', pk.chain),
+              eb(eb.fn('lower', ['address']), '=', pk.address.toLowerCase()),
+            ]),
+          ),
+        ),
+      )
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   async getByAbstractTokenId(id: string): Promise<DeployedTokenRecord[]> {
     const rows = await this.db
       .selectFrom('DeployedToken')

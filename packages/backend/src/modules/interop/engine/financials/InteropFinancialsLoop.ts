@@ -38,8 +38,8 @@ export class InteropFinancialsLoop extends TimeLoop {
     const unprocessed = (await this.db.interopTransfer.getUnprocessed()).map(
       (u) => ({
         transfer: u,
-        srcId: this.toDeployedId(u.srcChain, u.srcTokenAddress),
-        dstId: this.toDeployedId(u.dstChain, u.dstTokenAddress),
+        srcId: toDeployedId(this.chains, u.srcChain, u.srcTokenAddress),
+        dstId: toDeployedId(this.chains, u.dstChain, u.dstTokenAddress),
       }),
     )
 
@@ -58,7 +58,11 @@ export class InteropFinancialsLoop extends TimeLoop {
         .filter((x) => x !== undefined),
     )
 
-    const tokenInfos = await this.getTokenInfos(tokens)
+    const tokenInfos = await getTokenInfos(
+      tokens,
+      this.tokenDbClient,
+      this.logger,
+    )
 
     const coingeckoIds = unique(
       Array.from(tokenInfos.values())
@@ -184,83 +188,90 @@ export class InteropFinancialsLoop extends TimeLoop {
       valueUsd: price * amount,
     }
   }
+}
 
-  async getTokenInfos(deployedTokens: DeployedTokenId[]) {
-    const result: TokenInfos = new Map()
+export async function getTokenInfos(
+  deployedTokens: DeployedTokenId[],
+  tokenDbClient: TokenDbClient,
+  logger: Logger,
+) {
+  const result: TokenInfos = new Map()
 
-    const tokens =
-      await this.tokenDbClient.deployedTokens.getByChainAndAddress.query(
-        deployedTokens.map((d) => ({
-          chain: DeployedTokenId.chain(d),
-          address: DeployedTokenId.address(d),
-        })),
-      )
+  const tokens = await tokenDbClient.deployedTokens.getByChainAndAddress.query(
+    deployedTokens.map((d) => ({
+      chain: DeployedTokenId.chain(d),
+      address: DeployedTokenId.address(d),
+    })),
+  )
 
-    const tokensMap = new Map(
-      tokens.map((t) => [
-        DeployedTokenId.from(t.deployedToken.chain, t.deployedToken.address),
-        t,
-      ]),
-    )
+  const tokensMap = new Map(
+    tokens.map((t) => [
+      DeployedTokenId.from(t.deployedToken.chain, t.deployedToken.address),
+      t,
+    ]),
+  )
 
-    for (const d of deployedTokens) {
-      const tokenData = tokensMap.get(d)
+  for (const d of deployedTokens) {
+    const tokenData = tokensMap.get(d)
 
-      if (!tokenData) {
-        this.logger.info('Missing token detected', { deployedTokenId: d })
-        continue
-      }
-
-      const { deployedToken, abstractToken } = tokenData
-
-      if (!abstractToken) {
-        this.logger.info('Missing abstract token', { deployedTokenId: d })
-        continue
-      }
-
-      if (!abstractToken.coingeckoId) {
-        this.logger.info('Missing coingeckoId', {
-          deployedTokenId: d,
-          abstractToken,
-        })
-        continue
-      }
-
-      result.set(d, {
-        abstractId: abstractToken.id,
-        symbol: deployedToken.symbol,
-        coingeckoId: abstractToken.coingeckoId,
-        decimals: deployedToken.decimals,
-      })
+    if (!tokenData) {
+      logger.info('Missing token detected', { deployedTokenId: d })
+      continue
     }
 
-    return result
+    const { deployedToken, abstractToken } = tokenData
+
+    if (!abstractToken) {
+      logger.info('Missing abstract token', { deployedTokenId: d })
+      continue
+    }
+
+    if (!abstractToken.coingeckoId) {
+      logger.info('Missing coingeckoId', {
+        deployedTokenId: d,
+        abstractToken,
+      })
+      continue
+    }
+
+    result.set(d, {
+      abstractId: abstractToken.id,
+      symbol: deployedToken.symbol,
+      coingeckoId: abstractToken.coingeckoId,
+      decimals: deployedToken.decimals,
+    })
   }
 
-  toDeployedId(chain: string | undefined, address: string | undefined) {
-    if (!chain || !address) {
-      return
-    }
+  return result
+}
 
-    if (address === 'native') {
-      return DeployedTokenId.from(chain, 'native')
-    }
+export function toDeployedId(
+  chains: { name: string; type: 'evm' }[],
+  chain: string | undefined,
+  address: string | undefined,
+) {
+  if (!chain || !address) {
+    return
+  }
 
-    if (address === '0x' || address === Address32.ZERO) {
-      return
-    }
+  if (address === 'native') {
+    return DeployedTokenId.from(chain, 'native')
+  }
 
-    const chainConfig = this.chains.find((c) => c.name === chain)
-    if (!chainConfig) return
+  if (address === '0x' || address === Address32.ZERO) {
+    return
+  }
 
-    switch (chainConfig.type) {
-      case 'evm':
-        return DeployedTokenId.from(
-          chain,
-          Address32.cropToEthereumAddress(Address32(address)),
-        )
-      default:
-        assertUnreachable(chainConfig.type)
-    }
+  const chainConfig = chains.find((c) => c.name === chain)
+  if (!chainConfig) return
+
+  switch (chainConfig.type) {
+    case 'evm':
+      return DeployedTokenId.from(
+        chain,
+        Address32.cropToEthereumAddress(Address32(address)),
+      )
+    default:
+      assertUnreachable(chainConfig.type)
   }
 }

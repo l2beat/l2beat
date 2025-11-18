@@ -1,5 +1,6 @@
 import type { Database } from '@l2beat/database'
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 
 export type SummedByTimestampTvsValuesRecord = [
   timestamp: UnixTime,
@@ -15,24 +16,44 @@ export type SummedByTimestampTvsValuesRecord = [
   other: number,
 ]
 
+const ProjectWithRanges = v.object({
+  projectId: v.string().transform((value) => value as ProjectId),
+  sinceTimestamp: v.number(),
+  untilTimestamp: v.number().optional(),
+})
+export type ProjectWithRanges = v.infer<typeof ProjectWithRanges>
+
 export async function getSummedByTimestampTvsValuesQuery(
   db: Database,
-  projectIds: ProjectId[],
+  projects: ProjectId[] | ProjectWithRanges[],
   range: [number | null, number],
   forSummary: boolean,
   excludeAssociated: boolean,
   includeRwaRestrictedTokens: boolean,
 ): Promise<SummedByTimestampTvsValuesRecord[]> {
-  const tvsRecords = await db.tvsTokenValue.getSummedByTimestampByProjects(
-    projectIds,
-    range[0],
-    range[1],
-    {
-      forSummary,
-      excludeAssociated,
-      includeRwaRestrictedTokens,
-    },
-  )
+  const projectsWithRanges = v.array(ProjectWithRanges).safeParse(projects)
+
+  const tvsRecords = projectsWithRanges.success
+    ? await db.tvsTokenValue.getSummedByTimestampWithProjectsRanges(
+        projectsWithRanges.data,
+        range[0],
+        range[1],
+        {
+          forSummary,
+          excludeAssociated,
+          includeRwaRestrictedTokens,
+        },
+      )
+    : await db.tvsTokenValue.getSummedByTimestampByProjects(
+        projects as ProjectId[],
+        range[0],
+        range[1],
+        {
+          forSummary,
+          excludeAssociated,
+          includeRwaRestrictedTokens,
+        },
+      )
 
   return tvsRecords.map((v) => [
     v.timestamp,

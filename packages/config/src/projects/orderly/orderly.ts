@@ -43,6 +43,7 @@ export const orderly: ScalingProject = opStackL2({
         'https://medium.com/@orderlynetwork',
         'https://t.me/OrderlyNetworkAnnouncements',
       ],
+      other: ['https://growthepie.com/chains/orderly'],
     },
   },
   nonTemplateEscrows: [

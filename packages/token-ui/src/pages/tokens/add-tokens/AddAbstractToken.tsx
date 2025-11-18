@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
+import { Card, CardContent } from '~/components/core/Card'
 import {
   AbstractTokenForm,
   AbstractTokenSchema,
@@ -124,43 +125,45 @@ export function AddAbstractToken({
     areChecksLoading || coingeckoId !== debouncedCoingeckoId
 
   return (
-    <>
-      <PlanConfirmationDialog
-        plan={plan}
-        setPlan={setPlan}
-        onSuccess={() => {
-          form.reset()
-          if (redirectTo) {
-            navigate(
-              buildUrlWithParams('/tokens/new', {
-                tab: redirectTo,
-                abstractTokenId: form.getValues('id'),
-              }),
-            )
-          }
-        }}
-      />
-      <AbstractTokenForm
-        form={form}
-        onSubmit={onSubmit}
-        isFormDisabled={isPending}
-        refreshId={() => {
-          const id = generateRandomId()
-          form.setValue('id', id)
-        }}
-        checks={{
-          isLoading: showChecksLoading,
-          success: !!checks && checks.error === undefined,
-        }}
-      >
-        <ButtonWithSpinner
-          isLoading={isPending}
-          className="w-full"
-          type="submit"
+    <Card>
+      <CardContent>
+        <PlanConfirmationDialog
+          plan={plan}
+          setPlan={setPlan}
+          onSuccess={() => {
+            form.reset()
+            if (redirectTo) {
+              navigate(
+                buildUrlWithParams('/tokens/new', {
+                  tab: redirectTo,
+                  abstractTokenId: form.getValues('id'),
+                }),
+              )
+            }
+          }}
+        />
+        <AbstractTokenForm
+          form={form}
+          onSubmit={onSubmit}
+          isFormDisabled={isPending}
+          refreshId={() => {
+            const id = generateRandomId()
+            form.setValue('id', id)
+          }}
+          checks={{
+            isLoading: showChecksLoading,
+            success: !!checks && checks.error === undefined,
+          }}
         >
-          Submit
-        </ButtonWithSpinner>
-      </AbstractTokenForm>
-    </>
+          <ButtonWithSpinner
+            isLoading={isPending}
+            className="w-full"
+            type="submit"
+          >
+            Submit
+          </ButtonWithSpinner>
+        </AbstractTokenForm>
+      </CardContent>
+    </Card>
   )
 }

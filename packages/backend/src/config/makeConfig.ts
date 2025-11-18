@@ -157,12 +157,9 @@ export async function makeConfig(
     interop: flags.isEnabled('interop') && {
       capture: {
         enabled: flags.isEnabled('interop', 'capture'),
-        chains: [
-          { name: 'ethereum', type: 'evm' as const },
-          { name: 'arbitrum', type: 'evm' as const },
-          { name: 'base', type: 'evm' as const },
-          { name: 'optimism', type: 'evm' as const },
-        ].filter((c) => flags.isEnabled('interop', 'capture', c.name)),
+        chains: getInteropChains().filter((c) =>
+          flags.isEnabled('interop', 'capture', c.name),
+        ),
       },
       matching: flags.isEnabled('interop', 'matching'),
       cleaner: flags.isEnabled('interop', 'cleaner'),
@@ -192,6 +189,19 @@ export async function makeConfig(
     // Must be last
     flags: flags.getResolved(),
   }
+}
+
+export function getInteropChains() {
+  return [
+    { name: 'ethereum', type: 'evm' as const },
+    { name: 'arbitrum', type: 'evm' as const },
+    { name: 'base', type: 'evm' as const },
+    { name: 'optimism', type: 'evm' as const },
+    { name: 'apechain', type: 'evm' as const },
+    { name: 'polygonpos', type: 'evm' as const },
+    { name: 'zksync2', type: 'evm' as const },
+    { name: 'abstract', type: 'evm' as const },
+  ]
 }
 
 function getEthereumMinTimestamp(chains: ChainConfig[]) {

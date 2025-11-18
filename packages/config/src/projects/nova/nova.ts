@@ -153,6 +153,7 @@ export const nova: ScalingProject = orbitStackL2({
         'https://arbitrumfoundation.medium.com/',
         'https://discord.gg/Arbitrum',
       ],
+      other: ['https://growthepie.com/chains/arbitrum-nova'],
     },
   },
   chainConfig: {

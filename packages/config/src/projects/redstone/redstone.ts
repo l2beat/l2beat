@@ -56,6 +56,7 @@ export const redstone: ScalingProject = opStackL2({
         'https://twitter.com/redstonexyz',
         'https://discord.com/invite/latticexyz',
       ],
+      other: ['https://growthepie.com/chains/redstone'],
     },
   },
   daProvider: DACHALLENGES_DA_PROVIDER(

@@ -1,15 +1,29 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
-import { HttpClient, MulticallV3Client, RpcClient } from '@l2beat/shared'
-import { assert } from '@l2beat/shared-pure'
+import {
+  CoingeckoClient,
+  CoingeckoQueryService,
+  HttpClient,
+  MulticallV3Client,
+  RpcClient,
+} from '@l2beat/shared'
+import { assert, CoingeckoId, unique } from '@l2beat/shared-pure'
+import { getTokenDbClient } from '@l2beat/token-backend'
 import { v } from '@l2beat/validate'
 import { boolean, command, flag, positional, run, string } from 'cmd-ts'
 import { readFileSync } from 'fs'
 import { type ParseError, parse } from 'jsonc-parser'
 import { join } from 'path'
+import { getInteropChains } from '../../../config/makeConfig'
 import { InMemoryEventDb } from '../engine/capture/InMemoryEventDb'
 import { logToViemLog } from '../engine/capture/InteropBlockProcessor'
 import { InteropConfigStore } from '../engine/config/InteropConfigStore'
+import type { DeployedTokenId } from '../engine/financials/DeployedTokenId'
+import {
+  getTokenInfos,
+  type TokenInfos,
+  toDeployedId,
+} from '../engine/financials/InteropFinancialsLoop'
 import { match } from '../engine/match/InteropMatchingLoop'
 import { createInteropPlugins } from '../plugins'
 import {
@@ -105,6 +119,22 @@ async function runExample(example: Example): Promise<RunResult> {
   const logger = Logger.ERROR
   const http = new HttpClient()
   const env = getEnv()
+  const tokenDbClient = getTokenDbClient({
+    apiUrl: env.string('TOKEN_BACKEND_TRPC_URL'),
+    authToken: env.string('TOKEN_BACKEND_CF_TOKEN'),
+    callSource: 'interop',
+  })
+
+  const coingecko = new CoingeckoQueryService(
+    new CoingeckoClient({
+      callsPerMinute: 60,
+      sourceName: 'coingecko',
+      retryStrategy: 'SCRIPT',
+      http: new HttpClient(),
+      logger: Logger.SILENT,
+      apiKey: undefined,
+    }),
+  )
 
   const ps = new ProjectService()
   const psChains = (await ps.getProjects({ select: ['chainConfig'] })).map(
@@ -241,10 +271,77 @@ async function runExample(example: Example): Promise<RunResult> {
     logger,
   )
 
+  const transfers = result.transfers.map((u) => ({
+    transfer: u,
+    srcId: toDeployedId(
+      getInteropChains(),
+      u.src.event.ctx.chain,
+      u.src.tokenAddress,
+    ),
+    dstId: toDeployedId(
+      getInteropChains(),
+      u.dst.event.ctx.chain,
+      u.dst.tokenAddress,
+    ),
+  }))
+
+  const tokenInfos = await getTokenInfos(
+    unique(
+      transfers
+        .flatMap((t) => [t.srcId, t.dstId])
+        .filter((x) => x !== undefined),
+    ),
+    tokenDbClient,
+    Logger.SILENT,
+  )
+
+  const prices = await coingecko.getLatestMarketData(
+    unique(
+      Array.from(tokenInfos.values())
+        .map((t) => CoingeckoId(t.coingeckoId))
+        .filter((u) => u !== undefined),
+    ),
+  )
+
+  const transfersWithFinancials = []
+
+  for (const transfer of transfers) {
+    transfersWithFinancials.push({
+      ...transfer.transfer,
+      src: {
+        ...transfer.transfer.src,
+        financials: calculateFinancials(
+          transfer.srcId,
+          transfer.transfer.src.tokenAmount,
+          tokenInfos,
+          prices,
+        ),
+      },
+      dst: {
+        ...transfer.transfer.dst,
+        financials: calculateFinancials(
+          transfer.dstId,
+          transfer.transfer.dst.tokenAmount,
+          tokenInfos,
+          prices,
+        ),
+      },
+    })
+  }
+
   return {
-    events,
-    messages: result.messages,
-    transfers: result.transfers,
+    events: events.map((e) => ({ ...e, chain: e.ctx.chain })),
+    messages: result.messages.map((m) => ({
+      ...m,
+      src: { ...m.src, chain: m.src.ctx.chain },
+      dst: { ...m.dst, chain: m.dst.ctx.chain },
+    })),
+    transfers: transfersWithFinancials.map((t) => ({
+      ...t,
+      events: t.events.map((e) => ({ ...e, chain: e.ctx.chain })),
+      src: { ...t.src, chain: t.src.event.ctx.chain },
+      dst: { ...t.dst, chain: t.dst.event.ctx.chain },
+    })),
   }
 }
 
@@ -319,6 +416,34 @@ function summarizeType(name: string, items: { type: string }[]) {
   console.log(`${name}:`)
   for (const { type, count } of types) {
     console.log('   ', type, count)
+  }
+}
+
+function calculateFinancials(
+  deployedTokenId: DeployedTokenId | undefined,
+  rawAmount: bigint | undefined,
+  tokenInfos: TokenInfos,
+  prices: Map<CoingeckoId, { price: number; circulating: number }>,
+) {
+  if (!deployedTokenId) return undefined
+
+  const tokenInfo = tokenInfos.get(deployedTokenId)
+  if (!tokenInfo) return undefined
+
+  const price = prices.get(CoingeckoId(tokenInfo.coingeckoId))
+  if (!price) return undefined
+
+  if (!rawAmount) return undefined
+
+  const amount =
+    Number((rawAmount * 1_000_000n) / 10n ** BigInt(tokenInfo.decimals)) /
+    1_000_000
+
+  return {
+    symbol: tokenInfo.symbol,
+    price: price.price,
+    amount,
+    value: price.price * amount,
   }
 }
 

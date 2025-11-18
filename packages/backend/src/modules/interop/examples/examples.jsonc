@@ -20,7 +20,7 @@
       "allbridge.TokensSent",
       "allbridge.TokensReceived"
     ],
-    "messages": ["allbridge.Message.allbridgeswap"],
+    "messages": ["allbridge.Message"],
     "transfers": ["allbridge.Transfer"]
   },
   "ccip": {
@@ -903,6 +903,32 @@
       {
         "chain": "arbitrum",
         "tx": "0xc0a88c1ee35876f124cecedeece187913b4db2c7b00dfa0037d27a3e65622374"
+      }
+    ]
+  },
+  "orbitstack-customgateway": {
+    "txs": [
+      // ethereum -> arbitrum (dai deposit)
+      {
+        "chain": "ethereum",
+        "tx": "0xbd77763bd0c6ff499200d677768c918227419ecfb82b8ad32839fba441ffe7a5"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x52c3379f5891baa8e6faa9330ec62a627f5ec5e3eadde2fb758e85dc0faf1958"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xd62cb8b7c1b421a45d38ba3ccbc09c8039de48963c1fb78bf4dfccb4b4b112ba"
+      },
+      // arbitrum -> ethereum (dai withdrawal)
+      {
+        "chain": "arbitrum",
+        "tx": "0xe6dd81265933e6c98dd078304791bf07e0532735b60cc035cd5abd61a679ffcc"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x4f6ffd7cec7fe0b7c5fa414cb842750750e3cdd406cd27761d3095adbbc94b9b"
       }
     ]
   },

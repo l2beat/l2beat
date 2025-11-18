@@ -21,7 +21,6 @@ const CLIENT_CONFIG = {
   CLIENT_SIDE_PLAUSIBLE_DOMAIN: z.string().default('localhost'),
   CLIENT_SIDE_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
   CLIENT_SIDE_SHOW_HIRING_BADGE: featureFlag.default(false),
-  CLIENT_SIDE_PROGRAM_HASHES: featureFlag.default(false),
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
 
@@ -33,13 +32,8 @@ const SERVER_CONFIG = {
     .default('postgresql://postgres:password@localhost:5432/l2beat_local'),
   DATABASE_LOG_ENABLED: coerceBoolean.default(false),
   DISABLE_CACHE: coerceBoolean.default(false),
-  ETHEREUM_RPC_URL: z
-    .string()
-    .check((v) => !!new URL(v))
-    .default('https://cloudflare-eth.com'),
   MOCK: coerceBoolean.default(false),
   REDIS_URL: z.string().optional(),
-  CRON_SECRET: z.string().optional(),
   EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
   EXCLUDED_TVS_PROJECTS: stringArray.optional(),
 
@@ -103,12 +97,10 @@ function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
     DATABASE_URL: process.env.DATABASE_URL,
     DATABASE_LOG_ENABLED: process.env.DATABASE_LOG_ENABLED,
     DISABLE_CACHE: process.env.DISABLE_CACHE,
-    ETHEREUM_RPC_URL: process.env.ETHEREUM_RPC_URL,
     MOCK: process.env.MOCK,
     NODE_ENV: process.env.NODE_ENV,
     HEROKU_APP_NAME: process.env.HEROKU_APP_NAME,
     DEPLOYMENT_ENV: process.env.DEPLOYMENT_ENV,
-    CRON_SECRET: process.env.CRON_SECRET,
     REDIS_URL: process.env.REDIS_URL,
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
     EXCLUDED_TVS_PROJECTS: process.env.EXCLUDED_TVS_PROJECTS,
@@ -123,6 +115,5 @@ function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
     CLIENT_SIDE_PLAUSIBLE_DOMAIN: process.env.CLIENT_SIDE_PLAUSIBLE_DOMAIN,
     CLIENT_SIDE_PLAUSIBLE_ENABLED: process.env.CLIENT_SIDE_PLAUSIBLE_ENABLED,
     CLIENT_SIDE_SHOW_HIRING_BADGE: process.env.FEATURE_FLAG_HIRING,
-    CLIENT_SIDE_PROGRAM_HASHES: process.env.CLIENT_SIDE_PROGRAM_HASHES,
   }
 }

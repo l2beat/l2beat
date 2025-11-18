@@ -35,7 +35,7 @@ export const celo: ScalingProject = opStackL2({
       'Celo is an Ethereum Optimium based on the OP stack, scaling real-world solutions & leading a thriving new digital economy for all.',
     stacks: ['OP Stack'],
     links: {
-      websites: ['https://celo.org/'],
+      websites: ['https://celo.org/', 'https://forum.celo.org/'],
       bridges: ['https://superbridge.app/celo'],
       documentation: ['https://docs.celo.org/'],
       explorers: [
@@ -49,6 +49,7 @@ export const celo: ScalingProject = opStackL2({
         'https://discord.com/invite/celo',
         'https://blog.celo.org/',
       ],
+      other: ['https://growthepie.com/chains/celo'],
     },
   },
   hasSuperchainScUpgrades: true,

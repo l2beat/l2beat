@@ -41,7 +41,10 @@ export const base: ScalingProject = opStackL2({
         'https://base.mirror.xyz/',
         'https://farcaster.xyz/base',
       ],
-      other: ['https://rollup.codes/base'],
+      other: [
+        'https://rollup.codes/base',
+        'https://growthepie.com/chains/base',
+      ],
     },
   },
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'rsETH'], // TODO: check

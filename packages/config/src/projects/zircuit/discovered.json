@@ -636,7 +636,7 @@
         "0x409b9567c50661b673c0f84e9b8ed470f1ca48bc04fb1c8d09f8cac545e82cf8"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h. Additionally, users can 'escape' their funds after 1mo of no state updates by supplying merkle proofs or using a resolver.",
+      "description": "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition. If allowBootstrapKeepalive is set to true (currently false), then this contract accepts a state root without proof if the operator has not updated the state in 4h. Users can 'escape' their funds after 1mo of no state updates by supplying merkle proofs or using a resolver.",
       "ignoreInWatchMode": [
         "latestBlockNumber",
         "latestOutputIndex",
@@ -725,7 +725,8 @@
       "fieldMeta": {
         "proposer": { "severity": "HIGH" },
         "challenger": { "severity": "HIGH" },
-        "deletedOutputs": { "severity": "HIGH" }
+        "deletedOutputs": { "severity": "HIGH" },
+        "allowBootstrapKeepalive": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4": "Proxy",
@@ -2016,7 +2017,7 @@
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "opstack/zircuit/L1StandardBridge": "0x2f9c34737989113306a892abba83353771734bbf57cae7245088154cbf90be77",
-    "opstack/zircuit/L2OutputOracle_SP1": "0x85a1b833cdedb6708fe1e18092c56a4f9e09b7bc277ed143f3992fe3b21f768a",
+    "opstack/zircuit/L2OutputOracle_SP1": "0x28706f73dc8dbc091be1b1f7b62d6c3c2c6d16eafcfff8002a5e33b8f6984021",
     "opstack/zircuit/OptimismPortal": "0xc3cdbd0b6752833adcaa14487b9cfc1f863a5770d71a98ce9969ae1e4ccafefb",
     "opstack/zircuit/ResolverRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/zircuit/SuperchainConfig": "0x88333adf1f4e7a6bbd8da95cbcd6e91ee1dbda7da976597818c96c0dbef27421",
