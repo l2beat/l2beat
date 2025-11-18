@@ -1,5 +1,4 @@
 import { ArrowRightIcon } from 'lucide-react'
-import { Link } from 'react-router-dom'
 import { buttonVariants } from './core/Button'
 
 interface Props {
@@ -12,13 +11,14 @@ export function ExplorerLink({ explorerUrl, value, type }: Props) {
   const href = getHref(explorerUrl, value, type)
 
   return (
-    <Link
-      to={href}
+    <a
+      href={href}
       target="_blank"
+      rel="noopener noreferrer"
       className="text-blue-500 underline hover:text-blue-600"
     >
       {value}
-    </Link>
+    </a>
   )
 }
 
@@ -26,16 +26,17 @@ export function ExplorerLinkButton({ explorerUrl, value, type }: Props) {
   const href = getHref(explorerUrl, value, type)
 
   return (
-    <Link
-      to={href}
+    <a
+      href={href}
       target="_blank"
+      rel="noopener noreferrer"
       className={buttonVariants({
         variant: 'outline',
         className: 'shrink-0',
       })}
     >
       <ArrowRightIcon />
-    </Link>
+    </a>
   )
 }
 

@@ -72,13 +72,14 @@ export function ChainsSummaryPage() {
                     <TableCell>{chain.chainId}</TableCell>
                     <TableCell>
                       {chain.explorerUrl && (
-                        <Link
-                          to={chain.explorerUrl}
+                        <a
+                          href={chain.explorerUrl}
                           target="_blank"
+                          rel="noopener noreferrer"
                           className="text-blue-500 underline hover:text-blue-600"
                         >
                           {chain.explorerUrl}
-                        </Link>
+                        </a>
                       )}
                     </TableCell>
                     <TableCell>{chain.aliases}</TableCell>

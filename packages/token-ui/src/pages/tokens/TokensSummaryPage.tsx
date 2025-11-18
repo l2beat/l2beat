@@ -35,7 +35,6 @@ export function TokensSummaryPage() {
   const chainRecord = chains?.find(
     (chain) => chain.name === selectedDeployedToken?.chain,
   )
-  console.log(chainRecord)
   return (
     <AppLayout>
       <div className="grid h-full grid-cols-2 gap-4">
