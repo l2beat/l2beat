@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x519ce0218d94b6088e1c8d420229f63dec0c2566
+
+# Diff at Tue, 18 Nov 2025 16:01:58 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c3835bcdcb7588e6060ac6cbd4b3d2d9049082ba block: 1759481302
+- current timestamp: 1763481632
+
+## Description
+
+Posting to DAC fallback for a while.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (arb1:0x8AeDdE55Cb361e73a0B0c0cF2A5bB35E97a20456) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.sequencerVersion:
+-        "0x63"
++        "0x88"
+    }
+```
+
 Generated with discovered.json: 0x49b413678764a1719ce443f8afa5710f741dde09
 
 # Diff at Fri, 03 Oct 2025 08:49:45 GMT:
