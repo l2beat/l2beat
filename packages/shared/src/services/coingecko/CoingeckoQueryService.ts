@@ -190,7 +190,7 @@ export class CoingeckoQueryService {
     for (const c of coingeckoIds) {
       const p = prices.find((p) => p.id === c)
       if (p === undefined) {
-        this.logger.error(`${c}: Price not found, assuming 0`)
+        this.logger.warn(`${c}: Price not found, assuming 0`)
         result.set(c, { price: 0, circulating: 0 })
       } else {
         result.set(c, {
