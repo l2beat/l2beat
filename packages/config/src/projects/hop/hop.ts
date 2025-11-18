@@ -15,6 +15,7 @@ export const hop: Bridge = {
     category: 'Liquidity Network',
     links: {
       websites: ['https://hop.exchange/'],
+      documentation: ['https://docs.hop.exchange/'],
       repositories: ['https://github.com/hop-protocol'],
       socialMedia: [
         'https://twitter.com/HopProtocol',

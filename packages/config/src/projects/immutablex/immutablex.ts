@@ -90,6 +90,7 @@ export const immutablex: ScalingProject = {
         'https://medium.com/@immutablex',
         'https://twitter.com/Immutable',
       ],
+      other: ['https://growthepie.com/chains/immutable-x'],
     },
   },
   proofSystem: {

@@ -23,7 +23,7 @@ export class Chain {
   ) {
     const rpcApi = chainConfig.apis?.find((api) => api.type === 'rpc')
     if (rpcApi?.url) {
-      this.rpc = new RpcClient({ url: rpcApi.url }, chainConfig.name)
+      this.rpc = new RpcClient({ url: rpcApi.url })
     }
 
     const etherscanApi = chainConfig.apis?.find(

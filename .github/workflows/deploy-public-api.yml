@@ -2,10 +2,15 @@ name: Deploy public-api
 
 concurrency:
   group: public-api-deployment
-permissions: {}
+permissions:
+  contents: read
+  packages: write
 
 on:
   workflow_dispatch: {}
+  push:
+    branches:
+      - main
 
 jobs:
   deploy-public-api:

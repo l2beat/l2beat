@@ -367,7 +367,7 @@ model InteropEvent {
   unsupported Boolean
 
   @@id([eventId])
-  @@index([type])
+  @@index([type,matched,unsupported,timestamp])
 }
 
 model InteropMessage {
@@ -525,8 +525,9 @@ model InteropConfig {
 }
 
 model Chain {
-  name    String @id @db.VarChar(255)
-  chainId Int    @unique()
-  aliases Json?
-  apis    Json?
+  name        String  @id @db.VarChar(255)
+  chainId     Int     @unique()
+  explorerUrl String? @db.VarChar(255)
+  aliases     Json?
+  apis        Json?
 }

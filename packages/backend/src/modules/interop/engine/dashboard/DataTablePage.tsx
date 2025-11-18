@@ -83,10 +83,10 @@ export function DataTablePage(props: DataTablePageProps) {
         )}
 
         {tables.map(({ table, tableId, title }, index) => (
-          <>
+          <React.Fragment key={tableId || index}>
             <h1>{title}</h1>
-            <div key={tableId || index}>{table}</div>
-          </>
+            <div>{table}</div>
+          </React.Fragment>
         ))}
 
         {props.footer}

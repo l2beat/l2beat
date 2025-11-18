@@ -787,7 +787,7 @@ The **Vanguard** is a privileged actor who can always make the first child propo
               },
               {
                 title: 'Vanguard - Kailua Docs',
-                url: 'https://risc0.github.io/kailua/parameters.html#vanguard-advantage',
+                url: 'https://boundless-xyz.github.io/kailua/parameters.html#vanguard-advantage',
               },
             ],
           },
@@ -880,7 +880,7 @@ The Kailua state validation system is primarily optimistically resolved, so no v
               },
               {
                 category: 'Funds can be frozen if',
-                text: 'in non-optimistic mode, the SuccinctGateway is unable to route proof verification to a valid verifier.',
+                text: 'in non-optimistic mode, the SP1VerifierGateway is unable to route proof verification to a valid verifier.',
               },
             ],
           },

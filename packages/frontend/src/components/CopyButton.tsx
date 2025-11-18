@@ -11,12 +11,14 @@ interface CopyButtonProps {
   toCopy: string
   className?: string
   iconClassName?: string
+  copyText?: string
 }
 
 export function CopyButton({
   toCopy,
   className,
   iconClassName,
+  copyText = 'Copy URL',
 }: CopyButtonProps) {
   const copy = useCopyToClipboard()
   const [copied, setCopied] = useState(false)
@@ -51,7 +53,7 @@ export function CopyButton({
         hideWhenDetached
         onPointerDownOutside={(event) => event.preventDefault()}
       >
-        {copied ? 'Copied!' : 'Copy URL'}
+        {copied ? 'Copied!' : copyText}
       </TooltipContent>
     </Tooltip>
   )

@@ -7,6 +7,5 @@ export const queryExecutor = makeQueryExecutor({
   redisUrl: env.REDIS_URL,
   db: getDb(),
   logger: getLogger(),
-  env,
   ci: process.env.CI === 'true',
 })

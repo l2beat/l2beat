@@ -34,6 +34,7 @@ export const zora: ScalingProject = opStackL2({
         'https://instagram.com/our.zora',
         'https://zora.community',
       ],
+      other: ['https://growthepie.com/chains/zora'],
     },
   },
   hasSuperchainScUpgrades: true,

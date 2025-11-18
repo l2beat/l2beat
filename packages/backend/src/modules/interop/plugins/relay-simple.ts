@@ -14,7 +14,7 @@ the Solver or via Router (which serves as a multicall facitlity for
 a Solver that, e.g. tries to buy an NFT on behalf of a user).
 */
 
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
   Address32,
   createEventParser,
@@ -211,32 +211,38 @@ export class RelaySimplePlugIn implements InteropPlugin {
 
   matchTypes = [TransferSrc, TransferDst]
   match(
-    transferSrc: InteropEvent,
+    transferDst: InteropEvent,
     db: InteropEventDb,
   ): MatchResult | undefined {
-    if (TransferDst.checkType(transferSrc)) {
-      const transferDst = db.find(TransferSrc, {
-        requestId: transferSrc.args.requestId,
+    if (TransferDst.checkType(transferDst)) {
+      const transferSrc = db.find(TransferSrc, {
+        requestId: transferDst.args.requestId,
       })
-      if (!transferDst) return
+      if (!transferSrc) {
+        // Auto-ignore unmatched after 2 hours
+        if (transferDst.ctx.timestamp < UnixTime.now() - 2 * UnixTime.HOUR) {
+          return [Result.Ignore([transferDst])]
+        }
+        return
+      }
 
-      if (transferSrc.ctx.chain === transferDst.ctx.chain) {
-        return [Result.Ignore([transferSrc, transferDst])]
+      if (transferDst.ctx.chain === transferSrc.ctx.chain) {
+        return [Result.Ignore([transferDst, transferSrc])]
       }
 
       return [
         Result.Message('relay-simple.Message', {
           app: 'relay-simple',
-          srcEvent: transferDst,
-          dstEvent: transferSrc,
+          srcEvent: transferSrc,
+          dstEvent: transferDst,
         }),
         Result.Transfer('relay-simple.Transfer', {
-          srcEvent: transferDst,
-          srcAmount: transferDst.args.amount,
-          srcTokenAddress: transferDst.args.tokenAddress,
-          dstEvent: transferSrc,
-          dstAmount: transferSrc.args.amount,
-          dstTokenAddress: transferSrc.args.tokenAddress,
+          srcEvent: transferSrc,
+          srcAmount: transferSrc.args.amount,
+          srcTokenAddress: transferSrc.args.tokenAddress,
+          dstEvent: transferDst,
+          dstAmount: transferDst.args.amount,
+          dstTokenAddress: transferDst.args.tokenAddress,
         }),
       ]
     }

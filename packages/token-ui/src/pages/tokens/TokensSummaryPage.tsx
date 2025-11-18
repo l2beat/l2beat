@@ -11,14 +11,14 @@ import {
   CardTitle,
 } from '~/components/core/Card'
 import { Separator } from '~/components/core/Separator'
-import { LoadingText } from '~/components/LoadingText'
+import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractToken, DeployedToken } from '~/mock/types'
 import { api } from '~/react-query/trpc'
 import { cn } from '~/utils/cn'
 import { getDeployedTokenDisplayId } from '~/utils/getDisplayId'
 
-export function MainPage() {
+export function TokensSummaryPage() {
   const { data, isLoading: isAbstractTokensLoading } =
     api.abstractTokens.getAllWithDeployedTokens.useQuery()
 
@@ -35,10 +35,10 @@ export function MainPage() {
           <CardHeader>
             <CardTitle>Abstract Tokens</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="flex flex-col gap-2">
+          <CardContent className="h-full">
+            <div className="flex h-full flex-col gap-2">
               {isAbstractTokensLoading ? (
-                <LoadingText />
+                <LoadingState className="h-full" />
               ) : (
                 <>
                   {data?.abstractTokens.map((token) => (

@@ -33,6 +33,7 @@ export const plumenetwork: ScalingProject = orbitStackL2({
         'https://discord.gg/plume',
         'https://t.me/plumenetwork_community',
       ],
+      other: ['https://growthepie.com/chains/plume'],
     },
   },
   additionalPurposes: ['RWA'],

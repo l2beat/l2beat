@@ -58,7 +58,7 @@ jobs:
           pnpm prisma migrate deploy
         env:
           PRISMA_DB_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
-      - name: Notify discord in case of failures
+      - name: Notify discord in case of failure
         if: ${{ failure() }}
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_NOTIFICATION_WEBHOOK }}
@@ -67,3 +67,15 @@ jobs:
             -H "Content-Type: application/json" \
             -d "{\"content\": \"DB Migration workflow failure at $GITHUB_REF_NAME! Defails: https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID\"}" \
             "${DISCORD_WEBHOOK_URL}"
+      - name: Notify devs in case of failure
+        uses: dawidd6/action-send-mail@v6
+        if: ${{ failure() }}
+        with:
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          to: ${{ secrets.MAIL_TO }}
+          from: ${{ secrets.MAIL_SENDER }}
+          server_address: ${{ secrets.MAIL_SERVER }}
+          server_port: 465
+          body: "DB Migration workflow failure at ${{ github.ref_name }}! Defails: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          subject: "[Action Required] Database migration failed in github workflows"
