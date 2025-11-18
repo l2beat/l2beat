@@ -52,7 +52,7 @@ export interface Config {
   readonly da: DataAvailabilityTrackingConfig | false
   readonly blockSync: BlockSyncModuleConfig
   readonly anomalies: AnomaliesConfig | false
-  readonly bridges: BridgesConfig | false
+  readonly interop: InteropFeatureConfig | false
 
   readonly flags: ResolvedFeatureFlag[]
 }
@@ -158,6 +158,7 @@ export interface HealthConfig {
 }
 
 export interface ActivityConfig {
+  readonly voyagerApiKey: string | undefined
   readonly projects: ActivityConfigProject[]
 }
 
@@ -181,8 +182,14 @@ export interface UpdateMonitorConfig {
   readonly cacheUri: string
   readonly chains: DiscoveryChainConfig[]
   readonly disabledChains: string[]
+  readonly disabledProjects: string[]
   readonly discord: DiscordConfig | false
   readonly updateMessagesRetentionPeriodDays: number
+  readonly workerPool: {
+    readonly workerCount: number
+    readonly timeoutPerTaskMs: number
+    readonly timeoutPerRunMs: number
+  }
 }
 
 export interface VerifiersConfig {
@@ -202,7 +209,7 @@ export interface AnomaliesConfig {
   readonly anomaliesMinDuration: number
 }
 
-export interface BridgesConfig {
+export interface InteropFeatureConfig {
   capture: {
     enabled: boolean
     chains: {
@@ -218,10 +225,15 @@ export interface BridgesConfig {
   }
   compare: {
     enabled: boolean
-    intervalMs?: number
   }
   financials: {
     enabled: boolean
+    tokenDbApiUrl: string
+    tokenDbAuthToken?: string
+  }
+  config: {
+    enabled: boolean
+    chains: { id: number; name: string }[]
   }
 }
 

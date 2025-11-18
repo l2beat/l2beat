@@ -32,8 +32,8 @@ import { getDataAvailabilitySection } from '~/utils/project/technology/getDataAv
 import { getOperatorSection } from '~/utils/project/technology/getOperatorSection'
 import { getOtherConsiderationsSection } from '~/utils/project/technology/getOtherConsiderationsSection'
 import { getSequencingSection } from '~/utils/project/technology/getSequencingSection'
-import { getStateValidationSection } from '~/utils/project/technology/getStateValidationSection'
 import { getWithdrawalsSection } from '~/utils/project/technology/getWithdrawalsSection'
+import { getStateValidationSection } from '~/utils/project/technology/state-validation/getStateValidationSection'
 import { getScalingTvsSection } from '~/utils/project/tvs/getScalingTvsSection'
 import {
   getUnderReviewStatus,
@@ -97,6 +97,8 @@ export interface ProjectScalingEntry {
           associated: number
           btc: number
           other: number
+          rwaPublic: number
+          rwaRestricted: number
         }
         warnings: WarningWithSentiment[]
         associatedTokens: ProjectAssociatedToken[]
@@ -139,7 +141,7 @@ export async function getScalingProjectEntry(
     | 'livenessInfo'
     | 'livenessConfig'
     | 'costsInfo'
-    | 'hasActivity'
+    | 'activityConfig'
     | 'colors'
     | 'ecosystemColors'
     | 'discoveryInfo'
@@ -161,22 +163,26 @@ export async function getScalingProjectEntry(
     dataPostedSection,
     zkCatalogProjects,
     allProjectsWithContracts,
+    allProjects,
   ] = await Promise.all([
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
-    get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
+    get7dTvsBreakdown({ type: 'layer2' }),
     getTokensForProject(project),
     getLiveness(project.id),
     getContractUtils(),
     getScalingTvsSection(project),
     getActivitySection(helpers, project),
     getCostsSection(helpers, project),
-    getDataPostedSection(helpers, project, daSolutions),
+    getDataPostedSection(helpers, project),
     ps.getProjects({
       select: ['zkCatalogInfo'],
     }),
     ps.getProjects({
       select: ['contracts'],
+    }),
+    ps.getProjects({
+      optional: ['daBridge', 'isBridge', 'isScaling', 'isDaLayer'],
     }),
   ])
 
@@ -218,16 +224,13 @@ export async function getScalingProjectEntry(
             },
             warning: project.tvsInfo.warnings[0],
             tokens: {
-              breakdown: {
-                ...tvsProjectStats.breakdown,
-                associated: tvsProjectStats.associated.total,
-              },
+              breakdown: tvsProjectStats.breakdown,
               warnings: compact([
                 tvsProjectStats &&
                   tvsProjectStats.breakdown.total > 0 &&
                   getAssociatedTokenWarning({
                     associatedRatio:
-                      tvsProjectStats.associated.total /
+                      tvsProjectStats.breakdown.associated /
                       tvsProjectStats.breakdown.total,
                     name: project.name,
                     associatedTokens: project.tvsInfo.associatedTokens,
@@ -255,6 +258,10 @@ export async function getScalingProjectEntry(
   const stateValidationSection = getStateValidationSection(
     project,
     zkCatalogProjects,
+    contractUtils,
+    tvsStats,
+    allProjects,
+    allProjectsWithContracts,
   )
 
   const common = {
@@ -342,7 +349,6 @@ export async function getScalingProjectEntry(
         tvsBreakdownUrl: `/scaling/projects/${project.slug}/tvs-breakdown`,
         milestones: sortedMilestones,
         tokens,
-        tvsProjectStats,
         tvsInfo: project.tvsInfo,
         project,
         ...scalingTvsSection,

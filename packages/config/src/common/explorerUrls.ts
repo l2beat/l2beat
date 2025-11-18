@@ -36,4 +36,6 @@ export const EXPLORER_URLS: Record<string, string> = {
   gnosis: 'https://gnosisscan.io',
   zircuit: 'https://explorer.zircuit.com',
   metis: 'https://andromeda-explorer.metis.io',
+  ethereal: 'https://explorer.ethereal.trade',
+  sepolia: 'https://sepolia.etherscan.io',
 }

@@ -7,7 +7,6 @@
   "ValidatorsExitBusOracle_v2": {
     "hash": "0xe4c526720601a291e152819a6b6a28a60b7aa74dfc163dcdda0848713449d95d",
     "address": "eth:0x905A211eD6830Cfc95643f0bE2ff64E7f3bf9b94",
-    "chain": "ethereum",
     "blockNumber": 23519375
   }
 }

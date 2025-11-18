@@ -35,6 +35,7 @@ export const mantle: ScalingProject = opStackL2({
         'https://medium.com/0xmantle',
         'https://t.me/mantlenetwork',
       ],
+      other: ['https://growthepie.com/chains/mantle'],
     },
   },
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'FBTC'],
@@ -125,6 +126,19 @@ export const mantle: ScalingProject = opStackL2({
     },
   ],
   nonTemplateDaTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: discovery.getContract('SystemConfig').sinceBlock ?? 0,
+      inbox: ChainSpecificAddress.address(
+        discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+      ),
+      sequencers: [
+        ChainSpecificAddress.address(
+          discovery.getContractValue('SystemConfig', 'batcherHash'),
+        ),
+      ],
+    },
     {
       type: 'eigen-da',
       customerId: '0x24f0a3716805e8973bf48eb908d6d4a2f34af785',

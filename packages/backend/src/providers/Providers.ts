@@ -21,7 +21,7 @@ import { assert } from '@l2beat/shared-pure'
 import type { Config } from '../config'
 import { BlockProviders } from './BlockProviders'
 import { type Clients, initClients } from './Clients'
-import { DayProviders } from './DayProviders'
+import { DayProviders } from './day/DayProviders'
 import { LogsProviders } from './LogsProviders'
 import { SvmBlockProviders } from './SvmBlockProviders'
 import { UopsAnalyzers } from './UopsAnalyzers'
@@ -64,7 +64,11 @@ export class Providers {
       ),
     )
     this.uops = new UopsAnalyzers(config.chainConfig)
-    this.day = new DayProviders(config.chainConfig, this.clients.starkex)
+    this.day = new DayProviders(config.chainConfig, {
+      starkex: this.clients.starkex,
+      voyager: this.clients.voyager,
+      lighter: this.clients.lighter,
+    })
 
     const blobProviders: DaBlobProvider[] = []
     if (this.clients.beacon) {

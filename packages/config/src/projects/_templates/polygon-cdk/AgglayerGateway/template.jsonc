@@ -9,7 +9,8 @@
         "roleNames": {
           "0x131410eab1236cee2db19035b0e825c94e5ab705dffe23321dd53856da531617": "AGGCHAIN_DEFAULT_VKEY_ROLE",
           "0x0fdc2a718b96bc741c7544001e3dd7c26730802c54781668fa78a120e622629b": "AL_ADD_PP_ROUTE_ROLE",
-          "0xca75ae4228cde6195f9fa3dbde8dc352fb30aa63780717a378ccfc50274355dd": "AL_FREEZE_PP_ROUTE_ROLE"
+          "0xca75ae4228cde6195f9fa3dbde8dc352fb30aa63780717a378ccfc50274355dd": "AL_FREEZE_PP_ROUTE_ROLE",
+          "0x0c3038a1ecdf82843b70709289ff1703351ad391e3e27df7f6fa7d913601e15e": "AL_MULTISIG_ROLE"
         }
       }
     },
@@ -58,6 +59,21 @@
         }
       ]
     },
+    "alMultisigAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x0c3038a1ecdf82843b70709289ff1703351ad391e3e27df7f6fa7d913601e15e": "AL_MULTISIG_ROLE"
+        },
+        "pickRoleMembers": "AL_MULTISIG_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the aggchainSigners and threshold (a multisig used for permissioned state transitions)."
+        }
+      ]
+    },
     // need two configs here to catch all aggchainVKey updates
     "aggchainVKeys": {
       "description": "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP, ECDSA). This map is e.g. used by AggchainFEP.getAggchainVKey().",
@@ -95,6 +111,13 @@
           "event": "RouteFrozen"
         }
       }
+    },
+    "aggchainSigners": {
+      "description:": "default multisig signers that are used in some pessimistic proofs for state transition signing"
+    },
+    "aggchainMultisigHash": {
+      "description:": "changes if anything in the aggchainSigners multisig changes",
+      "severity": "HIGH"
     }
   }
 }

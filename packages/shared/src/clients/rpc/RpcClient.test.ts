@@ -475,7 +475,7 @@ describe(RpcClient.name, () => {
       )
 
       const rpc = new RpcClient({
-        sourceName: 'chain',
+        chain: 'chain',
         url: 'API_URL',
         http: mockObject<HttpClient>({}),
         callsPerMinute: 100_000,
@@ -496,7 +496,7 @@ describe(RpcClient.name, () => {
       )
 
       const rpc = new RpcClient({
-        sourceName: 'chain',
+        chain: 'chain',
         url: 'API_URL',
         http: mockObject<HttpClient>({}),
         callsPerMinute: 100_000,
@@ -510,7 +510,7 @@ describe(RpcClient.name, () => {
 
     it('returns false when multicall client is not configured', () => {
       const rpc = new RpcClient({
-        sourceName: 'chain',
+        chain: 'chain',
         url: 'API_URL',
         http: mockObject<HttpClient>({}),
         callsPerMinute: 100_000,
@@ -525,7 +525,7 @@ describe(RpcClient.name, () => {
   describe(RpcClient.prototype.multicall.name, () => {
     it('throws error when multicall client is not configured', async () => {
       const rpc = new RpcClient({
-        sourceName: 'chain',
+        chain: 'chain',
         url: 'API_URL',
         http: mockObject<HttpClient>({}),
         callsPerMinute: 100_000,
@@ -553,7 +553,7 @@ describe(RpcClient.name, () => {
       )
 
       const rpc = new RpcClient({
-        sourceName: 'chain',
+        chain: 'chain',
         url: 'API_URL',
         http: mockObject<HttpClient>({}),
         callsPerMinute: 100_000,
@@ -609,7 +609,7 @@ describe(RpcClient.name, () => {
       })
 
       const rpc = new RpcClient({
-        sourceName: 'chain',
+        chain: 'chain',
         url: 'API_URL',
         http,
         callsPerMinute: 100_000,
@@ -858,7 +858,7 @@ function mockClient(deps: {
   generateId?: () => string
 }) {
   return new RpcClient({
-    sourceName: 'chain',
+    chain: 'chain',
     url: deps.url ?? 'API_URL',
     http: deps.http ?? mockObject<HttpClient>({}),
     callsPerMinute: 100_000,
@@ -881,7 +881,7 @@ const mockResponse = (blockNumber: number) => ({
 
 const mockRawTx = (to: string | undefined) => ({
   hash: '0x1',
-  value: '0x111111111',
+  value: 11111111n.toString(),
   from: '0xf',
   to,
   input: '0x1',
@@ -892,7 +892,7 @@ const mockRawTx = (to: string | undefined) => ({
 
 const mockTx = (to: string | undefined) => ({
   hash: '0x1',
-  value: '0x111111111',
+  value: 11111111n,
   from: '0xf',
   to,
   data: '0x1',

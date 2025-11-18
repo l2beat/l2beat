@@ -110,6 +110,8 @@ export const edgex: ScalingProject = {
       type: 'day',
       sinceTimestamp: UnixTime(1720435943),
       resyncLastDays: 7,
+      batchSize: 10,
+      dataSource: 'StarkEx Aggregations API',
     },
     escrows: [
       discovery.getEscrowDetails({

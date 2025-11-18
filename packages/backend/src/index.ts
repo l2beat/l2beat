@@ -1,13 +1,13 @@
 import {
+  ConsoleTransport,
   type Env,
   getEnv,
-  LogFormatterEcs,
-  LogFormatterJson,
-  LogFormatterPretty,
   Logger,
   type LoggerOptions,
-  type LoggerTransportOptions,
+  type LoggerTransport,
+  MetricsAggregator,
 } from '@l2beat/backend-tools'
+import { Indexer } from '@l2beat/uif'
 import apm from 'elastic-apm-node'
 import { Application } from './Application'
 import { getConfig } from './config'
@@ -40,9 +40,8 @@ async function main() {
   } catch (e) {
     logger.critical('Failed to start the application', e)
 
-    // wait 10 seconds for the error to be reported
-    console.log('Waiting 10 seconds for the error to be reported')
-    await new Promise((resolve) => setTimeout(resolve, 10000))
+    // flush logs and wait for the error to be reported
+    logger.flush()
 
     throw e
   }
@@ -51,11 +50,8 @@ async function main() {
 function createLogger(env: Env): Logger {
   const isLocal = env.optionalString('DEPLOYMENT_ENV') === undefined
 
-  const loggerTransports: LoggerTransportOptions[] = [
-    {
-      transport: console,
-      formatter: isLocal ? new LogFormatterPretty() : new LogFormatterJson(),
-    },
+  const loggerTransports: LoggerTransport[] = [
+    isLocal ? ConsoleTransport.PRETTY : ConsoleTransport.JSON,
   ]
 
   // Elastic Search logging
@@ -70,18 +66,17 @@ function createLogger(env: Env): Logger {
       flushInterval: env.optionalInteger('ES_FLUSH_INTERVAL'),
     }
 
-    loggerTransports.push({
-      transport: new ElasticSearchTransport(options),
-      formatter: new LogFormatterEcs(),
-    })
+    loggerTransports.push(new ElasticSearchTransport(options))
   }
 
   const options: Partial<LoggerOptions> = {
-    logLevel: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
-    utc: isLocal ? false : true,
+    level: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['level'],
     transports: loggerTransports,
-    metricsEnabled: env.boolean('CLIENT_METRICS_ENABLED', esEnabled),
   }
+
+  const metricsEnabled = env.boolean('CLIENT_METRICS_ENABLED', esEnabled)
+  MetricsAggregator.setMetricsEnabled(metricsEnabled)
+  Indexer.setMetricsEnabled(metricsEnabled)
 
   return new Logger(options)
 }

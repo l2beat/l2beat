@@ -9,6 +9,7 @@ const genesisTimestamp = UnixTime(1744817872) // 2025-04-16T17:00:00Z
 
 export const lachain: ScalingProject = zkStackL2({
   addedAt: UnixTime(1740072754), // 2025-01-20T17:32:34Z
+  archivedAt: UnixTime(1760947223),
   display: {
     name: 'LaChain',
     slug: 'lachain',
@@ -46,7 +47,7 @@ export const lachain: ScalingProject = zkStackL2({
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
       query: {
         formula: 'sharedBridge',
-        chainId,
+        firstParameter: chainId,
         address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
         selector: '0x98f81962',
         functionSignature:
@@ -61,7 +62,7 @@ export const lachain: ScalingProject = zkStackL2({
       ],
       query: {
         formula: 'sharedBridge',
-        chainId,
+        firstParameter: chainId,
         address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
         selector: '0xe12a6137',
         functionSignature:
@@ -76,7 +77,7 @@ export const lachain: ScalingProject = zkStackL2({
       ],
       query: {
         formula: 'sharedBridge',
-        chainId,
+        firstParameter: chainId,
         address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
         selector: '0xcf02827d',
         functionSignature:

@@ -1,5 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
+import type { RequestInit } from 'node-fetch'
 
 interface Deps {
   maxRetries: number
@@ -23,9 +24,12 @@ export class RetryHandler {
     this.$.logger = this.$.logger.for(this)
   }
 
-  async retry<T>(fn: () => Promise<T>, error?: unknown): Promise<T> {
+  async retry<T>(
+    fn: () => Promise<T>,
+    metadata?: { error?: unknown; url?: string; init?: RequestInit },
+  ): Promise<T> {
     let attempt = 0
-
+    let error = metadata?.error
     while (true) {
       const delay = Math.min(
         this.$.initialRetryDelayMs * Math.pow(2, attempt),
@@ -36,6 +40,8 @@ export class RetryHandler {
         attempt: attempt,
         delay,
         error: error instanceof Error ? error.message : error,
+        url: metadata?.url,
+        init: metadata?.init,
       })
       await new Promise((resolve) => setTimeout(resolve, delay))
 

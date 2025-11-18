@@ -31,6 +31,7 @@ export const celestia: BaseProject = {
         'https://x.com/Celestia',
         'https://discord.com/invite/YsnTPcSfWQ',
         'https://t.me/CelestiaCommunity',
+        'https://youtube.com/@CelestiaNetwork',
       ],
     },
     badges: [],
@@ -182,6 +183,17 @@ export const celestia: BaseProject = {
             type: 'celestia',
             sinceBlock: 5047670,
             namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAKzFLTn1xOipecg=',
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('camp'),
+        name: 'Camp',
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 6459709,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAB7AAAAAAAAAeQ=',
           },
         ],
       },
@@ -396,6 +408,22 @@ export const celestia: BaseProject = {
             type: 'celestia',
             sinceBlock: 4932528,
             namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAMJ/xGlNMdE=',
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('xo-market'),
+        name: 'XO Market',
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 8164261,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAACnGTcXcpKRnenc=',
+          },
+          {
+            type: 'celestia',
+            sinceBlock: 8383370,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAEjr00EdZDGvoMU=',
           },
         ],
       },

@@ -138,6 +138,7 @@ export class EtherscanClient implements IEtherscanClient {
 
     let files: Record<string, string> = {}
     let remappings: string[] = []
+    let libraries: Record<string, EthereumAddress> = {}
     const name = result.ContractName.trim()
     const solidityVersion = result.CompilerVersion
     const source = result.SourceCode
@@ -151,6 +152,7 @@ export class EtherscanClient implements IEtherscanClient {
         )
         files = Object.fromEntries(decodedSource.sources)
         remappings = decodedSource.remappings
+        libraries = decodedSource.libraries
       } catch (e) {
         this.logger.error(e)
       }
@@ -163,6 +165,7 @@ export class EtherscanClient implements IEtherscanClient {
       solidityVersion,
       constructorArguments: result.ConstructorArguments,
       remappings,
+      libraries,
       files,
     }
   }
@@ -290,12 +293,16 @@ export class EtherscanClient implements IEtherscanClient {
 }
 
 const Sources = v.record(v.string(), v.object({ content: v.string() }))
-const Settings = v.object({ remappings: v.array(v.string()).optional() })
+const Settings = v.object({
+  remappings: v.array(v.string()).optional(),
+  libraries: v.record(v.string(), v.record(v.string(), v.string())).optional(),
+})
 const EtherscanSource = v.object({ sources: Sources, settings: Settings })
 
 interface DecodedSource {
   sources: [string, string][]
   remappings: string[]
+  libraries: Record<string, EthereumAddress>
 }
 
 function decodeEtherscanSource(
@@ -313,6 +320,7 @@ function decodeEtherscanSource(
     return {
       sources: [[`${name}.${extension}`, source]],
       remappings: [],
+      libraries: {},
     }
   }
 
@@ -324,8 +332,21 @@ function decodeEtherscanSource(
   const parsed: unknown = JSON.parse(source)
   let validated: Record<string, { content: string }>
   let remappings: string[] = []
+  const libraries: Record<string, EthereumAddress> = {}
   try {
     const verified = EtherscanSource.parse(parsed)
+    if (verified.settings.libraries !== undefined) {
+      for (const [key, value] of Object.entries(verified.settings.libraries)) {
+        if (Object.keys(value).length === 0) {
+          continue
+        }
+
+        for (const [name, address] of Object.entries(value)) {
+          libraries[`${key}/${name}`] = EthereumAddress(address)
+        }
+      }
+    }
+
     validated = verified.sources
     remappings = verified.settings.remappings ?? []
   } catch {
@@ -338,5 +359,6 @@ function decodeEtherscanSource(
       content,
     ]),
     remappings,
+    libraries,
   }
 }

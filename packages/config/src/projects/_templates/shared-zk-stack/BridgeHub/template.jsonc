@@ -19,7 +19,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "globally create new zk chains (based on the current version), register tokens (ZK cluster Admin role). Locally manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+          "description": "create new zk chains (based on the current version), register tokens (ZK cluster Admin role)."
         }
       ]
     },
@@ -27,13 +27,9 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration."
+          "description": "set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration."
         }
       ]
-    },
-    "migrationPaused": {
-      "description": "If false, chains can migrate to whitelisted settlement layers.",
-      "severity": "HIGH"
     },
     "chainsCreated": {
       "description": "All new chains created go thorugh the central bridgehub and are stored here with their respective STMs.",
@@ -52,14 +48,6 @@
         "select": ["isWhitelisted"],
         "groupBy": "chainId",
         "set": { "event": "SettlementLayerRegistered" }
-      }
-    },
-    "migrations": {
-      "description": "zk chain migrations that were started",
-      "severity": "HIGH",
-      "handler": {
-        "type": "event",
-        "add": { "event": "MigrationStarted" }
       }
     }
   }

@@ -1,6 +1,6 @@
 {
   "name": "bobanetwork",
-  "timestamp": 1751366039,
+  "timestamp": 1762517395,
   "configHash": "0xc3ba7d5d34760a946151a3e021df69cb66e1f34cba3c60d53b9639f56d7b1e5b",
   "entries": [
     {
@@ -15,7 +15,7 @@
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0xc7135dbd2a53312d36df3f3ee91ce0a5a459ab8fc7725880a3a9c55a5fa0ed6c"
+        "0xf2ca03f1fb80fdb3c1281ea41b46245c8e6811a03a9ad7129f60cfedaac0e231"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
@@ -83,7 +83,7 @@
         "optimismMintableERC20Factory": "eth:0x4d898F66327Fa050131A17ed17a39EBeCC81f0c3",
         "optimismPortal": "eth:0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e",
         "overhead": 2100,
-        "owner": "eth:0x56121a8612474C3eB65D69a3b871f284705b9bC4",
+        "owner": "eth:0xD382C8Ae5c51131086E2c5a2292E7B35D2093369",
         "resourceConfig": {
           "maxResourceLimit": 20000000,
           "elasticityMultiplier": 10,
@@ -115,11 +115,6 @@
         "eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375": "SystemConfig"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "address": "eth:0x33A0B6C2Bd60A592C5e91dCCd5E5f403693F0AC1",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x3A0d08CE95984B5dB59E604671e92A73C7897EB7",
@@ -218,12 +213,6 @@
           "permission": "guard",
           "from": "eth:0x996ffD627901f10C80A7d4B72A12316D2e77c076",
           "role": ".guardian"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "role": ".owner"
         },
         {
           "permission": "interact",
@@ -338,14 +327,14 @@
         "$members": [
           "eth:0xCCDEbe62f7378D5A931970A847cdf1EcFfc71C63",
           "eth:0x6976498e37E4941E167161fC3BC5191EEDc302ab",
-          "eth:0x33A0B6C2Bd60A592C5e91dCCd5E5f403693F0AC1"
+          "eth:0xBEC9D08ddfb46F20f3a847180E6bC04c8Dc8aCb4"
         ],
         "$threshold": 2,
         "domainSeparator": "0x3e1e6f01b53c63c1d9a6768542de75a2e5a4de16021b351a4e90bd9a948f99be",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 27,
+        "nonce": 31,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -359,7 +348,7 @@
       "type": "Contract",
       "template": "opstack/MIPS",
       "sourceHashes": [
-        "0xa2e4c062c9c44866846c9caf76340a103baaf77ec936f0e8fd29e5de6bdeb779"
+        "0xbb3cae27c16856a4265d2e2e2614765c1254c07cf3bb84574cd46e033524f1c8"
       ],
       "proxyType": "immutable",
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
@@ -448,7 +437,7 @@
         ],
         "$upgradeCount": 7,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292677043",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292677089",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -594,7 +583,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 100000,
-          "prevBlockNum": 22796899
+          "prevBlockNum": 23740302
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -655,7 +644,7 @@
       "type": "Contract",
       "template": "opstack/PermissionedDisputeGame",
       "sourceHashes": [
-        "0x36b6d01ce1c06ddc49ae1e3fcb2954cf2bfba1c55fd1174fce55ebd20e3dbe13"
+        "0x8738d176c361d44d45a0045debf90812ce2af53a3ca1a6483afd9d85d5f95883"
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
@@ -881,9 +870,27 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "eth:0xBEC9D08ddfb46F20f3a847180E6bC04c8Dc8aCb4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xCCDEbe62f7378D5A931970A847cdf1EcFfc71C63",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xD382C8Ae5c51131086E2c5a2292E7B35D2093369",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "role": ".owner"
+        }
+      ]
     },
     {
       "name": "AnchorStateRegistry",
@@ -990,7 +997,7 @@
         ],
         "$upgradeCount": 1,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 132,
+        "gameCount": 3202,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x97e8B3e46a251A657A56CEe8c24E4C0F1864be64",
@@ -1002,7 +1009,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x56121a8612474C3eB65D69a3b871f284705b9bC4",
-        "permissionedGamesTotal": 132,
+        "permissionedGamesTotal": 3202,
         "version": "1.0.0"
       },
       "fieldMeta": {
@@ -1640,11 +1647,11 @@
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismPortal2": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
-    "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
+    "opstack/PermissionedDisputeGame": "0xe39c1284ebcc867153d8d9bf8d32a6ab7daf95dde76ad7e13a040bb64d98b985",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 22823822 },
-  "permissionsConfigHash": "0x272479ef8c94762e42d5328525de637e725424f6fbcfa13faf9c144e25cc9b97"
+  "usedBlockNumbers": { "ethereum": 23747297 },
+  "permissionsConfigHash": "0x67550f73ff8c50698dc50feb53d32ffe50e99f2ce326f0d5a99b78f0be78a845"
 }

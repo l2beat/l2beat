@@ -3,8 +3,10 @@ import { ProjectService } from '@l2beat/config'
 import { createDatabase } from '@l2beat/database'
 import express from 'express'
 import swaggerUi from 'swagger-ui-express'
+import { InMemoryCache } from './cache/InMemoryCache'
 import { getConfig } from './config'
 import { authMiddleware } from './middleware/authMiddleware'
+import { errorHandler } from './middleware/errorHandler'
 import { loggerMiddleware } from './middleware/loggerMiddleware'
 import { OpenApi } from './OpenApi'
 import { addActivityRoutes } from './routes/activity/routes'
@@ -54,6 +56,10 @@ function main() {
     },
     security: [{ apiKeyAuth: [] }],
   })
+  const cache = new InMemoryCache({
+    logger,
+    enabled: config.cacheEnabled,
+  })
 
   app.get('/', (_, res) => {
     res.redirect('/docs')
@@ -80,8 +86,10 @@ function main() {
   app.use(loggerMiddleware(logger))
 
   addProjectsRoutes(openapi, ps)
-  addTvsRoutes(openapi, ps, db)
-  addActivityRoutes(openapi, ps, db)
+  addTvsRoutes(openapi, ps, db, cache)
+  addActivityRoutes(openapi, ps, db, cache)
+
+  app.use(errorHandler(logger))
 
   app.listen(config.api.port, () => {
     console.log(`Example app listening on port ${config.api.port}`)

@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -93,17 +93,140 @@ export const sp1: BaseProject = {
         ...TRUSTED_SETUPS.SP1Groth16,
       },
     ],
+    projectsForTvs: [
+      {
+        projectId: ProjectId('forknet'),
+        sinceTimestamp: UnixTime(1753882500),
+      },
+      {
+        projectId: ProjectId('katana'),
+        sinceTimestamp: UnixTime(1751328000),
+      },
+      {
+        projectId: ProjectId('blobstream'),
+        sinceTimestamp: UnixTime(1717608107),
+      },
+      {
+        projectId: ProjectId('vector'),
+        sinceTimestamp: UnixTime(1720128227),
+      },
+      {
+        projectId: ProjectId('sophon'),
+        sinceTimestamp: UnixTime(1745341091),
+      },
+      {
+        projectId: ProjectId('lens'),
+        sinceTimestamp: UnixTime(1745359200),
+      },
+      {
+        projectId: ProjectId('plumenetwork'),
+        sinceTimestamp: UnixTime(1746735060),
+      },
+      {
+        projectId: ProjectId('galxegravity'),
+        sinceTimestamp: UnixTime(1745880540),
+      },
+      {
+        projectId: ProjectId('rari'),
+        sinceTimestamp: UnixTime(1734562800),
+      },
+      {
+        projectId: ProjectId('winr'),
+        sinceTimestamp: UnixTime(1747088280),
+      },
+      {
+        projectId: ProjectId('molten'),
+        sinceTimestamp: UnixTime(1731480840),
+      },
+      {
+        projectId: ProjectId('taiko'),
+        sinceTimestamp: UnixTime(1730452800),
+      },
+      {
+        projectId: ProjectId('lumia'),
+        sinceTimestamp: UnixTime(1753882500),
+      },
+      {
+        projectId: ProjectId('polygonzkevm'),
+        sinceTimestamp: UnixTime(1753882500),
+      },
+      {
+        projectId: ProjectId('xlayer'),
+        sinceTimestamp: UnixTime(1753882500),
+      },
+      {
+        projectId: ProjectId('silicon'),
+        sinceTimestamp: UnixTime(1753882500),
+      },
+      {
+        projectId: ProjectId('facet'),
+        sinceTimestamp: UnixTime(1751407200),
+      },
+      {
+        projectId: ProjectId('ternoa'),
+        sinceTimestamp: UnixTime(1753882500),
+      },
+      {
+        projectId: ProjectId('wirex'),
+        sinceTimestamp: UnixTime(1753882500),
+      },
+      {
+        projectId: ProjectId('penchain'),
+        sinceTimestamp: UnixTime(1753882500),
+      },
+      {
+        projectId: ProjectId('phala'),
+        sinceTimestamp: UnixTime(1736290800),
+      },
+      {
+        projectId: ProjectId('mantle'),
+        sinceTimestamp: UnixTime(1757973600),
+      },
+      {
+        projectId: ProjectId('zircuit'),
+        sinceTimestamp: UnixTime(1756072800),
+      },
+      {
+        projectId: ProjectId('omni'),
+        sinceTimestamp: UnixTime(1748856160),
+      },
+      // archived projects
+      {
+        projectId: ProjectId('gpt'),
+        sinceTimestamp: UnixTime(1753882500),
+      },
+      {
+        projectId: ProjectId('astarzkevm'),
+        sinceTimestamp: UnixTime(1753882500),
+      },
+      {
+        projectId: ProjectId('witness'),
+        sinceTimestamp: UnixTime(1753882500),
+      },
+      {
+        projectId: ProjectId('kroma'),
+        sinceTimestamp: UnixTime(1739228400),
+      },
+      {
+        projectId: ProjectId('haust'),
+        sinceTimestamp: UnixTime(1756808195),
+      },
+    ],
     verifierHashes: [
       {
         hash: '0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
-            address: '0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459',
+            address: EthereumAddress(
+              '0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459',
+            ),
             chain: 'ethereum',
           },
           {
-            address: '0xFF5Adab685362DC4C33536a65aF5873738D1216B',
+            address: EthereumAddress(
+              '0xFF5Adab685362DC4C33536a65aF5873738D1216B',
+            ),
             chain: 'ethereum',
           },
         ],
@@ -114,7 +237,9 @@ export const sp1: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
-            address: '0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63',
+            address: EthereumAddress(
+              '0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63',
+            ),
             chain: 'ethereum',
           },
         ],
@@ -132,15 +257,21 @@ export const sp1: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
         knownDeployments: [
           {
-            address: '0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5',
+            address: EthereumAddress(
+              '0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5',
+            ),
             chain: 'ethereum',
           },
           {
-            address: '0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5',
+            address: EthereumAddress(
+              '0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5',
+            ),
             chain: 'arbitrum',
           },
           {
-            address: '0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd',
+            address: EthereumAddress(
+              '0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd',
+            ),
             chain: 'gnosis',
           },
         ],

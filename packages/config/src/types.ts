@@ -127,7 +127,6 @@ export interface BaseProject {
   isDaLayer?: true
   isUpcoming?: true
   archivedAt?: UnixTime
-  hasActivity?: true
   hasTestnet?: true
 }
 
@@ -167,7 +166,6 @@ export interface ProjectLinks {
   repositories?: string[]
   socialMedia?: string[]
   other?: string[]
-  rollupCodes?: string
 }
 export interface Badge {
   id: string
@@ -258,6 +256,7 @@ export interface MulticallContractConfig {
 export type ChainApiConfig =
   | ChainBasicApi<'rpc'>
   | ChainBasicApi<'starknet'>
+  | ChainBasicApi<'lighter'>
   | ChainBasicApi<'zksync'>
   | ChainBasicApi<'loopring'>
   | ChainBasicApi<'degate3'>
@@ -703,7 +702,7 @@ export interface ProjectDaBridge {
   risks: DaBridgeRisks
   usedIn: UsedInProject[]
   dac?: DacInfo
-  relayerType?: TableReadyValue<'Permissioned'>
+  relayerType?: TableReadyValue<'Permissioned' | 'SelfRelay'>
   validationType?: DaBridgeValidationType
 }
 
@@ -815,12 +814,19 @@ export interface ProjectZkCatalogInfo {
   trustedSetups: (TrustedSetup & {
     proofSystem: ZkCatalogTag
   })[]
+  /** Projects that are used in the TVS calculations. */
+  projectsForTvs?: {
+    projectId: ProjectId
+    sinceTimestamp: UnixTime
+    untilTimestamp?: UnixTime
+  }[]
   verifierHashes: {
     hash: string
     proofSystem: ZkCatalogTag
     knownDeployments: {
-      address: string
+      address: EthereumAddress
       chain: string
+      overrideUsedIn?: ProjectId[]
     }[]
     verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
     verificationSteps?: string
@@ -916,7 +922,10 @@ export type AdjustCount =
 export interface DayActivityConfig {
   type: 'day'
   sinceTimestamp: UnixTime
+  /** Source of the data, will be displayed in the UI */
+  dataSource: string
   resyncLastDays?: number
+  batchSize?: number
 }
 
 export interface ProjectLivenessInfo {

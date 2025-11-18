@@ -47,7 +47,7 @@ export function ProjectScalingSummary({ project }: Props) {
   return (
     <section
       id="summary"
-      data-role="project-section"
+      data-role="nav-section"
       className="w-full border-divider px-4 max-md:border-b md:rounded-lg md:bg-surface-primary md:p-6"
     >
       <div className="flex">
@@ -87,6 +87,12 @@ export function ProjectScalingSummary({ project }: Props) {
                       }
                       btc={project.header.tvs?.tokens.breakdown?.btc ?? 0}
                       other={project.header.tvs?.tokens.breakdown?.other ?? 0}
+                      rwaPublic={
+                        project.header.tvs?.tokens.breakdown?.rwaPublic ?? 0
+                      }
+                      rwaRestricted={
+                        project.header.tvs?.tokens.breakdown?.rwaRestricted ?? 0
+                      }
                       className="h-1.5 w-full"
                     />
                     {hasTokenWarnings && (
@@ -109,6 +115,12 @@ export function ProjectScalingSummary({ project }: Props) {
                     }
                     btc={project.header.tvs?.tokens.breakdown?.btc ?? 0}
                     other={project.header.tvs?.tokens.breakdown?.other ?? 0}
+                    rwaPublic={
+                      project.header.tvs?.tokens.breakdown?.rwaPublic ?? 0
+                    }
+                    rwaRestricted={
+                      project.header.tvs?.tokens.breakdown?.rwaRestricted ?? 0
+                    }
                     associatedTokens={
                       project.header.tvs?.tokens.associatedTokens ?? []
                     }

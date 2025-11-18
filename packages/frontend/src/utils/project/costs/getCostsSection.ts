@@ -10,11 +10,7 @@ export async function getCostsSection(
     'costsInfo' | 'archivedAt' | 'trackedTxsConfig'
   >,
 ): Promise<
-  | Pick<
-      CostsSectionProps,
-      'trackedTransactions' | 'defaultRange' | 'hasPostedData'
-    >
-  | undefined
+  Pick<CostsSectionProps, 'trackedTransactions' | 'defaultRange'> | undefined
 > {
   if (!project.costsInfo) return undefined
 
@@ -32,7 +28,6 @@ export async function getCostsSection(
 
   return {
     trackedTransactions,
-    hasPostedData: data.chart.some((d) => d[13] !== null),
     defaultRange: range,
   }
 }

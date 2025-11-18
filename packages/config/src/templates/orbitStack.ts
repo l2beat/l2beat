@@ -275,7 +275,7 @@ function defaultStateValidation(
       references: [
         {
           title: 'How is fraud proven - Arbitrum documentation FAQ',
-          url: 'https://docs.arbitrum.io/welcome/arbitrum-gentle-introduction#q-and-how-exactly-is-fraud-proven-sounds-complicated',
+          url: 'https://docs.arbitrum.io/get-started/arbitrum-introduction',
         },
       ],
     },
@@ -700,7 +700,7 @@ function orbitStackCommon(
       })(),
     milestones: templateVars.milestones ?? [],
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
-    customDa: templateVars.customDa,
+    customDa: postsToDAC(templateVars) ? templateVars.customDa : undefined,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     dataAvailability: extractDAs(daProviders),
     scopeOfAssessment: templateVars.scopeOfAssessment,
@@ -750,7 +750,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): ScalingProject {
           RISK_VIEW.SEQUENCER_SELF_SEQUENCE,
         ),
       proposerFailure:
-        templateVars.stackedRiskView?.sequencerFailure ??
+        templateVars.stackedRiskView?.proposerFailure ??
         sumRisk(
           common.riskView.proposerFailure,
           baseChain.riskView.proposerFailure,
@@ -1110,7 +1110,8 @@ function getDAProviders(
   const isUsingValidBlobstreamWmr =
     wmrValidForBlobstream.includes(wasmModuleRoot)
 
-  if (isUsingValidBlobstreamWmr) {
+  // Only add Celestia if NOT posting to DAC (sequencerVersion !== 0x88)
+  if (isUsingValidBlobstreamWmr && !postsToDAC(templateVars)) {
     if (templateVars.celestiaProofSystemInactive) {
       result.push({
         riskViewDA: RISK_VIEW.DATA_CELESTIA(false),

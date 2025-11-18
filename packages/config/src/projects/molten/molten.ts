@@ -4,6 +4,7 @@ import { BADGES } from '../../common/badges'
 import { ESPRESSO } from '../../common/sequencing'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('molten')
@@ -41,6 +42,7 @@ export const molten: ScalingProject = orbitStackL3({
     sinceBlock: 5305699,
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpNR57blEA=',
   },
+  customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
   associatedTokens: ['MOLTEN'],
   chainConfig: {
     name: 'molten',
@@ -85,6 +87,14 @@ export const molten: ScalingProject = orbitStackL3({
       url: 'https://x.com/MoltenL3/status/1774485708742205545',
       date: '2024-03-31T00:00:00Z',
       description: 'Molten launches its Mainnet.',
+      type: 'general',
+    },
+    {
+      title: 'Molten starts using Blobstream',
+      url: 'https://arbiscan.io/tx/0x9a8ae683e857b80a843f7f071b0f831ac8162c6ac2c09fd9a8a514809d80c7af',
+      date: '2024-11-13T00:00:00Z',
+      description:
+        'Upgraded ChallengeManager contract to the version that uses Celestia with Blobstream bridge',
       type: 'general',
     },
   ],

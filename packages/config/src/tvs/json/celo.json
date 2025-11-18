@@ -366,7 +366,7 @@
         "decimals": 6,
         "sinceTimestamp": 1741879559
       },
-      "category": "other",
+      "category": "rwaPublic",
       "source": "canonical",
       "isAssociated": false
     }

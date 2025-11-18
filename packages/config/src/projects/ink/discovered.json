@@ -1,6 +1,6 @@
 {
   "name": "ink",
-  "timestamp": 1759501321,
+  "timestamp": 1761310677,
   "configHash": "0x8b834afc2d7634f97b8230111eb489afe4c13855fc85ee36ede6aa3f10ac255e",
   "entries": [
     {
@@ -58,7 +58,7 @@
       "type": "Contract",
       "template": "opstack/MIPS",
       "sourceHashes": [
-        "0x4bde2f6a5214eb2f1bd8caaeb2a6700260f66f1ae8f389a13763187c11634d03"
+        "0xbb4d6f68705092044f28ad3a6bd721dfca9c2ba8a561025495d950aca06b10ee"
       ],
       "proxyType": "immutable",
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
@@ -169,7 +169,7 @@
         ],
         "$upgradeCount": 4,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 1205,
+        "gameCount": 1289,
         "gameImpls": [
           "eth:0x5F5BEa598Fdf8DF30d56808E8b793da8FC7f3028",
           "eth:0x5562D33B68fa20572FC58fA36aB19CCFeDD6eE8f",
@@ -332,7 +332,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 79,
+        "nonce": 84,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -412,7 +412,7 @@
       "type": "Contract",
       "template": "opstack/PermissionedDisputeGame",
       "sourceHashes": [
-        "0x6e19dedf2965b6aaae0af2c98a6df46b1caac3ffc191eaf1d10ca5570076252f"
+        "0x78ef988441111e9471e72a55f764cd7f35a0f81de503ac5d7ea03765b043da3b"
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
@@ -665,7 +665,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 23,
+        "nonce": 28,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -733,7 +733,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 23497698
+          "prevBlockNum": 23647435
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -775,7 +775,7 @@
       "type": "Contract",
       "template": "opstack/FaultDisputeGame",
       "sourceHashes": [
-        "0x825c4efedd1d48e3087fc99ff4e29a742c8e2a95498e4165e580f93ae5d23e74"
+        "0xa84a2c287a4758ce3cd3e4fd5e99b5cc94278297c2be14317401ae973d4dd23e"
       ],
       "proxyType": "immutable",
       "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",
@@ -1006,7 +1006,14 @@
     {
       "address": "eth:0x65436ddCbc026F34118954F229f7F132b696b3B4",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0x5562D33B68fa20572FC58fA36aB19CCFeDD6eE8f",
+          "role": ".proposer"
+        }
+      ]
     },
     {
       "name": "L1ERC721Bridge",
@@ -1076,6 +1083,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L1CrossDomainMessenger",
       "address": "eth:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
       "type": "Contract",
@@ -1125,7 +1137,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292632537",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292633190",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1187,7 +1199,7 @@
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
         "systemConfig": "eth:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364",
-        "totalSupply": "240000000000000000",
+        "totalSupply": "3360000000000000000",
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -1280,11 +1292,6 @@
       }
     },
     {
-      "address": "eth:0x7cB07FE039a92B3D784f284D919503A381BEC54f",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x7D056B99AA2021864c42E25B4F8cE3BdEAc9463C",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1340,7 +1347,7 @@
           "eth:0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
           "eth:0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
           "eth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
-          "eth:0x7cB07FE039a92B3D784f284D919503A381BEC54f",
+          "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02",
           "eth:0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
         ],
         "$threshold": 5,
@@ -1348,7 +1355,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 37,
+        "nonce": 43,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1494,6 +1501,13 @@
         "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x5562D33B68fa20572FC58fA36aB19CCFeDD6eE8f",
+          "role": ".challenger"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1610850364,
       "sinceBlock": 11670007,
@@ -1506,7 +1520,7 @@
           "eth:0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
           "eth:0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
           "eth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
-          "eth:0x7cB07FE039a92B3D784f284D919503A381BEC54f",
+          "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02",
           "eth:0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
         ],
         "$threshold": 5,
@@ -1515,7 +1529,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 110,
+        "nonce": 111,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -1719,7 +1733,7 @@
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 41,
+        "nonce": 46,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1873,12 +1887,12 @@
           ]
         ],
         "$upgradeCount": 2,
-        "anchorGame": "eth:0xA4918D473ad109Ab917351D154ED2c33b877E936",
+        "anchorGame": "eth:0xadFa6bE70469799694cc017012DF48A31A03d808",
         "disputeGameFactory": "eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x55ea6bd2f6117ab4064bd4e8c4b88685406bccc96e5eb3feb93d7070d9c8f7b9",
-          25381811
+          "0x36b9e22827dd7aa066fee017e8c8f826af2e10a7837a3d96e4834f10f78b7411",
+          27196889
         ],
         "initVersion": 1,
         "paused": false,
@@ -1933,7 +1947,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "ink:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620975",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620982",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1958,7 +1972,7 @@
       "template": "opstack/Layer2/GasPriceOracle",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0xa6ae4f0695335983b644f1524c759f3178ee95c406e1e905b8cbccf5763af43a"
+        "0xc5d4d2bf19122f506ce43be8395b97b65c2b1109721869f31aa0b39605c5254b"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Provides the current gas price for L2 transactions.",
@@ -1986,7 +2000,7 @@
         "isEcotone": true,
         "isFjord": true,
         "isIsthmus": true,
-        "l1BaseFee": 915537916,
+        "l1BaseFee": 314121503,
         "version": "1.4.0"
       },
       "implementationNames": {
@@ -2173,7 +2187,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 915537916,
+        "basefee": 314121503,
         "baseFeeScalar": 4424,
         "batcherHash": "0x000000000000000000000000500d7ea63cf2e501dadaa5feec1fc19fe2aa72ac",
         "blobBaseFee": 1,
@@ -2185,15 +2199,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x62f2f71e25b3807285794ab9221c6f9ac5be1094361f1d8efc31a89523009008",
+        "hash": "0x4ab019c568a8e7320fb768b8f80b16c44a215647a64be1a47b8dfcbc8e8ae0db",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 23497810,
+        "number": 23647467,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 10,
-        "timestamp": 1759501247,
+        "sequenceNumber": 6,
+        "timestamp": 1761310607,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -4176,11 +4190,11 @@
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismPortal2": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
-    "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
+    "opstack/PermissionedDisputeGame": "0xe39c1284ebcc867153d8d9bf8d32a6ab7daf95dde76ad7e13a040bb64d98b985",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ink": 26002910, "ethereum": 23497816 },
-  "permissionsConfigHash": "0x8b268ee0dc187598f819d3d8ecc659b314f038cbba900a23f10efb3523293744"
+  "usedBlockNumbers": { "ethereum": 23647472, "ink": 27812266 },
+  "permissionsConfigHash": "0x487b72821dec0535b8c40ea258d5be5bd33c2424465ee8e53a27ae493607b08f"
 }

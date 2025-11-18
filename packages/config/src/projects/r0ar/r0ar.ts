@@ -26,7 +26,16 @@ export const r0ar: ScalingProject = opStackL2({
       bridges: ['https://r0arbridge.io/'],
       documentation: [],
       explorers: ['https://r0arscan.io/'],
-      socialMedia: ['https://x.com/th3r0ar', 'https://t.me/r0ar_community'],
+      repositories: ['https://github.com/R0AR-Foundation'],
+      socialMedia: [
+        'https://x.com/th3r0ar',
+        'https://t.me/r0ar_community',
+        'https://discord.gg/K7bVMsbEJN',
+        'https://instagram.com/r0ars0ciety',
+        'https://facebook.com/groups/th3r0ar',
+        'https://youtube.com/@th3r0ar',
+        'https://tiktok.com/@r0arsociety',
+      ],
     },
   },
   chainConfig: {

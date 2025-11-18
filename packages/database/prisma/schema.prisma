@@ -358,14 +358,16 @@ model InteropEvent {
   blockHash   String  @db.VarChar(66)
   value       String? @db.VarChar(66)
   txTo        String? @db.VarChar(66)
+  calldata    String  @default("0x") @db.Text
   logIndex    Int?
   args        Json
+  ctx         Json    @default("{}")
 
   matched     Boolean
   unsupported Boolean
 
   @@id([eventId])
-  @@index([type])
+  @@index([type,matched,unsupported,timestamp])
 }
 
 model InteropMessage {
@@ -409,10 +411,12 @@ model InteropTransfer {
   srcTokenAddress String?   @db.VarChar(66)
   srcRawAmount    Decimal?  @db.Decimal(80, 0)
 
-  srcAbstractTokenId String? @db.VarChar(66)
-  srcAmount          Float?  @db.Real
-  srcPrice           Float?  @db.Real
-  srcValueUsd        Float?  @db.Real
+  srcAbstractTokenId String?  @db.VarChar(66)
+  srcSymbol          String?  @db.VarChar(66)
+  srcAmount          Float?   @db.Real
+  srcPrice           Float?   @db.Real
+  srcValueUsd        Float?   @db.Real
+  srcWasBurned       Boolean?
 
   dstTime         DateTime? @db.Timestamp(6)
   dstChain        String?   @db.VarChar(32)
@@ -422,10 +426,12 @@ model InteropTransfer {
   dstTokenAddress String?   @db.VarChar(66)
   dstRawAmount    Decimal?  @db.Decimal(80, 0)
 
-  dstAbstractTokenId String? @db.VarChar(66)
-  dstAmount          Float?  @db.Real
-  dstPrice           Float?  @db.Real
-  dstValueUsd        Float?  @db.Real
+  dstAbstractTokenId String?  @db.VarChar(66)
+  dstSymbol          String?  @db.VarChar(66)
+  dstAmount          Float?   @db.Real
+  dstPrice           Float?   @db.Real
+  dstValueUsd        Float?   @db.Real
+  dstWasMinted       Boolean?
 
   isProcessed Boolean
 
@@ -490,7 +496,7 @@ model TokenConnection {
   tokenToChain     String  @db.VarChar(32)
   tokenToAddress   String  @db.VarChar(255)
   type             String  @db.VarChar(32)
-  params           Json?   @db.Json
+  params           Json?
   comment          String? @db.Text
 
   tokenFrom DeployedToken @relation("TokenConnection_tokenFrom", fields: [tokenFromChain, tokenFromAddress], references: [chain, address], onDelete: Restrict)
@@ -508,4 +514,20 @@ model InteropRecentPrices {
 
   @@id([coingeckoId, timestamp])
   @@index([timestamp])
+}
+
+model InteropConfig {
+  key       String   @db.VarChar(64)
+  timestamp DateTime @db.Timestamp(6)
+  value     String   @db.Text
+
+  @@id([key, timestamp])
+}
+
+model Chain {
+  name        String  @id @db.VarChar(255)
+  chainId     Int     @unique()
+  explorerUrl String? @db.VarChar(255)
+  aliases     Json?
+  apis        Json?
 }

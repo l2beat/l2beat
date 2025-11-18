@@ -1,4 +1,4 @@
-import { UnixTime } from './UnixTime'
+import { UnixTime } from '@l2beat/shared-pure'
 
 export function dateTimeInputToUnixTimestamp(dateTimeInput: string) {
   const date = new Date(dateTimeInput)

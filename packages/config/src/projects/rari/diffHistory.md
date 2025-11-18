@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x0d067a71b49bce6f954472f5763252be4cf3f3ec
+
+# Diff at Tue, 11 Nov 2025 17:06:54 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@6a57543e1aa91ba0548ecf149f1f03a74c2120d0 block: 1760088323
+- current timestamp: 1762880716
+
+## Description
+
+Caldera multisig decreased threshold.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 1 (arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      values.$members.7:
+-        "arb1:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
+      values.multisigThreshold:
+-        "3 of 9 (33%)"
++        "3 of 8 (38%)"
+    }
+```
+
+Generated with discovered.json: 0x36a5c35fea6b305d5cde324260b78abf5eae0564
+
+# Diff at Tue, 04 Nov 2025 11:33:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1760088323
+- current timestamp: 1760088323
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1760088323 (main branch discovery), not current.
+
+```diff
+    contract QuoteVerifier (arb1:0x4613038C93aF8963dc9E5e46c9fb3cbc68724df1) {
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (arb1:0x729E3e7542E8A6630818E9a14A67e0Cb7008a5E5), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.
+      sourceHashes.0:
+-        "0xc6f6a066bf8a07836eade893ff10802899d88d921053005f78e94d1e18dd8b84"
++        "0x6833c39c55c2ef237e1417eabde0d10d78a37138115915b27f9703a35615a400"
+    }
+```
+
 Generated with discovered.json: 0x21ffb48a81d52d44ab89429a7663d9787e3b7ce5
 
 # Diff at Fri, 10 Oct 2025 09:26:30 GMT:

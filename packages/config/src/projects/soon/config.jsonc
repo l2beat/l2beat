@@ -19,16 +19,6 @@
             "args": []
           }
         },
-        "opStackDA": {
-          "handler": {
-            "type": "hardcoded", // !!! since they use the wrong encoding
-            "value": {
-              "isSequencerSendingBlobTx": false,
-              "isUsingCelestia": false,
-              "isUsingEigenDA": "v3"
-            }
-          }
-        },
         "sequencerInbox": {
           "handler": {
             "type": "opStackSequencerInbox",

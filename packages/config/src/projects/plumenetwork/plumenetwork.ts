@@ -33,6 +33,7 @@ export const plumenetwork: ScalingProject = orbitStackL2({
         'https://discord.gg/plume',
         'https://t.me/plumenetwork_community',
       ],
+      other: ['https://growthepie.com/chains/plume'],
     },
   },
   additionalPurposes: ['RWA'],
@@ -84,4 +85,14 @@ export const plumenetwork: ScalingProject = orbitStackL2({
       },
     ],
   },
+  milestones: [
+    {
+      title: 'Plume Network starts using Blobstream',
+      url: 'https://etherscan.io/tx/0xd2b584ea74be507497164ccdf37ceb1b3b66bad282c58a77811519c0c6b3acf7',
+      date: '2025-05-08T00:00:00Z',
+      description:
+        'Upgraded ChallengeManager contract to the version that uses Celestia with Blobstream bridge.',
+      type: 'general',
+    },
+  ],
 })

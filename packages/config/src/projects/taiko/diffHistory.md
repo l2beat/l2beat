@@ -1,3 +1,336 @@
+Generated with discovered.json: 0xdfecee0624fe6c1598c14b0e53b43c43549983d6
+
+# Diff at Mon, 10 Nov 2025 09:00:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c7b384345bf6076e020559556d64e4e6add0bee0 block: 1762269183
+- current timestamp: 1762765141
+
+## Description
+
+PreconfWhitelist changed, and the verifier upgrade proposal is now in the public / optimistic phase:
+- dao frontend: https://dao.taiko.xyz/plugins/community-proposals/#/proposals/20
+- review: https://gist.github.com/sekuba/46d7bcab5127c0ed6e0d66ce285b0559
+
+## Watched changes
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      values.proposalCount:
+-        20
++        21
+      values.proposalIds.20:
++        "599695636739451592739723352125243732881756389396"
+    }
+```
+
+```diff
+    contract Daniel Wang (eth:0xb47fE76aC588101BFBdA9E68F66433bA51E8029a) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163"
+      values.$members.1:
++        "eth:0xFa92ff698D57f7B875570D9F59501812B843CD44"
+      values.$members.2:
++        "eth:0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
+      values.$members.3:
++        "eth:0x7Cdd1c128Cd72dd252f569eeD942735330937F91"
+      values.$members.1:
+-        "eth:0x7057A707621Fadd422f84DE94A9dF7c4F1AC595C"
++        "eth:0xDC4ece5620659F4d5d1536Cab52BD5e5B15F8a0a"
+      values.$threshold:
+-        1
++        4
+      values.multisigThreshold:
+-        "1 of 2 (50%)"
++        "4 of 6 (67%)"
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered.
+      values.registeredOperators.1:
+-        {"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}
+      values.registeredOperators.2:
++        {"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}
+    }
+```
+
+Generated with discovered.json: 0xa6b0b533d0ee714110efc7db3fbbfa1f6d0ae39b
+
+# Diff at Wed, 05 Nov 2025 12:48:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bc0ecd2e43db8badee0981759f26dbc0b38299e3 block: 1762269183
+- current timestamp: 1762269183
+
+## Description
+
+Libraries are opt-in
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762269183 (main branch discovery), not current.
+
+```diff
+    contract TaikoL1 (eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: Main contract implementing the logic for proposing and proving Taiko blocks on L1.
+      values.$libraries:
+-        ["eth:0xc618b0bA27F751D33689DebA538f8567AeF53ee6","eth:0xe61FD6715FfFA2f4057f1Cf0230512b91A9f5f84","eth:0xfD9B548c00a1E96BbFc2C5FE0D339618B40B4593","eth:0x5565543Ec09f746721928B0A4d019c9E750d0552"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LibUtils (eth:0x5565543Ec09f746721928B0A4d019c9E750d0552)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LibBonds (eth:0xc618b0bA27F751D33689DebA538f8567AeF53ee6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LibData (eth:0xe61FD6715FfFA2f4057f1Cf0230512b91A9f5f84)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LibProving (eth:0xfD9B548c00a1E96BbFc2C5FE0D339618B40B4593)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x576c334abeb3e31443fed29382c4b557df4e7902
+
+# Diff at Tue, 04 Nov 2025 15:15:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2a2e6dec6588b124016c602f3ebd0bbf5fa7ec73 block: 1761894930
+- current timestamp: 1762269183
+
+## Description
+
+operator change.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered.
+      description:
+-        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 4 operators registered."
++        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered."
+      values.registeredOperators.1:
+-        {"proposer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74","sequencer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"}
+      values.registeredOperators.3.sequencer:
+-        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
++        "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"
+      values.registeredOperators.3.proposer:
+-        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
++        "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"
+      values.registeredOperatorsCount:
+-        4
++        3
+    }
+```
+
+Generated with discovered.json: 0x3176f5adf28bb496205bbfff361cda93ee8c6998
+
+# Diff at Tue, 04 Nov 2025 11:34:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1761894930
+- current timestamp: 1761894930
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761894930 (main branch discovery), not current.
+
+```diff
+    contract PEMCertChainLib (eth:0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169) {
+    +++ description: Library for managing PEM certificate chains.
+      sourceHashes.0:
+-        "0x97476fc6413c58015ddf51b5d2e37c3fdfc6b85ced25779773a1652ecc154c77"
++        "0x59efc4927f69d03e199767bdde2f8a8ef3a544833cdbf8c2eecf9152b373dcbc"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261) {
+    +++ description: Contract managing SGX attestation certificates.
+      sourceHashes.1:
+-        "0x0568e673edec0254e0d0584958369ffcb951f679158dd2a7c167bbf5fcf2a5bf"
++        "0xb88d9a2a00b03d84804743d62f07486e1276d8e7c989cc3a3cfd8f0ae26b5cd9"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: Contract managing SGX attestation certificates.
+      sourceHashes.1:
+-        "0xac51975c574b128e9dc1e8542c616ed655d4a2abc91d3233648ac688e530c68c"
++        "0xf03ee5163c982d906a23e9650c5ca9a0f66fa6bf33b9496c71476ce91c8d32ec"
+    }
+```
+
+```diff
+    contract TaikoAnchor (taiko:0x1670000000000000000000000000000000010001) {
+    +++ description: Handles cross-layer message verification and manages EIP-1559 gas pricing for L2 operations. Anchors L1 block details to L2 for cross-layer communication.
+      sourceHashes.1:
+-        "0xd2bffd1aa4016a982cb8f166de6b32cfa89406896b754e2f5abb2f63e7defd5a"
++        "0x94dfc8c1aa6a1ce9447da9bf865b6e827ffe8c9cb0b08e4d7c7589b8c4193134"
+    }
+```
+
+Generated with discovered.json: 0xaefab4cb6d9e9b925cae4be6786e47867737eeb5
+
+# Diff at Mon, 03 Nov 2025 14:19:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@64561b32de50bd9ecc1f1ddea1db1aa9e5ae4bee block: 1761894930
+- current timestamp: 1761894930
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761894930 (main branch discovery), not current.
+
+```diff
+    contract TaikoL1 (eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: Main contract implementing the logic for proposing and proving Taiko blocks on L1.
+      values.$libraries:
++        ["eth:0xc618b0bA27F751D33689DebA538f8567AeF53ee6","eth:0xe61FD6715FfFA2f4057f1Cf0230512b91A9f5f84","eth:0xfD9B548c00a1E96BbFc2C5FE0D339618B40B4593","eth:0x5565543Ec09f746721928B0A4d019c9E750d0552"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LibUtils (eth:0x5565543Ec09f746721928B0A4d019c9E750d0552)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LibBonds (eth:0xc618b0bA27F751D33689DebA538f8567AeF53ee6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LibData (eth:0xe61FD6715FfFA2f4057f1Cf0230512b91A9f5f84)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LibProving (eth:0xfD9B548c00a1E96BbFc2C5FE0D339618B40B4593)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x4ad2be96a6472cb72c1740890c9ba97f5d2c0a3f
+
+# Diff at Fri, 31 Oct 2025 07:17:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@68eb98b0468d176aa44713dcaed98f67b2a200a0 block: 1761643945
+- current timestamp: 1761894930
+
+## Description
+
+Minor upgrade proposed.
+
+Reviewed here: https://gist.github.com/sekuba/46d7bcab5127c0ed6e0d66ce285b0559 (approved, will go to optimistic phase if at least 5 approve)
+
+## Watched changes
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        11
++        12
+    }
+```
+
+Generated with discovered.json: 0x48b3c9a94d3498c063182c27bf387c8f600816ad
+
+# Diff at Tue, 28 Oct 2025 09:33:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@090e135db1084f4a9678d6bf1cb0ff5e854903ea block: 1761550873
+- current timestamp: 1761643945
+
+## Description
+
+proposer/sequencer whitelist changed.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 4 operators registered.
+      values.registeredOperators.0.sequencer:
+-        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
++        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+      values.registeredOperators.0.proposer:
+-        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
++        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+      values.registeredOperators.3.sequencer:
+-        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
++        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+      values.registeredOperators.3.proposer:
+-        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
++        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+    }
+```
+
+Generated with discovered.json: 0x833740284aedb8b48b0da3078846244cdb7d3086
+
+# Diff at Mon, 27 Oct 2025 07:42:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e31499883253bb2b7c36fe0654ea187cfa3ca612 block: 1759909174
+- current timestamp: 1761550873
+
+## Description
+
+Operator change.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 4 operators registered.
+      values.registeredOperators.0:
+-        {"proposer":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990","sequencer":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"}
+      values.registeredOperators.1:
+-        {"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}
+      values.registeredOperators.2:
++        {"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}
+      values.registeredOperators.3:
++        {"proposer":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990","sequencer":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"}
+    }
+```
+
 Generated with discovered.json: 0x55b32044ebd850568f757d8965b323b8b37b1ae5
 
 # Diff at Wed, 08 Oct 2025 07:42:30 GMT:

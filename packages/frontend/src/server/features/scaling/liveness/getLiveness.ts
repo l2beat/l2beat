@@ -4,6 +4,7 @@ import type {
   IndexerConfigurationRecord,
   RealTimeAnomalyRecord,
 } from '@l2beat/database'
+import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import type { ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
@@ -126,6 +127,7 @@ async function getLivenessData(projectId?: ProjectId) {
         trackedTxProject,
         configurations,
         anomalies,
+        targetTimestamp,
       ),
       batchSubmissions: mapAggregatedLivenessRecords(
         project30Days,
@@ -135,6 +137,7 @@ async function getLivenessData(projectId?: ProjectId) {
         trackedTxProject,
         configurations,
         anomalies,
+        targetTimestamp,
       ),
       proofSubmissions: mapAggregatedLivenessRecords(
         project30Days,
@@ -144,6 +147,7 @@ async function getLivenessData(projectId?: ProjectId) {
         trackedTxProject,
         configurations,
         anomalies,
+        targetTimestamp,
       ),
       anomalies: getAnomalies(anomalies, realTimeAnomalies, project30Days),
     }
@@ -175,11 +179,17 @@ function mapAggregatedLivenessRecords(
   project: TrackedTxsProject,
   configurations: IndexerConfigurationRecord[],
   anomalies: AnomalyRecord[],
+  targetTimestamp: UnixTime,
 ): LivenessDetails | undefined {
   const filteredConfigurations = configurations.filter((c) => {
     const config = project.trackedTxsConfigs?.find((pc) => pc.id === c.id)
     return config?.subtype === subtype
   })
+
+  const livenessConfigs = project.trackedTxsConfigs?.filter(
+    (c) => c.type === 'liveness' && c.subtype === subtype,
+  )
+
   const syncedUntil = getConfigurationsSyncedUntil(filteredConfigurations)
   if (!syncedUntil) {
     return undefined
@@ -195,29 +205,60 @@ function mapAggregatedLivenessRecords(
   const last30Days = records30Days?.find((r) => r.subtype === subtype)
   const last90Days = records90Days?.find((r) => r.subtype === subtype)
   const max = recordsMax?.find((r) => r.subtype === subtype)
+
+  const range30dStart = targetTimestamp - 30 * UnixTime.DAY
+  const range90dStart = targetTimestamp - 90 * UnixTime.DAY
+
   return {
-    '30d': last30Days
-      ? {
-          averageInSeconds: Math.round(last30Days.avg),
-          minimumInSeconds: last30Days.min,
-          maximumInSeconds: Math.max(last30Days.max, maxAnomalyDuration),
-        }
-      : undefined,
-    '90d': last90Days
-      ? {
-          averageInSeconds: Math.round(last90Days.avg),
-          minimumInSeconds: last90Days.min,
-          maximumInSeconds: Math.max(last90Days.max, maxAnomalyDuration),
-        }
-      : undefined,
-    max: max
-      ? {
-          averageInSeconds: Math.round(max.avg),
-          minimumInSeconds: max.min,
-          maximumInSeconds: Math.max(max.max, maxAnomalyDuration),
-        }
-      : undefined,
+    '30d': formatData(
+      last30Days,
+      maxAnomalyDuration,
+      livenessConfigs,
+      range30dStart,
+      targetTimestamp,
+    ),
+    '90d': formatData(
+      last90Days,
+      maxAnomalyDuration,
+      livenessConfigs,
+      range90dStart,
+      targetTimestamp,
+    ),
+    max: formatData(
+      max,
+      maxAnomalyDuration,
+      livenessConfigs,
+      null,
+      targetTimestamp,
+    ),
     syncedUntil: syncedUntil,
+  }
+}
+
+function formatData(
+  records:
+    | Omit<AggregatedLivenessRecord, 'timestamp' | 'numberOfRecords'>
+    | undefined,
+  maxAnomalyDuration: number,
+  trackedTxsConfigs: TrackedTxConfigEntry[],
+  rangeStart: UnixTime | null,
+  rangeEnd: UnixTime,
+) {
+  if (!records) {
+    const hasLiveConfigsInRange = trackedTxsConfigs.some((c) => {
+      return (
+        !c.untilTimestamp || // config is still active
+        rangeStart === null || // max range - any config overlaps
+        c.untilTimestamp >= rangeStart // config ended after range started
+      )
+    })
+    if (hasLiveConfigsInRange) return null
+    return undefined
+  }
+  return {
+    averageInSeconds: Math.round(records.avg),
+    minimumInSeconds: records.min,
+    maximumInSeconds: Math.max(records.max, maxAnomalyDuration),
   }
 }
 

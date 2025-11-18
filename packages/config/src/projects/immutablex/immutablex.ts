@@ -90,6 +90,7 @@ export const immutablex: ScalingProject = {
         'https://medium.com/@immutablex',
         'https://twitter.com/Immutable',
       ],
+      other: ['https://growthepie.com/chains/immutable-x'],
     },
   },
   proofSystem: {
@@ -120,6 +121,8 @@ export const immutablex: ScalingProject = {
       type: 'day',
       sinceTimestamp: UnixTime(1615389188),
       resyncLastDays: 7,
+      batchSize: 10,
+      dataSource: 'StarkEx Aggregations API',
     },
   },
   dataAvailability: {

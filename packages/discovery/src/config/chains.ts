@@ -357,16 +357,6 @@ export const chains: ChainConfig[] = [
     },
   },
   {
-    name: 'facet',
-    chainId: 1027303,
-    shortName: 'facet',
-    multicall: undefined,
-    explorer: {
-      type: 'blockscout',
-      url: 'https://explorer.facet.org',
-    },
-  },
-  {
     name: 'taiko',
     chainId: 167000,
     shortName: 'taiko',
@@ -374,6 +364,26 @@ export const chains: ChainConfig[] = [
     explorer: {
       type: 'etherscan',
       url: 'https://api.taikoscan.io/api',
+    },
+  },
+  {
+    name: 'ethereal',
+    chainId: 5064014,
+    shortName: 'ethereal',
+    multicall: undefined,
+    explorer: {
+      type: 'blockscout',
+      url: 'https://explorer.ethereal.trade/api',
+    },
+  },
+  {
+    name: 'jovay',
+    chainId: 5734951,
+    shortName: 'jovay',
+    multicall: undefined,
+    explorer: {
+      type: 'blockscout',
+      url: 'https://explorer.jovay.io/l2/api',
     },
   },
 ] as const satisfies ChainConfig[]

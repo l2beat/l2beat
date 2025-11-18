@@ -11,7 +11,8 @@ export function ErrorHandler() {
 
     const errorId = randomUUID()
     res.status(500)
-    logger.error('Error processing request', {
+
+    const body = {
       error: err instanceof Error ? err.message : String(err),
       method: req.method,
       url: req.originalUrl,
@@ -19,7 +20,13 @@ export function ErrorHandler() {
       status: res.statusCode,
       referer: req.headers.referer ?? 'unknown',
       userAgent: req.headers['user-agent'] ?? 'unknown',
-    })
+    }
+
+    if (err instanceof URIError && err.message.startsWith('Failed to decode')) {
+      logger.warn('Error processing request', body)
+    } else {
+      logger.error('Error processing request', body)
+    }
     res.send(`Internal Server Error\n\n Error ID: ${errorId}`)
   }
 }

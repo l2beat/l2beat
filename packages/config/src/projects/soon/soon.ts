@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -71,10 +71,29 @@ export const soon: ScalingProject = opStackL2({
   isNodeAvailable: false,
   nonTemplateDaTracking: [
     {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: discovery.getContract('SystemConfig').sinceBlock ?? 0,
+      inbox: ChainSpecificAddress.address(
+        discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+      ),
+      sequencers: [
+        ChainSpecificAddress.address(
+          discovery.getContractValue('SystemConfig', 'batcherHash'),
+        ),
+      ],
+    },
+    {
       type: 'eigen-da',
       customerId: '0x52ebeea8a7dcaaa17ee398b9f9b01dfa64db63ae',
       daLayer: ProjectId('eigenda'),
       sinceTimestamp: UnixTime(1735822800),
+    },
+    {
+      type: 'eigen-da',
+      daLayer: ProjectId('eigenda'),
+      sinceTimestamp: UnixTime(1753412400),
+      customerId: '0x420ad2641f22bf6f180c52d0b0566e7ec701c45a',
     },
   ],
 })

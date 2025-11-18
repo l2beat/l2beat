@@ -1,4 +1,8 @@
-import { formatDate, type LoggerTransport } from '@l2beat/backend-tools'
+import {
+  formatEcsLog,
+  type LogEntry,
+  type LoggerTransport,
+} from '@l2beat/backend-tools'
 import { v4 as uuidv4 } from 'uuid'
 import {
   ElasticSearchClient,
@@ -27,20 +31,12 @@ export class ElasticSearchTransport implements LoggerTransport {
     this.start()
   }
 
-  public debug(message: string): void {
-    this.buffer.push(message)
+  log(entry: LogEntry): void {
+    this.buffer.push(formatEcsLog(entry))
   }
 
-  public log(message: string): void {
-    this.buffer.push(message)
-  }
-
-  public warn(message: string): void {
-    this.buffer.push(message)
-  }
-
-  public error(message: string): void {
-    this.buffer.push(message)
+  push(log: string) {
+    this.buffer.push(log)
   }
 
   private start(): void {
@@ -51,6 +47,14 @@ export class ElasticSearchTransport implements LoggerTransport {
     // object will not require the Node.js event loop to remain active
     // nodejs.org/api/timers.html#timers_timeout_unref
     interval.unref()
+  }
+
+  /**
+   * Manually flush all buffered logs to Elastic Search.
+   * This should be called before the process exits to ensure all logs are sent.
+   */
+  public async flush(): Promise<void> {
+    await this.flushLogs()
   }
 
   private async flushLogs(): Promise<void> {
@@ -97,4 +101,11 @@ export class ElasticSearchTransport implements LoggerTransport {
     }
     return indexName
   }
+}
+
+export function formatDate(date: Date): string {
+  const padStart = (value: number): string => value.toString().padStart(2, '0')
+  return `${padStart(date.getDate())}-${padStart(
+    date.getMonth() + 1,
+  )}-${date.getFullYear()}`
 }

@@ -1,3 +1,161 @@
+Generated with discovered.json: 0x06c1bf9ade2222c09d2cc879b8190d2176315ee9
+
+# Diff at Tue, 04 Nov 2025 11:32:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1761310677
+- current timestamp: 1761310677
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761310677 (main branch discovery), not current.
+
+```diff
+    contract MIPS (eth:0x07BABE08EE4D07dBA236530183B24055535A7011) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes.0:
+-        "0x4bde2f6a5214eb2f1bd8caaeb2a6700260f66f1ae8f389a13763187c11634d03"
++        "0xbb4d6f68705092044f28ad3a6bd721dfca9c2ba8a561025495d950aca06b10ee"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0x5562D33B68fa20572FC58fA36aB19CCFeDD6eE8f) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sourceHashes.0:
+-        "0x6e19dedf2965b6aaae0af2c98a6df46b1caac3ffc191eaf1d10ca5570076252f"
++        "0x78ef988441111e9471e72a55f764cd7f35a0f81de503ac5d7ea03765b043da3b"
+    }
+```
+
+```diff
+    contract FaultDisputeGame (eth:0x5F5BEa598Fdf8DF30d56808E8b793da8FC7f3028) {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      sourceHashes.0:
+-        "0x825c4efedd1d48e3087fc99ff4e29a742c8e2a95498e4165e580f93ae5d23e74"
++        "0xa84a2c287a4758ce3cd3e4fd5e99b5cc94278297c2be14317401ae973d4dd23e"
+    }
+```
+
+```diff
+    contract GasPriceOracle (ink:0x420000000000000000000000000000000000000F) {
+    +++ description: Provides the current gas price for L2 transactions.
+      sourceHashes.1:
+-        "0xa6ae4f0695335983b644f1524c759f3178ee95c406e1e905b8cbccf5763af43a"
++        "0xc5d4d2bf19122f506ce43be8395b97b65c2b1109721869f31aa0b39605c5254b"
+    }
+```
+
+Generated with discovered.json: 0x17d9daef3de1e0781cefc8f2f9b2b0787d758e00
+
+# Diff at Mon, 03 Nov 2025 17:46:35 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6b72018cd9706ce7cba8ec489b67d7193f34dc20 block: 1761310677
+- current timestamp: 1761310677
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761310677 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x65436ddCbc026F34118954F229f7F132b696b3B4) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"eth:0x5562D33B68fa20572FC58fA36aB19CCFeDD6eE8f","role":".proposer"}]
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"challenge","from":"eth:0x5562D33B68fa20572FC58fA36aB19CCFeDD6eE8f","role":".challenger"}]
+    }
+```
+
+Generated with discovered.json: 0x43321955c9de59d7c376caf4c61ee0f68544c510
+
+# Diff at Fri, 24 Oct 2025 12:59:10 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@0713eeefaf9a5e5c65e5c8bacdd5c4941194faeb block: 1761222955
+- current timestamp: 1761310677
+
+## Description
+
+Fix previously misreported value by dwellir rpc and accidentally commited.
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.permissionedGamesTotal:
+-        185
++        190
+    }
+```
+
+Generated with discovered.json: 0x7d79aa81d1e63f77bb7af903c9b0a86b8681417c
+
+# Diff at Thu, 23 Oct 2025 12:37:13 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@57d3f180a9197fcc582bfc2d2856eea99da824cc block: 1759501321
+- current timestamp: 1761222955
+
+## Description
+
+msig change.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x7cB07FE039a92B3D784f284D919503A381BEC54f"
++        "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x7cB07FE039a92B3D784f284D919503A381BEC54f"
++        "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759501321 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.permissionedGamesTotal:
+-        190
++        185
+    }
+```
+
 Generated with discovered.json: 0x42087b54f9b1f4df052eefee9114435087a6eba4
 
 # Diff at Fri, 03 Oct 2025 14:23:11 GMT:

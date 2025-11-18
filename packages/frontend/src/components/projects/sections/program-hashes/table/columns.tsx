@@ -27,6 +27,7 @@ export const zkProgramHashesColumns = [
         <CopyButton
           toCopy={ctx.row.original.hash}
           iconClassName="size-3 fill-secondary"
+          copyText="Copy Hash"
         />
       </div>
     ),

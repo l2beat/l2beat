@@ -47,5 +47,11 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
     openapi: {
       url: env.string('BACKEND_URL', 'http://localhost:3000'),
     },
+    cacheEnabled:
+      (env.optionalString('DEPLOYMENT_ENV') === 'production' ||
+        env.optionalString('DEPLOYMENT_ENV') === 'staging') &&
+      !env.boolean('DISABLE_CACHE', false)
+        ? true
+        : false,
   }
 }

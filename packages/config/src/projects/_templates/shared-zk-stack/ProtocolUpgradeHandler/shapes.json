@@ -3,5 +3,10 @@
     "hash": "0x12958ca399cc6a20305ec705a35cae0ee77a75afd66ee1eb5f09d3a811ca4457",
     "address": "eth:0x0A67f0Fd2f7523057039F14969Fe23a5f620f19A",
     "blockNumber": 22188285
+  },
+  "ProtocolUpgradeHandler_v29.sol": {
+    "hash": "0x34c46d93159964444be38043b9ec094342e281f9e5fcb7f69eef181251cfd8e1",
+    "address": "eth:0x36625Bd3dDB469377C6e9893712158cA3c0cC14B",
+    "blockNumber": 23588465
   }
 }

@@ -12,7 +12,7 @@ import { polygonCDKStack } from '../../templates/polygonCDKStack'
 import { PolygoncdkDAC } from '../../templates/polygoncdk-template'
 
 const discovery = new ProjectDiscovery('silicon')
-const bridge = discovery.getContract('PolygonSharedBridge')
+const bridge = discovery.getContract('AgglayerBridge')
 
 const membersCountDAC = discovery.getContractValue<number>(
   'PolygonDataCommittee',
@@ -46,7 +46,11 @@ export const silicon: ScalingProject = polygonCDKStack({
       documentation: ['https://docs.silicon.network/'],
       explorers: ['https://scope.silicon.network'],
       repositories: ['https://github.com/0xSilicon'],
-      socialMedia: ['https://x.com/0xSilicon'],
+      socialMedia: [
+        'https://x.com/0xSilicon',
+        'https://medium.com/@0xSilicon',
+        'https://t.me/teamsilicon',
+      ],
     },
   },
   rollupModuleContract,

@@ -1,5 +1,4 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -38,7 +37,10 @@ export const lyra: ScalingProject = opStackL2({
         'https://x.com/derivexyz',
         'https://warpcast.com/lyra.eth',
         'https://discord.gg/Derive',
+        'https://youtube.com/@derivexyz',
+        'https://linkedin.com/company/derivelabs',
       ],
+      other: ['https://growthepie.com/chains/derive'],
     },
   },
   genesisTimestamp: UnixTime(1700022479),

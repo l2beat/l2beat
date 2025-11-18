@@ -783,11 +783,11 @@ The **Vanguard** is a privileged actor who can always make the first child propo
             references: [
               {
                 title: "'Sequencing' - Kailua Docs",
-                url: 'https://risc0.github.io/kailua/design.html#sequencing',
+                url: 'https://boundless-xyz.github.io/kailua/design.html#sequencing',
               },
               {
                 title: 'Vanguard - Kailua Docs',
-                url: 'https://risc0.github.io/kailua/parameters.html#vanguard-advantage',
+                url: 'https://boundless-xyz.github.io/kailua/parameters.html#vanguard-advantage',
               },
             ],
           },
@@ -806,7 +806,7 @@ Proving any of the ${proposalOutputCount} intermediate state commitments in a pr
 A single remaining child in a tournament can be 'resolved' and will be finalized and usable for withdrawals after an execution delay of ${formatSeconds(disputeGameFinalityDelaySeconds)} (time for the Guardian to manually blacklist malicious state roots).`,
             references: [
               {
-                url: 'https://docs.boundless.network/developers/kailua/how',
+                url: 'https://docs.boundless.network/developers/kailua/quick-start',
                 title: 'Disputes - Kailua Docs',
               },
             ],
@@ -880,7 +880,7 @@ The Kailua state validation system is primarily optimistically resolved, so no v
               },
               {
                 category: 'Funds can be frozen if',
-                text: 'in non-optimistic mode, the SuccinctGateway is unable to route proof verification to a valid verifier.',
+                text: 'in non-optimistic mode, the SP1VerifierGateway is unable to route proof verification to a valid verifier.',
               },
             ],
           },

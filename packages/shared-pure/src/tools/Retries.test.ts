@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { exponentialBackOff } from './Retries'
+import { exponentialBackOff } from './Retries.js'
 
 describe('Retries', () => {
   describe(exponentialBackOff.name, () => {

@@ -1,7 +1,7 @@
 {
   "name": "everclearbridge",
-  "timestamp": 1760090060,
-  "configHash": "0x6546bb5177ca12807ddea03f8b9cb3d4888f6fdb187f233b278a2415cf29f780",
+  "timestamp": 1761059671,
+  "configHash": "0x0c6bdd0f8f6d5734aceb08581a26365f74d8a55eca4bddb3b646ccf89b7a9979",
   "entries": [
     {
       "name": "Permit2",
@@ -172,7 +172,7 @@
         "0x183579075859d89358960a3d0a89ae170c5b81c70cb81f7e4b72e5ff310afb7f"
       ],
       "proxyType": "EIP1967 proxy",
-      "ignoreInWatchMode": ["intentQueue", "nonce"],
+      "ignoreInWatchMode": ["intentQueue", "nonce", "fillQueue"],
       "sinceTimestamp": 1726462859,
       "sinceBlock": 20760959,
       "values": {
@@ -211,13 +211,13 @@
         "EVERCLEAR": 25327,
         "feeAdapter": "eth:0x15a7cA97D1ed168fB34a4055CEFa2E2f9Bdb6C75",
         "FILL_INTENT_FOR_SOLVER_TYPEHASH": "0xce47b2c080dbcd8e420dc92bcf58f25f73f2e008a3b34ac41b9d468d1fb45d5a",
-        "fillQueue": { "first": 1, "last": 0 },
+        "fillQueue": { "first": 18, "last": 17 },
         "gateway": "eth:0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7",
-        "intentQueue": { "first": 20626, "last": 20625 },
+        "intentQueue": { "first": 21525, "last": 21524 },
         "lighthouse": "eth:0x38f188953f1E3afE83327C78AAeF72e0498da2C6",
         "messageGasLimit": 5000000,
         "messageReceiver": "eth:0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66",
-        "nonce": 20625,
+        "nonce": 21524,
         "owner": "eth:0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6",
         "paused": false,
         "PERMIT2": "eth:0x000000000022D473030F116dDEE9F6B43aC78BA3",
@@ -278,24 +278,6 @@
       }
     },
     {
-      "address": "everclear:0x0000000000000000000000000000000000000000",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "",
-      "address": "everclear:0x001Fffde58224F8617C82bAf3E466a2dEBb8078E",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1749656128,
-      "sinceBlock": 1615025,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "everclear:0x001Fffde58224F8617C82bAf3E466a2dEBb8078E": ""
-      }
-    },
-    {
       "address": "everclear:0x2eEd1440842990Fa61F0c396f981375Fa6004131",
       "type": "EOA",
       "proxyType": "EOA"
@@ -306,63 +288,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ProxyAdmin",
-      "address": "everclear:0x3a464f746D23Ab22155710f44dB16dcA53e0775E",
-      "type": "Contract",
-      "template": "global/ProxyAdmin",
-      "sourceHashes": [
-        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
-      ],
-      "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "everclear:0x7f50C5776722630a0024fAE05fDe8b47571D7B39",
-          "role": "admin"
-        }
-      ],
-      "sinceTimestamp": 1725975593,
-      "sinceBlock": 35,
-      "values": {
-        "$immutable": true,
-        "owner": "everclear:0x7a7716A400aA13B156317D683Ae2097db18B3E55"
-      },
-      "implementationNames": {
-        "everclear:0x3a464f746D23Ab22155710f44dB16dcA53e0775E": "ProxyAdmin"
-      }
-    },
-    {
-      "name": "",
-      "address": "everclear:0x3C2b535a49c6827DF0b8e94467e6922c99E3c092",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1725975645,
-      "sinceBlock": 219,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "everclear:0x3C2b535a49c6827DF0b8e94467e6922c99E3c092": ""
-      }
-    },
-    {
-      "name": "OwnableMulticall",
-      "address": "everclear:0x5c333d2284b36AeB1739C54dB2a729Fd15f80c35",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x012c1b599569ad1ad6c383404aff1736723ca39922bc084476e2c92cee1b783b"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1749656128,
-      "sinceBlock": 1615025,
-      "values": {
-        "$immutable": true,
-        "owner": "everclear:0x6FD739221F53F8dc1565F3aF830Cb687cfe5932D"
-      },
-      "implementationNames": {
-        "everclear:0x5c333d2284b36AeB1739C54dB2a729Fd15f80c35": "OwnableMulticall"
-      }
-    },
-    {
       "address": "everclear:0x5d334979C6f565b9646975AEdD2358D01f3db4c1",
       "type": "EOA",
       "proxyType": "EOA"
@@ -371,125 +296,6 @@
       "address": "everclear:0x6281ea3060B26352b558C4F45767C90db482c4fd",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "InterchainAccountRouter",
-      "address": "everclear:0x6FD739221F53F8dc1565F3aF830Cb687cfe5932D",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xdca7ab8e99495ec6b467a5a59b68e3c359a62d6b511d77dc3ecc4f2cb1d27365"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1749656128,
-      "sinceBlock": 1615025,
-      "values": {
-        "$immutable": true,
-        "bytecodeHash": "0x5800672c766b4d6ff3204148e083afbf06cb2b86fad3cb301cbb200e04d5fbcf",
-        "CCIP_READ_ISM": "everclear:0x001Fffde58224F8617C82bAf3E466a2dEBb8078E",
-        "COMMIT_TX_GAS_USAGE": 50000,
-        "domains": [
-          1000041455, 888888888, 33139, 466, 42161, 42170, 4278608, 11820, 592,
-          1313161554, 43114, 8333, 8453, 80094, 200901, 81457, 60808, 288, 3637,
-          6001, 56, 223, 42220, 383353, 1000088888, 668668, 21000000, 2632500,
-          7560, 19880818, 666666666, 2000, 5545, 648, 1, 9001, 250, 253368190,
-          14, 1000000747, 9999999, 478, 252, 122, 2187, 1300, 100, 1625, 260,
-          1666600000, 177, 43111, 999, 1000013371, 2525, 1001032009, 57073,
-          8217, 747474, 255, 59144, 1135, 42, 1000073017, 169, 5000, 698, 4200,
-          1000001750, 1088, 185, 92278, 34443, 360, 1284, 2818, 1689, 6900, 970,
-          204, 10, 291, 3338, 98866, 137, 1101, 1000008008, 227, 70700,
-          1000012617, 1597, 111188, 690, 753, 2020, 1000000030, 1996, 534352,
-          1329, 109, 2192, 1868, 146, 1514, 964, 1000055244, 5330, 1923, 167000,
-          5845, 40, 21000, 4547, 130, 88811, 1480, 480, 660279, 196, 37, 7000,
-          48900, 7777777, 1116, 16661
-        ],
-        "hook": "everclear:0x0000000000000000000000000000000000000000",
-        "implementation": "everclear:0x5c333d2284b36AeB1739C54dB2a729Fd15f80c35",
-        "interchainSecurityModule": "everclear:0x6FD739221F53F8dc1565F3aF830Cb687cfe5932D",
-        "localDomain": 25327,
-        "mailbox": "everclear:0x7f50C5776722630a0024fAE05fDe8b47571D7B39",
-        "moduleType": 1,
-        "owner": "everclear:0x7a7716A400aA13B156317D683Ae2097db18B3E55",
-        "PACKAGE_VERSION": "7.1.10"
-      },
-      "implementationNames": {
-        "everclear:0x6FD739221F53F8dc1565F3aF830Cb687cfe5932D": "InterchainAccountRouter"
-      }
-    },
-    {
-      "name": "OwnableMulticall",
-      "address": "everclear:0x7a7716A400aA13B156317D683Ae2097db18B3E55",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x012c1b599569ad1ad6c383404aff1736723ca39922bc084476e2c92cee1b783b",
-        "0x012c1b599569ad1ad6c383404aff1736723ca39922bc084476e2c92cee1b783b"
-      ],
-      "proxyType": "EIP1167 proxy",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "everclear:0x7f50C5776722630a0024fAE05fDe8b47571D7B39",
-          "role": "admin",
-          "via": [
-            {
-              "address": "everclear:0x3a464f746D23Ab22155710f44dB16dcA53e0775E"
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "everclear:0x3a464f746D23Ab22155710f44dB16dcA53e0775E",
-          "role": ".owner"
-        }
-      ],
-      "sinceTimestamp": 1751289324,
-      "sinceBlock": 1787001,
-      "values": {
-        "$implementation": "everclear:0x5c333d2284b36AeB1739C54dB2a729Fd15f80c35",
-        "owner": "everclear:0x6FD739221F53F8dc1565F3aF830Cb687cfe5932D"
-      },
-      "implementationNames": {
-        "everclear:0x7a7716A400aA13B156317D683Ae2097db18B3E55": "OwnableMulticall",
-        "everclear:0x5c333d2284b36AeB1739C54dB2a729Fd15f80c35": "OwnableMulticall"
-      }
-    },
-    {
-      "name": "Mailbox",
-      "address": "everclear:0x7f50C5776722630a0024fAE05fDe8b47571D7B39",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x2ab5c25041e0233dac4379f8d7050346b44ea76e72e339b82e9aa36f5ee464e1"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "sinceTimestamp": 1725975594,
-      "sinceBlock": 37,
-      "values": {
-        "$admin": "everclear:0x3a464f746D23Ab22155710f44dB16dcA53e0775E",
-        "$implementation": "everclear:0x3a867fCfFeC2B790970eeBDC9023E75B0a172aa7",
-        "$pastUpgrades": [
-          [
-            "2024-09-10T13:39:54.000Z",
-            "0x54aba2acfd515db65c4f75eec8c52ddfd7e4af72ad1fe70cb32a8de1b0ba137d",
-            ["everclear:0x3a867fCfFeC2B790970eeBDC9023E75B0a172aa7"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "defaultHook": "everclear:0x3C2b535a49c6827DF0b8e94467e6922c99E3c092",
-        "defaultIsm": "everclear:0xa3C641dF20C64E0D2a8a60147A4043DAab8ad896",
-        "deployedBlock": 20720564,
-        "latestDispatchedId": "0xd8dc824f6b01a51422662fcd22474f92eb3ed113f9fcba1fcb7f3bbf604608ec",
-        "localDomain": 25327,
-        "nonce": 48542,
-        "owner": "everclear:0x7a7716A400aA13B156317D683Ae2097db18B3E55",
-        "requiredHook": "everclear:0xC49aF4965264FA7BB6424CE37aA06773ad177224",
-        "VERSION": 3
-      },
-      "implementationNames": {
-        "everclear:0x7f50C5776722630a0024fAE05fDe8b47571D7B39": "TransparentUpgradeableProxy",
-        "everclear:0x3a867fCfFeC2B790970eeBDC9023E75B0a172aa7": "Mailbox"
-      }
     },
     {
       "address": "everclear:0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315",
@@ -554,7 +360,7 @@
           "averageGasUnitsPerSettlement": 50000,
           "bufferDBPS": 10000
         },
-        "getCurrentEpoch": 251303,
+        "getCurrentEpoch": 255312,
         "hubGateway": "everclear:0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa",
         "initialized": false,
         "lighthouse": "everclear:0x38f188953f1E3afE83327C78AAeF72e0498da2C6",
@@ -585,24 +391,6 @@
         "everclear:0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66": "HubMessageReceiver",
         "everclear:0xe0F010e465f15dcD42098dF9b99F1038c11B3056": "Manager"
       }
-    },
-    {
-      "name": "",
-      "address": "everclear:0xa3C641dF20C64E0D2a8a60147A4043DAab8ad896",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759400370,
-      "sinceBlock": 2673584,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "everclear:0xa3C641dF20C64E0D2a8a60147A4043DAab8ad896": ""
-      }
-    },
-    {
-      "address": "everclear:0xa7ECcdb9Be08178f896c26b7BbD8C3D4E844d9Ba",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "GnosisSafeL2",
@@ -667,53 +455,6 @@
       "address": "everclear:0xBF67dfcdC720E7bcaAdca6e1092f3A65207b7874",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "ProtocolFee",
-      "address": "everclear:0xC49aF4965264FA7BB6424CE37aA06773ad177224",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x42d8d5a1f90535d8652e45c7539a85a0c1dbd22b830d5fa87d1e7a9396cb0810"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1725975652,
-      "sinceBlock": 229,
-      "values": {
-        "$immutable": true,
-        "beneficiary": "everclear:0xa7ECcdb9Be08178f896c26b7BbD8C3D4E844d9Ba",
-        "hookType": 8,
-        "MAX_PROTOCOL_FEE": 1000000000,
-        "owner": "everclear:0xa7ECcdb9Be08178f896c26b7BbD8C3D4E844d9Ba",
-        "protocolFee": 0
-      },
-      "implementationNames": {
-        "everclear:0xC49aF4965264FA7BB6424CE37aA06773ad177224": "ProtocolFee"
-      }
-    },
-    {
-      "name": "DomainRoutingIsm",
-      "address": "everclear:0xcdBE2995Af304e9c14dF5B0c3d7C9CCc63D7b8B3",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x6c5e0840d2576bb2226bd5e50cb7c4311aa6d4d49e7c4f96eb15dec162d7fb07"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759230034,
-      "sinceBlock": 2654491,
-      "values": {
-        "$immutable": true,
-        "domains": [
-          8453, 1, 728126428, 10, 56, 130, 137, 146, 324, 2020, 5000, 33139,
-          34443, 42161, 43114, 4314, 48900, 57073, 59144, 100, 80094, 81457,
-          167000, 534352, 1399811149
-        ],
-        "moduleType": 1,
-        "owner": "everclear:0xBc8988C7a4b77c1d6df7546bd876Ea4D42DF0837",
-        "PACKAGE_VERSION": "7.0.0"
-      },
-      "implementationNames": {
-        "everclear:0xcdBE2995Af304e9c14dF5B0c3d7C9CCc63D7b8B3": "DomainRoutingIsm"
-      }
     },
     {
       "name": "HubGatewayV2",
@@ -1176,55 +917,6 @@
       "function watchtower() view returns (address)",
       "function withdrawFees(bytes32, bytes32, uint256, uint32[])"
     ],
-    "everclear:0x3a464f746D23Ab22155710f44dB16dcA53e0775E": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address proxy, address newAdmin)",
-      "function getProxyAdmin(address proxy) view returns (address)",
-      "function getProxyImplementation(address proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address proxy, address implementation)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "everclear:0x3a867fCfFeC2B790970eeBDC9023E75B0a172aa7": [
-      "constructor(uint32 _localDomain)",
-      "event DefaultHookSet(address indexed hook)",
-      "event DefaultIsmSet(address indexed module)",
-      "event Dispatch(address indexed sender, uint32 indexed destination, bytes32 indexed recipient, bytes message)",
-      "event DispatchId(bytes32 indexed messageId)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Process(uint32 indexed origin, bytes32 indexed sender, address indexed recipient)",
-      "event ProcessId(bytes32 indexed messageId)",
-      "event RequiredHookSet(address indexed hook)",
-      "function VERSION() view returns (uint8)",
-      "function defaultHook() view returns (address)",
-      "function defaultIsm() view returns (address)",
-      "function delivered(bytes32 _id) view returns (bool)",
-      "function deployedBlock() view returns (uint256)",
-      "function dispatch(uint32 destinationDomain, bytes32 recipientAddress, bytes messageBody, bytes metadata, address hook) payable returns (bytes32)",
-      "function dispatch(uint32 destinationDomain, bytes32 recipientAddress, bytes messageBody, bytes hookMetadata) payable returns (bytes32)",
-      "function dispatch(uint32 _destinationDomain, bytes32 _recipientAddress, bytes _messageBody) payable returns (bytes32)",
-      "function initialize(address _owner, address _defaultIsm, address _defaultHook, address _requiredHook)",
-      "function latestDispatchedId() view returns (bytes32)",
-      "function localDomain() view returns (uint32)",
-      "function nonce() view returns (uint32)",
-      "function owner() view returns (address)",
-      "function process(bytes _metadata, bytes _message) payable",
-      "function processedAt(bytes32 _id) view returns (uint48)",
-      "function processor(bytes32 _id) view returns (address)",
-      "function quoteDispatch(uint32 destinationDomain, bytes32 recipientAddress, bytes messageBody, bytes metadata, address hook) view returns (uint256 fee)",
-      "function quoteDispatch(uint32 destinationDomain, bytes32 recipientAddress, bytes messageBody) view returns (uint256 fee)",
-      "function quoteDispatch(uint32 destinationDomain, bytes32 recipientAddress, bytes messageBody, bytes defaultHookMetadata) view returns (uint256 fee)",
-      "function recipientIsm(address _recipient) view returns (address)",
-      "function renounceOwnership()",
-      "function requiredHook() view returns (address)",
-      "function setDefaultHook(address _hook)",
-      "function setDefaultIsm(address _module)",
-      "function setRequiredHook(address _hook)",
-      "function transferOwnership(address newOwner)"
-    ],
     "everclear:0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66": [
       "error HubMessageReceiver_ReceiveMessage_InvalidMessageType()",
       "error HubStorage_InvalidAddress()",
@@ -1280,93 +972,6 @@
       "function tokenFees(bytes32 _tickerHash) view returns (tuple(address recipient, uint24 fee)[] _fees)",
       "function updateVirtualBalance(bytes32 _user) view returns (bool _updateVirtualBalance)",
       "function watchtower() view returns (address)"
-    ],
-    "everclear:0x5c333d2284b36AeB1739C54dB2a729Fd15f80c35": [
-      "constructor(address _owner)",
-      "event CommitmentExecuted(bytes32 indexed commitmentHash)",
-      "event CommitmentSet(bytes32 indexed commitmentHash)",
-      "function commitments(bytes32 commitmentHash) view returns (bool isPendingExecution)",
-      "function multicall(tuple(bytes32 to, uint256 value, bytes data)[] calls) payable",
-      "function owner() view returns (address)",
-      "function revealAndExecute(tuple(bytes32 to, uint256 value, bytes data)[] calls, bytes32 salt) payable returns (bytes32 executedCommitment)",
-      "function setCommitment(bytes32 _commitment)"
-    ],
-    "everclear:0x6FD739221F53F8dc1565F3aF830Cb687cfe5932D": [
-      "constructor(address _mailbox, address _hook, address _owner, uint256 _commit_tx_gas_usage, string[] _commitment_urls)",
-      "event CommitRevealDispatched(bytes32 indexed commitment)",
-      "event HookSet(address _hook)",
-      "event Initialized(uint8 version)",
-      "event InterchainAccountCreated(address indexed account, uint32 origin, bytes32 router, bytes32 owner, address ism, bytes32 salt)",
-      "event IsmSet(address _ism)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event RemoteCallDispatched(uint32 indexed destination, address indexed owner, bytes32 router, bytes32 ism, bytes32 salt)",
-      "event RemoteIsmEnrolled(uint32 indexed domain, bytes32 ism)",
-      "function CCIP_READ_ISM() view returns (address)",
-      "function COMMIT_TX_GAS_USAGE() view returns (uint256)",
-      "function PACKAGE_VERSION() view returns (string)",
-      "function bytecodeHash() view returns (bytes32)",
-      "function callRemote(uint32 _destination, tuple(bytes32 to, uint256 value, bytes data)[] _calls, bytes _hookMetadata) payable returns (bytes32)",
-      "function callRemote(uint32 _destination, tuple(bytes32 to, uint256 value, bytes data)[] _calls) payable returns (bytes32)",
-      "function callRemoteCommitReveal(uint32 _destination, bytes32 _router, bytes32 _ism, bytes32 _ccipReadIsm, bytes _hookMetadata, address _hook, bytes32 _salt, bytes32 _commitment) payable returns (bytes32 _commitmentMsgId, bytes32 _revealMsgId)",
-      "function callRemoteCommitReveal(uint32 _destination, bytes32 _commitment, uint256 _gasLimit) payable returns (bytes32 _commitmentMsgId, bytes32 _revealMsgId)",
-      "function callRemoteCommitReveal(uint32 _destination, bytes32 _router, bytes32 _ism, bytes _hookMetadata, address _hook, bytes32 _salt, bytes32 _commitment) payable returns (bytes32 _commitmentMsgId, bytes32 _revealMsgId)",
-      "function callRemoteWithOverrides(uint32 _destination, bytes32 _router, bytes32 _ism, tuple(bytes32 to, uint256 value, bytes data)[] _calls, bytes _hookMetadata, bytes32 _userSalt) payable returns (bytes32)",
-      "function callRemoteWithOverrides(uint32 _destination, bytes32 _router, bytes32 _ism, tuple(bytes32 to, uint256 value, bytes data)[] _calls) payable returns (bytes32)",
-      "function callRemoteWithOverrides(uint32 _destination, bytes32 _router, bytes32 _ism, tuple(bytes32 to, uint256 value, bytes data)[] _calls, bytes32 _userSalt) payable returns (bytes32)",
-      "function callRemoteWithOverrides(uint32 _destination, bytes32 _router, bytes32 _ism, tuple(bytes32 to, uint256 value, bytes data)[] _calls, bytes _hookMetadata, bytes32 _salt, address _hook) payable returns (bytes32)",
-      "function callRemoteWithOverrides(uint32 _destination, bytes32 _router, bytes32 _ism, tuple(bytes32 to, uint256 value, bytes data)[] _calls, bytes _hookMetadata) payable returns (bytes32)",
-      "function domains() view returns (uint32[])",
-      "function enrollRemoteRouter(uint32 _domain, bytes32 _router)",
-      "function enrollRemoteRouterAndIsm(uint32 _destination, bytes32 _router, bytes32 _ism)",
-      "function enrollRemoteRouterAndIsms(uint32[] _destinations, bytes32[] _routers, bytes32[] _isms)",
-      "function enrollRemoteRouters(uint32[] _domains, bytes32[] _addresses)",
-      "function getDeployedInterchainAccount(uint32 _origin, bytes32 _owner, bytes32 _router, address _ism, bytes32 _userSalt) returns (address)",
-      "function getDeployedInterchainAccount(uint32 _origin, address _owner, address _router, address _ism) returns (address)",
-      "function getDeployedInterchainAccount(uint32 _origin, bytes32 _owner, bytes32 _router, address _ism) returns (address)",
-      "function getLocalInterchainAccount(uint32 _origin, bytes32 _owner, bytes32 _router, address _ism, bytes32 _userSalt) view returns (address)",
-      "function getLocalInterchainAccount(uint32 _origin, address _owner, address _router, address _ism) view returns (address)",
-      "function getLocalInterchainAccount(uint32 _origin, bytes32 _owner, bytes32 _router, address _ism) view returns (address)",
-      "function getRemoteInterchainAccount(address _owner, address _router, address _ism, bytes32 _userSalt) view returns (address)",
-      "function getRemoteInterchainAccount(uint32 _destination, address _owner) view returns (address)",
-      "function getRemoteInterchainAccount(uint32 _destination, address _owner, bytes32 _userSalt) view returns (address)",
-      "function getRemoteInterchainAccount(address _owner, address _router, address _ism) view returns (address)",
-      "function handle(uint32 _origin, bytes32 _sender, bytes _message) payable",
-      "function hook() view returns (address)",
-      "function implementation() view returns (address)",
-      "function interchainSecurityModule() view returns (address)",
-      "function isms(uint32 destinationDomain) view returns (bytes32 ism)",
-      "function localDomain() view returns (uint32)",
-      "function mailbox() view returns (address)",
-      "function moduleType() view returns (uint8)",
-      "function owner() view returns (address)",
-      "function quoteGasForCommitReveal(uint32 _destination, uint256 gasLimit) view returns (uint256 _gasPayment)",
-      "function quoteGasPayment(uint32 _destination, uint256 _gasLimit) view returns (uint256 _gasPayment)",
-      "function quoteGasPayment(uint32 _destination) view returns (uint256 _gasPayment)",
-      "function renounceOwnership()",
-      "function route(bytes _message) view returns (address)",
-      "function routers(uint32 _domain) view returns (bytes32)",
-      "function setHook(address _hook)",
-      "function setInterchainSecurityModule(address _module)",
-      "function transferOwnership(address newOwner)",
-      "function unenrollRemoteRouter(uint32 _domain)",
-      "function unenrollRemoteRouters(uint32[] _domains)",
-      "function verify(bytes _metadata, bytes _message) returns (bool)"
-    ],
-    "everclear:0x7a7716A400aA13B156317D683Ae2097db18B3E55": [
-      "constructor(address _owner)",
-      "event CommitmentExecuted(bytes32 indexed commitmentHash)",
-      "event CommitmentSet(bytes32 indexed commitmentHash)",
-      "function commitments(bytes32 commitmentHash) view returns (bool isPendingExecution)",
-      "function multicall(tuple(bytes32 to, uint256 value, bytes data)[] calls) payable",
-      "function owner() view returns (address)",
-      "function revealAndExecute(tuple(bytes32 to, uint256 value, bytes data)[] calls, bytes32 salt) payable returns (bytes32 executedCommitment)",
-      "function setCommitment(bytes32 _commitment)"
-    ],
-    "everclear:0x7f50C5776722630a0024fAE05fDe8b47571D7B39": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
     ],
     "everclear:0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7": [
       "error ECDSAInvalidSignature()",
@@ -1446,40 +1051,6 @@
     ],
     "everclear:0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8": [
       "constructor(address _singleton)"
-    ],
-    "everclear:0xC49aF4965264FA7BB6424CE37aA06773ad177224": [
-      "constructor(uint256 _maxProtocolFee, uint256 _protocolFee, address _beneficiary, address _owner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function MAX_PROTOCOL_FEE() view returns (uint256)",
-      "function beneficiary() view returns (address)",
-      "function collectProtocolFees()",
-      "function hookType() pure returns (uint8)",
-      "function owner() view returns (address)",
-      "function postDispatch(bytes metadata, bytes message) payable",
-      "function protocolFee() view returns (uint256)",
-      "function quoteDispatch(bytes metadata, bytes message) view returns (uint256)",
-      "function renounceOwnership()",
-      "function setBeneficiary(address _beneficiary)",
-      "function setProtocolFee(uint256 _protocolFee)",
-      "function supportsMetadata(bytes metadata) pure returns (bool)",
-      "function transferOwnership(address newOwner)"
-    ],
-    "everclear:0xcdBE2995Af304e9c14dF5B0c3d7C9CCc63D7b8B3": [
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function PACKAGE_VERSION() view returns (string)",
-      "function domains() view returns (uint256[])",
-      "function initialize(address _owner, uint32[] _domains, address[] __modules)",
-      "function initialize(address _owner)",
-      "function module(uint32 origin) view returns (address)",
-      "function moduleType() view returns (uint8)",
-      "function owner() view returns (address)",
-      "function remove(uint32 _domain)",
-      "function renounceOwnership()",
-      "function route(bytes _message) view returns (address)",
-      "function set(uint32 _domain, address _module)",
-      "function transferOwnership(address newOwner)",
-      "function verify(bytes _metadata, bytes _message) returns (bool)"
     ],
     "everclear:0xd8681612290EDD610E70f082Ef1015b25B597f5c": [
       "constructor()",
@@ -1792,10 +1363,9 @@
     ]
   },
   "usedTemplates": {
-    "everclearbridge/EverclearHubGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "everclearbridge/EverclearHubGateway": "0x7f95b098436a5c7082be25b752b0735f2a98d896415b75cefa4e7c0a4c270c74",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "everclear": 2750237, "ethereum": 23546565 },
-  "permissionsConfigHash": "0x8003074969e1392f4534e6c43a7c0ed5cd4a8be950cf7ca19b48d09a9a96bf6c"
+  "usedBlockNumbers": { "ethereum": 23626761, "everclear": 2881606 },
+  "permissionsConfigHash": "0xae2cfea5911cacbbe8d05d9507f1c11f65cc26dc8c22df13349e6eb8a413a665"
 }

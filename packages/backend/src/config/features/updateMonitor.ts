@@ -28,11 +28,17 @@ export function getUpdateMonitorConfig(
     ),
   ]
   const enabledChains = allChains.filter((chain) =>
-    flags.isEnabled('updateMonitor', chain),
+    flags.isEnabled('updateMonitor', 'chain', chain),
   )
   const disabledChains = allChains.filter(
-    (chain) => !flags.isEnabled('updateMonitor', chain),
+    (chain) => !flags.isEnabled('updateMonitor', 'chain', chain),
   )
+
+  const allProjects = configReader.readAllDiscoveredProjects()
+  const disabledProjects = allProjects.filter(
+    (project) => !flags.isEnabled('updateMonitor', 'project', project),
+  )
+
   return {
     configReader,
     paths,
@@ -45,12 +51,24 @@ export function getUpdateMonitorConfig(
       getChainDiscoveryConfig(env, chain, chains),
     ),
     disabledChains,
+    disabledProjects,
     cacheEnabled: env.optionalBoolean(['DISCOVERY_CACHE_ENABLED']),
     cacheUri: env.string(['DISCOVERY_CACHE_URI'], 'postgres'),
     updateMessagesRetentionPeriodDays: env.integer(
       ['UPDATE_MESSAGES_RETENTION_PERIOD_DAYS'],
       30,
     ),
+    workerPool: {
+      workerCount: env.integer(['UPDATE_MONITOR_WORKER_POOL_COUNT'], 3),
+      timeoutPerTaskMs: env.integer(
+        ['UPDATE_MONITOR_WORKER_POOL_TIMEOUT_PER_TASK_MS'],
+        20 * 60 * 1000, // 10 minutes
+      ),
+      timeoutPerRunMs: env.integer(
+        ['UPDATE_MONITOR_WORKER_POOL_TIMEOUT_PER_RUN_MS'],
+        60 * 60 * 1000, // 1 hour
+      ),
+    },
   }
 }
 

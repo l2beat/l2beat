@@ -1,3 +1,129 @@
+Generated with discovered.json: 0xca73552541225231bbf01c8b51cb93c767249100
+
+# Diff at Mon, 20 Oct 2025 15:34:07 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@bfe80e92f67656ee716f7ab40cc8f3f9e92dc7d6 block: 1756812807
+- current timestamp: 1760974375
+
+## Description
+
+All operators have been removed except one.
+
+## Watched changes
+
+```diff
+    contract PredicateServiceManager (eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2) {
+    +++ description: None
+      values.operators.1:
+-        "eth:0xa42CD0029F681b08B61f535E846F2A36F468C1c2"
+      values.operators.2:
+-        "eth:0x6c107920C18BEE5169aBcFeFb702467151dE7688"
+      values.operators.3:
+-        "eth:0x5ACCC90436492F24E6aF278569691e2c942A676d"
+      values.operators.4:
+-        "eth:0xBE7d5f26F5D5F567D35a86Dd4d7D02AceD2d5BFF"
+      values.operators.5:
+-        "eth:0xEA9F738eAD0b011030D65A50a43CAc5EC67fD3fD"
+      values.operators.6:
+-        "eth:0xa3ff1491088715D140bc821A28287cB3f71B43E4"
+      values.operators.7:
+-        "eth:0x5cd6Fdfad710609c828feba2508bCAF89e80501a"
+      values.operators.8:
+-        "eth:0xE3aD2A1E9b0514718680f96FF015d653105D51B9"
+      values.operators.9:
+-        "eth:0xA5954756792F64ba7bcC4B5fD664B0843a7aFe5b"
+      values.operators.10:
+-        "eth:0xCaAeB411241aC87b5846797C15bf339A54A1D736"
+      values.operators.11:
+-        "eth:0x794A15082bC31c81E370f6600FBA047f7226daB4"
+      values.operators.12:
+-        "eth:0x140dc7eF41B8ED01F340333045dC818947ca428d"
+      values.operators.13:
+-        "eth:0xd172a86A0F250AEC23ee19c759A8E73621fe3c10"
+      values.operators.14:
+-        "eth:0xb1EA8424075A71cd97F95ed64069241FfD4833BE"
+      values.operators.15:
+-        "eth:0xa83e07353A9ED2aF88e7281a2fA7719c01356D8e"
+      values.operators.16:
+-        "eth:0x896B35E1F9c93AfA35A2882c53605108F934bfe5"
+      values.operators.17:
+-        "eth:0xd9Dddc21D4A07968D45C7Ae0b57D2f71b0136c07"
+      values.operators.18:
+-        "eth:0x30EAfE8869a1528660a97b7a7E8e2d0037dCb922"
+      values.operators.19:
+-        "eth:0x89d60C9BCd5E6879e1F9440917B75502dF8AE020"
+      values.operators.20:
+-        "eth:0x110af279aAFfB0d182697d7fC87653838AA5945e"
+      values.operators.21:
+-        "eth:0xC28af4af11181B72194e6577FF4b556Ed4CD27a4"
+      values.operators.22:
+-        "eth:0x53730f4088B116c807875EB67f71CbB1b065F530"
+      values.operators.23:
+-        "eth:0xF02fBA1624775bf60D4C7bBFf28bC78547D67E1E"
+      values.operators.24:
+-        "eth:0x778328d6aDcA7A091F0B73d41aD8eA0E793712c3"
+      values.operators.25:
+-        "eth:0xe5801326014dB4F6729264Db38F5F5430bc2fbFa"
+      values.operators.26:
+-        "eth:0xDcAE4FAf7C7d0f4A78abe147244c6e9d60cFD202"
+      values.operators.27:
+-        "eth:0xEA50bB6735703422D2E053452F1F28BFf17Da51F"
+      values.operators.28:
+-        "eth:0x5b9B3Cf0202a1a3Dc8f527257b7E6002D23D8c85"
+      values.operators.29:
+-        "eth:0x67943aE8e07bFC9f5C9A90d608F7923D9C21e051"
+      values.operators.30:
+-        "eth:0x8f234faF8974CdC99AD2628EF5Ed0e9d644193EB"
+      values.operators.31:
+-        "eth:0xcCaa639D3Afdc77b562A4673b2ecDE6770349675"
+      values.operators.32:
+-        "eth:0x3F98F47D302a3CFd3746Fe35f7cF10c3217e5272"
+      values.operators.33:
+-        "eth:0x46b3f7b5be0787765565A6d8A645266a9347AB82"
+      values.operators.34:
+-        "eth:0xe483C7F156b25Da9be6220049E5111bB41C4C535"
+      values.operators.35:
+-        "eth:0xc25D6446d6086218cDAa8Dd04630DC5d16b591F6"
+      values.operators.36:
+-        "eth:0xa026265a0F01A6E1A19b04655519429df0a57c4e"
+      values.operators.37:
+-        "eth:0x5D4B5Ef127c545e5bf8E247F9FCd4e75a0A366B4"
+      values.operators.38:
+-        "eth:0xe0156eF2905c2Ea8B1F7571cAEE85fdF1657Ab38"
+      values.operators.39:
+-        "eth:0xe25480334fc57a4f38F081e87cdFeeEAF09779C9"
+      values.operators.40:
+-        "eth:0x08d112Be16ff37ca6DC8eA06eFEFD676A42502AA"
+      values.operators.41:
+-        "eth:0x01412450D52d5AfedA71b91602D3e0D9dA5231c7"
+      values.operators.42:
+-        "eth:0xDbEd88D83176316fc46797B43aDeE927Dc2ff2F5"
+      values.operators.43:
+-        "eth:0x7e3CeDe5c77CD4192D206C652dB0023a89D7E5EC"
+      values.operators.44:
+-        "eth:0x9ABcE41e1486210AD83DEB831AfcDd214af5B49d"
+      values.operators.45:
+-        "eth:0xfB487f216CA24162119C0C6Ae015d680D7569C2f"
+      values.operators.46:
+-        "eth:0xb5Ead7A953052dA8212DA7e9462D65F91205d06D"
+      values.operators.47:
+-        "eth:0x9e91B47454bEE4A8C54C1704f63f85BcbD112941"
+      values.operators.48:
+-        "eth:0x3a5DcEc17661d540eF215a56bD5aC35Ac3450b9d"
+      values.operators.49:
+-        "eth:0x529eC9ac9A80428CF8C92557f2eB1B336616f543"
+      values.operators.50:
+-        "eth:0xe48c8e071857d1229fc94d73a0f25d1dBB99C04C"
+      values.operators.51:
+-        "eth:0xdb69c57E9eC197a59d8144a42ECdfB37641BE80D"
+      values.operators.52:
+-        "eth:0x1C4B8717A3EFF560C49D09e7409819CB81FECe4B"
+      values.operators.53:
+-        "eth:0x5dCdf02a7188257b7c37dD3158756dA9Ccd4A9Cb"
+    }
+```
+
 Generated with discovered.json: 0x7f24019e02b04df6282c952b4f6666f36b5fd117
 
 # Diff at Tue, 02 Sep 2025 11:43:14 GMT:

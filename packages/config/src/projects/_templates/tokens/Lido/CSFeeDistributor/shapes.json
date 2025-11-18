@@ -7,7 +7,6 @@
   "CSFeeDistributor_v2": {
     "hash": "0x881e365358bb714cd1d4c59279039f33010f934835d0bd8406443a9bb43c5b9f",
     "address": "eth:0x5DCF7cF7c6645E9E822a379dF046a8b0390251A1",
-    "chain": "ethereum",
     "blockNumber": 23519375
   }
 }

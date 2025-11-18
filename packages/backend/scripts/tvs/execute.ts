@@ -1,10 +1,4 @@
-import {
-  type Env,
-  getEnv,
-  LogFormatterPretty,
-  Logger,
-  type LogLevel,
-} from '@l2beat/backend-tools'
+import { type Env, getEnv, Logger, type LogLevel } from '@l2beat/backend-tools'
 import { ProjectService, type TvsToken } from '@l2beat/config'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
@@ -458,17 +452,9 @@ function calculateBreakdown(
 }
 
 function initLogger(env: Env) {
-  const logLevel = env.string('LOG_LEVEL', 'INFO') as LogLevel
-  const logger = new Logger({
-    logLevel: logLevel,
-    transports: [
-      {
-        transport: console,
-        formatter: new LogFormatterPretty(),
-      },
-    ],
+  return new Logger({
+    level: env.string('LOG_LEVEL', 'INFO') as LogLevel,
   })
-  return logger
 }
 
 function toDollarString(value: number) {

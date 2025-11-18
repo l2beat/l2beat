@@ -1,8 +1,9 @@
-import type { SummedByTimestampTvsValuesRecord } from '@l2beat/dal'
+import type {
+  ProjectWithRanges,
+  SummedByTimestampTvsValuesRecord,
+} from '@l2beat/dal'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import keyBy from 'lodash/keyBy'
-import { env } from '~/env'
-import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { queryExecutor } from '~/server/queryExecutor'
 import { getTimestampedValuesRange } from '~/utils/range/range'
@@ -20,35 +21,41 @@ export type SummedTvsValues = {
   stablecoin: number | null
   btc: number | null
   other: number | null
+  rwaRestricted: number | null
+  rwaPublic: number | null
 }
 
 export async function getSummedTvsValues(
-  projectIds: ProjectId[],
+  projects: ProjectId[] | ProjectWithRanges[],
   range: { type: TvsChartRange } | { type: 'custom'; from: number; to: number },
   {
     forSummary,
     excludeAssociatedTokens,
-  }: { forSummary: boolean; excludeAssociatedTokens: boolean },
+    includeRwaRestrictedTokens,
+  }: {
+    forSummary: boolean
+    excludeAssociatedTokens: boolean
+    includeRwaRestrictedTokens: boolean
+  },
 ): Promise<SummedTvsValues[]> {
-  const db = getDb()
   const resolution = rangeToResolution(range)
 
   const [from, to] = getTimestampedValuesRange(range, resolution, {
     offset: -UnixTime.HOUR - 15 * UnixTime.MINUTE,
   })
 
-  const valueRecords = env.REDIS_URL
-    ? (
-        await queryExecutor.execute({
-          name: 'getSummedByTimestampTvsValuesQuery',
-          args: [projectIds, [from, to], forSummary, excludeAssociatedTokens],
-        })
-      ).map(mapArrayToObject)
-    : await db.tvsProjectValue.getSummedByTimestamp(
-        projectIds,
-        getType(forSummary, excludeAssociatedTokens),
-        [from, to],
-      )
+  const records = await queryExecutor.execute({
+    name: 'getSummedByTimestampTvsValuesQuery',
+    args: [
+      projects,
+      [from, to],
+      forSummary,
+      excludeAssociatedTokens,
+      includeRwaRestrictedTokens,
+    ],
+  })
+
+  const valueRecords = records.map(mapArrayToObject)
 
   if (valueRecords.length === 0) {
     return []
@@ -76,17 +83,12 @@ export async function getSummedTvsValues(
         stablecoin: null,
         other: null,
         btc: null,
+        rwaRestricted: null,
+        rwaPublic: null,
       }
     }
     return record
   })
-}
-
-function getType(forSummary: boolean, excludeAssociatedTokens: boolean) {
-  if (!forSummary) {
-    return excludeAssociatedTokens ? 'PROJECT_WA' : 'PROJECT'
-  }
-  return excludeAssociatedTokens ? 'SUMMARY_WA' : 'SUMMARY'
 }
 
 function mapArrayToObject([

@@ -4,12 +4,15 @@
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-    "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
+    "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+    "eth:0xE1Ae45810A738F13e70Ac8966354d7D0feCF7BD6", // v2 DACert Verifier
+    "eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12" // EigenDACertVerifierRouter
   ],
   "names": {
     "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d": "TimelockControllerOwning",
     "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83": "EIGEN Token",
-    "eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F": "EigenLayerProtocolCouncil"
+    "eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F": "EigenLayerProtocolCouncil",
+    "eth:0x5e29552239d9ACa88d2f410C35D8C0dE47483F37": "EigenDACertVerificationUtilsLibrary"
   },
   "overrides": {
     "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83": {

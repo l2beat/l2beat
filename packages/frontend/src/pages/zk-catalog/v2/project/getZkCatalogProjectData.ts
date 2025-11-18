@@ -15,7 +15,7 @@ export async function getZkCatalogProjectData(
   const project = await ps.getProject({
     slug,
     select: ['zkCatalogInfo', 'display', 'statuses'],
-    optional: ['archivedAt', 'milestones'],
+    optional: ['archivedAt', 'milestones', 'tvsInfo'],
   })
   if (!project) return undefined
 

@@ -3,6 +3,7 @@
   "name": "layerzerov2oft",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
+    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd", // canary DVN
     "eth:0x1a44076050125825900e736c501f859c50fE728c",
     "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
     "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
@@ -38,6 +39,7 @@
     "eth:0x8ddF05F9A5c488b4973897E278B58895bF87Cb24": "PolyhedraDVN",
     "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D": "HorizenDVN",
     "eth:0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2": "USDT0DVN",
+    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd": "CanaryDVN",
     "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113": "PriceFeed",
     "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059": "LayerZero Executor"
   },

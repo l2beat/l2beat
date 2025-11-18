@@ -1,14 +1,14 @@
-import { db } from '../../database/db'
 import { executePlan } from '../../execution'
 import { Intent } from '../../intents'
 import { generatePlan, Plan } from '../../planning'
-import { protectedProcedure, router } from '../trpc'
+import { readWriteProcedure } from '../procedures'
+import { router } from '../trpc'
 
 export const planRouter = router({
-  generate: protectedProcedure.input(Intent).mutation(({ input, ctx }) => {
-    return generatePlan(db, input, { meta: { email: ctx.email } })
+  generate: readWriteProcedure.input(Intent).mutation(({ input, ctx }) => {
+    return generatePlan(ctx.db, input, { meta: { email: ctx.session.email } })
   }),
-  execute: protectedProcedure.input(Plan).mutation(({ input, ctx }) => {
-    return executePlan(db, input, { email: ctx.email })
+  execute: readWriteProcedure.input(Plan).mutation(({ input, ctx }) => {
+    return executePlan(ctx.db, input, { email: ctx.session.email })
   }),
 })

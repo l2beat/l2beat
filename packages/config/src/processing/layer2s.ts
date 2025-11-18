@@ -48,7 +48,6 @@ import { eclipse } from '../projects/eclipse/eclipse'
 import { edgeless } from '../projects/edgeless/edgeless'
 import { edgex } from '../projects/edgex/edgex'
 import { ethernity } from '../projects/ethernity/ethernity'
-import { ethstorage } from '../projects/ethstorage/ethstorage'
 import { everclear } from '../projects/everclear/everclear'
 import { facet } from '../projects/facet/facet'
 import { fhenix } from '../projects/fhenix/fhenix'
@@ -64,7 +63,6 @@ import { fuse } from '../projects/fuse/fuse'
 import { galxegravity } from '../projects/galxegravity/galxegravity'
 import { gameswift } from '../projects/gameswift/gameswift'
 import { gasp } from '../projects/gasp/gasp'
-import { gateLayer } from '../projects/gate-layer/gate-layer'
 import { genlayer } from '../projects/genlayer/genlayer'
 import { giwa } from '../projects/giwa/giwa'
 import { gluon } from '../projects/gluon/gluon'
@@ -381,7 +379,6 @@ export const layer2s: ScalingProject[] = [
   polynomial,
   powerloom,
   prom,
-  ethstorage,
   publicgoodsnetwork,
   puffer,
   quarkchain,
@@ -392,7 +389,6 @@ export const layer2s: ScalingProject[] = [
   real,
   reddioex,
   roninNetwork,
-  gateLayer,
   reddiozkvm,
   redstone,
   reya,

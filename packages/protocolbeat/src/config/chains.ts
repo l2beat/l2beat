@@ -29,4 +29,6 @@ export const AVAILABLE_CHAINS = [
   { name: 'zircuit', chainId: 48900, shortName: 'zircuit' },
   { name: 'taiko', chainId: 167000, shortName: 'taiko' },
   { name: 'facet', chainId: 1027303, shortName: 'facet' },
+  { name: 'ethereal', chainId: 5064014, shortName: 'ethereal' },
+  { name: 'jovay', chainId: 5734951, shortName: 'jovay' },
 ].toSorted((a, b) => a.chainId - b.chainId)

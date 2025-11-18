@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { EthereumAddress } from './EthereumAddress'
+import { EthereumAddress } from './EthereumAddress.js'
 
 describe(EthereumAddress.name, () => {
   it('accepts lowercase addresses', () => {

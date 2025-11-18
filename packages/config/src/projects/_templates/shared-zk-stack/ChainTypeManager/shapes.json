@@ -8,5 +8,10 @@
     "hash": "0x5462a6c55c6e9f2d98c21f2588b2b9a4de1dc41ba0c10906f8965e21849a3a52",
     "address": "eth:0x6D598c77AF57Bfa17201483400615c61819dD45A",
     "blockNumber": 22374168
+  },
+  "ChainTypeManager_v29": {
+    "hash": "0xee0ad6dd34008989477a03f84eca5083a1cb79b46c01c850617d62c7b406c4ba",
+    "address": "eth:0x4aB7204e4205c96C32E23ADa9191720976dC084f",
+    "blockNumber": 23588465
   }
 }

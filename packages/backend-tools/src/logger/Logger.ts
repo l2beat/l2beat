@@ -1,216 +1,179 @@
-import { assertUnreachable } from '@l2beat/shared-pure'
-import { join } from 'path'
-import { LogFormatterJson } from './LogFormatterJson'
-import { LogFormatterPretty } from './LogFormatterPretty'
-import { LEVEL, type LogLevel } from './LogLevel'
-import { parseLogArguments } from './parseLogArguments'
-import { resolveError } from './resolveError'
-import { tagService } from './tagService'
-import type { LogEntry, LoggerOptions } from './types'
+import ErrorStackParser from 'error-stack-parser'
+import { ConsoleTransport } from './ConsoleTransport'
+import type { LogEntry, LoggerTransport, LogLevel } from './types'
+
+const RANK = {
+  NONE: 0,
+  CRITICAL: 1,
+  ERROR: 2,
+  WARN: 3,
+  INFO: 4,
+  DEBUG: 5,
+  TRACE: 6,
+}
+
+export interface LoggerOptions {
+  level: LogLevel | 'NONE'
+  transports: LoggerTransport[]
+  getTime: () => Date
+  cwd: string
+  filter: (entry: LogEntry) => boolean
+}
 
 /**
  * [Read full documentation](https://github.com/l2beat/tools/blob/master/packages/backend-tools/src/logger/docs.md)
  */
 export class Logger {
-  private readonly options: LoggerOptions
-  private readonly logLevel: number
-  private readonly cwd: string
+  readonly options: LoggerOptions
+  readonly tags: Record<string, unknown>
 
-  get metricsEnabled(): boolean {
-    return this.options.metricsEnabled ?? false
-  }
+  static SILENT = new Logger({ level: 'NONE' })
+  static CRITICAL = new Logger({ level: 'CRITICAL' })
+  static ERROR = new Logger({ level: 'ERROR' })
+  static WARN = new Logger({ level: 'WARN' })
+  static INFO = new Logger({ level: 'INFO' })
+  static DEBUG = new Logger({ level: 'DEBUG' })
+  static TRACE = new Logger({ level: 'TRACE' })
 
-  constructor(options: Partial<LoggerOptions>) {
+  critical = this.log.bind(this, 'CRITICAL')
+  error = this.log.bind(this, 'ERROR')
+  warn = this.log.bind(this, 'WARN')
+  info = this.log.bind(this, 'INFO')
+  debug = this.log.bind(this, 'DEBUG')
+  trace = this.log.bind(this, 'TRACE')
+
+  constructor(options: Partial<LoggerOptions>, tags?: Record<string, unknown>) {
     this.options = {
-      ...options,
-      logLevel: options.logLevel ?? 'INFO',
-      utc: options.utc ?? false,
-      cwd: options.cwd ?? process.cwd(),
+      level: options.level ?? 'INFO',
+      transports: options.transports ?? [ConsoleTransport.PRETTY],
       getTime: options.getTime ?? (() => new Date()),
-      reportError: options.reportError ?? (() => {}),
-      transports: options.transports ?? [
-        {
-          transport: console,
-          formatter: new LogFormatterJson(),
-        },
-      ],
+      cwd: options.cwd ?? process.cwd(),
+      filter: options.filter ?? (() => true),
     }
-    this.cwd = join(this.options.cwd, '/')
-    this.logLevel = LEVEL[this.options.logLevel]
+    this.tags = tags ?? {}
   }
 
-  static SILENT = new Logger({ logLevel: 'NONE' })
+  configure(options: Partial<LoggerOptions>) {
+    return new Logger({ ...this.options, ...options }, this.tags)
+  }
 
-  static CRITICAL = new Logger({
-    logLevel: 'CRITICAL',
-    transports: [
-      {
-        transport: console,
-        formatter: new LogFormatterPretty(),
-      },
-    ],
-  })
+  filter(predicate: (entry: LogEntry) => boolean) {
+    return this.configure({ filter: predicate })
+  }
 
-  static ERROR = new Logger({
-    logLevel: 'ERROR',
-    transports: [
-      {
-        transport: console,
-        formatter: new LogFormatterPretty(),
-      },
-    ],
-  })
-
-  static WARN = new Logger({
-    logLevel: 'WARN',
-    transports: [
-      {
-        transport: console,
-        formatter: new LogFormatterPretty(),
-      },
-    ],
-  })
-
-  static INFO = new Logger({
-    logLevel: 'INFO',
-    transports: [
-      {
-        transport: console,
-        formatter: new LogFormatterPretty(),
-      },
-    ],
-  })
-
-  static DEBUG = new Logger({
-    logLevel: 'DEBUG',
-    transports: [
-      {
-        transport: console,
-        formatter: new LogFormatterPretty(),
-      },
-    ],
-  })
-
-  static TRACE = new Logger({
-    logLevel: 'TRACE',
-    transports: [
-      {
-        transport: console,
-        formatter: new LogFormatterPretty(),
-      },
-    ],
-  })
-
-  configure(options: Partial<LoggerOptions>): Logger {
-    const logger = new Logger({ ...this.options, ...options })
-    return logger
+  tag(tags: Record<string, unknown>) {
+    return new Logger(this.options, { ...this.tags, ...tags })
   }
 
   // biome-ignore lint/complexity/noBannedTypes: generic type
   for(object: {} | string): Logger {
     const name = typeof object === 'string' ? object : object.constructor.name
-    return this.configure({
-      service: this.options.service ? `${this.options.service}.${name}` : name,
+    return this.tag({
+      service: this.tags.service ? `${this.tags.service}.${name}` : name,
     })
   }
 
-  tag(
-    tags: Pick<
-      LoggerOptions,
-      'tag' | 'module' | 'feature' | 'chain' | 'project' | 'source'
-    >,
-  ): Logger {
-    return this.configure(tags)
-  }
-
-  critical(...args: unknown[]): void {
-    if (this.logLevel >= LEVEL.CRITICAL) {
-      const parsed = this.parseEntry('CRITICAL', args)
-      this.print(parsed)
-      this.options.reportError(parsed)
-    }
-  }
-
-  error(...args: unknown[]): void {
-    if (this.logLevel >= LEVEL.ERROR) {
-      const entry = this.parseEntry('ERROR', args)
-      this.print(entry)
-      this.options.reportError(entry)
-    }
-  }
-
-  warn(...args: unknown[]): void {
-    if (this.logLevel >= LEVEL.WARN) {
-      this.print(this.parseEntry('WARN', args))
-    }
-  }
-
-  info(...args: unknown[]): void {
-    if (this.logLevel >= LEVEL.INFO) {
-      this.print(this.parseEntry('INFO', args))
-    }
-  }
-
-  debug(...args: unknown[]): void {
-    if (this.logLevel >= LEVEL.DEBUG) {
-      this.print(this.parseEntry('DEBUG', args))
-    }
-  }
-
-  trace(...args: unknown[]): void {
-    if (this.logLevel >= LEVEL.TRACE) {
-      this.print(this.parseEntry('TRACE', args))
-    }
-  }
-
-  metric(...args: unknown[]): void {
-    if (this.options.metricsEnabled) {
-      this.print(this.parseEntry('METRIC', args))
-    }
-  }
-
-  private parseEntry(level: LogLevel, args: unknown[]): LogEntry {
-    const parsed = parseLogArguments(args)
-    return {
-      ...parsed,
-      resolvedError: parsed.error
-        ? resolveError(parsed.error, this.cwd)
-        : undefined,
+  log(level: LogLevel, ...args: unknown[]) {
+    if (RANK[this.options.level] < RANK[level]) return
+    const time = this.options.getTime()
+    const { message, parameters } = resolveArgs(args, this.options.cwd)
+    const entry: LogEntry = {
+      time,
       level,
-      time: this.options.getTime(),
-      service: tagService(this.options.service, this.options.tag),
-      feature: this.options.feature,
-      module: this.options.module,
-      chain: parsed.chain ?? this.options.chain,
-      project: parsed.project ?? this.options.project,
-      source: this.options.source,
+      message,
+      parameters: { ...this.tags, ...parameters },
+    }
+    if (!this.options.filter(entry)) return
+    for (const transport of this.options.transports) {
+      try {
+        transport.log(entry)
+      } catch {}
     }
   }
 
-  private print(entry: LogEntry): void {
-    this.options.transports.forEach((transportOptions) => {
-      const output = transportOptions.formatter.format(entry)
-      switch (entry.level) {
-        case 'CRITICAL':
-        case 'ERROR':
-          transportOptions.transport.error(output)
-          break
-        case 'WARN':
-          transportOptions.transport.warn(output)
-          break
-        case 'INFO':
-        case 'METRIC':
-          transportOptions.transport.log(output)
-          break
-        case 'DEBUG':
-        case 'TRACE':
-          transportOptions.transport.debug(output)
-          break
-        case 'NONE':
-          break
-        default:
-          assertUnreachable(entry.level)
-      }
-    })
+  flush() {
+    for (const transport of this.options.transports) {
+      try {
+        transport.flush()
+      } catch {}
+    }
   }
+}
+
+function resolveArgs(
+  args: unknown[],
+  cwd: string,
+): {
+  message: string
+  parameters: Record<string, unknown>
+} {
+  let message: string | undefined
+  const values: unknown[] = []
+  let parameters: Record<string, unknown> = {}
+
+  for (const arg of args) {
+    if (typeof arg === 'string') {
+      if (message === undefined) {
+        message = arg
+      } else {
+        values.push(arg)
+      }
+    } else if (arg instanceof Error) {
+      if (!parameters.error) {
+        parameters.error = arg
+      } else {
+        values.push(arg)
+      }
+    } else if (typeof arg !== 'object' || arg === null || Array.isArray(arg)) {
+      values.push(arg)
+    } else {
+      parameters = { ...parameters, ...arg }
+    }
+  }
+
+  // place values in parameters
+  if (values.length === 1) {
+    parameters = { value: values[0], ...parameters }
+  } else if (values.length > 1) {
+    parameters = { values, ...parameters }
+  }
+
+  // optionally extract message from parameters
+  if (message === undefined && typeof parameters.message === 'string') {
+    message = parameters.message
+    // biome-ignore lint/performance/noDelete: desired behaviour
+    delete parameters.message
+  }
+
+  // transform error
+  if (parameters.error instanceof Error) {
+    parameters.error = resolveError(parameters.error, cwd)
+  }
+
+  return { message: message ?? '', parameters }
+}
+
+function resolveError(error: Error, cwd: string) {
+  return {
+    name: error.name,
+    error: error.message,
+    stack: ErrorStackParser.parse(error).map((frame) =>
+      formatFrame(frame, cwd),
+    ),
+  }
+}
+
+function formatFrame(frame: StackFrame, cwd: string): string {
+  const file = frame.fileName?.startsWith(cwd)
+    ? frame.fileName.slice(cwd.length)
+    : frame.fileName
+  const functionName = frame.functionName ? `${frame.functionName} ` : ''
+
+  const fileLocation =
+    frame.lineNumber !== undefined && frame.columnNumber !== undefined
+      ? `:${frame.lineNumber}:${frame.columnNumber}`
+      : ''
+  const location = file !== undefined ? `(${file}${fileLocation})` : ''
+
+  return `${functionName}${location}`
 }

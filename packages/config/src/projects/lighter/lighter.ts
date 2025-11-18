@@ -74,6 +74,11 @@ export const lighter: ScalingProject = {
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.STATE_DIFFS,
   },
+  chainConfig: {
+    name: 'lighter',
+    chainId: undefined,
+    apis: [],
+  },
   config: {
     escrows: [
       discovery.getEscrowDetails({
@@ -143,6 +148,11 @@ export const lighter: ScalingProject = {
         },
       },
     ],
+    activityConfig: {
+      type: 'day',
+      dataSource: 'Lighter API',
+      sinceTimestamp: UnixTime(1759363200), // 2025-10-01T00:00:00Z
+    },
   },
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
@@ -224,7 +234,7 @@ export const lighter: ScalingProject = {
     ],
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
-  upgradesAndGovernance: `Regular upgrades are initiated by the "network governor" and executed with a ${formatSeconds(upgradeDelay)} delay. The "security council" is allowed to reduce the upgrade delay to zero in case of an emergency. The security council does not currently satify the Stage 1 requirements. The network governor also retains the ability to add or remove validators.`,
+  upgradesAndGovernance: `Regular upgrades are initiated by the "network governor" and executed with a ${formatSeconds(upgradeDelay)} delay. The "security council" is allowed to reduce the upgrade delay to zero in case of an emergency. The security council does not currently satisfy the Stage 1 requirements. The network governor also retains the ability to add or remove validators.`,
   contracts: {
     addresses: {
       ...discovery.getDiscoveredContracts(),
@@ -235,6 +245,14 @@ export const lighter: ScalingProject = {
     ...discovery.getDiscoveredPermissions(),
   },
   milestones: [
+    {
+      title: 'Lighter experiences 4.5h of downtime',
+      url: 'https://x.com/Lighter_xyz/status/1977252708533911614',
+      date: '2025-10-10T00:00:00Z',
+      description:
+        'Lighter experiences 4.5 hours of downtime due to DB growth issues.',
+      type: 'incident',
+    },
     {
       title: 'Lighter launches public mainnet',
       url: 'https://x.com/Lighter_xyz/status/1973508660061180363',

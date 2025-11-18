@@ -122,6 +122,8 @@ export async function getChainConfig(
             retryStrategy: 'RELIABLE',
           })
           break
+        case 'lighter':
+          break
         default:
           assertUnreachable(api)
       }

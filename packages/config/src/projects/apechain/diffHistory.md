@@ -1,3 +1,156 @@
+Generated with discovered.json: 0x25dae8348bfd88343f0d7e930ec2b5ad9dbecd23
+
+# Diff at Wed, 05 Nov 2025 22:24:27 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@2369552edf4e3d745fb05d6aea795be46115ba13 block: 1760538265
+- current timestamp: 1762381395
+
+## Description
+
+New registered AWS TEE signers.
+
+## Watched changes
+
+```diff
+    contract EspressoNitroTEEVerifier (arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C) {
+    +++ description: Verifies attestations of an AWS Nitro TEE.
+      values.registeredSigners.4:
++        "arb1:0x6480ec7c5bA30bAa4c7F32fbB6eD5299117c5397"
+      values.registeredSigners.5:
++        "arb1:0x37aa7921D4a65d4D224d9C733E3E26c750A79D81"
+    }
+```
+
+Generated with discovered.json: 0xdf65af09d961fe678a04cd142ba73cc6f85937f8
+
+# Diff at Tue, 04 Nov 2025 11:32:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1760538265
+- current timestamp: 1760538265
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1760538265 (main branch discovery), not current.
+
+```diff
+    contract QuoteVerifier (arb1:0x69523d25E25e5c78d828Df90459b75F189D40Cf7) {
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (arb1:0x0d089B3fA00CBAD0a5098025519e9e4620622acF), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.
+      sourceHashes.0:
+-        "0x2ce21f391e19a4d7b963b79fced06804cb79a44416a35e9e11b229a9a6957b2e"
++        "0x17cf7a67e150ce8a604a58eacd58d5a05651d1783698d5782148bdaf167b3236"
+    }
+```
+
+Generated with discovered.json: 0x59797193bd1e4fa693846e318c9ce567fc8f877a
+
+# Diff at Wed, 15 Oct 2025 14:25:32 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@e6369d132630f14e783254ffb9e866e883328b9b block: 1750247636
+- current timestamp: 1760538265
+
+## Description
+
+Apechain now uses Espresso sequencer.
+
+## Watched changes
+
+```diff
+    EOA  (arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"arb1:0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C","description":"Add/remove batchPosters (Sequencers).","role":".batchPosterManager"}]
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C) {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here.
+      template:
+-        "orbitstack/SequencerInbox"
++        "orbitstack/SequencerInbox_Espresso"
+      sourceHashes.1:
+-        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
++        "0x724a7b4f0fa3a5ce6b00cc932e70b6b83a05d1a846a341cbf8477dc95f6c916c"
+      description:
+-        "A sequencer (registered in this contract) can submit transaction batches or commitments here."
++        "The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here."
+      values.$implementation:
+-        "arb1:0x0DD7dA1805d207511bb3Edabe9352B9E316048bE"
++        "arb1:0xCfAfB803EF1FEc576138Cebc79Ad41Aa6760C575"
+      values.$pastUpgrades.2:
++        ["2025-10-14T19:31:30.000Z","0xf2787805eb5c45529aacb68a446f51693fa2ffabbbe77585921d236a9b43d97a",["arb1:0xCfAfB803EF1FEc576138Cebc79Ad41Aa6760C575"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.batchPosterManager:
+-        "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c"
++        "arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B"
+      values.batchPosters.0:
+-        "arb1:0x845205C0F5109282954Bba4217aDA2a27Fdd89fF"
++        "arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B"
+      values.setIsBatchPosterCount:
+-        1
++        3
+      values.espressoTEEVerifier:
++        "arb1:0x4fd6D0995B3016726D5674992c1Ec1bDe0989cF5"
+      implementationNames.arb1:0x0DD7dA1805d207511bb3Edabe9352B9E316048bE:
+-        "SequencerInbox"
+      implementationNames.arb1:0xCfAfB803EF1FEc576138Cebc79Ad41Aa6760C575:
++        "SequencerInbox"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EspressoSGXTEEVerifier (arb1:0x05A16513BF74629b834878731f07b075Cca33f55)
+    +++ description: Verifies attestations of an Intel SGX TEE.
+```
+
+```diff
++   Status: CREATED
+    contract CertManager (arb1:0x27CA506AC6567Ef79d364b56cf4dE9C4141d803A)
+    +++ description: The CertManager is used for anchoring TEE attestation keys to a trusted Certificate Authority (CA).
+```
+
+```diff
++   Status: CREATED
+    contract EspressoTEEVerifier (arb1:0x4fd6D0995B3016726D5674992c1Ec1bDe0989cF5)
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
+```
+
+```diff
++   Status: CREATED
+    contract QuoteVerifier (arb1:0x69523d25E25e5c78d828Df90459b75F189D40Cf7)
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (arb1:0x0d089B3fA00CBAD0a5098025519e9e4620622acF), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.
+```
+
+```diff
++   Status: CREATED
+    contract EspressoNitroTEEVerifier (arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C)
+    +++ description: Verifies attestations of an AWS Nitro TEE.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/apechain/.flat/CertManager.sol    | 1978 +++++++++++++++
+ .../apechain/.flat/EspressoNitroTEEVerifier.sol    | 1973 +++++++++++++++
+ .../apechain/.flat/EspressoSGXTEEVerifier.sol      |  697 ++++++
+ .../apechain/.flat/EspressoTEEVerifier.sol         |  884 +++++++
+ .../src/projects/apechain/.flat/QuoteVerifier.sol  | 2597 ++++++++++++++++++++
+ .../SequencerInbox/SequencerInbox.sol              |  367 ++-
+ 6 files changed, 8410 insertions(+), 86 deletions(-)
+```
+
 Generated with discovered.json: 0x727fbcca366c826bbdb2faf4d7103617d06b7493
 
 # Diff at Fri, 26 Sep 2025 12:44:41 GMT:

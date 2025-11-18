@@ -142,7 +142,10 @@ export const linea: ScalingProject = {
         'https://linea.mirror.xyz/',
         'https://community.linea.build/',
       ],
-      rollupCodes: 'https://rollup.codes/linea',
+      other: [
+        'https://rollup.codes/linea',
+        'https://growthepie.com/chains/linea',
+      ],
     },
     liveness: {
       explanation:
@@ -559,12 +562,16 @@ export const linea: ScalingProject = {
             url: 'https://etherscan.io/address/0x07ddce60658a61dc1732cacf2220fce4a01c49b0#code#F37#L41',
           },
           {
-            title: 'PlonkVerifierMainnetFull.sol 1 (Proof Type 0)',
-            url: 'https://etherscan.io/address/0xED39C0C41A7651006953AB58Ecb3039363620995',
+            title: 'PlonkVerifierMainnetFull.sol (Proof Type 0)',
+            url: 'https://etherscan.io/address/0xA12E79C375FB0aaddfDA597BBe7b4e9A92e9b3De',
           },
           {
             title: 'PlonkVerifierMainnetFull.sol (Proof Type 1)',
-            url: 'https://etherscan.io/address/0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873',
+            url: 'https://etherscan.io/address/0x8421D1e3fb9A737A85dC7FF531c39f324FB2aC5d',
+          },
+          {
+            title: 'PlonkVerifierMainnetFull.sol (Proof Type 4)',
+            url: 'https://etherscan.io/address/0x8CAE7ff138e401384df88a408314e4E9a92f274E',
           },
         ],
       },

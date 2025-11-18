@@ -78,6 +78,7 @@ export async function getRecategorisedTvsChart({
         {
           forSummary: true,
           excludeAssociatedTokens: false,
+          includeRwaRestrictedTokens: false,
         },
       ),
       getSummedTvsValues(
@@ -86,6 +87,7 @@ export async function getRecategorisedTvsChart({
         {
           forSummary: true,
           excludeAssociatedTokens: false,
+          includeRwaRestrictedTokens: false,
         },
       ),
       getSummedTvsValues(
@@ -94,6 +96,7 @@ export async function getRecategorisedTvsChart({
         {
           forSummary: true,
           excludeAssociatedTokens: false,
+          includeRwaRestrictedTokens: false,
         },
       ),
     ])
