@@ -39,7 +39,6 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
           headers: () => {
             const headers = new Headers()
             headers.set('x-trpc-source', 'nextjs-react')
-            // In preview environment, send read-only token as CF_Authorization cookie
             const readOnlyToken = import.meta.env
               .VITE_TOKEN_BACKEND_READONLY_AUTH_TOKEN
             if (readOnlyToken) {
