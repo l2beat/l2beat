@@ -8,7 +8,7 @@ Generated with discovered.json: 0x96a97f8abaa52f1e8b5181b0a9a39115f840674a
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+New relayer, new multisig member.
 
 ## Watched changes
 
