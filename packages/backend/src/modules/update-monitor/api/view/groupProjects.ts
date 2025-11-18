@@ -69,8 +69,10 @@ export function groupProjects(
     {
       name: 'DA Projects',
       assignees: ['🐿', '🐱'],
-      predicate: (p) => (projectMap.get(p.name)?.isDaLayer ||  p.name === 'blobstream' ||  p.name === 'vector'),
-      
+      predicate: (p) =>
+        projectMap.get(p.name)?.isDaLayer ||
+        p.name === 'blobstream' ||
+        p.name === 'vector',
     },
     {
       name: 'Bridge Projects',
