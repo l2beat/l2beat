@@ -150,5 +150,28 @@ export const eclipse: ScalingProject = {
       },
     ],
   },
+  technology: {
+    dataAvailability: {
+      description: `
+## Data Availability
+
+Eclipse uses Celestia for data availability. Transaction data is posted to Celestia using the namespace 'eclipse'.
+
+**There is no fallback mechanism to Ethereum for data availability.** If Celestia becomes unavailable, the chain relies entirely on Celestia for transaction data recovery and cannot fall back to posting data on Ethereum.
+      `,
+      references: [
+        {
+          title: 'Eclipse Celestia Integration',
+          url: 'https://docs.eclipse.xyz/',
+        },
+      ],
+      risks: [
+        {
+          category: 'Funds can be frozen if',
+          text: 'Celestia becomes unavailable and transaction data cannot be retrieved.',
+        },
+      ],
+    },
+  },
   discoveryInfo: getDiscoveryInfo([discovery]),
 }

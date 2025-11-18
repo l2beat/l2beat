@@ -210,7 +210,29 @@ export const lightlink: ScalingProject = {
       ],
     },
   },
-  technology: {},
+  technology: {
+    dataAvailability: {
+      description: `
+## Data Availability
+
+LightLink uses Celestia for data availability. Transaction data is posted to Celestia, and block headers containing Celestia data pointers are posted to the CanonicalStateChain contract on Ethereum L1.
+
+**There is no fallback mechanism to Ethereum for data availability.** If Celestia becomes unavailable, the chain relies entirely on Celestia for transaction data recovery and cannot fall back to posting data on Ethereum.
+      `,
+      references: [
+        {
+          title: 'LightLink Celestia Integration',
+          url: 'https://docs.lightlink.io',
+        },
+      ],
+      risks: [
+        {
+          category: 'Funds can be frozen if',
+          text: 'Celestia becomes unavailable and transaction data cannot be retrieved.',
+        },
+      ],
+    },
+  },
   discoveryInfo: getDiscoveryInfo([discovery]),
 }
 

@@ -135,7 +135,8 @@ function CELESTIA_OFF_CHAIN(
     name: 'Data is posted to Celestia',
     description:
       'Transactions roots are posted onchain and the full data is posted on Celestia. ' +
-      additionalDescription,
+      additionalDescription +
+      ' If Celestia becomes unavailable, the sequencer falls back to posting full transaction data to Ethereum as calldata.',
     risks: [
       {
         category: 'Funds can be lost if',
@@ -209,7 +210,8 @@ function EIGENDA_OFF_CHAIN(
     name: 'Data is posted to EigenDA',
     description:
       'Transactions roots are posted onchain and the full data is posted on EigenDA. ' +
-      additionalDescription,
+      additionalDescription +
+      ' If EigenDA becomes unavailable, the sequencer falls back to posting full transaction data to Ethereum as blobs.',
     risks: [
       {
         category: 'Funds can be lost if',
