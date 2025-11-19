@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
-import { CodeView } from './CodeView'
-import { useCodeSettings } from './code/hooks/useCodeSettings'
-import { EditorFileTabs } from './EditorFileTabs'
-import type { EditorCallbacks } from './editor'
-import { type EditorFile, type Range, useCodeStore } from './store'
+import { CodeView } from '../code/CodeView'
+import type { EditorCallbacks } from '../code/editor'
+import { useCodeSettings } from '../code/hooks/useCodeSettings'
+import { LineSelector } from '../code/plugins/lineSelector'
+import { RangeHighlightPlugin } from '../code/plugins/range'
+import { EditorFileTabs } from '../components/EditorFileTabs'
+import { type EditorFile, type Range, useCodeStore } from '../store'
 
-type Props = {
+type EditorViewProps = {
   editorId: string
   callbacks?: EditorCallbacks
   files: EditorFile[]
@@ -15,9 +17,14 @@ type Props = {
     index?: number
   }
   disableTabs?: boolean
+  features?: {
+    lineSelection: boolean
+    rangeHighlight: boolean
+  }
 }
 
-export function EditorView(props: Props) {
+export function EditorView(props: EditorViewProps) {
+  const { features = { lineSelection: false, rangeHighlight: true } } = props
   const [dirtyFiles, setDirtyFiles] = useState<Record<string, boolean>>({})
   const [activeFileIndex, setActiveFileIndex] = useState(0)
 
@@ -28,13 +35,14 @@ export function EditorView(props: Props) {
     setDirtyFiles((prev) => ({ ...prev, [fileId]: dirty }))
   }
 
-  editor?.onLoad(() => {
-    editor.lineSelector.setSelection(initialSelection)
-    editor.lineSelector.scrollToSelection()
-  })
-
   useEffect(() => {
-    return editor?.lineSelector.onSelectionChange((selection) => {
+    editor?.onLoad(() => {
+      const plugin = editor.getPlugin(LineSelector)
+      plugin?.setSelection(initialSelection)
+      plugin?.scrollToSelection()
+    })
+
+    return editor?.getPlugin(LineSelector)?.onSelectionChange((selection) => {
       setSelection(selection)
     })
   }, [editor])
@@ -53,7 +61,7 @@ export function EditorView(props: Props) {
           })
 
           editor.onChange((content) => {
-            editor.lineSelector.scrollToSelection()
+            editor.getPlugin(LineSelector)?.scrollToSelection()
             props.callbacks?.onChange?.(content)
             setDirtyFile(activeFile.id, content !== activeFile.content)
           })
@@ -95,7 +103,9 @@ export function EditorView(props: Props) {
 
       const { startOffset, length } = props.range.data
       resetRange()
-      editor.showRange(startOffset, length)
+      editor
+        .getPlugin(RangeHighlightPlugin)
+        ?.showRange(startOffset, length, { highlight: true })
     }
   }, [editor, props.range, activeFileIndex])
 
@@ -111,7 +121,7 @@ export function EditorView(props: Props) {
           }))}
         />
       )}
-      <CodeView editorKey={props.editorId} />
+      <CodeView editorKey={props.editorId} features={features} />
     </div>
   )
 }

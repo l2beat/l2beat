@@ -14,6 +14,7 @@ import { IconTick } from '../../../icons/IconTick'
 import { useCodeStore } from '../store'
 import { DiffEditor } from './diffEditor'
 import { useDiffEditorSettings } from './hooks/useDiffEditorSettings'
+import { LineSelector } from './plugins/lineSelector'
 import { getInlineDiff } from './utils/getInlineDiff'
 
 export interface DiffViewProps {
@@ -58,6 +59,9 @@ export function DiffView(props: DiffViewProps) {
     }
 
     const editor = new DiffEditor(monacoEl.current)
+
+    editor.usePlugin(LineSelector)
+
     setDiffEditor(editorKey, editor)
 
     function onResize() {
@@ -74,7 +78,7 @@ export function DiffView(props: DiffViewProps) {
   }, [editor])
 
   useEffect(() => {
-    return editor?.lineSelector.onSelectionChange((selection) => {
+    return editor?.getPlugin(LineSelector)?.onSelectionChange((selection) => {
       setSelection(selection)
     })
   }, [editor])
@@ -84,7 +88,7 @@ export function DiffView(props: DiffViewProps) {
   }, [editor, splitLeft, splitRight])
 
   useEffect(() => {
-    editor?.lineSelector.setSelection(initialSelection)
+    editor?.getPlugin(LineSelector)?.setSelection(initialSelection)
   }, [initialSelection, editor])
 
   useEffect(() => {
@@ -93,7 +97,7 @@ export function DiffView(props: DiffViewProps) {
 
   editor?.onComputedDiff(setDiff)
   editor?.onComputedDiff(() => {
-    editor?.lineSelector.scrollToSelection()
+    editor?.getPlugin(LineSelector)?.scrollToSelection()
   })
 
   return (

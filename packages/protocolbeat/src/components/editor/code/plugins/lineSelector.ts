@@ -1,4 +1,6 @@
 import * as monaco from 'monaco-editor'
+import type { ToMonaco } from '../../monacoInit'
+import type { EditorPlugin } from '../../pluginStore'
 
 export interface LineSelection {
   startLine: number
@@ -6,14 +8,13 @@ export interface LineSelection {
   anchorLine: number
 }
 
-export class LineSelector {
-  private editor: monaco.editor.IStandaloneCodeEditor
+type LineSelectionListener = (selection: LineSelection | null) => void
 
+type ForType = 'code'
+export class LineSelector implements EditorPlugin<ForType> {
   private selectedLines: LineSelection | null = null
   private decorationIds: string[] = []
-  private selectionChangeListeners: Array<
-    (selection: LineSelection | null) => void
-  > = []
+  private selectionChangeListeners: LineSelectionListener[] = []
 
   static encode(selection: LineSelection): string {
     if (selection.startLine === selection.endLine) {
@@ -36,12 +37,15 @@ export class LineSelector {
     return { startLine, endLine, anchorLine: endLine }
   }
 
-  constructor(editor: monaco.editor.IStandaloneCodeEditor) {
-    this.editor = editor
+  constructor(readonly editor: ToMonaco<'code'>) {}
+
+  activate() {
+    this.setupLineSelectionHandlers()
   }
 
-  init() {
-    this.setupLineSelectionHandlers()
+  dispose() {
+    this.decorationIds = []
+    this.selectionChangeListeners = []
   }
 
   onSelectionChange(listener: (selection: LineSelection | null) => void) {
@@ -161,10 +165,5 @@ export class LineSelector {
     }
 
     this.decorationIds = this.editor.deltaDecorations([], decorations)
-  }
-
-  dispose() {
-    this.decorationIds = []
-    this.selectionChangeListeners = []
   }
 }

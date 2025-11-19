@@ -1,13 +1,18 @@
 import { useEffect, useRef } from 'react'
+import { useCodeStore } from '../store'
 import { Editor } from './editor'
-import { useCodeStore } from './store'
+import { LineSelector } from './plugins/lineSelector'
+import { RangeHighlightPlugin } from './plugins/range'
 
-export function CodeView({
-  editorKey = 'default',
-}: {
+type CodeViewProps = {
   editorKey?: string
-  readOnly?: boolean
-}) {
+  features: {
+    lineSelection: boolean
+    rangeHighlight: boolean
+  }
+}
+
+export function CodeView({ features, editorKey = 'default' }: CodeViewProps) {
   const monacoEl = useRef<HTMLDivElement>(null)
   const resizeObserverRef = useRef<ResizeObserver | null>(null)
   const { setEditor, getEditor, removeEditor } = useCodeStore()
@@ -26,6 +31,15 @@ export function CodeView({
     }
 
     const editor = new Editor(element)
+
+    if (features.lineSelection) {
+      editor.usePlugin(LineSelector)
+    }
+
+    if (features.rangeHighlight) {
+      editor.usePlugin(RangeHighlightPlugin)
+    }
+
     setEditor(editorKey, editor)
 
     const resizeObserver = new ResizeObserver(() => {
