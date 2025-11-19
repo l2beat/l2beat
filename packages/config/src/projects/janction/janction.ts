@@ -1,0 +1,30 @@
+import { UnixTime } from '@l2beat/shared-pure'
+import type { ScalingProject } from '../../internalTypes'
+import { upcomingL2 } from '../../templates/upcoming'
+
+export const jaction: ScalingProject = upcomingL2({
+  id: 'jaction',
+  capability: 'universal',
+  addedAt: UnixTime(1763561938),
+  display: {
+    name: 'Janction',
+    slug: 'janction',
+    description:
+      'Janction is the first Layer2 to provide verifiable, synergic and scalable AI service.',
+    purposes: ['AI'],
+    stacks: ['OP Stack'],
+    links: {
+      websites: ['https://janction.ai'],
+      repositories: ['https://github.com/Janction-R-D'],
+      documentation: ['https://docs.janction.ai/'],
+      explorers: ['http://jctscan.com/'],
+      socialMedia: [
+        'https://t.me/jasmyofficial',
+        'https://x.com/JANCTION_Global',
+      ],
+    },
+  },
+  proofSystem: {
+    type: 'Optimistic',
+  },
+})
