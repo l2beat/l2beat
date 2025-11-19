@@ -37,6 +37,7 @@ export const onChainProjects: string[] = [
   'gateway',
   'hibachi',
   'opcm16',
+  'aztecnetwork',
   ...configReader.getProjectsInGroup('tokens'),
 ]
 
