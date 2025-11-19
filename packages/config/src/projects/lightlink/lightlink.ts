@@ -220,7 +220,7 @@ There is no automatic fallback mechanism to Ethereum for data availability. If C
       references: [
         {
           title: 'LightLink Celestia Integration',
-          url: 'https://docs.lightlink.io',
+          url: 'https://docs.lightlink.io/lightlink-protocol/achitecture-and-design/lightlink-protocol-deep-dive#id-2-data-availability-layer',
         },
       ],
       risks: [

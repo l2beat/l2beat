@@ -160,7 +160,7 @@ There is no automatic fallback mechanism to Ethereum for data availability. If C
       references: [
         {
           title: 'Eclipse Celestia Integration',
-          url: 'https://docs.eclipse.xyz/',
+          url: 'https://docs.eclipse.xyz/architecture/eclipse-architecture/modular-components-of-eclipse#data-availability-celestia',
         },
       ],
       risks: [
