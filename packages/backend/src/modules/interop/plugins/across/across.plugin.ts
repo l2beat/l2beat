@@ -50,13 +50,13 @@ export class AcrossPlugin implements InteropPlugin {
     const networks = this.configs.get(AcrossConfig)
     if (!networks) return
 
-    const network = networks.find((n) => n.chain === input.ctx.chain)
+    const network = networks.find((n) => n.chain === input.chain)
     if (!network) return
 
     const fundsDeposited = parseFundsDeposited(input.log, [network.spokePool])
     if (fundsDeposited) {
       return [
-        AcrossFundsDeposited.create(input.ctx, {
+        AcrossFundsDeposited.create(input, {
           $dstChain: findChain(
             networks,
             (x) => x.chainId,
@@ -74,7 +74,7 @@ export class AcrossPlugin implements InteropPlugin {
     const filledRelay = parseFilledRelay(input.log, [network.spokePool])
     if (filledRelay) {
       return [
-        AcrossFilledRelay.create(input.ctx, {
+        AcrossFilledRelay.create(input, {
           $srcChain: findChain(
             networks,
             (x) => x.chainId,
@@ -92,7 +92,7 @@ export class AcrossPlugin implements InteropPlugin {
     const filledV3Relay = parseFilledV3Relay(input.log, [network.spokePool])
     if (filledV3Relay) {
       return [
-        AcrossFilledRelay.create(input.ctx, {
+        AcrossFilledRelay.create(input, {
           $srcChain: findChain(
             networks,
             (x) => x.chainId,

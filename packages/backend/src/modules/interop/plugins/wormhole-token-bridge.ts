@@ -49,7 +49,7 @@ export class WormholeTokenBridgePlugin implements InteropPlugin {
     const transfer = nextLog && parseTransfer(nextLog, null)
 
     return [
-      TransferRedeemed.create(input.ctx, {
+      TransferRedeemed.create(input, {
         sequence: parsed.sequence,
         $srcChain: findChain(
           wormholeNetworks,
