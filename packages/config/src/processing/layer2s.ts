@@ -167,6 +167,7 @@ import { river } from '../projects/river/river'
 import { roninNetwork } from '../projects/ronin-network/ronin-network'
 import { rss3 } from '../projects/rss3/rss3'
 import { rufus } from '../projects/rufus/rufus'
+import { sandchain } from '../projects/sandchain/sandchain'
 import { scroll } from '../projects/scroll/scroll'
 import { sentient } from '../projects/sentient/sentient'
 import { settlus } from '../projects/settlus/settlus'
@@ -397,6 +398,7 @@ export const layer2s: ScalingProject[] = [
   river,
   rss3,
   rufus,
+  sandchain,
   scroll,
   settlus,
   sentient,
