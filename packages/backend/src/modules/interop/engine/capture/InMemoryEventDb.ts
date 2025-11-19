@@ -1,4 +1,5 @@
-import type { UnixTime } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
+import BTree from 'sorted-btree'
 import type {
   InteropEvent,
   InteropEventDb,
@@ -97,6 +98,7 @@ export class InMemoryEventDb implements InteropEventDb {
     if (!index) {
       const fields: string[] = []
       const ctxFields: string[] = []
+
       if (query.ctx?.txHash || query.sameTxAfter || query.sameTxBefore) {
         ctxFields.push('txHash')
       } else {
@@ -110,7 +112,12 @@ export class InMemoryEventDb implements InteropEventDb {
           }
         }
       }
-      index = new EventIndex(type.type, fields, ctxFields)
+      index = new EventIndex(
+        type.type,
+        fields,
+        ctxFields,
+        !!query.approximateValue,
+      )
       this.indices.set(indexKey, index)
       for (const event of this.getEvents(type.type)) {
         index.addEvent(event)
@@ -125,6 +132,7 @@ function getIndexKey(
   query: InteropEventQuery<unknown>,
 ) {
   let indexKey = type.type + '#'
+
   if (query.ctx?.txHash || query.sameTxAfter || query.sameTxBefore) {
     return indexKey + '#txHash#'
   }
@@ -147,11 +155,13 @@ function getIndexKey(
 class EventIndex {
   private buckets = new Map<string, InteropEvent[]>()
   private eventKeys = new Map<string, string>()
+  private trees = new Map<string, BTree<bigint, InteropEvent[]>>()
 
   constructor(
     private eventType: string,
     private fields: string[],
     private ctxFields: string[],
+    private isApproximate: boolean,
   ) {}
 
   findEvents(query: InteropEventQuery<unknown>): InteropEvent[] {
@@ -173,11 +183,39 @@ class EventIndex {
         eventKey += value + ','
       }
     }
+
+    if (this.isApproximate && query.approximateValue) {
+      eventKey += 'approximate'
+      const tree = this.trees.get(eventKey)
+      if (!tree) {
+        return []
+      }
+
+      // @ts-ignore
+      const value = event.args[query.approximateValue.key] as bigint
+      // Convert tolerance (0-1) to BigInt by scaling by 10000
+      const toleranceScaled = BigInt(
+        Math.floor(query.approximateValue.tolerance * 10000),
+      )
+      const min = value - toleranceScaled
+      const max = value + toleranceScaled
+
+      tree.forRange(min, max, true, (_, events) => {
+        for (const e of events) {
+          // there should be only one in range
+          if (matchesQuery(e, query)) {
+            return [e]
+          }
+        }
+      })
+      return []
+    }
+
     const array = this.buckets.get(eventKey) ?? []
     return array.filter((e) => matchesQuery(e, query))
   }
 
-  addEvent(event: InteropEvent) {
+  addEvent(event: InteropEvent, approximateValue: bigint | undefined) {
     if (event.type !== this.eventType) {
       return
     }
@@ -189,28 +227,64 @@ class EventIndex {
     for (const field of this.ctxFields) {
       eventKey += (event.ctx as unknown as Record<string, unknown>)[field] + ','
     }
+
+    if (this.isApproximate && approximateValue) {
+      eventKey += 'approximate'
+      const tree = this.trees.get(eventKey)
+
+      if (!tree) {
+        this.trees.set(eventKey, new BTree<bigint, InteropEvent[]>())
+      } else {
+        const current = tree.get(approximateValue)
+        assert(current)
+        tree.set(approximateValue, [...current, event])
+      }
+    } else {
+      const array = this.buckets.get(eventKey) ?? []
+      array.push(event)
+      this.buckets.set(eventKey, array)
+    }
+
     this.eventKeys.set(event.eventId, eventKey)
-    const array = this.buckets.get(eventKey) ?? []
-    array.push(event)
-    this.buckets.set(eventKey, array)
   }
 
-  removeEvent(eventId: string) {
+  removeEvent(eventId: string, approximateValue: bigint | undefined) {
     const key = this.eventKeys.get(eventId)
     if (!key) {
       return
     }
     this.eventKeys.delete(eventId)
-    const array = this.buckets.get(key)
-    if (!array) {
-      return
-    }
-    const index = array.findIndex((x) => x.eventId === eventId)
-    if (index !== -1) {
-      array.splice(index, 1)
-    }
-    if (array.length === 0) {
-      this.buckets.delete(key)
+
+    if (this.isApproximate && approximateValue) {
+      const tree = this.trees.get(key)
+      if (!tree) return
+
+      const leaf = tree.get(approximateValue)
+      if (!leaf) return
+
+      const index = leaf.findIndex((l) => l.eventId === eventId)
+      if (index !== -1) {
+        if (index !== leaf.length - 1) {
+          leaf[index] = leaf[leaf.length - 1]
+        }
+        leaf.pop()
+
+        if (leaf.length === 0) {
+          tree.delete(approximateValue)
+        }
+      }
+    } else {
+      const array = this.buckets.get(key)
+      if (!array) {
+        return
+      }
+      const index = array.findIndex((x) => x.eventId === eventId)
+      if (index !== -1) {
+        array.splice(index, 1)
+      }
+      if (array.length === 0) {
+        this.buckets.delete(key)
+      }
     }
   }
 }

@@ -167,6 +167,7 @@ export type InteropEventQuery<T> = Partial<T> & {
   ctx?: Partial<InteropEventContext>
   sameTxBefore?: InteropEvent
   sameTxAfter?: InteropEvent
+  approximateValue?: { key: string; value: bigint; tolerance: number }
 }
 
 export interface InteropEventDb {
