@@ -47,10 +47,6 @@ export class MonacoCodeEditor<T extends EditorType> {
       ) as ToMonaco<T>
     }
   }
-
-  getEditor() {
-    return this.editor
-  }
 }
 
 function init() {
