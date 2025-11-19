@@ -1,3 +1,8 @@
+/*
+  WARNING:
+  this class is copypasted in other modules,
+  when doing updates remember to update them all.
+ */
 import {
   formatEcsLog,
   type LogEntry,
