@@ -54,7 +54,7 @@ export class StarknetClient extends ClientCore implements BlockClient {
         hash: t.transaction_hash,
         from: t.sender_address,
         type: t.type,
-        data: t.calldata?.join(','),
+        data: t.calldata,
       })),
       logsBloom: 'UNSUPPORTED',
     }
