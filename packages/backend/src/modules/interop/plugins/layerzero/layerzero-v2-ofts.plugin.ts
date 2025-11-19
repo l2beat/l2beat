@@ -63,7 +63,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
     const networks = this.configs.get(LayerZeroV2Config)
     if (!networks) return
 
-    const network = networks.find((x) => x.chain === input.ctx.chain)
+    const network = networks.find((x) => x.chain === input.chain)
     if (!network) return
     assert(network.endpointV2, 'We capture only chains with endpoints')
 
@@ -129,7 +129,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
             }
 
             return [
-              OFTSentPacketSent.create(input.ctx, {
+              OFTSentPacketSent.create(input, {
                 $dstChain,
                 guid,
                 amountSentLD: normalized.amountSentLD,
@@ -174,7 +174,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
           )
           const transfer = previousLog && parseTransfer(previousLog, null)
           return [
-            OFTReceivedPacketDelivered.create(input.ctx, {
+            OFTReceivedPacketDelivered.create(input, {
               $srcChain,
               guid,
               amountReceivedLD: oftReceived.amountReceivedLD,

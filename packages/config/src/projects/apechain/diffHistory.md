@@ -1,3 +1,25 @@
+Generated with discovered.json: 0x9ff98123a5eb3403d44754ecd2eb4e54ab589a91
+
+# Diff at Tue, 18 Nov 2025 11:39:34 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c3835bcdcb7588e6060ac6cbd4b3d2d9049082ba block: 1762381395
+- current timestamp: 1763465887
+
+## Description
+
+New registered AWS TEE signer.
+
+## Watched changes
+
+```diff
+    contract EspressoNitroTEEVerifier (arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C) {
+    +++ description: Verifies attestations of an AWS Nitro TEE.
+      values.registeredSigners.6:
++        "arb1:0xfbf3197115695CaB806CDAe742470374a5c18d24"
+    }
+```
+
 Generated with discovered.json: 0x25dae8348bfd88343f0d7e930ec2b5ad9dbecd23
 
 # Diff at Wed, 05 Nov 2025 22:24:27 GMT:

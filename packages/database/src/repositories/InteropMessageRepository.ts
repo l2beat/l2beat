@@ -1,5 +1,5 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import { type Insertable, type Selectable, sql } from 'kysely'
+import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropMessage } from '../kysely/generated/types'
 
@@ -73,9 +73,8 @@ export function toRow(
 export interface InteropMessageStatsRecord {
   type: string
   count: number
+  avgDuration: number
   knownAppCount: number
-  knownApps: string[]
-  medianDuration: number
 }
 
 export interface InteropMessageDetailedStatsRecord {
@@ -83,7 +82,7 @@ export interface InteropMessageDetailedStatsRecord {
   srcChain: string
   dstChain: string
   count: number
-  medianDuration: number
+  avgDuration: number
 }
 
 export class InteropMessageRepository extends BaseRepository {
@@ -134,9 +133,7 @@ export class InteropMessageRepository extends BaseRepository {
       .select((eb) => [
         'type',
         eb.fn.countAll().as('count'),
-        sql<number>`percentile_cont(0.5) within group (order by duration)`.as(
-          'medianDuration',
-        ),
+        eb.fn.avg('duration').as('avgDuration'),
         eb.fn
           .count(
             eb
@@ -152,11 +149,6 @@ export class InteropMessageRepository extends BaseRepository {
               .end(),
           )
           .as('knownAppCount'),
-        sql<
-          string[]
-        >`array_agg(distinct app) filter (where app != '' and app != 'unknown' and app is not null)`.as(
-          'knownApps',
-        ),
       ])
       .groupBy('type')
       .execute()
@@ -164,9 +156,8 @@ export class InteropMessageRepository extends BaseRepository {
     return overallStats.map((overall) => ({
       type: overall.type,
       count: Number(overall.count),
+      avgDuration: Number(overall.avgDuration),
       knownAppCount: Number(overall.knownAppCount),
-      knownApps: overall.knownApps ?? [],
-      medianDuration: Number(overall.medianDuration),
     }))
   }
 
@@ -194,9 +185,7 @@ export class InteropMessageRepository extends BaseRepository {
         'srcChain',
         'dstChain',
         eb.fn.countAll().as('count'),
-        sql<number>`percentile_cont(0.5) within group (order by duration)`.as(
-          'medianDuration',
-        ),
+        eb.fn.avg('duration').as('avgDuration'),
       ])
       .where('srcChain', 'is not', null)
       .where('dstChain', 'is not', null)
@@ -210,7 +199,7 @@ export class InteropMessageRepository extends BaseRepository {
         srcChain: chain.srcChain,
         dstChain: chain.dstChain,
         count: Number(chain.count),
-        medianDuration: Number(chain.medianDuration),
+        avgDuration: Number(chain.avgDuration),
       }
     })
   }

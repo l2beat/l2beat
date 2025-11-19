@@ -1,13 +1,14 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 import type {
   InteropEvent,
+  InteropEventContext,
   InteropEventDb,
   InteropEventQuery,
   InteropEventType,
 } from '../../plugins/types'
 
 export class InMemoryEventDb implements InteropEventDb {
-  private indices = new Map<string, EventIndex>()
+  private indices = new Map<number, EventIndex>()
   private eventsByType = new Map<string, InteropEvent[]>()
   private count = 0
 
@@ -45,12 +46,12 @@ export class InMemoryEventDb implements InteropEventDb {
   }
 
   private removeWhere(predicate: (event: InteropEvent) => boolean) {
-    const removedIds: string[] = []
+    const removed: InteropEvent[] = []
     for (const array of this.eventsByType.values()) {
       for (let i = 0; i < array.length; i++) {
         if (predicate(array[i])) {
           this.count -= 1
-          removedIds.push(array[i].eventId)
+          removed.push(array[i])
           if (i === array.length - 1) {
             array.pop()
           } else {
@@ -62,8 +63,8 @@ export class InMemoryEventDb implements InteropEventDb {
       }
     }
     for (const index of this.indices.values()) {
-      for (const eventId of removedIds) {
-        index.removeEvent(eventId)
+      for (const event of removed) {
+        index.removeEvent(event)
       }
     }
   }
@@ -92,18 +93,18 @@ export class InMemoryEventDb implements InteropEventDb {
   }
 
   private getIndex<T>(type: InteropEventType<T>, query: InteropEventQuery<T>) {
-    const indexKey = getIndexKey(type, query)
-    let index = this.indices.get(indexKey)
+    const queryHash = hashQuery(type, query)
+    let index = this.indices.get(queryHash)
     if (!index) {
       const fields: string[] = []
-      const ctxFields: string[] = []
+      const ctxFields: (keyof InteropEventContext)[] = []
       if (query.ctx?.txHash || query.sameTxAfter || query.sameTxBefore) {
         ctxFields.push('txHash')
       } else {
         for (const key in query) {
           if (key === 'ctx') {
             for (const ctxKey in query[key]) {
-              ctxFields.push(ctxKey)
+              ctxFields.push(ctxKey as keyof InteropEventContext)
             }
           } else {
             fields.push(key)
@@ -111,7 +112,7 @@ export class InMemoryEventDb implements InteropEventDb {
         }
       }
       index = new EventIndex(type.type, fields, ctxFields)
-      this.indices.set(indexKey, index)
+      this.indices.set(queryHash, index)
       for (const event of this.getEvents(type.type)) {
         index.addEvent(event)
       }
@@ -120,48 +121,101 @@ export class InMemoryEventDb implements InteropEventDb {
   }
 }
 
-function getIndexKey(
+function hashQuery(
   type: InteropEventType<unknown>,
   query: InteropEventQuery<unknown>,
-) {
-  let indexKey = type.type + '#'
+): number {
+  let hash = FNV_OFFSET_BASIS
+  hash = updateHash(hash, type.type)
+  hash = updateHash(hash, '#')
   if (query.ctx?.txHash || query.sameTxAfter || query.sameTxBefore) {
-    return indexKey + '#txHash#'
+    hash = updateHash(hash, '#txHash#')
+    return hash
   }
   for (const key in query) {
     if (key !== 'ctx') {
-      indexKey += key + '#'
+      hash = updateHash(hash, key)
+      hash = updateHash(hash, '#')
     }
   }
-  indexKey += '#'
+  hash = updateHash(hash, '#')
   if (query.ctx) {
     for (const key in query.ctx) {
       if (key !== 'ctx') {
-        indexKey += key + '#'
+        hash = updateHash(hash, key)
+        hash = updateHash(hash, '#')
       }
     }
   }
-  return indexKey
+  return hash
 }
 
 class EventIndex {
-  private buckets = new Map<string, InteropEvent[]>()
-  private eventKeys = new Map<string, string>()
+  private buckets = new Map<number, InteropEvent[]>()
 
   constructor(
     private eventType: string,
     private fields: string[],
-    private ctxFields: string[],
+    private ctxFields: (keyof InteropEventContext)[],
   ) {}
 
   findEvents(query: InteropEventQuery<unknown>): InteropEvent[] {
-    let eventKey = ''
+    const hash = this.hashQuery(query)
+    const array = this.buckets.get(hash) ?? []
+    return array.filter((e) => matchesQuery(e, query))
+  }
+
+  addEvent(event: InteropEvent) {
+    if (event.type !== this.eventType) {
+      return
+    }
+    const hash = this.hashEvent(event)
+    const array = this.buckets.get(hash) ?? []
+    array.push(event)
+    this.buckets.set(hash, array)
+  }
+
+  removeEvent(event: InteropEvent) {
+    const hash = this.hashEvent(event)
+    const array = this.buckets.get(hash)
+    if (!array) {
+      return
+    }
+    const index = array.findIndex((x) => x.eventId === event.eventId)
+    if (index !== -1) {
+      array.splice(index, 1)
+    }
+    if (array.length === 0) {
+      this.buckets.delete(hash)
+    }
+  }
+
+  private hashEvent(event: InteropEvent) {
+    const args = event.args as Record<string, unknown>
+    let hash = FNV_OFFSET_BASIS
     // biome-ignore lint/style/useForOf: speed
     for (let i = 0; i < this.fields.length; i++) {
-      eventKey += (query as Record<string, unknown>)[this.fields[i]] + ','
+      hash = updateHash(hash, `${args[this.fields[i]]}`)
+      hash = updateHash(hash, '#')
+    }
+    // biome-ignore lint/style/useForOf: speed
+    for (let i = 0; i < this.ctxFields.length; i++) {
+      hash = updateHash(hash, `${event.ctx[this.ctxFields[i]]}`)
+      hash = updateHash(hash, '#')
+    }
+    return hash
+  }
+
+  private hashQuery(query: InteropEventQuery<unknown>) {
+    const args = query as Record<string, unknown>
+    let hash = FNV_OFFSET_BASIS
+    // biome-ignore lint/style/useForOf: speed
+    for (let i = 0; i < this.fields.length; i++) {
+      hash = updateHash(hash, `${args[this.fields[i]]}`)
+      hash = updateHash(hash, '#')
     }
     if (this.ctxFields.length > 0) {
-      const ctx = (query.ctx ?? {}) as Record<string, unknown>
+      const ctx = query.ctx ?? {}
       // biome-ignore lint/style/useForOf: speed
       for (let i = 0; i < this.ctxFields.length; i++) {
         const key = this.ctxFields[i]
@@ -170,48 +224,11 @@ class EventIndex {
           value =
             query.sameTxBefore?.ctx.txHash ?? query.sameTxAfter?.ctx.txHash
         }
-        eventKey += value + ','
+        hash = updateHash(hash, `${value}`)
+        hash = updateHash(hash, '#')
       }
     }
-    const array = this.buckets.get(eventKey) ?? []
-    return array.filter((e) => matchesQuery(e, query))
-  }
-
-  addEvent(event: InteropEvent) {
-    if (event.type !== this.eventType) {
-      return
-    }
-
-    let eventKey = ''
-    for (const field of this.fields) {
-      eventKey += (event.args as Record<string, unknown>)[field] + ','
-    }
-    for (const field of this.ctxFields) {
-      eventKey += (event.ctx as unknown as Record<string, unknown>)[field] + ','
-    }
-    this.eventKeys.set(event.eventId, eventKey)
-    const array = this.buckets.get(eventKey) ?? []
-    array.push(event)
-    this.buckets.set(eventKey, array)
-  }
-
-  removeEvent(eventId: string) {
-    const key = this.eventKeys.get(eventId)
-    if (!key) {
-      return
-    }
-    this.eventKeys.delete(eventId)
-    const array = this.buckets.get(key)
-    if (!array) {
-      return
-    }
-    const index = array.findIndex((x) => x.eventId === eventId)
-    if (index !== -1) {
-      array.splice(index, 1)
-    }
-    if (array.length === 0) {
-      this.buckets.delete(key)
-    }
+    return hash
   }
 }
 
@@ -253,4 +270,14 @@ function matchesQuery<T>(
     }
   }
   return true
+}
+
+const FNV_OFFSET_BASIS = 0x811c9dc5
+const FNV_PRIME = 0x01000193
+function updateHash(hash: number, value: string) {
+  for (let i = 0; i < value.length; i++) {
+    hash ^= value.charCodeAt(i)
+    hash = Math.imul(hash, FNV_PRIME)
+  }
+  return hash >>> 0
 }

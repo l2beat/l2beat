@@ -4,8 +4,8 @@ import { getCode } from '../../../api/api'
 import type { ApiCodeResponse } from '../../../api/types'
 import { ActionNeededState } from '../../../components/ActionNeededState'
 import { ErrorState } from '../../../components/ErrorState'
-import { EditorView } from '../../../components/editor/EditorView'
 import { type EditorFile, useCodeStore } from '../../../components/editor/store'
+import { EditorView } from '../../../components/editor/views/EditorView'
 import { LoadingState } from '../../../components/LoadingState'
 import { IS_READONLY } from '../../../config/readonly'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
@@ -85,6 +85,7 @@ export function CodePanel() {
         files={files}
         range={rangeInfo}
         initialFileIndex={hasProxy ? 1 : 0}
+        features={{ lineSelection: false, rangeHighlight: true }}
       />
     </div>
   )
