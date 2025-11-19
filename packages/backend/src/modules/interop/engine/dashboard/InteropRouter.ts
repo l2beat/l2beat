@@ -1,4 +1,5 @@
 import Router from '@koa/router'
+import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
@@ -13,15 +14,43 @@ export function createInteropRouter(
   db: Database,
   config: InteropFeatureConfig,
   processors: InteropBlockProcessor[],
+  logger: Logger,
 ) {
   const router = new Router()
 
   router.get('/interop', async (ctx) => {
+    const routerStart = performance.now()
+
+    const eventsStart = performance.now()
     const events = await db.interopEvent.getStats()
+    const eventsTime = performance.now() - eventsStart
+
+    const messagesStart = performance.now()
     const messages = await getMessagesStats(db)
+    const messagesTime = performance.now() - messagesStart
+
+    const transfersStart = performance.now()
     const transfers = await getTransfersStats(db)
+    const transfersTime = performance.now() - transfersStart
+
+    const statusStart = performance.now()
     const status = getProcessorsStatus(processors)
+    const statusTime = performance.now() - statusStart
+
+    const missingTokensStart = performance.now()
     const missingTokens = await db.interopTransfer.getMissingTokensInfo()
+    const missingTokensTime = performance.now() - missingTokensStart
+
+    const routerTime = performance.now() - routerStart
+
+    logger.info('Interop dashboard timings', {
+      events: `${eventsTime.toFixed(2)}ms`,
+      messages: `${messagesTime.toFixed(2)}ms`,
+      transfers: `${transfersTime.toFixed(2)}ms`,
+      status: `${statusTime.toFixed(2)}ms`,
+      missingTokens: `${missingTokensTime.toFixed(2)}ms`,
+      total: `${routerTime.toFixed(2)}ms`,
+    })
 
     ctx.body = renderMainPage({
       events,
@@ -179,9 +208,8 @@ async function getMessagesStats(db: Database) {
   return stats.map((overall) => ({
     type: overall.type,
     count: Number(overall.count),
-    medianDuration: Number(overall.medianDuration),
+    avgDuration: Number(overall.avgDuration),
     knownAppCount: Number(overall.knownAppCount),
-    knownApps: overall.knownApps,
     chains: detailedStats
       .filter((chain) => chain.type === overall.type)
       .map((chain) => {
@@ -191,7 +219,7 @@ async function getMessagesStats(db: Database) {
           srcChain: chain.srcChain,
           dstChain: chain.dstChain,
           count: Number(chain.count),
-          medianDuration: Number(chain.medianDuration),
+          avgDuration: Number(chain.avgDuration),
         }
       }),
   }))
@@ -204,7 +232,7 @@ async function getTransfersStats(db: Database) {
   return stats.map((overall) => ({
     type: overall.type,
     count: overall.count,
-    medianDuration: overall.medianDuration,
+    avgDuration: overall.avgDuration,
     srcValueSum: overall.srcValueSum,
     dstValueSum: overall.dstValueSum,
     chains: detailedStats.filter((chain) => chain.type === overall.type),
