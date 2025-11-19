@@ -4,7 +4,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -15,7 +15,7 @@ const discovery = new ProjectDiscovery('aevo')
 export const aevo: ScalingProject = opStackL2({
   addedAt: UnixTime(1694090052), // 2023-09-07T12:34:12Z
   additionalBadges: [BADGES.RaaS.Conduit],
-  daProvider: EIGENDA_DA_PROVIDER(false),
+  daProvider: EIGENDA_DA_PROVIDER(false, DA_LAYERS.ETH_BLOBS),
   associatedTokens: ['AEVO'],
   discovery,
   additionalPurposes: ['Exchange'],

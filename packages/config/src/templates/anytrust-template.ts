@@ -44,7 +44,7 @@ Committee members run servers that support APIs for storing and retrieving data 
 The Sequencer API allows the rollup Sequencer to submit data blobs for storage, while the REST API enables anyone to fetch data by hash. 
 When the Sequencer produces a data batch, it sends the batch along with an expiration time to Committee members, who store it and sign it. 
 Once enough signatures are collected, the Sequencer aggregates them into a valid DACert and posts it to the L1 chain inbox. 
-If the Sequencer fails to collect enough signatures, it falls back to posting the full data to the L1 chain. \n
+If the Sequencer fails to collect enough signatures, it falls back to posting the full data to the L1 chain as calldata. \n
 
 A DACert includes a hash of the data block, an expiration time, and proof that the required threshold of Committee members have signed off on the data. 
 The proof consists of a hash of the Keyset used in signing, a bitmap indicating which members signed, and a BLS aggregated signature. 
