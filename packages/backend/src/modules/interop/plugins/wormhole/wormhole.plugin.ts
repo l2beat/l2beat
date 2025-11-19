@@ -28,7 +28,7 @@ export class WormholePlugin implements InteropPlugin {
     const networks = this.configs.get(WormholeConfig)
     if (!networks) return
 
-    const network = networks.find((n) => n.chain === input.ctx.chain)
+    const network = networks.find((n) => n.chain === input.chain)
     if (!network) {
       return
     }
@@ -39,7 +39,7 @@ export class WormholePlugin implements InteropPlugin {
     if (!parsed) return
 
     return [
-      LogMessagePublished.create(input.ctx, {
+      LogMessagePublished.create(input, {
         payload: parsed.payload,
         sequence: parsed.sequence,
         wormholeChainId: network.wormholeChainId,

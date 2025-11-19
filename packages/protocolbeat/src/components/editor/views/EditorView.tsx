@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
-import { CodeView } from './CodeView'
-import { EditorFileTabs } from './EditorFileTabs'
-import type { EditorCallbacks } from './editor'
-import { type EditorFile, type Range, useCodeStore } from './store'
+import { CodeEditorComponent } from '../code/CodeEditorComponent'
+import type { EditorCallbacks } from '../code/editor'
+import { useCodeSettings } from '../code/hooks/useCodeSettings'
+import { LineSelector } from '../code/plugins/lineSelector'
+import { RangeHighlightPlugin } from '../code/plugins/range'
+import { EditorFileTabs } from '../components/EditorFileTabs'
+import { type EditorFile, type Range, useCodeStore } from '../store'
 
-type Props = {
+type EditorViewProps = {
   editorId: string
   callbacks?: EditorCallbacks
   files: EditorFile[]
@@ -14,23 +17,41 @@ type Props = {
     index?: number
   }
   disableTabs?: boolean
+  features?: {
+    lineSelection: boolean
+    rangeHighlight: boolean
+  }
 }
 
-export function EditorView(props: Props) {
+export function EditorView(props: EditorViewProps) {
+  const { features = { lineSelection: false, rangeHighlight: true } } = props
   const [dirtyFiles, setDirtyFiles] = useState<Record<string, boolean>>({})
   const [activeFileIndex, setActiveFileIndex] = useState(0)
 
   const editor = useCodeStore((store) => store.editors[props.editorId])
-  const { resetRange } = useCodeStore()
+  const { resetRange, initialSelection, setSelection } = useCodeSettings()
 
   const setDirtyFile = (fileId: string, dirty: boolean) => {
     setDirtyFiles((prev) => ({ ...prev, [fileId]: dirty }))
   }
 
+  editor?.onLoad(() => {
+    const plugin = editor.getPlugin(LineSelector)
+    if (plugin) {
+      plugin.setSelection(initialSelection)
+      plugin.scrollToSelection()
+    }
+  })
+
+  useEffect(() => {
+    return editor?.getPlugin(LineSelector)?.onSelectionChange((selection) => {
+      setSelection(selection)
+    })
+  }, [editor])
+
   useEffect(() => {
     if (editor && props.files.length > 0) {
       const activeFile = props.files[activeFileIndex]
-      editor.detachListeners()
       if (activeFile) {
         if (!activeFile.readOnly) {
           editor.onSave((content) => {
@@ -82,7 +103,9 @@ export function EditorView(props: Props) {
 
       const { startOffset, length } = props.range.data
       resetRange()
-      editor.showRange(startOffset, length)
+      editor
+        .getPlugin(RangeHighlightPlugin)
+        ?.showRange(startOffset, length, { highlight: true })
     }
   }, [editor, props.range, activeFileIndex])
 
@@ -98,7 +121,7 @@ export function EditorView(props: Props) {
           }))}
         />
       )}
-      <CodeView editorKey={props.editorId} />
+      <CodeEditorComponent editorKey={props.editorId} features={features} />
     </div>
   )
 }

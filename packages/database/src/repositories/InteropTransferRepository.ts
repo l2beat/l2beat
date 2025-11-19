@@ -1,5 +1,5 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import { type Insertable, type Selectable, sql } from 'kysely'
+import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropTransfer } from '../kysely/generated/types'
 
@@ -135,7 +135,7 @@ export function toRow(
 export interface InteropTransfersStatsRecord {
   type: string
   count: number
-  medianDuration: number
+  avgDuration: number
   srcValueSum: number
   dstValueSum: number
 }
@@ -145,7 +145,7 @@ export interface InteropTransfersDetailedStatsRecord {
   srcChain: string
   dstChain: string
   count: number
-  medianDuration: number
+  avgDuration: number
   srcValueSum: number
   dstValueSum: number
 }
@@ -219,9 +219,7 @@ export class InteropTransferRepository extends BaseRepository {
       .select((eb) => [
         'type',
         eb.fn.countAll().as('count'),
-        sql<number>`percentile_cont(0.5) within group (order by duration)`.as(
-          'medianDuration',
-        ),
+        eb.fn.avg('duration').as('avgDuration'),
         eb.fn.sum('srcValueUsd').as('srcValueSum'),
         eb.fn.sum('dstValueUsd').as('dstValueSum'),
       ])
@@ -231,7 +229,7 @@ export class InteropTransferRepository extends BaseRepository {
     return overallStats.map((overall) => ({
       type: overall.type,
       count: Number(overall.count),
-      medianDuration: Number(overall.medianDuration),
+      avgDuration: Number(overall.avgDuration),
       srcValueSum: Number(overall.srcValueSum),
       dstValueSum: Number(overall.dstValueSum),
     }))
@@ -245,9 +243,7 @@ export class InteropTransferRepository extends BaseRepository {
         'srcChain',
         'dstChain',
         eb.fn.countAll().as('count'),
-        sql<number>`percentile_cont(0.5) within group (order by duration)`.as(
-          'medianDuration',
-        ),
+        eb.fn.avg('duration').as('avgDuration'),
         eb.fn.sum('srcValueUsd').as('srcValueSum'),
         eb.fn.sum('dstValueUsd').as('dstValueSum'),
       ])
@@ -263,7 +259,7 @@ export class InteropTransferRepository extends BaseRepository {
         srcChain: chain.srcChain,
         dstChain: chain.dstChain,
         count: Number(chain.count),
-        medianDuration: Number(chain.medianDuration),
+        avgDuration: Number(chain.avgDuration),
         srcValueSum: Number(chain.srcValueSum),
         dstValueSum: Number(chain.dstValueSum),
       }
