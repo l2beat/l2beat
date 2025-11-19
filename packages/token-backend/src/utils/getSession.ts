@@ -22,7 +22,7 @@ export async function getSession(
   // Otherwise, check the cookie
   const cookie = headers.get('cookie') ?? ''
   const cookies = parseCookies(cookie)
-  const token = cookies['CF_Authorization']
+  const token = cookies['CF_Authorization'] ?? headers.get('Authorization')
   if (!token) {
     return
   }

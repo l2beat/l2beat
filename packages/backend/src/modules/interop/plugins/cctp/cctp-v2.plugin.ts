@@ -107,7 +107,7 @@ export class CCTPV2Plugin implements InteropPlugin {
     const networks = this.configs.get(CCTPV2Config)
     if (!networks) return
 
-    const network = networks.find((n) => n.chain === input.ctx.chain)
+    const network = networks.find((n) => n.chain === input.chain)
     if (!network) return
     assert(
       network.messageTransmitter,
@@ -128,7 +128,7 @@ export class CCTPV2Plugin implements InteropPlugin {
         const burnMessage = decodeV2MessageBody(message.messageBody)
 
         return [
-          CCTPv2MessageSent.create(input.ctx, {
+          CCTPv2MessageSent.create(input, {
             // https://developers.circle.com/cctp/technical-guide#messages-and-finality
             fast: message.minFinalityThreshold <= 1000,
             $dstChain: findChain(
@@ -165,7 +165,7 @@ export class CCTPV2Plugin implements InteropPlugin {
       const transfer =
         previouspreviousLog && parseTransfer(previouspreviousLog, null)
       return [
-        CCTPv2MessageReceived.create(input.ctx, {
+        CCTPv2MessageReceived.create(input, {
           app: messageBody ? 'TokenMessengerV2' : undefined,
           hookData: messageBody?.hookData,
           caller: EthereumAddress(v2MessageReceived.caller),

@@ -1,8 +1,8 @@
 import { useMemo } from 'react'
 
 import { ErrorState } from '../../../components/ErrorState'
-import { EditorView } from '../../../components/editor/EditorView'
 import type { EditorFile } from '../../../components/editor/store'
+import { EditorView } from '../../../components/editor/views/EditorView'
 import { LoadingState } from '../../../components/LoadingState'
 import { IS_READONLY } from '../../../config/readonly'
 import { formatJson } from '../../../utils/formatJson'

@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import { getFlatSource } from '../../api/api'
 import { ErrorState } from '../../components/ErrorState'
-import { EditorView } from '../../components/editor/EditorView'
+import { EditorView } from '../../components/editor/views/EditorView'
 import { LoadingState } from '../../components/LoadingState'
 import { Title } from '../../components/Title'
 
@@ -45,6 +45,7 @@ export function CodePage() {
           range={undefined}
           initialFileIndex={0}
           disableTabs
+          features={{ lineSelection: true, rangeHighlight: false }}
         />
       </div>
     </>

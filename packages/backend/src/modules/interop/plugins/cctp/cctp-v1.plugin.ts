@@ -99,7 +99,7 @@ export class CCTPV1Plugin implements InteropPlugin {
     const networks = this.configs.get(CCTPV1Config)
     if (!networks) return
 
-    const network = networks.find((n) => n.chain === input.ctx.chain)
+    const network = networks.find((n) => n.chain === input.chain)
     if (!network) return
     assert(
       network.messageTransmitter,
@@ -116,7 +116,7 @@ export class CCTPV1Plugin implements InteropPlugin {
         if (!message) return
         const messageBody = decodeV1MessageBody(message.rawBody)
         return [
-          CCTPv1MessageSent.create(input.ctx, {
+          CCTPv1MessageSent.create(input, {
             messageBody: message.rawBody,
             $dstChain: findChain(
               networks,
@@ -146,7 +146,7 @@ export class CCTPV1Plugin implements InteropPlugin {
       const transfer =
         previouspreviousLog && parseTransfer(previouspreviousLog, null)
       return [
-        CCTPv1MessageReceived.create(input.ctx, {
+        CCTPv1MessageReceived.create(input, {
           caller: EthereumAddress(v1MessageReceived.caller),
           $srcChain: findChain(
             networks,

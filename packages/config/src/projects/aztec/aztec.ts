@@ -71,6 +71,7 @@ export const aztec: ScalingProject = {
         'https://medium.com/aztec-protocol',
         'https://discord.gg/UDtJr9u',
         'https://plonk.cafe/',
+        'https://youtube.com/@aztecnetwork',
       ],
     },
   },
