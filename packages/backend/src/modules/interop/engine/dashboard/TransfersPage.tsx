@@ -107,7 +107,10 @@ function TokenAddress(props: {
   if (address === Address32.NATIVE) {
     return <span>NATIVE</span>
   }
-  if (!props.explorerUrl || address === Address32.ZERO) {
+  if (address === Address32.ZERO) {
+    return <span>0x0</span>
+  }
+  if (!props.explorerUrl) {
     return null
   }
   return (

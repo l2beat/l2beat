@@ -5,6 +5,7 @@ import {
   CheckIcon,
   ChevronsUpDownIcon,
   PlusIcon,
+  SettingsIcon,
 } from 'lucide-react'
 import type { SubmitHandler, UseFormReturn } from 'react-hook-form'
 import { Link } from 'react-router-dom'
@@ -45,6 +46,7 @@ import type {
 } from '../../../../database/dist/repositories/ChainRepository'
 import { AutoFillIndicator } from '../AutoFillIndicator'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../core/Tooltip'
+import { ExplorerLinkButton } from '../ExplorerLink'
 
 export type DataSource = 'coingecko' | ChainApi['type']
 
@@ -218,18 +220,54 @@ export function DeployedTokenForm({
               control={form.control}
               name="address"
               success={success}
-              render={({ field }) => (
-                <FormItem className="col-span-2">
-                  <FormLabel>
-                    Address{' '}
-                    {tokenDetails.loading && <Spinner className="size-3.5" />}
-                  </FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="0xd33db33f" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              render={({ field }) => {
+                const chainRecord = chains.data?.find(
+                  (chain) => chain.name === chainValue,
+                )
+
+                return (
+                  <FormItem className="col-span-2">
+                    <FormLabel>
+                      Address{' '}
+                      {tokenDetails.loading && <Spinner className="size-3.5" />}
+                    </FormLabel>
+                    <div className="flex items-center gap-2">
+                      <FormControl>
+                        <Input {...field} placeholder="0xd33db33f" />
+                      </FormControl>
+                      {field.value?.startsWith('0x') ? (
+                        chainRecord?.explorerUrl ? (
+                          <ExplorerLinkButton
+                            explorerUrl={chainRecord.explorerUrl}
+                            value={field.value}
+                            type="address"
+                          />
+                        ) : (
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Link
+                                to={`/chains/${chainValue}`}
+                                target="_blank"
+                                className={buttonVariants({
+                                  variant: 'outline',
+                                  className: 'shrink-0',
+                                })}
+                              >
+                                <SettingsIcon />
+                              </Link>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              No explorer URL configured for this chain. Click
+                              to configure.
+                            </TooltipContent>
+                          </Tooltip>
+                        )
+                      ) : null}
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )
+              }}
             />
           </div>
 
