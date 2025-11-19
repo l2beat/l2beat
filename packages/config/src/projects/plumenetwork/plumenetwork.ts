@@ -15,7 +15,10 @@ export const plumenetwork: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1719224239), // 2024-06-24T10:17:19Z
   additionalBadges: [BADGES.RaaS.Conduit],
   discovery,
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS, REASON_FOR_BEING_OTHER.SMALL_DAC],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
     name: 'Plume Network',
     slug: 'plumenetwork',

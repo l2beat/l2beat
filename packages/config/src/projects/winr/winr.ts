@@ -13,7 +13,10 @@ export const winr: ScalingProject = orbitStackL3({
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS, REASON_FOR_BEING_OTHER.SMALL_DAC],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
     name: 'WINR',
     slug: 'winr',
