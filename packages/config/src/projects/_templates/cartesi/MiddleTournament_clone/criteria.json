@@ -1,3 +1,6 @@
 {
-  "validAddresses": ["eth:0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE"]
+  "validAddresses": [
+    "eth:0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE",
+    "eth:0x0a88360f41D0f643ea63ade00c0A1a795395d2D9"
+  ]
 }

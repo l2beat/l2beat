@@ -3,5 +3,11 @@
     "hash": "0xb13283139a2042d5619daf0269b24aaddc9650e7851dcce40e24ebf4bf13632c",
     "address": "eth:0x6CE590b9F0697327f18c601DF6f0baE4a0801B68",
     "blockNumber": 22709685
+  },
+  "DaveConsensus_v2.sol": {
+    "hash": "0x8ac2d62859fb202129c58e8e04fab24de739b3f91de2dec7c98c012ad2466e89",
+    "address": "eth:0xF0D8374F8446E87e013Ec1435C7245E05f439259",
+    "chain": "ethereum",
+    "blockNumber": 23796277
   }
 }

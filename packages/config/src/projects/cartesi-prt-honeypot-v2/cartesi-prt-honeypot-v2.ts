@@ -5,7 +5,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { formatEther } from 'ethers/lib/utils'
+import { utils } from 'ethers'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -27,19 +27,23 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
-const discovery = new ProjectDiscovery('cartesi-prt-honeypot')
+const discovery = new ProjectDiscovery('cartesi-prt-honeypot-v2')
+
 const minChallengePeriodBlocks = discovery.getContractValue<number>(
   'CanonicalTournamentParametersProvider',
   'minChallengePeriodBlocks',
 )
 const minChallengePeriodSeconds = minChallengePeriodBlocks * 12
+const topLevelTournamentBond = discovery.getContractValue<number>(
+  'TopTournament_example',
+  'bondValue',
+)
 
-export const cartesiprthoneypot: ScalingProject = {
+export const cartesiprthoneypotv2: ScalingProject = {
   type: 'layer2',
-  id: ProjectId('cartesi-prt-honeypot'),
+  id: ProjectId('cartesi-prt-honeypot-v2'),
   capability: 'appchain',
-  addedAt: UnixTime(1749678198), // 2025-06-11T21:43:18Z
-  archivedAt: UnixTime(1759137268),
+  addedAt: UnixTime(1762783269), // 2025-11-10T14:01:09Z
   badges: [
     BADGES.VM.CartesiVM,
     BADGES.VM.AppChain,
@@ -47,15 +51,13 @@ export const cartesiprthoneypot: ScalingProject = {
     BADGES.Stack.Cartesi,
   ],
   display: {
-    name: 'Cartesi PRT Honeypot',
-    shortName: 'Honeypot PRT',
-    headerWarning:
-      'The chain deployment is permanently frozen after the team managed to find a bug in the PRT contracts.[Read more](https://x.com/cartesiproject/status/1970902442259685855)',
+    name: 'Cartesi PRT Honeypot v2',
+    shortName: 'Honeypot v2',
     warning: 'The challenge protocol can be subject to delay attacks.',
-    slug: 'cartesi-prt-honeypot',
+    slug: 'cartesi-prt-honeypot-v2',
     stacks: ['Cartesi Rollups'],
     description:
-      'Cartesi PRT Honeypot is an application-specific Stage-2 rollup that stress-tests Cartesi Rollups’ security. Protected solely by Cartesi’s PRT (Permissionless Refereed Tournaments) fraud-proof algorithm, it turns its locked funds into an open bounty for anyone who can break the system. Users should not deposit unless they are willing to donate their funds to the Honeypot.',
+      'Cartesi PRT Honeypot v2 is an application-specific Stage-2 rollup that stress-tests Cartesi Rollups’ security. Protected solely by Cartesi’s PRT (Permissionless Refereed Tournaments) fraud-proof algorithm, it turns its locked funds into an open bounty for anyone who can break the system. Users should not deposit unless they are willing to donate their funds to the Honeypot.',
     purposes: ['Bug bounty'],
     links: {
       websites: ['https://cartesi.io/'],
@@ -83,10 +85,10 @@ export const cartesiprthoneypot: ScalingProject = {
     liveness: {
       warnings: {
         stateUpdates:
-          'The current PRT implementation is vulnerable to Sybil attacks that may impact liveness. Safety and decentralization are unaffected.',
+          'The current PRT implementation is vulnerable to Sybil attacks that may impact settlement liveness. Safety and decentralization are unaffected.',
       },
       explanation:
-        'The current PRT implementation uses three tournament levels, which creates liveness risks in the event of Sybil attacks. Furthermore, it lacks the planned economic layer (bonds and rewards). As a result: (1) honest defenders must cover their own gas costs without compensation, and (2) a well-funded adversary can cheaply create Sybil challengers to keep the dispute tree alive, delaying finality. Safety and decentralization are unaffected, but withdrawals can be significantly delayed until every branch is resolved.',
+        'The current PRT implementation uses three tournament levels, which creates liveness risks in the event of Sybil attacks. As a result, a well-funded adversary can create Sybil challengers to keep the dispute tree alive, delaying settlement. Safety and decentralization are unaffected, but withdrawals can be significantly delayed until every branch is resolved.',
     },
   },
   proofSystem: {
@@ -111,7 +113,7 @@ export const cartesiprthoneypot: ScalingProject = {
     escrows: [
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
-          'eth:0x4c1e74ef88a75c24e49eddd9f70d82a94d19251c',
+          'eth:0xfddf68726a28e418fa0c2a52c3134904a8c3e998',
         ),
         tokens: '*',
         description: 'Contract storing bounty funds.',
@@ -126,12 +128,12 @@ export const cartesiprthoneypot: ScalingProject = {
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
-            '0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051',
+            '0x1b51e2992A2755Ba4D6F7094032DF91991a0Cfac',
           ),
           selector: '0x1789cd63',
           functionSignature:
             'function addInput(address appContract, bytes payload) returns (bytes32)',
-          sinceTimestamp: UnixTime(1749510479),
+          sinceTimestamp: UnixTime(1762263971),
         },
       },
       {
@@ -142,12 +144,12 @@ export const cartesiprthoneypot: ScalingProject = {
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
-            '0x6ce590b9f0697327f18c601df6f0bae4a0801b68',
+            '0xF0D8374F8446E87e013Ec1435C7245E05f439259',
           ),
           selector: '0x8bca2e0c',
           functionSignature:
             'function settle(uint256 epochNumber, bytes32 outputsMerkleRoot, bytes32[] calldata proof)',
-          sinceTimestamp: UnixTime(1749510479),
+          sinceTimestamp: UnixTime(1762263971),
         },
       },
     ],
@@ -160,7 +162,7 @@ export const cartesiprthoneypot: ScalingProject = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT(minChallengePeriodSeconds),
-      initialBond: formatEther(0),
+      initialBond: utils.formatEther(topLevelTournamentBond),
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: {
@@ -205,7 +207,7 @@ export const cartesiprthoneypot: ScalingProject = {
         'https://github.com/cartesi/dave/tree/main/cartesi-rollups/node',
       additionalConsiderations: {
         short:
-          'The Cartesi PRT Honeypot is a minimal appchain (running a Cartesi Machine / dApp) for the purpose of incentivizing the testing of the Cartesi PRT proof system. Inputs/actions in the appchain are limited to deposits of CTSI by anyone and withdrawals by a single user.',
+          'The Cartesi PRT Honeypot v2 is a minimal appchain (running a Cartesi Machine / dApp) for the purpose of incentivizing the testing of the Cartesi PRT proof system. Inputs/actions in the appchain are limited to deposits of CTSI by anyone and withdrawals by a single user.',
         long: 'Users can deposit (donate) CTSI tokens to the Honeypot. The funds can only be withdrawn by the Cartesi Multisig to its own address. The appchain has the very specific purpose of a bug bounty on the proof system, incentivizing security researchers to break it and claim the deposited funds.',
       },
     },
@@ -216,7 +218,7 @@ export const cartesiprthoneypot: ScalingProject = {
       references: [
         {
           title: 'InputBox.sol#18 - Etherscan source code, addInput function',
-          url: 'https://etherscan.io/address/0xc70074bdd26d8cf983ca6a5b89b8db52d5850051#code#F1#L18',
+          url: 'https://etherscan.io/address/0x1b51e2992A2755Ba4D6F7094032DF91991a0Cfac#code#F1#L18',
         },
       ],
     },
@@ -249,17 +251,22 @@ export const cartesiprthoneypot: ScalingProject = {
   },
   stateDerivation: {
     nodeSoftware:
-      'The source code for the Cartesi node software is available [here](https://github.com/cartesi/dave/tree/v1.0.0/cartesi-rollups/node).',
+      'The source code for the Cartesi node software is available [here](https://github.com/cartesi/dave/tree/v2.0.0/cartesi-rollups/node).',
     genesisState:
-      'The genesis state comes from the Honeypot Cartesi Machine template included in the [Honeypot v2 release](https://github.com/cartesi/honeypot/releases/tag/v2.0.0). Alternatively, you can recreate it by following the build steps in the [Honeypot GitHub Repository](https://github.com/cartesi/honeypot/tree/v2.0.0?tab=readme-ov-file#building-the-application).',
+      'The genesis state comes from the Honeypot Cartesi Machine template included in the [Honeypot v3 release](https://github.com/cartesi/honeypot/releases/tag/v3.0.0). Alternatively, you can recreate it by following the build steps in the [Honeypot GitHub Repository](https://github.com/cartesi/honeypot/tree/v3.0.0?tab=readme-ov-file#building-the-application).',
     dataFormat:
-      'The reference implementation for ERC20 deposits can be found [here](https://github.com/cartesi/rollups-contracts/blob/v2.0.0/src/common/InputEncoding.sol#L38). To learn about the withdrawal request format, please refer to the documentation [here](https://github.com/cartesi/honeypot/wiki/Requesting-withdrawals).',
+      'The reference implementation for ERC20 deposits can be found [here](https://github.com/cartesi/rollups-contracts/blob/v2.1.0/src/common/InputEncoding.sol#L38). To learn about the withdrawal request format, please refer to the documentation [here](https://github.com/cartesi/honeypot/wiki/Requesting-withdrawals).',
   },
   stateValidation: {
     isUnderReview: true,
     categories: [
       {
         ...STATE_VALIDATION.FRAUD_PROOFS,
+        description:
+          STATE_VALIDATION.FRAUD_PROOFS.description +
+          `The initial bond for joining the tournament is set to ${utils.formatEther(
+            topLevelTournamentBond,
+          )} ETH.`,
         references: [
           {
             title: 'Permissionless Refereed Tournaments',
@@ -267,12 +274,12 @@ export const cartesiprthoneypot: ScalingProject = {
           },
           {
             title:
-              'MultiLevelTournamentFactory.sol#L37 - dispute resolution factory',
-            url: 'https://etherscan.io/address/0xA31C2aCfF3464658866960c0fBD3d798310272D7#code#F1#L37',
+              'MultiLevelTournamentFactory.sol#L48 - dispute resolution factory',
+            url: 'https://etherscan.io/address/0xa02997f69Dc5F1A727abE12ee36f87E28BBdEa6b#code#F1#L48',
           },
           {
-            title: 'DaveConsensus.sol#L149 - application consensus',
-            url: 'https://etherscan.io/address/0x6CE590b9F0697327f18c601DF6f0baE4a0801B68#code#F1#L149',
+            title: 'DaveConsensus.sol#L111 - application consensus',
+            url: 'https://etherscan.io/address/0xF0D8374F8446E87e013Ec1435C7245E05f439259#code#F1#L111',
           },
         ],
       },
@@ -284,20 +291,6 @@ export const cartesiprthoneypot: ScalingProject = {
     risks: [],
   },
   milestones: [
-    {
-      title: 'Honeypot Authority announcement',
-      url: 'https://medium.com/cartesi/cartesi-ecosystem-update-2023-124b384401cc#:~:text=Honeypot%20DApp%20on%20Mainnet',
-      date: '2023-04-11T00:00:00Z',
-      description: 'Honeypot Authority first announced to the community.',
-      type: 'general',
-    },
-    {
-      title: 'Honeypot Authority launch',
-      url: 'https://x.com/cartesiproject/status/1706685141421047982',
-      date: '2023-09-26T00:00:00Z',
-      description: 'Honeypot Authority launched on mainnet.',
-      type: 'general',
-    },
     {
       title: 'Permissionless Refereed Tournaments',
       url: 'https://arxiv.org/abs/2212.12439',
@@ -320,26 +313,11 @@ export const cartesiprthoneypot: ScalingProject = {
       type: 'general',
     },
     {
-      title: 'Cartesi PRT Honeypot deployed on Ethereum',
-      url: 'https://etherscan.io/address/0x4c1e74ef88a75c24e49eddd9f70d82a94d19251c',
-      date: '2025-06-09T00:00:00Z',
-      description: 'Cartesi PRT Honeypot deployed to Ethereum mainnet.',
+      title: 'Cartesi PRT Honeypot v2 deployed on Ethereum',
+      url: 'https://etherscan.io/address/0xfddf68726a28e418fa0c2a52c3134904a8c3e998',
+      date: '2025-11-08T00:00:00Z',
+      description: 'Cartesi PRT Honeypot v2 deployed to Ethereum mainnet.',
       type: 'general',
-    },
-    {
-      title: 'Cartesi PRT Honeypot reached a fail-stop state',
-      url: 'https://x.com/cartesiproject/status/1970902442259685855',
-      date: '2025-09-24T00:00:00Z',
-      description:
-        'The chain is permanently frozen after the team managed to find a bug in the PRT contracts.',
-      type: 'incident',
-    },
-    {
-      title: 'Cartesi PRT Honeypot postmortem',
-      url: 'https://cartesi.io/blog/prt_honeypot_postmortem/',
-      date: '2025-10-21T00:00:00Z',
-      description: 'Postmortem of the fail-stop incident.',
-      type: 'incident',
     },
   ],
   discoveryInfo: getDiscoveryInfo([discovery]),
