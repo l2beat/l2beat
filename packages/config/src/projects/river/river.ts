@@ -15,7 +15,7 @@ export const river: ScalingProject = opStackL2({
     REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
-  daProvider: CELESTIA_DA_PROVIDER,
+  daProvider: CELESTIA_DA_PROVIDER(),
   celestiaDa: {
     sinceBlock: 4071540, // first blob in this celestia block https://celenium.io/block/4071540?tab=transactions
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4Sor8Q7yCoU=',

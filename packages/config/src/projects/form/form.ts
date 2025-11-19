@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('form')
 const genesisTimestamp = UnixTime(1733419991)
 
 export const form: ScalingProject = opStackL2({
-  daProvider: CELESTIA_DA_PROVIDER,
+  daProvider: CELESTIA_DA_PROVIDER(),
   celestiaDa: {
     sinceBlock: 2943925,
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpR3bjJQT0=',

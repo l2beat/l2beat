@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('mantapacific')
 
 export const mantapacific: ScalingProject = opStackL2({
   addedAt: UnixTime(1693907285), // 2023-09-05T09:48:05Z
-  daProvider: CELESTIA_DA_PROVIDER,
+  daProvider: CELESTIA_DA_PROVIDER(),
   discovery,
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,

@@ -152,6 +152,7 @@ export const eclipse: ScalingProject = {
   },
   technology: {
     dataAvailability: {
+      name: 'Data is posted to Celestia',
       description: `
 ## Data Availability
 

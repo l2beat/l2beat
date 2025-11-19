@@ -64,6 +64,7 @@ export const redstone: ScalingProject = opStackL2({
     daResolveWindow,
     'https://github.com/latticexyz/redstone',
     DA_LAYERS.OP_ALT_DA,
+    DA_LAYERS.ETH_CALLDATA,
   ),
   genesisTimestamp: UnixTime(1712192291),
   isNodeAvailable: 'UnderReview',

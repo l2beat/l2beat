@@ -13,7 +13,7 @@ export const orderly: ScalingProject = opStackL2({
     isPartOfSuperchain: false,
   },
   addedAt: UnixTime(1707309065), // 2024-02-07T12:31:05Z
-  daProvider: CELESTIA_DA_PROVIDER,
+  daProvider: CELESTIA_DA_PROVIDER(),
   additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['Exchange'],
   discovery,

@@ -86,6 +86,7 @@ export const xterio: ScalingProject = opStackL2({
     daResolveWindow,
     'https://github.com/ethereum-optimism/optimism/releases/tag/op-node%2Fv1.7.5',
     DA_LAYERS.OP_ALT_DA,
+    DA_LAYERS.ETH_CALLDATA,
   ), // source: altlayer on telegram
   genesisTimestamp,
   chainConfig: {

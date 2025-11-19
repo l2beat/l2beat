@@ -13,7 +13,7 @@ const upgradeability = {
 
 export const ancient: ScalingProject = opStackL2({
   addedAt: UnixTime(1695904849), // 2023-09-28T12:40:49Z
-  daProvider: CELESTIA_DA_PROVIDER,
+  daProvider: CELESTIA_DA_PROVIDER(),
   additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
   discovery,

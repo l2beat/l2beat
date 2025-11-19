@@ -13,7 +13,7 @@ export const lyra: ScalingProject = opStackL2({
     isPartOfSuperchain: false,
   },
   addedAt: UnixTime(1702978961), // 2023-12-19T09:42:41Z
-  daProvider: CELESTIA_DA_PROVIDER,
+  daProvider: CELESTIA_DA_PROVIDER(),
   additionalBadges: [BADGES.RaaS.Conduit],
   associatedTokens: ['LYRA'],
   additionalPurposes: ['Exchange'],

@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('b3')
 export const b3: ScalingProject = opStackL3({
   addedAt: UnixTime(1722376845),
   additionalBadges: [BADGES.RaaS.Caldera, BADGES.L3ParentChain.Base],
-  daProvider: CELESTIA_DA_PROVIDER,
+  daProvider: CELESTIA_DA_PROVIDER(),
   hostChain: 'base',
   discovery,
   additionalPurposes: ['Gaming'],

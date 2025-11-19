@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('karak')
 
 export const karak: ScalingProject = opStackL2({
   addedAt: UnixTime(1687459278), // 2023-06-22T18:41:18Z
-  daProvider: CELESTIA_DA_PROVIDER,
+  daProvider: CELESTIA_DA_PROVIDER(),
   additionalBadges: [BADGES.RaaS.Caldera],
   discovery,
   reasonsForBeingOther: [
