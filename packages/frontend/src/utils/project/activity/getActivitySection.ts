@@ -1,4 +1,5 @@
 import type { Project } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import type { ActivitySectionProps } from '~/components/projects/sections/ActivitySection'
 
@@ -14,7 +15,7 @@ export async function getActivitySection(
   if (!project.activityConfig) return undefined
 
   const rangeOption = project.archivedAt ? 'max' : '1y'
-  const range = optionToRange(rangeOption)
+  const range = optionToRange(rangeOption, { offset: -1 * UnixTime.DAY })
   const data = await helpers.activity.chart.fetch({
     range,
     filter: { type: 'projects', projectIds: [project.id] },

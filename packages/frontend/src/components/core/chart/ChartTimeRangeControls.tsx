@@ -1,4 +1,6 @@
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
+import { useState } from 'react'
+import type { DateRange } from 'react-day-picker'
 import { Calendar } from '~/components/core/Calendar'
 import {
   Select,
@@ -22,6 +24,7 @@ interface Props {
   setValue: (range: ChartTimeRangeValue) => void
   options: { value: ChartTimeRangeOption; disabled?: boolean; label: string }[]
   projectSection?: boolean
+  offset?: UnixTime
 }
 
 export type ChartTimeRangeOption =
@@ -44,7 +47,12 @@ export function ChartTimeRangeControls({
   setValue,
   options,
   projectSection,
+  offset = 0,
 }: Props) {
+  const [internalValue, setInternalValue] = useState<DateRange | undefined>({
+    from: value.from ? UnixTime.toDate(value.from) : undefined,
+    to: UnixTime.toDate(value.to),
+  })
   const isClient = useIsClient()
   const breakpoint = useBreakpoint()
   const showSelect = projectSection
@@ -63,19 +71,28 @@ export function ChartTimeRangeControls({
   }
   const selectedOption = rangeToOption(value, options)
 
+  function onDateRangeChange(dateRange: DateRange | undefined) {
+    setInternalValue(dateRange)
+
+    if (dateRange?.from && dateRange?.to) {
+      setValue({
+        from: UnixTime.fromDate(dateRange.from),
+        to: UnixTime.fromDate(dateRange.to),
+      })
+    }
+  }
+
   if (showSelect) {
     return (
       <Select
-        value={selectedOption === 'custom' ? undefined : selectedOption}
+        value={selectedOption}
         onValueChange={(option) => {
           const range = optionToRange(option as ChartTimeRangeOption)
           setValue(range)
         }}
       >
         <SelectTrigger className={cn('z-0 h-8 bg-surface-secondary')}>
-          <SelectValue
-            placeholder={selectedOption === 'custom' ? 'Custom' : undefined}
-          />
+          <SelectValue />
         </SelectTrigger>
         <SelectContent className="bg-surface-secondary">
           {options.map((option) => (
@@ -105,16 +122,7 @@ export function ChartTimeRangeControls({
         {options.map((option) => (
           <button
             key={option.value}
-            onClick={() =>
-              setValue({
-                from:
-                  option.value === 'max'
-                    ? null
-                    : UnixTime.toStartOf(UnixTime.now(), 'day') -
-                      optionToDays(option.value) * UnixTime.DAY,
-                to: UnixTime.toStartOf(UnixTime.now(), 'day'),
-              })
-            }
+            onClick={() => setValue(optionToRange(option.value))}
             type="button"
             disabled={option.disabled}
             data-state={
@@ -122,8 +130,7 @@ export function ChartTimeRangeControls({
             }
             className={cn(
               'h-full rounded-md px-2 text-xs disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1',
-              'group-data-[variant=highlighted]/radio-group:data-[state=checked]:bg-linear-to-r group-data-[variant=highlighted]/radio-group:data-[state=checked]:from-purple-100 group-data-[variant=highlighted]/radio-group:data-[state=checked]:to-pink-100 group-data-[variant=highlighted]/radio-group:data-[state=checked]:text-white',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 focus-visible:ring-offset-transparent',
               'data-[state=checked]:bg-surface-tertiary primary-card:data-[state=checked]:bg-pure-white dark:primary-card:data-[state=checked]:bg-black',
             )}
           >
@@ -131,7 +138,18 @@ export function ChartTimeRangeControls({
           </button>
         ))}
         <VerticalSeparator />
-        <PopoverTrigger className="flex w-9 items-center justify-center p-0">
+        <PopoverTrigger
+          data-state={selectedOption === 'custom' ? 'checked' : 'unchecked'}
+          className={cn(
+            'flex w-9 items-center justify-center p-0',
+            'h-full rounded-md',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 focus-visible:ring-offset-transparent',
+            'focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-1 focus:ring-offset-transparent',
+            // unset the ring inset from the popover trigger classnames
+            'focus:[--tw-ring-inset:_]!',
+            'data-[state=checked]:bg-surface-tertiary primary-card:data-[state=checked]:bg-pure-white dark:primary-card:data-[state=checked]:bg-black',
+          )}
+        >
           <CalendarIcon className="size-4 shrink-0" />
         </PopoverTrigger>
       </div>
@@ -139,25 +157,15 @@ export function ChartTimeRangeControls({
       <PopoverContent className="!p-0 !bg-surface-primary">
         <Calendar
           mode="range"
-          defaultMonth={
-            value.from ? UnixTime.toDate(value.from) : UnixTime.toDate(value.to)
+          defaultMonth={UnixTime.toDate(value.to)}
+          selected={internalValue}
+          min={1}
+          timeZone="UTC"
+          disabled={(date) =>
+            date.getTime() >
+            UnixTime.toStartOf(UnixTime.now() + offset, 'day') * 1000
           }
-          selected={
-            value.from
-              ? {
-                  from: UnixTime.toDate(value.from),
-                  to: UnixTime.toDate(value.to),
-                }
-              : undefined
-          }
-          onSelect={(dateRange) => {
-            if (dateRange?.from && dateRange?.to) {
-              setValue({
-                from: UnixTime.fromDate(dateRange.from),
-                to: UnixTime.fromDate(dateRange.to),
-              })
-            }
-          }}
+          onSelect={onDateRangeChange}
           className="rounded-lg"
         />
         <div className="h-3" />
@@ -202,13 +210,14 @@ function optionToDays(option: ChartTimeRangeOption): number | null {
   }
 }
 
-export function optionToRange(option: ChartTimeRangeOption) {
+export function optionToRange(
+  option: ChartTimeRangeOption,
+  opts?: { offset?: UnixTime },
+) {
+  const offset = opts?.offset ?? 0
   const days = optionToDays(option)
   return {
-    from:
-      days === null
-        ? null
-        : UnixTime.toStartOf(UnixTime.now(), 'day') - days * UnixTime.DAY,
-    to: UnixTime.toStartOf(UnixTime.now(), 'day'),
+    from: days === null ? null : UnixTime.now() - days * UnixTime.DAY + offset,
+    to: UnixTime.now() + offset,
   }
 }

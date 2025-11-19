@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 
 export type TimeRange = '1d' | '7d' | '30d' | '90d' | '180d' | '1y' | 'max'
 type Resolution = 'hourly' | 'daily' | 'sixHourly'
@@ -12,17 +12,7 @@ export function getTimestampedValuesRange(
 ): [UnixTime | null, UnixTime] {
   const [from, to] = getBucketValuesRange(range, resolution, opts)
 
-  const adjustedFrom =
-    from !== null
-      ? from +
-        (resolution === 'daily'
-          ? UnixTime.DAY
-          : resolution === 'sixHourly'
-            ? UnixTime.SIX_HOURS
-            : UnixTime.HOUR)
-      : null
-
-  return [adjustedFrom, to]
+  return [from, to]
 }
 
 export function getBucketValuesRange(

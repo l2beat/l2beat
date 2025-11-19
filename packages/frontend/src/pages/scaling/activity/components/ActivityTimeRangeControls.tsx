@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { ChartTimeRangeControls } from '~/components/core/chart/ChartTimeRangeControls'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 
@@ -25,6 +26,7 @@ export function ActivityTimeRangeControls({
         { value: 'max', label: 'MAX' },
       ]}
       projectSection={projectSection}
+      offset={-1 * UnixTime.DAY}
     />
   )
 }
