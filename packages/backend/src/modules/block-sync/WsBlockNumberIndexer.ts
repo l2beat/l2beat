@@ -15,7 +15,7 @@ export class WsBlockNumberIndexer extends RootIndexer {
     private readonly createdWebSocket: () => WebSocket = () =>
       new WebSocket(url),
   ) {
-    super(logger.tag({ chain: source, project: source }))
+    super(logger.tag({ chain: source, tag: source }))
   }
 
   override initialize() {
