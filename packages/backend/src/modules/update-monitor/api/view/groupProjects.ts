@@ -58,7 +58,7 @@ export function groupProjects(
     {
       name: 'ZK Stack',
       assignees: ['🐝', '🐻'],
-      predicate: (p) => isStack(p.name, 'ZK Stack'),
+      predicate: (p) => isStack(p.name, 'ZK Stack') || p.name === 'gateway',
     },
     {
       name: 'Starknet & Starkexes',
