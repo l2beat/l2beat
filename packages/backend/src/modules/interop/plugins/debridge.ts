@@ -107,7 +107,7 @@ export class DeBridgePlugin implements InteropPlugin {
     const sent = parseSent(input.log, null)
     if (sent) {
       return [
-        Sent.create(input.ctx, {
+        Sent.create(input, {
           submissionId: sent.submissionId,
           debridgeId: sent.debridgeId,
           amount: sent.amount,
@@ -123,7 +123,7 @@ export class DeBridgePlugin implements InteropPlugin {
     const claimed = parseClaimed(input.log, null)
     if (claimed) {
       return [
-        Claimed.create(input.ctx, {
+        Claimed.create(input, {
           submissionId: claimed.submissionId,
           debridgeId: claimed.debridgeId,
           amount: claimed.amount,

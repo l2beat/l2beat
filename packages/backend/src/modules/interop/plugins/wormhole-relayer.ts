@@ -55,7 +55,7 @@ export class WormholeRelayerPlugin implements InteropPlugin {
     const parsed = parseDelivery(input.log, null)
     if (parsed) {
       return [
-        Delivery.create(input.ctx, {
+        Delivery.create(input, {
           recipientContract: parsed.recipientContract,
           sourceChain: parsed.sourceChain,
           deliveryVaaHash: parsed.deliveryVaaHash,
@@ -71,7 +71,7 @@ export class WormholeRelayerPlugin implements InteropPlugin {
     /*
         const send = parseSendEvent(input.log, null)
         if (send) {
-          return SendEvent.create(input.ctx, {
+          return SendEvent.create(input, {
             sequence: send.sequence.toString(),
             $dstChain: 'unknown yet',
           })

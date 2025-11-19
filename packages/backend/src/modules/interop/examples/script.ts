@@ -26,11 +26,10 @@ import {
 } from '../engine/financials/InteropFinancialsLoop'
 import { match } from '../engine/match/InteropMatchingLoop'
 import { createInteropPlugins } from '../plugins'
-import {
-  Address32,
-  type InteropEvent,
-  type InteropMessage,
-  type InteropTransfer,
+import type {
+  InteropEvent,
+  InteropMessage,
+  InteropTransfer,
 } from '../plugins/types'
 
 export function readJsonc(path: string): JSON {
@@ -214,24 +213,16 @@ async function runExample(example: Example): Promise<RunResult> {
       .filter((l) => l.transactionHash === tx.hash)
       .map(logToViemLog)
 
-    const ctx = {
-      timestamp: block.timestamp,
-      chain: chain.name,
-      blockNumber: block.number,
-      blockHash: block.hash,
-      txHash: tx.hash,
-      txValue: tx.value,
-      txTo: tx.to ? Address32.from(tx.to) : undefined,
-      txFrom: tx.from ? Address32.from(tx.from) : undefined,
-      txData: tx.data,
-      logIndex: -1,
-    }
-
     for (const plugin of plugins.eventPlugins) {
       if (!plugin.captureTx) {
         continue
       }
-      const captured = plugin.captureTx({ tx: ctx, txLogs })
+      const captured = plugin.captureTx({
+        chain: chain.name,
+        tx,
+        block,
+        txLogs,
+      })
       if (captured) {
         events.push(...captured.map((c) => ({ ...c, plugin: plugin.name })))
         break
@@ -244,9 +235,11 @@ async function runExample(example: Example): Promise<RunResult> {
           continue
         }
         const captured = plugin.capture({
+          chain: chain.name,
           log: log,
-          txLogs: txLogs,
-          ctx: { ...ctx, logIndex: log.logIndex ?? -1 },
+          tx,
+          block,
+          txLogs,
         })
         if (captured) {
           events.push(...captured.map((c) => ({ ...c, plugin: plugin.name })))
