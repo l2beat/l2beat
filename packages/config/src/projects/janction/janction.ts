@@ -17,7 +17,7 @@ export const jaction: ScalingProject = upcomingL2({
       websites: ['https://janction.ai'],
       repositories: ['https://github.com/Janction-R-D'],
       documentation: ['https://docs.janction.ai/'],
-      explorers: ['http://jctscan.com/'],
+      explorers: ['https://jctscan.com/'],
       socialMedia: [
         'https://t.me/jasmyofficial',
         'https://x.com/JANCTION_Global',
