@@ -1,4 +1,6 @@
 import * as monaco from 'monaco-editor'
+import type { ToMonaco } from '../../monacoInit'
+import type { EditorPlugin } from '../../pluginStore'
 
 export interface LineSelection {
   side: 'left' | 'right'
@@ -7,9 +9,9 @@ export interface LineSelection {
   anchorLine: number
 }
 
-export class LineSelector {
-  private editor: monaco.editor.IStandaloneDiffEditor
+type ForType = 'diff'
 
+export class LineSelector implements EditorPlugin<ForType> {
   private selectedLines: LineSelection | null = null
   private leftDecorationIds: string[] = []
   private rightDecorationIds: string[] = []
@@ -40,12 +42,16 @@ export class LineSelector {
     return { side, startLine, endLine, anchorLine: endLine }
   }
 
-  constructor(editor: monaco.editor.IStandaloneDiffEditor) {
-    this.editor = editor
+  constructor(readonly editor: ToMonaco<ForType>) {}
+
+  activate() {
+    this.setupLineSelectionHandlers()
   }
 
-  init() {
-    this.setupLineSelectionHandlers()
+  dispose() {
+    this.leftDecorationIds = []
+    this.rightDecorationIds = []
+    this.selectionChangeListeners = []
   }
 
   onSelectionChange(listener: (selection: LineSelection | null) => void) {
@@ -207,11 +213,5 @@ export class LineSelector {
         .getModifiedEditor()
         .deltaDecorations([], decorations)
     }
-  }
-
-  dispose() {
-    this.leftDecorationIds = []
-    this.rightDecorationIds = []
-    this.selectionChangeListeners = []
   }
 }
