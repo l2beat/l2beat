@@ -1,6 +1,6 @@
 {
   "name": "aztecnetwork",
-  "timestamp": 1763215240,
+  "timestamp": 1763566766,
   "configHash": "0x157af9e12291a27c9e88606d826b93e73538fe318daa54f6ce09a269e033cb04",
   "entries": [
     {
@@ -12,10 +12,12 @@
       "name": "CoinIssuer",
       "address": "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6",
       "type": "Contract",
+      "template": "aztecnetwork/CoinIssuer",
       "sourceHashes": [
         "0xa4f3bbaa9fb563fd7e37fc9a04d3c9f85603ad6dc3c53ee6e21fc0b91583cf51"
       ],
       "proxyType": "immutable",
+      "description": "Manages the inflation and minting schedule of the Aztec token. It enforces an annual percentage cap and mints new tokens for the budget.",
       "sinceTimestamp": 1762995131,
       "sinceBlock": 23786834,
       "values": {
@@ -36,15 +38,16 @@
       "name": "GovernanceProposer",
       "address": "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef",
       "type": "Contract",
+      "template": "aztecnetwork/GovernanceProposer",
       "sourceHashes": [
         "0xf5d24826d1f40e6e4796bdde6cee8f8b3fa9bc6f2a859fdb79c591cd8c6bbfb6"
       ],
       "proxyType": "immutable",
+      "description": "Intermediary contract that allows the L2 system (or specific L2 signals) to submit formal proposals to the L1 Governance contract.",
       "sinceTimestamp": 1762995059,
       "sinceBlock": 23786828,
       "values": {
         "$immutable": true,
-        "computeRound": [0, 0, 0, 0, 0],
         "eip712Domain": {
           "fields": "0x0f",
           "name": "EmpireBase",
@@ -55,26 +58,15 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 0,
-        "getCurrentRound": 3,
+        "getCurrentRound": 7,
         "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "getInstance": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12",
-        "getProposalProposer": [
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000"
-        ],
         "GSE": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
         "LIFETIME_IN_ROUNDS": 5,
         "QUORUM_SIZE": 600,
         "REGISTRY": "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
         "ROUND_SIZE": 1000,
         "SIGNAL_TYPEHASH": "0xdec0bfc6a67146d790874e4994d7a4662b60c6400491f3d945793c73ea05ebb7"
-      },
-      "errors": {
-        "computeRound": "Processing error occurred.",
-        "getProposalProposer": "Processing error occurred."
       },
       "implementationNames": {
         "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef": "GovernanceProposer"
@@ -89,10 +81,12 @@
       "name": "Governance",
       "address": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
       "type": "Contract",
+      "template": "aztecnetwork/Governance",
       "sourceHashes": [
         "0x108c41fbc4c83c17c0f1cade9547878fd22dbf5b378a3da7815cf2eacf863b0e"
       ],
       "proxyType": "immutable",
+      "description": "DAO contract used for proposals and token voting",
       "sinceTimestamp": 1762995071,
       "sinceBlock": 23786829,
       "values": {
@@ -111,67 +105,11 @@
           "requiredYeaMargin": "330000000000000000",
           "minimumVotes": "100000000000000000000000000"
         },
-        "getProposal": [
-          [
-            [0, 0, 0, 0, 0, 0, 0],
-            0,
-            "eth:0x0000000000000000000000000000000000000000",
-            "eth:0x0000000000000000000000000000000000000000",
-            0,
-            [0, 0]
-          ],
-          [
-            [0, 0, 0, 0, 0, 0, 0],
-            0,
-            "eth:0x0000000000000000000000000000000000000000",
-            "eth:0x0000000000000000000000000000000000000000",
-            0,
-            [0, 0]
-          ],
-          [
-            [0, 0, 0, 0, 0, 0, 0],
-            0,
-            "eth:0x0000000000000000000000000000000000000000",
-            "eth:0x0000000000000000000000000000000000000000",
-            0,
-            [0, 0]
-          ],
-          [
-            [0, 0, 0, 0, 0, 0, 0],
-            0,
-            "eth:0x0000000000000000000000000000000000000000",
-            "eth:0x0000000000000000000000000000000000000000",
-            0,
-            [0, 0]
-          ],
-          [
-            [0, 0, 0, 0, 0, 0, 0],
-            0,
-            "eth:0x0000000000000000000000000000000000000000",
-            "eth:0x0000000000000000000000000000000000000000",
-            0,
-            [0, 0]
-          ]
-        ],
-        "getProposalState": [],
-        "getWithdrawal": [
-          [0, 0, "eth:0x0000000000000000000000000000000000000000", false],
-          [0, 0, "eth:0x0000000000000000000000000000000000000000", false],
-          [0, 0, "eth:0x0000000000000000000000000000000000000000", false],
-          [0, 0, "eth:0x0000000000000000000000000000000000000000", false],
-          [0, 0, "eth:0x0000000000000000000000000000000000000000", false]
-        ],
         "governanceProposer": "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef",
         "isAllBeneficiariesAllowed": true,
         "proposalCount": 0,
-        "totalPowerAt": [0, 0, 0, 0, 0],
-        "totalPowerNow": 0,
+        "totalPowerNow": "101000000000000000000000000",
         "withdrawalCount": 0
-      },
-      "errors": {
-        "getProposal": "Processing error occurred.",
-        "getWithdrawal": "Processing error occurred.",
-        "totalPowerAt": "Processing error occurred."
       },
       "implementationNames": {
         "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e": "Governance"
@@ -181,10 +119,12 @@
       "name": "Inbox",
       "address": "eth:0x15c718C05B8c0dbec4D648b6711d6Ce8793969Ee",
       "type": "Contract",
+      "template": "aztecnetwork/Inbox",
       "sourceHashes": [
         "0x1d730495f5adaba8d5051f7f6ff89bb87ed039b2f192e27b9f80ef175ed92534"
       ],
       "proxyType": "immutable",
+      "description": "Handles L1-to-L2 messaging. Users deposit funds or send messages here, which are organized into a Merkle tree for the sequencer to include in an L2 block.",
       "sinceTimestamp": 1762995155,
       "sinceBlock": 23786836,
       "values": {
@@ -192,13 +132,6 @@
         "FEE_ASSET_PORTAL": "eth:0xe05dc9D5969272831757181fFf1532B066254bf1",
         "getFeeAssetPortal": "eth:0xe05dc9D5969272831757181fFf1532B066254bf1",
         "getInProgress": 2,
-        "getRoot": [
-          "0x00089a9d421a82c4a25f7acbebe69e638d5b064fa8a60e018793dcb0be53752c",
-          "0x00089a9d421a82c4a25f7acbebe69e638d5b064fa8a60e018793dcb0be53752c",
-          "0x00089a9d421a82c4a25f7acbebe69e638d5b064fa8a60e018793dcb0be53752c",
-          "0x00089a9d421a82c4a25f7acbebe69e638d5b064fa8a60e018793dcb0be53752c",
-          "0x00089a9d421a82c4a25f7acbebe69e638d5b064fa8a60e018793dcb0be53752c"
-        ],
         "getState": {
           "rollingHash": "0x00000000000000000000000000000000",
           "totalMessagesInserted": 0,
@@ -206,16 +139,16 @@
         },
         "getTotalMessagesInserted": 0,
         "ROLLUP": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12",
-        "trees": [0, 0, 0, 0, 0],
         "VERSION": 0
-      },
-      "errors": {
-        "getRoot": "Processing error occurred.",
-        "trees": "Processing error occurred."
       },
       "implementationNames": {
         "eth:0x15c718C05B8c0dbec4D648b6711d6Ce8793969Ee": "Inbox"
       }
+    },
+    {
+      "address": "eth:0x23d4A9533627eA70915026638ff5989a967Be667",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x32e90E88bb2E6Ee4382e6884cC5c299a6bA27920",
@@ -226,10 +159,12 @@
       "name": "Registry",
       "address": "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
       "type": "Contract",
+      "template": "aztecnetwork/Registry",
       "sourceHashes": [
         "0x2668189921df08d463ad0d3e7381bb520057ff2a687d45bed1ec160de02a6c87"
       ],
       "proxyType": "immutable",
+      "description": "Central directory that tracks the current 'canonical' (active) Rollup contract address and key system contracts like the Reward Distributor.",
       "sinceTimestamp": 1762995047,
       "sinceBlock": 23786827,
       "values": {
@@ -250,10 +185,12 @@
       "name": "RewardDistributor",
       "address": "eth:0x3D6A1B00C830C5f278FC5dFb3f6Ff0b74Db6dfe0",
       "type": "Contract",
+      "template": "aztecnetwork/RewardDistributor",
       "sourceHashes": [
         "0x2f431ac339a6130443de9108067868e7bdd0c6f33644cb46128b9fb1c4c39fcc"
       ],
       "proxyType": "immutable",
+      "description": "Holds tokens allocated for protocol rewards. The canonical Rollup contract calls this to distribute payments to sequencers and provers.",
       "sinceTimestamp": 1762995047,
       "sinceBlock": 23786827,
       "values": {
@@ -280,11 +217,12 @@
         "0x31e588d1304692f4bded80c6a0ee63f0cc4371047cb2679da34efa68ee1aa410"
       ],
       "proxyType": "immutable",
+      "description": "Core rollup logic contract. It processes block proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.",
       "sinceTimestamp": 1762995155,
       "sinceBlock": 23786836,
       "values": {
         "$immutable": true,
-        "archive": "0x1f9c798be7975bb34c3e605a4c92c75796eae7b9a08644bc9a6a55354ed470be",
+        "archive": "0x2a9cc03072b88e51f05c35b8595cc09d2dc01b84bdaefc28ec18fe5812737c80",
         "checkBlob": true,
         "eip712Domain": {
           "fields": "0x0f",
@@ -296,35 +234,22 @@
           "extensions": []
         },
         "getActivationThreshold": "200000000000000000000000",
-        "getActiveAttesterCount": 0,
-        "getAttesterAtIndex": [],
+        "getActiveAttesterCount": 505,
         "getAvailableValidatorFlushes": 0,
-        "getBlobCommitmentsHash": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
-        ],
-        "getBlock": [
-          [
-            "0x1f9c798be7975bb34c3e605a4c92c75796eae7b9a08644bc9a6a55354ed470be",
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            0,
-            [0, 0, 0, 0, 0]
-          ]
-        ],
+        "getBlobCommitmentsHash": [],
+        "getBlock": [],
         "getBlockReward": "400000000000000000000",
         "getBurnAddress": "eth:0x4355415548584943414c4c490000000000000000",
-        "getCurrentBlobCommitmentsHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCurrentEpoch": 95,
-        "getCurrentSampleSeed": "86056372706036767635070790517745032238956114295974579254062451278137314604172",
-        "getCurrentSlot": 3056,
+        "getCurrentBlobCommitmentsHash": "0x00cae3ec2f62bf0acae8ce2d6e8a5d578a3f92577d7280474a00eba6441fb18c",
+        "getCurrentEpoch": 248,
+        "getCurrentSampleSeed": "98263374213704234978006909063934132130657345973085484697112542429796742967861",
+        "getCurrentSlot": 7939,
         "getEarliestRewardsClaimableTimestamp": 1770818400,
         "getEjectionThreshold": "100000000000000000000000",
-        "getEntryQueueFlushSize": 0,
-        "getEntryQueueLength": 289,
+        "getEntryQueueFlushSize": 1,
+        "getEntryQueueLength": 14,
         "getEpochDuration": 32,
-        "getEpochForBlock": [0],
+        "getEpochForBlock": [],
         "getExitDelay": 345600,
         "getFeeAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getFeeAssetPerEth": 10000000000,
@@ -332,17 +257,17 @@
         "getGenesisTime": 1762995155,
         "getGSE": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
         "getInbox": "eth:0x15c718C05B8c0dbec4D648b6711d6Ce8793969Ee",
-        "getIsBootstrapped": false,
+        "getIsBootstrapped": true,
         "getL1FeesAt": [],
         "getLagInEpochs": 2,
         "getLocalEjectionThreshold": "196000000000000000000000",
         "getManaLimit": 0,
         "getManaTarget": 0,
-        "getNextFlushableEpoch": 0,
+        "getNextFlushableEpoch": 249,
         "getOutbox": "eth:0xf006c41097861AFeb18b05e586B921c081411Ee9",
-        "getPendingBlockNumber": 0,
+        "getPendingBlockNumber": 336,
         "getProofSubmissionEpochs": 1,
-        "getProvenBlockNumber": 0,
+        "getProvenBlockNumber": 313,
         "getProvingCostPerManaInEth": 0,
         "getProvingCostPerManaInFeeAsset": 0,
         "getRewardConfig": {
@@ -359,7 +284,7 @@
         "getSlotDuration": 72,
         "getStakingAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getTargetCommitteeSize": 24,
-        "getTips": { "pendingBlockNumber": 0, "provenBlockNumber": 0 },
+        "getTips": { "pendingBlockNumber": 336, "provenBlockNumber": 313 },
         "getVersion": 0,
         "isRewardsClaimable": false,
         "L1_BLOCK_AT_GENESIS": 23786836,
@@ -370,18 +295,15 @@
       }
     },
     {
-      "address": "eth:0x655b9ece565402F9994AEaD831AE651B99Af4914",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "ProtocolTreasury",
       "address": "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a",
       "type": "Contract",
+      "template": "aztecnetwork/ProtocolTreasury",
       "sourceHashes": [
         "0x7b8550d2aa8397c59330dca1f180e102e8bbbab775c39cbcd9c48d35358530db"
       ],
       "proxyType": "immutable",
+      "description": "Holds the protocol's funds controlled by Governance. It acts as a timelocked executor for spending or relaying transactions approved by the DAO.",
       "sinceTimestamp": 1762995107,
       "sinceBlock": 23786832,
       "values": {
@@ -402,10 +324,12 @@
       "name": "RewardBooster",
       "address": "eth:0x7101a6703491A4D808aeAbE9F62bC1Dc6a20bdf4",
       "type": "Contract",
+      "template": "aztecnetwork/RewardBooster",
       "sourceHashes": [
         "0x1e32c9c7fbb3685db3ea805b96aa1ac4fd140ce14d08ef809e105ebeefb097ce"
       ],
       "proxyType": "immutable",
+      "description": "Calculates 'boosted' reward shares for active provers based on a configured curve, incentivizing consistent participation.",
       "sinceTimestamp": 1762995155,
       "sinceBlock": 23786836,
       "values": {
@@ -427,10 +351,12 @@
       "name": "BaseStaker",
       "address": "eth:0x79075C8E314Ab4A84d54F90b1c7032Dc5469082d",
       "type": "Contract",
+      "template": "aztecnetwork/BaseStaker",
       "sourceHashes": [
         "0x7c41dc62f9a0a85c05716aeacafddd0ec7226cc56fdcb31f7e841d7d289b9c78"
       ],
       "proxyType": "immutable",
+      "description": "An template contract used for staker proxies within the StakingRegistry.",
       "sinceTimestamp": 1756897955,
       "sinceBlock": 23282209,
       "values": {
@@ -440,7 +366,6 @@
         "proxiableUUID": "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "errors": { "getOperator": "Processing error occurred." },
       "implementationNames": {
         "eth:0x79075C8E314Ab4A84d54F90b1c7032Dc5469082d": "BaseStaker"
       }
@@ -449,10 +374,12 @@
       "name": "TallySlashingProposer",
       "address": "eth:0x7a318c3DaA9f21f8fc8238c65755eB0394Fbf189",
       "type": "Contract",
+      "template": "aztecnetwork/TallySlashingProposer",
       "sourceHashes": [
         "0xb74d109a937010524abe2393cfaedb3100583e50cc78c56cd4168137b11883d2"
       ],
       "proxyType": "immutable",
+      "description": "Allows the validator committee to vote on slashing a specific peer. Once a quorum is reached, it proposes a slash action to the Slasher.",
       "sinceTimestamp": 1762995155,
       "sinceBlock": 23786836,
       "values": {
@@ -468,14 +395,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 28,
-        "getCurrentRound": 23,
-        "getRound": [
-          [false, false, 0],
-          [false, false, 0],
-          [false, false, 0],
-          [false, false, 0],
-          [false, false, 0]
-        ],
+        "getCurrentRound": 62,
         "INSTANCE": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12",
         "LIFETIME_IN_ROUNDS": 34,
         "MAX_ROUND_SIZE": 1024,
@@ -492,7 +412,6 @@
         "SLASHING_PROPOSER_TYPE": 1,
         "VOTE_TYPEHASH": "0x18b6b90f234e6d028d4c9800043cedef34624eedddd14e60eba01934728014fe"
       },
-      "errors": { "getRound": "Processing error occurred." },
       "implementationNames": {
         "eth:0x7a318c3DaA9f21f8fc8238c65755eB0394Fbf189": "TallySlashingProposer"
       }
@@ -511,14 +430,15 @@
       "name": "SlashPayloadCloneable",
       "address": "eth:0x82c592b4Bb7E1f50f68E75d86743c3330beAaba4",
       "type": "Contract",
+      "template": "aztecnetwork/SlashPayloadCloneable",
       "sourceHashes": [
         "0x93ba104fbc1cf3a7164185bcb45b1005baeca7402f0a86b6fb9d8f6fa075e39e"
       ],
       "proxyType": "immutable",
+      "description": "A template for specific slashing payload contracts deployed deterministically to encode a slashing action (who to slash and how much) that the Slasher executes.",
       "sinceTimestamp": 1762995155,
       "sinceBlock": 23786836,
       "values": { "$immutable": true, "getURI": "SlashPayload" },
-      "errors": { "getActions": "Processing error occurred." },
       "implementationNames": {
         "eth:0x82c592b4Bb7E1f50f68E75d86743c3330beAaba4": "SlashPayloadCloneable"
       }
@@ -532,10 +452,12 @@
       "name": "Slasher",
       "address": "eth:0x91A3745c685c220595B997E53311EbF660144889",
       "type": "Contract",
+      "template": "aztecnetwork/Slasher",
       "sourceHashes": [
         "0xb389fc4f97aaa4911b22a8cc60478f1216452f68747a3d0bd1305320a8f213a9"
       ],
       "proxyType": "immutable",
+      "description": "The executor contract for penalties. It receives authorization to slash validator stakes, subject to an execution delay and a vetoer.",
       "sinceTimestamp": 1762995155,
       "sinceBlock": 23786836,
       "values": {
@@ -560,10 +482,13 @@
       "name": "Aztec",
       "address": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
       "type": "Contract",
+      "template": "aztecnetwork/Aztec",
       "sourceHashes": [
         "0xd5b487c2f69097daa1e35d596189814c087e6c52d35f2808b8c2f542821105b5"
       ],
       "proxyType": "immutable",
+      "description": "AZTEC token contract",
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1751359739,
       "sinceBlock": 22823299,
       "values": {
@@ -593,10 +518,12 @@
       "name": "GSE",
       "address": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
       "type": "Contract",
+      "template": "aztecnetwork/GSE",
       "sourceHashes": [
         "0x547457f5ff4ac8ea3f42813204d953274a213c147ab1709fdcfd4973a9e98c37"
       ],
       "proxyType": "immutable",
+      "description": "Central staking hub. Validators (attesters) deposit stake here to register. It manages delegation of voting power and tracks which rollup instance validators are securing.",
       "sinceTimestamp": 1762995035,
       "sinceBlock": 23786826,
       "values": {
@@ -608,18 +535,10 @@
         "getBonusInstanceAddress": "eth:0x9064Fb41156D300196d5Eb95E0B3c1f08eBc39a8",
         "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "getLatestRollup": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12",
-        "getLatestRollupAt": [
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000"
-        ],
         "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "proofOfPossessionGasLimit": 250000,
-        "totalSupply": 0
+        "totalSupply": "101000000000000000000000000"
       },
-      "errors": { "getLatestRollupAt": "Processing error occurred." },
       "implementationNames": {
         "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f": "GSE"
       }
@@ -666,7 +585,7 @@
           "eth:0xB216FcaF63c6C0f73a557B342e1Da9710C95DA81",
           "eth:0x81062F03742B88923eaB121243B69D0a0092089e",
           "eth:0x32e90E88bb2E6Ee4382e6884cC5c299a6bA27920",
-          "eth:0x655b9ece565402F9994AEaD831AE651B99Af4914",
+          "eth:0x23d4A9533627eA70915026638ff5989a967Be667",
           "eth:0xb31e6d9661720A93d54AF7D1815d9bb399280629",
           "eth:0x0Fb6215099f48D723CfB89434C2cb887357Bc871",
           "eth:0x7EAbE4F636B937628A7Fe503bD7F06772C047FEe"
@@ -676,7 +595,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -685,9 +604,10 @@
       }
     },
     {
-      "name": "Registry",
+      "name": "StakingRegistry",
       "address": "eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80",
       "type": "Contract",
+      "template": "aztecnetwork/StakingRegistry",
       "sourceHashes": [
         "0x5bec86caaab8c1c4f3acc5289ed1e63204996e1060b8cc0b3659805297f969f5"
       ],
@@ -721,10 +641,12 @@
       "name": "FeeJuicePortal",
       "address": "eth:0xe05dc9D5969272831757181fFf1532B066254bf1",
       "type": "Contract",
+      "template": "aztecnetwork/FeeJuicePortal",
       "sourceHashes": [
         "0x542e189cee1c3e2c68161b3fd76e431295ff190f00f18202a51059f392f457e1"
       ],
       "proxyType": "immutable",
+      "description": "A specific bridge allowing the Aztec token ('Fee Juice') to be deposited into L2 specifically for paying gas fees. AZTEC tokens accruing in this escrow can only be used as fees for sequencers.",
       "sinceTimestamp": 1762995155,
       "sinceBlock": 23786836,
       "values": {
@@ -743,25 +665,19 @@
       "name": "Outbox",
       "address": "eth:0xf006c41097861AFeb18b05e586B921c081411Ee9",
       "type": "Contract",
+      "template": "aztecnetwork/Outbox",
       "sourceHashes": [
         "0xe9ea050e1b0b8a10d023bae844d6efe6d644671b0bef1bffa83987dacfed72a7"
       ],
       "proxyType": "immutable",
+      "description": "Handles L2-to-L1 messaging. It stores Merkle roots of messages exiting the rollup, allowing users to prove inclusion and finalize withdrawals or actions on L1.",
       "sinceTimestamp": 1762995155,
       "sinceBlock": 23786836,
       "values": {
         "$immutable": true,
-        "getRootData": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
-        ],
         "ROLLUP": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12",
         "VERSION": 0
       },
-      "errors": { "getRootData": "Processing error occurred." },
       "implementationNames": {
         "eth:0xf006c41097861AFeb18b05e586B921c081411Ee9": "Outbox"
       }
@@ -1501,9 +1417,26 @@
     ]
   },
   "usedTemplates": {
-    "aztecnetwork/Rollup": "0x8270650849be160a4227f53a3b689d49082c5f28db904a4d18017689baec63c6",
+    "aztecnetwork/Aztec": "0x9cb0edfecd174d91d81f651ad52d7c288ec44b877a0e2f8ad0ff293a553bfe30",
+    "aztecnetwork/BaseStaker": "0x829f70cfbf1a0dc4cbc075bf8c385689e08a80e148416fec856aecc61cddcc05",
+    "aztecnetwork/CoinIssuer": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "aztecnetwork/FeeJuicePortal": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "aztecnetwork/Governance": "0x315b8919e05896edfe7d1ca7aaa74032b0a7c6817f5c9f5fc7f704569c0deede",
+    "aztecnetwork/GovernanceProposer": "0x967e3b24b3afc9abcd7b23b3f31a2523d6d5bf2a6f20938168ac9632a9200f4a",
+    "aztecnetwork/GSE": "0x97fe85feeb2d56f80e370735da8c21abd0f9f81d4686424dc15de8f524a7126b",
+    "aztecnetwork/Inbox": "0x7b9d69a80a28ac213da9476cc0c265646f4a1452b6a2946cf6c71140fa08ceaa",
+    "aztecnetwork/Outbox": "0xa0d40137e5e7237171a464fc6b70a00b177e4cc5d455cfc8138d47cfe6766c04",
+    "aztecnetwork/ProtocolTreasury": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "aztecnetwork/Registry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "aztecnetwork/RewardBooster": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "aztecnetwork/RewardDistributor": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "aztecnetwork/Rollup": "0x798844adb9822f324816edec4b98e65eccaf1ba7f4d1fd622a86b33aa81bd6e5",
+    "aztecnetwork/Slasher": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "aztecnetwork/SlashPayloadCloneable": "0x821354dfe974f5f53d0c4ebf4ce746144ad353e598809041e44c28c9c572fd92",
+    "aztecnetwork/StakingRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "aztecnetwork/TallySlashingProposer": "0xb8da98d00c6d88bcdda710305b36ec77cd8adbad61805bbaf584641a2b1f3db3",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23805051 },
-  "permissionsConfigHash": "0xa9bb993d9408a37bcba904fab06f01ff2fa4a620061ca4b2d6bac355bde4a390"
+  "usedBlockNumbers": { "ethereum": 23834069 },
+  "permissionsConfigHash": "0x458e293e593455e6942af630cd8c26af41249bda5974d61d52f1b932cc084caa"
 }

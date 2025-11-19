@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Calculates 'boosted' reward shares for active provers based on a configured curve, incentivizing consistent participation."
+}
