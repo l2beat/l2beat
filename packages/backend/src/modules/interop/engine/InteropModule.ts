@@ -62,7 +62,12 @@ export function createInteropModule({
     logger,
   )
 
-  const router = createInteropRouter(db, config.interop, processors, logger)
+  const router = createInteropRouter(
+    db,
+    config.interop,
+    processors,
+    logger.for('InteropRouter'),
+  )
 
   const compareLoops = plugins.comparePlugins.map(
     (c) => new InteropCompareLoop(db, c, logger),
