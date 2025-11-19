@@ -1,6 +1,6 @@
 {
   "name": "plumenetwork",
-  "timestamp": 1759480939,
+  "timestamp": 1763554901,
   "configHash": "0xe33cabedac4841297addb076ca3e45dbaf78009c728ad35d1895258840b283e3",
   "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
@@ -177,7 +177,7 @@
           "eth:0xf576102530749344D2f4C04D15C2B8609c7897ea"
         ],
         "allowedOutboxList": ["eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71"],
-        "delayedMessageCount": 1372,
+        "delayedMessageCount": 1622,
         "inboxHistory": [
           "eth:0x943fc691242291B74B105e8D19bd9E5DC2fcBa1D",
           "eth:0xf576102530749344D2f4C04D15C2B8609c7897ea"
@@ -187,8 +187,8 @@
         "outboxHistory": ["eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71"],
         "rollup": "eth:0x35c60Cc77b0A8bf6F938B11bd3E9D319a876c2aC",
         "sequencerInbox": "eth:0x85eC1b9138a8b9659A51e2b51bb0861901040b59",
-        "sequencerMessageCount": 18778,
-        "sequencerReportedSubMessageCount": 31554700
+        "sequencerMessageCount": 25515,
+        "sequencerReportedSubMessageCount": 39244628
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -251,7 +251,7 @@
         ],
         "$upgradeCount": 1,
         "anyTrustFastConfirmer": "eth:0x0000000000000000000000000000000000000000",
-        "arbOsFromWmRoot": "Celestia Nitro 3.3.2 wasmModuleRoot",
+        "arbOsFromWmRoot": "ArbOS v32 wasmModuleRoot",
         "baseStake": "100000000000000000",
         "bridge": "eth:0x35381f63091926750F43b2A7401B083263aDEF83",
         "chainId": 98866,
@@ -260,13 +260,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 430,
+        "firstUnresolvedNode": 524,
         "inbox": "eth:0x943fc691242291B74B105e8D19bd9E5DC2fcBa1D",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 22739185,
-        "latestConfirmed": 429,
-        "latestNodeCreated": 440,
+        "latestConfirmed": 523,
+        "latestNodeCreated": 535,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71",
@@ -294,7 +294,7 @@
         "validatorUtils": "eth:0x84eA2523b271029FFAeB58fc6E6F1435a280db44",
         "validatorWalletCreator": "eth:0x0A5eC2286bB15893d5b8f320aAbc823B2186BA09",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3",
+        "wasmModuleRoot": "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
@@ -521,7 +521,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 172,
+        "nonce": 186,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -714,7 +714,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 18778,
+        "batchCount": 25515,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x17F187D978664C96ffD655996a45e085c403AD8b",
@@ -753,9 +753,9 @@
         "postsBlobs": false,
         "reader4844": "eth:0x58f9a83EF35a241bcAc7EC4fB6e7DBcE2A1D1125",
         "rollup": "eth:0x35c60Cc77b0A8bf6F938B11bd3E9D319a876c2aC",
-        "sequencerVersion": "0x63",
+        "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1372,
+        "totalDelayedMessagesRead": 1622,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1951,6 +1951,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23496129 },
+  "usedBlockNumbers": { "ethereum": 23833093 },
   "permissionsConfigHash": "0x4ab352e7abe29adbe76c593f42297ce62193131e85d11d5cb8fb94826e758d39"
 }
