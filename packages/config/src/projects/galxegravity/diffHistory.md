@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xc2a9a19320ccc138aa8fc46e52a8ec810f87c6cd
+
+# Diff at Wed, 19 Nov 2025 12:17:55 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@2b637644c92662f812c5b3f8fe7a2b8a31d11187 block: 1759480830
+- current timestamp: 1763554611
+
+## Description
+
+No more a Celestia L2.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (eth:0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.sequencerVersion:
+-        "0x63"
++        "0x88"
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0xf993AF239770932A0EDaB88B6A5ba3708Bd58239) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
+-        "Celestia Nitro 3.3.2 wasmModuleRoot"
++        "ArbOS v32 wasmModuleRoot"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3"
++        "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39"
+    }
+```
+
 Generated with discovered.json: 0x79ad1db1bfd211a048bf54728d743e18b1e5b504
 
 # Diff at Fri, 03 Oct 2025 08:41:37 GMT:
