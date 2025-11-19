@@ -45,7 +45,7 @@ export function CodePage() {
           range={undefined}
           initialFileIndex={0}
           disableTabs
-          features={{ lineSelection: true, rangeHighlight: true }}
+          features={{ lineSelection: true, rangeHighlight: false }}
         />
       </div>
     </>
