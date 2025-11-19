@@ -20,6 +20,7 @@ export interface Diff {
 export class DiffEditor extends EditorPluginStore<'diff'> {
   private models: Record<string, editor.IDiffEditorModel | null> = {}
   private viewStates: Record<string, editor.IDiffEditorViewState | null> = {}
+  private callbacks: monaco.IDisposable[] = []
   private currentCodeHash = ''
 
   constructor(element: HTMLElement) {
@@ -49,7 +50,7 @@ export class DiffEditor extends EditorPluginStore<'diff'> {
   }
 
   onComputedDiff(listener: (diff: Diff) => void) {
-    this.editor.onDidUpdateDiff(() => {
+    const disposable = this.editor.onDidUpdateDiff(() => {
       const lineChanges = this.editor.getLineChanges() ?? []
       let deletions = 0
       let additions = 0
@@ -71,6 +72,8 @@ export class DiffEditor extends EditorPluginStore<'diff'> {
 
       listener({ deletions, additions, changes })
     })
+
+    this.callbacks.push(disposable)
   }
 
   resize() {
@@ -93,6 +96,13 @@ export class DiffEditor extends EditorPluginStore<'diff'> {
     this.editor.goToDiff('previous')
   }
 
+  private disposeCallbacks() {
+    for (const callback of this.callbacks) {
+      callback.dispose()
+    }
+    this.callbacks = []
+  }
+
   dispose() {
     Object.values(this.models).forEach((model) => {
       if (model) {
@@ -102,6 +112,7 @@ export class DiffEditor extends EditorPluginStore<'diff'> {
     })
     this.models = {}
     this.viewStates = {}
+    this.disposeCallbacks()
     this.disposePlugins()
     this.editor.dispose()
   }

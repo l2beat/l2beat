@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { CodeView } from '../code/CodeView'
+import { CodeEditorComponent } from '../code/CodeEditorComponent'
 import type { EditorCallbacks } from '../code/editor'
 import { useCodeSettings } from '../code/hooks/useCodeSettings'
 import { LineSelector } from '../code/plugins/lineSelector'
@@ -35,13 +35,15 @@ export function EditorView(props: EditorViewProps) {
     setDirtyFiles((prev) => ({ ...prev, [fileId]: dirty }))
   }
 
-  useEffect(() => {
-    editor?.onLoad(() => {
-      const plugin = editor.getPlugin(LineSelector)
-      plugin?.setSelection(initialSelection)
-      plugin?.scrollToSelection()
-    })
+  editor?.onLoad(() => {
+    const plugin = editor.getPlugin(LineSelector)
+    if (plugin) {
+      plugin.setSelection(initialSelection)
+      plugin.scrollToSelection()
+    }
+  })
 
+  useEffect(() => {
     return editor?.getPlugin(LineSelector)?.onSelectionChange((selection) => {
       setSelection(selection)
     })
@@ -50,7 +52,6 @@ export function EditorView(props: EditorViewProps) {
   useEffect(() => {
     if (editor && props.files.length > 0) {
       const activeFile = props.files[activeFileIndex]
-      editor.detachListeners()
       if (activeFile) {
         if (!activeFile.readOnly) {
           editor.onSave((content) => {
@@ -61,7 +62,6 @@ export function EditorView(props: EditorViewProps) {
           })
 
           editor.onChange((content) => {
-            editor.getPlugin(LineSelector)?.scrollToSelection()
             props.callbacks?.onChange?.(content)
             setDirtyFile(activeFile.id, content !== activeFile.content)
           })
@@ -121,7 +121,7 @@ export function EditorView(props: EditorViewProps) {
           }))}
         />
       )}
-      <CodeView editorKey={props.editorId} features={features} />
+      <CodeEditorComponent editorKey={props.editorId} features={features} />
     </div>
   )
 }

@@ -10,16 +10,12 @@ import { theme } from './theme'
 
 let initialized = false
 
-export type EditorType = 'code' | 'diff' | 'hybrid'
+export type EditorType = 'code' | 'diff'
 export type ToMonaco<T> = T extends 'code'
   ? monaco.editor.IStandaloneCodeEditor
   : T extends 'diff'
     ? monaco.editor.IStandaloneDiffEditor
-    : T extends 'hybrid'
-      ?
-          | monaco.editor.IStandaloneCodeEditor
-          | monaco.editor.IStandaloneDiffEditor
-      : never
+    : never
 
 export class MonacoCodeEditor<T extends EditorType> {
   protected editor: ToMonaco<T>

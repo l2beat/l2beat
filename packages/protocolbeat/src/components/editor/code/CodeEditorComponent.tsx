@@ -4,15 +4,18 @@ import { Editor } from './editor'
 import { LineSelector } from './plugins/lineSelector'
 import { RangeHighlightPlugin } from './plugins/range'
 
-type CodeViewProps = {
-  editorKey?: string
+type CodeEditorComponentProps = {
+  editorKey: string
   features: {
     lineSelection: boolean
     rangeHighlight: boolean
   }
 }
 
-export function CodeView({ features, editorKey = 'default' }: CodeViewProps) {
+export function CodeEditorComponent({
+  features,
+  editorKey,
+}: CodeEditorComponentProps) {
   const monacoEl = useRef<HTMLDivElement>(null)
   const resizeObserverRef = useRef<ResizeObserver | null>(null)
   const { setEditor, getEditor, removeEditor } = useCodeStore()
@@ -27,7 +30,10 @@ export function CodeView({ features, editorKey = 'default' }: CodeViewProps) {
     const existingEditor = getEditor(editorKey)
 
     if (existingEditor) {
-      return
+      return () => {
+        existingEditor.dispose()
+        removeEditor(editorKey)
+      }
     }
 
     const editor = new Editor(element)
