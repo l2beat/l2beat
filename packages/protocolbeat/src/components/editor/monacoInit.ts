@@ -17,6 +17,20 @@ export type ToMonaco<T> = T extends 'code'
     ? monaco.editor.IStandaloneDiffEditor
     : never
 
+// Compatible with diff options
+const settings: monaco.editor.IStandaloneEditorConstructionOptions = {
+  minimap: { enabled: false },
+  readOnly: true,
+  colorDecorators: false,
+  renderWhitespace: 'none',
+  renderControlCharacters: false,
+  fontFamily:
+    "ui-monospace, Menlo, Monaco, 'Cascadia Code', 'Source Code Pro', Consolas, 'DejaVu Sans Mono', monospace",
+  // @ts-expect-error Thanks you Microsoft
+  'bracketPairColorization.enabled': false,
+  model: null, // Prevent Monaco from creating a default model
+}
+
 export class MonacoCodeEditor<T extends EditorType> {
   protected editor: ToMonaco<T>
   constructor(element: HTMLElement, editorType: 'code' | 'diff') {
@@ -25,31 +39,12 @@ export class MonacoCodeEditor<T extends EditorType> {
       initialized = true
     }
     if (editorType === 'code') {
-      this.editor = monaco.editor.create(element, {
-        minimap: { enabled: false },
-        readOnly: true,
-        colorDecorators: false,
-        renderWhitespace: 'none',
-        renderControlCharacters: false,
-        fontFamily:
-          "ui-monospace, Menlo, Monaco, 'Cascadia Code', 'Source Code Pro', Consolas, 'DejaVu Sans Mono', monospace",
-        // @ts-expect-error Thanks you Microsoft
-        'bracketPairColorization.enabled': false,
-        model: null, // Prevent Monaco from creating a default model
-      }) as ToMonaco<T>
+      this.editor = monaco.editor.create(element, settings) as ToMonaco<T>
     } else {
-      this.editor = monaco.editor.createDiffEditor(element, {
-        minimap: { enabled: false },
-        readOnly: true,
-        colorDecorators: false,
-        renderWhitespace: 'none',
-        renderControlCharacters: false,
-        fontFamily:
-          "ui-monospace, Menlo, Monaco, 'Cascadia Code', 'Source Code Pro', Consolas, 'DejaVu Sans Mono', monospace",
-        // @ts-expect-error Thanks you Microsoft
-        'bracketPairColorization.enabled': false,
-        model: null, // Prevent Monaco from creating a default model
-      }) as ToMonaco<T>
+      this.editor = monaco.editor.createDiffEditor(
+        element,
+        settings,
+      ) as ToMonaco<T>
     }
   }
 
