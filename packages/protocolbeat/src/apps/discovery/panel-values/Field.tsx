@@ -54,9 +54,9 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
 
   const tags = getFieldTags(field)
   return (
-    <li className="mb-1 truncate text-sm last:mb-0">
-      <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-1 font-bold text-xs">
-        <div className="flex flex-wrap items-center gap-1 leading-none">
+    <li className="group/field truncate text-sm">
+      <div className="flex h-fit flex-wrap items-center justify-between px-4 py-1 font-bold text-xs">
+        <div className="flex flex-wrap items-center gap-1">
           {field.name}
           {tags.map((x, i) => (
             <span
@@ -67,7 +67,7 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
             </span>
           ))}
         </div>
-        <div className="flex gap-1">
+        <div className="flex gap-1 opacity-0 group-hover/field:opacity-100">
           {canModify && templateModel.hasTemplate && (
             <BadgeWrapper text="Template">
               {templateTags.map((x, i) => (
@@ -150,7 +150,7 @@ function BadgeWrapper(props: {
 }) {
   return (
     <span className="flex max-w-fit items-center justify-center gap-1 border border-coffee-400/40 px-1 py-0.5 text-coffee-400">
-      {props.text}
+      <span className="select-none">{props.text}</span>
       {props.children}
     </span>
   )
