@@ -367,7 +367,7 @@ model InteropEvent {
   unsupported Boolean
 
   @@id([eventId])
-  @@index([type,matched,unsupported,timestamp])
+  @@index([type, matched, unsupported, timestamp])
 }
 
 model InteropMessage {
