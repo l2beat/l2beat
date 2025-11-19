@@ -22,6 +22,8 @@ export function useProjectData() {
     : undefined
 
   return {
+    isPending: projectResponse.isPending,
+    isError: projectResponse.isError,
     project,
     selectedAddress,
     projectResponse,
