@@ -35,6 +35,7 @@ export const mint: ScalingProject = opStackL2({
         'https://mirror.xyz/mintchain.eth',
         'https://community.mintchain.io',
       ],
+      other: ['https://growthepie.com/chains/mint'],
     },
   },
   chainConfig: {

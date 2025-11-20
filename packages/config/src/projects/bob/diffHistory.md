@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xd25958143a8b2d41a1d4b974fbfda59f41f75909
+
+# Diff at Thu, 13 Nov 2025 11:05:32 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@236e99b8e7528eefed3152e229515862240afbdc block: 1759250312
+- current timestamp: 1763031834
+
+## Description
+
+Two verifiers removed from RiscZeroVerifierRouter, unrelated to BOB verifiers still active.
+
+## Watched changes
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
++++ severity: HIGH
+      values.callsExecuted.10:
++        {"id":"0xcb59c64b787c143323784e652a53a3df139307efbcefa80b438a461680142a2b","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0x93d237f650bd176900000000000000000000000000000000000000000000000000000000"}
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
++++ severity: HIGH
+      values.callsExecuted.11:
++        {"id":"0x02c881bb278f937c1b8b577c6a44e474f471442762ddaf1e416b5ae793acf8cc","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0x93d237f6c101b42b00000000000000000000000000000000000000000000000000000000"}
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsScheduled.13:
++        {"id":"0xcb59c64b787c143323784e652a53a3df139307efbcefa80b438a461680142a2b","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0x93d237f650bd176900000000000000000000000000000000000000000000000000000000","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200}
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsScheduled.14:
++        {"id":"0x02c881bb278f937c1b8b577c6a44e474f471442762ddaf1e416b5ae793acf8cc","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0x93d237f6c101b42b00000000000000000000000000000000000000000000000000000000","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+    }
+```
+
 Generated with discovered.json: 0xcf9ef8f345cdbdfe6a98275cf26f85d8e63708a1
 
 # Diff at Tue, 04 Nov 2025 11:32:27 GMT:
@@ -600,7 +634,7 @@ Generated with discovered.json: 0x062861cee1e1bf6aa963ec55b86fe36d2c4e03cc
 - proofMaturityDelaySeconds: 7d->1d
 - disputeGameFinalityDelaySeconds: 3.5d->1d 
 
-Upgrade to standard OP stack v3 contracts (OptiPortal2) with [KAILUA Hybrid mode](https://risc0.github.io/kailua/design.html) as respected dispute game. Kailua is configured in [Vanguard mode](https://risc0.github.io/kailua/parameters.html?highlight=vanguard#vanguard-advantage).
+Upgrade to standard OP stack v3 contracts (OptiPortal2) with [KAILUA Hybrid mode](https://boundless-xyz.github.io/kailua/design.html) as respected dispute game. Kailua is configured in [Vanguard mode](https://boundless-xyz.github.io/kailua/parameters.html?highlight=vanguard#vanguard-advantage).
 
 summary:
 - standard op stack contracts

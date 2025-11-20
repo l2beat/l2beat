@@ -41,7 +41,7 @@ function EventsTable(props: { events: InteropEventStatsRecord[] }) {
       <tbody>
         {props.events.map((e) => {
           return (
-            <tr>
+            <tr key={e.type}>
               <td>{e.type}</td>
               <td>
                 <a href={`/interop/events/all/${e.type}`}>{e.count}</a>
@@ -147,39 +147,37 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
           <th rowSpan={2}>Count</th>
           <th rowSpan={2}>Median Duration</th>
           <th rowSpan={2}>Known %</th>
-          {NETWORKS.map((n) => (
-            <>
+          {NETWORKS.map((n, idx) => (
+            <React.Fragment key={`header-${idx}`}>
               <th colSpan={2}>
                 {n[0].display} {'>'} {n[1].display}
               </th>
               <th colSpan={2}>
                 {n[0].display} {'<'} {n[1].display}
               </th>
-            </>
+            </React.Fragment>
           ))}
         </tr>
         <tr>
-          {NETWORKS.map((_) => (
-            <>
+          {NETWORKS.map((_, idx) => (
+            <React.Fragment key={`subheader-${idx}`}>
               <th>Count</th>
               <th>Duration</th>
               <th>Count</th>
               <th>Duration</th>
-            </>
+            </React.Fragment>
           ))}
         </tr>
       </thead>
       <tbody>
         {props.items.map((t) => {
           return (
-            <tr>
+            <tr key={t.type}>
               <td>{t.type}</td>
               <td>
                 <a href={`/interop/messages/${t.type}`}>{t.count}</a>
               </td>
-              <td data-order={t.medianDuration}>
-                {formatSeconds(t.medianDuration)}
-              </td>
+              <td data-order={t.avgDuration}>{formatSeconds(t.avgDuration)}</td>
               {
                 <td>
                   {t.count > 0
@@ -187,7 +185,7 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
                     : ''}
                 </td>
               }
-              {NETWORKS.map((n) => {
+              {NETWORKS.map((n, idx) => {
                 const srcDstCount = t.chains.find(
                   (tt) =>
                     tt.srcChain === n[0].name && tt.dstChain === n[1].name,
@@ -195,7 +193,7 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
                 const srcDstDuration = t.chains.find(
                   (tt) =>
                     tt.srcChain === n[0].name && tt.dstChain === n[1].name,
-                )?.medianDuration
+                )?.avgDuration
                 const dstSrcCount = t.chains.find(
                   (tt) =>
                     tt.srcChain === n[1].name && tt.dstChain === n[0].name,
@@ -203,9 +201,9 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
                 const dstSrcDuration = t.chains.find(
                   (tt) =>
                     tt.srcChain === n[1].name && tt.dstChain === n[0].name,
-                )?.medianDuration
+                )?.avgDuration
                 return (
-                  <>
+                  <React.Fragment key={`${t.type}-${idx}`}>
                     <td>
                       {srcDstCount && (
                         <a
@@ -230,7 +228,7 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
                     <td data-order={dstSrcDuration ?? ''}>
                       {dstSrcDuration && formatSeconds(dstSrcDuration)}
                     </td>
-                  </>
+                  </React.Fragment>
                 )
               })}
             </tr>
@@ -251,8 +249,8 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
           <th rowSpan={2}>Median Duration</th>
           <th rowSpan={2}>srcValue</th>
           <th rowSpan={2}>dstValue</th>
-          {NETWORKS.map((n) => (
-            <>
+          {NETWORKS.map((n, idx) => (
+            <React.Fragment key={`transfer-header-${idx}`}>
               <th
                 colSpan={4}
                 style={{ textAlign: 'center', border: '1px solid black' }}
@@ -262,12 +260,12 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
               <th colSpan={4} style={{ textAlign: 'center' }}>
                 {n[0].display} {'<'} {n[1].display}
               </th>
-            </>
+            </React.Fragment>
           ))}
         </tr>
         <tr>
-          {NETWORKS.map((_) => (
-            <>
+          {NETWORKS.map((_, idx) => (
+            <React.Fragment key={`transfer-subheader-${idx}`}>
               <th>Count</th>
               <th>Duration</th>
               <th>srcValue</th>
@@ -276,24 +274,22 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
               <th>Duration</th>
               <th>srcValue</th>
               <th>dstValue</th>
-            </>
+            </React.Fragment>
           ))}
         </tr>
       </thead>
       <tbody>
         {props.items.map((t) => {
           return (
-            <tr>
+            <tr key={t.type}>
               <td>{t.type}</td>
               <td>
                 <a href={`/interop/transfers/${t.type}`}>{t.count}</a>
               </td>
-              <td data-order={t.medianDuration}>
-                {formatSeconds(t.medianDuration)}
-              </td>
+              <td data-order={t.avgDuration}>{formatSeconds(t.avgDuration)}</td>
               <td data-order={t.srcValueSum}>{formatDollars(t.srcValueSum)}</td>
               <td data-order={t.dstValueSum}>{formatDollars(t.dstValueSum)}</td>
-              {NETWORKS.map((n) => {
+              {NETWORKS.map((n, idx) => {
                 const forwardStats = t.chains.find(
                   (tt) =>
                     tt.srcChain === n[0].name && tt.dstChain === n[1].name,
@@ -304,15 +300,15 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
                 )
 
                 const forwardCount = forwardStats?.count
-                const forwardDuration = forwardStats?.medianDuration
+                const forwardDuration = forwardStats?.avgDuration
                 const forwardDstValue = forwardStats?.dstValueSum
                 const forwardSrcValue = forwardStats?.srcValueSum
                 const backwardCount = backwardStats?.count
-                const backwardDuration = backwardStats?.medianDuration
+                const backwardDuration = backwardStats?.avgDuration
                 const backwardSrcValue = backwardStats?.srcValueSum
                 const backwardDstValue = backwardStats?.dstValueSum
                 return (
-                  <>
+                  <React.Fragment key={`${t.type}-${idx}`}>
                     <td>
                       {
                         <a
@@ -349,7 +345,7 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
                     <td data-order={backwardDstValue}>
                       {formatDollars(backwardDstValue)}
                     </td>
-                  </>
+                  </React.Fragment>
                 )
               })}
             </tr>
@@ -383,7 +379,7 @@ function MissingTokensTable(props: {
               ? Address32.cropToEthereumAddress(t.tokenAddress as Address32)
               : t.tokenAddress
           return (
-            <tr>
+            <tr key={`${t.chain}-${t.tokenAddress}`}>
               <td>{t.chain}</td>
               <td>
                 {explorerUrl &&
@@ -430,65 +426,54 @@ function MainPageLayout(props: {
   )
 
   return (
-    <DataTablePage
-      showHome={false}
-      tables={[
-        {
-          title: 'Events',
-          table: eventsTable,
-          tableId: 'eventsTable',
-          dataTableOptions: {
-            order: [[0, 'asc']],
+    <>
+      <a href="/interop/configs" target="_blank">
+        Automated configs
+      </a>
+      <DataTablePage
+        showHome={false}
+        tables={[
+          {
+            title: 'Events',
+            table: eventsTable,
+            tableId: 'eventsTable',
+            dataTableOptions: {
+              order: [[0, 'asc']],
+            },
           },
-        },
-        {
-          title: 'Messages',
-          table: messagesTable,
-          tableId: 'messagesTable',
-          dataTableOptions: {
-            order: [[0, 'asc']],
+          {
+            title: 'Messages',
+            table: messagesTable,
+            tableId: 'messagesTable',
+            dataTableOptions: {
+              order: [[0, 'asc']],
+            },
           },
-        },
-        {
-          title: 'Transfers',
-          table: transfersTable,
-          tableId: 'transfersTable',
-          dataTableOptions: {
-            order: [[0, 'asc']],
+          {
+            title: 'Transfers',
+            table: transfersTable,
+            tableId: 'transfersTable',
+            dataTableOptions: {
+              order: [[0, 'asc']],
+            },
           },
-        },
-        {
-          title: 'Missing Tokens',
-          table: missingTokensTable,
-          tableId: 'missingTokensTable',
-          dataTableOptions: {
-            order: [[2, 'desc']],
-            pageLength: 25,
+          {
+            title: 'Missing Tokens',
+            table: missingTokensTable,
+            tableId: 'missingTokensTable',
+            dataTableOptions: {
+              order: [[2, 'desc']],
+              pageLength: 25,
+            },
           },
-        },
-      ]}
-      footer={
-        <>
+        ]}
+        footer={
           <>
-            <h3> Apps for message types </h3>
-            {props.messages.map(
-              (m) =>
-                m.knownApps.length > 0 && (
-                  <div key={m.type}>
-                    <h4>{m.type}</h4>
-                    <ul>
-                      {m.knownApps.map((app) => (
-                        <li key={app}>{app}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ),
-            )}
+            <ProcessorsStatusTable processors={props.status} />
           </>
-          <ProcessorsStatusTable processors={props.status} />
-        </>
-      }
-    />
+        }
+      />
+    </>
   )
 }
 

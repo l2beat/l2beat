@@ -1,5 +1,10 @@
-import { type Branded, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { randomUUID } from 'crypto'
+import {
+  type Block,
+  type Branded,
+  EthereumAddress,
+  type Transaction,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   type Abi,
   type ContractEventName,
@@ -55,20 +60,15 @@ Address32.NATIVE = Address32('native')
 export interface InteropEventContext {
   timestamp: UnixTime
   chain: string
-  blockNumber: number
-  blockHash: string
   txHash: string
-  txValue?: bigint
-  txTo?: Address32
-  txFrom?: Address32
   logIndex: number
-  txData: string
 }
 
 export interface InteropEvent<T = unknown> {
   plugin: string
   eventId: string
   type: string
+  direction?: 'incoming' | 'outgoing'
   expiresAt: UnixTime
   ctx: InteropEventContext
   args: T
@@ -88,6 +88,8 @@ export interface TransferSide {
   event: InteropEvent
   tokenAddress?: Address32
   tokenAmount?: bigint
+  wasBurned?: boolean
+  wasMinted?: boolean
 }
 
 export interface InteropTransfer {
@@ -104,19 +106,33 @@ export interface InteropIgnore {
   events: InteropEvent[]
 }
 
+const ABC = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+function randomId() {
+  let id = ''
+  for (let i = 0; i < 10; i++) {
+    id += ABC[Math.floor(Math.random() * ABC.length)]
+  }
+  return id
+}
+
 export function generateId(type: string) {
-  return `${type}-${randomUUID()}`
+  return `${type}-${randomId()}`
 }
 
 export interface InteropEventType<T> {
   type: string
-  create(ctx: InteropEventContext, payload: T): Omit<InteropEvent<T>, 'plugin'>
+  create(capture: LogToCapture, payload: T): Omit<InteropEvent<T>, 'plugin'>
+  createTx(capture: TxToCapture, payload: T): Omit<InteropEvent<T>, 'plugin'>
+  createCtx(
+    ctx: InteropEventContext,
+    payload: T,
+  ): Omit<InteropEvent<T>, 'plugin'>
   checkType(action: InteropEvent): action is InteropEvent<T>
 }
 
 export function createInteropEventType<T>(
   type: string,
-  options?: { ttl?: number },
+  options?: { ttl?: number; direction?: 'incoming' | 'outgoing' },
 ): InteropEventType<T> {
   if (!/\w+\.\w+/.test(type)) {
     throw new Error(
@@ -131,10 +147,36 @@ export function createInteropEventType<T>(
 
   return {
     type,
-    create(ctx: InteropEventContext, args: T): Omit<InteropEvent<T>, 'plugin'> {
+    create(capture: LogToCapture, args: T): Omit<InteropEvent<T>, 'plugin'> {
+      return this.createCtx(
+        {
+          chain: capture.chain,
+          logIndex: capture.log.logIndex ?? -1, // log.logIndex being null should never happen!
+          timestamp: capture.block.timestamp,
+          txHash: capture.tx.hash ?? '', // tx.hash being null should never happen!
+        },
+        args,
+      )
+    },
+    createTx(capture: TxToCapture, args: T): Omit<InteropEvent<T>, 'plugin'> {
+      return this.createCtx(
+        {
+          chain: capture.chain,
+          logIndex: -1,
+          timestamp: capture.block.timestamp,
+          txHash: capture.tx.hash ?? '', // tx.hash being null should never happen!
+        },
+        args,
+      )
+    },
+    createCtx(
+      ctx: InteropEventContext,
+      args: T,
+    ): Omit<InteropEvent<T>, 'plugin'> {
       return {
         eventId: generateId('evt'),
         type,
+        ...(options?.direction ? { direction: options.direction } : {}),
         expiresAt: ctx.timestamp + ttl,
         ctx,
         args,
@@ -149,12 +191,16 @@ export function createInteropEventType<T>(
 export interface LogToCapture {
   log: Log
   txLogs: Log[]
-  ctx: InteropEventContext
+  tx: Transaction
+  block: Block
+  chain: string
 }
 
 export interface TxToCapture {
-  tx: InteropEventContext
   txLogs: Log[]
+  tx: Transaction
+  block: Block
+  chain: string
 }
 
 export type MatchResult = (
@@ -279,10 +325,12 @@ export interface InteropTransferOptions {
   srcEvent: InteropEvent
   srcTokenAddress?: Address32
   srcAmount?: bigint
+  srcWasBurned?: boolean
 
   dstEvent: InteropEvent
   dstTokenAddress?: Address32
   dstAmount?: bigint
+  dstWasMinted?: boolean
 
   extraEvents?: InteropEvent[]
 }
@@ -308,11 +356,13 @@ function Transfer(
       event: options.srcEvent,
       tokenAddress: options.srcTokenAddress,
       tokenAmount: options.srcAmount,
+      wasBurned: options.srcWasBurned,
     },
     dst: {
       event: options.dstEvent,
       tokenAddress: options.dstTokenAddress,
       tokenAmount: options.dstAmount,
+      wasMinted: options.dstWasMinted,
     },
   }
 }

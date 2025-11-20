@@ -9,6 +9,7 @@ allbridge is a simple swap service that performs three steps:
  */
 
 import {
+  Address32,
   createEventParser,
   createInteropEventType,
   defineNetworks,
@@ -47,6 +48,10 @@ const parseTokensReceived = createEventParser(
   'event TokensReceived(uint256 amount, bytes32 recipient, uint256 nonce, uint8 messenger, bytes32 message)',
 )
 
+const parseTransfer = createEventParser(
+  'event Transfer(address indexed from, address indexed to, uint256 value)',
+)
+
 export const ALLBRDIGE_NETWORKS = defineNetworks('allbridge', [
   { allBridgeChainId: 6, chain: 'arbitrum' },
   { allBridgeChainId: 9, chain: 'base' },
@@ -61,6 +66,8 @@ export const TokensSent = createInteropEventType<{
   amount: bigint
   receiveToken: `0x${string}`
   $dstChain: string
+  srcTokenAddress?: Address32
+  srcAmount?: bigint
 }>('allbridge.TokensSent')
 
 export const MessageReceived = createInteropEventType<{
@@ -72,6 +79,8 @@ export const TokensReceived = createInteropEventType<{
   amount: bigint
   message: `0x${string}`
   $srcChain: string
+  dstTokenAddress?: Address32
+  dstAmount?: bigint
 }>('allbridge.TokensReceived')
 
 export class AllbridgePlugIn implements InteropPlugin {
@@ -81,7 +90,7 @@ export class AllbridgePlugIn implements InteropPlugin {
     const messageSent = parseMessageSent(input.log, null)
     if (messageSent) {
       return [
-        MessageSent.create(input.ctx, {
+        MessageSent.create(input, {
           message: messageSent.message,
           $dstChain: findChain(
             ALLBRDIGE_NETWORKS,
@@ -96,7 +105,7 @@ export class AllbridgePlugIn implements InteropPlugin {
     const messageReceived = parseMessageReceived(input.log, null)
     if (messageReceived) {
       return [
-        MessageReceived.create(input.ctx, {
+        MessageReceived.create(input, {
           message: messageReceived.message,
           $srcChain: findChain(
             ALLBRDIGE_NETWORKS,
@@ -109,8 +118,31 @@ export class AllbridgePlugIn implements InteropPlugin {
     }
     const tokensSent = parseTokensSent(input.log, null)
     if (tokensSent) {
+      // Find Transfer event in any preceding logs
+      let srcTokenAddress: Address32 | undefined
+      let srcAmount: bigint | undefined
+
+      for (
+        let offset = 1;
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        offset <= input.log.logIndex!;
+        offset++
+      ) {
+        const precedingLog = input.txLogs.find(
+          // biome-ignore lint/style/noNonNullAssertion: It's there
+          (x) => x.logIndex === input.log.logIndex! - offset,
+        )
+        if (!precedingLog) break
+
+        const transfer = parseTransfer(precedingLog, null)
+        if (transfer) {
+          srcTokenAddress = Address32.from(precedingLog.address)
+          srcAmount = transfer.value
+          break
+        }
+      }
       return [
-        TokensSent.create(input.ctx, {
+        TokensSent.create(input, {
           amount: tokensSent.amount,
           receiveToken: tokensSent.receiveToken,
           $dstChain: findChain(
@@ -118,14 +150,38 @@ export class AllbridgePlugIn implements InteropPlugin {
             (x) => x.allBridgeChainId,
             Number(tokensSent.destinationChainId),
           ),
+          srcTokenAddress,
+          srcAmount,
         }),
       ]
     }
 
     const tokensReceived = parseTokensReceived(input.log, null)
     if (tokensReceived) {
+      let dstTokenAddress: Address32 | undefined
+      let dstAmount: bigint | undefined
+
+      for (
+        let offset = 1;
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        offset <= input.log.logIndex!;
+        offset++
+      ) {
+        const precedingLog = input.txLogs.find(
+          // biome-ignore lint/style/noNonNullAssertion: It's there
+          (x) => x.logIndex === input.log.logIndex! - offset,
+        )
+        if (!precedingLog) break
+
+        const transfer = parseTransfer(precedingLog, null)
+        if (transfer) {
+          dstTokenAddress = Address32.from(precedingLog.address)
+          dstAmount = transfer.value
+          break
+        }
+      }
       return [
-        TokensReceived.create(input.ctx, {
+        TokensReceived.create(input, {
           amount: tokensReceived.amount,
           message: tokensReceived.message,
           $srcChain: findChain(
@@ -134,6 +190,8 @@ export class AllbridgePlugIn implements InteropPlugin {
             /* srcChain is the first byte of the message */
             Number.parseInt(tokensReceived.message.slice(2, 4), 16),
           ),
+          dstTokenAddress,
+          dstAmount,
         }),
       ]
     }
@@ -147,17 +205,20 @@ export class AllbridgePlugIn implements InteropPlugin {
   */
 
   matchTypes = [TokensReceived]
-  match(delivery: InteropEvent, db: InteropEventDb): MatchResult | undefined {
-    if (TokensReceived.checkType(delivery)) {
+  match(
+    tokensReceived: InteropEvent,
+    db: InteropEventDb,
+  ): MatchResult | undefined {
+    if (TokensReceived.checkType(tokensReceived)) {
       const messageReceived = db.find(MessageReceived, {
-        message: delivery.args.message,
+        message: tokensReceived.args.message,
       })
       if (!messageReceived) {
         return
       }
 
       const messageSent = db.find(MessageSent, {
-        message: delivery.args.message,
+        message: tokensReceived.args.message,
       })
       if (!messageSent) {
         return
@@ -172,15 +233,17 @@ export class AllbridgePlugIn implements InteropPlugin {
 
       return [
         Result.Message('allbridge.Message', {
-          app: 'allbridgeswap',
+          app: 'allbridge',
           srcEvent: messageSent,
           dstEvent: messageReceived,
         }),
-        Result.Transfer('allbridgeswap.Transfer', {
+        Result.Transfer('allbridge.Transfer', {
           srcEvent: tokensSent,
-          srcAmount: tokensSent.args.amount,
-          dstEvent: delivery,
-          dstAmount: delivery.args.amount,
+          srcTokenAddress: tokensSent.args.srcTokenAddress,
+          srcAmount: tokensSent.args.srcAmount,
+          dstEvent: tokensReceived,
+          dstAmount: tokensReceived.args.dstAmount,
+          dstTokenAddress: tokensReceived.args.dstTokenAddress,
         }),
       ]
     }

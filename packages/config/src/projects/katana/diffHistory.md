@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xd9252e729a8e91e0eb85f53a15d280a32e488214
+
+# Diff at Mon, 17 Nov 2025 11:29:07 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1ced7b6309befc68bef18813184f322d7f7507fd block: 1762264436
+- current timestamp: 1763378838
+
+## Description
+
+New multisig member.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xF045025C845E786E343Df30cC6f67ec6BB822b34"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 7 (43%)"
+    }
+```
+
 Generated with discovered.json: 0x2841529776b042045de62632501c9feaf74f7368
 
 # Diff at Tue, 04 Nov 2025 13:55:22 GMT:

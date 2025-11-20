@@ -70,6 +70,10 @@ const parseV1MessageReceived = createEventParser(
   'event MessageReceived(address indexed caller, uint32 sourceDomain, uint64 indexed nonce, bytes32 sender, bytes messageBody)',
 )
 
+const parseTransfer = createEventParser(
+  'event Transfer(address indexed from, address indexed to, uint256 value)',
+)
+
 export const CCTPv1MessageSent = createInteropEventType<{
   messageBody: string
   $dstChain: string
@@ -82,6 +86,8 @@ export const CCTPv1MessageReceived = createInteropEventType<{
   $srcChain: string
   nonce: number
   messageBody: string
+  dstTokenAddress?: Address32
+  dstAmount?: bigint
 }>('cctp-v1.MessageReceived')
 
 export class CCTPV1Plugin implements InteropPlugin {
@@ -93,7 +99,7 @@ export class CCTPV1Plugin implements InteropPlugin {
     const networks = this.configs.get(CCTPV1Config)
     if (!networks) return
 
-    const network = networks.find((n) => n.chain === input.ctx.chain)
+    const network = networks.find((n) => n.chain === input.chain)
     if (!network) return
     assert(
       network.messageTransmitter,
@@ -108,19 +114,19 @@ export class CCTPV1Plugin implements InteropPlugin {
       if (version === 0) {
         const message = decodeV1Message(messageSent.message)
         if (!message) return
-        const burnMessage = decodeBurnMessage(message.rawBody)
+        const messageBody = decodeV1MessageBody(message.rawBody)
         return [
-          CCTPv1MessageSent.create(input.ctx, {
+          CCTPv1MessageSent.create(input, {
             messageBody: message.rawBody,
             $dstChain: findChain(
               networks,
               (x) => x.domain,
               Number(message.destinationDomain),
             ),
-            srcTokenAddress: burnMessage
-              ? Address32.from(burnMessage.burnToken)
+            srcTokenAddress: messageBody
+              ? Address32.from(messageBody.burnToken)
               : undefined,
-            srcAmount: burnMessage?.amount ?? undefined,
+            srcAmount: messageBody?.amount ?? undefined,
           }),
         ]
       }
@@ -130,8 +136,17 @@ export class CCTPV1Plugin implements InteropPlugin {
       network.messageTransmitter,
     ])
     if (v1MessageReceived) {
+      // const messageBody = decodeMessageBody(v1MessageReceived.messageBody) // only encodes the source token, so no value to us
+      // if (!messageBody) return
+      // use erc20 transfer event instead (fragile because it might not be 2 logs before)
+      const previouspreviousLog = input.txLogs.find(
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        (x) => x.logIndex === input.log.logIndex! - 2,
+      )
+      const transfer =
+        previouspreviousLog && parseTransfer(previouspreviousLog, null)
       return [
-        CCTPv1MessageReceived.create(input.ctx, {
+        CCTPv1MessageReceived.create(input, {
           caller: EthereumAddress(v1MessageReceived.caller),
           $srcChain: findChain(
             networks,
@@ -140,6 +155,10 @@ export class CCTPV1Plugin implements InteropPlugin {
           ),
           nonce: Number(v1MessageReceived.nonce),
           messageBody: v1MessageReceived.messageBody,
+          dstTokenAddress: previouspreviousLog
+            ? Address32.from(previouspreviousLog.address)
+            : undefined,
+          dstAmount: transfer?.value ?? undefined,
         }),
       ]
     }
@@ -170,6 +189,8 @@ export class CCTPV1Plugin implements InteropPlugin {
           srcTokenAddress: messageSent.args.srcTokenAddress,
           srcAmount: messageSent.args.srcAmount,
           dstEvent: messageReceived,
+          dstTokenAddress: messageReceived.args.dstTokenAddress,
+          dstAmount: messageReceived.args.dstAmount,
         }),
       ]
     }
@@ -212,7 +233,7 @@ export function decodeV1Message(encodedHex: string) {
 }
 
 // https://developers.circle.com/cctp/v1/message-format
-export function decodeBurnMessage(encodedHex: string) {
+export function decodeV1MessageBody(encodedHex: string) {
   try {
     const reader = new BinaryReader(encodedHex)
     const version = reader.readUint32()

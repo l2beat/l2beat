@@ -31,6 +31,7 @@ export const optimism: ScalingProject = opStackL2({
       bridges: ['https://app.optimism.io'],
       documentation: [
         'https://docs.optimism.io/',
+        'https://specs.optimism.io/',
         'https://community.optimism.io',
       ],
       explorers: [
@@ -47,7 +48,10 @@ export const optimism: ScalingProject = opStackL2({
         'https://twitch.tv/optimismpbc',
         'https://discord.gg/optimism',
       ],
-      other: ['https://rollup.codes/optimism'],
+      other: [
+        'https://rollup.codes/optimism',
+        'https://growthepie.com/chains/optimism',
+      ],
     },
   },
   hasSuperchainScUpgrades: true,

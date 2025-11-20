@@ -34,7 +34,11 @@ export function ListPanel() {
     <div className="h-full w-full overflow-x-hidden">
       <ol>
         {response.data.entries.map((chain, i) => (
-          <ListItemChain key={i} entry={chain} first={i === 0} />
+          <ListItemChain
+            key={`${chain.project}-${i}`}
+            entry={chain}
+            first={i === 0}
+          />
         ))}
       </ol>
     </div>

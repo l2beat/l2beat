@@ -6,7 +6,7 @@ import type {
   StructureContract,
 } from '../config/StructureConfig'
 import type { EntryParameters } from '../output/types'
-import { applyReturnFragment } from '../type-casters/applyReturnFragment'
+import { asStructured } from '../type-casters/asStructured'
 import { prefixAddresses } from '../utils/prefixAddresses'
 import type { HandlerResult } from './Handler'
 import { orderByCopyDependencies } from './orderByCopyDependencies'
@@ -27,9 +27,9 @@ export function decodeHandlerResults(
   for (const { value, field, fragment, error } of results) {
     if (value !== undefined) {
       try {
-        values[field] = applyReturnFragment(
+        values[field] = asStructured(
           prefixAddresses(longChain, value),
-          fragment,
+          fragment?.outputs,
         )
       } catch (e) {
         errors[field] = getErrorMessage(e)

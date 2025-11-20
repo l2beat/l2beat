@@ -38,6 +38,7 @@ import { MayanSwiftPlugin } from './mayan-swift'
 import { OpStackPlugin } from './opstack/opstack'
 import { OpStackStandardBridgePlugin } from './opstack/opstack-standardbridge'
 import { OrbitStackPlugin } from './orbitstack/orbitstack'
+import { OrbitStackCustomGatewayPlugin } from './orbitstack/orbitstack-customgateway'
 import { OrbitStackStandardGatewayPlugin } from './orbitstack/orbitstack-standardgateway'
 import { OrbitStackWethGatewayPlugin } from './orbitstack/orbitstack-wethgateway'
 import { RelayPlugin } from './relay/relay.plugin'
@@ -124,6 +125,7 @@ export function createInteropPlugins(
       new AcrossPlugin(deps.configs),
       new OrbitStackWethGatewayPlugin(), // should be run before OrbitStackStandardGateway and OrbitStack
       new OrbitStackStandardGatewayPlugin(), // should be run before OrbitStack
+      new OrbitStackCustomGatewayPlugin(), // should be run before OrbitStack
       new OrbitStackPlugin(),
       new OpStackStandardBridgePlugin(), // should be run before OpStack
       new OpStackPlugin(),

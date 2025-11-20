@@ -53,6 +53,7 @@ export const swell = opStackL2({
         'https://discord.com/invite/swellnetworkdao',
         'https://swellnetwork.io/blog',
       ],
+      other: ['https://growthepie.com/chains/swell'],
     },
   },
   stateDerivation: DERIVATION.OPSTACK('SWELL'),

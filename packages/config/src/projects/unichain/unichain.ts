@@ -37,6 +37,7 @@ export const unichain: ScalingProject = opStackL2({
         'https://x.com/unichain',
         'https://discord.com/invite/uniswap',
       ],
+      other: ['https://growthepie.com/chains/unichain'],
     },
   },
   hasSuperchainScUpgrades: true,

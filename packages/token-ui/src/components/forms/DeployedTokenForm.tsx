@@ -5,9 +5,11 @@ import {
   CheckIcon,
   ChevronsUpDownIcon,
   PlusIcon,
+  SettingsIcon,
 } from 'lucide-react'
 import type { SubmitHandler, UseFormReturn } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import { toast } from 'sonner'
 import { Button, buttonVariants } from '~/components/core/Button'
 import {
   Command,
@@ -33,18 +35,45 @@ import {
 } from '~/components/core/Popover'
 import { Spinner } from '~/components/core/Spinner'
 import { Textarea } from '~/components/core/TextArea'
-import { api } from '~/react-query/trpc'
 import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
 import { minLengthCheck, minNumberCheck } from '~/utils/checks'
 import { cn } from '~/utils/cn'
 import { getAbstractTokenDisplayId } from '~/utils/getDisplayId'
+import { parseDateTimePaste } from '~/utils/parseDate'
+import type {
+  ChainApi,
+  ChainRecord,
+} from '../../../../database/dist/repositories/ChainRepository'
+import { AutoFillIndicator } from '../AutoFillIndicator'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../core/Tooltip'
+import { ExplorerLinkButton } from '../ExplorerLink'
+
+export type DataSource = 'coingecko' | ChainApi['type']
+
+export const fieldToDataSource: Record<
+  'symbol' | 'decimals' | 'deploymentTimestamp' | 'abstractTokenId',
+  DataSource[]
+> = {
+  symbol: ['coingecko'],
+  decimals: ['rpc'],
+  deploymentTimestamp: ['etherscan', 'blockscout'],
+  abstractTokenId: ['coingecko'],
+}
+
+export const dataSourceToLabel: Record<DataSource, string> = {
+  coingecko: 'Coingecko',
+  rpc: 'RPC',
+  etherscan: 'Etherscan',
+  blockscout: 'Blockscout',
+  blockscoutV2: 'Blockscout V2',
+  routescan: 'Routescan',
+}
 
 export type DeployedTokenSchema = v.infer<typeof DeployedTokenSchema>
 export const DeployedTokenSchema = v.object({
   chain: v.string(),
   address: v.string(),
-  decimals: v.number().check(minNumberCheck(1)),
+  decimals: v.string().transform(Number).check(minNumberCheck(1)),
   symbol: v.string().check(minLengthCheck(1)),
   abstractTokenId: v.string().optional(),
   deploymentTimestamp: v.string(),
@@ -63,6 +92,18 @@ interface Props {
     data: AbstractTokenRecord[] | undefined
     loading: boolean
   }
+  chains: {
+    data: ChainRecord[] | undefined
+    loading: boolean
+  }
+  autofill:
+    | {
+        symbol: boolean
+        decimals: boolean
+        deploymentTimestamp: boolean
+        abstractTokenId: boolean
+      }
+    | undefined
   children: React.ReactNode
 }
 
@@ -72,15 +113,15 @@ export function DeployedTokenForm({
   isFormDisabled,
   tokenDetails,
   abstractTokens,
+  chains,
+  autofill,
   children,
 }: Props) {
-  const { data: chains, isLoading: areChainsLoading } =
-    api.chains.getAll.useQuery()
-
   const abstractTokenId = form.watch('abstractTokenId')
   const abstractToken = abstractTokens.data?.find(
     (abstractToken) => abstractToken.id === abstractTokenId,
   )
+  const chainValue = form.watch('chain')
 
   const success =
     tokenDetails.data && tokenDetails.data?.error?.type !== 'already-exists'
@@ -100,62 +141,77 @@ export function DeployedTokenForm({
                     Chain{' '}
                     {tokenDetails.loading && <Spinner className="size-3.5" />}
                   </FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          disabled={areChainsLoading}
-                          variant="outline"
-                          role="combobox"
-                          className={cn(
-                            'justify-between',
-                            !field.value && 'text-muted-foreground',
-                          )}
-                        >
-                          {field.value
-                            ? (chains?.find(
-                                (chain) => chain.name === field.value,
-                              )?.name ?? form.formState.defaultValues?.chain)
-                            : 'Select chain'}
-                          <ChevronsUpDownIcon className="opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-[200px] p-0" align="start">
-                      <Command>
-                        <CommandInput
-                          placeholder="Search chain..."
-                          className="h-9"
-                        />
-                        <CommandList>
-                          <CommandEmpty>No chain found.</CommandEmpty>
-                          <CommandGroup>
-                            {chains?.map((chain) => (
-                              <CommandItem
-                                value={chain.name}
-                                key={chain.name}
-                                onSelect={() => {
-                                  form.setValue('chain', chain.name, {
-                                    shouldDirty: true,
-                                  })
-                                }}
-                              >
-                                {chain.name}
-                                <CheckIcon
-                                  className={cn(
-                                    'ml-auto',
-                                    chain.name === field.value
-                                      ? 'opacity-100'
-                                      : 'opacity-0',
-                                  )}
-                                />
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                        </CommandList>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
+                  <div className="flex items-center gap-2">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl className="flex-1">
+                          <Button
+                            disabled={chains.loading}
+                            variant="outline"
+                            role="combobox"
+                            className={cn(
+                              'justify-between',
+                              !field.value && 'text-muted-foreground',
+                            )}
+                          >
+                            {field.value
+                              ? (chains.data?.find(
+                                  (chain) => chain.name === field.value,
+                                )?.name ?? form.formState.defaultValues?.chain)
+                              : 'Select chain'}
+                            <ChevronsUpDownIcon className="opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[200px] p-0" align="start">
+                        <Command>
+                          <CommandInput
+                            placeholder="Search chain..."
+                            className="h-9"
+                          />
+                          <CommandList>
+                            <CommandEmpty>No chain found.</CommandEmpty>
+                            <CommandGroup>
+                              {chains.data?.map((chain) => (
+                                <CommandItem
+                                  value={chain.name}
+                                  key={chain.name}
+                                  onSelect={() => {
+                                    form.setValue('chain', chain.name, {
+                                      shouldDirty: true,
+                                    })
+                                  }}
+                                >
+                                  {chain.name}
+                                  <CheckIcon
+                                    className={cn(
+                                      'ml-auto',
+                                      chain.name === field.value
+                                        ? 'opacity-100'
+                                        : 'opacity-0',
+                                    )}
+                                  />
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    {chainValue && (
+                      <Link
+                        to={`/chains/${chainValue}`}
+                        target="_blank"
+                        className={buttonVariants({
+                          variant: 'outline',
+                          className: 'shrink-0',
+                          size: 'icon',
+                        })}
+                      >
+                        <ArrowRightIcon />
+                      </Link>
+                    )}
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}
@@ -165,18 +221,54 @@ export function DeployedTokenForm({
               control={form.control}
               name="address"
               success={success}
-              render={({ field }) => (
-                <FormItem className="col-span-2">
-                  <FormLabel>
-                    Address{' '}
-                    {tokenDetails.loading && <Spinner className="size-3.5" />}
-                  </FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="0xd33db33f" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              render={({ field }) => {
+                const chainRecord = chains.data?.find(
+                  (chain) => chain.name === chainValue,
+                )
+
+                return (
+                  <FormItem className="col-span-2">
+                    <FormLabel>
+                      Address{' '}
+                      {tokenDetails.loading && <Spinner className="size-3.5" />}
+                    </FormLabel>
+                    <div className="flex items-center gap-2">
+                      <FormControl>
+                        <Input {...field} placeholder="0xd33db33f" />
+                      </FormControl>
+                      {field.value?.startsWith('0x') ? (
+                        chainRecord?.explorerUrl ? (
+                          <ExplorerLinkButton
+                            explorerUrl={chainRecord.explorerUrl}
+                            value={field.value}
+                            type="address"
+                          />
+                        ) : (
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Link
+                                to={`/chains/${chainValue}`}
+                                target="_blank"
+                                className={buttonVariants({
+                                  variant: 'outline',
+                                  className: 'shrink-0',
+                                })}
+                              >
+                                <SettingsIcon />
+                              </Link>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              No explorer URL configured for this chain. Click
+                              to configure.
+                            </TooltipContent>
+                          </Tooltip>
+                        )
+                      ) : null}
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )
+              }}
             />
           </div>
 
@@ -185,7 +277,18 @@ export function DeployedTokenForm({
             name="symbol"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Symbol</FormLabel>
+                <FormLabel>
+                  Symbol{' '}
+                  {autofill && chainValue && (
+                    <AutoFillIndicator
+                      sources={fieldToDataSource.symbol.map(
+                        (dS) => dataSourceToLabel[dS],
+                      )}
+                      available={autofill.symbol}
+                      chainName={chainValue}
+                    />
+                  )}
+                </FormLabel>
                 <FormControl>
                   <Input {...field} disabled={tokenDetails.loading} />
                 </FormControl>
@@ -198,12 +301,22 @@ export function DeployedTokenForm({
             name="decimals"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Decimals</FormLabel>
+                <FormLabel>
+                  Decimals
+                  {autofill && chainValue && (
+                    <AutoFillIndicator
+                      sources={fieldToDataSource.decimals.map(
+                        (dS) => dataSourceToLabel[dS],
+                      )}
+                      available={autofill.decimals}
+                      chainName={chainValue}
+                    />
+                  )}
+                </FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
                     {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
+                    onChange={(e) => field.onChange(e.target.value)}
                     disabled={tokenDetails.loading}
                   />
                 </FormControl>
@@ -217,12 +330,35 @@ export function DeployedTokenForm({
             name="deploymentTimestamp"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Deployment Timestamp</FormLabel>
+                <FormLabel>
+                  Deployment Timestamp{' '}
+                  {autofill && chainValue && (
+                    <AutoFillIndicator
+                      sources={fieldToDataSource.deploymentTimestamp.map(
+                        (dS) => dataSourceToLabel[dS],
+                      )}
+                      available={autofill.deploymentTimestamp}
+                      chainName={chainValue}
+                    />
+                  )}
+                </FormLabel>
                 <FormControl>
                   <Input
                     type="datetime-local"
                     {...field}
                     disabled={tokenDetails.loading}
+                    onPaste={(e) => {
+                      e.preventDefault()
+                      const pastedText = e.clipboardData.getData('text')
+                      const parsedDate = parseDateTimePaste(pastedText)
+                      if (parsedDate) {
+                        field.onChange(parsedDate)
+                      } else {
+                        toast.error(
+                          `Invalid date format. If you think it's correct, please report to dev team.`,
+                        )
+                      }
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -234,7 +370,18 @@ export function DeployedTokenForm({
             name="abstractTokenId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Abstract Token ID</FormLabel>
+                <FormLabel>
+                  Abstract Token ID{' '}
+                  {autofill && chainValue && (
+                    <AutoFillIndicator
+                      sources={fieldToDataSource.abstractTokenId.map(
+                        (dS) => dataSourceToLabel[dS],
+                      )}
+                      available={autofill.abstractTokenId}
+                      chainName={chainValue}
+                    />
+                  )}
+                </FormLabel>
                 <div className="flex items-center gap-2">
                   <Popover>
                     <PopoverTrigger asChild>
@@ -312,6 +459,7 @@ export function DeployedTokenForm({
                       className={buttonVariants({
                         variant: 'outline',
                         className: 'shrink-0',
+                        size: 'icon',
                       })}
                     >
                       <ArrowRightIcon />
