@@ -164,7 +164,7 @@ function AbstractTokenView({
                         className="flex items-center justify-between gap-2 px-6 odd:bg-muted"
                       >
                         {suggestion.chain} ({suggestion.address})
-                        <Button variant="link" asChild>
+                        <Button variant="link" asChild size="icon">
                           <Link
                             to={buildUrlWithParams('/tokens/new', {
                               tab: 'deployed',
@@ -207,7 +207,7 @@ function AbstractTokenView({
                     className="flex items-center justify-between gap-2 px-6 odd:bg-muted"
                   >
                     {token.chain} ({token.symbol})
-                    <Button asChild variant="link">
+                    <Button asChild variant="link" size="icon">
                       <Link to={`/tokens/${token.chain}/${token.address}`}>
                         <ArrowRightIcon />
                       </Link>
@@ -235,6 +235,7 @@ function AbstractTokenView({
         <ButtonWithSpinner
           variant="destructive"
           className="mt-2"
+          size="icon"
           onClick={() => {
             planMutate({
               type: 'DeleteAbstractTokenIntent',

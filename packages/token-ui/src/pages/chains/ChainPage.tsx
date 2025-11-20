@@ -118,6 +118,7 @@ function ChainView({ chain }: { chain: ChainRecord }) {
       <ButtonWithSpinner
         variant="destructive"
         className="mt-2"
+        size="icon"
         onClick={() => {
           if (
             confirm(

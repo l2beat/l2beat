@@ -147,6 +147,7 @@ export function AbstractTokenForm({
                       className={buttonVariants({
                         variant: 'outline',
                         className: 'shrink-0',
+                        size: 'icon',
                       })}
                     >
                       <ArrowRightIcon />
