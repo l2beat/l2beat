@@ -24,6 +24,7 @@ import {
   TableRow,
 } from '~/components/core/Table'
 import { ExplorerLink } from '~/components/ExplorerLink'
+import { ExternalLink } from '~/components/ExternalLink'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractToken, DeployedToken } from '~/mock/types'
@@ -117,14 +118,9 @@ function ChainsTable({ chains }: { chains: ChainRecord[] }) {
               <TableCell>{chain.chainId}</TableCell>
               <TableCell>
                 {chain.explorerUrl ? (
-                  <a
-                    href={chain.explorerUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 underline hover:text-blue-600"
-                  >
+                  <ExternalLink href={chain.explorerUrl}>
                     {chain.explorerUrl}
-                  </a>
+                  </ExternalLink>
                 ) : (
                   '-'
                 )}
