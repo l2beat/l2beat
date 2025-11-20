@@ -68,6 +68,7 @@ export interface InteropEvent<T = unknown> {
   plugin: string
   eventId: string
   type: string
+  direction?: 'incoming' | 'outgoing'
   expiresAt: UnixTime
   ctx: InteropEventContext
   args: T
@@ -129,7 +130,7 @@ export interface InteropEventType<T> {
 
 export function createInteropEventType<T>(
   type: string,
-  options?: { ttl?: number },
+  options?: { ttl?: number; direction?: 'incoming' | 'outgoing' },
 ): InteropEventType<T> {
   if (!/\w+\.\w+/.test(type)) {
     throw new Error(
@@ -173,6 +174,7 @@ export function createInteropEventType<T>(
       return {
         eventId: generateId('evt'),
         type,
+        ...(options?.direction ? { direction: options.direction } : {}),
         expiresAt: ctx.timestamp + ttl,
         ctx,
         args,
