@@ -50,7 +50,7 @@ export function ChartTimeRangeControls({
   offset = 0,
 }: Props) {
   const [internalValue, setInternalValue] = useState<DateRange | undefined>({
-    from: value.from ? UnixTime.toDate(value.from) : undefined,
+    from: value.from ? UnixTime.toDate(value.from) : UnixTime.toDate(0),
     to: UnixTime.toDate(value.to),
   })
   const isClient = useIsClient()
@@ -75,9 +75,27 @@ export function ChartTimeRangeControls({
     setInternalValue(dateRange)
 
     if (dateRange?.from && dateRange?.to) {
+      const now = UnixTime.now() + offset
+      const todayStart = UnixTime.toStartOf(now, 'day')
+
+      // Check if the selected dates are today
+      const fromDate = UnixTime.fromDate(dateRange.from)
+      const toDate = UnixTime.fromDate(dateRange.to)
+      const fromIsToday = UnixTime.toStartOf(fromDate, 'day') === todayStart
+      const toIsToday = UnixTime.toStartOf(toDate, 'day') === todayStart
+
+      // If the date is today, use current hour instead of midnight
+      // Otherwise, use start of day for from and end of day for to
+      const fromTimestamp = fromIsToday
+        ? UnixTime.toStartOf(now, 'hour')
+        : UnixTime.toStartOf(fromDate, 'day')
+      const toTimestamp = toIsToday
+        ? UnixTime.toStartOf(now, 'hour')
+        : UnixTime.toEndOf(toDate, 'day')
+
       setValue({
-        from: UnixTime.fromDate(dateRange.from),
-        to: UnixTime.fromDate(dateRange.to),
+        from: fromTimestamp,
+        to: toTimestamp,
       })
     }
   }
@@ -122,7 +140,14 @@ export function ChartTimeRangeControls({
         {options.map((option) => (
           <button
             key={option.value}
-            onClick={() => setValue(optionToRange(option.value))}
+            onClick={() => {
+              const range = optionToRange(option.value)
+              setValue(range)
+              setInternalValue({
+                from: UnixTime.toDate(range.from ?? 0),
+                to: UnixTime.toDate(range.to),
+              })
+            }}
             type="button"
             disabled={option.disabled}
             data-state={
@@ -217,7 +242,12 @@ export function optionToRange(
   const offset = opts?.offset ?? 0
   const days = optionToDays(option)
   return {
-    from: days === null ? null : UnixTime.now() - days * UnixTime.DAY + offset,
-    to: UnixTime.now() + offset,
+    from:
+      days === null
+        ? null
+        : UnixTime.toStartOf(UnixTime.now(), 'hour') -
+          days * UnixTime.DAY +
+          offset,
+    to: UnixTime.toStartOf(UnixTime.now(), 'hour') + offset,
   }
 }

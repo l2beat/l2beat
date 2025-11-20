@@ -95,9 +95,16 @@ export async function getDaThroughputChart({
     }
   }
 
-  const expectedTo = getThroughputExpectedTimestamp(resolution)
+  const expectedTo = getThroughputExpectedTimestamp({
+    to,
+    resolution,
+  })
 
-  const adjustedTo = isThroughputSynced(syncedUntil, false)
+  const adjustedTo = isThroughputSynced({
+    syncedUntil,
+    pastDaySynced: false,
+    to,
+  })
     ? maxTimestamp
     : expectedTo
 

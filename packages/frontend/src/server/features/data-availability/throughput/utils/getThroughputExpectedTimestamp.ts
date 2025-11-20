@@ -1,11 +1,12 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
-export function getThroughputExpectedTimestamp(
-  resolution: 'hourly' | 'sixHourly' | 'daily',
-  lastTimestamp?: UnixTime,
-) {
-  const now = lastTimestamp ?? UnixTime.now()
-
+export function getThroughputExpectedTimestamp({
+  to,
+  resolution,
+}: {
+  to: UnixTime
+  resolution: 'hourly' | 'sixHourly' | 'daily'
+}) {
   const unit: Record<typeof resolution, 'hour' | 'six hours' | 'day'> = {
     hourly: 'hour',
     sixHourly: 'six hours',
@@ -17,5 +18,5 @@ export function getThroughputExpectedTimestamp(
     daily: UnixTime.DAY,
   }
 
-  return UnixTime.toStartOf(now, unit[resolution]) - span[resolution]
+  return UnixTime.toStartOf(to, unit[resolution]) - span[resolution]
 }

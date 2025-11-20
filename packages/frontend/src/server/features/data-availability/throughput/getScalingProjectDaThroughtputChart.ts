@@ -10,11 +10,7 @@ import { generateTimestamps } from '../../utils/generateTimestamps'
 import { isThroughputSynced } from './isThroughputSynced'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
-import {
-  type DaThroughputTimeRange,
-  getThroughputRange,
-  rangeToResolution,
-} from './utils/range'
+import { getThroughputRange, rangeToResolution } from './utils/range'
 
 export type ScalingProjectDaThroughputChart = {
   chart: ScalingProjectDaThroughputChartPoint[]
@@ -49,9 +45,9 @@ export async function getScalingProjectDaThroughputChart(
   }
 
   const db = getDb()
-  const resolution = rangeToResolution(params.range as DaThroughputTimeRange)
+  const resolution = rangeToResolution(params.range)
 
-  const range = getThroughputRange(params.range as DaThroughputTimeRange)
+  const range = getThroughputRange(params.range)
   const [throughput, activityRecords] = await Promise.all([
     db.dataAvailability.getByProjectIdsAndTimeRange([params.projectId], range),
     getActivityForProjectAndRange(params.projectId, params.range),
@@ -91,8 +87,15 @@ export async function getScalingProjectDaThroughputChart(
     }
   }
 
-  const expectedTo = getThroughputExpectedTimestamp(resolution)
-  const adjustedTo = isThroughputSynced(syncedUntil, false)
+  const expectedTo = getThroughputExpectedTimestamp({
+    to: range[1],
+    resolution,
+  })
+  const adjustedTo = isThroughputSynced({
+    to: range[1],
+    syncedUntil,
+    pastDaySynced: false,
+  })
     ? maxTimestamp
     : expectedTo
 

@@ -1,7 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { getBucketValuesRange } from '~/utils/range/range'
-import { rangeToDays } from '~/utils/range/rangeToDays'
 
 export const DaThroughputTimeRangeValues = [
   '7d',
@@ -31,8 +30,13 @@ export function getThroughputRange(
 
 export type DaThroughputResolution = ReturnType<typeof rangeToResolution>
 export function rangeToResolution(range: DaThroughputTimeRange) {
-  const days = rangeToDays(range)
-  if (days && days <= 7) return 'hourly'
-  if (days && days < 180) return 'sixHourly'
+  if (range.from === null) return 'daily'
+  if (range.from > UnixTime.toStartOf(UnixTime.now(), 'day') - 7 * UnixTime.DAY)
+    return 'hourly'
+  if (
+    range.from >
+    UnixTime.toStartOf(UnixTime.now(), 'day') - 180 * UnixTime.DAY
+  )
+    return 'sixHourly'
   return 'daily'
 }
