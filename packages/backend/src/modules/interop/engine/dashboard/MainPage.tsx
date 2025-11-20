@@ -9,6 +9,7 @@ import type { InteropMissingTokenInfo } from '@l2beat/database/dist/repositories
 import { formatSeconds } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
+import { getInteropChains } from '../../../../config/makeConfig'
 import { Address32 } from '../../plugins/types'
 import { DataTablePage } from './DataTablePage'
 import { formatDollars } from './formatDollars'
@@ -75,12 +76,7 @@ function EventsTable(props: { events: InteropEventStatsRecord[] }) {
   )
 }
 
-const NETWORKS = generateNetworkPairs([
-  { name: 'ethereum', display: 'ETH' },
-  { name: 'base', display: 'BASE' },
-  { name: 'arbitrum', display: 'ARB' },
-  { name: 'optimism', display: 'OP' },
-])
+const NETWORKS = generateNetworkPairs(getInteropChains())
 
 function MessagesTable(props: { items: MessageStats[]; id: string }) {
   return (
