@@ -81,8 +81,10 @@ export async function getCostsChart({
     ([_, value]) => value.blobsGas !== null,
   )?.[0]
 
-  const expectedTo = getCostsExpectedTimestamp(resolution)
-  const adjustedTo = isCostsSynced(syncedUntil) ? maxTimestamp : expectedTo
+  const expectedTo = getCostsExpectedTimestamp(to, resolution)
+  const adjustedTo = isCostsSynced({ to, syncedUntil })
+    ? maxTimestamp
+    : expectedTo
 
   const timestamps = generateTimestamps([minTimestamp, adjustedTo], resolution)
 

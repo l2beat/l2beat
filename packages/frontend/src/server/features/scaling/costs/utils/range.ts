@@ -1,7 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { getBucketValuesRange } from '~/utils/range/range'
-import { rangeToDays } from '~/utils/range/rangeToDays'
 
 export type CostsTimeRange = v.infer<typeof CostsTimeRange>
 export const CostsTimeRange = v.object({
@@ -18,14 +17,17 @@ export function getCostsRange(
 }
 
 export type CostsResolution = ReturnType<typeof rangeToResolution>
-export function rangeToResolution(value: CostsTimeRange) {
-  const days = rangeToDays(value)
-  if (days && days < 30) {
+export function rangeToResolution(range: CostsTimeRange) {
+  if (range.from === null) return 'daily'
+  if (
+    range.from >
+    UnixTime.toStartOf(UnixTime.now(), 'day') - 30 * UnixTime.DAY
+  )
     return 'hourly'
-  }
-  if (days && days <= 90) {
+  if (
+    range.from >
+    UnixTime.toStartOf(UnixTime.now(), 'day') - 90 * UnixTime.DAY
+  )
     return 'sixHourly'
-  }
-
   return 'daily'
 }
