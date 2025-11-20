@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xb5bccb5bb583d65146dec59793b87f66375f639f
+Generated with discovered.json: 0x33d374ce8a5ffbbbbf65e438918bff1c8cd9b50b
 
-# Diff at Thu, 20 Nov 2025 14:32:40 GMT:
+# Diff at Thu, 20 Nov 2025 14:51:30 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@4b9fb6935244c163272f55e2acbd987c21dfd4d2 block: 1763566766
@@ -9,6 +9,17 @@ Generated with discovered.json: 0xb5bccb5bb583d65146dec59793b87f66375f639f
 ## Description
 
 config: silence disco.
+
+## Watched changes
+
+```diff
+    contract FlushRewarder (eth:0x7C9a7130379F1B5dd6e7A53AF84fC0fE32267B65) {
+    +++ description: None
+      values.rewardsAvailable:
+-        "1000000000000000000000000"
++        "998300000000000000000000"
+    }
+```
 
 ## Config/verification related changes
 
@@ -24,6 +35,12 @@ discovery. Values are for block 1763566766 (main branch discovery), not current.
       values.getBlock:
 -        []
     }
+```
+
+```diff
++   Status: CREATED
+    contract FlushRewarder (eth:0x7C9a7130379F1B5dd6e7A53AF84fC0fE32267B65)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0x7b64fdfa08d102a097f08c9ad6cf17b47f08a101

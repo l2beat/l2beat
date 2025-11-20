@@ -1,7 +1,7 @@
 {
   "name": "aztecnetwork",
   "timestamp": 1763649088,
-  "configHash": "0x157af9e12291a27c9e88606d826b93e73538fe318daa54f6ce09a269e033cb04",
+  "configHash": "0x008bafc2c1ecdee8031dac0b1f3ce08621aaf2e32a01e0a1f67479296dbbc2bd",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -428,6 +428,29 @@
       },
       "implementationNames": {
         "eth:0x7a318c3DaA9f21f8fc8238c65755eB0394Fbf189": "TallySlashingProposer"
+      }
+    },
+    {
+      "name": "FlushRewarder",
+      "address": "eth:0x7C9a7130379F1B5dd6e7A53AF84fC0fE32267B65",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xd7f12f5dbac77168a11817bc18488af1779a67b4d2985dfee99ed3eb8b2254f6"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762995191,
+      "sinceBlock": 23786839,
+      "values": {
+        "$immutable": true,
+        "DEFAULT_MAX_ADD_PER_FLUSH": 16,
+        "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
+        "REWARD_ASSET": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+        "rewardPerInsertion": "100000000000000000000",
+        "rewardsAvailable": "998300000000000000000000",
+        "ROLLUP": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12"
+      },
+      "implementationNames": {
+        "eth:0x7C9a7130379F1B5dd6e7A53AF84fC0fE32267B65": "FlushRewarder"
       }
     },
     {
@@ -1204,6 +1227,30 @@
       "function getVotes(uint256 _round, uint256 _index) view returns (bytes)",
       "function vote(bytes _votes, tuple(uint8 v, bytes32 r, bytes32 s) _sig)"
     ],
+    "eth:0x7C9a7130379F1B5dd6e7A53AF84fC0fE32267B65": [
+      "constructor(address _owner, address _rollup, address _rewardAsset, uint256 _rewardPerInsertion)",
+      "error InsufficientRewardsAvailable()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error Rollup__RewardsNotClaimable()",
+      "error SafeERC20FailedOperation(address token)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RewardPerInsertionUpdated(uint256 rewardPerInsertion)",
+      "function DEFAULT_MAX_ADD_PER_FLUSH() view returns (uint256)",
+      "function REWARD_ASSET() view returns (address)",
+      "function ROLLUP() view returns (address)",
+      "function claimRewards()",
+      "function flushEntryQueue()",
+      "function flushEntryQueue(uint256 _toAdd)",
+      "function owner() view returns (address)",
+      "function recover(address _asset, address _to, uint256 _amount)",
+      "function renounceOwnership()",
+      "function rewardPerInsertion() view returns (uint256)",
+      "function rewardsAvailable() view returns (uint256)",
+      "function rewardsOf(address) view returns (uint256)",
+      "function setRewardPerInsertion(uint256 _rewardPerInsertion)",
+      "function transferOwnership(address newOwner)"
+    ],
     "eth:0x82c592b4Bb7E1f50f68E75d86743c3330beAaba4": [
       "function getActions() view returns (tuple(address target, bytes data)[] actions)",
       "function getURI() pure returns (string)"
@@ -1453,5 +1500,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 23840861 },
-  "permissionsConfigHash": "0x458e293e593455e6942af630cd8c26af41249bda5974d61d52f1b932cc084caa"
+  "permissionsConfigHash": "0x2ebfd35013f40df3a66101327697631509a54d4b0a45b0cedecd06bdae4d02a7"
 }
