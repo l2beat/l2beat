@@ -1,6 +1,6 @@
 {
   "name": "aztecnetwork",
-  "timestamp": 1763566766,
+  "timestamp": 1763649088,
   "configHash": "0x157af9e12291a27c9e88606d826b93e73538fe318daa54f6ce09a269e033cb04",
   "entries": [
     {
@@ -44,6 +44,7 @@
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract that allows the L2 system (or specific L2 signals) to submit formal proposals to the L1 Governance contract.",
+      "ignoreInWatchMode": ["getCurrentRound"],
       "sinceTimestamp": 1762995059,
       "sinceBlock": 23786828,
       "values": {
@@ -58,7 +59,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 0,
-        "getCurrentRound": 7,
+        "getCurrentRound": 9,
         "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "getInstance": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12",
         "GSE": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
@@ -87,6 +88,7 @@
       ],
       "proxyType": "immutable",
       "description": "DAO contract used for proposals and token voting",
+      "ignoreInWatchMode": ["totalPowerNow"],
       "sinceTimestamp": 1762995071,
       "sinceBlock": 23786829,
       "values": {
@@ -108,7 +110,7 @@
         "governanceProposer": "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef",
         "isAllBeneficiariesAllowed": true,
         "proposalCount": 0,
-        "totalPowerNow": "101000000000000000000000000",
+        "totalPowerNow": "105400000000000000000000000",
         "withdrawalCount": 0
       },
       "implementationNames": {
@@ -218,11 +220,24 @@
       ],
       "proxyType": "immutable",
       "description": "Core rollup logic contract. It processes block proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.",
+      "ignoreInWatchMode": [
+        "archive",
+        "getActiveAttesterCount",
+        "getCurrentBlobCommitmentsHash",
+        "getCurrentEpoch",
+        "getCurrentSampleSeed",
+        "getCurrentSlot",
+        "getEntryQueueLength",
+        "getNextFlushableEpoch",
+        "getPendingBlockNumber",
+        "getProvenBlockNumber",
+        "getTips"
+      ],
       "sinceTimestamp": 1762995155,
       "sinceBlock": 23786836,
       "values": {
         "$immutable": true,
-        "archive": "0x2a9cc03072b88e51f05c35b8595cc09d2dc01b84bdaefc28ec18fe5812737c80",
+        "archive": "0x024690e5fa67024e1935257b7d98a5b87f2b13300aec2bfe54ae36da04bab202",
         "checkBlob": true,
         "eip712Domain": {
           "fields": "0x0f",
@@ -234,20 +249,18 @@
           "extensions": []
         },
         "getActivationThreshold": "200000000000000000000000",
-        "getActiveAttesterCount": 505,
+        "getActiveAttesterCount": 527,
         "getAvailableValidatorFlushes": 0,
-        "getBlobCommitmentsHash": [],
-        "getBlock": [],
         "getBlockReward": "400000000000000000000",
         "getBurnAddress": "eth:0x4355415548584943414c4c490000000000000000",
-        "getCurrentBlobCommitmentsHash": "0x00cae3ec2f62bf0acae8ce2d6e8a5d578a3f92577d7280474a00eba6441fb18c",
-        "getCurrentEpoch": 248,
-        "getCurrentSampleSeed": "98263374213704234978006909063934132130657345973085484697112542429796742967861",
-        "getCurrentSlot": 7939,
+        "getCurrentBlobCommitmentsHash": "0x00e1ffbdb3454a79b39161f2cb6444bcf0ee8975a46148866dcc8174cf321bbc",
+        "getCurrentEpoch": 283,
+        "getCurrentSampleSeed": "103288406354012110975288375496287468504314425116735921752326456288573587360567",
+        "getCurrentSlot": 9082,
         "getEarliestRewardsClaimableTimestamp": 1770818400,
         "getEjectionThreshold": "100000000000000000000000",
         "getEntryQueueFlushSize": 1,
-        "getEntryQueueLength": 14,
+        "getEntryQueueLength": 10,
         "getEpochDuration": 32,
         "getEpochForBlock": [],
         "getExitDelay": 345600,
@@ -263,11 +276,11 @@
         "getLocalEjectionThreshold": "196000000000000000000000",
         "getManaLimit": 0,
         "getManaTarget": 0,
-        "getNextFlushableEpoch": 249,
+        "getNextFlushableEpoch": 284,
         "getOutbox": "eth:0xf006c41097861AFeb18b05e586B921c081411Ee9",
-        "getPendingBlockNumber": 336,
+        "getPendingBlockNumber": 1337,
         "getProofSubmissionEpochs": 1,
-        "getProvenBlockNumber": 313,
+        "getProvenBlockNumber": 1313,
         "getProvingCostPerManaInEth": 0,
         "getProvingCostPerManaInFeeAsset": 0,
         "getRewardConfig": {
@@ -284,7 +297,7 @@
         "getSlotDuration": 72,
         "getStakingAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getTargetCommitteeSize": 24,
-        "getTips": { "pendingBlockNumber": 336, "provenBlockNumber": 313 },
+        "getTips": { "pendingBlockNumber": 1337, "provenBlockNumber": 1313 },
         "getVersion": 0,
         "isRewardsClaimable": false,
         "L1_BLOCK_AT_GENESIS": 23786836,
@@ -380,6 +393,7 @@
       ],
       "proxyType": "immutable",
       "description": "Allows the validator committee to vote on slashing a specific peer. Once a quorum is reached, it proposes a slash action to the Slasher.",
+      "ignoreInWatchMode": ["getCurrentRound"],
       "sinceTimestamp": 1762995155,
       "sinceBlock": 23786836,
       "values": {
@@ -395,7 +409,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 28,
-        "getCurrentRound": 62,
+        "getCurrentRound": 70,
         "INSTANCE": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12",
         "LIFETIME_IN_ROUNDS": 34,
         "MAX_ROUND_SIZE": 1024,
@@ -524,6 +538,7 @@
       ],
       "proxyType": "immutable",
       "description": "Central staking hub. Validators (attesters) deposit stake here to register. It manages delegation of voting power and tracks which rollup instance validators are securing.",
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1762995035,
       "sinceBlock": 23786826,
       "values": {
@@ -537,7 +552,7 @@
         "getLatestRollup": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12",
         "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "proofOfPossessionGasLimit": 250000,
-        "totalSupply": "101000000000000000000000000"
+        "totalSupply": "105400000000000000000000000"
       },
       "implementationNames": {
         "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f": "GSE"
@@ -1421,22 +1436,22 @@
     "aztecnetwork/BaseStaker": "0x829f70cfbf1a0dc4cbc075bf8c385689e08a80e148416fec856aecc61cddcc05",
     "aztecnetwork/CoinIssuer": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "aztecnetwork/FeeJuicePortal": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "aztecnetwork/Governance": "0x315b8919e05896edfe7d1ca7aaa74032b0a7c6817f5c9f5fc7f704569c0deede",
-    "aztecnetwork/GovernanceProposer": "0x967e3b24b3afc9abcd7b23b3f31a2523d6d5bf2a6f20938168ac9632a9200f4a",
-    "aztecnetwork/GSE": "0x97fe85feeb2d56f80e370735da8c21abd0f9f81d4686424dc15de8f524a7126b",
+    "aztecnetwork/Governance": "0x2bd07eec54441e6e562220d69f178666f365330b729b145b67e8c026c0ff97e0",
+    "aztecnetwork/GovernanceProposer": "0xd251e17ac927ecce11d82c021b46b918e12f5e9be00219536a2945ce7ff509ac",
+    "aztecnetwork/GSE": "0xec9f7ba5d907b32bd920bea78fa1b71cf91c320d24fe89f74ef1b91ca411668d",
     "aztecnetwork/Inbox": "0x7b9d69a80a28ac213da9476cc0c265646f4a1452b6a2946cf6c71140fa08ceaa",
     "aztecnetwork/Outbox": "0xa0d40137e5e7237171a464fc6b70a00b177e4cc5d455cfc8138d47cfe6766c04",
     "aztecnetwork/ProtocolTreasury": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "aztecnetwork/Registry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "aztecnetwork/RewardBooster": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "aztecnetwork/RewardDistributor": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "aztecnetwork/Rollup": "0x798844adb9822f324816edec4b98e65eccaf1ba7f4d1fd622a86b33aa81bd6e5",
+    "aztecnetwork/Rollup": "0xfe5a3b4e61988e954323ef472c11363d5476b6a7320ab0801e06f6091280af43",
     "aztecnetwork/Slasher": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "aztecnetwork/SlashPayloadCloneable": "0x821354dfe974f5f53d0c4ebf4ce746144ad353e598809041e44c28c9c572fd92",
     "aztecnetwork/StakingRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "aztecnetwork/TallySlashingProposer": "0xb8da98d00c6d88bcdda710305b36ec77cd8adbad61805bbaf584641a2b1f3db3",
+    "aztecnetwork/TallySlashingProposer": "0x79d17506e76ca87ca29df48adf9222a01821722b0096d11689dad9fbc27f40c7",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23834069 },
+  "usedBlockNumbers": { "ethereum": 23840861 },
   "permissionsConfigHash": "0x458e293e593455e6942af630cd8c26af41249bda5974d61d52f1b932cc084caa"
 }

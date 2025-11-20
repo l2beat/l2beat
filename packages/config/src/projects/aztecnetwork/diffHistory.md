@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xb5bccb5bb583d65146dec59793b87f66375f639f
+
+# Diff at Thu, 20 Nov 2025 14:32:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4b9fb6935244c163272f55e2acbd987c21dfd4d2 block: 1763566766
+- current timestamp: 1763649088
+
+## Description
+
+config: silence disco.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1763566766 (main branch discovery), not current.
+
+```diff
+    contract Rollup (eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12) {
+    +++ description: Core rollup logic contract. It processes block proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
+      values.getBlobCommitmentsHash:
+-        []
+      values.getBlock:
+-        []
+    }
+```
+
 Generated with discovered.json: 0x7b64fdfa08d102a097f08c9ad6cf17b47f08a101
 
 # Diff at Wed, 19 Nov 2025 16:23:21 GMT:
