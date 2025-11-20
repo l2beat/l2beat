@@ -102,20 +102,14 @@ describeDatabase(InteropMessageRepository.name, (database) => {
       expect(stats.type).toEqual('message')
       expect(stats.count).toEqual(3)
       expect(stats.knownAppCount).toEqual(3)
-      expect(stats.medianDuration).toEqual(150)
-      expect(stats.knownApps).toEqualUnsorted([
-        'arbitrum',
-        'optimism',
-        'polygon',
-      ])
+      expect(stats.avgDuration).toEqual(150)
 
       const swapStats = result.find((s) => s.type === 'swap')
       assert(swapStats)
       expect(swapStats.type).toEqual('swap')
       expect(swapStats.count).toEqual(1)
       expect(swapStats.knownAppCount).toEqual(1)
-      expect(swapStats.knownApps).toEqual(['arbitrum'])
-      expect(swapStats.medianDuration).toEqual(300)
+      expect(swapStats.avgDuration).toEqual(300)
     })
   })
 })

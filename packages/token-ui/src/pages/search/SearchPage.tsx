@@ -23,6 +23,8 @@ import {
   TableHeader,
   TableRow,
 } from '~/components/core/Table'
+import { ExplorerLink } from '~/components/ExplorerLink'
+import { ExternalLink } from '~/components/ExternalLink'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractToken, DeployedToken } from '~/mock/types'
@@ -55,7 +57,10 @@ export function SearchPage() {
               <CardTitle>Deployed Tokens</CardTitle>
             </CardHeader>
             <CardContent>
-              <DeployedTokensTable tokens={data.deployedTokens} />
+              <DeployedTokensTable
+                tokens={data.deployedTokens}
+                chains={data.chains}
+              />
             </CardContent>
           </Card>
           <Card>
@@ -111,7 +116,15 @@ function ChainsTable({ chains }: { chains: ChainRecord[] }) {
                 </Link>
               </TableCell>
               <TableCell>{chain.chainId}</TableCell>
-              <TableCell>{chain.explorerUrl ?? '-'}</TableCell>
+              <TableCell>
+                {chain.explorerUrl ? (
+                  <ExternalLink href={chain.explorerUrl}>
+                    {chain.explorerUrl}
+                  </ExternalLink>
+                ) : (
+                  '-'
+                )}
+              </TableCell>
               <TableCell>
                 {chain.aliases && chain.aliases.length > 0
                   ? chain.aliases.join(', ')
@@ -190,7 +203,13 @@ function AbstractTokensTable({ tokens }: { tokens: AbstractToken[] }) {
   )
 }
 
-function DeployedTokensTable({ tokens }: { tokens: DeployedToken[] }) {
+function DeployedTokensTable({
+  tokens,
+  chains,
+}: {
+  tokens: DeployedToken[]
+  chains: ChainRecord[]
+}) {
   if (tokens.length === 0) {
     return (
       <Empty>
@@ -213,9 +232,9 @@ function DeployedTokensTable({ tokens }: { tokens: DeployedToken[] }) {
     <Table>
       <TableHeader>
         <TableRow>
+          <TableHead>Symbol</TableHead>
           <TableHead>Chain</TableHead>
           <TableHead>Address</TableHead>
-          <TableHead>Symbol</TableHead>
           <TableHead>Abstract Token Id</TableHead>
           <TableHead>Decimals</TableHead>
           <TableHead>Deployment Timestamp</TableHead>
@@ -223,6 +242,9 @@ function DeployedTokensTable({ tokens }: { tokens: DeployedToken[] }) {
       </TableHeader>
       <TableBody>
         {tokens.map((token) => {
+          const explorerUrl = chains.find(
+            (chain) => chain.name === token.chain,
+          )?.explorerUrl
           return (
             <TableRow key={getDeployedTokenDisplayId(token)}>
               <TableCell>
@@ -234,18 +256,25 @@ function DeployedTokensTable({ tokens }: { tokens: DeployedToken[] }) {
                 </Link>
               </TableCell>
               <TableCell>{token.chain}</TableCell>
-              <TableCell>{token.address}</TableCell>
-              <TableCell>{token.symbol}</TableCell>
               <TableCell>
-                {token.abstractTokenId ? (
+                {token.address.startsWith('0x') && explorerUrl ? (
+                  <ExplorerLink
+                    explorerUrl={explorerUrl}
+                    value={token.address}
+                    type="address"
+                  />
+                ) : (
+                  token.address
+                )}
+              </TableCell>
+              <TableCell>
+                {token.abstractTokenId && (
                   <Link
                     to={`/tokens/${token.abstractTokenId}`}
                     className="underline"
                   >
                     {token.abstractTokenId}
                   </Link>
-                ) : (
-                  '-'
                 )}
               </TableCell>
               <TableCell>{token.decimals}</TableCell>

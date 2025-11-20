@@ -177,9 +177,7 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
               <td>
                 <a href={`/interop/messages/${t.type}`}>{t.count}</a>
               </td>
-              <td data-order={t.medianDuration}>
-                {formatSeconds(t.medianDuration)}
-              </td>
+              <td data-order={t.avgDuration}>{formatSeconds(t.avgDuration)}</td>
               {
                 <td>
                   {t.count > 0
@@ -195,7 +193,7 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
                 const srcDstDuration = t.chains.find(
                   (tt) =>
                     tt.srcChain === n[0].name && tt.dstChain === n[1].name,
-                )?.medianDuration
+                )?.avgDuration
                 const dstSrcCount = t.chains.find(
                   (tt) =>
                     tt.srcChain === n[1].name && tt.dstChain === n[0].name,
@@ -203,7 +201,7 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
                 const dstSrcDuration = t.chains.find(
                   (tt) =>
                     tt.srcChain === n[1].name && tt.dstChain === n[0].name,
-                )?.medianDuration
+                )?.avgDuration
                 return (
                   <React.Fragment key={`${t.type}-${idx}`}>
                     <td>
@@ -288,9 +286,7 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
               <td>
                 <a href={`/interop/transfers/${t.type}`}>{t.count}</a>
               </td>
-              <td data-order={t.medianDuration}>
-                {formatSeconds(t.medianDuration)}
-              </td>
+              <td data-order={t.avgDuration}>{formatSeconds(t.avgDuration)}</td>
               <td data-order={t.srcValueSum}>{formatDollars(t.srcValueSum)}</td>
               <td data-order={t.dstValueSum}>{formatDollars(t.dstValueSum)}</td>
               {NETWORKS.map((n, idx) => {
@@ -304,11 +300,11 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
                 )
 
                 const forwardCount = forwardStats?.count
-                const forwardDuration = forwardStats?.medianDuration
+                const forwardDuration = forwardStats?.avgDuration
                 const forwardDstValue = forwardStats?.dstValueSum
                 const forwardSrcValue = forwardStats?.srcValueSum
                 const backwardCount = backwardStats?.count
-                const backwardDuration = backwardStats?.medianDuration
+                const backwardDuration = backwardStats?.avgDuration
                 const backwardSrcValue = backwardStats?.srcValueSum
                 const backwardDstValue = backwardStats?.dstValueSum
                 return (
@@ -473,22 +469,6 @@ function MainPageLayout(props: {
         ]}
         footer={
           <>
-            <>
-              <h3> Apps for message types </h3>
-              {props.messages.map(
-                (m) =>
-                  m.knownApps.length > 0 && (
-                    <div key={m.type}>
-                      <h4>{m.type}</h4>
-                      <ul>
-                        {m.knownApps.map((app) => (
-                          <li key={app}>{app}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ),
-              )}
-            </>
             <ProcessorsStatusTable processors={props.status} />
           </>
         }

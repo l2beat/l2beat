@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x095928c20034073bbb323b58e5b1cc29f4c1ab86
+
+# Diff at Wed, 19 Nov 2025 11:32:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c2740481ca5c9bb2be3283052c4a68b2d735c71b block: 1762765141
+- current timestamp: 1763551862
+
+## Description
+
+new proposal: move TAIKO to team treasury multisig.
+
+## Watched changes
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        12
++        13
+    }
+```
+
 Generated with discovered.json: 0xdfecee0624fe6c1598c14b0e53b43c43549983d6
 
 # Diff at Mon, 10 Nov 2025 09:00:28 GMT:

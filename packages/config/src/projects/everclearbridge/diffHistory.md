@@ -1,3 +1,182 @@
+Generated with discovered.json: 0x02cd1684ee7c1305b917dcd95389cf676b16fe04
+
+# Diff at Wed, 19 Nov 2025 10:38:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c2740481ca5c9bb2be3283052c4a68b2d735c71b block: 1761059671
+- current timestamp: 1763548654
+
+## Description
+
+upgrade to spokev6 and new hub implementations. this project is not reviewed because some contracts are unverified.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract FeeAdapter (eth:0x15a7cA97D1ed168fB34a4055CEFa2E2f9Bdb6C75)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (eth:0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66)
+    +++ description: None
+```
+
+```diff
+    contract EverclearSpokeV6 (eth:0xa05A3380889115bf313f1Db9d5f335157Be4D816) {
+    +++ description: None
+      name:
+-        "EverclearSpokeV5"
++        "EverclearSpokeV6"
+      sourceHashes.1:
+-        "0x183579075859d89358960a3d0a89ae170c5b81c70cb81f7e4b72e5ff310afb7f"
++        "0xd03b62b4ee402e771d84ca75da25f35312dc7409476626108d74a9751e3565ed"
+      values.$implementation:
+-        "eth:0xb0CE951eF4655C73E42E3c7D85eF166E7c615Af7"
++        "eth:0x14955763862049A07Ba9391A2A3f7efb1190e763"
+      values.$pastUpgrades.5:
++        ["2025-11-12T18:45:47.000Z","0x5612d7c9c48e8ea7e890589635e40727c9f17e0ea80b3b2b86ca012a612fba23",["eth:0x14955763862049A07Ba9391A2A3f7efb1190e763"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.feeAdapter:
+-        "eth:0x15a7cA97D1ed168fB34a4055CEFa2E2f9Bdb6C75"
++        "eth:0xd0185bfb8107c5b2336bC73cE3fdd9Bfb504540e"
+      values.FILL_INTENT_FOR_SOLVER_TYPEHASH:
+-        "0xce47b2c080dbcd8e420dc92bcf58f25f73f2e008a3b34ac41b9d468d1fb45d5a"
++        "0x266096008cc1d427b37083c1e59371cf0173761773f5ee24fee15db496609bed"
+      values.messageReceiver:
+-        "eth:0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66"
++        "eth:0xF45D744e76Be85c8e22228D2bE0E045f4e656f2E"
+      values.PROCESS_FILL_QUEUE_VIA_RELAYER_TYPEHASH:
+-        "0xfff2306b4d1a2b16ba8a4ba32d8ed8136d2cc882aea58ada6b2baedcde647f57"
++        "0xce1faaeef1bc26cbe90f4e1a23cfed5940bbac04f28982812ae07a8d0ad23c39"
+      values.PROCESS_INTENT_QUEUE_VIA_RELAYER_TYPEHASH:
+-        "0x87c42ffc42ddf0cd52b5e8a0b1fa6c45338db7d6e7c93f9d2943eb42b2706aca"
++        "0xf3f51acca0066ef7defe3ea640de2b9e07d96fade5fb959604a014440ab3d7cc"
+      values.BATCH_FILL_INTENT_TYPEHASH:
++        "0x47fa6a5d212053b505e8157c5819225af8dc549dc5796a65c2bf35c33519e57e"
+      values.deprecated_fillQueue:
++        {"first":82,"last":81}
+      values.deprecated_intentQueue:
++        {"first":23119,"last":23118}
+      values.FILL_INTENT_TYPEHASH:
++        "0x75108041a6a81a2f98b1dd7b5c7952bfe7620180ebd2f4676b628c82da4cec07"
+      values.fillSigner:
++        "eth:0xd148C7f37b346a4bD8e14f8c1f181f5f640481C8"
+      implementationNames.eth:0xb0CE951eF4655C73E42E3c7D85eF166E7c615Af7:
+-        "EverclearSpokeV5"
+      implementationNames.eth:0x14955763862049A07Ba9391A2A3f7efb1190e763:
++        "EverclearSpokeV6"
+    }
+```
+
+```diff
+    contract EverclearHub (everclear:0xa05A3380889115bf313f1Db9d5f335157Be4D816) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x457307c82577abe25e93c7096a0773b8bc37c55a1373212df91feeee68559f79"
++        "0x066d1d834e540b5825aaa4f9cfed578776ae52ec815e6f95f27baa5bdde5d545"
+      values.$implementation.0:
+-        "everclear:0x255aba6E7f08d40B19872D11313688c2ED65d1C9"
++        "everclear:0xEf9AfbeCcDf87472ABF9e01e83B8c9B8E7e5e1aE"
+      values.$implementation.1:
+-        "everclear:0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7"
++        "everclear:0xEFAc8f12D52dc6FFdcf6377667605aEeC4209C37"
+      values.$implementation.2:
+-        "everclear:0xeFa6Ac3F931620fD0449eC8c619f2A14A0A78E99"
++        "everclear:0x8Fe5228CE21acbeFBC7153A933F143b0806af8E4"
+      values.$implementation.3:
+-        "everclear:0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66"
++        "everclear:0xBfC1263A8a1827B8E5001e680021F14a04bc4d13"
+      values.$implementation.4:
+-        "everclear:0xe0F010e465f15dcD42098dF9b99F1038c11B3056"
++        "everclear:0x7619120C668876ca1c3Cfe6d018Fc95c165a6551"
+      values.$pastUpgrades.0:
++        ["2024-09-16T04:30:18.000Z","0x9ee081ca278159d6b98301c61ae69a12b68141557106086a5e77b189a6568715",["everclear:0x255aba6E7f08d40B19872D11313688c2ED65d1C9","everclear:0xEFAc8f12D52dc6FFdcf6377667605aEeC4209C37","everclear:0x8Fe5228CE21acbeFBC7153A933F143b0806af8E4","everclear:0xBfC1263A8a1827B8E5001e680021F14a04bc4d13","everclear:0x7619120C668876ca1c3Cfe6d018Fc95c165a6551","everclear:0x0000000000000000000000000000000000000000"]]
+      values.$pastUpgrades.0.2.0:
+-        "everclear:0x255aba6E7f08d40B19872D11313688c2ED65d1C9"
++        "everclear:0xEf9AfbeCcDf87472ABF9e01e83B8c9B8E7e5e1aE"
+      values.$pastUpgrades.0.2.1:
+-        "everclear:0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7"
++        "everclear:0xEFAc8f12D52dc6FFdcf6377667605aEeC4209C37"
+      values.$pastUpgrades.0.2.2:
+-        "everclear:0xeFa6Ac3F931620fD0449eC8c619f2A14A0A78E99"
++        "everclear:0x8Fe5228CE21acbeFBC7153A933F143b0806af8E4"
+      values.$pastUpgrades.0.2.3:
+-        "everclear:0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66"
++        "everclear:0xBfC1263A8a1827B8E5001e680021F14a04bc4d13"
+      values.$pastUpgrades.0.2.4:
+-        "everclear:0xe0F010e465f15dcD42098dF9b99F1038c11B3056"
++        "everclear:0x7619120C668876ca1c3Cfe6d018Fc95c165a6551"
+      values.$pastUpgrades.0.1:
+-        "0x9ee081ca278159d6b98301c61ae69a12b68141557106086a5e77b189a6568715"
++        "0x0a931b2ce4b420cdc5ef5421d0a98e610feb4c7401ffd63fa46afb5691e9bd70"
+      values.$pastUpgrades.0.0:
+-        "2024-09-16T04:30:18.000Z"
++        "2025-11-12T18:53:36.000Z"
+      values.$upgradeCount:
+-        1
++        2
+      values.managerModule:
+-        "everclear:0xe0F010e465f15dcD42098dF9b99F1038c11B3056"
++        "everclear:0x7619120C668876ca1c3Cfe6d018Fc95c165a6551"
+      values.PROCESS_QUEUE_VIA_RELAYER_TYPEHASH:
+-        "0x9ee676d393dd5facc07ae4ba72101da49596c33d1358807aba1cc4687c098eb9"
++        "0x09b3b633d13dee4d3dded11a692b0a71b91231547cf1117793ee8fdf9d09f017"
+      values.deprecated_gasConfig:
++        {"settlementBaseGasUnits":40000,"averageGasUnitsPerSettlement":50000,"bufferDBPS":10000}
+      implementationNames.everclear:0x255aba6E7f08d40B19872D11313688c2ED65d1C9:
+-        "EverclearHub"
+      implementationNames.everclear:0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7:
+-        "Settler"
+      implementationNames.everclear:0xeFa6Ac3F931620fD0449eC8c619f2A14A0A78E99:
+-        "Handler"
+      implementationNames.everclear:0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66:
+-        "HubMessageReceiver"
+      implementationNames.everclear:0xe0F010e465f15dcD42098dF9b99F1038c11B3056:
+-        "Manager"
+      implementationNames.everclear:0xEf9AfbeCcDf87472ABF9e01e83B8c9B8E7e5e1aE:
++        "EverclearHubV2"
+      implementationNames.everclear:0xEFAc8f12D52dc6FFdcf6377667605aEeC4209C37:
++        "SettlerV2"
+      implementationNames.everclear:0x8Fe5228CE21acbeFBC7153A933F143b0806af8E4:
++        "HandlerV2"
+      implementationNames.everclear:0xBfC1263A8a1827B8E5001e680021F14a04bc4d13:
++        "HubMessageReceiverV2"
+      implementationNames.everclear:0x7619120C668876ca1c3Cfe6d018Fc95c165a6551:
++        "ManagerV2"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract FeeAdapterV2 (eth:0xd0185bfb8107c5b2336bC73cE3fdd9Bfb504540e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SpokeMessageReceiverV2 (eth:0xF45D744e76Be85c8e22228D2bE0E045f4e656f2E)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../EverclearHub/EverclearHubV2.1.sol}             |  555 ++++---
+ .../EverclearHub/HandlerV2.3.sol}                  |  410 +++--
+ .../EverclearHub/HubMessageReceiverV2.4.sol}       |  485 ++++--
+ .../EverclearHub/ManagerV2.5.sol}                  |  535 ++++---
+ .../EverclearHub/SettlerV2.2.sol}                  |  496 ++++--
+ .../EverclearSpokeV6/EverclearSpokeV6.sol}         |  796 +++++++---
+ .../FeeAdapter.sol => .flat/FeeAdapterV2.sol}      |  236 ++-
+ .../.flat/SpokeMessageReceiverV2.sol               | 1572 ++++++++++++++++++++
+ 8 files changed, 3971 insertions(+), 1114 deletions(-)
+```
+
 Generated with discovered.json: 0xd2d5aaa14ff125fabf19aef1c5caf05860a412e8
 
 # Diff at Wed, 15 Oct 2025 13:47:38 GMT:

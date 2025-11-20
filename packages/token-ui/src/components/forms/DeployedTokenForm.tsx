@@ -5,6 +5,7 @@ import {
   CheckIcon,
   ChevronsUpDownIcon,
   PlusIcon,
+  SettingsIcon,
 } from 'lucide-react'
 import type { SubmitHandler, UseFormReturn } from 'react-hook-form'
 import { Link } from 'react-router-dom'
@@ -45,6 +46,7 @@ import type {
 } from '../../../../database/dist/repositories/ChainRepository'
 import { AutoFillIndicator } from '../AutoFillIndicator'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../core/Tooltip'
+import { ExplorerLinkButton } from '../ExplorerLink'
 
 export type DataSource = 'coingecko' | ChainApi['type']
 
@@ -71,7 +73,7 @@ export type DeployedTokenSchema = v.infer<typeof DeployedTokenSchema>
 export const DeployedTokenSchema = v.object({
   chain: v.string(),
   address: v.string(),
-  decimals: v.number().check(minNumberCheck(1)),
+  decimals: v.string().transform(Number).check(minNumberCheck(1)),
   symbol: v.string().check(minLengthCheck(1)),
   abstractTokenId: v.string().optional(),
   deploymentTimestamp: v.string(),
@@ -203,6 +205,7 @@ export function DeployedTokenForm({
                         className={buttonVariants({
                           variant: 'outline',
                           className: 'shrink-0',
+                          size: 'icon',
                         })}
                       >
                         <ArrowRightIcon />
@@ -218,18 +221,54 @@ export function DeployedTokenForm({
               control={form.control}
               name="address"
               success={success}
-              render={({ field }) => (
-                <FormItem className="col-span-2">
-                  <FormLabel>
-                    Address{' '}
-                    {tokenDetails.loading && <Spinner className="size-3.5" />}
-                  </FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="0xd33db33f" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              render={({ field }) => {
+                const chainRecord = chains.data?.find(
+                  (chain) => chain.name === chainValue,
+                )
+
+                return (
+                  <FormItem className="col-span-2">
+                    <FormLabel>
+                      Address{' '}
+                      {tokenDetails.loading && <Spinner className="size-3.5" />}
+                    </FormLabel>
+                    <div className="flex items-center gap-2">
+                      <FormControl>
+                        <Input {...field} placeholder="0xd33db33f" />
+                      </FormControl>
+                      {field.value?.startsWith('0x') ? (
+                        chainRecord?.explorerUrl ? (
+                          <ExplorerLinkButton
+                            explorerUrl={chainRecord.explorerUrl}
+                            value={field.value}
+                            type="address"
+                          />
+                        ) : (
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Link
+                                to={`/chains/${chainValue}`}
+                                target="_blank"
+                                className={buttonVariants({
+                                  variant: 'outline',
+                                  className: 'shrink-0',
+                                })}
+                              >
+                                <SettingsIcon />
+                              </Link>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              No explorer URL configured for this chain. Click
+                              to configure.
+                            </TooltipContent>
+                          </Tooltip>
+                        )
+                      ) : null}
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )
+              }}
             />
           </div>
 
@@ -263,7 +302,7 @@ export function DeployedTokenForm({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  Decimals{' '}
+                  Decimals
                   {autofill && chainValue && (
                     <AutoFillIndicator
                       sources={fieldToDataSource.decimals.map(
@@ -276,9 +315,8 @@ export function DeployedTokenForm({
                 </FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
                     {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
+                    onChange={(e) => field.onChange(e.target.value)}
                     disabled={tokenDetails.loading}
                   />
                 </FormControl>
@@ -317,7 +355,7 @@ export function DeployedTokenForm({
                         field.onChange(parsedDate)
                       } else {
                         toast.error(
-                          `Invalid date format. If you think it's correct, please report to dev team. Input: ${pastedText}`,
+                          `Invalid date format. If you think it's correct, please report to dev team.`,
                         )
                       }
                     }}
@@ -421,6 +459,7 @@ export function DeployedTokenForm({
                       className={buttonVariants({
                         variant: 'outline',
                         className: 'shrink-0',
+                        size: 'icon',
                       })}
                     >
                       <ArrowRightIcon />

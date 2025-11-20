@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x6fd7d704614707c7891d4ce2a27b176dd33e87a2
+
+# Diff at Thu, 20 Nov 2025 10:18:33 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@2b637644c92662f812c5b3f8fe7a2b8a31d11187 block: 1761318853
+- current timestamp: 1763633846
+
+## Description
+
+New verifier adding status codes for certificate verification results.
+https://disco.l2beat.com/diff/eth:0x46766C6426eF4D3092f73F72660A8b7B510E6846/eth:0x61692e93b6B045c444e942A91EcD1527F23A3FB7
+
+## Watched changes
+
+```diff
+    contract EigenDAOperationsMultisig (eth:0x002721B4790d97dC140a049936aA710152Ba92D5) {
+    +++ description: None
+      values.$members.6:
+-        "eth:0x5D9A6573206e5205702E4caD87DC61f4C2a1Ad04"
+      values.multisigThreshold:
+-        "3 of 7 (43%)"
++        "3 of 6 (50%)"
+    }
+```
+
+```diff
+    contract EigenDACertVerifierRouter (eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12) {
+    +++ description: A router contract for DA Certificate verifiers. Verifier routing depends on the certificate reference block number.
+      values.certVerifierABNs.1:
++        23786550
++++ description: The DA verifier contracts indexed by activation block number.
+      values.DAVerifiers.1:
++        {"activationBlockNumber":23786550,"certVerifier":"eth:0x46766C6426eF4D3092f73F72660A8b7B510E6846"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EigenDACertVerifier (eth:0x46766C6426eF4D3092f73F72660A8b7B510E6846)
+    +++ description: A DA verifier contract for EigenDA V2 certificates. The verifier is used to verify the certificate against operator signatures and stake thresholds.
+```
+
+## Source code changes
+
+```diff
+...:0x46766C6426eF4D3092f73F72660A8b7B510E6846.sol | 1304 ++++++++++++++++++++
+ 1 file changed, 1304 insertions(+)
+```
+
 Generated with discovered.json: 0xe624b01310ae6b9d258c0cc9695903ecafb609a2
 
 # Diff at Wed, 05 Nov 2025 12:46:40 GMT:

@@ -42,7 +42,7 @@ export class LayerZeroV2Plugin implements InteropPlugin {
     const networks = this.configs.get(LayerZeroV2Config)
     if (!networks) return
 
-    const network = networks.find((x) => x.chain === input.ctx.chain)
+    const network = networks.find((x) => x.chain === input.chain)
     if (!network) return
     assert(network.endpointV2, 'We capture only chains with endpoints')
 
@@ -58,7 +58,7 @@ export class LayerZeroV2Plugin implements InteropPlugin {
         packet.header.receiver,
       )
       const $dstChain = findChain(networks, (x) => x.eid, packet.header.dstEid)
-      return [PacketSent.create(input.ctx, { $dstChain, guid })]
+      return [PacketSent.create(input, { $dstChain, guid })]
     }
 
     const packetDelivered = parsePacketDelivered(input.log, [
@@ -77,7 +77,7 @@ export class LayerZeroV2Plugin implements InteropPlugin {
         (x) => x.eid,
         packetDelivered.origin.srcEid,
       )
-      return [PacketDelivered.create(input.ctx, { $srcChain, guid })]
+      return [PacketDelivered.create(input, { $srcChain, guid })]
     }
   }
 

@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "aztecnetwork",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298"]
+}
