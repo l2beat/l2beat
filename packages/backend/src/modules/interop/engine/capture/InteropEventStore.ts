@@ -97,6 +97,7 @@ function toDbRecord(event: InteropEvent): InteropEventRecord {
     plugin: event.plugin,
     eventId: event.eventId,
     type: event.type,
+    direction: event.direction,
     expiresAt: event.expiresAt,
     args: event.args,
     chain: event.ctx.chain,

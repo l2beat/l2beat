@@ -7,6 +7,7 @@ export interface InteropEventRecord {
   plugin: string
   eventId: string
   type: string
+  direction: string | undefined
   expiresAt: UnixTime
   timestamp: UnixTime
   chain: string
@@ -27,6 +28,7 @@ export function toRecord(row: Selectable<InteropEvent>): InteropEventRecord {
     plugin: row.plugin,
     eventId: row.eventId,
     type: row.type,
+    direction: row.direction ?? undefined,
     expiresAt: UnixTime.fromDate(row.expiresAt),
     timestamp: UnixTime.fromDate(row.timestamp),
     chain: row.chain,
@@ -48,6 +50,7 @@ export function toRow(record: InteropEventRecord): Insertable<InteropEvent> {
     plugin: record.plugin,
     eventId: record.eventId,
     type: record.type,
+    direction: record.direction,
     expiresAt: UnixTime.toDate(record.expiresAt),
     timestamp: UnixTime.toDate(record.timestamp),
     chain: record.chain,
