@@ -31,6 +31,7 @@ function EventsTable(props: { events: InteropEventStatsRecord[] }) {
       <thead>
         <tr>
           <th>Type</th>
+          <th>Direction</th>
           <th>All</th>
           <th>Matched</th>
           <th>Unmatched</th>
@@ -43,6 +44,7 @@ function EventsTable(props: { events: InteropEventStatsRecord[] }) {
           return (
             <tr key={e.type}>
               <td>{e.type}</td>
+              <td>{e.direction}</td>
               <td>
                 <a href={`/interop/events/all/${e.type}`}>{e.count}</a>
               </td>
