@@ -12,6 +12,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { Address32 } from '../../plugins/types'
 import { DataTablePage } from './DataTablePage'
 import { formatDollars } from './formatDollars'
+import { generateNetworkPairs } from './generateNetworkPairs'
 import {
   type ProcessorsStatus,
   ProcessorsStatusTable,
@@ -74,71 +75,12 @@ function EventsTable(props: { events: InteropEventStatsRecord[] }) {
   )
 }
 
-const NETWORKS: [
-  { name: string; display: string },
-  { name: string; display: string },
-][] = [
-  [
-    {
-      name: 'ethereum',
-      display: 'ETH',
-    },
-    {
-      name: 'base',
-      display: 'BASE',
-    },
-  ],
-  [
-    {
-      name: 'ethereum',
-      display: 'ETH',
-    },
-    {
-      name: 'arbitrum',
-      display: 'ARB',
-    },
-  ],
-  [
-    {
-      name: 'ethereum',
-      display: 'ETH',
-    },
-    {
-      name: 'optimism',
-      display: 'OP',
-    },
-  ],
-  [
-    {
-      name: 'base',
-      display: 'BASE',
-    },
-    {
-      name: 'arbitrum',
-      display: 'ARB',
-    },
-  ],
-  [
-    {
-      name: 'base',
-      display: 'BASE',
-    },
-    {
-      name: 'optimism',
-      display: 'OP',
-    },
-  ],
-  [
-    {
-      name: 'arbitrum',
-      display: 'ARB',
-    },
-    {
-      name: 'optimism',
-      display: 'OP',
-    },
-  ],
-]
+const NETWORKS = generateNetworkPairs([
+  { name: 'ethereum', display: 'ETH' },
+  { name: 'base', display: 'BASE' },
+  { name: 'arbitrum', display: 'ARB' },
+  { name: 'optimism', display: 'OP' },
+])
 
 function MessagesTable(props: { items: MessageStats[]; id: string }) {
   return (
