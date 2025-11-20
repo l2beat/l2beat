@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getSummedActivityForProjects } from '../activity/getSummedActivityForProjects'
 import { getCostsForProjects } from './getCostsForProjects'
@@ -44,7 +45,10 @@ export async function getCostsTable(
 
   return Object.fromEntries(
     Object.entries(projectsCosts).map(([projectId, costs]) => {
-      const isSynced = isCostsSynced(costs.syncedUntil)
+      const isSynced = isCostsSynced({
+        syncedUntil: costs.syncedUntil,
+        to: UnixTime.now(),
+      })
       return [
         projectId,
         {
