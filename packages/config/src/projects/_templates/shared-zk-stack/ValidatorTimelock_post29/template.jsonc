@@ -5,9 +5,10 @@
   "ignoreRelatives": ["accessControl"],
   "fields": {
     // the DEFAULT_ADMIN_ROLE is always the chainAdmin (defined by the bridgehub) and is not controlled by accesscontrol
-    "accessControl": {
-      "handler": { "type": "crossChainAccessControl" }
-    },
+    // not fetching accessControl here but in the respective projects instead
+    // "accessControl": {
+    //   "handler": { "type": "crossChainAccessControl" }
+    // },
     "executionDelay_fmt": {
       "handler": { "type": "call", "method": "executionDelay", "args": [] },
       "edit": ["format", "FormatSeconds"]
