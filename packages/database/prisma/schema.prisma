@@ -365,6 +365,7 @@ model InteropEvent {
 
   matched     Boolean
   unsupported Boolean
+  direction   String?
 
   @@id([eventId])
   @@index([type, matched, unsupported, timestamp])
