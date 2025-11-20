@@ -124,6 +124,7 @@ export interface InteropEventType<T> {
     ctx: InteropEventContext,
     payload: T,
   ): Omit<InteropEvent<T>, 'plugin'>
+  mock(args: T, expiresAt?: UnixTime): InteropEvent<T>
   checkType(action: InteropEvent): action is InteropEvent<T>
 }
 
@@ -176,6 +177,16 @@ export function createInteropEventType<T>(
         expiresAt: ctx.timestamp + ttl,
         ctx,
         args,
+      }
+    },
+    mock(args: T, expiresAt?: UnixTime): InteropEvent<T> {
+      return {
+        eventId: generateId('evt'),
+        type,
+        expiresAt: expiresAt ?? UnixTime.now() + ttl,
+        plugin: '',
+        args,
+        ctx: { chain: '', logIndex: -1, timestamp: 0, txHash: '' },
       }
     },
     checkType(action: InteropEvent): action is InteropEvent<T> {

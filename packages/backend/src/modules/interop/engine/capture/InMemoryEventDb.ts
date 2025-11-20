@@ -150,6 +150,107 @@ function hashQuery(
   return hash
 }
 
+// Implements a min-heap on the `expiresAt` property
+class EventTypeStore<T> {
+  private all: InteropEvent<T>[] = []
+  private indices = new Map<InteropEvent<T>, number>()
+
+  peekNextToExpire(): InteropEvent<T> | undefined {
+    return this.all[0]
+  }
+
+  removeNextToExpire(): boolean {
+    const last = this.all.pop()
+    if (!last) return false
+    if (this.all.length === 0) {
+      this.indices.delete(last)
+      return true
+    }
+    this.indices.delete(this.all[0])
+    this.all[0] = last
+    this.indices.set(last, 0)
+    this.siftDown(0)
+    return true
+  }
+
+  add(event: InteropEvent<T>) {
+    this.all.push(event)
+    this.indices.set(event, this.all.length - 1)
+    this.siftUp(this.all.length - 1)
+  }
+
+  remove(event: InteropEvent<T>) {
+    const index = this.indices.get(event)
+    if (index === undefined) return
+
+    this.indices.delete(event)
+    const last = this.all.pop()
+    if (last === event || !last) return
+
+    this.all[index] = last
+    this.indices.set(last, index)
+    if (index !== 0) {
+      const parentIndex = Math.floor((index - 1) / 2)
+      if (this.all[parentIndex].expiresAt > last.expiresAt) {
+        this.siftUp(index)
+        return
+      }
+    }
+
+    this.siftDown(index)
+  }
+
+  private siftUp(index: number) {
+    while (index !== 0) {
+      const element = this.all[index]
+      const parentIndex = Math.floor((index - 1) / 2)
+      const parent = this.all[parentIndex]
+      if (parent.expiresAt <= element.expiresAt) {
+        break
+      }
+      this.all[parentIndex] = element
+      this.indices.set(element, parentIndex)
+      this.all[index] = parent
+      this.indices.set(parent, index)
+      index = parentIndex
+    }
+  }
+
+  private siftDown(index: number) {
+    while (true) {
+      const element = this.all[index]
+      const childLIndex = index * 2 + 1
+      const childRIndex = index * 2 + 2
+
+      let smallerIndex = childLIndex
+      if (childRIndex < this.all.length) {
+        const childL = this.all[childLIndex]
+        const childR = this.all[childRIndex]
+        if (childR.expiresAt < childL.expiresAt) {
+          smallerIndex = childRIndex
+        }
+      }
+
+      if (smallerIndex >= this.all.length) {
+        break
+      }
+      const smallerChild = this.all[smallerIndex]
+      if (smallerChild.expiresAt >= element.expiresAt) {
+        break
+      }
+      this.all[smallerIndex] = element
+      this.indices.set(element, smallerIndex)
+      this.all[index] = smallerChild
+      this.indices.set(smallerChild, index)
+      index = smallerIndex
+    }
+  }
+
+  getAll(): InteropEvent<T>[] {
+    return this.all
+  }
+}
+
 class EventIndex {
   private buckets = new Map<number, InteropEvent[]>()
 
