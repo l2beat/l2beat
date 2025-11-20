@@ -44,12 +44,12 @@ export function createInteropRouter(
     const routerTime = performance.now() - routerStart
 
     logger.info('Interop dashboard timings', {
-      eventsDurationMs: eventsTime,
-      messagesDurationMs: messagesTime,
-      transfersDurationMs: transfersTime,
-      statusDurationMs: statusTime,
-      missingTokensDurationMs: missingTokensTime,
-      totalDurationMs: routerTime,
+      eventsDurationMs: Number(eventsTime.toFixed(2)),
+      messagesDurationMs: Number(messagesTime.toFixed(2)),
+      transfersDurationMs: Number(transfersTime.toFixed(2)),
+      statusDurationMs: Number(statusTime.toFixed(2)),
+      missingTokensDurationMs: Number(missingTokensTime.toFixed(2)),
+      totalDurationMs: Number(routerTime.toFixed(2)),
     })
 
     ctx.body = renderMainPage({
