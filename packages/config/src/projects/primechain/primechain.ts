@@ -20,7 +20,7 @@ export const primechain: ScalingProject = upcomingL2({
       bridges: ['https://portal.caldera.xyz/bridge/prime-chain'],
       documentation: ['https://docs.echelon.io/'],
       socialMedia: [
-        'https://discord.com/invite/echelonfnd',
+        'https://discord.com/invite/2rBxp8mSjg',
         'https://x.com/EchelonFND',
       ],
     },
