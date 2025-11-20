@@ -95,8 +95,8 @@ export interface InteropTransfer {
   plugin: string
   type: string
   events: InteropEvent[]
-  src: TransferSide
-  dst: TransferSide
+  src: TransferSide & { wasBurned?: boolean }
+  dst: TransferSide & { wasMinted?: boolean }
 }
 
 export interface InteropIgnore {
@@ -323,10 +323,12 @@ export interface InteropTransferOptions {
   srcEvent: InteropEvent
   srcTokenAddress?: Address32
   srcAmount?: bigint
+  srcWasBurned?: boolean
 
   dstEvent: InteropEvent
   dstTokenAddress?: Address32
   dstAmount?: bigint
+  dstWasMinted?: boolean
 
   extraEvents?: InteropEvent[]
 }
@@ -352,11 +354,13 @@ function Transfer(
       event: options.srcEvent,
       tokenAddress: options.srcTokenAddress,
       tokenAmount: options.srcAmount,
+      wasBurned: options.srcWasBurned,
     },
     dst: {
       event: options.dstEvent,
       tokenAddress: options.dstTokenAddress,
       tokenAmount: options.dstAmount,
+      wasMinted: options.dstWasMinted,
     },
   }
 }

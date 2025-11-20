@@ -134,9 +134,11 @@ export class AcrossPlugin implements InteropPlugin {
         srcEvent: fundsDeposited,
         srcTokenAddress: fundsDeposited.args.tokenAddress,
         srcAmount: fundsDeposited.args.amount,
+        srcWasBurned: false,
         dstEvent: filledRelay,
         dstTokenAddress: filledRelay.args.tokenAddress,
         dstAmount: filledRelay.args.amount,
+        dstWasMinted: false,
       }),
     ]
   }
