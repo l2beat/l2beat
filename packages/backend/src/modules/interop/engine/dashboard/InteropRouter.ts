@@ -21,43 +21,28 @@ export function createInteropRouter(
   router.get('/interop', async (ctx) => {
     const routerStart = performance.now()
 
-    const eventsStart = performance.now()
-    const events = await db.interopEvent.getStats()
-    const eventsTime = performance.now() - eventsStart
+    const [events, messages, transfers, missingTokens, uniqueApps] =
+      await Promise.all([
+        db.interopEvent.getStats(),
+        getMessagesStats(db),
+        getTransfersStats(db),
+        db.interopTransfer.getMissingTokensInfo(),
+        db.interopMessage.getUniqueAppsPerPlugin(),
+      ])
 
-    const messagesStart = performance.now()
-    const messages = await getMessagesStats(db)
-    const messagesTime = performance.now() - messagesStart
-
-    const transfersStart = performance.now()
-    const transfers = await getTransfersStats(db)
-    const transfersTime = performance.now() - transfersStart
-
-    const statusStart = performance.now()
-    const status = getProcessorsStatus(processors)
-    const statusTime = performance.now() - statusStart
-
-    const missingTokensStart = performance.now()
-    const missingTokens = await db.interopTransfer.getMissingTokensInfo()
-    const missingTokensTime = performance.now() - missingTokensStart
-
-    const routerTime = performance.now() - routerStart
+    const routerDuration = performance.now() - routerStart
 
     logger.info('Interop dashboard timings', {
-      eventsDurationMs: Number(eventsTime.toFixed(2)),
-      messagesDurationMs: Number(messagesTime.toFixed(2)),
-      transfersDurationMs: Number(transfersTime.toFixed(2)),
-      statusDurationMs: Number(statusTime.toFixed(2)),
-      missingTokensDurationMs: Number(missingTokensTime.toFixed(2)),
-      totalDurationMs: Number(routerTime.toFixed(2)),
+      totalDurationMs: Number(routerDuration.toFixed(2)),
     })
 
     ctx.body = renderMainPage({
       events,
       messages,
       transfers,
-      status,
+      status: getProcessorsStatus(processors),
       missingTokens,
+      uniqueApps,
       getExplorerUrl: config.dashboard.getExplorerUrl,
     })
   })

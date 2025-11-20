@@ -2,6 +2,7 @@ import type {
   InteropEventStatsRecord,
   InteropMessageDetailedStatsRecord,
   InteropMessageStatsRecord,
+  InteropMessageUniqueAppsRecord,
   InteropTransfersDetailedStatsRecord,
   InteropTransfersStatsRecord,
 } from '@l2beat/database'
@@ -348,6 +349,7 @@ function MainPageLayout(props: {
   transfers: TransferStats[]
   status: ProcessorsStatus[]
   missingTokens: InteropMissingTokenInfo[]
+  uniqueApps: InteropMessageUniqueAppsRecord[]
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   const eventsTable = <EventsTable {...props} />
@@ -409,6 +411,17 @@ function MainPageLayout(props: {
         ]}
         footer={
           <>
+            <h3>Known apps for plugins</h3>
+            {props.uniqueApps.map((u) => (
+              <div>
+                <h4>{u.plugin}</h4>
+                <ul>
+                  {u.apps.map((a) => (
+                    <li>{a}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
             <ProcessorsStatusTable processors={props.status} />
           </>
         }
@@ -423,6 +436,7 @@ export function renderMainPage(props: {
   transfers: TransferStats[]
   status: ProcessorsStatus[]
   missingTokens: InteropMissingTokenInfo[]
+  uniqueApps: InteropMessageUniqueAppsRecord[]
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   return '<!DOCTYPE html>' + renderToStaticMarkup(<MainPageLayout {...props} />)

@@ -38,6 +38,7 @@ export type {
   InteropMessageDetailedStatsRecord,
   InteropMessageRecord,
   InteropMessageStatsRecord,
+  InteropMessageUniqueAppsRecord,
 } from './repositories/InteropMessageRepository'
 export type {
   InteropMissingTokenInfo,
