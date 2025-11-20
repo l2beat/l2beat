@@ -355,7 +355,7 @@ export function DeployedTokenForm({
                         field.onChange(parsedDate)
                       } else {
                         toast.error(
-                          `Invalid date format. If you think it's correct, please report to dev team. Input: ${pastedText}`,
+                          `Invalid date format. If you think it's correct, please report to dev team.`,
                         )
                       }
                     }}
