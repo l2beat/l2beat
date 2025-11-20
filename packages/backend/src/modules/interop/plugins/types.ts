@@ -88,6 +88,8 @@ export interface TransferSide {
   event: InteropEvent
   tokenAddress?: Address32
   tokenAmount?: bigint
+  wasBurned?: boolean
+  wasMinted?: boolean
 }
 
 export interface InteropTransfer {
@@ -95,8 +97,8 @@ export interface InteropTransfer {
   plugin: string
   type: string
   events: InteropEvent[]
-  src: TransferSide & { wasBurned?: boolean }
-  dst: TransferSide & { wasMinted?: boolean }
+  src: TransferSide
+  dst: TransferSide
 }
 
 export interface InteropIgnore {
