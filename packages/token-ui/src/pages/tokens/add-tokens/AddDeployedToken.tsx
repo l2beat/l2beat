@@ -287,6 +287,7 @@ export function AddDeployedToken() {
           <SheetTrigger asChild>
             <Button
               variant="outline"
+              size="icon"
               type="button"
               className="absolute top-2 left-full ml-2"
             >
@@ -352,6 +353,7 @@ function Suggestions({
                   ) : (
                     <Button
                       variant="link"
+                      size="icon"
                       onClick={() =>
                         addToQueue(suggestion.chain, suggestion.address)
                       }
@@ -360,7 +362,7 @@ function Suggestions({
                     </Button>
                   )}
 
-                  <Button variant="link" asChild>
+                  <Button variant="link" size="icon" asChild>
                     <Link
                       to={buildUrlWithParams('/tokens/new', {
                         tab: 'deployed',
