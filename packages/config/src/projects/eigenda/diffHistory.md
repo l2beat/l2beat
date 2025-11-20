@@ -1,14 +1,15 @@
-Generated with discovered.json: 0xaa85d06a3ec73d658a0ebe0ac1232bf58ce0397d
+Generated with discovered.json: 0x6fd7d704614707c7891d4ce2a27b176dd33e87a2
 
-# Diff at Tue, 18 Nov 2025 16:07:02 GMT:
+# Diff at Thu, 20 Nov 2025 10:18:33 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@c3835bcdcb7588e6060ac6cbd4b3d2d9049082ba block: 1761318853
-- current timestamp: 1763481951
+- comparing to: main@2b637644c92662f812c5b3f8fe7a2b8a31d11187 block: 1761318853
+- current timestamp: 1763633846
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+New verifier adding status codes for certificate verification results.
+https://disco.l2beat.com/diff/eth:0x46766C6426eF4D3092f73F72660A8b7B510E6846/eth:0x61692e93b6B045c444e942A91EcD1527F23A3FB7
 
 ## Watched changes
 
@@ -37,7 +38,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract EigenDACertVerifier (eth:0x46766C6426eF4D3092f73F72660A8b7B510E6846)
-    +++ description: None
+    +++ description: A DA verifier contract for EigenDA V2 certificates. The verifier is used to verify the certificate against operator signatures and stake thresholds.
 ```
 
 ## Source code changes
