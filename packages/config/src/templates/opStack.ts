@@ -583,10 +583,24 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
     Array.isArray(da) ? da : [da],
   )
 
+  // Also make technology.dataAvailability an array for L3s
+  const l3TechDA = common.technology?.dataAvailability
+  const hostChainTechDAs = asArray(
+    baseChain.technology?.dataAvailability,
+  ).flatMap((da) => (Array.isArray(da) ? da : [da]))
+
   return {
     type: 'layer3',
     ...common,
     dataAvailability: l3DA ? [l3DA, ...hostChainDAs] : hostChainDAs,
+    technology: common.technology
+      ? {
+          ...common.technology,
+          dataAvailability: l3TechDA
+            ? [l3TechDA, ...hostChainTechDAs]
+            : hostChainTechDAs,
+        }
+      : undefined,
     hostChain: ProjectId(hostChain),
     display: { ...common.display, ...templateVars.display },
     stackedRiskView: templateVars.stackedRiskView ?? stackedRisk,
