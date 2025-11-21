@@ -185,9 +185,6 @@ function contractFromDiscovery(
     return {
       description: fieldColor?.description,
       handler: field?.handler,
-      ignoreInWatchMode: contractConfig.ignoreInWatchMode?.includes(name),
-      ignoreRelatives: contractConfig.ignoreRelatives?.includes(name),
-      severity: fieldColor?.severity,
     }
   }
 

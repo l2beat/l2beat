@@ -126,6 +126,7 @@ export {
 export {
   type ContractConfigSchema,
   type DiscoveryConfigSchema,
+  type FieldConfigSchema,
 } from './schemas/schemas'
 export { EtherscanClient } from './utils/EtherscanClient'
 export { getErrorMessage } from './utils/getErrorMessage'

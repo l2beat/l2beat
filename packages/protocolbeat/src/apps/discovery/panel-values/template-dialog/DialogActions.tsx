@@ -29,11 +29,7 @@ export function DialogActions({
           </Button>
         )}
         {step === 'finalize-creation' && (
-          <Button
-            disabled={!isFormValid}
-            onClick={onCreate}
-            className="bg-coffee-400 hover:bg-coffee-400/80"
-          >
+          <Button disabled={!isFormValid} onClick={onCreate} variant="solid">
             Create shape
           </Button>
         )}
