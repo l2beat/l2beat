@@ -236,8 +236,10 @@ export function optionToRange(
   option: ChartTimeRangeOption,
   opts?: { offset?: UnixTime },
 ) {
-  const offset = opts?.offset ?? 0
+  // Default offset is 75 minutes, cuz this is more or less how much time we need to wait for the data to be fully synced.
+  const offset = opts?.offset ?? -1 * (UnixTime.HOUR + 15 * UnixTime.MINUTE)
   const days = optionToDays(option)
+
   return {
     from:
       days === null
