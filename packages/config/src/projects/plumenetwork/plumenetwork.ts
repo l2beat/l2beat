@@ -78,6 +78,10 @@ export const plumenetwork: ScalingProject = orbitStackL2({
         url: 'https://rpc.plume.org',
         callsPerMinute: 300,
       },
+      {
+        type: 'blockscout',
+        url: 'https://explorer.plume.org/api',
+      },
     ],
     multicallContracts: [
       {
