@@ -71,6 +71,7 @@ export function toRow(record: InteropEventRecord): Insertable<InteropEvent> {
 
 export interface InteropEventStatsRecord {
   type: string
+  direction: string | undefined
   count: number
   matched: number
   unmatched: number
@@ -142,6 +143,7 @@ export class InteropEventRepository extends BaseRepository {
       .selectFrom('InteropEvent')
       .select((eb) => [
         'type',
+        'direction',
         eb.fn.countAll().as('count'),
         eb.fn.countAll().filterWhere('matched', '=', true).as('matched'),
         eb.fn
@@ -160,11 +162,12 @@ export class InteropEventRepository extends BaseRepository {
           .filterWhere('matched', '=', false)
           .as('oldUnmatched'),
       ])
-      .groupBy('type')
+      .groupBy(['type', 'direction'])
       .execute()
 
     return rows.map((x) => ({
       type: x.type,
+      direction: x.direction ?? undefined,
       count: Number(x.count),
       matched: Number(x.matched),
       unmatched: Number(x.unmatched),

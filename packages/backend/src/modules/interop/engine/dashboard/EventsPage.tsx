@@ -81,7 +81,7 @@ function EventsPageLayout(props: {
       showHome={true}
       tables={[
         {
-          title: `Interop Events: ${props.events[0]?.type ?? ''}`,
+          title: `Interop Events: ${props.events[0]?.type ?? ''} (${props.events[0].direction ?? '<missing_direction>'})`,
           table: eventsTable,
           tableId: 'events',
           dataTableOptions: dataTableOptions,
