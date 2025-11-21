@@ -61,7 +61,11 @@ export class ContractConfigModel {
     return this.patch({ ignoreInWatchMode: undefinedIfEmpty(methods) })
   }
 
-  setFieldSeverity(name: string, severity: 'HIGH' | 'LOW' | undefined) {
+  setCategory(category: ContractConfigSchema['category']) {
+    return this.patch({ category })
+  }
+
+  setFieldSeverity(name: string, severity: FieldConfigSchema['severity']) {
     return this.patchField(name, (field) => field.setSeverity(severity))
   }
 

@@ -27,7 +27,7 @@ export class FieldConfigModel {
     return isEmpty(this.config)
   }
 
-  setSeverity(severity: 'HIGH' | 'LOW' | undefined) {
+  setSeverity(severity: FieldConfigSchema['severity']) {
     return this.patch({ severity })
   }
 
