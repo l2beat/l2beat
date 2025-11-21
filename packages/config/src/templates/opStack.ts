@@ -266,7 +266,10 @@ function opStackCommon(
     ...(templateVars.nonTemplateOptimismPortalEscrowTokens ?? []),
   ]
 
-  const daProvider = getDAProvider(templateVars, hostChainDA)
+  const daProvider = getDAProvider(templateVars, {
+    hostChainDA,
+    projectType: type,
+  })
 
   const automaticBadges = templateVars.usingAltVm
     ? [BADGES.Stack.OPStack, daProvider.badge]
@@ -551,6 +554,9 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
     baseChain.chainConfig?.explorerUrl,
     hostChainDA,
   )
+  const projectName =
+    templateVars.display.name ?? templateVars.discovery.projectName
+  const hostChainName = baseChain.display.name
 
   const stackedRisk = {
     stateValidation: pickWorseRisk(
@@ -577,28 +583,43 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
     ),
   }
 
-  // For L3s, dataAvailability should be an array with both L3 and host chain entries
-  const l3DA = common.dataAvailability
-  const hostChainDAs = asArray(baseChain.dataAvailability).flatMap((da) =>
+  // For L3s, dataAvailability should explicitly show "L3 -> host" and "host -> L1"
+  const transformedL3DaEntries = asArray(common.dataAvailability).map(
+    (entry) => addHostChainContextToDaEntry(entry, projectName, baseChain),
+  )
+  const rawHostChainDAs = asArray(baseChain.dataAvailability).flatMap((da) =>
     Array.isArray(da) ? da : [da],
+  )
+  const hostChainDAs = rawHostChainDAs.map((entry) =>
+    addRootChainContextToDaEntry(entry, baseChain),
   )
 
   // Also make technology.dataAvailability an array for L3s
-  const l3TechDA = common.technology?.dataAvailability
-  const hostChainTechDAs = asArray(
-    baseChain.technology?.dataAvailability,
-  ).flatMap((da) => (Array.isArray(da) ? da : [da]))
-
+  const l3TechnologyChoices = asArray(common.technology?.dataAvailability)
+  const rootLayerName = rawHostChainDAs[0]?.layer.value ?? 'its DA layer'
+  const transformedL3TechChoices =
+    l3TechnologyChoices.length === 0
+      ? []
+      : [
+          addHostChainContextToTechnologyChoice(
+            l3TechnologyChoices[0],
+            projectName,
+            hostChainName,
+            rootLayerName,
+          ),
+          ...l3TechnologyChoices.slice(1),
+        ]
   return {
     type: 'layer3',
     ...common,
-    dataAvailability: l3DA ? [l3DA, ...hostChainDAs] : hostChainDAs,
+    dataAvailability: [
+      ...transformedL3DaEntries,
+      ...hostChainDAs,
+    ] as ProjectScalingDa[],
     technology: common.technology
       ? {
           ...common.technology,
-          dataAvailability: l3TechDA
-            ? [l3TechDA, ...hostChainTechDAs]
-            : hostChainTechDAs,
+          dataAvailability: transformedL3TechChoices,
         }
       : undefined,
     hostChain: ProjectId(hostChain),
@@ -1485,8 +1506,13 @@ function technologyDA(
 
 function getDAProvider(
   templateVars: OpStackConfigCommon,
-  hostChainDA?: DAProvider,
+  options?: {
+    hostChainDA?: DAProvider
+    projectType?: ScalingProject['type']
+  },
 ): DAProvider {
+  const hostChainDA = options?.hostChainDA
+  const projectType = options?.projectType ?? 'layer2'
   const postsToCelestia =
     templateVars.usesEthereumBlobs ??
     templateVars.discovery.getContractValue<{
@@ -1524,7 +1550,10 @@ function getDAProvider(
       badge:
         hostChainDA?.badge ??
         (usesBlobs ? BADGES.DA.EthereumBlobs : BADGES.DA.EthereumCalldata),
-      riskView: RISK_VIEW.DATA_ON_CHAIN,
+      riskView:
+        projectType === 'layer3'
+          ? RISK_VIEW.DATA_ON_CHAIN_L3
+          : RISK_VIEW.DATA_ON_CHAIN,
       technology: usesBlobs
         ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
         : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
@@ -1962,5 +1991,51 @@ function hostChainDAProvider(hostChain: ScalingProject): DAProvider {
     riskView: hostChain.riskView.dataAvailability,
     technology: hostDaTech,
     badge: DABadge,
+  }
+}
+
+function addHostChainContextToDaEntry(
+  daEntry: ProjectScalingDa,
+  projectName: string,
+  hostChain: ScalingProject,
+): ProjectScalingDa {
+  const hostChainName = hostChain.display.name
+  return {
+    ...daEntry,
+    layer: {
+      ...daEntry.layer,
+      secondLine: `→ ${hostChainName}`,
+      description: `${projectName} posts its transaction data to ${hostChainName} before it reaches ${daEntry.layer.value}. ${daEntry.layer.description ?? ''}`.trim(),
+      sentiment: daEntry.layer.sentiment,
+    },
+  }
+}
+
+function addRootChainContextToDaEntry(
+  daEntry: ProjectScalingDa,
+  hostChain: ScalingProject,
+): ProjectScalingDa {
+  const hostChainName = hostChain.display.name
+  const targetLayerName = daEntry.layer.value
+  return {
+    ...daEntry,
+    layer: {
+      ...daEntry.layer,
+      value: hostChainName,
+      secondLine: `→ ${targetLayerName}`,
+      description: `${hostChainName} posts its transaction data to ${targetLayerName}. ${daEntry.layer.description ?? ''}`.trim(),
+    },
+  }
+}
+
+function addHostChainContextToTechnologyChoice(
+  choice: ProjectTechnologyChoice,
+  projectName: string,
+  hostChainName: string,
+  rootLayerName: string,
+): ProjectTechnologyChoice {
+  return {
+    ...choice,
+    description: `${projectName} posts its transaction data to ${hostChainName}, which then posts to ${rootLayerName}. ${choice.description}`.trim(),
   }
 }
