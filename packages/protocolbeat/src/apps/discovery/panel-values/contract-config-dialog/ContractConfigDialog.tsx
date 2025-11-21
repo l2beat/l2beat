@@ -4,6 +4,7 @@ import { Select } from '../../../../components/Select'
 import { IconClose } from '../../../../icons/IconClose'
 import { IconGear } from '../../../../icons/IconGear'
 import { useConfigModels } from '../../hooks/useConfigModels'
+import { useProjectData } from '../../hooks/useProjectData'
 
 const CATEGORIES = {
   core: {
@@ -33,6 +34,7 @@ const CATEGORIES = {
 }
 
 export function ContractConfigDialog() {
+  const { selected } = useProjectData()
   const models = useConfigModels()
 
   return (
@@ -43,12 +45,16 @@ export function ContractConfigDialog() {
         </Button>
       </Dialog.Trigger>
       <Dialog.Body>
-        <Dialog.Title>Contract Configuration</Dialog.Title>
-        <Dialog.Description>Configure the contract settings</Dialog.Description>
+        <Dialog.Title>
+          Contract -{' '}
+          <span className="font-mono text-coffee-400">
+            {selected?.name ?? 'Unknown'}
+          </span>
+        </Dialog.Title>
         <div className="grid grid-cols-2 gap-6">
           {/* Config Column */}
           <div className="space-y-4">
-            <h3 className="border-coffee-400/40 border-b pb-2 font-medium text-base">
+            <h3 className="border-coffee-400/40 border-b pb-1 text-base">
               Config
             </h3>
 
@@ -63,7 +69,7 @@ export function ContractConfigDialog() {
 
           {/* Template Column */}
           <div className="space-y-4">
-            <h3 className="border-coffee-400/40 border-b pb-2 font-medium text-base">
+            <h3 className="border-coffee-400/40 border-b pb-1 font-medium text-base">
               Template
             </h3>
 
@@ -99,7 +105,7 @@ function CategorySelect({
   setCategory: (category: string | undefined) => void
 }) {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-1">
       <Select.Root
         onValueChange={(value) => {
           console.log('value', value)

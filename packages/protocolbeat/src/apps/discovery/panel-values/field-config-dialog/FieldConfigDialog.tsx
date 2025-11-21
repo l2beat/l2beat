@@ -3,7 +3,7 @@ import type { Field } from '../../../../api/types'
 import { Button } from '../../../../components/Button'
 import { Checkbox } from '../../../../components/Checkbox'
 import { Dialog } from '../../../../components/Dialog'
-import { IconPlus } from '../../../../icons/IconPlus'
+import { IconGear } from '../../../../icons/IconGear'
 import { useConfigModels } from '../../hooks/useConfigModels'
 
 type Props = {
@@ -36,21 +36,17 @@ export function FieldConfigDialog(props: Props) {
     <Dialog.Root>
       <Dialog.Trigger asChild>
         <Button variant="icon" size="icon">
-          <IconPlus className="size-4 text-coffee-200/80" />
+          <IconGear className="size-4 text-coffee-200/80" />
         </Button>
       </Dialog.Trigger>
       <Dialog.Body>
         <Dialog.Title>
-          Field Configuration:{' '}
-          <span className="font-mono text-coffee-400">{fieldName}</span>
+          Field - <span className="font-mono text-coffee-400">{fieldName}</span>
         </Dialog.Title>
-        <Dialog.Description>
-          Configure the field settings for config and template.
-        </Dialog.Description>
         <div className="grid grid-cols-2 gap-6">
           {/* Config Column */}
           <div className="space-y-4">
-            <h3 className="border-coffee-400/40 border-b pb-2 font-medium text-base">
+            <h3 className="border-coffee-400/40 border-b pb-1 text-base">
               Config
             </h3>
 
@@ -120,7 +116,7 @@ export function FieldConfigDialog(props: Props) {
 
           {/* Template Column */}
           <div className="space-y-4">
-            <h3 className="border-coffee-400/40 border-b pb-2 font-medium text-base">
+            <h3 className="border-coffee-400/40 border-b pb-1 text-base">
               Template
             </h3>
 

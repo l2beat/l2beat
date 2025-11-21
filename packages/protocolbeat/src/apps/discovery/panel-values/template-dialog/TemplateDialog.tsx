@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import clsx from 'clsx'
 import { useMemo, useState } from 'react'
 
 import { createShape, listTemplates } from '../../../../api/api'
+import { Button } from '../../../../components/Button'
 import { Dialog } from '../../../../components/Dialog'
 import { Input } from '../../../../components/Input'
 import {
@@ -76,15 +76,9 @@ function TemplateDialogTrigger({
 }) {
   return (
     <Dialog.Trigger asChild disabled={disabled}>
-      <div
-        className={clsx(
-          'group relative ml-2 cursor-pointer overflow-hidden bg-coffee-400 px-3 py-1 font-medium text-sm text-white transition-all duration-300',
-          className,
-        )}
-      >
-        <span className="pointer-events-none absolute inset-0 animate-[disco_1.5s_linear_infinite] bg-[length:400%_400%] bg-[linear-gradient(270deg,#ff0080,#ff8c00,#40e0d0,#8a2be2)] opacity-0 transition-opacity duration-200 group-hover:opacity-80" />
-        <span className="relative z-10">{children}</span>
-      </div>
+      <Button variant="icon" size="icon" className={className}>
+        {children}
+      </Button>
     </Dialog.Trigger>
   )
 }
@@ -134,9 +128,7 @@ function TemplateDialogBody({
 
   return (
     <Dialog.Body>
-      <Dialog.Title className="mb-1 font-medium text-lg">
-        Add new shape
-      </Dialog.Title>
+      <Dialog.Title>Add new shape</Dialog.Title>
 
       {isLoading && <LoadingState />}
       {isError && <ErrorState />}

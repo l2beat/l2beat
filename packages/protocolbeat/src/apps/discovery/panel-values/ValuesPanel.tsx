@@ -1,15 +1,13 @@
-import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
-import { getProject } from '../../../api/api'
 import type { ApiAddressEntry, ApiProjectContract } from '../../../api/types'
 import { ActionNeededState } from '../../../components/ActionNeededState'
 import { AddressIcon } from '../../../components/AddressIcon'
 import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
 import { IS_READONLY } from '../../../config/readonly'
-import { findSelected } from '../../../utils/findSelected'
+import { IconShape } from '../../../icons/IconShape'
 import { useConfigModels } from '../hooks/useConfigModels'
-import { usePanelStore } from '../store/panel-store'
+import { useProjectData } from '../hooks/useProjectData'
 import { AbiDisplay } from './AbiDisplay'
 import { AddressDisplay } from './AddressDisplay'
 import { ContractConfigDialog } from './contract-config-dialog/ContractConfigDialog'
@@ -24,20 +22,14 @@ export function ValuesPanel() {
     throw new Error('Cannot use component outside of project page!')
   }
 
-  const response = useQuery({
-    queryKey: ['projects', project],
-    queryFn: () => getProject(project),
-  })
-  const selectedAddress = usePanelStore((state) => state.selected)
+  const { selected, isError, isPending } = useProjectData()
 
-  if (response.isPending) {
+  if (isPending) {
     return <LoadingState />
   }
-  if (response.isError) {
+  if (isError) {
     return <ErrorState />
   }
-
-  const selected = findSelected(response.data.entries, selectedAddress)
 
   return (
     <div className="h-full w-full overflow-x-auto">
@@ -73,7 +65,9 @@ function Display({
       project={project}
       selectedName={selected.name}
     >
-      <TemplateDialog.Trigger>Add shape</TemplateDialog.Trigger>
+      <TemplateDialog.Trigger>
+        <IconShape />
+      </TemplateDialog.Trigger>
       <TemplateDialog.Body
         addresses={addresses}
         project={project}
@@ -88,7 +82,7 @@ function Display({
   return (
     <>
       <div id={selected.address} className="mb-2 px-5 text-lg">
-        <div className="flex flex-wrap items-center">
+        <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-1 font-bold">
             <AddressIcon type={selected.type} />
             {selected.name ?? 'Unknown'}
@@ -96,7 +90,7 @@ function Display({
               <span className="text-aux-red"> (Unverified)</span>
             )}
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             {templateDialog}
             {contractConfigDialog}
           </div>
