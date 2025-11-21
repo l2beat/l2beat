@@ -38,6 +38,7 @@ export const grvt: ScalingProject = zkStackL2({
         'https://x.com/grvt_io',
         'https://discord.gg/3jsVPwaGeB',
         'https://grvt.io/blog/',
+        'https://t.me/grvt_io',
       ],
     },
   },
