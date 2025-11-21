@@ -18,7 +18,7 @@ export const namechain: ScalingProject = upcomingL2({
       repositories: ['https://github.com/ensdomains/namechain'],
       socialMedia: [
         'https://x.com/ensdomains',
-        'https://discord.com/invite/TZmGtEP',
+        'https://discord.com/invite/f9e4fnY',
         'https://farcaster.xyz/ensdomains',
       ],
     },
