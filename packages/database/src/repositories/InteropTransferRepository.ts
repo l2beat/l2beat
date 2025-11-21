@@ -16,6 +16,7 @@ export interface InteropTransferRecord {
   srcEventId: string | undefined
   srcTokenAddress: string | undefined
   srcRawAmount: bigint | undefined
+  srcWasBurned: boolean | undefined
   srcAbstractTokenId: string | undefined
   srcSymbol: string | undefined
   srcAmount: number | undefined
@@ -28,6 +29,7 @@ export interface InteropTransferRecord {
   dstEventId: string | undefined
   dstTokenAddress: string | undefined
   dstRawAmount: bigint | undefined
+  dstWasMinted: boolean | undefined
   dstAbstractTokenId: string | undefined
   dstSymbol: string | undefined
   dstAmount: number | undefined
@@ -72,6 +74,7 @@ export function toRecord(
     srcEventId: row.srcEventId ?? undefined,
     srcTokenAddress: row.srcTokenAddress ?? undefined,
     srcRawAmount: row.srcRawAmount ? BigInt(row.srcRawAmount) : undefined,
+    srcWasBurned: row.srcWasBurned ?? undefined,
     srcAbstractTokenId: row.srcAbstractTokenId ?? undefined,
     srcSymbol: row.srcSymbol ?? undefined,
     srcAmount: row.srcAmount ?? undefined,
@@ -84,6 +87,7 @@ export function toRecord(
     dstEventId: row.dstEventId ?? undefined,
     dstTokenAddress: row.dstTokenAddress ?? undefined,
     dstRawAmount: row.dstRawAmount ? BigInt(row.dstRawAmount) : undefined,
+    dstWasMinted: row.dstWasMinted ?? undefined,
     dstAbstractTokenId: row.dstAbstractTokenId ?? undefined,
     dstSymbol: row.dstSymbol ?? undefined,
     dstAmount: row.dstAmount ?? undefined,
@@ -110,6 +114,7 @@ export function toRow(
     srcEventId: record.srcEventId,
     srcTokenAddress: record.srcTokenAddress,
     srcRawAmount: record.srcRawAmount?.toString(),
+    srcWasBurned: record.srcWasBurned,
     srcAbstractTokenId: record.srcAbstractTokenId,
     srcSymbol: record.srcSymbol,
     srcAmount: record.srcAmount,
@@ -123,6 +128,7 @@ export function toRow(
     dstEventId: record.dstEventId,
     dstTokenAddress: record.dstTokenAddress,
     dstRawAmount: record.dstRawAmount?.toString(),
+    dstWasMinted: record.dstWasMinted,
     dstAbstractTokenId: record.dstAbstractTokenId,
     dstSymbol: record.dstSymbol,
     dstAmount: record.dstAmount,

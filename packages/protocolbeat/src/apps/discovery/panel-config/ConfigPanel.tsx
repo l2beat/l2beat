@@ -1,37 +1,18 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useMemo } from 'react'
-import { readConfigFile, updateConfigFile } from '../../../api/api'
-import type { ApiConfigFileResponse } from '../../../api/types'
 
 import { ErrorState } from '../../../components/ErrorState'
-import { EditorView } from '../../../components/editor/EditorView'
 import type { EditorFile } from '../../../components/editor/store'
+import { EditorView } from '../../../components/editor/views/EditorView'
 import { LoadingState } from '../../../components/LoadingState'
 import { IS_READONLY } from '../../../config/readonly'
 import { formatJson } from '../../../utils/formatJson'
 import { removeJSONTrailingCommas } from '../../../utils/removeJSONTrailingCommas'
+import { type ConfigModels, useConfigModels } from '../hooks/useConfigModels'
 import { useProjectData } from '../hooks/useProjectData'
 
 export function ConfigPanel() {
-  const { project, projectResponse } = useProjectData()
-  const queryClient = useQueryClient()
-  const templateResponse = useQuery({
-    queryKey: ['projects', project, 'config'],
-    queryFn: () => {
-      return readConfigFile(project)
-    },
-  })
-
-  const saveConfig = useMutation({
-    mutationFn: async (content: string) => {
-      await updateConfigFile(project, content)
-    },
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: ['projects', project, 'config'],
-      })
-    },
-  })
+  const { project } = useProjectData()
+  const configModels = useConfigModels()
 
   // TODO: move this to backend/editor or replace with gui
   const onSaveCallback = (content: string): string => {
@@ -39,21 +20,21 @@ export function ConfigPanel() {
       content = formatJson(JSON.parse(removeJSONTrailingCommas(content)))
     } catch {}
 
-    saveConfig.mutate(content)
+    configModels.configModel.save(content)
 
     return content
   }
 
   const files = useMemo(
-    () => getConfigFiles(templateResponse, project),
-    [templateResponse.data, project],
+    () => getConfigFiles(project, configModels),
+    [project, configModels],
   )
 
-  if (projectResponse.isError) {
+  if (configModels.isError) {
     return <ErrorState />
   }
 
-  if (projectResponse.isPending) {
+  if (configModels.isPending) {
     return <LoadingState />
   }
 
@@ -67,34 +48,18 @@ export function ConfigPanel() {
 }
 
 function getConfigFiles(
-  configResponse: ReturnType<typeof useQuery<ApiConfigFileResponse | null>>,
   project: string,
+  { configModel }: ConfigModels,
 ): EditorFile[] {
-  const data = configResponse.data
-
-  if (!data) {
-    return [
-      {
-        id: 'config',
-        name: 'config.jsonc',
-        content: '// No config files - no config response',
-        language: 'json',
-        readOnly: true,
-      },
-    ]
-  }
-
   const sources: EditorFile[] = []
 
-  if (data.config) {
-    sources.push({
-      id: `config-${project}`,
-      name: 'config.jsonc',
-      content: data.config,
-      language: 'json',
-      readOnly: IS_READONLY,
-    })
-  }
+  sources.push({
+    id: `config-${project}`,
+    name: 'config.jsonc',
+    content: configModel.files.config,
+    language: 'json',
+    readOnly: IS_READONLY,
+  })
 
   return sources
 }

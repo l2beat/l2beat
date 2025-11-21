@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "sygma",
   "import": ["../globalConfig.jsonc"],
+  "archived": true,
   "initialAddresses": [
     "eth:0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089",
     "eth:0x9f9778DA7c1D0AbE148314d6C1EA6E0A93C151C7"

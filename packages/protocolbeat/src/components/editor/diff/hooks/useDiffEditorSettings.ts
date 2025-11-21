@@ -1,12 +1,18 @@
 import { useCallback, useEffect } from 'react'
 import { useDiffSettingsStore } from '../../store'
-import type { DiffViewProps } from '../DiffView'
 import { splitCode } from '../utils/soliditySplitter'
 import { useDiffState } from './useDiffState'
 import { useLineSelection } from './useLineSelection'
 import { useUrlState } from './useUrlState'
 
-export function useDiffEditorSettings(props: DiffViewProps) {
+type UseDiffEditorSettingsProps = {
+  leftCode: Record<string, string>
+  rightCode: Record<string, string>
+  leftAddress: string
+  rightAddress: string
+}
+
+export function useDiffEditorSettings(props: UseDiffEditorSettingsProps) {
   const {
     fold,
     removeUnchanged,

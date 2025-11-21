@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The executor contract for penalties. It receives authorization to slash validator stakes, subject to an execution delay and a vetoer."
+}

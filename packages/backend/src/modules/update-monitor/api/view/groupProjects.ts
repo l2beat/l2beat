@@ -58,7 +58,7 @@ export function groupProjects(
     {
       name: 'ZK Stack',
       assignees: ['🐝', '🐻'],
-      predicate: (p) => isStack(p.name, 'ZK Stack'),
+      predicate: (p) => isStack(p.name, 'ZK Stack') || p.name === 'gateway',
     },
     {
       name: 'Starknet & Starkexes',
@@ -69,7 +69,10 @@ export function groupProjects(
     {
       name: 'DA Projects',
       assignees: ['🐿', '🐱'],
-      predicate: (p) => projectMap.get(p.name)?.isDaLayer ?? false,
+      predicate: (p) =>
+        projectMap.get(p.name)?.isDaLayer ||
+        p.name === 'blobstream' ||
+        p.name === 'vector',
     },
     {
       name: 'Bridge Projects',

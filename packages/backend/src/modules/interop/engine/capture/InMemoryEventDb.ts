@@ -1,27 +1,36 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 import type {
   InteropEvent,
+  InteropEventContext,
   InteropEventDb,
   InteropEventQuery,
   InteropEventType,
 } from '../../plugins/types'
 
 export class InMemoryEventDb implements InteropEventDb {
-  private indices = new Map<string, EventIndex>()
-  private eventsByType = new Map<string, InteropEvent[]>()
+  private stores: EventTypeStore<unknown>[] = []
+  private storeIndices = new Map<string, number>()
   private count = 0
 
+  constructor(private eventCap = 500_000) {}
+
   getEvents(type: string): InteropEvent[] {
-    let array = this.eventsByType.get(type)
-    if (!array) {
-      array = []
-      this.eventsByType.set(type, array)
+    return this.getStore(type).getAll()
+  }
+
+  private getStore<T = unknown>(type: string): EventTypeStore<T> {
+    let storeIndex = this.storeIndices.get(type)
+    if (storeIndex === undefined) {
+      const store = new EventTypeStore()
+      storeIndex = this.stores.length
+      this.storeIndices.set(type, storeIndex)
+      this.stores.push(store)
     }
-    return array
+    return this.stores[storeIndex] as EventTypeStore<T>
   }
 
   getEventTypes() {
-    return [...this.eventsByType.keys()]
+    return [...this.storeIndices.keys()]
   }
 
   getEventCount() {
@@ -29,41 +38,41 @@ export class InMemoryEventDb implements InteropEventDb {
   }
 
   addEvent(event: InteropEvent) {
-    this.count += 1
-    this.getEvents(event.type).push(event)
-    for (const index of this.indices.values()) {
-      index.addEvent(event)
+    if (this.count >= this.eventCap) {
+      let minStore: EventTypeStore<unknown> | undefined
+      let minExpiresAt = Number.POSITIVE_INFINITY
+      // This shouldn't be a bottleneck but if it is we can always create
+      // a top-level heap for the stores too.
+      for (const store of this.stores) {
+        const next = store.peekNextToExpire()
+        if (next && next.expiresAt < minExpiresAt) {
+          minExpiresAt = next.expiresAt
+          minStore = store
+        }
+      }
+      if (minStore?.removeNextToExpire()) {
+        this.count -= 1
+      }
     }
+    this.getStore(event.type).add(event)
+    this.count += 1
   }
 
   removeExpired(now: UnixTime) {
-    this.removeWhere((e) => e.expiresAt <= now)
-  }
-
-  removeEvents(eventIds: Set<string>) {
-    this.removeWhere((e) => eventIds.has(e.eventId))
-  }
-
-  private removeWhere(predicate: (event: InteropEvent) => boolean) {
-    const removedIds: string[] = []
-    for (const array of this.eventsByType.values()) {
-      for (let i = 0; i < array.length; i++) {
-        if (predicate(array[i])) {
-          this.count -= 1
-          removedIds.push(array[i].eventId)
-          if (i === array.length - 1) {
-            array.pop()
-          } else {
-            // biome-ignore lint/style/noNonNullAssertion: It's there
-            array[i] = array.pop()!
-            i--
-          }
-        }
+    for (const store of this.stores) {
+      while (true) {
+        const next = store.peekNextToExpire()
+        if (!next || next.expiresAt >= now) break
+        store.removeNextToExpire()
+        this.count -= 1
       }
     }
-    for (const index of this.indices.values()) {
-      for (const eventId of removedIds) {
-        index.removeEvent(eventId)
+  }
+
+  removeEvents(events: InteropEvent[]) {
+    for (const event of events) {
+      if (this.getStore(event.type).remove(event)) {
+        this.count -= 1
       }
     }
   }
@@ -72,15 +81,133 @@ export class InMemoryEventDb implements InteropEventDb {
     type: InteropEventType<T>,
     query: InteropEventQuery<T>,
   ): InteropEvent<T> | undefined {
-    return this.findAll(type, query)[0]
+    return this.getStore<T>(type.type).findAll(query)[0]
   }
 
   findAll<T>(
     type: InteropEventType<T>,
     query: InteropEventQuery<T>,
   ): InteropEvent<T>[] {
-    const index = this.getIndex(type, query)
-    const events = index.findEvents(query) as InteropEvent<T>[]
+    return this.getStore<T>(type.type).findAll(query)
+  }
+}
+
+// Implements a min-heap on the `expiresAt` property and keeps lookups for
+// a specific event type.
+class EventTypeStore<T> {
+  private all: InteropEvent<T>[] = []
+  private indices = new Map<InteropEvent<T>, number>()
+  // There is most likely 0-2 lookups so array is faster than a map
+  private lookups: Lookup<T>[] = []
+
+  getAll(): InteropEvent<T>[] {
+    return this.all
+  }
+
+  peekNextToExpire(): InteropEvent<T> | undefined {
+    return this.all[0]
+  }
+
+  removeNextToExpire(): boolean {
+    if (this.all.length === 0) {
+      return false
+    }
+
+    const element = this.all[0]
+    this.indices.delete(element)
+    for (const lookup of this.lookups) {
+      lookup.removeEvent(element)
+    }
+
+    const last = this.all.pop()
+    if (!last) return true
+
+    this.all[0] = last
+    this.indices.set(last, 0)
+    this.siftDown(0)
+    return true
+  }
+
+  add(event: InteropEvent<T>) {
+    this.all.push(event)
+    this.indices.set(event, this.all.length - 1)
+    this.siftUp(this.all.length - 1)
+  }
+
+  remove(event: InteropEvent<T>): boolean {
+    const index = this.indices.get(event)
+    if (index === undefined) return false
+
+    this.indices.delete(event)
+    for (const lookup of this.lookups) {
+      lookup.removeEvent(event)
+    }
+
+    const last = this.all.pop()
+    if (last === event || !last) return true
+
+    this.all[index] = last
+    this.indices.set(last, index)
+    if (index !== 0) {
+      const parentIndex = Math.floor((index - 1) / 2)
+      if (this.all[parentIndex].expiresAt > last.expiresAt) {
+        this.siftUp(index)
+        return true
+      }
+    }
+    this.siftDown(index)
+    return true
+  }
+
+  private siftUp(index: number) {
+    while (index !== 0) {
+      const element = this.all[index]
+      const parentIndex = Math.floor((index - 1) / 2)
+      const parent = this.all[parentIndex]
+      if (parent.expiresAt <= element.expiresAt) {
+        break
+      }
+      this.all[parentIndex] = element
+      this.indices.set(element, parentIndex)
+      this.all[index] = parent
+      this.indices.set(parent, index)
+      index = parentIndex
+    }
+  }
+
+  private siftDown(index: number) {
+    while (true) {
+      const element = this.all[index]
+      const childLIndex = index * 2 + 1
+      const childRIndex = index * 2 + 2
+
+      let smallerIndex = childLIndex
+      if (childRIndex < this.all.length) {
+        const childL = this.all[childLIndex]
+        const childR = this.all[childRIndex]
+        if (childR.expiresAt < childL.expiresAt) {
+          smallerIndex = childRIndex
+        }
+      }
+
+      if (smallerIndex >= this.all.length) {
+        break
+      }
+      const smallerChild = this.all[smallerIndex]
+      if (smallerChild.expiresAt >= element.expiresAt) {
+        break
+      }
+      this.all[smallerIndex] = element
+      this.indices.set(element, smallerIndex)
+      this.all[index] = smallerChild
+      this.indices.set(smallerChild, index)
+      index = smallerIndex
+    }
+  }
+
+  findAll(query: InteropEventQuery<T>): InteropEvent<T>[] {
+    const lookup = this.getLookup(query)
+    const events = lookup.findEvents(query)
     if (events.length > 1) {
       if (query.sameTxAfter) {
         events.sort((a, b) => a.ctx.logIndex - b.ctx.logIndex)
@@ -91,77 +218,123 @@ export class InMemoryEventDb implements InteropEventDb {
     return events
   }
 
-  private getIndex<T>(type: InteropEventType<T>, query: InteropEventQuery<T>) {
-    const indexKey = getIndexKey(type, query)
-    let index = this.indices.get(indexKey)
-    if (!index) {
-      const fields: string[] = []
-      const ctxFields: string[] = []
+  private getLookup(query: InteropEventQuery<T>): Lookup<T> {
+    const lookupHash = this.hashLookup(query)
+    let lookup = this.lookups.find((l) => l.hash === lookupHash)
+    if (!lookup) {
+      const fields: (keyof T)[] = []
+      const ctxFields: (keyof InteropEventContext)[] = []
       if (query.ctx?.txHash || query.sameTxAfter || query.sameTxBefore) {
         ctxFields.push('txHash')
       } else {
         for (const key in query) {
           if (key === 'ctx') {
             for (const ctxKey in query[key]) {
-              ctxFields.push(ctxKey)
+              ctxFields.push(ctxKey as keyof InteropEventContext)
             }
           } else {
-            fields.push(key)
+            fields.push(key as keyof T)
           }
         }
       }
-      index = new EventIndex(type.type, fields, ctxFields)
-      this.indices.set(indexKey, index)
-      for (const event of this.getEvents(type.type)) {
-        index.addEvent(event)
+      lookup = new Lookup<T>(lookupHash, fields, ctxFields)
+      this.lookups.push(lookup)
+      for (const event of this.all) {
+        lookup.addEvent(event)
       }
     }
-    return index
+    return lookup
   }
-}
 
-function getIndexKey(
-  type: InteropEventType<unknown>,
-  query: InteropEventQuery<unknown>,
-) {
-  let indexKey = type.type + '#'
-  if (query.ctx?.txHash || query.sameTxAfter || query.sameTxBefore) {
-    return indexKey + '#txHash#'
-  }
-  for (const key in query) {
-    if (key !== 'ctx') {
-      indexKey += key + '#'
+  private hashLookup(query: InteropEventQuery<unknown>): number {
+    if (query.ctx?.txHash || query.sameTxAfter || query.sameTxBefore) {
+      return 42 // The specific number doesn't matter. Any magic constant is fine
     }
-  }
-  indexKey += '#'
-  if (query.ctx) {
-    for (const key in query.ctx) {
+    let hash = FNV_OFFSET_BASIS
+    for (const key in query) {
       if (key !== 'ctx') {
-        indexKey += key + '#'
+        hash = updateHash(hash, key)
+        hash = updateHash(hash, '#')
       }
     }
+    hash = updateHash(hash, '#')
+    if (query.ctx) {
+      for (const key in query.ctx) {
+        if (key !== 'ctx') {
+          hash = updateHash(hash, key)
+          hash = updateHash(hash, '#')
+        }
+      }
+    }
+    return hash
   }
-  return indexKey
 }
 
-class EventIndex {
-  private buckets = new Map<string, InteropEvent[]>()
-  private eventKeys = new Map<string, string>()
+// This is effectively an in-memory index that allows for efficient querying
+// by specific event fields. Calling `db.find(MyEvent, { a: 1, b: 2 })` results
+// in the creation of a Lookup for fields a and b. Events with different
+// a and b values land in different buckets making them easy to find.
+class Lookup<T> {
+  private buckets = new Map<number, InteropEvent<T>[]>()
 
   constructor(
-    private eventType: string,
-    private fields: string[],
-    private ctxFields: string[],
+    readonly hash: number,
+    private fields: (keyof T)[],
+    private ctxFields: (keyof InteropEventContext)[],
   ) {}
 
-  findEvents(query: InteropEventQuery<unknown>): InteropEvent[] {
-    let eventKey = ''
+  findEvents(query: InteropEventQuery<T>): InteropEvent<T>[] {
+    const hash = this.hashQuery(query)
+    const array = this.buckets.get(hash) ?? []
+    return array.filter((e) => matchesQuery(e, query))
+  }
+
+  addEvent(event: InteropEvent<T>) {
+    const hash = this.hashEvent(event)
+    const array = this.buckets.get(hash) ?? []
+    array.push(event)
+    this.buckets.set(hash, array)
+  }
+
+  removeEvent(event: InteropEvent<T>) {
+    const hash = this.hashEvent(event)
+    const array = this.buckets.get(hash)
+    if (!array) {
+      return
+    }
+    const index = array.findIndex((x) => x.eventId === event.eventId)
+    if (index !== -1) {
+      array.splice(index, 1)
+    }
+    if (array.length === 0) {
+      this.buckets.delete(hash)
+    }
+  }
+
+  private hashEvent(event: InteropEvent<T>) {
+    let hash = FNV_OFFSET_BASIS
     // biome-ignore lint/style/useForOf: speed
     for (let i = 0; i < this.fields.length; i++) {
-      eventKey += (query as Record<string, unknown>)[this.fields[i]] + ','
+      hash = updateHash(hash, `${event.args[this.fields[i]]}`)
+      hash = updateHash(hash, '#')
+    }
+    // biome-ignore lint/style/useForOf: speed
+    for (let i = 0; i < this.ctxFields.length; i++) {
+      hash = updateHash(hash, `${event.ctx[this.ctxFields[i]]}`)
+      hash = updateHash(hash, '#')
+    }
+    return hash
+  }
+
+  private hashQuery(query: InteropEventQuery<T>) {
+    let hash = FNV_OFFSET_BASIS
+    // biome-ignore lint/style/useForOf: speed
+    for (let i = 0; i < this.fields.length; i++) {
+      hash = updateHash(hash, `${query[this.fields[i]]}`)
+      hash = updateHash(hash, '#')
     }
     if (this.ctxFields.length > 0) {
-      const ctx = (query.ctx ?? {}) as Record<string, unknown>
+      const ctx = query.ctx ?? {}
       // biome-ignore lint/style/useForOf: speed
       for (let i = 0; i < this.ctxFields.length; i++) {
         const key = this.ctxFields[i]
@@ -170,48 +343,11 @@ class EventIndex {
           value =
             query.sameTxBefore?.ctx.txHash ?? query.sameTxAfter?.ctx.txHash
         }
-        eventKey += value + ','
+        hash = updateHash(hash, `${value}`)
+        hash = updateHash(hash, '#')
       }
     }
-    const array = this.buckets.get(eventKey) ?? []
-    return array.filter((e) => matchesQuery(e, query))
-  }
-
-  addEvent(event: InteropEvent) {
-    if (event.type !== this.eventType) {
-      return
-    }
-
-    let eventKey = ''
-    for (const field of this.fields) {
-      eventKey += (event.args as Record<string, unknown>)[field] + ','
-    }
-    for (const field of this.ctxFields) {
-      eventKey += (event.ctx as unknown as Record<string, unknown>)[field] + ','
-    }
-    this.eventKeys.set(event.eventId, eventKey)
-    const array = this.buckets.get(eventKey) ?? []
-    array.push(event)
-    this.buckets.set(eventKey, array)
-  }
-
-  removeEvent(eventId: string) {
-    const key = this.eventKeys.get(eventId)
-    if (!key) {
-      return
-    }
-    this.eventKeys.delete(eventId)
-    const array = this.buckets.get(key)
-    if (!array) {
-      return
-    }
-    const index = array.findIndex((x) => x.eventId === eventId)
-    if (index !== -1) {
-      array.splice(index, 1)
-    }
-    if (array.length === 0) {
-      this.buckets.delete(key)
-    }
+    return hash
   }
 }
 
@@ -253,4 +389,17 @@ function matchesQuery<T>(
     }
   }
   return true
+}
+
+// We use FNV-1 for speed and low memory overhead
+// Previously we used string keys and those remained in memory
+// Also calling updateHash does not allocate intermediate values
+const FNV_OFFSET_BASIS = 0x811c9dc5
+const FNV_PRIME = 0x01000193
+function updateHash(hash: number, value: string) {
+  for (let i = 0; i < value.length; i++) {
+    hash ^= value.charCodeAt(i)
+    hash = Math.imul(hash, FNV_PRIME)
+  }
+  return hash >>> 0
 }

@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Central directory that tracks the current 'canonical' (active) Rollup contract address and key system contracts like the Reward Distributor."
+}
