@@ -1,6 +1,7 @@
 import type { EntryParameters } from '@l2beat/discovery'
 import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
 import unionBy from 'lodash/unionBy'
+import uniqWith from 'lodash/uniqWith'
 import { get$Implementations } from '../discovery/extractors'
 import type {
   Badge,
@@ -25,8 +26,13 @@ export function mergeBadges(inherentBadges: Badge[], definedBadges: Badge[]) {
     }
   }
 
-  return unionBy(toBeUniqueBadges, (badge) => badge.type).concat(
+  const dedupedDuplicates = uniqWith(
     duplicateBadges,
+    (a, b) => a.id === b.id && a.type === b.type,
+  )
+
+  return unionBy(toBeUniqueBadges, (badge) => badge.type).concat(
+    dedupedDuplicates,
   )
 }
 
