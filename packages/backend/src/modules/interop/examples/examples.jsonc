@@ -455,6 +455,14 @@
       {
         "chain": "arbitrum",
         "tx": "0x7092e179d4dadcb97ef2bf5ee3eb0c641f8d4549273c2cdcd66ed8707c99a641"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x69722a83e20ee078c95ad4d8532a86201ba441481999f695b3767d389b8c6798"
+      },
+      {
+        "chain": "base",
+        "tx": "0x574ee29934a0c965243b46c2c66c9b8c6cd77a2de8dfcb0d75ee32940fd11cad"
       }
     ]
   },

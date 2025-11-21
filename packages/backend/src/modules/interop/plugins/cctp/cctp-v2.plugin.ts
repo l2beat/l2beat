@@ -168,15 +168,14 @@ export class CCTPV2Plugin implements InteropPlugin {
       )
       const transfer =
         previouspreviousLog && parseTransfer(previouspreviousLog, null)
-      const fallbackTransfer =
-        fourback && parseTransfer(fourback, null)
+      const fallbackTransfer = fourback && parseTransfer(fourback, null)
       let dstAmount = transfer?.value
-        if (
-          fallbackTransfer?.value !== undefined &&
-          fallbackTransfer.value > (transfer?.value ?? 0)
-        ) {
-          dstAmount = fallbackTransfer.value
-        }
+      if (
+        fallbackTransfer?.value !== undefined &&
+        fallbackTransfer.value > (transfer?.value ?? 0)
+      ) {
+        dstAmount = fallbackTransfer.value
+      }
       return [
         CCTPv2MessageReceived.create(input, {
           app: messageBody ? 'TokenMessengerV2' : undefined,
