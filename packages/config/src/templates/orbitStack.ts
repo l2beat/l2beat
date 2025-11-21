@@ -762,6 +762,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): ScalingProject {
   return {
     type: 'layer3',
     ...common,
+    dataAvailability: dedupeScalingDaEntries(asArray(common.dataAvailability)),
     ecosystemInfo: {
       id: ProjectId('arbitrum-orbit'),
     },
@@ -769,6 +770,28 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): ScalingProject {
     display: { ...common.display, ...templateVars.display },
     stackedRiskView: getStackedRisks(),
   }
+}
+
+function dedupeScalingDaEntries(
+  entries: ProjectScalingDa[] | undefined,
+): ProjectScalingDa[] | undefined {
+  if (!entries) {
+    return entries
+  }
+  const seen = new Set<string>()
+  return entries.filter((entry) => {
+    const key = [
+      entry.layer.value,
+      entry.layer.secondLine,
+      entry.bridge.value,
+      entry.mode.value,
+    ].join('|')
+    if (seen.has(key)) {
+      return false
+    }
+    seen.add(key)
+    return true
+  })
 }
 
 export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {

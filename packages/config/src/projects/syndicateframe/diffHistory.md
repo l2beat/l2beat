@@ -8,7 +8,7 @@ Generated with discovered.json: 0x3090f8213a72c97f2087f2df9fd1f668507a32d7
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Posting calldata to host chain rather than Celestia commitment.
 
 ## Watched changes
 
