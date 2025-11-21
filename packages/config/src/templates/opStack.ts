@@ -2015,6 +2015,8 @@ function addHostChainContextToTechnologyChoice(
   return {
     ...choice,
     description:
-      `${projectName} posts its transaction data to ${hostChainName}, which then posts to ${rootLayerName}. ${choice.description}`.trim(),
+      rootLayerName === hostChainName
+        ? choice.description
+        : `${projectName} posts its transaction data to ${hostChainName}, which then posts to ${rootLayerName}. ${choice.description}`.trim(),
   }
 }
