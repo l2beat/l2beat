@@ -8,24 +8,29 @@ import type {
 } from '../../plugins/types'
 
 export class InMemoryEventDb implements InteropEventDb {
-  private eventsByType = new Map<string, EventTypeStore<unknown>>()
+  private stores: EventTypeStore<unknown>[] = []
+  private storeIndices = new Map<string, number>()
   private count = 0
+
+  constructor(private eventCap = 500_000) {}
 
   getEvents(type: string): InteropEvent[] {
     return this.getStore(type).getAll()
   }
 
   private getStore<T = unknown>(type: string): EventTypeStore<T> {
-    let store = this.eventsByType.get(type)
-    if (!store) {
-      store = new EventTypeStore()
-      this.eventsByType.set(type, store)
+    let storeIndex = this.storeIndices.get(type)
+    if (storeIndex === undefined) {
+      const store = new EventTypeStore()
+      storeIndex = this.stores.length
+      this.storeIndices.set(type, storeIndex)
+      this.stores.push(store)
     }
-    return store as EventTypeStore<T>
+    return this.stores[storeIndex] as EventTypeStore<T>
   }
 
   getEventTypes() {
-    return [...this.eventsByType.keys()]
+    return [...this.storeIndices.keys()]
   }
 
   getEventCount() {
@@ -33,16 +38,30 @@ export class InMemoryEventDb implements InteropEventDb {
   }
 
   addEvent(event: InteropEvent) {
-    this.count += 1
+    if (this.count >= this.eventCap) {
+      let minStore: EventTypeStore<unknown> | undefined
+      let minExpiresAt = Number.POSITIVE_INFINITY
+      for (const store of this.stores) {
+        const next = store.peekNextToExpire()
+        if (next && next.expiresAt < minExpiresAt) {
+          minExpiresAt = next.expiresAt
+          minStore = store
+        }
+      }
+      minStore?.removeNextToExpire()
+      this.count -= 1
+    }
     this.getStore(event.type).add(event)
+    this.count += 1
   }
 
   removeExpired(now: UnixTime) {
-    for (const store of this.eventsByType.values()) {
+    for (const store of this.stores) {
       while (true) {
         const next = store.peekNextToExpire()
         if (!next || next.expiresAt >= now) break
         store.removeNextToExpire()
+        this.count -= 1
       }
     }
   }
@@ -51,6 +70,7 @@ export class InMemoryEventDb implements InteropEventDb {
     for (const event of events) {
       this.getStore(event.type).remove(event)
     }
+    this.count -= events.length
   }
 
   find<T>(
@@ -72,7 +92,8 @@ export class InMemoryEventDb implements InteropEventDb {
 class EventTypeStore<T> {
   private all: InteropEvent<T>[] = []
   private indices = new Map<InteropEvent<T>, number>()
-  private lookups = new Map<number, Lookup<T>>()
+  // There is most likely 0-2 lookups so array is faster than a map
+  private lookups: Lookup<T>[] = []
 
   getAll(): InteropEvent<T>[] {
     return this.all
@@ -83,13 +104,19 @@ class EventTypeStore<T> {
   }
 
   removeNextToExpire(): boolean {
-    const last = this.all.pop()
-    if (!last) return false
     if (this.all.length === 0) {
-      this.indices.delete(last)
-      return true
+      return false
     }
-    this.indices.delete(this.all[0])
+
+    const element = this.all[0]
+    this.indices.delete(element)
+    for (const lookup of this.lookups) {
+      lookup.removeEvent(element)
+    }
+
+    const last = this.all.pop()
+    if (!last) return true
+
     this.all[0] = last
     this.indices.set(last, 0)
     this.siftDown(0)
@@ -107,6 +134,10 @@ class EventTypeStore<T> {
     if (index === undefined) return
 
     this.indices.delete(event)
+    for (const lookup of this.lookups) {
+      lookup.removeEvent(event)
+    }
+
     const last = this.all.pop()
     if (last === event || !last) return
 
@@ -184,7 +215,7 @@ class EventTypeStore<T> {
 
   private getLookup(query: InteropEventQuery<T>): Lookup<T> {
     const lookupHash = this.hashLookup(query)
-    let lookup = this.lookups.get(lookupHash)
+    let lookup = this.lookups.find((l) => l.hash === lookupHash)
     if (!lookup) {
       const fields: (keyof T)[] = []
       const ctxFields: (keyof InteropEventContext)[] = []
@@ -201,8 +232,8 @@ class EventTypeStore<T> {
           }
         }
       }
-      lookup = new Lookup<T>(fields, ctxFields)
-      this.lookups.set(lookupHash, lookup)
+      lookup = new Lookup<T>(lookupHash, fields, ctxFields)
+      this.lookups.push(lookup)
       for (const event of this.all) {
         lookup.addEvent(event)
       }
@@ -238,6 +269,7 @@ class Lookup<T> {
   private buckets = new Map<number, InteropEvent<T>[]>()
 
   constructor(
+    readonly hash: number,
     private fields: (keyof T)[],
     private ctxFields: (keyof InteropEventContext)[],
   ) {}
