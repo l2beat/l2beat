@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react'
-import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
+import { optionToRange } from '~/utils/range/range'
 
 type CostsTimeRangeContextValue = {
   range: CostsTimeRange

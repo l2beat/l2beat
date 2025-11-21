@@ -9,7 +9,6 @@ import {
   ChartLegendContent,
   ChartTooltip,
 } from '~/components/core/chart/Chart'
-import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import {
   EthereumFillGradientDef,
@@ -29,6 +28,7 @@ import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils
 import { api } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
+import { optionToRange } from '~/utils/range/range'
 import { EcosystemWidget } from '../widgets/EcosystemWidget'
 import { EcosystemChartTimeRange } from './EcosystemsChartTimeRange'
 import { EcosystemsMarketShare } from './EcosystemsMarketShare'
@@ -72,7 +72,9 @@ export function EcosystemsActivityChart({
     chartMeta,
     hiddenDataKeys,
   )
-  const [timeRange, setTimeRange] = useState<ActivityTimeRange>(optionToRange('1y'))
+  const [timeRange, setTimeRange] = useState<ActivityTimeRange>(
+    optionToRange('1y'),
+  )
 
   const { data, isLoading } = api.activity.chart.useQuery({
     range: timeRange,

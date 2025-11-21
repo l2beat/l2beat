@@ -4,12 +4,12 @@ import { assert, type TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import groupBy from 'lodash/groupBy'
 import { getDefaultSubtype } from '~/components/chart/liveness/getDefaultSubtype'
-import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import type { LivenessSectionProps } from '~/components/projects/sections/LivenessSection'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { LivenessProject } from '~/server/features/scaling/liveness/types'
 import { getHasTrackedContractChanged } from '~/server/features/scaling/liveness/utils/getHasTrackedContractChanged'
 import type { SsrHelpers } from '~/trpc/server'
+import { optionToRange } from '~/utils/range/range'
 import { getTrackedTransactions } from '../tracked-txs/getTrackedTransactions'
 
 export async function getLivenessSection(

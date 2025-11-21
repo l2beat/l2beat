@@ -1,9 +1,9 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import { getScalingProjectTvsBreakdown } from '~/server/features/scaling/project/getScalingProjectTvsBreakdown'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
+import { optionToRange } from '~/utils/range/range'
 
 export async function getScalingProjectTvsBreakdownData(
   manifest: Manifest,

@@ -1,9 +1,9 @@
 import type { Project } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
-import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import type { DataPostedSectionProps } from '~/components/projects/sections/data-posted/DataPostedSection'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
+import { optionToRange } from '~/utils/range/range'
 import { getDaLayersInfo } from './getDaLayersInfo'
 
 export async function getDataPostedSection(

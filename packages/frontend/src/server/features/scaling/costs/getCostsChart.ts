@@ -1,7 +1,6 @@
 import type { AggregatedL2CostRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { range } from 'lodash'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '../../utils/generateTimestamps'

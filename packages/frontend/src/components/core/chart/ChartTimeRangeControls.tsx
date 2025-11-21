@@ -1,4 +1,4 @@
-import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { useState } from 'react'
 import type { DateRange } from 'react-day-picker'
 import { Calendar } from '~/components/core/Calendar'
@@ -13,21 +13,25 @@ import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useIsClient } from '~/hooks/useIsClient'
 import { CalendarIcon } from '~/icons/Calendar'
 import { cn } from '~/utils/cn'
-import { rangeToDays } from '~/utils/range/rangeToDays'
+import {
+  type ChartRange,
+  optionToRange,
+  rangeToOption,
+} from '~/utils/range/range'
 import { Popover, PopoverContent, PopoverTrigger } from '../Popover'
 import { Skeleton } from '../Skeleton'
 import { VerticalSeparator } from '../VerticalSeparator'
 
 interface Props {
   name: string
-  value: ChartTimeRangeValue
-  setValue: (range: ChartTimeRangeValue) => void
-  options: { value: ChartTimeRangeOption; disabled?: boolean; label: string }[]
+  value: ChartRange
+  setValue: (range: ChartRange) => void
+  options: { value: ChartRangeOption; disabled?: boolean; label: string }[]
   projectSection?: boolean
   offset?: UnixTime
 }
 
-export type ChartTimeRangeOption =
+export type ChartRangeOption =
   | '1d'
   | '7d'
   | '30d'
@@ -35,8 +39,6 @@ export type ChartTimeRangeOption =
   | '180d'
   | '1y'
   | 'max'
-
-export type ChartTimeRangeValue = [UnixTime | null, UnixTime]
 
 export function ChartTimeRangeControls({
   name,
@@ -90,7 +92,7 @@ export function ChartTimeRangeControls({
       <Select
         value={selectedOption}
         onValueChange={(option) => {
-          const range = optionToRange(option as ChartTimeRangeOption, {
+          const range = optionToRange(option as ChartRangeOption, {
             offset,
           })
           setValue(range)
@@ -184,65 +186,4 @@ export function ChartTimeRangeControls({
       </PopoverContent>
     </Popover>
   )
-}
-
-function rangeToOption(
-  [from, to]: ChartTimeRangeValue,
-  options: { value: ChartTimeRangeOption }[],
-  offset: UnixTime,
-): ChartTimeRangeOption | 'custom' {
-  if (
-    UnixTime.toStartOf(to, 'day') !==
-    UnixTime.toStartOf(UnixTime.now() + offset, 'day')
-  ) {
-    return 'custom'
-  }
-  if (from === null) return 'max'
-  const days = rangeToDays([from, to])
-  const option = options.find((option) => optionToDays(option.value) === days)
-  if (option) return option.value
-
-  return 'custom'
-}
-
-function optionToDays(option: 'max'): null
-function optionToDays(option: Exclude<ChartTimeRangeOption, 'max'>): number
-function optionToDays(option: ChartTimeRangeOption): number | null
-function optionToDays(option: ChartTimeRangeOption): number | null {
-  switch (option) {
-    case '1d':
-      return 1
-    case '7d':
-      return 7
-    case '30d':
-      return 30
-    case '90d':
-      return 90
-    case '180d':
-      return 180
-    case '1y':
-      return 365
-    case 'max':
-      return null
-    default:
-      return assertUnreachable(option)
-  }
-}
-
-export function optionToRange(
-  option: ChartTimeRangeOption,
-  opts?: { offset?: UnixTime },
-): ChartTimeRangeValue {
-  // Default offset is 75 minutes, cuz this is more or less how much time we need to wait for the data to be fully synced.
-  const offset = opts?.offset ?? -1 * (UnixTime.HOUR + 15 * UnixTime.MINUTE)
-  const days = optionToDays(option)
-
-  return [
-    days === null
-      ? null
-      : UnixTime.toStartOf(UnixTime.now(), 'hour') -
-        days * UnixTime.DAY +
-        offset,
-    UnixTime.toStartOf(UnixTime.now(), 'hour') + offset,
-  ]
 }

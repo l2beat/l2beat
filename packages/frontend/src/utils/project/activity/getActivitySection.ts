@@ -1,10 +1,9 @@
 import type { Project } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
-import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import type { ActivitySectionProps } from '~/components/projects/sections/ActivitySection'
-
 import { isActivityChartDataEmpty } from '~/server/features/utils/isChartDataEmpty'
 import type { SsrHelpers } from '~/trpc/server'
+import { optionToRange } from '~/utils/range/range'
 
 export async function getActivitySection(
   helpers: SsrHelpers,

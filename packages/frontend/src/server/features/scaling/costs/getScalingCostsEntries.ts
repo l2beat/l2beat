@@ -1,8 +1,8 @@
 import type { Project, WarningWithSentiment } from '@l2beat/config'
-import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
+import { optionToRange } from '~/utils/range/range'
 import {
   getProjectsChangeReport,
   type ProjectChanges,

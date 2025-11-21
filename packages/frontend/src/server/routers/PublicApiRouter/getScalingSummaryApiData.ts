@@ -1,6 +1,6 @@
-import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import { getScalingApiEntries } from '~/server/features/scaling/summary/getScalingApiEntries'
 import { getTvsChart } from '~/server/features/scaling/tvs/getTvsChartData'
+import { optionToRange } from '~/utils/range/range'
 
 export async function getScalingSummaryApiData() {
   const [entries, data] = await Promise.all([

@@ -1,7 +1,7 @@
 import type { Project } from '@l2beat/config'
-import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import type { CostsSectionProps } from '~/components/projects/sections/costs/CostsSection'
 import type { SsrHelpers } from '~/trpc/server'
+import { optionToRange } from '~/utils/range/range'
 import { getTrackedTransactions } from '../tracked-txs/getTrackedTransactions'
 
 export async function getCostsSection(

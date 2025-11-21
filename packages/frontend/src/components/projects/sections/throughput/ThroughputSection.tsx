@@ -4,7 +4,6 @@ import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { ThroughputSectionChart } from '~/components/chart/data-availability/ThroughputSectionChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
-import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { ClockIcon } from '~/icons/Clock'
 import {
@@ -13,6 +12,7 @@ import {
 } from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import { api } from '~/trpc/React'
 import { formatBpsToMbps, formatBytes } from '~/utils/number-format/formatBytes'
+import { optionToRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 

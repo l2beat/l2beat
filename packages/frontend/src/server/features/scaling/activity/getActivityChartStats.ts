@@ -1,4 +1,4 @@
-import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
+import { optionToRange } from '~/utils/range/range'
 import { getRecategorisedActivityChart } from './getRecategorisedActivityChart'
 import { countPerSecond } from './utils/countPerSecond'
 import type { ActivityProjectFilter } from './utils/projectFilterUtils'

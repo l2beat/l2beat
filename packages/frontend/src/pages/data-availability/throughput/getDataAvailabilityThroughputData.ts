@@ -1,10 +1,10 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import { getDaThroughputEntries } from '~/server/features/data-availability/throughput/getDaThroughputEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { optionToRange } from '~/utils/range/range'
 
 export async function getDataAvailabilityThroughputData(
   manifest: Manifest,

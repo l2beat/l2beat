@@ -6,7 +6,6 @@ import { ZkCatalogAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/z
 import { ZkCatalogBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/zk-catalog/ZkCatalogBridgeTypeTvsChart'
 import { TvsChartControls } from '~/components/chart/tvs/TvsChartControls'
 import type { ChartProject } from '~/components/core/chart/Chart'
-import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { IncludeRwaRestrictedTokensCheckbox } from '~/pages/scaling/components/IncludeRwaRestrictedTokensCheckbox'
@@ -22,6 +21,7 @@ import type { DetailedTvsChartWithProjectsRangesData } from '~/server/features/s
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
+import { optionToRange } from '~/utils/range/range'
 import {
   TvsChartControlsContextProvider,
   useTvsChartControlsContext,

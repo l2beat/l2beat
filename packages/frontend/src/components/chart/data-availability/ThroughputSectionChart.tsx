@@ -3,11 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
-import {
-  ChartTimeRangeControls,
-  type ChartTimeRangeValue,
-  optionToRange,
-} from '~/components/core/chart/ChartTimeRangeControls'
+import { ChartTimeRangeControls } from '~/components/core/chart/ChartTimeRangeControls'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import type { ProjectDaThroughputChartPoint } from '~/server/features/data-availability/throughput/getProjectDaThroughputChartData'
@@ -16,6 +12,7 @@ import {
   rangeToResolution,
 } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
+import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { ChartDataSourceInfo } from '../ChartDataSourceInfo'
 import { DaThroughputByProjectChart } from './DaThroughputByProjectChart'
@@ -33,7 +30,7 @@ interface Props {
 }
 
 function rangeToDaThroughputRangeForDisplay(
-  range: ChartTimeRangeValue,
+  range: ChartRange,
 ): '7d' | '30d' | '90d' | '180d' | '1y' | 'max' {
   if (range[0] === null) {
     return 'max'
@@ -48,6 +45,7 @@ function rangeToDaThroughputRangeForDisplay(
   if (days === 180) return '180d'
   if (days === 365) return '1y'
   // Default to closest option for custom ranges
+  // TODO (ranges refactor)
   if (days < 7) return '7d'
   if (days < 30) return '30d'
   if (days < 90) return '90d'
@@ -63,7 +61,7 @@ export function ThroughputSectionChart({
   milestones,
 }: Props) {
   const { includeScalingOnly, setIncludeScalingOnly } = useIncludeScalingOnly()
-  const [range, setRange] = useState<ChartTimeRangeValue>(optionToRange('1y'))
+  const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
 
   const { data, isLoading } = api.da.projectCharts.useQuery({
     range,

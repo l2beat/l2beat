@@ -1,13 +1,13 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import type { ICache } from '~/server/cache/ICache'
 import { getScalingTvsEntries } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { optionToRange } from '~/utils/range/range'
 
 export async function getScalingTvsData(
   req: Request<

@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { createContext, useContext, useState } from 'react'
-import { optionToRange } from '~/components/core/chart/ChartTimeRangeControls'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
+import { optionToRange } from '~/utils/range/range'
 
 type ActivityTimeRangeContextValue = {
   timeRange: ActivityTimeRange
