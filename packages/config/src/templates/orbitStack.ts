@@ -1060,14 +1060,13 @@ function getDAProviders(
       false
 
     // Return and don't even check for other DAs
-    return [
+    const daEntries: DAProvider[] = [
       {
         layer:
-          (hostChainDA?.layer ?? usesBlobs)
-            ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
-            : DA_LAYERS.ETH_CALLDATA,
-        bridge: hostChainDA?.layer ?? DA_BRIDGES.ENSHRINED,
-        mode: hostChainDA?.layer ?? DA_MODES.TRANSACTION_DATA_COMPRESSED,
+          hostChainDA?.layer ??
+          (usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA),
+        bridge: hostChainDA?.bridge ?? DA_BRIDGES.ENSHRINED,
+        mode: hostChainDA?.mode ?? DA_MODES.TRANSACTION_DATA_COMPRESSED,
         badge:
           hostChainDA?.badge ??
           (usesBlobs ? BADGES.DA.EthereumBlobs : BADGES.DA.EthereumCalldata),
@@ -1100,6 +1099,13 @@ function getDAProviders(
         },
       },
     ]
+
+    // For L3s, add the host chain's DA as a second entry
+    if (type === 'layer3' && hostChainDA !== undefined) {
+      daEntries.push(hostChainDA)
+    }
+
+    return daEntries
   }
 
   const wasmModuleRoot = templateVars.discovery.getContractValue<string>(

@@ -544,11 +544,12 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
   const baseChain = layer2s.find((l2) => l2.id === hostChain)
   assert(baseChain, `Could not find base chain ${hostChain} in layer2s`)
 
+  const hostChainDA = hostChainDAProvider(baseChain)
   const common = opStackCommon(
     'layer3',
     templateVars,
     baseChain.chainConfig?.explorerUrl,
-    hostChainDAProvider(baseChain),
+    hostChainDA,
   )
 
   const stackedRisk = {
@@ -576,9 +577,16 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
     ),
   }
 
+  // For L3s, dataAvailability should be an array with both L3 and host chain entries
+  const l3DA = common.dataAvailability
+  const hostChainDAs = asArray(baseChain.dataAvailability).flatMap((da) =>
+    Array.isArray(da) ? da : [da],
+  )
+
   return {
     type: 'layer3',
     ...common,
+    dataAvailability: l3DA ? [l3DA, ...hostChainDAs] : hostChainDAs,
     hostChain: ProjectId(hostChain),
     display: { ...common.display, ...templateVars.display },
     stackedRiskView: templateVars.stackedRiskView ?? stackedRisk,
@@ -1496,14 +1504,12 @@ function getDAProvider(
 
     return {
       layer:
-        (hostChainDA?.layer ?? usesBlobs)
-          ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
-          : DA_LAYERS.ETH_CALLDATA,
+        hostChainDA?.layer ??
+        (usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA),
       bridge: hostChainDA?.bridge ?? DA_BRIDGES.ENSHRINED,
       badge:
-        (hostChainDA?.badge ?? usesBlobs)
-          ? BADGES.DA.EthereumBlobs
-          : BADGES.DA.EthereumCalldata,
+        hostChainDA?.badge ??
+        (usesBlobs ? BADGES.DA.EthereumBlobs : BADGES.DA.EthereumCalldata),
       riskView: RISK_VIEW.DATA_ON_CHAIN,
       technology: usesBlobs
         ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
