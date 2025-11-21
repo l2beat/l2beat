@@ -9,9 +9,14 @@ import type {
 import { InMemoryEventDb } from './InMemoryEventDb'
 
 export class InteropEventStore implements InteropEventDb {
-  private eventDb = new InMemoryEventDb()
+  private eventDb: InMemoryEventDb
 
-  constructor(private db: Database) {}
+  constructor(
+    private db: Database,
+    inMemoryLimit: number,
+  ) {
+    this.eventDb = new InMemoryEventDb(inMemoryLimit)
+  }
 
   async start() {
     const records = await this.db.interopEvent.getUnmatched()

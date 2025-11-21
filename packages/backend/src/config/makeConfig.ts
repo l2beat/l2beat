@@ -185,6 +185,7 @@ export async function makeConfig(
           .filter((c) => c.chainId !== undefined)
           .map((c) => ({ id: c.chainId as number, name: c.name })),
       },
+      inMemoryEventCap: env.integer('INTEROP_EVENT_CAP', 500_000),
     },
     // Must be last
     flags: flags.getResolved(),

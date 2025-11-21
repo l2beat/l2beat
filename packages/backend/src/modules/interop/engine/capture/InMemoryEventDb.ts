@@ -41,6 +41,8 @@ export class InMemoryEventDb implements InteropEventDb {
     if (this.count >= this.eventCap) {
       let minStore: EventTypeStore<unknown> | undefined
       let minExpiresAt = Number.POSITIVE_INFINITY
+      // This shouldn't be a bottleneck but if it is we can always create
+      // a top-level heap for the stores too.
       for (const store of this.stores) {
         const next = store.peekNextToExpire()
         if (next && next.expiresAt < minExpiresAt) {
@@ -48,8 +50,9 @@ export class InMemoryEventDb implements InteropEventDb {
           minStore = store
         }
       }
-      minStore?.removeNextToExpire()
-      this.count -= 1
+      if (minStore?.removeNextToExpire()) {
+        this.count -= 1
+      }
     }
     this.getStore(event.type).add(event)
     this.count += 1
@@ -68,9 +71,10 @@ export class InMemoryEventDb implements InteropEventDb {
 
   removeEvents(events: InteropEvent[]) {
     for (const event of events) {
-      this.getStore(event.type).remove(event)
+      if (this.getStore(event.type).remove(event)) {
+        this.count -= 1
+      }
     }
-    this.count -= events.length
   }
 
   find<T>(
@@ -88,7 +92,8 @@ export class InMemoryEventDb implements InteropEventDb {
   }
 }
 
-// Implements a min-heap on the `expiresAt` property
+// Implements a min-heap on the `expiresAt` property and keeps lookups for
+// a specific event type.
 class EventTypeStore<T> {
   private all: InteropEvent<T>[] = []
   private indices = new Map<InteropEvent<T>, number>()
@@ -129,9 +134,9 @@ class EventTypeStore<T> {
     this.siftUp(this.all.length - 1)
   }
 
-  remove(event: InteropEvent<T>) {
+  remove(event: InteropEvent<T>): boolean {
     const index = this.indices.get(event)
-    if (index === undefined) return
+    if (index === undefined) return false
 
     this.indices.delete(event)
     for (const lookup of this.lookups) {
@@ -139,7 +144,7 @@ class EventTypeStore<T> {
     }
 
     const last = this.all.pop()
-    if (last === event || !last) return
+    if (last === event || !last) return true
 
     this.all[index] = last
     this.indices.set(last, index)
@@ -147,11 +152,11 @@ class EventTypeStore<T> {
       const parentIndex = Math.floor((index - 1) / 2)
       if (this.all[parentIndex].expiresAt > last.expiresAt) {
         this.siftUp(index)
-        return
+        return true
       }
     }
-
     this.siftDown(index)
+    return true
   }
 
   private siftUp(index: number) {
@@ -265,6 +270,10 @@ class EventTypeStore<T> {
   }
 }
 
+// This is effectively an in-memory index that allows for efficient querying
+// by specific event fields. Calling `db.find(MyEvent, { a: 1, b: 2 })` results
+// in the creation of a Lookup for fields a and b. Events with different
+// a and b values land in different buckets making them easy to find.
 class Lookup<T> {
   private buckets = new Map<number, InteropEvent<T>[]>()
 
@@ -382,6 +391,9 @@ function matchesQuery<T>(
   return true
 }
 
+// We use FNV-1 for speed and low memory overhead
+// Previously we used string keys and those remained in memory
+// Also calling updateHash does not allocate intermediate values
 const FNV_OFFSET_BASIS = 0x811c9dc5
 const FNV_PRIME = 0x01000193
 function updateHash(hash: number, value: string) {
