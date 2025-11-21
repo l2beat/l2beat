@@ -1,4 +1,6 @@
 import clsx from 'clsx'
+import { Icon } from '../icons/Icon'
+import { IconChecked } from '../icons/IconChcked'
 
 type CheckboxProps = {
   checked: 'indeterminate' | boolean
@@ -25,35 +27,17 @@ export function Checkbox({
       onClick={disabled ? undefined : onClick}
       id={id}
     >
-      {checked === true && <CheckedTick />}
+      {checked === true && <IconChecked />}
       {checked === 'indeterminate' && <Indeterminate />}
       {checked === false && <span className="w-4" />}
     </div>
   )
 }
 
-function CheckedTick() {
-  return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      className="fill-none stroke-coffee-200"
-    >
-      <path d="M2.5 8.5L6.5 12.5L13.5 4" strokeWidth="2" />
-    </svg>
-  )
-}
-
 function Indeterminate() {
   return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      className="fill-none stroke-coffee-200"
-    >
-      <line x1="3" y1="8" x2="13" y2="8" strokeWidth="2" />
-    </svg>
+    <Icon className="stroke-2 stroke-coffee-200">
+      <line x1="3" y1="8" x2="13" y2="8" />
+    </Icon>
   )
 }

@@ -16,6 +16,7 @@ const buttonVariants = cva(
       },
       size: {
         default: 'px-4 py-1',
+        small: 'px-2 py-0.5 text-xs',
         icon: 'size-4 p-0',
       },
     },
@@ -36,7 +37,7 @@ export function Button({
   return (
     <button
       {...props}
-      className={clsx(buttonVariants({ variant, size }), className)}
+      className={clsx(className, buttonVariants({ variant, size }))}
     >
       {children}
     </button>

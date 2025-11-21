@@ -62,7 +62,7 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     return configModel.getFieldSeverity(selectedAddress, fieldName)
   }
 
-  const setCategory = (category: string) => {
+  const setCategory = (category: string | undefined) => {
     const newModel = configModel.setCategory(selectedAddress, category)
     setConfigModel(newModel)
     saveModelContents(newModel)

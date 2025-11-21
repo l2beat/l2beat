@@ -62,7 +62,7 @@ export function useTemplateModel({ templateId, files }: Props) {
     return templateModel.getFieldSeverity(fieldName)
   }
 
-  const setCategory = (category: string) => {
+  const setCategory = (category: string | undefined) => {
     const newModel = templateModel.setCategory(category)
     setTemplateModel(newModel)
     saveModelContents(newModel)

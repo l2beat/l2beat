@@ -1,8 +1,6 @@
-import clsx from 'clsx'
 import type { Field } from '../../../api/types'
-import { Button } from '../../../components/Button'
-import { IconClose } from '../../../icons/IconClose'
 import { useConfigModels } from '../hooks/useConfigModels'
+import { FieldTag } from './FieldTag'
 import { FieldValueDisplay } from './FieldValueDisplay'
 import { FieldConfigDialog } from './field-config-dialog/FieldConfigDialog'
 
@@ -89,33 +87,33 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
         <div className="flex flex-wrap items-center gap-1">
           {field.name}
           {legacyTags.map((x, i) => (
-            <FieldTagNew key={i} source="legacy">
+            <FieldTag key={i} source="legacy">
               {x}
-            </FieldTagNew>
+            </FieldTag>
           ))}
         </div>
         {templateTags
           .filter((x) => x.isActive)
           .map((x, i) => (
-            <FieldTagNew
+            <FieldTag
               key={i}
               source="template"
               onRemoveClick={canModify ? x.onClick : undefined}
             >
               {x.tag}
-            </FieldTagNew>
+            </FieldTag>
           ))}
 
         {configTags
           .filter((x) => x.isActive)
           .map((x, i) => (
-            <FieldTagNew
+            <FieldTag
               key={i}
               source="config"
               onRemoveClick={canModify ? x.onClick : undefined}
             >
               {x.tag}
-            </FieldTagNew>
+            </FieldTag>
           ))}
         <div className="opacity-0 group-hover/field:opacity-100">
           {canModify && <FieldConfigDialog field={field} />}
@@ -144,44 +142,4 @@ function getLegacyTags(field: Field) {
 
 function canModifyField(field: Field) {
   return !field.name.startsWith('$')
-}
-
-function FieldTagNew(props: {
-  source: 'config' | 'template' | 'legacy'
-  children: React.ReactNode
-  onRemoveClick?: () => void
-}) {
-  return (
-    <span className="flex items-center justify-center gap-1 bg-aux-blue text-coffee-800 ">
-      <div className="py-0.5 pl-1 font-mono text-[10px]">{props.children}</div>
-      <span
-        className={clsx(
-          'w-4 select-none px-1 py-0.5',
-          toTagColor(props.source),
-        )}
-      >
-        {props.source.at(0)?.toUpperCase()}
-      </span>
-      {props.onRemoveClick && (
-        <Button
-          onClick={props.onRemoveClick}
-          variant="icon"
-          size="icon"
-          className="pr-1"
-        >
-          <IconClose />
-        </Button>
-      )}
-    </span>
-  )
-}
-
-function toTagColor(source: 'config' | 'template' | 'legacy') {
-  if (source === 'config') {
-    return 'bg-aux-cyan'
-  }
-  if (source === 'template') {
-    return 'bg-aux-green'
-  }
-  return 'bg-aux-red'
 }

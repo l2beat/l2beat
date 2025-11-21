@@ -12,7 +12,9 @@ import { useConfigModels } from '../hooks/useConfigModels'
 import { usePanelStore } from '../store/panel-store'
 import { AbiDisplay } from './AbiDisplay'
 import { AddressDisplay } from './AddressDisplay'
+import { ContractConfigDialog } from './contract-config-dialog/ContractConfigDialog'
 import { FieldDisplay } from './Field'
+import { FieldTag } from './FieldTag'
 import { Folder } from './Folder'
 import { TemplateDialog } from './template-dialog/TemplateDialog'
 
@@ -60,12 +62,12 @@ function Display({
   selected: ApiProjectContract | ApiAddressEntry
   blockNumber: number
 }) {
-  const { configModel, templateModel } = useConfigModels()
+  const { configModel, templateModel, canModify } = useConfigModels()
   const chain = selected.chain
 
   const addresses = getAddressesToCopy(selected)
 
-  const dialog = addresses && canAddShape(selected) && !IS_READONLY && (
+  const templateDialog = addresses && canAddShape(selected) && !IS_READONLY && (
     <TemplateDialog.Root
       key={`${project}-${selected.address}`}
       project={project}
@@ -81,6 +83,8 @@ function Display({
     </TemplateDialog.Root>
   )
 
+  const contractConfigDialog = canModify && <ContractConfigDialog />
+
   return (
     <>
       <div id={selected.address} className="mb-2 px-5 text-lg">
@@ -92,7 +96,10 @@ function Display({
               <span className="text-aux-red"> (Unverified)</span>
             )}
           </div>
-          {dialog}
+          <div className="flex items-center gap-1">
+            {templateDialog}
+            {contractConfigDialog}
+          </div>
         </div>
         <WithHeadline headline="Address">
           <AddressDisplay
@@ -122,9 +129,7 @@ function Display({
                   <span className="flex items-center gap-1">
                     {selected.template.shape.name}
                     {selected.template.shape.hasCriteria && (
-                      <Badge className="bg-aux-yellow/10 px-1 py-0.5 text-aux-yellow">
-                        + Criteria
-                      </Badge>
+                      <Badge>+ Criteria</Badge>
                     )}
                   </span>
                 </div>
@@ -162,12 +167,14 @@ function Display({
         )}
         {(configModel.category || templateModel.category) && (
           <WithHeadline headline="Category">
-            <p className="text-coffee-200/40">
-              {configModel.category} - Config
-            </p>
-            <p className="text-coffee-200/40">
-              {templateModel.category} - Template
-            </p>
+            <div className="flex items-center gap-1">
+              {configModel.category && (
+                <FieldTag source="config">{configModel.category}</FieldTag>
+              )}
+              {templateModel.category && (
+                <FieldTag source="template">{templateModel.category}</FieldTag>
+              )}
+            </div>
           </WithHeadline>
         )}
       </div>
@@ -282,10 +289,12 @@ function canAddShape(selected: ApiProjectContract | ApiAddressEntry) {
   )
 }
 
-function Badge(props: { children: React.ReactNode; className?: string }) {
+function Badge(props: { children: React.ReactNode }) {
   return (
     <span
-      className={`flex max-w-fit items-center justify-center gap-1 rounded-md px-2 py-0.5 text-xs ${props.className}`}
+      className={
+        'flex max-w-fit items-center justify-center gap-1 rounded-md bg-aux-yellow/10 px-1 py-0.5 text-aux-yellow text-xs'
+      }
     >
       {props.children}
     </span>

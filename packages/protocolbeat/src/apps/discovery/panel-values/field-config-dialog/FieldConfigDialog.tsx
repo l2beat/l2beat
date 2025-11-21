@@ -226,7 +226,8 @@ function SeverityButton({
   return (
     <Button
       onClick={onClick}
-      className={clsx('p-0', isActive && 'bg-coffee-400/50')}
+      className={clsx(isActive && 'bg-coffee-400/50')}
+      size="small"
     >
       {children}
     </Button>
