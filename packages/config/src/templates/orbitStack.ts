@@ -576,9 +576,11 @@ function orbitStackCommon(
             risks: [],
           } as ProjectTechnologyChoice
         })(),
-      dataAvailability:
-        templateVars.nonTemplateTechnology?.dataAvailability ??
-        daProviders.map((p) => p.technology),
+      dataAvailability: dedupeTechnologyChoices(
+        templateVars.nonTemplateTechnology?.dataAvailability
+          ? asArray(templateVars.nonTemplateTechnology.dataAvailability)
+          : daProviders.map((p) => p.technology),
+      ),
       operator: templateVars.nonTemplateTechnology?.operator ?? {
         ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
@@ -762,6 +764,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): ScalingProject {
   return {
     type: 'layer3',
     ...common,
+    technology: limitTechnologyDaEntries(common.technology),
     dataAvailability: dedupeScalingDaEntries(asArray(common.dataAvailability)),
     ecosystemInfo: {
       id: ProjectId('arbitrum-orbit'),
@@ -792,6 +795,36 @@ function dedupeScalingDaEntries(
     seen.add(key)
     return true
   })
+}
+
+function dedupeTechnologyChoices(
+  choices: ProjectTechnologyChoice[] | undefined,
+): ProjectTechnologyChoice[] | undefined {
+  if (!choices) {
+    return choices
+  }
+  const seen = new Set<string>()
+  return choices.filter((choice) => {
+    const key = `${choice.name}|${choice.description}`
+    if (seen.has(key)) {
+      return false
+    }
+    seen.add(key)
+    return true
+  })
+}
+
+function limitTechnologyDaEntries(
+  technology: ProjectScalingTechnology | undefined,
+): ProjectScalingTechnology | undefined {
+  if (!technology?.dataAvailability) {
+    return technology
+  }
+  const [primary] = asArray(technology.dataAvailability)
+  return {
+    ...technology,
+    dataAvailability: primary ? [primary] : undefined,
+  }
 }
 
 export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
