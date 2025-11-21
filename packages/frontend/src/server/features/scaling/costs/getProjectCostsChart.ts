@@ -1,16 +1,17 @@
 import type { ActivityRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import { ChartRange } from '~/utils/range/range'
 import { getScalingProjectDaThroughputChart } from '../../data-availability/throughput/getScalingProjectDaThroughtputChart'
 import { getActivityForProjectAndRange } from '../activity/getActivityForProjectAndRange'
 import { type CostsChartDataPoint, getCostsChart } from './getCostsChart'
 import { getCostsForProject } from './getCostsForProject'
 import type { LatestCostsProjectResponse } from './types'
-import { CostsTimeRange, rangeToResolution } from './utils/range'
+import { rangeToResolution } from './utils/range'
 
 export type ProjectCostsChartParams = v.infer<typeof ProjectCostsChartParams>
 export const ProjectCostsChartParams = v.object({
-  range: CostsTimeRange,
+  range: ChartRange,
   projectId: v.string(),
 })
 
@@ -155,10 +156,7 @@ function getCostPerDay(data: ReturnType<typeof getTotal>, days: number) {
   }
 }
 
-function getSummedUopsCount(
-  records: ActivityRecord[],
-  range: [UnixTime | null, UnixTime],
-) {
+function getSummedUopsCount(records: ActivityRecord[], range: ChartRange) {
   const [from, to] = range
   const filteredRecords = records.filter((record) => {
     return from !== null

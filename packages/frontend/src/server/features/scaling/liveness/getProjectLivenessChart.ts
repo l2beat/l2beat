@@ -10,15 +10,16 @@ import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { ChartRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
-import { LivenessChartTimeRange, rangeToResolution } from './utils/chartRange'
+import { rangeToResolution } from './utils/chartRange'
 import { isLivenessSynced } from './utils/isLivenessSynced'
 
 export type ProjectLivenessChartParams = v.infer<
   typeof ProjectLivenessChartParams
 >
 export const ProjectLivenessChartParams = v.object({
-  range: LivenessChartTimeRange,
+  range: ChartRange,
   subtype: TrackedTxsConfigSubtype,
   projectId: v.string(),
 })

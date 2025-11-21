@@ -12,10 +12,11 @@ import {
   createTvsProjectsFilter,
   TvsProjectFilter,
 } from './utils/projectFilterUtils'
-import { rangeToResolution, TvsChartRange } from './utils/range'
+import { rangeToResolution } from './utils/range'
+import { ChartRange } from '~/utils/range/range'
 
 export const DetailedTvsChartDataParams = v.object({
-  range: TvsChartRange,
+  range: ChartRange,
   excludeAssociatedTokens: v.boolean(),
   includeRwaRestrictedTokens: v.boolean(),
   filter: TvsProjectFilter,

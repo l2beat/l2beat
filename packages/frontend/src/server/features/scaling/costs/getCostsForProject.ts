@@ -2,14 +2,14 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import type { ChartRange } from '~/utils/range/range'
 import { getTrackedTxsProject } from '../../utils/getTrackedTxsProjects'
 import type { LatestCostsProjectResponse } from './types'
-import type { CostsTimeRange } from './utils/range'
 import { sumCostValues } from './utils/sumCostValues'
 
 export async function getCostsForProject(
   projectId: string,
-  range: CostsTimeRange,
+  range: ChartRange,
 ): Promise<LatestCostsProjectResponse | undefined> {
   if (env.MOCK) {
     return getMockedCostsForProject()

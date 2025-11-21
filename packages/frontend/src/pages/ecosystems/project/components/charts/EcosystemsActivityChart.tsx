@@ -24,10 +24,10 @@ import type {
   EcosystemEntry,
   EcosystemMilestone,
 } from '~/server/features/ecosystems/getEcosystemEntry'
-import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
+import type { ChartRange } from '~/utils/range/range'
 import { optionToRange } from '~/utils/range/range'
 import { EcosystemWidget } from '../widgets/EcosystemWidget'
 import { EcosystemChartTimeRange } from './EcosystemsChartTimeRange'
@@ -72,9 +72,7 @@ export function EcosystemsActivityChart({
     chartMeta,
     hiddenDataKeys,
   )
-  const [timeRange, setTimeRange] = useState<ActivityTimeRange>(
-    optionToRange('1y'),
-  )
+  const [timeRange, setTimeRange] = useState<ChartRange>(optionToRange('1y'))
 
   const { data, isLoading } = api.activity.chart.useQuery({
     range: timeRange,

@@ -1,5 +1,5 @@
 import { INFINITY } from '~/consts/characters'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import type { ChartRange } from '~/utils/range/range'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { Skeleton } from '../../core/Skeleton'
@@ -10,7 +10,7 @@ interface Props {
   unit: string
   value: number | undefined
   change: number | undefined
-  range: TvsChartRange
+  range: ChartRange
   timeRange: [number, number] | undefined
 }
 

@@ -1,10 +1,8 @@
 import { v } from '@l2beat/validate'
 import express from 'express'
 import { ActivityProjectFilterType } from '~/server/features/scaling/activity/utils/projectFilterUtils'
-import { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { TvsProjectFilterType } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
-import { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
-import { optionToRange } from '~/utils/range/range'
+import { ChartRange, optionToRange } from '~/utils/range/range'
 import { validateRoute } from '~/utils/validateRoute'
 import { getScalingActivityApiData } from './getScalingActivityApiData'
 import { getScalingActivityProjectApiData } from './getScalingActivityProjectApiData'
@@ -20,7 +18,7 @@ export function createPublicApiRouter() {
     '/api/scaling/activity',
     validateRoute({
       query: v.object({
-        range: ActivityTimeRange.optional(),
+        range: ChartRange.optional(),
         type: ActivityProjectFilterType.optional(),
         projectIds: v.string().optional(),
       }),
@@ -48,7 +46,7 @@ export function createPublicApiRouter() {
     '/api/scaling/activity/:slug',
     validateRoute({
       params: v.object({ slug: v.string() }),
-      query: v.object({ range: ActivityTimeRange.optional() }),
+      query: v.object({ range: ChartRange.optional() }),
     }),
     async (req, res) => {
       const { slug } = req.params
@@ -66,7 +64,7 @@ export function createPublicApiRouter() {
     '/api/scaling/tvs',
     validateRoute({
       query: v.object({
-        range: TvsChartRange.optional(),
+        range: ChartRange.optional(),
         type: TvsProjectFilterType.optional(),
         projectIds: v.string().optional(),
         excludeAssociatedTokens: v.string().optional(),
@@ -98,7 +96,7 @@ export function createPublicApiRouter() {
     validateRoute({
       params: v.object({ slug: v.string() }),
       query: v.object({
-        range: TvsChartRange.optional(),
+        range: ChartRange.optional(),
         excludeAssociatedTokens: v.string().optional(),
         includeRwaRestrictedTokens: v.string().optional(),
       }),

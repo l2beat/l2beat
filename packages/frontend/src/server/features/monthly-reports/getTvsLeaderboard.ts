@@ -3,6 +3,7 @@ import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { queryExecutor } from '~/server/queryExecutor'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
+import type { ChartRange } from '~/utils/range/range'
 
 export interface TvsLeaderboard {
   projects: Record<
@@ -22,7 +23,7 @@ type TvsLeaderboardProjectFilter = v.infer<typeof TvsLeaderboardProjectFilter>
 
 export async function getTvsLeaderboard(
   props: TvsLeaderboardProjectFilter,
-  range: [UnixTime | null, UnixTime],
+  range: ChartRange,
 ): Promise<TvsLeaderboard> {
   if (env.MOCK) {
     return getMockTvsBreakdownData(props.projectIds)

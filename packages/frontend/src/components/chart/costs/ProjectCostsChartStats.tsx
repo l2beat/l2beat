@@ -3,7 +3,7 @@ import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
 import type { ProjectCostsChartResponse } from '~/server/features/scaling/costs/getProjectCostsChart'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
-import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
+import type { ChartRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 
 export function ProjectCostsChartStats({
@@ -12,7 +12,7 @@ export function ProjectCostsChartStats({
   isLoading,
   data,
 }: {
-  range: CostsTimeRange
+  range: ChartRange
   unit: CostsUnit
   isLoading: boolean
   data: ProjectCostsChartResponse | undefined

@@ -1,9 +1,9 @@
 import { ChartTimeRangeControls } from '~/components/core/chart/ChartTimeRangeControls'
-import type { LivenessChartTimeRange } from '~/server/features/scaling/liveness/utils/chartRange'
+import type { ChartRange } from '~/utils/range/range'
 
 interface Props {
-  timeRange: LivenessChartTimeRange
-  setTimeRange: (timeRange: LivenessChartTimeRange) => void
+  timeRange: ChartRange
+  setTimeRange: (timeRange: ChartRange) => void
   projectSection?: boolean
 }
 

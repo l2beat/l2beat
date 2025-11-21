@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { v } from '@l2beat/validate'
+import type { ChartRange } from '~/utils/range/range'
 
 export const DaThroughputTimeRangeValues = [
   '7d',
@@ -10,14 +10,8 @@ export const DaThroughputTimeRangeValues = [
   'max',
 ] as const
 
-export type DaThroughputTimeRange = v.infer<typeof DaThroughputTimeRange>
-export const DaThroughputTimeRange = v.tuple([
-  v.union([v.number(), v.null()]),
-  v.number(),
-])
-
 export type DaThroughputResolution = ReturnType<typeof rangeToResolution>
-export function rangeToResolution(range: DaThroughputTimeRange) {
+export function rangeToResolution(range: ChartRange) {
   if (range[0] === null) return 'daily'
   if (range[0] > UnixTime.toStartOf(UnixTime.now(), 'day') - 7 * UnixTime.DAY)
     return 'hourly'

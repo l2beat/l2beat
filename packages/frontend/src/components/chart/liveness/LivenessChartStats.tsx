@@ -5,7 +5,7 @@ import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { AnomalyIndicator } from '~/pages/scaling/liveness/components/AnomalyIndicator'
 import { DurationCell } from '~/pages/scaling/liveness/components/table/DurationCell'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
-import type { LivenessChartTimeRange } from '~/server/features/scaling/liveness/utils/chartRange'
+import type { ChartRange } from '~/utils/range/range'
 import { cn } from '~/utils/cn'
 import { rangeToLabel } from '~/utils/project/rangeToLabel'
 
@@ -23,7 +23,7 @@ export function LivenessChartStats({
         Record<'stateUpdates' | 'batchSubmissions' | 'proofSubmissions', number>
       >
     | undefined
-  timeRange: LivenessChartTimeRange
+  timeRange: ChartRange
   anomalies: LivenessAnomaly[]
   configuredSubtypes: TrackedTxsConfigSubtype[]
   hasTrackedContractsChanged: boolean

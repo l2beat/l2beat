@@ -4,8 +4,9 @@ import { v as z } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
+import { ChartRange } from '~/utils/range/range'
 import { isTvsSynced } from '../utils/isTvsSynced'
-import { rangeToResolution, TvsChartRange } from '../utils/range'
+import { rangeToResolution } from '../utils/range'
 
 const TokenParams = z.object({
   projectId: z.string(),
@@ -14,7 +15,7 @@ const TokenParams = z.object({
 
 export const TokenTvsChartParams = z.object({
   token: TokenParams,
-  range: TvsChartRange,
+  range: ChartRange,
 })
 
 export type TokenTvsChartParams = z.infer<typeof TokenTvsChartParams>

@@ -1,7 +1,2 @@
-import { v } from '@l2beat/validate'
-
-export type ActivityTimeRange = v.infer<typeof ActivityTimeRange>
-export const ActivityTimeRange = v.tuple([
-  v.union([v.number(), v.null()]),
-  v.number(),
-])
+// This file is kept for potential future utility functions
+// All range types now use ChartRange from ~/utils/range/range

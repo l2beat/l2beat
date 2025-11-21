@@ -1,10 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { ChartTimeRangeControls } from '~/components/core/chart/ChartTimeRangeControls'
-import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
+import type { ChartRange } from '~/utils/range/range'
 
 interface Props {
-  timeRange: ActivityTimeRange
-  setTimeRange: (timeRange: ActivityTimeRange) => void
+  timeRange: ChartRange
+  setTimeRange: (timeRange: ChartRange) => void
   projectSection?: boolean
 }
 

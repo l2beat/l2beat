@@ -2,7 +2,7 @@ import type { Milestone } from '@l2beat/config'
 import { ProjectCostsChart } from '~/components/chart/costs/ProjectCostsChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
+import type { ChartRange } from '~/utils/range/range'
 import type { TrackedTransactionsByType } from '~/utils/project/tracked-txs/getTrackedTransactions'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
@@ -12,7 +12,7 @@ export interface CostsSectionProps extends ProjectSectionProps {
   project: ChartProject
   milestones: Milestone[]
   trackedTransactions: TrackedTransactionsByType
-  defaultRange: CostsTimeRange
+  defaultRange: ChartRange
 }
 
 export function CostsSection({

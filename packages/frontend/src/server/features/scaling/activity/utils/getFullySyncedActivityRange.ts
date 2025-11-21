@@ -1,6 +1,5 @@
-import type { UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
-import type { ActivityTimeRange } from './range'
+import type { ChartRange } from '~/utils/range/range'
 import { getActivityAdjustedTimestamp } from './syncStatus'
 
 /**
@@ -9,8 +8,8 @@ import { getActivityAdjustedTimestamp } from './syncStatus'
  * Fully synced means that the day is synced to the midnight. Current day is not included.
  */
 export async function getFullySyncedActivityRange(
-  range: ActivityTimeRange,
-): Promise<[UnixTime | null, UnixTime]> {
+  range: ChartRange,
+): Promise<ChartRange> {
   const db = getDb()
 
   const target = await db.syncMetadata.getMaxTargetForFeature('activity')

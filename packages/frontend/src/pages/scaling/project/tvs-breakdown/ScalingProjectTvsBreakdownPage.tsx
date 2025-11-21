@@ -13,14 +13,14 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ScalingProjectTvsBreakdown } from '~/server/features/scaling/project/getScalingProjectTvsBreakdown'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import type { ChartRange } from '~/utils/range/range'
 import { ScalingRwaRestrictedTokensContextProvider } from '../../components/ScalingRwaRestrictedTokensContext'
 import { RequestTokenBox } from './components/RequestTokenBox'
 import { TvsBreakdownPageHeader } from './components/TvsBreakdownPageHeader'
 import { ProjectTvsBreakdownTokenTable } from './components/tables/ProjectTvsBreakdownTokenTable'
 
 interface Props extends AppLayoutProps, ScalingProjectTvsBreakdown {
-  defaultRange: TvsChartRange
+  defaultRange: ChartRange
 }
 
 export function ScalingProjectTvsBreakdownPage({

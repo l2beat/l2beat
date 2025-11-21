@@ -7,12 +7,12 @@ import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import { ActivityMetricControls } from '~/pages/scaling/activity/components/ActivityMetricControls'
 import { ActivityTimeRangeControls } from '~/pages/scaling/activity/components/ActivityTimeRangeControls'
-import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { formatUopsRatio } from '~/utils/number-format/formatUopsRatio'
+import type { ChartRange } from '~/utils/range/range'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
@@ -25,7 +25,7 @@ interface Props {
   milestones: Milestone[]
   project: ChartProject
   category?: ProjectScalingCategory
-  defaultRange: ActivityTimeRange
+  defaultRange: ChartRange
 }
 
 export function ProjectActivityChart({
@@ -34,7 +34,7 @@ export function ProjectActivityChart({
   category,
   defaultRange,
 }: Props) {
-  const [timeRange, setTimeRange] = useState<ActivityTimeRange>(defaultRange)
+  const [timeRange, setTimeRange] = useState<ChartRange>(defaultRange)
   const [metric, setMetric] = useState<ActivityMetric>('uops')
   const [scale, setScale] = useState<ChartScale>('lin')
 

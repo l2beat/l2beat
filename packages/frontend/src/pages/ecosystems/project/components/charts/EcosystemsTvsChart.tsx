@@ -21,7 +21,7 @@ import type {
   EcosystemEntry,
   EcosystemMilestone,
 } from '~/server/features/ecosystems/getEcosystemEntry'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import type { ChartRange } from '~/utils/range/range'
 import { api } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -46,7 +46,7 @@ export function EcosystemsTvsChart({
   ecosystemMilestones: EcosystemMilestone[]
 }) {
   const [unit, setUnit] = useState<ChartUnit>('usd')
-  const [timeRange, setTimeRange] = useState<TvsChartRange>(optionToRange('1y'))
+  const [timeRange, setTimeRange] = useState<ChartRange>(optionToRange('1y'))
 
   const { data, isLoading } = api.tvs.chart.useQuery({
     range: timeRange,

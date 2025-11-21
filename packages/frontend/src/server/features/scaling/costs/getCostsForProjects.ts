@@ -3,12 +3,12 @@ import groupBy from 'lodash/groupBy'
 import { getDb } from '~/server/database'
 import { getTrackedTxsProjects } from '../../utils/getTrackedTxsProjects'
 import type { LatestCostsResponse } from './types'
-import type { CostsTimeRange } from './utils/range'
+import type { ChartRange } from '~/utils/range/range'
 import { sumCostValues } from './utils/sumCostValues'
 
 export async function getCostsForProjects(
   projects: Project<'trackedTxsConfig'>[],
-  range: CostsTimeRange,
+  range: ChartRange,
 ) {
   const db = getDb()
   const response: LatestCostsResponse = {}

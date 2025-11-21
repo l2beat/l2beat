@@ -2,6 +2,7 @@ import { assert, ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ChartRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { getActivitySyncState } from '../../utils/syncState'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
@@ -12,7 +13,6 @@ import {
   ActivityProjectFilter,
   createActivityProjectsFilter,
 } from './utils/projectFilterUtils'
-import { ActivityTimeRange } from './utils/range'
 import {
   getActivityAdjustedTimestamp,
   getActivitySyncWarning,
@@ -21,7 +21,7 @@ import {
 export type ActivityChartParams = v.infer<typeof ActivityChartParams>
 export const ActivityChartParams = v.object({
   filter: ActivityProjectFilter,
-  range: ActivityTimeRange,
+  range: ChartRange,
 })
 
 type ActivityChartDataPoint = [

@@ -3,15 +3,16 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ChartRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { addIfDefined } from './utils/addIfDefined'
 import { getCostsExpectedTimestamp } from './utils/getCostsExpectedTimestamp'
 import { CostsProjectsFilter, getCostsProjects } from './utils/getCostsProjects'
 import { isCostsSynced } from './utils/isCostsSynced'
-import { CostsTimeRange, rangeToResolution } from './utils/range'
+import { rangeToResolution } from './utils/range'
 
 export const CostsChartParams = v.object({
-  range: CostsTimeRange,
+  range: ChartRange,
   filter: CostsProjectsFilter,
 })
 export type CostsChartParams = v.infer<typeof CostsChartParams>

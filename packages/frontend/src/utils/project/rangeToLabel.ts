@@ -1,15 +1,8 @@
 import { rangeToDays } from '~/utils/range/rangeToDays'
+import type { ChartRange } from '../range/range'
 
 export function rangeToLabel(
-  range:
-    | [number | null, number]
-    | '1d'
-    | '7d'
-    | '30d'
-    | '90d'
-    | '180d'
-    | '1y'
-    | 'max',
+  range: ChartRange | '1d' | '7d' | '30d' | '90d' | '180d' | '1y' | 'max',
 ): string {
   // Handle old string format for backwards compatibility
   if (typeof range === 'string') {

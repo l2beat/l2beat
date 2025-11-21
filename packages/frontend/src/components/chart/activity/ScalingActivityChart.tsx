@@ -10,8 +10,8 @@ import { useIsClient } from '~/hooks/useIsClient'
 import { useActivityTimeRangeContext } from '~/pages/scaling/activity/components/ActivityTimeRangeContext'
 import { ActivityTimeRangeControls } from '~/pages/scaling/activity/components/ActivityTimeRangeControls'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/getScalingActivityEntries'
-import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/React'
+import type { ChartRange } from '~/utils/range/range'
 import type { ChartScale } from '../types'
 import { ActivityChartHeader } from './ActivityChartHeader'
 import { ActivityRatioChart } from './ActivityRatioChart'
@@ -81,8 +81,8 @@ export function ScalingActivityChart({ milestones, entries }: Props) {
 interface ControlsProps {
   scale: ChartScale
   setScale: (scale: ChartScale) => void
-  timeRange: ActivityTimeRange
-  setTimeRange: (timeRange: ActivityTimeRange) => void
+  timeRange: ChartRange
+  setTimeRange: (timeRange: ChartRange) => void
 }
 
 function Controls({ scale, setScale, timeRange, setTimeRange }: ControlsProps) {

@@ -1,12 +1,12 @@
 import { createContext, useContext, useState } from 'react'
 import type { ChartUnit } from '~/components/chart/types'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import type { ChartRange } from '~/utils/range/range'
 
 type TvsChartControlsContextValue = {
   unit: ChartUnit
   setUnit: React.Dispatch<React.SetStateAction<ChartUnit>>
-  range: TvsChartRange
-  setRange: React.Dispatch<React.SetStateAction<TvsChartRange>>
+  range: ChartRange
+  setRange: React.Dispatch<React.SetStateAction<ChartRange>>
 }
 
 const TvsChartControlsContext =
@@ -14,7 +14,7 @@ const TvsChartControlsContext =
 
 interface Props {
   children: React.ReactNode
-  defaultRange: TvsChartRange
+  defaultRange: ChartRange
 }
 
 export function TvsChartControlsContextProvider({
@@ -22,7 +22,7 @@ export function TvsChartControlsContextProvider({
   defaultRange,
 }: Props) {
   const [unit, setUnit] = useState<ChartUnit>('usd')
-  const [range, setRange] = useState<TvsChartRange>(defaultRange)
+  const [range, setRange] = useState<ChartRange>(defaultRange)
   return (
     <TvsChartControlsContext.Provider
       value={{

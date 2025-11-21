@@ -7,7 +7,7 @@ import keyBy from 'lodash/keyBy'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { queryExecutor } from '~/server/queryExecutor'
 import { isTvsSynced } from './isTvsSynced'
-import type { TvsChartRange } from './range'
+import type { ChartRange } from '~/utils/range/range'
 import { rangeToResolution } from './range'
 
 export type SummedTvsValues = {
@@ -26,7 +26,7 @@ export type SummedTvsValues = {
 
 export async function getSummedTvsValues(
   projects: ProjectId[] | ProjectWithRanges[],
-  range: TvsChartRange,
+  range: ChartRange,
   {
     forSummary,
     excludeAssociatedTokens,

@@ -5,7 +5,7 @@ import { getCostsForProjects } from './getCostsForProjects'
 import type { LatestCostsProjectResponse, LatestCostsValues } from './types'
 import { getCostsProjects } from './utils/getCostsProjects'
 import { isCostsSynced } from './utils/isCostsSynced'
-import type { CostsTimeRange } from './utils/range'
+import type { ChartRange } from '~/utils/range/range'
 
 type LatestCostsValuesWithTotal = LatestCostsValues & {
   total: number
@@ -23,7 +23,7 @@ export type CostsTableData = Record<
 >
 
 export async function getCostsTable(
-  timeRange: CostsTimeRange,
+  timeRange: ChartRange,
 ): Promise<CostsTableData> {
   if (env.MOCK) {
     return getMockCostsTableData()

@@ -32,7 +32,7 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { CustomLink } from '~/components/link/CustomLink'
 import { PercentChange } from '~/components/PercentChange'
 import { ChevronIcon } from '~/icons/Chevron'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import type { ChartRange } from '~/utils/range/range'
 import { api } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -68,7 +68,7 @@ export function ScalingSummaryTvsChart({
   timeRange,
 }: {
   unit: ChartUnit
-  timeRange: TvsChartRange
+  timeRange: ChartRange
 }) {
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
   const { data, isLoading } = api.tvs.recategorisedChart.useQuery({
@@ -238,7 +238,7 @@ interface Props {
   total: number | undefined
   change: number | undefined
   unit: ChartUnit
-  timeRange: TvsChartRange
+  timeRange: ChartRange
 }
 
 function Header({ total, unit, change, timeRange }: Props) {

@@ -1,8 +1,8 @@
 import { pluralize } from '@l2beat/shared-pure'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import type { ChartRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 
-export function tvsRangeToReadable(range: TvsChartRange) {
+export function tvsRangeToReadable(range: ChartRange) {
   if (range[0] === null) {
     return 'All time'
   }

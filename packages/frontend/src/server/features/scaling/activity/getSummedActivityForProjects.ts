@@ -2,12 +2,12 @@ import type { ActivityRecord } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import { getDb } from '~/server/database'
+import type { ChartRange } from '~/utils/range/range'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
-import type { ActivityTimeRange } from './utils/range'
 
 export async function getSummedActivityForProjects(
   projectIds: string[],
-  timeRange: ActivityTimeRange,
+  timeRange: ChartRange,
   rangeByProject: Record<string, [UnixTime, UnixTime]>,
 ) {
   const db = getDb()

@@ -2,6 +2,7 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
+import { ChartRange } from '~/utils/range/range'
 import { getEthPrices } from './utils/getEthPrices'
 import {
   getSummedTvsValues,
@@ -12,10 +13,10 @@ import {
   createTvsProjectsFilter,
   TvsProjectFilter,
 } from './utils/projectFilterUtils'
-import { rangeToResolution, TvsChartRange } from './utils/range'
+import { rangeToResolution } from './utils/range'
 
 export const TvsChartDataParams = v.object({
-  range: TvsChartRange,
+  range: ChartRange,
   filter: TvsProjectFilter,
   excludeAssociatedTokens: v.boolean(),
   includeRwaRestrictedTokens: v.boolean(),

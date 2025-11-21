@@ -18,7 +18,7 @@ import {
   type TvsData,
 } from '~/pages/scaling/project/tvs-breakdown/components/TvsBreakdownSummaryBox'
 import type { DetailedTvsChartWithProjectsRangesData } from '~/server/features/scaling/tvs/getDetailedTvsChartWithProjectsRanges'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import type { ChartRange } from '~/utils/range/range'
 import { api } from '~/trpc/React'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { optionToRange } from '~/utils/range/range'
@@ -34,7 +34,7 @@ export interface ZkCatalogTvsSectionProps extends ProjectSectionProps {
   project: ChartProject
   milestones: Milestone[]
   tvsInfo: ProjectTvsInfo | undefined
-  defaultRange: TvsChartRange
+  defaultRange: ChartRange
   projectsForTvs: {
     projectId: ProjectId
     sinceTimestamp: UnixTime

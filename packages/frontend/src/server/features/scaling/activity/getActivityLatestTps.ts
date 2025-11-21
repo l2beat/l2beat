@@ -4,7 +4,7 @@ import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
-import { optionToRange } from '~/utils/range/range'
+import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { getActivitySyncState, type SyncState } from '../../utils/syncState'
 import { countPerSecond } from './utils/countPerSecond'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
@@ -21,7 +21,7 @@ export type ActivityLatestUopsData = Record<
 
 export async function getActivityLatestUops(
   projects: Project[],
-  range?: [UnixTime | null, UnixTime],
+  range?: ChartRange,
 ): Promise<ActivityLatestUopsData> {
   if (env.MOCK) {
     return getMockActivityLatestUopsData(projects)

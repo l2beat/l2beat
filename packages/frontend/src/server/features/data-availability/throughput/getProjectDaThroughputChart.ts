@@ -4,15 +4,16 @@ import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { ChartRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { isThroughputSynced } from './isThroughputSynced'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
-import { DaThroughputTimeRange, rangeToResolution } from './utils/range'
+import { rangeToResolution } from './utils/range'
 
 type ProjectDaThroughputChart = {
   chart: ProjectDaThroughputChartPoint[]
-  range: [UnixTime | null, UnixTime]
+  range: ChartRange
   syncedUntil: UnixTime
 }
 export type ProjectDaThroughputChartPoint = [
@@ -21,7 +22,7 @@ export type ProjectDaThroughputChartPoint = [
 ]
 
 export const ProjectDaThroughputChartParams = v.object({
-  range: DaThroughputTimeRange,
+  range: ChartRange,
   includeScalingOnly: v.boolean(),
   projectId: v.string(),
 })

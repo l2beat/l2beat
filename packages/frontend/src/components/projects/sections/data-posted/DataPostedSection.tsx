@@ -4,7 +4,7 @@ import { ProjectDataPostedChart } from '~/components/chart/data-posted/ProjectDa
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { CustomLink } from '~/components/link/CustomLink'
-import type { DataPostedTimeRange } from '~/server/features/scaling/data-posted/range'
+import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 import { DataPostedTrackedTransactions } from './DataPostedTrackedTransactions'
@@ -22,7 +22,7 @@ export interface DataPostedSectionProps extends ProjectSectionProps {
     href: string
   }[]
   milestones: Milestone[]
-  defaultRange: DataPostedTimeRange
+  defaultRange: ChartRange
   daTrackingConfig: (ProjectDaTrackingConfig & {
     daLayerName: string
   })[]

@@ -1,9 +1,9 @@
 import { getTvsChart } from '~/server/features/scaling/tvs/getTvsChartData'
 import type { TvsProjectFilterType } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import type { ChartRange } from '~/utils/range/range'
 
 interface Params {
-  range: TvsChartRange
+  range: ChartRange
   type: TvsProjectFilterType
   projectIds: string[]
   excludeAssociatedTokens: boolean

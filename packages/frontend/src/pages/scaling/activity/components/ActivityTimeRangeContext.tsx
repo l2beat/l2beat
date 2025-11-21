@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { createContext, useContext, useState } from 'react'
-import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
+import type { ChartRange } from '~/utils/range/range'
 import { optionToRange } from '~/utils/range/range'
 
 type ActivityTimeRangeContextValue = {
-  timeRange: ActivityTimeRange
-  setTimeRange: (range: ActivityTimeRange) => void
+  timeRange: ChartRange
+  setTimeRange: (range: ChartRange) => void
 }
 
 const ActivityTimeRangeContext =
@@ -16,7 +16,7 @@ interface Props {
 }
 
 export function ActivityTimeRangeContextProvider({ children }: Props) {
-  const [timeRange, setTimeRange] = useState<ActivityTimeRange>(
+  const [timeRange, setTimeRange] = useState<ChartRange>(
     optionToRange('1y', { offset: -1 * UnixTime.DAY }),
   )
   return (

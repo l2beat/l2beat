@@ -7,10 +7,11 @@ import {
   getSummedTvsValues,
   type SummedTvsValues,
 } from './utils/getSummedTvsValues'
-import { rangeToResolution, TvsChartRange } from './utils/range'
+import { rangeToResolution } from './utils/range'
+import { ChartRange } from '~/utils/range/range'
 
 export const TvsChartWithProjectsRangesDataParams = v.object({
-  range: TvsChartRange,
+  range: ChartRange,
   excludeAssociatedTokens: v.boolean(),
   includeRwaRestrictedTokens: v.boolean(),
   projects: v.array(

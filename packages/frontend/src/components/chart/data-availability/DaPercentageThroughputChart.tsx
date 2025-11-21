@@ -17,10 +17,8 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChart'
-import type {
-  DaThroughputResolution,
-  DaThroughputTimeRange,
-} from '~/server/features/data-availability/throughput/utils/range'
+import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
+import type { ChartRange } from '~/utils/range/range'
 import { formatRange } from '~/utils/dates'
 import { getDaChartMeta } from './meta'
 
@@ -30,7 +28,7 @@ interface Props {
   includeScalingOnly: boolean
   syncStatus?: Record<string, number>
   resolution: DaThroughputResolution
-  range: DaThroughputTimeRange
+  range: ChartRange
 }
 export function DaPercentageThroughputChart({
   data,

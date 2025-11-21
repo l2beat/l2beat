@@ -5,7 +5,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { getActivityForProjectAndRange } from '../../scaling/activity/getActivityForProjectAndRange'
-import { DataPostedTimeRange } from '../../scaling/data-posted/range'
+import { ChartRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { isThroughputSynced } from './isThroughputSynced'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
@@ -30,7 +30,7 @@ type ScalingProjectDaThroughputChartPoint = [
 ]
 
 export const ScalingProjectDaThroughputChartParams = v.object({
-  range: DataPostedTimeRange,
+  range: ChartRange,
   projectId: v.string(),
 })
 export type ScalingProjectDaThroughputChartParams = v.infer<

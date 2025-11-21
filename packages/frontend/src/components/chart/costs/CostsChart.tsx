@@ -19,14 +19,12 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsResolution } from '~/server/features/scaling/costs/utils/range'
-import {
-  type CostsTimeRange,
-  rangeToResolution,
-} from '~/server/features/scaling/costs/utils/range'
+import { rangeToResolution } from '~/server/features/scaling/costs/utils/range'
 import { formatRange } from '~/utils/dates'
 import { formatBytes } from '~/utils/number-format/formatBytes'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatNumber } from '~/utils/number-format/formatNumber'
+import type { ChartRange } from '~/utils/range/range'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from '../../../server/features/data-availability/throughput/utils/consts'
 
 interface CostsChartDataPoint {
@@ -47,7 +45,7 @@ interface Props {
   unit: CostsUnit
   isLoading: boolean
   milestones: Milestone[]
-  range: CostsTimeRange
+  range: ChartRange
   hasBlobs: boolean
   project?: ChartProject
   tickCount?: number

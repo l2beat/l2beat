@@ -1,7 +1,2 @@
-import { v } from '@l2beat/validate'
-
-export const DataPostedTimeRange = v.tuple([
-  v.union([v.number(), v.null()]),
-  v.number(),
-])
-export type DataPostedTimeRange = v.infer<typeof DataPostedTimeRange>
+// This file is kept for potential future utility functions
+// All range types now use ChartRange from ~/utils/range/range

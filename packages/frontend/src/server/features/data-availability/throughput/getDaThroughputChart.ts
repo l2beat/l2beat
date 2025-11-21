@@ -12,7 +12,8 @@ import { generateTimestamps } from '../../utils/generateTimestamps'
 import { isThroughputSynced } from './isThroughputSynced'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
-import { DaThroughputTimeRange, rangeToResolution } from './utils/range'
+import { rangeToResolution } from './utils/range'
+import { ChartRange } from '~/utils/range/range'
 
 type DaThroughputChart = {
   data: DaThroughputDataPoint[]
@@ -28,7 +29,7 @@ export type DaThroughputDataPoint = [
 ]
 
 export const DaThroughputChartParams = v.object({
-  range: DaThroughputTimeRange,
+  range: ChartRange,
   includeScalingOnly: v.boolean(),
 })
 export type DaThroughputChartParams = v.infer<typeof DaThroughputChartParams>

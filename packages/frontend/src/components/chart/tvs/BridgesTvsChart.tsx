@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react'
 import { INFINITY } from '~/consts/characters'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import type { ChartRange } from '~/utils/range/range'
 import { optionToRange } from '~/utils/range/range'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
@@ -22,7 +22,7 @@ export function BridgesTvsChart() {
     'bridges-summary-unit',
     'usd',
   )
-  const [timeRange, setTimeRange] = useState<TvsChartRange>(optionToRange('1y'))
+  const [timeRange, setTimeRange] = useState<ChartRange>(optionToRange('1y'))
 
   const { data, isLoading } = api.tvs.chart.useQuery({
     range: timeRange,
@@ -87,7 +87,7 @@ function BridgesChartHeader({
   unit: string
   value: number | undefined
   change: number | undefined
-  range: TvsChartRange
+  range: ChartRange
   timeRange: [number, number] | undefined
 }) {
   const changeOverTime =
