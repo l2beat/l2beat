@@ -35,7 +35,6 @@ export function MonthlyUpdateThroughputChart({
 }) {
   const fillId = useId()
   const { data, isLoading } = api.da.projectChart.useQuery({
-    // TODO (ranges refactor): whaat?
     range: [from, to + UnixTime.DAY],
     projectId: id,
     includeScalingOnly: false,

@@ -1,8 +1,8 @@
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import type { ScalingProjectDaThroughputChart } from '~/server/features/data-availability/throughput/getScalingProjectDaThroughtputChart'
-import type { ChartRange } from '~/utils/range/range'
 import { formatBytes } from '~/utils/number-format/formatBytes'
 import { rangeToLabel } from '~/utils/project/rangeToLabel'
+import type { ChartRange } from '~/utils/range/range'
 
 export function ProjectDataPostedChartStats({
   range,

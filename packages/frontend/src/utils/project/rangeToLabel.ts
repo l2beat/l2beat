@@ -10,23 +10,18 @@ export function rangeToLabel(
       case '1d':
         return 'Past day'
       case '7d':
-        return '7 days'
+        return '7D'
       case '30d':
-        return '30 days'
+        return '30D'
       case '90d':
-        return '90 days'
+        return '90D'
       case '180d':
-        return '180 days'
+        return '180D'
       case '1y':
-        return '1 year'
+        return '1Y'
       case 'max':
         return 'All time'
     }
-  }
-
-  // Handle tuple or object format
-  if (range[0] === null) {
-    return 'All time'
   }
 
   const days = rangeToDays(range)
@@ -35,16 +30,11 @@ export function rangeToLabel(
   }
 
   if (days === 1) return 'Past day'
-  if (days === 7) return '7 days'
-  if (days === 30) return '30 days'
-  if (days === 90) return '90 days'
-  if (days === 180) return '180 days'
-  if (days === 365) return '1 year'
-  // TODO (ranges refactor)
-  if (days < 7) return '7 days'
-  if (days < 30) return '30 days'
-  if (days < 90) return '90 days'
-  if (days < 180) return '180 days'
-  if (days < 365) return '1 year'
-  return 'All time'
+
+  if (days < 365) {
+    return `${days}D`
+  }
+
+  const years = Math.round(days / 365)
+  return `${years}Y`
 }
