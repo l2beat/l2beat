@@ -62,6 +62,12 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     return configModel.getFieldSeverity(selectedAddress, fieldName)
   }
 
+  const setCategory = (category: string) => {
+    const newModel = configModel.setCategory(selectedAddress, category)
+    setConfigModel(newModel)
+    saveModelContents(newModel)
+  }
+
   const configString = useMemo(() => {
     return configModel.toString()
   }, [configModel])
@@ -101,6 +107,7 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     toggleIgnoreInWatchMode,
     setFieldSeverity,
     getFieldSeverity,
+    setCategory,
 
     save: saveRaw,
 
@@ -111,5 +118,6 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     ignoreMethods: configModel.getIgnoredMethods(selectedAddress),
     ignoreRelatives: configModel.getIgnoreRelatives(selectedAddress),
     ignoreInWatchMode: configModel.getIgnoreInWatchMode(selectedAddress),
+    category: configModel.getCategory(selectedAddress),
   }
 }

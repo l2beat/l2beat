@@ -81,6 +81,10 @@ export class ConfigModel {
     return this.overrides[id]?.getFieldSeverity(fieldName)
   }
 
+  setCategory(id: string, category: ContractConfigSchema['category']) {
+    return this.patchOverride(id, (override) => override.setCategory(category))
+  }
+
   patch(patch: Partial<DiscoveryConfigSchema>) {
     const newConfig = clone(this.config)
     assign(newConfig, patch)
@@ -106,6 +110,10 @@ export class ConfigModel {
 
   getIgnoreInWatchMode(id: string) {
     return this.overrides[id]?.ignoreInWatchMode
+  }
+
+  getCategory(id: string) {
+    return this.overrides[id]?.category
   }
 
   private getOverride(id: string) {

@@ -8,6 +8,7 @@ import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
 import { IS_READONLY } from '../../../config/readonly'
 import { findSelected } from '../../../utils/findSelected'
+import { useConfigModels } from '../hooks/useConfigModels'
 import { usePanelStore } from '../store/panel-store'
 import { AbiDisplay } from './AbiDisplay'
 import { AddressDisplay } from './AddressDisplay'
@@ -20,6 +21,7 @@ export function ValuesPanel() {
   if (!project) {
     throw new Error('Cannot use component outside of project page!')
   }
+
   const response = useQuery({
     queryKey: ['projects', project],
     queryFn: () => getProject(project),
@@ -39,25 +41,28 @@ export function ValuesPanel() {
     <div className="h-full w-full overflow-x-auto">
       {!selected && <ActionNeededState message="Select a contract" />}
       {selected && (
-        <Display selected={selected} blockNumber={selected.blockNumber} />
+        <Display
+          project={project}
+          selected={selected}
+          blockNumber={selected.blockNumber}
+        />
       )}
     </div>
   )
 }
 
 function Display({
-  selected,
+  project,
   blockNumber,
+  selected,
 }: {
+  project: string
   selected: ApiProjectContract | ApiAddressEntry
   blockNumber: number
 }) {
+  const { configModel, templateModel } = useConfigModels()
   const chain = selected.chain
 
-  const { project } = useParams()
-  if (!project) {
-    throw new Error('Cannot use component outside of project page!')
-  }
   const addresses = getAddressesToCopy(selected)
 
   const dialog = addresses && canAddShape(selected) && !IS_READONLY && (
@@ -133,7 +138,7 @@ function Display({
             <WithHeadline headline="Roles">
               <div className="flex gap-1">
                 {selected.roles.map((role) => (
-                  <p className="text-aux-teal ">{role}</p>
+                  <p className="text-aux-teal">{role}</p>
                 ))}
               </div>
             </WithHeadline>
@@ -153,6 +158,16 @@ function Display({
         {!selected.isReachable && (
           <WithHeadline headline="Reachable">
             <p className="text-coffee-200/40">No</p>
+          </WithHeadline>
+        )}
+        {(configModel.category || templateModel.category) && (
+          <WithHeadline headline="Category">
+            <p className="text-coffee-200/40">
+              {configModel.category} - Config
+            </p>
+            <p className="text-coffee-200/40">
+              {templateModel.category} - Template
+            </p>
           </WithHeadline>
         )}
       </div>

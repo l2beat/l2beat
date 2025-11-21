@@ -3,7 +3,7 @@ import type { Field } from '../../../../api/types'
 import { Button } from '../../../../components/Button'
 import { Checkbox } from '../../../../components/Checkbox'
 import { Dialog } from '../../../../components/Dialog'
-import { IconGear } from '../../../../icons/IconGear'
+import { IconPlus } from '../../../../icons/IconPlus'
 import { useConfigModels } from '../../hooks/useConfigModels'
 
 type Props = {
@@ -34,8 +34,10 @@ export function FieldConfigDialog(props: Props) {
 
   return (
     <Dialog.Root>
-      <Dialog.Trigger>
-        <IconGear />
+      <Dialog.Trigger asChild>
+        <Button variant="icon" size="icon">
+          <IconPlus className="size-4 text-coffee-200/80" />
+        </Button>
       </Dialog.Trigger>
       <Dialog.Body>
         <Dialog.Title>
@@ -224,7 +226,7 @@ function SeverityButton({
   return (
     <Button
       onClick={onClick}
-      className={clsx('p-0', isActive && 'bg-coffee-400')}
+      className={clsx('p-0', isActive && 'bg-coffee-400/50')}
     >
       {children}
     </Button>

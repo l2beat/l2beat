@@ -119,4 +119,8 @@ export class ContractConfigModel {
   get ignoreRelatives() {
     return this.config.ignoreRelatives
   }
+
+  get category() {
+    return this.config.category
+  }
 }
