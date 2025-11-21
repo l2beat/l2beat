@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
+import type { ChartRange } from '~/utils/range/range'
 import { getSummedActivityForProjects } from '../activity/getSummedActivityForProjects'
 import { getCostsForProjects } from './getCostsForProjects'
 import type { LatestCostsProjectResponse, LatestCostsValues } from './types'
 import { getCostsProjects } from './utils/getCostsProjects'
 import { isCostsSynced } from './utils/isCostsSynced'
-import type { ChartRange } from '~/utils/range/range'
 
 type LatestCostsValuesWithTotal = LatestCostsValues & {
   total: number

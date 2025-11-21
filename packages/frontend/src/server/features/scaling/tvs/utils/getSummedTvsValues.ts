@@ -6,8 +6,8 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import keyBy from 'lodash/keyBy'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { queryExecutor } from '~/server/queryExecutor'
-import { isTvsSynced } from './isTvsSynced'
 import type { ChartRange } from '~/utils/range/range'
+import { isTvsSynced } from './isTvsSynced'
 import { rangeToResolution } from './range'
 
 export type SummedTvsValues = {

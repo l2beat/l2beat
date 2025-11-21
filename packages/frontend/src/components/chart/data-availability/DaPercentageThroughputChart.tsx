@@ -18,8 +18,8 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/getCommo
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChart'
 import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
-import type { ChartRange } from '~/utils/range/range'
 import { formatRange } from '~/utils/dates'
+import type { ChartRange } from '~/utils/range/range'
 import { getDaChartMeta } from './meta'
 
 interface Props {

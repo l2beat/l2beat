@@ -1,9 +1,9 @@
 import type { Project } from '@l2beat/config'
 import groupBy from 'lodash/groupBy'
 import { getDb } from '~/server/database'
+import type { ChartRange } from '~/utils/range/range'
 import { getTrackedTxsProjects } from '../../utils/getTrackedTxsProjects'
 import type { LatestCostsResponse } from './types'
-import type { ChartRange } from '~/utils/range/range'
 import { sumCostValues } from './utils/sumCostValues'
 
 export async function getCostsForProjects(

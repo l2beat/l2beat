@@ -1,6 +1,6 @@
 import { INFINITY } from '~/consts/characters'
-import type { ChartRange } from '~/utils/range/range'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import type { ChartRange } from '~/utils/range/range'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { Skeleton } from '../../core/Skeleton'
 import { PercentChange } from '../../PercentChange'

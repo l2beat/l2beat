@@ -18,9 +18,9 @@ import {
   type TvsData,
 } from '~/pages/scaling/project/tvs-breakdown/components/TvsBreakdownSummaryBox'
 import type { DetailedTvsChartWithProjectsRangesData } from '~/server/features/scaling/tvs/getDetailedTvsChartWithProjectsRanges'
-import type { ChartRange } from '~/utils/range/range'
 import { api } from '~/trpc/React'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
+import type { ChartRange } from '~/utils/range/range'
 import { optionToRange } from '~/utils/range/range'
 import {
   TvsChartControlsContextProvider,

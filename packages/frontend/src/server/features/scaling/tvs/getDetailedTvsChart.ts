@@ -2,6 +2,7 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
+import { ChartRange } from '~/utils/range/range'
 import { getEthPrices } from './utils/getEthPrices'
 import {
   getSummedTvsValues,
@@ -13,7 +14,6 @@ import {
   TvsProjectFilter,
 } from './utils/projectFilterUtils'
 import { rangeToResolution } from './utils/range'
-import { ChartRange } from '~/utils/range/range'
 
 export const DetailedTvsChartDataParams = v.object({
   range: ChartRange,

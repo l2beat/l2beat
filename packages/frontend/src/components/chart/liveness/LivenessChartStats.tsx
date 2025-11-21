@@ -5,9 +5,9 @@ import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { AnomalyIndicator } from '~/pages/scaling/liveness/components/AnomalyIndicator'
 import { DurationCell } from '~/pages/scaling/liveness/components/table/DurationCell'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
-import type { ChartRange } from '~/utils/range/range'
 import { cn } from '~/utils/cn'
 import { rangeToLabel } from '~/utils/project/rangeToLabel'
+import type { ChartRange } from '~/utils/range/range'
 
 export function LivenessChartStats({
   stats,
