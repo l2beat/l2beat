@@ -61,7 +61,7 @@ export class InteropRecentPricesIndexer extends ManagedChildIndexer {
     return target
   }
 
-  override async invalidate(targetHeight: number): Promise<number> {
-    return await this.$.db.interopRecentPrices.deleteAfter(targetHeight)
+  override invalidate(targetHeight: number): Promise<number> {
+    return Promise.resolve(targetHeight) // this indexer does not invalidate
   }
 }

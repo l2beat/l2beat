@@ -259,6 +259,7 @@ export class UpdateMonitor {
       if (contract.errors !== undefined) {
         for (const [field, error] of Object.entries(contract.errors)) {
           logger.warn('There was an error during discovery', {
+            projectId: discovery.name,
             field,
             error,
           })

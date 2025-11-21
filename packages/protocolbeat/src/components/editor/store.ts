@@ -1,6 +1,6 @@
 import { create } from 'zustand'
+import type { Editor, EditorSupportedLanguage } from './code/editor'
 import type { DiffEditor } from './diff/diffEditor'
-import type { Editor, EditorSupportedLanguage } from './editor'
 
 export interface Range {
   startOffset: number
@@ -26,6 +26,7 @@ interface CodeState {
   removeEditor: (key: string) => void
   setDiffEditor: (key: string, editor: DiffEditor) => void
   getDiffEditor: (key: string) => DiffEditor | undefined
+  removeDiffEditor: (key: string) => void
   setSourceIndex: (address: string, sourceIndex: number) => void
   getSourceIndex: (address: string) => number | undefined
   showRange: (address: string, range: Range | undefined) => void
@@ -73,6 +74,11 @@ export const useCodeStore = create<CodeState>((set, get) => ({
   getDiffEditor: (editorId: string) => {
     return get().diffEditors[editorId]
   },
+  removeDiffEditor: (editorId: string) =>
+    set((state) => {
+      const { [editorId]: _, ...diffEditors } = state.diffEditors
+      return { diffEditors }
+    }),
   setSourceIndex: (address: string, sourceIndex: number) =>
     set((state) => ({
       sourceIndex: { ...state.sourceIndex, [address]: sourceIndex },

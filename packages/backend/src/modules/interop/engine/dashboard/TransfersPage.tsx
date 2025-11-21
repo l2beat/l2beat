@@ -38,7 +38,9 @@ function TransfersTable(props: {
           const dstExplorerUrl = e.dstChain && props.getExplorerUrl(e.dstChain)
 
           return (
-            <tr>
+            <tr
+              key={`${e.srcChain}-${e.srcTxHash}-${e.dstChain}-${e.dstTxHash}`}
+            >
               <td data-order={e.timestamp}>
                 {new Date(e.timestamp * 1000).toLocaleString()}
               </td>
@@ -105,7 +107,10 @@ function TokenAddress(props: {
   if (address === Address32.NATIVE) {
     return <span>NATIVE</span>
   }
-  if (!props.explorerUrl || address === Address32.ZERO) {
+  if (address === Address32.ZERO) {
+    return <span>0x0</span>
+  }
+  if (!props.explorerUrl) {
     return null
   }
   return (

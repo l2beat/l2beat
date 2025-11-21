@@ -1,7 +1,6 @@
 import { v } from '@l2beat/validate'
 import { ArrowRightIcon, RefreshCwIcon } from 'lucide-react'
 import type { SubmitHandler, UseFormReturn } from 'react-hook-form'
-import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { Button, buttonVariants } from '~/components/core/Button'
 import {
@@ -25,6 +24,7 @@ import { Textarea } from '~/components/core/TextArea'
 import { minLengthCheck, urlCheck } from '~/utils/checks'
 import { parseDatePaste } from '~/utils/parseDate'
 import { Checkbox } from '../core/Checkbox'
+import { ExternalLink } from '../ExternalLink'
 
 const categoryValues = ['btc', 'ether', 'stablecoin', 'other'] as const
 
@@ -140,17 +140,17 @@ export function AbstractTokenForm({
                 <FormControl>
                   <div className="group flex items-center gap-2">
                     <Input {...field} />
-                    <Link
-                      to={`https://www.coingecko.com/en/coins/${field.value}`}
-                      target="_blank"
+                    <ExternalLink
+                      href={`https://www.coingecko.com/en/coins/${field.value}`}
                       aria-disabled={!checks?.success}
                       className={buttonVariants({
                         variant: 'outline',
                         className: 'shrink-0',
+                        size: 'icon',
                       })}
                     >
                       <ArrowRightIcon />
-                    </Link>
+                    </ExternalLink>
                   </div>
                 </FormControl>
 
@@ -204,7 +204,7 @@ export function AbstractTokenForm({
                         field.onChange(parsedDate)
                       } else {
                         toast.error(
-                          `Invalid date format. If you think it's correct, please report to dev team. Input: ${pastedText}`,
+                          `Invalid date format. If you think it's correct, please report to dev team.`,
                         )
                       }
                     }}

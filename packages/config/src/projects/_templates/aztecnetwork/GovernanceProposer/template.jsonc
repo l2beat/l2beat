@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Intermediary contract that allows the L2 system (or specific L2 signals) to submit formal proposals to the L1 Governance contract.",
+  "ignoreMethods": ["computeRound", "getProposalProposer"],
+  "ignoreInWatchMode": ["getCurrentRound"]
+}

@@ -8,5 +8,11 @@
     "hash": "0x3d55623cb35937b0b8f6a42b0dec9a7287f19e54ebca9af664a6215829b5df66",
     "address": "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51",
     "blockNumber": 22868281
+  },
+  "CanonicalBridgeV3.sol": {
+    "hash": "0xa3f1bc495709a51f53d454130ac4b132983abbc6738a9630f44e6a8fb68b392d",
+    "address": "eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a",
+    "chain": "ethereum",
+    "blockNumber": 23839653
   }
 }

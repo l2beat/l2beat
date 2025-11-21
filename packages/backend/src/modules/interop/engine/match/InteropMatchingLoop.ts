@@ -243,6 +243,7 @@ function toTransferRecord(transfer: InteropTransfer): InteropTransferRecord {
 
     srcTokenAddress: transfer.src.tokenAddress,
     srcRawAmount: transfer.src.tokenAmount,
+    srcWasBurned: transfer.src.wasBurned,
     srcSymbol: undefined,
     srcAbstractTokenId: undefined,
     srcAmount: undefined,
@@ -257,6 +258,7 @@ function toTransferRecord(transfer: InteropTransfer): InteropTransferRecord {
 
     dstTokenAddress: transfer.dst.tokenAddress,
     dstRawAmount: transfer.dst.tokenAmount,
+    dstWasMinted: transfer.dst.wasMinted,
     dstSymbol: undefined,
     dstAbstractTokenId: undefined,
     dstAmount: undefined,

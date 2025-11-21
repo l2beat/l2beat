@@ -15,7 +15,10 @@ export const plumenetwork: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1719224239), // 2024-06-24T10:17:19Z
   additionalBadges: [BADGES.RaaS.Conduit],
   discovery,
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
     name: 'Plume Network',
     slug: 'plumenetwork',
@@ -75,6 +78,10 @@ export const plumenetwork: ScalingProject = orbitStackL2({
         url: 'https://rpc.plume.org',
         callsPerMinute: 300,
       },
+      {
+        type: 'blockscout',
+        url: 'https://explorer.plume.org/api',
+      },
     ],
     multicallContracts: [
       {
@@ -92,6 +99,14 @@ export const plumenetwork: ScalingProject = orbitStackL2({
       date: '2025-05-08T00:00:00Z',
       description:
         'Upgraded ChallengeManager contract to the version that uses Celestia with Blobstream bridge.',
+      type: 'general',
+    },
+    {
+      title: 'Plume Network stops using Celestia',
+      url: 'https://etherscan.io/tx/0x55fefaa9e30fdcbd6dbaeba2d032922e707f83504a47edaf4da7523ec2d09e58',
+      date: '2025-11-18T00:00:00Z',
+      description:
+        'Plume Network stops using Celestia and switches to ArbOS v32 with a DAC for data availability.',
       type: 'general',
     },
   ],

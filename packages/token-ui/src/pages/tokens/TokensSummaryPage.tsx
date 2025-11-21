@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { PlusIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Badge } from '~/components/core/Badge'
@@ -11,6 +12,7 @@ import {
   CardTitle,
 } from '~/components/core/Card'
 import { Separator } from '~/components/core/Separator'
+import { ExplorerLink } from '~/components/ExplorerLink'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractToken, DeployedToken } from '~/mock/types'
@@ -19,15 +21,20 @@ import { cn } from '~/utils/cn'
 import { getDeployedTokenDisplayId } from '~/utils/getDisplayId'
 
 export function TokensSummaryPage() {
-  const { data, isLoading: isAbstractTokensLoading } =
-    api.abstractTokens.getAllWithDeployedTokens.useQuery()
-
   const [selectedAbstractToken, setSelectedAbstractToken] = useState<
     AbstractToken | undefined
   >(undefined)
   const [selectedDeployedToken, setSelectedDeployedToken] = useState<
     DeployedToken | undefined
   >(undefined)
+
+  const { data, isLoading: isAbstractTokensLoading } =
+    api.abstractTokens.getAllWithDeployedTokens.useQuery()
+  const { data: chains } = api.chains.getAll.useQuery()
+
+  const chainRecord = chains?.find(
+    (chain) => chain.name === selectedDeployedToken?.chain,
+  )
   return (
     <AppLayout>
       <div className="grid h-full grid-cols-2 gap-4">
@@ -221,7 +228,30 @@ export function TokensSummaryPage() {
                     <ItemWithLabel
                       className="col-span-2"
                       label="Address"
-                      value={selectedDeployedToken.address}
+                      value={
+                        selectedDeployedToken.address.startsWith('0x') ? (
+                          chainRecord?.explorerUrl ? (
+                            <ExplorerLink
+                              explorerUrl={chainRecord.explorerUrl}
+                              value={selectedDeployedToken.address}
+                              type="address"
+                            />
+                          ) : (
+                            <span className="relative">
+                              {selectedDeployedToken.address}
+                              <Link
+                                to={`/chains/${selectedDeployedToken.chain}`}
+                                target="_blank"
+                                className="absolute top-full right-0 flex items-center gap-1 text-muted-foreground text-xs hover:text-primary"
+                              >
+                                <PlusIcon className="size-[1lh]" /> Add explorer
+                              </Link>
+                            </span>
+                          )
+                        ) : (
+                          selectedDeployedToken.address
+                        )
+                      }
                     />
                   </div>
                   <ItemWithLabel
@@ -262,8 +292,8 @@ function ItemWithLabel({
   value,
   className,
 }: {
-  label: string
-  value: string | null
+  label: React.ReactNode
+  value: React.ReactNode
   className?: string
 }) {
   return (

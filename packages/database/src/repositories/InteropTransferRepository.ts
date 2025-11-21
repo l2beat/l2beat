@@ -1,5 +1,5 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import { type Insertable, type Selectable, sql } from 'kysely'
+import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropTransfer } from '../kysely/generated/types'
 
@@ -16,6 +16,7 @@ export interface InteropTransferRecord {
   srcEventId: string | undefined
   srcTokenAddress: string | undefined
   srcRawAmount: bigint | undefined
+  srcWasBurned: boolean | undefined
   srcAbstractTokenId: string | undefined
   srcSymbol: string | undefined
   srcAmount: number | undefined
@@ -28,6 +29,7 @@ export interface InteropTransferRecord {
   dstEventId: string | undefined
   dstTokenAddress: string | undefined
   dstRawAmount: bigint | undefined
+  dstWasMinted: boolean | undefined
   dstAbstractTokenId: string | undefined
   dstSymbol: string | undefined
   dstAmount: number | undefined
@@ -72,6 +74,7 @@ export function toRecord(
     srcEventId: row.srcEventId ?? undefined,
     srcTokenAddress: row.srcTokenAddress ?? undefined,
     srcRawAmount: row.srcRawAmount ? BigInt(row.srcRawAmount) : undefined,
+    srcWasBurned: row.srcWasBurned ?? undefined,
     srcAbstractTokenId: row.srcAbstractTokenId ?? undefined,
     srcSymbol: row.srcSymbol ?? undefined,
     srcAmount: row.srcAmount ?? undefined,
@@ -84,6 +87,7 @@ export function toRecord(
     dstEventId: row.dstEventId ?? undefined,
     dstTokenAddress: row.dstTokenAddress ?? undefined,
     dstRawAmount: row.dstRawAmount ? BigInt(row.dstRawAmount) : undefined,
+    dstWasMinted: row.dstWasMinted ?? undefined,
     dstAbstractTokenId: row.dstAbstractTokenId ?? undefined,
     dstSymbol: row.dstSymbol ?? undefined,
     dstAmount: row.dstAmount ?? undefined,
@@ -110,6 +114,7 @@ export function toRow(
     srcEventId: record.srcEventId,
     srcTokenAddress: record.srcTokenAddress,
     srcRawAmount: record.srcRawAmount?.toString(),
+    srcWasBurned: record.srcWasBurned,
     srcAbstractTokenId: record.srcAbstractTokenId,
     srcSymbol: record.srcSymbol,
     srcAmount: record.srcAmount,
@@ -123,6 +128,7 @@ export function toRow(
     dstEventId: record.dstEventId,
     dstTokenAddress: record.dstTokenAddress,
     dstRawAmount: record.dstRawAmount?.toString(),
+    dstWasMinted: record.dstWasMinted,
     dstAbstractTokenId: record.dstAbstractTokenId,
     dstSymbol: record.dstSymbol,
     dstAmount: record.dstAmount,
@@ -135,7 +141,7 @@ export function toRow(
 export interface InteropTransfersStatsRecord {
   type: string
   count: number
-  medianDuration: number
+  avgDuration: number
   srcValueSum: number
   dstValueSum: number
 }
@@ -145,7 +151,7 @@ export interface InteropTransfersDetailedStatsRecord {
   srcChain: string
   dstChain: string
   count: number
-  medianDuration: number
+  avgDuration: number
   srcValueSum: number
   dstValueSum: number
 }
@@ -219,9 +225,7 @@ export class InteropTransferRepository extends BaseRepository {
       .select((eb) => [
         'type',
         eb.fn.countAll().as('count'),
-        sql<number>`percentile_cont(0.5) within group (order by duration)`.as(
-          'medianDuration',
-        ),
+        eb.fn.avg('duration').as('avgDuration'),
         eb.fn.sum('srcValueUsd').as('srcValueSum'),
         eb.fn.sum('dstValueUsd').as('dstValueSum'),
       ])
@@ -231,7 +235,7 @@ export class InteropTransferRepository extends BaseRepository {
     return overallStats.map((overall) => ({
       type: overall.type,
       count: Number(overall.count),
-      medianDuration: Number(overall.medianDuration),
+      avgDuration: Number(overall.avgDuration),
       srcValueSum: Number(overall.srcValueSum),
       dstValueSum: Number(overall.dstValueSum),
     }))
@@ -245,9 +249,7 @@ export class InteropTransferRepository extends BaseRepository {
         'srcChain',
         'dstChain',
         eb.fn.countAll().as('count'),
-        sql<number>`percentile_cont(0.5) within group (order by duration)`.as(
-          'medianDuration',
-        ),
+        eb.fn.avg('duration').as('avgDuration'),
         eb.fn.sum('srcValueUsd').as('srcValueSum'),
         eb.fn.sum('dstValueUsd').as('dstValueSum'),
       ])
@@ -263,7 +265,7 @@ export class InteropTransferRepository extends BaseRepository {
         srcChain: chain.srcChain,
         dstChain: chain.dstChain,
         count: Number(chain.count),
-        medianDuration: Number(chain.medianDuration),
+        avgDuration: Number(chain.avgDuration),
         srcValueSum: Number(chain.srcValueSum),
         dstValueSum: Number(chain.dstValueSum),
       }
