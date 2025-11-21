@@ -592,8 +592,8 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
   const l3TechnologyChoices = asArray(common.technology?.dataAvailability)
   const baseChainRootDa = asArray(baseChain.dataAvailability)[0]
   const rootLayerName =
-    dataAvailabilityEntries[0]?.layer.value ??
     baseChainRootDa?.layer.value ??
+    dataAvailabilityEntries[0]?.layer.value ??
     'its DA layer'
   const transformedL3TechChoices =
     l3TechnologyChoices.length === 0
@@ -604,6 +604,7 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
             projectName,
             hostChainName,
             rootLayerName,
+            baseChain.dataAvailability,
           ),
           ...l3TechnologyChoices.slice(1),
         ]
@@ -1997,7 +1998,20 @@ function addHostChainContextToTechnologyChoice(
   projectName: string,
   hostChainName: string,
   rootLayerName: string,
+  hostChainDaEntries: ProjectScalingDa[] | ProjectScalingDa | undefined,
 ): ProjectTechnologyChoice {
+  const hostChainDas = asArray(hostChainDaEntries)
+  const describesSameDa = hostChainDas.some(
+    (entry) =>
+      entry.layer.value === choice.name ||
+      entry.layer.value === rootLayerName ||
+      entry.layer.value === projectName,
+  )
+
+  if (describesSameDa) {
+    return choice
+  }
+
   return {
     ...choice,
     description:
