@@ -1,3 +1,116 @@
+Generated with discovered.json: 0x8c2cb25422ebb280311a2342c853ac3aaffb9ed0
+
+# Diff at Thu, 20 Nov 2025 11:23:19 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@affe2a8446dd872cf147b75c29b9d7804e5f0b52 block: 1763033250
+- current timestamp: 1763637734
+
+## Description
+
+Owner of PredicateServiceManager (managing the deposits AML checks) is now an EOA.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE)
+    +++ description: None
+```
+
+```diff
+    contract PredicateServiceManager (eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2) {
+    +++ description: None
+      values.operators.2:
++        "eth:0x5f936C12E43181662e85814b0cFd10334A33E5A1"
+      values.owner:
+-        "eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE"
++        "eth:0xFb37A6BC0DC1c52900a8E50A2D6d1b7a59CEa02c"
+    }
+```
+
+```diff
+    EOA  (eth:0xFb37A6BC0DC1c52900a8E50A2D6d1b7a59CEa02c) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2","description":"can add and remove permissioned operators, deregister regular operators, register new policies, override existing policies, and in general manage the AVS (e.g. thresholds, strategies) and the connection to EigenLayer.","role":".owner"}]
+    }
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe/GnosisSafe.sol => /dev/null         | 953 ---------------------
+ .../GnosisSafe/GnosisSafeProxy.p.sol => /dev/null  |  35 -
+ 2 files changed, 988 deletions(-)
+```
+
+Generated with discovered.json: 0x92be968dbd15dcb2b1cd9fc369d6118cfa27d35f
+
+# Diff at Thu, 13 Nov 2025 11:28:34 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@236e99b8e7528eefed3152e229515862240afbdc block: 1760974375
+- current timestamp: 1763033250
+
+## Description
+
+New ServiceManager (predicateManager)
+https://disco.l2beat.com/diff/eth:0x1BafAF26d236FbEA3E86075370B554eC0477bFD0/eth:0x7FC138988d13deD38FA22aBc4e15e855c92b092E - introduces option for owner to register operators to AVS directly, and a toggle for the owner to allow or deactivate registrations.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2","description":"can add and remove permissioned operators, deregister regular operators, register new policies, override existing policies, and in general manage the AVS (e.g. thresholds, strategies) and the connection to EigenLayer.","role":".owner"}]
+    }
+```
+
+```diff
+    contract PredicateServiceManager (eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x55b4084f8591b2c3c51011b50fe478e7761ce2cab412359b4df3b6941fcba322"
++        "0x64a4c29e61f52080da22207fe5295d233b6450ecc65dbf2852a0b0383fd74f63"
+      values.$implementation:
+-        "eth:0x1BafAF26d236FbEA3E86075370B554eC0477bFD0"
++        "eth:0x7FC138988d13deD38FA22aBc4e15e855c92b092E"
+      values.$pastUpgrades.3:
++        ["2025-11-12T14:17:59.000Z","0xe7e91f3f1cc274f4b11beeb0763c88b1f2b56c2be6b8b1f490695672ea5521d8",["eth:0x7FC138988d13deD38FA22aBc4e15e855c92b092E"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.operators.1:
++        "eth:0x28c4E42b2A0F3Daa4bfd1dC8A2CEDaE99C567b1E"
+      values.owner:
+-        "eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371"
++        "eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE"
+      values.allowRegistrations:
++        false
+      implementationNames.eth:0x1BafAF26d236FbEA3E86075370B554eC0477bFD0:
+-        "ServiceManager"
+      implementationNames.eth:0x7FC138988d13deD38FA22aBc4e15e855c92b092E:
++        "ServiceManager"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../intmax/.flat/GnosisSafe/GnosisSafe.sol         | 953 +++++++++++++++++++++
+ .../intmax/.flat/GnosisSafe/GnosisSafeProxy.p.sol  |  35 +
+ .../PredicateServiceManager/ServiceManager.sol     |  26 +
+ 3 files changed, 1014 insertions(+)
+```
+
 Generated with discovered.json: 0xca73552541225231bbf01c8b51cb93c767249100
 
 # Diff at Mon, 20 Oct 2025 15:34:07 GMT:

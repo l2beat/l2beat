@@ -1,11 +1,10 @@
 import type { Database, InteropEventRecord } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
-import {
-  Address32,
-  type InteropEvent,
-  type InteropEventDb,
-  type InteropEventQuery,
-  type InteropEventType,
+import type {
+  InteropEvent,
+  InteropEventDb,
+  InteropEventQuery,
+  InteropEventType,
 } from '../../plugins/types'
 import { InMemoryEventDb } from './InMemoryEventDb'
 
@@ -86,14 +85,9 @@ function fromDbRecord(record: InteropEventRecord): InteropEvent {
     args: record.args,
     ctx: {
       chain: record.chain,
-      blockHash: record.blockHash,
-      blockNumber: record.blockNumber,
-      logIndex: record.logIndex,
       timestamp: record.timestamp,
+      logIndex: record.logIndex,
       txHash: record.txHash,
-      txValue: record.value,
-      txTo: record.txTo ? Address32.from(record.txTo) : undefined,
-      txData: record.calldata,
     },
   }
 }
@@ -103,18 +97,20 @@ function toDbRecord(event: InteropEvent): InteropEventRecord {
     plugin: event.plugin,
     eventId: event.eventId,
     type: event.type,
+    direction: event.direction,
     expiresAt: event.expiresAt,
     args: event.args,
     chain: event.ctx.chain,
-    blockHash: event.ctx.blockHash,
-    blockNumber: event.ctx.blockNumber,
-    logIndex: event.ctx.logIndex,
     timestamp: event.ctx.timestamp,
+    logIndex: event.ctx.logIndex,
     txHash: event.ctx.txHash,
-    value: event.ctx.txValue,
-    txTo: event.ctx.txTo,
-    calldata: event.ctx.txData,
     matched: false,
     unsupported: false,
+    // Deprecated
+    blockHash: '-',
+    blockNumber: 0,
+    value: 0n,
+    txTo: '-',
+    calldata: '-',
   }
 }

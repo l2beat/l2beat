@@ -1,6 +1,6 @@
 {
   "name": "intmax",
-  "timestamp": 1760974375,
+  "timestamp": 1763637734,
   "configHash": "0x6b82cbb74882682b00cd46b12f5936f3fe78edfeba89fc469426d203ebe4b918",
   "entries": [
     {
@@ -95,14 +95,6 @@
         "0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"
       ],
       "proxyType": "EIP7702 EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2",
-          "description": "can add and remove permissioned operators, deregister regular operators, register new policies, override existing policies, and in general manage the AVS (e.g. thresholds, strategies) and the connection to EigenLayer.",
-          "role": ".owner"
-        }
-      ],
       "values": {
         "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
         "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
@@ -152,7 +144,7 @@
         "$upgradeCount": 1,
         "CONTRIBUTOR": "0xa0bb1af1c90aa52ed052b92714ff0087008cc720049bf1af77cca2600b31e80c",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCurrentPeriod": 17,
+        "getCurrentPeriod": 21,
         "periodInterval": 604800,
         "startTimestamp": 1750464000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -319,7 +311,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 5 (20%)",
-        "nonce": 1,
+        "nonce": 3,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -384,8 +376,8 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deploymentTime": 1750550400,
         "eligibilityPermitter": "eth:0x0000000000000000000000000000000000000000",
-        "getLastDepositId": 25194,
-        "getLastRelayedDepositId": 25194,
+        "getLastDepositId": 36630,
+        "getLastRelayedDepositId": 36619,
         "getNativeTokenIndex": 0,
         "paused": false,
         "RELAY_LIMIT": 450,
@@ -408,7 +400,7 @@
       "template": "eigenlayer/PredicateServiceManager",
       "sourceHashes": [
         "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762",
-        "0x55b4084f8591b2c3c51011b50fe478e7761ce2cab412359b4df3b6941fcba322"
+        "0x64a4c29e61f52080da22207fe5295d233b6450ecc65dbf2852a0b0383fd74f63"
       ],
       "proxyType": "EIP1967 proxy",
       "receivedPermissions": [
@@ -434,7 +426,7 @@
       "sinceBlock": 21497263,
       "values": {
         "$admin": "eth:0x7153803C06d6a36D6d91aEB3C1ed8e5b934Df601",
-        "$implementation": "eth:0x1BafAF26d236FbEA3E86075370B554eC0477bFD0",
+        "$implementation": "eth:0x7FC138988d13deD38FA22aBc4e15e855c92b092E",
         "$pastUpgrades": [
           [
             "2024-12-28T00:05:35.000Z",
@@ -450,10 +442,16 @@
             "2025-05-08T14:43:11.000Z",
             "0x3e8496c487d693ccaaba5374092074412beefbf09fad7e2deff08e6aa25a8b5c",
             ["eth:0x1BafAF26d236FbEA3E86075370B554eC0477bFD0"]
+          ],
+          [
+            "2025-11-12T14:17:59.000Z",
+            "0xe7e91f3f1cc274f4b11beeb0763c88b1f2b56c2be6b8b1f490695672ea5521d8",
+            ["eth:0x7FC138988d13deD38FA22aBc4e15e855c92b092E"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "aggregator": "eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371",
+        "allowRegistrations": false,
         "avsDirectory": "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
         "delegationManager": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "getDeployedPolicies": [
@@ -487,7 +485,18 @@
           "x-test-random",
           "x-mxon-prod-001",
           "x-kyc-basic-template-001",
-          "x-strict-membership-policy"
+          "x-strict-membership-policy",
+          "x-aztec-prod-001",
+          "x-aztec-aml-001",
+          "x-aztec-identity-001",
+          "x-aztec-identity-002",
+          "x-aztec-identity-003",
+          "x-aztec-identity-004",
+          "x-aztec-identity-005",
+          "x-aztec-identity-006",
+          "x-aztec-identity-007",
+          "x-aztec-aml-007",
+          "x-aztec-aml-008"
         ],
         "getRestakeableStrategies": [
           "eth:0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
@@ -500,8 +509,12 @@
           "eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d"
         ],
         "intmaxThreshold": 1,
-        "operators": ["eth:0x6BD4b34e9eD84c8178E995628Bf1b14cAf47a529"],
-        "owner": "eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371",
+        "operators": [
+          "eth:0x6BD4b34e9eD84c8178E995628Bf1b14cAf47a529",
+          "eth:0x28c4E42b2A0F3Daa4bfd1dC8A2CEDaE99C567b1E",
+          "eth:0x5f936C12E43181662e85814b0cFd10334A33E5A1"
+        ],
+        "owner": "eth:0xFb37A6BC0DC1c52900a8E50A2D6d1b7a59CEa02c",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "permissionedOperators": [],
         "socialGraphIDs": [
@@ -514,8 +527,21 @@
       },
       "implementationNames": {
         "eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2": "TransparentUpgradeableProxy",
-        "eth:0x1BafAF26d236FbEA3E86075370B554eC0477bFD0": "ServiceManager"
+        "eth:0x7FC138988d13deD38FA22aBc4e15e855c92b092E": "ServiceManager"
       }
+    },
+    {
+      "address": "eth:0xFb37A6BC0DC1c52900a8E50A2D6d1b7a59CEa02c",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2",
+          "description": "can add and remove permissioned operators, deregister regular operators, register new policies, override existing policies, and in general manage the AVS (e.g. thresholds, strategies) and the connection to EigenLayer.",
+          "role": ".owner"
+        }
+      ]
     },
     {
       "address": "scr:0x0000000000000000000000000000000000000000",
@@ -560,14 +586,14 @@
         ],
         "$upgradeCount": 1,
         "contribution": "scr:0x42Fe7Db60c4C70eBb7597dB9a0959F9fCa0114af",
-        "depositIndex": 25194,
-        "depositTreeRoot": "0x2975f43a01bdd9b894fa2e5e1a0ef6a010af001990022b37d8e658cd48f14cfe",
+        "depositIndex": 36619,
+        "depositTreeRoot": "0xc8de7f5e73322f03710f2b9318139ecf5af0f7e58acdc7de64ef743f71401f28",
         "FULL_ACCOUNT_IDS_BYTES": 640,
-        "getLatestBlockNumber": 29684,
+        "getLatestBlockNumber": 40877,
         "getPenalty": 0,
         "isMigrationCompleted": true,
         "l2ScrollMessenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "lastProcessedDepositId": 25194,
+        "lastProcessedDepositId": 36619,
         "liquidity": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
         "NUM_SENDERS_IN_BLOCK": 128,
         "owner": "scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD",
@@ -641,11 +667,11 @@
           "numPhases": 7,
           "phase0Period": 16
         },
-        "getCurrentPeriod": 121,
+        "getCurrentPeriod": 152,
         "isMigrationCompleted": true,
         "l2ScrollMessenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
         "liquidity": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
-        "nullifierNonce": 7296,
+        "nullifierNonce": 9704,
         "owner": "scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD",
         "RELAY_LIMIT": 100,
         "REWARD_TOKEN_INDEX": 1,
@@ -690,7 +716,7 @@
         "$upgradeCount": 1,
         "CONTRIBUTOR": "0xa0bb1af1c90aa52ed052b92714ff0087008cc720049bf1af77cca2600b31e80c",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCurrentPeriod": 17,
+        "getCurrentPeriod": 21,
         "periodInterval": 604800,
         "startTimestamp": 1750464000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -875,81 +901,6 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0x1BafAF26d236FbEA3E86075370B554eC0477bFD0": [
-      "error ECDSAInvalidSignature()",
-      "error ECDSAInvalidSignatureLength(uint256 length)",
-      "error ECDSAInvalidSignatureS(bytes32 s)",
-      "error InvalidInitialization()",
-      "error NotInitializing()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error ServiceManager__ArrayLengthMismatch()",
-      "error ServiceManager__InvalidOperator()",
-      "error ServiceManager__InvalidStrategy()",
-      "error ServiceManager__Unauthorized()",
-      "event AVSDirectoryUpdated(address indexed avsDirectory)",
-      "event DelegationManagerUpdated(address indexed delegationManager)",
-      "event DeployedPolicy(string indexed policyID, string policy)",
-      "event Initialized(uint64 version)",
-      "event OperatorRegistered(address indexed operator)",
-      "event OperatorRemoved(address indexed operator)",
-      "event OperatorSigningKeyRotated(address indexed operator, address indexed oldSigningKey, address indexed newSigningKey)",
-      "event OperatorsStakesUpdated(address[][] indexed operatorsPerQuorum, bytes indexed quorumNumbers)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event PermissionedOperatorsAdded(address[] operators)",
-      "event PermissionedOperatorsRemoved(address[] operators)",
-      "event SetPolicy(address indexed client, string indexed policyID)",
-      "event StakeRegistryUpdated(address indexed stakeRegistry)",
-      "event StrategyAdded(address indexed strategy)",
-      "event StrategyRemoved(address indexed strategy)",
-      "event TaskValidated(address indexed msgSender, address indexed target, uint256 indexed value, string policyID, string taskId, uint256 quorumThresholdCount, uint256 expireByTime, address[] signerAddresses)",
-      "event ThresholdStakeUpdated(uint256 indexed thresholdStake)",
-      "function acceptOwnership()",
-      "function addPermissionedOperators(address[] _operators)",
-      "function addStrategy(address _strategy, uint8 quorumNumber, uint256 index)",
-      "function aggregator() view returns (address)",
-      "function avsDirectory() view returns (address)",
-      "function clientToPolicy(address, string) view returns (bool)",
-      "function clientToPolicyID(address) view returns (string)",
-      "function delegationManager() view returns (address)",
-      "function deployPolicy(string _policyID, string _policy, uint256 _quorumThreshold)",
-      "function deployedPolicyIDs(uint256) view returns (string)",
-      "function deregisterOperatorFromAVS(address _operator)",
-      "function getDeployedPolicies() view returns (string[])",
-      "function getOperatorRestakedStrategies(address operator) view returns (address[])",
-      "function getRestakeableStrategies() view returns (address[])",
-      "function hashTaskSafe(tuple(string taskId, address msgSender, address target, uint256 value, bytes encodedSigAndArgs, string policyID, uint32 quorumThresholdCount, uint256 expireByTime) _task) view returns (bytes32)",
-      "function hashTaskWithExpiry(tuple(string taskId, address msgSender, address target, uint256 value, bytes encodedSigAndArgs, string policyID, uint32 quorumThresholdCount, uint256 expireByTime) _task) pure returns (bytes32)",
-      "function idToPolicy(string) view returns (string)",
-      "function idToSocialGraph(string) view returns (string)",
-      "function initialize(address _owner, address _aggregator, address _delegationManager, address _stakeRegistry, address _avsDirectory, uint256 _thresholdStake)",
-      "function operators(address) view returns (uint256 totalStake, uint8 status)",
-      "function overrideClientPolicyID(string _policyID, address _clientAddress)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function policyIdToThreshold(string) view returns (uint256)",
-      "function registerOperatorToAVS(address _operatorSigningKey, tuple(bytes signature, bytes32 salt, uint256 expiry) _operatorSignature)",
-      "function removePermissionedOperators(address[] _operators)",
-      "function removeStrategy(address _strategy)",
-      "function renounceOwnership()",
-      "function rotatePredicateSigningKey(address _oldSigningKey, address _newSigningKey)",
-      "function setAVSDirectory(address _avsDirectory)",
-      "function setDelegationManager(address _delegationManager)",
-      "function setMetadataURI(string _metadataURI)",
-      "function setPolicy(string _policyID)",
-      "function setStakeRegistry(address _stakeRegistry)",
-      "function setThresholdStake(uint256 _thresholdStake)",
-      "function signingKeyToOperator(address) view returns (address)",
-      "function socialGraphIDs(uint256) view returns (string)",
-      "function spentTaskIds(string) view returns (bool)",
-      "function stakeRegistry() view returns (address)",
-      "function strategies(uint256) view returns (address)",
-      "function thresholdStake() view returns (uint256)",
-      "function transferOwnership(address newOwner)",
-      "function updateOperatorsForQuorum(address[][] operatorsPerQuorum, bytes quorumNumbers)",
-      "function validateSignatures(tuple(string taskId, address msgSender, address target, uint256 value, bytes encodedSigAndArgs, string policyID, uint32 quorumThresholdCount, uint256 expireByTime) _task, address[] signerAddresses, bytes[] signatures) returns (bool isVerified)"
-    ],
     "eth:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -1107,6 +1058,84 @@
       "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
       "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
       "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
+    ],
+    "eth:0x7FC138988d13deD38FA22aBc4e15e855c92b092E": [
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error ServiceManager__ArrayLengthMismatch()",
+      "error ServiceManager__InvalidOperator()",
+      "error ServiceManager__InvalidStrategy()",
+      "error ServiceManager__Unauthorized()",
+      "event AVSDirectoryUpdated(address indexed avsDirectory)",
+      "event DelegationManagerUpdated(address indexed delegationManager)",
+      "event DeployedPolicy(string indexed policyID, string policy)",
+      "event Initialized(uint64 version)",
+      "event OperatorRegistered(address indexed operator)",
+      "event OperatorRemoved(address indexed operator)",
+      "event OperatorSigningKeyRotated(address indexed operator, address indexed oldSigningKey, address indexed newSigningKey)",
+      "event OperatorsStakesUpdated(address[][] indexed operatorsPerQuorum, bytes indexed quorumNumbers)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PermissionedOperatorsAdded(address[] operators)",
+      "event PermissionedOperatorsRemoved(address[] operators)",
+      "event SetPolicy(address indexed client, string indexed policyID)",
+      "event StakeRegistryUpdated(address indexed stakeRegistry)",
+      "event StrategyAdded(address indexed strategy)",
+      "event StrategyRemoved(address indexed strategy)",
+      "event TaskValidated(address indexed msgSender, address indexed target, uint256 indexed value, string policyID, string taskId, uint256 quorumThresholdCount, uint256 expireByTime, address[] signerAddresses)",
+      "event ThresholdStakeUpdated(uint256 indexed thresholdStake)",
+      "function acceptOwnership()",
+      "function addPermissionedOperators(address[] _operators)",
+      "function addStrategy(address _strategy, uint8 quorumNumber, uint256 index)",
+      "function aggregator() view returns (address)",
+      "function allowRegistrations() view returns (bool)",
+      "function avsDirectory() view returns (address)",
+      "function clientToPolicy(address, string) view returns (bool)",
+      "function clientToPolicyID(address) view returns (string)",
+      "function delegationManager() view returns (address)",
+      "function deployPolicy(string _policyID, string _policy, uint256 _quorumThreshold)",
+      "function deployedPolicyIDs(uint256) view returns (string)",
+      "function deregisterOperatorFromAVS(address _operator)",
+      "function getDeployedPolicies() view returns (string[])",
+      "function getOperatorRestakedStrategies(address operator) view returns (address[])",
+      "function getRestakeableStrategies() view returns (address[])",
+      "function hashTaskSafe(tuple(string taskId, address msgSender, address target, uint256 value, bytes encodedSigAndArgs, string policyID, uint32 quorumThresholdCount, uint256 expireByTime) _task) view returns (bytes32)",
+      "function hashTaskWithExpiry(tuple(string taskId, address msgSender, address target, uint256 value, bytes encodedSigAndArgs, string policyID, uint32 quorumThresholdCount, uint256 expireByTime) _task) pure returns (bytes32)",
+      "function idToPolicy(string) view returns (string)",
+      "function idToSocialGraph(string) view returns (string)",
+      "function initialize(address _owner, address _aggregator, address _delegationManager, address _stakeRegistry, address _avsDirectory, uint256 _thresholdStake)",
+      "function operators(address) view returns (uint256 totalStake, uint8 status)",
+      "function overrideClientPolicyID(string _policyID, address _clientAddress)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function policyIdToThreshold(string) view returns (uint256)",
+      "function registerOperatorOverride(address _operator, address _operatorSigningKey)",
+      "function registerOperatorToAVS(address _operatorSigningKey, tuple(bytes signature, bytes32 salt, uint256 expiry) _operatorSignature)",
+      "function removePermissionedOperators(address[] _operators)",
+      "function removeStrategy(address _strategy)",
+      "function renounceOwnership()",
+      "function rotatePredicateSigningKey(address _oldSigningKey, address _newSigningKey)",
+      "function setAVSDirectory(address _avsDirectory)",
+      "function setAllowRegistrations(bool _allowRegistrations)",
+      "function setDelegationManager(address _delegationManager)",
+      "function setMetadataURI(string _metadataURI)",
+      "function setPolicy(string _policyID)",
+      "function setStakeRegistry(address _stakeRegistry)",
+      "function setThresholdStake(uint256 _thresholdStake)",
+      "function signingKeyToOperator(address) view returns (address)",
+      "function socialGraphIDs(uint256) view returns (string)",
+      "function spentTaskIds(string) view returns (bool)",
+      "function stakeRegistry() view returns (address)",
+      "function strategies(uint256) view returns (address)",
+      "function thresholdStake() view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function updateOperatorsForQuorum(address[][] operatorsPerQuorum, bytes quorumNumbers)",
+      "function validateSignatures(tuple(string taskId, address msgSender, address target, uint256 value, bytes encodedSigAndArgs, string policyID, uint32 quorumThresholdCount, uint256 expireByTime) _task, address[] signerAddresses, bytes[] signatures) returns (bool isVerified)"
     ],
     "eth:0xA3C2a579af4cF3853172058e5c76d273DC1542DD": [
       "constructor(address _singleton)"
@@ -1599,6 +1628,6 @@
     "intmax/Rollup": "0x9efdc4c4aebfdd09e6ab16141180d3f9fa8e1bfe833622003535a1d9b98836c6",
     "intmax/Withdrawal": "0x75b4c1362cc72d9da892fea60e4d80cb34235523f8074a5ba537671b9cd474c7"
   },
-  "usedBlockNumbers": { "ethereum": 23619727, "scroll": 23551926 },
-  "permissionsConfigHash": "0x9a240030134b12857a0ad3b1c1459da05f8a936a431230313e2252e94d582823"
+  "usedBlockNumbers": { "ethereum": 23839923, "scroll": 25145749 },
+  "permissionsConfigHash": "0x7e39f4d3ceb549cd0249f3f4190f76e5d102fcbc76491de255fe5f8966bbbe0e"
 }

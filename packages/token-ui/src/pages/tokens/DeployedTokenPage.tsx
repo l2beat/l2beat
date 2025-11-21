@@ -214,6 +214,7 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
         <ButtonWithSpinner
           variant="destructive"
           className="mt-2"
+          size="icon"
           onClick={() => {
             planMutate({
               type: 'DeleteDeployedTokenIntent',

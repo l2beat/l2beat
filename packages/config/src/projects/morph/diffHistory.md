@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xe7385c8babbd596bf15629ed62eda93b617a03e6
+
+# Diff at Thu, 20 Nov 2025 14:37:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4b9fb6935244c163272f55e2acbd987c21dfd4d2 block: 1763563909
+- current timestamp: 1763649405
+
+## Description
+
+add staker.
+
+## Watched changes
+
+```diff
+    contract L1Staking (eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7) {
+    +++ description: Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented).
+      values.getActiveStakers.3:
++        "eth:0xf0e11a8EA095Cc915f5a7e420928d396ed1Bb7e4"
+    }
+```
+
+Generated with discovered.json: 0xca5580805eeb3eab63c083b3804769c66b1c4819
+
+# Diff at Wed, 19 Nov 2025 14:53:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c2740481ca5c9bb2be3283052c4a68b2d735c71b block: 1760973938
+- current timestamp: 1763563909
+
+## Description
+
+stakers removed.
+
+## Watched changes
+
+```diff
+    contract L1Staking (eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7) {
+    +++ description: Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented).
+      values.deleteList.0:
+-        "eth:0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65"
+      values.deleteList.1:
+-        "eth:0xf834ffbeb6bB3F4841afc6b5FB40B94cd580fa23"
+      values.deleteList.2:
+-        "eth:0x61F2945d4bc9E40B66a6376d1094a50438f613e2"
+      values.deleteList.3:
+-        "eth:0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7"
+    }
+```
+
 Generated with discovered.json: 0xe8a0de42ecea568478643af5de21834d1b89290c
 
 # Diff at Mon, 20 Oct 2025 15:26:52 GMT:

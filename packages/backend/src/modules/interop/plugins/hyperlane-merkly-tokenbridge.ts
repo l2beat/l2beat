@@ -59,7 +59,7 @@ export class HyperlaneMerklyTokenBridgePlugin implements InteropPlugin {
 
   capture(input: LogToCapture) {
     const network = MERKLY_TOKENBRIDGE_NETWORKS.find(
-      (n) => n.chain === input.ctx.chain,
+      (n) => n.chain === input.chain,
     )
     if (!network) return
 
@@ -77,7 +77,7 @@ export class HyperlaneMerklyTokenBridgePlugin implements InteropPlugin {
       )
 
       return [
-        HwrTransferSentMerkly.create(input.ctx, {
+        HwrTransferSentMerkly.create(input, {
           messageId,
           $dstChain,
           destination: Number(sentTransferRemote.destination),

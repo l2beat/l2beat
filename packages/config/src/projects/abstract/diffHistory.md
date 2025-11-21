@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x96a6a301eadd93003cfcff11e51c8b1850962089
+
+# Diff at Wed, 19 Nov 2025 10:28:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c2740481ca5c9bb2be3283052c4a68b2d735c71b block: 1761640428
+- current timestamp: 1763546038
+
+## Description
+
+config: remove global accesscontrol from template in favor of the chain specific accesscontrol.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761640428 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.accessControl:
+-        {"eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9":{"PRECOMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x14F19299476664665eDa17DBb7dA7e62E3253aa8","eth:0x7d95f0B9D3383D58E39a75a67760aA2153D355A2"]},"COMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x14F19299476664665eDa17DBb7dA7e62E3253aa8","eth:0x7d95f0B9D3383D58E39a75a67760aA2153D355A2"]},"REVERTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x14F19299476664665eDa17DBb7dA7e62E3253aa8","eth:0x7d95f0B9D3383D58E39a75a67760aA2153D355A2"]},"PROVER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x14F19299476664665eDa17DBb7dA7e62E3253aa8","eth:0x7d95f0B9D3383D58E39a75a67760aA2153D355A2"]},"EXECUTOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x14F19299476664665eDa17DBb7dA7e62E3253aa8","eth:0x7d95f0B9D3383D58E39a75a67760aA2153D355A2"]}},"eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9":{"PRECOMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807","eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"]},"COMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807","eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"]},"REVERTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807","eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"]},"PROVER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807","eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"]},"EXECUTOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807","eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"]}},"eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3":{"PRECOMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA","eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"]},"COMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA","eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"]},"REVERTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA","eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"]},"PROVER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA","eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"]},"EXECUTOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA","eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"]}}}
+    }
+```
+
 Generated with discovered.json: 0x6033fb915b8de4d9ad10909e3a167887cca3e1e2
 
 # Diff at Tue, 04 Nov 2025 11:32:16 GMT:

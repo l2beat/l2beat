@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Central staking hub. Validators (attesters) deposit stake here to register. It manages delegation of voting power and tracks which rollup instance validators are securing.",
+  "ignoreMethods": ["getLatestRollupAt"],
+  "ignoreInWatchMode": ["totalSupply"]
+}

@@ -1447,30 +1447,6 @@
           ]
         ],
         "$upgradeCount": 1,
-        "accessControl": {
-          "gateway:0xCE7CBd23193d029410b40e0fD8a79a5121f9250C": {
-            "PRECOMMITTER_ROLE": {
-              "adminRole": "DEFAULT_ADMIN_ROLE",
-              "members": ["gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"]
-            },
-            "COMMITTER_ROLE": {
-              "adminRole": "DEFAULT_ADMIN_ROLE",
-              "members": ["gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"]
-            },
-            "REVERTER_ROLE": {
-              "adminRole": "DEFAULT_ADMIN_ROLE",
-              "members": ["gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"]
-            },
-            "PROVER_ROLE": {
-              "adminRole": "DEFAULT_ADMIN_ROLE",
-              "members": ["gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"]
-            },
-            "EXECUTOR_ROLE": {
-              "adminRole": "DEFAULT_ADMIN_ROLE",
-              "members": ["gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"]
-            }
-          }
-        },
         "BRIDGE_HUB": "gateway:0x0000000000000000000000000000000000010002",
         "COMMITTER_ROLE": "0x0b60b5d7f7e737e4561eecda7c6a01e19e626c495c26e6f45e5b255f76a20106",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -2769,7 +2745,7 @@
     "shared-zk-stack/RelayedSLDAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/RollupDAManager": "0xb3064b9a4b6b31c69ab9bb1337849fe653a6264b962bfb9ff611716631669310",
     "shared-zk-stack/ServerNotifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "shared-zk-stack/ValidatorTimelock_post29": "0x6b83daae3459d63aeff3b894c47d96c0190d2aaccc58fd6243a417aa7e5ac3a3"
+    "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
   "usedBlockNumbers": { "ethereum": 23746323, "gateway": 87463 },
   "permissionsConfigHash": "0x086649429f79cd0e85a7bed5d80cd72309e980baf193ca9622c427008c52b550"

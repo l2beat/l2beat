@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Core rollup logic contract. It processes block proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.",
+  "ignoreMethods": [
+    "canPruneAtTime",
+    "archiveAt",
+    "getCollectiveProverRewardsForEpoch",
+    "getEntryQueueAt",
+    "getEpochAt",
+    "getEpochAtSlot",
+    "getFeeHeader",
+    "getTimestampForSlot",
+    "status",
+    "getAttesterAtIndex",
+    "getBlock",
+    "getBlobCommitmentsHash"
+  ],
+  "ignoreInWatchMode": [
+    "archive",
+    "getActiveAttesterCount",
+    "getCurrentBlobCommitmentsHash",
+    "getCurrentEpoch",
+    "getCurrentSampleSeed",
+    "getCurrentSlot",
+    "getEntryQueueLength",
+    "getNextFlushableEpoch",
+    "getPendingBlockNumber",
+    "getProvenBlockNumber",
+    "getTips"
+  ]
+}

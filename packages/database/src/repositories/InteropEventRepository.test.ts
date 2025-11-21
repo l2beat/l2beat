@@ -431,6 +431,7 @@ function event(
     plugin,
     eventId,
     type,
+    direction: undefined,
     expiresAt,
     timestamp,
     chain: 'ethereum',
