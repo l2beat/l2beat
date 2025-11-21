@@ -20,7 +20,7 @@ export class HttpClient {
   }
 
   async fetchRaw(url: string, init: RequestInit & { timeout?: number }) {
-    return await fetch(url, {
+    return fetch(url, {
       ...init,
       timeout: init.timeout ?? 10_000,
     })
