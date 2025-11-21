@@ -97,6 +97,7 @@ export const scroll: ScalingProject = {
       ],
       other: [
         'https://rollup.codes/scroll',
+        'https://forum.scroll.io',
         'https://growthepie.com/chains/scroll',
       ],
     },
