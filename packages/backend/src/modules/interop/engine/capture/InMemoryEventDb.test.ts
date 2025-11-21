@@ -41,7 +41,7 @@ describe(InMemoryEventDb.name, () => {
     ]
     events.forEach((e) => db.addEvent(e))
 
-    db.removeEvents(new Set([events[0].eventId]))
+    db.removeEvents([events[0]])
 
     expect(db.find(EventA, { a: 'one' })).toEqual(undefined)
   })

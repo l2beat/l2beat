@@ -33,14 +33,15 @@ export class InteropEventStore implements InteropEventDb {
     matched,
     unsupported,
   }: {
-    matched: Set<string>
-    unsupported: Set<string>
+    matched: InteropEvent[]
+    unsupported: InteropEvent[]
   }): Promise<void> {
-    const all = new Set([...matched, ...unsupported])
-    this.eventDb.removeEvents(all)
+    this.eventDb.removeEvents([...matched, ...unsupported])
     await this.db.transaction(async () => {
-      await this.db.interopEvent.updateMatched(Array.from(matched))
-      await this.db.interopEvent.updateUnsupported(Array.from(unsupported))
+      await this.db.interopEvent.updateMatched(matched.map((e) => e.eventId))
+      await this.db.interopEvent.updateUnsupported(
+        unsupported.map((e) => e.eventId),
+      )
     })
   }
 
