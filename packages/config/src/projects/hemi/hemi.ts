@@ -31,6 +31,8 @@ export const hemi: ScalingProject = opStackL2({
         'https://discord.gg/hemixyz',
         'https://linkedin.com/company/hemi-labs',
         'https://youtube.com/@HemiLabs',
+        'https://t.me/hemi_news',
+        'https://tiktok.com/@hemi_xyz',
       ],
     },
   },
