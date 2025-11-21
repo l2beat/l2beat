@@ -21,7 +21,7 @@ export type ActivityLatestUopsData = Record<
 
 export async function getActivityLatestUops(
   projects: Project[],
-  range?: { type: 'custom'; from: UnixTime; to: UnixTime },
+  range?: [UnixTime | null, UnixTime],
 ): Promise<ActivityLatestUopsData> {
   if (env.MOCK) {
     return getMockActivityLatestUopsData(projects)

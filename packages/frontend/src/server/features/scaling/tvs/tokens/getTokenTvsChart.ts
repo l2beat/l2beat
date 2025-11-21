@@ -4,10 +4,6 @@ import { v as z } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
-import {
-  getBucketValuesRange,
-  getTimestampedValuesRange,
-} from '~/utils/range/range'
 import { isTvsSynced } from '../utils/isTvsSynced'
 import { rangeToResolution, TvsChartRange } from '../utils/range'
 
@@ -45,14 +41,10 @@ export async function getTokenTvsChart({
   const db = getDb()
   const resolution = rangeToResolution(range)
 
-  const [from, to] = getTimestampedValuesRange(range, resolution, {
-    offset: -UnixTime.HOUR - 15 * UnixTime.MINUTE,
-  })
-
   const tokenValues = await db.tvsTokenValue.getByTokenIdInTimeRange(
     token.tokenId,
-    from,
-    to,
+    range[0],
+    range[1],
   )
 
   if (tokenValues.length === 0) {
@@ -75,7 +67,7 @@ export async function getTokenTvsChart({
   const maxTimestamp = tokenValues.at(-1)?.timestamp
   assert(maxTimestamp, 'maxTimestamp is undefined')
 
-  const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : to
+  const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : range[1]
 
   const timestamps = generateTimestamps(
     [minTimestamp, adjustedTo],
@@ -101,15 +93,14 @@ function getMockTokenTvsChartData(
   params: TokenTvsChartParams,
 ): TokenTvsChartData {
   const resolution = rangeToResolution(params.range)
-  const [from, to] = getBucketValuesRange(params.range, 'hourly')
   const adjustedRange: [UnixTime, UnixTime] = [
-    from ?? to - 730 * UnixTime.DAY,
-    to,
+    params.range[0] ?? params.range[1] - 730 * UnixTime.DAY,
+    params.range[1],
   ]
   const timestamps = generateTimestamps(adjustedRange, resolution)
 
   return {
     chart: timestamps.map((timestamp) => [timestamp, 50000]),
-    syncedUntil: to,
+    syncedUntil: params.range[1],
   }
 }

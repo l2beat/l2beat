@@ -40,7 +40,7 @@ export async function getMonthlyUpdateEntry(
 
   const [tvs, activity] = await Promise.all([
     get7dTvsBreakdown({ type: 'layer2', customTarget: to }),
-    getActivityLatestUops(allScalingProjects, { type: 'custom', from, to }),
+    getActivityLatestUops(allScalingProjects, [from, to]),
   ])
 
   const [ecosystemsUpdatesEntries, daUpdatesEntries] = await Promise.all([

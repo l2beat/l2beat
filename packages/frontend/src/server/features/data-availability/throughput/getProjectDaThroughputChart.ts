@@ -8,11 +8,7 @@ import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { isThroughputSynced } from './isThroughputSynced'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
-import {
-  DaThroughputTimeRange,
-  getThroughputRange,
-  rangeToResolution,
-} from './utils/range'
+import { DaThroughputTimeRange, rangeToResolution } from './utils/range'
 
 type ProjectDaThroughputChart = {
   chart: ProjectDaThroughputChartPoint[]
@@ -60,30 +56,28 @@ export async function getProjectDaThroughputChart(
   }
 }
 
-export async function getProjectDaThroughputChartData(
-  params: ProjectDaThroughputChartParams,
-) {
+export async function getProjectDaThroughputChartData({
+  range,
+  projectId,
+  includeScalingOnly,
+}: ProjectDaThroughputChartParams) {
   const db = getDb()
-  const resolution = rangeToResolution(params.range)
-  const range = getThroughputRange(params.range)
+  const resolution = rangeToResolution(range)
 
   const daLayer = await ps.getProject({
-    id: params.projectId as ProjectId,
+    id: projectId as ProjectId,
     select: ['daLayer'],
   })
   const sovereignProjectsIds =
     daLayer?.daLayer.sovereignProjectsTrackingConfig?.map((c) => c.projectId)
 
-  const throughput = await (params.includeScalingOnly
+  const throughput = await (includeScalingOnly
     ? db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
-        [params.projectId],
+        [projectId],
         range,
         sovereignProjectsIds,
       )
-    : db.dataAvailability.getByProjectIdsAndTimeRange(
-        [params.projectId],
-        range,
-      ))
+    : db.dataAvailability.getByProjectIdsAndTimeRange([projectId], range))
 
   if (throughput.length === 0) {
     return undefined
@@ -98,14 +92,14 @@ export async function getProjectDaThroughputChartData(
   )
 
   const expectedTo = getThroughputExpectedTimestamp({
-    to: params.range.to,
+    to: range[1],
     resolution,
   })
 
   const adjustedTo = isThroughputSynced({
     syncedUntil,
     pastDaySynced: false,
-    to: params.range.to,
+    to: range[1],
   })
     ? maxTimestamp
     : expectedTo
@@ -169,7 +163,7 @@ function getMockProjectDaThroughputChart({
 }: ProjectDaThroughputChartParams): ProjectDaThroughputChart {
   const days = rangeToDays(range) ?? 730
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
-  const from = range.from ?? to - days * UnixTime.DAY
+  const from = range[0] ?? to - days * UnixTime.DAY
 
   if (!['ethereum', 'celestia', 'avail', 'eigenda'].includes(projectId)) {
     return {

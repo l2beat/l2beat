@@ -10,7 +10,6 @@ import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
-import { getBucketValuesRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { LivenessChartTimeRange, rangeToResolution } from './utils/chartRange'
 import { isLivenessSynced } from './utils/isLivenessSynced'
@@ -47,9 +46,6 @@ export async function getProjectLivenessChart({
   }
   const db = getDb()
   const resolution = rangeToResolution(range)
-  const [from, to] = getBucketValuesRange(range, resolution, {
-    offset: -UnixTime.HOUR - 15 * UnixTime.MINUTE,
-  })
 
   const [livenessProject] = await ps.getProjects({
     ids: [ProjectId(projectId)],
@@ -64,12 +60,12 @@ export async function getProjectLivenessChart({
     db.aggregatedLiveness.getByProjectAndSubtypeInTimeRange(
       ProjectId(projectId),
       effectiveSubtype,
-      [from, to],
+      range,
     ),
-    db.aggregatedLiveness.getAvgByProjectAndTimeRange(ProjectId(projectId), [
-      from,
-      to,
-    ]),
+    db.aggregatedLiveness.getAvgByProjectAndTimeRange(
+      ProjectId(projectId),
+      range,
+    ),
   ])
 
   const stats = Object.fromEntries(
@@ -109,7 +105,7 @@ export async function getProjectLivenessChart({
     ...Object.keys(groupedByResolution).map(Number),
   )
 
-  const adjustedTo = isLivenessSynced(syncedUntil) ? lastTimestamp : to
+  const adjustedTo = isLivenessSynced(syncedUntil) ? lastTimestamp : range[1]
 
   const timestamps = generateTimestamps(
     [startTimestamp, adjustedTo],
@@ -154,10 +150,9 @@ function calculateLivenessStats(entries: AggregatedLivenessRecord[]) {
 function getMockProjectLivenessChartData({
   range,
 }: ProjectLivenessChartParams): ProjectLivenessChartData {
-  const [from, to] = getBucketValuesRange(range, 'daily')
   const adjustedRange: [UnixTime, UnixTime] = [
-    from ?? UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
-    to,
+    range[0] ?? UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
+    range[1],
   ]
   const timestamps = generateTimestamps(adjustedRange, 'daily')
 

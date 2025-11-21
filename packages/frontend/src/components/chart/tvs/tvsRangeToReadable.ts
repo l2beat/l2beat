@@ -3,10 +3,10 @@ import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 
 export function tvsRangeToReadable(range: TvsChartRange) {
-  if (range.from === null) {
+  if (range[0] === null) {
     return 'All time'
   }
-  const days = rangeToDays({ from: range.from, to: range.to })
+  const days = rangeToDays(range)
   if (days === null) {
     return 'All time'
   }

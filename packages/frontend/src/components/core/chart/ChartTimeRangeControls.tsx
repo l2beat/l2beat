@@ -36,10 +36,7 @@ export type ChartTimeRangeOption =
   | '1y'
   | 'max'
 
-export type ChartTimeRangeValue = {
-  from: UnixTime | null
-  to: UnixTime
-}
+export type ChartTimeRangeValue = [UnixTime | null, UnixTime]
 
 export function ChartTimeRangeControls({
   name,
@@ -50,8 +47,8 @@ export function ChartTimeRangeControls({
   offset = 0,
 }: Props) {
   const [internalValue, setInternalValue] = useState<DateRange | undefined>({
-    from: value.from ? UnixTime.toDate(value.from) : UnixTime.toDate(0),
-    to: UnixTime.toDate(value.to),
+    from: value[0] ? UnixTime.toDate(value[0]) : UnixTime.toDate(0),
+    to: UnixTime.toDate(value[1]),
   })
   const isClient = useIsClient()
   const breakpoint = useBreakpoint()
@@ -75,16 +72,16 @@ export function ChartTimeRangeControls({
     setInternalValue(dateRange)
 
     if (dateRange?.from && dateRange?.to) {
-      setValue({
-        from: UnixTime.fromDate(dateRange.from),
-        to: Math.min(
+      setValue([
+        UnixTime.fromDate(dateRange.from),
+        Math.min(
           UnixTime.toStartOf(UnixTime.now(), 'hour'),
           UnixTime.fromDate(dateRange.to) +
             23 * UnixTime.HOUR +
             59 * UnixTime.MINUTE +
             59,
         ),
-      })
+      ])
     }
   }
 
@@ -134,8 +131,8 @@ export function ChartTimeRangeControls({
               const range = optionToRange(option.value, { offset })
               setValue(range)
               setInternalValue({
-                from: UnixTime.toDate(range.from ?? 0),
-                to: UnixTime.toDate(range.to),
+                from: UnixTime.toDate(range[0] ?? 0),
+                to: UnixTime.toDate(range[1]),
               })
             }}
             type="button"
@@ -172,7 +169,7 @@ export function ChartTimeRangeControls({
       <PopoverContent className="!p-0 !bg-surface-primary">
         <Calendar
           mode="range"
-          defaultMonth={UnixTime.toDate(value.to)}
+          defaultMonth={UnixTime.toDate(value[1])}
           selected={internalValue}
           min={1}
           timeZone="UTC"
@@ -190,7 +187,7 @@ export function ChartTimeRangeControls({
 }
 
 function rangeToOption(
-  { from, to }: { from: UnixTime | null; to: UnixTime },
+  [from, to]: ChartTimeRangeValue,
   options: { value: ChartTimeRangeOption }[],
   offset: UnixTime,
 ): ChartTimeRangeOption | 'custom' {
@@ -201,7 +198,7 @@ function rangeToOption(
     return 'custom'
   }
   if (from === null) return 'max'
-  const days = rangeToDays({ from, to })
+  const days = rangeToDays([from, to])
   const option = options.find((option) => optionToDays(option.value) === days)
   if (option) return option.value
 
@@ -235,18 +232,17 @@ function optionToDays(option: ChartTimeRangeOption): number | null {
 export function optionToRange(
   option: ChartTimeRangeOption,
   opts?: { offset?: UnixTime },
-) {
+): ChartTimeRangeValue {
   // Default offset is 75 minutes, cuz this is more or less how much time we need to wait for the data to be fully synced.
   const offset = opts?.offset ?? -1 * (UnixTime.HOUR + 15 * UnixTime.MINUTE)
   const days = optionToDays(option)
 
-  return {
-    from:
-      days === null
-        ? null
-        : UnixTime.toStartOf(UnixTime.now(), 'hour') -
-          days * UnixTime.DAY +
-          offset,
-    to: UnixTime.toStartOf(UnixTime.now(), 'hour') + offset,
-  }
+  return [
+    days === null
+      ? null
+      : UnixTime.toStartOf(UnixTime.now(), 'hour') -
+        days * UnixTime.DAY +
+        offset,
+    UnixTime.toStartOf(UnixTime.now(), 'hour') + offset,
+  ]
 }

@@ -1,10 +1,10 @@
 import { v } from '@l2beat/validate'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 
-export const LivenessChartTimeRange = v.object({
-  from: v.union([v.number(), v.null()]),
-  to: v.number(),
-})
+export const LivenessChartTimeRange = v.tuple([
+  v.union([v.number(), v.null()]),
+  v.number(),
+])
 export type LivenessChartTimeRange = v.infer<typeof LivenessChartTimeRange>
 
 export type LivenessChartResolution = 'hourly' | 'sixHourly' | 'daily'

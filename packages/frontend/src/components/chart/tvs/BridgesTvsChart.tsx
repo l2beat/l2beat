@@ -91,7 +91,7 @@ function BridgesChartHeader({
   timeRange: [number, number] | undefined
 }) {
   const changeOverTime =
-    range.from === null ? (
+    range[0] === null ? (
       INFINITY
     ) : change ? (
       <PercentChange value={change} textClassName="lg:w-[63px] lg:text-base" />

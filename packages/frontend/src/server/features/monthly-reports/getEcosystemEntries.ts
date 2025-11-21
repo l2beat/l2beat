@@ -95,14 +95,14 @@ export async function getEcosystemMonthlyUpdateEntries(
         type: 'projects',
         projectIds: projects.map((p) => p.id),
       },
-      { type: 'custom', from, to },
+      [from, to],
     ),
     getActivityLeaderboard(
       {
         type: 'projects',
         projectIds: projects.map((p) => p.id),
       },
-      { type: 'custom', from, to },
+      [from, to],
     ),
   ])
 

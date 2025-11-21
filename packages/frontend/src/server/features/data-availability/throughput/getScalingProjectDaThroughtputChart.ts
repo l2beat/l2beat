@@ -10,7 +10,7 @@ import { generateTimestamps } from '../../utils/generateTimestamps'
 import { isThroughputSynced } from './isThroughputSynced'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
-import { getThroughputRange, rangeToResolution } from './utils/range'
+import { rangeToResolution } from './utils/range'
 
 export type ScalingProjectDaThroughputChart = {
   chart: ScalingProjectDaThroughputChartPoint[]
@@ -37,20 +37,22 @@ export type ScalingProjectDaThroughputChartParams = v.infer<
   typeof ScalingProjectDaThroughputChartParams
 >
 
-export async function getScalingProjectDaThroughputChart(
-  params: ScalingProjectDaThroughputChartParams,
-): Promise<ScalingProjectDaThroughputChart | undefined> {
+export async function getScalingProjectDaThroughputChart({
+  projectId,
+  range,
+}: ScalingProjectDaThroughputChartParams): Promise<
+  ScalingProjectDaThroughputChart | undefined
+> {
   if (env.MOCK) {
-    return getMockScalingProjectDaThroughputChart(params)
+    return getMockScalingProjectDaThroughputChart({ range, projectId })
   }
 
   const db = getDb()
-  const resolution = rangeToResolution(params.range)
+  const resolution = rangeToResolution(range)
 
-  const range = getThroughputRange(params.range)
   const [throughput, activityRecords] = await Promise.all([
-    db.dataAvailability.getByProjectIdsAndTimeRange([params.projectId], range),
-    getActivityForProjectAndRange(params.projectId, params.range),
+    db.dataAvailability.getByProjectIdsAndTimeRange([projectId], range),
+    getActivityForProjectAndRange(projectId, range),
   ])
 
   if (throughput.length === 0) {
@@ -200,7 +202,7 @@ function getMockScalingProjectDaThroughputChart({
 }: ScalingProjectDaThroughputChartParams): ScalingProjectDaThroughputChart {
   const days = rangeToDays(range) ?? 730
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
-  const from = range.from ?? to - days * UnixTime.DAY
+  const from = range[0] ?? to - days * UnixTime.DAY
 
   const timestamps = generateTimestamps([from, to], 'daily')
 

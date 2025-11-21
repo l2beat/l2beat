@@ -94,8 +94,8 @@ export function DaPercentageThroughputChart({
 
   const syncedUntil = Math.max(...Object.values(syncStatus ?? {}))
 
-  const ChartElement = range.from === null ? Area : Bar
-  const ChartWrapper = range.from === null ? AreaChart : BarChart
+  const ChartElement = range[0] === null ? Area : Bar
+  const ChartWrapper = range[0] === null ? AreaChart : BarChart
 
   return (
     <ChartContainer

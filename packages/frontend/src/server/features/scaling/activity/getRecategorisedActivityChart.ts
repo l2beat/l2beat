@@ -1,7 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getBucketValuesRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
 import { getActivityProjects } from './utils/getActivityProjects'
@@ -151,10 +150,9 @@ export async function getRecategorisedActivityChart(
 
 function getMockRecategorisedActivityChart(
   _: ActivityProjectFilter,
-  timeRange: ActivityTimeRange,
+  range: ActivityTimeRange,
 ): RecategorisedActivityChartData {
-  const [from, to] = getBucketValuesRange(timeRange, 'daily')
-  const adjustedRange: [UnixTime, UnixTime] = [from ?? 1590883200, to]
+  const adjustedRange: [UnixTime, UnixTime] = [range[0] ?? 1590883200, range[1]]
   const timestamps = generateTimestamps(adjustedRange, 'daily')
 
   return {

@@ -2,7 +2,6 @@ import { assert, ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getBucketValuesRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { getActivitySyncState } from '../../utils/syncState'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
@@ -206,11 +205,7 @@ function getActivityChartStats(
 function getMockActivityChart({
   range,
 }: ActivityChartParams): ActivityChartData {
-  const [from, to] = getBucketValuesRange(
-    { from: range.from, to: range.to },
-    'daily',
-  )
-  const adjustedRange: [UnixTime, UnixTime] = [from ?? 1590883200, to]
+  const adjustedRange: [UnixTime, UnixTime] = [range[0] ?? 1590883200, range[1]]
   const timestamps = generateTimestamps(adjustedRange, 'daily')
 
   return {

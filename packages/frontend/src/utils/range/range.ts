@@ -3,26 +3,14 @@ import type { UnixTime } from '@l2beat/shared-pure'
 export type TimeRange = '1d' | '7d' | '30d' | '90d' | '180d' | '1y' | 'max'
 type Resolution = 'hourly' | 'daily' | 'sixHourly'
 
-export function getTimestampedValuesRange(
-  range: { from: number | null; to: number },
-  resolution: Resolution,
-  opts?: {
-    offset?: UnixTime
-  },
-): [UnixTime | null, UnixTime] {
-  const [from, to] = getBucketValuesRange(range, resolution, opts)
-
-  return [from, to]
-}
-
 export function getBucketValuesRange(
-  range: { from: number | null; to: number },
+  range: [number | null, number],
   resolution: Resolution,
   opts?: {
     offset?: UnixTime
   },
 ): [UnixTime | null, UnixTime] {
-  const { from, to } = range
+  const [from, to] = Array.isArray(range) ? range : [range.from, range.to]
   return [from, to]
 
   // const days = rangeToDays(range)

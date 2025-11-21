@@ -25,7 +25,7 @@ type ActivityLeaderboardProjectFilter = v.infer<
 
 export async function getActivityLeaderboard(
   props: ActivityLeaderboardProjectFilter,
-  range: { type: 'custom'; from: UnixTime; to: UnixTime },
+  range: [UnixTime | null, UnixTime],
 ): Promise<ActivityLeaderboard> {
   if (env.MOCK) {
     return getMockActivityLeaderboardData(props.projectIds)
@@ -34,7 +34,7 @@ export async function getActivityLeaderboard(
   const db = getDb()
   const records = await db.activity.getByProjectsAndTimeRange(
     props.projectIds as ProjectId[],
-    [range.from, range.to],
+    range,
   )
   const grouped = groupBy(records, (r) => r.projectId)
 

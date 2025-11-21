@@ -16,5 +16,5 @@ export async function getFullySyncedActivityRange(
   const target = await db.syncMetadata.getMaxTargetForFeature('activity')
   const end = getActivityAdjustedTimestamp(target)
 
-  return [range.from, Math.min(range.to, end)]
+  return [range[0], Math.min(range[1], end)]
 }

@@ -5,19 +5,17 @@ import { ps } from '~/server/projects'
 import { getTrackedTxsProject } from '../../utils/getTrackedTxsProjects'
 import type { LatestCostsProjectResponse } from './types'
 import type { CostsTimeRange } from './utils/range'
-import { getCostsRange } from './utils/range'
 import { sumCostValues } from './utils/sumCostValues'
 
 export async function getCostsForProject(
   projectId: string,
-  timeRange: CostsTimeRange,
+  range: CostsTimeRange,
 ): Promise<LatestCostsProjectResponse | undefined> {
   if (env.MOCK) {
     return getMockedCostsForProject()
   }
 
   const db = getDb()
-  const costsRange = getCostsRange(timeRange)
 
   const project = await ps.getProject({
     id: ProjectId(projectId),
@@ -26,7 +24,7 @@ export async function getCostsForProject(
   if (!project) return undefined
   const [configurations, records] = await Promise.all([
     db.indexerConfiguration.getByIndexerId('tracked_txs_indexer'),
-    db.aggregatedL2Cost.getByProjectAndTimeRange(project.id, costsRange),
+    db.aggregatedL2Cost.getByProjectAndTimeRange(project.id, range),
   ])
 
   const trackedTxsProject = getTrackedTxsProject(
@@ -37,7 +35,7 @@ export async function getCostsForProject(
   if (!trackedTxsProject || records.length === 0) return undefined
 
   const timestamps = records.map((r) => r.timestamp)
-  const range: [UnixTime, UnixTime] = [
+  const dataRange: [UnixTime, UnixTime] = [
     Math.min(...timestamps),
     Math.max(...timestamps),
   ]
@@ -45,7 +43,7 @@ export async function getCostsForProject(
   return {
     ...sumCostValues(records),
     syncedUntil: trackedTxsProject.syncedUntil,
-    range,
+    range: dataRange,
   }
 }
 

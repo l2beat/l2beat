@@ -35,10 +35,7 @@ export function MonthlyUpdateTvsChart({
 }) {
   const id = useId()
   const { data, isLoading } = api.tvs.chart.useQuery({
-    range: {
-      from,
-      to,
-    },
+    range: [from, to],
     excludeAssociatedTokens: false,
     includeRwaRestrictedTokens: false,
     filter: {

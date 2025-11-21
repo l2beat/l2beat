@@ -12,7 +12,6 @@ import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromCo
 import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import type { ProjectDaThroughputChartPoint } from '~/server/features/data-availability/throughput/getProjectDaThroughputChartData'
 import {
-  type DaThroughputTimeRange,
   DaThroughputTimeRangeValues,
   rangeToResolution,
 } from '~/server/features/data-availability/throughput/utils/range'
@@ -36,7 +35,7 @@ interface Props {
 function rangeToDaThroughputRangeForDisplay(
   range: ChartTimeRangeValue,
 ): '7d' | '30d' | '90d' | '180d' | '1y' | 'max' {
-  if (range.from === null) {
+  if (range[0] === null) {
     return 'max'
   }
   const days = rangeToDays(range)
@@ -89,10 +88,7 @@ export function ThroughputSectionChart({
     [data],
   )
 
-  const resolution = useMemo(
-    () => rangeToResolution(range as DaThroughputTimeRange),
-    [range],
-  )
+  const resolution = useMemo(() => rangeToResolution(range), [range])
 
   return (
     <div>

@@ -18,7 +18,7 @@ export function ProjectCostsChartStats({
   data: ProjectCostsChartResponse | undefined
 }) {
   const days = rangeToDays(range)
-  const isMax = range.from === null
+  const isMax = range[0] === null
   return (
     <ChartStats className="mt-4 lg:grid-cols-3">
       <ChartStatsItem

@@ -2,7 +2,7 @@ import { rangeToDays } from '~/utils/range/rangeToDays'
 
 export function rangeToLabel(
   range:
-    | { from: number | null; to: number }
+    | [number | null, number]
     | '1d'
     | '7d'
     | '30d'
@@ -31,8 +31,8 @@ export function rangeToLabel(
     }
   }
 
-  // Handle new object format
-  if (range.from === null) {
+  // Handle tuple or object format
+  if (range[0] === null) {
     return 'All time'
   }
 
@@ -47,6 +47,7 @@ export function rangeToLabel(
   if (days === 90) return '90 days'
   if (days === 180) return '180 days'
   if (days === 365) return '1 year'
+  // TODO (ranges refactor)
   if (days < 7) return '7 days'
   if (days < 30) return '30 days'
   if (days < 90) return '90 days'
