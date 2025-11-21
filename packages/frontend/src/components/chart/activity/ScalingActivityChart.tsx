@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
@@ -7,7 +7,6 @@ import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromCo
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useIsClient } from '~/hooks/useIsClient'
-import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { useActivityTimeRangeContext } from '~/pages/scaling/activity/components/ActivityTimeRangeContext'
 import { ActivityTimeRangeControls } from '~/pages/scaling/activity/components/ActivityTimeRangeControls'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/getScalingActivityEntries'
@@ -30,10 +29,7 @@ interface Props {
 
 export function ScalingActivityChart({ milestones, entries }: Props) {
   const { timeRange, setTimeRange } = useActivityTimeRangeContext()
-  const [scale, setScale] = useLocalStorage<ChartScale>(
-    'scaling-activity-scale',
-    'lin',
-  )
+  const [scale, setScale] = useState<ChartScale>('lin')
   const { dataKeys, toggleDataKey } = useChartDataKeys(
     RECATEGORISED_ACTIVITY_CHART_META,
   )

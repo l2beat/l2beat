@@ -69,7 +69,7 @@ export function ChartTimeRangeControls({
       />
     )
   }
-  const selectedOption = rangeToOption(value, options)
+  const selectedOption = rangeToOption(value, options, offset)
 
   function onDateRangeChange(dateRange: DateRange | undefined) {
     setInternalValue(dateRange)
@@ -93,7 +93,9 @@ export function ChartTimeRangeControls({
       <Select
         value={selectedOption}
         onValueChange={(option) => {
-          const range = optionToRange(option as ChartTimeRangeOption)
+          const range = optionToRange(option as ChartTimeRangeOption, {
+            offset,
+          })
           setValue(range)
         }}
       >
@@ -129,7 +131,7 @@ export function ChartTimeRangeControls({
           <button
             key={option.value}
             onClick={() => {
-              const range = optionToRange(option.value)
+              const range = optionToRange(option.value, { offset })
               setValue(range)
               setInternalValue({
                 from: UnixTime.toDate(range.from ?? 0),
@@ -190,7 +192,14 @@ export function ChartTimeRangeControls({
 function rangeToOption(
   { from, to }: { from: UnixTime | null; to: UnixTime },
   options: { value: ChartTimeRangeOption }[],
+  offset: UnixTime,
 ): ChartTimeRangeOption | 'custom' {
+  if (
+    UnixTime.toStartOf(to, 'day') !==
+    UnixTime.toStartOf(UnixTime.now() + offset, 'day')
+  ) {
+    return 'custom'
+  }
   if (from === null) return 'max'
   const days = rangeToDays({ from, to })
   const option = options.find((option) => optionToDays(option.value) === days)
