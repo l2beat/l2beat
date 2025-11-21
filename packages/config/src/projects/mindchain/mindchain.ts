@@ -1,8 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
-import { upcomingL3 } from '../../templates/upcoming'
+import { underReviewL3 } from '../../templates/underReview'
 
-export const mindchain: ScalingProject = upcomingL3({
+export const mindchain: ScalingProject = underReviewL3({
   id: 'mindchain',
   capability: 'universal',
   addedAt: UnixTime(1738898515), // 2025-02-05T14:15:15Z
@@ -17,7 +17,8 @@ export const mindchain: ScalingProject = upcomingL3({
       websites: ['https://mindnetwork.xyz/'],
       documentation: ['https://docs.mindnetwork.xyz/minddocs'],
       repositories: ['https://github.com/mind-network'],
-      bridges: ['https://fhebridge.mindnetwork.xyz/connectWallct'],
+      explorers: ['https://explorer.mindnetwork.xyz/'],
+      bridges: ['https://agent.mindnetwork.xyz/bridge'],
       socialMedia: [
         'https://twitter.com/mindnetwork_xyz',
         'https://discord.com/invite/UYj94MJdGJ',
@@ -31,4 +32,5 @@ export const mindchain: ScalingProject = upcomingL3({
   proofSystem: {
     type: 'Optimistic',
   },
+  dataAvailability: undefined,
 })
