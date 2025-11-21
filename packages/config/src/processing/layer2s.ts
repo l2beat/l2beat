@@ -84,6 +84,7 @@ import { immutablex } from '../projects/immutablex/immutablex'
 import { immutablezkevm } from '../projects/immutablezkevm/immutablezkevm'
 import { ink } from '../projects/ink/ink'
 import { iotex } from '../projects/iotex/iotex'
+import { jaction } from '../projects/janction/janction'
 import { jovay } from '../projects/jovay/jovay'
 import { karak } from '../projects/karak/karak'
 import { katana } from '../projects/katana/katana'
@@ -315,6 +316,7 @@ export const layer2s: ScalingProject[] = [
   immutablezkevm,
   ink,
   iotex,
+  jaction,
   jovay,
   karak,
   katana,
