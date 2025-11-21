@@ -75,27 +75,15 @@ export function ChartTimeRangeControls({
     setInternalValue(dateRange)
 
     if (dateRange?.from && dateRange?.to) {
-      const now = UnixTime.now() + offset
-      const todayStart = UnixTime.toStartOf(now, 'day')
-
-      // Check if the selected dates are today
-      const fromDate = UnixTime.fromDate(dateRange.from)
-      const toDate = UnixTime.fromDate(dateRange.to)
-      const fromIsToday = UnixTime.toStartOf(fromDate, 'day') === todayStart
-      const toIsToday = UnixTime.toStartOf(toDate, 'day') === todayStart
-
-      // If the date is today, use current hour instead of midnight
-      // Otherwise, use start of day for from and end of day for to
-      const fromTimestamp = fromIsToday
-        ? UnixTime.toStartOf(now, 'hour')
-        : UnixTime.toStartOf(fromDate, 'day')
-      const toTimestamp = toIsToday
-        ? UnixTime.toStartOf(now, 'hour')
-        : UnixTime.toEndOf(toDate, 'day')
-
       setValue({
-        from: fromTimestamp,
-        to: toTimestamp,
+        from: UnixTime.fromDate(dateRange.from),
+        to: Math.min(
+          UnixTime.toStartOf(UnixTime.now(), 'hour'),
+          UnixTime.fromDate(dateRange.to) +
+            23 * UnixTime.HOUR +
+            59 * UnixTime.MINUTE +
+            59,
+        ),
       })
     }
   }
