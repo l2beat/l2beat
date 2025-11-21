@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { writeTemplateFile } from '../../../api/api'
 import { formatJson } from '../../../utils/formatJson'
 import { toggleInList } from '../../../utils/toggleInList'
-import { ContractConfigModel } from '../components/ConfigModel'
+import { ContractConfigModel } from '../models/ContractConfigModel'
 
 type Props = {
   project: string
@@ -49,6 +49,19 @@ export function useTemplateModel({ templateId, files }: Props) {
     saveModelContents(newModel)
   }
 
+  const setFieldSeverity = (
+    fieldName: string,
+    severity: 'HIGH' | 'LOW' | undefined,
+  ) => {
+    const newModel = templateModel.setFieldSeverity(fieldName, severity)
+    setTemplateModel(newModel)
+    saveModelContents(newModel)
+  }
+
+  const getFieldSeverity = (fieldName: string) => {
+    return templateModel.getFieldSeverity(fieldName)
+  }
+
   const saveMutation = useMutation({
     mutationFn: async (content?: string) => {
       if (!templateId) {
@@ -89,6 +102,8 @@ export function useTemplateModel({ templateId, files }: Props) {
     toggleIgnoreMethods,
     toggleIgnoreRelatives,
     toggleIgnoreInWatchMode,
+    setFieldSeverity,
+    getFieldSeverity,
 
     save: saveRaw,
 

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { updateConfigFile } from '../../../api/api'
 import { formatJson } from '../../../utils/formatJson'
 import { toggleInList } from '../../../utils/toggleInList'
-import { ConfigModel } from '../components/ConfigModel'
+import { ConfigModel } from '../models/ConfigModel'
 
 type Props = {
   project: string
@@ -45,6 +45,23 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     saveModelContents(newModel)
   }
 
+  const setFieldSeverity = (
+    fieldName: string,
+    severity: 'HIGH' | 'LOW' | undefined,
+  ) => {
+    const newModel = configModel.setFieldSeverity(
+      selectedAddress,
+      fieldName,
+      severity,
+    )
+    setConfigModel(newModel)
+    saveModelContents(newModel)
+  }
+
+  const getFieldSeverity = (fieldName: string) => {
+    return configModel.getFieldSeverity(selectedAddress, fieldName)
+  }
+
   const configString = useMemo(() => {
     return configModel.toString()
   }, [configModel])
@@ -82,6 +99,8 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     toggleIgnoreMethods,
     toggleIgnoreRelatives,
     toggleIgnoreInWatchMode,
+    setFieldSeverity,
+    getFieldSeverity,
 
     save: saveRaw,
 

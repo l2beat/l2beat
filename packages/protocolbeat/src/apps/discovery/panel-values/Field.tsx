@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import type { Field } from '../../../api/types'
 import { useConfigModels } from '../hooks/useConfigModels'
 import { FieldValueDisplay } from './FieldValueDisplay'
+import { FieldConfigDialog } from './field-config-dialog/FieldConfigDialog'
 
 export interface FieldDisplayProps {
   field: Field
@@ -30,6 +31,11 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
       isIgnored: templateModel.ignoreInWatchMode?.includes(field.name),
       onClick: () => templateModel.toggleIgnoreInWatchMode(field.name),
     },
+    {
+      tag: `SEV:${templateModel.getFieldSeverity(field.name) ?? 'NONE'}`,
+      isIgnored: true,
+      onClick: () => {},
+    },
   ] as const
 
   const configTags = [
@@ -47,6 +53,11 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
       tag: 'WM',
       isIgnored: configModel.ignoreInWatchMode?.includes(field.name),
       onClick: () => configModel.toggleIgnoreInWatchMode(field.name),
+    },
+    {
+      tag: `SEV:${configModel.getFieldSeverity(field.name) ?? 'NONE'}`,
+      isIgnored: true,
+      onClick: () => {},
     },
   ] as const
 
@@ -68,6 +79,7 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
           ))}
         </div>
         <div className="flex gap-1 opacity-0 group-hover/field:opacity-100">
+          <FieldConfigDialog field={field} />
           {canModify && templateModel.hasTemplate && (
             <BadgeWrapper text="Template">
               {templateTags.map((x, i) => (
@@ -157,5 +169,5 @@ function BadgeWrapper(props: {
 }
 
 function canModifyField(field: Field) {
-  return !field.name.startsWith('$') && !field.handler
+  return !field.name.startsWith('$')
 }
