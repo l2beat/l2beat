@@ -31,11 +31,6 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
       isIgnored: templateModel.ignoreInWatchMode?.includes(field.name),
       onClick: () => templateModel.toggleIgnoreInWatchMode(field.name),
     },
-    {
-      tag: `SEV:${templateModel.getFieldSeverity(field.name) ?? 'NONE'}`,
-      isIgnored: true,
-      onClick: () => {},
-    },
   ] as const
 
   const configTags = [
@@ -54,22 +49,17 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
       isIgnored: configModel.ignoreInWatchMode?.includes(field.name),
       onClick: () => configModel.toggleIgnoreInWatchMode(field.name),
     },
-    {
-      tag: `SEV:${configModel.getFieldSeverity(field.name) ?? 'NONE'}`,
-      isIgnored: true,
-      onClick: () => {},
-    },
   ] as const
 
   const canModify = canModifyField(field) && canModifyModel
 
-  const tags = getFieldTags(field)
+  const legacyTags = getLegacyTags(field)
   return (
     <li className="group/field truncate text-sm">
       <div className="flex h-fit flex-wrap items-center justify-between px-4 py-1 font-bold text-xs">
         <div className="flex flex-wrap items-center gap-1">
           {field.name}
-          {tags.map((x, i) => (
+          {legacyTags.map((x, i) => (
             <span
               className="bg-aux-blue px-1 py-1 text-[10px] text-black uppercase"
               key={i}
@@ -138,20 +128,12 @@ function FieldTag({ tag, onClick, state }: FieldTagProps) {
   )
 }
 
-function getFieldTags(field: Field) {
+function getLegacyTags(field: Field) {
   const tags: string[] = []
   if (field.handler) {
     tags.push(`handler:${field.handler.type}`)
   }
-  if (field.ignoreInWatchMode) {
-    tags.push('ignore:watchmode')
-  }
-  if (field.ignoreRelatives) {
-    tags.push('ignore:relatives')
-  }
-  if (field.severity) {
-    tags.push(`severity:${field.severity.toLowerCase()}`)
-  }
+
   return tags
 }
 
