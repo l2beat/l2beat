@@ -1,10 +1,11 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
+import type { ChartRange } from '~/utils/range/range'
 import { getSummedActivityForProjects } from '../activity/getSummedActivityForProjects'
 import { getCostsForProjects } from './getCostsForProjects'
 import type { LatestCostsProjectResponse, LatestCostsValues } from './types'
 import { getCostsProjects } from './utils/getCostsProjects'
 import { isCostsSynced } from './utils/isCostsSynced'
-import type { CostsTimeRange } from './utils/range'
 
 type LatestCostsValuesWithTotal = LatestCostsValues & {
   total: number
@@ -22,7 +23,7 @@ export type CostsTableData = Record<
 >
 
 export async function getCostsTable(
-  timeRange: CostsTimeRange,
+  timeRange: ChartRange,
 ): Promise<CostsTableData> {
   if (env.MOCK) {
     return getMockCostsTableData()
@@ -44,7 +45,10 @@ export async function getCostsTable(
 
   return Object.fromEntries(
     Object.entries(projectsCosts).map(([projectId, costs]) => {
-      const isSynced = isCostsSynced(costs.syncedUntil)
+      const isSynced = isCostsSynced({
+        syncedUntil: costs.syncedUntil,
+        to: UnixTime.now(),
+      })
       return [
         projectId,
         {

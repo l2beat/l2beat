@@ -3,8 +3,8 @@ import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
 import type { ProjectCostsChartResponse } from '~/server/features/scaling/costs/getProjectCostsChart'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
-import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 import { rangeToLabel } from '~/utils/project/rangeToLabel'
+import type { ChartRange } from '~/utils/range/range'
 
 export function ProjectCostsChartStats({
   range,
@@ -12,16 +12,17 @@ export function ProjectCostsChartStats({
   isLoading,
   data,
 }: {
-  range: CostsTimeRange
+  range: ChartRange
   unit: CostsUnit
   isLoading: boolean
   data: ProjectCostsChartResponse | undefined
 }) {
+  const isMax = range[0] === null
   return (
     <ChartStats className="mt-4 lg:grid-cols-3">
       <ChartStatsItem
         label={
-          range === 'max'
+          isMax
             ? `Total ${unitToLabel(unit)}`
             : `${rangeToLabel(range)} total ${unitToLabel(unit)}`
         }

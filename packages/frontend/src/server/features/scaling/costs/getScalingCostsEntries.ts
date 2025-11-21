@@ -2,6 +2,7 @@ import type { Project, WarningWithSentiment } from '@l2beat/config'
 import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
+import { optionToRange } from '~/utils/range/range'
 import {
   getProjectsChangeReport,
   type ProjectChanges,
@@ -21,7 +22,7 @@ export async function getScalingCostsEntries(helpers: SsrHelpers) {
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'archivedAt'],
     }),
-    helpers.costs.table.fetch({ range: '30d' }),
+    helpers.costs.table.fetch({ range: optionToRange('30d') }),
   ])
 
   const entries = projects

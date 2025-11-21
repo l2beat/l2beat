@@ -4,12 +4,9 @@ import { v as z } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
-import {
-  getBucketValuesRange,
-  getTimestampedValuesRange,
-} from '~/utils/range/range'
+import { ChartRange } from '~/utils/range/range'
 import { isTvsSynced } from '../utils/isTvsSynced'
-import { rangeToResolution, TvsChartRange } from '../utils/range'
+import { rangeToResolution } from '../utils/range'
 
 const TokenParams = z.object({
   projectId: z.string(),
@@ -18,7 +15,7 @@ const TokenParams = z.object({
 
 export const TokenTvsChartParams = z.object({
   token: TokenParams,
-  range: TvsChartRange,
+  range: ChartRange,
 })
 
 export type TokenTvsChartParams = z.infer<typeof TokenTvsChartParams>
@@ -43,16 +40,12 @@ export async function getTokenTvsChart({
   }
 
   const db = getDb()
-  const resolution = rangeToResolution({ type: range })
-
-  const [from, to] = getTimestampedValuesRange({ type: range }, resolution, {
-    offset: -UnixTime.HOUR - 15 * UnixTime.MINUTE,
-  })
+  const resolution = rangeToResolution(range)
 
   const tokenValues = await db.tvsTokenValue.getByTokenIdInTimeRange(
     token.tokenId,
-    from,
-    to,
+    range[0],
+    range[1],
   )
 
   if (tokenValues.length === 0) {
@@ -75,7 +68,7 @@ export async function getTokenTvsChart({
   const maxTimestamp = tokenValues.at(-1)?.timestamp
   assert(maxTimestamp, 'maxTimestamp is undefined')
 
-  const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : to
+  const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : range[1]
 
   const timestamps = generateTimestamps(
     [minTimestamp, adjustedTo],
@@ -100,16 +93,15 @@ export async function getTokenTvsChart({
 function getMockTokenTvsChartData(
   params: TokenTvsChartParams,
 ): TokenTvsChartData {
-  const resolution = rangeToResolution({ type: params.range })
-  const [from, to] = getBucketValuesRange({ type: params.range }, 'hourly')
+  const resolution = rangeToResolution(params.range)
   const adjustedRange: [UnixTime, UnixTime] = [
-    from ?? to - 730 * UnixTime.DAY,
-    to,
+    params.range[0] ?? params.range[1] - 730 * UnixTime.DAY,
+    params.range[1],
   ]
   const timestamps = generateTimestamps(adjustedRange, resolution)
 
   return {
     chart: timestamps.map((timestamp) => [timestamp, 50000]),
-    syncedUntil: to,
+    syncedUntil: params.range[1],
   }
 }

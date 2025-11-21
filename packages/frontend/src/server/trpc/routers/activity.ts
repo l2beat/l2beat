@@ -6,7 +6,7 @@ import {
 import { getActivityChartStats } from '~/server/features/scaling/activity/getActivityChartStats'
 import { getRecategorisedActivityChart } from '~/server/features/scaling/activity/getRecategorisedActivityChart'
 import { ActivityProjectFilter } from '~/server/features/scaling/activity/utils/projectFilterUtils'
-import { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
+import { ChartRange } from '~/utils/range/range'
 import { procedure, router } from '../trpc'
 
 export const activityRouter = router({
@@ -16,7 +16,7 @@ export const activityRouter = router({
   recategorisedChart: procedure
     .input(
       z.object({
-        range: ActivityTimeRange,
+        range: ChartRange,
         filter: ActivityProjectFilter,
       }),
     )

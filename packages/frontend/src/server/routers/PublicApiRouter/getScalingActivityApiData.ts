@@ -3,10 +3,10 @@ import {
   getActivityChart,
 } from '~/server/features/scaling/activity/getActivityChart'
 import type { ActivityProjectFilterType } from '~/server/features/scaling/activity/utils/projectFilterUtils'
-import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
+import type { ChartRange } from '~/utils/range/range'
 
 interface Params {
-  range: ActivityTimeRange
+  range: ChartRange
   type: ActivityProjectFilterType
   projectIds: string[]
 }
@@ -18,7 +18,7 @@ export async function getScalingActivityApiData({
 }: Params) {
   const params: ActivityChartParams = {
     filter: type === 'projects' ? { type: 'projects', projectIds } : { type },
-    range: { type: range },
+    range,
   }
 
   const { data } = await getActivityChart(params)

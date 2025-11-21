@@ -2,7 +2,7 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
-import { getTimestampedValuesRange } from '~/utils/range/range'
+import { ChartRange } from '~/utils/range/range'
 import { getEthPrices } from './utils/getEthPrices'
 import {
   getSummedTvsValues,
@@ -13,19 +13,10 @@ import {
   createTvsProjectsFilter,
   TvsProjectFilter,
 } from './utils/projectFilterUtils'
-import { rangeToResolution, TvsChartRange } from './utils/range'
+import { rangeToResolution } from './utils/range'
 
 export const TvsChartDataParams = v.object({
-  range: v.union([
-    v.object({
-      type: TvsChartRange,
-    }),
-    v.object({
-      type: v.literal('custom'),
-      from: v.number(),
-      to: v.number(),
-    }),
-  ]),
+  range: ChartRange,
   filter: TvsProjectFilter,
   excludeAssociatedTokens: v.boolean(),
   includeRwaRestrictedTokens: v.boolean(),
@@ -135,8 +126,10 @@ function getChartData(
 
 function getMockTvsChartData({ range }: TvsChartDataParams): TvsChartData {
   const resolution = rangeToResolution(range)
-  const [from, to] = getTimestampedValuesRange(range, resolution)
-  const timestamps = generateTimestamps([from ?? 1573776000, to], resolution)
+  const timestamps = generateTimestamps(
+    [range[0] ?? 1573776000, range[1]],
+    resolution,
+  )
 
   return {
     chart: timestamps.map((timestamp) => {

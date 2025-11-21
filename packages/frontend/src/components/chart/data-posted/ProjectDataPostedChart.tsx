@@ -3,9 +3,9 @@ import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { DataPostedTimeRangeControls } from '~/pages/scaling/data-posted/DataPostedTimeRangeControls'
-import { rangeToResolution } from '~/server/features/scaling/costs/utils/range'
-import type { DataPostedTimeRange } from '~/server/features/scaling/data-posted/range'
+import { rangeToResolution } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
+import type { ChartRange } from '~/utils/range/range'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
@@ -14,7 +14,7 @@ import { ProjectDataPostedChartStats } from './ProjectDataPostedChartStats'
 
 interface Props {
   project: ChartProject
-  defaultRange: DataPostedTimeRange
+  defaultRange: ChartRange
   milestones: Milestone[]
 }
 
@@ -23,7 +23,7 @@ export function ProjectDataPostedChart({
   defaultRange,
   milestones,
 }: Props) {
-  const [timeRange, setTimeRange] = useState<DataPostedTimeRange>(defaultRange)
+  const [timeRange, setTimeRange] = useState<ChartRange>(defaultRange)
 
   const { data, isLoading } = api.da.scalingProjectChart.useQuery({
     range: timeRange,
@@ -58,7 +58,7 @@ export function ProjectDataPostedChart({
       </ChartControlsWrapper>
       <DataPostedChart
         milestones={milestones}
-        resolution={rangeToResolution({ type: timeRange })}
+        resolution={rangeToResolution(timeRange)}
         data={chartData}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}

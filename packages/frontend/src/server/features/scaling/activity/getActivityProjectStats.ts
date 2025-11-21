@@ -2,6 +2,7 @@ import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
+import { optionToRange } from '~/utils/range/range'
 import { getActivitySyncState } from '../../utils/syncState'
 import { countPerSecond } from './utils/countPerSecond'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
@@ -20,7 +21,7 @@ type ActivityProjectStats = Awaited<
 >
 async function getActivityProjectStatsData(projectId: ProjectId) {
   const db = getDb()
-  const range = await getFullySyncedActivityRange({ type: '30d' })
+  const range = await getFullySyncedActivityRange(optionToRange('30d'))
   const [counts, syncMetadata] = await Promise.all([
     db.activity.getByProjectAndTimeRange(projectId, range),
     db.syncMetadata.getByFeatureAndId('activity', projectId),

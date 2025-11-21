@@ -11,8 +11,9 @@ import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromCo
 import { useTableFilterContext } from '~/components/table/filters/TableFilterContext'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
+import type { ChartRange } from '~/utils/range/range'
+import { optionToRange } from '~/utils/range/range'
 import { ExcludeAssociatedTokensCheckbox } from '../../components/ExcludeAssociatedTokensCheckbox'
 import { IncludeRwaRestrictedTokensCheckbox } from '../../components/IncludeRwaRestrictedTokensCheckbox'
 import { useScalingAssociatedTokensContext } from '../../components/ScalingAssociatedTokensContext'
@@ -29,7 +30,7 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { state: filters } = useTableFilterContext()
-  const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
+  const [timeRange, setTimeRange] = useState<ChartRange>(optionToRange('1y'))
   const [unit, setUnit] = useState<ChartUnit>('usd')
 
   const filter = useMemo<TvsProjectFilter>(() => {

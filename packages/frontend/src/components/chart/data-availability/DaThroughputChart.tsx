@@ -3,11 +3,11 @@ import { Checkbox } from '~/components/core/Checkbox'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import {
-  type DaThroughputTimeRange,
   DaThroughputTimeRangeValues,
   rangeToResolution,
 } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
+import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { ChartTimeRangeControls } from '../../core/chart/ChartTimeRangeControls'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
@@ -15,7 +15,7 @@ import { DaAbsoluteThroughputChart } from './DaAbsoluteThroughputChart'
 import { DaPercentageThroughputChart } from './DaPercentageThroughputChart'
 
 export function DaThroughputChart() {
-  const [range, setRange] = useState<DaThroughputTimeRange>('1y')
+  const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
   const [metric, setMetric] = useState<'percentage' | 'absolute'>('percentage')
   const { includeScalingOnly, setIncludeScalingOnly } = useIncludeScalingOnly()
 
@@ -29,7 +29,7 @@ export function DaThroughputChart() {
     [chartData],
   )
 
-  const resolution = rangeToResolution({ type: range })
+  const resolution = rangeToResolution(range)
 
   return (
     <div>

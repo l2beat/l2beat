@@ -21,10 +21,11 @@ import type {
   EcosystemEntry,
   EcosystemMilestone,
 } from '~/server/features/ecosystems/getEcosystemEntry'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import type { ChartRange } from '~/utils/range/range'
+import { optionToRange } from '~/utils/range/range'
 import { EcosystemWidget } from '../widgets/EcosystemWidget'
 import { EcosystemChartTimeRange } from './EcosystemsChartTimeRange'
 import { EcosystemsMarketShare } from './EcosystemsMarketShare'
@@ -45,12 +46,10 @@ export function EcosystemsTvsChart({
   ecosystemMilestones: EcosystemMilestone[]
 }) {
   const [unit, setUnit] = useState<ChartUnit>('usd')
-  const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
+  const [timeRange, setTimeRange] = useState<ChartRange>(optionToRange('1y'))
 
   const { data, isLoading } = api.tvs.chart.useQuery({
-    range: {
-      type: timeRange,
-    },
+    range: timeRange,
     excludeAssociatedTokens: false,
     includeRwaRestrictedTokens: false,
     filter: {

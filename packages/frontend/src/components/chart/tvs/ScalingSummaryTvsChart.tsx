@@ -32,11 +32,12 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { CustomLink } from '~/components/link/CustomLink'
 import { PercentChange } from '~/components/PercentChange'
 import { ChevronIcon } from '~/icons/Chevron'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import type { ChartRange } from '~/utils/range/range'
 import type { ChartUnit } from '../types'
+import { tvsRangeToReadable } from './tvsRangeToReadable'
 
 const chartMeta = {
   rollups: {
@@ -67,7 +68,7 @@ export function ScalingSummaryTvsChart({
   timeRange,
 }: {
   unit: ChartUnit
-  timeRange: TvsChartRange
+  timeRange: ChartRange
 }) {
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
   const { data, isLoading } = api.tvs.recategorisedChart.useQuery({
@@ -237,7 +238,7 @@ interface Props {
   total: number | undefined
   change: number | undefined
   unit: ChartUnit
-  timeRange: TvsChartRange
+  timeRange: ChartRange
 }
 
 function Header({ total, unit, change, timeRange }: Props) {
@@ -276,7 +277,10 @@ function Header({ total, unit, change, timeRange }: Props) {
         ) : (
           <p className="whitespace-nowrap text-right text-xs">
             <PercentChange value={change} />
-            <span className="text-secondary"> / {timeRange}</span>
+            <span className="text-secondary">
+              {' '}
+              / {tvsRangeToReadable(timeRange)}
+            </span>
           </p>
         )}
       </div>

@@ -18,9 +18,10 @@ import {
   type TvsData,
 } from '~/pages/scaling/project/tvs-breakdown/components/TvsBreakdownSummaryBox'
 import type { DetailedTvsChartWithProjectsRangesData } from '~/server/features/scaling/tvs/getDetailedTvsChartWithProjectsRanges'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
+import type { ChartRange } from '~/utils/range/range'
+import { optionToRange } from '~/utils/range/range'
 import {
   TvsChartControlsContextProvider,
   useTvsChartControlsContext,
@@ -33,7 +34,7 @@ export interface ZkCatalogTvsSectionProps extends ProjectSectionProps {
   project: ChartProject
   milestones: Milestone[]
   tvsInfo: ProjectTvsInfo | undefined
-  defaultRange: TvsChartRange
+  defaultRange: ChartRange
   projectsForTvs: {
     projectId: ProjectId
     sinceTimestamp: UnixTime
@@ -122,7 +123,7 @@ function TvsProjectStats({
   const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { data, isLoading } = api.tvs.detailedChartWithProjectsRanges.useQuery({
     projects: projectsForTvs,
-    range: '7d',
+    range: optionToRange('7d'),
     excludeAssociatedTokens: false,
     includeRwaRestrictedTokens,
   })

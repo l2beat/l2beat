@@ -1,9 +1,9 @@
 import { ChartTimeRangeControls } from '~/components/core/chart/ChartTimeRangeControls'
-import type { DataPostedTimeRange } from '~/server/features/scaling/data-posted/range'
+import type { ChartRange } from '~/utils/range/range'
 
 interface Props {
-  timeRange: DataPostedTimeRange
-  setTimeRange: (timeRange: DataPostedTimeRange) => void
+  timeRange: ChartRange
+  setTimeRange: (timeRange: ChartRange) => void
   projectSection?: boolean
 }
 

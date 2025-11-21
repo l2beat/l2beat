@@ -1,19 +1,17 @@
 import type { Project } from '@l2beat/config'
 import groupBy from 'lodash/groupBy'
 import { getDb } from '~/server/database'
+import type { ChartRange } from '~/utils/range/range'
 import { getTrackedTxsProjects } from '../../utils/getTrackedTxsProjects'
 import type { LatestCostsResponse } from './types'
-import type { CostsTimeRange } from './utils/range'
-import { getCostsRange } from './utils/range'
 import { sumCostValues } from './utils/sumCostValues'
 
 export async function getCostsForProjects(
   projects: Project<'trackedTxsConfig'>[],
-  timeRange: CostsTimeRange,
+  range: ChartRange,
 ) {
   const db = getDb()
   const response: LatestCostsResponse = {}
-  const range = getCostsRange({ type: timeRange })
 
   const configurations = await db.indexerConfiguration.getByIndexerId(
     'tracked_txs_indexer',

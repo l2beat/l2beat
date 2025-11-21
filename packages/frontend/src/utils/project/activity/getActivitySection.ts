@@ -1,8 +1,9 @@
 import type { Project } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { ActivitySectionProps } from '~/components/projects/sections/ActivitySection'
-
 import { isActivityChartDataEmpty } from '~/server/features/utils/isChartDataEmpty'
 import type { SsrHelpers } from '~/trpc/server'
+import { optionToRange } from '~/utils/range/range'
 
 export async function getActivitySection(
   helpers: SsrHelpers,
@@ -12,9 +13,10 @@ export async function getActivitySection(
 > {
   if (!project.activityConfig) return undefined
 
-  const range = project.archivedAt ? 'max' : '1y'
+  const rangeOption = project.archivedAt ? 'max' : '1y'
+  const range = optionToRange(rangeOption, { offset: -1 * UnixTime.DAY })
   const data = await helpers.activity.chart.fetch({
-    range: { type: range },
+    range,
     filter: { type: 'projects', projectIds: [project.id] },
   })
 

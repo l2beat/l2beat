@@ -8,7 +8,7 @@ import {
   getProjectCostsChart,
   ProjectCostsChartParams,
 } from '~/server/features/scaling/costs/getProjectCostsChart'
-import { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
+import { ChartRange } from '~/utils/range/range'
 import { procedure, router } from '../trpc'
 
 export const costsRouter = router({
@@ -19,6 +19,6 @@ export const costsRouter = router({
     .input(ProjectCostsChartParams)
     .query(async ({ input }) => getProjectCostsChart(input)),
   table: procedure
-    .input(v.object({ range: CostsTimeRange }))
+    .input(v.object({ range: ChartRange }))
     .query(async ({ input }) => getCostsTable(input.range)),
 })

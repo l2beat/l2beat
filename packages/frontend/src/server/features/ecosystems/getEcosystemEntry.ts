@@ -15,6 +15,7 @@ import type { SsrHelpers } from '~/trpc/server'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getImageParams } from '~/utils/project/getImageParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
+import { optionToRange } from '~/utils/range/range'
 import { getProjectsChangeReport } from '../projects-change-report/getProjectsChangeReport'
 import { getActivityLatestUops } from '../scaling/activity/getActivityLatestTps'
 import { getApprovedOngoingAnomalies } from '../scaling/liveness/getApprovedOngoingAnomalies'
@@ -176,7 +177,7 @@ export async function getEcosystemEntry(
     getBlobsData(liveProjects),
     getEcosystemToken(ecosystem, liveProjects),
     helpers.activity.chart.prefetch({
-      range: { type: '1y' },
+      range: optionToRange('1y'),
       filter: {
         type: 'projects',
         projectIds: liveProjects.map((project) => project.id),

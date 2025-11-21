@@ -30,8 +30,13 @@ export function generateTimestamps(
           : UnixTime.DAY)
     )
   })
+
   const isLastGeneratedTarget = generated.at(-1) === to
-  if (opts?.addTarget && !isLastGeneratedTarget) {
+  if (
+    opts?.addTarget &&
+    !isLastGeneratedTarget &&
+    UnixTime.isFull(to, 'hour')
+  ) {
     generated.push(to)
   }
 

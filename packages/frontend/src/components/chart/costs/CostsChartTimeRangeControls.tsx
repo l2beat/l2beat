@@ -1,10 +1,10 @@
 import type { CostsMetric } from '~/pages/scaling/costs/components/CostsMetricContext'
-import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
+import type { ChartRange } from '~/utils/range/range'
 import { ChartTimeRangeControls } from '../../core/chart/ChartTimeRangeControls'
 
 interface Props {
-  timeRange: CostsTimeRange
-  setTimeRange: (range: CostsTimeRange) => void
+  timeRange: ChartRange
+  setTimeRange: (range: ChartRange) => void
   metric?: CostsMetric
   projectSection?: boolean
 }

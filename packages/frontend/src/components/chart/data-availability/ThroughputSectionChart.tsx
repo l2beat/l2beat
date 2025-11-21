@@ -8,11 +8,12 @@ import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromCo
 import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import type { ProjectDaThroughputChartPoint } from '~/server/features/data-availability/throughput/getProjectDaThroughputChartData'
 import {
-  type DaThroughputTimeRange,
+  type DaThroughputResolution,
   DaThroughputTimeRangeValues,
   rangeToResolution,
 } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
+import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { ChartDataSourceInfo } from '../ChartDataSourceInfo'
 import { DaThroughputByProjectChart } from './DaThroughputByProjectChart'
 import { EthereumProjectsOnlyCheckbox } from './EthereumProjectsOnlyCheckbox'
@@ -35,17 +36,18 @@ export function ThroughputSectionChart({
   milestones,
 }: Props) {
   const { includeScalingOnly, setIncludeScalingOnly } = useIncludeScalingOnly()
-  const [range, setRange] = useState<DaThroughputTimeRange>('1y')
+  const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
 
   const { data, isLoading } = api.da.projectCharts.useQuery({
-    range: { type: range },
+    range,
     projectId: project.id,
     includeScalingOnly,
   })
+
   const dataWithConfiguredThroughputs = getDataWithConfiguredThroughputs(
     data?.totalChart.data,
     configuredThroughputs,
-    range,
+    rangeToResolution(range),
   )
 
   const chartRange = useMemo(
@@ -56,7 +58,7 @@ export function ThroughputSectionChart({
     [data],
   )
 
-  const resolution = useMemo(() => rangeToResolution({ type: range }), [range])
+  const resolution = useMemo(() => rangeToResolution(range), [range])
 
   return (
     <div>
@@ -106,7 +108,7 @@ export function ThroughputSectionChart({
 function getDataWithConfiguredThroughputs(
   data: ProjectDaThroughputChartPoint[] | undefined,
   configuredThroughputs: DaLayerThroughput[],
-  range: DaThroughputTimeRange,
+  resolution: DaThroughputResolution,
 ): ProjectChartDataWithConfiguredThroughput[] | undefined {
   const processedConfigs = configuredThroughputs
     .sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
@@ -132,23 +134,22 @@ function getDataWithConfiguredThroughputs(
     return [
       timestamp,
       value,
-      adjustThoughputToRange(range, config?.targetDaily),
-      adjustThoughputToRange(range, config?.maxDaily),
+      adjustThoughputToRange(resolution, config?.targetDaily),
+      adjustThoughputToRange(resolution, config?.maxDaily),
     ]
   })
 }
 
 function adjustThoughputToRange(
-  range: DaThroughputTimeRange,
+  resolution: DaThroughputResolution,
   throughput: number | null | undefined,
 ) {
   if (!throughput) return null
 
-  switch (range) {
-    case '7d':
+  switch (resolution) {
+    case 'hourly':
       return throughput / 24
-    case '30d':
-    case '90d':
+    case 'sixHourly':
       return throughput / 4
     default:
       return throughput

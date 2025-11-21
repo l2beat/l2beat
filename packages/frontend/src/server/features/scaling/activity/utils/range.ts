@@ -1,4 +1,2 @@
-import { v } from '@l2beat/validate'
-
-export type ActivityTimeRange = v.infer<typeof ActivityTimeRange>
-export const ActivityTimeRange = v.enum(['30d', '90d', '180d', '1y', 'max'])
+// This file is kept for potential future utility functions
+// All range types now use ChartRange from ~/utils/range/range

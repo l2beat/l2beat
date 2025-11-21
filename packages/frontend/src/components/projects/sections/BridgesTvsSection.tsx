@@ -5,7 +5,7 @@ import { TokenSummaryBox } from '~/components/chart/tvs/token/TokenSummaryBox'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { TokenCombobox } from '~/components/TokenCombobox'
 import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import type { ChartRange } from '~/utils/range/range'
 import { ProjectTvsChart } from '../../chart/tvs/ProjectTvsChart'
 import { TvsChartControlsContextProvider } from '../../chart/tvs/TvsChartControlsContext'
 import { ProjectSection } from './ProjectSection'
@@ -16,7 +16,7 @@ export interface BridgesTvsSectionProps extends ProjectSectionProps {
   tokens: ProjectToken[] | undefined
   project: ChartProject
   milestones: Milestone[]
-  defaultRange: TvsChartRange
+  defaultRange: ChartRange
 }
 
 export function BridgesTvsSection({

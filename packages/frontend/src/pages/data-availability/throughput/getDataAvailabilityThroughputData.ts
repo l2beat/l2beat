@@ -4,6 +4,7 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { optionToRange } from '~/utils/range/range'
 
 export async function getDataAvailabilityThroughputData(
   manifest: Manifest,
@@ -13,7 +14,10 @@ export async function getDataAvailabilityThroughputData(
   const [appLayoutProps, entries] = await Promise.all([
     getAppLayoutProps(),
     getDaThroughputEntries(),
-    helpers.da.chart.prefetch({ range: '1y', includeScalingOnly: true }),
+    helpers.da.chart.prefetch({
+      range: optionToRange('1y'),
+      includeScalingOnly: true,
+    }),
   ])
 
   return {

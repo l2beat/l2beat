@@ -1,9 +1,9 @@
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import type { ChartRange } from '~/utils/range/range'
 import { ChartTimeRangeControls } from '../../core/chart/ChartTimeRangeControls'
 
 interface Props {
-  timeRange: TvsChartRange
-  setTimeRange: (value: TvsChartRange) => void
+  timeRange: ChartRange
+  setTimeRange: (value: ChartRange) => void
   projectSection?: boolean
 }
 

@@ -1,9 +1,10 @@
-import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
+import type { ChartRange } from '~/utils/range/range'
 
 export interface ActivityLeaderboard {
   projects: Record<
@@ -25,7 +26,7 @@ type ActivityLeaderboardProjectFilter = v.infer<
 
 export async function getActivityLeaderboard(
   props: ActivityLeaderboardProjectFilter,
-  range: { type: 'custom'; from: UnixTime; to: UnixTime },
+  range: ChartRange,
 ): Promise<ActivityLeaderboard> {
   if (env.MOCK) {
     return getMockActivityLeaderboardData(props.projectIds)
@@ -34,7 +35,7 @@ export async function getActivityLeaderboard(
   const db = getDb()
   const records = await db.activity.getByProjectsAndTimeRange(
     props.projectIds as ProjectId[],
-    [range.from, range.to],
+    range,
   )
   const grouped = groupBy(records, (r) => r.projectId)
 

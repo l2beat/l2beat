@@ -28,22 +28,22 @@ import { formatBytes } from '~/utils/number-format/formatBytes'
 
 const chartMeta = {
   ethereum: {
-    label: 'Data posted on Ethereum',
+    label: 'Ethereum',
     color: 'var(--chart-ethereum)',
     indicatorType: { shape: 'line' as const },
   },
   celestia: {
-    label: 'Data posted on Celestia',
+    label: 'Celestia',
     color: 'var(--chart-fuchsia)',
     indicatorType: { shape: 'line' as const },
   },
   avail: {
-    label: 'Data posted on Avail',
+    label: 'Avail',
     color: 'var(--chart-sky)',
     indicatorType: { shape: 'line' as const },
   },
   eigenda: {
-    label: 'Data posted on EigenDA',
+    label: 'EigenDA',
     color: 'var(--chart-lime)',
     indicatorType: { shape: 'line' as const },
   },

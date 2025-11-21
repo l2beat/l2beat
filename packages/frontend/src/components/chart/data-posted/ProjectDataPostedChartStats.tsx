@@ -1,15 +1,15 @@
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import type { ScalingProjectDaThroughputChart } from '~/server/features/data-availability/throughput/getScalingProjectDaThroughtputChart'
-import type { DataPostedTimeRange } from '~/server/features/scaling/data-posted/range'
 import { formatBytes } from '~/utils/number-format/formatBytes'
 import { rangeToLabel } from '~/utils/project/rangeToLabel'
+import type { ChartRange } from '~/utils/range/range'
 
 export function ProjectDataPostedChartStats({
   range,
   isLoading,
   data,
 }: {
-  range: DataPostedTimeRange
+  range: ChartRange
   isLoading: boolean
   data: ScalingProjectDaThroughputChart['stats'] | undefined
 }) {

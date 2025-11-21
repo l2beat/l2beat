@@ -1,14 +1,13 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getBucketValuesRange } from '~/utils/range/range'
+import type { ChartRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
 import { getActivityProjects } from './utils/getActivityProjects'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
 import type { ActivityProjectFilter } from './utils/projectFilterUtils'
 import { createActivityProjectsFilter } from './utils/projectFilterUtils'
-import type { ActivityTimeRange } from './utils/range'
 
 export type RecategorisedActivityChartData = {
   data: [
@@ -32,7 +31,7 @@ export type RecategorisedActivityChartData = {
  */
 export async function getRecategorisedActivityChart(
   filter: ActivityProjectFilter,
-  range: ActivityTimeRange,
+  range: ChartRange,
 ): Promise<RecategorisedActivityChartData> {
   if (env.MOCK) {
     return getMockRecategorisedActivityChart(filter, range)
@@ -61,7 +60,7 @@ export async function getRecategorisedActivityChart(
     .filter((p) => p.scalingInfo.type === 'Other')
     .map((p) => p.id)
 
-  const adjustedRange = await getFullySyncedActivityRange({ type: range })
+  const adjustedRange = await getFullySyncedActivityRange(range)
   const [
     rollupsEntries,
     validiumsAndOptimiumsEntries,
@@ -151,10 +150,9 @@ export async function getRecategorisedActivityChart(
 
 function getMockRecategorisedActivityChart(
   _: ActivityProjectFilter,
-  timeRange: ActivityTimeRange,
+  range: ChartRange,
 ): RecategorisedActivityChartData {
-  const [from, to] = getBucketValuesRange({ type: timeRange }, 'daily')
-  const adjustedRange: [UnixTime, UnixTime] = [from ?? 1590883200, to]
+  const adjustedRange: [UnixTime, UnixTime] = [range[0] ?? 1590883200, range[1]]
   const timestamps = generateTimestamps(adjustedRange, 'daily')
 
   return {

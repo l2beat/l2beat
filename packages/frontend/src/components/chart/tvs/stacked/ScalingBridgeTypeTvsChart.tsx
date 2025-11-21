@@ -2,14 +2,14 @@ import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
 import { useScalingTvsDataKeys } from '~/pages/scaling/tvs/components/ScalingTvsDataKeysContext'
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
+import type { ChartRange } from '~/utils/range/range'
 import type { ChartUnit } from '../../types'
 import { BridgeTypeTvsChart } from './BridgeTypeTvsChart'
 
 interface Props {
   milestones: Milestone[]
-  range: TvsChartRange
+  range: ChartRange
   unit: ChartUnit
   filter: TvsProjectFilter
   excludeAssociatedTokens: boolean

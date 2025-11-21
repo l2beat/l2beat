@@ -51,7 +51,6 @@ export async function getScalingProjectData(
     getAppLayoutProps(),
     getScalingProjectEntry(project, helpers),
   ])
-
   return {
     head: {
       manifest,

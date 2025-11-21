@@ -7,8 +7,8 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
-import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/React'
+import type { ChartRange } from '~/utils/range/range'
 import { CostsChart } from './CostsChart'
 import { CostsChartTimeRangeControls } from './CostsChartTimeRangeControls'
 import { ProjectCostsChartStats } from './ProjectCostsChartStats'
@@ -16,7 +16,7 @@ import { ProjectCostsChartStats } from './ProjectCostsChartStats'
 interface Props {
   milestones: Milestone[]
   project: ChartProject
-  defaultRange: CostsTimeRange
+  defaultRange: ChartRange
 }
 
 export function ProjectCostsChart({
@@ -24,7 +24,7 @@ export function ProjectCostsChart({
   project,
   defaultRange,
 }: Props) {
-  const [range, setRange] = useState<CostsTimeRange>(defaultRange)
+  const [range, setRange] = useState<ChartRange>(defaultRange)
   const [unit, setUnit] = useState<CostsUnit>('usd')
 
   const { data, isLoading } = api.costs.projectChart.useQuery({
