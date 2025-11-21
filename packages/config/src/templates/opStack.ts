@@ -2000,6 +2000,7 @@ function addHostChainContextToTechnologyChoice(
 ): ProjectTechnologyChoice {
   return {
     ...choice,
-    description: `${projectName} posts its transaction data to ${hostChainName}, which then posts to ${rootLayerName}. ${choice.description}`.trim(),
+    description:
+      `${projectName} posts its transaction data to ${hostChainName}, which then posts to ${rootLayerName}. ${choice.description}`.trim(),
   }
 }

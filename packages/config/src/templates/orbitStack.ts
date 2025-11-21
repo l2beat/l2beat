@@ -1087,7 +1087,9 @@ function getDAProviders(
       {
         layer:
           hostChainDA?.layer ??
-          (usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA),
+          (usesBlobs
+            ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
+            : DA_LAYERS.ETH_CALLDATA),
         bridge: hostChainDA?.bridge ?? DA_BRIDGES.ENSHRINED,
         mode: hostChainDA?.mode ?? DA_MODES.TRANSACTION_DATA_COMPRESSED,
         badge:
