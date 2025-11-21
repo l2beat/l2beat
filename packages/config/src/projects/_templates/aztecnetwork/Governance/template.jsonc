@@ -6,5 +6,6 @@
     "getProposalState",
     "getWithdrawal",
     "totalPowerAt"
-  ]
+  ],
+  "ignoreInWatchMode": ["totalPowerNow"]
 }

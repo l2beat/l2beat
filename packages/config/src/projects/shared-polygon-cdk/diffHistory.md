@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xac98d101fd026666422a99cf3798edc25e1b9843
+
+# Diff at Thu, 20 Nov 2025 14:36:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4b9fb6935244c163272f55e2acbd987c21dfd4d2 block: 1761895482
+- current timestamp: 1763649253
+
+## Description
+
+Test deployment added.
+
+## Watched changes
+
+```diff
+    contract AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.11:
++        26
+      values.rollupCount:
+-        25
++        26
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: LOW
+      values.rollupsDataV2.25:
++        {"rollupContract":"eth:0xE369D0C2aee9B32c3b0EC54443890bEDF11Ef6D4","chainID":125125,"verifier":"eth:0x0000000000000000000000000000000000000000","forkID":0,"rollupTypeID":13,"rollupVerifierType":2,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
+    }
+```
+
 Generated with discovered.json: 0xdf2f75229e06863c6b32f6eb5c5b2d8729313d3e
 
 # Diff at Fri, 31 Oct 2025 13:59:12 GMT:
