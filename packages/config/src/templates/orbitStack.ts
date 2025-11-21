@@ -576,11 +576,9 @@ function orbitStackCommon(
             risks: [],
           } as ProjectTechnologyChoice
         })(),
-      dataAvailability: dedupeTechnologyChoices(
-        templateVars.nonTemplateTechnology?.dataAvailability
-          ? asArray(templateVars.nonTemplateTechnology.dataAvailability)
-          : daProviders.map((p) => p.technology),
-      ),
+      dataAvailability:
+        templateVars.nonTemplateTechnology?.dataAvailability ??
+        daProviders.map((p) => p.technology),
       operator: templateVars.nonTemplateTechnology?.operator ?? {
         ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
@@ -764,66 +762,12 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): ScalingProject {
   return {
     type: 'layer3',
     ...common,
-    technology: limitTechnologyDaEntries(common.technology),
-    dataAvailability: dedupeScalingDaEntries(asArray(common.dataAvailability)),
     ecosystemInfo: {
       id: ProjectId('arbitrum-orbit'),
     },
     hostChain: ProjectId(hostChain),
     display: { ...common.display, ...templateVars.display },
     stackedRiskView: getStackedRisks(),
-  }
-}
-
-function dedupeScalingDaEntries(
-  entries: ProjectScalingDa[] | undefined,
-): ProjectScalingDa[] | undefined {
-  if (!entries) {
-    return entries
-  }
-  const seen = new Set<string>()
-  return entries.filter((entry) => {
-    const key = [
-      entry.layer.value,
-      entry.layer.secondLine,
-      entry.bridge.value,
-      entry.mode.value,
-    ].join('|')
-    if (seen.has(key)) {
-      return false
-    }
-    seen.add(key)
-    return true
-  })
-}
-
-function dedupeTechnologyChoices(
-  choices: ProjectTechnologyChoice[] | undefined,
-): ProjectTechnologyChoice[] | undefined {
-  if (!choices) {
-    return choices
-  }
-  const seen = new Set<string>()
-  return choices.filter((choice) => {
-    const key = `${choice.name}|${choice.description}`
-    if (seen.has(key)) {
-      return false
-    }
-    seen.add(key)
-    return true
-  })
-}
-
-function limitTechnologyDaEntries(
-  technology: ProjectScalingTechnology | undefined,
-): ProjectScalingTechnology | undefined {
-  if (!technology?.dataAvailability) {
-    return technology
-  }
-  const [primary] = asArray(technology.dataAvailability)
-  return {
-    ...technology,
-    dataAvailability: primary ? [primary] : undefined,
   }
 }
 
@@ -1116,15 +1060,14 @@ function getDAProviders(
       false
 
     // Return and don't even check for other DAs
-    const daEntries: DAProvider[] = [
+    return [
       {
         layer:
-          hostChainDA?.layer ??
-          (usesBlobs
+          (hostChainDA?.layer ?? usesBlobs)
             ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
-            : DA_LAYERS.ETH_CALLDATA),
-        bridge: hostChainDA?.bridge ?? DA_BRIDGES.ENSHRINED,
-        mode: hostChainDA?.mode ?? DA_MODES.TRANSACTION_DATA_COMPRESSED,
+            : DA_LAYERS.ETH_CALLDATA,
+        bridge: hostChainDA?.layer ?? DA_BRIDGES.ENSHRINED,
+        mode: hostChainDA?.layer ?? DA_MODES.TRANSACTION_DATA_COMPRESSED,
         badge:
           hostChainDA?.badge ??
           (usesBlobs ? BADGES.DA.EthereumBlobs : BADGES.DA.EthereumCalldata),
@@ -1157,13 +1100,6 @@ function getDAProviders(
         },
       },
     ]
-
-    // For L3s, add the host chain's DA as a second entry
-    if (type === 'layer3' && hostChainDA !== undefined) {
-      daEntries.push(hostChainDA)
-    }
-
-    return daEntries
   }
 
   const wasmModuleRoot = templateVars.discovery.getContractValue<string>(

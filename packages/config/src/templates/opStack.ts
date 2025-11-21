@@ -583,48 +583,101 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
     ),
   }
 
-  const dataAvailabilityEntries =
-    common.dataAvailability !== undefined
-      ? asArray(common.dataAvailability)
-      : asArray(baseChain.dataAvailability)
+  const l3DataAvailability = buildOpStackL3DaEntries(
+    projectName,
+    baseChain,
+    asArray(common.dataAvailability),
+    asArray(baseChain.dataAvailability),
+  )
 
-  // Also make technology.dataAvailability mention host chain relationship
-  const l3TechnologyChoices = asArray(common.technology?.dataAvailability)
-  const baseChainRootDa = asArray(baseChain.dataAvailability)[0]
-  const rootLayerName =
-    baseChainRootDa?.layer.value ??
-    dataAvailabilityEntries[0]?.layer.value ??
-    'its DA layer'
-  const transformedL3TechChoices =
-    l3TechnologyChoices.length === 0
-      ? []
-      : [
-          addHostChainContextToTechnologyChoice(
-            l3TechnologyChoices[0],
-            projectName,
-            hostChainName,
-            rootLayerName,
-            baseChain.dataAvailability,
-          ),
-          ...l3TechnologyChoices.slice(1),
-        ]
+  const opStackTechnologyDa = buildOpStackL3TechnologyChoices(
+    projectName,
+    baseChain,
+    asArray(common.technology?.dataAvailability),
+    asArray(baseChain.technology?.dataAvailability),
+    asArray(baseChain.dataAvailability),
+  )
+
   return {
     type: 'layer3',
     ...common,
-    dataAvailability: dataAvailabilityEntries,
+    dataAvailability: l3DataAvailability,
     technology: common.technology
       ? {
           ...common.technology,
-          dataAvailability:
-            l3TechnologyChoices.length > 0
-              ? transformedL3TechChoices
-              : common.technology.dataAvailability,
+          dataAvailability: opStackTechnologyDa,
         }
       : undefined,
     hostChain: ProjectId(hostChain),
     display: { ...common.display, ...templateVars.display },
     stackedRiskView: templateVars.stackedRiskView ?? stackedRisk,
   }
+}
+
+function buildOpStackL3DaEntries(
+  projectName: string,
+  hostChain: ScalingProject,
+  l3Entries: ProjectScalingDa[],
+  hostChainEntries: ProjectScalingDa[],
+): ProjectScalingDa[] {
+  const hostName = hostChain.display.name
+
+  const formattedL3Entry = l3Entries[0]
+    ? {
+        ...l3Entries[0],
+        layer: {
+          ...l3Entries[0].layer,
+          value: `${projectName} → ${hostName}`,
+          secondLine: undefined,
+          projectId: hostChain.id,
+          description: `${projectName} posts its transaction data to ${hostName}. ${l3Entries[0].layer.description ?? ''}`.trim(),
+        },
+      }
+    : undefined
+
+  const formattedHostEntries = hostChainEntries.map((entry) => ({
+    ...entry,
+    layer: {
+      ...entry.layer,
+      value: `${hostName} → ${entry.layer.value}`,
+      secondLine: undefined,
+      description: `${hostName} posts its transaction data to ${entry.layer.value}. ${entry.layer.description ?? ''}`.trim(),
+    },
+  }))
+
+  return formattedL3Entry
+    ? [formattedL3Entry, ...formattedHostEntries]
+    : formattedHostEntries
+}
+
+function buildOpStackL3TechnologyChoices(
+  projectName: string,
+  hostChain: ScalingProject,
+  l3Choices: ProjectTechnologyChoice[],
+  hostChainChoices: ProjectTechnologyChoice[],
+  hostChainDaEntries: ProjectScalingDa[],
+): ProjectTechnologyChoice[] | undefined {
+  const hostName = hostChain.display.name
+  const result: ProjectTechnologyChoice[] = []
+
+  if (l3Choices[0]) {
+    result.push({
+      ...l3Choices[0],
+      name: `${projectName} → ${hostName}`,
+      description: `${projectName} posts its transaction data to ${hostName}. ${l3Choices[0].description}`.trim(),
+    })
+  }
+
+  hostChainChoices.forEach((choice, index) => {
+    const targetName = hostChainDaEntries[index]?.layer.value ?? choice.name
+    result.push({
+      ...choice,
+      name: `${hostName} → ${targetName}`,
+      description: `${hostName} posts its transaction data to ${targetName}. ${choice.description}`.trim(),
+    })
+  })
+
+  return result.length > 0 ? result : undefined
 }
 
 function getZkProgramHashes(
@@ -1990,33 +2043,5 @@ function hostChainDAProvider(hostChain: ScalingProject): DAProvider {
     riskView: hostChain.riskView.dataAvailability,
     technology: hostDaTech,
     badge: DABadge,
-  }
-}
-
-function addHostChainContextToTechnologyChoice(
-  choice: ProjectTechnologyChoice,
-  projectName: string,
-  hostChainName: string,
-  rootLayerName: string,
-  hostChainDaEntries: ProjectScalingDa[] | ProjectScalingDa | undefined,
-): ProjectTechnologyChoice {
-  const hostChainDas = asArray(hostChainDaEntries)
-  const describesSameDa = hostChainDas.some(
-    (entry) =>
-      entry.layer.value === choice.name ||
-      entry.layer.value === rootLayerName ||
-      entry.layer.value === projectName,
-  )
-
-  if (describesSameDa) {
-    return choice
-  }
-
-  return {
-    ...choice,
-    description:
-      rootLayerName === hostChainName
-        ? choice.description
-        : `${projectName} posts its transaction data to ${hostChainName}, which then posts to ${rootLayerName}. ${choice.description}`.trim(),
   }
 }
