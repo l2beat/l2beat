@@ -162,8 +162,21 @@ export class CCTPV2Plugin implements InteropPlugin {
         // biome-ignore lint/style/noNonNullAssertion: It's there
         (x) => x.logIndex === input.log.logIndex! - 2,
       )
+      const fourback = input.txLogs.find(
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        (x) => x.logIndex === input.log.logIndex! - 4,
+      )
       const transfer =
         previouspreviousLog && parseTransfer(previouspreviousLog, null)
+      const fallbackTransfer =
+        fourback && parseTransfer(fourback, null)
+      let dstAmount = transfer?.value
+        if (
+          fallbackTransfer?.value !== undefined &&
+          fallbackTransfer.value > (transfer?.value ?? 0)
+        ) {
+          dstAmount = fallbackTransfer.value
+        }
       return [
         CCTPv2MessageReceived.create(input, {
           app: messageBody ? 'TokenMessengerV2' : undefined,
@@ -183,7 +196,7 @@ export class CCTPV2Plugin implements InteropPlugin {
           dstTokenAddress: previouspreviousLog
             ? Address32.from(previouspreviousLog.address)
             : undefined,
-          dstAmount: transfer?.value ?? undefined,
+          dstAmount,
         }),
       ]
     }

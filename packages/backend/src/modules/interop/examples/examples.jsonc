@@ -1037,10 +1037,26 @@
       }
     ]
   },
-  "cctpv1-debug": {
+  "cctp-debug": {
     "loadConfigs": ["cctp-v1", "cctp-v2"],
-    // should be 4 cctpv1 message and a couple other ones. somehow these are not correctly tracked in prod but work locally
+    // should be 4 cctpv1 message and 2 cctpv2 matched transfers and some stray events around.
     "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x3b3c109c7ac84cc6324ab067346177f7bca8d7b22331b7ffb278c64395d71c8f"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x84f127978c385ebd683b604bb213af56f82f0d10b4509eab4a93ae99650235ef"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x284aed9764a451c32bae3ade17ce61daf420f20d80f3b0849db45af54a16cf1c"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x607ef6ded5162ece9b8c8d9df7ef0be69aa6005863403a963295bb362222d5a0"
+      },
       {
         "chain": "base",
         "tx": "0x48c77cfedbee0ab31da92f80e0e4f4f8dfce70af2e5fef3ceedc745271731100"
