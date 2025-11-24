@@ -39,7 +39,6 @@ export const celo: ScalingProject = opStackL2({
       bridges: ['https://superbridge.app/celo'],
       documentation: ['https://docs.celo.org/'],
       explorers: [
-        'https://explorer.celo.org/mainnet/',
         'https://celoscan.io',
         'https://celo.blockscout.com/',
       ],
@@ -80,6 +79,7 @@ export const celo: ScalingProject = opStackL2({
         chainId,
         contractCreationUnsupported: true,
       },
+      { type: 'blockscoutV2', url: 'https://celo.blockscout.com/api/v2' },
     ],
   },
   nonTemplateContractRisks: CONTRACTS.UPGRADE_NO_DELAY_RISK,
