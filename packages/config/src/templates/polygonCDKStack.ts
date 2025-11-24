@@ -349,7 +349,7 @@ export function polygonCDKStack(
           references: [
             {
               title: 'Pessimistic Proof - Polygon Knowledge Layer',
-              url: 'https://docs.agglayer.dev/agglayer/core-concepts/pessimistic-proof/',
+              url: 'https://docs.polygon.technology/cdk/concepts/pessimistic-proofs',
             },
             {
               title:
