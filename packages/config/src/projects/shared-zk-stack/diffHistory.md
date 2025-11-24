@@ -10,6 +10,8 @@ Generated with discovered.json: 0x85c2396421e140cef9c2914de8fe8fb8d18ce476
 
 [Queue ZIP-14 Upgrade ZK Token with Permissionless Burn Function](https://www.tally.xyz/gov/zksync/proposal/56697539346434504259886089137844919991955896472242107434527974192173343556352?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f).
 
+upgrades ZK token with permissioned burn function: https://disco.l2beat.com/diff/zksync:0x01a6715d3560241E09E865a46122bf347A576c09/zksync:0x4fcd824D304e9b1584CdBb582c104BDcbFb11274
+
 ## Watched changes
 
 ```diff
