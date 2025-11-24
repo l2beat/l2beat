@@ -46,11 +46,17 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
       return project && !project.isArchived
     })
 
+    this.logger.info('Filtered configuration', {
+      activeConfigurations: activeConfigurations.length,
+    })
+
     const txs = await this.$.trackedTxsClient.getData(
       activeConfigurations,
       unixFrom,
       unixTo,
     )
+
+    this.logger.info('Fetched txs', { txs: txs.length, unixFrom, unixTo })
 
     return async () => {
       for (const updater of this.$.updaters) {
@@ -66,9 +72,11 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
         )
         await updater.update(filteredTxs)
       }
-      this.logger.info('Saved txs into DB', {
+
+      this.logger.info('Executed updaters', {
         from,
         to: unixTo,
+        updatersCount: this.$.updaters.length,
         configurationsToSync: configurations.length,
       })
 
