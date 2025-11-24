@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xe6b8e95d0210ddcffcc7a06bada0f590b9b3401a
+Generated with discovered.json: 0xab43bd863efb9401422ee555d861ee7c61a846ae
 
-# Diff at Mon, 24 Nov 2025 10:26:52 GMT:
+# Diff at Mon, 24 Nov 2025 14:16:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@a7f22580fca8d48e9cc5f7f28da38d6b8725e891 block: 1763649088
@@ -8,7 +8,7 @@ Generated with discovered.json: 0xe6b8e95d0210ddcffcc7a06bada0f590b9b3401a
 
 ## Description
 
-config: yeeted flushrewarder (not core contract), ignored more noisy vars
+config: yeeted flushrewarder (not core contract), ignored more noisy vars, cleaned up the disco
 
 ## Config/verification related changes
 
@@ -17,9 +17,71 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1763649088 (main branch discovery), not current.
 
 ```diff
+    contract Rollup (eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12) {
+    +++ description: Core rollup logic contract. It processes block proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
+      fieldMeta:
++        {"getManaLimit":{"severity":"HIGH","description":"gas limit, currently 0 to prevent transactions"}}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract BaseStaker (eth:0x79075C8E314Ab4A84d54F90b1c7032Dc5469082d)
+    +++ description: An template contract used for staker proxies within the StakingRegistry.
+```
+
+```diff
 -   Status: DELETED
     contract FlushRewarder (eth:0x7C9a7130379F1B5dd6e7A53AF84fC0fE32267B65)
     +++ description: None
+```
+
+```diff
+    EOA  (eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80","description":"set the time at which the ProtocolTreasury funds can be transfered and manage staker implementations referenced by this contract.","role":".owner"}]
+    }
+```
+
+```diff
+    contract AztecTokenPositionRegistry_ProtocolTreasury (eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80) {
+    +++ description: Used to set the time at which AZTEC tokens owned by the ProtocolTreasury are unlocked.
+      name:
+-        "StakingRegistry"
++        "AztecTokenPositionRegistry_ProtocolTreasury"
+      template:
+-        "aztecnetwork/StakingRegistry"
++        "aztecnetwork/AztecTokenPositionRegistry"
+      description:
++        "Used to set the time at which AZTEC tokens owned by the ProtocolTreasury are unlocked."
+      fieldMeta:
++        {"getUnlockStartTime":{"severity":"HIGH"}}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract StakingRegistry (eth:0x042dF8f42790d6943F41C25C2132400fd727f452)
+    +++ description: Manages staking providers for delegation.
+```
+
+```diff
++   Status: CREATED
+    contract BaseStaker (eth:0x0Cb8fe28D35fD4763C4f3E3761904bAcF829BbF8)
+    +++ description: A template contract used for staker proxies within the StakingRegistry.
+```
+
+```diff
++   Status: CREATED
+    contract ATPWithdrawableAndClaimableStaker (eth:0x7C009AE557234d094D798A03D21E3c1C1CAD3b42)
+    +++ description: Standard escrow implementation used to simplify and manage staking with locked AZTEC tokens.
+```
+
+```diff
++   Status: CREATED
+    contract AztecTokenPositionRegistry_Sequencers (eth:0x8F778768aDed86AB778a47cd81b3b42B4b3F655B)
+    +++ description: A registry for contracts related to Sequencer staking and token unlock parameters.
 ```
 
 Generated with discovered.json: 0x33d374ce8a5ffbbbbf65e438918bff1c8cd9b50b

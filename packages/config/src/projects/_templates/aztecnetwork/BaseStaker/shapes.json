@@ -4,5 +4,11 @@
     "address": "eth:0x79075C8E314Ab4A84d54F90b1c7032Dc5469082d",
     "chain": "ethereum",
     "blockNumber": 23834069
+  },
+  "BaseStaker_template.sol": {
+    "hash": "0xaf64fb5970d5a784cc6822b5e3288c0dcb324cb15ce1c6a4c1f2e610bd603763",
+    "address": "eth:0x0Cb8fe28D35fD4763C4f3E3761904bAcF829BbF8",
+    "chain": "ethereum",
+    "blockNumber": 23867964
   }
 }
