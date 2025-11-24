@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
@@ -21,7 +22,14 @@ import { transformFunctionCallsQueryResult } from './utils/transformFunctionCall
 import { transformTransfersQueryResult } from './utils/transformTransfersQueryResult'
 
 export class TrackedTxsClient {
-  constructor(private readonly bigquery: BigQueryClient) {}
+  private logger: Logger
+
+  constructor(
+    private readonly bigquery: BigQueryClient,
+    logger: Logger,
+  ) {
+    this.logger = logger.for(this)
+  }
 
   async getData(
     configurations: Configuration<TrackedTxConfigEntry>[],
@@ -57,6 +65,15 @@ export class TrackedTxsClient {
       > => c.properties.params.formula === 'sharedBridge',
     )
 
+    this.logger.info('Generated configs', {
+      transfersConfig: transfersConfig.length,
+      functionCallsConfig: functionCallsConfig.length,
+      sharpSubmissionsConfig: sharpSubmissionsConfig.length,
+      sharedBridgesConfig: sharedBridgesConfig.length,
+      from,
+      to,
+    })
+
     const [transfers, functionCalls] = await Promise.all([
       this.getTransfers(transfersConfig, from, to),
       this.getFunctionCalls(
@@ -67,6 +84,13 @@ export class TrackedTxsClient {
         to,
       ),
     ])
+
+    this.logger.info('Fetched from BigQuery', {
+      transfersCount: transfers.length,
+      functionCallsCount: functionCalls.length,
+      from,
+      to,
+    })
 
     return [...transfers, ...functionCalls]
   }

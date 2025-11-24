@@ -32,7 +32,7 @@ export function createTrackedTxsModule(
     config.trackedTxsConfig.bigQuery,
   )
 
-  const trackedTxsClient = new TrackedTxsClient(bigQueryClient)
+  const trackedTxsClient = new TrackedTxsClient(bigQueryClient, logger)
   const runtimeConfigurations = config.trackedTxsConfig.projects.flatMap(
     (project) => project.configurations,
   )
