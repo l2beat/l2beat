@@ -1,5 +1,5 @@
+import { Address32 } from '@l2beat/shared-pure'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   type InteropEvent,

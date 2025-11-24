@@ -47,12 +47,11 @@ This has a problem that the same message sent twice will be identical, however c
 is set by Circle validators, it's hard to say how this can be solved by the matching logic only.
 */
 
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { Address32, assert, EthereumAddress } from '@l2beat/shared-pure'
 import { solidityKeccak256 } from 'ethers/lib/utils'
 import { BinaryReader } from '../../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   findChain,

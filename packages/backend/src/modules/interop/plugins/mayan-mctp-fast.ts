@@ -1,9 +1,9 @@
+import { Address32 } from '@l2beat/shared-pure'
 import { BinaryReader } from '../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { CCTPv2MessageReceived, CCTPv2MessageSent } from './cctp/cctp-v2.plugin'
 import { MayanForwarded } from './mayan-forwarder'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   findChain,

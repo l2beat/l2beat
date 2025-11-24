@@ -1,6 +1,6 @@
+import { Address32 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   findChain,

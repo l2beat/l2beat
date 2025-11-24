@@ -12,6 +12,7 @@ DST EXECUTE:
 
 */
 
+import { Address32 } from '@l2beat/shared-pure'
 import {
   AXELAR_NETWORKS,
   ContractCall,
@@ -19,7 +20,6 @@ import {
   ContractCallExecuted,
 } from './axelar'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   findChain,
