@@ -360,9 +360,6 @@ describeDatabase(InteropEventRepository.name, (db) => {
         UnixTime(200),
         {
           args: 123456789012345678901234567890n,
-          ctx: {
-            txValue: 123456789012345678901234567890n,
-          } as InteropEventContext,
         },
       )
 
@@ -371,7 +368,6 @@ describeDatabase(InteropEventRepository.name, (db) => {
 
       expect(result).toHaveLength(1)
       expect(result[0]?.args).toEqual(123456789012345678901234567890n)
-      expect(result[0]?.ctx.txValue).toEqual(123456789012345678901234567890n)
     })
 
     it('handles bigints inside args object', async () => {
@@ -385,9 +381,6 @@ describeDatabase(InteropEventRepository.name, (db) => {
           args: {
             amount: 999999999999999999999999n,
           },
-          ctx: {
-            txValue: 999999999999999999999999n,
-          } as InteropEventContext,
         },
       )
 
@@ -398,8 +391,6 @@ describeDatabase(InteropEventRepository.name, (db) => {
       expect(result[0]?.args).toEqual({
         amount: 999999999999999999999999n,
       })
-
-      expect(result[0]?.ctx.txValue).toEqual(999999999999999999999999n)
     })
   })
 
@@ -426,7 +417,7 @@ function event(
     matched: false,
     unsupported: false,
     args: { amount: '1000000000000000000' },
-    ctx: { blockNumber: 1 } as InteropEventContext,
+    ctx: { chain: 'chain' } as InteropEventContext,
     chain: 'chain',
     blockNumber: 1,
     ...overrides,
