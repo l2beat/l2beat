@@ -84,20 +84,6 @@ export class EthRpcClient {
     return vQuantity.parse(data)
   }
 
-  async getBlockTransactionCountByHash(hash: string): Promise<bigint> {
-    const data = await this._call('eth_getBlockTransactionCountByHash', [hash])
-    return vQuantity.parse(data)
-  }
-
-  async getBlockTransactionCountByNumber(
-    block: BlockParameter,
-  ): Promise<bigint> {
-    const data = await this._call('eth_getBlockTransactionCountByNumber', [
-      encodeBlock(block),
-    ])
-    return vQuantity.parse(data)
-  }
-
   async getCode(
     address: EthereumAddress,
     block: BlockParameter,
@@ -122,14 +108,7 @@ export class EthRpcClient {
         encodeBlock(block),
       ])
     } catch (e) {
-      if (
-        e instanceof Error &&
-        e.message.startsWith('RPC call failed') &&
-        (e.message.includes('invalid opcode: INVALID') ||
-          e.message.includes('CALL_EXCEPTION') ||
-          e.message.includes('revert') ||
-          e.message.includes('reverted'))
-      ) {
+      if (isRevert(e)) {
         return { reverted: true }
       }
       throw e
@@ -141,19 +120,21 @@ export class EthRpcClient {
   async estimateGas(
     transaction: TransactionParameter,
     block: BlockParameter,
-  ): Promise<{ reverted: boolean; estimate: bigint }> {
-    const data = await this._call('eth_estimateGas', [
-      encodeTransaction(transaction),
-      encodeBlock(block),
-    ])
-    // TODO: handle revert
+  ): Promise<{ reverted: false; gas: bigint } | { reverted: true }> {
+    let data: unknown
+    try {
+      data = await this._call('eth_estimateGas', [
+        encodeTransaction(transaction),
+        encodeBlock(block),
+      ])
+    } catch (e) {
+      if (isRevert(e)) {
+        return { reverted: true }
+      }
+      throw e
+    }
     const result = vQuantity.parse(data)
-    return { reverted: false, estimate: result }
-  }
-
-  async getBlockByHash(hash: string): Promise<RpcBlock | null> {
-    const data = await this._call('eth_getBlockByHash', [hash, false])
-    return BlockResponse.parse(data)
+    return { reverted: false, gas: result }
   }
 
   async getBlockByNumber(block: BlockParameter): Promise<RpcBlock | null> {
@@ -164,11 +145,9 @@ export class EthRpcClient {
     return BlockResponse.parse(data)
   }
 
-  async getBlockWithTransactionsByHash(
-    hash: string,
-  ): Promise<RpcBlockWithTransactions | null> {
-    const data = await this._call('eth_getBlockByHash', [hash, true])
-    return BlockWithTransactionsResponse.parse(data)
+  async getBlockByHash(hash: string): Promise<RpcBlock | null> {
+    const data = await this._call('eth_getBlockByHash', [hash, false])
+    return BlockResponse.parse(data)
   }
 
   async getBlockWithTransactionsByNumber(
@@ -179,6 +158,27 @@ export class EthRpcClient {
       true,
     ])
     return BlockWithTransactionsResponse.parse(data)
+  }
+
+  async getBlockWithTransactionsByHash(
+    hash: string,
+  ): Promise<RpcBlockWithTransactions | null> {
+    const data = await this._call('eth_getBlockByHash', [hash, true])
+    return BlockWithTransactionsResponse.parse(data)
+  }
+
+  async getBlockTransactionCountByNumber(
+    block: BlockParameter,
+  ): Promise<bigint> {
+    const data = await this._call('eth_getBlockTransactionCountByNumber', [
+      encodeBlock(block),
+    ])
+    return vQuantity.parse(data)
+  }
+
+  async getBlockTransactionCountByHash(hash: string): Promise<bigint> {
+    const data = await this._call('eth_getBlockTransactionCountByHash', [hash])
+    return vQuantity.parse(data)
   }
 
   async getTransactionByHash(hash: string): Promise<RpcTransaction | null> {
@@ -221,6 +221,7 @@ export class EthRpcClient {
   private async _call(method: string, params: unknown = []) {
     const id = this.nextId()
     const response = await this.http.fetch(this.url, {
+      method: 'POST',
       body: JSON.stringify({
         jsonrpc: '2.0',
         id,
@@ -342,25 +343,45 @@ const blockBase = {
   stateRoot: vData(32),
   receiptsRoot: vData(32),
   miner: vAddress,
-  difficulty: vQuantity,
-  totalDifficulty: vQuantity,
+  // optional, despite official docs
+  difficulty: vQuantity.optional(),
+  // optional, despite official docs
+  totalDifficulty: vQuantity.optional(),
   extraData: vData(),
   size: vQuantity,
   gasLimit: vQuantity,
   gasUsed: vQuantity,
   timestamp: vQuantity,
   uncles: v.array(vData(32)),
-  // TODO: non-standard fields from other chains
+  // NOTE: not mentioned in docs
+  mixHash: vData(32).optional(),
+  // NOTE: not mentioned in docs, added after EIP-1559
+  baseFeePerGas: vQuantity.optional(),
+  // NOTE: not mentioned in docs, added after EIP-4844
+  blobGasUsed: vQuantity.optional(),
+  excessBlobGas: vQuantity.optional(),
+  parentBeaconBlockRoot: vData(32).optional(),
+  // NOTE: not mentioned in docs, added after EIP-4895
+  requestsHash: vData(32).optional(),
+  withdrawals: v.array(
+    v.strictObject({
+      address: vAddress,
+      amount: vQuantity,
+      index: vQuantity,
+      validatorIndex: vQuantity,
+    }),
+  ).optional(),
+  withdrawalsRoot: vData(32).optional(),
 }
 
 export type RpcBlock = v.infer<typeof RpcBlock>
-const RpcBlock = v.object({
+const RpcBlock = v.strictObject({
   ...blockBase,
   transactions: v.array(vData(32)),
 })
 
 export type RpcTransaction = v.infer<typeof RpcTransaction>
-const RpcTransaction = v.object({
+const RpcTransaction = v.strictObject({
   blockHash: v.union([v.null(), vData(32)]),
   blockNumber: v.union([v.null(), vQuantity]),
   from: vAddress,
@@ -379,13 +400,13 @@ const RpcTransaction = v.object({
 })
 
 export type RpcBlockWithTransactions = v.infer<typeof RpcBlockWithTransactions>
-const RpcBlockWithTransactions = v.object({
+const RpcBlockWithTransactions = v.strictObject({
   ...blockBase,
   transactions: v.array(RpcTransaction),
 })
 
 export type RpcLog = v.infer<typeof RpcLog>
-const RpcLog = v.object({
+const RpcLog = v.strictObject({
   removed: v.boolean(),
   logIndex: v.union([v.null(), vQuantity]),
   transactionIndex: v.union([v.null(), vQuantity]),
@@ -399,7 +420,7 @@ const RpcLog = v.object({
 })
 
 export type RpcReceipt = v.infer<typeof RpcReceipt>
-const RpcReceipt = v.object({
+const RpcReceipt = v.strictObject({
   transactionHash: vData(32),
   transactionIndex: vQuantity,
   blockHash: vData(32),
@@ -454,4 +475,15 @@ function randomId() {
     id += alphabet[Math.floor(Math.random() * alphabet.length)]
   }
   return id
+}
+
+function isRevert(e: unknown): e is Error {
+  return (
+    e instanceof Error &&
+    e.message.startsWith('RPC call failed') &&
+    (e.message.includes('invalid opcode: INVALID') ||
+      e.message.includes('CALL_EXCEPTION') ||
+      e.message.includes('revert') ||
+      e.message.includes('reverted'))
+  )
 }

@@ -1,7 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { EthRpcClient } from './EthRpcClient'
-import { MockHttp } from './Http'
+import { Http, MockHttp } from './Http'
 
 describe(EthRpcClient.name, () => {
   it('correctly calls an endpoint', async () => {
@@ -102,5 +102,121 @@ describe(EthRpcClient.name, () => {
         'latest',
       ),
     ).toBeRejected()
+  })
+})
+
+describe.skip(`${EthRpcClient.name} integration`, () => {
+  // Update this locally when running those tests. They are for discovering
+  // issues with the client
+  const URL = 'https://ethereum-rpc.publicnode.com'
+  const VITALIK = EthereumAddress('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
+  const MULTICALL3 = EthereumAddress(
+    '0xcA11bde05977b3631167028862bE2a173976CA11',
+  )
+  const client = new EthRpcClient(new Http(), URL)
+
+  it(EthRpcClient.prototype.chainId.name, async () => {
+    const chainId = await client.chainId()
+    expect(chainId > 0n).toEqual(true)
+  })
+
+  it(EthRpcClient.prototype.blockNumber.name, async () => {
+    const blockNumber = await client.blockNumber()
+    expect(blockNumber > 0n).toEqual(true)
+  })
+
+  it(EthRpcClient.prototype.gasPrice.name, async () => {
+    const gasPrice = await client.blockNumber()
+    expect(gasPrice >= 0n).toEqual(true)
+  })
+
+  it(EthRpcClient.prototype.getBalance.name, async () => {
+    const balance = await client.getBalance(VITALIK, 'latest')
+    expect(balance >= 0n).toEqual(true)
+  })
+
+  it(EthRpcClient.prototype.getStorageAt.name, async () => {
+    const storage = await client.getStorageAt(VITALIK, 0n, 'latest')
+    expect(storage).toEqual('0x' + '0'.repeat(64))
+  })
+
+  it(EthRpcClient.prototype.getTransactionCount.name, async () => {
+    const count = await client.getTransactionCount(VITALIK, 'latest')
+    expect(count >= 0n).toEqual(true)
+  })
+
+  it(EthRpcClient.prototype.getCode.name, async () => {
+    const code = await client.getCode(MULTICALL3, 'latest')
+    expect(code).toMatchRegex(/^0x/)
+  })
+
+  it(EthRpcClient.prototype.call.name, async () => {
+    const chainId = await client.chainId()
+    const result1 = await client.call(
+      {
+        to: MULTICALL3,
+        input: '0x3408e470', // getChainId()
+      },
+      'latest',
+    )
+    expect(result1.reverted).toEqual(false)
+    if (!result1.reverted) {
+      expect(BigInt(result1.data)).toEqual(chainId)
+    }
+
+    const result2 = await client.call(
+      {
+        to: MULTICALL3,
+        input: '0xDEADBEEF', // garbage
+      },
+      'latest',
+    )
+    expect(result2.reverted).toEqual(true)
+  })
+
+  it(EthRpcClient.prototype.estimateGas.name, async () => {
+    const result1 = await client.estimateGas(
+      {
+        to: MULTICALL3,
+        input: '0x3408e470', // getChainId()
+      },
+      'latest',
+    )
+    expect(result1.reverted).toEqual(false)
+    if (!result1.reverted) {
+      expect(result1.gas >= 0n).toEqual(true)
+    }
+
+    const result2 = await client.estimateGas(
+      {
+        to: MULTICALL3,
+        input: '0xDEADBEEF', // garbage
+      },
+      'latest',
+    )
+    expect(result2.reverted).toEqual(true)
+  })
+
+  it(EthRpcClient.prototype.getBlockByNumber.name, async () => {
+    const latest1 = await client.getBlockByNumber('latest')
+    expect(latest1 && latest1.number && latest1.number >= 0n).toEqual(true)
+
+    const latest2 = await client.getBlockByNumber(latest1?.number ?? 0n)
+    expect(latest2).toEqual(latest1)
+
+    const block0 = await client.getBlockByNumber(0n)
+    expect(block0?.number).toEqual(0n)
+
+    const block1 = await client.getBlockByNumber(1n)
+    expect(block1?.number).toEqual(1n)
+
+    const block1000 = await client.getBlockByNumber(1000n)
+    expect(block1000?.number).toEqual(1000n)
+  })
+
+  it(EthRpcClient.prototype.getBlockByHash.name, async () => {
+    const latest1 = await client.getBlockByNumber('latest')
+    const latest2 = await client.getBlockByHash(latest1?.hash ?? '0x')
+    expect(latest2).toEqual(latest1)
   })
 })
