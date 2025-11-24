@@ -15,15 +15,7 @@ export async function getScalingSummaryApiData() {
   return {
     chart: {
       types: ['timestamp', 'native', 'canonical', 'external', 'ethPrice'],
-      data: data.chart.map(
-        ([timestamp, native, canonical, external, ethPrice]) => [
-          timestamp,
-          native,
-          canonical,
-          external,
-          ethPrice,
-        ],
-      ),
+      data: data.chart,
       syncedUntil: data.syncedUntil,
     },
     projects: Object.fromEntries(entries.map((entry) => [entry.id, entry])),
