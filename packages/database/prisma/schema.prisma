@@ -396,6 +396,7 @@ model InteropMessage {
   @@index([type])
   @@index([type, app, duration])
   @@index([type, srcChain, dstChain, duration])
+  @@index([app, plugin])
 }
 
 model InteropTransfer {
