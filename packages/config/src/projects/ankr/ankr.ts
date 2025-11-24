@@ -13,8 +13,8 @@ export const ankr: Bridge = {
     slug: 'ankr',
     category: 'Token Bridge',
     links: {
-      websites: ['https://www.ankr.com/'],
-      bridges: ['https://www.ankr.com/staking/bridge/'],
+      websites: ['https://ankr.com/'],
+      bridges: ['https://ankr.com/staking/bridge/'],
       documentation: ['https://ankr.com/docs/bridge/overview/'],
       repositories: ['https://github.com/Ankr-network'],
       socialMedia: [
