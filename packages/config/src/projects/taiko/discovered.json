@@ -1,6 +1,6 @@
 {
   "name": "taiko",
-  "timestamp": 1763551862,
+  "timestamp": 1763978021,
   "configHash": "0xfab89f75d053cae1a12bd233309b4f78f60b5a3821cbd44da3f00eca20de9a46",
   "entries": [
     {
@@ -386,68 +386,68 @@
           "ontakeForkHeight": 538304
         },
         "getLastSyncedTransition": {
-          "batchId_": 1341740,
-          "blockId_": 3306809,
+          "batchId_": 1342604,
+          "blockId_": 3371720,
           "ts_": {
-            "parentHash": "0x52340efec3d3cb2bf014ef8ffff3a8dfb58d0d7873e4cf7dbe65ce29055a1964",
-            "blockHash": "0xb9bc529618a74cb0e8869edd75289a169483f67b51501b8c3115beefcd080124",
-            "stateRoot": "0xebfb252e51e8b8c833f5ac70822e909669ab49671e4c913b1be53590d7cb6b9b",
-            "prover": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
-            "inProvingWindow": true,
-            "createdAt": 1763536511
+            "parentHash": "0x738eb8831792df2da4ff8087d6f80087c2ca53b3d2fff9acce0f21a688df020e",
+            "blockHash": "0x15079e023be6d80ef4b99b9bf2b4677bbce8a2d0858a0dadd220f0061d496d81",
+            "stateRoot": "0xb09e32d6981d90935184c8954b30a860e7ed4e69948187f75f3cdf5724352162",
+            "prover": "eth:0xC61909a85159EB0cDe0651735b7685DD1C7E72c5",
+            "inProvingWindow": false,
+            "createdAt": 1763969135
           }
         },
         "getLastVerifiedBlock": {
-          "blockId_": 1341740,
-          "blockHash_": "0xb9bc529618a74cb0e8869edd75289a169483f67b51501b8c3115beefcd080124",
-          "stateRoot_": "0xebfb252e51e8b8c833f5ac70822e909669ab49671e4c913b1be53590d7cb6b9b",
-          "verifiedAt_": 1742118911
+          "blockId_": 1342605,
+          "blockHash_": "0xc357c3c1865852bf61884d843a0452fcd752de5a131249830cce1ff798e1c249",
+          "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "verifiedAt_": 1742130767
         },
         "getLastVerifiedTransition": {
-          "batchId_": 1341740,
-          "blockId_": 3306809,
+          "batchId_": 1342605,
+          "blockId_": 3371782,
           "ts_": {
-            "parentHash": "0x52340efec3d3cb2bf014ef8ffff3a8dfb58d0d7873e4cf7dbe65ce29055a1964",
-            "blockHash": "0xb9bc529618a74cb0e8869edd75289a169483f67b51501b8c3115beefcd080124",
-            "stateRoot": "0xebfb252e51e8b8c833f5ac70822e909669ab49671e4c913b1be53590d7cb6b9b",
+            "parentHash": "0x15079e023be6d80ef4b99b9bf2b4677bbce8a2d0858a0dadd220f0061d496d81",
+            "blockHash": "0xc357c3c1865852bf61884d843a0452fcd752de5a131249830cce1ff798e1c249",
+            "stateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "prover": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
             "inProvingWindow": true,
-            "createdAt": 1763536511
+            "createdAt": 1763962823
           }
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 1341740,
-            "lastSynecdAt": 1763551031
+            "lastSyncedBlockId": 1342604,
+            "lastSynecdAt": 1763976743
           },
           {
-            "numBlocks": 1341773,
-            "lastVerifiedBlockId": 1341740,
+            "numBlocks": 1342640,
+            "lastVerifiedBlockId": 1342605,
             "provingPaused": false,
-            "lastProposedIn": 23832830,
+            "lastProposedIn": 23867942,
             "lastUnpausedAt": 1716571955
           }
         ],
         "getStats1": {
           "genesisHeight": 19923613,
           "__reserved2": 1716358991,
-          "lastSyncedBatchId": 1341740,
-          "lastSyncedAt": 1763551031
+          "lastSyncedBatchId": 1342604,
+          "lastSyncedAt": 1763976743
         },
         "getStats2": {
-          "numBatches": 1341773,
-          "lastVerifiedBatchId": 1341740,
+          "numBatches": 1342640,
+          "lastVerifiedBatchId": 1342605,
           "paused": false,
-          "lastProposedIn": 23832830,
+          "lastProposedIn": 23867942,
           "lastUnpausedAt": 1716571955
         },
         "impl": "eth:0xbB1f830636e1A017b81C3E38b7f6219344149Eb7",
         "inboxWrapper": "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
         "inNonReentrant": false,
         "isOnL1": true,
-        "lastProposedIn": 23832830,
+        "lastProposedIn": 23867942,
         "newFork": "eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8",
         "oldFork": "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
@@ -488,14 +488,14 @@
           "stats1": {
             "genesisHeight": 19923613,
             "__reserved2": 1716358991,
-            "lastSyncedBatchId": 1341740,
-            "lastSyncedAt": 1763551031
+            "lastSyncedBatchId": 1342604,
+            "lastSyncedAt": 1763976743
           },
           "stats2": {
-            "numBatches": 1341773,
-            "lastVerifiedBatchId": 1341740,
+            "numBatches": 1342640,
+            "lastVerifiedBatchId": 1342605,
             "paused": false,
-            "lastProposedIn": 23832830,
+            "lastProposedIn": 23867942,
             "lastUnpausedAt": 1716571955
           }
         },
@@ -716,7 +716,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1763551859,
+        "clock": 1763978015,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -3057,7 +3057,7 @@
         "impl": "eth:0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 38049,
+        "nextMessageId": 38076,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -3402,8 +3402,8 @@
           "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
           "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d"
         ],
-        "getOperatorForCurrentEpoch": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
-        "getOperatorForNextEpoch": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
+        "getOperatorForCurrentEpoch": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+        "getOperatorForNextEpoch": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
         "havingPerfectOperators": false,
         "impl": "eth:0x54FeDc114D78dcbDb8c7b2DeA433f9749E8fd0Fc",
         "inNonReentrant": false,
@@ -3419,12 +3419,12 @@
             "sequencer": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
           },
           {
-            "proposer": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
-            "sequencer": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"
-          },
-          {
             "proposer": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
             "sequencer": "eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"
+          },
+          {
+            "proposer": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
+            "sequencer": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"
           }
         ],
         "registeredOperatorsCount": 3,
@@ -6222,6 +6222,6 @@
     "taiko/TaikoWrapper": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 23832843, "taiko": 3309203 },
+  "usedBlockNumbers": { "ethereum": 23867952, "taiko": 3374245 },
   "permissionsConfigHash": "0x2ca90d0054a6a65a415ae00e467d9e332bfc37e055cfa709d8466fd5153f88dc"
 }
