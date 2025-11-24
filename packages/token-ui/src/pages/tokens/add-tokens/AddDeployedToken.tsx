@@ -259,6 +259,11 @@ export function AddDeployedToken() {
                   onClick={() => {
                     const next = queue.at(0)
                     setQueue((prev) => prev.slice(1))
+                    form.resetField('symbol')
+                    form.resetField('decimals')
+                    form.resetField('deploymentTimestamp')
+                    form.resetField('abstractTokenId')
+                    form.resetField('comment')
 
                     if (next) {
                       setSearchParams((prev) => {
