@@ -297,6 +297,7 @@ function findMintedTokenAddress(
   recipient: string,
   amount: bigint,
 ): Address32 | undefined {
+  // First, try to find a standard mint (from zero address)
   for (const log of logs) {
     const transfer = parseTransfer(log, null)
     if (
@@ -308,6 +309,21 @@ function findMintedTokenAddress(
       return Address32.from(log.address)
     }
   }
+
+  // Fallback: look for any Transfer with matching recipient and amount
+  // This handles custom gateways that transfer from reserves or the token contract itself
+  for (const log of logs) {
+    const transfer = parseTransfer(log, null)
+    if (
+      transfer &&
+      transfer.to.toLowerCase() === recipient.toLowerCase() &&
+      transfer.value === amount
+    ) {
+      return Address32.from(log.address)
+    }
+  }
+
+  return undefined
 }
 
 function findBurnedTokenAddress(
@@ -315,6 +331,7 @@ function findBurnedTokenAddress(
   sender: string,
   amount: bigint,
 ): Address32 | undefined {
+  // First, try to find a standard burn (to zero address)
   for (const log of logs) {
     const transfer = parseTransfer(log, null)
     if (
@@ -326,4 +343,19 @@ function findBurnedTokenAddress(
       return Address32.from(log.address)
     }
   }
+
+  // Fallback: look for any Transfer with matching sender and amount
+  // This handles custom gateways that transfer to reserves or the token contract itself
+  for (const log of logs) {
+    const transfer = parseTransfer(log, null)
+    if (
+      transfer &&
+      transfer.from.toLowerCase() === sender.toLowerCase() &&
+      transfer.value === amount
+    ) {
+      return Address32.from(log.address)
+    }
+  }
+
+  return undefined
 }

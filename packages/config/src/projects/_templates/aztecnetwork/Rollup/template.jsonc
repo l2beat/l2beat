@@ -11,6 +11,21 @@
     "getFeeHeader",
     "getTimestampForSlot",
     "status",
-    "getAttesterAtIndex"
+    "getAttesterAtIndex",
+    "getBlock",
+    "getBlobCommitmentsHash"
+  ],
+  "ignoreInWatchMode": [
+    "archive",
+    "getActiveAttesterCount",
+    "getCurrentBlobCommitmentsHash",
+    "getCurrentEpoch",
+    "getCurrentSampleSeed",
+    "getCurrentSlot",
+    "getEntryQueueLength",
+    "getNextFlushableEpoch",
+    "getPendingBlockNumber",
+    "getProvenBlockNumber",
+    "getTips"
   ]
 }

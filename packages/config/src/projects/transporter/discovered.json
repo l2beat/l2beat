@@ -1,6 +1,6 @@
 {
   "name": "transporter",
-  "timestamp": 1763564141,
+  "timestamp": 1763649449,
   "configHash": "0x4e045723beaf31fcfff76bccbfc7f2591b2ddf0c0bf1dc5d49e9cbc705c02de7",
   "entries": [
     {
@@ -26,7 +26,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1737115091,
       "sinceBlock": 21644063,
@@ -75,7 +76,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739912039,
       "sinceBlock": 21875772,
@@ -97,7 +99,7 @@
         ],
         "getToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "getTokenDecimals": 18,
-        "getUnsiloedLiquidity": "2705548794070713600118",
+        "getUnsiloedLiquidity": "2708075468397436461500",
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "typeAndVersion": "SiloedLockReleaseTokenPool 1.6.0"
       },
@@ -202,7 +204,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1718911127,
       "sinceBlock": 20134975,
@@ -238,7 +241,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1747764215,
       "sinceBlock": 22525788,
@@ -336,7 +340,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1755382439,
       "sinceBlock": 23156518,
@@ -382,7 +387,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1745296295,
       "sinceBlock": 22322169,
@@ -485,7 +491,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1711406459,
       "sinceBlock": 19514511,
@@ -521,7 +528,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1752600575,
       "sinceBlock": 22926080,
@@ -561,7 +569,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1750690739,
       "sinceBlock": 22767877,
@@ -606,7 +615,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758693971,
       "sinceBlock": 23430996,
@@ -642,7 +652,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758282167,
       "sinceBlock": 23396898,
@@ -684,7 +695,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1736358971,
       "sinceBlock": 21581390,
@@ -704,7 +716,7 @@
         "getAllowListEnabled": false,
         "getBridgeLimit": "40000000000000000000000000",
         "getBridgeLimitAdmin": "eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39",
-        "getCurrentBridgedAmount": "23216923824510957910849443",
+        "getCurrentBridgedAmount": "21090082038631646856874451",
         "getRateLimitAdmin": "eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39",
         "getRebalancer": "eth:0x0000000000000000000000000000000000000000",
         "getRmnProxy": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
@@ -750,7 +762,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1715364563,
       "sinceBlock": 19841333,
@@ -782,7 +795,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1745592419,
       "sinceBlock": 22346726,
@@ -851,7 +865,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729734167,
       "sinceBlock": 21032243,
@@ -889,7 +904,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1738836011,
       "sinceBlock": 21786724,
@@ -925,7 +941,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739964635,
       "sinceBlock": 21880124,
@@ -976,7 +993,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 0,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 375967,
+        "nextAvailableNonce": 376456,
         "owner": "eth:0x4aA5bF962852DcC59695F600d346D3F751B0D920",
         "paused": false,
         "pauser": "eth:0xc809b0216B149cc301Cb203EDD84FCdB8F15C4ed",
@@ -1002,7 +1019,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1741454915,
       "sinceBlock": 22003648,
@@ -1042,7 +1060,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1724954207,
       "sinceBlock": 20635872,
@@ -1083,7 +1102,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1712691755,
       "sinceBlock": 19620237,
@@ -1123,7 +1143,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1743497303,
       "sinceBlock": 22172960,
@@ -1170,7 +1191,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 226,
+        "getExpectedNextSequenceNumber": 227,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -1237,7 +1258,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1716484655,
       "sinceBlock": 19934018,
@@ -1273,7 +1295,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1752004703,
       "sinceBlock": 22876707,
@@ -1390,7 +1413,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 854,
+        "getExpectedNextSequenceNumber": 855,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -1521,7 +1544,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1745346035,
       "sinceBlock": 22326302,
@@ -1565,7 +1589,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1742326787,
       "sinceBlock": 22075905,
@@ -1670,7 +1695,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1709671307,
       "sinceBlock": 19371421,
@@ -2185,7 +2211,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1697125163,
       "sinceBlock": 18335287,
@@ -2238,7 +2265,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758713063,
       "sinceBlock": 23432578,
@@ -2284,7 +2312,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1741337855,
       "sinceBlock": 21993953,
@@ -2355,7 +2384,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1715364503,
       "sinceBlock": 19841328,
@@ -2401,7 +2431,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1749315815,
       "sinceBlock": 22654076,
@@ -2454,7 +2485,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1752534599,
       "sinceBlock": 22920608,
@@ -2566,7 +2598,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1740571199,
       "sinceBlock": 21930364,
@@ -2602,7 +2635,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758724163,
       "sinceBlock": 23433497,
@@ -2643,7 +2677,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1757681027,
       "sinceBlock": 23347062,
@@ -2684,7 +2719,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1746496091,
       "sinceBlock": 22421497,
@@ -2794,7 +2830,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1741796039,
       "sinceBlock": 22031911,
@@ -2834,7 +2871,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1752387023,
       "sinceBlock": 22908380,
@@ -2868,7 +2906,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1736170031,
       "sinceBlock": 21565713,
@@ -2902,7 +2941,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1747164383,
       "sinceBlock": 22476363,
@@ -3044,7 +3084,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1751681195,
       "sinceBlock": 22849925,
@@ -3083,7 +3124,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1734970007,
       "sinceBlock": 21466269,
@@ -3122,7 +3164,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1747346651,
       "sinceBlock": 22491363,
@@ -3163,7 +3206,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758713207,
       "sinceBlock": 23432590,
@@ -3209,7 +3253,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1750786055,
       "sinceBlock": 22775774,
@@ -3253,7 +3298,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758724199,
       "sinceBlock": 23433500,
@@ -3299,7 +3345,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739964659,
       "sinceBlock": 21880126,
@@ -3358,7 +3405,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 1793,
+        "nonce": 1794,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3389,7 +3436,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1715364491,
       "sinceBlock": 19841327,
@@ -3495,7 +3543,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739964707,
       "sinceBlock": 21880130,
@@ -3541,7 +3590,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739964731,
       "sinceBlock": 21880132,
@@ -3582,7 +3632,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758713135,
       "sinceBlock": 23432584,
@@ -3651,7 +3702,7 @@
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
         "getExpectedNextSequenceNumber": 3591,
-        "getLatestPriceEpochAndRound": 37636098,
+        "getLatestPriceEpochAndRound": 37714689,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "avalanche",
@@ -3723,7 +3774,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1751803667,
       "sinceBlock": 22860059,
@@ -3764,7 +3816,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758713159,
       "sinceBlock": 23432586,
@@ -3805,7 +3858,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1728056903,
       "sinceBlock": 20893157,
@@ -3851,7 +3905,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1697125139,
       "sinceBlock": 18335285,
@@ -3894,7 +3949,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729738271,
       "sinceBlock": 21032584,
@@ -4027,7 +4083,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729729403,
       "sinceBlock": 21031850,
@@ -4141,7 +4198,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1746813887,
       "sinceBlock": 22447555,
@@ -4192,7 +4250,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1747869935,
       "sinceBlock": 22534526,
@@ -4226,7 +4285,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758004475,
       "sinceBlock": 23373864,
@@ -4264,7 +4324,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739875655,
       "sinceBlock": 21872756,
@@ -4313,7 +4374,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1749707015,
       "sinceBlock": 22686471,
@@ -4352,7 +4414,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1740980615,
       "sinceBlock": 21964345,
@@ -4399,7 +4462,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1756296383,
       "sinceBlock": 23232348,
@@ -4441,7 +4505,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1762422155,
       "sinceBlock": 23739418,
@@ -4475,7 +4540,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1759084091,
       "sinceBlock": 23463281,
@@ -4585,7 +4651,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1740538739,
       "sinceBlock": 21927671,
@@ -4619,7 +4686,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729733927,
       "sinceBlock": 21032223,
@@ -4724,7 +4792,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1747065083,
       "sinceBlock": 22468203,
@@ -4860,7 +4929,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1743410507,
       "sinceBlock": 22165771,
@@ -4969,7 +5039,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1752570311,
       "sinceBlock": 22923571,
@@ -5007,7 +5078,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1734107279,
       "sinceBlock": 21394783,
@@ -5133,7 +5205,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1740596039,
       "sinceBlock": 21932426,
@@ -5169,7 +5242,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1751750855,
       "sinceBlock": 22855689,
@@ -5203,7 +5277,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1751015123,
       "sinceBlock": 22794769,
@@ -5239,7 +5314,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1730398235,
       "sinceBlock": 21087327,
@@ -5309,7 +5385,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1748610683,
       "sinceBlock": 22595762,
@@ -5345,7 +5422,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758724175,
       "sinceBlock": 23433498,
@@ -5391,7 +5469,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1757266271,
       "sinceBlock": 23312723,
@@ -5427,7 +5506,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1715364551,
       "sinceBlock": 19841332,
@@ -5522,7 +5602,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1748626991,
       "sinceBlock": 22597116,
@@ -5561,7 +5642,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1743005279,
       "sinceBlock": 22132177,
@@ -5666,7 +5748,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1728073703,
       "sinceBlock": 20894553,
@@ -5703,7 +5786,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729737323,
       "sinceBlock": 21032506,
@@ -5743,7 +5827,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758713327,
       "sinceBlock": 23432599,
@@ -5784,7 +5869,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1749479555,
       "sinceBlock": 22667636,
@@ -5822,7 +5908,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1733817251,
       "sinceBlock": 21370742,
@@ -5858,7 +5945,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1734913223,
       "sinceBlock": 21461572,
@@ -5894,7 +5982,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729697099,
       "sinceBlock": 21029169,
@@ -5928,7 +6017,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729693355,
       "sinceBlock": 21028857,
@@ -5987,7 +6077,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729696955,
       "sinceBlock": 21029157,
@@ -6033,7 +6124,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758713111,
       "sinceBlock": 23432582,
@@ -6218,7 +6310,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1715888579,
       "sinceBlock": 19884697,
@@ -6250,7 +6343,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1756380503,
       "sinceBlock": 23239321,
@@ -6284,7 +6378,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1719424067,
       "sinceBlock": 20177450,
@@ -6335,7 +6430,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729729475,
       "sinceBlock": 21031856,
@@ -6371,7 +6467,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1745863847,
       "sinceBlock": 22369258,
@@ -6405,7 +6502,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1743494639,
       "sinceBlock": 22172739,
@@ -6443,7 +6541,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1698777515,
       "sinceBlock": 18471947,
@@ -6487,7 +6586,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1740631979,
       "sinceBlock": 21935406,
@@ -6535,7 +6635,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758713027,
       "sinceBlock": 23432575,
@@ -6576,7 +6677,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729738091,
       "sinceBlock": 21032569,
@@ -6610,7 +6712,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1744184543,
       "sinceBlock": 22229924,
@@ -6649,7 +6752,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1741247675,
       "sinceBlock": 21986488,
@@ -6768,7 +6872,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1738825799,
       "sinceBlock": 21785876,
@@ -6802,7 +6907,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1736822483,
       "sinceBlock": 21619802,
@@ -6848,7 +6954,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729698647,
       "sinceBlock": 21029297,
@@ -6889,7 +6996,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1757100515,
       "sinceBlock": 23298997,
@@ -6924,7 +7032,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1741021031,
       "sinceBlock": 21967695,
@@ -7001,7 +7110,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1734533711,
       "sinceBlock": 21430146,
@@ -7037,7 +7147,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1747409747,
       "sinceBlock": 22496558,
@@ -7077,7 +7188,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1742500007,
       "sinceBlock": 22090259,
@@ -7197,7 +7309,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1697125187,
       "sinceBlock": 18335289,
@@ -7309,7 +7422,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1736366387,
       "sinceBlock": 21582006,
@@ -7343,7 +7457,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729692971,
       "sinceBlock": 21028826,
@@ -7382,7 +7497,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1742497775,
       "sinceBlock": 22090074,
@@ -7418,7 +7534,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1761561755,
       "sinceBlock": 23668257,
@@ -7497,7 +7614,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729733759,
       "sinceBlock": 21032209,
@@ -7536,7 +7654,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729733807,
       "sinceBlock": 21032213,
@@ -7576,7 +7695,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758713171,
       "sinceBlock": 23432587,
@@ -7622,7 +7742,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739995859,
       "sinceBlock": 21882716,
@@ -7668,7 +7789,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739964647,
       "sinceBlock": 21880125,
@@ -7778,7 +7900,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1741542395,
       "sinceBlock": 22010890,
@@ -7814,7 +7937,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1734425831,
       "sinceBlock": 21421205,
@@ -7928,7 +8052,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729697159,
       "sinceBlock": 21029174,
@@ -7969,7 +8094,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758713183,
       "sinceBlock": 23432588,
@@ -8010,7 +8136,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758724187,
       "sinceBlock": 23433499,
@@ -8051,7 +8178,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1745332559,
       "sinceBlock": 22325181,
@@ -8092,7 +8220,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1718219663,
       "sinceBlock": 20077767,
@@ -8132,7 +8261,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1741032491,
       "sinceBlock": 21968645,
@@ -8269,7 +8399,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729733603,
       "sinceBlock": 21032198,
@@ -8382,7 +8513,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1732766627,
       "sinceBlock": 21283735,
@@ -8417,7 +8549,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1752355283,
       "sinceBlock": 22905743,
@@ -8456,7 +8589,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729734095,
       "sinceBlock": 21032237,
@@ -8547,7 +8681,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1105,
+        "getExpectedNextSequenceNumber": 1106,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -8609,7 +8743,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1713201839,
       "sinceBlock": 19662376,
@@ -8650,7 +8785,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739964695,
       "sinceBlock": 21880129,
@@ -8765,7 +8901,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1737147179,
       "sinceBlock": 21646724,
@@ -8886,7 +9023,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1711027655,
       "sinceBlock": 19483330,
@@ -8996,7 +9134,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1737625907,
       "sinceBlock": 21686412,
@@ -9039,7 +9178,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 62,
+        "getExpectedNextSequenceNumber": 63,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -9111,7 +9250,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739532623,
       "sinceBlock": 21844416,
@@ -9152,7 +9292,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1706129963,
       "sinceBlock": 19079032,
@@ -9214,7 +9355,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1719424031,
       "sinceBlock": 20177447,
@@ -9250,7 +9392,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729733639,
       "sinceBlock": 21032201,
@@ -9286,7 +9429,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1738949099,
       "sinceBlock": 21796105,
@@ -9406,7 +9550,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1709671463,
       "sinceBlock": 19371434,
@@ -9444,7 +9589,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1761560027,
       "sinceBlock": 23668116,
@@ -9478,7 +9624,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1756118243,
       "sinceBlock": 23217570,
@@ -9512,7 +9659,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739974331,
       "sinceBlock": 21880929,
@@ -9550,7 +9698,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1742500427,
       "sinceBlock": 22090294,
@@ -9591,7 +9740,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729733843,
       "sinceBlock": 21032216,
@@ -9671,7 +9821,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1743680831,
       "sinceBlock": 22188178,
@@ -10274,7 +10425,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1720026155,
       "sinceBlock": 20227345,
@@ -10319,7 +10471,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1735554587,
       "sinceBlock": 21514700,
@@ -10360,7 +10513,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739964683,
       "sinceBlock": 21880128,
@@ -10401,7 +10555,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758713099,
       "sinceBlock": 23432581,
@@ -10442,7 +10597,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1745589131,
       "sinceBlock": 22346454,
@@ -10478,7 +10634,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1713201383,
       "sinceBlock": 19662339,
@@ -10514,7 +10671,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1708552763,
       "sinceBlock": 19278858,
@@ -10571,7 +10729,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1722536915,
       "sinceBlock": 20435489,
@@ -10607,7 +10766,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1715888555,
       "sinceBlock": 19884695,
@@ -10709,7 +10869,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729692791,
       "sinceBlock": 21028811,
@@ -10751,7 +10912,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1754506799,
       "sinceBlock": 23083974,
@@ -10875,7 +11037,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1753024571,
       "sinceBlock": 22961239,
@@ -11155,7 +11318,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1760636855,
       "sinceBlock": 23591807,
@@ -11176,7 +11340,8 @@
           "1294465214383781161",
           "9043146809313071210",
           "5936861837188149645",
-          "13624601974233774587"
+          "13624601974233774587",
+          "8481857512324358265"
         ],
         "getToken": "eth:0x8236a87084f8B84306f72007F36F2618A5634494",
         "getTokenDecimals": 8,
@@ -11205,7 +11370,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729692563,
       "sinceBlock": 21028792,
@@ -11241,7 +11407,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1737344771,
       "sinceBlock": 21663103,
@@ -11350,7 +11517,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729692863,
       "sinceBlock": 21028817,
@@ -11388,7 +11556,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1712691803,
       "sinceBlock": 19620241,
@@ -11428,7 +11597,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1722536699,
       "sinceBlock": 20435471,
@@ -11464,7 +11634,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729698767,
       "sinceBlock": 21029307,
@@ -11605,7 +11776,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758713279,
       "sinceBlock": 23432596,
@@ -11720,7 +11892,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739651879,
       "sinceBlock": 21854253,
@@ -11831,7 +12004,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729733975,
       "sinceBlock": 21032227,
@@ -11867,7 +12041,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729693079,
       "sinceBlock": 21028835,
@@ -11905,7 +12080,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758713123,
       "sinceBlock": 23432583,
@@ -12015,7 +12191,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1745006327,
       "sinceBlock": 22298124,
@@ -12051,7 +12228,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739281235,
       "sinceBlock": 21823641,
@@ -12096,7 +12274,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758724151,
       "sinceBlock": 23433496,
@@ -12206,7 +12385,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729739627,
       "sinceBlock": 21032697,
@@ -12245,7 +12425,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1751693939,
       "sinceBlock": 22850982,
@@ -12279,7 +12460,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1736785679,
       "sinceBlock": 21616755,
@@ -12331,7 +12513,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1754429471,
       "sinceBlock": 23077566,
@@ -12372,7 +12555,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1748940743,
       "sinceBlock": 22623055,
@@ -12419,7 +12603,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1757957291,
       "sinceBlock": 23369967,
@@ -12455,7 +12640,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1746459815,
       "sinceBlock": 22418505,
@@ -12564,7 +12750,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1748714555,
       "sinceBlock": 22604363,
@@ -12669,7 +12856,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1760795915,
       "sinceBlock": 23604976,
@@ -12703,7 +12891,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1741372091,
       "sinceBlock": 21996788,
@@ -12736,7 +12925,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1742238707,
       "sinceBlock": 22068614,
@@ -12772,7 +12962,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1747154087,
       "sinceBlock": 22475516,
@@ -12823,7 +13014,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1751531099,
       "sinceBlock": 22837491,
@@ -12936,7 +13128,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729698731,
       "sinceBlock": 21029304,
@@ -12979,7 +13172,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 9097,
+        "getExpectedNextSequenceNumber": 9149,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -13046,7 +13239,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758684995,
       "sinceBlock": 23430251,
@@ -13082,7 +13276,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729729427,
       "sinceBlock": 21031852,
@@ -13196,7 +13391,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1748337743,
       "sinceBlock": 22573199,
@@ -13230,7 +13426,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1742242727,
       "sinceBlock": 22068944,
@@ -13269,7 +13466,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1727960207,
       "sinceBlock": 20885131,
@@ -13419,7 +13617,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1753021895,
       "sinceBlock": 22961017,
@@ -13453,7 +13652,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1715888531,
       "sinceBlock": 19884693,
@@ -13503,7 +13703,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729738067,
       "sinceBlock": 21032567,
@@ -13544,7 +13745,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1727815127,
       "sinceBlock": 20873084,
@@ -13584,7 +13786,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1749658835,
       "sinceBlock": 22682475,
@@ -13610,7 +13813,7 @@
         ],
         "getToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "getTokenDecimals": 6,
-        "getUnsiloedLiquidity": 426230150178,
+        "getUnsiloedLiquidity": 417416695099,
         "getXERC20": "eth:0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "typeAndVersion": "SiloedWithUnsiloedXERC20GroupTokenPool 1.6.0"
@@ -13637,7 +13840,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1711406315,
       "sinceBlock": 19514499,
@@ -13698,7 +13902,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1216,
+        "getExpectedNextSequenceNumber": 1227,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -13904,7 +14108,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1749831023,
       "sinceBlock": 22696743,
@@ -13940,7 +14145,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1744059971,
       "sinceBlock": 22219593,
@@ -14051,7 +14257,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1745129939,
       "sinceBlock": 22308374,
@@ -14094,7 +14301,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729692719,
       "sinceBlock": 21028805,
@@ -14130,7 +14338,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758713075,
       "sinceBlock": 23432579,
@@ -14240,7 +14449,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758713147,
       "sinceBlock": 23432585,
@@ -14281,7 +14491,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1712692055,
       "sinceBlock": 19620262,
@@ -14409,7 +14620,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1722536579,
       "sinceBlock": 20435461,
@@ -14445,7 +14657,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1720821911,
       "sinceBlock": 20293296,
@@ -14492,8 +14705,8 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 3251,
-        "getLatestPriceEpochAndRound": 32128770,
+        "getExpectedNextSequenceNumber": 3271,
+        "getLatestPriceEpochAndRound": 32209155,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "avalanche",
@@ -14554,7 +14767,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739964623,
       "sinceBlock": 21880123,
@@ -14595,7 +14809,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1737503183,
       "sinceBlock": 21676237,
@@ -14633,7 +14848,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729738223,
       "sinceBlock": 21032580,
@@ -14669,7 +14885,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739964743,
       "sinceBlock": 21880133,
@@ -14907,7 +15124,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1748523059,
       "sinceBlock": 22588521,
@@ -14941,7 +15159,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1760629487,
       "sinceBlock": 23591195,
@@ -14975,7 +15194,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729697051,
       "sinceBlock": 21029165,
@@ -15011,7 +15231,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739964671,
       "sinceBlock": 21880127,
@@ -15052,7 +15273,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1746193535,
       "sinceBlock": 22396502,
@@ -15098,7 +15320,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1736901131,
       "sinceBlock": 21626321,
@@ -15132,7 +15355,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1742499371,
       "sinceBlock": 22090207,
@@ -15783,7 +16007,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 8 (75%)",
-        "nonce": 111,
+        "nonce": 113,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -15819,7 +16043,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1761560831,
       "sinceBlock": 23668182,
@@ -15880,7 +16105,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1745298299,
       "sinceBlock": 22322335,
@@ -15952,7 +16178,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739962247,
       "sinceBlock": 21879927,
@@ -16072,7 +16299,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1761578039,
       "sinceBlock": 23669600,
@@ -16084,7 +16312,11 @@
         "getRateLimitAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getRmnProxy": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
         "getRouter": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
-        "getSupportedChains": ["2459028469735686113", "6433500567565415381"],
+        "getSupportedChains": [
+          "2459028469735686113",
+          "6433500567565415381",
+          "8481857512324358265"
+        ],
         "getToken": "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
         "getTokenDecimals": 8,
         "owner": "eth:0x251a604E8E8f6906d60f8dedC5aAeb8CD38F4892",
@@ -16107,7 +16339,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1757621831,
       "sinceBlock": 23342152,
@@ -16222,7 +16455,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758155687,
       "sinceBlock": 23386413,
@@ -16265,7 +16499,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739365451,
       "sinceBlock": 21830582,
@@ -16323,7 +16558,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1742290235,
       "sinceBlock": 22072879,
@@ -16357,7 +16593,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1757367803,
       "sinceBlock": 23321131,
@@ -16418,7 +16655,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729734023,
       "sinceBlock": 21032231,
@@ -16454,7 +16692,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739735555,
       "sinceBlock": 21861163,
@@ -16488,7 +16727,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758597647,
       "sinceBlock": 23423006,
@@ -16522,7 +16762,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1715888603,
       "sinceBlock": 19884699,
@@ -16554,7 +16795,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729737107,
       "sinceBlock": 21032488,
@@ -16590,7 +16832,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1760021495,
       "sinceBlock": 23540887,
@@ -16662,7 +16905,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758713243,
       "sinceBlock": 23432593,
@@ -16703,7 +16947,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729729331,
       "sinceBlock": 21031844,
@@ -16737,7 +16982,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1749480635,
       "sinceBlock": 22667726,
@@ -16775,7 +17021,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1751654111,
       "sinceBlock": 22847679,
@@ -16811,7 +17058,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1736365187,
       "sinceBlock": 21581908,
@@ -16888,7 +17136,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729734047,
       "sinceBlock": 21032233,
@@ -16934,7 +17183,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1741853219,
       "sinceBlock": 22036647,
@@ -16975,7 +17225,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758713291,
       "sinceBlock": 23432597,
@@ -17016,7 +17267,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1707769439,
       "sinceBlock": 19214305,
@@ -17058,7 +17310,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1722536651,
       "sinceBlock": 20435467,
@@ -17163,7 +17416,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729697003,
       "sinceBlock": 21029161,
@@ -17204,7 +17458,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 2562,
+        "getExpectedNextSequenceNumber": 2564,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -17302,7 +17556,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729693031,
       "sinceBlock": 21028831,
@@ -17336,7 +17591,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1745351795,
       "sinceBlock": 22326779,
@@ -17375,7 +17631,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1734108035,
       "sinceBlock": 21394845,
@@ -17431,7 +17688,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758713219,
       "sinceBlock": 23432591,
@@ -17472,7 +17730,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1743650171,
       "sinceBlock": 22185646,
@@ -17505,7 +17764,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1756246247,
       "sinceBlock": 23228186,
@@ -17546,7 +17806,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1757929163,
       "sinceBlock": 23367640,
@@ -17580,7 +17841,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1750865363,
       "sinceBlock": 22782351,
@@ -17616,7 +17878,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1753209167,
       "sinceBlock": 22976525,
@@ -17651,7 +17914,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1740979463,
       "sinceBlock": 21964249,
@@ -17724,7 +17988,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1697125199,
       "sinceBlock": 18335290,
@@ -17772,7 +18037,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1718911091,
       "sinceBlock": 20134972,
@@ -17813,7 +18079,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729696883,
       "sinceBlock": 21029151,
@@ -17847,7 +18114,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1727705819,
       "sinceBlock": 20864010,
@@ -17881,7 +18149,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1742754731,
       "sinceBlock": 22111403,
@@ -18011,7 +18280,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 821,
+        "getExpectedNextSequenceNumber": 848,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -18073,7 +18342,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1742499767,
       "sinceBlock": 22090240,
@@ -18114,7 +18384,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1745433203,
       "sinceBlock": 22333521,
@@ -18228,7 +18499,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1759341107,
       "sinceBlock": 23484558,
@@ -18267,7 +18539,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1749055463,
       "sinceBlock": 22632544,
@@ -18305,7 +18578,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1736523635,
       "sinceBlock": 21595032,
@@ -18382,7 +18656,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1722536615,
       "sinceBlock": 20435464,
@@ -18443,7 +18718,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1139,
+        "getExpectedNextSequenceNumber": 1141,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -18743,16 +19018,16 @@
             0, 0, 0, 0, 0, 0, 0, 0, 0
           ]
         },
-        "getOpCount": 364,
+        "getOpCount": 366,
         "getRoot": {
-          "root": "0xf52b6b91071c2fdefc24c15e9ec35828337e135ecd44ed528581a305623c3c72",
-          "validUntil": 1763658085
+          "root": "0xc75fe8eabdfa29b5b76d01738bd5574a38e309ba7bc7f183bc155e4cebbab955",
+          "validUntil": 1763899780
         },
         "getRootMetadata": {
           "chainId": 1,
           "multiSig": "eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e",
-          "preOpCount": 363,
-          "postOpCount": 364,
+          "preOpCount": 365,
+          "postOpCount": 366,
           "overridePreviousRoot": false
         },
         "MAX_NUM_SIGNERS": 200,
@@ -18858,7 +19133,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 8404,
+        "getExpectedNextSequenceNumber": 8436,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -18994,7 +19269,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1708552811,
       "sinceBlock": 19278862,
@@ -19105,7 +19381,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758047807,
       "sinceBlock": 23377463,
@@ -19146,7 +19423,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1760427455,
       "sinceBlock": 23574497,
@@ -19200,7 +19478,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739964719,
       "sinceBlock": 21880131,
@@ -19241,7 +19520,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1738688987,
       "sinceBlock": 21774536,
@@ -19275,7 +19555,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1761912467,
       "sinceBlock": 23697233,
@@ -19313,7 +19594,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1742500259,
       "sinceBlock": 22090280,
@@ -19349,7 +19631,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1711406435,
       "sinceBlock": 19514509,
@@ -19390,7 +19673,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758547319,
       "sinceBlock": 23418832,
@@ -19431,7 +19715,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1747339439,
       "sinceBlock": 22490771,
@@ -19481,7 +19766,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 10457,
+        "getExpectedNextSequenceNumber": 10482,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -19548,7 +19833,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729733687,
       "sinceBlock": 21032204,
@@ -19588,7 +19874,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1747945427,
       "sinceBlock": 22540779,
@@ -19624,7 +19911,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1757442611,
       "sinceBlock": 23327341,
@@ -19934,7 +20222,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729738139,
       "sinceBlock": 21032573,
@@ -19968,7 +20257,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1752023495,
       "sinceBlock": 22878267,
@@ -20012,7 +20302,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729692911,
       "sinceBlock": 21028821,
@@ -20092,7 +20383,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729693139,
       "sinceBlock": 21028840,
@@ -20143,7 +20435,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1734107951,
       "sinceBlock": 21394838,
@@ -20199,7 +20492,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729698695,
       "sinceBlock": 21029301,
@@ -20235,7 +20529,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1707769475,
       "sinceBlock": 19214308,
@@ -20275,7 +20570,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758713231,
       "sinceBlock": 23432592,
@@ -20321,7 +20617,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1749538403,
       "sinceBlock": 22672496,
@@ -20357,7 +20654,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1736842523,
       "sinceBlock": 21621463,
@@ -20391,7 +20689,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1759730003,
       "sinceBlock": 23516768,
@@ -20402,7 +20701,11 @@
         "getRateLimitAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getRmnProxy": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
         "getRouter": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
-        "getSupportedChains": ["11344663589394136015", "5936861837188149645"],
+        "getSupportedChains": [
+          "11344663589394136015",
+          "5936861837188149645",
+          "13624601974233774587"
+        ],
         "getToken": "eth:0x5c98060ec53eF50Ab97FefEdd93Ff32efa07f5ce",
         "getTokenDecimals": 18,
         "owner": "eth:0x61835e15d76aCf1b0d59f70fA8c9a2aAC9e4268B",
@@ -20425,7 +20728,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739651495,
       "sinceBlock": 21854221,
@@ -20461,7 +20765,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1762290695,
       "sinceBlock": 23728552,
@@ -20497,7 +20802,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758713087,
       "sinceBlock": 23432580,
@@ -20538,7 +20844,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1736366063,
       "sinceBlock": 21581980,
@@ -20572,7 +20879,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1745850599,
       "sinceBlock": 22368163,
@@ -20616,7 +20924,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1747408355,
       "sinceBlock": 22496443,
@@ -20761,7 +21070,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1758713267,
       "sinceBlock": 23432595,
@@ -20812,7 +21122,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1742914331,
       "sinceBlock": 22124632,
@@ -20846,7 +21157,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1742498723,
       "sinceBlock": 22090153,
@@ -20882,7 +21194,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1745257619,
       "sinceBlock": 22318964,
@@ -20920,7 +21233,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1742149703,
       "sinceBlock": 22061234,
@@ -20961,7 +21275,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1717695479,
       "sinceBlock": 20034323,
@@ -20997,7 +21312,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1745302799,
       "sinceBlock": 22322709,
@@ -21031,7 +21347,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729733879,
       "sinceBlock": 21032219,
@@ -21071,7 +21388,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1754494955,
       "sinceBlock": 23082995,
@@ -21111,7 +21429,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739932499,
       "sinceBlock": 21877467,
@@ -21147,7 +21466,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1729700099,
       "sinceBlock": 21029418,
@@ -21183,7 +21503,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1757610575,
       "sinceBlock": 23341220,
@@ -21224,7 +21545,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 9337,
+        "getExpectedNextSequenceNumber": 9374,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -21355,7 +21676,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1720823027,
       "sinceBlock": 20293389,
@@ -21402,7 +21724,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 407,
+        "getExpectedNextSequenceNumber": 408,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "ethereum",
@@ -21533,7 +21855,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1760825987,
       "sinceBlock": 23607464,
@@ -21584,7 +21907,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1739209427,
       "sinceBlock": 21817688,
@@ -21697,7 +22021,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1760349791,
       "sinceBlock": 23568071,
@@ -21731,7 +22056,8 @@
         "getOnRamps",
         "getCurrentBridgedAmount",
         "getUnsiloedLiquidity",
-        "getLockedTokens"
+        "getLockedTokens",
+        "getSupportedChains"
       ],
       "sinceTimestamp": 1751682743,
       "sinceBlock": 22850053,
@@ -51561,8 +51887,8 @@
     "transporter/PriceRegistry": "0x1446d2e81e0804c808246c6c31122a8823aa7c974e2487647d7502d530d9b46f",
     "transporter/RouterV1_2_0": "0xabd52866e5c895c524c21b209ff836630841998d9c58164c4d5bb9cce698fb19",
     "transporter/TokenAdminRegistry": "0x28d68380ec883c6a6b267b97c91ab0904a762c604e68b51e4ec12ffed9c32d05",
-    "transporter/TokenPool": "0x8acb4979a48889011ad003ec6c5882b4c1892b3c874a46713b70aaea7a825e84"
+    "transporter/TokenPool": "0x32151072569e965287f6dde9deefc6e47dbb9fdd1f404c83312c29b57c3782f3"
   },
-  "usedBlockNumbers": { "ethereum": 23833851 },
+  "usedBlockNumbers": { "ethereum": 23840891 },
   "permissionsConfigHash": "0x87b4fc76477de4597558e21edc0e4076501e7eb6922df57c166bc61a6b4985fa"
 }

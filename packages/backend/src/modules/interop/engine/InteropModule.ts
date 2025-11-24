@@ -30,7 +30,7 @@ export function createInteropModule({
   }
   logger = logger.tag({ feature: 'interop', module: 'interop' })
 
-  const eventStore = new InteropEventStore(db)
+  const eventStore = new InteropEventStore(db, config.interop.inMemoryEventCap)
   const configStore = new InteropConfigStore(db)
   const plugins = createInteropPlugins({
     configs: configStore,
