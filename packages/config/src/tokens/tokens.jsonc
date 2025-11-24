@@ -6764,6 +6764,21 @@
   ],
   "corn": [
     {
+      "symbol": "USDT0",
+      "address": "0xb8ce59fc3717ada4c02eadf9682a9e934f625ebb",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "CORN",
       "address": "0x44f49ff0da2498bCb1D3Dc7C0f999578F67FD8C6",
       "coingeckoId": "corn-3",
