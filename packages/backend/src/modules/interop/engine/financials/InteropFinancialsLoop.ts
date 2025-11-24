@@ -6,8 +6,19 @@ import {
   UnixTime,
   unique,
 } from '@l2beat/shared-pure'
+import type { TokenDbClient } from '@l2beat/token-backend'
 import { TimeLoop } from '../../../../tools/TimeLoop'
-import { DeployedTokenId, type ITokenDb, type PriceInfo } from './TokenDb'
+import { DeployedTokenId } from './DeployedTokenId'
+
+export type TokenInfos = Map<
+  string,
+  {
+    abstractId: string
+    symbol: string
+    coingeckoId: string
+    decimals: number
+  }
+>
 
 export class InteropFinancialsLoop extends TimeLoop {
   constructor(

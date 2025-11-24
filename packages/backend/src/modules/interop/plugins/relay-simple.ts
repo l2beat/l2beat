@@ -14,7 +14,7 @@ the Solver or via Router (which serves as a multicall facitlity for
 a Solver that, e.g. tries to buy an NFT on behalf of a user).
 */
 
-import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
   createEventParser,
   createInteropEventType,

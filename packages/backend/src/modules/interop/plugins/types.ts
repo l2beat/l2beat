@@ -1,6 +1,11 @@
 import type { InteropEventContext } from '@l2beat/database'
-import { type Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { randomUUID } from 'crypto'
+import {
+  type Address32,
+  type Block,
+  EthereumAddress,
+  type Transaction,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   type Abi,
   type ContractEventName,

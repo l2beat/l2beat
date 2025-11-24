@@ -1,7 +1,14 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
-import { HttpClient, MulticallV3Client, RpcClient } from '@l2beat/shared'
-import { Address32, assert } from '@l2beat/shared-pure'
+import {
+  CoingeckoClient,
+  CoingeckoQueryService,
+  HttpClient,
+  MulticallV3Client,
+  RpcClient,
+} from '@l2beat/shared'
+import { assert, CoingeckoId, unique } from '@l2beat/shared-pure'
+import { getTokenDbClient } from '@l2beat/token-backend'
 import { v } from '@l2beat/validate'
 import { boolean, command, flag, positional, run, string } from 'cmd-ts'
 import { readFileSync } from 'fs'

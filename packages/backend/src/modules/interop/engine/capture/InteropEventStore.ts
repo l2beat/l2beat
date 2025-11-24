@@ -92,8 +92,8 @@ function fromDbRecord(record: InteropEventRecord): InteropEvent {
     ctx: {
       chain: record.chain,
       timestamp: record.timestamp,
-      logIndex: record.logIndex,
-      txHash: record.txHash,
+      logIndex: record.ctx.logIndex,
+      txHash: record.ctx.txHash,
     },
   }
 }

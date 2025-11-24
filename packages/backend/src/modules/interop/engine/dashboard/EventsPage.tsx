@@ -30,7 +30,7 @@ function EventsTable(props: {
           const dstChain = (e.args as { $dstChain?: string }).$dstChain
 
           return (
-            <tr key={`${e.chain}-${e.txHash}-${e.logIndex}`}>
+            <tr key={`${e.chain}-${e.ctx.txHash}-${e.ctx.logIndex}`}>
               <td data-order={e.timestamp}>
                 {new Date(e.timestamp * 1000).toLocaleString()}
               </td>
