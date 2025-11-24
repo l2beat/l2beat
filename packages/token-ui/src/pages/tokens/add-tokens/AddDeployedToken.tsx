@@ -461,7 +461,7 @@ function Queue({
             }}
             placeholder="ethereum,0x1234567890123456789012345678901234567890&#10;arbitrum,0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"
             rows={10}
-            className="font-mono text-sm"
+            className="max-h-[192px] font-mono text-sm"
           />
           {error && <p className="text-destructive text-sm">{error}</p>}
         </div>
