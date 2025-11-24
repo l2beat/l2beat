@@ -23,7 +23,7 @@ export function validateResolver<Input extends FieldValues, Context, Output>(
       }
     }
 
-    return { values: input, errors: {} }
+    return { values: schema.parse(input), errors: {} }
   }
 }
 
