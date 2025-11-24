@@ -24,7 +24,7 @@ export const mantle: ScalingProject = opStackL2({
     description:
       'Mantle is a modular general-purpose validium with a protocol design philosophy that aims to offer users a less costly and more user-friendly experience, provide developers with a simpler and more flexible development environment, and deliver a comprehensive set of infrastructure for the next wave of mass-adopted dApps.',
     links: {
-      websites: ['https://mantle.xyz/'],
+      websites: ['https://mantle.xyz/', 'https://forum.mantle.xyz/'],
       bridges: ['https://bridge.mantle.xyz'],
       documentation: ['https://docs-v2.mantle.xyz/'],
       explorers: ['https://explorer.mantle.xyz/'],
