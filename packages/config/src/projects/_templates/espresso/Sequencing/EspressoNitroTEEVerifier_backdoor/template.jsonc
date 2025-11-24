@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EspressoNitroTEEVerifier_neutered",
+  "description": "[NEUTERED] Usually verifies attestations of an AWS Nitro TEE, but this version of the contract does not verify anything and always returns true for certificate verifications. It also allows the owner to register any signer without a TEE attestation.",
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "register any signer without attestation by the TEE and spoof signatures."
+        }
+      ]
+    },
+    "registeredSigners": {
+      "handler": {
+        "type": "event",
+        "select": "signer",
+        "add": {
+          "event": "AWSSignerRegistered"
+        },
+        "remove": {
+          "event": "DeletedAWSRegisteredSigner"
+        }
+      }
+    },
+    "validEnclaveHashes": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "enclaveHash",
+        "add": {
+          "event": "AWSEnclaveHashSet",
+          "where": ["=", "#valid", true]
+        },
+        "remove": {
+          "event": "AWSEnclaveHashSet",
+          "where": ["=", "#valid", false]
+        }
+      }
+    }
+  }
+}

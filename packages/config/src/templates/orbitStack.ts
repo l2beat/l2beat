@@ -1149,7 +1149,8 @@ function getDAProviders(
     templateVars.discovery.getContractValue<string>(
       'SequencerInbox',
       'espressoTEEVerifier',
-    ) !== EthereumAddress.ZERO
+    ) !== EthereumAddress.ZERO &&
+    !templateVars.discovery.hasContract('EspressoNitroTEEVerifier_neutered') // this one is here because of apechain, who deployed a backdoored TEE verifier
 
   const isUsingEspressonAndDac =
     isUsingEspressoSequencer && postsToDAC(templateVars)
