@@ -1,6 +1,6 @@
 {
   "name": "eclipse",
-  "timestamp": 1763636218,
+  "timestamp": 1763979972,
   "configHash": "0xa03ce50c533a805d3b2035ceb089b205d585943e5e69aa083dc8b308ae4203cb",
   "entries": [
     {
@@ -145,6 +145,7 @@
           "role": ".withdrawerAC"
         }
       ],
+      "ignoreInWatchMode": ["depositIndex"],
       "sinceTimestamp": 1762805459,
       "sinceBlock": 23771157,
       "values": {
@@ -185,7 +186,7 @@
         "CLAIM_AUTHORITY_ROLE": "0x49d85f38d8d200e3ac71b7ada9a2786ccb6d016b3c28e43e8057f6bbae438adc",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"],
-        "depositIndex": 10,
+        "depositIndex": 15,
         "FRAUD_WINDOW_SETTER_ROLE": "0xe68a6574a7e933010135bdcdb85f5b60aed1ee2a05b00c7c3b88734a75706cf0",
         "fraudWindowDuration": 604800,
         "getVersionComponents": { "major": 3, "minor": 0, "patch": 0 },
@@ -893,13 +894,13 @@
     ]
   },
   "usedTemplates": {
-    "eclipse/CanonicalBridge": "0x3028ad5c23ba079d10065324a135b092e75a5ca419cdb7ac0587074e3053d640",
+    "eclipse/CanonicalBridge": "0xb51e8c0128452f7113c7d08ed5b8891f7813d76e3939be3931f7f0b66428bbc1",
     "eclipse/EtherBridge": "0x9e0ad9f10767611f57df498651c22d2f5668f4627bccc8e46d0f43a58a845525",
     "eclipse/Mailbox": "0x9e0ad9f10767611f57df498651c22d2f5668f4627bccc8e46d0f43a58a845525",
     "eclipse/Treasury": "0x08a8222e3c470e18a1546220ba08a53b24e40935a0cb002af4a516050794b89a",
     "eclipse/Upgrader0to1": "0x62b4c472e65c2ae7518c7fb7fa8791913f6109336e1376e07f6b5a001a5f2e8b",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23839796 },
+  "usedBlockNumbers": { "ethereum": 23868113 },
   "permissionsConfigHash": "0x07f5da376711d11a086e6a89d61b2929c924ba4586868db74e8debbec3b2f0c6"
 }

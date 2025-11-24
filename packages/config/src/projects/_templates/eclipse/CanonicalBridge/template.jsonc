@@ -59,5 +59,6 @@
         }
       ]
     }
-  }
+  },
+  "ignoreInWatchMode": ["depositIndex"]
 }
