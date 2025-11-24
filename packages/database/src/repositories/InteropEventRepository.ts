@@ -1,4 +1,4 @@
-import { type Address32, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropEvent } from '../kysely/generated/types'
@@ -21,14 +21,8 @@ export interface InteropEventRecord {
 export interface InteropEventContext {
   timestamp: UnixTime
   chain: string
-  blockNumber: number
-  blockHash: string
   txHash: string
-  txValue?: bigint
-  txTo?: Address32
-  txFrom?: Address32
   logIndex: number
-  txData: string
 }
 
 export function toRecord(row: Selectable<InteropEvent>): InteropEventRecord {

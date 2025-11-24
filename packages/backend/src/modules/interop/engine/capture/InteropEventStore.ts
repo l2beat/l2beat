@@ -108,15 +108,10 @@ function toDbRecord(event: InteropEvent): InteropEventRecord {
     args: event.args,
     chain: event.ctx.chain,
     timestamp: event.ctx.timestamp,
-    logIndex: event.ctx.logIndex,
-    txHash: event.ctx.txHash,
     matched: false,
     unsupported: false,
+    ctx: event.ctx,
     // Deprecated
-    blockHash: '-',
     blockNumber: 0,
-    value: 0n,
-    txTo: '-',
-    calldata: '-',
   }
 }
