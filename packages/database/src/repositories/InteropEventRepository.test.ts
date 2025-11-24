@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
 import {
   type InteropEventContext,
@@ -360,9 +360,9 @@ describeDatabase(InteropEventRepository.name, (db) => {
         UnixTime(200),
         {
           args: 123456789012345678901234567890n,
-          ctx: mockObject<InteropEventContext>({
+          ctx: {
             txValue: 123456789012345678901234567890n,
-          }),
+          } as InteropEventContext,
         },
       )
 
@@ -385,9 +385,9 @@ describeDatabase(InteropEventRepository.name, (db) => {
           args: {
             amount: 999999999999999999999999n,
           },
-          ctx: mockObject<InteropEventContext>({
+          ctx: {
             txValue: 999999999999999999999999n,
-          }),
+          } as InteropEventContext,
         },
       )
 
@@ -425,7 +425,7 @@ function event(
     matched: false,
     unsupported: false,
     args: { amount: '1000000000000000000' },
-    ctx: mockObject<InteropEventContext>({ blockNumber: 1 }),
+    ctx: { blockNumber: 1 } as InteropEventContext,
     chain: 'chain',
     blockNumber: 1,
     ...overrides,
