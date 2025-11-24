@@ -26,6 +26,13 @@
     "getNextFlushableEpoch",
     "getPendingBlockNumber",
     "getProvenBlockNumber",
-    "getTips"
-  ]
+    "getTips",
+    "getAvailableValidatorFlushes"
+  ],
+  "fields": {
+    "getManaLimit": {
+      "severity": "HIGH",
+      "description": "gas limit, currently 0 to prevent transactions"
+    }
+  }
 }
