@@ -7,5 +7,5 @@
     "getWithdrawal",
     "totalPowerAt"
   ],
-  "ignoreInWatchMode": ["totalPowerNow"]
+  "ignoreInWatchMode": ["totalPowerNow", "withdrawalCount"]
 }

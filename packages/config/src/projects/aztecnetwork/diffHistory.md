@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xe6b8e95d0210ddcffcc7a06bada0f590b9b3401a
+
+# Diff at Mon, 24 Nov 2025 10:26:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7f22580fca8d48e9cc5f7f28da38d6b8725e891 block: 1763649088
+- current timestamp: 1763978160
+
+## Description
+
+config: yeeted flushrewarder (not core contract), ignored more noisy vars
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1763649088 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract FlushRewarder (eth:0x7C9a7130379F1B5dd6e7A53AF84fC0fE32267B65)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x33d374ce8a5ffbbbbf65e438918bff1c8cd9b50b
 
 # Diff at Thu, 20 Nov 2025 14:51:30 GMT:
