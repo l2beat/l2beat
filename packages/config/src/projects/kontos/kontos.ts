@@ -19,7 +19,7 @@ export const kontos: ScalingProject = underReviewL2({
       explorers: ['https://explorer.kontos.io/'],
       repositories: ['https://twitter.com/kontosio'],
       socialMedia: [
-        'https://discord.com/invite/zecrey',
+        'https://discord.com/invite/MdajwkVZE4',
         'https://x.com/kontosio',
         'https://t.me/ZecreyAnnouncement',
         'https://kontosio.medium.com/',
