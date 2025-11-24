@@ -1,3 +1,25 @@
+Generated with discovered.json: 0x793058d7bfaa3d491f390caa0191496eb438826b
+
+# Diff at Mon, 24 Nov 2025 12:32:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7f22580fca8d48e9cc5f7f28da38d6b8725e891 block: 1763649253
+- current timestamp: 1763987450
+
+## Description
+
+third aggchainVkey with identifier added.
+
+## Watched changes
+
+```diff
+    contract AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      values.aggchainVKeys.0x00080001:
++        [{"selector":"0x00080001","newVKey":"0x6e38caa6114ac4b9779f647547de9e8f09e9f5cd6194e7134110760d3aa31b53"}]
+    }
+```
+
 Generated with discovered.json: 0xac98d101fd026666422a99cf3798edc25e1b9843
 
 # Diff at Thu, 20 Nov 2025 14:36:02 GMT:
