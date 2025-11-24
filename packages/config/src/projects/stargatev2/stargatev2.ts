@@ -54,6 +54,7 @@ export const stargatev2: Bridge = {
     links: {
       websites: ['https://stargate.finance/', 'https://layerzero.network/'],
       bridges: ['https://layerzeroscan.com/'],
+      documentation: ['https://docs.stargate.finance/introduction/overview', 'https://docs.layerzero.network/v2'],
       repositories: [
         'https://github.com/stargate-protocol/stargate-v2',
         'https://github.com/LayerZero-Labs/LayerZero-v2',
