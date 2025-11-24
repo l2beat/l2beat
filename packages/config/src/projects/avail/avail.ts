@@ -95,6 +95,10 @@ App-specific data can be reconstructed by app clients, which request and assembl
           title: 'Avail App Client - Source Code',
           url: 'https://github.com/availproject/avail-light/blob/a9e1741a6c7579d6ab1988eb409808b33f999180/core/src/app_client.rs',
         },
+        {
+          title: 'Data Availability - Reference Document',
+          url: 'https://github.com/availproject/data-availability/blob/master/reference%20document/Data%20Availability%20-%20Reference%20Document.pdf',
+        },
       ],
       risks: [
         {
