@@ -194,14 +194,14 @@ export async function makeConfig(
 
 export function getInteropChains() {
   return [
-    { name: 'ethereum', type: 'evm' as const },
-    { name: 'arbitrum', type: 'evm' as const },
-    { name: 'base', type: 'evm' as const },
-    { name: 'optimism', type: 'evm' as const },
-    { name: 'apechain', type: 'evm' as const },
-    { name: 'polygonpos', type: 'evm' as const },
-    { name: 'zksync2', type: 'evm' as const },
-    { name: 'abstract', type: 'evm' as const },
+    { name: 'ethereum', type: 'evm' as const, display: 'ETH' },
+    { name: 'arbitrum', type: 'evm' as const, display: 'ARB' },
+    { name: 'base', type: 'evm' as const, display: 'BASE' },
+    { name: 'optimism', type: 'evm' as const, display: 'OP' },
+    { name: 'apechain', type: 'evm' as const, display: 'APE' },
+    { name: 'polygonpos', type: 'evm' as const, display: 'POL' },
+    { name: 'zksync2', type: 'evm' as const, display: 'ZK' },
+    { name: 'abstract', type: 'evm' as const, display: 'ABS' },
   ]
 }
 
