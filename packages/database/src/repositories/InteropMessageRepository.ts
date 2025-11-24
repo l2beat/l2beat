@@ -232,8 +232,6 @@ export class InteropMessageRepository extends BaseRepository {
       .where('app', 'is not', null)
       .execute()
 
-    console.log(rows.length)
-
     const grouped = new Map<string, string[]>()
 
     for (const row of rows) {
