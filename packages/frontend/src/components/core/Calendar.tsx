@@ -33,8 +33,6 @@ function Calendar({
       )}
       captionLayout={captionLayout}
       formatters={{
-        formatMonthDropdown: (date) =>
-          date.toLocaleString('default', { month: 'short' }),
         formatWeekdayName: (day) => {
           return new Intl.DateTimeFormat('en-US', { weekday: 'short' })
             .format(day)
@@ -48,9 +46,11 @@ function Calendar({
           'relative flex flex-col gap-4 md:flex-row',
           defaultClassNames.months,
         ),
+
         month: cn('flex w-full flex-col', defaultClassNames.month),
         nav: cn(
           'absolute inset-x-0 top-0 flex w-full items-center justify-between gap-1 px-3 py-[9px]',
+          captionLayout === 'dropdown' && 'h-[54px]',
           defaultClassNames.nav,
         ),
         button_previous: cn(
@@ -72,19 +72,16 @@ function Calendar({
           defaultClassNames.dropdowns,
         ),
         dropdown_root: cn(
-          'relative rounded-md border border-input shadow-xs',
+          'relative rounded-md border border-divider shadow-xs',
           // 'has-focus:border-ring has-focus:ring-[3px] has-focus:ring-ring/50',
           defaultClassNames.dropdown_root,
         ),
-        dropdown: cn(
-          'absolute inset-0 bg-popover opacity-0',
-          defaultClassNames.dropdown,
-        ),
+        dropdown: cn('absolute inset-0 opacity-0', defaultClassNames.dropdown),
         caption_label: cn(
           'select-none font-medium',
           captionLayout === 'label'
             ? 'font-medium text-label-value-14 text-secondary'
-            : 'flex h-8 items-center gap-1 rounded-md pr-1 pl-2 font-medium text-label-value-14 text-secondary [&>svg]:size-3.5 [&>svg]:text-secondary',
+            : 'flex h-8 items-center gap-1 rounded-md pr-1 pl-2 font-medium text-label-value-14 [&>svg]:text-secondary',
           defaultClassNames.caption_label,
         ),
         table: 'w-full border-collapse',
@@ -93,7 +90,7 @@ function Calendar({
           'flex flex-1 select-none items-center justify-center rounded-md font-semibold text-secondary text-subtitle-10',
           defaultClassNames.weekday,
         ),
-        week: cn('flex w-full', defaultClassNames.week),
+        week: cn('group/week flex w-full', defaultClassNames.week),
         week_number_header: cn(
           'w-(--cell-width) select-none',
           defaultClassNames.week_number_header,
@@ -103,7 +100,7 @@ function Calendar({
           defaultClassNames.week_number,
         ),
         day: cn(
-          'group/day relative h-full w-full select-none border border-divider p-0 text-center',
+          'group/day relative h-(--cell-height) w-(--cell-width) select-none border border-divider p-0 text-center',
           // props.showWeekNumber
           //   ? '[&:nth-child(2)[data-selected=true]_button]:rounded-l-md'
           //   : '[&:first-child[data-selected=true]_button]:rounded-l-md',
@@ -202,7 +199,7 @@ function CalendarDayButton({
       data-range-end={modifiers.range_end}
       data-range-middle={modifiers.range_middle}
       className={cn(
-        'flex h-(--cell-height) w-full min-w-(--cell-width) flex-col items-center justify-center gap-1 font-medium text-label-value-14 leading-none data-[range-end=true]:bg-brand data-[range-middle=true]:bg-surface-secondary data-[range-start=true]:bg-brand data-[selected-single=true]:bg-brand data-[range-end=true]:text-white data-[range-middle=true]:text-primary data-[range-start=true]:text-white data-[selected-single=true]:text-white group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 dark:hover:text-white [&>span]:text-xs [&>span]:opacity-70',
+        'flex size-full flex-col items-center justify-center gap-1 font-medium text-label-value-14 leading-none data-[range-end=true]:bg-brand data-[range-middle=true]:bg-surface-secondary data-[range-start=true]:bg-brand data-[selected-single=true]:bg-brand data-[range-end=true]:text-white data-[range-middle=true]:text-primary data-[range-start=true]:text-white data-[selected-single=true]:text-white group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 dark:hover:text-white [&>span]:text-xs [&>span]:opacity-70',
         // 'group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-[3px] group-data-[focused=true]/day:ring-ring/50',
         defaultClassNames.day,
         className,

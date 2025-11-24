@@ -5,9 +5,9 @@ export type TvsChartResolution = ReturnType<typeof rangeToResolution>
 
 export function rangeToResolution(range: ChartRange) {
   if (range[0] === null) return 'daily'
-  if (range[0] > UnixTime.toStartOf(UnixTime.now(), 'day') - 7 * UnixTime.DAY)
+  if (range[0] >= UnixTime.toStartOf(UnixTime.now(), 'day') - 7 * UnixTime.DAY)
     return 'hourly'
-  if (range[0] > UnixTime.toStartOf(UnixTime.now(), 'day') - 90 * UnixTime.DAY)
+  if (range[0] >= UnixTime.toStartOf(UnixTime.now(), 'day') - 90 * UnixTime.DAY)
     return 'sixHourly'
   return 'daily'
 }

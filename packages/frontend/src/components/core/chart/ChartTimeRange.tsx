@@ -19,7 +19,7 @@ export function ChartTimeRange({ range }: Props) {
 
 export function ProjectChartTimeRange({ range }: Props) {
   if (!range) {
-    return <Skeleton className="h-8 w-44 lg:w-52" />
+    return <Skeleton className="mb-1 h-7 w-44 lg:w-52" />
   }
 
   return (

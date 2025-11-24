@@ -3,11 +3,20 @@ import { useState } from 'react'
 import type { DateRange } from 'react-day-picker'
 import { Calendar } from '~/components/core/Calendar'
 import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '~/components/core/Drawer'
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
+  selectTriggerClassnames,
 } from '~/components/core/Select'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useIsClient } from '~/hooks/useIsClient'
@@ -52,6 +61,8 @@ export function ChartTimeRangeControls({
     from: value[0] ? UnixTime.toDate(value[0]) : UnixTime.toDate(0),
     to: UnixTime.toDate(value[1]),
   })
+
+  const [month, setMonth] = useState<Date>(UnixTime.toDate(value[1]))
   const isClient = useIsClient()
   const breakpoint = useBreakpoint()
   const showSelect = projectSection
@@ -87,33 +98,82 @@ export function ChartTimeRangeControls({
     }
   }
 
+  const CalendarComponent = ({ className }: { className?: string }) => (
+    <>
+      <Calendar
+        mode="range"
+        month={month}
+        onMonthChange={setMonth}
+        // 2020-01-01
+        startMonth={UnixTime.toDate(1577836800)}
+        endMonth={UnixTime.toDate(UnixTime.toStartOf(UnixTime.now(), 'day'))}
+        selected={internalValue}
+        min={1}
+        timeZone="UTC"
+        disabled={(date) =>
+          date.getTime() >
+          UnixTime.toStartOf(UnixTime.now() + offset, 'day') * 1000
+        }
+        onSelect={onDateRangeChange}
+        captionLayout="dropdown"
+        className={cn('rounded-lg pb-3', className)}
+      />
+    </>
+  )
+
   if (showSelect) {
     return (
-      <Select
-        value={selectedOption}
-        onValueChange={(option) => {
-          const range = optionToRange(option as ChartRangeOption, {
-            offset,
-          })
-          setValue(range)
-        }}
-      >
-        <SelectTrigger className={cn('z-0 h-8 bg-surface-secondary')}>
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent className="bg-surface-secondary">
-          {options.map((option) => (
-            <SelectItem
-              key={option.value}
-              value={option.value}
-              disabled={option.disabled}
-              className="focus:bg-surface-tertiary"
-            >
-              {option.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <div className="flex items-center gap-1">
+        <Select
+          value={selectedOption}
+          onValueChange={(option) => {
+            const range = optionToRange(option as ChartRangeOption, {
+              offset,
+            })
+            setValue(range)
+          }}
+        >
+          <SelectTrigger className="z-0 h-8 bg-surface-secondary">
+            <SelectValue>
+              {selectedOption === 'custom'
+                ? '-'
+                : options.find((option) => option.value === selectedOption)
+                    ?.label}
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent className="bg-surface-secondary">
+            {options.map((option) => (
+              <SelectItem
+                key={option.value}
+                value={option.value}
+                disabled={option.disabled}
+                className="focus:bg-surface-tertiary"
+              >
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Drawer>
+          <DrawerHeader className="sr-only">
+            <DrawerTitle>Select time range</DrawerTitle>
+            <DrawerDescription>
+              Select the time range for the chart.
+            </DrawerDescription>
+          </DrawerHeader>
+          <DrawerTrigger
+            className={cn(
+              '!bg-surface-secondary z-0 h-8',
+              selectTriggerClassnames,
+            )}
+          >
+            <CalendarIcon className="size-4 shrink-0" />
+          </DrawerTrigger>
+          <DrawerContent className="mx-auto">
+            <CalendarComponent className="mx-auto h-[286px]" />
+          </DrawerContent>
+        </Drawer>
+      </div>
     )
   }
 
@@ -169,20 +229,7 @@ export function ChartTimeRangeControls({
       </div>
 
       <PopoverContent className="!p-0 !bg-surface-primary">
-        <Calendar
-          mode="range"
-          defaultMonth={UnixTime.toDate(value[1])}
-          selected={internalValue}
-          min={1}
-          timeZone="UTC"
-          disabled={(date) =>
-            date.getTime() >
-            UnixTime.toStartOf(UnixTime.now() + offset, 'day') * 1000
-          }
-          onSelect={onDateRangeChange}
-          className="rounded-lg"
-        />
-        <div className="h-3" />
+        <CalendarComponent />
       </PopoverContent>
     </Popover>
   )

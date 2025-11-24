@@ -26,7 +26,7 @@ export function TvsChartControls({
   return (
     <ChartControlsWrapper className={cn('flex-wrap gap-y-0', className)}>
       <ProjectChartTimeRange range={chartRange} />
-      <div className="flex items-center gap-1">
+      <div className="flex w-full items-center justify-between gap-1">
         {unit && (
           <TvsChartUnitControls unit={unit.value} setUnit={unit.setValue} />
         )}
