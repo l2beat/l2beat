@@ -10,6 +10,7 @@ export class ConsoleTransport implements LoggerTransport {
   static PLAIN_UTC = new ConsoleTransport(formatPlain(utcTime))
   static PRETTY = new ConsoleTransport(formatPretty(localTime))
   static PRETTY_UTC = new ConsoleTransport(formatPretty(utcTime))
+  static RAW = new ConsoleTransport(formatRaw())
 
   log(entry: LogEntry): void {
     const formatted = this.format(entry)
@@ -107,6 +108,16 @@ export function formatPretty(formatTime: (time: Date) => string) {
     const timeFmt = `${COLOR_GRAY}${formatTime(entry.time)}${COLOR_RESET}`
     const levelFmt = LEVEL_COLOR[entry.level]
     return `${timeFmt} ${levelFmt}${serviceFmt} ${entry.message}${restFmt}`
+  }
+}
+
+export function formatRaw() {
+  return function formatRaw(entry: LogEntry): string {
+    const { error, service: _, tag: __, ...rest } = entry.parameters
+    const restFmt = formatParametersPretty(
+      JSON.parse(safeToJSON(withError(rest, error))),
+    )
+    return `${entry.message}${restFmt}`
   }
 }
 

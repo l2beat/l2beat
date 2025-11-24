@@ -33,6 +33,8 @@ export const oevnetwork: ScalingProject = orbitStackL2({
       socialMedia: [
         'https://discord.com/invite/api3dao',
         'https://medium.com/api3',
+        'https://x.com/api3dao',
+        'https://t.me/API3DAO',
       ],
     },
   },

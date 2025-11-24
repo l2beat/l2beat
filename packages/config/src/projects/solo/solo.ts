@@ -14,9 +14,9 @@ export const solo: ScalingProject = upcomingL2({
     purposes: ['AI'],
     stacks: ['OP Stack'],
     links: {
-      websites: ['https://solo.tech'],
+      websites: ['https://solochain.io'],
       bridges: ['https://solo-testnet.bridge.caldera.xyz'],
-      documentation: ['https://docs.solo.tech/'],
+      documentation: ['https://docs.solochain.io'],
       explorers: ['https://solo-testnet.explorer.caldera.xyz/'],
       socialMedia: ['https://x.com/SoloDePIN', 'https://t.me/SoloDePIN'],
     },

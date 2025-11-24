@@ -1,114 +1,70 @@
 import type { Milestone } from '@l2beat/config'
-import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-
+import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
+import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
-import { useTableFilterContext } from '~/components/table/filters/TableFilterContext'
 import { useIsClient } from '~/hooks/useIsClient'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
-import { useActivityMetricContext } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import { useActivityTimeRangeContext } from '~/pages/scaling/activity/components/ActivityTimeRangeContext'
 import { ActivityTimeRangeControls } from '~/pages/scaling/activity/components/ActivityTimeRangeControls'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/getScalingActivityEntries'
-import type { ActivityProjectFilter } from '~/server/features/scaling/activity/utils/projectFilterUtils'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/React'
-import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
-import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
 import type { ChartScale } from '../types'
-import type { ActivityChartType } from './ActivityChart'
-import { ActivityChart } from './ActivityChart'
 import { ActivityChartHeader } from './ActivityChartHeader'
 import { ActivityRatioChart } from './ActivityRatioChart'
+import {
+  RECATEGORISED_ACTIVITY_CHART_META,
+  ScalingRecategorizedActivityChart,
+} from './ScalingRecategorizedActivityChart'
+import { ScalingRecategorizedActivityStats } from './ScalingRecategorizedActivityStats'
+import { getRatioChartData } from './utils/getRatioChartData'
 
 interface Props {
   milestones: Milestone[]
   entries: ScalingActivityEntry[]
-  hideScalingFactor?: boolean
-  type: ActivityChartType
 }
 
-export function ScalingActivityChart({
-  milestones,
-  entries,
-  hideScalingFactor,
-  type,
-}: Props) {
+export function ScalingActivityChart({ milestones, entries }: Props) {
   const { timeRange, setTimeRange } = useActivityTimeRangeContext()
-  const { metric } = useActivityMetricContext()
-  const { state: filters } = useTableFilterContext()
   const [scale, setScale] = useLocalStorage<ChartScale>(
-    'scaling-tvs-scale',
+    'scaling-activity-scale',
     'lin',
   )
-
-  const chartFilter: ActivityProjectFilter =
-    Object.keys(filters).length === 0
-      ? {
-          type: typeToChartFilterType(type),
-        }
-      : {
-          type: 'projects',
-          projectIds: entries.map((project) => project.id),
-        }
-
-  const { data: stats } = api.activity.chartStats.useQuery({
-    filter: chartFilter,
-  })
-  const { data, isLoading } = api.activity.chart.useQuery({
-    range: { type: timeRange },
-    filter: chartFilter,
-  })
-
-  const chartData = useMemo(
-    () =>
-      data?.data.map(
-        ([timestamp, projectsTx, ethereumTx, projectsUops, ethereumUops]) => {
-          const projectMetric = metric === 'tps' ? projectsTx : projectsUops
-          const ethereumMetric = metric === 'tps' ? ethereumTx : ethereumUops
-          return {
-            timestamp,
-            projects:
-              projectMetric !== null ? projectMetric / UnixTime.DAY : null,
-            ethereum:
-              ethereumMetric !== null ? ethereumMetric / UnixTime.DAY : null,
-          }
-        },
-      ),
-    [data?.data, metric],
+  const { dataKeys, toggleDataKey } = useChartDataKeys(
+    RECATEGORISED_ACTIVITY_CHART_META,
   )
 
-  const ratioData = useMemo(() => {
-    return data?.data.map(([timestamp, projectsTx, _, projectsUops]) => ({
-      timestamp,
-      ratio:
-        projectsTx !== null && projectsUops !== null
-          ? projectsTx === 0
-            ? 1
-            : projectsUops / projectsTx
-          : null,
-    }))
-  }, [data?.data])
+  const { data, isLoading } = api.activity.recategorisedChart.useQuery({
+    range: timeRange,
+    filter: { type: 'projects', projectIds: entries.map((entry) => entry.id) },
+  })
 
-  const chartRange = getChartRange(chartData)
+  const ratioData = useMemo(() => getRatioChartData(data), [data])
+  const chartRange = useMemo(
+    () => getChartRange(data?.data.map(([timestamp, ..._]) => ({ timestamp }))),
+    [data?.data],
+  )
 
   return (
     <div className="flex flex-col">
-      <ActivityChartHeader
-        stats={stats}
-        range={chartRange}
-        hideScalingFactor={hideScalingFactor}
-      />
-      <ActivityChart
-        className="mt-4 mb-3"
-        data={chartData}
-        syncedUntil={data?.syncedUntil}
+      <ActivityChartHeader />
+      <ScalingRecategorizedActivityStats entries={entries} />
+      <div className="mt-1 mb-2">
+        <ChartTimeRange range={chartRange} />
+      </div>
+      <ScalingRecategorizedActivityChart
+        data={data}
         isLoading={isLoading}
         milestones={milestones}
-        scale={scale}
-        metric={metric}
-        type={type}
+        chartMeta={RECATEGORISED_ACTIVITY_CHART_META}
+        interactiveLegend={{
+          dataKeys,
+          onItemClick: toggleDataKey,
+        }}
       />
       <ActivityRatioChart
         data={ratioData}
@@ -157,19 +113,4 @@ function Controls({ scale, setScale, timeRange, setTimeRange }: ControlsProps) {
       />
     </ChartControlsWrapper>
   )
-}
-
-function typeToChartFilterType(
-  type: ActivityChartType,
-): Exclude<ActivityProjectFilter['type'], 'all' | 'projects'> {
-  switch (type) {
-    case 'Rollups':
-      return 'rollups'
-    case 'ValidiumsAndOptimiums':
-      return 'validiumsAndOptimiums'
-    case 'Others':
-      return 'others'
-    default:
-      assertUnreachable(type)
-  }
 }

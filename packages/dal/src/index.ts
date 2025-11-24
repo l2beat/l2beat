@@ -6,19 +6,23 @@ import { getPackageHash } from './utils/packageHash'
 
 type Options = {
   redisUrl: string | undefined
-  env: Record<string, unknown>
+  // Pass here ENVs that may change the data queried by the query executor
   db: Database
   logger: Logger
   ci: boolean
+  envs?: Record<string, unknown>
 }
 
-export function makeQueryExecutor({ redisUrl, db, logger, env, ci }: Options) {
+export function makeQueryExecutor({ redisUrl, db, logger, envs, ci }: Options) {
   let cache: Cache | undefined
   if (redisUrl) {
-    const packageHash = getPackageHash(env)
+    const packageHash = getPackageHash(db.url, envs)
     cache = new Cache(redisUrl, packageHash)
   }
   return new QueryExecutor(db, logger, cache, ci)
 }
 
-export { type SummedByTimestampTvsValuesRecord } from './queries/tvl/getSummedByTimestampTvsValuesQuery'
+export {
+  type ProjectWithRanges,
+  type SummedByTimestampTvsValuesRecord,
+} from './queries/tvl/getSummedByTimestampTvsValuesQuery'

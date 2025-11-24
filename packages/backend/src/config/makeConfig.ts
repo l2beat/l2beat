@@ -157,12 +157,9 @@ export async function makeConfig(
     interop: flags.isEnabled('interop') && {
       capture: {
         enabled: flags.isEnabled('interop', 'capture'),
-        chains: [
-          { name: 'ethereum', type: 'evm' as const },
-          { name: 'arbitrum', type: 'evm' as const },
-          { name: 'base', type: 'evm' as const },
-          { name: 'optimism', type: 'evm' as const },
-        ].filter((c) => flags.isEnabled('interop', 'capture', c.name)),
+        chains: getInteropChains().filter((c) =>
+          flags.isEnabled('interop', 'capture', c.name),
+        ),
       },
       matching: flags.isEnabled('interop', 'matching'),
       cleaner: flags.isEnabled('interop', 'cleaner'),
@@ -179,6 +176,8 @@ export async function makeConfig(
       },
       financials: {
         enabled: flags.isEnabled('interop', 'financials'),
+        tokenDbApiUrl: env.string('TOKEN_BACKEND_TRPC_URL'),
+        tokenDbAuthToken: env.optionalString('TOKEN_BACKEND_CF_TOKEN'),
       },
       config: {
         enabled: flags.isEnabled('interop', 'config'),
@@ -186,10 +185,24 @@ export async function makeConfig(
           .filter((c) => c.chainId !== undefined)
           .map((c) => ({ id: c.chainId as number, name: c.name })),
       },
+      inMemoryEventCap: env.integer('INTEROP_EVENT_CAP', 500_000),
     },
     // Must be last
     flags: flags.getResolved(),
   }
+}
+
+export function getInteropChains() {
+  return [
+    { name: 'ethereum', type: 'evm' as const, display: 'ETH' },
+    { name: 'arbitrum', type: 'evm' as const, display: 'ARB' },
+    { name: 'base', type: 'evm' as const, display: 'BASE' },
+    { name: 'optimism', type: 'evm' as const, display: 'OP' },
+    { name: 'apechain', type: 'evm' as const, display: 'APE' },
+    { name: 'polygonpos', type: 'evm' as const, display: 'POL' },
+    { name: 'zksync2', type: 'evm' as const, display: 'ZK' },
+    { name: 'abstract', type: 'evm' as const, display: 'ABS' },
+  ]
 }
 
 function getEthereumMinTimestamp(chains: ChainConfig[]) {

@@ -105,6 +105,7 @@ export { ProxyDetector } from './discovery/proxies/ProxyDetector'
 export { generateEntrypoints } from './discovery/shared-modules/generateEntrypoints'
 export { deduplicateAbi } from './discovery/source/deduplicateAbi'
 export { SourceCodeService } from './discovery/source/SourceCodeService'
+export { asStructured } from './discovery/type-casters/asStructured'
 export { get$Implementations } from './discovery/utils/extractors'
 export { getContractField } from './discovery/utils/metaGetters'
 export { normalizeDiffPath } from './discovery/utils/normalizeDiffPath'
@@ -122,6 +123,10 @@ export {
   flatteningHash,
   getHashToBeMatched,
 } from './flatten/utils'
+export {
+  type ContractConfigSchema,
+  type DiscoveryConfigSchema,
+} from './schemas/schemas'
 export { EtherscanClient } from './utils/EtherscanClient'
 export { getErrorMessage } from './utils/getErrorMessage'
 export {

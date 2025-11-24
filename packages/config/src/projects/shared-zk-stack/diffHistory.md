@@ -1,3 +1,153 @@
+Generated with discovered.json: 0x85c2396421e140cef9c2914de8fe8fb8d18ce476
+
+# Diff at Mon, 24 Nov 2025 12:35:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7f22580fca8d48e9cc5f7f28da38d6b8725e891 block: 1762866771
+- current timestamp: 1763987551
+
+## Description
+
+[Queue ZIP-14 Upgrade ZK Token with Permissionless Burn Function](https://www.tally.xyz/gov/zksync/proposal/56697539346434504259886089137844919991955896472242107434527974192173343556352?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f).
+
+upgrades ZK token with permissioned burn function: https://disco.l2beat.com/diff/zksync:0x01a6715d3560241E09E865a46122bf347A576c09/zksync:0x4fcd824D304e9b1584CdBb582c104BDcbFb11274
+
+## Watched changes
+
+```diff
+    contract BridgeHub (eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
++++ description: All new chains created go thorugh the central bridgehub and are stored here with their respective STMs.
+      values.chainsCreated.16:
++        {"chainId":30715,"chainTypeManager":"eth:0x1adF137F59949c9081157D5de1e002D1C992071F","chainGovernance":"eth:0x6aED6A0aCaAa8E434d5d98e31D01175d08F409d2"}
+      values.getAllZKChainChainIDs.16:
++        30715
+      values.getAllZKChains.16:
++        "eth:0xb6d615084d7a72bF98C2BD35DD6aBE824feb2dc7"
+    }
+```
+
+```diff
+    contract MessageRoot (eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD) {
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+      values.chainCount:
+-        17
++        18
+    }
+```
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        13
++        14
+    }
+```
+
+Generated with discovered.json: 0x17d305bb1cd2e10751f16a70fea702221904cd5c
+
+# Diff at Tue, 11 Nov 2025 13:13:57 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b1f047143f23a2eb66cb8ee546e40e8456ba2c8c block: 1762779859
+- current timestamp: 1762866771
+
+## Description
+
+New proposal on ZkTokenGovernor: https://www.tally.xyz/gov/zksync/proposal/68452231205260788796569713423066878142593117468039270123415287058789227565934?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746. This proposal will shorten votingDelay from 7 to 3 days and lateQuorumVoteExtension from 7 to 2 days for Token Program Proposals.
+
+New proposal on ZkProtocolGovernor: https://www.tally.xyz/gov/zksync/proposal/56697539346434504259886089137844919991955896472242107434527974192173343556352?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f. This proposal will upgrade ZK token on zksync to ZKTokenV3, introducing role-gated burnFrom, permissionless burn of owned tokens and max supply.
+
+New proposal on ZkGovOpsGovernor: https://www.tally.xyz/gov/zksync/proposal/106273763076555939732473066377698909735843793351966221159383225521787704405222?govId=eip155:324:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160. This proposal will shorten votingDelay from 7 to 3 days and lateQuorumVoteExtension from 7 to 2 days for Governance Advisory Proposals.
+
+## Watched changes
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        14
++        15
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        13
++        14
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor (zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        1
++        2
+    }
+```
+
+Generated with discovered.json: 0x2ed9ffadb7c9ba5aadebefd4c7c3dcb4b02bf708
+
+# Diff at Mon, 10 Nov 2025 13:05:36 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@e5b98f73e765185048172a39ccf6cdf19ca5fe79 block: 1762349131
+- current timestamp: 1762779859
+
+## Description
+
+Part of [TPP-12](https://www.tally.xyz/gov/zksync/proposal/97314764080859415498674952864578860560861880297360481348949362100730414449748?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746) execution: `Zk_StakingPilot_2025` (0xb1c5f8ea8cE447FDaFB234D85EAD8c8A83b6306B) was granted the minter role on ZK token.
+
+## Watched changes
+
+```diff
+    contract ZkToken (zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+      values.accessControl.MINTER_ROLE.members.16:
++        "zksync:0xb1c5f8ea8cE447FDaFB234D85EAD8c8A83b6306B"
+    }
+```
+
+Generated with discovered.json: 0x5962fc0632a9211b2a4bb5cfa30da6aa5b533dce
+
+# Diff at Wed, 05 Nov 2025 13:27:46 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@65e01cac46a1da4a93a30562e3b62c4f0590a2f9 block: 1762180826
+- current timestamp: 1762349131
+
+## Description
+
+Created a new proposal: https://www.tally.xyz/gov/zksync/proposal/59956436467786828609747327435664724459335730934530897411573906572229159062327?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746. Queued a proposal: https://www.tally.xyz/gov/zksync/proposal/97314764080859415498674952864578860560861880297360481348949362100730414449748?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746.
+
+Executed proposal: https://www.tally.xyz/gov/zksync/proposal/8043865517871673466500920771587039178855876090726876272793935297016439640908?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746. This proposal added a new capped minter for ZK token to fund governance system.
+
+## Watched changes
+
+```diff
+    contract ZkToken (zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+      values.accessControl.MINTER_ROLE.members.15:
++        "zksync:0x1E386bc1FC6556c831371816f0a62705189939A1"
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        12
++        13
+      values.proposalQueuedCount:
+-        9
++        10
+    }
+```
+
 Generated with discovered.json: 0x4e2aff97b2b4185b08bea09e2aa30159eb71658a
 
 # Diff at Mon, 03 Nov 2025 14:41:33 GMT:

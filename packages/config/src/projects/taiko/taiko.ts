@@ -119,7 +119,10 @@ export const taiko: ScalingProject = {
         'https://community.taiko.xyz',
         'https://youtube.com/@taikoxyz',
       ],
-      rollupCodes: 'https://rollup.codes/taiko',
+      other: [
+        'https://rollup.codes/taiko',
+        'https://growthepie.com/chains/taiko',
+      ],
     },
     liveness: {
       explanation:
@@ -409,7 +412,7 @@ export const taiko: ScalingProject = {
         },
         {
           title: 'PreconfWhitelist.sol - Etherscan source code',
-          url: 'https://etherscan.io/address/0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8#code',
+          url: 'https://etherscan.io/address/0xFD019460881e6EeC632258222393d5821029b2ac#code',
         },
       ],
       risks: [FRONTRUNNING_RISK],
@@ -488,6 +491,14 @@ export const taiko: ScalingProject = {
       url: 'https://taiko.mirror.xyz/_oKlnpzKSOxGILyy4WlvpUmYEqD7BFxzmRo3XETlJqE',
       date: '2024-06-06T00:00:00.00Z',
       description: 'Proposing blocks on Taiko is now permissionless.',
+      type: 'general',
+    },
+    {
+      title: 'Taiko enabled SP1 and Risc0 proving',
+      url: 'https://etherscan.io/tx/0x13ea4d044a313cf667d16514465e6b96227ef7198bda7b19c70eefee44e9bccd',
+      date: '2024-11-01T00:00:00.00Z',
+      description:
+        'TaikoL1 smart contract upgraded to verify SP1 and Risc0 proofs of Taiko L2 blocks.',
       type: 'general',
     },
   ],

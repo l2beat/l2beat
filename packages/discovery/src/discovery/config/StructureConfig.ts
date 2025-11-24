@@ -57,6 +57,7 @@ export const ManualProxyType = v.enum([
 
 export type StructureContract = v.infer<typeof StructureContract>
 export const _StructureContract = {
+  discoverLibraries: v.boolean().optional(),
   canActIndependently: v.boolean().optional(),
   ignoreDiscovery: v.boolean().default(false),
   proxyType: ManualProxyType.optional(),
@@ -94,6 +95,7 @@ export type EntrypointsFile = v.infer<typeof EntrypointsFile>
 
 export type StructureConfig = v.infer<typeof StructureConfig>
 export const _StructureConfig = {
+  discoverLibraries: v.boolean().optional(),
   initialAddresses: v.array(
     v.string().transform((v) => ChainSpecificAddress(v)),
   ),

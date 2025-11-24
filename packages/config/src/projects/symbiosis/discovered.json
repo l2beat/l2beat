@@ -1,6 +1,6 @@
 {
   "name": "symbiosis",
-  "timestamp": 1759406260,
+  "timestamp": 1762264533,
   "configHash": "0x54f1224e55ad3dbf81063468af7ceb27bfcf42f9ed11b9afb8862a4100d030f7",
   "entries": [
     {
@@ -145,7 +145,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 66,
+        "nonce": 68,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -177,10 +177,10 @@
         ],
         "$upgradeCount": 1,
         "currentChainId": 1,
-        "mpc": "eth:0x169Ce9FE028d0Bcf6DaB3b7e04b78463b517AcBf",
-        "newMPC": "eth:0x169Ce9FE028d0Bcf6DaB3b7e04b78463b517AcBf",
-        "newMPCEffectiveTime": 1759320215,
-        "oldMPC": "eth:0x8F940aD8adeE5fc79Adb6d93F3BF01CA937Fb42D",
+        "mpc": "eth:0x048D2775261899441993b2B2415e93a287Ce634A",
+        "newMPC": "eth:0x048D2775261899441993b2B2415e93a287Ce634A",
+        "newMPCEffectiveTime": 1762239671,
+        "oldMPC": "eth:0x53dEec0F7dE9071Cf7205e46a6F6d63feC9cF952",
         "owner": "eth:0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
       },
       "implementationNames": {
@@ -204,7 +204,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
-        "0x8c47d485b7d202eb666ef592012502f811cc91f1337393dbfd3411b67dea3580"
+        "0x88f9af5b639d093bef909055aeab8deeb89f0960c4e729408ead2e7bebaa988b"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["requestCount"],
@@ -212,7 +212,7 @@
       "sinceBlock": 15966438,
       "values": {
         "$admin": "eth:0x1Da522B35363c1eda4833bc121c8F3c67B2caa75",
-        "$implementation": "eth:0x755a967298c96d50216C6ED8D68869747B4f6878",
+        "$implementation": "eth:0x57dBCB192fA64bf07Eab76941D1daE5177c8f4f3",
         "$pastUpgrades": [
           [
             "2022-11-14T06:19:11.000Z",
@@ -248,20 +248,25 @@
             "2024-11-06T18:25:35.000Z",
             "0x4ba8c9e82d442fff19bc936ad0a26c1b91025d3d9f321847b9a1b22dab3bc86b",
             ["eth:0x755a967298c96d50216C6ED8D68869747B4f6878"]
+          ],
+          [
+            "2025-11-03T11:35:59.000Z",
+            "0x24fe0ae55786abe96a4fbd26893143d7abf4babb38c602b80c118db1eda313ce",
+            ["eth:0x57dBCB192fA64bf07Eab76941D1daE5177c8f4f3"]
           ]
         ],
-        "$upgradeCount": 7,
+        "$upgradeCount": 8,
         "bridge": "eth:0x5523985926Aa12BA58DC5Ad00DDca99678D7227E",
         "metaRouter": "eth:0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F",
         "owner": "eth:0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a",
         "paused": false,
-        "requestCount": 92246,
+        "requestCount": 99706,
         "versionRecipient": "2.0.1",
         "wrapper": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "implementationNames": {
         "eth:0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8": "TransparentUpgradeableProxy",
-        "eth:0x755a967298c96d50216C6ED8D68869747B4f6878": "Portal"
+        "eth:0x57dBCB192fA64bf07Eab76941D1daE5177c8f4f3": "Portal"
       }
     },
     {
@@ -388,33 +393,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "eth:0x7057aB3fB2BeE9c18e0cDe4240DE4ff7f159E365": [
-      "event LogChangeMPC(address indexed oldMPC, address indexed newMPC, uint256 indexed effectiveTime, uint256 chainId)",
-      "event OracleRequest(address bridge, bytes callData, address receiveSide, address oppositeBridge, uint256 chainId)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event SetAdminPermission(address indexed admin, bool permission)",
-      "event SetTransmitterStatus(address indexed transmitter, bool status)",
-      "function changeMPC(address _newMPC) returns (bool)",
-      "function changeMPCSigned(address _newMPC, bytes signature) returns (bool)",
-      "function currentChainId() view returns (uint256)",
-      "function initialize(address _mpc)",
-      "function isAdmin(address) view returns (bool)",
-      "function isTransmitter(address) view returns (bool)",
-      "function mpc() view returns (address)",
-      "function newMPC() view returns (address)",
-      "function newMPCEffectiveTime() view returns (uint256)",
-      "function oldMPC() view returns (address)",
-      "function owner() view returns (address)",
-      "function receiveRequestV2(bytes _callData, address _receiveSide)",
-      "function receiveRequestV2Signed(bytes _callData, address _receiveSide, bytes signature)",
-      "function renounceOwnership()",
-      "function setAdminPermission(address _user, bool _permission)",
-      "function setTransmitterStatus(address _transmitter, bool _status)",
-      "function transferOwnership(address newOwner)",
-      "function transmitRequestV2(bytes _callData, address _receiveSide, address _oppositeBridge, uint256 _chainId)",
-      "function withdrawFee(address token, address to, uint256 amount) returns (bool)"
-    ],
-    "eth:0x755a967298c96d50216C6ED8D68869747B4f6878": [
+    "eth:0x57dBCB192fA64bf07Eab76941D1daE5177c8f4f3": [
       "event BurnCompleted(bytes32 indexed id, bytes32 indexed crossChainID, address indexed to, uint256 amount, uint256 bridgingFee, address token)",
       "event ClientIdLog(bytes32 requestId, bytes32 indexed clientId)",
       "event MetaRevertRequest(bytes32 indexed id, address indexed to)",
@@ -459,6 +438,32 @@
       "function unsynthesizeStates(bytes32) view returns (uint8)",
       "function versionRecipient() pure returns (string)",
       "function wrapper() view returns (address)"
+    ],
+    "eth:0x7057aB3fB2BeE9c18e0cDe4240DE4ff7f159E365": [
+      "event LogChangeMPC(address indexed oldMPC, address indexed newMPC, uint256 indexed effectiveTime, uint256 chainId)",
+      "event OracleRequest(address bridge, bytes callData, address receiveSide, address oppositeBridge, uint256 chainId)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event SetAdminPermission(address indexed admin, bool permission)",
+      "event SetTransmitterStatus(address indexed transmitter, bool status)",
+      "function changeMPC(address _newMPC) returns (bool)",
+      "function changeMPCSigned(address _newMPC, bytes signature) returns (bool)",
+      "function currentChainId() view returns (uint256)",
+      "function initialize(address _mpc)",
+      "function isAdmin(address) view returns (bool)",
+      "function isTransmitter(address) view returns (bool)",
+      "function mpc() view returns (address)",
+      "function newMPC() view returns (address)",
+      "function newMPCEffectiveTime() view returns (uint256)",
+      "function oldMPC() view returns (address)",
+      "function owner() view returns (address)",
+      "function receiveRequestV2(bytes _callData, address _receiveSide)",
+      "function receiveRequestV2Signed(bytes _callData, address _receiveSide, bytes signature)",
+      "function renounceOwnership()",
+      "function setAdminPermission(address _user, bool _permission)",
+      "function setTransmitterStatus(address _transmitter, bool _status)",
+      "function transferOwnership(address newOwner)",
+      "function transmitRequestV2(bytes _callData, address _receiveSide, address _oppositeBridge, uint256 _chainId)",
+      "function withdrawFee(address token, address to, uint256 amount) returns (bool)"
     ],
     "eth:0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -550,6 +555,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23489946 },
+  "usedBlockNumbers": { "ethereum": 23726387 },
   "permissionsConfigHash": "0x325afe6d8f82474439aa3a03eb23b4835a2bcc9309ffb68a0f48cec0b70a05cf"
 }

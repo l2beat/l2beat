@@ -96,14 +96,14 @@ export class MayanForwarderPlugin implements InteropPlugin {
       )
       if (!decodedData) return
       return [
-        MayanForwarded.create(input.ctx, {
+        MayanForwarded.create(input, {
           mayanProtocol: decodeMayanProtocol(
-            input.ctx.chain,
+            input.chain,
             forwardedEth.mayanProtocol,
           ),
           methodSignature: decodedData.methodSignature,
           tokenIn: decodedData.tokenIn ?? Address32.NATIVE,
-          amountIn: decodedData.amountIn ?? input.ctx.txValue,
+          amountIn: decodedData.amountIn ?? input.tx.value,
           tokenOut: decodedData.tokenOut,
           minAmountOut: decodedData.minAmountOut,
           $dstChain: decodedData.dstChain,
@@ -119,9 +119,9 @@ export class MayanForwarderPlugin implements InteropPlugin {
       )
       if (!decodedData) return
       return [
-        MayanForwarded.create(input.ctx, {
+        MayanForwarded.create(input, {
           mayanProtocol: decodeMayanProtocol(
-            input.ctx.chain,
+            input.chain,
             forwardedERC20.mayanProtocol,
           ),
           methodSignature: decodedData.methodSignature,
@@ -142,9 +142,9 @@ export class MayanForwarderPlugin implements InteropPlugin {
       )
       if (!decodedData) return
       return [
-        MayanForwarded.create(input.ctx, {
+        MayanForwarded.create(input, {
           mayanProtocol: decodeMayanProtocol(
-            input.ctx.chain,
+            input.chain,
             swapAndForwardedEth.mayanProtocol,
           ),
           methodSignature: decodedData.methodSignature,
@@ -165,9 +165,9 @@ export class MayanForwarderPlugin implements InteropPlugin {
       )
       if (!decodedData) return
       return [
-        MayanForwarded.create(input.ctx, {
+        MayanForwarded.create(input, {
           mayanProtocol: decodeMayanProtocol(
-            input.ctx.chain,
+            input.chain,
             swapAndForwardedERC20.mayanProtocol,
           ),
           methodSignature: decodedData.methodSignature,

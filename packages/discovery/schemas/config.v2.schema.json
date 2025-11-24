@@ -6,771 +6,689 @@
     "import": { "type": "array", "items": { "type": "string" } },
     "archived": { "type": "boolean" },
     "modelCrossChainPermissions": { "type": "boolean" },
-    "chains": {
+    "discoverLibraries": { "type": "boolean" },
+    "initialAddresses": { "type": "array", "items": { "type": "string" } },
+    "maxAddresses": { "type": "number" },
+    "maxDepth": { "type": "number" },
+    "overrides": {
       "type": "object",
       "propertyNames": { "type": "string" },
       "additionalProperties": {
         "type": "object",
         "properties": {
-          "initialAddresses": {
+          "discoverLibraries": { "type": "boolean" },
+          "canActIndependently": { "type": "boolean" },
+          "ignoreDiscovery": { "type": "boolean" },
+          "proxyType": {
+            "enum": [
+              "new Arbitrum proxy",
+              "call implementation proxy",
+              "zkSync Lite proxy",
+              "zkLighter proxy",
+              "zkSpace proxy",
+              "Eternal Storage proxy",
+              "Polygon Extension proxy",
+              "Optics Beacon proxy",
+              "Axelar proxy",
+              "LightLink proxy",
+              "Everclear proxy",
+              "TaikoFork proxy",
+              "immutable"
+            ]
+          },
+          "ignoreInWatchMode": {
             "type": "array",
             "items": { "type": "string" }
           },
-          "maxAddresses": { "type": "number" },
-          "maxDepth": { "type": "number" },
-          "overrides": {
+          "ignoreMethods": { "type": "array", "items": { "type": "string" } },
+          "ignoreRelatives": { "type": "array", "items": { "type": "string" } },
+          "fields": {
             "type": "object",
             "propertyNames": { "type": "string" },
             "additionalProperties": {
               "type": "object",
               "properties": {
-                "canActIndependently": { "type": "boolean" },
-                "ignoreDiscovery": { "type": "boolean" },
-                "proxyType": {
-                  "enum": [
-                    "new Arbitrum proxy",
-                    "call implementation proxy",
-                    "zkSync Lite proxy",
-                    "zkLighter proxy",
-                    "zkSpace proxy",
-                    "Eternal Storage proxy",
-                    "Polygon Extension proxy",
-                    "Optics Beacon proxy",
-                    "Axelar proxy",
-                    "LightLink proxy",
-                    "Everclear proxy",
-                    "TaikoFork proxy",
-                    "immutable"
-                  ]
-                },
-                "ignoreInWatchMode": {
-                  "type": "array",
-                  "items": { "type": "string" }
-                },
-                "ignoreMethods": {
-                  "type": "array",
-                  "items": { "type": "string" }
-                },
-                "ignoreRelatives": {
-                  "type": "array",
-                  "items": { "type": "string" }
-                },
-                "fields": {
-                  "type": "object",
-                  "propertyNames": { "type": "string" },
-                  "additionalProperties": {
-                    "type": "object",
-                    "properties": {
-                      "permissions": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "enum": [
-                                "challenge",
-                                "guard",
-                                "propose",
-                                "sequence",
-                                "validate",
-                                "disperse",
-                                "relayDA",
-                                "operateLinea",
-                                "fastconfirm",
-                                "validateZkStack",
-                                "validateBridge",
-                                "validateBridge2",
-                                "validateBridge3",
-                                "relay",
-                                "aggregatePolygon",
-                                "operateStarknet",
-                                "operateStarkEx",
-                                "governStarknet",
-                                "metisGameCreator",
-                                "stateDeleterMetis",
-                                "hotValidatorHyperliquid",
-                                "coldValidatorHyperliquid",
-                                "acrossPropose",
-                                "validateLighter",
-                                "member",
-                                "act",
-                                "interact",
-                                "upgrade"
-                              ]
-                            },
-                            "delay": {
-                              "anyOf": [
-                                { "type": "number" },
-                                { "type": "string" }
-                              ]
-                            },
-                            "description": { "type": "string" },
-                            "condition": { "type": "string" },
-                            "role": { "type": "string" }
-                          },
-                          "required": ["type"]
-                        }
-                      },
-                      "description": { "type": "string" },
-                      "severity": { "enum": ["HIGH", "LOW"] },
-                      "type": {
-                        "anyOf": [
-                          {
-                            "enum": [
-                              "CODE_CHANGE",
-                              "L2",
-                              "EXTERNAL",
-                              "RISK_PARAMETER",
-                              "PERMISSION"
-                            ]
-                          },
-                          {
-                            "type": "array",
-                            "items": {
-                              "enum": [
-                                "CODE_CHANGE",
-                                "L2",
-                                "EXTERNAL",
-                                "RISK_PARAMETER",
-                                "PERMISSION"
-                              ]
-                            }
-                          }
-                        ]
-                      },
-                      "handler": {
-                        "anyOf": [
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "storage" },
-                              "slot": {
-                                "anyOf": [
-                                  {
-                                    "anyOf": [
-                                      { "type": "number" },
-                                      { "type": "string" },
-                                      { "type": "string" },
-                                      { "type": "string" }
-                                    ]
-                                  },
-                                  {
-                                    "type": "array",
-                                    "items": {
-                                      "anyOf": [
-                                        { "type": "number" },
-                                        { "type": "string" },
-                                        { "type": "string" },
-                                        { "type": "string" }
-                                      ]
-                                    }
-                                  }
-                                ]
-                              },
-                              "offset": {
-                                "anyOf": [
-                                  { "type": "number" },
-                                  { "type": "string" },
-                                  { "type": "string" }
-                                ]
-                              },
-                              "returnType": {
-                                "enum": ["address", "bytes", "number", "uint8"]
-                              },
-                              "ignoreRelative": { "type": "boolean" }
-                            },
-                            "required": ["type", "slot"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "dynamicArray" },
-                              "slot": {
-                                "anyOf": [
-                                  { "type": "number" },
-                                  { "type": "string" },
-                                  { "type": "string" },
-                                  { "type": "string" }
-                                ]
-                              },
-                              "returnType": { "enum": ["address"] },
-                              "ignoreRelative": { "type": "boolean" }
-                            },
-                            "required": ["type", "slot"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "array" },
-                              "indices": {
-                                "anyOf": [
-                                  {
-                                    "type": "array",
-                                    "items": { "type": "number" }
-                                  },
-                                  { "type": "string" }
-                                ]
-                              },
-                              "method": { "type": "string" },
-                              "length": {
-                                "anyOf": [
-                                  { "type": "number" },
-                                  { "type": "string" }
-                                ]
-                              },
-                              "maxLength": { "type": "number" },
-                              "startIndex": { "type": "number" },
-                              "ignoreRelative": { "type": "boolean" }
-                            },
-                            "required": ["type"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "call" },
-                              "method": { "type": "string" },
-                              "args": {
-                                "type": "array",
-                                "items": {
-                                  "anyOf": [
-                                    { "type": "string" },
-                                    { "type": "number" }
-                                  ]
-                                }
-                              },
-                              "ignoreRelative": { "type": "boolean" },
-                              "expectRevert": { "type": "boolean" },
-                              "address": { "type": "string" }
-                            },
-                            "required": ["type", "args"]
-                          },
-                          {
-                            "anyOf": [
-                              {
-                                "type": "object",
-                                "properties": {
-                                  "type": { "const": "event" },
-                                  "select": {
-                                    "anyOf": [
-                                      { "type": "string" },
-                                      {
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                      }
-                                    ]
-                                  },
-                                  "groupBy": { "type": "string" },
-                                  "ignoreRelative": { "type": "boolean" },
-                                  "set": {
-                                    "anyOf": [
-                                      {
-                                        "type": "object",
-                                        "properties": {
-                                          "event": {
-                                            "anyOf": [
-                                              { "type": "string" },
-                                              {
-                                                "type": "array",
-                                                "items": { "type": "string" }
-                                              }
-                                            ]
-                                          },
-                                          "where": {}
-                                        },
-                                        "required": ["event"]
-                                      },
-                                      {
-                                        "type": "array",
-                                        "items": {
-                                          "type": "object",
-                                          "properties": {
-                                            "event": {
-                                              "anyOf": [
-                                                { "type": "string" },
-                                                {
-                                                  "type": "array",
-                                                  "items": { "type": "string" }
-                                                }
-                                              ]
-                                            },
-                                            "where": {}
-                                          },
-                                          "required": ["event"]
-                                        }
-                                      }
-                                    ]
-                                  },
-                                  "add": {},
-                                  "remove": {}
-                                },
-                                "required": ["type", "set"]
-                              },
-                              {
-                                "type": "object",
-                                "properties": {
-                                  "type": { "const": "event" },
-                                  "select": {
-                                    "anyOf": [
-                                      { "type": "string" },
-                                      {
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                      }
-                                    ]
-                                  },
-                                  "groupBy": { "type": "string" },
-                                  "ignoreRelative": { "type": "boolean" },
-                                  "set": {},
-                                  "add": {
-                                    "anyOf": [
-                                      {
-                                        "type": "object",
-                                        "properties": {
-                                          "event": {
-                                            "anyOf": [
-                                              { "type": "string" },
-                                              {
-                                                "type": "array",
-                                                "items": { "type": "string" }
-                                              }
-                                            ]
-                                          },
-                                          "where": {}
-                                        },
-                                        "required": ["event"]
-                                      },
-                                      {
-                                        "type": "array",
-                                        "items": {
-                                          "type": "object",
-                                          "properties": {
-                                            "event": {
-                                              "anyOf": [
-                                                { "type": "string" },
-                                                {
-                                                  "type": "array",
-                                                  "items": { "type": "string" }
-                                                }
-                                              ]
-                                            },
-                                            "where": {}
-                                          },
-                                          "required": ["event"]
-                                        }
-                                      }
-                                    ]
-                                  },
-                                  "remove": {
-                                    "anyOf": [
-                                      {
-                                        "type": "object",
-                                        "properties": {
-                                          "event": {
-                                            "anyOf": [
-                                              { "type": "string" },
-                                              {
-                                                "type": "array",
-                                                "items": { "type": "string" }
-                                              }
-                                            ]
-                                          },
-                                          "where": {}
-                                        },
-                                        "required": ["event"]
-                                      },
-                                      {
-                                        "type": "array",
-                                        "items": {
-                                          "type": "object",
-                                          "properties": {
-                                            "event": {
-                                              "anyOf": [
-                                                { "type": "string" },
-                                                {
-                                                  "type": "array",
-                                                  "items": { "type": "string" }
-                                                }
-                                              ]
-                                            },
-                                            "where": {}
-                                          },
-                                          "required": ["event"]
-                                        }
-                                      }
-                                    ]
-                                  }
-                                },
-                                "required": ["type", "add"]
-                              }
-                            ]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "starkWareNamedStorage" },
-                              "tag": { "type": "string" },
-                              "returnType": {
-                                "enum": ["address", "bytes", "number"]
-                              },
-                              "ignoreRelative": { "type": "boolean" }
-                            },
-                            "required": ["type", "tag"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "accessControl" },
-                              "roleNames": {
-                                "type": "object",
-                                "propertyNames": { "type": "string" },
-                                "additionalProperties": { "type": "string" }
-                              },
-                              "pickRoleMembers": { "type": "string" },
-                              "ignoreRelative": { "type": "boolean" }
-                            },
-                            "required": ["type"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "scrollAccessControl" },
-                              "roleNames": {
-                                "type": "object",
-                                "propertyNames": { "type": "string" },
-                                "additionalProperties": { "type": "string" }
-                              },
-                              "ignoreRelative": { "type": "boolean" }
-                            },
-                            "required": ["type"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "kintoAccessControl" },
-                              "roleNames": {
-                                "type": "object",
-                                "propertyNames": { "type": "string" },
-                                "additionalProperties": { "type": "string" }
-                              },
-                              "ignoreRelative": { "type": "boolean" }
-                            },
-                            "required": ["type"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "lineaRolesModule" },
-                              "roleNames": {
-                                "type": "object",
-                                "propertyNames": { "type": "string" },
-                                "additionalProperties": { "type": "string" }
-                              },
-                              "ignoreRelative": { "type": "boolean" }
-                            },
-                            "required": ["type"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "constructorArgs" },
-                              "nameArgs": { "type": "boolean" }
-                            },
-                            "required": ["type"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "eventCount" },
-                              "topics": {
-                                "type": "array",
-                                "items": {
-                                  "anyOf": [
-                                    { "type": "string" },
-                                    { "type": "null" }
-                                  ]
-                                }
-                              }
-                            },
-                            "required": ["type", "topics"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "hardcoded" },
-                              "value": {}
-                            },
-                            "required": ["type", "value"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "starkWareGovernance" },
-                              "filterBy": { "type": "string" }
-                            },
-                            "required": ["type", "filterBy"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "layerZeroMultisig" }
-                            },
-                            "required": ["type"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "arbitrumActors" },
-                              "actorType": {
-                                "anyOf": [
-                                  { "const": "validator" },
-                                  { "const": "batchPoster" }
-                                ]
-                              }
-                            },
-                            "required": ["type", "actorType"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": {
-                                "const": "arbitrumScheduledTransactions"
-                              }
-                            },
-                            "required": ["type"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "opStackDA" },
-                              "sequencerAddress": { "type": "string" }
-                            },
-                            "required": ["type", "sequencerAddress"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "opStackSequencerInbox" },
-                              "sequencerAddress": { "type": "string" }
-                            },
-                            "required": ["type", "sequencerAddress"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "arbitrumSequencerVersion" }
-                            },
-                            "required": ["type"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "arbitrumDACKeyset" }
-                            },
-                            "required": ["type"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "eip2535Facets" },
-                              "ignoreRelative": { "type": "boolean" }
-                            },
-                            "required": ["type"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": {
-                                "const": "zksynceraScheduledTransactions"
-                              }
-                            },
-                            "required": ["type"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "zksynceraValidators" }
-                            },
-                            "required": ["type"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "orbitPostsBlobs" }
-                            },
-                            "required": ["type"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": {
-                                "const": "polygoncdkScheduledTransactions"
-                              }
-                            },
-                            "required": ["type"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "ERC20Data" },
-                              "overrides": {
-                                "type": "object",
-                                "properties": {
-                                  "coingeckoId": { "type": "string" },
-                                  "category": {
-                                    "enum": [
-                                      "ether",
-                                      "stablecoin",
-                                      "btc",
-                                      "rwaRestricted",
-                                      "rwaPublic",
-                                      "other"
-                                    ]
-                                  },
-                                  "source": {
-                                    "enum": ["canonical", "external", "native"]
-                                  },
-                                  "supply": {
-                                    "enum": [
-                                      "totalSupply",
-                                      "circulatingSupply",
-                                      "zero"
-                                    ]
-                                  },
-                                  "bridgedUsing": {
-                                    "type": "object",
-                                    "properties": {
-                                      "bridges": {
-                                        "type": "array",
-                                        "items": {
-                                          "type": "object",
-                                          "properties": {
-                                            "name": { "type": "string" },
-                                            "slug": { "type": "string" }
-                                          },
-                                          "required": ["name"]
-                                        }
-                                      },
-                                      "warning": { "type": "string" }
-                                    },
-                                    "required": ["bridges"]
-                                  },
-                                  "deploymentTimestamp": { "type": "number" },
-                                  "excludeFromTotal": { "const": true }
-                                }
-                              }
-                            },
-                            "required": ["type"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": { "type": { "const": "tradable" } },
-                            "required": ["type"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "YieldFiMinters" },
-                              "permissionlessMinting": { "type": "boolean" },
-                              "mintingWithPermit": { "type": "boolean" }
-                            },
-                            "required": ["type"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "eventTrace" },
-                              "event": { "type": "string" },
-                              "function": { "type": "string" }
-                            },
-                            "required": ["type", "event", "function"]
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": { "const": "crossChainAccessControl" },
-                              "roleNames": {
-                                "type": "object",
-                                "propertyNames": { "type": "string" },
-                                "additionalProperties": { "type": "string" }
-                              },
-                              "chainAddressNames": {
-                                "type": "object",
-                                "propertyNames": { "type": "string" },
-                                "additionalProperties": { "type": "string" }
-                              },
-                              "pickRoleMembers": { "type": "string" },
-                              "pickChainAddress": { "type": "string" },
-                              "ignoreRelative": { "type": "boolean" }
-                            },
-                            "required": ["type"]
-                          }
-                        ]
-                      },
-                      "template": { "type": "string" },
-                      "copy": { "type": "string" },
-                      "edit": {}
-                    }
-                  }
-                },
-                "methods": {
-                  "type": "object",
-                  "propertyNames": { "type": "string" },
-                  "additionalProperties": { "type": "string" }
-                },
-                "manualSourcePaths": {
-                  "type": "object",
-                  "propertyNames": { "type": "string" },
-                  "additionalProperties": { "type": "string" }
-                },
-                "types": {
-                  "type": "object",
-                  "propertyNames": { "type": "string" },
-                  "additionalProperties": {
-                    "type": "object",
-                    "properties": {
-                      "typeCaster": { "type": "string" },
-                      "arg": {
-                        "type": "object",
-                        "propertyNames": { "type": "string" },
-                        "additionalProperties": {
-                          "anyOf": [{ "type": "string" }, { "type": "number" }]
-                        }
-                      },
-                      "description": { "type": "string" },
-                      "severity": { "enum": ["HIGH", "LOW"] }
-                    }
-                  }
-                },
-                "displayName": { "type": "string" },
-                "categories": {
-                  "type": "object",
-                  "propertyNames": { "type": "string" },
-                  "additionalProperties": {
-                    "type": "object",
-                    "properties": {
-                      "name": { "type": "string" },
-                      "priority": { "type": "number" }
-                    },
-                    "required": ["name", "priority"]
-                  }
-                },
-                "category": { "type": "string" },
-                "description": { "type": "string" },
-                "references": {
+                "permissions": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "text": { "type": "string" },
-                      "href": { "type": "string" }
+                      "type": {
+                        "enum": [
+                          "challenge",
+                          "guard",
+                          "propose",
+                          "sequence",
+                          "validate",
+                          "disperse",
+                          "relayDA",
+                          "operateLinea",
+                          "fastconfirm",
+                          "validateZkStack",
+                          "validateBridge",
+                          "validateBridge2",
+                          "validateBridge3",
+                          "relay",
+                          "aggregatePolygon",
+                          "operateStarknet",
+                          "operateStarkEx",
+                          "governStarknet",
+                          "metisGameCreator",
+                          "stateDeleterMetis",
+                          "hotValidatorHyperliquid",
+                          "coldValidatorHyperliquid",
+                          "acrossPropose",
+                          "validateLighter",
+                          "member",
+                          "act",
+                          "interact",
+                          "upgrade"
+                        ]
+                      },
+                      "delay": {
+                        "anyOf": [{ "type": "number" }, { "type": "string" }]
+                      },
+                      "description": { "type": "string" },
+                      "condition": { "type": "string" },
+                      "role": { "type": "string" }
                     },
-                    "required": ["text", "href"]
+                    "required": ["type"]
                   }
-                }
+                },
+                "description": { "type": "string" },
+                "severity": { "enum": ["HIGH", "LOW"] },
+                "type": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "CODE_CHANGE",
+                        "L2",
+                        "EXTERNAL",
+                        "RISK_PARAMETER",
+                        "PERMISSION"
+                      ]
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "enum": [
+                          "CODE_CHANGE",
+                          "L2",
+                          "EXTERNAL",
+                          "RISK_PARAMETER",
+                          "PERMISSION"
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "handler": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "storage" },
+                        "slot": {
+                          "anyOf": [
+                            {
+                              "anyOf": [
+                                { "type": "number" },
+                                { "type": "string" },
+                                { "type": "string" },
+                                { "type": "string" }
+                              ]
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "anyOf": [
+                                  { "type": "number" },
+                                  { "type": "string" },
+                                  { "type": "string" },
+                                  { "type": "string" }
+                                ]
+                              }
+                            }
+                          ]
+                        },
+                        "offset": {
+                          "anyOf": [
+                            { "type": "number" },
+                            { "type": "string" },
+                            { "type": "string" }
+                          ]
+                        },
+                        "returnType": {
+                          "enum": ["address", "bytes", "number", "uint8"]
+                        },
+                        "ignoreRelative": { "type": "boolean" }
+                      },
+                      "required": ["type", "slot"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "dynamicArray" },
+                        "slot": {
+                          "anyOf": [
+                            { "type": "number" },
+                            { "type": "string" },
+                            { "type": "string" },
+                            { "type": "string" }
+                          ]
+                        },
+                        "returnType": { "enum": ["address"] },
+                        "ignoreRelative": { "type": "boolean" }
+                      },
+                      "required": ["type", "slot"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "array" },
+                        "indices": {
+                          "anyOf": [
+                            { "type": "array", "items": { "type": "number" } },
+                            { "type": "string" }
+                          ]
+                        },
+                        "method": { "type": "string" },
+                        "length": {
+                          "anyOf": [{ "type": "number" }, { "type": "string" }]
+                        },
+                        "maxLength": { "type": "number" },
+                        "startIndex": { "type": "number" },
+                        "ignoreRelative": { "type": "boolean" }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "call" },
+                        "method": { "type": "string" },
+                        "args": {
+                          "type": "array",
+                          "items": {
+                            "anyOf": [
+                              { "type": "string" },
+                              { "type": "number" }
+                            ]
+                          }
+                        },
+                        "ignoreRelative": { "type": "boolean" },
+                        "expectRevert": { "type": "boolean" },
+                        "address": { "type": "string" }
+                      },
+                      "required": ["type", "args"]
+                    },
+                    {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": { "const": "event" },
+                            "select": {
+                              "anyOf": [
+                                { "type": "string" },
+                                {
+                                  "type": "array",
+                                  "items": { "type": "string" }
+                                }
+                              ]
+                            },
+                            "groupBy": { "type": "string" },
+                            "ignoreRelative": { "type": "boolean" },
+                            "set": {
+                              "anyOf": [
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "event": {
+                                      "anyOf": [
+                                        { "type": "string" },
+                                        {
+                                          "type": "array",
+                                          "items": { "type": "string" }
+                                        }
+                                      ]
+                                    },
+                                    "where": {}
+                                  },
+                                  "required": ["event"]
+                                },
+                                {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "event": {
+                                        "anyOf": [
+                                          { "type": "string" },
+                                          {
+                                            "type": "array",
+                                            "items": { "type": "string" }
+                                          }
+                                        ]
+                                      },
+                                      "where": {}
+                                    },
+                                    "required": ["event"]
+                                  }
+                                }
+                              ]
+                            },
+                            "add": {},
+                            "remove": {}
+                          },
+                          "required": ["type", "set"]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": { "const": "event" },
+                            "select": {
+                              "anyOf": [
+                                { "type": "string" },
+                                {
+                                  "type": "array",
+                                  "items": { "type": "string" }
+                                }
+                              ]
+                            },
+                            "groupBy": { "type": "string" },
+                            "ignoreRelative": { "type": "boolean" },
+                            "set": {},
+                            "add": {
+                              "anyOf": [
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "event": {
+                                      "anyOf": [
+                                        { "type": "string" },
+                                        {
+                                          "type": "array",
+                                          "items": { "type": "string" }
+                                        }
+                                      ]
+                                    },
+                                    "where": {}
+                                  },
+                                  "required": ["event"]
+                                },
+                                {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "event": {
+                                        "anyOf": [
+                                          { "type": "string" },
+                                          {
+                                            "type": "array",
+                                            "items": { "type": "string" }
+                                          }
+                                        ]
+                                      },
+                                      "where": {}
+                                    },
+                                    "required": ["event"]
+                                  }
+                                }
+                              ]
+                            },
+                            "remove": {
+                              "anyOf": [
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "event": {
+                                      "anyOf": [
+                                        { "type": "string" },
+                                        {
+                                          "type": "array",
+                                          "items": { "type": "string" }
+                                        }
+                                      ]
+                                    },
+                                    "where": {}
+                                  },
+                                  "required": ["event"]
+                                },
+                                {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "event": {
+                                        "anyOf": [
+                                          { "type": "string" },
+                                          {
+                                            "type": "array",
+                                            "items": { "type": "string" }
+                                          }
+                                        ]
+                                      },
+                                      "where": {}
+                                    },
+                                    "required": ["event"]
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "required": ["type", "add"]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "starkWareNamedStorage" },
+                        "tag": { "type": "string" },
+                        "returnType": {
+                          "enum": ["address", "bytes", "number"]
+                        },
+                        "ignoreRelative": { "type": "boolean" }
+                      },
+                      "required": ["type", "tag"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "accessControl" },
+                        "roleNames": {
+                          "type": "object",
+                          "propertyNames": { "type": "string" },
+                          "additionalProperties": { "type": "string" }
+                        },
+                        "pickRoleMembers": { "type": "string" },
+                        "ignoreRelative": { "type": "boolean" }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "scrollAccessControl" },
+                        "roleNames": {
+                          "type": "object",
+                          "propertyNames": { "type": "string" },
+                          "additionalProperties": { "type": "string" }
+                        },
+                        "ignoreRelative": { "type": "boolean" }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "kintoAccessControl" },
+                        "roleNames": {
+                          "type": "object",
+                          "propertyNames": { "type": "string" },
+                          "additionalProperties": { "type": "string" }
+                        },
+                        "ignoreRelative": { "type": "boolean" }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "lineaRolesModule" },
+                        "roleNames": {
+                          "type": "object",
+                          "propertyNames": { "type": "string" },
+                          "additionalProperties": { "type": "string" }
+                        },
+                        "ignoreRelative": { "type": "boolean" }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "constructorArgs" },
+                        "nameArgs": { "type": "boolean" }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "eventCount" },
+                        "topics": {
+                          "type": "array",
+                          "items": {
+                            "anyOf": [{ "type": "string" }, { "type": "null" }]
+                          }
+                        }
+                      },
+                      "required": ["type", "topics"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "hardcoded" },
+                        "value": {}
+                      },
+                      "required": ["type", "value"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "starkWareGovernance" },
+                        "filterBy": { "type": "string" }
+                      },
+                      "required": ["type", "filterBy"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "layerZeroMultisig" }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "arbitrumActors" },
+                        "actorType": {
+                          "anyOf": [
+                            { "const": "validator" },
+                            { "const": "batchPoster" }
+                          ]
+                        }
+                      },
+                      "required": ["type", "actorType"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "arbitrumScheduledTransactions" }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "opStackDA" },
+                        "sequencerAddress": { "type": "string" }
+                      },
+                      "required": ["type", "sequencerAddress"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "opStackSequencerInbox" },
+                        "sequencerAddress": { "type": "string" }
+                      },
+                      "required": ["type", "sequencerAddress"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "arbitrumSequencerVersion" }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "arbitrumDACKeyset" }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "eip2535Facets" },
+                        "ignoreRelative": { "type": "boolean" }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "zksynceraScheduledTransactions" }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "zksynceraValidators" }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": { "type": { "const": "orbitPostsBlobs" } },
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "polygoncdkScheduledTransactions" }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "ERC20Data" },
+                        "overrides": {
+                          "type": "object",
+                          "properties": {
+                            "coingeckoId": { "type": "string" },
+                            "category": {
+                              "enum": [
+                                "ether",
+                                "stablecoin",
+                                "btc",
+                                "rwaRestricted",
+                                "rwaPublic",
+                                "other"
+                              ]
+                            },
+                            "source": {
+                              "enum": ["canonical", "external", "native"]
+                            },
+                            "supply": {
+                              "enum": [
+                                "totalSupply",
+                                "circulatingSupply",
+                                "zero"
+                              ]
+                            },
+                            "bridgedUsing": {
+                              "type": "object",
+                              "properties": {
+                                "bridges": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "name": { "type": "string" },
+                                      "slug": { "type": "string" }
+                                    },
+                                    "required": ["name"]
+                                  }
+                                },
+                                "warning": { "type": "string" }
+                              },
+                              "required": ["bridges"]
+                            },
+                            "deploymentTimestamp": { "type": "number" },
+                            "excludeFromTotal": { "const": true }
+                          }
+                        }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": { "type": { "const": "tradable" } },
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "YieldFiMinters" },
+                        "permissionlessMinting": { "type": "boolean" },
+                        "mintingWithPermit": { "type": "boolean" }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "eventTrace" },
+                        "event": { "type": "string" },
+                        "function": { "type": "string" }
+                      },
+                      "required": ["type", "event", "function"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "crossChainAccessControl" },
+                        "roleNames": {
+                          "type": "object",
+                          "propertyNames": { "type": "string" },
+                          "additionalProperties": { "type": "string" }
+                        },
+                        "chainAddressNames": {
+                          "type": "object",
+                          "propertyNames": { "type": "string" },
+                          "additionalProperties": { "type": "string" }
+                        },
+                        "pickRoleMembers": { "type": "string" },
+                        "pickChainAddress": { "type": "string" },
+                        "ignoreRelative": { "type": "boolean" }
+                      },
+                      "required": ["type"]
+                    }
+                  ]
+                },
+                "template": { "type": "string" },
+                "copy": { "type": "string" },
+                "edit": {}
               }
             }
           },
-          "sharedModules": { "type": "array", "items": { "type": "string" } },
+          "methods": {
+            "type": "object",
+            "propertyNames": { "type": "string" },
+            "additionalProperties": { "type": "string" }
+          },
+          "manualSourcePaths": {
+            "type": "object",
+            "propertyNames": { "type": "string" },
+            "additionalProperties": { "type": "string" }
+          },
           "types": {
             "type": "object",
             "propertyNames": { "type": "string" },
@@ -790,20 +708,7 @@
               }
             }
           },
-          "entrypoints": {
-            "type": "object",
-            "propertyNames": { "type": "string" },
-            "additionalProperties": {
-              "type": "object",
-              "properties": {
-                "name": { "type": "string" },
-                "type": { "enum": ["Contract", "EOA"] },
-                "project": { "type": "string" },
-                "isLegacy": { "type": "boolean" }
-              },
-              "required": ["type", "project"]
-            }
-          },
+          "displayName": { "type": "string" },
           "categories": {
             "type": "object",
             "propertyNames": { "type": "string" },
@@ -816,15 +721,73 @@
               "required": ["name", "priority"]
             }
           },
-          "names": {
+          "category": { "type": "string" },
+          "description": { "type": "string" },
+          "references": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "text": { "type": "string" },
+                "href": { "type": "string" }
+              },
+              "required": ["text", "href"]
+            }
+          }
+        }
+      }
+    },
+    "sharedModules": { "type": "array", "items": { "type": "string" } },
+    "types": {
+      "type": "object",
+      "propertyNames": { "type": "string" },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "typeCaster": { "type": "string" },
+          "arg": {
             "type": "object",
             "propertyNames": { "type": "string" },
-            "additionalProperties": { "type": "string" }
-          }
-        },
-        "required": ["initialAddresses"]
+            "additionalProperties": {
+              "anyOf": [{ "type": "string" }, { "type": "number" }]
+            }
+          },
+          "description": { "type": "string" },
+          "severity": { "enum": ["HIGH", "LOW"] }
+        }
       }
+    },
+    "entrypoints": {
+      "type": "object",
+      "propertyNames": { "type": "string" },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "enum": ["Contract", "EOA"] },
+          "project": { "type": "string" },
+          "isLegacy": { "type": "boolean" }
+        },
+        "required": ["type", "project"]
+      }
+    },
+    "categories": {
+      "type": "object",
+      "propertyNames": { "type": "string" },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "priority": { "type": "number" }
+        },
+        "required": ["name", "priority"]
+      }
+    },
+    "names": {
+      "type": "object",
+      "propertyNames": { "type": "string" },
+      "additionalProperties": { "type": "string" }
     }
   },
-  "required": ["name", "chains"]
+  "required": ["name", "initialAddresses"]
 }

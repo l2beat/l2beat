@@ -10,6 +10,7 @@
   "overrides": {
     "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458": {
       "description": "The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.",
+      "discoverLibraries": true,
       "ignoreMethods": [
         "proxiableUUID",
         "getHotShotCommitment",

@@ -162,6 +162,24 @@
     },
     {
       "mode": "custom",
+      "id": "starknet-mRe7BTC",
+      "priceId": "midas-mre7btc-2",
+      "symbol": "mRe7BTC",
+      "name": "Midas Re7 BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/69666/large/mRe7BTC_icon.png?1759235343",
+      "amount": {
+        "type": "starknetTotalSupply",
+        "address": "0x04E4fb1a9Ca7E84bAe609B9Dc0078ad7719E49187Ae7e425bB47D131710Eddac",
+        "chain": "starknet",
+        "decimals": 18,
+        "sinceTimestamp": 1758799398
+      },
+      "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "custom",
       "id": "starknet-mRe7YIELD",
       "priceId": "midas-mre7yield",
       "symbol": "mRe7YIELD",

@@ -1,20 +1,8 @@
 {
   "name": "taiko",
-  "timestamp": 1761894930,
+  "timestamp": 1763978021,
   "configHash": "0xfab89f75d053cae1a12bd233309b4f78f60b5a3821cbd44da3f00eca20de9a46",
   "entries": [
-    {
-      "address": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
-          "role": ".getOperatorCandidatesForCurrentEpoch"
-        }
-      ]
-    },
     {
       "name": "PEMCertChainLib",
       "address": "eth:0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169",
@@ -113,12 +101,6 @@
           "eth:0xbB1f830636e1A017b81C3E38b7f6219344149Eb7",
           "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
           "eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8"
-        ],
-        "$libraries": [
-          "eth:0xc618b0bA27F751D33689DebA538f8567AeF53ee6",
-          "eth:0xe61FD6715FfFA2f4057f1Cf0230512b91A9f5f84",
-          "eth:0xfD9B548c00a1E96BbFc2C5FE0D339618B40B4593",
-          "eth:0x5565543Ec09f746721928B0A4d019c9E750d0552"
         ],
         "$pastUpgrades": [
           [
@@ -404,68 +386,68 @@
           "ontakeForkHeight": 538304
         },
         "getLastSyncedTransition": {
-          "batchId_": 1338140,
-          "blockId_": 3055697,
+          "batchId_": 1342604,
+          "blockId_": 3371720,
           "ts_": {
-            "parentHash": "0x49943a8ae19f8ca34d2301e539e606624d59e76b45ab23125ae67cb088447c8f",
-            "blockHash": "0xca6b4bb641b2ed458bfa773cec27c169b35d14214d10bf9a247a9a85bcd0eb2f",
-            "stateRoot": "0x9130d4597dd0d951261eaa9d4374b486a37523d90407fb20e7ffddb5b133bee7",
-            "prover": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
-            "inProvingWindow": true,
-            "createdAt": 1761882167
+            "parentHash": "0x738eb8831792df2da4ff8087d6f80087c2ca53b3d2fff9acce0f21a688df020e",
+            "blockHash": "0x15079e023be6d80ef4b99b9bf2b4677bbce8a2d0858a0dadd220f0061d496d81",
+            "stateRoot": "0xb09e32d6981d90935184c8954b30a860e7ed4e69948187f75f3cdf5724352162",
+            "prover": "eth:0xC61909a85159EB0cDe0651735b7685DD1C7E72c5",
+            "inProvingWindow": false,
+            "createdAt": 1763969135
           }
         },
         "getLastVerifiedBlock": {
-          "blockId_": 1338141,
-          "blockHash_": "0x95b6fda5b6def7c040119aab341ddf77bab59c1e15423ef09357c208376b45f8",
+          "blockId_": 1342605,
+          "blockHash_": "0xc357c3c1865852bf61884d843a0452fcd752de5a131249830cce1ff798e1c249",
           "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "verifiedAt_": 1742055263
+          "verifiedAt_": 1742130767
         },
         "getLastVerifiedTransition": {
-          "batchId_": 1338141,
-          "blockId_": 3055827,
+          "batchId_": 1342605,
+          "blockId_": 3371782,
           "ts_": {
-            "parentHash": "0xca6b4bb641b2ed458bfa773cec27c169b35d14214d10bf9a247a9a85bcd0eb2f",
-            "blockHash": "0x95b6fda5b6def7c040119aab341ddf77bab59c1e15423ef09357c208376b45f8",
+            "parentHash": "0x15079e023be6d80ef4b99b9bf2b4677bbce8a2d0858a0dadd220f0061d496d81",
+            "blockHash": "0xc357c3c1865852bf61884d843a0452fcd752de5a131249830cce1ff798e1c249",
             "stateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "prover": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
+            "prover": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
             "inProvingWindow": true,
-            "createdAt": 1761882551
+            "createdAt": 1763962823
           }
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 1338140,
-            "lastSynecdAt": 1761894311
+            "lastSyncedBlockId": 1342604,
+            "lastSynecdAt": 1763976743
           },
           {
-            "numBlocks": 1338170,
-            "lastVerifiedBlockId": 1338141,
+            "numBlocks": 1342640,
+            "lastVerifiedBlockId": 1342605,
             "provingPaused": false,
-            "lastProposedIn": 23695766,
+            "lastProposedIn": 23867942,
             "lastUnpausedAt": 1716571955
           }
         ],
         "getStats1": {
           "genesisHeight": 19923613,
           "__reserved2": 1716358991,
-          "lastSyncedBatchId": 1338140,
-          "lastSyncedAt": 1761894311
+          "lastSyncedBatchId": 1342604,
+          "lastSyncedAt": 1763976743
         },
         "getStats2": {
-          "numBatches": 1338170,
-          "lastVerifiedBatchId": 1338141,
+          "numBatches": 1342640,
+          "lastVerifiedBatchId": 1342605,
           "paused": false,
-          "lastProposedIn": 23695766,
+          "lastProposedIn": 23867942,
           "lastUnpausedAt": 1716571955
         },
         "impl": "eth:0xbB1f830636e1A017b81C3E38b7f6219344149Eb7",
         "inboxWrapper": "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
         "inNonReentrant": false,
         "isOnL1": true,
-        "lastProposedIn": 23695766,
+        "lastProposedIn": 23867942,
         "newFork": "eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8",
         "oldFork": "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
@@ -506,14 +488,14 @@
           "stats1": {
             "genesisHeight": 19923613,
             "__reserved2": 1716358991,
-            "lastSyncedBatchId": 1338140,
-            "lastSyncedAt": 1761894311
+            "lastSyncedBatchId": 1342604,
+            "lastSyncedAt": 1763976743
           },
           "stats2": {
-            "numBatches": 1338170,
-            "lastVerifiedBatchId": 1338141,
+            "numBatches": 1342640,
+            "lastVerifiedBatchId": 1342605,
             "paused": false,
-            "lastProposedIn": 23695766,
+            "lastProposedIn": 23867942,
             "lastUnpausedAt": 1716571955
           }
         },
@@ -734,7 +716,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1761894923,
+        "clock": 1763978015,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -989,7 +971,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 148,
+        "nonce": 152,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1121,21 +1103,6 @@
       "address": "eth:0x5374b2907a45a28c37caA45e06FC6eBceECAC72a",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "LibUtils",
-      "address": "eth:0x5565543Ec09f746721928B0A4d019c9E750d0552",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xa95a0bf39ca3a8957ae05fcfb8e1fa0fc50899665b9b2ac121aeb1aa45c7478b"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1747264643,
-      "sinceBlock": 22484611,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x5565543Ec09f746721928B0A4d019c9E750d0552": "LibUtils"
-      }
     },
     {
       "address": "eth:0x55792e1F0a41D3af8B6d41DFdcf24651AA80fA1e",
@@ -1389,11 +1356,6 @@
     },
     {
       "address": "eth:0x6dcB04fCC1c597DAFad86e2886bE463d53CaFAdf",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x7057A707621Fadd422f84DE94A9dF7c4F1AC595C",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1700,7 +1662,7 @@
         "inNonReentrant": false,
         "INSTANCE_EXPIRY": 31536000,
         "INSTANCE_VALIDITY_DELAY": 0,
-        "nextInstanceId": 16,
+        "nextInstanceId": 17,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -2026,7 +1988,7 @@
         "minVetoPercent": "10",
         "minVetoRatio": 100000,
         "pluginType": 0,
-        "proposalCount": 20,
+        "proposalCount": 21,
         "proposalIds": [
           "594318504305273196926027118847304676812617940992",
           "594333808845007833054360677244409987180489867265",
@@ -2047,7 +2009,8 @@
           "595223403592331371744459256866956472219296858128",
           "595223436259438596154551751121806216745162113041",
           "595300306046126036153418824792663965561388007442",
-          "595517191137765700860044776076277647522733752339"
+          "595517191137765700860044776076277647522733752339",
+          "599695636739451592739723352125243732881756389396"
         ],
         "PROPOSER_PERMISSION_ID": "0x8513c2609a72007a81419055c80fdd2cf7e49f07dffbb28683bb4593636ce3b2",
         "taikoBridge": "eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
@@ -2592,7 +2555,7 @@
         "inNonReentrant": false,
         "INSTANCE_EXPIRY": 31536000,
         "INSTANCE_VALIDITY_DELAY": 0,
-        "nextInstanceId": 16,
+        "nextInstanceId": 17,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -2796,15 +2759,19 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163",
+          "eth:0xFa92ff698D57f7B875570D9F59501812B843CD44",
+          "eth:0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1",
+          "eth:0x7Cdd1c128Cd72dd252f569eeD942735330937F91",
           "eth:0x30bc4C0Baf55A37Ccf2d626Bc592bd7715b75De2",
-          "eth:0x7057A707621Fadd422f84DE94A9dF7c4F1AC595C"
+          "eth:0xDC4ece5620659F4d5d1536Cab52BD5e5B15F8a0a"
         ],
-        "$threshold": 1,
+        "$threshold": 4,
         "domainSeparator": "0x4d1471e323401d347b11627cf824dfcf21c5307d1377cffaec145c873dc2550d",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 67,
+        "multisigThreshold": "4 of 6 (67%)",
+        "nonce": 69,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2895,21 +2862,6 @@
       "address": "eth:0xBFD60Cb2313B848a2FC088d3bc1ab6BF498E1DD1",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "LibBonds",
-      "address": "eth:0xc618b0bA27F751D33689DebA538f8567AeF53ee6",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x640f3fde75c47db84e65ebce824c47d9121d25898c7f0636a7abfba5b1e74de1"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1747264643,
-      "sinceBlock": 22484611,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xc618b0bA27F751D33689DebA538f8567AeF53ee6": "LibBonds"
-      }
     },
     {
       "address": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
@@ -3105,7 +3057,7 @@
         "impl": "eth:0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 37999,
+        "nextMessageId": 38076,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -3152,7 +3104,7 @@
           "proposalExpirationPeriod": 1209600
         },
         "pluginType": 0,
-        "proposalCount": 12,
+        "proposalCount": 13,
         "UPDATE_MULTISIG_SETTINGS_PERMISSION_ID": "0xb1750e46d35a0069c8465b8643e7838d2149a842a2db8ee233d9835590040cad",
         "UPGRADE_PLUGIN_PERMISSION_ID": "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5"
       },
@@ -3182,21 +3134,6 @@
           "role": ".getOperatorCandidatesForCurrentEpoch"
         }
       ]
-    },
-    {
-      "name": "LibData",
-      "address": "eth:0xe61FD6715FfFA2f4057f1Cf0230512b91A9f5f84",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x650f9dc1d365201df825d0fb98420f99dce408d0548f7acc1c7da75270b0226d"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1747264667,
-      "sinceBlock": 22484613,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xe61FD6715FfFA2f4057f1Cf0230512b91A9f5f84": "LibData"
-      }
     },
     {
       "address": "eth:0xE7CBcDa9a4FEAe2bC7ca6b2B682Bc4Ae9f8B7e3B",
@@ -3374,6 +3311,11 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "address": "eth:0xFa92ff698D57f7B875570D9F59501812B843CD44",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "TaikoDAOController",
       "address": "eth:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3",
       "type": "Contract",
@@ -3420,7 +3362,7 @@
         "0x93a254bb5914a81cd902577cdafd323639e44227fdae5e14aa14fd47e1440063"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 4 operators registered.",
+      "description": "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered.",
       "ignoreInWatchMode": [
         "getOperatorCandidatesForCurrentEpoch",
         "getOperatorCandidatesForNextEpoch",
@@ -3453,17 +3395,15 @@
         "getOperatorCandidatesForCurrentEpoch": [
           "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
           "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
-          "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
-          "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+          "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d"
         ],
         "getOperatorCandidatesForNextEpoch": [
           "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
           "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
-          "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
-          "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+          "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d"
         ],
-        "getOperatorForCurrentEpoch": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
-        "getOperatorForNextEpoch": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
+        "getOperatorForCurrentEpoch": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+        "getOperatorForNextEpoch": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
         "havingPerfectOperators": false,
         "impl": "eth:0x54FeDc114D78dcbDb8c7b2DeA433f9749E8fd0Fc",
         "inNonReentrant": false,
@@ -3479,39 +3419,20 @@
             "sequencer": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
           },
           {
-            "proposer": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
-            "sequencer": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"
-          },
-          {
             "proposer": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
             "sequencer": "eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"
           },
           {
-            "proposer": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
-            "sequencer": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+            "proposer": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74",
+            "sequencer": "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"
           }
         ],
-        "registeredOperatorsCount": 4,
+        "registeredOperatorsCount": 3,
         "resolver": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
         "eth:0xFD019460881e6EeC632258222393d5821029b2ac": "ERC1967Proxy",
         "eth:0x54FeDc114D78dcbDb8c7b2DeA433f9749E8fd0Fc": "PreconfWhitelist"
-      }
-    },
-    {
-      "name": "LibProving",
-      "address": "eth:0xfD9B548c00a1E96BbFc2C5FE0D339618B40B4593",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x3b628cc0cda00f7669f586b33786da861f2b2ed1bd0be4f3500099dec66962d0"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1747264643,
-      "sinceBlock": 22484611,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xfD9B548c00a1E96BbFc2C5FE0D339618B40B4593": "LibProving"
       }
     },
     {
@@ -4625,14 +4546,6 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "eth:0x5565543Ec09f746721928B0A4d019c9E750d0552": [
-      "error L1_INVALID_BLOCK_ID()",
-      "error L1_INVALID_GENESIS_HASH()",
-      "error L1_INVALID_PARAMS()",
-      "error L1_TRANSITION_NOT_FOUND()",
-      "error L1_UNEXPECTED_TRANSITION_ID()",
-      "event BlockVerifiedV2(uint256 indexed blockId, address indexed prover, bytes32 blockHash, uint16 tier)"
-    ],
     "eth:0x584fE70fE82F728f0Fe26488857D623f3B59E070": [
       "constructor()",
       "error DaoUnauthorized(address dao, address where, address who, bytes32 permissionId)",
@@ -5552,15 +5465,6 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "eth:0xc618b0bA27F751D33689DebA538f8567AeF53ee6": [
-      "error ETH_TRANSFER_FAILED()",
-      "error L1_ETH_NOT_PAID_AS_BOND()",
-      "error L1_INVALID_MSG_VALUE()",
-      "event BondCredited(address indexed user, uint256 blockId, uint256 amount)",
-      "event BondDebited(address indexed user, uint256 blockId, uint256 amount)",
-      "event BondDeposited(address indexed user, uint256 amount)",
-      "event BondWithdrawn(address indexed user, uint256 amount)"
-    ],
     "eth:0xcdb25e201Ad3fdcFe16730A6CA2cC0B1Ce2137a2": [
       "constructor(uint8 _inclusionDelay, uint64 _feeInGwei, address _inbox, address _inboxWrapper)",
       "error ACCESS_DENIED()",
@@ -5774,9 +5678,6 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function verifyProof(tuple(uint64 batchId, bytes32 metaHash, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot) transition)[] _ctxs, bytes _proof)"
     ],
-    "eth:0xe61FD6715FfFA2f4057f1Cf0230512b91A9f5f84": [
-      "function blockV2ToV1(tuple(bytes32 metaHash, address assignedProver, uint96 livenessBond, uint64 blockId, uint64 proposedAt, uint64 proposedIn, uint24 nextTransitionId, bool livenessBondReturned, uint24 verifiedTransitionId) _v2) pure returns (tuple(bytes32 metaHash, address assignedProver, uint96 livenessBond, uint64 blockId, uint64 proposedAt, uint64 proposedIn, uint32 nextTransitionId, uint32 verifiedTransitionId))"
-    ],
     "eth:0xE78659fbF234c84C909Cf317D84edc2f6C0D8413": [
       "constructor()",
       "error ACCESS_DENIED()",
@@ -5913,33 +5814,6 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
-    ],
-    "eth:0xfD9B548c00a1E96BbFc2C5FE0D339618B40B4593": [
-      "error L1_ALREADY_CONTESTED()",
-      "error L1_ALREADY_PROVED()",
-      "error L1_BLOCK_MISMATCH()",
-      "error L1_BLOCK_MISMATCH()",
-      "error L1_CANNOT_CONTEST()",
-      "error L1_DIFF_VERIFIER()",
-      "error L1_ETH_NOT_PAID_AS_BOND()",
-      "error L1_FORK_HEIGHT_ERROR()",
-      "error L1_INVALID_BLOCK_ID()",
-      "error L1_INVALID_MSG_VALUE()",
-      "error L1_INVALID_PARAMS()",
-      "error L1_INVALID_PAUSE_STATUS()",
-      "error L1_INVALID_TIER()",
-      "error L1_INVALID_TRANSITION()",
-      "error L1_NOT_ASSIGNED_PROVER()",
-      "error L1_PROVING_PAUSED()",
-      "error L1_TRANSITION_ID_ZERO()",
-      "error L1_UNEXPECTED_TRANSITION_ID()",
-      "event BlockVerifiedV2(uint256 indexed blockId, address indexed prover, bytes32 blockHash, uint16 tier)",
-      "event BondCredited(address indexed user, uint256 blockId, uint256 amount)",
-      "event BondDebited(address indexed user, uint256 blockId, uint256 amount)",
-      "event BondDeposited(address indexed user, uint256 amount)",
-      "event ProvingPaused(bool paused)",
-      "event TransitionContestedV2(uint256 indexed blockId, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, bytes32 graffiti) tran, address contester, uint96 contestBond, uint16 tier, uint64 proposedIn)",
-      "event TransitionProvedV2(uint256 indexed blockId, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, bytes32 graffiti) tran, address prover, uint96 validityBond, uint16 tier, uint64 proposedIn)"
     ],
     "eth:0xFF5Adab685362DC4C33536a65aF5873738D1216B": [
       "error InvalidProof()",
@@ -6348,6 +6222,6 @@
     "taiko/TaikoWrapper": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 23695785, "taiko": 3057658 },
-  "permissionsConfigHash": "0xb6f82656942b474e8cd8782b2972a86cc6d14b33671f096fa643d7e40ab8413e"
+  "usedBlockNumbers": { "ethereum": 23867952, "taiko": 3374245 },
+  "permissionsConfigHash": "0x2ca90d0054a6a65a415ae00e467d9e332bfc37e055cfa709d8466fd5153f88dc"
 }

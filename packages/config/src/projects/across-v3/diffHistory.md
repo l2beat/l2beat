@@ -1,3 +1,101 @@
+Generated with discovered.json: 0xe14899ad67375505474d7ddd77ed32649b5e0104
+
+# Diff at Mon, 24 Nov 2025 09:54:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7f22580fca8d48e9cc5f7f28da38d6b8725e891 block: 1762264490
+- current timestamp: 1763977586
+
+## Description
+
+Monad adapter added (based on universal adapter).
+
+## Watched changes
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.Adapters.143:
++        "eth:0xC29a3Ba0fBf477F16Fd53d2C438Eade024FD8452"
+      values.CrossChainContracts.143:
++        "eth:0xd2ecb3afe598b746F8123CaE365a598DA831A449"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Monad_Adapter (eth:0xC29a3Ba0fBf477F16Fd53d2C438Eade024FD8452)
+    +++ description: This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/across-v3/.flat/Monad_Adapter.sol | 792 +++++++++++++++++++++
+ 1 file changed, 792 insertions(+)
+```
+
+Generated with discovered.json: 0x5c5f544337726a102f4fd424667e0e244094b6f1
+
+# Diff at Wed, 05 Nov 2025 12:46:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@65e01cac46a1da4a93a30562e3b62c4f0590a2f9 block: 1762264490
+- current timestamp: 1762264490
+
+## Description
+
+Libraries are opt-in
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762264490 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract LpTokenFactory (eth:0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d)
+    +++ description: None
+```
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.$libraries:
+-        ["eth:0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d"]
+    }
+```
+
+Generated with discovered.json: 0x14bdb6df23743d0ea6e179071ed0140eae8dddf9
+
+# Diff at Tue, 04 Nov 2025 13:56:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f12d06bbf120eab9f5356a235918d4d6b2484290 block: 1759932934
+- current timestamp: 1762264490
+
+## Description
+
+Finalization delay halved to 30min.
+
+## Watched changes
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      description:
+-        "The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h and a bond amount of 0.45 ABT."
++        "The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT."
+      values.finalizationDelayFmt:
+-        "1h"
++        "30m"
+      values.liveness:
+-        3600
++        1800
+    }
+```
+
 Generated with discovered.json: 0xe4c8e28753387db86ba32e3b776747560466c459
 
 # Diff at Fri, 31 Oct 2025 10:30:51 GMT:

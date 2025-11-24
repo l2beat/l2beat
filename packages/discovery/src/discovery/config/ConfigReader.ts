@@ -200,6 +200,32 @@ export class ConfigReader {
     }
   }
 
+  readDiffLastDescription(name: string): string | undefined {
+    const projectPath = this.resolveProjectPath(name)
+    assert(
+      fileExistsCaseSensitive(projectPath),
+      'Project not found, check if case matches',
+    )
+
+    const content = readFileSync(
+      path.join(projectPath, 'diffHistory.md'),
+      'utf-8',
+    )
+    const lines = content.split('\n')
+    const index = lines.findIndex((l) => l === '## Description')
+    if (index < 0) {
+      return undefined
+    }
+
+    const followingLines = lines.slice(index + 1)
+    const lastIndex = followingLines.findIndex((l) => l.startsWith('## '))
+    if (lastIndex < 0) {
+      return followingLines.join('\n').trim()
+    }
+
+    return followingLines.slice(0, lastIndex).join('\n').trim()
+  }
+
   getProjectPath(project: string): string {
     return this.resolveProjectPath(project)
   }

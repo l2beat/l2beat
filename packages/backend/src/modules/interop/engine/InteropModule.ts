@@ -1,4 +1,5 @@
 import { HttpClient } from '@l2beat/shared'
+import { getTokenDbClient } from '@l2beat/token-backend'
 import { HourlyIndexer } from '../../../tools/HourlyIndexer'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../../types'
@@ -13,7 +14,6 @@ import { InteropConfigStore } from './config/InteropConfigStore'
 import { createInteropRouter } from './dashboard/InteropRouter'
 import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
 import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
-import { MockTokenDb } from './financials/TokenDb'
 import { InteropMatchingLoop } from './match/InteropMatchingLoop'
 
 export function createInteropModule({
@@ -30,7 +30,7 @@ export function createInteropModule({
   }
   logger = logger.tag({ feature: 'interop', module: 'interop' })
 
-  const eventStore = new InteropEventStore(db)
+  const eventStore = new InteropEventStore(db, config.interop.inMemoryEventCap)
   const configStore = new InteropConfigStore(db)
   const plugins = createInteropPlugins({
     configs: configStore,
@@ -62,7 +62,12 @@ export function createInteropModule({
     logger,
   )
 
-  const router = createInteropRouter(db, config.interop, processors)
+  const router = createInteropRouter(
+    db,
+    config.interop,
+    processors,
+    logger.for('InteropRouter'),
+  )
 
   const compareLoops = plugins.comparePlugins.map(
     (c) => new InteropCompareLoop(db, c, logger),
@@ -80,11 +85,17 @@ export function createInteropModule({
     minHeight: 1,
     indexerService,
   })
-  const tokenDb = new MockTokenDb()
+
+  const tokenDbClient = getTokenDbClient({
+    apiUrl: config.interop.financials.tokenDbApiUrl,
+    authToken: config.interop.financials.tokenDbAuthToken,
+    callSource: 'interop',
+  })
+
   const financialsService = new InteropFinancialsLoop(
     config.interop.capture.chains,
     db,
-    tokenDb,
+    tokenDbClient,
     logger,
   )
 

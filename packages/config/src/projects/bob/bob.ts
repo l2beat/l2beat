@@ -28,7 +28,12 @@ export const bob: ScalingProject = opStackL2({
       documentation: ['https://docs.gobob.xyz'],
       explorers: ['https://explorer.gobob.xyz?'],
       repositories: ['https://github.com/bob-collective'],
-      socialMedia: ['https://twitter.com/build_on_bob'],
+      socialMedia: [
+        'https://twitter.com/build_on_bob',
+        'https://discord.com/invite/gobob',
+        'https://t.me/gobobxyz',
+        'https://youtube.com/@BuildOnBitcoin',
+      ],
     },
   },
   nonTemplateEscrows: [

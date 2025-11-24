@@ -99,7 +99,7 @@ export class DeBridgeDlnPlugin implements InteropPlugin {
     const logOrderCreated = parseCreatedOrder(input.log, null)
     if (logOrderCreated) {
       return [
-        LogCreatedOrder.create(input.ctx, {
+        LogCreatedOrder.create(input, {
           orderId: logOrderCreated.orderId,
           fromToken: Address32.from(logOrderCreated.order.giveTokenAddress),
           toToken: Address32.from(logOrderCreated.order.takeTokenAddress),
@@ -117,7 +117,7 @@ export class DeBridgeDlnPlugin implements InteropPlugin {
     const logOrderFilled = parseFulfilledOrder(input.log, null)
     if (logOrderFilled) {
       return [
-        LogFulfilledOrder.create(input.ctx, {
+        LogFulfilledOrder.create(input, {
           orderId: logOrderFilled.orderId,
           fromToken: Address32.from(logOrderFilled.order.giveTokenAddress),
           toToken: Address32.from(logOrderFilled.order.takeTokenAddress),

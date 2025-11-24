@@ -1,17 +1,28 @@
-import { initTRPC, TRPCError } from '@trpc/server'
-import { jwtVerify } from 'jose'
-import { config } from '../config'
-import { parseCookies } from '../utils/parseCookies'
+import type { TokenDatabase } from '@l2beat/database'
+import { initTRPC } from '@trpc/server'
+import type { jwtVerify } from 'jose'
+import type { Config } from '../config/Config'
+import { getSession } from '../utils/getSession'
 
-export const createTRPCContext = (opts: { headers: Headers }) => {
+export const createTRPCContext = async (opts: {
+  headers: Headers
+  config: Config
+  db: TokenDatabase
+  jwtVerifyFn?: typeof jwtVerify
+}) => {
+  const { headers, config, db, jwtVerifyFn } = opts
+  const session = await getSession(headers, config, { jwtVerifyFn })
+
   return {
-    ...opts,
+    headers,
+    db,
+    session,
   }
 }
 
 type Context = Awaited<ReturnType<typeof createTRPCContext>>
 
-const t = initTRPC.context<Context>().create({
+export const trcpRoot = initTRPC.context<Context>().create({
   transformer: {
     serialize: JSON.stringify,
     deserialize: JSON.parse,
@@ -27,57 +38,11 @@ const t = initTRPC.context<Context>().create({
   },
 })
 
+export const router = trcpRoot.router
+
 /**
  * Create a server-side caller.
  *
  * @see https://trpc.io/docs/server/server-side-calls
  */
-export const createCallerFactory = t.createCallerFactory
-
-/**
- * Used to create a router in the tRPC API.
- */
-export const router = t.router
-
-/**
- * Used to define a procedure in the tRPC API.
- */
-const publicProcedure = t.procedure
-
-export const protectedProcedure = publicProcedure.use(async (opts) => {
-  const auth = config.auth
-  if (auth === false) {
-    return opts.next({
-      ctx: {
-        email: 'dev@l2beat.com',
-      },
-    })
-  }
-  const headers = opts.ctx.headers
-  const cookie = headers.get('cookie')
-  if (!cookie) {
-    throw new TRPCError({ code: 'UNAUTHORIZED' })
-  }
-
-  const cookies = parseCookies(cookie)
-  const token = cookies['CF_Authorization']
-
-  if (!token) {
-    throw new TRPCError({ code: 'UNAUTHORIZED' })
-  }
-  const { JWKS, teamDomain, aud } = auth
-  const decodedToken = await jwtVerify(token, JWKS, {
-    issuer: teamDomain,
-    audience: aud,
-  })
-  if (!decodedToken) {
-    throw new TRPCError({ code: 'UNAUTHORIZED' })
-  }
-  const { payload } = decodedToken
-
-  return opts.next({
-    ctx: {
-      email: payload.email as string,
-    },
-  })
-})
+export const createCallerFactory = trcpRoot.createCallerFactory

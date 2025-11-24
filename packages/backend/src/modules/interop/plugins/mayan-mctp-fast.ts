@@ -42,7 +42,7 @@ export class MayanMctpFastPlugin implements InteropPlugin {
         Number(orderFulfilled.sourceDomain),
       )
       return [
-        OrderFulfilled.create(input.ctx, {
+        OrderFulfilled.create(input, {
           amount: orderFulfilled.amount,
           $srcChain,
         }),

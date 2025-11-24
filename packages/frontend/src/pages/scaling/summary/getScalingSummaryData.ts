@@ -58,9 +58,6 @@ async function getCachedData() {
       range: SCALING_SUMMARY_TIME_RANGE,
       filter: { type: 'all' },
     }),
-    helpers.activity.chartStats.prefetch({
-      filter: { type: 'withoutOthers' },
-    }),
     helpers.tvs.table.prefetch({
       type: 'rollups',
       excludeAssociatedTokens: false,

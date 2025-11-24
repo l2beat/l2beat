@@ -15,35 +15,12 @@
       "sinceBlock": 18122866,
       "values": {
         "$immutable": true,
-        "$libraries": [
-          "eth:0xF5B2d8c81cDE4D6238bBf20D3D77DB37df13f735",
-          "eth:0x33436035441927Df1a73FE3AAC5906854632e53d"
-        ],
         "getConsensus": "eth:0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f",
         "getTemplateHash": "0x64523866b6437fd593d8c0c65f88f59717f2eefa81422cc4921214423c819bf2",
         "owner": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
         "eth:0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366": "CartesiDApp"
-      }
-    },
-    {
-      "name": "MerkleV2",
-      "address": "eth:0x33436035441927Df1a73FE3AAC5906854632e53d",
-      "type": "Contract",
-      "template": "bugbuster/MerkleV2",
-      "sourceHashes": [
-        "0x675099eb69fe5cac5aa600324d551c0cba32065c778fab957b12cdfdf85a6964"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1690208675,
-      "sinceBlock": 17763539,
-      "values": {
-        "$immutable": true,
-        "$libraries": ["eth:0xB634F716BEd5Dd5A2b9a91C92474C499e50Cb27D"]
-      },
-      "implementationNames": {
-        "eth:0x33436035441927Df1a73FE3AAC5906854632e53d": "MerkleV2"
       }
     },
     {
@@ -120,39 +97,6 @@
       "implementationNames": {
         "eth:0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f": "Authority"
       }
-    },
-    {
-      "name": "CartesiMathV2",
-      "address": "eth:0xB634F716BEd5Dd5A2b9a91C92474C499e50Cb27D",
-      "type": "Contract",
-      "template": "bugbuster/CartesiMathV2",
-      "sourceHashes": [
-        "0x2da30de4896050157503a4b201540ebce88af44d2b2cd6ef157a829cd0cc7d4e"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1690208663,
-      "sinceBlock": 17763538,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xB634F716BEd5Dd5A2b9a91C92474C499e50Cb27D": "CartesiMathV2"
-      }
-    },
-    {
-      "name": "Bitmask",
-      "address": "eth:0xF5B2d8c81cDE4D6238bBf20D3D77DB37df13f735",
-      "type": "Contract",
-      "template": "bugbuster/Bitmask",
-      "sourceHashes": [
-        "0x639743f54fa7369b5278fe2f7a1d02c2348a8f0e70f9f81c54adbe19f5fbef58"
-      ],
-      "proxyType": "immutable",
-      "description": "Implementation of bit mask with dynamic array.",
-      "sinceTimestamp": 1690208639,
-      "sinceBlock": 17763536,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xF5B2d8c81cDE4D6238bBf20D3D77DB37df13f735": "Bitmask"
-      }
     }
   ],
   "abis": {
@@ -182,13 +126,6 @@
       "function validateNotice(bytes _notice, tuple(tuple(uint64 inputIndexWithinEpoch, uint64 outputIndexWithinInput, bytes32 outputHashesRootHash, bytes32 vouchersEpochRootHash, bytes32 noticesEpochRootHash, bytes32 machineStateHash, bytes32[] outputHashInOutputHashesSiblings, bytes32[] outputHashesInEpochSiblings) validity, bytes context) _proof) view returns (bool)",
       "function wasVoucherExecuted(uint256 _inputIndex, uint256 _outputIndexWithinInput) view returns (bool)",
       "function withdrawEther(address _receiver, uint256 _value)"
-    ],
-    "eth:0x33436035441927Df1a73FE3AAC5906854632e53d": [
-      "function calculateRootFromPowerOfTwo(bytes32[] hashes) pure returns (bytes32)",
-      "function getEmptyTreeHashAtIndex(uint256 _index) pure returns (bytes32)",
-      "function getHashOfWordAtIndex(bytes _data, uint256 _wordIndex) pure returns (bytes32)",
-      "function getMerkleRootFromBytes(bytes _data, uint256 _log2Size) pure returns (bytes32)",
-      "function getRootAfterReplacementInDrive(uint256 _position, uint256 _logSizeOfReplacement, uint256 _logSizeOfFullDrive, bytes32 _replacement, bytes32[] siblings) pure returns (bytes32)"
     ],
     "eth:0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9": [
       "constructor(address _owner)",
@@ -232,21 +169,9 @@
       "function submitClaim(bytes _claimData)",
       "function transferOwnership(address newOwner)",
       "function withdrawERC20Tokens(address _token, address _recipient, uint256 _amount)"
-    ],
-    "eth:0xB634F716BEd5Dd5A2b9a91C92474C499e50Cb27D": [
-      "function clz(uint256 _num) pure returns (uint256)",
-      "function ctz(uint256 _num) pure returns (uint256)",
-      "function getLog2Floor(uint256 _num) pure returns (uint8)",
-      "function getLog2TableTimes1M(uint256 _num) pure returns (uint256)",
-      "function isPowerOf2(uint256 _num) pure returns (bool)",
-      "function log2ApproxTimes1M(uint256 _num) pure returns (uint256)"
     ]
   },
-  "usedTemplates": {
-    "bugbuster/Bitmask": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "bugbuster/CartesiMathV2": "0x45b392b81be961c24a91deb0f1b32d3dd9ac9b3c54d4451926fb84cbfcb8698f",
-    "bugbuster/MerkleV2": "0xa28847a011dfff9dcaba18afea53d599e875572206a6ca331354f384ad826276"
-  },
+  "usedTemplates": {},
   "usedBlockNumbers": { "ethereum": 20641250 },
-  "permissionsConfigHash": "0xeac851533890de662722c446a913baf2274836faeec77a9c2ade6ffc953bc7dc"
+  "permissionsConfigHash": "0x1d6d89492649898cf90bdb3845ac69c7934e6af50be7d0fe3b715cfb5da42489"
 }

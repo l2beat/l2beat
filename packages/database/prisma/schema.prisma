@@ -365,9 +365,10 @@ model InteropEvent {
 
   matched     Boolean
   unsupported Boolean
+  direction   String?
 
   @@id([eventId])
-  @@index([type])
+  @@index([type, matched, unsupported, timestamp])
 }
 
 model InteropMessage {
@@ -393,6 +394,9 @@ model InteropMessage {
 
   @@id([messageId])
   @@index([type])
+  @@index([type, app, duration])
+  @@index([type, srcChain, dstChain, duration])
+  @@index([app, plugin])
 }
 
 model InteropTransfer {
@@ -438,6 +442,8 @@ model InteropTransfer {
   @@id([transferId])
   @@index([type])
   @@index([isProcessed])
+  @@index([isProcessed, srcValueUsd, dstValueUsd])
+  @@index([type, duration, srcValueUsd, dstValueUsd])
 }
 
 model EcosystemToken {
@@ -482,6 +488,7 @@ model DeployedToken {
   deploymentTimestamp DateTime @db.Timestamp(6)
   comment             String?  @db.Text
 
+  chainRelation   Chain?            @relation(fields: [chain], references: [name], onDelete: Restrict)
   abstractToken   AbstractToken?    @relation(fields: [abstractTokenId], references: [id], onDelete: Restrict)
   connectionsFrom TokenConnection[] @relation("TokenConnection_tokenFrom")
   connectionsTo   TokenConnection[] @relation("TokenConnection_tokenTo")
@@ -496,7 +503,7 @@ model TokenConnection {
   tokenToChain     String  @db.VarChar(32)
   tokenToAddress   String  @db.VarChar(255)
   type             String  @db.VarChar(32)
-  params           Json?   @db.Json
+  params           Json?
   comment          String? @db.Text
 
   tokenFrom DeployedToken @relation("TokenConnection_tokenFrom", fields: [tokenFromChain, tokenFromAddress], references: [chain, address], onDelete: Restrict)
@@ -522,4 +529,14 @@ model InteropConfig {
   value     String   @db.Text
 
   @@id([key, timestamp])
+}
+
+model Chain {
+  name        String  @id @db.VarChar(255)
+  chainId     Int     @unique()
+  explorerUrl String? @db.VarChar(255)
+  aliases     Json?
+  apis        Json?
+
+  deployedTokens DeployedToken[]
 }

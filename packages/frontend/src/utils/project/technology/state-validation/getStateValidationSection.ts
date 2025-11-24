@@ -2,11 +2,15 @@ import type { Project } from '@l2beat/config'
 import type { StateValidationSectionProps } from '~/components/projects/sections/state-validation/StateValidationSection'
 import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import type { ContractUtils } from '../../contracts-and-permissions/getContractUtils'
+import { getZkProgramHashes } from '../../contracts-and-permissions/getZkProgramHashes'
 import { getDiagramParams } from '../../getDiagramParams'
 import { getProverInfo } from './getProverInfo'
 
 export function getStateValidationSection(
-  project: Project<'scalingTechnology' | 'statuses' | 'scalingInfo'>,
+  project: Project<
+    'scalingTechnology' | 'statuses' | 'scalingInfo',
+    'contracts'
+  >,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
@@ -14,6 +18,7 @@ export function getStateValidationSection(
     never,
     'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
   >[],
+  allProjectsWithContracts: Project<'contracts'>[],
 ):
   | Omit<StateValidationSectionProps, 'id' | 'title' | 'sectionOrder'>
   | undefined {
@@ -35,6 +40,11 @@ export function getStateValidationSection(
       contractUtils,
       tvs,
       allProjects,
+    ),
+    zkProgramHashes: getZkProgramHashes(
+      project.contracts?.zkProgramHashes,
+      zkCatalogProjects,
+      allProjectsWithContracts,
     ),
   }
 }

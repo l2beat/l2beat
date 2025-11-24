@@ -1,3 +1,85 @@
+Generated with discovered.json: 0xf8e637ee516b044f1ae8041721507092b556c120
+
+# Diff at Wed, 05 Nov 2025 12:48:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bc0ecd2e43db8badee0981759f26dbc0b38299e3 block: 1757661532
+- current timestamp: 1757661532
+
+## Description
+
+Libraries are opt-in
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757661532 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Pairing (eth:0x57f928158C3EE7CDad1e4D8642503c4D0201f611)
+    +++ description: None
+```
+
+```diff
+    contract SemaphoreVerifier (eth:0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0x57f928158C3EE7CDad1e4D8642503c4D0201f611"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Pairing (oeth:0x047eE5313F98E26Cc8177fA38877cB36292D2364)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Pairing (oeth:0x2a968958E6136FA0FC2Ed068aF8Bef464c7b66EA)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Pairing (oeth:0x379C62556c665F1eDD25f2c2A0f76Bc70a53b2e4)
+    +++ description: None
+```
+
+```diff
+    contract SemaphoreVerifier (oeth:0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF) {
+    +++ description: None
+      values.$libraries:
+-        ["oeth:0x2a968958E6136FA0FC2Ed068aF8Bef464c7b66EA"]
+    }
+```
+
+```diff
+    contract OpWorldID_Zero (oeth:0x42FF98C4E85212a5D31358ACbFe76a621b50fC02) {
+    +++ description: None
+      values.$libraries:
+-        ["oeth:0x047eE5313F98E26Cc8177fA38877cB36292D2364"]
+    }
+```
+
+```diff
+    contract SemaphoreVerifier (oeth:0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB) {
+    +++ description: None
+      values.$libraries:
+-        ["oeth:0x379C62556c665F1eDD25f2c2A0f76Bc70a53b2e4"]
+    }
+```
+
+```diff
+    contract OpWorldID_One (oeth:0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d) {
+    +++ description: A contract that manages the root history of the Semaphore identity merkle tree on Optimism.
+      values.$libraries:
+-        ["oeth:0x2a968958E6136FA0FC2Ed068aF8Bef464c7b66EA"]
+    }
+```
+
 Generated with discovered.json: 0xd7490a70d46b440e9e91c817cf26b5e5c75e4f95
 
 # Diff at Fri, 31 Oct 2025 11:49:17 GMT:

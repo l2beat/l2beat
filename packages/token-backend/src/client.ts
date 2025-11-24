@@ -7,6 +7,8 @@ export interface TokenClientConfig {
   callSource?: string
 }
 
+export type TokenDbClient = ReturnType<typeof getTokenDbClient>
+
 export function getTokenDbClient(config: TokenClientConfig) {
   const headers: Record<string, string> = {}
 
@@ -22,6 +24,7 @@ export function getTokenDbClient(config: TokenClientConfig) {
     links: [
       httpBatchLink({
         url: config.apiUrl,
+        methodOverride: 'POST', // Sometimes request body is too large to fit in GET's URL
         transformer: {
           serialize: JSON.stringify,
           deserialize: JSON.parse,

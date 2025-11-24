@@ -48,7 +48,7 @@ export class MayanSwiftPlugin implements InteropPlugin {
     const orderFulfilled = parseOrderFulfilled(input.log, null)
     if (orderFulfilled) {
       return [
-        OrderFulfilled.create(input.ctx, {
+        OrderFulfilled.create(input, {
           key: orderFulfilled.key,
         }),
       ]
@@ -64,7 +64,7 @@ export class MayanSwiftPlugin implements InteropPlugin {
       const parsed = nextLog && logToProtocolData(nextLog, wormholeNetworks)
       const dstChain = parsed?.dstChain ?? 'unknown_missing_protocolData'
       return [
-        OrderCreated.create(input.ctx, {
+        OrderCreated.create(input, {
           key: orderCreated.key,
           $dstChain: dstChain,
         }),

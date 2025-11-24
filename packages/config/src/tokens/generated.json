@@ -2691,6 +2691,20 @@
       "supply": "zero"
     },
     {
+      "name": "HAUST",
+      "coingeckoId": "haust",
+      "address": "0xec3502A9f98f151aF52EE6CB423a0afE7bBF5A19",
+      "symbol": "HAUST",
+      "decimals": 18,
+      "deploymentTimestamp": 1725525707,
+      "coingeckoListingTimestamp": 1761523200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52141/large/chain-logo-200.png?1732643394",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Hegic",
       "coingeckoId": "hegic",
       "address": "0x584bC13c7D411c00c01A62e8019472dE68768430",
@@ -3582,6 +3596,20 @@
       "coingeckoListingTimestamp": 1621296000,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/15595/large/Metis_Black_Bg.png?1702968192",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Midas Re7 BTC",
+      "coingeckoId": "midas-mre7btc-2",
+      "address": "0x9FB442d6B612a6dcD2acC67bb53771eF1D9F661A",
+      "symbol": "mRe7BTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1756975739,
+      "coingeckoListingTimestamp": 1762214400,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/69666/large/mRe7BTC_icon.png?1759235343",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -10456,6 +10484,28 @@
       }
     },
     {
+      "name": "USDT0",
+      "coingeckoId": "usdt0",
+      "address": "0x779Ded0c9e1022225f8E0630b35a9b54bE713736",
+      "symbol": "USDT0",
+      "decimals": 6,
+      "deploymentTimestamp": 1762005534,
+      "coingeckoListingTimestamp": 1737590400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
+      "chainId": 5000,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Wrapped Mantle",
       "coingeckoId": "wrapped-mantle",
       "address": "0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8",
@@ -13323,6 +13373,28 @@
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Syrup USDC",
+      "coingeckoId": "syrupusdc",
+      "address": "0x41CA7586cC1311807B4605fBB748a3B8862b42b5",
+      "symbol": "syrupUSDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1753290053,
+      "coingeckoListingTimestamp": 1740873600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54658/large/syrupUSDC.png?1761824955",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "name": "Talos",

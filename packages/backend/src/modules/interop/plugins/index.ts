@@ -38,6 +38,7 @@ import { MayanSwiftPlugin } from './mayan-swift'
 import { OpStackPlugin } from './opstack/opstack'
 import { OpStackStandardBridgePlugin } from './opstack/opstack-standardbridge'
 import { OrbitStackPlugin } from './orbitstack/orbitstack'
+import { OrbitStackCustomGatewayPlugin } from './orbitstack/orbitstack-customgateway'
 import { OrbitStackStandardGatewayPlugin } from './orbitstack/orbitstack-standardgateway'
 import { OrbitStackWethGatewayPlugin } from './orbitstack/orbitstack-wethgateway'
 import { RelayPlugin } from './relay/relay.plugin'
@@ -110,10 +111,10 @@ export function createInteropPlugins(
       new MayanMctpFastPlugin(deps.configs), // should be run before CCTP
       new CCTPV1Plugin(deps.configs),
       new CCTPV2Plugin(deps.configs),
-      new StargatePlugin(deps.configs), // should be run ofts
+      new StargatePlugin(deps.configs), // should be run before ofts, lzv2
       new LayerZeroV2OFTsPlugin(deps.configs), // should be run before LayerZeroV2
-      new LayerZeroV1Plugin(deps.configs),
       new LayerZeroV2Plugin(deps.configs),
+      new LayerZeroV1Plugin(deps.configs),
       new WormholeNTTPlugin(deps.configs), // should be run before WormholeCore and WormholeRelayer
       new WormholeTokenBridgePlugin(deps.configs), // should be run before Wormhole
       new WormholeRelayerPlugin(deps.configs), // should be run before Wormhole
@@ -124,6 +125,7 @@ export function createInteropPlugins(
       new AcrossPlugin(deps.configs),
       new OrbitStackWethGatewayPlugin(), // should be run before OrbitStackStandardGateway and OrbitStack
       new OrbitStackStandardGatewayPlugin(), // should be run before OrbitStack
+      new OrbitStackCustomGatewayPlugin(), // should be run before OrbitStack
       new OrbitStackPlugin(),
       new OpStackStandardBridgePlugin(), // should be run before OpStack
       new OpStackPlugin(),

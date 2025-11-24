@@ -53,6 +53,7 @@ export const OutBoxTransactionExecuted = createInteropEventType<{
 export const MessageDelivered = createInteropEventType<{
   chain: string
   messageNum: string
+  txValue: bigint
 }>('orbitstack.MessageDelivered')
 
 export const RedeemScheduled = createInteropEventType<{
@@ -91,6 +92,26 @@ export const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
     ),
     l1Weth: EthereumAddress('0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'),
     l2Weth: EthereumAddress('0x82af49447d8a07e3bd95bd0d56f35241523fbab1'),
+    customGateways: [
+      {
+        key: 'custom',
+        l1Gateway: EthereumAddress(
+          '0xcee284f754e854890e311e3280b767f80797180d',
+        ),
+        l2Gateway: EthereumAddress(
+          '0x096760f208390250649e3e8763348e783aef5562',
+        ),
+      },
+      {
+        key: 'dai',
+        l1Gateway: EthereumAddress(
+          '0xd3b5b60020504bc3489d6949d545893982ba3011',
+        ),
+        l2Gateway: EthereumAddress(
+          '0x467194771dae2967aef3ecbedd3bf9a310c76c65',
+        ),
+      },
+    ],
   },
 ])
 
@@ -98,7 +119,7 @@ export class OrbitStackPlugin implements InteropPlugin {
   name = 'orbitstack'
 
   capture(input: LogToCapture) {
-    if (input.ctx.chain === 'ethereum') {
+    if (input.chain === 'ethereum') {
       const network = ORBITSTACK_NETWORKS.find(
         (n) => n.outbox === EthereumAddress(input.log.address),
       )
@@ -107,7 +128,7 @@ export class OrbitStackPlugin implements InteropPlugin {
         const otxe = parseOutBoxTransactionExecuted(input.log, [network.outbox])
         if (otxe) {
           return [
-            OutBoxTransactionExecuted.create(input.ctx, {
+            OutBoxTransactionExecuted.create(input, {
               chain: network.chain,
               position: Number(otxe.transactionIndex),
             }),
@@ -133,17 +154,16 @@ export class OrbitStackPlugin implements InteropPlugin {
           }
 
           return [
-            MessageDelivered.create(input.ctx, {
+            MessageDelivered.create(input, {
               chain: networkForBridge.chain,
               messageNum: messageDelivered.messageIndex.toString(),
+              txValue: input.tx.value ?? 0n,
             }),
           ]
         }
       }
     } else {
-      const network = ORBITSTACK_NETWORKS.find(
-        (n) => n.chain === input.ctx.chain,
-      )
+      const network = ORBITSTACK_NETWORKS.find((n) => n.chain === input.chain)
       if (!network) return
 
       // L2 -> L1 (Withdrawal initiation on L2)
@@ -152,7 +172,7 @@ export class OrbitStackPlugin implements InteropPlugin {
         // Check if this is an ETH withdrawal (callvalue > 0)
         if (l2ToL1Tx.callvalue > 0n) {
           return [
-            ETHWithdrawalInitiatedL2ToL1Tx.create(input.ctx, {
+            ETHWithdrawalInitiatedL2ToL1Tx.create(input, {
               chain: network.chain,
               position: Number(l2ToL1Tx.position),
               amount: l2ToL1Tx.callvalue,
@@ -160,7 +180,7 @@ export class OrbitStackPlugin implements InteropPlugin {
           ]
         }
         return [
-          L2ToL1Tx.create(input.ctx, {
+          L2ToL1Tx.create(input, {
             chain: network.chain,
             position: Number(l2ToL1Tx.position),
           }),
@@ -172,25 +192,27 @@ export class OrbitStackPlugin implements InteropPlugin {
         network.arbRetryableTx,
       ])
       if (redeemScheduled) {
+        const calldata = input.tx.data ?? '0x'
         // Extract messageNum from transaction calldata
         // The calldata format is: selector (4 bytes) + messageNum (32 bytes) + ...
         // messageNum is the first parameter after the function selector
-        const messageNum =
-          input.ctx.txData.length >= 2 + 8 + 64
-            ? '0x' + input.ctx.txData.slice(2 + 8, 2 + 8 + 64)
+        const messageNumHex =
+          calldata.length >= 2 + 8 + 64
+            ? '0x' + calldata.slice(2 + 8, 2 + 8 + 64)
             : '0x0'
+        const messageNum = BigInt(messageNumHex).toString()
 
         // Extract callValue (param 3) from calldata
         // submitRetryable(bytes32,uint256,uint256,uint256,...)
         // Offset: selector (2+8) + param0 (64) + param1 (64) + param2 (64) = 202
         const callValueHex =
-          input.ctx.txData.length >= 2 + 8 + 64 * 4
-            ? '0x' + input.ctx.txData.slice(2 + 8 + 64 * 3, 2 + 8 + 64 * 4)
+          calldata.length >= 2 + 8 + 64 * 4
+            ? '0x' + calldata.slice(2 + 8 + 64 * 3, 2 + 8 + 64 * 4)
             : '0x0'
         const callValue = BigInt(callValueHex)
 
         return [
-          RedeemScheduled.create(input.ctx, {
+          RedeemScheduled.create(input, {
             chain: network.chain,
             messageNum: messageNum,
             retryTxHash: redeemScheduled.retryTxHash,
@@ -257,10 +279,7 @@ export class OrbitStackPlugin implements InteropPlugin {
       // Check if this is an ETH deposit (based on L2 callValue)
       if (event.args.ethAmount) {
         // Verify L1 has txValue
-        if (
-          !messageDelivered.ctx.txValue ||
-          messageDelivered.ctx.txValue === 0n
-        ) {
+        if (messageDelivered.args.txValue === 0n) {
           return
         }
 
@@ -272,7 +291,7 @@ export class OrbitStackPlugin implements InteropPlugin {
           }),
           Result.Transfer('orbitstack.L1ToL2Transfer', {
             srcEvent: messageDelivered,
-            srcAmount: messageDelivered.ctx.txValue,
+            srcAmount: messageDelivered.args.txValue,
             srcTokenAddress: Address32.NATIVE,
             dstEvent: event,
             dstAmount: event.args.ethAmount,

@@ -24,7 +24,7 @@ export function VerificationSteps({
   if (!verificationSteps) {
     return (
       <span className="mt-px font-medium text-label-value-13 text-secondary opacity-50">
-        Unknown
+        None
       </span>
     )
   }

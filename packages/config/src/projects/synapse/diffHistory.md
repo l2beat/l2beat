@@ -1,4 +1,42 @@
-Generated with discovered.json: 0xa2d795cf2467f4b0448487b5c011252e5d52e35f
+Generated with discovered.json: 0xf59a43e44567bca796c28d45ef9978b90b40a2e3
+
+# Diff at Wed, 05 Nov 2025 12:48:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bc0ecd2e43db8badee0981759f26dbc0b38299e3 block: 1762264539
+- current timestamp: 1762264539
+
+## Description
+
+Libraries are opt-in
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762264539 (main branch discovery), not current.
+
+```diff
+    contract Liquidity Pool (eth:0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0x11199A9eE50127F335B84A1eEb961D8A85147f5F","eth:0xFE986b20d34df3Aa9fA2e4d18b8EBe5AC6c753b0","eth:0x11199A9eE50127F335B84A1eEb961D8A85147f5F","eth:0xFE986b20d34df3Aa9fA2e4d18b8EBe5AC6c753b0"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SwapUtils (eth:0x11199A9eE50127F335B84A1eEb961D8A85147f5F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AmplificationUtils (eth:0xFE986b20d34df3Aa9fA2e4d18b8EBe5AC6c753b0)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x489ff40310ad4393c5f13a1c1c64fbbb57e5f8f6
 
 # Diff at Tue, 04 Nov 2025 11:34:41 GMT:
 

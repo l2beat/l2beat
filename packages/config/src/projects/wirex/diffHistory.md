@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xa67a52addec6f08ee214ca865ab49f8db2fb56c2
+
+# Diff at Tue, 04 Nov 2025 13:54:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f12d06bbf120eab9f5356a235918d4d6b2484290 block: 1758532079
+- current timestamp: 1762264409
+
+## Description
+
+Config: Agglayer rename.
+
+## Watched changes
+
+```diff
+    contract Validium (eth:0x78253E2E6120164bd826668A4C96Db20f78A94c9) {
+    +++ description: The main system contract defining the pay-chain Layer 2 logic. Entry point for sequencing batches.
+      values.trustedSequencer:
+-        "eth:0x0AE999d2d668f12f2b46C4Fd3e13A32D478A9164"
++        "eth:0xc303511902D613b6Cd4635Ccf5E40066B4bde1B1"
+    }
+```
+
 Generated with discovered.json: 0x748334b27db294d6d4151c0c300daeac05bca04e
 
 # Diff at Tue, 04 Nov 2025 11:34:51 GMT:

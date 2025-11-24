@@ -145,7 +145,11 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'https://youtube.com/@Arbitrum',
         'https://t.me/arbitrum',
       ],
-      rollupCodes: 'https://rollup.codes/arbitrum-one',
+
+      other: [
+        'https://rollup.codes/arbitrum-one',
+        'https://growthepie.com/chains/arbitrum',
+      ],
     },
     liveness: {
       warnings: {

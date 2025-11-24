@@ -62,6 +62,14 @@ const parseClaimed = createEventParser(
   'event Claimed(bytes32 submissionId, bytes32 indexed debridgeId, uint256 amount, address indexed receiver, uint256 nonce, uint256 indexed chainIdFrom, bytes autoParams, bool isNativeToken)',
 )
 
+const parseSentOrderUnlock = createEventParser(
+  'event SentOrderUnlock(bytes32 orderId, bytes beneficiary, bytes32 submissionId)',
+)
+
+const parseTransfer = createEventParser(
+  'event Transfer(address indexed from, address indexed to, uint256 value)',
+)
+
 export const DEBRIDGE_TOKENS: {
   tokenId: `0x${string}`
   symbol: string
@@ -88,13 +96,16 @@ export const Sent = createInteropEventType<{
   submissionId: `0x${string}`
   debridgeId: `0x${string}`
   amount: bigint
+  srcTokenAddress?: Address32
   $dstChain: string
+  payloadType?: 'dlnSettlement'
 }>('debridge.Sent')
 
 export const Claimed = createInteropEventType<{
   submissionId: `0x${string}`
   debridgeId: `0x${string}`
   amount: bigint
+  dstTokenAddress?: Address32
   receiver: EthereumAddress
   $srcChain: string
 }>('debridge.Claimed')
@@ -105,11 +116,44 @@ export class DeBridgePlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     const sent = parseSent(input.log, null)
     if (sent) {
+      const plusTwo = input.txLogs.find(
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        (x) => x.logIndex === input.log.logIndex! + 2,
+      )
+      const sentOrderUnlock = plusTwo && parseSentOrderUnlock(plusTwo, null)
+
+      // Find Transfer event by searching through all preceding logs in the worst case
+      let srcTokenAddress: Address32 | undefined
+      // let srcAmount: bigint | undefined
+
+      if (BigInt(sent.amount) > 0) {
+        for (
+          let offset = 1;
+          // biome-ignore lint/style/noNonNullAssertion: It's there
+          offset <= input.log.logIndex!;
+          offset++
+        ) {
+          const precedingLog = input.txLogs.find(
+            // biome-ignore lint/style/noNonNullAssertion: It's there
+            (x) => x.logIndex === input.log.logIndex! - offset,
+          )
+          if (!precedingLog) break
+
+          const transfer = parseTransfer(precedingLog, null)
+          if (transfer) {
+            srcTokenAddress = Address32.from(precedingLog.address)
+            // srcAmount = transfer.value
+            break
+          }
+        }
+      }
       return [
-        Sent.create(input.ctx, {
+        Sent.create(input, {
           submissionId: sent.submissionId,
           debridgeId: sent.debridgeId,
+          srcTokenAddress,
           amount: sent.amount,
+          payloadType: sentOrderUnlock ? 'dlnSettlement' : undefined,
           $dstChain: findChain(
             DEBRIDGE_NETWORKS,
             (x) => x.chainId,
@@ -121,11 +165,37 @@ export class DeBridgePlugin implements InteropPlugin {
 
     const claimed = parseClaimed(input.log, null)
     if (claimed) {
+      // Find Transfer event by searching through all preceding logs in the worst case
+      let srcTokenAddress: Address32 | undefined
+      // let srcAmount: bigint | undefined
+
+      if (BigInt(claimed.amount) > 0) {
+        for (
+          let offset = 1;
+          // biome-ignore lint/style/noNonNullAssertion: It's there
+          offset <= input.log.logIndex!;
+          offset++
+        ) {
+          const precedingLog = input.txLogs.find(
+            // biome-ignore lint/style/noNonNullAssertion: It's there
+            (x) => x.logIndex === input.log.logIndex! - offset,
+          )
+          if (!precedingLog) break
+
+          const transfer = parseTransfer(precedingLog, null)
+          if (transfer) {
+            srcTokenAddress = Address32.from(precedingLog.address)
+            // srcAmount = transfer.value
+            break
+          }
+        }
+      }
       return [
-        Claimed.create(input.ctx, {
+        Claimed.create(input, {
           submissionId: claimed.submissionId,
           debridgeId: claimed.debridgeId,
           amount: claimed.amount,
+          dstTokenAddress: srcTokenAddress,
           receiver: EthereumAddress(claimed.receiver),
           $srcChain: findChain(
             DEBRIDGE_NETWORKS,
@@ -154,7 +224,7 @@ export class DeBridgePlugin implements InteropPlugin {
     const hasTransfer = BigInt(claimed.args.amount) > 0
     const results: MatchResult = [
       Result.Message('debridge.Message', {
-        app: hasTransfer ? 'debridge' : 'unknown',
+        app: hasTransfer ? 'tokenBridge' : (sent.args.payloadType ?? 'unknown'),
         srcEvent: sent,
         dstEvent: claimed,
       }),
@@ -163,14 +233,16 @@ export class DeBridgePlugin implements InteropPlugin {
       results.push(
         Result.Transfer('debridge.Transfer', {
           srcEvent: sent,
-          srcTokenAddress:
-            DEBRIDGE_TOKENS.find((t) => t.tokenId === sent.args.debridgeId)
-              ?.tokenAddresses[sent.ctx.chain] ?? Address32.ZERO,
+          srcTokenAddress: sent.args.srcTokenAddress,
+          // srcTokenAddress: DEBRIDGE_TOKENS.find(
+          //   (t) => t.tokenId === sent.args.debridgeId,
+          // )?.tokenAddresses[sent.ctx.chain],
           srcAmount: claimed.args.amount,
           dstEvent: claimed,
-          dstTokenAddress:
-            DEBRIDGE_TOKENS.find((t) => t.tokenId === claimed.args.debridgeId)
-              ?.tokenAddresses[claimed.ctx.chain] ?? Address32.ZERO,
+          dstTokenAddress: claimed.args.dstTokenAddress,
+          // dstTokenAddress: DEBRIDGE_TOKENS.find(
+          //   (t) => t.tokenId === claimed.args.debridgeId,
+          // )?.tokenAddresses[claimed.ctx.chain],
           dstAmount: claimed.args.amount,
         }),
       )

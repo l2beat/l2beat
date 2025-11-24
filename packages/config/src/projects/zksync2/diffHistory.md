@@ -1,3 +1,92 @@
+Generated with discovered.json: 0x590ee357be3bc5a84f20b382997f1a5966b14d53
+
+# Diff at Wed, 19 Nov 2025 10:32:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c2740481ca5c9bb2be3283052c4a68b2d735c71b block: 1762505590
+- current timestamp: 1762505590
+
+## Description
+
+config: remove global accesscontrol from template in favor of the chain specific accesscontrol.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762505590 (main branch discovery), not current.
+
+```diff
+    contract ZKsyncValidatorTimelock (gateway:0xe279aF77D3C1685022641ffE1b9b538c5eA0Ae24) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
+      values.accessControl:
+-        {"gateway:0xCE7CBd23193d029410b40e0fD8a79a5121f9250C":{"PRECOMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"]},"COMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"]},"REVERTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"]},"PROVER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"]},"EXECUTOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"]}}}
+    }
+```
+
+Generated with discovered.json: 0xc1be404bb437e7801bf9b3b36fe3de205f5dd562
+
+# Diff at Fri, 07 Nov 2025 09:03:39 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@4fc89c2b7ec1f3752b32fdd3573cd1b04749f1e8 block: 1762183851
+- current timestamp: 1762505590
+
+## Description
+
+Verified sources for ChainAssetHandler on Gateway, the smart contract is the same as on L1.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762183851 (main branch discovery), not current.
+
+```diff
+    contract ChainAssetHandler (gateway:0x000000000000000000000000000000000001000a) {
+    +++ description: Specialized contract for managing chain assets, i.e. chain migrations.
+      name:
+-        "ChainAssetHandler_unverified"
++        "ChainAssetHandler"
+      unverified:
+-        true
++++ severity: HIGH
+      values.migrationPaused:
++        false
++++ description: zk chain migrations that were started
++++ severity: HIGH
+      values.migrations:
++        []
+      values.owner:
++        "gateway:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"
++++ description: this 'paused' is unrelated to migrations and only used for initialization.
++++ severity: LOW
+      values.paused:
++        false
+      values.pendingOwner:
++        "gateway:0x0000000000000000000000000000000000000000"
+      implementationNames.gateway:0x000000000000000000000000000000000001000a:
+-        ""
++        "ChainAssetHandler"
+      template:
++        "shared-zk-stack/ChainAssetHandler"
+      sourceHashes:
++        ["0x0ae09698e3bbec162b9457ba33b3184a082d0d89367f001764f8b8b22a1f950d"]
+      description:
++        "Specialized contract for managing chain assets, i.e. chain migrations."
+      fieldMeta:
++        {"migrationPaused":{"severity":"HIGH"},"paused":{"severity":"LOW","description":"this 'paused' is unrelated to migrations and only used for initialization."},"migrations":{"severity":"HIGH","description":"zk chain migrations that were started"}}
+    }
+```
+
+```diff
+    EOA ProtocolUpgradeHandler_l2Alias (gateway:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"gateway:0x000000000000000000000000000000000001000a","description":"pause, resume chain migrations.","role":".owner"}
+    }
+```
+
 Generated with discovered.json: 0xf8c6d24bfea45a062594e056fdc4a63c1830a9c3
 
 # Diff at Tue, 04 Nov 2025 11:35:04 GMT:

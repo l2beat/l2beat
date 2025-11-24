@@ -91,7 +91,7 @@ export class SquidCoralPlugin implements InteropPlugin {
     const logOrderCreated = parseOrderCreated(input.log, null)
     if (logOrderCreated) {
       return [
-        LogOrderCreated.create(input.ctx, {
+        LogOrderCreated.create(input, {
           orderHash: logOrderCreated.orderHash,
           fromToken: Address32.from(logOrderCreated.order.fromToken),
           toToken: Address32.from(logOrderCreated.order.toToken),
@@ -109,7 +109,7 @@ export class SquidCoralPlugin implements InteropPlugin {
     const logOrderFilled = parseOrderFilled(input.log, null)
     if (logOrderFilled) {
       return [
-        LogOrderFilled.create(input.ctx, {
+        LogOrderFilled.create(input, {
           orderHash: logOrderFilled.orderHash,
           fromToken: Address32.from(logOrderFilled.order.fromToken),
           toToken: Address32.from(logOrderFilled.order.toToken),

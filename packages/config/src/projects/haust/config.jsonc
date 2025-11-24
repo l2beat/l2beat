@@ -1,5 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "haust",
-  "import": ["../globalConfig.jsonc"]
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0xaD83Cd3e5A725546daDC5A25088c5c098d320Ca8"],
+  "sharedModules": ["shared-polygon-cdk"]
 }

@@ -14,5 +14,14 @@
       "eth:0xf255FC8738a5c6Ee6E869A5b182a9Cd4F99a2ED6"
     ],
     "blockNumber": 23670579
+  },
+  "Proxy2.sol": {
+    "hash": "0x655cbba8ed9e8bc798be3624c7ded712b4e2abf1c743d46361b14e173e92e58a",
+    "address": [
+      "eth:0x59e71dc90E662F17c4eB156A8cA1BCCD106aCfA0",
+      "eth:0xf255FC8738a5c6Ee6E869A5b182a9Cd4F99a2ED6"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 23720658
   }
 }

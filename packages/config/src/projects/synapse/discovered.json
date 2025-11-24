@@ -1,6 +1,6 @@
 {
   "name": "synapse",
-  "timestamp": 1734022739,
+  "timestamp": 1762264539,
   "configHash": "0xa723c8c660a7d82fb80d1d061181c5f4fef68ce16af1a967578c742fffc633a7",
   "entries": [
     {
@@ -22,21 +22,11 @@
       "sinceBlock": 13033711,
       "values": {
         "$implementation": "eth:0x5A5fFf6F753d7C11A56A52FE47a177a87e431655",
-        "$libraries": [
-          "eth:0x11199A9eE50127F335B84A1eEb961D8A85147f5F",
-          "eth:0xFE986b20d34df3Aa9fA2e4d18b8EBe5AC6c753b0",
-          "eth:0x11199A9eE50127F335B84A1eEb961D8A85147f5F",
-          "eth:0xFE986b20d34df3Aa9fA2e4d18b8EBe5AC6c753b0"
-        ],
         "flashLoanFeeBPS": 8,
         "getA": 2000,
-        "getAdminBalance": [
-          "13804561110566440022953",
-          20729333528,
-          25246591713
-        ],
+        "getAdminBalance": ["12113493082461850797029", 9293679440, 17756781350],
         "getAPrecise": 200000,
-        "getVirtualPrice": "1001229200492888736",
+        "getVirtualPrice": "1001229202707847701",
         "MAX_BPS": 10000,
         "owner": "eth:0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55",
         "paused": false,
@@ -54,26 +44,6 @@
       "implementationNames": {
         "eth:0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8": "SwapFlashLoan",
         "eth:0x5A5fFf6F753d7C11A56A52FE47a177a87e431655": "SwapFlashLoan"
-      }
-    },
-    {
-      "name": "SwapUtils",
-      "address": "eth:0x11199A9eE50127F335B84A1eEb961D8A85147f5F",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xbcecee924e9c0a65eced4ca848b05dfc177f8ed61a440f6aef2dd912a9acec20"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1623990043,
-      "sinceBlock": 12656277,
-      "values": {
-        "$immutable": true,
-        "MAX_ADMIN_FEE": 10000000000,
-        "MAX_SWAP_FEE": 100000000,
-        "POOL_PRECISION_DECIMALS": 18
-      },
-      "implementationNames": {
-        "eth:0x11199A9eE50127F335B84A1eEb961D8A85147f5F": "SwapUtils"
       }
     },
     {
@@ -301,7 +271,7 @@
           "eth:0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134"
         ],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 829,
+        "nonce": 867,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -377,21 +347,6 @@
       "implementationNames": {
         "eth:0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134": "AllowanceModule"
       }
-    },
-    {
-      "name": "AmplificationUtils",
-      "address": "eth:0xFE986b20d34df3Aa9fA2e4d18b8EBe5AC6c753b0",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x7380d798ce1ebcf614765d059c42b2d9a6b3c8c60a5e2db724d25b98b62eec6c"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1623990021,
-      "sinceBlock": 12656274,
-      "values": { "$immutable": true, "A_PRECISION": 100, "MAX_A": 1000000 },
-      "implementationNames": {
-        "eth:0xFE986b20d34df3Aa9fA2e4d18b8EBe5AC6c753b0": "AmplificationUtils"
-      }
     }
   ],
   "abis": {
@@ -443,18 +398,6 @@
       "function transferOwnership(address newOwner)",
       "function unpause()",
       "function withdrawAdminFees()"
-    ],
-    "eth:0x11199A9eE50127F335B84A1eEb961D8A85147f5F": [
-      "event AddLiquidity(address indexed provider, uint256[] tokenAmounts, uint256[] fees, uint256 invariant, uint256 lpTokenSupply)",
-      "event NewAdminFee(uint256 newAdminFee)",
-      "event NewSwapFee(uint256 newSwapFee)",
-      "event RemoveLiquidity(address indexed provider, uint256[] tokenAmounts, uint256 lpTokenSupply)",
-      "event RemoveLiquidityImbalance(address indexed provider, uint256[] tokenAmounts, uint256[] fees, uint256 invariant, uint256 lpTokenSupply)",
-      "event RemoveLiquidityOne(address indexed provider, uint256 lpTokenAmount, uint256 lpTokenSupply, uint256 boughtId, uint256 tokensBought)",
-      "event TokenSwap(address indexed buyer, uint256 tokensSold, uint256 tokensBought, uint128 soldId, uint128 boughtId)",
-      "function MAX_ADMIN_FEE() view returns (uint256)",
-      "function MAX_SWAP_FEE() view returns (uint256)",
-      "function POOL_PRECISION_DECIMALS() view returns (uint8)"
     ],
     "eth:0x1B84765dE8B7566e4cEAF4D0fD3c5aF52D3DdE4F": [
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
@@ -751,17 +694,11 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
-    "eth:0xFE986b20d34df3Aa9fA2e4d18b8EBe5AC6c753b0": [
-      "event RampA(uint256 oldA, uint256 newA, uint256 initialTime, uint256 futureTime)",
-      "event StopRampA(uint256 currentA, uint256 time)",
-      "function A_PRECISION() view returns (uint256)",
-      "function MAX_A() view returns (uint256)"
     ]
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 21387773 },
-  "permissionsConfigHash": "0x7d035fda8e9eed0713be5b22425837fc5c4064e9d856cdee5a56bc5a86ee39d0"
+  "usedBlockNumbers": { "ethereum": 23726388 },
+  "permissionsConfigHash": "0xe1b3d13c57ee386de8381023904df8afbbc81ac493783d67149f069c951be113"
 }

@@ -142,7 +142,10 @@ export const linea: ScalingProject = {
         'https://linea.mirror.xyz/',
         'https://community.linea.build/',
       ],
-      rollupCodes: 'https://rollup.codes/linea',
+      other: [
+        'https://rollup.codes/linea',
+        'https://growthepie.com/chains/linea',
+      ],
     },
     liveness: {
       explanation:

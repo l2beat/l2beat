@@ -12,7 +12,11 @@ export const galxegravity: ScalingProject = orbitStackL2({
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
   associatedTokens: ['G'],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
     name: 'Gravity',
     slug: 'galxegravity',
@@ -65,4 +69,22 @@ export const galxegravity: ScalingProject = orbitStackL2({
       { type: 'blockscoutV2', url: 'https://explorer.gravity.xyz/api/v2' },
     ],
   },
+  milestones: [
+    {
+      title: 'Gravity starts using Blobstream',
+      url: 'https://etherscan.io/tx/0x89bb6d5ad4aee106eb3057f96b1c3dc685bc40dc798d267f429c486b114fbd25',
+      date: '2025-04-28T00:00:00Z',
+      description:
+        'Upgraded ChallengeManager contract to the version that uses Celestia with Blobstream bridge.',
+      type: 'general',
+    },
+    {
+      title: 'Gravity stops using Celestia',
+      url: 'https://etherscan.io/tx/0x55fefaa9e30fdcbd6dbaeba2d032922e707f83504a47edaf4da7523ec2d09e58',
+      date: '2025-11-18T00:00:00Z',
+      description:
+        'Gravity stops using Celestia and switches to ArbOS v32 with a DAC for data availability.',
+      type: 'general',
+    },
+  ],
 })

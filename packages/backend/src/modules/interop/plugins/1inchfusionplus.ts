@@ -68,14 +68,14 @@ export class OneinchFusionPlusPlugin implements InteropPlugin {
 
   capture(input: LogToCapture) {
     const network = ONEINCH_FUSIONPLUS_NETWORKS.find(
-      (n) => n.chain === input.ctx.chain,
+      (n) => n.chain === input.chain,
     )
     if (!network) return
 
     const dstEscrowCreated = parseDstEscrowCreated(input.log, [network.address])
     if (dstEscrowCreated) {
       return [
-        DstEscrowCreated.create(input.ctx, {
+        DstEscrowCreated.create(input, {
           hashlock: dstEscrowCreated.hashlock,
         }),
       ]
@@ -84,7 +84,7 @@ export class OneinchFusionPlusPlugin implements InteropPlugin {
     const srcEscrowCreated = parseSrcEscrowCreated(input.log, [network.address])
     if (srcEscrowCreated) {
       return [
-        SrcEscrowCreated.create(input.ctx, {
+        SrcEscrowCreated.create(input, {
           hashlock: srcEscrowCreated.srcImmutables.hashlock,
           srcTokenId: srcEscrowCreated.srcImmutables.token, // 1inch token id, not token address
           srcAmount: srcEscrowCreated.srcImmutables.amount,
@@ -113,6 +113,7 @@ export class OneinchFusionPlusPlugin implements InteropPlugin {
         Result.Transfer('oneinch-fusion-plus.Transfer', {
           srcEvent: srcEscrowCreated,
           srcAmount: srcEscrowCreated.args.srcAmount,
+          // need 1inch token ID mapping
           dstEvent: dstEscrowCreated,
         }),
       ]

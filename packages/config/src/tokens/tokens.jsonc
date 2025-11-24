@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "HAUST",
+      "address": "0xec3502A9f98f151aF52EE6CB423a0afE7bBF5A19"
+    },
+    {
       "symbol": "USTB",
       "address": "0x43415eB6ff9DB7E26A15b704e7A3eDCe97d31C4e",
       "category": "rwaRestricted" // reason: whitelist
@@ -10,6 +14,11 @@
       "address": "0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92",
       "category": "rwaPublic"
     },
+    {
+      "symbol": "mRe7BTC",
+      "address": "0x9FB442d6B612a6dcD2acC67bb53771eF1D9F661A",
+      "category": "rwaPublic"
+    }, // the mRe tokens do not have any tx restrictions and can be used in defi
     {
       "symbol": "mRe7YIELD",
       "address": "0x87C9053C819bB28e0D73d33059E1b3DA80AFb0cf",
@@ -2252,6 +2261,21 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "syrupUSDC",
+      "address": "0x41CA7586cC1311807B4605fBB748a3B8862b42b5",
+      "source": "external",
+      "category": "stablecoin",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
     {
       "symbol": "EARNM",
       "address": "0x3e62fed35c97145e6b445704b8ce74b2544776a9",
@@ -4541,6 +4565,21 @@
     }
   ],
   "mantle": [
+    {
+      "symbol": "USDT0",
+      "address": "0x779Ded0c9e1022225f8E0630b35a9b54bE713736",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
     {
       "symbol": "USDY",
       "address": "0x5be26527e817998a7206475496fde1e68957c5a6",

@@ -1,6 +1,6 @@
 {
   "name": "buidl",
-  "timestamp": 1759846774,
+  "timestamp": 1762265216,
   "configHash": "0xd494fa246b7d7d01ad3b652fc54c7899353c716acc5f43f6bb21eba85c7af69e",
   "entries": [
     {
@@ -23,7 +23,6 @@
       "values": {
         "$admin": "arb1:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
         "$implementation": "arb1:0xdbf6db49066784A69244d3b33Cf44C25Ec86C0F7",
-        "$libraries": ["arb1:0xf5493Af69553f78A513F27333e8F87479A66EB4d"],
         "$pastUpgrades": [
           [
             "2024-11-04T14:14:49.000Z",
@@ -78,8 +77,8 @@
         "TA_MULTICALL": 8195,
         "TOKEN_ISSUER": 512,
         "TOKEN_REALLOCATOR": 8192,
-        "totalIssued": 47565737460000,
-        "totalSupply": 30882120490000,
+        "totalIssued": 47652247550000,
+        "totalSupply": 30968630580000,
         "TRANSACTION_RELAYER": 4096,
         "TRUST_SERVICE": 1,
         "UNUSED_1": 16,
@@ -209,6 +208,6 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "arbitrum": 387044363 },
+  "usedBlockNumbers": { "arbitrum": 396730117 },
   "permissionsConfigHash": "0x2a82a405963425c693d9f2dd82d1dbfbf2e3b57fe263aee148af26a1c97ff044"
 }

@@ -13,18 +13,18 @@
       "handler": {
         "type": "call",
         "method": "function approvedRelayers(address) view returns (bool)",
-        "args": ["0x87b8171993dA656F1bdbF862B071f21E82D674B9"]
+        "args": ["0x27BF7DE579c5779DbFbB8e9d69999E4D1370787D"]
       }
     },
     "relayers": {
       "handler": {
         "type": "hardcoded",
-        "value": ["0x87b8171993dA656F1bdbF862B071f21E82D674B9"]
+        "value": ["0x27BF7DE579c5779DbFbB8e9d69999E4D1370787D"]
       },
       "permissions": [
         {
           "type": "interact",
-          "description": "can call commitHeaderRange() to commit block ranges to the Vector contract."
+          "description": "it is a ‘Relayer’ and can call commitHeaderRange() to commit block ranges to the Vector contract. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
         }
       ]
     },

@@ -30,7 +30,7 @@ function EventsTable(props: {
           const dstChain = (e.args as { $dstChain?: string }).$dstChain
 
           return (
-            <tr>
+            <tr key={`${e.chain}-${e.txHash}-${e.logIndex}`}>
               <td data-order={e.timestamp}>
                 {new Date(e.timestamp * 1000).toLocaleString()}
               </td>
@@ -46,7 +46,11 @@ function EventsTable(props: {
               </td>
               <td>{srcChain ?? ''}</td>
               <td>{dstChain ?? ''}</td>
-              <td>{JSON.stringify(e.args)}</td>
+              <td>
+                {JSON.stringify(e.args, (_, value) =>
+                  typeof value === 'bigint' ? `BigInt(${value})` : value,
+                )}
+              </td>
             </tr>
           )
         })}
@@ -77,7 +81,7 @@ function EventsPageLayout(props: {
       showHome={true}
       tables={[
         {
-          title: `Interop Events: ${props.events[0]?.type ?? ''}`,
+          title: `Interop Events: ${props.events[0]?.type ?? ''} (${props.events[0].direction ?? '<missing_direction>'})`,
           table: eventsTable,
           tableId: 'events',
           dataTableOptions: dataTableOptions,

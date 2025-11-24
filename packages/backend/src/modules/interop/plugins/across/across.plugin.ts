@@ -23,7 +23,7 @@ export const AcrossFundsDeposited = createInteropEventType<{
   depositId: bigint
   tokenAddress: Address32
   amount: bigint
-}>('across.FundsDeposited')
+}>('across.FundsDeposited', { direction: 'outgoing' })
 
 const parseFilledRelay = createEventParser(
   'event FilledRelay(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 repaymentChainId, uint256 indexed originChainId, uint256 indexed depositId, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 exclusiveRelayer, bytes32 indexed relayer, bytes32 depositor, bytes32 recipient, bytes32 messageHash, (bytes32 updatedRecipient, bytes32 updatedMessageHash, uint256 updatedOutputAmount, uint8 fillType) relayExecutionInfo)',
@@ -39,7 +39,7 @@ export const AcrossFilledRelay = createInteropEventType<{
   depositId: bigint
   tokenAddress: Address32
   amount: bigint
-}>('across.FilledRelay')
+}>('across.FilledRelay', { direction: 'incoming' })
 
 export class AcrossPlugin implements InteropPlugin {
   name = 'across'
@@ -50,13 +50,13 @@ export class AcrossPlugin implements InteropPlugin {
     const networks = this.configs.get(AcrossConfig)
     if (!networks) return
 
-    const network = networks.find((n) => n.chain === input.ctx.chain)
+    const network = networks.find((n) => n.chain === input.chain)
     if (!network) return
 
     const fundsDeposited = parseFundsDeposited(input.log, [network.spokePool])
     if (fundsDeposited) {
       return [
-        AcrossFundsDeposited.create(input.ctx, {
+        AcrossFundsDeposited.create(input, {
           $dstChain: findChain(
             networks,
             (x) => x.chainId,
@@ -74,7 +74,7 @@ export class AcrossPlugin implements InteropPlugin {
     const filledRelay = parseFilledRelay(input.log, [network.spokePool])
     if (filledRelay) {
       return [
-        AcrossFilledRelay.create(input.ctx, {
+        AcrossFilledRelay.create(input, {
           $srcChain: findChain(
             networks,
             (x) => x.chainId,
@@ -92,7 +92,7 @@ export class AcrossPlugin implements InteropPlugin {
     const filledV3Relay = parseFilledV3Relay(input.log, [network.spokePool])
     if (filledV3Relay) {
       return [
-        AcrossFilledRelay.create(input.ctx, {
+        AcrossFilledRelay.create(input, {
           $srcChain: findChain(
             networks,
             (x) => x.chainId,
@@ -134,9 +134,11 @@ export class AcrossPlugin implements InteropPlugin {
         srcEvent: fundsDeposited,
         srcTokenAddress: fundsDeposited.args.tokenAddress,
         srcAmount: fundsDeposited.args.amount,
+        srcWasBurned: false,
         dstEvent: filledRelay,
         dstTokenAddress: filledRelay.args.tokenAddress,
         dstAmount: filledRelay.args.amount,
+        dstWasMinted: false,
       }),
     ]
   }

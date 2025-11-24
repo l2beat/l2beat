@@ -27,19 +27,6 @@
       }
     },
     {
-      "name": "",
-      "address": "eth:0x081d7B167a94E7421Ea5D0016C3D01E0cFf6B557",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1584426759,
-      "sinceBlock": 9687430,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x081d7B167a94E7421Ea5D0016C3D01E0cFf6B557": ""
-      }
-    },
-    {
       "name": "PlasmaFramework",
       "address": "eth:0x0D4C1222f5e839a911e2053860e45F18921D72ac",
       "type": "Contract",
@@ -72,19 +59,6 @@
       "address": "eth:0x22405c1782913fb676bc74Ef54a60727B0e1026F",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "",
-      "address": "eth:0x24c0a84090135AD04F257C85E10db6B4A74E0738",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1584426120,
-      "sinceBlock": 9687388,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x24c0a84090135AD04F257C85E10db6B4A74E0738": ""
-      }
     },
     {
       "address": "eth:0x27b4C9e627F66eB3c7Bf0E98751Bd721615D3B21",
@@ -127,18 +101,6 @@
       "sinceBlock": 9687476,
       "values": {
         "$immutable": true,
-        "$libraries": [
-          "eth:0xf38380bbf08961123960fAd630a0609906849751",
-          "eth:0x24c0a84090135AD04F257C85E10db6B4A74E0738",
-          "eth:0x5E84DF30ce17A9AC34E5474fc37a9c2267454518",
-          "eth:0x081d7B167a94E7421Ea5D0016C3D01E0cFf6B557",
-          "eth:0x5d3EE50E31293B45A7eb8B864c0B015E169AC7D8",
-          "eth:0x9e3108FB11cAEDA64e264B2953a0eDa81cf1a650",
-          "eth:0xEf6133d149460C9B79e132517934f77F1E62b23e",
-          "eth:0x7A8C0D7F1e6dBe36AB3A9adE0C44a0b868bB703F",
-          "eth:0x4f05855B6dF026726037500D10D91652b5C9e784",
-          "eth:0x67C3E5524dBE05B54fE08c3D4af65c273B87E630"
-        ],
         "BOND_LOWER_BOUND_DIVISOR": 2,
         "BOND_UPPER_BOUND_MULTIPLIER": 2,
         "INITIAL_BOND_SIZE": "14000000000000000",
@@ -150,45 +112,6 @@
       },
       "implementationNames": {
         "eth:0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3": "PaymentExitGame"
-      }
-    },
-    {
-      "name": "",
-      "address": "eth:0x4f05855B6dF026726037500D10D91652b5C9e784",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1584426942,
-      "sinceBlock": 9687442,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x4f05855B6dF026726037500D10D91652b5C9e784": ""
-      }
-    },
-    {
-      "name": "",
-      "address": "eth:0x5d3EE50E31293B45A7eb8B864c0B015E169AC7D8",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1584426785,
-      "sinceBlock": 9687433,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x5d3EE50E31293B45A7eb8B864c0B015E169AC7D8": ""
-      }
-    },
-    {
-      "name": "",
-      "address": "eth:0x5E84DF30ce17A9AC34E5474fc37a9c2267454518",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1584426141,
-      "sinceBlock": 9687392,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x5E84DF30ce17A9AC34E5474fc37a9c2267454518": ""
       }
     },
     {
@@ -205,45 +128,6 @@
       }
     },
     {
-      "name": "",
-      "address": "eth:0x67C3E5524dBE05B54fE08c3D4af65c273B87E630",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1584427032,
-      "sinceBlock": 9687445,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x67C3E5524dBE05B54fE08c3D4af65c273B87E630": ""
-      }
-    },
-    {
-      "name": "",
-      "address": "eth:0x7A8C0D7F1e6dBe36AB3A9adE0C44a0b868bB703F",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1584426890,
-      "sinceBlock": 9687440,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x7A8C0D7F1e6dBe36AB3A9adE0C44a0b868bB703F": ""
-      }
-    },
-    {
-      "name": "",
-      "address": "eth:0x9e3108FB11cAEDA64e264B2953a0eDa81cf1a650",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1584426811,
-      "sinceBlock": 9687434,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x9e3108FB11cAEDA64e264B2953a0eDa81cf1a650": ""
-      }
-    },
-    {
       "name": "ERC20DepositVerifier",
       "address": "eth:0xD876aeb3a443FBC03B7349AAc115E9054563CD82",
       "type": "Contract",
@@ -254,32 +138,6 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0xD876aeb3a443FBC03B7349AAc115E9054563CD82": ""
-      }
-    },
-    {
-      "name": "",
-      "address": "eth:0xEf6133d149460C9B79e132517934f77F1E62b23e",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1584426861,
-      "sinceBlock": 9687437,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xEf6133d149460C9B79e132517934f77F1E62b23e": ""
-      }
-    },
-    {
-      "name": "",
-      "address": "eth:0xf38380bbf08961123960fAd630a0609906849751",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1584426092,
-      "sinceBlock": 9687385,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xf38380bbf08961123960fAd630a0609906849751": ""
       }
     }
   ],
@@ -411,5 +269,5 @@
   },
   "usedTemplates": {},
   "usedBlockNumbers": { "ethereum": 16154924 },
-  "permissionsConfigHash": "0x37b792fcacae9cd5bc38619e388b44eaeca50072d6a23db84289a2052d33b5f8"
+  "permissionsConfigHash": "0xeae31ff1c613313baa60f84e4157dd6b730cf51dae613ee0d1ea3d681b14e0e7"
 }

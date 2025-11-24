@@ -1,3 +1,94 @@
+Generated with discovered.json: 0xcc1a70a85adaba778c969d792f9258e701d84357
+
+# Diff at Wed, 19 Nov 2025 10:57:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c2740481ca5c9bb2be3283052c4a68b2d735c71b block: 1762264513
+- current timestamp: 1763549217
+
+## Description
+
+HypERC20Collateral USDC escrow for eclipse [upgraded](https://disco.l2beat.com/diff/eth:0xe8CC4FF9203196A90734d2C4328B83775486163C/eth:0x36D930c7782BafE74Ff52CAb54648a1b2ecC48bE): 
+- allow 'rebalancing' collateral: moves the underlying 'locked' collateral to a whitelisted domain/bridge combination
+- owner can whitelist, rebalancer can rebalance (added perms)
+
+## Watched changes
+
+```diff
+    contract HyperlaneMultisig (eth:0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6) {
+    +++ description: None
+      receivedPermissions.3.description:
+-        "change the ISM and hooks, whitelist new routes and update destination fees."
++        "change the ISM and hooks, register new remote escrows to rebalance collateral to, whitelist new routes and update destination fees."
+    }
+```
+
+```diff
+    contract HypERC20Collateral (eth:0xe1De9910fe71cC216490AC7FCF019e13a34481D7) {
+    +++ description: Escrow for USDC that is bridged from Ethereum to Eclipse.
+      template:
+-        "hyperlane/HypERC20Collateral"
++        "hyperlane/HypERC20Collateral_MovableCollateralRouter"
+      sourceHashes.1:
+-        "0x22ecad7e3715262180975872286e858ca32b854a576c5a9d5ce70965e0669e0b"
++        "0x5fc3214e479761007bc3001f10a465e893e0013c39c9a3449c859efa82a1568f"
+      values.$implementation:
+-        "eth:0xe8CC4FF9203196A90734d2C4328B83775486163C"
++        "eth:0x36D930c7782BafE74Ff52CAb54648a1b2ecC48bE"
+      values.$pastUpgrades.1:
++        ["2025-11-12T14:12:23.000Z","0x2d4139f7f4e04625ee07af013b51f9ab9e0c6cb69d5fc01c881a7aad17007fce",["eth:0x36D930c7782BafE74Ff52CAb54648a1b2ecC48bE"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.domains.1:
++        8453
+      values.domains.2:
++        42161
+      values.domains.3:
++        1399811149
+      values.allowedRebalancers:
++        ["eth:0xa3948a15e1d0778a7d53268b651B2411AF198FE3"]
+      values.PACKAGE_VERSION:
++        "9.0.16"
+      values.scale:
++        1
+      implementationNames.eth:0xe8CC4FF9203196A90734d2C4328B83775486163C:
+-        "HypERC20Collateral"
+      implementationNames.eth:0x36D930c7782BafE74Ff52CAb54648a1b2ecC48bE:
++        "HypERC20Collateral"
+    }
+```
+
+## Source code changes
+
+```diff
+.../HypERC20Collateral.sol                         | 3542 +++++++++++---------
+ 1 file changed, 1976 insertions(+), 1566 deletions(-)
+```
+
+Generated with discovered.json: 0xe4115caea3b087b5cf42c72e41823cea28ddeec3
+
+# Diff at Tue, 04 Nov 2025 13:56:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f12d06bbf120eab9f5356a235918d4d6b2484290 block: 1760089860
+- current timestamp: 1762264513
+
+## Description
+
+ms signer swapped.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0xCEA8039076E35a825854c5C2f85659430b06ec96) {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x7C96179df8619E49B389784ECDBBcA7090a5D08F"
++        "eth:0x83954FBd07f8A868F4A72103e7bBCc8Ec59CeA1C"
+    }
+```
+
 Generated with discovered.json: 0xf2e5d73c3b0d34592298c5a16204caea96edf789
 
 # Diff at Fri, 10 Oct 2025 09:52:09 GMT:

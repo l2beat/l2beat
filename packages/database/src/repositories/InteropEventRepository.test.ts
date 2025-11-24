@@ -420,6 +420,7 @@ function event(
     plugin,
     eventId,
     type,
+    direction: undefined,
     expiresAt,
     timestamp,
     matched: false,

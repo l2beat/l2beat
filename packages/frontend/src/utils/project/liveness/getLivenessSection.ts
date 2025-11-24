@@ -46,11 +46,9 @@ export async function getLivenessSection(
     duplicatedData,
   ]) as TrackedTxsConfigSubtype[]
 
-  const range = project.archivedAt ? 'max' : '30d'
-
   const data = await helpers.liveness.projectChart.fetch({
     projectId: project.id,
-    range,
+    range: 'max',
     subtype: getDefaultSubtype(configuredSubtypes),
   })
 
@@ -68,7 +66,7 @@ export async function getLivenessSection(
     anomalies: liveness?.anomalies ?? [],
     hasTrackedContractsChanged,
     trackedTransactions,
-    defaultRange: range,
+    defaultRange: project.archivedAt ? 'max' : '30d',
     isArchived: project.archivedAt !== undefined,
   }
 }

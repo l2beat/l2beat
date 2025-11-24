@@ -228,11 +228,14 @@ export interface InteropFeatureConfig {
   }
   financials: {
     enabled: boolean
+    tokenDbApiUrl: string
+    tokenDbAuthToken?: string
   }
   config: {
     enabled: boolean
     chains: { id: number; name: string }[]
   }
+  inMemoryEventCap: number
 }
 
 export interface DaBeatConfig {

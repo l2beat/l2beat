@@ -41,12 +41,15 @@ import { VerifierStatusRepository } from './repositories/VerifierStatusRepositor
 import { getDatabaseStats } from './utils/getDatabaseStats'
 
 export type Database = ReturnType<typeof createDatabase>
-export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
+export function createDatabase(
+  config: PoolConfig & { log?: LogConfig; connectionString: string },
+) {
   const db = new DatabaseClient({ ...config })
 
   return {
     transaction: db.transaction.bind(db),
     close: db.close.bind(db),
+    url: config.connectionString,
 
     // #region Activity
     activity: new ActivityRepository(db),

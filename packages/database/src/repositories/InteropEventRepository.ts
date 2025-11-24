@@ -7,6 +7,7 @@ export interface InteropEventRecord {
   plugin: string
   eventId: string
   type: string
+  direction: string | undefined
   expiresAt: UnixTime
   timestamp: UnixTime
   chain: string
@@ -35,6 +36,7 @@ export function toRecord(row: Selectable<InteropEvent>): InteropEventRecord {
     plugin: row.plugin,
     eventId: row.eventId,
     type: row.type,
+    direction: row.direction ?? undefined,
     expiresAt: UnixTime.fromDate(row.expiresAt),
     timestamp: UnixTime.fromDate(row.timestamp),
     chain: row.chain,
@@ -51,6 +53,7 @@ export function toRow(record: InteropEventRecord): Insertable<InteropEvent> {
     plugin: record.plugin,
     eventId: record.eventId,
     type: record.type,
+    direction: record.direction,
     expiresAt: UnixTime.toDate(record.expiresAt),
     timestamp: UnixTime.toDate(record.timestamp),
     chain: record.chain,
@@ -70,6 +73,7 @@ export function toRow(record: InteropEventRecord): Insertable<InteropEvent> {
 
 export interface InteropEventStatsRecord {
   type: string
+  direction: string | undefined
   count: number
   matched: number
   unmatched: number
@@ -141,6 +145,7 @@ export class InteropEventRepository extends BaseRepository {
       .selectFrom('InteropEvent')
       .select((eb) => [
         'type',
+        'direction',
         eb.fn.countAll().as('count'),
         eb.fn.countAll().filterWhere('matched', '=', true).as('matched'),
         eb.fn
@@ -159,11 +164,12 @@ export class InteropEventRepository extends BaseRepository {
           .filterWhere('matched', '=', false)
           .as('oldUnmatched'),
       ])
-      .groupBy('type')
+      .groupBy(['type', 'direction'])
       .execute()
 
     return rows.map((x) => ({
       type: x.type,
+      direction: x.direction ?? undefined,
       count: Number(x.count),
       matched: Number(x.matched),
       unmatched: Number(x.unmatched),

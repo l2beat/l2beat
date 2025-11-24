@@ -1,6 +1,5 @@
 import partition from 'lodash/partition'
 import { DiagramImage } from '~/components/DiagramImage'
-import { env } from '~/env'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
 import { DiscoUiBanner } from '../../DiscoUiBanner'
 import type { TechnologyContract } from '../ContractEntry'
@@ -130,17 +129,15 @@ export function ContractsSection(props: ContractsSectionProps) {
           <RiskList risks={props.risks} />
         </>
       )}
-      {env.CLIENT_SIDE_PROGRAM_HASHES &&
-        props.zkProgramHashes &&
-        props.zkProgramHashes.length > 0 && (
-          <div className="mt-4 space-y-2 md:mt-6">
-            <div className="flex items-baseline gap-3">
-              <h3 className="whitespace-pre text-heading-20">Program Hashes</h3>
-              <div className="w-full border-divider border-b-2" />
-            </div>
-            <ZkProgramHashesTable entries={props.zkProgramHashes} />
+      {props.zkProgramHashes && props.zkProgramHashes.length > 0 && (
+        <div className="mt-4 space-y-2 md:mt-6">
+          <div className="flex items-baseline gap-3">
+            <h3 className="whitespace-pre text-heading-20">Program Hashes</h3>
+            <div className="w-full border-divider border-b-2" />
           </div>
-        )}
+          <ZkProgramHashesTable entries={props.zkProgramHashes} />
+        </div>
+      )}
     </ProjectSection>
   )
 }

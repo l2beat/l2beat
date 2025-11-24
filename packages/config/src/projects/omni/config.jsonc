@@ -22,7 +22,10 @@
         "cDaiToken",
         "sDaiToken",
         "erc20token",
-        "daiToken"
+        "daiToken",
+        "DAI_USDS",
+        "DAI",
+        "USDS"
       ],
       "ignoreMethods": [
         "totalExecutedPerDay",
@@ -167,6 +170,10 @@
       }
     },
     "gno:0xB740472C650fe949931B9df0cB253B48c80c82dE": {
+      "ignoreDiscovery": true
+    },
+    "gno:0x7301CFA0e1756B71869E93d4e4Dca5c7d0eb0AA6": {
+      "proxyType": "Eternal Storage proxy",
       "ignoreDiscovery": true
     }
   }

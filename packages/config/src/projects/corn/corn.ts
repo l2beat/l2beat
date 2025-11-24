@@ -38,6 +38,7 @@ export const corn: ScalingProject = orbitStackL2({
         'https://x.com/use_corn',
         'https://discord.com/invite/usecorn',
         'https://blog.usecorn.com/',
+        'https://t.me/usecorn',
       ],
     },
   },

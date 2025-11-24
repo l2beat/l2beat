@@ -13,7 +13,10 @@ export const winr: ScalingProject = orbitStackL3({
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
     name: 'WINR',
     slug: 'winr',
@@ -169,6 +172,22 @@ export const winr: ScalingProject = orbitStackL3({
       url: 'https://x.com/WINRProtocol/status/1867223130684735514',
       date: '2024-12-16T00:00:00Z',
       description: 'WINR launches its Mainnet.',
+      type: 'general',
+    },
+    {
+      title: 'WINR starts using Blobstream',
+      url: 'https://arbiscan.io/tx/0xe3dc71cb07fe7af204af6862884be9162b11cc7455660ff2be9562a12afd604c',
+      date: '2025-05-12T00:00:00Z',
+      description:
+        'Upgraded ChallengeManager contract to the version that uses Celestia with Blobstream bridge',
+      type: 'general',
+    },
+    {
+      title: 'WINR stops using Celestia',
+      url: 'https://arbiscan.io/tx/0xb5f69f2cfceafaafb8533d67b2eac01fff5794336ead963815dca88b8f137b53',
+      date: '2025-11-18T00:00:00Z',
+      description:
+        'WINR stops using Celestia and switches to ArbOS v32 with a DAC for data availability.',
       type: 'general',
     },
   ],

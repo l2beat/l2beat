@@ -8,7 +8,7 @@ import { config as dotenv } from 'dotenv'
 import { planAndExecute } from '../src/execution'
 import transformed from './transformed.json'
 
-function getTestDatabase() {
+function getTokenDatabase() {
   dotenv()
 
   const connection = process.env['LOCAL_DB_URL']
@@ -102,7 +102,7 @@ async function clearTokenTables(db: TokenDatabase) {
 
 async function main() {
   console.log('Importing tokens')
-  const db = getTestDatabase()
+  const db = getTokenDatabase()
   try {
     await clearTokenTables(db)
     await importTransformed(db)

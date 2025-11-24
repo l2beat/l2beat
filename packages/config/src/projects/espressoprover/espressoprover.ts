@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -13,6 +13,7 @@ export const espressoprover: BaseProject = {
     description:
       'Espresso Light Client prover generates a Plonk proof of the HotShot consenus of Espresso network.',
     links: {
+      websites: ['https://www.espressosys.com/'],
       documentation: [
         'https://docs.espressosys.com/network/learn/the-espresso-network/internal-functionality/light-client',
       ],
@@ -56,7 +57,9 @@ export const espressoprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Jellyfish,
         knownDeployments: [
           {
-            address: '0xa239397d05516d3e44bed853e7ba1e672ddd958f',
+            address: EthereumAddress(
+              '0xa239397d05516d3e44bed853e7ba1e672ddd958f',
+            ),
             chain: 'ethereum',
           },
         ],

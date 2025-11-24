@@ -104,7 +104,7 @@ export class WormholeNTTPlugin implements InteropPlugin {
     const send = parseSendTransceiverMessage(input.log, null)
     if (send) {
       return [
-        TransceiverMessage.create(input.ctx, {
+        TransceiverMessage.create(input, {
           sourceNttManagerAddress: send.message.sourceNttManagerAddress,
           recipientNttManagerAddress: send.message.recipientNttManagerAddress,
           nttManagerPayload: send.message.nttManagerPayload,
@@ -120,7 +120,7 @@ export class WormholeNTTPlugin implements InteropPlugin {
     const received = parseReceivedRelayedMessage(input.log, null)
     if (received) {
       return [
-        ReceivedRelayedMessage.create(input.ctx, {
+        ReceivedRelayedMessage.create(input, {
           digest: received.digest,
           emitterAddress: received.emitterAddress,
           $srcChain: findChain(
@@ -186,11 +186,11 @@ export class WormholeNTTPlugin implements InteropPlugin {
           dstEvent: received,
           srcTokenAddress: srcTokenAddress
             ? Address32.from(srcTokenAddress)
-            : Address32.ZERO,
+            : undefined,
           srcAmount: amount,
           dstTokenAddress: dstTokenAddress
             ? Address32.from(dstTokenAddress)
-            : Address32.ZERO, // TODO: Should extract token from dst NTT manager
+            : undefined, // TODO: Should extract token from dst NTT manager
           dstAmount: amount,
         }),
       ]

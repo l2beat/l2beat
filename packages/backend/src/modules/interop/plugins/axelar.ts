@@ -103,7 +103,7 @@ export class AxelarPlugin implements InteropPlugin {
     const contractCall = parseContractCall(input.log, null)
     if (contractCall) {
       return [
-        ContractCall.create(input.ctx, {
+        ContractCall.create(input, {
           sender: EthereumAddress(contractCall.sender),
           destinationContractAddress: contractCall.destinationContractAddress,
           payloadHash: contractCall.payloadHash,
@@ -119,7 +119,7 @@ export class AxelarPlugin implements InteropPlugin {
     const contractCallWithToken = parseContractCallWithToken(input.log, null)
     if (contractCallWithToken) {
       return [
-        ContractCallWithToken.create(input.ctx, {
+        ContractCallWithToken.create(input, {
           sender: EthereumAddress(contractCallWithToken.sender),
           destinationContractAddress:
             contractCallWithToken.destinationContractAddress,
@@ -138,7 +138,7 @@ export class AxelarPlugin implements InteropPlugin {
     const contractCallApproved = parseContractCallApproved(input.log, null)
     if (contractCallApproved) {
       return [
-        ContractCallApproved.create(input.ctx, {
+        ContractCallApproved.create(input, {
           commandId: contractCallApproved.commandId,
           payloadHash: contractCallApproved.payloadHash,
           sourceAddress: contractCallApproved.sourceAddress,
@@ -161,7 +161,7 @@ export class AxelarPlugin implements InteropPlugin {
     )
     if (contractCallApprovedWithMint) {
       return [
-        ContractCallApprovedWithMint.create(input.ctx, {
+        ContractCallApprovedWithMint.create(input, {
           commandId: contractCallApprovedWithMint.commandId,
           payloadHash: contractCallApprovedWithMint.payloadHash,
           sourceAddress: contractCallApprovedWithMint.sourceAddress,
@@ -183,7 +183,7 @@ export class AxelarPlugin implements InteropPlugin {
     const contractCallExecuted = parseContractCallExecuted(input.log, null)
     if (contractCallExecuted) {
       return [
-        ContractCallExecuted.create(input.ctx, {
+        ContractCallExecuted.create(input, {
           commandId: contractCallExecuted.commandId,
         }),
       ]

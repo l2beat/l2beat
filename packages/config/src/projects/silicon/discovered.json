@@ -1,6 +1,6 @@
 {
   "name": "silicon",
-  "timestamp": 1753192487,
+  "timestamp": 1762264428,
   "configHash": "0x066d380ca2c63c367903345846e6ca752907308faec3b0c90b8c71906a2f54ab",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
@@ -159,7 +159,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0xaeed872512ddbbf615b594a80e8a60cf6355d66580a32d5e9352a0293eb5eebf",
+        "lastAccInputHash": "0x856cb899550502d5d2e4050648c195c5f863991aad54abb876929a2508958da4",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "silicon-zk",
@@ -454,6 +454,6 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 22975146 },
+  "usedBlockNumbers": { "ethereum": 23726379 },
   "permissionsConfigHash": "0x23adff9c9ff7b2cfed12b2e83a82bbaac514427f196039b20aefa027b3afc787"
 }

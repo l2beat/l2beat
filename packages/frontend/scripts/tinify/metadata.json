@@ -66,7 +66,6 @@
   "static/icons/codex.png": "b2761335e6ad14fcd25fba98eaa19af7",
   "static/meta-images/scaling/projects/codex/opengraph-image.png": "ecf6736186bf9975a10aa3609d91c2e1",
   "static/icons/chainport.png": "3822f1c7dfb8bd3d6c693ea59f87a461",
-  "static/icons/cheese.png": "87fb66fa1140193fe98d985fd19f06a3",
   "static/icons/chainbounty.png": "6db2950e888ed056b7f7125a0d0ad3db",
   "static/meta-images/scaling/projects/chainbounty/opengraph-image.png": "5b632fa58373815ee2207de71cc1af7b",
   "static/icons/clique.png": "4e297ca4e2935182f46d8e822659fde7",
@@ -307,7 +306,7 @@
   "static/icons/stargate.png": "1964842978571f9c159fed7d5ef33a7c",
   "static/icons/stargatev2.png": "999430ca520bd06a21ee9d1c2c79eb21",
   "static/icons/starknet.png": "63c268bcf68e1718036317decea068de",
-  "static/icons/status.png": "44db2bacdb63ce9c5bff5124f9c9c1d2",
+  "static/icons/status.png": "4e27e1d63840d1cc23b619f2974d7810",
   "static/icons/studiochain.png": "aaacda32d7189e1462b42f544f3ff639",
   "static/icons/superlumio.png": "b5d335dd8cf865e98f6f5e01f3a885c2",
   "static/icons/superposition.png": "82683236579cef2e17df9b1605452e9b",
@@ -711,8 +710,6 @@
   "static/meta-images/scaling/projects/cartesi-honeypot/tvs-breakdown/opengraph-image.png": "f8552ba0f6a015b1c015bfc8fdbd7175",
   "static/meta-images/scaling/projects/celo/opengraph-image.png": "095086d0aa2e07ad493ee5d522f17c37",
   "static/meta-images/scaling/projects/celo/tvs-breakdown/opengraph-image.png": "0a805ab8966728b4fcbfae2106133de3",
-  "static/meta-images/scaling/projects/cheese/opengraph-image.png": "2fb6f48670357d55fafd3f8152185a65",
-  "static/meta-images/scaling/projects/cheese/tvs-breakdown/opengraph-image.png": "8b5dd273bec0f1963df7e64cd98745f1",
   "static/meta-images/scaling/projects/clique/opengraph-image.png": "95067158ccc85ac89abb53971548680f",
   "static/meta-images/scaling/projects/clique/tvs-breakdown/opengraph-image.png": "3e000d8441a993d2b319fdb6ad01c674",
   "static/meta-images/scaling/projects/conwai/opengraph-image.png": "5d60bb963f537cd6aa3c8cc18b953487",
@@ -1507,5 +1504,9 @@
   "static/meta-images/publications/monthly-update-2025-10.png": "327e623bbfd06b0610932e36d8a361e2",
   "static/icons/stwo.png": "2844e04d003ec887a6707096937e5119",
   "static/meta-images/zk-catalog/projects/stwo/opengraph-image.png": "30308525ddf32264b87fdc1e3557c72d",
-  "static/meta-images/publications/governance-review-75.png": "7ae4dd4363c44487cdb7566d69c116b6"
+  "static/meta-images/publications/governance-review-75.png": "7ae4dd4363c44487cdb7566d69c116b6",
+  "static/meta-images/publications/governance-review-76.png": "4b79ae6e7077498a8de1cb48620371c4",
+  "static/icons/sandchain.png": "2668312e04dca06de5f09a638f096eaa",
+  "static/meta-images/scaling/projects/sandchain/opengraph-image.png": "3a5baddd3dd33a9410aeb41efaaff20c",
+  "static/meta-images/publications/interop-talk.png": "23bdda7cd65ef80b28bea625a6cf77b9"
 }

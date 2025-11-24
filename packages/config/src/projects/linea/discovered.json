@@ -195,21 +195,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Permissions",
-      "address": "eth:0x33D1C5A5B6a7f3885c7467e829aaa21698937597",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xd8e73f22fb2c8e8aa6d9288529f821c3823d1896c9e3d9fb01e7f954791b9aaf"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1669260983,
-      "sinceBlock": 16037194,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x33D1C5A5B6a7f3885c7467e829aaa21698937597": "Permissions"
-      }
-    },
-    {
       "name": "CallForwardingProxy",
       "address": "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D",
       "type": "Contract",
@@ -1222,7 +1207,6 @@
       "sinceBlock": 18614911,
       "values": {
         "$immutable": false,
-        "$libraries": ["eth:0x33D1C5A5B6a7f3885c7467e829aaa21698937597"],
         "avatar": "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
         "getGuard": "eth:0x0000000000000000000000000000000000000000",
         "guard": "eth:0x0000000000000000000000000000000000000000",
@@ -2631,39 +2615,6 @@
       "function tokenBeacon() view returns (address)",
       "function unPauseByType(uint8 _pauseType)"
     ],
-    "eth:0x33D1C5A5B6a7f3885c7467e829aaa21698937597": [
-      "error ArraysDifferentLength()",
-      "error CalldataOutOfBounds()",
-      "error DelegateCallNotAllowed()",
-      "error FunctionNotAllowed()",
-      "error FunctionSignatureTooShort()",
-      "error NoMembership()",
-      "error NotEnoughCompValuesForOneOf()",
-      "error ParameterGreaterThanAllowed()",
-      "error ParameterLessThanAllowed()",
-      "error ParameterNotAllowed()",
-      "error ParameterNotOneOfAllowed()",
-      "error ScopeMaxParametersExceeded()",
-      "error SendNotAllowed()",
-      "error TargetAddressNotAllowed()",
-      "error UnacceptableMultiSendOffset()",
-      "error UnsuitableDynamic32CompValueSize()",
-      "error UnsuitableOneOfComparison()",
-      "error UnsuitableRelativeComparison()",
-      "error UnsuitableStaticCompValueSize()",
-      "event AllowTarget(uint16 role, address targetAddress, uint8 options)",
-      "event RevokeTarget(uint16 role, address targetAddress)",
-      "event ScopeAllowFunction(uint16 role, address targetAddress, bytes4 selector, uint8 options, uint256 resultingScopeConfig)",
-      "event ScopeFunction(uint16 role, address targetAddress, bytes4 functionSig, bool[] isParamScoped, uint8[] paramType, uint8[] paramComp, bytes[] compValue, uint8 options, uint256 resultingScopeConfig)",
-      "event ScopeFunctionExecutionOptions(uint16 role, address targetAddress, bytes4 functionSig, uint8 options, uint256 resultingScopeConfig)",
-      "event ScopeParameter(uint16 role, address targetAddress, bytes4 functionSig, uint256 index, uint8 paramType, uint8 paramComp, bytes compValue, uint256 resultingScopeConfig)",
-      "event ScopeParameterAsOneOf(uint16 role, address targetAddress, bytes4 functionSig, uint256 index, uint8 paramType, bytes[] compValues, uint256 resultingScopeConfig)",
-      "event ScopeRevokeFunction(uint16 role, address targetAddress, bytes4 selector, uint256 resultingScopeConfig)",
-      "event ScopeTarget(uint16 role, address targetAddress)",
-      "event UnscopeParameter(uint16 role, address targetAddress, bytes4 functionSig, uint256 index, uint256 resultingScopeConfig)",
-      "function keyForCompValues(address targetAddress, bytes4 functionSig, uint256 index) pure returns (bytes32)",
-      "function keyForFunctions(address targetAddress, bytes4 functionSig) pure returns (bytes32)"
-    ],
     "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D": [
       "constructor(address _target)",
       "function target() view returns (address)"
@@ -3574,5 +3525,5 @@
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23677049, "linea": 25002866 },
-  "permissionsConfigHash": "0xf095733187795a75d1ea1888d3c64da49242b80cfc7b610a0ef5d18e020e7799"
+  "permissionsConfigHash": "0xb16c508e58777e7904fbe6c610eb0b2c7efe88d3319daf3ea554e03e9f7ba5ad"
 }

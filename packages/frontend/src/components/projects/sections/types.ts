@@ -24,6 +24,7 @@ import type { TechnologyChoicesSectionProps } from './TechnologyChoicesSection'
 import type { TrustedSetupSectionProps } from './TrustedSetupsSection'
 import type { ThroughputSectionProps } from './throughput/ThroughputSection'
 import type { ScalingTvsSectionProps } from './tvs/ScalingTvsSection'
+import type { ZkCatalogTvsSectionProps } from './tvs/ZkCatalogTvsSection'
 import type { VerifiersSectionProps } from './VerifiersSection'
 
 type SectionId =
@@ -200,6 +201,11 @@ interface ProjectDetailsGrissiniRiskAnalysisSection {
   props: ProjectDetailsProps<GrissiniRiskAnalysisSectionProps>
 }
 
+interface ProjectDetailsZkCatalogTvsSection {
+  type: 'ZkCatalogTvsSection'
+  props: ProjectDetailsProps<ZkCatalogTvsSectionProps>
+}
+
 export type ProjectDetailsSection = {
   excludeFromNavigation?: boolean
   sideNavTitle?: string
@@ -231,4 +237,5 @@ export type ProjectDetailsSection = {
   | ProjectDetailsTrustedSetupSection
   | ProjectDetailsVerifiersSection
   | ProjectDetailsProgramHashesSection
+  | ProjectDetailsZkCatalogTvsSection
 )

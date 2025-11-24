@@ -75,7 +75,7 @@ export class CelerPlugIn implements InteropPlugin {
     const parsed = parseMessage(input.log, null)
     if (parsed) {
       return [
-        CelerMessage.create(input.ctx, {
+        CelerMessage.create(input, {
           receiver: Address32.from(parsed.receiver),
           $dstChain: findChain(
             CELER_NETWORKS,
@@ -90,7 +90,7 @@ export class CelerPlugIn implements InteropPlugin {
     const executed = parseExecuted(input.log, null)
     if (executed) {
       return [
-        CelerExecuted.create(input.ctx, {
+        CelerExecuted.create(input, {
           msgType: Number(executed.msgType),
           msgId: executed.msgId,
           status: Number(executed.status),
@@ -107,7 +107,7 @@ export class CelerPlugIn implements InteropPlugin {
     const sent = parseSent(input.log, null)
     if (sent) {
       return [
-        CelerSent.create(input.ctx, {
+        CelerSent.create(input, {
           transferId: sent.transferId,
           token: Address32.from(sent.token),
           amount: sent.amount,
@@ -123,7 +123,7 @@ export class CelerPlugIn implements InteropPlugin {
     const relay = parseRelay(input.log, null)
     if (relay) {
       return [
-        CelerRelay.create(input.ctx, {
+        CelerRelay.create(input, {
           transferId: relay.transferId,
           token: Address32.from(relay.token),
           amount: relay.amount,

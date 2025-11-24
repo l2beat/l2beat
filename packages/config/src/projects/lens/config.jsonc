@@ -10,66 +10,30 @@
   "names": {
     "eth:0xc29d04A93F893700015138E3E334eB828dAC3cef": "LensZkEvm",
     "eth:0x6bd8d33551077Ed281Cb047835a2aE4033eEc433": "LensZkEvmAdmin",
-    "eth:0x4968A0E4b025eD7d095753E54058377969b41abC": "Lens Multisig",
-    "eth:0x5C03468829A26981c410a7930bD4853622F0B2E5": "ValidatorTimelock3",
-    "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock2"
+    "eth:0x4968A0E4b025eD7d095753E54058377969b41abC": "Lens Multisig"
   },
   "overrides": {
     "eth:0x5C03468829A26981c410a7930bD4853622F0B2E5": {
-      "ignoreRelatives": ["stateTransitionManager"],
-      "fields": {
-        "validatorsVTL": {
-          "handler": {
-            "type": "event",
-            "select": ["validator"],
-            "add": {
-              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
-              "where": ["=", "#chainId", 232]
-            },
-            "remove": {
-              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
-              "where": ["=", "#chainId", 232]
-            }
-          },
-          "permissions": [{ "type": "validateZkStack" }]
-        }
-      }
+      // wrongly discovered VTL
+      "ignoreDiscovery": true
     },
-    "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": {
+    "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": {
       "fields": {
-        "validatorsVTL": {
+        "validatorsVTLFullAC": {
+          // giving the permission to the entire AC, because in practice the actor(s) have all roles
           "handler": {
-            "type": "event",
-            "select": ["validator"],
-            "add": {
-              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
-              "where": ["=", "#chainId", 232]
-            },
-            "remove": {
-              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
-              "where": ["=", "#chainId", 232]
-            }
+            "type": "crossChainAccessControl",
+            "pickChainAddress": "eth:0xc29d04A93F893700015138E3E334eB828dAC3cef"
           },
           "permissions": [{ "type": "validateZkStack" }]
-        }
-      }
-    },
-    "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": {
-      "fields": {
+        },
         "validatorsVTL": {
+          // for backwards compatibility with the zkstack template
           "handler": {
-            "type": "event",
-            "select": ["validator"],
-            "add": {
-              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
-              "where": ["=", "#chainId", 232]
-            },
-            "remove": {
-              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
-              "where": ["=", "#chainId", 232]
-            }
+            "type": "crossChainAccessControl",
+            "pickChainAddress": "eth:0xc29d04A93F893700015138E3E334eB828dAC3cef"
           },
-          "permissions": [{ "type": "validateZkStack" }]
+          "edit": ["get", "EXECUTOR_ROLE", "members"]
         }
       }
     }

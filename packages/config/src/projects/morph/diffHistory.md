@@ -1,3 +1,139 @@
+Generated with discovered.json: 0xc6d638e9e703b8d995da1acebd6b0dd88c966e1d
+
+# Diff at Mon, 24 Nov 2025 11:41:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7f22580fca8d48e9cc5f7f28da38d6b8725e891 block: 1763649405
+- current timestamp: 1763984401
+
+## Description
+
+verifier change (programhash, no code changes):
+
+previous programHashes, removed:
+- 0x001bdbe2a0f4839f3e7ca3b42ab1ca9d012e23249d17564c953d3557aede919c
+- 0x006c835a4c049b699a3675fefa51b182c7efe404a656151c0410245966724bc3
+
+new programhash, added:
+- 0x0059b74a8fd03c44462de3916b45ebeedb9f1158e3037e8c40b8941cbe438d7e
+
+proveRemaining changed. this var is the accumulated ETH balance retained by the protocol from failed challenges.
+- challenge: https://etherscan.io/tx/0xe92cd2101b2322721bf4601ffa60c03e0e79d27b26c7ccbb8ccabc11737b2266
+- resolve/prove: https://etherscan.io/tx/0x3b6e8a3ba6b62ddb7972ee2f1c80037635c7425378a1b981823ee6f8bb9086ea
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierV1 (eth:0x4006FDA79493FEE14dA42BfA34575aAA79bcf953)
+    +++ description: Current SP1 verifier using Blobs for DA.
+```
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1) {
+    +++ description: Used to update the verifier and keep track of current and old versions.
+      values.latestVerifier.0.verifier:
+-        "eth:0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154"
++        "eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423"
+      values.latestVerifier.0.startBatchIndex:
+-        0
++        45847
+      values.latestVerifier.1.verifier:
+-        "eth:0x4006FDA79493FEE14dA42BfA34575aAA79bcf953"
++        "eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423"
+      values.latestVerifier.1.startBatchIndex:
+-        20230
++        45847
+      values.legacyVerifiersLength.0:
+-        0
++        1
+      values.legacyVerifiersLength.1:
+-        0
++        1
+    }
+```
+
+```diff
+    contract MorphRollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.
+      values.challengers.31:
++        "eth:0xB2e53dcb84dc869E3bA61911a170B53eE1326184"
+      values.proveRemaining:
+-        3000000000000000
++        "303000000000000000"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierV1 (eth:0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154)
+    +++ description: SP1 verifier using Blobs for DA (being deprecated).
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV1 (eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../dev/null                                       | 1409 --------------------
+ .../ZkEvmVerifierV1.sol}                           |    8 +-
+ 2 files changed, 4 insertions(+), 1413 deletions(-)
+```
+
+Generated with discovered.json: 0xe7385c8babbd596bf15629ed62eda93b617a03e6
+
+# Diff at Thu, 20 Nov 2025 14:37:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4b9fb6935244c163272f55e2acbd987c21dfd4d2 block: 1763563909
+- current timestamp: 1763649405
+
+## Description
+
+add staker.
+
+## Watched changes
+
+```diff
+    contract L1Staking (eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7) {
+    +++ description: Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented).
+      values.getActiveStakers.3:
++        "eth:0xf0e11a8EA095Cc915f5a7e420928d396ed1Bb7e4"
+    }
+```
+
+Generated with discovered.json: 0xca5580805eeb3eab63c083b3804769c66b1c4819
+
+# Diff at Wed, 19 Nov 2025 14:53:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c2740481ca5c9bb2be3283052c4a68b2d735c71b block: 1760973938
+- current timestamp: 1763563909
+
+## Description
+
+stakers removed.
+
+## Watched changes
+
+```diff
+    contract L1Staking (eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7) {
+    +++ description: Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented).
+      values.deleteList.0:
+-        "eth:0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65"
+      values.deleteList.1:
+-        "eth:0xf834ffbeb6bB3F4841afc6b5FB40B94cd580fa23"
+      values.deleteList.2:
+-        "eth:0x61F2945d4bc9E40B66a6376d1094a50438f613e2"
+      values.deleteList.3:
+-        "eth:0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7"
+    }
+```
+
 Generated with discovered.json: 0xe8a0de42ecea568478643af5de21834d1b89290c
 
 # Diff at Mon, 20 Oct 2025 15:26:52 GMT:

@@ -11,7 +11,7 @@ export type ScalingLivenessTableEntry = Omit<ScalingLivenessEntry, 'data'> & {
 
 type TableEntryData = Record<
   TrackedTxsConfigSubtype,
-  TableEntryDataPoint | undefined
+  TableEntryDataPoint | undefined | null
 > & {
   isSynced: boolean
 }
@@ -41,19 +41,19 @@ export function toLivenessTableEntry(
             ...stateUpdates,
             warning: entry.data.stateUpdates?.warning,
           }
-        : undefined,
+        : stateUpdates,
       batchSubmissions: batchSubmissions
         ? {
             ...batchSubmissions,
             warning: entry.data.batchSubmissions?.warning,
           }
-        : undefined,
+        : batchSubmissions,
       proofSubmissions: proofSubmissions
         ? {
             ...proofSubmissions,
             warning: entry.data.proofSubmissions?.warning,
           }
-        : undefined,
+        : proofSubmissions,
       isSynced: entry.data.isSynced,
     },
   }

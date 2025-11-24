@@ -1,3 +1,357 @@
+Generated with discovered.json: 0x881322d4ae3c303436904e58fcfb1e53f6481621
+
+# Diff at Wed, 19 Nov 2025 14:59:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c2740481ca5c9bb2be3283052c4a68b2d735c71b block: 1762765918
+- current timestamp: 1763564141
+
+## Description
+
+tokenpool changes.
+
+## Watched changes
+
+```diff
+    contract SiloedLockReleaseTokenPool (eth:0x011Ef1fe26D20077A59F38e9Ad155b166AD87D40) {
+    +++ description: None
+      values.getRateLimitAdmin:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xf95aB7115f7625B116de8062c29CeF379297D663"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (eth:0x0a02473E57902fD7764E6E952E2962763045B404) {
+    +++ description: None
+      values.getSupportedChains.1:
++        "4627098889531055414"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0x1689C22eD5435e49071CFc208D1Ac6F2A2274490) {
+    +++ description: None
+      values.getSupportedChains.15:
+-        "7264351850409363825"
++        "3461204551265785888"
+      values.getSupportedChains.18:
+-        "3461204551265785888"
+    }
+```
+
+```diff
+    contract HybridWithExternalMinterTokenPool (eth:0x36a72eD0096B414521C45E3ddC9ed657d1D9c141) {
+    +++ description: None
+      values.getSupportedChains.3:
++        "4829375610284793157"
+    }
+```
+
+```diff
+    contract Router (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.89:
++        {"sourceChainSelector":"12657445206920369324","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"}
+      values.onRamps.241851231317828981:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x20fD5ab74D519df395f41c958D982BecB6b64432"
+      values.onRamps.12657445206920369324:
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+    }
+```
+
+```diff
+    contract LombardTokenPoolV2 (eth:0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7) {
+    +++ description: None
+      values.getSupportedChains.5:
++        "1294465214383781161"
+      values.getSupportedChains.6:
++        "9043146809313071210"
+      values.getSupportedChains.7:
++        "5936861837188149645"
+      values.getSupportedChains.8:
++        "13624601974233774587"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0x9aCd2ffD56E278a560Cc4E12dCA2B7D2B3359Ac2) {
+    +++ description: None
+      values.getSupportedChains.3:
++        "3461204551265785888"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0x9Dfaaa0826b8D81Ea7Cf7ED95619574bcb47d6EA) {
+    +++ description: None
+      values.owner:
+-        "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"
++        "eth:0x71083c7F1dCa054E3D96c833Eb38500aA6881Db9"
+    }
+```
+
+Generated with discovered.json: 0x8b8f1ead9b67756615f02ac6a3607e9000aa927c
+
+# Diff at Mon, 10 Nov 2025 09:33:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c7b384345bf6076e020559556d64e4e6add0bee0 block: 1762264674
+- current timestamp: 1762765918
+
+## Description
+
+New tokenpools, added templates.
+
+## Watched changes
+
+```diff
+    contract LockReleaseTokenPool (eth:0x20B79D39Bd44dEee4F89B1e9d0e3b945fde06491) {
+    +++ description: None
+      values.getSupportedChains.3:
++        "2442541497099098535"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (eth:0x3E8Ac93aBbD46e5BD4C3641D942f61ed6D858529)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0x697f6b0658B9f146701379eb5394a4BAe627c8B9)
+    +++ description: None
+```
+
+```diff
+    contract Router (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.88:
++        {"sourceChainSelector":"8481857512324358265","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"}
+      values.onRamps.241851231317828981:
+-        "eth:0x20fD5ab74D519df395f41c958D982BecB6b64432"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.onRamps.8481857512324358265:
+-        "eth:0xffBD6B0146C9E16A9f9E77DC8898cbfF6E2AA389"
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0x9aCd2ffD56E278a560Cc4E12dCA2B7D2B3359Ac2) {
+    +++ description: None
+      values.getSupportedChains.2:
++        "9335212494177455608"
+    }
+```
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.235:
+-        "eth:0x3E8Ac93aBbD46e5BD4C3641D942f61ed6D858529"
++        "eth:0x36C036E22C350442F63A189352345c4A7534bbdC"
+      values.pools.282:
++        "eth:0xeE17B5467f0D9F938d9993b982941E4720a94b10"
+      values.pools.283:
++        "eth:0xbc7b13D6E42D5D0ce14Af43482aE8aF7A5927c06"
+      values.poolsMap.eth:0x6eb935F5b649fc98BC7a3079F0211f5255C8B3eA:
+-        "eth:0x3E8Ac93aBbD46e5BD4C3641D942f61ed6D858529"
++        "eth:0x36C036E22C350442F63A189352345c4A7534bbdC"
+      values.poolsMap.eth:0x833E53F1e2D320e0768671Dee5CEc88b2d93330F:
++        "eth:0xeE17B5467f0D9F938d9993b982941E4720a94b10"
+      values.poolsMap.eth:0xb706b81B495aaAAA802CC8547d03ad6Fa1bD7012:
++        "eth:0xbc7b13D6E42D5D0ce14Af43482aE8aF7A5927c06"
+    }
+```
+
+```diff
+    contract LombardTokenPoolV2 (eth:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0) {
+    +++ description: None
+      values.getSupportedChains.1:
++        "6433500567565415381"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (eth:0xEcf61D6fAA3B9faE7195AF3bc9891450C1733f78) {
+    +++ description: None
+      values.getSupportedChains.1:
++        "17673274061779414707"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (eth:0xf05a207442f14E446b0e32b12D2043bfc68Cb1C9) {
+    +++ description: None
+      values.getSupportedChains.8:
++        "9335212494177455608"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x36C036E22C350442F63A189352345c4A7534bbdC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenPool (eth:0xbc7b13D6E42D5D0ce14Af43482aE8aF7A5927c06)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0xeE17B5467f0D9F938d9993b982941E4720a94b10)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0x36C036E22C350442F63A189352345c4A7534bbdC.sol} |  651 ++----
+ ...:0xeE17B5467f0D9F938d9993b982941E4720a94b10.sol | 2132 ++++++++++++++++++++
+ .../.flat@1762264674/Safe/Safe.sol => /dev/null    | 1088 ----------
+ .../Safe/SafeProxy.p.sol => /dev/null              |   37 -
+ 4 files changed, 2285 insertions(+), 1623 deletions(-)
+```
+
+Generated with discovered.json: 0xac425cfbd5a241f700c17be7787cedf50065979c
+
+# Diff at Tue, 04 Nov 2025 14:07:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f12d06bbf120eab9f5356a235918d4d6b2484290 block: 1761895172
+- current timestamp: 1762264674
+
+## Description
+
+add tokenpools (some unverified).
+
+## Watched changes
+
+```diff
+    contract LockReleaseTokenPool (eth:0x1B7492C3bD23A4aDB448710e4275FF14A5288932) {
+    +++ description: None
+      values.getSupportedChains.20:
++        "4829375610284793157"
+    }
+```
+
+```diff
+    contract USDOBurnMintTokenPool (eth:0x500d4882938020E939a5666c1B4200873da7EfD3) {
+    +++ description: None
+      values.getSupportedChains.2:
++        "9813823125703490621"
+    }
+```
+
+```diff
+    contract Router (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.onRamps.13624601974233774587:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+    }
+```
+
+```diff
+    contract LombardTokenPoolV2 (eth:0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7) {
+    +++ description: None
+      values.getSupportedChains.4:
++        "6433500567565415381"
+    }
+```
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.275:
++        "eth:0xE25a97E9e2f1Eeee81d4a7986A018AC3Ae8D857b"
+      values.pools.276:
++        "eth:0xa1fDd455Ed9adc66F2b6a496405911C0bbC9424e"
+      values.pools.277:
++        "eth:0xa42baa160DB5Aea58a1800ac6a33a92488288767"
+      values.pools.278:
++        "eth:0x3690367eDd22eDE1FE827258352F900fBD05b8Dc"
+      values.pools.279:
++        "eth:0x80E873D80ed41ED0a3aAeEb6efbaA01839f2111b"
+      values.pools.280:
++        "eth:0x02E87189512d1Bdc3Ca7795CAb68A8311703B88C"
+      values.pools.281:
++        "eth:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0"
+      values.poolsMap.eth:0x4C1Dab3Be86347977F3DfC4b9688224ef2272939:
++        "eth:0xE25a97E9e2f1Eeee81d4a7986A018AC3Ae8D857b"
+      values.poolsMap.eth:0xa0769f7A8fC65e47dE93797b4e21C073c117Fc80:
++        "eth:0xa1fDd455Ed9adc66F2b6a496405911C0bbC9424e"
+      values.poolsMap.eth:0xe4880249745eAc5F1eD9d8F7DF844792D560e750:
++        "eth:0xa42baa160DB5Aea58a1800ac6a33a92488288767"
+      values.poolsMap.eth:0xf695Df6c0f3bB45918A7A82e83348FC59517734E:
++        "eth:0x3690367eDd22eDE1FE827258352F900fBD05b8Dc"
+      values.poolsMap.eth:0x4f33aCf823E6eEb697180d553cE0c710124C8D59:
++        "eth:0x80E873D80ed41ED0a3aAeEb6efbaA01839f2111b"
+      values.poolsMap.eth:0x3868D4e336d14D38031cf680329d31e4712e11cC:
++        "eth:0x02E87189512d1Bdc3Ca7795CAb68A8311703B88C"
+      values.poolsMap.eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072:
++        "eth:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TokenPool (eth:0x02E87189512d1Bdc3Ca7795CAb68A8311703B88C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenPool (eth:0x3690367eDd22eDE1FE827258352F900fBD05b8Dc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenPool (eth:0x80E873D80ed41ED0a3aAeEb6efbaA01839f2111b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenPool (eth:0xa1fDd455Ed9adc66F2b6a496405911C0bbC9424e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenPool (eth:0xa42baa160DB5Aea58a1800ac6a33a92488288767)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LombardTokenPoolV2 (eth:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xE25a97E9e2f1Eeee81d4a7986A018AC3Ae8D857b)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0xE25a97E9e2f1Eeee81d4a7986A018AC3Ae8D857b.sol | 1615 ++++++++++++++++
+ ...0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7.sol} |    0
+ ...:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0.sol | 1949 ++++++++++++++++++++
+ 3 files changed, 3564 insertions(+)
+```
+
 Generated with discovered.json: 0xcc0f62e80c373949527783d0021de6e9698b3ff5
 
 # Diff at Tue, 04 Nov 2025 11:34:49 GMT:

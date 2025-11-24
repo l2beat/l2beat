@@ -158,12 +158,21 @@ export const acrossV3: Bridge = {
   technology: {
     destination: [
       'Optimism',
+      'Arbitrum',
+      'Base',
+      'Linea',
+      'Scroll',
+      'Blast',
+      'Mode',
+      'ZKsync Era',
       'Polygon',
       'Boba',
-      'Arbitrum',
-      'ZkSync Era',
-      'Linea',
-      'Base',
+      'Zora',
+      'Redstone',
+      'Soneium',
+      'World Chain',
+      'Ink',
+      'Lisk',
     ],
     principleOfOperation: {
       name: 'Principle of operation',
@@ -183,7 +192,7 @@ The permissioned proposer of the root bundle can also propose rebalancing liquid
       references: [
         {
           title: 'Across V4 Architecture',
-          url: 'https://docs.across.to/exclusive/what-is-across-v4#across-protocol-v4-architecture',
+          url: 'https://docs.across.to/concepts/what-is-across-v4#across-protocol-v4-architecture',
         },
       ],
       risks: [

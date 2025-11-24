@@ -1,6 +1,6 @@
 {
   "name": "wirex",
-  "timestamp": 1758532079,
+  "timestamp": 1762264409,
   "configHash": "0x86c94ed57598879374e70b30a0dc75d7714d8b9df0e8d0f1018018fd178fc6e1",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
@@ -21,18 +21,6 @@
         "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81": "FflonkVerifier"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "address": "eth:0x0AE999d2d668f12f2b46C4Fd3e13A32D478A9164",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "eth:0x78253E2E6120164bd826668A4C96Db20f78A94c9",
-          "role": ".trustedSequencer"
-        }
-      ]
     },
     {
       "name": "AgglayerBridge",
@@ -181,7 +169,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x0ea20f863bdb4fd586d96e33239b2c7a36a6bd487d1d53c2c77d6a0e53f84bdc",
+        "lastAccInputHash": "0xceb8816ffb6c9827109061301e56c75e96ac6c477ed3b531d610de6210a70af2",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "pay-chain",
@@ -192,7 +180,7 @@
         "SIGNATURE_INITIALIZE_TX_S": "0x000000000000000000000000000000000000000000000000000000005ca1ab1e",
         "SIGNATURE_INITIALIZE_TX_V": 27,
         "TIMESTAMP_RANGE": 36,
-        "trustedSequencer": "eth:0x0AE999d2d668f12f2b46C4Fd3e13A32D478A9164",
+        "trustedSequencer": "eth:0xc303511902D613b6Cd4635Ccf5E40066B4bde1B1",
         "trustedSequencerURL": "https://rpc.wirexpaychain.com"
       },
       "fieldMeta": {
@@ -227,6 +215,18 @@
           "permission": "act",
           "from": "eth:0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78",
           "role": ".owner"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xc303511902D613b6Cd4635Ccf5E40066B4bde1B1",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "eth:0x78253E2E6120164bd826668A4C96Db20f78A94c9",
+          "role": ".trustedSequencer"
         }
       ]
     },
@@ -452,6 +452,6 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23417571 },
-  "permissionsConfigHash": "0x34084a0051db7ba3fbf9e84ccd2504fe3ccba077e28ec2621e07d92eaf551c84"
+  "usedBlockNumbers": { "ethereum": 23726377 },
+  "permissionsConfigHash": "0x044ee653664f6350b5077b8d6bcec4a3916742b8f313015119ba6c8e2c3eac28"
 }

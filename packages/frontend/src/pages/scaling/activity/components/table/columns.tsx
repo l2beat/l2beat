@@ -1,11 +1,15 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
+import { Badge } from '~/components/badge/Badge'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { PrimaryValueCell } from '~/components/table/cells/PrimaryValueCell'
+import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
+import { TypeInfo } from '~/components/table/cells/TypeInfo'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import type { CommonProjectColumnsOptions } from '~/components/table/utils/common-project-columns/CommonProjectColumns'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
+import { EM_DASH } from '~/consts/characters'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/getScalingActivityEntries'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatInteger } from '~/utils/number-format/formatInteger'
@@ -47,6 +51,33 @@ export const getScalingActivityColumns = (
         : `/scaling/projects/${row.slug}#activity`,
     opts,
   ),
+  columnHelper.accessor('type', {
+    header: 'Type',
+    cell: (ctx) => {
+      const { type, id, stacks } = ctx.row.original
+
+      let content
+      if (id === ProjectId.ETHEREUM) {
+        content = EM_DASH
+      } else if (!type) {
+        content = (
+          <Badge type="gray" size="small">
+            Unknown
+          </Badge>
+        )
+      } else {
+        content = type
+      }
+
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First>
+            <TypeInfo stacks={type ? stacks : []}>{content}</TypeInfo>
+          </TwoRowCell.First>
+        </TwoRowCell>
+      )
+    },
+  }),
   columnHelper.accessor('data.pastDayCount', {
     header: `Past day ${metric === 'uops' ? 'UOPS' : 'TPS'}`,
     cell: (ctx) => {
@@ -97,7 +128,7 @@ export const getScalingActivityColumns = (
       tooltip: `Shows the maximum sustained ${metric === 'uops' ? 'UOPS' : 'TPS'}, calculated as an average over the count for a day.`,
     },
   }),
-  columnHelper.accessor('data.summedCount', {
+  columnHelper.accessor('data.summedCount.value', {
     header: '30D Count',
     cell: (ctx) => {
       const data = ctx.row.original.data

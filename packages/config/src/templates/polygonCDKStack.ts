@@ -190,10 +190,10 @@ export function polygonCDKStack(
         ...(templateVars.additionalPurposes ?? []),
       ],
       architectureImage:
-        (templateVars.architectureImage ??
-        templateVars.daProvider !== undefined)
+        templateVars.architectureImage ??
+        (templateVars.daProvider !== undefined
           ? 'polygon-cdk-validium'
-          : 'polygon-cdk-rollup',
+          : 'polygon-cdk-rollup'),
       stacks: ['Agglayer CDK'],
       tvsWarning: templateVars.display.tvsWarning,
     },
@@ -349,7 +349,7 @@ export function polygonCDKStack(
           references: [
             {
               title: 'Pessimistic Proof - Polygon Knowledge Layer',
-              url: 'https://docs.polygon.technology/learn/agglayer/pessimistic_proof',
+              url: 'https://docs.polygon.technology/cdk/concepts/pessimistic-proofs',
             },
             {
               title:
@@ -428,7 +428,7 @@ The regular upgrade process for all system contracts (shared and L2-specific) st
 
 The PolygonSecurityCouncil can expedite the upgrade process by declaring an emergency state. This state pauses both the shared bridge and the AgglayerManager and allows for instant upgrades through the timelock. Accordingly, instant upgrades for all system contracts are possible with the cooperation of the SecurityCouncil. The emergency state has been activated ${emergencyActivatedCount} time(s) since inception.
 
-Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rolupTypes and manage operational parameters and fees in the AgglayerManager directly. The local admin of a specific Layer 2 can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.`,
+Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rollupTypes and manage operational parameters and fees in the AgglayerManager directly. The local admin of a specific Layer 2 can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.`,
     milestones: templateVars.milestones,
     badges: mergeBadges(baseBadges, templateVars.additionalBadges ?? []),
     customDa: templateVars.customDa,

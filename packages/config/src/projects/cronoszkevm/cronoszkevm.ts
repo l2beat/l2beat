@@ -34,6 +34,7 @@ export const cronoszkevm: ScalingProject = zkStackL2({
       socialMedia: [
         'https://x.com/cronos_chain',
         'https://discord.com/invite/cronos',
+        'https://t.me/Cronos_Announcements',
       ],
     },
   },

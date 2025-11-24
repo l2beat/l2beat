@@ -1,7 +1,10 @@
-import type { Project } from '@l2beat/config'
+import type {
+  Project,
+  ProjectScalingCategory,
+  ProjectScalingStack,
+} from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
-import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import { ps } from '~/server/projects'
 import type { ProjectChanges } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
@@ -38,19 +41,16 @@ export async function getScalingActivityEntries() {
         activityData[project.id],
       ),
     )
-    .concat([
-      getEthereumEntry(ethereumData, 'rollups'),
-      getEthereumEntry(ethereumData, 'validiumsAndOptimiums'),
-      getEthereumEntry(ethereumData, 'others'),
-      getEthereumEntry(ethereumData, 'notReviewed'),
-    ])
+    .concat(getEthereumEntry(ethereumData))
     .filter((p) => p !== undefined)
     .sort(compareActivityEntry)
 
-  return groupByScalingTabs(entries)
+  return entries
 }
 
 export interface ScalingActivityEntry extends CommonScalingEntry {
+  type: ProjectScalingCategory | undefined
+  stacks: ProjectScalingStack[] | undefined
   data:
     | {
         tps: ActivityData
@@ -87,6 +87,8 @@ function getScalingProjectActivityEntry(
 
   return {
     ...getCommonScalingEntry({ project, changes, syncWarning }),
+    type: project.scalingInfo.type,
+    stacks: project.scalingInfo.stacks,
     data: {
       tps: data.tps,
       uops: data.uops,
@@ -98,7 +100,6 @@ function getScalingProjectActivityEntry(
 
 function getEthereumEntry(
   data: ActivityProjectTableData,
-  tab: CommonScalingEntry['tab'],
 ): ScalingActivityEntry {
   const syncWarning = getActivitySyncWarning(data.syncState)
   return {
@@ -108,7 +109,9 @@ function getEthereumEntry(
     icon: getProjectIcon('ethereum'),
     isLayer3: false,
     slug: 'ethereum',
-    tab,
+    tab: 'rollups',
+    stacks: undefined,
+    type: undefined,
     filterable: undefined,
     backgroundColor: 'blue',
     data: {

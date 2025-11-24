@@ -43,7 +43,7 @@ export class InteropBlockProcessor implements BlockProcessor {
           this.logger.error('Capture failed', e, {
             plugin: plugin.name,
             blockNumber: block.number,
-            tx: txToCapture.tx.txHash,
+            tx: txToCapture.tx.hash,
           })
         }
       }
@@ -63,8 +63,8 @@ export class InteropBlockProcessor implements BlockProcessor {
           this.logger.error('Capture failed', e, {
             plugin: plugin.name,
             blockNumber: block.number,
-            tx: logToDecode.ctx.txHash,
-            logIndex: logToDecode.ctx.logIndex,
+            tx: logToDecode.tx.hash,
+            logIndex: logToDecode.log.logIndex,
             topic: logToDecode.log.topics[0],
           })
         }
@@ -93,38 +93,23 @@ export class InteropBlockProcessor implements BlockProcessor {
 }
 
 function getItemsToCapture(chain: string, block: Block, logs: Log[]) {
-  const logsToCapture: LogToCapture[] = []
-  const txsToCapture: TxToCapture[] = []
   const viemLogs = logs.map(logToViemLog)
-
-  const txs = block.transactions
+  const logsToCapture: LogToCapture[] = []
+  const txsToCapture = block.transactions
     .filter((x) => !!x.hash) // TODO: why can this be missing!?
     .map(
-      (tx): InteropEventContext => ({
-        timestamp: block.timestamp,
+      (tx): TxToCapture => ({
+        block,
+        tx,
         chain,
-        blockHash: block.hash,
-        blockNumber: block.number,
-        // biome-ignore lint/style/noNonNullAssertion: We know tx is not pending
-        txHash: tx.hash!,
-        // biome-ignore lint/style/noNonNullAssertion: EVM tx should have it
-        txValue: tx.value!,
-        txTo: tx.to !== undefined ? Address32.from(tx.to) : undefined,
-        txFrom: tx.from !== undefined ? Address32.from(tx.from) : undefined,
-        // biome-ignore lint/style/noNonNullAssertion: EVM tx should have it
-        txData: tx.data! as string,
-        logIndex: -1,
+        txLogs: viemLogs.filter((log) => log.transactionHash === tx.hash),
       }),
     )
-
-  for (const tx of txs) {
-    const txLogs = viemLogs.filter((log) => log.transactionHash === tx.txHash)
-    for (const log of txLogs) {
-      logsToCapture.push({ log, ctx: tx, txLogs })
+  for (const tx of txsToCapture) {
+    for (const log of tx.txLogs) {
+      logsToCapture.push({ log, ...tx })
     }
-    txsToCapture.push({ tx, txLogs })
   }
-
   return { txsToCapture, logsToCapture }
 }
 

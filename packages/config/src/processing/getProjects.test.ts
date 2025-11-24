@@ -4,10 +4,16 @@ import {
   type TrackedTxFunctionCallConfig,
   type TrackedTxTransferConfig,
 } from '@l2beat/shared'
-import { assert, EthereumAddress, type ProjectId } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  EthereumAddress,
+  type ProjectId,
+} from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { expect } from 'earl'
 import { existsSync } from 'fs'
+import uniq from 'lodash/uniq'
 import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { checkRisk } from '../test/helpers'
@@ -213,6 +219,36 @@ describe('getProjects', () => {
           ).toEqual(true)
         })
       }
+    }
+  })
+
+  describe('zk catalog', async () => {
+    const usageMap = getUsageMap(projects)
+
+    for (const project of projects) {
+      describe(project.id, () => {
+        if (!project.zkCatalogInfo) return
+        const liveTvsProjects = new Set(
+          project.zkCatalogInfo.projectsForTvs
+            ?.filter((p) => !p.untilTimestamp)
+            .map((p) => p.projectId),
+        )
+
+        const usedInVerifiers = uniq(
+          project.zkCatalogInfo.verifierHashes.flatMap((v) =>
+            v.knownDeployments.flatMap(
+              (d) =>
+                d.overrideUsedIn ?? usageMap.get(`${d.chain}-${d.address}`),
+            ),
+          ),
+        ).filter((p) => p !== undefined)
+
+        for (const usedIn of usedInVerifiers) {
+          it(`${usedIn} is configured in ${project.id} TVS projects`, () => {
+            expect(liveTvsProjects.has(usedIn)).toEqual(true)
+          })
+        }
+      })
     }
   })
 
@@ -660,3 +696,40 @@ describe('getProjects', () => {
     }
   })
 })
+
+// This is simpler version of getContractUtils that we have in FE. It's used only for testing.
+function getUsageMap(projects: BaseProject[]) {
+  const usageMap = new Map<`${string}-${EthereumAddress}`, ProjectId[]>()
+
+  function addUsage(chain: string, address: EthereumAddress, usage: ProjectId) {
+    const key = `${chain}-${address}` as const
+    const uses = usageMap.get(key)
+    if (!uses) {
+      usageMap.set(key, [usage])
+      return
+    }
+    if (!uses.includes(usage)) {
+      uses.push(usage)
+    }
+  }
+
+  for (const project of projects) {
+    if (!project.isScaling || !project.contracts) continue
+
+    for (const [chain, contracts] of Object.entries(
+      project.contracts.addresses,
+    )) {
+      for (const contract of contracts) {
+        addUsage(
+          chain,
+          ChainSpecificAddress.address(contract.address),
+          project.id,
+        )
+        for (const impl of contract.upgradeability?.implementations ?? []) {
+          addUsage(chain, ChainSpecificAddress.address(impl), project.id)
+        }
+      }
+    }
+  }
+  return usageMap
+}

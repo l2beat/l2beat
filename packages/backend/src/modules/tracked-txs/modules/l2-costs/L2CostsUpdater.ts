@@ -22,7 +22,6 @@ export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
     }
 
     const transformed = this.transform(transactions)
-    console.log('transformed', transformed)
     await this.db.l2Cost.insertMany(transformed)
     this.logger.info('Updated L2 costs', { count: transactions.length })
   }
@@ -32,7 +31,6 @@ export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
   }
 
   transform(transactions: TrackedTxResult[]): L2CostRecord[] {
-    console.log('transactions', transactions)
     return transactions.map((tx) => ({
       timestamp: tx.blockTimestamp,
       txHash: tx.hash,

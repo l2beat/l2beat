@@ -1,3 +1,78 @@
+Generated with discovered.json: 0x7b5696afd73ecc55a90f93c4577ace056cf3d8fc
+
+# Diff at Mon, 17 Nov 2025 11:36:35 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1ced7b6309befc68bef18813184f322d7f7507fd block: 1762517461
+- current timestamp: 1763379307
+
+## Description
+
+Gas limit increase.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        95000000
++        100000000
+    }
+```
+
+Generated with discovered.json: 0x449cd90166c738a1ee66070e753a22da0a557883
+
+# Diff at Fri, 07 Nov 2025 12:12:19 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@13bc02ee5170e2fdf5ee8d6add3be941d055d545 block: 1762276356
+- current timestamp: 1762517461
+
+## Description
+
+gas limit change.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        90000000
++        95000000
+    }
+```
+
+Generated with discovered.json: 0x8a8a92133c65368d467df3d5c81c9a42a29b068c
+
+# Diff at Tue, 04 Nov 2025 17:13:54 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@247fa0b26d8d13bf9c509f1c360df6ee053d13ee block: 1761223334
+- current timestamp: 1762276356
+
+## Description
+
+gas limit changes.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        85000000
++        90000000
+    }
+```
+
 Generated with discovered.json: 0xa51b4afda975dece579d6c0b607ba86e7db5d17f
 
 # Diff at Tue, 04 Nov 2025 11:34:53 GMT:

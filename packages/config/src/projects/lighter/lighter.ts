@@ -234,7 +234,7 @@ export const lighter: ScalingProject = {
     ],
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
-  upgradesAndGovernance: `Regular upgrades are initiated by the "network governor" and executed with a ${formatSeconds(upgradeDelay)} delay. The "security council" is allowed to reduce the upgrade delay to zero in case of an emergency. The security council does not currently satify the Stage 1 requirements. The network governor also retains the ability to add or remove validators.`,
+  upgradesAndGovernance: `Regular upgrades are initiated by the "network governor" and executed with a ${formatSeconds(upgradeDelay)} delay. The "security council" is allowed to reduce the upgrade delay to zero in case of an emergency. The security council does not currently satisfy the Stage 1 requirements. The network governor also retains the ability to add or remove validators.`,
   contracts: {
     addresses: {
       ...discovery.getDiscoveredContracts(),

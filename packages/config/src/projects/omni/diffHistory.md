@@ -1,3 +1,116 @@
+Generated with discovered.json: 0xcc45dbe40818af28f77cdb24cafddd3ed3498309
+
+# Diff at Mon, 10 Nov 2025 10:11:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c7b384345bf6076e020559556d64e4e6add0bee0 block: 1757940700
+- current timestamp: 1762767834
+
+## Description
+
+DaiForeignBridge upgrade - https://disco.l2beat.com/diff/eth:0xb54042F5bA4B048fEa54aaE70abbbe41AC716299/eth:0x257bDD093Cab1Bd39eBF837dCB60f33d031d7d49
+- migrate from DAI  and sDAI to USDS and sUSDS
+- function names are confusing, e.g. daiToken now returns the USDS address
+
+cannot use templates because of the eternalStorageProxy
+
+added USDS and sUSDS to TVS
+
+## Watched changes
+
+```diff
+    contract DaiForeignBridge (eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016) {
+    +++ description: Token bridge implementation and escrow for DAI-related tokens. Escrowed Dai can be invested in the Spark protocol for sDai.
+      sourceHashes.1:
+-        "0x3c108eaa9520cd55043d9ba97a6dea1d273e4300c8b99800347d12780410f08f"
++        "0x31707ec58aa0ebd43328575885a3495f21a2d3e21890280fafe5cbaf1ab5938b"
+      values.$implementation:
+-        "eth:0xb54042F5bA4B048fEa54aaE70abbbe41AC716299"
++        "eth:0x257bDD093Cab1Bd39eBF837dCB60f33d031d7d49"
+      values.$pastUpgrades.9:
++        ["2025-11-07T15:06:59.000Z","0x05db4562ed98cb55938bb541e030222c9630e6ff8e224abc3fc0aefd5aba1202",["eth:0x257bDD093Cab1Bd39eBF837dCB60f33d031d7d49"]]
+      values.$upgradeCount:
+-        9
++        10
+      values.daiToken:
+-        "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
++        "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F"
+      values.erc20token:
+-        "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
++        "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F"
+      values.implementation:
+-        "eth:0xb54042F5bA4B048fEa54aaE70abbbe41AC716299"
++        "eth:0x257bDD093Cab1Bd39eBF837dCB60f33d031d7d49"
+      values.sDaiToken:
+-        "eth:0x83F20F44975D03b1b09e64809B757c47f942BEeA"
++        "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD"
+      values.version:
+-        9
++        10
+      values.DAI:
++        "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
+      values.DAI_USDS:
++        "eth:0x3225737a9Bbb6473CB4a45b7244ACa2BeFdB276A"
+      values.USDS:
++        "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F"
+      implementationNames.eth:0xb54042F5bA4B048fEa54aaE70abbbe41AC716299:
+-        "XDaiForeignBridge"
+      implementationNames.eth:0x257bDD093Cab1Bd39eBF837dCB60f33d031d7d49:
++        "XDaiForeignBridge"
+    }
+```
+
+## Source code changes
+
+```diff
+.../DaiForeignBridge/XDaiForeignBridge.sol         | 218 +++++++++++++--------
+ 1 file changed, 141 insertions(+), 77 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757940700 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract EternalStorageProxy (gno:0x7301CFA0e1756B71869E93d4e4Dca5c7d0eb0AA6)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x63c731d9a064f5294ea2772c40ba07dc4c7d362b
+
+# Diff at Wed, 05 Nov 2025 12:47:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bc0ecd2e43db8badee0981759f26dbc0b38299e3 block: 1757940700
+- current timestamp: 1757940700
+
+## Description
+
+Libraries are opt-in
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757940700 (main branch discovery), not current.
+
+```diff
+    contract SP1HeliosAdapter (gno:0x9C63010F056E4692A44A510F2F5E8A44B94960Bf) {
+    +++ description: None
+      values.$libraries:
+-        ["gno:0xff07C59F7D882D1799e1CABd1D17faaDE7694fe0"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MerklePatricia (gno:0xff07C59F7D882D1799e1CABd1D17faaDE7694fe0)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xd406ff6e6f64ddedeaedac62563897ccb121fdfe
 
 # Diff at Tue, 04 Nov 2025 11:33:45 GMT:

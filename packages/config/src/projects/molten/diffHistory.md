@@ -1,3 +1,83 @@
+Generated with discovered.json: 0x3a93605e0b4c4911948c277c64c4e436c714525e
+
+# Diff at Wed, 19 Nov 2025 12:21:38 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@2b637644c92662f812c5b3f8fe7a2b8a31d11187 block: 1762953905
+- current timestamp: 1763554833
+
+## Description
+
+Posting to DAC for a long time.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2) {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
+      values.sequencerVersion:
+-        "0x63"
++        "0x88"
+    }
+```
+
+Generated with discovered.json: 0x51989eaefe0e7500ae77ab4f3051bed7489b5f3d
+
+# Diff at Wed, 12 Nov 2025 13:26:45 GMT:
+
+- author: unknown (<unknown>)
+- comparing to: main@27e0954e328a1da641bdbcd0ceed6c44d77f2b96 block: 1762880768
+- current timestamp: 1762953905
+
+## Description
+
+Discovery to fix sequencerVersion.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2) {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
+      values.sequencerVersion:
+-        "0x88"
++        "0x63"
+    }
+```
+
+Generated with discovered.json: 0xab6fb090ee377c146c2c4d0c7e6d751bd90e2a8d
+
+# Diff at Tue, 11 Nov 2025 17:07:40 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@6a57543e1aa91ba0548ecf149f1f03a74c2120d0 block: 1760088316
+- current timestamp: 1762880768
+
+## Description
+
+Caldera multisig decreased threshold.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2) {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
+      values.sequencerVersion:
+-        "0x63"
++        "0x88"
+    }
+```
+
+```diff
+    contract Caldera Multisig 1 (arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      values.$members.7:
+-        "arb1:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
+      values.multisigThreshold:
+-        "3 of 9 (33%)"
++        "3 of 8 (38%)"
+    }
+```
+
 Generated with discovered.json: 0x8bb2e8d82d04fb7e2bbe2a1fec6cccbde4482e49
 
 # Diff at Tue, 04 Nov 2025 11:33:37 GMT:

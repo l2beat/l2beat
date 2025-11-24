@@ -6,6 +6,7 @@ import swaggerUi from 'swagger-ui-express'
 import { InMemoryCache } from './cache/InMemoryCache'
 import { getConfig } from './config'
 import { authMiddleware } from './middleware/authMiddleware'
+import { errorHandler } from './middleware/errorHandler'
 import { loggerMiddleware } from './middleware/loggerMiddleware'
 import { OpenApi } from './OpenApi'
 import { addActivityRoutes } from './routes/activity/routes'
@@ -87,6 +88,8 @@ function main() {
   addProjectsRoutes(openapi, ps)
   addTvsRoutes(openapi, ps, db, cache)
   addActivityRoutes(openapi, ps, db, cache)
+
+  app.use(errorHandler(logger))
 
   app.listen(config.api.port, () => {
     console.log(`Example app listening on port ${config.api.port}`)

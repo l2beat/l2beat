@@ -66,7 +66,7 @@ export const omni: Bridge = {
       {
         address: EthereumAddress('0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016'),
         sinceTimestamp: UnixTime(1573776000),
-        tokens: ['cDAI', 'DAI', 'sDAI'],
+        tokens: ['cDAI', 'DAI', 'sDAI', 'sUSDS', 'USDS'],
         chain: 'ethereum',
       },
     ],
@@ -126,7 +126,7 @@ export const omni: Bridge = {
     canonical: true,
     principleOfOperation: {
       name: 'Principle of operation',
-      description: `The Gnosis bridge is comprised of two standard multisig-validated token bridges (Omni and xDAI) with similar architecture and validators. While the xDAI bridge is only used for bridging DAI-related tokens (xDAI is Gnosis Chains gas token), the Omni bridge can be used to bridge many other ERC-20 tokens. Both bridges on ethereum are served by external validators that sign bridge messages via custom multisigs. Assets that are locked in one of the escrows on ethereum can be 'invested' by permissioned actors to generate yield. In the case of DAI / sDAI (Spark protocol), the yield is handed down to sDAI users on Gnosis Chain. The addition of Hashi (EVM Hash Oracle Aggregator) and light clients for message validation is being tested but remains optional for now.`,
+      description: `The Gnosis bridge is comprised of two standard multisig-validated token bridges (Omni and xDAI) with similar architecture and validators. While the xDAI bridge is only used for bridging USDS-related tokens (xDAI is Gnosis Chains gas token), the Omni bridge can be used to bridge many other ERC-20 tokens. Both bridges on ethereum are served by external validators that sign bridge messages via custom multisigs. Assets that are locked in one of the escrows on ethereum can be 'invested' by permissioned actors to generate yield. In the case of USDS / sUSDS (Spark protocol), the yield is handed down to sUSDS users on Gnosis Chain. The addition of Hashi (EVM Hash Oracle Aggregator) and light clients for message validation is being tested but remains optional for now.`,
       references: [],
       risks: [],
     },
@@ -164,6 +164,14 @@ export const omni: Bridge = {
     },
   },
   milestones: [
+    {
+      title: 'Gnosis canonical bridges paused',
+      url: 'https://x.com/gnosisdotio/status/1985321081255891396',
+      date: '2025-11-03T00:00:00.00Z',
+      description:
+        'Bridging out from Gnosis Chain has been temporarily halted following the Balancer V2 exploit.',
+      type: 'incident',
+    },
     {
       title: 'Plonky3 vulnerability patch',
       url: 'https://x.com/SuccinctLabs/status/1929773028034204121',

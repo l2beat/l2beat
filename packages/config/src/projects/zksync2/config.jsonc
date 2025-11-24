@@ -16,8 +16,7 @@
     "eth:0x41527B2d03844dB6b0945f25702cB958b6d55989": "L1ERC20Bridge_wstETH",
     "gateway:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4": "ProtocolUpgradeHandler_l2Alias",
     "gateway:0x3E04Bd6a9056b39999f3883955E183F655346174": "EraChainAdminProxy_l2Alias",
-    "gateway:0xe279aF77D3C1685022641ffE1b9b538c5eA0Ae24": "ZKsyncValidatorTimelock", // needed bc we have multiple VTL
-    "gateway:0x000000000000000000000000000000000001000a": "ChainAssetHandler_unverified"
+    "gateway:0xe279aF77D3C1685022641ffE1b9b538c5eA0Ae24": "ZKsyncValidatorTimelock" // needed bc we have multiple VTL
   },
   "overrides": {
     "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3": {

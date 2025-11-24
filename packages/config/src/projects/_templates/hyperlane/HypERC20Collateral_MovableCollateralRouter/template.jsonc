@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreRelatives": ["wrappedToken"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the ISM and hooks, register new remote escrows to rebalance collateral to, whitelist new routes and update destination fees."
+        }
+      ]
+    },
+    "allowedRebalancers": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "reblance the 'locked' collateral to remote escrows that were previously whitelisted by the owner."
+        }
+      ]
+    }
+  }
+}

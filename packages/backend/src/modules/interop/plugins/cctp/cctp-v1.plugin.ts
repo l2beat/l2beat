@@ -48,10 +48,10 @@ is set by Circle validators, it's hard to say how this can be solved by the matc
 */
 
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
-import { solidityKeccak256 } from 'ethers/lib/utils'
 import { BinaryReader } from '../../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import {
+  Address32,
   createEventParser,
   createInteropEventType,
   findChain,
@@ -70,9 +70,15 @@ const parseV1MessageReceived = createEventParser(
   'event MessageReceived(address indexed caller, uint32 sourceDomain, uint64 indexed nonce, bytes32 sender, bytes messageBody)',
 )
 
+const parseTransfer = createEventParser(
+  'event Transfer(address indexed from, address indexed to, uint256 value)',
+)
+
 export const CCTPv1MessageSent = createInteropEventType<{
   messageBody: string
   $dstChain: string
+  srcTokenAddress?: Address32
+  srcAmount?: bigint
 }>('cctp-v1.MessageSent')
 
 export const CCTPv1MessageReceived = createInteropEventType<{
@@ -80,6 +86,8 @@ export const CCTPv1MessageReceived = createInteropEventType<{
   $srcChain: string
   nonce: number
   messageBody: string
+  dstTokenAddress?: Address32
+  dstAmount?: bigint
 }>('cctp-v1.MessageReceived')
 
 export class CCTPV1Plugin implements InteropPlugin {
@@ -91,7 +99,7 @@ export class CCTPV1Plugin implements InteropPlugin {
     const networks = this.configs.get(CCTPV1Config)
     if (!networks) return
 
-    const network = networks.find((n) => n.chain === input.ctx.chain)
+    const network = networks.find((n) => n.chain === input.chain)
     if (!network) return
     assert(
       network.messageTransmitter,
@@ -106,14 +114,19 @@ export class CCTPV1Plugin implements InteropPlugin {
       if (version === 0) {
         const message = decodeV1Message(messageSent.message)
         if (!message) return
+        const messageBody = decodeV1MessageBody(message.rawBody)
         return [
-          CCTPv1MessageSent.create(input.ctx, {
+          CCTPv1MessageSent.create(input, {
             messageBody: message.rawBody,
             $dstChain: findChain(
               networks,
               (x) => x.domain,
               Number(message.destinationDomain),
             ),
+            srcTokenAddress: messageBody
+              ? Address32.from(messageBody.burnToken)
+              : undefined,
+            srcAmount: messageBody?.amount ?? undefined,
           }),
         ]
       }
@@ -123,8 +136,17 @@ export class CCTPV1Plugin implements InteropPlugin {
       network.messageTransmitter,
     ])
     if (v1MessageReceived) {
+      // const messageBody = decodeMessageBody(v1MessageReceived.messageBody) // only encodes the source token, so no value to us
+      // if (!messageBody) return
+      // use erc20 transfer event instead (fragile because it might not be 2 logs before)
+      const previouspreviousLog = input.txLogs.find(
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        (x) => x.logIndex === input.log.logIndex! - 2,
+      )
+      const transfer =
+        previouspreviousLog && parseTransfer(previouspreviousLog, null)
       return [
-        CCTPv1MessageReceived.create(input.ctx, {
+        CCTPv1MessageReceived.create(input, {
           caller: EthereumAddress(v1MessageReceived.caller),
           $srcChain: findChain(
             networks,
@@ -133,6 +155,10 @@ export class CCTPV1Plugin implements InteropPlugin {
           ),
           nonce: Number(v1MessageReceived.nonce),
           messageBody: v1MessageReceived.messageBody,
+          dstTokenAddress: previouspreviousLog
+            ? Address32.from(previouspreviousLog.address)
+            : undefined,
+          dstAmount: transfer?.value ?? undefined,
         }),
       ]
     }
@@ -143,6 +169,10 @@ export class CCTPV1Plugin implements InteropPlugin {
     messageReceived: InteropEvent,
     db: InteropEventDb,
   ): MatchResult | undefined {
+    const networks = this.configs.get(CCTPV1Config)
+    if (!networks) return
+    const network = networks.find((n) => n.chain === messageReceived.ctx.chain)
+    if (!network) return
     if (CCTPv1MessageReceived.checkType(messageReceived)) {
       const messageSent = db.find(CCTPv1MessageSent, {
         messageBody: messageReceived.args.messageBody,
@@ -150,9 +180,17 @@ export class CCTPV1Plugin implements InteropPlugin {
       if (!messageSent) return
       return [
         Result.Message('cctp-v1.Message', {
-          app: 'unknown',
+          app: 'cctp-v1',
           srcEvent: messageSent,
           dstEvent: messageReceived,
+        }),
+        Result.Transfer('cctp-v1.Transfer', {
+          srcEvent: messageSent,
+          srcTokenAddress: messageSent.args.srcTokenAddress,
+          srcAmount: messageSent.args.srcAmount,
+          dstEvent: messageReceived,
+          dstTokenAddress: messageReceived.args.dstTokenAddress,
+          dstAmount: messageReceived.args.dstAmount,
         }),
       ]
     }
@@ -194,54 +232,8 @@ export function decodeV1Message(encodedHex: string) {
   }
 }
 
-// https://basescan.org/address/0x7db629f6acc20be49a0a7565c21cc178e9ac21e3#code#F4#L78
-export function decodeV2Message(encodedHex: string) {
-  try {
-    const reader = new BinaryReader(encodedHex)
-    const version = reader.readUint32()
-    const sourceDomain = reader.readUint32()
-    const destinationDomain = reader.readUint32()
-    const nonce = reader.readUint256()
-    const sender = reader.readBytes(32)
-    const recipient = reader.readBytes(32)
-    const destinationCaller = reader.readBytes(32)
-    const minFinalityThreshold = reader.readUint32() // only in V2
-    const finalityThresholdExecuted = reader.readUint32() // only in V2
-    const messageBody = reader.readRemainingBytes()
-    return {
-      version,
-      sourceDomain,
-      destinationDomain,
-      nonce,
-      sender,
-      recipient,
-      destinationCaller,
-      minFinalityThreshold,
-      finalityThresholdExecuted,
-      messageBody,
-    }
-  } catch {
-    return undefined
-  }
-}
-
-export function hashBurnMessage(encodedHex: string) {
-  const burnMessage = decodeBurnMessage(encodedHex)
-  return solidityKeccak256(
-    ['uint32', 'bytes32', 'bytes32', 'uint256', 'bytes32', 'uint256', 'bytes'],
-    [
-      burnMessage?.version,
-      burnMessage?.burnToken,
-      burnMessage?.mintRecipient,
-      burnMessage?.amount,
-      burnMessage?.messageSender,
-      burnMessage?.maxFee,
-      burnMessage?.hookData,
-    ],
-  )
-}
-
-export function decodeBurnMessage(encodedHex: string) {
+// https://developers.circle.com/cctp/v1/message-format
+export function decodeV1MessageBody(encodedHex: string) {
   try {
     const reader = new BinaryReader(encodedHex)
     const version = reader.readUint32()
@@ -249,20 +241,12 @@ export function decodeBurnMessage(encodedHex: string) {
     const mintRecipient = reader.readBytes(32)
     const amount = reader.readUint256()
     const messageSender = reader.readBytes(32)
-    const maxFee = reader.readUint256()
-    const feeExecuted = reader.readUint256()
-    const expirationBlock = reader.readUint256()
-    const hookData = reader.readRemainingBytes()
     return {
       version,
       burnToken,
       mintRecipient,
       amount,
       messageSender,
-      maxFee,
-      feeExecuted,
-      expirationBlock,
-      hookData,
     }
   } catch {
     return undefined

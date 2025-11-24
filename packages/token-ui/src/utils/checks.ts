@@ -1,6 +1,8 @@
 export function minNumberCheck(minNumber: number) {
   return (value: number) =>
-    value >= minNumber ? true : `Minimum number is ${minNumber}`
+    !isNaN(value) && value >= minNumber
+      ? true
+      : `Minimum number is ${minNumber}`
 }
 
 export function minLengthCheck(minLength: number) {

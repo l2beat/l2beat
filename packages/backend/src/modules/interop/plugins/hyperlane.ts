@@ -58,7 +58,7 @@ export class HyperlanePlugIn implements InteropPlugin {
       const processId = nextLog && parseProcessId(nextLog, null)
       if (!processId) return
       return [
-        Process.create(input.ctx, {
+        Process.create(input, {
           messageId: processId.messageId,
           $srcChain: findChain(
             HYPERLANE_NETWORKS,
@@ -72,7 +72,7 @@ export class HyperlanePlugIn implements InteropPlugin {
     const dispatch = parseDispatch(input.log, null)
     if (dispatch)
       return [
-        Dispatch.create(input.ctx, {
+        Dispatch.create(input, {
           messageId: keccak256(dispatch.message),
           $dstChain: findChain(
             HYPERLANE_NETWORKS,

@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x22ce6ed78b07a4bb7d16073da61c687022830b80
+Generated with discovered.json: 0xe3587b8debca26307a372edb27123c37812196ee
+
+# Diff at Wed, 05 Nov 2025 12:48:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bc0ecd2e43db8badee0981759f26dbc0b38299e3 block: 1762265216
+- current timestamp: 1762265216
+
+## Description
+
+Libraries are opt-in
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762265216 (main branch discovery), not current.
+
+```diff
+    contract BlackRock USD Institutional Digital Liquidity Fund Token (arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872) {
+    +++ description: None
+      values.$libraries:
+-        ["arb1:0xf5493Af69553f78A513F27333e8F87479A66EB4d"]
+    }
+```
+
+Generated with discovered.json: 0xd1692a4667c370de0fa4270297a1ac912800f794
 
 # Diff at Tue, 04 Nov 2025 11:35:05 GMT:
 
@@ -8,7 +34,7 @@ Generated with discovered.json: 0x22ce6ed78b07a4bb7d16073da61c687022830b80
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Config: library, should be removed.
 
 ## Config/verification related changes
 

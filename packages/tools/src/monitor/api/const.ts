@@ -3,5 +3,4 @@ export const DISCORD_BOT_AVATAR_URL =
 
 export const DISCORD_BOT_NAME = 'L2BEAT Monitor'
 
-export const UPDATE_MONITOR_URL =
-  'https://update-monitor-prod.l2beat.com/discovery/changes'
+export const UPDATE_MONITOR_URL = 'https://um-prod.l2beat.com/discovery/changes'

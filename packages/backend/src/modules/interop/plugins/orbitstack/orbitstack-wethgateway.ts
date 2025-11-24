@@ -76,7 +76,7 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
   name = 'orbitstack-wethgateway'
 
   capture(input: LogToCapture) {
-    if (input.ctx.chain === 'ethereum') {
+    if (input.chain === 'ethereum') {
       // L1 -> L2 WETH deposit initiated
       const network = ORBITSTACK_NETWORKS.find(
         (n) => EthereumAddress(input.log.address) === n.l1WethGateway,
@@ -108,7 +108,7 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
             )
             if (messageDelivered) {
               return [
-                WethDepositInitiatedMessageDelivered.create(input.ctx, {
+                WethDepositInitiatedMessageDelivered.create(input, {
                   chain: network.chain,
                   messageNum: messageDelivered.messageIndex.toString(),
                   amount: depositInitiated._amount,
@@ -143,14 +143,11 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
             ])
             if (outBoxTx) {
               return [
-                WethWithdrawalFinalizedOutBoxTransactionExecuted.create(
-                  input.ctx,
-                  {
-                    chain: network.chain,
-                    position: Number(outBoxTx.transactionIndex),
-                    amount: wethWithdrawalFinalized._amount,
-                  },
-                ),
+                WethWithdrawalFinalizedOutBoxTransactionExecuted.create(input, {
+                  chain: network.chain,
+                  position: Number(outBoxTx.transactionIndex),
+                  amount: wethWithdrawalFinalized._amount,
+                }),
               ]
             }
           }
@@ -158,9 +155,7 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
       }
     } else {
       // L2 operations
-      const network = ORBITSTACK_NETWORKS.find(
-        (n) => n.chain === input.ctx.chain,
-      )
+      const network = ORBITSTACK_NETWORKS.find((n) => n.chain === input.chain)
       if (!network) return
 
       // First, check if this is an L2ToL1Tx event from ArbSys (for WETH withdrawals)
@@ -184,7 +179,7 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
         if (wethWithdrawalLog) {
           // This is a WETH withdrawal! Capture it to prevent base plugin from seeing it
           return [
-            L2ToL1Tx.create(input.ctx, {
+            L2ToL1Tx.create(input, {
               chain: network.chain,
               position: Number(l2ToL1Tx.position),
             }),
@@ -222,7 +217,7 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
 
         if (transferLog) {
           return [
-            WethDepositFinalized.create(input.ctx, {
+            WethDepositFinalized.create(input, {
               chain: network.chain,
               amount: depositFinalized.amount,
             }),
@@ -260,7 +255,7 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
         // Return the WETH-specific withdrawal initiated event
         // The L2ToL1Tx event is captured separately above
         return [
-          WethWithdrawalInitiatedL2ToL1Tx.create(input.ctx, {
+          WethWithdrawalInitiatedL2ToL1Tx.create(input, {
             chain: network.chain,
             position: Number(withdrawalInitiated._l2ToL1Id),
             amount: withdrawalInitiated._amount,

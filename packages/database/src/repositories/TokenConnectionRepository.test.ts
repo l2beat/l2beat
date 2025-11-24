@@ -1,5 +1,6 @@
 import { expect } from 'earl'
 import { describeTokenDatabase } from '../test/tokenDatabase'
+import type { ChainRecord } from './ChainRepository'
 import type {
   DeployedTokenPrimaryKey,
   DeployedTokenRecord,
@@ -12,6 +13,7 @@ import {
 describeTokenDatabase(TokenConnectionRepository.name, (db) => {
   const repository = db.tokenConnection
   const deployedTokens = db.deployedToken
+  const chains = db.chain
 
   async function insertConnections(
     connections: TokenConnectionRecord[],
@@ -35,6 +37,13 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
   }
 
   beforeEach(async () => {
+    const chainRecord1 = mockChain({ name: 'ethereum', chainId: 1 })
+    const chainRecord2 = mockChain({ name: 'arbitrum', chainId: 42161 })
+    const chainRecord3 = mockChain({ name: 'optimism', chainId: 10 })
+    await chains.insert(chainRecord1)
+    await chains.insert(chainRecord2)
+    await chains.insert(chainRecord3)
+
     await deployedTokens.insert(deployedToken(tokenA))
     await deployedTokens.insert(deployedToken(tokenB))
     await deployedTokens.insert(deployedToken(tokenC))
@@ -43,6 +52,7 @@ describeTokenDatabase(TokenConnectionRepository.name, (db) => {
   afterEach(async () => {
     await repository.deleteAll()
     await deployedTokens.deleteAll()
+    await chains.deleteAll()
   })
 
   describe(TokenConnectionRepository.prototype.insert.name, () => {
@@ -315,5 +325,17 @@ function tokenConnection(input: TokenConnectionInput): TokenConnectionRecord {
     type: input.type,
     params: input.params ?? null,
     comment: input.comment ?? null,
+  }
+}
+
+function mockChain(
+  overrides: Partial<ChainRecord> & { name: string; chainId: number },
+): ChainRecord {
+  return {
+    name: overrides.name,
+    chainId: overrides.chainId,
+    explorerUrl: overrides.explorerUrl ?? null,
+    aliases: overrides.aliases ?? null,
+    apis: overrides.apis ?? null,
   }
 }

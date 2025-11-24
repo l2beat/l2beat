@@ -42,7 +42,7 @@ export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
       ps.getProjects({
         optional: ['daBridge', 'isBridge', 'isScaling', 'isDaLayer'],
       }),
-      get7dTvsBreakdown({ type: 'layer2' }),
+      get7dTvsBreakdown({ type: 'all' }),
       getContractUtils(),
     ])
 
@@ -72,7 +72,6 @@ function getZkCatalogEntry(
     project,
     allProjects,
     tvs,
-    contractUtils,
   )
 
   return {

@@ -166,7 +166,6 @@ export interface ProjectLinks {
   repositories?: string[]
   socialMedia?: string[]
   other?: string[]
-  rollupCodes?: string
 }
 export interface Badge {
   id: string
@@ -815,11 +814,17 @@ export interface ProjectZkCatalogInfo {
   trustedSetups: (TrustedSetup & {
     proofSystem: ZkCatalogTag
   })[]
+  /** Projects that are used in the TVS calculations. */
+  projectsForTvs?: {
+    projectId: ProjectId
+    sinceTimestamp: UnixTime
+    untilTimestamp?: UnixTime
+  }[]
   verifierHashes: {
     hash: string
     proofSystem: ZkCatalogTag
     knownDeployments: {
-      address: string
+      address: EthereumAddress
       chain: string
       overrideUsedIn?: ProjectId[]
     }[]

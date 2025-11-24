@@ -17,7 +17,7 @@ export const rayls: ScalingProject = upcomingL2({
     links: {
       websites: ['https://rayls.com/'],
       documentation: ['https://docs.rayls.com/'],
-      explorers: ['https://rayls-sandbox-chain.explorer.caldera.xyz/'],
+      explorers: ['https://devnet-explorer.rayls.com'],
       socialMedia: [
         'https://discord.gg/6THZ96357r',
         'https://x.com/RaylsLabs',

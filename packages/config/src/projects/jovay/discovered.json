@@ -1,6 +1,6 @@
 {
   "name": "jovay",
-  "timestamp": 1761907870,
+  "timestamp": 1762443722,
   "configHash": "0x622125b51a6406eeab9b446ee191c7ffd1aee4ed5e967718f5fbc7970a548154",
   "entries": [
     {
@@ -39,6 +39,7 @@
       ],
       "proxyType": "immutable",
       "description": "The MeasurementDao contract is an onchain registry that allowlists SGX MR_ENCLAVE<->MR_SIGNER pairs and TDX RTMR3/MRTD values, and verifies DCAP quotes by matching quote fields to the stored measurements.",
+      "ignoreInWatchMode": ["get_rtMr"],
       "sinceTimestamp": 1758378371,
       "sinceBlock": 23404860,
       "values": {
@@ -46,7 +47,8 @@
         "get_mr_enclave": [],
         "get_mrtd": [],
         "get_rtMr": [
-          "0x3e0b25d2f522b09e8f9749dbb7cb0b49d677372868cddcffa568cf2fb9386efe0e455af66021216d37b2a9c19d88ca90"
+          "0x3e0b25d2f522b09e8f9749dbb7cb0b49d677372868cddcffa568cf2fb9386efe0e455af66021216d37b2a9c19d88ca90",
+          "0xe6ad4b4f516eda68799b6940a6759e6515f0d86ca9694c2c3a1e824db11766026ae904d9d6601b50138162eb61d940ee"
         ],
         "owner": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB"
       },
@@ -131,6 +133,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L1ETHBridge contract is used to bridge ETH between the L1 and L2.",
+      "ignoreInWatchMode": ["balance"],
       "sinceTimestamp": 1758377315,
       "sinceBlock": 23404772,
       "values": {
@@ -149,7 +152,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "balance": "632842400666000000",
+        "balance": "638941800666000000",
         "mailBox": "eth:0x9869A90FDAc287519E48aff4cCE329907a995162",
         "owner": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
         "paused": false,
@@ -198,6 +201,13 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L1Mailbox contract is used to send messages to the L2.",
+      "ignoreInWatchMode": [
+        "feeBalance",
+        "nextFinalizeQueueIndex",
+        "nextMsgIndex",
+        "pendingQueueIndex",
+        "rollingHash"
+      ],
       "sinceTimestamp": 1758377279,
       "sinceBlock": 23404769,
       "values": {
@@ -217,16 +227,16 @@
         ],
         "$upgradeCount": 2,
         "baseFee": 1000000,
-        "feeBalance": 31800000000000,
+        "feeBalance": 33600000000000,
         "l2FinalizeDepositGasUsed": 300000,
         "l2GasLimit": 3000000,
         "lastestQueueIndex": 0,
-        "nextFinalizeQueueIndex": 76,
-        "nextMsgIndex": 76,
+        "nextFinalizeQueueIndex": 79,
+        "nextMsgIndex": 79,
         "owner": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
         "paused": false,
-        "pendingQueueIndex": 76,
-        "rollingHash": "0x18661f201e12ddddf87408f67d1adfd59d6d09b8148a28a1867ba73cafb3faa3",
+        "pendingQueueIndex": 79,
+        "rollingHash": "0x95d6db7353bd6cf564e1018b94a6e8c5a54610fdc494a427151ed328351503a9",
         "rollup": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
         "stableRollingHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "withdrawer": "eth:0x0000000000000000000000000000000000000000"
@@ -308,6 +318,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The Rollup contract is used to submit and verify L2 batches.",
+      "ignoreInWatchMode": ["lastCommittedBatch", "lastTeeVerifiedBatch"],
       "sinceTimestamp": 1758377339,
       "sinceBlock": 23404774,
       "values": {
@@ -328,8 +339,8 @@
         "$upgradeCount": 2,
         "l1_mail_box": "eth:0x9869A90FDAc287519E48aff4cCE329907a995162",
         "l1BlobNumberLimit": 6,
-        "lastCommittedBatch": 971,
-        "lastTeeVerifiedBatch": 971,
+        "lastCommittedBatch": 1117,
+        "lastTeeVerifiedBatch": 1117,
         "lastZkVerifiedBatch": 0,
         "layer2ChainId": 5734951,
         "maxBlockInChunk": 32,
@@ -725,13 +736,13 @@
   "usedTemplates": {
     "jovay/AutomataDcapAttestationFee": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "jovay/DcapAttestationRouter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "jovay/L1ETHBridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "jovay/L1Mailbox": "0xd75a8de0aea57fbdadee1f6157e0f9ba901365080ba928110035ef18640191b8",
-    "jovay/MeasurementDao": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "jovay/Rollup": "0xfefe72e14b81569a237122abd4f83e7a2366955462611ff8eaf63f4f36b103d3",
+    "jovay/L1ETHBridge": "0x9f1260719db2abb008347c8137fabdb0709ce0fa5e33f48f35437eb36c9d8d11",
+    "jovay/L1Mailbox": "0x460f5a2af5ecc4d1cdde7f567a813292b37d120e20318b441d2605afe095ce22",
+    "jovay/MeasurementDao": "0x284197987ec66e00fe0e7ed783549510dbb4e2da7f7a46443a91ab7efb02bba8",
+    "jovay/Rollup": "0xd7746226f9952f7e388de7c12050a1bf84b140fbc9868b9211fa1dcf48ea4563",
     "jovay/TEECacheVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "jovay/TEEVerifierProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23696853 },
+  "usedBlockNumbers": { "ethereum": 23741202 },
   "permissionsConfigHash": "0x519465cb7e1e84c96fef130afd717a0553a0369133c7edb08542054a77898879"
 }

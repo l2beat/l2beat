@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x29c4176ac2b7e091451927bd4994dd69290a2dff
+
+# Diff at Tue, 04 Nov 2025 13:55:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f12d06bbf120eab9f5356a235918d4d6b2484290 block: 1761552324
+- current timestamp: 1762264464
+
+## Description
+
+Stargate DVN upgraded to 2/3.
+
+## Watched changes
+
+```diff
+    contract Stargate Verifier (eth:0x8FafAE7Dd957044088b3d0F67359C327c6200d18) {
+    +++ description: One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.
+      values.quorum:
+-        1
++        2
+      values.signerSize:
+-        1
++        3
+    }
+```
+
 Generated with discovered.json: 0x408b9346f70ccde2761e02cf988c807919794e1c
 
 # Diff at Mon, 27 Oct 2025 08:07:17 GMT:

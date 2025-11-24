@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -67,13 +67,21 @@ export const intmaxprover: BaseProject = {
         ...TRUSTED_SETUPS.AztecIgnition,
       },
     ],
+    projectsForTvs: [
+      {
+        projectId: ProjectId('intmax'),
+        sinceTimestamp: UnixTime(1750888800),
+      },
+    ],
     verifierHashes: [
       {
         hash: '0x664dceea25b57766a5b550cf25cca24a7305f36fd60a5835f9e0505bec14ce8e',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
-            address: '0x1d38545a33740Ab3480d9035bB3126914404423d',
+            address: EthereumAddress(
+              '0x1d38545a33740Ab3480d9035bB3126914404423d',
+            ),
             chain: 'scroll',
           },
         ],

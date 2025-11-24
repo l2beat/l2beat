@@ -64,12 +64,14 @@ export const aztec: ScalingProject = {
     links: {
       websites: ['https://aztec.network/'],
       bridges: ['https://old.zk.money'],
+      documentation: ['https://docs.aztec.network/'],
       repositories: ['https://github.com/AztecProtocol/aztec-2-bug-bounty'],
       socialMedia: [
         'https://twitter.com/aztecnetwork',
         'https://medium.com/aztec-protocol',
         'https://discord.gg/UDtJr9u',
         'https://plonk.cafe/',
+        'https://youtube.com/@aztecnetwork',
       ],
     },
   },

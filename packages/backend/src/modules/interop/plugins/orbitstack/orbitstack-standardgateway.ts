@@ -76,14 +76,14 @@ const WithdrawalFinalizedOutBoxTransactionExecuted = createInteropEventType<{
 }>('orbitstack-standardgateway.WithdrawalFinalized')
 
 const parseWithdrawalFinalized = createEventParser(
-  'event WithdrawalFinalized(address indexed l1Token, address indexed from, address indexed to, uint256 exitNum, uint256 amount)',
+  'event WithdrawalFinalized(address l1Token, address indexed _from, address indexed _to, uint256 indexed _exitNum, uint256 _amount)',
 )
 
 export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
   name = 'orbitstack-standardgateway'
 
   capture(input: LogToCapture) {
-    if (input.ctx.chain === 'ethereum') {
+    if (input.chain === 'ethereum') {
       // L1 -> L2 ERC20 deposit initiated
       const network = ORBITSTACK_NETWORKS.find(
         (n) => EthereumAddress(input.log.address) === n.l1StandardGateway,
@@ -110,7 +110,7 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
           ])
           if (messageDelivered) {
             return [
-              DepositInitiatedMessageDelivered.create(input.ctx, {
+              DepositInitiatedMessageDelivered.create(input, {
                 chain: network.chain,
                 messageNum: messageDelivered.messageIndex.toString(),
                 l1Token: Address32.from(depositInitiated._l1Token),
@@ -138,11 +138,11 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
           ])
           if (outBoxTx) {
             return [
-              WithdrawalFinalizedOutBoxTransactionExecuted.create(input.ctx, {
+              WithdrawalFinalizedOutBoxTransactionExecuted.create(input, {
                 chain: network.chain,
                 position: Number(outBoxTx.transactionIndex),
                 l1Token: Address32.from(withdrawalFinalized.l1Token),
-                amount: withdrawalFinalized.amount,
+                amount: withdrawalFinalized._amount,
               }),
             ]
           }
@@ -150,9 +150,7 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
       }
     } else {
       // L2 operations
-      const network = ORBITSTACK_NETWORKS.find(
-        (n) => n.chain === input.ctx.chain,
-      )
+      const network = ORBITSTACK_NETWORKS.find((n) => n.chain === input.chain)
       if (!network) return
 
       // Check if this is from the L2 standard gateway
@@ -177,7 +175,7 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
           const transfer = parseTransfer(transferLog, null)
           if (transfer) {
             return [
-              DepositFinalized.create(input.ctx, {
+              DepositFinalized.create(input, {
                 chain: network.chain,
                 l1Token: Address32.from(depositFinalized.l1Token),
                 l2Token: Address32.from(transferLog.address),
@@ -218,7 +216,7 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
 
             if (transferLog) {
               return [
-                WithdrawalInitiatedL2ToL1Tx.create(input.ctx, {
+                WithdrawalInitiatedL2ToL1Tx.create(input, {
                   chain: network.chain,
                   position: Number(l2ToL1Tx.position),
                   l1Token: Address32.from(withdrawalInitiated.l1Token),

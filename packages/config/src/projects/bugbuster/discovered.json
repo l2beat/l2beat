@@ -22,25 +22,6 @@
       }
     },
     {
-      "name": "MerkleV2",
-      "address": "oeth:0x33436035441927Df1a73FE3AAC5906854632e53d",
-      "type": "Contract",
-      "template": "bugbuster/MerkleV2",
-      "sourceHashes": [
-        "0x675099eb69fe5cac5aa600324d551c0cba32065c778fab957b12cdfdf85a6964"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1690216621,
-      "sinceBlock": 107308922,
-      "values": {
-        "$immutable": true,
-        "$libraries": ["oeth:0xB634F716BEd5Dd5A2b9a91C92474C499e50Cb27D"]
-      },
-      "implementationNames": {
-        "oeth:0x33436035441927Df1a73FE3AAC5906854632e53d": "MerkleV2"
-      }
-    },
-    {
       "name": "BugBuster",
       "address": "oeth:0x3FF5C7383F614256053c3F6B86A47bA974937299",
       "type": "Contract",
@@ -52,10 +33,6 @@
       "sinceBlock": 125600141,
       "values": {
         "$immutable": true,
-        "$libraries": [
-          "oeth:0xF5B2d8c81cDE4D6238bBf20D3D77DB37df13f735",
-          "oeth:0x33436035441927Df1a73FE3AAC5906854632e53d"
-        ],
         "getConsensus": "oeth:0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35",
         "getTemplateHash": "0x8fa989ac6c95375f2f07c8fa900a87bce79ae243a5a5f90c9531ccc9e1fceafc",
         "owner": "oeth:0x7f9e54fEa7F266bcE775DbC3E34061D9407b1ed3"
@@ -122,42 +99,9 @@
       }
     },
     {
-      "name": "CartesiMathV2",
-      "address": "oeth:0xB634F716BEd5Dd5A2b9a91C92474C499e50Cb27D",
-      "type": "Contract",
-      "template": "bugbuster/CartesiMathV2",
-      "sourceHashes": [
-        "0x2da30de4896050157503a4b201540ebce88af44d2b2cd6ef157a829cd0cc7d4e"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1690216615,
-      "sinceBlock": 107308919,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "oeth:0xB634F716BEd5Dd5A2b9a91C92474C499e50Cb27D": "CartesiMathV2"
-      }
-    },
-    {
       "address": "oeth:0xD330C12e8DBD00570616D9406614106e2B3A1cf5",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "Bitmask",
-      "address": "oeth:0xF5B2d8c81cDE4D6238bBf20D3D77DB37df13f735",
-      "type": "Contract",
-      "template": "bugbuster/Bitmask",
-      "sourceHashes": [
-        "0x639743f54fa7369b5278fe2f7a1d02c2348a8f0e70f9f81c54adbe19f5fbef58"
-      ],
-      "proxyType": "immutable",
-      "description": "Implementation of bit mask with dynamic array.",
-      "sinceTimestamp": 1690216611,
-      "sinceBlock": 107308917,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "oeth:0xF5B2d8c81cDE4D6238bBf20D3D77DB37df13f735": "Bitmask"
-      }
     }
   ],
   "abis": {
@@ -174,13 +118,6 @@
       "function renounceOwnership()",
       "function submitClaim(bytes _claimData)",
       "function transferOwnership(address newOwner)"
-    ],
-    "oeth:0x33436035441927Df1a73FE3AAC5906854632e53d": [
-      "function calculateRootFromPowerOfTwo(bytes32[] hashes) pure returns (bytes32)",
-      "function getEmptyTreeHashAtIndex(uint256 _index) pure returns (bytes32)",
-      "function getHashOfWordAtIndex(bytes _data, uint256 _wordIndex) pure returns (bytes32)",
-      "function getMerkleRootFromBytes(bytes _data, uint256 _log2Size) pure returns (bytes32)",
-      "function getRootAfterReplacementInDrive(uint256 _position, uint256 _logSizeOfReplacement, uint256 _logSizeOfFullDrive, bytes32 _replacement, bytes32[] siblings) pure returns (bytes32)"
     ],
     "oeth:0x3FF5C7383F614256053c3F6B86A47bA974937299": [
       "constructor(address _consensus, address _owner, bytes32 _templateHash)",
@@ -237,21 +174,9 @@
       "constructor(address _inputBox)",
       "function depositERC20Tokens(address _token, address _dapp, uint256 _amount, bytes _execLayerData)",
       "function getInputBox() view returns (address)"
-    ],
-    "oeth:0xB634F716BEd5Dd5A2b9a91C92474C499e50Cb27D": [
-      "function clz(uint256 _num) pure returns (uint256)",
-      "function ctz(uint256 _num) pure returns (uint256)",
-      "function getLog2Floor(uint256 _num) pure returns (uint8)",
-      "function getLog2TableTimes1M(uint256 _num) pure returns (uint256)",
-      "function isPowerOf2(uint256 _num) pure returns (bool)",
-      "function log2ApproxTimes1M(uint256 _num) pure returns (uint256)"
     ]
   },
-  "usedTemplates": {
-    "bugbuster/Bitmask": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "bugbuster/CartesiMathV2": "0x45b392b81be961c24a91deb0f1b32d3dd9ac9b3c54d4451926fb84cbfcb8698f",
-    "bugbuster/MerkleV2": "0xa28847a011dfff9dcaba18afea53d599e875572206a6ca331354f384ad826276"
-  },
+  "usedTemplates": {},
   "usedBlockNumbers": { "optimism": 125928338 },
-  "permissionsConfigHash": "0x53dad9c0b7f7616b9097887adcfee54c59e6679d8297e9e6736836c72bf3181a"
+  "permissionsConfigHash": "0x41d0ab9148f634eb8d9281c1d31dacff8a28921a7e693c68fc0ede56a0ea6be3"
 }

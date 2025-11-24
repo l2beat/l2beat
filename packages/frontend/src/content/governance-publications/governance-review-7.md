@@ -41,7 +41,7 @@ EventHorizonDAO [submitted an RFC](https://forum.arbitrum.foundation/t/delegate-
 
 ### **GovHack Proposals**
 
-During [GovHack](https://forum.arbitrum.foundation/t/govhack-ethdenver-powered-by-hack-humanity/21119/6), there were a lot of proposals that were drafted and a lot of discussions that took place. You can review all of the [proposals created during GovHack here](https://forum.arbitrum.foundation/c/arbitrum-govhack/26).
+During [GovHack](https://forum.arbitrum.foundation/t/govhack-ethdenver-powered-by-hack-humanity/21119/6), there were a lot of proposals that were drafted and a lot of discussions that took place. You can review all of the [proposals created during GovHack here](https://forum.arbitrum.foundation/c/archive/govhack-denver/42).
 
 **Discuss with L2BEAT**
 

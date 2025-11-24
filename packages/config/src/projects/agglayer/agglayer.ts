@@ -19,6 +19,7 @@ export const agglayer: BaseProject = {
         'https://www.agglayer.dev/learn',
       ],
       explorers: ['https://visualizer.agglayer.dev/'],
+      repositories: ['https://github.com/AggLayer'],
       socialMedia: ['https://x.com/agglayer'],
     },
     badges: [BADGES.Stack.CDKErigon, BADGES.Infra.Agglayer],

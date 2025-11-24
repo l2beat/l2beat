@@ -24,7 +24,7 @@ export class BlockIndexer extends ManagedChildIndexer {
       name: 'block_indexer',
       tags: {
         tag: $.source,
-        project: $.source,
+        chain: $.source,
       },
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
@@ -128,11 +128,18 @@ export function onlyConsistent(blocks: Block[], logs: Log[]) {
   const result: { block: Block; logs: Log[] }[] = []
   for (const block of blocks) {
     const blockLogs = logs.filter((l) => l.blockHash === block.hash)
-    const hasLogs = blockLogs.length > 0
-    const shouldHaveLogs = block.logsBloom !== LOGS_BLOOM_ZERO
-    if (hasLogs !== shouldHaveLogs) {
+
+    // https://polygonscan.com/block/79061984 this block has logs bloom ZERO - although it has transaction with 10 logs.
+    // This broke our validation logic. We decided to update our validation scheme to accommodate this issue.
+    const isBlockValid =
+      (blockLogs.length === 0 && block.logsBloom === LOGS_BLOOM_ZERO) ||
+      (blockLogs.length > 0 &&
+        blockLogs.every((log) => log.blockHash === block.hash))
+
+    if (!isBlockValid) {
       break
     }
+
     result.push({ block, logs: blockLogs })
   }
   return result

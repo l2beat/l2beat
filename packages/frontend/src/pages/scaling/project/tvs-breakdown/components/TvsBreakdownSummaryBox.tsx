@@ -16,7 +16,7 @@ import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPer
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
-type TvsData = {
+export type TvsData = {
   breakdown: {
     total: number
     native: number

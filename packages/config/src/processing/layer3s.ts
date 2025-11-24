@@ -9,7 +9,6 @@ import { blessnet } from '../projects/blessnet/blessnet'
 import { blockfit } from '../projects/blockfit/blockfit'
 import { bugbuster } from '../projects/bugbuster/bugbuster'
 import { chainbounty } from '../projects/chainbounty/chainbounty'
-import { cheese } from '../projects/cheese/cheese'
 import { clique } from '../projects/clique/clique'
 import { conwai } from '../projects/conwai/conwai'
 import { datalake } from '../projects/datalake/datalake'
@@ -81,7 +80,6 @@ export const layer3s: ScalingProject[] = [
   bugbuster,
   b3,
   chainbounty,
-  cheese,
   clique,
   conwai,
   datalake,

@@ -203,5 +203,17 @@
     "hash": "0x92cb1726de12b1da49da271817aa8cb3adff6ddfc57fe572946feff137fecc30",
     "address": "eth:0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7",
     "blockNumber": 23667407
+  },
+  "LombardTokenPoolV2_1.sol": {
+    "hash": "0x8e421d5afd1c7e19b36271c4b4881ec63b043cafb738247e93581440affd41fb",
+    "address": "eth:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0",
+    "chain": "ethereum",
+    "blockNumber": 23726399
+  },
+  "BurnMintTokenPool7.sol": {
+    "hash": "0x947fe96d0e62740a79e8289cc4674caa9c541ee30847c832d9c9bfeb4a7caec1",
+    "address": "eth:0x36C036E22C350442F63A189352345c4A7534bbdC",
+    "chain": "ethereum",
+    "blockNumber": 23767885
   }
 }

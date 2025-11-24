@@ -3,6 +3,10 @@ import type { Insertable, Selectable, Updateable } from 'kysely'
 import isNil from 'lodash/isNil'
 import { BaseRepository } from '../BaseRepository'
 import type { DeployedToken } from '../kysely/generated/types'
+import {
+  type AbstractTokenRecord,
+  toAbstractTokenRecord,
+} from './AbstractTokenRepository'
 
 export type DeployedTokenRecord = {
   symbol: string
@@ -68,6 +72,78 @@ export class DeployedTokenRepository extends BaseRepository {
     return Number(result.numUpdatedRows)
   }
 
+  async getByChainAndAddress(pks: DeployedTokenPrimaryKey[]): Promise<
+    {
+      deployedToken: DeployedTokenRecord
+      abstractToken: AbstractTokenRecord | undefined
+    }[]
+  > {
+    if (pks.length === 0) {
+      return []
+    }
+
+    const result = await this.db
+      .selectFrom('DeployedToken')
+      .leftJoin(
+        'AbstractToken',
+        'AbstractToken.id',
+        'DeployedToken.abstractTokenId',
+      )
+      .selectAll('DeployedToken')
+      .select([
+        'AbstractToken.id as AbstractToken_id',
+        'AbstractToken.issuer as AbstractToken_issuer',
+        'AbstractToken.category as AbstractToken_category',
+        'AbstractToken.iconUrl as AbstractToken_iconUrl',
+        'AbstractToken.coingeckoId as AbstractToken_coingeckoId',
+        'AbstractToken.coingeckoListingTimestamp as AbstractToken_coingeckoListingTimestamp',
+        'AbstractToken.symbol as AbstractToken_symbol',
+        'AbstractToken.comment as AbstractToken_comment',
+        'AbstractToken.reviewed as AbstractToken_reviewed',
+      ])
+      .where((eb) =>
+        eb.or(
+          pks.map((pk) =>
+            eb.and([
+              eb('chain', '=', pk.chain),
+              eb('address', '=', pk.address),
+            ]),
+          ),
+        ),
+      )
+      .execute()
+
+    return result.map((row) => ({
+      deployedToken: toRecord({
+        symbol: row.symbol,
+        comment: row.comment,
+        chain: row.chain,
+        address: row.address,
+        abstractTokenId: row.abstractTokenId,
+        decimals: row.decimals,
+        deploymentTimestamp: row.deploymentTimestamp,
+      }),
+      abstractToken:
+        row.AbstractToken_id === null ||
+        row.AbstractToken_symbol === null ||
+        row.AbstractToken_category === null ||
+        row.AbstractToken_reviewed === null
+          ? undefined
+          : toAbstractTokenRecord({
+              id: row.AbstractToken_id,
+              issuer: row.AbstractToken_issuer,
+              symbol: row.AbstractToken_symbol,
+              category: row.AbstractToken_category,
+              iconUrl: row.AbstractToken_iconUrl,
+              coingeckoId: row.AbstractToken_coingeckoId,
+              coingeckoListingTimestamp:
+                row.AbstractToken_coingeckoListingTimestamp,
+              comment: row.AbstractToken_comment,
+              reviewed: row.AbstractToken_reviewed,
+            }),
+    }))
+  }
+
   async findByChainAndAddress(
     pk: DeployedTokenPrimaryKey,
   ): Promise<DeployedTokenRecord | undefined> {
@@ -75,9 +151,34 @@ export class DeployedTokenRepository extends BaseRepository {
       .selectFrom('DeployedToken')
       .selectAll()
       .where('chain', '=', pk.chain)
-      .where('address', '=', pk.address)
+      .where((eb) => eb.fn('lower', ['address']), '=', pk.address.toLowerCase())
       .executeTakeFirst()
     return row ? toRecord(row) : undefined
+  }
+
+  async getByChainsAndAddresses(
+    pks: DeployedTokenPrimaryKey[],
+  ): Promise<DeployedTokenRecord[]> {
+    if (pks.length === 0) {
+      return []
+    }
+
+    const rows = await this.db
+      .selectFrom('DeployedToken')
+      .selectAll()
+      .where((eb) =>
+        eb.or(
+          pks.map((pk) =>
+            eb.and([
+              eb('chain', '=', pk.chain),
+              eb(eb.fn('lower', ['address']), '=', pk.address.toLowerCase()),
+            ]),
+          ),
+        ),
+      )
+      .execute()
+
+    return rows.map(toRecord)
   }
 
   async getByAbstractTokenId(id: string): Promise<DeployedTokenRecord[]> {

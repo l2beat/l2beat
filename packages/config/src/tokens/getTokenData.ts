@@ -93,7 +93,7 @@ export async function getTokenData(
     const chainConfig = chains.find((c) => c.name === chain)
     logger.assert(
       chainConfig !== undefined,
-      'Configuration not found, add chain configuration to project .ts file',
+      `Configuration for ${chain} not found, add chain configuration to project .ts file`,
     )
     const chainId = getChainId(chainLogger, chainConfig)
 

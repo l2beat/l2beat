@@ -3,7 +3,6 @@ import { CodeIcon } from '~/icons/Code'
 import { DocumentIcon } from '~/icons/Document'
 import { GlobeIcon } from '~/icons/Globe'
 import { BridgesIcon } from '~/icons/pages/Bridges'
-import { RollupCodesIcon } from '~/icons/products/RollupCodes'
 import { SearchIcon } from '~/icons/Search'
 import { ThreeHorizontalDotsIcon } from '~/icons/ThreeHorizontalDots'
 import { UserIcon } from '~/icons/User'
@@ -30,8 +29,6 @@ export function ProjectLinkIcon(props: LinkNameIconProps) {
       return <CodeIcon className={className} />
     case 'Social':
       return <UserIcon className={className} />
-    case 'rollup.codes':
-      return <RollupCodesIcon className={className} />
     case 'Other':
       return <ThreeHorizontalDotsIcon className={className} />
     default:

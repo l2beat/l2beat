@@ -121,14 +121,14 @@ export class CCIPPlugIn implements InteropPlugin {
   name = 'ccip'
 
   capture(input: LogToCapture) {
-    const network = CCIP_NETWORKS.find((x) => x.chain === input.ctx.chain)
+    const network = CCIP_NETWORKS.find((x) => x.chain === input.chain)
     if (!network) return
 
     const ccipSendRequested = parseCCIPSendRequested(input.log, null)
     if (ccipSendRequested) {
       const outboundLane = EthereumAddress(input.log.address)
       return ccipSendRequested.message.tokenAmounts.map((ta) =>
-        CCIPSendRequested.create(input.ctx, {
+        CCIPSendRequested.create(input, {
           messageId: ccipSendRequested.message.messageId,
           token: Address32.from(ta.token),
           amount: ta.amount,
@@ -144,7 +144,7 @@ export class CCIPPlugIn implements InteropPlugin {
     if (executionStateChanged) {
       const inboundLane = EthereumAddress(input.log.address)
       return [
-        ExecutionStateChanged.create(input.ctx, {
+        ExecutionStateChanged.create(input, {
           messageId: executionStateChanged.messageId,
           state: executionStateChanged.state,
           $srcChain:
@@ -177,8 +177,8 @@ export class CCIPPlugIn implements InteropPlugin {
             dstEvent: delivery,
             srcTokenAddress: ccipSendRequested.args.token,
             srcAmount: ccipSendRequested.args.amount,
-            dstTokenAddress: ccipSendRequested.args.token,
-            dstAmount: ccipSendRequested.args.amount,
+            // dstTokenAddress: ccipSendRequested.args.token, // this is the source data and contaminates the financials
+            // dstAmount: ccipSendRequested.args.amount,
           }),
         )
       }

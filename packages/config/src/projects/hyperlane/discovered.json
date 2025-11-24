@@ -1,6 +1,6 @@
 {
   "name": "hyperlane",
-  "timestamp": 1760089860,
+  "timestamp": 1763549217,
   "configHash": "0x15e53bf5053f875f8eb85230e26381fad8ac41c5fdf36a8eb38a1f35b58c7b08",
   "entries": [
     {
@@ -191,7 +191,7 @@
         {
           "permission": "interact",
           "from": "eth:0xe1De9910fe71cC216490AC7FCF019e13a34481D7",
-          "description": "change the ISM and hooks, whitelist new routes and update destination fees.",
+          "description": "change the ISM and hooks, register new remote escrows to rebalance collateral to, whitelist new routes and update destination fees.",
           "role": ".owner"
         }
       ],
@@ -217,7 +217,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 70,
+        "nonce": 72,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -388,7 +388,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 10 (60%)",
-        "nonce": 19,
+        "nonce": 23,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -529,17 +529,17 @@
       }
     },
     {
-      "address": "eth:0x7C96179df8619E49B389784ECDBBcA7090a5D08F",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x7f03DFC538Df4f6893D6f1AE3089eafF8924D898",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "eth:0x82950a6356316272dF1928C72F5F0A44D9673c88",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x83954FBd07f8A868F4A72103e7bBCc8Ec59CeA1C",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -595,6 +595,19 @@
       }
     },
     {
+      "address": "eth:0xa3948a15e1d0778a7d53268b651B2411AF198FE3",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xe1De9910fe71cC216490AC7FCF019e13a34481D7",
+          "description": "reblance the 'locked' collateral to remote escrows that were previously whitelisted by the owner.",
+          "role": ".allowedRebalancers"
+        }
+      ]
+    },
+    {
       "name": "GnosisSafe",
       "address": "eth:0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e",
       "type": "Contract",
@@ -647,7 +660,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 2079,
+        "nonce": 2087,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -793,7 +806,7 @@
           "eth:0x95A2115018b84cfe0630C16CCA277E1569a84BEf",
           "eth:0x4A4e996Dd8F36Dcf46b30A7F97877da922323EEb",
           "eth:0x3DE2da610996eA5A72B9Af7cB8740caC48A9329f",
-          "eth:0x7C96179df8619E49B389784ECDBBcA7090a5D08F",
+          "eth:0x83954FBd07f8A868F4A72103e7bBCc8Ec59CeA1C",
           "eth:0x544bDcBb88F2756000De227580aaad7376f3794E",
           "eth:0x9eaC7114D1a1EaBc4732A886795cFD9E6E35843f"
         ],
@@ -802,7 +815,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 231,
+        "nonce": 248,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -862,10 +875,10 @@
       "name": "HypERC20Collateral",
       "address": "eth:0xe1De9910fe71cC216490AC7FCF019e13a34481D7",
       "type": "Contract",
-      "template": "hyperlane/HypERC20Collateral",
+      "template": "hyperlane/HypERC20Collateral_MovableCollateralRouter",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x22ecad7e3715262180975872286e858ca32b854a576c5a9d5ce70965e0669e0b"
+        "0x5fc3214e479761007bc3001f10a465e893e0013c39c9a3449c859efa82a1568f"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow for USDC that is bridged from Ethereum to Eclipse.",
@@ -873,26 +886,36 @@
       "sinceBlock": 20785718,
       "values": {
         "$admin": "eth:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659",
-        "$implementation": "eth:0xe8CC4FF9203196A90734d2C4328B83775486163C",
+        "$implementation": "eth:0x36D930c7782BafE74Ff52CAb54648a1b2ecC48bE",
         "$pastUpgrades": [
           [
             "2024-09-19T16:04:47.000Z",
             "0xbfc967b9bb1710c500b0ec754d44978d7555a42194ad8b056d1fc44349ebe1c3",
             ["eth:0xe8CC4FF9203196A90734d2C4328B83775486163C"]
+          ],
+          [
+            "2025-11-12T14:12:23.000Z",
+            "0x2d4139f7f4e04625ee07af013b51f9ab9e0c6cb69d5fc01c881a7aad17007fce",
+            ["eth:0x36D930c7782BafE74Ff52CAb54648a1b2ecC48bE"]
           ]
         ],
-        "$upgradeCount": 1,
-        "domains": [1408864445],
+        "$upgradeCount": 2,
+        "allowedRebalancers": [
+          "eth:0xa3948a15e1d0778a7d53268b651B2411AF198FE3"
+        ],
+        "domains": [1408864445, 8453, 42161, 1399811149],
         "hook": "eth:0x0000000000000000000000000000000000000000",
         "interchainSecurityModule": "eth:0x0000000000000000000000000000000000000000",
         "localDomain": 1,
         "mailbox": "eth:0xc005dc82818d67AF737725bD4bf75435d065D239",
         "owner": "eth:0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
+        "PACKAGE_VERSION": "9.0.16",
+        "scale": 1,
         "wrappedToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
       "implementationNames": {
         "eth:0xe1De9910fe71cC216490AC7FCF019e13a34481D7": "TransparentUpgradeableProxy",
-        "eth:0xe8CC4FF9203196A90734d2C4328B83775486163C": "HypERC20Collateral"
+        "eth:0x36D930c7782BafE74Ff52CAb54648a1b2ecC48bE": "HypERC20Collateral"
       }
     },
     {
@@ -1164,6 +1187,56 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0x36D930c7782BafE74Ff52CAb54648a1b2ecC48bE": [
+      "constructor(address erc20, uint256 _scale, address _mailbox)",
+      "event CollateralMoved(uint32 indexed domain, bytes32 recipient, uint256 amount, address indexed rebalancer)",
+      "event GasSet(uint32 domain, uint256 gas)",
+      "event HookSet(address _hook)",
+      "event Initialized(uint8 version)",
+      "event IsmSet(address _ism)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ReceivedTransferRemote(uint32 indexed origin, bytes32 indexed recipient, uint256 amount)",
+      "event SentTransferRemote(uint32 indexed destination, bytes32 indexed recipient, uint256 amount)",
+      "function PACKAGE_VERSION() view returns (string)",
+      "function addBridge(uint32 domain, address bridge)",
+      "function addRebalancer(address rebalancer)",
+      "function allowedBridges(uint32 domain) view returns (address[])",
+      "function allowedRebalancers() view returns (address[])",
+      "function allowedRecipient(uint32 routerDomain) view returns (bytes32 recipient)",
+      "function approveTokenForBridge(address token, address bridge)",
+      "function balanceOf(address _account) view returns (uint256)",
+      "function destinationGas(uint32 destinationDomain) view returns (uint256 gasLimit)",
+      "function domains() view returns (uint32[])",
+      "function enrollRemoteRouter(uint32 _domain, bytes32 _router)",
+      "function enrollRemoteRouters(uint32[] _domains, bytes32[] _addresses)",
+      "function handle(uint32 _origin, bytes32 _sender, bytes _message) payable",
+      "function hook() view returns (address)",
+      "function initialize(address _hook, address _interchainSecurityModule, address _owner)",
+      "function interchainSecurityModule() view returns (address)",
+      "function localDomain() view returns (uint32)",
+      "function mailbox() view returns (address)",
+      "function owner() view returns (address)",
+      "function quoteGasPayment(uint32 _destinationDomain) view returns (uint256)",
+      "function quoteTransferRemote(uint32 _destinationDomain, bytes32 _recipient, uint256 _amount) view returns (tuple(address token, uint256 amount)[] quotes)",
+      "function rebalance(uint32 domain, uint256 amount, address bridge) payable",
+      "function removeBridge(uint32 domain, address bridge)",
+      "function removeRebalancer(address rebalancer)",
+      "function removeRecipient(uint32 domain)",
+      "function renounceOwnership()",
+      "function routers(uint32 _domain) view returns (bytes32)",
+      "function scale() view returns (uint256)",
+      "function setDestinationGas(uint32 domain, uint256 gas)",
+      "function setDestinationGas(tuple(uint32 domain, uint256 gas)[] gasConfigs)",
+      "function setHook(address _hook)",
+      "function setInterchainSecurityModule(address _module)",
+      "function setRecipient(uint32 domain, bytes32 recipient)",
+      "function transferOwnership(address newOwner)",
+      "function transferRemote(uint32 _destination, bytes32 _recipient, uint256 _amountOrId, bytes _hookMetadata, address _hook) payable returns (bytes32 messageId)",
+      "function transferRemote(uint32 _destination, bytes32 _recipient, uint256 _amountOrId) payable returns (bytes32 messageId)",
+      "function unenrollRemoteRouter(uint32 _domain)",
+      "function unenrollRemoteRouters(uint32[] _domains)",
+      "function wrappedToken() view returns (address)"
     ],
     "eth:0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6": [
       "constructor(address _singleton)"
@@ -1483,38 +1556,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0xe8CC4FF9203196A90734d2C4328B83775486163C": [
-      "constructor(address erc20, address _mailbox)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event ReceivedTransferRemote(uint32 indexed origin, bytes32 indexed recipient, uint256 amount)",
-      "event SentTransferRemote(uint32 indexed destination, bytes32 indexed recipient, uint256 amount)",
-      "function balanceOf(address _account) view returns (uint256)",
-      "function destinationGas(uint32) view returns (uint256)",
-      "function domains() view returns (uint32[])",
-      "function enrollRemoteRouter(uint32 _domain, bytes32 _router)",
-      "function enrollRemoteRouters(uint32[] _domains, bytes32[] _addresses)",
-      "function handle(uint32 _origin, bytes32 _sender, bytes _message) payable",
-      "function hook() view returns (address)",
-      "function initialize(address _hook, address _interchainSecurityModule, address _owner)",
-      "function interchainSecurityModule() view returns (address)",
-      "function localDomain() view returns (uint32)",
-      "function mailbox() view returns (address)",
-      "function owner() view returns (address)",
-      "function quoteGasPayment(uint32 _destinationDomain) view returns (uint256)",
-      "function renounceOwnership()",
-      "function routers(uint32 _domain) view returns (bytes32)",
-      "function setDestinationGas(uint32 domain, uint256 gas)",
-      "function setDestinationGas(tuple(uint32 domain, uint256 gas)[] gasConfigs)",
-      "function setHook(address _hook)",
-      "function setInterchainSecurityModule(address _module)",
-      "function transferOwnership(address newOwner)",
-      "function transferRemote(uint32 _destination, bytes32 _recipient, uint256 _amountOrId, bytes _hookMetadata, address _hook) payable returns (bytes32 messageId)",
-      "function transferRemote(uint32 _destination, bytes32 _recipient, uint256 _amountOrId) payable returns (bytes32 messageId)",
-      "function unenrollRemoteRouter(uint32 _domain)",
-      "function unenrollRemoteRouters(uint32[] _domains)",
-      "function wrappedToken() view returns (address)"
-    ],
     "eth:0xef899e92DA472E014bE795Ecce948308958E25A2": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1553,9 +1594,10 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "hyperlane/DomainRoutingIsm": "0x054063eee8503558c826442aee17956c6e3173f1e75d4dd631670e99bc89b040",
     "hyperlane/HypERC20Collateral": "0x74c72cea4d402a1c731e811f347b7c5add14af56aa440d3b0ec6f95034b4dd1b",
+    "hyperlane/HypERC20Collateral_MovableCollateralRouter": "0x01f34c2b8f98b72e471bb65b9af82e073cf43841d576fa8ca83e15bd4cf99f76",
     "hyperlane/Mailbox": "0xe22d3d5e3098b17b9c38a147e885155b739913b845a7ce90bdb7c76debbf8674",
     "hyperlane/StaticAggregationIsm": "0x2d6b11f237adf34ab464f429543446907842de31b085be3d3676ddc30bcf6449"
   },
-  "usedBlockNumbers": { "ethereum": 23546549 },
-  "permissionsConfigHash": "0x59c652efa73021e8e8a124d5b57c2fae43db5ec423b43fbe7f2708d9ec37e1db"
+  "usedBlockNumbers": { "ethereum": 23832626 },
+  "permissionsConfigHash": "0xea298a44f068e112766f68abeca212e45a71b6a1e2d1fa0883031b41cbd26247"
 }

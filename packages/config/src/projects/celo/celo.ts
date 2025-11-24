@@ -1,6 +1,11 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { formatEther } from 'ethers/lib/utils'
-import { CONTRACTS, REASON_FOR_BEING_OTHER } from '../../common'
+import { CONTRACTS, DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -17,7 +22,7 @@ export const celo: ScalingProject = opStackL2({
   capability: 'universal',
   addedAt: UnixTime(1718876598), // '2024-06-20T09:43:18Z'
   additionalBadges: [BADGES.Other.MigratedFromL1],
-  daProvider: EIGENDA_DA_PROVIDER(false),
+  daProvider: EIGENDA_DA_PROVIDER(false, DA_LAYERS.ETH_BLOBS),
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
@@ -30,7 +35,7 @@ export const celo: ScalingProject = opStackL2({
       'Celo is an Ethereum Optimium based on the OP stack, scaling real-world solutions & leading a thriving new digital economy for all.',
     stacks: ['OP Stack'],
     links: {
-      websites: ['https://celo.org/'],
+      websites: ['https://celo.org/', 'https://forum.celo.org/'],
       bridges: ['https://superbridge.app/celo'],
       documentation: ['https://docs.celo.org/'],
       explorers: [
@@ -44,6 +49,7 @@ export const celo: ScalingProject = opStackL2({
         'https://discord.com/invite/celo',
         'https://blog.celo.org/',
       ],
+      other: ['https://growthepie.com/chains/celo'],
     },
   },
   hasSuperchainScUpgrades: true,
@@ -115,6 +121,19 @@ export const celo: ScalingProject = opStackL2({
     adjustCount: { type: 'SubtractOne' },
   },
   nonTemplateDaTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: discovery.getContract('SystemConfig').sinceBlock ?? 0,
+      inbox: ChainSpecificAddress.address(
+        discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+      ),
+      sequencers: [
+        ChainSpecificAddress.address(
+          discovery.getContractValue('SystemConfig', 'batcherHash'),
+        ),
+      ],
+    },
     {
       type: 'eigen-da',
       customerId: '0xecf08b0a4f196e06e9aece95d5dd724bc121f09c',

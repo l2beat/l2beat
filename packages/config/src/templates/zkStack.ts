@@ -419,7 +419,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
           references: [
             {
               title: 'Withdrawing funds - ZKsync documentation',
-              url: 'https://docs.zksync.io/build/developer-reference/bridging-assets',
+              url: 'https://docs.zksync.io/zksync-protocol/rollup/bridging-assets',
             },
           ],
         },

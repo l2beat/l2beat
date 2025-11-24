@@ -32,6 +32,7 @@ export const ham: ScalingProject = opStackL3({
       documentation: [
         'https://docs.ham.fun/',
         'https://stack.optimism.io/',
+        'https://specs.optimism.io/',
         'https://ham.fun/developers',
       ],
       explorers: ['https://explorer.ham.fun/'],

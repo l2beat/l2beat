@@ -20,7 +20,7 @@
       "allbridge.TokensSent",
       "allbridge.TokensReceived"
     ],
-    "messages": ["allbridge.Message.allbridgeswap"],
+    "messages": ["allbridge.Message"],
     "transfers": ["allbridge.Transfer"]
   },
   "ccip": {
@@ -74,6 +74,7 @@
     ]
   },
   "cctpv1": {
+    "loadConfigs": ["cctp-v1"],
     "txs": [
       {
         "chain": "base",
@@ -86,6 +87,7 @@
     ]
   },
   "cctpv2": {
+    "loadConfigs": ["cctp-v2"],
     "txs": [
       {
         "chain": "arbitrum",
@@ -385,6 +387,14 @@
     "messages": ["axelar.ContractCallWithTokenMessage"],
     "transfers": ["axelar-gateway.Transfer"]
   },
+  "relay-simple-3": {
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x8ff6c0aaf973cffb1f526bad1b6731127c46015f8fa5db619dc09e235b0628e1"
+      }
+    ]
+  },
   "relay-simple": {
     "txs": [
       {
@@ -445,6 +455,14 @@
       {
         "chain": "arbitrum",
         "tx": "0x7092e179d4dadcb97ef2bf5ee3eb0c641f8d4549273c2cdcd66ed8707c99a641"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x69722a83e20ee078c95ad4d8532a86201ba441481999f695b3767d389b8c6798"
+      },
+      {
+        "chain": "base",
+        "tx": "0x574ee29934a0c965243b46c2c66c9b8c6cd77a2de8dfcb0d75ee32940fd11cad"
       }
     ]
   },
@@ -496,7 +514,8 @@
       }
     ]
   },
-  "wormhole-token-bridge": {
+  "wormhole-tokenbridge": {
+    "loadConfigs": ["wormhole"],
     "txs": [
       {
         "chain": "ethereum",
@@ -571,9 +590,9 @@
   "layerzeromix": {
     "loadConfigs": ["layerzero-v2"],
     // Messages:
-    //   layerzero-v2.Message 5
+    //   layerzero-v2.Message 6
     // Transfers:
-    //   oftv2.Transfer 2
+    //   oftv2.Transfer 3
     //   stargate-v2-bus.Transfer 3
     //   stargate-v2-taxi.Transfer 1
     "txs": [
@@ -628,6 +647,14 @@
       {
         "chain": "ethereum",
         "tx": "0x17a8188cbc60c5fdea6160dd4f51b5c0be25f4e93d5bcfc9a53fda3047a4e1db"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x8237c97cc2c4a0406e99a201a81fd25d3c66a64c9dae214c179fb10d9b5678ad"
+      },
+      {
+        "chain": "base",
+        "tx": "0xda926e7dd4b35380b6c6ef3c90f207aa7766cbdb3efdb9d33a008be1d5eb62af"
       }
     ]
   },
@@ -887,6 +914,32 @@
       }
     ]
   },
+  "orbitstack-customgateway": {
+    "txs": [
+      // ethereum -> arbitrum (dai deposit)
+      {
+        "chain": "ethereum",
+        "tx": "0xbd77763bd0c6ff499200d677768c918227419ecfb82b8ad32839fba441ffe7a5"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x52c3379f5891baa8e6faa9330ec62a627f5ec5e3eadde2fb758e85dc0faf1958"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xd62cb8b7c1b421a45d38ba3ccbc09c8039de48963c1fb78bf4dfccb4b4b112ba"
+      },
+      // arbitrum -> ethereum (dai withdrawal)
+      {
+        "chain": "arbitrum",
+        "tx": "0xe6dd81265933e6c98dd078304791bf07e0532735b60cc035cd5abd61a679ffcc"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x4f6ffd7cec7fe0b7c5fa414cb842750750e3cdd406cd27761d3095adbbc94b9b"
+      }
+    ]
+  },
   "orbitstack-wethgateway": {
     "txs": [
       // ethereum -> arbitrum (weth deposit via unwrap/rewrap)
@@ -992,9 +1045,26 @@
       }
     ]
   },
-  "cctpv1-debug": {
-    // should be 4 cctpv1 message and a couple other ones. somehow these are not correctly tracked in prod but work locally
+  "cctp-debug": {
+    "loadConfigs": ["cctp-v1", "cctp-v2"],
+    // should be 4 cctpv1 message and 2 cctpv2 matched transfers and some stray events around.
     "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x3b3c109c7ac84cc6324ab067346177f7bca8d7b22331b7ffb278c64395d71c8f"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x84f127978c385ebd683b604bb213af56f82f0d10b4509eab4a93ae99650235ef"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x284aed9764a451c32bae3ade17ce61daf420f20d80f3b0849db45af54a16cf1c"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x607ef6ded5162ece9b8c8d9df7ef0be69aa6005863403a963295bb362222d5a0"
+      },
       {
         "chain": "base",
         "tx": "0x48c77cfedbee0ab31da92f80e0e4f4f8dfce70af2e5fef3ceedc745271731100"

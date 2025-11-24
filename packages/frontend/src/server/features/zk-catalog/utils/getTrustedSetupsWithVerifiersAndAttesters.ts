@@ -8,11 +8,11 @@ import { notUndefined, type ProjectId } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
+import { getLogger } from '~/server/utils/logger'
 import type { ContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import type { SevenDayTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
 import { getProjectIcon } from '../../utils/getProjectIcon'
 import type { TrustedSetupVerifierData } from '../getZkCatalogEntries'
-import { calculateProjectTvs } from './getZkCatalogProjectTvs'
 
 export type TrustedSetupsByProofSystem = Record<
   string,
@@ -146,4 +146,32 @@ export function getProjectsUsedIn(
       }
     })
     .filter(notUndefined)
+}
+
+function calculateProjectTvs(
+  projectId: string,
+  allProjects: Project<
+    never,
+    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
+  >[],
+  tvs: SevenDayTvsBreakdown,
+): number {
+  const project = allProjects.find((p) => p.id === projectId)
+  if (!project) {
+    const logger = getLogger().for('calculateProjectTvs')
+    logger.warn(`Project ${projectId} not found`)
+    return 0
+  }
+
+  // if project is a DA bridge we want to get summed TVS of all projects secured by this bridge
+  if (project.daBridge) {
+    return project.daBridge.usedIn
+      .map((p) => p.id)
+      .reduce((acc, p) => {
+        const projectTvs = tvs.projects[p]?.breakdown.total
+        return projectTvs ? acc + projectTvs : acc
+      }, 0)
+  }
+
+  return tvs.projects[project.id]?.breakdown.total ?? 0
 }

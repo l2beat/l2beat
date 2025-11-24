@@ -1,3 +1,96 @@
+Generated with discovered.json: 0xd4144abf0430598839817975f1204a8679bc4b20
+
+# Diff at Mon, 24 Nov 2025 11:39:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7f22580fca8d48e9cc5f7f28da38d6b8725e891 block: 1762196400
+- current timestamp: 1763984268
+
+## Description
+
+new markets!
+
+## Watched changes
+
+```diff
+    contract Lighter (eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7) {
+    +++ description: The main rollup contract. It processes L2 batches, manages USDC deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.
+      values.createdMarkets.36:
++        "ICP"
+      values.createdMarkets.37:
++        "FIL"
+      values.createdMarkets.38:
++        "STRK"
+      values.createdMarkets.39:
++        "USDKRW"
+      values.createdMarkets.40:
++        "AUDUSD"
+      values.createdMarkets.41:
++        "NZDUSD"
+    }
+```
+
+Generated with discovered.json: 0x9ea25ff0e5d1f126bf239b1421683406de91af83
+
+# Diff at Mon, 03 Nov 2025 19:01:11 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6b72018cd9706ce7cba8ec489b67d7193f34dc20 block: 1761590191
+- current timestamp: 1762196400
+
+## Description
+
+As per tg, added a "quote multiplier" to the state through the state upgrade verifier.
+
+## Watched changes
+
+```diff
+    contract Lighter (eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7) {
+    +++ description: The main rollup contract. It processes L2 batches, manages USDC deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.
+      sourceHashes.1:
+-        "0x63c0aabbd18f145acd677da4d5c3feac9c12a174abbd89c23b9038cbe4e6415a"
++        "0x655cbba8ed9e8bc798be3624c7ded712b4e2abf1c743d46361b14e173e92e58a"
+      values.$implementation.0:
+-        "eth:0x4FF23C6cA650166A95D854935a8b012B53ac59Bc"
++        "eth:0x59e71dc90E662F17c4eB156A8cA1BCCD106aCfA0"
+      values.createdMarkets.30:
++        "EURUSD"
+      values.createdMarkets.31:
++        "GBPUSD"
+      values.createdMarkets.32:
++        "USDJPY"
+      values.createdMarkets.33:
++        "USDCHF"
+      values.createdMarkets.34:
++        "USDCAD"
+      values.createdMarkets.35:
++        "CC"
+      values.getTarget:
+-        "eth:0x4FF23C6cA650166A95D854935a8b012B53ac59Bc"
++        "eth:0x59e71dc90E662F17c4eB156A8cA1BCCD106aCfA0"
+      implementationNames.eth:0x4FF23C6cA650166A95D854935a8b012B53ac59Bc:
+-        "ZkLighter"
+      implementationNames.eth:0x59e71dc90E662F17c4eB156A8cA1BCCD106aCfA0:
++        "ZkLighter"
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045.
+      values.versionId:
+-        32
++        33
+    }
+```
+
+## Source code changes
+
+```diff
+.../lighter/{.flat@1761590191 => .flat}/Lighter/ZkLighter.1.sol         | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
 Generated with discovered.json: 0x762cf03db2ea3b73b581c32cbd87d476cf732a9d
 
 # Diff at Mon, 27 Oct 2025 18:37:41 GMT:

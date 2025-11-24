@@ -24,6 +24,7 @@ import { TechnologyChoicesSection } from './sections/TechnologyChoicesSection'
 import { TrustedSetupSection } from './sections/TrustedSetupsSection'
 import { ThroughputSection } from './sections/throughput/ThroughputSection'
 import { ScalingTvsSection } from './sections/tvs/ScalingTvsSection'
+import { ZkCatalogTvsSection } from './sections/tvs/ZkCatalogTvsSection'
 import type { ProjectDetailsSection } from './sections/types'
 import { UpcomingDisclaimer } from './sections/UpcomingDisclaimer'
 import { VerifiersSection } from './sections/VerifiersSection'
@@ -56,6 +57,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'BridgesTvsSection':
             return (
               <BridgesTvsSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'ZkCatalogTvsSection':
+            return (
+              <ZkCatalogTvsSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}
