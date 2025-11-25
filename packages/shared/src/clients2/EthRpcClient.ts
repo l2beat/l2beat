@@ -385,6 +385,10 @@ const blockBase = {
     )
     .optional(),
   withdrawalsRoot: vData(32).optional(),
+  // arbitrum specific
+  l1BlockNumber: vQuantity.optional(),
+  sendCount: vQuantity.optional(),
+  sendRoot: vData(32).optional(),
 }
 
 export type RpcBlock = v.infer<typeof RpcBlock>
@@ -481,7 +485,10 @@ const RpcReceipt = v.strictObject({
   type: vQuantity,
   root: vData(32).optional(),
   status: vQuantity.optional(),
-  // TODO: non-standard fields from other chains
+  // arbitrum specific
+  gasUsedForL1: vQuantity.optional(),
+  l1BlockNumber: vQuantity.optional(),
+  timeboosted: v.boolean().optional(),
 })
 
 const Bytes32Response = vData(32)
