@@ -144,7 +144,10 @@ describe(transformFunctionCallsQueryResult.name, () => {
         non_zero_bytes: 200,
       },
     ]
-    const expected: TrackedTxFunctionCallResult[] = [
+    const expected: Omit<
+      TrackedTxFunctionCallResult,
+      'blobGasPrice' | 'blobGasUsed'
+    >[] = [
       {
         formula: 'functionCall',
         projectId: functionCalls[0].properties.projectId,
@@ -277,7 +280,10 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
     ]
 
-    const expected: TrackedTxFunctionCallResult[] = [
+    const expected: Omit<
+      TrackedTxFunctionCallResult,
+      'blobGasPrice' | 'blobGasUsed'
+    >[] = [
       {
         formula: 'functionCall',
         projectId: sharpSubmissions[0].properties.projectId,
@@ -370,7 +376,10 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
     ]
 
-    const expected: TrackedTxFunctionCallResult[] = [
+    const expected: Omit<
+      TrackedTxFunctionCallResult,
+      'blobGasPrice' | 'blobGasUsed'
+    >[] = [
       {
         formula: 'functionCall',
         projectId: sharedBridgeCalls[0].properties.projectId,
@@ -458,7 +467,10 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
     ]
 
-    const expected: TrackedTxFunctionCallResult[] = [
+    const expected: Omit<
+      TrackedTxFunctionCallResult,
+      'blobGasPrice' | 'blobGasUsed'
+    >[] = [
       {
         formula: 'functionCall',
         projectId: sharedBridgeCalls[0].properties.projectId,
@@ -559,7 +571,10 @@ describe(transformFunctionCallsQueryResult.name, () => {
         non_zero_bytes: 200,
       },
     ]
-    const expected: TrackedTxFunctionCallResult[] = [
+    const expected: Omit<
+      TrackedTxFunctionCallResult,
+      'blobGasPrice' | 'blobGasUsed'
+    >[] = [
       {
         formula: 'functionCall',
         projectId: functionCalls[0].properties.projectId,

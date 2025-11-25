@@ -15,7 +15,7 @@ export function transformTransfersQueryResult(
     TrackedTxConfigEntry & { params: TrackedTxTransferConfig }
   >[],
   queryResults: BigQueryTransferResult[],
-): TrackedTxTransferResult[] {
+): Omit<TrackedTxTransferResult, 'blobGasPrice' | 'blobGasUsed'>[] {
   return queryResults.flatMap((r) => {
     const matchingConfigs = configs.filter(
       (t) =>

@@ -25,7 +25,7 @@ export function transformFunctionCallsQueryResult(
     TrackedTxConfigEntry & { params: TrackedTxSharedBridgeConfig }
   >[],
   queryResults: BigQueryFunctionCallResult[],
-): TrackedTxFunctionCallResult[] {
+): Omit<TrackedTxFunctionCallResult, 'blobGasPrice' | 'blobGasUsed'>[] {
   return queryResults.flatMap((r) => {
     const selector = r.input.slice(0, 10)
 

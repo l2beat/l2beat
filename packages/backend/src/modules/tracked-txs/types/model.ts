@@ -37,6 +37,7 @@ export type TrackedTxFunctionCallResult = {
   type: TrackedTxsConfigType
   subtype: TrackedTxsConfigSubtype
   hash: string
+  txType: number
   blockNumber: number
   blockTimestamp: UnixTime
   toAddress: EthereumAddress
@@ -45,6 +46,8 @@ export type TrackedTxFunctionCallResult = {
   gasPrice: bigint
   calldataGasUsed: number
   dataLength: number
+  blobGasUsed: bigint
+  blobGasPrice: bigint
 }
 
 export type BigQueryTransferResult = v.infer<typeof BigQueryTransferResult>
@@ -70,6 +73,7 @@ export type TrackedTxTransferResult = {
   type: TrackedTxsConfigType
   subtype: TrackedTxsConfigSubtype
   hash: string
+  txType: number
   blockNumber: number
   blockTimestamp: UnixTime
   fromAddress: EthereumAddress
@@ -78,4 +82,6 @@ export type TrackedTxTransferResult = {
   gasPrice: bigint
   calldataGasUsed: number
   dataLength: number
+  blobGasUsed: bigint
+  blobGasPrice: bigint
 }

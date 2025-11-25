@@ -111,7 +111,10 @@ describe(transformTransfersQueryResult.name, () => {
         non_zero_bytes: 200,
       },
     ]
-    const expected: TrackedTxTransferResult[] = [
+    const expected: Omit<
+      TrackedTxTransferResult,
+      'blobGasPrice' | 'blobGasUsed'
+    >[] = [
       {
         formula: 'transfer',
         projectId: config[0].properties.projectId,
@@ -261,7 +264,10 @@ describe(transformTransfersQueryResult.name, () => {
         non_zero_bytes: 200,
       },
     ]
-    const expected: TrackedTxTransferResult[] = [
+    const expected: Omit<
+      TrackedTxTransferResult,
+      'blobGasPrice' | 'blobGasUsed'
+    >[] = [
       {
         formula: 'transfer',
         projectId: config[0].properties.projectId,

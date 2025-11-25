@@ -35,12 +35,12 @@ export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
       timestamp: tx.blockTimestamp,
       txHash: tx.hash,
       configurationId: tx.id,
-      gasUsed: tx.receiptGasUsed,
+      gasUsed: tx.gasUsed,
       gasPrice: tx.gasPrice,
       calldataLength: tx.dataLength,
       calldataGasUsed: tx.calldataGasUsed,
-      blobGasUsed: tx.receiptBlobGasUsed,
-      blobGasPrice: tx.receiptBlobGasPrice,
+      blobGasUsed: Number(tx.blobGasUsed),
+      blobGasPrice: tx.blobGasPrice,
     }))
   }
 }
