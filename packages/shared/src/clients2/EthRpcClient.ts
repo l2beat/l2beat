@@ -312,11 +312,11 @@ const blockBase = {
   number: v.union([v.null(), vQuantity]),
   hash: v.union([v.null(), vData(32)]),
   parentHash: vData(32),
-  // optional in celo
+  // optional on celo
   nonce: v.union([v.null(), vData(8), v.literal('0x0')]).optional(),
-  // optional in celo
+  // optional on celo
   sha3Uncles: vData(32).optional(),
-  // optional in celo
+  // optional on celo
   uncles: v.array(vData(32)).optional(),
   logsBloom: vData(256),
   transactionsRoot: vData(32),
@@ -325,8 +325,8 @@ const blockBase = {
   miner: vAddress,
   // optional, despite official docs
   difficulty: vQuantity.optional(),
-  // optional, despite official docs
-  totalDifficulty: vQuantity.optional(),
+  // optional, despite official docs, nullable on optimism
+  totalDifficulty: v.union([v.null(), vQuantity]).optional(),
   extraData: vData(),
   size: vQuantity,
   gasLimit: vQuantity,
@@ -367,16 +367,21 @@ const RpcTransaction = v.passthroughObject({
   blockNumber: v.union([v.null(), vQuantity]),
   from: vAddress,
   gas: vQuantity,
-  gasPrice: vQuantity,
+  // nullable on celo, optional on filecoin
+  gasPrice: v.union([v.null(), vQuantity]).optional(),
   hash: vData(32),
   input: vData(),
-  nonce: vQuantity,
+  // optional on base
+  nonce: vQuantity.optional(),
   to: v.union([v.null(), vAddress]),
   transactionIndex: v.union([v.null(), vQuantity]),
   value: vQuantity,
-  v: vQuantity,
-  r: vQuantity,
-  s: vQuantity,
+  // optional on zksync
+  v: vQuantity.optional(),
+  // optional on zksync
+  r: vQuantity.optional(),
+  // optional on zksync
+  s: vQuantity.optional(),
   // not mentioned in docs, added after EIP-2718
   type: vQuantity.optional(),
   // not mentioned in docs, added after EIP-1559
@@ -385,17 +390,20 @@ const RpcTransaction = v.passthroughObject({
   // not mentioned in docs, added after EIP-2930
   chainId: vQuantity.optional(),
   accessList: v
-    .array(
-      v.passthroughObject({
-        address: vAddress,
-        storageKeys: v.array(vData(32)),
-      }),
-    )
+    .union([
+      v.null(),
+      v.array(
+        v.passthroughObject({
+          address: vAddress,
+          storageKeys: v.array(vData(32)),
+        }),
+      ),
+    ])
     .optional(),
   yParity: vQuantity.optional(),
   // not mentioned in docs, added after EIP-4844
-  blobVersionedHashes: v.array(vData(32)).optional(),
-  maxFeePerBlobGas: vQuantity.optional(),
+  blobVersionedHashes: v.union([v.null(), v.array(vData(32))]).optional(),
+  maxFeePerBlobGas: v.union([v.null(), vQuantity]).optional(),
   // not mentioned in docs, added after EIP-7702
   authorizationList: v
     .array(
@@ -419,7 +427,8 @@ const RpcBlockWithTransactions = v.passthroughObject({
 
 export type RpcLog = v.infer<typeof RpcLog>
 const RpcLog = v.passthroughObject({
-  removed: v.boolean(),
+  // optional on rootstock
+  removed: v.boolean().optional(),
   logIndex: v.union([v.null(), vQuantity]),
   transactionIndex: v.union([v.null(), vQuantity]),
   transactionHash: v.union([v.null(), vData(32)]),
@@ -428,8 +437,8 @@ const RpcLog = v.passthroughObject({
   address: vAddress,
   data: vData(),
   topics: v.array(vData(32)),
-  // non-standard optimisation
-  blockTimestamp: vQuantity.optional(),
+  // non-standard optimisation, number in sonic
+  blockTimestamp: v.union([vQuantity, v.number()]).transform(BigInt).optional(),
 })
 
 export type RpcReceipt = v.infer<typeof RpcReceipt>
@@ -441,7 +450,8 @@ const RpcReceipt = v.passthroughObject({
   from: vAddress,
   to: v.union([v.null(), vAddress]),
   cumulativeGasUsed: vQuantity,
-  effectiveGasPrice: vQuantity,
+  // optional on celo, nullable on zetachain
+  effectiveGasPrice: v.union([v.null(), vQuantity]).optional(),
   gasUsed: vQuantity,
   contractAddress: v.union([v.null(), vAddress]),
   logs: v.array(RpcLog),
@@ -496,6 +506,7 @@ function isRevert(e: unknown): e is Error {
     (e.message.includes('invalid opcode: INVALID') ||
       e.message.includes('CALL_EXCEPTION') ||
       e.message.includes('revert') ||
-      e.message.includes('reverted'))
+      e.message.includes('reverted') ||
+      e.message.includes('gas required exceeds allowance'))
   )
 }
