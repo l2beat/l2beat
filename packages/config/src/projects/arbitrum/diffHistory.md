@@ -1,3 +1,104 @@
+Generated with discovered.json: 0xf6d8dd8c56f628614c89162950f2f35c35ea1893
+
+# Diff at Mon, 24 Nov 2025 09:43:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7f22580fca8d48e9cc5f7f28da38d6b8725e891 block: 1763480452
+- current timestamp: 1763976293
+
+## Description
+
+3 SC members rotated in:
+- 0x0cd9e52891A0a48d45b0C61A31086be8361Ef157: immunefi
+- 0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988: gauntlet
+- 0x875573B973F7E9Ca54eb34a59180C70eE1128208: zachxbt
+
+## Watched changes
+
+```diff
+    contract L2SecurityCouncilEmergency (arb1:0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x875573B973F7E9Ca54eb34a59180C70eE1128208"
+      values.$members.1:
++        "arb1:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988"
+      values.$members.2:
++        "arb1:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157"
+      values.$members.3:
+-        "arb1:0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
+      values.$members.4:
+-        "arb1:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+      values.$members.5:
+-        "arb1:0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
+    }
+```
+
+```diff
+    contract L2SecurityCouncilPropose (arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x875573B973F7E9Ca54eb34a59180C70eE1128208"
+      values.$members.1:
++        "arb1:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988"
+      values.$members.2:
++        "arb1:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157"
+      values.$members.3:
+-        "arb1:0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
+      values.$members.4:
+-        "arb1:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+      values.$members.5:
+-        "arb1:0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
+    }
+```
+
+```diff
+    contract Arbitrum Security Council (eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x875573B973F7E9Ca54eb34a59180C70eE1128208"
+      values.$members.1:
++        "eth:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988"
+      values.$members.2:
++        "eth:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157"
+      values.$members.3:
+-        "eth:0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
+      values.$members.4:
+-        "eth:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+      values.$members.5:
+-        "eth:0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1763480452 (main branch discovery), not current.
+
+```diff
+    EOA Immunefi (arb1:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157) {
+    +++ description: None
+      name:
++        "Immunefi"
+    }
+```
+
+```diff
+    EOA zachxbt (arb1:0x875573B973F7E9Ca54eb34a59180C70eE1128208) {
+    +++ description: None
+      name:
++        "zachxbt"
+    }
+```
+
+```diff
+    EOA Gauntlet (arb1:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988) {
+    +++ description: None
+      name:
++        "Gauntlet"
+    }
+```
+
 Generated with discovered.json: 0xc05b798d60a4f74d7c34ae73789a7a5bfa8db2b4
 
 # Diff at Tue, 18 Nov 2025 15:42:54 GMT:

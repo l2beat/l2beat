@@ -120,6 +120,15 @@ Verify:
       'https://github.com/agglayer/provers/tree/v1.5.0/crates/aggchain-proof-program',
     verificationStatus: 'notVerified',
   },
+  '0x6e38caa6114ac4b9779f647547de9e8f09e9f5cd6194e7134110760d3aa31b53': {
+    title: 'Aggchain program of agglayer',
+    description:
+      'Verifies state transition of an Agglayer-based chain either by checking a full validity proof or just by checking a registered multisig signature. Also checks that L1 information on the chain aligns with the values stored on Agglayer.',
+    proverSystemProject: ProjectId('sp1'),
+    programUrl:
+      'https://github.com/agglayer/provers/tree/v1.8.0/crates/aggchain-proof-program', // ??? verify version tag
+    verificationStatus: 'notVerified',
+  },
   '0x00de39c136b88dfeacb832629e21a9667935bc0e74aaa21292e4f237d79d0bef': {
     title: 'Celestia Blobstream DA bridge program',
     description:
