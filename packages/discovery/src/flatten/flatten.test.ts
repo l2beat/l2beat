@@ -26,7 +26,7 @@ describe('flatten', () => {
         content: `
                 import { C2 } from "remappedPath2";
                 import { C4 } from "path4";
-                import "../../../remappedPath1.js";
+                import "../../../remappedPath1";
 
                 ${ROOT_CONTRACT_SOURCE}
                 `,
@@ -178,7 +178,7 @@ contract R1 is C2, C3, C4 {
     const rootFile: FileContent = {
       path: 'Root.sol',
       content: String.raw`
-import './DependencyFile.sol.js' as Namespace;
+import './DependencyFile.sol' as Namespace;
 
 contract R1 is Namespace.C2 {
     function f(address x) public {
@@ -240,7 +240,7 @@ contract R1 is StringClass {
     const rootFile: FileContent = {
       path: 'Root.sol',
       content: String.raw`
-import "./Globals.sol.js";
+import "./Globals.sol";
 contract R1 {
   function doSomething() public {
     emit EventHappened(GLOBAL_VALUE, msg.sender);
