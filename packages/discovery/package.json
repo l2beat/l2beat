@@ -4,30 +4,22 @@
   "version": "0.48.0",
   "type": "module",
   "sideEffects": false,
-  "main": "./build/cjs/index.js",
-  "module": "./build/esm/index.js",
-  "types": "./build/types/index.d.ts",
+  "main": "./dist/node/src/index.js",
+  "types": "./dist/node/src/index.d.ts",
   "exports": {
     ".": {
-      "types": "./build/types/index.d.ts",
-      "import": "./build/esm/index.js",
-      "require": "./build/cjs/index.js"
+      "types": "./dist/node/src/index.d.ts",
+      "require": "./dist/node/src/index.js"
     },
-    "./config": {
-      "types": "./build/types/config/index.d.ts",
-      "import": "./build/esm/config/index.js",
-      "require": "./build/cjs/config/index.js"
-    },
-    "./schemas": {
-      "types": "./build/types/schemas/index.d.ts",
-      "import": "./build/esm/schemas/index.js",
-      "require": "./build/cjs/schemas/index.js"
+    "./web": {
+      "types": "./dist/web/index.web.d.mts",
+      "import": "./dist/web/index.web.mjs"
     }
   },
   "scripts": {
-    "build": "pnpm run clean && pnpm run build:esm && pnpm run build:cjs",
-    "build:esm": "tsc -p tsconfig.esm.json",
-    "build:cjs": "tsc -p tsconfig.cjs.json && cp cjs-package.json build/cjs/package.json",
+    "build": "pnpm run clean && pnpm run build:web && pnpm run build:node",
+    "build:web": "tsdown",
+    "build:node": "tsc -p tsconfig.node.json && cp cjs.package.json dist/node/package.json",
     "build:dependencies": "cd ../.. && pnpm build:dependencies:discovery",
     "watch:dependencies": "cd ../.. && pnpm watch:dependencies:discovery",
     "clean": "rm -rf dist",
@@ -64,6 +56,7 @@
     "@types/lodash": "^4.14.198",
     "@types/mock-fs": "^4.13.4",
     "@types/node-fetch": "^2.6.4",
-    "mock-fs": "^5.2.0"
+    "mock-fs": "^5.2.0",
+    "tsdown": "^0.16.6"
   }
 }

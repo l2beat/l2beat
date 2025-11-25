@@ -1,8 +1,8 @@
-import type { IProvider } from '@l2beat/discovery'
 import type {
   DebugTransactionCall,
   DebugTransactionCallResponse,
-} from '@l2beat/discovery/dist/discovery/provider/DebugTransactionTrace'
+  IProvider,
+} from '@l2beat/discovery'
 import {
   ChainSpecificAddress,
   EthereumAddress,

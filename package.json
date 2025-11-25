@@ -69,8 +69,12 @@
     "esbuild-register": "^3.6.0",
     "mocha": "^10.2.0",
     "ts-node": "^10.9.1",
+    "tsdown": "^0.16.6",
     "turbo": "^2.5.6",
     "typescript": "^5.5.3",
     "wait-for-expect": "^3.0.2"
+  },
+  "dependencies": {
+    "madge": "^8.0.0"
   }
 }

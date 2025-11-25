@@ -4,9 +4,7 @@
     "module": "CommonJS",
     "moduleResolution": "Node",
     "verbatimModuleSyntax": false,
-    "outDir": "build/cjs",
-    "declaration": false,
-    "declarationMap": false
+    "outDir": "dist/node"
   },
-  "exclude": ["build", "node_modules", "**/test/*", "**/*test.ts"]
+  "exclude": ["dist", "node_modules", "**/test/*", "**/*test.ts"]
 }

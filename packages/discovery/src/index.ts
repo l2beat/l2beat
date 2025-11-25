@@ -19,6 +19,7 @@ export { codeIsEOA } from './discovery/analysis/codeIsEOA.js'
 export { getShapeFromOutputEntry } from './discovery/analysis/findShape.js'
 export { TemplateService } from './discovery/analysis/TemplateService.js'
 export { colorize } from './discovery/colorize/colorize.js'
+export type { ColorContract } from './discovery/config/ColorConfig.js'
 export { ConfigReader } from './discovery/config/ConfigReader.js'
 export { ConfigRegistry } from './discovery/config/ConfigRegistry.js'
 export type { DiscoveryConfig } from './discovery/config/ConfigSchema.js'
@@ -34,6 +35,7 @@ export {
   Permission,
   RolePermissionEntries,
 } from './discovery/config/PermissionConfig.js'
+export { ShapeSchema } from './discovery/config/ShapeSchema.js'
 export {
   makeEntryStructureConfig,
   type StructureContractConfig as ContractConfig,
@@ -89,9 +91,13 @@ export type {
   ResolvedPermissionPath,
 } from './discovery/output/types.js'
 export { AllProviders } from './discovery/provider/AllProviders.js'
+export {
+  type DebugTransactionCall,
+  type DebugTransactionCallResponse,
+} from './discovery/provider/DebugTransactionTrace.js'
 export { type DiscoveryCache } from './discovery/provider/DiscoveryCache.js'
 export { InMemoryCache } from './discovery/provider/InMemoryCache.js'
-export type { IProvider } from './discovery/provider/IProvider.js'
+export { type IProvider } from './discovery/provider/IProvider.js'
 export { LeveledCache } from './discovery/provider/LeveledCache.js'
 export { MulticallClient } from './discovery/provider/multicall/MulticallClient.js'
 export { getMulticall3Config } from './discovery/provider/multicall/MulticallConfig.js'
@@ -105,7 +111,10 @@ export {
   ProviderStats,
 } from './discovery/provider/Stats.js'
 export { ProxyDetector } from './discovery/proxies/ProxyDetector.js'
-export { generateEntrypoints } from './discovery/shared-modules/generateEntrypoints.js'
+export {
+  generateEntrypoints,
+  generateEntrypointsCommand,
+} from './discovery/shared-modules/generateEntrypoints.js'
 export { deduplicateAbi } from './discovery/source/deduplicateAbi.js'
 export { SourceCodeService } from './discovery/source/SourceCodeService.js'
 export { asStructured } from './discovery/type-casters/asStructured.js'
@@ -122,6 +131,7 @@ export type { HashedChunks, HashedFileContent } from './flatten/utils.js'
 export {
   buildSimilarityHashmap,
   combineImplementationHashes,
+  contractFlatteningHash,
   estimateSimilarity,
   flatteningHash,
   getHashToBeMatched,
@@ -133,6 +143,7 @@ export {
 export { EtherscanClient } from './utils/EtherscanClient.js'
 export { getErrorMessage } from './utils/getErrorMessage.js'
 export {
+  type ContractSource,
   type ExplorerConfig,
   getExplorerClient,
   type IEtherscanClient,

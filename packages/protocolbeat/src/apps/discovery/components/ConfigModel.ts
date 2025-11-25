@@ -1,13 +1,15 @@
-import type {
-  ContractConfigSchema,
-  DiscoveryConfigSchema,
-} from '@l2beat/discovery'
+import {
+  ConfigRegistry,
+  type ContractConfigSchema,
+  type DiscoveryConfigSchema,
+} from '@l2beat/discovery/web'
 import { assign, CommentArray, parse, stringify } from 'comment-json'
 import { clone } from './cloneWithComments'
 
 export class ConfigModel {
   private readonly config: DiscoveryConfigSchema
   private readonly overrides: Record<string, ContractConfigModel> = {}
+  private readonly registry: ConfigRegistry
 
   static fromRawJsonc(jsonc: string) {
     const parsed = parse(jsonc) as unknown as DiscoveryConfigSchema
@@ -22,6 +24,7 @@ export class ConfigModel {
     )) {
       this.overrides[address] = new ContractConfigModel(contractConfig)
     }
+    this.registry = new ConfigRegistry(this.config)
   }
 
   peek(): DiscoveryConfigSchema {
@@ -171,7 +174,7 @@ export class ContractConfigModel {
     return hasCommentsRecursive(this.config)
   }
 
-  peek() {
+  peek(): ContractConfigSchema {
     return clone(this.config)
   }
 

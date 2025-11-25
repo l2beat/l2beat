@@ -1,13 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   AllProviders,
+  contractFlatteningHash,
   type DiscoveryPaths,
   getChainConfigs,
   getDiscoveryPaths,
+  ShapeSchema,
   SQLiteCache,
 } from '@l2beat/discovery'
-import { ShapeSchema } from '@l2beat/discovery/dist/discovery/config/ShapeSchema'
-import { contractFlatteningHash } from '@l2beat/discovery/dist/flatten/utils'
 import { HttpClient } from '@l2beat/shared'
 import {
   assert,
