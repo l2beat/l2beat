@@ -348,8 +348,12 @@ const blockBase = {
   number: v.union([v.null(), vQuantity]),
   hash: v.union([v.null(), vData(32)]),
   parentHash: vData(32),
-  nonce: v.union([v.null(), vData(8), v.literal('0x0')]),
-  sha3Uncles: vData(32),
+  // optional in celo
+  nonce: v.union([v.null(), vData(8), v.literal('0x0')]).optional(),
+  // optional in celo
+  sha3Uncles: vData(32).optional(),
+  // optional in celo
+  uncles: v.array(vData(32)).optional(),
   logsBloom: vData(256),
   transactionsRoot: vData(32),
   stateRoot: vData(32),
@@ -364,7 +368,6 @@ const blockBase = {
   gasLimit: vQuantity,
   gasUsed: vQuantity,
   timestamp: vQuantity,
-  uncles: v.array(vData(32)),
   // not mentioned in docs
   mixHash: vData(32).optional(),
   // not mentioned in docs, added after EIP-1559
