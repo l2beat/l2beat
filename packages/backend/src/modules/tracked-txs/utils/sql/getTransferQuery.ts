@@ -19,6 +19,8 @@ export function getTransferQuery(
     ]),
     fromDate,
     toDate,
+    fromDate,
+    toDate,
   ]
 
   // To calculate the non-zero bytes we are grouping bytes by adding 'x' sign between each byte
