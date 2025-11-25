@@ -136,35 +136,46 @@ export class EthRpcClient {
     const result = vQuantity.parse(data)
     return { reverted: false, gas: result }
   }
-
-  async getBlockByNumber(block: BlockParameter): Promise<RpcBlock | null> {
-    const data = await this._call('eth_getBlockByNumber', [
-      encodeBlock(block),
-      false,
-    ])
-    return BlockResponse.parse(data)
-  }
-
-  async getBlockByHash(hash: string): Promise<RpcBlock | null> {
-    const data = await this._call('eth_getBlockByHash', [hash, false])
-    return BlockResponse.parse(data)
-  }
-
-  async getBlockWithTransactionsByNumber(
+  async getBlockByNumber(
     block: BlockParameter,
-  ): Promise<RpcBlockWithTransactions | null> {
+    includeTransactions: false,
+  ): Promise<RpcBlock | null>
+  async getBlockByNumber(
+    block: BlockParameter,
+    includeTransactions: true,
+  ): Promise<RpcBlockWithTransactions | null>
+  async getBlockByNumber(
+    block: BlockParameter,
+    includeTransactions: boolean,
+  ): Promise<RpcBlock | RpcBlockWithTransactions | null> {
     const data = await this._call('eth_getBlockByNumber', [
       encodeBlock(block),
-      true,
+      includeTransactions,
     ])
-    return BlockWithTransactionsResponse.parse(data)
+    return includeTransactions
+      ? BlockWithTransactionsResponse.parse(data)
+      : BlockResponse.parse(data)
   }
 
-  async getBlockWithTransactionsByHash(
+  async getBlockByHash(
     hash: string,
-  ): Promise<RpcBlockWithTransactions | null> {
-    const data = await this._call('eth_getBlockByHash', [hash, true])
-    return BlockWithTransactionsResponse.parse(data)
+    includeTransactions: false,
+  ): Promise<RpcBlock | null>
+  async getBlockByHash(
+    hash: string,
+    includeTransactions: true,
+  ): Promise<RpcBlockWithTransactions | null>
+  async getBlockByHash(
+    hash: string,
+    includeTransactions: boolean,
+  ): Promise<RpcBlock | RpcBlockWithTransactions | null> {
+    const data = await this._call('eth_getBlockByHash', [
+      hash,
+      includeTransactions,
+    ])
+    return includeTransactions
+      ? BlockWithTransactionsResponse.parse(data)
+      : BlockResponse.parse(data)
   }
 
   async getBlockTransactionCountByNumber(
