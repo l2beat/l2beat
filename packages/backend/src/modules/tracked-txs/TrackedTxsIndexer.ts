@@ -61,7 +61,7 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
     return async () => {
       for (const updater of this.$.updaters) {
         const filteredTxs = txs.filter((tx) => tx.type === updater.type)
-        this.$.db.syncMetadata.updateSyncedUntil(
+        await this.$.db.syncMetadata.updateSyncedUntil(
           updater.type,
           uniq(
             activeConfigurations
