@@ -1,8 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { formatAsciiBorder } from '@l2beat/shared-pure'
 import chalk from 'chalk'
-// biome-ignore lint/style/noRestrictedImports: esm
-import { partition } from 'lodash'
+import partition from 'lodash/partition.js'
 import type { Analysis } from '../analysis/AddressAnalyzer.js'
 import { getShapeFromAnalyzedContract } from '../analysis/findShape.js'
 import type { TemplateService } from '../analysis/TemplateService.js'

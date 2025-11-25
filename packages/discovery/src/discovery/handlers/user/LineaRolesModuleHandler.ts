@@ -1,8 +1,8 @@
 import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { type BigNumber, type providers, utils } from 'ethers'
-// biome-ignore lint/style/noRestrictedImports: esm
-import { isEmpty, zip } from 'lodash'
+import isEmpty from 'lodash/isEmpty.js'
+import zip from 'lodash/zip.js'
 
 import type { IProvider } from '../../provider/IProvider.js'
 import { FunctionSelectorDecoder } from '../../utils/FunctionSelectorDecoder.js'

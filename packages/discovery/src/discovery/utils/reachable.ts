@@ -1,6 +1,5 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
-// biome-ignore lint/style/noRestrictedImports: esm
-import { uniq } from 'lodash'
+import uniq from 'lodash/uniq.js'
 import type { EntryParameters } from '../output/types.js'
 import { toAddressArray } from './extractors.js'
 

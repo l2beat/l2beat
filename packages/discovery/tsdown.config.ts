@@ -4,6 +4,7 @@ import { defineConfig } from 'tsdown'
 export default defineConfig({
   entry: ['./src/index.web.ts'],
   outDir: 'dist/web',
-  format: 'esm',
-  target: 'esnext',
+  platform: 'neutral',
+  minify: true,
+  external: ['crypto', 'util'],
 })

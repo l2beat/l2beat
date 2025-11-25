@@ -1,6 +1,5 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
-// biome-ignore lint/style/noRestrictedImports: esm
-import { merge } from 'lodash'
+import merge from 'lodash/merge.js'
 import type { Analysis } from '../analysis/AddressAnalyzer.js'
 import { ConfigReader } from './ConfigReader.js'
 import { getDiscoveryPaths } from './getDiscoveryPaths.js'

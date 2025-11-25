@@ -1,6 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
-// biome-ignore lint/style/noRestrictedImports: esm
-import { zip } from 'lodash'
+import zip from 'lodash/zip.js'
 import type {
   ContractValue,
   DiscoveryCustomType,

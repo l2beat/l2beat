@@ -1,10 +1,10 @@
-import { LRUMap } from 'lru_map'
+import lru from 'lru_map'
 import type { DiscoveryCache } from './DiscoveryCache.js'
 
 export class InMemoryCache implements DiscoveryCache {
-  private readonly lru: LRUMap<string, string>
+  private readonly lru: lru.LRUMap<string, string>
   constructor(lruSize = 100000) {
-    this.lru = new LRUMap(lruSize)
+    this.lru = new lru.LRUMap(lruSize)
   }
 
   set(key: string, value: string): Promise<void> {

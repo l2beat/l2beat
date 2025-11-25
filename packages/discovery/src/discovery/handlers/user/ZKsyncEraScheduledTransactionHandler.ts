@@ -2,8 +2,7 @@ import { ChainSpecificAddress, type Hash256 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
 
-// biome-ignore lint/style/noRestrictedImports: esm
-import { uniqBy } from 'lodash'
+import uniqBy from 'lodash/uniqBy.js'
 import type { ContractValue } from '../../output/types.js'
 import type { IProvider } from '../../provider/IProvider.js'
 import { ProxyDetector } from '../../proxies/ProxyDetector.js'

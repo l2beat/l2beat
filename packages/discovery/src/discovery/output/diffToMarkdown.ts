@@ -1,6 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
-// biome-ignore lint/style/noRestrictedImports: esm
-import { toUpper } from 'lodash'
+import toUpper from 'lodash/toUpper.js'
 import type { FieldDiff } from './diffContracts.js'
 import type { DiscoveryDiff } from './diffDiscovery.js'
 

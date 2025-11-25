@@ -1,7 +1,7 @@
 import { hashJson } from '@l2beat/shared'
 import type { Hash256 } from '@l2beat/shared-pure'
-// biome-ignore lint/style/noRestrictedImports: esm
-import { isArray, isObject } from 'lodash'
+import isArray from 'lodash/isArray.js'
+import isObject from 'lodash/isObject.js'
 import type { StructureConfig } from './StructureConfig.js'
 
 export function getDiscoveryConfigEntries(rawConfig: StructureConfig): string {

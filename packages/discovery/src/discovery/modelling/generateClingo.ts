@@ -1,6 +1,5 @@
 import { existsSync, readFileSync } from 'fs'
-// biome-ignore lint/style/noRestrictedImports: esm
-import { merge } from 'lodash'
+import merge from 'lodash/merge.js'
 import { join } from 'path'
 import type { TemplateService } from '../analysis/TemplateService.js'
 import type { ConfigReader } from '../config/ConfigReader.js'

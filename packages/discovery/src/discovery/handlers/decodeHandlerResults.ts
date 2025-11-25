@@ -1,6 +1,5 @@
 import { getErrorMessage } from '@l2beat/shared-pure'
-// biome-ignore lint/style/noRestrictedImports: esm
-import { merge } from 'lodash'
+import merge from 'lodash/merge.js'
 import { BlipRuntime } from '../../blip/BlipRuntime.js'
 import type {
   DiscoveryCustomType,

@@ -1,7 +1,6 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 
-// biome-ignore lint/style/noRestrictedImports: esm
-import { zip } from 'lodash'
+import zip from 'lodash/zip.js'
 
 import { contractFlatteningHash, sha2_256bit } from '../../flatten/utils.js'
 import type { ContractSource } from '../../utils/IEtherscanClient.js'

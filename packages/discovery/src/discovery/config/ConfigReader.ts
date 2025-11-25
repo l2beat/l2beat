@@ -8,8 +8,8 @@ import {
 import { v } from '@l2beat/validate'
 import { createHash } from 'crypto'
 import { existsSync, readdirSync, readFileSync } from 'fs'
-// biome-ignore lint/style/noRestrictedImports: esm
-import { merge, uniq } from 'lodash'
+import merge from 'lodash/merge.js'
+import uniq from 'lodash/uniq.js'
 import path from 'path'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer.js'
 import type { DiscoveryOutput } from '../output/types.js'

@@ -1,8 +1,7 @@
 import { assert, type ChainSpecificAddress, unique } from '@l2beat/shared-pure'
 import { type Parser, type Validator, v } from '@l2beat/validate'
 import { type providers, utils } from 'ethers'
-// biome-ignore lint/style/noRestrictedImports: esm
-import { groupBy } from 'lodash'
+import groupBy from 'lodash/groupBy.js'
 import { isDeepStrictEqual } from 'util'
 import { executeBlip } from '../../../blip/executeBlip.js'
 import type { BlipSexp } from '../../../blip/type.js'

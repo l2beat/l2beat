@@ -1,5 +1,4 @@
-// biome-ignore lint/style/noRestrictedImports: esm
-import { isEmpty } from 'lodash'
+import isEmpty from 'lodash/isEmpty.js'
 import type {
   DiscoveryOutput,
   EntryParameters,

@@ -7,8 +7,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-// biome-ignore lint/style/noRestrictedImports: esm
-import { zip } from 'lodash'
+import zip from 'lodash/zip.js'
 import type { ContractValue } from '../../output/types.js'
 import type { IProvider } from '../../provider/IProvider.js'
 import { getImplementation } from '../auto/Eip1967Proxy.js'

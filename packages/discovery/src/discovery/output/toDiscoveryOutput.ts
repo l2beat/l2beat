@@ -1,6 +1,5 @@
 import { type UnixTime, withoutUndefinedKeys } from '@l2beat/shared-pure'
-// biome-ignore lint/style/noRestrictedImports: esm
-import { merge } from 'lodash'
+import merge from 'lodash/merge.js'
 import type { Analysis } from '../analysis/AddressAnalyzer.js'
 import type { TemplateService } from '../analysis/TemplateService.js'
 import { colorize } from '../colorize/colorize.js'
