@@ -319,6 +319,7 @@ function encodeFilter(filter: FilterParameter) {
   if (filter.blockHash) {
     encoded.blockHash = filter.blockHash
   }
+  return encoded
 }
 
 const vQuantity = v.string().transform((value: string) => {
@@ -376,7 +377,7 @@ const blockBase = {
   requestsHash: vData(32).optional(),
   withdrawals: v
     .array(
-      v.strictObject({
+      v.passthroughObject({
         address: vAddress,
         amount: vQuantity,
         index: vQuantity,
@@ -385,20 +386,16 @@ const blockBase = {
     )
     .optional(),
   withdrawalsRoot: vData(32).optional(),
-  // arbitrum specific
-  l1BlockNumber: vQuantity.optional(),
-  sendCount: vQuantity.optional(),
-  sendRoot: vData(32).optional(),
 }
 
 export type RpcBlock = v.infer<typeof RpcBlock>
-const RpcBlock = v.strictObject({
+const RpcBlock = v.passthroughObject({
   ...blockBase,
   transactions: v.array(vData(32)),
 })
 
 export type RpcTransaction = v.infer<typeof RpcTransaction>
-const RpcTransaction = v.strictObject({
+const RpcTransaction = v.passthroughObject({
   blockHash: v.union([v.null(), vData(32)]),
   blockNumber: v.union([v.null(), vQuantity]),
   from: vAddress,
@@ -422,7 +419,7 @@ const RpcTransaction = v.strictObject({
   chainId: vQuantity.optional(),
   accessList: v
     .array(
-      v.strictObject({
+      v.passthroughObject({
         address: vAddress,
         storageKeys: v.array(vData(32)),
       }),
@@ -435,7 +432,7 @@ const RpcTransaction = v.strictObject({
   // not mentioned in docs, added after EIP-7702
   authorizationList: v
     .array(
-      v.strictObject({
+      v.passthroughObject({
         chainId: vQuantity,
         address: vAddress,
         nonce: vQuantity,
@@ -448,13 +445,13 @@ const RpcTransaction = v.strictObject({
 })
 
 export type RpcBlockWithTransactions = v.infer<typeof RpcBlockWithTransactions>
-const RpcBlockWithTransactions = v.strictObject({
+const RpcBlockWithTransactions = v.passthroughObject({
   ...blockBase,
   transactions: v.array(RpcTransaction),
 })
 
 export type RpcLog = v.infer<typeof RpcLog>
-const RpcLog = v.strictObject({
+const RpcLog = v.passthroughObject({
   removed: v.boolean(),
   logIndex: v.union([v.null(), vQuantity]),
   transactionIndex: v.union([v.null(), vQuantity]),
@@ -469,7 +466,7 @@ const RpcLog = v.strictObject({
 })
 
 export type RpcReceipt = v.infer<typeof RpcReceipt>
-const RpcReceipt = v.strictObject({
+const RpcReceipt = v.passthroughObject({
   transactionHash: vData(32),
   transactionIndex: vQuantity,
   blockHash: vData(32),
@@ -485,10 +482,6 @@ const RpcReceipt = v.strictObject({
   type: vQuantity,
   root: vData(32).optional(),
   status: vQuantity.optional(),
-  // arbitrum specific
-  gasUsedForL1: vQuantity.optional(),
-  l1BlockNumber: vQuantity.optional(),
-  timeboosted: v.boolean().optional(),
 })
 
 const Bytes32Response = vData(32)
@@ -503,16 +496,16 @@ const ReceiptResponse = v.union([v.null(), RpcReceipt])
 const LogsResponse = v.array(RpcLog)
 
 const JsonRpcResponse = v.union([
-  v.strictObject({
+  v.passthroughObject({
     jsonrpc: v.literal('2.0'),
-    error: v.strictObject({
+    error: v.passthroughObject({
       code: v.number(),
       message: v.string(),
       data: v.unknown().optional(),
     }),
     id: v.union([v.null(), v.string(), v.number()]),
   }),
-  v.strictObject({
+  v.passthroughObject({
     jsonrpc: v.literal('2.0'),
     result: v.unknown(),
     id: v.union([v.null(), v.string(), v.number()]),

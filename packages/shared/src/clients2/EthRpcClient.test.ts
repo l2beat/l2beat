@@ -105,239 +105,209 @@ describe(EthRpcClient.name, () => {
   })
 })
 
-describe(`${EthRpcClient.name} integration`, () => {
-  // Update this locally when running those tests. They are for discovering
-  // issues with the client
-  const RPCS = [
-    { name: 'publicnode-ethereum', url: 'https://ethereum-rpc.publicnode.com' },
-    { name: 'publicnode-arbitrum', url: 'https://arbitrum-rpc.publicnode.com' },
-  ]
-  RPCS.forEach(({ name, url }) =>
-    describe(name, () => {
-      const VITALIK = EthereumAddress(
-        '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045',
-      )
-      const MULTICALL3 = EthereumAddress(
-        '0xcA11bde05977b3631167028862bE2a173976CA11',
-      )
-      const client = new EthRpcClient(new Http(), url)
-
-      it(EthRpcClient.prototype.chainId.name, async () => {
-        const chainId = await client.chainId()
-        expect(chainId > 0n).toEqual(true)
-      })
-
-      it(EthRpcClient.prototype.blockNumber.name, async () => {
-        const blockNumber = await client.blockNumber()
-        expect(blockNumber > 0n).toEqual(true)
-      })
-
-      it(EthRpcClient.prototype.gasPrice.name, async () => {
-        const gasPrice = await client.blockNumber()
-        expect(gasPrice >= 0n).toEqual(true)
-      })
-
-      it(EthRpcClient.prototype.getBalance.name, async () => {
-        const balance = await client.getBalance(VITALIK, 'latest')
-        expect(balance >= 0n).toEqual(true)
-      })
-
-      it(EthRpcClient.prototype.getStorageAt.name, async () => {
-        const storage = await client.getStorageAt(VITALIK, 0n, 'latest')
-        expect(storage).toEqual('0x' + '0'.repeat(64))
-      })
-
-      it(EthRpcClient.prototype.getTransactionCount.name, async () => {
-        const count = await client.getTransactionCount(VITALIK, 'latest')
-        expect(count >= 0n).toEqual(true)
-      })
-
-      it(EthRpcClient.prototype.getCode.name, async () => {
-        const code = await client.getCode(MULTICALL3, 'latest')
-        expect(code).toMatchRegex(/^0x/)
-      })
-
-      it(EthRpcClient.prototype.call.name, async () => {
-        const chainId = await client.chainId()
-        const result1 = await client.call(
-          {
-            to: MULTICALL3,
-            input: '0x3408e470', // getChainId()
-          },
-          'latest',
-        )
-        expect(result1.reverted).toEqual(false)
-        if (!result1.reverted) {
-          expect(BigInt(result1.data)).toEqual(chainId)
-        }
-
-        const result2 = await client.call(
-          {
-            to: MULTICALL3,
-            input: '0xDEADBEEF', // garbage
-          },
-          'latest',
-        )
-        expect(result2.reverted).toEqual(true)
-      })
-
-      it(EthRpcClient.prototype.estimateGas.name, async () => {
-        const result1 = await client.estimateGas(
-          {
-            to: MULTICALL3,
-            input: '0x3408e470', // getChainId()
-          },
-          'latest',
-        )
-        expect(result1.reverted).toEqual(false)
-        if (!result1.reverted) {
-          expect(result1.gas >= 0n).toEqual(true)
-        }
-
-        const result2 = await client.estimateGas(
-          {
-            to: MULTICALL3,
-            input: '0xDEADBEEF', // garbage
-          },
-          'latest',
-        )
-        expect(result2.reverted).toEqual(true)
-      })
-
-      describe(EthRpcClient.prototype.getBlockByNumber.name, () => {
-        it('without transactions', async () => {
-          const latest1 = await client.getBlockByNumber('latest', false)
-          expect(latest1 && latest1.number && latest1.number >= 0n).toEqual(
-            true,
-          )
-
-          const latest2 = await client.getBlockByNumber(
-            latest1?.number ?? 0n,
-            false,
-          )
-          expect(latest2).toEqual(latest1)
-
-          const block0 = await client.getBlockByNumber(0n, false)
-          expect(block0?.number).toEqual(0n)
-
-          const block1 = await client.getBlockByNumber(1n, false)
-          expect(block1?.number).toEqual(1n)
-
-          const block1000 = await client.getBlockByNumber(1000n, false)
-          expect(block1000?.number).toEqual(1000n)
-        })
-        it('with transactions', async () => {
-          const latest1 = await client.getBlockByNumber('latest', true)
-          expect(latest1 && latest1.number && latest1.number >= 0n).toEqual(
-            true,
-          )
-
-          const latest2 = await client.getBlockByNumber(
-            latest1?.number ?? 0n,
-            true,
-          )
-          expect(latest2).toEqual(latest1)
-
-          const block0 = await client.getBlockByNumber(0n, true)
-          expect(block0?.number).toEqual(0n)
-
-          const block1 = await client.getBlockByNumber(1n, true)
-          expect(block1?.number).toEqual(1n)
-
-          const block1000 = await client.getBlockByNumber(1000n, true)
-          expect(block1000?.number).toEqual(1000n)
-        })
-      })
-
-      describe(EthRpcClient.prototype.getBlockByHash.name, () => {
-        it('without transactions', async () => {
-          const latest1 = await client.getBlockByNumber('latest', false)
-          const latest2 = await client.getBlockByHash(
-            latest1?.hash ?? '0x',
-            false,
-          )
-          expect(latest2).toEqual(latest1)
-        })
-        it('with transactions', async () => {
-          const latest1 = await client.getBlockByNumber('latest', true)
-          const latest2 = await client.getBlockByHash(
-            latest1?.hash ?? '0x',
-            true,
-          )
-          expect(latest2).toEqual(latest1)
-        })
-      })
-
-      it(
-        EthRpcClient.prototype.getBlockTransactionCountByNumber.name,
-        async () => {
-          const latest = await client.getBlockByNumber('latest', false)
-          const count = await client.getBlockTransactionCountByNumber(
-            latest?.number ?? 0n,
-          )
-          expect(latest?.transactions.length).toEqual(Number(count))
-        },
-      )
-
-      it(
-        EthRpcClient.prototype.getBlockTransactionCountByHash.name,
-        async () => {
-          const latest = await client.getBlockByNumber('latest', false)
-          const count = await client.getBlockTransactionCountByHash(
-            latest?.hash ?? '0x',
-          )
-          expect(latest?.transactions.length).toEqual(Number(count))
-        },
-      )
-
-      it(EthRpcClient.prototype.getTransactionByHash.name, async () => {
-        const latest = await client.getBlockByNumber('latest', true)
-        const tx1 = latest?.transactions[0]
-        const tx2 = await client.getTransactionByHash(tx1?.hash ?? '0x')
-        expect(tx1 ?? null).toEqual(tx2)
-      })
-
-      it(
-        EthRpcClient.prototype.getTransactionByBlockHashAndIndex.name,
-        async () => {
-          const latest = await client.getBlockByNumber('latest', true)
-          const tx1 = latest?.transactions[0]
-          const tx2 = await client.getTransactionByBlockHashAndIndex(
-            latest?.hash ?? '0x',
-            0n,
-          )
-          expect(tx1 ?? null).toEqual(tx2)
-        },
-      )
-
-      it(
-        EthRpcClient.prototype.getTransactionByBlockNumberAndIndex.name,
-        async () => {
-          const latest = await client.getBlockByNumber('latest', true)
-          const tx1 = latest?.transactions[0]
-          const tx2 = await client.getTransactionByBlockNumberAndIndex(
-            latest?.number ?? 0n,
-            0n,
-          )
-          expect(tx1 ?? null).toEqual(tx2)
-        },
-      )
-
-      it(EthRpcClient.prototype.getTransactionReceipt.name, async () => {
-        const latest = await client.getBlockByNumber('latest', true)
-        const tx = latest?.transactions[0]
-        const receipt = await client.getTransactionReceipt(tx?.hash ?? '0x')
-        expect(receipt?.transactionHash).toEqual(tx?.hash)
-      })
-
-      it(EthRpcClient.prototype.getLogs.name, async () => {
-        const blockNumber = await client.blockNumber() - 1000n
-        const logs = await client.getLogs({
-          fromBlock: blockNumber - 10n,
-          toBlock: blockNumber,
-        })
-        expect(!!logs).toEqual(true)
-      })
-    }),
+describe.skip(`${EthRpcClient.name} integration`, () => {
+  const URL = 'SET THIS TO SOMETHING BUT DO NOT COMMIT'
+  const VITALIK = EthereumAddress('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
+  const MULTICALL3 = EthereumAddress(
+    '0xcA11bde05977b3631167028862bE2a173976CA11',
   )
+  const client = new EthRpcClient(new Http(), URL)
+
+  it(EthRpcClient.prototype.chainId.name, async () => {
+    const chainId = await client.chainId()
+    expect(chainId > 0n).toEqual(true)
+  })
+
+  it(EthRpcClient.prototype.blockNumber.name, async () => {
+    const blockNumber = await client.blockNumber()
+    expect(blockNumber > 0n).toEqual(true)
+  })
+
+  it(EthRpcClient.prototype.gasPrice.name, async () => {
+    const gasPrice = await client.blockNumber()
+    expect(gasPrice >= 0n).toEqual(true)
+  })
+
+  it(EthRpcClient.prototype.getBalance.name, async () => {
+    const balance = await client.getBalance(VITALIK, 'latest')
+    expect(balance >= 0n).toEqual(true)
+  })
+
+  it(EthRpcClient.prototype.getStorageAt.name, async () => {
+    const storage = await client.getStorageAt(VITALIK, 0n, 'latest')
+    expect(storage).toEqual('0x' + '0'.repeat(64))
+  })
+
+  it(EthRpcClient.prototype.getTransactionCount.name, async () => {
+    const count = await client.getTransactionCount(VITALIK, 'latest')
+    expect(count >= 0n).toEqual(true)
+  })
+
+  it(EthRpcClient.prototype.getCode.name, async () => {
+    const code = await client.getCode(MULTICALL3, 'latest')
+    expect(code).toMatchRegex(/^0x/)
+  })
+
+  it(EthRpcClient.prototype.call.name, async () => {
+    const chainId = await client.chainId()
+    const result1 = await client.call(
+      {
+        to: MULTICALL3,
+        input: '0x3408e470', // getChainId()
+      },
+      'latest',
+    )
+    expect(result1.reverted).toEqual(false)
+    if (!result1.reverted) {
+      expect(BigInt(result1.data)).toEqual(chainId)
+    }
+
+    const result2 = await client.call(
+      {
+        to: MULTICALL3,
+        input: '0xDEADBEEF', // garbage
+      },
+      'latest',
+    )
+    expect(result2.reverted).toEqual(true)
+  })
+
+  it(EthRpcClient.prototype.estimateGas.name, async () => {
+    const result1 = await client.estimateGas(
+      {
+        to: MULTICALL3,
+        input: '0x3408e470', // getChainId()
+      },
+      'latest',
+    )
+    expect(result1.reverted).toEqual(false)
+    if (!result1.reverted) {
+      expect(result1.gas >= 0n).toEqual(true)
+    }
+
+    const result2 = await client.estimateGas(
+      {
+        to: MULTICALL3,
+        input: '0xDEADBEEF', // garbage
+      },
+      'latest',
+    )
+    expect(result2.reverted).toEqual(true)
+  })
+
+  describe(EthRpcClient.prototype.getBlockByNumber.name, () => {
+    it('without transactions', async () => {
+      const latest1 = await client.getBlockByNumber('latest', false)
+      expect(latest1 && latest1.number && latest1.number >= 0n).toEqual(true)
+
+      const latest2 = await client.getBlockByNumber(
+        latest1?.number ?? 0n,
+        false,
+      )
+      expect(latest2).toEqual(latest1)
+
+      const block0 = await client.getBlockByNumber(0n, false)
+      expect(block0?.number).toEqual(0n)
+
+      const block1 = await client.getBlockByNumber(1n, false)
+      expect(block1?.number).toEqual(1n)
+
+      const block1000 = await client.getBlockByNumber(1000n, false)
+      expect(block1000?.number).toEqual(1000n)
+    })
+    it('with transactions', async () => {
+      const latest1 = await client.getBlockByNumber('latest', true)
+      expect(latest1 && latest1.number && latest1.number >= 0n).toEqual(true)
+
+      const latest2 = await client.getBlockByNumber(latest1?.number ?? 0n, true)
+      expect(latest2).toEqual(latest1)
+
+      const block0 = await client.getBlockByNumber(0n, true)
+      expect(block0?.number).toEqual(0n)
+
+      const block1 = await client.getBlockByNumber(1n, true)
+      expect(block1?.number).toEqual(1n)
+
+      const block1000 = await client.getBlockByNumber(1000n, true)
+      expect(block1000?.number).toEqual(1000n)
+    })
+  })
+
+  describe(EthRpcClient.prototype.getBlockByHash.name, () => {
+    it('without transactions', async () => {
+      const latest1 = await client.getBlockByNumber('latest', false)
+      const latest2 = await client.getBlockByHash(latest1?.hash ?? '0x', false)
+      expect(latest2).toEqual(latest1)
+    })
+    it('with transactions', async () => {
+      const latest1 = await client.getBlockByNumber('latest', true)
+      const latest2 = await client.getBlockByHash(latest1?.hash ?? '0x', true)
+      expect(latest2).toEqual(latest1)
+    })
+  })
+
+  it(EthRpcClient.prototype.getBlockTransactionCountByNumber.name, async () => {
+    const latest = await client.getBlockByNumber('latest', false)
+    const count = await client.getBlockTransactionCountByNumber(
+      latest?.number ?? 0n,
+    )
+    expect(latest?.transactions.length).toEqual(Number(count))
+  })
+
+  it(EthRpcClient.prototype.getBlockTransactionCountByHash.name, async () => {
+    const latest = await client.getBlockByNumber('latest', false)
+    const count = await client.getBlockTransactionCountByHash(
+      latest?.hash ?? '0x',
+    )
+    expect(latest?.transactions.length).toEqual(Number(count))
+  })
+
+  it(EthRpcClient.prototype.getTransactionByHash.name, async () => {
+    const latest = await client.getBlockByNumber('latest', true)
+    const tx1 = latest?.transactions[0]
+    const tx2 = await client.getTransactionByHash(tx1?.hash ?? '0x')
+    expect(tx1 ?? null).toEqual(tx2)
+  })
+
+  it(
+    EthRpcClient.prototype.getTransactionByBlockHashAndIndex.name,
+    async () => {
+      const latest = await client.getBlockByNumber('latest', true)
+      const tx1 = latest?.transactions[0]
+      const tx2 = await client.getTransactionByBlockHashAndIndex(
+        latest?.hash ?? '0x',
+        0n,
+      )
+      expect(tx1 ?? null).toEqual(tx2)
+    },
+  )
+
+  it(
+    EthRpcClient.prototype.getTransactionByBlockNumberAndIndex.name,
+    async () => {
+      const latest = await client.getBlockByNumber('latest', true)
+      const tx1 = latest?.transactions[0]
+      const tx2 = await client.getTransactionByBlockNumberAndIndex(
+        latest?.number ?? 0n,
+        0n,
+      )
+      expect(tx1 ?? null).toEqual(tx2)
+    },
+  )
+
+  it(EthRpcClient.prototype.getTransactionReceipt.name, async () => {
+    const latest = await client.getBlockByNumber('latest', true)
+    const tx = latest?.transactions[0]
+    const receipt = await client.getTransactionReceipt(tx?.hash ?? '0x')
+    expect(receipt?.transactionHash).toEqual(tx?.hash)
+  })
+
+  it(EthRpcClient.prototype.getLogs.name, async () => {
+    const latest = await client.getBlockByNumber('latest', false)
+    const logs = await client.getLogs({
+      fromBlock: latest?.number ?? 0n,
+      toBlock: latest?.number ?? 0n,
+    })
+    expect(logs.every((l) => l.blockHash === latest?.hash)).toEqual(true)
+  })
 })
