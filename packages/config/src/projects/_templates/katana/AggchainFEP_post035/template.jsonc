@@ -35,7 +35,10 @@
     },
     "optimisticModeManager": {
       "permissions": [
-        { "type": "interact", "description": "toggle the 'optimisticMode'." }
+        {
+          "type": "interact",
+          "description": "toggle the 'optimisticMode'."
+        }
       ]
     },
     "aggchainManager": {
@@ -56,7 +59,7 @@
         "method": "function opSuccinctConfigs(bytes32) view returns (bytes32 aggregationVkey, bytes32 rangeVkeyCommitment, bytes32 rollupConfigHash)",
         // "args": ["{{ selectedOpSuccinctConfigName }}"] // should be this but there is a bug
         "args": [
-          "0x622142ba8035695383551428b698950d3d4a6a53629c90a86d7192cfb221ae4e"
+          "0x4a6e8c6abb9ec46b76062d422b6d87bb4b7e0304b4b06d554037828ce3006650"
         ]
       }
     },

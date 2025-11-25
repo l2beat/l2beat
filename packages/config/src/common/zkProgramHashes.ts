@@ -164,7 +164,7 @@ Verify:
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
-  
+
   '0x40bc0563112dcc6868037ea0445916342df200ec0152bf7b4c2cca1d640fdaa3': {
     title: 'Range program of OP Succinct',
     description:
@@ -194,6 +194,20 @@ Verify:
     verificationStatus: 'notVerified',
   },
   '0x04415a0d46de8b145eb5056969fa3b5900c3c23a21cb3feb2bdcb8da752de7a1': {
+    title: 'Range program of OP Succinct',
+    description:
+      'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
+  '0x007efdd073c9845bbc446e0e62018af999bde96ecec416725391efa4a3f0a44d': {
+    title: 'Aggregation program of OP Succinct',
+    description:
+      'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
+  '0x4b8234c47685b3361b22399702416a8010783b1b701b279073b4f0831e55da63': {
     title: 'Range program of OP Succinct',
     description:
       'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
