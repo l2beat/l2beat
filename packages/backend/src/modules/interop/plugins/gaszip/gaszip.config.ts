@@ -1,4 +1,4 @@
-import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { defineNetworks } from '../types'
 
 export interface GasZipNetwork {
