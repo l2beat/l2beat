@@ -1,4 +1,4 @@
-import { type Parser, v } from '@l2beat/validate'
+import { type Validator, v } from '@l2beat/validate'
 import { expect } from 'earl'
 import type { FieldValues } from 'react-hook-form'
 import { validateResolver } from './validateResolver'
@@ -372,23 +372,10 @@ describe('validateResolver', () => {
       })
     })
   })
-
-  describe('transform and parse', () => {
-    it('transforms string to number using transform', () => {
-      const schema = v.object({
-        age: v.string().transform((val) => Number(val)),
-      })
-
-      const result = validate(schema, { age: '42' })
-
-      expect(result.values).toEqual({ age: 42 })
-      expect(result.errors).toEqual({})
-    })
-  })
 })
 
 function validate<T extends FieldValues>(
-  schema: Parser<T>,
+  schema: Validator<T>,
   value: { [K in keyof T]?: any },
 ):
   | {
