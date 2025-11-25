@@ -178,44 +178,8 @@ export class EthRpcClient {
       : BlockResponse.parse(data)
   }
 
-  async getBlockTransactionCountByNumber(
-    block: BlockParameter,
-  ): Promise<bigint> {
-    const data = await this._call('eth_getBlockTransactionCountByNumber', [
-      encodeBlock(block),
-    ])
-    return vQuantity.parse(data)
-  }
-
-  async getBlockTransactionCountByHash(hash: string): Promise<bigint> {
-    const data = await this._call('eth_getBlockTransactionCountByHash', [hash])
-    return vQuantity.parse(data)
-  }
-
   async getTransactionByHash(hash: string): Promise<RpcTransaction | null> {
     const data = await this._call('eth_getTransactionByHash', [hash])
-    return TransactionResponse.parse(data)
-  }
-
-  async getTransactionByBlockHashAndIndex(
-    hash: string,
-    index: bigint,
-  ): Promise<RpcTransaction | null> {
-    const data = await this._call('eth_getTransactionByBlockHashAndIndex', [
-      hash,
-      encodeQuantity(index),
-    ])
-    return TransactionResponse.parse(data)
-  }
-
-  async getTransactionByBlockNumberAndIndex(
-    block: BlockParameter,
-    index: bigint,
-  ): Promise<RpcTransaction | null> {
-    const data = await this._call('eth_getTransactionByBlockNumberAndIndex', [
-      encodeBlock(block),
-      encodeQuantity(index),
-    ])
     return TransactionResponse.parse(data)
   }
 
