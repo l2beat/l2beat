@@ -99,7 +99,6 @@ function getScalingLivenessEntry(
   )
 
   const changes = projectsChangeReport.getChanges(project.id)
-  console.log(liveness)
   const lowestSyncedUntil = getLowestSyncedUntil(liveness)
   const syncWarning = getLivenessSyncWarning(lowestSyncedUntil)
   const data = transformLivenessData(liveness, project, !syncWarning)

@@ -25,7 +25,6 @@ export async function getScalingCostsData(
       () => getCachedData(cache, req.query.tab),
     ),
   ])
-  console.log(env)
 
   return {
     head: {
