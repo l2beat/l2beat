@@ -6764,7 +6764,7 @@
   ],
   "corn": [
     {
-      "symbol": "USDT0",
+      "symbol": "USD₮0",
       "address": "0xb8ce59fc3717ada4c02eadf9682a9e934f625ebb",
       "category": "stablecoin",
       "source": "external",
