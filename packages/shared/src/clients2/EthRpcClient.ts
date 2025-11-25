@@ -353,24 +353,26 @@ const blockBase = {
   gasUsed: vQuantity,
   timestamp: vQuantity,
   uncles: v.array(vData(32)),
-  // NOTE: not mentioned in docs
+  // not mentioned in docs
   mixHash: vData(32).optional(),
-  // NOTE: not mentioned in docs, added after EIP-1559
+  // not mentioned in docs, added after EIP-1559
   baseFeePerGas: vQuantity.optional(),
-  // NOTE: not mentioned in docs, added after EIP-4844
+  // not mentioned in docs, added after EIP-4844
   blobGasUsed: vQuantity.optional(),
   excessBlobGas: vQuantity.optional(),
   parentBeaconBlockRoot: vData(32).optional(),
-  // NOTE: not mentioned in docs, added after EIP-4895
+  // not mentioned in docs, added after EIP-4895
   requestsHash: vData(32).optional(),
-  withdrawals: v.array(
-    v.strictObject({
-      address: vAddress,
-      amount: vQuantity,
-      index: vQuantity,
-      validatorIndex: vQuantity,
-    }),
-  ).optional(),
+  withdrawals: v
+    .array(
+      v.strictObject({
+        address: vAddress,
+        amount: vQuantity,
+        index: vQuantity,
+        validatorIndex: vQuantity,
+      }),
+    )
+    .optional(),
   withdrawalsRoot: vData(32).optional(),
 }
 
@@ -396,7 +398,38 @@ const RpcTransaction = v.strictObject({
   v: vQuantity,
   r: vQuantity,
   s: vQuantity,
-  // TODO: non-standard fields from other chains
+  // not mentioned in docs, added after EIP-2718
+  type: vQuantity.optional(),
+  // not mentioned in docs, added after EIP-1559
+  maxFeePerGas: vQuantity.optional(),
+  maxPriorityFeePerGas: vQuantity.optional(),
+  // not mentioned in docs, added after EIP-2930
+  chainId: vQuantity.optional(),
+  accessList: v
+    .array(
+      v.strictObject({
+        address: vAddress,
+        storageKeys: v.array(vData(32)),
+      }),
+    )
+    .optional(),
+  yParity: vQuantity.optional(),
+  // not mentioned in docs, added after EIP-4844
+  blobVersionedHashes: v.array(vData(32)).optional(),
+  maxFeePerBlobGas: vQuantity.optional(),
+  // not mentioned in docs, added after EIP-7702
+  authorizationList: v
+    .array(
+      v.strictObject({
+        chainId: vQuantity,
+        address: vAddress,
+        nonce: vQuantity,
+        yParity: vQuantity,
+        r: vQuantity,
+        s: vQuantity,
+      }),
+    )
+    .optional(),
 })
 
 export type RpcBlockWithTransactions = v.infer<typeof RpcBlockWithTransactions>
@@ -416,7 +449,8 @@ const RpcLog = v.strictObject({
   address: vAddress,
   data: vData(),
   topics: v.array(vData(32)),
-  // TODO: non-standard fields from other chains
+  // non-standard optimisation
+  blockTimestamp: vQuantity.optional(),
 })
 
 export type RpcReceipt = v.infer<typeof RpcReceipt>
