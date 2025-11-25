@@ -73,7 +73,7 @@ export type DeployedTokenSchema = v.infer<typeof DeployedTokenSchema>
 export const DeployedTokenSchema = v.object({
   chain: v.string(),
   address: v.string(),
-  decimals: v.string().transform(Number).check(minNumberCheck(1)),
+  decimals: v.number().check(minNumberCheck(1)),
   symbol: v.string().check(minLengthCheck(1)),
   abstractTokenId: v.string().optional(),
   deploymentTimestamp: v.string(),
@@ -316,7 +316,14 @@ export function DeployedTokenForm({
                 <FormControl>
                   <Input
                     {...field}
-                    onChange={(e) => field.onChange(e.target.value)}
+                    type="number"
+                    onChange={(e) =>
+                      field.onChange(
+                        e.target.value !== ''
+                          ? Number(e.target.value)
+                          : undefined,
+                      )
+                    }
                     disabled={tokenDetails.loading}
                   />
                 </FormControl>

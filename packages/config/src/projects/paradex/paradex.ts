@@ -233,6 +233,7 @@ export const paradex: ScalingProject = {
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1744056299),
+          untilTimestamp: UnixTime(1763997779),
           programHashes: [
             '2534935718742676028234156221136000178296467523045214874259117268197132196876', // Starknet OS
           ],
@@ -243,8 +244,29 @@ export const paradex: ScalingProject = {
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1744056299),
+          untilTimestamp: UnixTime(1763997779),
           programHashes: [
             '273279642033703284306509103355536170486431195329675679055627933497997642494', // Aggregator
+          ],
+        },
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1763997779),
+          programHashes: [
+            '793595346346724189681221050719974054861327641387231526786912662354259445535', // Starknet OS, overlaps with starknet
+          ],
+        },
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1763997779),
+          programHashes: [
+            '760308386675154762009993173725077399730170358078020153308029499928875469870', // Aggregator, overlaps with starknet
           ],
         },
       },

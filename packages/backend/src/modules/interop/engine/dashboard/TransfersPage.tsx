@@ -1,8 +1,7 @@
 import type { InteropTransferRecord } from '@l2beat/database'
-import { formatSeconds } from '@l2beat/shared-pure'
+import { Address32, formatSeconds } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { Address32 } from '../../plugins/types'
 import { DataTablePage } from './DataTablePage'
 import { formatDollars } from './formatDollars'
 import {

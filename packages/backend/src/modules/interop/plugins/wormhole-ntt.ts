@@ -24,10 +24,10 @@ Note that (TODO: )
 
 */
 
+import { Address32 } from '@l2beat/shared-pure'
 import { BinaryReader } from '../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   findChain,

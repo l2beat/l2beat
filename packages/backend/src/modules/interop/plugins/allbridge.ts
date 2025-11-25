@@ -8,8 +8,8 @@ allbridge is a simple swap service that performs three steps:
   as VUSD is not used outside of Allbridge
  */
 
+import { Address32 } from '@l2beat/shared-pure'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   defineNetworks,

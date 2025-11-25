@@ -1,7 +1,7 @@
+import type { InteropEventContext } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
 import type {
   InteropEvent,
-  InteropEventContext,
   InteropEventDb,
   InteropEventQuery,
   InteropEventType,

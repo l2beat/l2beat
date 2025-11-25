@@ -7,11 +7,10 @@ import type {
   InteropTransfersStatsRecord,
 } from '@l2beat/database'
 import type { InteropMissingTokenInfo } from '@l2beat/database/dist/repositories/InteropTransferRepository'
-import { formatSeconds } from '@l2beat/shared-pure'
+import { Address32, formatSeconds } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { getInteropChains } from '../../../../config/makeConfig'
-import { Address32 } from '../../plugins/types'
 import { DataTablePage } from './DataTablePage'
 import { formatDollars } from './formatDollars'
 import { generateNetworkPairs } from './generateNetworkPairs'
