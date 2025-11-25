@@ -1,20 +1,20 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
-import type { ContractValue } from '../../output/types'
+import type { ContractValue } from '../../output/types.js'
 
-import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import type { IProvider } from '../../provider/IProvider.js'
+import type { Handler, HandlerResult } from '../Handler.js'
 import {
   generateReferenceInput,
   getReferencedName,
   Reference,
   type ReferenceInput,
   resolveReference,
-} from '../reference'
-import { callMethod } from '../utils/callMethod'
-import { getFunctionFragment } from '../utils/getFunctionFragment'
-import { valueToNumber } from '../utils/valueToNumber'
+} from '../reference.js'
+import { callMethod } from '../utils/callMethod.js'
+import { getFunctionFragment } from '../utils/getFunctionFragment.js'
+import { valueToNumber } from '../utils/valueToNumber.js'
 
 export type ArrayHandlerDefinition = v.infer<typeof ArrayHandlerDefinition>
 export const ArrayHandlerDefinition = v.strictObject({

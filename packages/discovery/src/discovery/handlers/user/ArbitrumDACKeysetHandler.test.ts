@@ -2,8 +2,8 @@ import { Bytes, ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { type providers, utils } from 'ethers'
 
-import type { IProvider } from '../../provider/IProvider'
-import { ArbitrumDACKeysetHandler } from './ArbitrumDACKeysetHandler'
+import type { IProvider } from '../../provider/IProvider.js'
+import { ArbitrumDACKeysetHandler } from './ArbitrumDACKeysetHandler.js'
 
 describe(ArbitrumDACKeysetHandler.name, () => {
   const abi = new utils.Interface([

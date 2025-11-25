@@ -1,7 +1,7 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { addressToBytes32, bytes32ToAddress } from './address'
+import { addressToBytes32, bytes32ToAddress } from './address.js'
 
 describe(addressToBytes32.name, () => {
   it('encodes addresses correctly', () => {

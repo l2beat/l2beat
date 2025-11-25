@@ -1,17 +1,16 @@
 import { type ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { BigNumber, utils } from 'ethers'
-import type { ParamType } from 'ethers/lib/utils'
-import type { ContractValue } from '../../output/types'
+import type { ContractValue } from '../../output/types.js'
 import type {
   DebugTransactionCall,
   DebugTransactionCallResponse,
-} from '../../provider/DebugTransactionTrace'
-import type { IProvider } from '../../provider/IProvider'
-import { getSighash } from '../getSighash'
-import type { Handler, HandlerResult } from '../Handler'
-import { getEventFragment } from '../utils/getEventFragment'
-import { getFunctionFragment } from '../utils/getFunctionFragment'
+} from '../../provider/DebugTransactionTrace.js'
+import type { IProvider } from '../../provider/IProvider.js'
+import { getSighash } from '../getSighash.js'
+import type { Handler, HandlerResult } from '../Handler.js'
+import { getEventFragment } from '../utils/getEventFragment.js'
+import { getFunctionFragment } from '../utils/getFunctionFragment.js'
 
 export type EventTraceHandlerDefinition = v.infer<
   typeof EventTraceHandlerDefinition
@@ -105,7 +104,10 @@ export class EventTraceHandler implements Handler {
   }
 }
 
-function materializeNamed(value: unknown, param: ParamType): ContractValue {
+function materializeNamed(
+  value: unknown,
+  param: utils.ParamType,
+): ContractValue {
   if (param.baseType === 'tuple' && typeof value === 'object') {
     const obj: Record<string, ContractValue> = {}
 

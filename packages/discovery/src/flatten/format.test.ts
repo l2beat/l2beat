@@ -1,7 +1,11 @@
 import { expect } from 'earl'
 import { readFile } from 'fs/promises'
-import { join } from 'path'
-import { format } from './format'
+import { dirname, join } from 'path'
+import { fileURLToPath } from 'url'
+import { format } from './format.js'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 describe(format.name, () => {
   it('correctly formats the test file', async () => {

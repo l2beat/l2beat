@@ -2,13 +2,32 @@
   "name": "@l2beat/discovery",
   "description": "L2Beat discovery - engine & tooling utilized for keeping an eye on L2s",
   "version": "0.48.0",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "bin": {
-    "discovery": "./cli.js"
+  "type": "module",
+  "sideEffects": false,
+  "main": "./build/cjs/index.js",
+  "module": "./build/esm/index.js",
+  "types": "./build/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/types/index.d.ts",
+      "import": "./build/esm/index.js",
+      "require": "./build/cjs/index.js"
+    },
+    "./config": {
+      "types": "./build/types/config/index.d.ts",
+      "import": "./build/esm/config/index.js",
+      "require": "./build/cjs/config/index.js"
+    },
+    "./schemas": {
+      "types": "./build/types/schemas/index.d.ts",
+      "import": "./build/esm/schemas/index.js",
+      "require": "./build/cjs/schemas/index.js"
+    }
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "pnpm run clean && pnpm run build:esm && pnpm run build:cjs",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json && cp cjs-package.json build/cjs/package.json",
     "build:dependencies": "cd ../.. && pnpm build:dependencies:discovery",
     "watch:dependencies": "cd ../.. && pnpm watch:dependencies:discovery",
     "clean": "rm -rf dist",
@@ -22,9 +41,9 @@
   },
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",
-    "@l2beat/validate": "workspace:*",
     "@l2beat/shared": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
+    "@l2beat/validate": "workspace:*",
     "@mradomski/fast-solidity-parser": "0.1.6",
     "bignumber.js": "^9.1.2",
     "chalk": "^4.1.2",

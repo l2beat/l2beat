@@ -3,9 +3,9 @@ import type {
   BlobClient,
   BlobsInBlock,
   CelestiaApiClient,
+  CelestiaEvent,
   CoingeckoClient,
 } from '@l2beat/shared'
-import type { CelestiaEvent } from '@l2beat/shared/build/clients/api-celestia/types'
 import type {
   Bytes,
   ChainSpecificAddress,
@@ -17,9 +17,9 @@ import type { providers, utils } from 'ethers'
 import type {
   ContractSource,
   IEtherscanClient,
-} from '../../utils/IEtherscanClient'
-import type { DebugTransactionCallResponse } from './DebugTransactionTrace'
-import type { IStatelessProvider } from './IStatelessProvider'
+} from '../../utils/IEtherscanClient.js'
+import type { DebugTransactionCallResponse } from './DebugTransactionTrace.js'
+import type { IStatelessProvider } from './IStatelessProvider.js'
 
 export interface ContractDeployment {
   deployer: EthereumAddress

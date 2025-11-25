@@ -1,9 +1,9 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { utils } from 'ethers'
 
-import { getErrorMessage } from '../../../utils/getErrorMessage'
-import type { IProvider } from '../../provider/IProvider'
-import { toContractValue } from './toContractValue'
+import { getErrorMessage } from '../../../utils/getErrorMessage.js'
+import type { IProvider } from '../../provider/IProvider.js'
+import { toContractValue } from './toContractValue.js'
 
 export const EXEC_REVERT_MSG = 'Execution reverted'
 

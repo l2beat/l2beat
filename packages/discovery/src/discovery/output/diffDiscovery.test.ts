@@ -1,8 +1,8 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { diffDiscovery } from './diffDiscovery'
-import type { EntryParameters } from './types'
+import { diffDiscovery } from './diffDiscovery.js'
+import type { EntryParameters } from './types.js'
 
 describe(diffDiscovery.name, () => {
   const ADDRESS_A = ChainSpecificAddress.random()

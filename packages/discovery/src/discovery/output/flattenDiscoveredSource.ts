@@ -2,9 +2,9 @@ import type { Logger } from '@l2beat/backend-tools'
 import { timed } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { posix } from 'path'
-import { flattenStartingFrom } from '../../flatten/flatten'
-import type { FileContent } from '../../flatten/ParsedFilesManager'
-import type { Analysis } from '../analysis/AddressAnalyzer'
+import { flattenStartingFrom } from '../../flatten/flatten.js'
+import type { FileContent } from '../../flatten/ParsedFilesManager.js'
+import type { Analysis } from '../analysis/AddressAnalyzer.js'
 
 export function flattenDiscoveredSources(
   results: Analysis[],

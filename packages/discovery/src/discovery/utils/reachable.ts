@@ -1,7 +1,8 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
-import uniq from 'lodash/uniq'
-import type { EntryParameters } from '../output/types'
-import { toAddressArray } from './extractors'
+// biome-ignore lint/style/noRestrictedImports: esm
+import { uniq } from 'lodash'
+import type { EntryParameters } from '../output/types.js'
+import { toAddressArray } from './extractors.js'
 
 type ReferenceNode = {
   address: ChainSpecificAddress

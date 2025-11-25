@@ -1,6 +1,6 @@
 import { expect } from 'earl'
-import type { ContractValue } from '../discovery/output/types'
-import { executeBlip } from './executeBlip'
+import type { ContractValue } from '../discovery/output/types.js'
+import { executeBlip } from './executeBlip.js'
 
 describe(executeBlip.name, () => {
   // Contract value tests

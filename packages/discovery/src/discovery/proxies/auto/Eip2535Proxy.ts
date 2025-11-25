@@ -10,8 +10,8 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import type { IProvider } from '../../provider/IProvider'
-import type { ProxyDetails } from '../types'
+import type { IProvider } from '../../provider/IProvider.js'
+import type { ProxyDetails } from '../types.js'
 
 async function getPastUpgrades(
   provider: IProvider,

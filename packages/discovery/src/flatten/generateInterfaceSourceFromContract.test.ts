@@ -1,9 +1,9 @@
 import { expect } from 'earl'
-import { generateInterfaceSourceFromContract } from './generateInterfaceSourceFromContract'
+import { generateInterfaceSourceFromContract } from './generateInterfaceSourceFromContract.js'
 import {
   ParsedFilesManager,
   type TopLevelDeclaration,
-} from './ParsedFilesManager'
+} from './ParsedFilesManager.js'
 
 describe(generateInterfaceSourceFromContract.name, () => {
   it('generates interface from contract', () => {

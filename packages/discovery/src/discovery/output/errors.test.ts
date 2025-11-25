@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { neuterErrors } from './errors'
+import { neuterErrors } from './errors.js'
 
 describe(neuterErrors.name, () => {
   it('multiple entries', () => {

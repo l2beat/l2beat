@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { parseClingoFact } from './clingoparser'
+import { parseClingoFact } from './clingoparser.js'
 
 describe(parseClingoFact.name, () => {
   it('properly parses clingo facts, casting cons to arrays and nil to undefined', () => {

@@ -7,8 +7,8 @@ import {
 import { expect, mockFn, mockObject } from 'earl'
 import { type providers, utils } from 'ethers'
 
-import type { IProvider } from '../../provider/IProvider'
-import { ScrollAccessControlHandler } from './ScrollAccessControlHandler'
+import type { IProvider } from '../../provider/IProvider.js'
+import { ScrollAccessControlHandler } from './ScrollAccessControlHandler.js'
 
 describe(ScrollAccessControlHandler.name, () => {
   const abi = new utils.Interface([

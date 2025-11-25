@@ -1,13 +1,13 @@
 import { assert } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
-import { generateInterfaceSourceFromContract } from './generateInterfaceSourceFromContract'
+import { generateInterfaceSourceFromContract } from './generateInterfaceSourceFromContract.js'
 import {
   type DeclarationFilePair,
   type FileContent,
   type ParsedFile,
   ParsedFilesManager,
-} from './ParsedFilesManager'
-import type { FlattenOptions } from './types'
+} from './ParsedFilesManager.js'
+import type { FlattenOptions } from './types.js'
 
 type EntryType = 'inheritance' | 'dynamic'
 

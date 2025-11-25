@@ -2,13 +2,13 @@ import { assert, ChainSpecificAddress, unique } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
 
-import type { ContractValue } from '../../output/types'
-import type { IProvider } from '../../provider/IProvider'
-import { ProxyDetector } from '../../proxies/ProxyDetector'
-import { get$Implementations } from '../../utils/extractors'
-import { getSighash } from '../getSighash'
-import type { Handler, HandlerResult } from '../Handler'
-import { toContractValue } from '../utils/toContractValue'
+import type { ContractValue } from '../../output/types.js'
+import type { IProvider } from '../../provider/IProvider.js'
+import { ProxyDetector } from '../../proxies/ProxyDetector.js'
+import { get$Implementations } from '../../utils/extractors.js'
+import { getSighash } from '../getSighash.js'
+import type { Handler, HandlerResult } from '../Handler.js'
+import { toContractValue } from '../utils/toContractValue.js'
 
 export type PolygonCDKScheduledTransactionsHandlerDefinition = v.infer<
   typeof PolygonCDKScheduledTransactionsHandlerDefinition

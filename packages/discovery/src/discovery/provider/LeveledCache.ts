@@ -1,4 +1,4 @@
-import type { DiscoveryCache } from './DiscoveryCache'
+import type { DiscoveryCache } from './DiscoveryCache.js'
 
 export class LeveledCache implements DiscoveryCache {
   constructor(

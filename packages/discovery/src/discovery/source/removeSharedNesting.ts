@@ -1,6 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
 import path from 'path'
-import { sanitizePath } from './sanitizePath'
+import { sanitizePath } from './sanitizePath.js'
 
 /**
  * Removes the common directory from all file names.

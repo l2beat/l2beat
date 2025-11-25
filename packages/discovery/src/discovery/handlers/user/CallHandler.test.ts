@@ -1,10 +1,10 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import type { IProvider } from '../../provider/IProvider'
-import { EXEC_REVERT_MSG } from '../utils/callMethod'
-import { toFunctionFragment } from '../utils/toFunctionFragment'
-import { CallHandler } from './CallHandler'
+import type { IProvider } from '../../provider/IProvider.js'
+import { EXEC_REVERT_MSG } from '../utils/callMethod.js'
+import { toFunctionFragment } from '../utils/toFunctionFragment.js'
+import { CallHandler } from './CallHandler.js'
 
 describe(CallHandler.name, () => {
   describe('dependencies', () => {

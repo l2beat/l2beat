@@ -1,4 +1,4 @@
-import type { ProxyDetails } from '../types'
+import type { ProxyDetails } from '../types.js'
 
 export function getImmutableProxy(): Promise<ProxyDetails | undefined> {
   return Promise.resolve({

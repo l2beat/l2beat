@@ -1,19 +1,19 @@
-import { resolveCategory } from '../analysis/category'
-import type { TemplateService } from '../analysis/TemplateService'
+import { resolveCategory } from '../analysis/category.js'
+import type { TemplateService } from '../analysis/TemplateService.js'
 import type {
   ColorConfig,
   ColorContract,
   ExternalReference,
-} from '../config/ColorConfig'
-import { makeEntryColorConfig } from '../config/colorUtils'
+} from '../config/ColorConfig.js'
+import { makeEntryColorConfig } from '../config/colorUtils.js'
 import type {
   ColorOutput,
   FieldMeta,
   StructureEntry,
   StructureOutput,
-} from '../output/types'
-import { get$Implementations } from '../utils/extractors'
-import { interpolateString } from '../utils/interpolateString'
+} from '../output/types.js'
+import { get$Implementations } from '../utils/extractors.js'
+import { interpolateString } from '../utils/interpolateString.js'
 
 export function colorize(
   config: ColorConfig,

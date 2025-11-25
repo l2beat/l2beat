@@ -1,14 +1,14 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
-import type { ContractValue } from '../../output/types'
+import type { ContractValue } from '../../output/types.js'
 
-import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
-import { callMethod } from '../utils/callMethod'
-import { getFunctionFragment } from '../utils/getFunctionFragment'
-import { toContractValue } from '../utils/toContractValue'
-import { toEventFragment } from '../utils/toEventFragment'
+import type { IProvider } from '../../provider/IProvider.js'
+import type { Handler, HandlerResult } from '../Handler.js'
+import { callMethod } from '../utils/callMethod.js'
+import { getFunctionFragment } from '../utils/getFunctionFragment.js'
+import { toContractValue } from '../utils/toContractValue.js'
+import { toEventFragment } from '../utils/toEventFragment.js'
 
 export type StarkWareGovernanceHandlerDefinition = v.infer<
   typeof StarkWareGovernanceHandlerDefinition

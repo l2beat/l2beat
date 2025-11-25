@@ -4,27 +4,30 @@ import type {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import type { DiscoveryCustomType, Entrypoint } from '../config/StructureConfig'
-import type { StructureContractConfig } from '../config/structureUtils'
-import type { HandlerResult } from '../handlers/Handler'
-import type { HandlerExecutor } from '../handlers/HandlerExecutor'
-import type { ContractValue } from '../output/types'
-import type { IProvider } from '../provider/IProvider'
-import type { ProxyDetector } from '../proxies/ProxyDetector'
-import { getImplementationNames } from '../source/getDerivedName'
-import { getLibraries } from '../source/getLibraries'
+import type {
+  DiscoveryCustomType,
+  Entrypoint,
+} from '../config/StructureConfig.js'
+import type { StructureContractConfig } from '../config/structureUtils.js'
+import type { HandlerResult } from '../handlers/Handler.js'
+import type { HandlerExecutor } from '../handlers/HandlerExecutor.js'
+import type { ContractValue } from '../output/types.js'
+import type { IProvider } from '../provider/IProvider.js'
+import type { ProxyDetector } from '../proxies/ProxyDetector.js'
+import { getImplementationNames } from '../source/getDerivedName.js'
+import { getLibraries } from '../source/getLibraries.js'
 import type {
   PerContractSource,
   SourceCodeService,
-} from '../source/SourceCodeService'
+} from '../source/SourceCodeService.js'
 import {
   get$Beacons,
   get$Implementations,
   get$PastUpgrades,
-} from '../utils/extractors'
-import { codeIsEOA } from './codeIsEOA'
-import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
-import type { TemplateService } from './TemplateService'
+} from '../utils/extractors.js'
+import { codeIsEOA } from './codeIsEOA.js'
+import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates.js'
+import type { TemplateService } from './TemplateService.js'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA | Reference
 

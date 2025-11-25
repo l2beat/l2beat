@@ -3,9 +3,9 @@ import {
   ChainSpecificAddress,
   type EthereumAddress,
 } from '@l2beat/shared-pure'
-import type { IProvider } from '../../provider/IProvider'
-import { getModules } from '../../utils/getSafeModules'
-import type { ProxyDetails } from '../types'
+import type { IProvider } from '../../provider/IProvider.js'
+import { getModules } from '../../utils/getSafeModules.js'
+import type { ProxyDetails } from '../types.js'
 
 // TODO: (sz-piotr) Is this simply equivalent to 0x66 and 0x67?
 const AVATAR_SLOT = Bytes.fromHex(

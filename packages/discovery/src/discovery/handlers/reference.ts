@@ -1,8 +1,8 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import type { ContractValue } from '../output/types'
-import type { IProvider } from '../provider/IProvider'
-import type { HandlerResult } from './Handler'
+import type { ContractValue } from '../output/types.js'
+import type { IProvider } from '../provider/IProvider.js'
+import type { HandlerResult } from './Handler.js'
 
 const REFERENCE_REGEX = /^\{\{\s*[$a-z_][$.a-z\d_]*\s*\}\}$/i
 export const Reference = v.string().check((v) => REFERENCE_REGEX.test(v))

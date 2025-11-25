@@ -2,8 +2,8 @@ import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
 
-import type { IProvider } from '../../provider/IProvider'
-import { callMethod } from './callMethod'
+import type { IProvider } from '../../provider/IProvider.js'
+import { callMethod } from './callMethod.js'
 
 describe('callMethod', () => {
   const ADDRESS = ChainSpecificAddress.random()

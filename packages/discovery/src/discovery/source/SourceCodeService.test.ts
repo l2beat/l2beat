@@ -1,9 +1,9 @@
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import type { ContractSource } from '../../utils/IEtherscanClient'
-import type { IProvider } from '../provider/IProvider'
-import { SourceCodeService } from './SourceCodeService'
+import type { ContractSource } from '../../utils/IEtherscanClient.js'
+import type { IProvider } from '../provider/IProvider.js'
+import { SourceCodeService } from './SourceCodeService.js'
 
 describe(SourceCodeService.name, () => {
   const FOO_ADDRESS = ChainSpecificAddress.random()

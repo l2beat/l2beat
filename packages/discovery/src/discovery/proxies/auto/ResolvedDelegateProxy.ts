@@ -5,7 +5,6 @@ import {
   type EthereumAddress,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import type { Indexed, LogDescription } from 'ethers/lib/utils'
 /*
 Custom proxy introduced originally by Optimism team
 It stores (immutable) libAddressManager and implementation name
@@ -16,10 +15,10 @@ Implementation address is resolved by calling the libAddressManager.getAddress(i
 It does not have an owner
 
 */
-import type { ContractValue } from '../../output/types'
-import type { IProvider } from '../../provider/IProvider'
-import { getPastUpgradesSingleEvent } from '../pastUpgrades'
-import type { ProxyDetails } from '../types'
+import type { ContractValue } from '../../output/types.js'
+import type { IProvider } from '../../provider/IProvider.js'
+import { getPastUpgradesSingleEvent } from '../pastUpgrades.js'
+import type { ProxyDetails } from '../types.js'
 
 async function getAddressManager(
   provider: IProvider,
@@ -112,11 +111,11 @@ export async function detectResolvedDelegateProxy(
     provider,
     addressManager,
     'event AddressSet(string indexed name, address implementation, address oldAddress)',
-    (log: LogDescription) => {
-      let name: Indexed | undefined
+    (log: utils.LogDescription) => {
+      let name: utils.Indexed | undefined
       log.eventFragment.inputs.forEach((input, index) => {
         if (input.name === 'name') {
-          name = log.args[index] as Indexed
+          name = log.args[index] as utils.Indexed
         }
       })
       return name?.hash === utils.id(implementationName)

@@ -1,15 +1,16 @@
 import { existsSync, readFileSync } from 'fs'
-import merge from 'lodash/merge'
+// biome-ignore lint/style/noRestrictedImports: esm
+import { merge } from 'lodash'
 import { join } from 'path'
-import type { TemplateService } from '../analysis/TemplateService'
-import type { ConfigReader } from '../config/ConfigReader'
-import type { PermissionsConfig } from '../config/PermissionConfig'
-import type { StructureEntry } from '../output/types'
-import { interpolateModelTemplate } from './interpolate'
+import type { TemplateService } from '../analysis/TemplateService.js'
+import type { ConfigReader } from '../config/ConfigReader.js'
+import type { PermissionsConfig } from '../config/PermissionConfig.js'
+import type { StructureEntry } from '../output/types.js'
+import { interpolateModelTemplate } from './interpolate.js'
 import {
   buildPermissionsModel,
   contractValuesForInterpolation,
-} from './relations'
+} from './relations.js'
 
 export function generateClingoFromPermissionsConfig(
   entry: StructureEntry,

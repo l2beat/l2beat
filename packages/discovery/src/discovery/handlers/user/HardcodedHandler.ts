@@ -1,6 +1,6 @@
 import { v } from '@l2beat/validate'
 
-import type { Handler, HandlerResult } from '../Handler'
+import type { Handler, HandlerResult } from '../Handler.js'
 
 export type HardCodedDefinition = v.infer<typeof HardCodedDefinition>
 export const HardCodedDefinition = v.strictObject({

@@ -1,5 +1,5 @@
-import type { Transaction } from '../../../../utils/IEtherscanClient'
-import type { IProvider } from '../../../provider/IProvider'
+import type { Transaction } from '../../../../utils/IEtherscanClient.js'
+import type { IProvider } from '../../../provider/IProvider.js'
 
 /**
  * https://eips.ethereum.org/EIPS/eip-4844#parameters

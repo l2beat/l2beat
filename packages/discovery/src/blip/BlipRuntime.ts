@@ -1,14 +1,15 @@
 import { assert } from '@l2beat/shared-pure'
-import zip from 'lodash/zip'
+// biome-ignore lint/style/noRestrictedImports: esm
+import { zip } from 'lodash'
 import type {
   ContractValue,
   DiscoveryCustomType,
-} from '../discovery/output/types'
+} from '../discovery/output/types.js'
 import {
   getCustomTypeCaster,
   isCustomTypeCaster,
-} from '../discovery/type-casters'
-import type { BlipSexp } from './type'
+} from '../discovery/type-casters/index.js'
+import type { BlipSexp } from './type.js'
 
 export class BlipRuntime {
   public readonly usedTypesSet: Set<DiscoveryCustomType> = new Set()

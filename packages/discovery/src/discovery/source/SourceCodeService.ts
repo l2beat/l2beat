@@ -1,12 +1,14 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
-import zip from 'lodash/zip'
 
-import { contractFlatteningHash, sha2_256bit } from '../../flatten/utils'
-import type { ContractSource } from '../../utils/IEtherscanClient'
-import type { IProvider } from '../provider/IProvider'
-import { deduplicateAbi } from './deduplicateAbi'
-import { getLegacyDerivedName } from './getDerivedName'
-import { skipIgnoredFunctions } from './skipIgnoredFunctions'
+// biome-ignore lint/style/noRestrictedImports: esm
+import { zip } from 'lodash'
+
+import { contractFlatteningHash, sha2_256bit } from '../../flatten/utils.js'
+import type { ContractSource } from '../../utils/IEtherscanClient.js'
+import type { IProvider } from '../provider/IProvider.js'
+import { deduplicateAbi } from './deduplicateAbi.js'
+import { getLegacyDerivedName } from './getDerivedName.js'
+import { skipIgnoredFunctions } from './skipIgnoredFunctions.js'
 
 export interface PerContractSource {
   hash?: string

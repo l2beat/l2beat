@@ -1,8 +1,8 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
-import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import type { IProvider } from '../../provider/IProvider.js'
+import type { Handler, HandlerResult } from '../Handler.js'
 
 export type ZKsyncEraValidatorsHandlerDefinition = v.infer<
   typeof ZKsyncEraValidatorsHandlerDefinition

@@ -1,8 +1,8 @@
 import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { type providers, utils } from 'ethers'
-import type { IProvider } from '../../provider/IProvider'
-import { EventHandler, EventHandlerDefinition } from './EventHandler'
+import type { IProvider } from '../../provider/IProvider.js'
+import { EventHandler, EventHandlerDefinition } from './EventHandler.js'
 
 describe(EventHandler.name, () => {
   const stringABI = [

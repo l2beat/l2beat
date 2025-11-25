@@ -1,10 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { BatchingAndCachingProvider } from './BatchingAndCachingProvider'
-import type { LowLevelProvider } from './LowLevelProvider'
-import type { MulticallClient } from './multicall/MulticallClient'
-import type { ReorgAwareCache } from './ReorgAwareCache'
+import { BatchingAndCachingProvider } from './BatchingAndCachingProvider.js'
+import type { LowLevelProvider } from './LowLevelProvider.js'
+import type { MulticallClient } from './multicall/MulticallClient.js'
+import type { ReorgAwareCache } from './ReorgAwareCache.js'
 
 describe(BatchingAndCachingProvider.name, () => {
   const logger = Logger.SILENT

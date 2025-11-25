@@ -11,15 +11,15 @@ import {
   positional,
   string,
 } from 'cmd-ts'
-import { getChainConfigs } from '../config/config.discovery'
+import { getChainConfigs } from '../config/config.discovery.js'
 import type {
   DiscoveryChainConfig,
   DiscoveryModuleConfig,
-} from '../config/types'
-import { ConfigReader } from '../discovery/config/ConfigReader'
-import { getDiscoveryPaths } from '../discovery/config/getDiscoveryPaths'
-import { dryRunDiscovery, runDiscovery } from '../discovery/runDiscovery'
-import { configureLogger } from './logger'
+} from '../config/types.js'
+import { ConfigReader } from '../discovery/config/ConfigReader.js'
+import { getDiscoveryPaths } from '../discovery/config/getDiscoveryPaths.js'
+import { dryRunDiscovery, runDiscovery } from '../discovery/runDiscovery.js'
+import { configureLogger } from './logger.js'
 
 export const DiscoverCommandArgs = {
   project: positional({

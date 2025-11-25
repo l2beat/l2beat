@@ -1,6 +1,6 @@
 import { celestiaTools } from '@l2beat/shared'
-import type { Transaction } from '../../../../utils/IEtherscanClient'
-import type { IProvider } from '../../../provider/IProvider'
+import type { Transaction } from '../../../../utils/IEtherscanClient.js'
+import type { IProvider } from '../../../provider/IProvider.js'
 
 export function checkForCelestia(sequencerTxs: Transaction[]) {
   const celestiaCommitments = sequencerTxs.filter((tx) =>

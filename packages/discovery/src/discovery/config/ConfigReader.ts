@@ -8,13 +8,13 @@ import {
 import { v } from '@l2beat/validate'
 import { createHash } from 'crypto'
 import { existsSync, readdirSync, readFileSync } from 'fs'
-import merge from 'lodash/merge'
-import uniq from 'lodash/uniq'
+// biome-ignore lint/style/noRestrictedImports: esm
+import { merge, uniq } from 'lodash'
 import path from 'path'
-import { fileExistsCaseSensitive } from '../../utils/fsLayer'
-import type { DiscoveryOutput } from '../output/types'
-import { readJsonc } from '../utils/readJsonc'
-import { ConfigRegistry } from './ConfigRegistry'
+import { fileExistsCaseSensitive } from '../../utils/fsLayer.js'
+import type { DiscoveryOutput } from '../output/types.js'
+import { readJsonc } from '../utils/readJsonc.js'
+import { ConfigRegistry } from './ConfigRegistry.js'
 
 const HASH_LINE_PREFIX = 'Generated with discovered.json: '
 

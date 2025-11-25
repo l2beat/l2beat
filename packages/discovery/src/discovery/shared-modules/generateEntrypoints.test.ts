@@ -1,8 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockFn } from 'earl'
-import type { Entrypoint } from '../config/StructureConfig'
-import { generateEntrypoints } from './generateEntrypoints'
+import type { Entrypoint } from '../config/StructureConfig.js'
+import { generateEntrypoints } from './generateEntrypoints.js'
 
 const entrypoint1: Entrypoint = {
   project: 'project1',

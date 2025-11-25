@@ -1,9 +1,9 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import type { IProvider } from '../../provider/IProvider'
-import { toFunctionFragment } from '../utils/toFunctionFragment'
-import { SimpleMethodHandler } from './SimpleMethodHandler'
+import type { IProvider } from '../../provider/IProvider.js'
+import { toFunctionFragment } from '../utils/toFunctionFragment.js'
+import { SimpleMethodHandler } from './SimpleMethodHandler.js'
 
 describe(SimpleMethodHandler.name, () => {
   it('can correctly call balanceOf', async () => {

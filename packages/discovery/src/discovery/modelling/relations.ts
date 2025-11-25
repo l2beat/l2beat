@@ -2,11 +2,11 @@ import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type {
   ContractPermission,
   RawPermissionConfiguration,
-} from '../config/PermissionConfig'
-import type { ContractValue, StructureEntry } from '../output/types'
-import { get$Admins, toAddressArray } from '../utils/extractors'
-import { interpolateString } from '../utils/interpolateString'
-import { interpolateModelTemplate } from './interpolate'
+} from '../config/PermissionConfig.js'
+import type { ContractValue, StructureEntry } from '../output/types.js'
+import { get$Admins, toAddressArray } from '../utils/extractors.js'
+import { interpolateString } from '../utils/interpolateString.js'
+import { interpolateModelTemplate } from './interpolate.js'
 
 interface InlineTemplate {
   content: string

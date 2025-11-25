@@ -1,8 +1,8 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { getMulticall3Config } from '../discovery/provider/multicall/MulticallConfig'
-import type { MulticallConfig } from '../discovery/provider/multicall/types'
-import type { EtherscanUnsupportedMethods } from '../utils/IEtherscanClient'
+import { getMulticall3Config } from '../discovery/provider/multicall/MulticallConfig.js'
+import type { MulticallConfig } from '../discovery/provider/multicall/types.js'
+import type { EtherscanUnsupportedMethods } from '../utils/IEtherscanClient.js'
 
 interface ChainConfig {
   name: string

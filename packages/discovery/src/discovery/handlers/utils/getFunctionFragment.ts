@@ -1,6 +1,6 @@
 import type { utils } from 'ethers'
 
-import { toFunctionFragment } from './toFunctionFragment'
+import { toFunctionFragment } from './toFunctionFragment.js'
 
 export function getFunctionFragment(
   method: string,

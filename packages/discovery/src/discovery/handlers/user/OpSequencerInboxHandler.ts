@@ -5,15 +5,15 @@ import {
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
-import type { Transaction } from '../../../utils/IEtherscanClient'
-import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import type { Transaction } from '../../../utils/IEtherscanClient.js'
+import type { IProvider } from '../../provider/IProvider.js'
+import type { Handler, HandlerResult } from '../Handler.js'
 import {
   generateReferenceInput,
   getReferencedName,
   resolveReference,
-} from '../reference'
-import { valueToAddress } from '../utils/valueToAddress'
+} from '../reference.js'
+import { valueToAddress } from '../utils/valueToAddress.js'
 
 export type OpStackSequencerInboxHandlerDefinition = v.infer<
   typeof OpStackSequencerInboxHandlerDefinition

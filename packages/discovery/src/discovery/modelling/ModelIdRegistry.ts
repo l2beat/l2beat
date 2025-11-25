@@ -1,6 +1,6 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import type { ClingoFact } from './clingoparser'
-import type { KnowledgeBase } from './KnowledgeBase'
+import type { ClingoFact } from './clingoparser.js'
+import type { KnowledgeBase } from './KnowledgeBase.js'
 
 interface AddressData {
   modelId: string

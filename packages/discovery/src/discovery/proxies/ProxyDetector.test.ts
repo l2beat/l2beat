@@ -1,8 +1,8 @@
 import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import type { IProvider } from '../provider/IProvider'
-import { MANUAL_DETECTORS, ProxyDetector } from './ProxyDetector'
-import type { ProxyDetails } from './types'
+import type { IProvider } from '../provider/IProvider.js'
+import { MANUAL_DETECTORS, ProxyDetector } from './ProxyDetector.js'
+import type { ProxyDetails } from './types.js'
 
 describe(ProxyDetector.name, () => {
   const address = ChainSpecificAddress.random()

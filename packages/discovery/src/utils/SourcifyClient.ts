@@ -8,7 +8,7 @@ import {
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
-import type { ContractSource, IEtherscanClient } from './IEtherscanClient'
+import type { ContractSource, IEtherscanClient } from './IEtherscanClient.js'
 
 const URL = 'https://sourcify.dev/server'
 

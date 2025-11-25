@@ -1,57 +1,57 @@
-export { DiscoverCommandArgs, discover } from './cli/discoverCommand'
-export { modelPermissionsCommand } from './cli/modelPermissionsCommand'
+export { DiscoverCommandArgs, discover } from './cli/discoverCommand.js'
+export { modelPermissionsCommand } from './cli/modelPermissionsCommand.js'
 export {
   getChainConfig,
   getChainConfigs,
   getChainFullName,
   getChainShortName,
   isChainShortName,
-} from './config/config.discovery'
+} from './config/config.discovery.js'
 export type {
   DiscoveryChainConfig,
   DiscoveryModuleConfig,
-} from './config/types'
+} from './config/types.js'
 export {
   AddressAnalyzer,
   type Analysis,
-} from './discovery/analysis/AddressAnalyzer'
-export { codeIsEOA } from './discovery/analysis/codeIsEOA'
-export { getShapeFromOutputEntry } from './discovery/analysis/findShape'
-export { TemplateService } from './discovery/analysis/TemplateService'
-export { colorize } from './discovery/colorize/colorize'
-export { ConfigReader } from './discovery/config/ConfigReader'
-export { ConfigRegistry } from './discovery/config/ConfigRegistry'
-export type { DiscoveryConfig } from './discovery/config/ConfigSchema'
-export { ConfigWriter } from './discovery/config/ConfigWriter'
-export { makeEntryColorConfig } from './discovery/config/colorUtils'
+} from './discovery/analysis/AddressAnalyzer.js'
+export { codeIsEOA } from './discovery/analysis/codeIsEOA.js'
+export { getShapeFromOutputEntry } from './discovery/analysis/findShape.js'
+export { TemplateService } from './discovery/analysis/TemplateService.js'
+export { colorize } from './discovery/colorize/colorize.js'
+export { ConfigReader } from './discovery/config/ConfigReader.js'
+export { ConfigRegistry } from './discovery/config/ConfigRegistry.js'
+export type { DiscoveryConfig } from './discovery/config/ConfigSchema.js'
+export { ConfigWriter } from './discovery/config/ConfigWriter.js'
+export { makeEntryColorConfig } from './discovery/config/colorUtils.js'
 export {
   type DiscoveryPaths,
   getDiscoveryPaths,
-} from './discovery/config/getDiscoveryPaths'
-export { hashJsonStable } from './discovery/config/hashJsonStable'
+} from './discovery/config/getDiscoveryPaths.js'
+export { hashJsonStable } from './discovery/config/hashJsonStable.js'
 export {
   BasePermissionEntries,
   Permission,
   RolePermissionEntries,
-} from './discovery/config/PermissionConfig'
+} from './discovery/config/PermissionConfig.js'
 export {
   makeEntryStructureConfig,
   type StructureContractConfig as ContractConfig,
-} from './discovery/config/structureUtils'
+} from './discovery/config/structureUtils.js'
 export {
   type DiscoveryCounter,
   SimpleDiscoveryCounter,
-} from './discovery/engine/DiscoveryCounter'
-export { DiscoveryEngine } from './discovery/engine/DiscoveryEngine'
-export { getDiscoveryEngine } from './discovery/getDiscoveryEngine'
-export { HandlerExecutor } from './discovery/handlers/HandlerExecutor'
+} from './discovery/engine/DiscoveryCounter.js'
+export { DiscoveryEngine } from './discovery/engine/DiscoveryEngine.js'
+export { getDiscoveryEngine } from './discovery/getDiscoveryEngine.js'
+export { HandlerExecutor } from './discovery/handlers/HandlerExecutor.js'
 export {
   type ClingoFact,
   type ClingoValue,
-} from './discovery/modelling/clingoparser'
-export { combinePermissionsIntoDiscovery } from './discovery/modelling/combinePermissionsIntoDiscovery'
-export { KnowledgeBase } from './discovery/modelling/KnowledgeBase'
-export { ModelIdRegistry } from './discovery/modelling/ModelIdRegistry'
+} from './discovery/modelling/clingoparser.js'
+export { combinePermissionsIntoDiscovery } from './discovery/modelling/combinePermissionsIntoDiscovery.js'
+export { KnowledgeBase } from './discovery/modelling/KnowledgeBase.js'
+export { ModelIdRegistry } from './discovery/modelling/ModelIdRegistry.js'
 export {
   DiscoveryRegistry,
   type DiscoveryTimestamps as DiscoveryBlockNumbers,
@@ -59,78 +59,81 @@ export {
   generatePermissionConfigHash,
   getDependenciesToDiscoverForProject,
   modelPermissions,
-} from './discovery/modelling/modelPermissions'
-export { diffContracts, type FieldDiff } from './discovery/output/diffContracts'
+} from './discovery/modelling/modelPermissions.js'
+export {
+  diffContracts,
+  type FieldDiff,
+} from './discovery/output/diffContracts.js'
 export {
   type DiscoveryDiff,
   diffDiscovery,
-} from './discovery/output/diffDiscovery'
+} from './discovery/output/diffDiscovery.js'
 export {
   contractDiffToMarkdown,
   discoveryDiffToMarkdown,
-} from './discovery/output/diffToMarkdown'
-export { neuterErrors } from './discovery/output/errors'
-export { flattenDiscoveredSources } from './discovery/output/flattenDiscoveredSource'
-export { saveDiscoveredJson } from './discovery/output/saveDiscoveryResult'
-export { generateStructureHash } from './discovery/output/structureOutput'
+} from './discovery/output/diffToMarkdown.js'
+export { neuterErrors } from './discovery/output/errors.js'
+export { flattenDiscoveredSources } from './discovery/output/flattenDiscoveredSource.js'
+export { saveDiscoveredJson } from './discovery/output/saveDiscoveryResult.js'
+export { generateStructureHash } from './discovery/output/structureOutput.js'
 export {
   combineStructureAndColor,
   toDiscoveryOutput,
   toRawDiscoveryOutput,
-} from './discovery/output/toDiscoveryOutput'
+} from './discovery/output/toDiscoveryOutput.js'
 export type {
   ContractValue,
   DiscoveryOutput,
   EntryParameters,
   ReceivedPermission,
   ResolvedPermissionPath,
-} from './discovery/output/types'
-export { AllProviders } from './discovery/provider/AllProviders'
-export { type DiscoveryCache } from './discovery/provider/DiscoveryCache'
-export { InMemoryCache } from './discovery/provider/InMemoryCache'
-export type { IProvider } from './discovery/provider/IProvider'
-export { LeveledCache } from './discovery/provider/LeveledCache'
-export { MulticallClient } from './discovery/provider/multicall/MulticallClient'
-export { getMulticall3Config } from './discovery/provider/multicall/MulticallConfig'
-export type { MulticallConfig } from './discovery/provider/multicall/types'
-export { NoCache } from './discovery/provider/NoCache'
-export { RateLimitedProvider } from './discovery/provider/RateLimitedProvider'
-export { SQLiteCache } from './discovery/provider/SQLiteCache'
+} from './discovery/output/types.js'
+export { AllProviders } from './discovery/provider/AllProviders.js'
+export { type DiscoveryCache } from './discovery/provider/DiscoveryCache.js'
+export { InMemoryCache } from './discovery/provider/InMemoryCache.js'
+export type { IProvider } from './discovery/provider/IProvider.js'
+export { LeveledCache } from './discovery/provider/LeveledCache.js'
+export { MulticallClient } from './discovery/provider/multicall/MulticallClient.js'
+export { getMulticall3Config } from './discovery/provider/multicall/MulticallConfig.js'
+export type { MulticallConfig } from './discovery/provider/multicall/types.js'
+export { NoCache } from './discovery/provider/NoCache.js'
+export { RateLimitedProvider } from './discovery/provider/RateLimitedProvider.js'
+export { SQLiteCache } from './discovery/provider/SQLiteCache.js'
 export {
   type AllProviderStats,
   ProviderMeasurement,
   ProviderStats,
-} from './discovery/provider/Stats'
-export { ProxyDetector } from './discovery/proxies/ProxyDetector'
-export { generateEntrypoints } from './discovery/shared-modules/generateEntrypoints'
-export { deduplicateAbi } from './discovery/source/deduplicateAbi'
-export { SourceCodeService } from './discovery/source/SourceCodeService'
-export { asStructured } from './discovery/type-casters/asStructured'
-export { get$Implementations } from './discovery/utils/extractors'
-export { getContractField } from './discovery/utils/metaGetters'
-export { normalizeDiffPath } from './discovery/utils/normalizeDiffPath'
-export { getReachableEntries } from './discovery/utils/reachable'
-export { readJsonc } from './discovery/utils/readJsonc'
-export { sortBySeverity } from './discovery/utils/sortDiffs'
-export { flattenStartingFrom } from './flatten/flatten'
-export { format } from './flatten/format'
-export { ParsedFilesManager } from './flatten/ParsedFilesManager'
-export type { HashedChunks, HashedFileContent } from './flatten/utils'
+} from './discovery/provider/Stats.js'
+export { ProxyDetector } from './discovery/proxies/ProxyDetector.js'
+export { generateEntrypoints } from './discovery/shared-modules/generateEntrypoints.js'
+export { deduplicateAbi } from './discovery/source/deduplicateAbi.js'
+export { SourceCodeService } from './discovery/source/SourceCodeService.js'
+export { asStructured } from './discovery/type-casters/asStructured.js'
+export { get$Implementations } from './discovery/utils/extractors.js'
+export { getContractField } from './discovery/utils/metaGetters.js'
+export { normalizeDiffPath } from './discovery/utils/normalizeDiffPath.js'
+export { getReachableEntries } from './discovery/utils/reachable.js'
+export { readJsonc } from './discovery/utils/readJsonc.js'
+export { sortBySeverity } from './discovery/utils/sortDiffs.js'
+export { flattenStartingFrom } from './flatten/flatten.js'
+export { format } from './flatten/format.js'
+export { ParsedFilesManager } from './flatten/ParsedFilesManager.js'
+export type { HashedChunks, HashedFileContent } from './flatten/utils.js'
 export {
   buildSimilarityHashmap,
   combineImplementationHashes,
   estimateSimilarity,
   flatteningHash,
   getHashToBeMatched,
-} from './flatten/utils'
+} from './flatten/utils.js'
 export {
   type ContractConfigSchema,
   type DiscoveryConfigSchema,
-} from './schemas/schemas'
-export { EtherscanClient } from './utils/EtherscanClient'
-export { getErrorMessage } from './utils/getErrorMessage'
+} from './schemas/schemas.js'
+export { EtherscanClient } from './utils/EtherscanClient.js'
+export { getErrorMessage } from './utils/getErrorMessage.js'
 export {
   type ExplorerConfig,
   getExplorerClient,
   type IEtherscanClient,
-} from './utils/IEtherscanClient'
+} from './utils/IEtherscanClient.js'

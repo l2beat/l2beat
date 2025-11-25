@@ -1,15 +1,16 @@
 import { getErrorMessage } from '@l2beat/shared-pure'
-import merge from 'lodash/merge'
-import { BlipRuntime } from '../../blip/BlipRuntime'
+// biome-ignore lint/style/noRestrictedImports: esm
+import { merge } from 'lodash'
+import { BlipRuntime } from '../../blip/BlipRuntime.js'
 import type {
   DiscoveryCustomType,
   StructureContract,
-} from '../config/StructureConfig'
-import type { EntryParameters } from '../output/types'
-import { asStructured } from '../type-casters/asStructured'
-import { prefixAddresses } from '../utils/prefixAddresses'
-import type { HandlerResult } from './Handler'
-import { orderByCopyDependencies } from './orderByCopyDependencies'
+} from '../config/StructureConfig.js'
+import type { EntryParameters } from '../output/types.js'
+import { asStructured } from '../type-casters/asStructured.js'
+import { prefixAddresses } from '../utils/prefixAddresses.js'
+import type { HandlerResult } from './Handler.js'
+import { orderByCopyDependencies } from './orderByCopyDependencies.js'
 
 export function decodeHandlerResults(
   longChain: string,

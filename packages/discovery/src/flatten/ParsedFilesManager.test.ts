@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { type FileContent, ParsedFilesManager } from './ParsedFilesManager'
+import { type FileContent, ParsedFilesManager } from './ParsedFilesManager.js'
 
 describe(ParsedFilesManager.name, () => {
   const EMPTY_REMAPPINGS: string[] = []
@@ -122,8 +122,8 @@ describe(ParsedFilesManager.name, () => {
         {
           path: 'Importing.sol',
           content: `
-          import "./ImportedAsAll.sol";
-          import { S1 as Alias1 } from "./ImportedSelective.sol";
+          import "./ImportedAsAll.sol.js";
+          import { S1 as Alias1 } from "./ImportedSelective.sol.js";
           contract R1 { function r1() public {} }
           `,
         },
@@ -163,8 +163,8 @@ describe(ParsedFilesManager.name, () => {
         {
           path: 'Importing.sol',
           content: `
-          import "./src/////ImportedAsAll.sol";
-          import { S1 as Alias1 } from ".////src//ImportedSelective.sol";
+          import "./src/////ImportedAsAll.sol.js";
+          import { S1 as Alias1 } from ".////src//ImportedSelective.sol.js";
           contract R1 { function r1() public {} }
           `,
         },
@@ -247,7 +247,7 @@ describe(ParsedFilesManager.name, () => {
         {
           path: 'Importing.sol',
           content: `
-          import "./ImportedAsAll.sol";
+          import "./ImportedAsAll.sol.js";
           contract R1 { function r1() public { L1.S1 memory s; L2.f1(); } }
           `,
         },
@@ -276,7 +276,7 @@ describe(ParsedFilesManager.name, () => {
         {
           path: 'Importing.sol',
           content: `
-          import "./ImportedAsAll.sol";
+          import "./ImportedAsAll.sol.js";
           contract R1 { function r1() public {
               L1.S1 memory s;
               L2.f1();
@@ -309,7 +309,7 @@ describe(ParsedFilesManager.name, () => {
         {
           path: 'Usage.sol',
           content: `
-          import "./Globals.sol";
+          import "./Globals.sol.js";
           contract User {
             function doSomething() public {
               emit EventHappened(GLOBAL_VALUE, msg.sender);

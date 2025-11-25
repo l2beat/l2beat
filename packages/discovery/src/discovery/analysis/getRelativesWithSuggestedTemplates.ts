@@ -1,9 +1,9 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 
-import type { StructureContractField } from '../config/StructureConfig'
-import type { HandlerResult } from '../handlers/Handler'
-import { toAddressArray } from '../utils/extractors'
-import type { AddressesWithTemplates } from './AddressAnalyzer'
+import type { StructureContractField } from '../config/StructureConfig.js'
+import type { HandlerResult } from '../handlers/Handler.js'
+import { toAddressArray } from '../utils/extractors.js'
+import type { AddressesWithTemplates } from './AddressAnalyzer.js'
 
 export function getRelativesWithSuggestedTemplates(
   parameters: HandlerResult[],

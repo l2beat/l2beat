@@ -1,13 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import type { IProvider } from '../provider/IProvider'
-import { executeHandlers } from './executeHandlers'
-import type { Handler, HandlerResult } from './Handler'
-import { SimpleMethodHandler } from './system/SimpleMethodHandler'
-import { ArrayHandler, getArrayFragment } from './user/ArrayHandler'
-import { StorageHandler } from './user/StorageHandler'
-import { toFunctionFragment } from './utils/toFunctionFragment'
+import type { IProvider } from '../provider/IProvider.js'
+import { executeHandlers } from './executeHandlers.js'
+import type { Handler, HandlerResult } from './Handler.js'
+import { SimpleMethodHandler } from './system/SimpleMethodHandler.js'
+import { ArrayHandler, getArrayFragment } from './user/ArrayHandler.js'
+import { StorageHandler } from './user/StorageHandler.js'
+import { toFunctionFragment } from './utils/toFunctionFragment.js'
 
 describe(executeHandlers.name, () => {
   function providerWithStorage(layout: Record<string, number>) {

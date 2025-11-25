@@ -1,7 +1,8 @@
 import { assert } from '@l2beat/shared-pure'
-import toUpper from 'lodash/toUpper'
-import type { FieldDiff } from './diffContracts'
-import type { DiscoveryDiff } from './diffDiscovery'
+// biome-ignore lint/style/noRestrictedImports: esm
+import { toUpper } from 'lodash'
+import type { FieldDiff } from './diffContracts.js'
+import type { DiscoveryDiff } from './diffDiscovery.js'
 
 export function discoveryDiffToMarkdown(
   diffs: DiscoveryDiff[],

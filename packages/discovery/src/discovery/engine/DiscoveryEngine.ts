@@ -5,20 +5,20 @@ import type {
   AddressAnalyzer,
   AddressesWithTemplates,
   Analysis,
-} from '../analysis/AddressAnalyzer'
-import type { StructureConfig } from '../config/StructureConfig'
+} from '../analysis/AddressAnalyzer.js'
+import type { StructureConfig } from '../config/StructureConfig.js'
 import {
   buildSharedModuleIndex,
   makeEntryStructureConfig,
-} from '../config/structureUtils'
-import type { AllProviders } from '../provider/AllProviders'
+} from '../config/structureUtils.js'
+import type { AllProviders } from '../provider/AllProviders.js'
 import {
   type DiscoveryCounter,
   SimpleDiscoveryCounter,
-} from './DiscoveryCounter'
-import { gatherReachableAddresses } from './gatherReachableAddresses'
-import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
-import { shouldSkip } from './shouldSkip'
+} from './DiscoveryCounter.js'
+import { gatherReachableAddresses } from './gatherReachableAddresses.js'
+import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed.js'
+import { shouldSkip } from './shouldSkip.js'
 
 export class DiscoveryEngine {
   constructor(

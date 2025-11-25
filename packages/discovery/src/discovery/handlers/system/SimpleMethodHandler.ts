@@ -1,11 +1,11 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { utils } from 'ethers'
 
-import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
-import { callMethod } from '../utils/callMethod'
-import { rewriteSolidityIdentifier } from '../utils/rewriteSolidityIdentifier'
-import { toFunctionFragment } from '../utils/toFunctionFragment'
+import type { IProvider } from '../../provider/IProvider.js'
+import type { Handler, HandlerResult } from '../Handler.js'
+import { callMethod } from '../utils/callMethod.js'
+import { rewriteSolidityIdentifier } from '../utils/rewriteSolidityIdentifier.js'
+import { toFunctionFragment } from '../utils/toFunctionFragment.js'
 
 export class SimpleMethodHandler implements Handler {
   readonly field: string

@@ -1,11 +1,12 @@
-import isEmpty from 'lodash/isEmpty'
+// biome-ignore lint/style/noRestrictedImports: esm
+import { isEmpty } from 'lodash'
 import type {
   DiscoveryOutput,
   EntryParameters,
   PermissionsOutput,
   ReceivedPermission,
-} from '../output/types'
-import type { DiscoveryTimestamps } from './modelPermissions'
+} from '../output/types.js'
+import type { DiscoveryTimestamps } from './modelPermissions.js'
 
 // This function transforms permission modelling output such that
 // it matches the historical format of ReceivedPermission.

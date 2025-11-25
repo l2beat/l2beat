@@ -1,6 +1,6 @@
-import { ColorConfig } from './ColorConfig'
-import { PermissionsConfig } from './PermissionConfig'
-import { StructureConfig } from './StructureConfig'
+import { ColorConfig } from './ColorConfig.js'
+import { PermissionsConfig } from './PermissionConfig.js'
+import { StructureConfig } from './StructureConfig.js'
 
 // values inside this class should not be modified during the runtime
 // this will result in the hash being different and break the update mechanism

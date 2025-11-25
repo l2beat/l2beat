@@ -1,8 +1,8 @@
 import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 
-import type { Semver } from '../../../utils/semver'
-import { fetchAccessControl } from '../../handlers/user/AccessControlHandler'
-import type { IProvider } from '../../provider/IProvider'
+import type { Semver } from '../../../utils/semver.js'
+import { fetchAccessControl } from '../../handlers/user/AccessControlHandler.js'
+import type { IProvider } from '../../provider/IProvider.js'
 
 export async function getProxyGovernance(
   provider: IProvider,

@@ -1,5 +1,5 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import type { ContractValue } from '../output/types'
+import type { ContractValue } from '../output/types.js'
 
 export function prefixAddresses(
   longChain: string,

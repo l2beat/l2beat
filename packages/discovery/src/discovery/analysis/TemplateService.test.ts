@@ -1,7 +1,7 @@
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockFn } from 'earl'
-import { getDiscoveryPaths } from '../config/getDiscoveryPaths'
-import { type Shape, TemplateService } from './TemplateService'
+import { getDiscoveryPaths } from '../config/getDiscoveryPaths.js'
+import { type Shape, TemplateService } from './TemplateService.js'
 
 const CORRECT_SUPERCHAIN_CONFIG_ADDR = ChainSpecificAddress(
   'eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C',

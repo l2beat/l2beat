@@ -1,10 +1,10 @@
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import type { ConfigReader } from '../config/ConfigReader'
-import { ConfigRegistry } from '../config/ConfigRegistry'
-import { StructureContract } from '../config/StructureConfig'
-import { buildSharedModuleIndex } from '../config/structureUtils'
-import { shouldSkip } from './shouldSkip'
+import type { ConfigReader } from '../config/ConfigReader.js'
+import { ConfigRegistry } from '../config/ConfigRegistry.js'
+import { StructureContract } from '../config/StructureConfig.js'
+import { buildSharedModuleIndex } from '../config/structureUtils.js'
+import { shouldSkip } from './shouldSkip.js'
 
 describe(shouldSkip.name, () => {
   it('skips addresses marked as ignored', () => {

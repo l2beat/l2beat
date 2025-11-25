@@ -7,12 +7,13 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import zip from 'lodash/zip'
-import type { ContractValue } from '../../output/types'
-import type { IProvider } from '../../provider/IProvider'
-import { getImplementation } from '../auto/Eip1967Proxy'
-import type { DateAddresses } from '../pastUpgrades'
-import type { ProxyDetails } from '../types'
+// biome-ignore lint/style/noRestrictedImports: esm
+import { zip } from 'lodash'
+import type { ContractValue } from '../../output/types.js'
+import type { IProvider } from '../../provider/IProvider.js'
+import { getImplementation } from '../auto/Eip1967Proxy.js'
+import type { DateAddresses } from '../pastUpgrades.js'
+import type { ProxyDetails } from '../types.js'
 
 // keccak256('settlement_module');
 const _SETTLEMENT_MODULE = Bytes.fromHex(

@@ -2,26 +2,26 @@ import { assert, Hash256 } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
-import type { Analysis } from '../analysis/AddressAnalyzer'
-import type { TemplateService } from '../analysis/TemplateService'
-import type { ConfigReader } from '../config/ConfigReader'
-import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
-import type { PermissionsConfig } from '../config/PermissionConfig'
-import type { DiscoveryOutput, PermissionsOutput } from '../output/types'
-import { buildAddressToNameMap } from './buildAddressToNameMap'
-import { type ClingoFact, parseClingoFact } from './clingoparser'
+import type { Analysis } from '../analysis/AddressAnalyzer.js'
+import type { TemplateService } from '../analysis/TemplateService.js'
+import type { ConfigReader } from '../config/ConfigReader.js'
+import type { DiscoveryPaths } from '../config/getDiscoveryPaths.js'
+import type { PermissionsConfig } from '../config/PermissionConfig.js'
+import type { DiscoveryOutput, PermissionsOutput } from '../output/types.js'
+import { buildAddressToNameMap } from './buildAddressToNameMap.js'
+import { type ClingoFact, parseClingoFact } from './clingoparser.js'
 import {
   generateClingoFromModelLp,
   generateClingoFromPermissionsConfig,
   getProjectSpecificModelLp,
-} from './generateClingo'
-import { KnowledgeBase } from './KnowledgeBase'
-import { ModelIdRegistry } from './ModelIdRegistry'
+} from './generateClingo.js'
+import { KnowledgeBase } from './KnowledgeBase.js'
+import { ModelIdRegistry } from './ModelIdRegistry.js'
 import {
   parseEoaWithMajorityUpgradePermissionsFacts,
   parseUltimatePermissionFact,
-} from './parseUltimatePermissionFact'
-import { runClingo } from './runClingo'
+} from './parseUltimatePermissionFact.js'
+import { runClingo } from './runClingo.js'
 
 export type DiscoveryTimestamps = {
   [project: string]: { timestamp: number }

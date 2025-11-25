@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync } from 'fs'
 import path from 'path'
 import sqlite3 from 'sqlite3' // SQLite Client
-import type { DiscoveryCache } from './DiscoveryCache'
+import type { DiscoveryCache } from './DiscoveryCache.js'
 
 const DEFAULT_DATABASE_DIR = 'cache'
 const DEFAULT_DATABASE_FILENAME = 'discovery.sqlite'

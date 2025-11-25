@@ -1,4 +1,4 @@
-import type { Analysis } from './AddressAnalyzer'
+import type { Analysis } from './AddressAnalyzer.js'
 
 export function interpolateString(
   description: string,

@@ -4,13 +4,13 @@ import {
   CoingeckoId,
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { chains } from '../../../../config/chains'
-import type { IProvider } from '../../../provider/IProvider'
-import type { Handler, HandlerResult } from '../../Handler'
-import { getCoingeckoId } from './getCoingeckoId'
-import { getTokenInfo } from './getTokenInfo'
-import { SourceEntry } from './types'
-import { today } from './utils'
+import { chains } from '../../../../config/chains.js'
+import type { IProvider } from '../../../provider/IProvider.js'
+import type { Handler, HandlerResult } from '../../Handler.js'
+import { getCoingeckoId } from './getCoingeckoId.js'
+import { getTokenInfo } from './getTokenInfo.js'
+import { SourceEntry } from './types.js'
+import { today } from './utils.js'
 
 export type ERC20DataDefinition = v.infer<typeof ERC20DataDefinition>
 export const ERC20DataDefinition = v.strictObject({

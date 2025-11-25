@@ -1,7 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import type { ContractValue } from '../output/types'
-import type { ArgType, BaseTypeCaster } from './BaseTypeCaster'
+import type { ContractValue } from '../output/types.js'
+import type { ArgType, BaseTypeCaster } from './BaseTypeCaster.js'
 
 const Validator = v.record(
   v.string(),

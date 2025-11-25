@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { validateBlip } from './validateBlip'
+import { validateBlip } from './validateBlip.js'
 
 describe(validateBlip.name, () => {
   describe('primitive values', () => {

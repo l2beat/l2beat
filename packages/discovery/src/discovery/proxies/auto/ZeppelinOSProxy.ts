@@ -1,8 +1,8 @@
 import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
-import type { ContractValue } from '../../output/types'
-import type { IProvider } from '../../provider/IProvider'
-import { getPastUpgradesSingleEvent } from '../pastUpgrades'
-import type { ProxyDetails } from '../types'
+import type { ContractValue } from '../../output/types.js'
+import type { IProvider } from '../../provider/IProvider.js'
+import { getPastUpgradesSingleEvent } from '../pastUpgrades.js'
+import type { ProxyDetails } from '../types.js'
 
 // keccak256('org.zeppelinos.proxy.implementation')
 const IMPLEMENTATION_SLOT = Bytes.fromHex(

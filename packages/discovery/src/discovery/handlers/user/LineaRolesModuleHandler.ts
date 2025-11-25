@@ -1,12 +1,12 @@
 import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { type BigNumber, type providers, utils } from 'ethers'
-import isEmpty from 'lodash/isEmpty'
-import zip from 'lodash/zip'
+// biome-ignore lint/style/noRestrictedImports: esm
+import { isEmpty, zip } from 'lodash'
 
-import type { IProvider } from '../../provider/IProvider'
-import { FunctionSelectorDecoder } from '../../utils/FunctionSelectorDecoder'
-import type { Handler, HandlerResult } from '../Handler'
+import type { IProvider } from '../../provider/IProvider.js'
+import { FunctionSelectorDecoder } from '../../utils/FunctionSelectorDecoder.js'
+import type { Handler, HandlerResult } from '../Handler.js'
 
 export type LineaRolesModuleHandlerDefinition = v.infer<
   typeof LineaRolesModuleHandlerDefinition

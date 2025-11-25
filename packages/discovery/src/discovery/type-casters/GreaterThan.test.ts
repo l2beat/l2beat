@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { GreaterThan } from './GreaterThan'
+import { GreaterThan } from './GreaterThan.js'
 
 interface TestData {
   value: number

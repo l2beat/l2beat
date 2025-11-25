@@ -18,10 +18,10 @@ import type { providers } from 'ethers'
 import type {
   ContractSource,
   IEtherscanClient,
-} from '../../utils/IEtherscanClient'
-import { DebugTransactionCallResponse } from './DebugTransactionTrace'
-import type { ContractDeployment, RawProviders } from './IProvider'
-import { ProviderMeasurement, ProviderStats } from './Stats'
+} from '../../utils/IEtherscanClient.js'
+import { DebugTransactionCallResponse } from './DebugTransactionTrace.js'
+import type { ContractDeployment, RawProviders } from './IProvider.js'
+import { ProviderMeasurement, ProviderStats } from './Stats.js'
 
 const shouldRetry = Retries.exponentialBackOff({
   stepMs: 500, // 0.5, 1s, 2s, 4s, 8s, 16s, 32s, 64s, 128s, 256s

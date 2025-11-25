@@ -1,7 +1,7 @@
 import type {
   AddressesWithTemplates,
   Analysis,
-} from '../analysis/AddressAnalyzer'
+} from '../analysis/AddressAnalyzer.js'
 
 export function removeAlreadyAnalyzed(
   toAnalyze: AddressesWithTemplates,

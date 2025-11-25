@@ -1,8 +1,8 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import type { ContractValue } from '../../output/types'
-import type { IProvider } from '../../provider/IProvider'
-import { ArbitrumScheduledTransactionsHandler } from './ArbitrumScheduledTransactionsHandler'
+import type { ContractValue } from '../../output/types.js'
+import type { IProvider } from '../../provider/IProvider.js'
+import { ArbitrumScheduledTransactionsHandler } from './ArbitrumScheduledTransactionsHandler.js'
 
 const RETRYABLE_TICKET_MAGIC = ChainSpecificAddress(
   'eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C',

@@ -4,9 +4,9 @@ import {
   type EthereumAddress,
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import type { IProvider } from '../../provider/IProvider'
-import { FunctionSelectorDecoder } from '../../utils/FunctionSelectorDecoder'
-import type { Handler, HandlerResult } from '../Handler'
+import type { IProvider } from '../../provider/IProvider.js'
+import { FunctionSelectorDecoder } from '../../utils/FunctionSelectorDecoder.js'
+import type { Handler, HandlerResult } from '../Handler.js'
 
 export type EIP2535FacetHandlerDefinition = v.infer<
   typeof EIP2535FacetHandlerDefinition

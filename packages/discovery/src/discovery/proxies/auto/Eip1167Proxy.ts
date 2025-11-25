@@ -1,6 +1,6 @@
 import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
-import type { IProvider } from '../../provider/IProvider'
-import type { ProxyDetails } from '../types'
+import type { IProvider } from '../../provider/IProvider.js'
+import type { ProxyDetails } from '../types.js'
 
 const LEADING_BYTECODE = Bytes.fromHex('0x363d3d373d3d3d363d73')
 const TRAILING_BYTECODE = Bytes.fromHex('0x5af43d82803e903d91602b57fd5bf3')

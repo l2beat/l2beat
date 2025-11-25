@@ -9,14 +9,18 @@ import {
   type UnixTime,
 } from '@l2beat/shared-pure'
 import { type providers, utils } from 'ethers'
-import type { ContractSource } from '../../utils/IEtherscanClient'
-import { bytes32ToAddress } from '../utils/address'
-import { isRevert } from '../utils/isRevert'
-import type { BatchingAndCachingProvider } from './BatchingAndCachingProvider'
-import type { DebugTransactionCallResponse } from './DebugTransactionTrace'
-import type { ContractDeployment, IProvider, RawProviders } from './IProvider'
-import type { IStatelessProvider } from './IStatelessProvider'
-import { ProviderMeasurement, ProviderStats } from './Stats'
+import type { ContractSource } from '../../utils/IEtherscanClient.js'
+import { bytes32ToAddress } from '../utils/address.js'
+import { isRevert } from '../utils/isRevert.js'
+import type { BatchingAndCachingProvider } from './BatchingAndCachingProvider.js'
+import type { DebugTransactionCallResponse } from './DebugTransactionTrace.js'
+import type {
+  ContractDeployment,
+  IProvider,
+  RawProviders,
+} from './IProvider.js'
+import type { IStatelessProvider } from './IStatelessProvider.js'
+import { ProviderMeasurement, ProviderStats } from './Stats.js'
 
 interface AllProviders {
   get(chain: string, timestamp: UnixTime): Promise<IProvider>

@@ -15,13 +15,13 @@ import {
   parseBlockscoutResponse,
   TransactionListResult,
   UnverifiedContractSourceResult,
-} from './BlockscoutModels'
+} from './BlockscoutModels.js'
 import type {
   ContractSource,
   EtherscanUnsupportedMethods,
   IEtherscanClient,
-} from './IEtherscanClient'
-import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
+} from './IEtherscanClient.js'
+import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi.js'
 
 class BlockscoutError extends Error {}
 const MAXIMUM_CALLS_FOR_BLOCK_TIMESTAMP = 10

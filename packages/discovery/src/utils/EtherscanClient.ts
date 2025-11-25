@@ -14,13 +14,13 @@ import {
   OneTransactionListResult,
   TransactionListResult,
   tryParseEtherscanResponse,
-} from './EtherscanModels'
+} from './EtherscanModels.js'
 import type {
   ContractSource,
   EtherscanUnsupportedMethods,
   IEtherscanClient,
-} from './IEtherscanClient'
-import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
+} from './IEtherscanClient.js'
+import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi.js'
 
 class EtherscanError extends Error {}
 

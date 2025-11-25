@@ -1,10 +1,10 @@
 import {
   getHashForMatchingFromSources,
   getHashToBeMatched,
-} from '../../flatten/utils'
-import type { EntryParameters } from '../output/types'
-import type { AnalyzedContract } from './AddressAnalyzer'
-import type { TemplateService } from './TemplateService'
+} from '../../flatten/utils.js'
+import type { EntryParameters } from '../output/types.js'
+import type { AnalyzedContract } from './AddressAnalyzer.js'
+import type { TemplateService } from './TemplateService.js'
 
 export function getShapeFromAnalyzedContract(
   templateService: TemplateService,

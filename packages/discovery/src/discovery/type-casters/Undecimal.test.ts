@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { Undecimal } from './Undecimal'
+import { Undecimal } from './Undecimal.js'
 
 interface TestData {
   decimals: number

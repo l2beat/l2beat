@@ -1,6 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
-import type { ParamType } from 'ethers/lib/utils'
-import { toFunctionFragment } from '../handlers/utils/toFunctionFragment'
+import type { utils } from 'ethers'
+import { toFunctionFragment } from '../handlers/utils/toFunctionFragment.js'
 
 export type Type = BaseType | ArrayType | TupleType
 
@@ -33,7 +33,7 @@ export function parseReturnType(returnType: string): TupleType {
   return toInternalType(fragment.outputs)
 }
 
-export function toInternalType(args: ParamType[] | undefined): TupleType {
+export function toInternalType(args: utils.ParamType[] | undefined): TupleType {
   assert(args !== undefined, 'Fragment must have arguments')
 
   return {
@@ -45,7 +45,7 @@ export function toInternalType(args: ParamType[] | undefined): TupleType {
   }
 }
 
-function parseEthersParamType(paramType: ParamType): Type {
+function parseEthersParamType(paramType: utils.ParamType): Type {
   if (paramType.arrayLength !== null) {
     return {
       kind: 'array',

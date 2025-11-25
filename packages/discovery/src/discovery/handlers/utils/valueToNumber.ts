@@ -1,7 +1,7 @@
 import type { Bytes } from '@l2beat/shared-pure'
-import type { ContractValue } from '../../output/types'
+import type { ContractValue } from '../../output/types.js'
 
-import { valueToBigInt } from './valueToBigInt'
+import { valueToBigInt } from './valueToBigInt.js'
 
 export function valueToNumber(value: bigint | Bytes | ContractValue): number {
   const bigint = valueToBigInt(value)

@@ -1,5 +1,5 @@
-import type { MulticallConfig } from '../discovery/provider/multicall/types'
-import type { ExplorerConfig } from '../utils/IEtherscanClient'
+import type { MulticallConfig } from '../discovery/provider/multicall/types.js'
+import type { ExplorerConfig } from '../utils/IEtherscanClient.js'
 
 export interface DiscoveryModuleConfig {
   readonly project: string

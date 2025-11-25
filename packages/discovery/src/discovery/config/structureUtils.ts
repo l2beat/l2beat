@@ -1,9 +1,10 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
-import merge from 'lodash/merge'
-import type { Analysis } from '../analysis/AddressAnalyzer'
-import { ConfigReader } from './ConfigReader'
-import { getDiscoveryPaths } from './getDiscoveryPaths'
-import { type StructureConfig, StructureContract } from './StructureConfig'
+// biome-ignore lint/style/noRestrictedImports: esm
+import { merge } from 'lodash'
+import type { Analysis } from '../analysis/AddressAnalyzer.js'
+import { ConfigReader } from './ConfigReader.js'
+import { getDiscoveryPaths } from './getDiscoveryPaths.js'
+import { type StructureConfig, StructureContract } from './StructureConfig.js'
 
 export interface SharedModuleIndexEntry {
   name?: string

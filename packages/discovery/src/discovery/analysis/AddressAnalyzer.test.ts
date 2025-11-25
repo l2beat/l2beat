@@ -7,18 +7,21 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { StructureContract } from '../config/StructureConfig'
-import { makeEntryStructureConfig } from '../config/structureUtils'
-import type { HandlerExecutor } from '../handlers/HandlerExecutor'
-import type { IProvider } from '../provider/IProvider'
-import type { ProxyDetector } from '../proxies/ProxyDetector'
+import { StructureContract } from '../config/StructureConfig.js'
+import { makeEntryStructureConfig } from '../config/structureUtils.js'
+import type { HandlerExecutor } from '../handlers/HandlerExecutor.js'
+import type { IProvider } from '../provider/IProvider.js'
+import type { ProxyDetector } from '../proxies/ProxyDetector.js'
 import type {
   ContractSources,
   SourceCodeService,
-} from '../source/SourceCodeService'
-import { EMPTY_ANALYZED_CONTRACT, EMPTY_ANALYZED_EOA } from '../utils/testUtils'
-import { AddressAnalyzer } from './AddressAnalyzer'
-import type { TemplateService } from './TemplateService'
+} from '../source/SourceCodeService.js'
+import {
+  EMPTY_ANALYZED_CONTRACT,
+  EMPTY_ANALYZED_EOA,
+} from '../utils/testUtils.js'
+import { AddressAnalyzer } from './AddressAnalyzer.js'
+import type { TemplateService } from './TemplateService.js'
 
 describe(AddressAnalyzer.name, () => {
   const overrides = StructureContract.parse({})

@@ -3,10 +3,10 @@ import {
   ChainSpecificAddress,
   EthereumAddress,
 } from '@l2beat/shared-pure'
-import type { ContractValue } from '../../output/types'
-import type { IProvider } from '../../provider/IProvider'
-import { getPastUpgradesSingleEvent } from '../pastUpgrades'
-import type { ProxyDetails } from '../types'
+import type { ContractValue } from '../../output/types.js'
+import type { IProvider } from '../../provider/IProvider.js'
+import { getPastUpgradesSingleEvent } from '../pastUpgrades.js'
+import type { ProxyDetails } from '../types.js'
 
 // keccak256('eip1967.proxy.implementation') - 1)
 export const IMPLEMENTATION_SLOT = Bytes.fromHex(

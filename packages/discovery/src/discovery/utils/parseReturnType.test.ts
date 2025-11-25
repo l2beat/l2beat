@@ -1,5 +1,9 @@
 import { expect } from 'earl'
-import { parseReturnType, type TupleType, type Type } from './parseReturnType'
+import {
+  parseReturnType,
+  type TupleType,
+  type Type,
+} from './parseReturnType.js'
 
 function BaseT(typeName: string): Type {
   return { kind: 'base', typeName }

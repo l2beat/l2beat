@@ -1,8 +1,8 @@
 import { type ChainSpecificAddress, formatJson } from '@l2beat/shared-pure'
 import { mkdirSync, writeFileSync } from 'fs'
 import { join } from 'path'
-import type { ConfigReader } from './ConfigReader'
-import { StructureConfig } from './StructureConfig'
+import type { ConfigReader } from './ConfigReader.js'
+import { StructureConfig } from './StructureConfig.js'
 
 type ConfigTemplateValues = {
   name: string

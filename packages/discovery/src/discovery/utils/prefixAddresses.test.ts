@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { prefixAddresses } from './prefixAddresses'
+import { prefixAddresses } from './prefixAddresses.js'
 
 describe(prefixAddresses.name, () => {
   const CHAIN = 'ethereum'

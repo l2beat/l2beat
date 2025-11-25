@@ -1,4 +1,4 @@
-import type { StructureContract } from '../config/StructureConfig'
+import type { StructureContract } from '../config/StructureConfig.js'
 
 export function orderByCopyDependencies(
   fields: StructureContract['fields'],

@@ -1,16 +1,16 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import type { IProvider } from '../../../provider/IProvider'
-import type { Handler, HandlerResult } from '../../Handler'
+import type { IProvider } from '../../../provider/IProvider.js'
+import type { Handler, HandlerResult } from '../../Handler.js'
 import {
   generateReferenceInput,
   getReferencedName,
   resolveReference,
-} from '../../reference'
-import { valueToAddress } from '../../utils/valueToAddress'
-import { checkForBlobs } from './blobs-check'
-import { checkForCelestia } from './celestia-verification'
-import { checkForEigenDA } from './eigen-verification'
+} from '../../reference.js'
+import { valueToAddress } from '../../utils/valueToAddress.js'
+import { checkForBlobs } from './blobs-check.js'
+import { checkForCelestia } from './celestia-verification.js'
+import { checkForEigenDA } from './eigen-verification.js'
 
 export type OpStackDAHandlerDefinition = v.infer<
   typeof OpStackDAHandlerDefinition

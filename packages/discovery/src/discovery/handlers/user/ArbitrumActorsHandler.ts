@@ -2,9 +2,9 @@ import { type ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { type providers, utils } from 'ethers'
 
-import type { DebugTransactionCall } from '../../provider/DebugTransactionTrace'
-import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import type { DebugTransactionCall } from '../../provider/DebugTransactionTrace.js'
+import type { IProvider } from '../../provider/IProvider.js'
+import type { Handler, HandlerResult } from '../Handler.js'
 
 export type ArbitrumActorsHandlerDefinition = v.infer<
   typeof ArbitrumActorsHandlerDefinition

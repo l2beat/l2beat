@@ -1,8 +1,8 @@
-import type { StructureContractConfig } from '../config/structureUtils'
-import { getSystemHandlers } from './getSystemHandlers'
-import type { Handler } from './Handler'
-import { ErrorHandler } from './system/ErrorHandler'
-import { getUserHandler } from './user'
+import type { StructureContractConfig } from '../config/structureUtils.js'
+import { getSystemHandlers } from './getSystemHandlers.js'
+import type { Handler } from './Handler.js'
+import { ErrorHandler } from './system/ErrorHandler.js'
+import { getUserHandler } from './user/index.js'
 
 export function getHandlers(
   abi: string[],

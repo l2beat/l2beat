@@ -5,7 +5,7 @@ import type {
   MulticallConfig,
   MulticallRequest,
   MulticallResponse,
-} from './types'
+} from './types.js'
 
 export function getMulticall3Config(
   sinceBlock: number,

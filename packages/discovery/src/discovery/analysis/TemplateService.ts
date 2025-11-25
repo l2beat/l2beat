@@ -18,19 +18,19 @@ import {
   combineImplementationHashes,
   contractFlatteningHash,
   getHashForMatchingFromSources,
-} from '../../flatten/utils'
-import { fileExistsCaseSensitive } from '../../utils/fsLayer'
-import type { ContractSource } from '../../utils/IEtherscanClient'
-import { ColorContract } from '../config/ColorConfig'
-import type { ConfigRegistry } from '../config/ConfigRegistry'
-import { hashJsonStable } from '../config/hashJsonStable'
-import { ContractPermission } from '../config/PermissionConfig'
-import type { ShapeSchema } from '../config/ShapeSchema'
-import { StructureContract } from '../config/StructureConfig'
-import { generateStructureHash } from '../output/structureOutput'
-import type { DiscoveryOutput } from '../output/types'
-import type { ContractSources } from '../source/SourceCodeService'
-import { readJsonc } from '../utils/readJsonc'
+} from '../../flatten/utils.js'
+import { fileExistsCaseSensitive } from '../../utils/fsLayer.js'
+import type { ContractSource } from '../../utils/IEtherscanClient.js'
+import { ColorContract } from '../config/ColorConfig.js'
+import type { ConfigRegistry } from '../config/ConfigRegistry.js'
+import { hashJsonStable } from '../config/hashJsonStable.js'
+import { ContractPermission } from '../config/PermissionConfig.js'
+import type { ShapeSchema } from '../config/ShapeSchema.js'
+import { StructureContract } from '../config/StructureConfig.js'
+import { generateStructureHash } from '../output/structureOutput.js'
+import type { DiscoveryOutput } from '../output/types.js'
+import type { ContractSources } from '../source/SourceCodeService.js'
+import { readJsonc } from '../utils/readJsonc.js'
 
 export const TEMPLATES_PATH = path.join('_templates')
 

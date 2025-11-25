@@ -1,8 +1,8 @@
 import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { toContractValue } from '../handlers/utils/toContractValue'
-import type { ContractValue } from '../output/types'
-import type { ArgType, BaseTypeCaster } from './BaseTypeCaster'
+import { toContractValue } from '../handlers/utils/toContractValue.js'
+import type { ContractValue } from '../output/types.js'
+import type { ArgType, BaseTypeCaster } from './BaseTypeCaster.js'
 
 const Validator = v.object({
   prefix: v.string(),

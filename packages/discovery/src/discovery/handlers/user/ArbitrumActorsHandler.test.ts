@@ -1,9 +1,9 @@
 import { ChainSpecificAddress, type Hash256 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { DebugTransactionCallResponse } from '../../provider/DebugTransactionTrace'
-import type { IProvider } from '../../provider/IProvider'
-import { ArbitrumActorsHandler } from './ArbitrumActorsHandler'
+import { DebugTransactionCallResponse } from '../../provider/DebugTransactionTrace.js'
+import type { IProvider } from '../../provider/IProvider.js'
+import { ArbitrumActorsHandler } from './ArbitrumActorsHandler.js'
 
 describe(ArbitrumActorsHandler.name, () => {
   it('returns validators from the traces that add and remove them', async () => {

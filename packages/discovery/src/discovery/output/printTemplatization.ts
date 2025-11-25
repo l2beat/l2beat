@@ -1,12 +1,13 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { formatAsciiBorder } from '@l2beat/shared-pure'
 import chalk from 'chalk'
-import partition from 'lodash/partition'
-import type { Analysis } from '../analysis/AddressAnalyzer'
-import { getShapeFromAnalyzedContract } from '../analysis/findShape'
-import type { TemplateService } from '../analysis/TemplateService'
-import type { ColorConfig } from '../config/ColorConfig'
-import { makeEntryColorConfig } from '../config/colorUtils'
+// biome-ignore lint/style/noRestrictedImports: esm
+import { partition } from 'lodash'
+import type { Analysis } from '../analysis/AddressAnalyzer.js'
+import { getShapeFromAnalyzedContract } from '../analysis/findShape.js'
+import type { TemplateService } from '../analysis/TemplateService.js'
+import type { ColorConfig } from '../config/ColorConfig.js'
+import { makeEntryColorConfig } from '../config/colorUtils.js'
 
 export function printTemplatization(
   logger: Logger,

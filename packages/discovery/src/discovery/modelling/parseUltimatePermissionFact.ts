@@ -1,7 +1,7 @@
 import { assert, type ChainSpecificAddress } from '@l2beat/shared-pure'
-import type { Permission } from '../config/PermissionConfig'
-import type { ClingoFact } from './clingoparser'
-import type { ModelIdRegistry } from './ModelIdRegistry'
+import type { Permission } from '../config/PermissionConfig.js'
+import type { ClingoFact } from './clingoparser.js'
+import type { ModelIdRegistry } from './ModelIdRegistry.js'
 
 export function parseUltimatePermissionFact(
   fact: ClingoFact,

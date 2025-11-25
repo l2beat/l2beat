@@ -1,115 +1,115 @@
 import { v } from '@l2beat/validate'
 
-import type { Handler } from '../Handler'
+import type { Handler } from '../Handler.js'
 import {
   AccessControlHandler,
   AccessControlHandlerDefinition,
-} from './AccessControlHandler'
+} from './AccessControlHandler.js'
 import {
   ArbitrumActorsHandler,
   ArbitrumActorsHandlerDefinition,
-} from './ArbitrumActorsHandler'
+} from './ArbitrumActorsHandler.js'
 import {
   ArbitrumDACKeysetHandler,
   ArbitrumDACKeysetHandlerDefinition,
-} from './ArbitrumDACKeysetHandler'
+} from './ArbitrumDACKeysetHandler.js'
 import {
   ArbitrumScheduledTransactionsHandler,
   ArbitrumScheduledTransactionsHandlerDefinition,
-} from './ArbitrumScheduledTransactionsHandler'
+} from './ArbitrumScheduledTransactionsHandler.js'
 import {
   ArbitrumSequencerVersionDefinition,
   ArbitrumSequencerVersionHandler,
-} from './ArbitrumSequencerVersionHandler'
-import { ArrayHandler, ArrayHandlerDefinition } from './ArrayHandler'
-import { CallHandler, CallHandlerDefinition } from './CallHandler'
+} from './ArbitrumSequencerVersionHandler.js'
+import { ArrayHandler, ArrayHandlerDefinition } from './ArrayHandler.js'
+import { CallHandler, CallHandlerDefinition } from './CallHandler.js'
 import {
   ConstructorArgsDefinition,
   ConstructorArgsHandler,
-} from './ConstructorArgsHandler'
+} from './ConstructorArgsHandler.js'
 import {
   CrossChainAccessControlHandler,
   CrossChainAccessControlHandlerDefinition,
-} from './CrossChainAccessControlHandler'
+} from './CrossChainAccessControlHandler.js'
 import {
   DynamicArrayHandler,
   DynamicArrayHandlerDefinition,
-} from './DynamicArrayHandler'
+} from './DynamicArrayHandler.js'
 import {
   EIP2535FacetHandler,
   EIP2535FacetHandlerDefinition,
-} from './EIP2535FacetHandler'
+} from './EIP2535FacetHandler.js'
 import {
   ERC20DataDefinition,
   ERC20DataHandler,
-} from './ERC20DataHandler/ERC20DataHandler'
+} from './ERC20DataHandler/ERC20DataHandler.js'
 import {
   EventCountHandler,
   EventCountHandlerDefinition,
-} from './EventCountHandler'
-import { EventHandler, EventHandlerDefinition } from './EventHandler'
+} from './EventCountHandler.js'
+import { EventHandler, EventHandlerDefinition } from './EventHandler.js'
 import {
   EventTraceHandler,
   EventTraceHandlerDefinition,
-} from './EventTraceHandler'
-import { HardCodedDefinition, HardCodedHandler } from './HardcodedHandler'
+} from './EventTraceHandler.js'
+import { HardCodedDefinition, HardCodedHandler } from './HardcodedHandler.js'
 import {
   KintoAccessControlHandler,
   KintoAccessControlHandlerDefinition,
-} from './KintoAccessControlHandler'
+} from './KintoAccessControlHandler.js'
 import {
   LayerZeroMultisigHandler,
   LayerZeroMultisigHandlerDefinition,
-} from './LayerZeroMultisigHandler'
+} from './LayerZeroMultisigHandler.js'
 import {
   LineaRolesModuleHandler,
   LineaRolesModuleHandlerDefinition,
-} from './LineaRolesModuleHandler'
+} from './LineaRolesModuleHandler.js'
 import {
   OpStackDAHandler,
   OpStackDAHandlerDefinition,
-} from './OpDaHandler/OpDAHandler'
+} from './OpDaHandler/OpDAHandler.js'
 import {
   OpStackSequencerInboxHandler,
   OpStackSequencerInboxHandlerDefinition,
-} from './OpSequencerInboxHandler'
+} from './OpSequencerInboxHandler.js'
 import {
   OrbitPostsBlobsDefinition,
   OrbitPostsBlobsHandler,
-} from './OrbitPostsBlobsHandler'
+} from './OrbitPostsBlobsHandler.js'
 import {
   PolygonCDKScheduledTransactionHandler,
   PolygonCDKScheduledTransactionsHandlerDefinition,
-} from './PolygonCDKScheduledTransactionHandler'
+} from './PolygonCDKScheduledTransactionHandler.js'
 import {
   ScrollAccessControlHandler,
   ScrollAccessControlHandlerDefinition,
-} from './ScrollAccessControlHandler'
+} from './ScrollAccessControlHandler.js'
 import {
   StarkWareGovernanceHandler,
   StarkWareGovernanceHandlerDefinition,
-} from './StarkWareGovernanceHandler'
+} from './StarkWareGovernanceHandler.js'
 import {
   StarkWareNamedStorageHandler,
   StarkWareNamedStorageHandlerDefinition,
-} from './StarkWareNamedStorageHandler'
-import { StorageHandler, StorageHandlerDefinition } from './StorageHandler'
+} from './StarkWareNamedStorageHandler.js'
+import { StorageHandler, StorageHandlerDefinition } from './StorageHandler.js'
 import {
   TradableDefinition,
   TradableHandler,
-} from './TradableHandler/TradableHandler'
+} from './TradableHandler/TradableHandler.js'
 import {
   YieldFiMintersDefinition,
   YieldFiMintersHandler,
-} from './YieldFiMintersHandler'
+} from './YieldFiMintersHandler.js'
 import {
   ZKsyncEraScheduledTransactionHandler,
   ZKsyncEraScheduledTransactionsHandlerDefinition,
-} from './ZKsyncEraScheduledTransactionHandler'
+} from './ZKsyncEraScheduledTransactionHandler.js'
 import {
   ZKsyncEraValidatorsHandler,
   ZKsyncEraValidatorsHandlerDefinition,
-} from './ZKsyncEraValidatorsHandler'
+} from './ZKsyncEraValidatorsHandler.js'
 
 export type UserHandlerDefinition = v.infer<typeof UserHandlerDefinition>
 export const UserHandlerDefinition = v.union([

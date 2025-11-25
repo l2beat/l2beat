@@ -3,10 +3,10 @@ import {
   ChainSpecificAddress,
   type EthereumAddress,
 } from '@l2beat/shared-pure'
-import type { IProvider } from '../../provider/IProvider'
-import { get$Implementations } from '../../utils/extractors'
-import { detectEip1967Proxy } from '../auto/Eip1967Proxy'
-import type { ProxyDetails } from '../types'
+import type { IProvider } from '../../provider/IProvider.js'
+import { get$Implementations } from '../../utils/extractors.js'
+import { detectEip1967Proxy } from '../auto/Eip1967Proxy.js'
+import type { ProxyDetails } from '../types.js'
 
 export async function getZkSpaceProxy(
   provider: IProvider,

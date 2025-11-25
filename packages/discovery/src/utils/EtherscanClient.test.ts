@@ -3,7 +3,7 @@ import type { HttpClient } from '@l2beat/shared'
 import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { type InstalledClock, install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
-import { EtherscanClient } from './EtherscanClient'
+import { EtherscanClient } from './EtherscanClient.js'
 
 describe(EtherscanClient.name, () => {
   const logger = Logger.SILENT

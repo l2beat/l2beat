@@ -1,6 +1,7 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
-import merge from 'lodash/merge'
-import { type ColorConfig, ColorContract } from './ColorConfig'
+// biome-ignore lint/style/noRestrictedImports: esm
+import { merge } from 'lodash'
+import { type ColorConfig, ColorContract } from './ColorConfig.js'
 
 export type ColorContractOverrides = ColorContract & {
   name?: string

@@ -1,10 +1,10 @@
 import { assert, Bytes, type ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { ethers } from 'ethers'
-import type { ContractValue } from '../../output/types'
+import type { ContractValue } from '../../output/types.js'
 
-import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import type { IProvider } from '../../provider/IProvider.js'
+import type { Handler, HandlerResult } from '../Handler.js'
 
 export type ConstructorArgsDefinition = v.infer<
   typeof ConstructorArgsDefinition

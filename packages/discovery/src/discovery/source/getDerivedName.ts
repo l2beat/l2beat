@@ -1,5 +1,5 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
-import type { ContractSources } from './SourceCodeService'
+import type { ContractSources } from './SourceCodeService.js'
 
 export function getLegacyDerivedName(names: string[]): string {
   return (names.length === 2 ? names[1] : names[0]) ?? ''

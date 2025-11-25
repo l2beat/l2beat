@@ -2,13 +2,14 @@ import { ChainSpecificAddress, type Hash256 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
 
-import uniqBy from 'lodash/uniqBy'
-import type { ContractValue } from '../../output/types'
-import type { IProvider } from '../../provider/IProvider'
-import { ProxyDetector } from '../../proxies/ProxyDetector'
-import { get$Implementations } from '../../utils/extractors'
-import type { Handler, HandlerResult } from '../Handler'
-import { toContractValue } from '../utils/toContractValue'
+// biome-ignore lint/style/noRestrictedImports: esm
+import { uniqBy } from 'lodash'
+import type { ContractValue } from '../../output/types.js'
+import type { IProvider } from '../../provider/IProvider.js'
+import { ProxyDetector } from '../../proxies/ProxyDetector.js'
+import { get$Implementations } from '../../utils/extractors.js'
+import type { Handler, HandlerResult } from '../Handler.js'
+import { toContractValue } from '../utils/toContractValue.js'
 
 export type ZKsyncEraScheduledTransactionsHandlerDefinition = v.infer<
   typeof ZKsyncEraScheduledTransactionsHandlerDefinition

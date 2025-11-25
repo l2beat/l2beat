@@ -1,8 +1,8 @@
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { diffContracts } from './diffContracts'
-import type { EntryParameters } from './types'
+import { diffContracts } from './diffContracts.js'
+import type { EntryParameters } from './types.js'
 
 describe(diffContracts.name, () => {
   const OLD_ADDRESS = ChainSpecificAddress.from('eth', EthereumAddress.random())

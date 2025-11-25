@@ -3,9 +3,9 @@ import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { readFileSync } from 'fs'
 import { writeFile } from 'fs/promises'
 import { join } from 'path'
-import { fileExistsCaseSensitive } from '../../utils/fsLayer'
-import type { ConfigReader } from '../config/ConfigReader'
-import { type Entrypoint, EntrypointsFile } from '../config/StructureConfig'
+import { fileExistsCaseSensitive } from '../../utils/fsLayer.js'
+import type { ConfigReader } from '../config/ConfigReader.js'
+import { type Entrypoint, EntrypointsFile } from '../config/StructureConfig.js'
 
 const ENTRYPOINTS_FILENAME = 'entrypoints.json'
 

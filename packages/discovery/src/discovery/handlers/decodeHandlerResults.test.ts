@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { decodeHandlerResults } from './decodeHandlerResults'
+import { decodeHandlerResults } from './decodeHandlerResults.js'
 
 describe(decodeHandlerResults.name, () => {
   const longChain = 'ethereum'

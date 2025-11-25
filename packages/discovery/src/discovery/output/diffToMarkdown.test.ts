@@ -1,11 +1,11 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import type { DiscoveryDiff } from './diffDiscovery'
+import type { DiscoveryDiff } from './diffDiscovery.js'
 import {
   contractDiffToMarkdown,
   discoveryDiffToMarkdown,
   fieldDiffToMarkdown,
-} from './diffToMarkdown'
+} from './diffToMarkdown.js'
 
 const ADDRESS = ChainSpecificAddress.random()
 
