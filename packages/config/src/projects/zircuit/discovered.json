@@ -1,6 +1,6 @@
 {
   "name": "zircuit",
-  "timestamp": 1764058058,
+  "timestamp": 1764059552,
   "configHash": "0xa721fd52d401a16b9fbcadc5ade3f759ae184f4a9e202f3f14da01d3d1fa0a64",
   "entries": [
     {
@@ -731,23 +731,16 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 14400,
         "finalizationPeriodSeconds": 14400,
-        "getL2OutputExtension": [
-          [0, "eth:0x0000000000000000000000000000000000000000"],
-          [0, "eth:0x0000000000000000000000000000000000000000"],
-          [0, "eth:0x0000000000000000000000000000000000000000"],
-          [0, "eth:0x0000000000000000000000000000000000000000"],
-          [0, "eth:0x0000000000000000000000000000000000000000"]
-        ],
         "initializerVersion": 2,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
         "l2ChainId": 48900,
-        "latestBlockNumber": 22057500,
-        "latestOutputIndex": 35166,
+        "latestBlockNumber": 22059100,
+        "latestOutputIndex": 35167,
         "latestOutputProposedV2": 32836,
-        "latestOutputProposedV3": 35166,
-        "nextBlockNumber": 22057501,
-        "nextOutputIndex": 35167,
+        "latestOutputProposedV3": 35167,
+        "nextBlockNumber": 22059101,
+        "nextOutputIndex": 35168,
         "owner": "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "proposer": "eth:0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
@@ -762,7 +755,6 @@
         "verifierV3": "eth:0xf35A4088eA0231C44B9DB52D25c0E9E2fEe31f67",
         "version": "3.1.0"
       },
-      "errors": { "getL2OutputExtension": "Processing error occurred." },
       "fieldMeta": {
         "proposer": { "severity": "HIGH" },
         "challenger": { "severity": "HIGH" },
@@ -1127,21 +1119,21 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 90978258,
+        "basefee": 86119024,
         "baseFeeScalar": 1368,
         "batcherHash": "0x000000000000000000000000af1e4f6a47af647f87c0ec814d8032c4a4bff145",
         "blobBaseFee": 1,
         "blobBaseFeeScalar": 810949,
         "depositExclusions": "0x",
         "DEPOSITOR_ACCOUNT": "zircuit:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0xa71865ef37664f53283449c6b60dd5d6340b63f3fcbf46b351a8ba09aec93d9c",
+        "hash": "0xdacf9337b9b465c10e3e719c33ca9bae0aead1ad0bee75fed6399c86e646810e",
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 23874527,
+        "number": 23874648,
         "operatorFeeConstant": 23225000000,
         "operatorFeeScalar": 4200000000,
-        "sequenceNumber": 3,
-        "timestamp": 1764058031,
+        "sequenceNumber": 5,
+        "timestamp": 1764059519,
         "version": "1.3.0"
       },
       "implementationNames": {
@@ -2008,13 +2000,13 @@
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "opstack/zircuit/L1StandardBridge": "0x2f9c34737989113306a892abba83353771734bbf57cae7245088154cbf90be77",
-    "opstack/zircuit/L2OutputOracle_SP1_nokeepalive": "0x4e4f1acfeb7b67e05711fb70ed934206d9ffbfdd9bc5c70c46ddcb3675c60854",
+    "opstack/zircuit/L2OutputOracle_SP1_nokeepalive": "0xb017000b1b08d71c470a169b11174fa0c5fd03e42503e110ea979137b68baf76",
     "opstack/zircuit/OptimismPortal": "0xc3cdbd0b6752833adcaa14487b9cfc1f863a5770d71a98ce9969ae1e4ccafefb",
     "opstack/zircuit/ResolverRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/zircuit/SuperchainConfig": "0x88333adf1f4e7a6bbd8da95cbcd6e91ee1dbda7da976597818c96c0dbef27421",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 23874529, "zircuit": 22060921 },
+  "usedBlockNumbers": { "ethereum": 23874650, "zircuit": 22061668 },
   "permissionsConfigHash": "0x047b7dfc9f81c2302de301125a9ed2ce8ccf448613cbf95ee6608134768d3655"
 }

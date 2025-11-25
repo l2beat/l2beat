@@ -10,7 +10,8 @@
     "getL2OutputRootWithFinalization",
     "getL2OutputEx",
     "isL2OutputFinalized",
-    "historicBlockHashes"
+    "historicBlockHashes",
+    "getL2OutputExtension"
   ],
   "ignoreInWatchMode": [
     "latestBlockNumber",
@@ -29,52 +30,33 @@
       },
       "edit": ["format", "FormatSeconds"]
     },
-    "proposer": {
-      "severity": "HIGH",
-      "permissions": [
-        {
-          "type": "propose"
-        }
-      ]
-    },
+    "proposer": { "severity": "HIGH", "permissions": [{ "type": "propose" }] },
     "challenger": {
       "severity": "HIGH",
-      "permissions": [
-        {
-          "type": "challenge"
-        }
-      ]
+      "permissions": [{ "type": "challenge" }]
     },
     "deletedOutputs": {
       "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": ["prevNextOutputIndex", "newNextOutputIndex"],
-        "add": {
-          "event": "OutputsDeleted"
-        }
+        "add": { "event": "OutputsDeleted" }
       }
     },
     "latestOutputProposedV3": {
       "handler": {
         "type": "event",
         "select": "l2OutputIndex",
-        "set": {
-          "event": "OutputProposed"
-        }
+        "set": { "event": "OutputProposed" }
       }
     },
     "latestOutputProposedV2": {
       "handler": {
         "type": "event",
         "select": "l2OutputIndex",
-        "set": {
-          "event": "OutputProposedV2"
-        }
+        "set": { "event": "OutputProposedV2" }
       }
     },
-    "allowBootstrapKeepalive": {
-      "severity": "HIGH"
-    }
+    "allowBootstrapKeepalive": { "severity": "HIGH" }
   }
 }

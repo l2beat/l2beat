@@ -1,17 +1,22 @@
-Generated with discovered.json: 0x1e01b4e271680b8142d46d0d4afeecbdd2a3920f
+Generated with discovered.json: 0xb5b10a1a3360039ef2bc5811fe1fa5ffb645f5e2
 
-# Diff at Tue, 25 Nov 2025 08:25:37 GMT:
+# Diff at Tue, 25 Nov 2025 08:34:20 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9d494505416f16cb69e5d5ecc74d3b29fe31d596 block: 1762276375
-- current timestamp: 1764058058
+- current timestamp: 1764059552
 
 ## Description
 
 minor upgrade for fusaka changes and cleanup of the bootstrapv2 functions + removal of the 'keepalive' proof circumvention:
+
 SystemConfig: https://disco.l2beat.com/diff/eth:0x83085450544c3F360a40720859EbB1bfd311584D/eth:0xaFD10586f3F2cB2aD34E8196563424a3a93EbE9F
+
 L1StandardBrifge: https://disco.l2beat.com/diff/eth:0xFF30d6E9acecc919e4E9e1A2e67980ee44Df6Ebb/eth:0x25DF2d6DDCa09C0f9Fce19373896be075F4f7d98
-L2OutputOracle: https://disco.l2beat.com/diff/eth:0x6AB82bb139383BB758348fBb81EdA57458e59f65/eth:0x5E66C2820666f4Fb490d2D2edE4dCB0E46CD03C6 (keepalive removed)
+
+L2OutputOracle: https://disco.l2beat.com/diff/eth:0x6AB82bb139383BB758348fBb81EdA57458e59f65/eth:0x5E66C2820666f4Fb490d2D2edE4dCB0E46CD03C6
+- keepalive removed
+- aggregationvkey changed to `0x0050b72e60cf8aef095d5718413fd32e1c18d0e54ebc4b9f560cf1cd93dd2605`
 
 ## Watched changes
 
@@ -110,14 +115,10 @@ L2OutputOracle: https://disco.l2beat.com/diff/eth:0x6AB82bb139383BB758348fBb81Ed
 -        14400
       values.withdrawalKeepalivePeriodSecondsFmt:
 -        "4h"
-      values.getL2OutputExtension:
-+        [[0,"eth:0x0000000000000000000000000000000000000000"],[0,"eth:0x0000000000000000000000000000000000000000"],[0,"eth:0x0000000000000000000000000000000000000000"],[0,"eth:0x0000000000000000000000000000000000000000"],[0,"eth:0x0000000000000000000000000000000000000000"]]
       implementationNames.eth:0x6AB82bb139383BB758348fBb81EdA57458e59f65:
 -        "L2OutputOracle"
       implementationNames.eth:0x5E66C2820666f4Fb490d2D2edE4dCB0E46CD03C6:
 +        "L2OutputOracle"
-      errors:
-+        {"getL2OutputExtension":"Processing error occurred."}
     }
 ```
 
