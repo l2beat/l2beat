@@ -120,12 +120,10 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       type: 'liveness',
       subtype: 'batchSubmissions',
       id: getMockRuntimeConfigurations()[0].id,
-      receiptGasUsed: 100,
+      gasUsed: 100,
       gasPrice: 10n,
       dataLength: 5,
       calldataGasUsed: 10,
-      receiptBlobGasPrice: null,
-      receiptBlobGasUsed: null,
     },
     {
       formula: 'transfer',
@@ -138,12 +136,10 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       fromAddress: EthereumAddress.random(),
       toAddress: EthereumAddress.random(),
       projectId: ProjectId('test2'),
-      receiptGasUsed: 200,
+      gasUsed: 200,
       gasPrice: 20n,
       dataLength: 0,
       calldataGasUsed: 0,
-      receiptBlobGasPrice: null,
-      receiptBlobGasUsed: null,
     },
   ]
 }
