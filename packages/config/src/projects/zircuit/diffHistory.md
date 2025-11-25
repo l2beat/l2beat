@@ -12,7 +12,7 @@ minor upgrade for fusaka changes and cleanup of the bootstrapv2 functions + remo
 
 SystemConfig: https://disco.l2beat.com/diff/eth:0x83085450544c3F360a40720859EbB1bfd311584D/eth:0xaFD10586f3F2cB2aD34E8196563424a3a93EbE9F
 
-L1StandardBrifge: https://disco.l2beat.com/diff/eth:0xFF30d6E9acecc919e4E9e1A2e67980ee44Df6Ebb/eth:0x25DF2d6DDCa09C0f9Fce19373896be075F4f7d98
+L1StandardBridge: https://disco.l2beat.com/diff/eth:0xFF30d6E9acecc919e4E9e1A2e67980ee44Df6Ebb/eth:0x25DF2d6DDCa09C0f9Fce19373896be075F4f7d98
 
 L2OutputOracle: https://disco.l2beat.com/diff/eth:0x6AB82bb139383BB758348fBb81EdA57458e59f65/eth:0x5E66C2820666f4Fb490d2D2edE4dCB0E46CD03C6
 - keepalive removed
