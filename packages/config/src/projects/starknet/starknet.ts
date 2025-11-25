@@ -216,8 +216,16 @@ export const starknet: ScalingProject = {
         'https://starkware.co/ecosystem/',
         'https://community.starknet.io/',
       ],
-      documentation: ['https://docs.starknet.io'],
-      explorers: ['https://voyager.online/', 'https://starkscan.co/'],
+      documentation: [
+        'https://docs.starknet.io',
+        'https://starknet.io/cairo-book',
+      ],
+      explorers: [
+        'https://voyager.online/',
+        'https://starkscan.co/',
+        'https://oklink.com/starknet',
+        'https://viewblock.io/starknet',
+      ],
       repositories: ['https://github.com/starkware-libs'],
       socialMedia: [
         'https://discord.com/invite/qypnmzkhbc',
