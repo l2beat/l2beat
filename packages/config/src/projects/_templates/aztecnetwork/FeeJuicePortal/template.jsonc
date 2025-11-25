@@ -1,4 +1,4 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "A specific bridge allowing the Aztec token ('Fee Juice') to be deposited into L2 specifically for paying gas fees. AZTEC tokens accruing in this escrow can only be used as fees for sequencers."
+  "description": "A one-way public bridge to deposit AZTEC tokens to the Rollup."
 }
