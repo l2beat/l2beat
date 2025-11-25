@@ -10,6 +10,7 @@ import type { LivenessProject } from '~/server/features/scaling/liveness/types'
 import { getHasTrackedContractChanged } from '~/server/features/scaling/liveness/utils/getHasTrackedContractChanged'
 import type { SsrHelpers } from '~/trpc/server'
 import { getTrackedTransactions } from '../tracked-txs/getTrackedTransactions'
+import { env } from '~/env'
 
 export async function getLivenessSection(
   helpers: SsrHelpers,
@@ -68,5 +69,6 @@ export async function getLivenessSection(
     trackedTransactions,
     defaultRange: project.archivedAt ? 'max' : '30d',
     isArchived: project.archivedAt !== undefined,
+    bigQueryOutage: env.CLIENT_SIDE_BIG_QUERY_OUTAGE,
   }
 }

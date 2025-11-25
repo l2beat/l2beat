@@ -7,12 +7,14 @@ import type { TrackedTransactionsByType } from '~/utils/project/tracked-txs/getT
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 import { TrackedTransactions } from './TrackedTransactions'
+import { BigQueryOutageNotice } from '~/components/BigQueryOutageNotice'
 
 export interface CostsSectionProps extends ProjectSectionProps {
   project: ChartProject
   milestones: Milestone[]
   trackedTransactions: TrackedTransactionsByType
   defaultRange: CostsTimeRange
+  bigQueryOutage: boolean
 }
 
 export function CostsSection({
@@ -20,6 +22,7 @@ export function CostsSection({
   milestones,
   trackedTransactions,
   defaultRange,
+  bigQueryOutage,
   ...sectionProps
 }: CostsSectionProps) {
   return (
@@ -27,6 +30,7 @@ export function CostsSection({
       <p className="text-paragraph-15 md:text-paragraph-16">
         The section shows the operating costs that L2s pay to Ethereum.
       </p>
+      {bigQueryOutage && <BigQueryOutageNotice className="mb-0" />}
       <HorizontalSeparator className="my-4" />
       <ProjectCostsChart
         milestones={milestones}

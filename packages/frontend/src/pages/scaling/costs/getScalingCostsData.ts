@@ -1,6 +1,7 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { env } from '~/env'
 import type { ICache } from '~/server/cache/ICache'
 import { getScalingCostsEntries } from '~/server/features/scaling/costs/getScalingCostsEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -24,6 +25,7 @@ export async function getScalingCostsData(
       () => getCachedData(cache, req.query.tab),
     ),
   ])
+  console.log(env)
 
   return {
     head: {
@@ -44,6 +46,7 @@ export async function getScalingCostsData(
         ...appLayoutProps,
         ...data,
         milestones: HOMEPAGE_MILESTONES,
+        bigQueryOutage: env.CLIENT_SIDE_BIG_QUERY_OUTAGE,
       },
     },
   }
