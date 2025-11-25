@@ -1,11 +1,11 @@
-import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { defineNetworks } from '../types'
 
 export interface GasZipNetwork {
   chain: string
   gaszipId: number
   chainId: number
-  solver: Address32
+  solver: EthereumAddress
 }
 
 export const DEPOSIT_EOA_ADDRESS = EthereumAddress(
@@ -20,25 +20,25 @@ export const GASZIP_NETWORKS = defineNetworks<GasZipNetwork>('gaszip', [
     chain: 'ethereum',
     gaszipId: 255,
     chainId: 1,
-    solver: Address32.from('0x5baBE600b9fCD5fB7b66c0611bF4896D967b23A1'),
+    solver: EthereumAddress('0x5baBE600b9fCD5fB7b66c0611bF4896D967b23A1'),
   },
   {
     chain: 'arbitrum',
     gaszipId: 57,
     chainId: 42161,
-    solver: Address32.from('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
+    solver: EthereumAddress('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
   },
   {
     chain: 'base',
     gaszipId: 54,
     chainId: 8453,
-    solver: Address32.from('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
+    solver: EthereumAddress('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
   },
   {
     chain: 'optimism',
     gaszipId: 55,
     chainId: 10,
-    solver: Address32.from('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
+    solver: EthereumAddress('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
   },
 ])
 
