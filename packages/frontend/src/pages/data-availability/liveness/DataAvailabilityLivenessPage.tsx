@@ -46,7 +46,10 @@ export function DataAvailabilityLivenessPage({
             </DirectoryTabsList>
             <DirectoryTabsContent value="public">
               <PublicSystemInfo />
-              <DaLivenessTable items={publicSystems} />
+              <DaLivenessTable
+                items={publicSystems}
+                bigQueryOutage={bigQueryOutage}
+              />
             </DirectoryTabsContent>
           </DirectoryTabs>
         </LivenessTimeRangeContextProvider>

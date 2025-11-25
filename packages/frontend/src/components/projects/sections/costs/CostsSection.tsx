@@ -1,4 +1,5 @@
 import type { Milestone } from '@l2beat/config'
+import { BigQueryOutageNotice } from '~/components/BigQueryOutageNotice'
 import { ProjectCostsChart } from '~/components/chart/costs/ProjectCostsChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -7,7 +8,6 @@ import type { TrackedTransactionsByType } from '~/utils/project/tracked-txs/getT
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 import { TrackedTransactions } from './TrackedTransactions'
-import { BigQueryOutageNotice } from '~/components/BigQueryOutageNotice'
 
 export interface CostsSectionProps extends ProjectSectionProps {
   project: ChartProject

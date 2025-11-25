@@ -64,6 +64,7 @@ export function LivenessSection({
         defaultRange={defaultRange}
         isArchived={isArchived}
         hideSubtypeSwitch={hideSubtypeSwitch}
+        bigQueryOutage={bigQueryOutage}
       />
       <div className="mt-4">
         <TrackedTransactions {...trackedTransactions} />

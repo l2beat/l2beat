@@ -1,5 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
+import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import {
   Tooltip,
   TooltipContent,
@@ -15,7 +16,10 @@ import type { ScalingLivenessTableEntry } from './toTableEntry'
 
 const columnHelper = createColumnHelper<ScalingLivenessTableEntry>()
 
-export function getScalingLivenessColumns(hideProofSystem?: boolean) {
+export function getScalingLivenessColumns(
+  hideProofSystem?: boolean,
+  bigQueryOutage?: boolean,
+) {
   return compact([
     ...getScalingCommonProjectColumns(
       columnHelper,
@@ -80,6 +84,10 @@ export function getScalingLivenessColumns(hideProofSystem?: boolean) {
       cell: (ctx) => {
         const entry = ctx.row.original
         const showComingSoon = !entry.data?.isSynced
+
+        if (bigQueryOutage) {
+          return <NoDataBadge />
+        }
 
         return (
           <AnomalyIndicator
