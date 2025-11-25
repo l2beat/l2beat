@@ -338,7 +338,10 @@ describe('validateResolver', () => {
       const result = validate(schema, { name: 'John', age: undefined })
 
       expect(result).toEqual({
-        values: { name: 'John' },
+        values: {
+          age: undefined,
+          name: 'John',
+        },
         errors: {},
       })
     })
