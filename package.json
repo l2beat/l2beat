@@ -73,8 +73,5 @@
     "turbo": "^2.5.6",
     "typescript": "^5.5.3",
     "wait-for-expect": "^3.0.2"
-  },
-  "dependencies": {
-    "madge": "^8.0.0"
   }
 }
