@@ -84,6 +84,7 @@ export const zksync: ScalingProject = {
         'https://t.me/zksync',
         'https://twitter.com/zksync',
         'https://twitter.com/zkSyncDevs',
+        'https://linkedin.com/company/zksync-network',
       ],
     },
     liveness: {
