@@ -99,6 +99,7 @@ export const scroll: ScalingProject = {
         'https://rollup.codes/scroll',
         'https://forum.scroll.io',
         'https://growthepie.com/chains/scroll',
+        'https://scroll.io/gov-docs/',
       ],
     },
     liveness: {
