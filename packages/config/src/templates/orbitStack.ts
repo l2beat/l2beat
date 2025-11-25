@@ -480,7 +480,8 @@ function orbitStackCommon(
     archivedAt: templateVars.archivedAt ?? undefined,
     display: {
       architectureImage,
-      stateValidationImage: isPostBoLD ? 'bold' : 'orbit',
+      stateValidationImage:
+        templateVars.stateValidationImage ?? (isPostBoLD ? 'bold' : 'orbit'),
       purposes: templateVars.overridingPurposes ?? [
         'Universal',
         ...(templateVars.additionalPurposes ?? []),
@@ -631,9 +632,11 @@ function orbitStackCommon(
         },
         EXITS.AUTONOMOUS,
       ],
-      otherConsiderations:
-        templateVars.nonTemplateTechnology?.otherConsiderations ??
-        EVM_OTHER_CONSIDERATIONS,
+      otherConsiderations: templateVars.nonTemplateTechnology
+        ?.otherConsiderations ?? [
+        ...EVM_OTHER_CONSIDERATIONS,
+        ...(templateVars.additiveConsiderations ?? []),
+      ],
     },
     permissions: generateDiscoveryDrivenPermissions(allDiscoveries),
     stateDerivation: templateVars.stateDerivation,
