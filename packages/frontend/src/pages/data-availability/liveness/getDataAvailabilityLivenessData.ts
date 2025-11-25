@@ -1,4 +1,5 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { env } from '~/env'
 import { getDaLivenessEntries } from '~/server/features/data-availability/liveness/getDaLivenessEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -31,6 +32,7 @@ export async function getDataAvailabilityLivenessData(
       props: {
         ...appLayoutProps,
         ...entries,
+        bigQueryOutage: env.CLIENT_SIDE_BIG_QUERY_OUTAGE,
       },
     },
   }
