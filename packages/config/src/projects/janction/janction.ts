@@ -6,6 +6,7 @@ export const janction: ScalingProject = upcomingL2({
   id: 'janction',
   capability: 'universal',
   addedAt: UnixTime(1763561938),
+  hasTestnet: true,
   display: {
     name: 'Janction',
     slug: 'janction',
