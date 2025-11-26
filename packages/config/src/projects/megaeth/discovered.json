@@ -1,6 +1,6 @@
 {
   "name": "megaeth",
-  "timestamp": 1764142524,
+  "timestamp": 1764152153,
   "configHash": "0x3630c6cfebaa5c6afbbd6092b54510b3f2da435e6172cd35a2bee5c1e6c96a0b",
   "entries": [
     {
@@ -16,7 +16,15 @@
     {
       "address": "eth:0x22D54E4eED77F86aB0F19E7586f099DDeEe1fE73",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x46D6Eba3AECD215a3e703cdA963820d4520b45D6",
+          "description": "sign KYC approvals offchain that permit the user to deposit.",
+          "role": ".permitSigner"
+        }
+      ]
     },
     {
       "address": "eth:0x28B73e18f31Fdb6F9B6EEF8c0050E9994684b9AD",
@@ -37,6 +45,7 @@
         "0x1e4dc0cf0e125ad726bb101917363d1e5b16e3ce1049250a5c16a6c5591083e4"
       ],
       "proxyType": "immutable",
+      "description": "Predeposit Escrow, not connected to an L2: Users can deposit USDC. The system uses off-chain permit signatures to ensure only KYC'd users can deposit. Withdrawals can only be made by eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719 to eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719.",
       "sinceTimestamp": 1764062435,
       "sinceBlock": 23874891,
       "values": {
@@ -44,7 +53,7 @@
         "cap": 500000000000000,
         "endTime": 1766671200,
         "getDepositStatus": 3,
-        "getTimeUntilEnd": 2528677,
+        "getTimeUntilEnd": 2519053,
         "getTimeUntilStart": 0,
         "getUserCount": 4582,
         "isDepositActive": true,
@@ -68,7 +77,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Safe",
+      "name": "Megaeth Multisig",
       "address": "eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -77,6 +86,14 @@
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x46D6Eba3AECD215a3e703cdA963820d4520b45D6",
+          "description": "set critical contract parameters like the treasury (withdrawal recipient) address and withdraw all tokens.",
+          "role": ".owner"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1761268271,
       "sinceBlock": 23643971,
@@ -248,8 +265,8 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "megaeth/MegaUSDmPreDeposit": "0xb9413c15652074d3e4cd8ee18841d360247978f8e77d04ac191eaa715790328e"
+    "megaeth/MegaUSDmPreDeposit": "0x96d48c527a8a074a85050e40e14322abca0b46e60a9f00888789cd9185d68514"
   },
-  "usedBlockNumbers": { "ethereum": 23881469 },
-  "permissionsConfigHash": "0x092a2bcf2eaf107f66779ff266bdf47ae7a479163249bc03ecc4089d91e0256c"
+  "usedBlockNumbers": { "ethereum": 23882261 },
+  "permissionsConfigHash": "0x9032f0f17b489eb2d40f6e4f9937150fcaafba504f8134abddf0d09c2b4debb1"
 }

@@ -1,4 +1,23 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreRelatives": ["usdc"]
+  "description": "Predeposit Escrow, not connected to an L2: Users can deposit USDC. The system uses off-chain permit signatures to ensure only KYC'd users can deposit. Withdrawals can only be made by {{owner}} to {{treasury}}.",
+  "ignoreRelatives": ["usdc"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "act",
+          "description": "set critical contract parameters like the treasury (withdrawal recipient) address and withdraw all tokens."
+        }
+      ]
+    },
+    "permitSigner": {
+      "permissions": [
+        {
+          "type": "act",
+          "description": "sign KYC approvals offchain that permit the user to deposit."
+        }
+      ]
+    }
+  }
 }
