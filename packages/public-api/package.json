@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "tsc",
+    "build:dependencies": "cd ../.. && pnpm build:dependencies:public-api",
     "clean": "rm -rf build",
     "format": "biome format .",
     "format:fix": "biome format --write .",
