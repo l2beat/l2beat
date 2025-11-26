@@ -153,7 +153,7 @@ export class GasZipPlugin implements InteropPlugin {
       {
         key: 'amount',
         valueBigInt: gasZipFill.args.amount,
-        toleranceDown: 0.05,
+        toleranceUp: 0.05,
       },
     )
     if (!gasZipDeposit) return

@@ -101,14 +101,18 @@ export class InMemoryEventDb implements InteropEventDb {
       'Approximated value should be BigInt',
     )
 
+    const PRECISION = 10000n
     const minValue = approximate.toleranceDown
       ? approximate.valueBigInt -
-        approximate.valueBigInt * BigInt(approximate.toleranceDown)
+        (approximate.valueBigInt *
+          BigInt(Math.floor(approximate.toleranceDown * 10000))) /
+          PRECISION
       : approximate.valueBigInt
-
     const maxValue = approximate.toleranceUp
       ? approximate.valueBigInt +
-        approximate.valueBigInt * BigInt(approximate.toleranceUp)
+        (approximate.valueBigInt *
+          BigInt(Math.floor(approximate.toleranceUp * 10000))) /
+          PRECISION
       : approximate.valueBigInt
 
     for (const e of events) {
