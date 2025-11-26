@@ -30,6 +30,12 @@ export class ApiServer {
 
     const router = new Router()
 
+    // For health check
+    router.get('/', (ctx) => {
+      ctx.status = 200
+      ctx.body = 'OK'
+    })
+
     for (const childRouter of routers) {
       router.use(childRouter.routes(), childRouter.allowedMethods())
     }
