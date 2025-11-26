@@ -1,6 +1,6 @@
 {
   "name": "base",
-  "timestamp": 1763378474,
+  "timestamp": 1764148407,
   "configHash": "0xd238af9607ffb878f8c4b8db8bb4e8bdc00ce8100fa3d110447ab682a6609526",
   "entries": [
     {
@@ -31,7 +31,7 @@
         "BASIS_POINT_SCALE": 10000,
         "FEE_DISBURSEMENT_INTERVAL": 86400,
         "L1_WALLET": "base:0x23B597f33f6f2621F77DA117523Dffd634cDf4ea",
-        "lastDisbursementTime": 1763184151,
+        "lastDisbursementTime": 1763856005,
         "netFeeRevenue": 0,
         "OPTIMISM_GROSS_REVENUE_SHARE_BASIS_POINTS": 250,
         "OPTIMISM_NET_REVENUE_SHARE_BASIS_POINTS": 1500,
@@ -79,7 +79,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "base:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292667246",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292667624",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -290,7 +290,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "basefee": 111868990,
+        "basefee": 66330190,
         "baseFeeScalar": 2269,
         "batcherHash": "0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e5b76c9",
         "blobBaseFee": 1,
@@ -302,15 +302,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xb80b0f32d90e438c23785c89ea1cb125833c170472f15df92d956d910f73176e",
+        "hash": "0xf86fe1258268446aa01096987076411b617930e165ed5f673dec3c5e6c008d2c",
         "isCustomGasToken": false,
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 23818544,
+        "number": 23881938,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 2,
-        "timestamp": 1763378291,
+        "sequenceNumber": 5,
+        "timestamp": 1764148223,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -1288,7 +1288,7 @@
         "proxyAdminOwner": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
         "symbol": "WETH",
         "systemConfig": "eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072",
-        "totalSupply": "20160000000000000000",
+        "totalSupply": "20080000000000000000",
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -1460,7 +1460,7 @@
         ],
         "$upgradeCount": 3,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 9153,
+        "gameCount": 9366,
         "gameImpls": [
           "eth:0xe4066890367BF8A51d58377431808083A01b1E0c",
           "eth:0xe3803582fd5BCdc62720D2b80f35e8dDeA94e2ec",
@@ -1567,8 +1567,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 1032940,
-          "prevBlockNum": 23818539
+          "prevBoughtGas": 516470,
+          "prevBlockNum": 23881948
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1726,7 +1726,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 28,
+        "nonce": 31,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2309,7 +2309,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 43,
+        "nonce": 47,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2377,7 +2377,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293100016",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293104713",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2463,12 +2463,12 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0xa61baa08019C26fD7Dd59a1A5632be26aB429Fd5",
+        "anchorGame": "eth:0x87f26880cD01e094EEEd42F5523E6ACAb4E137C8",
         "disputeGameFactory": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x7f9b1185145114fdce3c5571ade7b3d3254373b392f3243cf1ac4dc846612ac5",
-          37989876
+          "0xce7887de3e0b3705bf39533feff53f1efb740ab0e9ba5325b1762caaeacf18d2",
+          38376373
         ],
         "initVersion": 1,
         "paused": false,
@@ -2509,7 +2509,7 @@
       "template": "opstack/SuperchainConfig_expiry",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x5a0e73c7d129cc83e1c387b55df0141890c02d2cb4111b8a1b6376d737d88f6b"
+        "0x53a6b3db7f270298025bbfef7f6c77b420a9808341212fa9cf54a5e157a18567"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.",
@@ -2517,7 +2517,7 @@
       "sinceBlock": 19064589,
       "values": {
         "$admin": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-        "$implementation": "eth:0xCe28685EB204186b557133766eCA00334EB441E4",
+        "$implementation": "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957",
         "$pastUpgrades": [
           [
             "2024-01-22T20:19:59.000Z",
@@ -2543,9 +2543,14 @@
             "2025-07-24T17:47:23.000Z",
             "0x46acdce174c8d83ebe2f208d8c76c867e75617483d64c3e407f69ae2f9868716",
             ["eth:0xCe28685EB204186b557133766eCA00334EB441E4"]
+          ],
+          [
+            "2025-11-25T17:46:35.000Z",
+            "0xf556934cb4de1ab40a4cfba17856cd601cbc8b875b96a9ccd8ee32bcd363abf5",
+            ["eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"]
           ]
         ],
-        "$upgradeCount": 5,
+        "$upgradeCount": 6,
         "guardian": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
         "initVersion": 2,
         "paused": false,
@@ -2553,12 +2558,12 @@
         "pauseExpiryFmt": "3mo 1d",
         "proxyAdmin": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "version": "2.3.0"
+        "version": "2.4.0"
       },
       "fieldMeta": { "paused": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C": "Proxy",
-        "eth:0xCe28685EB204186b557133766eCA00334EB441E4": "SuperchainConfig"
+        "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957": "SuperchainConfig"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
@@ -2631,7 +2636,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 111,
+        "nonce": 112,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -2893,7 +2898,7 @@
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 46,
+        "nonce": 50,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -4431,10 +4436,7 @@
       "function version() view returns (string)",
       "function wards(address) view returns (uint256)"
     ],
-    "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": [
-      "constructor(address _singleton)"
-    ],
-    "eth:0xCe28685EB204186b557133766eCA00334EB441E4": [
+    "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957": [
       "constructor()",
       "error ProxyAdminOwnedBase_NotProxyAdmin()",
       "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
@@ -4464,8 +4466,10 @@
       "function proxyAdmin() view returns (address)",
       "function proxyAdminOwner() view returns (address)",
       "function unpause(address _identifier)",
-      "function upgrade()",
       "function version() view returns (string)"
+    ],
+    "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": [
+      "constructor(address _singleton)"
     ],
     "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
@@ -4854,6 +4858,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "base": 38294563, "ethereum": 23818559 },
+  "usedBlockNumbers": { "base": 38679530, "ethereum": 23881953 },
   "permissionsConfigHash": "0x2dff3969c61f31ddd865376f783fbde687c74eff3bf01449156fe2d66ac838e3"
 }
