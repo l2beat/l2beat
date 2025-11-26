@@ -1,3 +1,4 @@
+import { getEnv } from '@l2beat/backend-tools'
 import { v } from '@l2beat/validate'
 import { writeFileSync } from 'fs'
 import path from 'path'
@@ -10,7 +11,9 @@ const tvsRanges = ['7d', '30d', '90d', '180d', '1y', 'max']
 const activityRanges = ['30d', '90d', '180d', '1y', 'max']
 
 export async function main() {
-  const projects = await fetch(withApiKey(`${prod}/v1/projects`))
+  const env = getEnv()
+  const apiKey = env.string('COMPARE_API_KEY')
+  const projects = await fetch(withApiKey(`${prod}/v1/projects`, apiKey))
   const projectsData = await projects.json()
   const parsedProjects = v.array(ProjectSchema).parse(projectsData)
 
@@ -34,8 +37,8 @@ export async function main() {
   for (const endpoint of toCheck) {
     console.log(`Checking ${endpoint}...`)
     const [prodResponse, localResponse] = await Promise.all([
-      fetch(withApiKey(`${prod}/${endpoint}`)),
-      fetch(withApiKey(`${local}/${endpoint}`)),
+      fetch(withApiKey(`${prod}/${endpoint}`, apiKey)),
+      fetch(withApiKey(`${local}/${endpoint}`, apiKey)),
     ])
     const prodDataJson = await prodResponse.json()
     const localDataJson = await localResponse.json()
@@ -77,9 +80,9 @@ function roundNestedValues(data: unknown) {
 
 main().catch(console.error)
 
-function withApiKey(url: string) {
+function withApiKey(url: string, apiKey: string) {
   if (url.includes('?')) {
-    return `${url}&apiKey=twojastara123`
+    return `${url}&apiKey=${apiKey}`
   }
-  return `${url}?apiKey=twojastara123`
+  return `${url}?apiKey=${apiKey}`
 }
