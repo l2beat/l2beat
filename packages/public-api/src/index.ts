@@ -65,6 +65,10 @@ function main() {
     res.redirect('/docs')
   })
 
+  app.get('/health', (_, res) => {
+    res.status(200).send('OK')
+  })
+
   app.get('/openapi', (_, res) => {
     res.json(openapi.getOpenApiSchema())
   })

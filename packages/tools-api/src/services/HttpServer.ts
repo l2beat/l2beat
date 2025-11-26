@@ -12,6 +12,10 @@ export function createHttpServer(
 ) {
   const app = express()
 
+  app.get('/health', (_, res) => {
+    res.status(200).send('OK')
+  })
+
   app.use('/api', cors())
 
   for (const module of modules) {
