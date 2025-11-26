@@ -26,21 +26,25 @@ export function createAnomaliesModule({
       )
     : undefined
 
-  const realTimeLivenessProcessor = new RealTimeLivenessProcessor(
-    config,
-    logger,
-    db,
-    anomaliesNotifier,
-  )
+  const realTimeLivenessProcessor = config.trackedTxsConfig
+    ? new RealTimeLivenessProcessor(
+        config.trackedTxsConfig,
+        logger,
+        db,
+        anomaliesNotifier,
+      )
+    : undefined
 
   const start = () => {
     logger = logger.for('AnomaliesModule')
     logger.info('Starting')
     anomaliesNotifier?.start()
-    realTimeLivenessProcessor.start()
+    realTimeLivenessProcessor?.start()
     logger.info('Started')
   }
 
-  blockProcessors.push(realTimeLivenessProcessor)
+  if (realTimeLivenessProcessor) {
+    blockProcessors.push(realTimeLivenessProcessor)
+  }
   return { start }
 }

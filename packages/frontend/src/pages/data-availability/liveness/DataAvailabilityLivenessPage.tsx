@@ -36,7 +36,7 @@ export function DataAvailabilityLivenessPage({
           <MainPageHeader description="DA bridges liveness shows how actively different DA layers are posting data availability attestations to Ethereum, and whether there are any significant deviations from their usual submission schedule.">
             Liveness
           </MainPageHeader>
-          {bigQueryOutage && <BigQueryOutageNotice />}
+          {bigQueryOutage && <BigQueryOutageNotice type="page" mobileFull />}
           <Controls />
           <DirectoryTabs defaultValue="public">
             <DirectoryTabsList>

@@ -51,7 +51,7 @@ export function LivenessSection({
           ? 'This section shows how "live" the project\'s operators are by displaying how frequently they submit transactions of the selected type. It also highlights anomalies - significant deviations from their typical schedule.'
           : 'This section shows how frequently DA attestations are submitted. It also highlights anomalies - significant deviations from the typical schedule.'}
       </p>
-      {bigQueryOutage && <BigQueryOutageNotice />}
+      {bigQueryOutage && <BigQueryOutageNotice type="section" />}
       {!isArchived && <OngoingAnomalies anomalies={ongoingAnomalies} />}
 
       <HorizontalSeparator className="my-4" />
