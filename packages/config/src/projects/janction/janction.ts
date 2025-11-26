@@ -10,7 +10,7 @@ export const janction: ScalingProject = upcomingL2({
     name: 'Janction',
     slug: 'janction',
     description:
-      'Janction is the first Layer2 to provide verifiable, synergic and scalable AI service.',
+      'Janction is aiming to become the first Layer2 to provide verifiable, synergic and scalable AI service.',
     purposes: ['AI'],
     stacks: ['OP Stack'],
     links: {
