@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "DAO contract used for proposals and token voting",
+  "ignoreMethods": [
+    "getProposal",
+    "getProposalState",
+    "getWithdrawal",
+    "totalPowerAt"
+  ],
+  "ignoreInWatchMode": ["totalPowerNow", "withdrawalCount"]
+}

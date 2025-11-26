@@ -1,8 +1,7 @@
 import type { InteropTransferRecord } from '@l2beat/database'
-import { formatSeconds } from '@l2beat/shared-pure'
+import { Address32, formatSeconds } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { Address32 } from '../../plugins/types'
 import { DataTablePage } from './DataTablePage'
 import { formatDollars } from './formatDollars'
 import {
@@ -99,26 +98,31 @@ function TransfersTable(props: {
   )
 }
 
-function TokenAddress(props: {
+function TokenAddress({
+  explorerUrl,
+  address,
+}: {
   explorerUrl: string | undefined
   address: string | undefined
 }) {
-  const address = props.address ? Address32(props.address) : Address32.ZERO
+  if (address === undefined) {
+    return <span>undefined</span>
+  }
   if (address === Address32.NATIVE) {
-    return <span>NATIVE</span>
+    return <span>native</span>
   }
   if (address === Address32.ZERO) {
     return <span>0x0</span>
   }
-  if (!props.explorerUrl) {
+  if (!explorerUrl) {
     return null
   }
   return (
     <a
       target="_blank"
-      href={`${props.explorerUrl}/address/${Address32.cropToEthereumAddress(address)}`}
+      href={`${explorerUrl}/address/${Address32.cropToEthereumAddress(Address32(address))}`}
     >
-      {Address32.cropToEthereumAddress(address)}
+      {Address32.cropToEthereumAddress(Address32(address))}
     </a>
   )
 }

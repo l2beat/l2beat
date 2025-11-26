@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x590ee357be3bc5a84f20b382997f1a5966b14d53
+
+# Diff at Wed, 19 Nov 2025 10:32:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c2740481ca5c9bb2be3283052c4a68b2d735c71b block: 1762505590
+- current timestamp: 1762505590
+
+## Description
+
+config: remove global accesscontrol from template in favor of the chain specific accesscontrol.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762505590 (main branch discovery), not current.
+
+```diff
+    contract ZKsyncValidatorTimelock (gateway:0xe279aF77D3C1685022641ffE1b9b538c5eA0Ae24) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
+      values.accessControl:
+-        {"gateway:0xCE7CBd23193d029410b40e0fD8a79a5121f9250C":{"PRECOMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"]},"COMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"]},"REVERTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"]},"PROVER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"]},"EXECUTOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["gateway:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"]}}}
+    }
+```
+
 Generated with discovered.json: 0xc1be404bb437e7801bf9b3b36fe3de205f5dd562
 
 # Diff at Fri, 07 Nov 2025 09:03:39 GMT:

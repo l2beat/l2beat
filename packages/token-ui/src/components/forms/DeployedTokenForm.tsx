@@ -205,6 +205,7 @@ export function DeployedTokenForm({
                         className={buttonVariants({
                           variant: 'outline',
                           className: 'shrink-0',
+                          size: 'icon',
                         })}
                       >
                         <ArrowRightIcon />
@@ -301,7 +302,7 @@ export function DeployedTokenForm({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  Decimals{' '}
+                  Decimals
                   {autofill && chainValue && (
                     <AutoFillIndicator
                       sources={fieldToDataSource.decimals.map(
@@ -314,9 +315,15 @@ export function DeployedTokenForm({
                 </FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
                     {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
+                    type="number"
+                    onChange={(e) =>
+                      field.onChange(
+                        e.target.value !== ''
+                          ? Number(e.target.value)
+                          : undefined,
+                      )
+                    }
                     disabled={tokenDetails.loading}
                   />
                 </FormControl>
@@ -355,7 +362,7 @@ export function DeployedTokenForm({
                         field.onChange(parsedDate)
                       } else {
                         toast.error(
-                          `Invalid date format. If you think it's correct, please report to dev team. Input: ${pastedText}`,
+                          `Invalid date format. If you think it's correct, please report to dev team.`,
                         )
                       }
                     }}
@@ -459,6 +466,7 @@ export function DeployedTokenForm({
                       className={buttonVariants({
                         variant: 'outline',
                         className: 'shrink-0',
+                        size: 'icon',
                       })}
                     >
                       <ArrowRightIcon />

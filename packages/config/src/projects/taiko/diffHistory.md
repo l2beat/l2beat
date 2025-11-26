@@ -1,3 +1,50 @@
+Generated with discovered.json: 0x8502867169e7ab04e91bb2855670f7d3c12974fe
+
+# Diff at Mon, 24 Nov 2025 09:55:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7f22580fca8d48e9cc5f7f28da38d6b8725e891 block: 1763551862
+- current timestamp: 1763978021
+
+## Description
+
+new operators.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered.
+      values.registeredOperators.1:
+-        {"proposer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74","sequencer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"}
+      values.registeredOperators.2:
++        {"proposer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74","sequencer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"}
+    }
+```
+
+Generated with discovered.json: 0x095928c20034073bbb323b58e5b1cc29f4c1ab86
+
+# Diff at Wed, 19 Nov 2025 11:32:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c2740481ca5c9bb2be3283052c4a68b2d735c71b block: 1762765141
+- current timestamp: 1763551862
+
+## Description
+
+new proposal: move TAIKO to team treasury multisig.
+
+## Watched changes
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        12
++        13
+    }
+```
+
 Generated with discovered.json: 0xdfecee0624fe6c1598c14b0e53b43c43549983d6
 
 # Diff at Mon, 10 Nov 2025 09:00:28 GMT:

@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xe189cfe8d3efade0413bf73a9d5f2fa8cb6c92d3
+
+# Diff at Mon, 24 Nov 2025 11:36:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7f22580fca8d48e9cc5f7f28da38d6b8725e891 block: 1756809496
+- current timestamp: 1763984140
+
+## Description
+
+predeploy source hash changed. there is no diff between the code on disco.l2beat.com and local latest ver.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756809496 (main branch discovery), not current.
+
+```diff
+    contract L2ToL1MessagePasser (facet:0x4200000000000000000000000000000000000016) {
+    +++ description: L2ToL1MessagePasser is a contract that allows messages to be sent from the L2 to the L1, used to send withdrawal requests from the L2 to the L1.
+      sourceHashes.0:
+-        "0x6a90057e0a817ce81f9ed4b565f5efdbf1ebf76d5f59f3ce62f2994455e8199d"
++        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a"
+    }
+```
+
 Generated with discovered.json: 0x6e72e8999769d8491f81dc867356b9f578232874
 
 # Diff at Tue, 04 Nov 2025 11:32:41 GMT:

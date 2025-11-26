@@ -10,7 +10,8 @@
     "eth:0x6F4083304C2cA99B077ACE06a5DcF670615915Af": "Alephzero_Adapter",
     "eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2": "Ink_Adapter",
     "eth:0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2": "Soneium_Adapter",
-    "eth:0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b": "Lisk_Adapter"
+    "eth:0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b": "Lisk_Adapter",
+    "eth:0xC29a3Ba0fBf477F16Fd53d2C438Eade024FD8452": "Monad_Adapter"
   },
   "overrides": {
     "eth:0x0ec70777Ac388774041dD5A1778Cdf3AF3134D2B": {

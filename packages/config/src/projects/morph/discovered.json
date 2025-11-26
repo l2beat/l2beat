@@ -1,6 +1,6 @@
 {
   "name": "morph",
-  "timestamp": 1760973938,
+  "timestamp": 1763984401,
   "configHash": "0xb1738f8f5e824117d5ba7e4607dc46a3e611677183d8e3a84a16916cf026bdab",
   "entries": [
     {
@@ -31,6 +31,25 @@
           "role": ".challengers"
         }
       ]
+    },
+    {
+      "name": "ZkEvmVerifierV1",
+      "address": "eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x3531085f506af5a2423ca2358f5e8e7b16a0f173c3fb648268bc29725123d370"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1763718611,
+      "sinceBlock": 23846603,
+      "values": {
+        "$immutable": true,
+        "programVkey": "0x0059b74a8fd03c44462de3916b45ebeedb9f1158e3037e8c40b8941cbe438d7e",
+        "VERIFIER_HASH": "0xffea2d2e12ed24da258af874d77eee7ee91a1e050ee197052908089e57681e67"
+      },
+      "implementationNames": {
+        "eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423": "ZkEvmVerifierV1"
+      }
     },
     {
       "address": "eth:0x05e1d4694041aF987Af6F8402D902686018E2136",
@@ -66,18 +85,14 @@
         ],
         "$upgradeCount": 2,
         "challengeDeposit": 1,
-        "deleteList": [
-          "eth:0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65",
-          "eth:0xf834ffbeb6bB3F4841afc6b5FB40B94cd580fa23",
-          "eth:0x61F2945d4bc9E40B66a6376d1094a50438f613e2",
-          "eth:0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7"
-        ],
+        "deleteList": [],
         "gasLimitAddStaker": 1000000,
         "gasLimitRemoveStakers": 8000000,
         "getActiveStakers": [
           "eth:0x6aB0E960911b50f6d14f249782ac12EC3E7584A0",
           "eth:0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80",
           "eth:0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796",
+          "eth:0xf0e11a8EA095Cc915f5a7e420928d396ed1Bb7e4",
           "eth:0x76F91869161dC4348230D5F60883Dd17462035f4"
         ],
         "getStakersFromBitmap": [
@@ -291,35 +306,15 @@
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-        "nextCrossDomainMessageIndex": 25367,
+        "nextCrossDomainMessageIndex": 25442,
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 25361,
+        "pendingQueueIndex": 25435,
         "ROLLUP_CONTRACT": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
       "implementationNames": {
         "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF": "TransparentUpgradeableProxy",
         "eth:0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA": "L1MessageQueueWithGasPriceOracle"
-      }
-    },
-    {
-      "name": "ZkEvmVerifierV1",
-      "address": "eth:0x4006FDA79493FEE14dA42BfA34575aAA79bcf953",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x3531085f506af5a2423ca2358f5e8e7b16a0f173c3fb648268bc29725123d370"
-      ],
-      "proxyType": "immutable",
-      "description": "Current SP1 verifier using Blobs for DA.",
-      "sinceTimestamp": 1747024619,
-      "sinceBlock": 22464880,
-      "values": {
-        "$immutable": true,
-        "programVkey": "0x006c835a4c049b699a3675fefa51b182c7efe404a656151c0410245966724bc3",
-        "VERIFIER_HASH": "0xffea2d2e12ed24da258af874d77eee7ee91a1e050ee197052908089e57681e67"
-      },
-      "implementationNames": {
-        "eth:0x4006FDA79493FEE14dA42BfA34575aAA79bcf953": "ZkEvmVerifierV1"
       }
     },
     {
@@ -436,15 +431,15 @@
         "$immutable": true,
         "latestVerifier": [
           {
-            "startBatchIndex": 0,
-            "verifier": "eth:0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154"
+            "startBatchIndex": 45847,
+            "verifier": "eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423"
           },
           {
-            "startBatchIndex": 20230,
-            "verifier": "eth:0x4006FDA79493FEE14dA42BfA34575aAA79bcf953"
+            "startBatchIndex": 45847,
+            "verifier": "eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423"
           }
         ],
-        "legacyVerifiersLength": [0, 0],
+        "legacyVerifiersLength": [1, 1],
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "rollup": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "verifierVersions": [1, 2]
@@ -464,11 +459,6 @@
           "role": ".challengers"
         }
       ]
-    },
-    {
-      "address": "eth:0x61F2945d4bc9E40B66a6376d1094a50438f613e2",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x6aB0E960911b50f6d14f249782ac12EC3E7584A0",
@@ -612,7 +602,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchChallenged": 45,
+        "batchChallenged": 45883,
         "challengers": [
           "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
           "eth:0x77B29534738E3F0F297d36635d7884965C7c8cE1",
@@ -644,20 +634,21 @@
           "eth:0x92C4d5d9CaDD1aF74080DE7aa078434007F710Bb",
           "eth:0x234aCb24b1DeeA7f6c7530b8c29a6378bA21e1D0",
           "eth:0x5c6E1011cd3b5d7D2937c098b8F61d6B3d1aee7e",
-          "eth:0x95C373754C66feF1Eb2dbb6934aF821C551D9738"
+          "eth:0x95C373754C66feF1Eb2dbb6934aF821C551D9738",
+          "eth:0xB2e53dcb84dc869E3bA61911a170B53eE1326184"
         ],
         "finalizationPeriodSeconds": 172800,
         "inChallenge": false,
         "l1StakingContract": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-        "lastCommittedBatchIndex": 44672,
-        "lastFinalizedBatchIndex": 44596,
+        "lastCommittedBatchIndex": 46049,
+        "lastFinalizedBatchIndex": 45850,
         "LAYER_2_CHAIN_ID": 1,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false,
         "proofRewardPercent": 70,
         "proofWindow": 259200,
-        "proveRemaining": 3000000000000000,
+        "proveRemaining": "303000000000000000",
         "revertReqIndex": 0,
         "verifier": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1"
       },
@@ -752,9 +743,16 @@
       ]
     },
     {
-      "address": "eth:0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65",
+      "address": "eth:0xB2e53dcb84dc869E3bA61911a170B53eE1326184",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
+        }
+      ]
     },
     {
       "address": "eth:0xb4A20D473e8C378aE742a8017DD67756a358eAB6",
@@ -767,11 +765,6 @@
           "role": ".challengers"
         }
       ]
-    },
-    {
-      "address": "eth:0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Morph Multisig 2",
@@ -820,7 +813,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 41,
+        "nonce": 48,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1025,7 +1018,7 @@
         "counterpart": "eth:0x5300000000000000000000000000000000000007",
         "feeVault": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "maxReplayTimes": 3,
-        "messageNonce": 25367,
+        "messageNonce": 25442,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false,
@@ -1067,24 +1060,17 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ZkEvmVerifierV1",
-      "address": "eth:0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x3531085f506af5a2423ca2358f5e8e7b16a0f173c3fb648268bc29725123d370"
-      ],
-      "proxyType": "immutable",
-      "description": "SP1 verifier using Blobs for DA (being deprecated).",
-      "sinceTimestamp": 1736755163,
-      "sinceBlock": 21614228,
-      "values": {
-        "$immutable": true,
-        "programVkey": "0x001bdbe2a0f4839f3e7ca3b42ab1ca9d012e23249d17564c953d3557aede919c",
-        "VERIFIER_HASH": "0xffea2d2e12ed24da258af874d77eee7ee91a1e050ee197052908089e57681e67"
-      },
-      "implementationNames": {
-        "eth:0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154": "ZkEvmVerifierV1"
-      }
+      "address": "eth:0xf0e11a8EA095Cc915f5a7e420928d396ed1Bb7e4",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "description": "Actors allowed to commit transaction batches and propose state roots",
+          "role": ".getActiveStakers"
+        }
+      ]
     },
     {
       "name": "Morph Multisig 1",
@@ -1233,11 +1219,6 @@
       ]
     },
     {
-      "address": "eth:0xf834ffbeb6bB3F4841afc6b5FB40B94cd580fa23",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Whitelist",
       "address": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984",
       "type": "Contract",
@@ -1258,6 +1239,18 @@
     }
   ],
   "abis": {
+    "eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423": [
+      "constructor(bytes32 _programVkey)",
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function programVkey() view returns (bytes32)",
+      "function verifyBatch(bytes proof, bytes32 publicInputHash) view",
+      "function verifyPlonk(bytes proof, bytes publicInputHash) view",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
     "eth:0x0cC37d5239F9027A1269f53D83c73084D538f3a9": [
       "constructor()",
       "error ErrZeroAddress()",
@@ -1327,18 +1320,6 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
-    ],
-    "eth:0x4006FDA79493FEE14dA42BfA34575aAA79bcf953": [
-      "constructor(bytes32 _programVkey)",
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function programVkey() view returns (bytes32)",
-      "function verifyBatch(bytes proof, bytes32 publicInputHash) view",
-      "function verifyPlonk(bytes proof, bytes publicInputHash) view",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
@@ -1711,18 +1692,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154": [
-      "constructor(bytes32 _programVkey)",
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function programVkey() view returns (bytes32)",
-      "function verifyBatch(bytes proof, bytes32 publicInputHash) view",
-      "function verifyPlonk(bytes proof, bytes publicInputHash) view",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887": [
       "constructor(address _singleton)"
     ],
@@ -1741,6 +1710,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23619691 },
-  "permissionsConfigHash": "0x4e9ba95357530bdd4c42d2f433513a7b510270b686f6fc74d2aab1fad78e7a95"
+  "usedBlockNumbers": { "ethereum": 23868480 },
+  "permissionsConfigHash": "0xeff3ab5ffabedb775d86a8013e506f9969cecbffaf43182699144b576ad462d9"
 }

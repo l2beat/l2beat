@@ -4,11 +4,9 @@
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
-    "eth:0xb23B2492f7A9631104A5877F7FFA00633660968d",
-    "eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11"
+    "eth:0xb23B2492f7A9631104A5877F7FFA00633660968d"
   ],
   "names": {
-    "eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11": "CanonicalBridgeV1",
     "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC": "Eclipse Multisig 2",
     "eth:0x4720342419C1D316B948690d12C86D5b485C64E0": "Eclipse Multisig"
   },

@@ -1,6 +1,7 @@
+import type { InteropEventContext } from '@l2beat/database'
 import {
+  type Address32,
   type Block,
-  type Branded,
   EthereumAddress,
   type Transaction,
   UnixTime,
@@ -16,58 +17,11 @@ import {
   parseAbi,
 } from 'viem'
 
-export type Address32 = Branded<string, 'Address32'>
-
-export function Address32(value: string) {
-  if (/^0x[a-f0-9]{64}$/.test(value) || value === 'native') {
-    return value as Address32
-  }
-  throw new Error('Invalid Bytes32Address')
-}
-
-Address32.fromOrUndefined = function fromOrUndefined(
-  value: string | undefined,
-) {
-  if (!value) {
-    return undefined
-  }
-  try {
-    return Address32.from(value)
-  } catch {
-    return undefined
-  }
-}
-
-Address32.from = function from(value: string | EthereumAddress) {
-  if (value === 'native') {
-    return value as Address32
-  }
-  if (/^0x[a-f0-9]*$/i.test(value) && value.length <= 66) {
-    return ('0x' + value.slice(2).toLowerCase().padStart(64, '0')) as Address32
-  }
-  throw new Error('Cannot create Bytes32Address')
-}
-
-Address32.cropToEthereumAddress = function cropToEthereumAddress(
-  value: Address32,
-) {
-  return EthereumAddress(`0x${value.slice(-40)}`)
-}
-
-Address32.ZERO = Address32.from('0x')
-Address32.NATIVE = Address32('native')
-
-export interface InteropEventContext {
-  timestamp: UnixTime
-  chain: string
-  txHash: string
-  logIndex: number
-}
-
 export interface InteropEvent<T = unknown> {
   plugin: string
   eventId: string
   type: string
+  direction?: 'incoming' | 'outgoing'
   expiresAt: UnixTime
   ctx: InteropEventContext
   args: T
@@ -87,6 +41,8 @@ export interface TransferSide {
   event: InteropEvent
   tokenAddress?: Address32
   tokenAmount?: bigint
+  wasBurned?: boolean
+  wasMinted?: boolean
 }
 
 export interface InteropTransfer {
@@ -124,12 +80,13 @@ export interface InteropEventType<T> {
     ctx: InteropEventContext,
     payload: T,
   ): Omit<InteropEvent<T>, 'plugin'>
+  mock(args: T, expiresAt?: UnixTime): InteropEvent<T>
   checkType(action: InteropEvent): action is InteropEvent<T>
 }
 
 export function createInteropEventType<T>(
   type: string,
-  options?: { ttl?: number },
+  options?: { ttl?: number; direction?: 'incoming' | 'outgoing' },
 ): InteropEventType<T> {
   if (!/\w+\.\w+/.test(type)) {
     throw new Error(
@@ -173,9 +130,20 @@ export function createInteropEventType<T>(
       return {
         eventId: generateId('evt'),
         type,
+        ...(options?.direction ? { direction: options.direction } : {}),
         expiresAt: ctx.timestamp + ttl,
         ctx,
         args,
+      }
+    },
+    mock(args: T, expiresAt?: UnixTime): InteropEvent<T> {
+      return {
+        eventId: generateId('evt'),
+        type,
+        expiresAt: expiresAt ?? UnixTime.now() + ttl,
+        plugin: '',
+        args,
+        ctx: { chain: '', logIndex: -1, timestamp: 0, txHash: '' },
       }
     },
     checkType(action: InteropEvent): action is InteropEvent<T> {
@@ -321,10 +289,12 @@ export interface InteropTransferOptions {
   srcEvent: InteropEvent
   srcTokenAddress?: Address32
   srcAmount?: bigint
+  srcWasBurned?: boolean
 
   dstEvent: InteropEvent
   dstTokenAddress?: Address32
   dstAmount?: bigint
+  dstWasMinted?: boolean
 
   extraEvents?: InteropEvent[]
 }
@@ -350,11 +320,13 @@ function Transfer(
       event: options.srcEvent,
       tokenAddress: options.srcTokenAddress,
       tokenAmount: options.srcAmount,
+      wasBurned: options.srcWasBurned,
     },
     dst: {
       event: options.dstEvent,
       tokenAddress: options.dstTokenAddress,
       tokenAmount: options.dstAmount,
+      wasMinted: options.dstWasMinted,
     },
   }
 }

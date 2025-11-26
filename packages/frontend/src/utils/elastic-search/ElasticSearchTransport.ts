@@ -1,3 +1,8 @@
+/*
+  WARNING:
+  this class is copypasted in other modules,
+  when doing updates remember to update them all.
+ */
 import {
   formatEcsLog,
   type LogEntry,
@@ -87,6 +92,30 @@ export class ElasticSearchTransport implements LoggerTransport {
       }
     } catch (error) {
       console.log(error)
+
+      try {
+        // We want to get notified in case there is a "push time error"
+        // e.g. fields types collision https://github.com/l2beat/l2beat/pull/10136
+        // There is an additional Alert set in Kibana for this.
+        await this.client.bulk(
+          [
+            {
+              id: this.uuidProvider(),
+              ...JSON.parse(
+                formatEcsLog({
+                  time: new Date(),
+                  level: 'ERROR',
+                  message: error instanceof Error ? error.message : '',
+                  parameters: {
+                    cause: error instanceof Error ? (error.cause ?? '') : '',
+                  },
+                }),
+              ),
+            },
+          ],
+          await this.createIndex(),
+        )
+      } catch {}
     }
   }
 

@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import type {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
@@ -41,7 +42,7 @@ describe(TrackedTxsClient.name, () => {
   describe(TrackedTxsClient.prototype.getData.name, () => {
     it('calls big query, parses results', async () => {
       const bigquery = getMockBiqQuery([TRANSFERS_RESPONSE, FUNCTIONS_RESPONSE])
-      const trackedTxsClient = new TrackedTxsClient(bigquery)
+      const trackedTxsClient = new TrackedTxsClient(bigquery, Logger.SILENT)
 
       const data = await trackedTxsClient.getData(
         CONFIGURATIONS as unknown as Configuration<TrackedTxConfigEntry>[],
@@ -62,7 +63,7 @@ describe(TrackedTxsClient.name, () => {
   describe(TrackedTxsClient.prototype.getTransfers.name, () => {
     it('does not call query when empty config', async () => {
       const bigquery = getMockBiqQuery([])
-      const trackedTxsClient = new TrackedTxsClient(bigquery)
+      const trackedTxsClient = new TrackedTxsClient(bigquery, Logger.SILENT)
 
       await trackedTxsClient.getTransfers([], FROM, TO)
 
@@ -73,7 +74,7 @@ describe(TrackedTxsClient.name, () => {
   describe(TrackedTxsClient.prototype.getFunctionCalls.name, () => {
     it('does not call query when empty config', async () => {
       const bigquery = getMockBiqQuery([])
-      const trackedTxsClient = new TrackedTxsClient(bigquery)
+      const trackedTxsClient = new TrackedTxsClient(bigquery, Logger.SILENT)
 
       await trackedTxsClient.getFunctionCalls([], [], [], FROM, TO)
 

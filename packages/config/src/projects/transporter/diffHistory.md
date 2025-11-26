@@ -1,3 +1,97 @@
+Generated with discovered.json: 0x881322d4ae3c303436904e58fcfb1e53f6481621
+
+# Diff at Wed, 19 Nov 2025 14:59:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c2740481ca5c9bb2be3283052c4a68b2d735c71b block: 1762765918
+- current timestamp: 1763564141
+
+## Description
+
+tokenpool changes.
+
+## Watched changes
+
+```diff
+    contract SiloedLockReleaseTokenPool (eth:0x011Ef1fe26D20077A59F38e9Ad155b166AD87D40) {
+    +++ description: None
+      values.getRateLimitAdmin:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xf95aB7115f7625B116de8062c29CeF379297D663"
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (eth:0x0a02473E57902fD7764E6E952E2962763045B404) {
+    +++ description: None
+      values.getSupportedChains.1:
++        "4627098889531055414"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0x1689C22eD5435e49071CFc208D1Ac6F2A2274490) {
+    +++ description: None
+      values.getSupportedChains.15:
+-        "7264351850409363825"
++        "3461204551265785888"
+      values.getSupportedChains.18:
+-        "3461204551265785888"
+    }
+```
+
+```diff
+    contract HybridWithExternalMinterTokenPool (eth:0x36a72eD0096B414521C45E3ddC9ed657d1D9c141) {
+    +++ description: None
+      values.getSupportedChains.3:
++        "4829375610284793157"
+    }
+```
+
+```diff
+    contract Router (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.89:
++        {"sourceChainSelector":"12657445206920369324","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"}
+      values.onRamps.241851231317828981:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x20fD5ab74D519df395f41c958D982BecB6b64432"
+      values.onRamps.12657445206920369324:
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+    }
+```
+
+```diff
+    contract LombardTokenPoolV2 (eth:0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7) {
+    +++ description: None
+      values.getSupportedChains.5:
++        "1294465214383781161"
+      values.getSupportedChains.6:
++        "9043146809313071210"
+      values.getSupportedChains.7:
++        "5936861837188149645"
+      values.getSupportedChains.8:
++        "13624601974233774587"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0x9aCd2ffD56E278a560Cc4E12dCA2B7D2B3359Ac2) {
+    +++ description: None
+      values.getSupportedChains.3:
++        "3461204551265785888"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0x9Dfaaa0826b8D81Ea7Cf7ED95619574bcb47d6EA) {
+    +++ description: None
+      values.owner:
+-        "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"
++        "eth:0x71083c7F1dCa054E3D96c833Eb38500aA6881Db9"
+    }
+```
+
 Generated with discovered.json: 0x8b8f1ead9b67756615f02ac6a3607e9000aa927c
 
 # Diff at Mon, 10 Nov 2025 09:33:10 GMT:

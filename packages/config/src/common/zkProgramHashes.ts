@@ -120,6 +120,15 @@ Verify:
       'https://github.com/agglayer/provers/tree/v1.5.0/crates/aggchain-proof-program',
     verificationStatus: 'notVerified',
   },
+  '0x6e38caa6114ac4b9779f647547de9e8f09e9f5cd6194e7134110760d3aa31b53': {
+    title: 'Aggchain program of agglayer',
+    description:
+      'Verifies state transition of an Agglayer-based chain either by checking a full validity proof or just by checking a registered multisig signature. Also checks that L1 information on the chain aligns with the values stored on Agglayer.',
+    proverSystemProject: ProjectId('sp1'),
+    programUrl:
+      'https://github.com/agglayer/provers/tree/v1.8.0/crates/aggchain-proof-program', // ??? verify version tag
+    verificationStatus: 'notVerified',
+  },
   '0x00de39c136b88dfeacb832629e21a9667935bc0e74aaa21292e4f237d79d0bef': {
     title: 'Celestia Blobstream DA bridge program',
     description:
@@ -155,6 +164,7 @@ Verify:
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
+
   '0x40bc0563112dcc6868037ea0445916342df200ec0152bf7b4c2cca1d640fdaa3': {
     title: 'Range program of OP Succinct',
     description:
@@ -170,6 +180,34 @@ Verify:
     verificationStatus: 'notVerified',
   },
   '0x43f01f7522e77ddc0bea30de6cb8075608a0d0c906660e4f5f430a1e5e170829': {
+    title: 'Range program of OP Succinct',
+    description:
+      'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
+  '0x0050b72e60cf8aef095d5718413fd32e1c18d0e54ebc4b9f560cf1cd93dd2605': {
+    title: 'Aggregation program of OP Succinct',
+    description:
+      'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
+  '0x04415a0d46de8b145eb5056969fa3b5900c3c23a21cb3feb2bdcb8da752de7a1': {
+    title: 'Range program of OP Succinct',
+    description:
+      'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
+  '0x007efdd073c9845bbc446e0e62018af999bde96ecec416725391efa4a3f0a44d': {
+    title: 'Aggregation program of OP Succinct',
+    description:
+      'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
+  '0x4b8234c47685b3361b22399702416a8010783b1b701b279073b4f0831e55da63': {
     title: 'Range program of OP Succinct',
     description:
       'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',

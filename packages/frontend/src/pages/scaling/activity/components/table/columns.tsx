@@ -128,7 +128,7 @@ export const getScalingActivityColumns = (
       tooltip: `Shows the maximum sustained ${metric === 'uops' ? 'UOPS' : 'TPS'}, calculated as an average over the count for a day.`,
     },
   }),
-  columnHelper.accessor('data.summedCount', {
+  columnHelper.accessor('data.summedCount.value', {
     header: '30D Count',
     cell: (ctx) => {
       const data = ctx.row.original.data

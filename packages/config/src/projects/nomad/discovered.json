@@ -1,6 +1,6 @@
 {
   "name": "nomad",
-  "timestamp": 1740653555,
+  "timestamp": 1763563780,
   "configHash": "0x5293339bc3444b28d45ba33d689e865d4b9a12496bbd080904c3db5425315eaf",
   "entries": [
     {
@@ -36,7 +36,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "committedRoot": "0xe4b36eb1b76ae0a0519308627ca33e93fa126308d5e90c9156967009db1877d1",
+        "committedRoot": "0x3ff7063d0ab1100b8ba755897ee08537d2381f5677edf884a87f602a01daa9c3",
         "homeDomainHash": "0x6d99fb87e3b04d5511e33963be35e5bf1413faef07088eb5a343ed9bae06d90c",
         "LEGACY_STATUS_NONE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "LEGACY_STATUS_PROCESSED": "0x0000000000000000000000000000000000000000000000000000000000000002",
@@ -286,21 +286,21 @@
         ],
         "$upgradeCount": 3,
         "committedRoot": "0xe18ac8f4c08b5cb8d38126206e555344f57eb4fcebf1033f6d722c2ed865d28f",
-        "count": 20122,
+        "count": 20123,
         "homeDomainHash": "0x112314385541338d132d96253c1d3cb02a64b68804296e64e833f21583d1c512",
         "localDomain": 6648936,
         "MAX_MESSAGE_BODY_BYTES": 2048,
         "OpticsBeacon_beacon": "eth:0x063e871f8DB991CEAd34B557A00B157B360084cc",
         "owner": "eth:0x3009C99D370B780304D2098196f1EBF779a4777a",
-        "queueEnd": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "queueLength": 0,
-        "root": "0xe18ac8f4c08b5cb8d38126206e555344f57eb4fcebf1033f6d722c2ed865d28f",
+        "queueEnd": "0x13f1c527a69e7a9343a2c654058213282fed23efb562ba55aa984aaad42e13e8",
+        "queueLength": 1,
+        "root": "0x13f1c527a69e7a9343a2c654058213282fed23efb562ba55aa984aaad42e13e8",
         "state": 1,
         "suggestUpdate": {
-          "_committedRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "_new": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          "_committedRoot": "0xe18ac8f4c08b5cb8d38126206e555344f57eb4fcebf1033f6d722c2ed865d28f",
+          "_new": "0x13f1c527a69e7a9343a2c654058213282fed23efb562ba55aa984aaad42e13e8"
         },
-        "tree": 20122,
+        "tree": 20123,
         "updater": "eth:0xa728bE5Be33E60D9c65677EBa569555536e587E4",
         "updaterManager": "eth:0x9272C9d5fa902Ef3804EC81e0333Ae420D57f715",
         "VERSION": 0
@@ -793,6 +793,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 21937195 },
+  "usedBlockNumbers": { "ethereum": 23833821 },
   "permissionsConfigHash": "0x623f0eca1c36ff96d3bfb02d8745a05e6ed8173106b98ec23c2db45c9582baed"
 }

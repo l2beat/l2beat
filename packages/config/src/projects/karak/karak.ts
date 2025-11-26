@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('karak')
 
 export const karak: ScalingProject = opStackL2({
   addedAt: UnixTime(1687459278), // 2023-06-22T18:41:18Z
-  daProvider: CELESTIA_DA_PROVIDER,
+  daProvider: CELESTIA_DA_PROVIDER(DA_LAYERS.ETH_CALLDATA),
   additionalBadges: [BADGES.RaaS.Caldera],
   discovery,
   reasonsForBeingOther: [

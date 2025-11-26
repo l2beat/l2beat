@@ -365,6 +365,7 @@ model InteropEvent {
 
   matched     Boolean
   unsupported Boolean
+  direction   String?
 
   @@id([eventId])
   @@index([type, matched, unsupported, timestamp])
@@ -395,6 +396,7 @@ model InteropMessage {
   @@index([type])
   @@index([type, app, duration])
   @@index([type, srcChain, dstChain, duration])
+  @@index([app, plugin])
 }
 
 model InteropTransfer {

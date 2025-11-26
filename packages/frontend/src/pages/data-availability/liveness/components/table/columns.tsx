@@ -1,4 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import {
   Tooltip,
   TooltipContent,
@@ -16,7 +17,7 @@ import type { DaLivenessTableEntry } from './toDaLivenessTableEntry'
 
 const columnHelper = createColumnHelper<DaLivenessTableEntry>()
 
-export const publicColumns = [
+export const publicColumns = (bigQueryOutage?: boolean) => [
   ...getDaCommonProjectColumns(columnHelper, (row) => row.href ?? ''),
   columnHelper.accessor('name', {
     header: 'DA Layer',
@@ -145,6 +146,10 @@ export const publicColumns = [
         return null
       }
 
+      if (bigQueryOutage) {
+        return <NoDataBadge />
+      }
+
       return (
         <AnomalyIndicator
           anomalies={bridge.anomalies}
@@ -156,15 +161,19 @@ export const publicColumns = [
       tooltip:
         'Anomalies are based on a Z-score. It measures how far away a data point is from a 30-day rolling average. We consider as anomalies the data points with Z-score > 15.',
       additionalRows: (ctx) => {
-        return ctx.row.original.bridges
-          .slice(1)
-          .map((bridge) => (
+        return ctx.row.original.bridges.slice(1).map((bridge) => {
+          if (bigQueryOutage) {
+            return <NoDataBadge />
+          }
+
+          return (
             <AnomalyIndicator
               key={bridge.slug}
               anomalies={bridge.anomalies}
               hasTrackedContractsChanged={bridge.hasTrackedContractsChanged}
             />
-          ))
+          )
+        })
       },
     },
   }),

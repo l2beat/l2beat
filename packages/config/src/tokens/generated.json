@@ -10484,6 +10484,28 @@
       }
     },
     {
+      "name": "USDT0",
+      "coingeckoId": "usdt0",
+      "address": "0x779Ded0c9e1022225f8E0630b35a9b54bE713736",
+      "symbol": "USDT0",
+      "decimals": 6,
+      "deploymentTimestamp": 1762005534,
+      "coingeckoListingTimestamp": 1737590400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
+      "chainId": 5000,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Wrapped Mantle",
       "coingeckoId": "wrapped-mantle",
       "address": "0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8",
@@ -16107,6 +16129,28 @@
       "coingeckoListingTimestamp": 1722556800,
       "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/unnamed.png?1721961640",
+      "chainId": 21000000,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USD₮0",
+      "coingeckoId": "usdt0",
+      "address": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
+      "symbol": "USD₮0",
+      "decimals": 6,
+      "deploymentTimestamp": 1741375647,
+      "coingeckoListingTimestamp": 1737590400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
       "chainId": 21000000,
       "source": "external",
       "supply": "totalSupply",

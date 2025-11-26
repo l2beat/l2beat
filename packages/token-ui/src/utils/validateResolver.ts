@@ -10,7 +10,6 @@ export function validateResolver<Input extends FieldValues, Context, Output>(
     assert(schema.meta, 'Meta is required')
 
     const errors = getErrors(schema, input)
-
     if (errors.length > 0) {
       return {
         values: {},

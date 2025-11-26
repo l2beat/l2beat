@@ -1,16 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import type { Database, InteropEventContext } from '@l2beat/database'
+import { Address32, UnixTime } from '@l2beat/shared-pure'
 import { Indexer, RootIndexer } from '@l2beat/uif'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { ManagedChildIndexer } from '../../../../tools/uif/ManagedChildIndexer'
 import type { InteropEventStore } from '../../engine/capture/InteropEventStore'
-import {
-  Address32,
-  createInteropEventType,
-  type InteropEvent,
-  type InteropEventContext,
-} from '../types'
+import { createInteropEventType, type InteropEvent } from '../types'
 import type { RelayApiClient } from './RelayApiClient'
 
 export class RelayRootIndexer extends RootIndexer {

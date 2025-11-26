@@ -2,16 +2,18 @@ import type {
   InteropEventStatsRecord,
   InteropMessageDetailedStatsRecord,
   InteropMessageStatsRecord,
+  InteropMessageUniqueAppsRecord,
   InteropTransfersDetailedStatsRecord,
   InteropTransfersStatsRecord,
 } from '@l2beat/database'
 import type { InteropMissingTokenInfo } from '@l2beat/database/dist/repositories/InteropTransferRepository'
-import { formatSeconds } from '@l2beat/shared-pure'
+import { Address32, formatSeconds } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { Address32 } from '../../plugins/types'
+import { getInteropChains } from '../../../../config/makeConfig'
 import { DataTablePage } from './DataTablePage'
 import { formatDollars } from './formatDollars'
+import { generateNetworkPairs } from './generateNetworkPairs'
 import {
   type ProcessorsStatus,
   ProcessorsStatusTable,
@@ -31,6 +33,7 @@ function EventsTable(props: { events: InteropEventStatsRecord[] }) {
       <thead>
         <tr>
           <th>Type</th>
+          <th>Direction</th>
           <th>All</th>
           <th>Matched</th>
           <th>Unmatched</th>
@@ -43,6 +46,7 @@ function EventsTable(props: { events: InteropEventStatsRecord[] }) {
           return (
             <tr key={e.type}>
               <td>{e.type}</td>
+              <td>{e.direction}</td>
               <td>
                 <a href={`/interop/events/all/${e.type}`}>{e.count}</a>
               </td>
@@ -72,71 +76,7 @@ function EventsTable(props: { events: InteropEventStatsRecord[] }) {
   )
 }
 
-const NETWORKS: [
-  { name: string; display: string },
-  { name: string; display: string },
-][] = [
-  [
-    {
-      name: 'ethereum',
-      display: 'ETH',
-    },
-    {
-      name: 'base',
-      display: 'BASE',
-    },
-  ],
-  [
-    {
-      name: 'ethereum',
-      display: 'ETH',
-    },
-    {
-      name: 'arbitrum',
-      display: 'ARB',
-    },
-  ],
-  [
-    {
-      name: 'ethereum',
-      display: 'ETH',
-    },
-    {
-      name: 'optimism',
-      display: 'OP',
-    },
-  ],
-  [
-    {
-      name: 'base',
-      display: 'BASE',
-    },
-    {
-      name: 'arbitrum',
-      display: 'ARB',
-    },
-  ],
-  [
-    {
-      name: 'base',
-      display: 'BASE',
-    },
-    {
-      name: 'optimism',
-      display: 'OP',
-    },
-  ],
-  [
-    {
-      name: 'arbitrum',
-      display: 'ARB',
-    },
-    {
-      name: 'optimism',
-      display: 'OP',
-    },
-  ],
-]
+const NETWORKS = generateNetworkPairs(getInteropChains())
 
 function MessagesTable(props: { items: MessageStats[]; id: string }) {
   return (
@@ -408,6 +348,7 @@ function MainPageLayout(props: {
   transfers: TransferStats[]
   status: ProcessorsStatus[]
   missingTokens: InteropMissingTokenInfo[]
+  uniqueApps: InteropMessageUniqueAppsRecord[]
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   const eventsTable = <EventsTable {...props} />
@@ -469,6 +410,17 @@ function MainPageLayout(props: {
         ]}
         footer={
           <>
+            <h3>Known apps for plugins</h3>
+            {props.uniqueApps.map((u) => (
+              <div>
+                <h4>{u.plugin}</h4>
+                <ul>
+                  {u.apps.map((a) => (
+                    <li>{a}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
             <ProcessorsStatusTable processors={props.status} />
           </>
         }
@@ -483,6 +435,7 @@ export function renderMainPage(props: {
   transfers: TransferStats[]
   status: ProcessorsStatus[]
   missingTokens: InteropMissingTokenInfo[]
+  uniqueApps: InteropMessageUniqueAppsRecord[]
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   return '<!DOCTYPE html>' + renderToStaticMarkup(<MainPageLayout {...props} />)

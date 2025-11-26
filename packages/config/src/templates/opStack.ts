@@ -76,16 +76,25 @@ import {
   safeGetImplementation,
 } from './utils'
 
-export const CELESTIA_DA_PROVIDER: DAProvider = {
-  layer: DA_LAYERS.CELESTIA,
-  riskView: RISK_VIEW.DATA_CELESTIA(false),
-  technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
-  bridge: DA_BRIDGES.NONE,
-  badge: BADGES.DA.Celestia,
+export function CELESTIA_DA_PROVIDER(
+  fallback?: DaProjectTableValue,
+): DAProvider {
+  return {
+    layer: DA_LAYERS.CELESTIA,
+    riskView: RISK_VIEW.DATA_CELESTIA(false),
+    technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(
+      false,
+      fallback?.value,
+    ),
+    bridge: DA_BRIDGES.NONE,
+    badge: BADGES.DA.Celestia,
+    fallback,
+  }
 }
 
 export function EIGENDA_DA_PROVIDER(
   isUsingDACertVerifier: boolean,
+  fallback?: DaProjectTableValue,
 ): (templateVars: OpStackConfigCommon) => DAProvider {
   return (templateVars: OpStackConfigCommon) => {
     const opStackDA = templateVars.discovery.getContractValue<{
@@ -105,9 +114,11 @@ export function EIGENDA_DA_PROVIDER(
       technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(
         isUsingDACertVerifier,
         eigenDACertVersion,
+        fallback?.value,
       ),
       bridge: DA_BRIDGES.NONE,
       badge: BADGES.DA.EigenDA,
+      fallback,
     }
   }
 }
@@ -125,6 +136,7 @@ export function DACHALLENGES_DA_PROVIDER(
   daResolveWindow: string,
   nodeSourceLink?: string,
   daLayer: DaProjectTableValue = DA_LAYERS.NONE,
+  fallback?: DaProjectTableValue,
 ): DAProvider {
   return {
     layer: daLayer,
@@ -133,9 +145,11 @@ export function DACHALLENGES_DA_PROVIDER(
       daChallengeWindow,
       daResolveWindow,
       nodeSourceLink,
+      fallback?.value,
     ),
     bridge: DA_BRIDGES.NONE_WITH_DA_CHALLENGES,
     badge: BADGES.DA.CustomDA,
+    fallback,
   }
 }
 
@@ -145,6 +159,7 @@ interface DAProvider {
   technology: ProjectTechnologyChoice
   bridge: TableReadyValue
   badge: Badge
+  fallback?: DaProjectTableValue
 }
 
 interface OpStackConfigCommon {
@@ -327,14 +342,14 @@ function opStackCommon(
       architectureImage:
         templateVars.architectureImage ?? architectureImage.join('-'),
       stateValidationImage:
-        (templateVars.stateValidationImage ??
-        fraudProofType === 'Permissionless')
+        templateVars.stateValidationImage ??
+        (fraudProofType === 'Permissionless'
           ? 'opfp'
           : fraudProofType === 'Kailua'
             ? 'kailua'
             : fraudProofType === 'OpSuccinct'
               ? 'opsuccinct'
-              : undefined,
+              : undefined),
       stacks: ['OP Stack'],
       warning:
         templateVars.display.warning === undefined
@@ -1462,7 +1477,7 @@ function getDAProvider(
   } else {
     daProvider =
       templateVars.daProvider ??
-      (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+      (postsToCelestia ? CELESTIA_DA_PROVIDER() : undefined)
   }
 
   if (daProvider === undefined) {
@@ -1726,7 +1741,7 @@ function postsToEthereum(templateVars: OpStackConfigCommon): boolean {
 
   const daProvider =
     templateVars.daProvider ??
-    (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+    (postsToCelestia ? CELESTIA_DA_PROVIDER() : undefined)
 
   return daProvider === undefined
 }

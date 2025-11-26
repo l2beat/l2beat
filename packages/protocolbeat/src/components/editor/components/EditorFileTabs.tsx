@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { IconCodeFile } from '../../icons/IconCodeFile'
+import { IconCodeFile } from '../../../icons/IconCodeFile'
 
 type EditorFileTabsProps = {
   files: EditorFileTabProps[]

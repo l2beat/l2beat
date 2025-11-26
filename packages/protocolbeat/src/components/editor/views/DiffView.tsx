@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useCopy } from '../../../hooks/useCopy'
 import { IconArrowToDotDown } from '../../../icons/IconArrowToDotDown'
@@ -11,17 +11,18 @@ import { IconShare } from '../../../icons/IconShare'
 import { IconSplit } from '../../../icons/IconSplit'
 import { IconSwap } from '../../../icons/IconSwap'
 import { IconTick } from '../../../icons/IconTick'
+import { DiffEditorComponent } from '../diff/DiffEditorComponent'
+import { useDiffEditorSettings } from '../diff/hooks/useDiffEditorSettings'
+import { LineSelector } from '../diff/plugins/lineSelector'
+import { getInlineDiff } from '../diff/utils/getInlineDiff'
 import { useCodeStore } from '../store'
-import { DiffEditor } from './diffEditor'
-import { useDiffEditorSettings } from './hooks/useDiffEditorSettings'
-import { getInlineDiff } from './utils/getInlineDiff'
 
 export interface DiffViewProps {
   leftAddress: string
   leftCode: Record<string, string>
   rightAddress: string
   rightCode: Record<string, string>
-  editorKey?: string
+  editorKey: string
 }
 
 export function DiffView(props: DiffViewProps) {
@@ -44,37 +45,13 @@ export function DiffView(props: DiffViewProps) {
     splitRight,
   } = useDiffEditorSettings(props)
 
-  const monacoEl = useRef(null)
-  const { setDiffEditor, getDiffEditor } = useCodeStore()
-  const editorKey = props.editorKey ?? 'default'
-  const editor = getDiffEditor(editorKey)
+  const editor = useCodeStore((store) => store.diffEditors[props.editorKey])
 
   const { copied: urlCopied, copy: copyUrl } = useCopy()
   const { copied: inlineDiffCopied, copy: copyInlineDiff } = useCopy()
 
   useEffect(() => {
-    if (!monacoEl.current) {
-      return
-    }
-
-    const editor = new DiffEditor(monacoEl.current)
-    setDiffEditor(editorKey, editor)
-
-    function onResize() {
-      editor.resize()
-    }
-    window.addEventListener('resize', onResize)
-    return () => {
-      window.removeEventListener('resize', onResize)
-    }
-  }, [setDiffEditor, editorKey])
-
-  useEffect(() => {
-    editor?.resize()
-  }, [editor])
-
-  useEffect(() => {
-    return editor?.lineSelector.onSelectionChange((selection) => {
+    return editor?.getPlugin(LineSelector)?.onSelectionChange((selection) => {
       setSelection(selection)
     })
   }, [editor])
@@ -84,7 +61,7 @@ export function DiffView(props: DiffViewProps) {
   }, [editor, splitLeft, splitRight])
 
   useEffect(() => {
-    editor?.lineSelector.setSelection(initialSelection)
+    editor?.getPlugin(LineSelector)?.setSelection(initialSelection)
   }, [initialSelection, editor])
 
   useEffect(() => {
@@ -93,7 +70,7 @@ export function DiffView(props: DiffViewProps) {
 
   editor?.onComputedDiff(setDiff)
   editor?.onComputedDiff(() => {
-    editor?.lineSelector.scrollToSelection()
+    editor?.getPlugin(LineSelector)?.scrollToSelection()
   })
 
   return (
@@ -222,7 +199,7 @@ export function DiffView(props: DiffViewProps) {
         </div>
       </div>
       <div className="h-1 bg-coffee-900" />
-      <div className="h-full w-full" ref={monacoEl} />
+      <DiffEditorComponent editorKey={props.editorKey} />
     </div>
   )
 }
