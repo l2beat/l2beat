@@ -1,6 +1,7 @@
 import {
   ConfigReader,
   ConfigWriter,
+  generateStructureHash,
   getDiscoveryPaths,
   TemplateService,
 } from '@l2beat/discovery'
@@ -153,6 +154,23 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     })
   })
 
+  app.get('/api/config-files/:project/sync-status', (req, res) => {
+    const query = projectParamsSchema.safeParse(req.params)
+    if (!query.success) {
+      res.status(400).json({ errors: query.message })
+      return
+    }
+    const { project } = query.data
+
+    const discovery = configReader.readDiscovery(project)
+    const registry = configReader.readConfig(project)
+    const hash = generateStructureHash(registry.structure)
+
+    res.json({
+      isInSync: discovery.configHash === hash,
+    })
+  })
+
   app.get('/api/config-files/:project', (req, res) => {
     const query = projectParamsSchema.safeParse(req.params)
 
@@ -161,10 +179,10 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
       return
     }
 
-    const config: string = configReader.readRawConfigAsText(query.data.project)
+    const configText = configReader.readRawConfigAsText(query.data.project)
 
     res.json({
-      config,
+      config: configText,
     })
   })
 

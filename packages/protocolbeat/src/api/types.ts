@@ -56,6 +56,10 @@ export interface ApiConfigFileResponse {
   config: string
 }
 
+export interface ApiConfigSyncStatusResponse {
+  isInSync: boolean
+}
+
 export type ApiCreateShapeResponse =
   | {
       success: true

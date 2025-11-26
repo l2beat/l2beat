@@ -1,7 +1,9 @@
 import clsx from 'clsx'
 import { Link } from 'react-router-dom'
 import { Button } from '../../../components/Button'
+import { IS_READONLY } from '../../../config/readonly'
 import { IconPlus } from '../../../icons/IconPlus'
+import { ConfigSyncBadge } from '../components/ConfigSyncBadge'
 import { Search } from '../search/Search'
 import { SettingsDialog } from './SettingsDialog'
 import { useMultiViewStore } from './store'
@@ -19,6 +21,8 @@ export function TopBar(props: { project: string }) {
           <img className="-top-[3px] relative h-[20px]" src="/logo.svg" />
         </Link>
         <p>{props.project}</p>
+
+        {!IS_READONLY && <ConfigSyncBadge project={props.project} />}
       </div>
       <div className="-translate-x-1/2 absolute left-1/2 z-50">
         <Search />

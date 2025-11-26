@@ -3,6 +3,7 @@ import type {
   ApiCodeResponse,
   ApiCodeSearchResponse,
   ApiConfigFileResponse,
+  ApiConfigSyncStatusResponse,
   ApiCreateConfigFileResponse,
   ApiCreateShapeResponse,
   ApiListTemplatesResponse,
@@ -143,6 +144,17 @@ export async function readConfigFile(
   const data = await res.json()
 
   return data as ApiConfigFileResponse
+}
+
+export async function getConfigSyncStatus(
+  project: string,
+): Promise<ApiConfigSyncStatusResponse> {
+  const res = await fetch(`/api/config-files/${project}/sync-status`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiConfigSyncStatusResponse
 }
 
 export async function createConfigFile(
