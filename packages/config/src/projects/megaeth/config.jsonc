@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "megaeth",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0x46D6Eba3AECD215a3e703cdA963820d4520b45D6"]
+}
