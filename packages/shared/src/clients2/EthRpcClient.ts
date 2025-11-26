@@ -35,17 +35,17 @@ export class EthRpcClient {
   ) {}
 
   async chainId(): Promise<bigint> {
-    const data = await this._call('eth_chainId')
+    const data = await this.rawCall('eth_chainId')
     return vQuantity.parse(data)
   }
 
   async blockNumber(): Promise<bigint> {
-    const data = await this._call('eth_blockNumber')
+    const data = await this.rawCall('eth_blockNumber')
     return vQuantity.parse(data)
   }
 
   async gasPrice(): Promise<bigint> {
-    const data = await this._call('eth_gasPrice')
+    const data = await this.rawCall('eth_gasPrice')
     return vQuantity.parse(data)
   }
 
@@ -53,7 +53,7 @@ export class EthRpcClient {
     address: EthereumAddress,
     block: BlockParameter,
   ): Promise<bigint> {
-    const data = await this._call('eth_getBalance', [
+    const data = await this.rawCall('eth_getBalance', [
       address,
       encodeBlock(block),
     ])
@@ -65,7 +65,7 @@ export class EthRpcClient {
     position: bigint,
     block: BlockParameter,
   ): Promise<string> {
-    const data = await this._call('eth_getStorageAt', [
+    const data = await this.rawCall('eth_getStorageAt', [
       address,
       encodeQuantity(position),
       encodeBlock(block),
@@ -77,7 +77,7 @@ export class EthRpcClient {
     address: EthereumAddress,
     block: BlockParameter,
   ): Promise<bigint> {
-    const data = await this._call('eth_getTransactionCount', [
+    const data = await this.rawCall('eth_getTransactionCount', [
       address,
       encodeBlock(block),
     ])
@@ -88,12 +88,17 @@ export class EthRpcClient {
     address: EthereumAddress,
     block: BlockParameter,
   ): Promise<string> {
-    const data = await this._call('eth_getCode', [address, encodeBlock(block)])
+    const data = await this.rawCall('eth_getCode', [
+      address,
+      encodeBlock(block),
+    ])
     return BytesResponse.parse(data)
   }
 
   async sendRawTransaction(signedTransaction: string): Promise<string> {
-    const data = await this._call('eth_sendRawTransaction', [signedTransaction])
+    const data = await this.rawCall('eth_sendRawTransaction', [
+      signedTransaction,
+    ])
     return Bytes32Response.parse(data)
   }
 
@@ -103,7 +108,7 @@ export class EthRpcClient {
   ): Promise<{ reverted: false; data: string } | { reverted: true }> {
     let data: unknown
     try {
-      data = await this._call('eth_call', [
+      data = await this.rawCall('eth_call', [
         encodeTransaction(transaction),
         encodeBlock(block),
       ])
@@ -123,7 +128,7 @@ export class EthRpcClient {
   ): Promise<{ reverted: false; gas: bigint } | { reverted: true }> {
     let data: unknown
     try {
-      data = await this._call('eth_estimateGas', [
+      data = await this.rawCall('eth_estimateGas', [
         encodeTransaction(transaction),
         encodeBlock(block),
       ])
@@ -148,7 +153,7 @@ export class EthRpcClient {
     block: BlockParameter,
     includeTransactions: boolean,
   ): Promise<RpcBlock | RpcBlockWithTransactions | null> {
-    const data = await this._call('eth_getBlockByNumber', [
+    const data = await this.rawCall('eth_getBlockByNumber', [
       encodeBlock(block),
       includeTransactions,
     ])
@@ -169,7 +174,7 @@ export class EthRpcClient {
     hash: string,
     includeTransactions: boolean,
   ): Promise<RpcBlock | RpcBlockWithTransactions | null> {
-    const data = await this._call('eth_getBlockByHash', [
+    const data = await this.rawCall('eth_getBlockByHash', [
       hash,
       includeTransactions,
     ])
@@ -179,21 +184,21 @@ export class EthRpcClient {
   }
 
   async getTransactionByHash(hash: string): Promise<RpcTransaction | null> {
-    const data = await this._call('eth_getTransactionByHash', [hash])
+    const data = await this.rawCall('eth_getTransactionByHash', [hash])
     return TransactionResponse.parse(data)
   }
 
   async getTransactionReceipt(hash: string): Promise<RpcReceipt | null> {
-    const data = await this._call('eth_getTransactionReceipt', [hash])
+    const data = await this.rawCall('eth_getTransactionReceipt', [hash])
     return ReceiptResponse.parse(data)
   }
 
   async getLogs(filter: FilterParameter): Promise<RpcLog[]> {
-    const data = await this._call('eth_getLogs', [encodeFilter(filter)])
+    const data = await this.rawCall('eth_getLogs', [encodeFilter(filter)])
     return LogsResponse.parse(data)
   }
 
-  private async _call(method: string, params: unknown = []) {
+  async rawCall(method: string, params: unknown = []) {
     const id = this.nextId()
     const response = await this.http.fetch(this.url, {
       method: 'POST',
