@@ -2,8 +2,8 @@ import { UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
-export const jaction: ScalingProject = upcomingL2({
-  id: 'jaction',
+export const janction: ScalingProject = upcomingL2({
+  id: 'janction',
   capability: 'universal',
   addedAt: UnixTime(1763561938),
   display: {
