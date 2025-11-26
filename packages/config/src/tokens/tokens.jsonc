@@ -6353,6 +6353,13 @@
   ],
   "bob": [
     {
+      "symbol": "BOB",
+      "address": "0xB0BD54846a92b214C04A63B26AD7Dc5e19A60808",
+      "coingeckoId": "bob-build-on-bitcoin",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "WBTC",
       "category": "btc",
       "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
