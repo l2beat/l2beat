@@ -23,7 +23,11 @@ export const lambda: ScalingProject = opStackL2({
     links: {
       websites: ['https://lambda.im/'],
       bridges: ['https://portal.lambda.im/bridge/'],
-      documentation: ['https://docs.lambda.im/', 'https://docs.optimism.io/'],
+      documentation: [
+        'https://docs.lambda.im/',
+        'https://docs.optimism.io/',
+        'https://specs.optimism.io/',
+      ],
       explorers: ['https://scan.lambda.im/'],
       repositories: ['https://github.com/LambdaIM'],
       socialMedia: [
