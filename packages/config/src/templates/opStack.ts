@@ -554,9 +554,6 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
     baseChain.chainConfig?.explorerUrl,
     hostChainDA,
   )
-  const projectName =
-    templateVars.display.name ?? templateVars.discovery.projectName
-  const hostChainName = baseChain.display.name
 
   const stackedRisk = {
     stateValidation: pickWorseRisk(
@@ -583,101 +580,13 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
     ),
   }
 
-  const l3DataAvailability = buildOpStackL3DaEntries(
-    projectName,
-    baseChain,
-    asArray(common.dataAvailability),
-    asArray(baseChain.dataAvailability),
-  )
-
-  const opStackTechnologyDa = buildOpStackL3TechnologyChoices(
-    projectName,
-    baseChain,
-    asArray(common.technology?.dataAvailability),
-    asArray(baseChain.technology?.dataAvailability),
-    asArray(baseChain.dataAvailability),
-  )
-
   return {
     type: 'layer3',
     ...common,
-    dataAvailability: l3DataAvailability,
-    technology: common.technology
-      ? {
-          ...common.technology,
-          dataAvailability: opStackTechnologyDa,
-        }
-      : undefined,
     hostChain: ProjectId(hostChain),
     display: { ...common.display, ...templateVars.display },
     stackedRiskView: templateVars.stackedRiskView ?? stackedRisk,
   }
-}
-
-function buildOpStackL3DaEntries(
-  projectName: string,
-  hostChain: ScalingProject,
-  l3Entries: ProjectScalingDa[],
-  hostChainEntries: ProjectScalingDa[],
-): ProjectScalingDa[] {
-  const hostName = hostChain.display.name
-
-  const formattedL3Entry = l3Entries[0]
-    ? {
-        ...l3Entries[0],
-        layer: {
-          ...l3Entries[0].layer,
-          value: `${projectName} → ${hostName}`,
-          secondLine: undefined,
-          projectId: hostChain.id,
-          description: `${projectName} posts its transaction data to ${hostName}. ${l3Entries[0].layer.description ?? ''}`.trim(),
-        },
-      }
-    : undefined
-
-  const formattedHostEntries = hostChainEntries.map((entry) => ({
-    ...entry,
-    layer: {
-      ...entry.layer,
-      value: `${hostName} → ${entry.layer.value}`,
-      secondLine: undefined,
-      description: `${hostName} posts its transaction data to ${entry.layer.value}. ${entry.layer.description ?? ''}`.trim(),
-    },
-  }))
-
-  return formattedL3Entry
-    ? [formattedL3Entry, ...formattedHostEntries]
-    : formattedHostEntries
-}
-
-function buildOpStackL3TechnologyChoices(
-  projectName: string,
-  hostChain: ScalingProject,
-  l3Choices: ProjectTechnologyChoice[],
-  hostChainChoices: ProjectTechnologyChoice[],
-  hostChainDaEntries: ProjectScalingDa[],
-): ProjectTechnologyChoice[] | undefined {
-  const hostName = hostChain.display.name
-  const result: ProjectTechnologyChoice[] = []
-
-  if (l3Choices[0]) {
-    result.push({
-      ...l3Choices[0],
-      name: `${projectName} → ${hostName}`,
-      description: `${projectName} posts its transaction data to ${hostName}. ${l3Choices[0].description}`.trim(),
-    })
-  }
-
-  hostChainChoices.forEach((choice, index) => {
-    const targetName = hostChainDaEntries[index]?.layer.value ?? choice.name
-    result.push({
-      ...choice,
-      name: `${hostName} → ${targetName}`,
-      description: `${hostName} posts its transaction data to ${targetName}. ${choice.description}`.trim(),
-    })
-  })
-
-  return result.length > 0 ? result : undefined
 }
 
 function getZkProgramHashes(
