@@ -30,8 +30,7 @@ export class ApiServer {
 
     const router = new Router()
 
-    // For health check
-    router.get('/', (ctx) => {
+    router.get('/health', (ctx) => {
       ctx.status = 200
       ctx.body = 'OK'
     })
