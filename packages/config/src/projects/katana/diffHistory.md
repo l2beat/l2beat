@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x28320ae7c3b9a14e46648127246d3e5a9577106b
+
+# Diff at Wed, 26 Nov 2025 13:37:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5f66ce888d7143602a6ce8aceef3c861c5276726 block: 1764059644
+- current timestamp: 1764164180
+
+## Description
+
+ms change in yearn.
+
+## Watched changes
+
+```diff
+    contract Yearn Strategist Multisig (eth:0x16388463d60FFE0661Cf7F1f31a7D658aC790ff7) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x80a3887BA60F76acAb48EE4aEAd0a71A0774A8B2"
+      values.$members.6:
+-        "eth:0x254f44F45ac892730e511f143DEd3Cd920b075aF"
++        "eth:0x0Dca0FDC170baA4CA9c1dCd37Ffe01f97bCfD504"
+      values.multisigThreshold:
+-        "3 of 7 (43%)"
++        "3 of 8 (38%)"
+    }
+```
+
 Generated with discovered.json: 0xeac92d4fcee26234c11735246dd89b72e6b70df1
 
 # Diff at Tue, 25 Nov 2025 08:37:28 GMT:
