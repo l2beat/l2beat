@@ -31,6 +31,7 @@ export class EthRpcClient {
   constructor(
     private http: Http,
     private url: string,
+    private metricsLabel: string,
     private nextId: () => string | number = randomId,
   ) {}
 
@@ -201,6 +202,7 @@ export class EthRpcClient {
   async rawCall(method: string, params: unknown = []) {
     const id = this.nextId()
     const response = await this.http.fetch(this.url, {
+      metricsLabel: this.metricsLabel,
       method: 'POST',
       body: JSON.stringify({
         jsonrpc: '2.0',
