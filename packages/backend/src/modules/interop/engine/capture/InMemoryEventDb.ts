@@ -1,6 +1,7 @@
 import type { InteropEventContext } from '@l2beat/database'
-import type { UnixTime } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import type {
+  InteropApproximateQuery,
   InteropEvent,
   InteropEventDb,
   InteropEventQuery,
@@ -82,6 +83,44 @@ export class InMemoryEventDb implements InteropEventDb {
     query: InteropEventQuery<T>,
   ): InteropEvent<T> | undefined {
     return this.getStore<T>(type.type).findAll(query)[0]
+  }
+
+  findApproximate<T>(
+    type: InteropEventType<T>,
+    query: InteropEventQuery<T>,
+    approximate: InteropApproximateQuery<T>,
+  ): InteropEvent<T> | undefined {
+    const events = this.getStore<T>(type.type).findAll(query)
+
+    if (events.length === 0) {
+      return
+    }
+
+    assert(
+      typeof events[0].args[approximate.key] === 'bigint',
+      'Approximated value should be BigInt',
+    )
+
+    const minValue = approximate.toleranceDown
+      ? approximate.valueBigInt -
+        approximate.valueBigInt * BigInt(approximate.toleranceDown)
+      : approximate.valueBigInt
+
+    const maxValue = approximate.toleranceUp
+      ? approximate.valueBigInt +
+        approximate.valueBigInt * BigInt(approximate.toleranceUp)
+      : approximate.valueBigInt
+
+    for (const e of events) {
+      if (
+        // @ts-ignore
+        e.args[approximate.key] >= minValue &&
+        // @ts-ignore
+        e.args[approximate.key] <= maxValue
+      ) {
+        return e
+      }
+    }
   }
 
   findAll<T>(

@@ -144,14 +144,19 @@ export class GasZipPlugin implements InteropPlugin {
   match(gasZipFill: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (!GasZipFill.checkType(gasZipFill)) return
 
-    const deposits = db.findAll(GasZipDeposit, {
-      $dstChain: gasZipFill.ctx.chain,
-      // amount: ~gasZipFill.args.amount, // TODO: we need a way to match approximate amounts (e.g. 5% tolerance)
-      destinationAddress: gasZipFill.args.receiver,
-    })
-    const gasZipDeposit = deposits[0]
+    const gasZipDeposit = db.findApproximate(
+      GasZipDeposit,
+      {
+        $dstChain: gasZipFill.ctx.chain,
+        destinationAddress: gasZipFill.args.receiver,
+      },
+      {
+        key: 'amount',
+        valueBigInt: gasZipFill.args.amount,
+        toleranceDown: 0.05,
+      },
+    )
     if (!gasZipDeposit) return
-    this.logger.info('gas.zip deposits', { depositsCount: deposits.length })
 
     return [
       Result.Message('gaszip.Message', {
