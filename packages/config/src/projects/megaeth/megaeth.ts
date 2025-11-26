@@ -13,7 +13,7 @@ export const megaeth: ScalingProject = underReviewL2({
     name: 'Megaeth',
     slug: 'megaeth',
     description:
-      'MegaETH is developing a real-time blockchain based on the OP stack architecture and the hybrid Kailua proof system. Where crypto applications leverage extreme performance to reach their full potential. The project is in a pre-deposit phase during which the implementation of the Layer 2 system is yet unknown.',
+      'MegaETH is developing a real-time blockchain based on the OP stack architecture and the hybrid Kailua proof system, where crypto applications leverage extreme performance to reach their full potential. The project is in a pre-deposit phase during which the implementation of the Layer 2 system is yet unknown.',
     purposes: ['Universal'],
     links: {
       websites: ['https://megaeth.com/'],
