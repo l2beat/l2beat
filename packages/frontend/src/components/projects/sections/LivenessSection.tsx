@@ -1,6 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import { pluralize, type TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import React from 'react'
+import { BigQueryOutageNotice } from '~/components/BigQueryOutageNotice'
 import { ProjectLivenessChart } from '~/components/chart/liveness/ProjectLivenessChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -24,6 +25,7 @@ export interface LivenessSectionProps extends ProjectSectionProps {
   defaultRange: ChartRange
   isArchived: boolean
   hideSubtypeSwitch?: boolean
+  bigQueryOutage: boolean
   isForDaBridge?: boolean
 }
 
@@ -38,6 +40,7 @@ export function LivenessSection({
   isArchived,
   hideSubtypeSwitch,
   isForDaBridge,
+  bigQueryOutage,
   ...sectionProps
 }: LivenessSectionProps) {
   const ongoingAnomalies = anomalies.filter((a) => a.end === undefined)
@@ -48,6 +51,7 @@ export function LivenessSection({
           ? 'This section shows how "live" the project\'s operators are by displaying how frequently they submit transactions of the selected type. It also highlights anomalies - significant deviations from their typical schedule.'
           : 'This section shows how frequently DA attestations are submitted. It also highlights anomalies - significant deviations from the typical schedule.'}
       </p>
+      {bigQueryOutage && <BigQueryOutageNotice type="section" />}
       {!isArchived && <OngoingAnomalies anomalies={ongoingAnomalies} />}
 
       <HorizontalSeparator className="my-4" />
@@ -60,6 +64,7 @@ export function LivenessSection({
         defaultRange={defaultRange}
         isArchived={isArchived}
         hideSubtypeSwitch={hideSubtypeSwitch}
+        bigQueryOutage={bigQueryOutage}
       />
       <div className="mt-4">
         <TrackedTransactions {...trackedTransactions} />

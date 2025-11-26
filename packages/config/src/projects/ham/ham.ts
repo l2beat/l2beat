@@ -9,6 +9,7 @@ const discovery = new ProjectDiscovery('ham')
 
 export const ham: ScalingProject = opStackL3({
   addedAt: UnixTime(1722499160), // 2024-08-01T07:59:20Z
+  archivedAt: UnixTime(1764140400), // 2025-11-26T07:00:00.000Z
   hostChain: 'base',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Caldera],

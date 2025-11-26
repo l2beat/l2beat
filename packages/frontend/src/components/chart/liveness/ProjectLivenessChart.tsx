@@ -25,6 +25,7 @@ interface Props {
   defaultRange: ChartRange
   isArchived: boolean
   hideSubtypeSwitch?: boolean
+  bigQueryOutage: boolean
 }
 
 export function ProjectLivenessChart({
@@ -36,6 +37,7 @@ export function ProjectLivenessChart({
   isArchived,
   defaultRange,
   hideSubtypeSwitch,
+  bigQueryOutage,
 }: Props) {
   const [timeRange, setTimeRange] = useState<ChartRange>(defaultRange)
   const [subtype, setSubtype] = useState<TrackedTxsConfigSubtype>(
@@ -118,6 +120,7 @@ export function ProjectLivenessChart({
         configuredSubtypes={configuredSubtypes}
         hasTrackedContractsChanged={hasTrackedContractsChanged}
         isArchived={isArchived}
+        bigQueryOutage={bigQueryOutage}
       />
     </div>
   )

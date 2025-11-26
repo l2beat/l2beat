@@ -16142,6 +16142,28 @@
       }
     },
     {
+      "name": "USD₮0",
+      "coingeckoId": "usdt0",
+      "address": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
+      "symbol": "USD₮0",
+      "decimals": 6,
+      "deploymentTimestamp": 1741375647,
+      "coingeckoListingTimestamp": 1737590400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
+      "chainId": 21000000,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Wrapped eETH",
       "coingeckoId": "wrapped-eeth",
       "address": "0x85aDfA60dDf86b67E6fD493Bd2c774b2eD772D14",

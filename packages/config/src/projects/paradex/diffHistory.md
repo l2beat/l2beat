@@ -1,3 +1,44 @@
+Generated with discovered.json: 0xfe451a998eda91257e016e9b01e1da265bc27cf1
+
+# Diff at Tue, 25 Nov 2025 08:41:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9d494505416f16cb69e5d5ecc74d3b29fe31d596 block: 1758110896
+- current timestamp: 1764060007
+
+## Description
+
+update to v0.14 progHashes.
+
+TODO: the cost calculation for starknet is deeply wrong, and liveness for paradex and starknet overlaps.
+
+## Watched changes
+
+```diff
+    contract Paradex (eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      values.aggregatorHashMapped:
+-        "Starknet Aggregator (since v0.13.4)"
++        "Starknet Aggregator (since v0.14.0)"
+      values.aggregatorProgramHash:
+-        "273279642033703284306509103355536170486431195329675679055627933497997642494"
++        "760308386675154762009993173725077399730170358078020153308029499928875469870"
+      values.configHash:
+-        "2741190170141984203224468507008497105532196084369172236871397222510074358631"
++        "755316247915403236082211219217701569888673466355003491006148202168030226084"
++++ description: The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.
++++ severity: HIGH
+      values.programHash:
+-        "2534935718742676028234156221136000178296467523045214874259117268197132196876"
++        "793595346346724189681221050719974054861327641387231526786912662354259445535"
+      values.programHashHistory.6:
++        "2534935718742676028234156221136000178296467523045214874259117268197132196876"
+      values.programHashMapped:
+-        "2534935718742676028234156221136000178296467523045214874259117268197132196876"
++        "StarkNet OS (since v0.14.0)"
+    }
+```
+
 Generated with discovered.json: 0xd4a5c31a48effc986b42dbeb13451a92e0cfac0d
 
 # Diff at Wed, 17 Sep 2025 12:09:21 GMT:

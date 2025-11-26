@@ -48,10 +48,7 @@ export const lighter: ScalingProject = {
     purposes: ['Exchange'],
     links: {
       websites: ['https://lighter.xyz', 'https://app.lighter.xyz/'],
-      explorers: [
-        'https://app.lighter.xyz/explorer',
-        'https://scan.lighter.xyz',
-      ],
+      explorers: ['https://app.lighter.xyz/explorer'],
       documentation: [
         'https://docs.lighter.xyz',
         'https://assets.lighter.xyz/whitepaper.pdf',

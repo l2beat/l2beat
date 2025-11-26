@@ -1,16 +1,15 @@
 import { assert } from '@l2beat/shared-pure'
-import type { Parser } from '@l2beat/validate'
+import type { Validator } from '@l2beat/validate'
 import type { ImpMeta } from 'node_modules/@l2beat/validate/dist/esm/validate'
 import type { FieldErrors, FieldValues, Resolver } from 'react-hook-form'
 
 export function validateResolver<Input extends FieldValues, Context, Output>(
-  schema: Parser<Input> & { meta?: ImpMeta },
+  schema: Validator<Input> & { meta?: ImpMeta },
 ): Resolver<Input, Context, Output | Input> {
   return (input) => {
     assert(schema.meta, 'Meta is required')
 
     const errors = getErrors(schema, input)
-
     if (errors.length > 0) {
       return {
         values: {},
@@ -28,7 +27,7 @@ export function validateResolver<Input extends FieldValues, Context, Output>(
 }
 
 function getErrors(
-  schema: Parser<unknown> & { meta?: ImpMeta },
+  schema: Validator<unknown> & { meta?: ImpMeta },
   input: FieldValues | FieldValues[],
   keyPrefix?: string,
 ): { key: string; message: string }[] {
@@ -65,7 +64,7 @@ function getErrors(
     return errors
   }
 
-  const result = schema.safeParse(input)
+  const result = schema.safeValidate(input)
   if (!result.success) {
     assert(keyPrefix, 'Key prefix is required')
     errors.push({

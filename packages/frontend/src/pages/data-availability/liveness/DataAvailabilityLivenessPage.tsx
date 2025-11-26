@@ -1,3 +1,4 @@
+import { BigQueryOutageNotice } from '~/components/BigQueryOutageNotice'
 import { CountBadge } from '~/components/badge/CountBadge'
 import {
   DirectoryTabs,
@@ -20,10 +21,12 @@ import { DaLivenessTable } from './components/table/DaLivenessTable'
 
 interface Props extends AppLayoutProps {
   publicSystems: DaLivenessEntry[]
+  bigQueryOutage: boolean
 }
 
 export function DataAvailabilityLivenessPage({
   publicSystems,
+  bigQueryOutage,
   ...props
 }: Props) {
   return (
@@ -33,6 +36,7 @@ export function DataAvailabilityLivenessPage({
           <MainPageHeader description="DA bridges liveness shows how actively different DA layers are posting data availability attestations to Ethereum, and whether there are any significant deviations from their usual submission schedule.">
             Liveness
           </MainPageHeader>
+          {bigQueryOutage && <BigQueryOutageNotice type="page" mobileFull />}
           <Controls />
           <DirectoryTabs defaultValue="public">
             <DirectoryTabsList>
@@ -42,7 +46,10 @@ export function DataAvailabilityLivenessPage({
             </DirectoryTabsList>
             <DirectoryTabsContent value="public">
               <PublicSystemInfo />
-              <DaLivenessTable items={publicSystems} />
+              <DaLivenessTable
+                items={publicSystems}
+                bigQueryOutage={bigQueryOutage}
+              />
             </DirectoryTabsContent>
           </DirectoryTabs>
         </LivenessTimeRangeContextProvider>
