@@ -120,7 +120,7 @@ class EventTypeStore<T> {
     }
 
     const last = this.all.pop()
-    if (!last) return true
+    if (!last || last === element) return true
 
     this.all[0] = last
     this.indices.set(last, 0)
