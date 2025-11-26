@@ -14746,6 +14746,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "BOB",
+      "coingeckoId": "bob-build-on-bitcoin",
+      "address": "0xB0BD54846a92b214C04A63B26AD7Dc5e19A60808",
+      "symbol": "BOB",
+      "decimals": 18,
+      "deploymentTimestamp": 1739374645,
+      "coingeckoListingTimestamp": 1763596800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54720/large/BOB_symbol_colour.png?1741195397",
+      "chainId": 60808,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Bridged USDC (BOB)",
       "coingeckoId": "usd-coin",
       "address": "0xe75D0fB2C24A55cA1e3F96781a2bCC7bdba058F0",
