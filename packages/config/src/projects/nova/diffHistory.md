@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x98dc78c4474861867a541644dd285e905ced43db
+
+# Diff at Mon, 24 Nov 2025 09:46:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7f22580fca8d48e9cc5f7f28da38d6b8725e891 block: 1763481382
+- current timestamp: 1763977449
+
+## Description
+
+3 SC members rotated in:
+- 0x0cd9e52891A0a48d45b0C61A31086be8361Ef157: immunefi
+- 0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988: gauntlet
+- 0x875573B973F7E9Ca54eb34a59180C70eE1128208: zachxbt
+
+## Watched changes
+
+```diff
+    contract L2SecurityCouncilEmergency (arb-nova:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3) {
+    +++ description: None
+      values.$members.0:
++        "arb-nova:0x875573B973F7E9Ca54eb34a59180C70eE1128208"
+      values.$members.1:
++        "arb-nova:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988"
+      values.$members.2:
++        "arb-nova:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157"
+      values.$members.3:
+-        "arb-nova:0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
+      values.$members.4:
+-        "arb-nova:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+      values.$members.5:
+-        "arb-nova:0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
+    }
+```
+
+```diff
+    contract SecurityCouncil (eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x875573B973F7E9Ca54eb34a59180C70eE1128208"
+      values.$members.1:
++        "eth:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988"
+      values.$members.2:
++        "eth:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157"
+      values.$members.3:
+-        "eth:0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
+      values.$members.4:
+-        "eth:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+      values.$members.5:
+-        "eth:0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
+    }
+```
+
 Generated with discovered.json: 0xba73972ff12f8a0d895fa772d329b31845ffb5e1
 
 # Diff at Tue, 18 Nov 2025 15:58:01 GMT:

@@ -259,6 +259,11 @@ export function AddDeployedToken() {
                   onClick={() => {
                     const next = queue.at(0)
                     setQueue((prev) => prev.slice(1))
+                    form.resetField('symbol')
+                    form.resetField('decimals')
+                    form.resetField('deploymentTimestamp')
+                    form.resetField('abstractTokenId')
+                    form.resetField('comment')
 
                     if (next) {
                       setSearchParams((prev) => {
@@ -456,7 +461,7 @@ function Queue({
             }}
             placeholder="ethereum,0x1234567890123456789012345678901234567890&#10;arbitrum,0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"
             rows={10}
-            className="font-mono text-sm"
+            className="max-h-[192px] font-mono text-sm"
           />
           {error && <p className="text-destructive text-sm">{error}</p>}
         </div>

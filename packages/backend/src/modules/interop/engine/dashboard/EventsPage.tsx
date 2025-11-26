@@ -30,18 +30,18 @@ function EventsTable(props: {
           const dstChain = (e.args as { $dstChain?: string }).$dstChain
 
           return (
-            <tr key={`${e.chain}-${e.txHash}-${e.logIndex}`}>
+            <tr key={`${e.chain}-${e.ctx.txHash}-${e.ctx.logIndex}`}>
               <td data-order={e.timestamp}>
                 {new Date(e.timestamp * 1000).toLocaleString()}
               </td>
               <td>{e.chain}</td>
               <td>
                 {explorerUrl ? (
-                  <a target="_blank" href={`${explorerUrl}/tx/${e.txHash}`}>
-                    {e.txHash}
+                  <a target="_blank" href={`${explorerUrl}/tx/${e.ctx.txHash}`}>
+                    {e.ctx.txHash}
                   </a>
                 ) : (
-                  e.txHash
+                  e.ctx.txHash
                 )}
               </td>
               <td>{srcChain ?? ''}</td>
@@ -81,7 +81,7 @@ function EventsPageLayout(props: {
       showHome={true}
       tables={[
         {
-          title: `Interop Events: ${props.events[0]?.type ?? ''}`,
+          title: `Interop Events: ${props.events[0]?.type ?? ''} (${props.events[0].direction ?? '<missing_direction>'})`,
           table: eventsTable,
           tableId: 'events',
           dataTableOptions: dataTableOptions,

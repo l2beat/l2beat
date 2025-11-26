@@ -88,6 +88,9 @@ export class SyncMetadataRepository extends BaseRepository {
     syncedUntil: UnixTime,
     blockSyncedUntil?: number,
   ): Promise<void> {
+    if (ids.length === 0) {
+      return
+    }
     await this.db
       .updateTable('SyncMetadata')
       .set({
@@ -116,6 +119,9 @@ export class SyncMetadataRepository extends BaseRepository {
     feature: SyncMetadataRecord['feature'],
     ids: string[],
   ): Promise<SyncMetadataRecord[]> {
+    if (ids.length === 0) {
+      return []
+    }
     const rows = await this.db
       .selectFrom('SyncMetadata')
       .selectAll()

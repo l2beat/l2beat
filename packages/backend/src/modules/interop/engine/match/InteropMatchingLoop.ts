@@ -41,10 +41,10 @@ export class InteropMatchingLoop extends TimeLoop {
     )
 
     await this.db.transaction(async () => {
-      if (result.matchedIds.size > 0 || result.unsupportedIds.size > 0) {
+      if (result.matched.length > 0 || result.unsupported.length > 0) {
         await this.store.updateMatchedAndUnsupported({
-          matched: result.matchedIds,
-          unsupported: result.unsupportedIds,
+          matched: result.matched,
+          unsupported: result.unsupported,
         })
       }
       const messages = await this.db.interopMessage.insertMany(
@@ -78,8 +78,8 @@ export async function match(
     chains: supportedChains.length,
   })
 
-  const matchedIds = new Set<string>()
-  const unsupportedIds = new Set<string>()
+  const matched = new Set<InteropEvent>()
+  const unsupported = new Set<InteropEvent>()
   const allMessages: InteropMessage[] = []
   const allTransfers: InteropTransfer[] = []
 
@@ -101,7 +101,7 @@ export async function match(
       const events = getEvents(type.type)
       stats.events += events.length
       for (const event of events) {
-        if (matchedIds.has(event.eventId)) {
+        if (matched.has(event)) {
           continue
         }
         let result: MatchResult | undefined
@@ -119,25 +119,25 @@ export async function match(
           continue
         }
 
-        matchedIds.add(event.eventId)
+        matched.add(event)
         for (const item of result) {
           if (item.kind === 'InteropMessage') {
             allMessages.push({ ...item, plugin: plugin.name })
             stats.messages++
             stats.matchedEvents += item.events.length
             for (const event of item.events) {
-              matchedIds.add(event.eventId)
+              matched.add(event)
             }
           } else if (item.kind === 'InteropTransfer') {
             allTransfers.push({ ...item, plugin: plugin.name })
             stats.transfers++
             stats.matchedEvents += item.events.length
             for (const event of item.events) {
-              matchedIds.add(event.eventId)
+              matched.add(event)
             }
           } else if (item.kind === 'InteropIgnore') {
             for (const event of item.events) {
-              unsupportedIds.add(event.eventId)
+              unsupported.add(event)
             }
           }
         }
@@ -156,7 +156,7 @@ export async function match(
 
   for (const type of eventTypes) {
     for (const event of getEvents(type)) {
-      if (matchedIds.has(event.eventId)) {
+      if (matched.has(event)) {
         continue
       }
       const $srcChain = (event.args as Record<string, unknown>).$srcChain
@@ -164,14 +164,14 @@ export async function match(
         typeof $srcChain === 'string' &&
         !supportedChains.includes($srcChain)
       ) {
-        unsupportedIds.add(event.eventId)
+        unsupported.add(event)
       }
       const $dstChain = (event.args as Record<string, unknown>).$dstChain
       if (
         typeof $dstChain === 'string' &&
         !supportedChains.includes($dstChain)
       ) {
-        unsupportedIds.add(event.eventId)
+        unsupported.add(event)
       }
     }
   }
@@ -181,15 +181,15 @@ export async function match(
     plugins: plugins.length,
     events: count,
     chains: supportedChains.length,
-    matchedEvents: matchedIds.size,
-    unsupportedEvents: unsupportedIds.size,
+    matchedEvents: matched.size,
+    unsupportedEvents: unsupported.size,
     messages: allMessages.length,
     transfers: allTransfers.length,
   })
 
   return {
-    matchedIds,
-    unsupportedIds,
+    matched: Array.from(matched),
+    unsupported: Array.from(unsupported),
     messages: allMessages,
     transfers: allTransfers,
   }

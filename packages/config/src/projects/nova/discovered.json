@@ -1,11 +1,17 @@
 {
   "name": "nova",
-  "timestamp": 1763481382,
+  "timestamp": 1763977449,
   "configHash": "0xfbda4ca898daf3f88f71cc20ad6cc5ea5a50052145a2427a0d1dc110d1370203",
   "entries": [
     {
       "name": "bartek.eth-L2BEAT",
       "address": "arb-nova:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Immunefi",
+      "address": "arb-nova:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -129,12 +135,6 @@
       }
     },
     {
-      "name": "DennisonBertram-Tally",
-      "address": "arb-nova:0x59c8535419BbCb8AdFFDB3C835435E907e3B183B",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "L2WethGateway",
       "address": "arb-nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD",
       "type": "Contract",
@@ -183,12 +183,6 @@
         "arb-nova:0xbe04Ab2728c924D678f9FC833E379688c6eFA317": "L2WethGateway"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "name": "JohnMorrow-Gauntlet",
-      "address": "arb-nova:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "L2UpgradeExecutor",
@@ -263,6 +257,12 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "name": "zachxbt",
+      "address": "arb-nova:0x875573B973F7E9Ca54eb34a59180C70eE1128208",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "GriffGreen-Giveth",
       "address": "arb-nova:0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
       "type": "EOA",
@@ -271,12 +271,6 @@
     {
       "name": "StevenThornton-OpenZeppelin",
       "address": "arb-nova:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "GoncaloMagalhaes-Immunefi",
-      "address": "arb-nova:0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -521,12 +515,12 @@
         "$immutable": false,
         "$implementation": "arb-nova:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
+          "arb-nova:0x875573B973F7E9Ca54eb34a59180C70eE1128208",
+          "arb-nova:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988",
+          "arb-nova:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157",
           "arb-nova:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E",
           "arb-nova:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392",
           "arb-nova:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D",
-          "arb-nova:0x59c8535419BbCb8AdFFDB3C835435E907e3B183B",
-          "arb-nova:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
-          "arb-nova:0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8",
           "arb-nova:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33",
           "arb-nova:0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
           "arb-nova:0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
@@ -582,7 +576,7 @@
         "beaconProxyFactory": "arb-nova:0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
         "cloneableProxyHash": "0xe95e7b13b0b76934e55320c0f1a812918ec818f61a9b36660d64d803eeecb91a",
         "counterpartGateway": "arb-nova:0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
-        "exitNum": 959,
+        "exitNum": 961,
         "router": "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
       },
       "implementationNames": {
@@ -802,6 +796,12 @@
       }
     },
     {
+      "name": "Gauntlet",
+      "address": "arb-nova:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "bartek.eth-L2BEAT",
       "address": "eth:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
       "type": "EOA",
@@ -819,6 +819,12 @@
           "role": ".batchPosters"
         }
       ]
+    },
+    {
+      "name": "Immunefi",
+      "address": "eth:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "SequencerInbox",
@@ -880,7 +886,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "batchCount": 291294,
+        "batchCount": 293204,
         "batchPosterManager": "eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "eth:0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -889,12 +895,12 @@
         "bridge": "eth:0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
         "BROTLI_MESSAGE_HEADER_FLAG": "0x00",
         "buffer": {
-          "bufferBlocks": 14248,
+          "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 300,
-          "prevBlockNumber": 23826945,
+          "prevBlockNumber": 23867654,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 23827013
+          "prevSequencedBlockNumber": 23867714
         },
         "dacKeyset": {
           "requiredSignatures": 5,
@@ -927,7 +933,7 @@
         "rollup": "eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 537190,
+        "totalDelayedMessagesRead": 539117,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1224,12 +1230,6 @@
       }
     },
     {
-      "name": "DennisonBertram-Tally",
-      "address": "eth:0x59c8535419BbCb8AdFFDB3C835435E907e3B183B",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x64379Dee676ab442B48925Ed603771f386510Ee7",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1304,13 +1304,13 @@
       }
     },
     {
-      "name": "JohnMorrow-Gauntlet",
-      "address": "eth:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
+      "address": "eth:0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe",
+      "name": "zachxbt",
+      "address": "eth:0x875573B973F7E9Ca54eb34a59180C70eE1128208",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1350,12 +1350,6 @@
       "implementationNames": {
         "eth:0x97f63339374fCe157Aa8Ee27830172d2AF76A786": "L1DaiGateway"
       }
-    },
-    {
-      "name": "GoncaloMagalhaes-Immunefi",
-      "address": "eth:0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "OneStepProverHostIo",
@@ -1566,7 +1560,7 @@
           "eth:0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["eth:0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 537194,
+        "delayedMessageCount": 539120,
         "inboxHistory": [
           "eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
           "eth:0x304807A7ed6c1296df2128E6ff3836e477329CD2"
@@ -1574,8 +1568,8 @@
         "outboxHistory": ["eth:0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
         "rollup": "eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd",
         "sequencerInbox": "eth:0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 291294,
-        "sequencerReportedSubMessageCount": 84316602
+        "sequencerMessageCount": 293204,
+        "sequencerReportedSubMessageCount": 84341016
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -4382,7 +4376,7 @@
         ],
         "inbox": "eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isPostBoLD": true,
-        "latestConfirmed": "0x47582c594ce9d42b0a46bf1dcbd25c92c7623e600ba011bdd166c55e4506d726",
+        "latestConfirmed": "0xf1518359835a31e06b5be0d5347ecdb8c1a14f02d51054a56c99dcac5da58e80",
         "loserStakeEscrow": "eth:0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
@@ -4621,12 +4615,12 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x875573B973F7E9Ca54eb34a59180C70eE1128208",
+          "eth:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988",
+          "eth:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157",
           "eth:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E",
           "eth:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392",
           "eth:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D",
-          "eth:0x59c8535419BbCb8AdFFDB3C835435E907e3B183B",
-          "eth:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
-          "eth:0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8",
           "eth:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33",
           "eth:0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
           "eth:0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
@@ -4654,6 +4648,12 @@
           "href": "https://docs.arbitrum.foundation/security-council-members"
         }
       ]
+    },
+    {
+      "name": "Gauntlet",
+      "address": "eth:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xfE2bf40f2A9183774BF8E871d634A4E50255158B",
@@ -6041,6 +6041,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "ethereum": 23827029, "nova": 84316601 },
-  "permissionsConfigHash": "0x097aab79b9e7f7ff6f3acab1ac062708c128cc253ecbdc42d4bbe1d326108454"
+  "usedBlockNumbers": { "ethereum": 23867905, "nova": 84341019 },
+  "permissionsConfigHash": "0xae39f89ab434aea6678c375856fd24abb6a2c782b7a207bbd29cf5cb644a0c7a"
 }

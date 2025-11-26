@@ -345,14 +345,14 @@ function opStackCommon(
       architectureImage:
         templateVars.architectureImage ?? architectureImage.join('-'),
       stateValidationImage:
-        (templateVars.stateValidationImage ??
-        fraudProofType === 'Permissionless')
+        templateVars.stateValidationImage ??
+        (fraudProofType === 'Permissionless'
           ? 'opfp'
           : fraudProofType === 'Kailua'
             ? 'kailua'
             : fraudProofType === 'OpSuccinct'
               ? 'opsuccinct'
-              : undefined,
+              : undefined),
       stacks: ['OP Stack'],
       warning:
         templateVars.display.warning === undefined

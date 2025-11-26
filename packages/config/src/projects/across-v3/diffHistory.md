@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xe14899ad67375505474d7ddd77ed32649b5e0104
+
+# Diff at Mon, 24 Nov 2025 09:54:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7f22580fca8d48e9cc5f7f28da38d6b8725e891 block: 1762264490
+- current timestamp: 1763977586
+
+## Description
+
+Monad adapter added (based on universal adapter).
+
+## Watched changes
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.Adapters.143:
++        "eth:0xC29a3Ba0fBf477F16Fd53d2C438Eade024FD8452"
+      values.CrossChainContracts.143:
++        "eth:0xd2ecb3afe598b746F8123CaE365a598DA831A449"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Monad_Adapter (eth:0xC29a3Ba0fBf477F16Fd53d2C438Eade024FD8452)
+    +++ description: This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/across-v3/.flat/Monad_Adapter.sol | 792 +++++++++++++++++++++
+ 1 file changed, 792 insertions(+)
+```
+
 Generated with discovered.json: 0x5c5f544337726a102f4fd424667e0e244094b6f1
 
 # Diff at Wed, 05 Nov 2025 12:46:21 GMT:

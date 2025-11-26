@@ -12,15 +12,17 @@ export interface InteropEventRecord {
   timestamp: UnixTime
   chain: string
   blockNumber: number
-  blockHash: string
-  txHash: string
-  value: bigint | undefined
-  txTo: string | undefined
-  calldata: string
-  logIndex: number
+  args: unknown
+  ctx: InteropEventContext
   matched: boolean
   unsupported: boolean
-  args: unknown
+}
+
+export interface InteropEventContext {
+  timestamp: UnixTime
+  chain: string
+  txHash: string
+  logIndex: number
 }
 
 export function toRecord(row: Selectable<InteropEvent>): InteropEventRecord {
@@ -33,15 +35,10 @@ export function toRecord(row: Selectable<InteropEvent>): InteropEventRecord {
     timestamp: UnixTime.fromDate(row.timestamp),
     chain: row.chain,
     blockNumber: row.blockNumber,
-    blockHash: row.blockHash,
-    txHash: row.txHash,
-    value: row.value ? BigInt(row.value) : undefined, //TODO: make optional
-    txTo: row.txTo ?? undefined,
-    calldata: row.calldata,
-    logIndex: row.logIndex ?? -1, // TODO: make optional
+    args: reviveBigInts(row.args),
+    ctx: reviveBigInts(row.ctx) as InteropEventContext,
     matched: row.matched,
     unsupported: row.unsupported,
-    args: reviveBigInts(row.args),
   }
 }
 
@@ -55,15 +52,14 @@ export function toRow(record: InteropEventRecord): Insertable<InteropEvent> {
     timestamp: UnixTime.toDate(record.timestamp),
     chain: record.chain,
     blockNumber: record.blockNumber,
-    blockHash: record.blockHash.toLowerCase(),
-    txHash: record.txHash.toLowerCase(),
-    calldata: record.calldata,
-    value: record.value?.toString(),
-    txTo: record.txTo ?? null,
-    logIndex: record.logIndex,
+    blockHash: '',
+    txHash: '',
     matched: record.matched,
     unsupported: record.unsupported,
     args: JSON.stringify(record.args, (_, value) =>
+      typeof value === 'bigint' ? `BigInt(${value})` : value,
+    ),
+    ctx: JSON.stringify(record.ctx, (_, value) =>
       typeof value === 'bigint' ? `BigInt(${value})` : value,
     ),
   }
@@ -71,6 +67,7 @@ export function toRow(record: InteropEventRecord): Insertable<InteropEvent> {
 
 export interface InteropEventStatsRecord {
   type: string
+  direction: string | undefined
   count: number
   matched: number
   unmatched: number
@@ -142,6 +139,7 @@ export class InteropEventRepository extends BaseRepository {
       .selectFrom('InteropEvent')
       .select((eb) => [
         'type',
+        'direction',
         eb.fn.countAll().as('count'),
         eb.fn.countAll().filterWhere('matched', '=', true).as('matched'),
         eb.fn
@@ -160,11 +158,12 @@ export class InteropEventRepository extends BaseRepository {
           .filterWhere('matched', '=', false)
           .as('oldUnmatched'),
       ])
-      .groupBy('type')
+      .groupBy(['type', 'direction'])
       .execute()
 
     return rows.map((x) => ({
       type: x.type,
+      direction: x.direction ?? undefined,
       count: Number(x.count),
       matched: Number(x.matched),
       unmatched: Number(x.unmatched),

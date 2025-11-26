@@ -9,9 +9,14 @@ import type {
 import { InMemoryEventDb } from './InMemoryEventDb'
 
 export class InteropEventStore implements InteropEventDb {
-  private eventDb = new InMemoryEventDb()
+  private eventDb: InMemoryEventDb
 
-  constructor(private db: Database) {}
+  constructor(
+    private db: Database,
+    inMemoryLimit: number,
+  ) {
+    this.eventDb = new InMemoryEventDb(inMemoryLimit)
+  }
 
   async start() {
     const records = await this.db.interopEvent.getUnmatched()
@@ -33,14 +38,15 @@ export class InteropEventStore implements InteropEventDb {
     matched,
     unsupported,
   }: {
-    matched: Set<string>
-    unsupported: Set<string>
+    matched: InteropEvent[]
+    unsupported: InteropEvent[]
   }): Promise<void> {
-    const all = new Set([...matched, ...unsupported])
-    this.eventDb.removeEvents(all)
+    this.eventDb.removeEvents([...matched, ...unsupported])
     await this.db.transaction(async () => {
-      await this.db.interopEvent.updateMatched(Array.from(matched))
-      await this.db.interopEvent.updateUnsupported(Array.from(unsupported))
+      await this.db.interopEvent.updateMatched(matched.map((e) => e.eventId))
+      await this.db.interopEvent.updateUnsupported(
+        unsupported.map((e) => e.eventId),
+      )
     })
   }
 
@@ -86,8 +92,8 @@ function fromDbRecord(record: InteropEventRecord): InteropEvent {
     ctx: {
       chain: record.chain,
       timestamp: record.timestamp,
-      logIndex: record.logIndex,
-      txHash: record.txHash,
+      logIndex: record.ctx.logIndex,
+      txHash: record.ctx.txHash,
     },
   }
 }
@@ -102,15 +108,10 @@ function toDbRecord(event: InteropEvent): InteropEventRecord {
     args: event.args,
     chain: event.ctx.chain,
     timestamp: event.ctx.timestamp,
-    logIndex: event.ctx.logIndex,
-    txHash: event.ctx.txHash,
     matched: false,
     unsupported: false,
+    ctx: event.ctx,
     // Deprecated
-    blockHash: '-',
     blockNumber: 0,
-    value: 0n,
-    txTo: '-',
-    calldata: '-',
   }
 }

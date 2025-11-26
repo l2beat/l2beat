@@ -85,6 +85,11 @@ export interface InteropMessageDetailedStatsRecord {
   avgDuration: number
 }
 
+export interface InteropMessageUniqueAppsRecord {
+  plugin: string
+  apps: string[]
+}
+
 export class InteropMessageRepository extends BaseRepository {
   async insertMany(records: InteropMessageRecord[]): Promise<number> {
     if (records.length === 0) return 0
@@ -215,5 +220,29 @@ export class InteropMessageRepository extends BaseRepository {
   async deleteAll(): Promise<number> {
     const result = await this.db.deleteFrom('InteropMessage').executeTakeFirst()
     return Number(result.numDeletedRows)
+  }
+
+  async getUniqueAppsPerPlugin(): Promise<InteropMessageUniqueAppsRecord[]> {
+    const rows = await this.db
+      .selectFrom('InteropMessage')
+      .select(['plugin', 'app'])
+      .distinct()
+      .where('app', '!=', '')
+      .where('app', '!=', 'unknown')
+      .where('app', 'is not', null)
+      .execute()
+
+    const grouped = new Map<string, string[]>()
+
+    for (const row of rows) {
+      const apps = grouped.get(row.plugin) ?? []
+      apps.push(row.app)
+      grouped.set(row.plugin, apps)
+    }
+
+    return Array.from(grouped.entries()).map(([plugin, apps]) => ({
+      plugin,
+      apps,
+    }))
   }
 }

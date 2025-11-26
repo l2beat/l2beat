@@ -1,6 +1,7 @@
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import { Fragment } from 'react'
+import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { AnomalyIndicator } from '~/pages/scaling/liveness/components/AnomalyIndicator'
 import { DurationCell } from '~/pages/scaling/liveness/components/table/DurationCell'
@@ -16,6 +17,7 @@ export function LivenessChartStats({
   configuredSubtypes,
   timeRange,
   isArchived,
+  bigQueryOutage,
 }: {
   stats:
     | Partial<
@@ -28,6 +30,7 @@ export function LivenessChartStats({
   hasTrackedContractsChanged: boolean
   isLoading: boolean
   isArchived: boolean
+  bigQueryOutage: boolean
 }) {
   const timeRangeLabel = timeRange.toUpperCase()
   const elements = compact([
@@ -63,10 +66,14 @@ export function LivenessChartStats({
     ),
     !isArchived && (
       <ChartStatsItem key="anomalies" label="Past 30 days anomalies">
-        <AnomalyIndicator
-          anomalies={anomalies}
-          hasTrackedContractsChanged={hasTrackedContractsChanged}
-        />
+        {bigQueryOutage ? (
+          <NoDataBadge />
+        ) : (
+          <AnomalyIndicator
+            anomalies={anomalies}
+            hasTrackedContractsChanged={hasTrackedContractsChanged}
+          />
+        )}
       </ChartStatsItem>
     ),
   ])

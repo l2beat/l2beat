@@ -1,18 +1,22 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, InteropTransferUpdate } from '@l2beat/database'
-import { assertUnreachable, UnixTime, unique } from '@l2beat/shared-pure'
+import {
+  Address32,
+  assertUnreachable,
+  UnixTime,
+  unique,
+} from '@l2beat/shared-pure'
 import type { TokenDbClient } from '@l2beat/token-backend'
 import { TimeLoop } from '../../../../tools/TimeLoop'
-import { Address32 } from '../../plugins/types'
 import { DeployedTokenId } from './DeployedTokenId'
 
 export type TokenInfos = Map<
-  DeployedTokenId,
+  string,
   {
     abstractId: string
     symbol: string
-    decimals: number
     coingeckoId: string
+    decimals: number
   }
 >
 
