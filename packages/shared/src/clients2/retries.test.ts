@@ -60,6 +60,10 @@ describe(withRetries.name, () => {
     notAsync() {
       return 42
     }
+
+    notAsyncThrow() {
+      throw new Error('oops')
+    }
   }
 
   it('wraps a given service', async () => {
@@ -70,6 +74,7 @@ describe(withRetries.name, () => {
     expect(await fooService.getFoo()).toEqual('foo')
     expect(await fooService.getBar()).toEqual('bar')
     expect(fooService.notAsync()).toEqual(42)
+    expect(() => fooService.notAsyncThrow()).toThrow('oops')
     expect(fooService.toString()).toEqual('[object Object]')
   })
 })
