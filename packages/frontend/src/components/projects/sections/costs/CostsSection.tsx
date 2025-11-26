@@ -30,7 +30,9 @@ export function CostsSection({
       <p className="text-paragraph-15 md:text-paragraph-16">
         The section shows the operating costs that L2s pay to Ethereum.
       </p>
-      {bigQueryOutage && <BigQueryOutageNotice className="mb-0" />}
+      {bigQueryOutage && (
+        <BigQueryOutageNotice type="section" className="mb-0" />
+      )}
       <HorizontalSeparator className="my-4" />
       <ProjectCostsChart
         milestones={milestones}
