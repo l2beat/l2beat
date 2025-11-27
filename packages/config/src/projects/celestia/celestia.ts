@@ -54,7 +54,7 @@ export const celestia: BaseProject = {
 
       ![Blobs](/images/da-layer-technology/celestia/blobs.png#center)
 
-      All data posted in a Celestia blob is divided into chunks of fixed size, called shares, and each blob is arranged in a k * k matrix of shares. The maximum square size is 512 (k = 256), for a total of 65536 shares.\n
+      All data posted in a Celestia blob is divided into chunks of fixed size, called shares, and each blob is arranged in a k * k matrix of shares. The maximum original square size is 512 (k = 512), for a total of 262,144 shares.\n
 
       ![Blobs matrix](/images/da-layer-technology/celestia/blobs-matrix.png#center)
 
@@ -127,10 +127,10 @@ export const celestia: BaseProject = {
     /*
       Node params sources:
       - unbondingPeriod: CIP-37 https://cips.celestia.org/cip-037.html
-      - pruningWindow: CIP-36 https://cips.celestia.org/cip-036.html
+      - pruningWindow: CIP-34 https://cips.celestia.org/cip-034.html
       - finality (time_iota_ms): https://celestiaorg.github.io/celestia-app/specs/params.html
       - block time: https://github.com/celestiaorg/celestia-app/blob/main/pkg/appconsts/consensus_consts.go
-      - max block size: CIP-38 https://cips.celestia.org/cip-038.html
+      - max square size: CIP-38 https://cips.celestia.org/cip-038.html
     */
     consensusAlgorithm: {
       name: 'CometBFT',
@@ -145,7 +145,7 @@ export const celestia: BaseProject = {
       erasureCodingScheme: '2D Reed-Solomon',
       erasureCodingProof: 'Fraud proofs',
     },
-    pruningWindow: 86400 * 7 + 3600, // 7 days + 1 hour in seconds (CIP-36)
+    pruningWindow: 86400 * 7 + 3600, // 7 days + 1 hour in seconds (CIP-34)
     throughput: [
       {
         size: 8388608, // 8 MiB
