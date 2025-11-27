@@ -114,6 +114,9 @@ export class HyperlaneMerklyTokenBridgePlugin implements InteropPlugin {
           srcTokenAddress: hwrSentMerkly.args.tokenAddress,
           srcAmount: hwrSentMerkly.args.amount,
           dstEvent: process, // merkly does not emit at destination
+          // from source data
+          dstTokenAddress: hwrSentMerkly.args.tokenAddress,
+          dstAmount: hwrSentMerkly.args.amount,
         }),
       ]
     }
