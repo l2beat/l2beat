@@ -22,7 +22,7 @@ export interface TransactionParameter {
 export interface FilterParameter {
   fromBlock?: BlockParameter
   toBlock?: BlockParameter
-  address?: EthereumAddress
+  address?: EthereumAddress | EthereumAddress[]
   topics?: (string | null | (string | null)[])[]
   blockHash?: string
 }
