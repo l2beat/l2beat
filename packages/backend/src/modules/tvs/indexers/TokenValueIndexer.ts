@@ -101,7 +101,7 @@ export class TokenValueIndexer extends ManagedMultiIndexer<TvsToken> {
           tokenIds,
           syncedUntil,
         )
-        await this.$.db.tvsTokenValue.insertMany(records)
+        await this.$.db.tvsTokenValue.upsertMany(records)
       })
       this.logger.info('Saved token values into DB', {
         timestamps: timestamps.length,

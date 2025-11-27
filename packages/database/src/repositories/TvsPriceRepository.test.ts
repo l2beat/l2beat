@@ -10,14 +10,14 @@ describeDatabase(TvsPriceRepository.name, (db) => {
     await repository.deleteAll()
   })
 
-  describe(TvsPriceRepository.prototype.insertMany.name, () => {
+  describe(TvsPriceRepository.prototype.upsertMany.name, () => {
     it('adds new rows', async () => {
       const records = [
         tvsPrice('a', 'eth', UnixTime(100), 1000.5),
         tvsPrice('b', 'btc', UnixTime(200), 20000.75),
       ]
 
-      const inserted = await repository.insertMany(records)
+      const inserted = await repository.upsertMany(records)
       expect(inserted).toEqual(2)
 
       const result = await repository.getAll()
@@ -25,7 +25,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
     })
 
     it('handles empty array', async () => {
-      const inserted = await repository.insertMany([])
+      const inserted = await repository.upsertMany([])
       expect(inserted).toEqual(0)
     })
 
@@ -35,14 +35,34 @@ describeDatabase(TvsPriceRepository.name, (db) => {
         records.push(tvsPrice('a', 'eth', UnixTime(i), 1000 + i))
       }
 
-      const inserted = await repository.insertMany(records)
+      const inserted = await repository.upsertMany(records)
       expect(inserted).toEqual(1500)
+    })
+
+    it('updates existing records on conflict', async () => {
+      const initialRecords = [
+        tvsPrice('a', 'eth', UnixTime(100), 1000.5),
+        tvsPrice('b', 'btc', UnixTime(200), 20000.75),
+      ]
+
+      await repository.upsertMany(initialRecords)
+
+      const updatedRecords = [
+        tvsPrice('a', 'eth', UnixTime(100), 1500.25),
+        tvsPrice('b', 'btc', UnixTime(200), 25000.5),
+      ]
+
+      const inserted = await repository.upsertMany(updatedRecords)
+      expect(inserted).toEqual(2)
+
+      const result = await repository.getAll()
+      expect(result).toEqualUnsorted(updatedRecords)
     })
   })
 
   describe(TvsPriceRepository.prototype.getPrice.name, () => {
     it('returns price for a configuration', async () => {
-      await repository.insertMany([
+      await repository.upsertMany([
         tvsPrice('a', 'eth', UnixTime(100), 1000),
         tvsPrice('a', 'eth', UnixTime(200), 1100),
         tvsPrice('a', 'eth', UnixTime(300), 1200),
@@ -58,7 +78,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
 
   describe(TvsPriceRepository.prototype.getPricesInRange.name, () => {
     it('gets prices for given configIds in time range', async () => {
-      await repository.insertMany([
+      await repository.upsertMany([
         tvsPrice('a', 'eth', UnixTime(50), 900.5),
         tvsPrice('a', 'eth', UnixTime(100), 1000.5),
         tvsPrice('b', 'btc', UnixTime(100), 20000.75),
@@ -86,7 +106,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
     })
 
     it('returns empty array when no data in range', async () => {
-      await repository.insertMany([
+      await repository.upsertMany([
         tvsPrice('a', 'eth', UnixTime(50), 900.5),
         tvsPrice('a', 'eth', UnixTime(300), 1200.0),
       ])
@@ -103,7 +123,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
     })
 
     it('returns empty array when no matching configIds', async () => {
-      await repository.insertMany([tvsPrice('a', 'eth', UnixTime(100), 1000.5)])
+      await repository.upsertMany([tvsPrice('a', 'eth', UnixTime(100), 1000.5)])
 
       const configIds = ['b'.repeat(12)]
 
@@ -119,7 +139,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
 
   describe(TvsPriceRepository.prototype.getPricesInRangeByPriceId.name, () => {
     beforeEach(async () => {
-      await repository.insertMany([
+      await repository.upsertMany([
         tvsPrice('a', 'eth', UnixTime(50), 900.5),
         tvsPrice('a', 'eth', UnixTime(100), 1000.5),
         tvsPrice('b', 'btc', UnixTime(100), 20000.75),
@@ -159,7 +179,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
 
   describe(TvsPriceRepository.prototype.getLatestPriceBefore.name, () => {
     it('returns the latest price for a configuration', async () => {
-      await repository.insertMany([
+      await repository.upsertMany([
         tvsPrice('a', 'eth', UnixTime(100), 1000),
         tvsPrice('a', 'eth', UnixTime(200), 1100),
         tvsPrice('a', 'eth', UnixTime(300), 1200),
@@ -176,7 +196,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
     })
 
     it('returns undefined when no prices exist for the configuration', async () => {
-      await repository.insertMany([tvsPrice('a', 'eth', UnixTime(200), 1000)])
+      await repository.upsertMany([tvsPrice('a', 'eth', UnixTime(200), 1000)])
 
       const result = await repository.getLatestPriceBefore(
         'b'.repeat(12),
@@ -189,7 +209,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
 
   describe(TvsPriceRepository.prototype.deleteByConfigInTimeRange.name, () => {
     it('deletes data in range for matching config', async () => {
-      await repository.insertMany([
+      await repository.upsertMany([
         tvsPrice('b', 'eth', UnixTime(1), 1000),
         tvsPrice('b', 'eth', UnixTime(2), 1100),
         tvsPrice('b', 'eth', UnixTime(3), 1200),
@@ -212,7 +232,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
     })
 
     it('returns 0 if no matching config found', async () => {
-      await repository.insertMany([tvsPrice('b', 'eth', UnixTime(1), 1000)])
+      await repository.upsertMany([tvsPrice('b', 'eth', UnixTime(1), 1000)])
 
       const deleted = await repository.deleteByConfigInTimeRange(
         'c'.repeat(12),

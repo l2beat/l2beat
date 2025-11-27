@@ -6,21 +6,21 @@ import { TvsBlockTimestampRepository } from './TvsBlockTimestampRepository'
 describeDatabase(TvsBlockTimestampRepository.name, (db) => {
   const repository = db.tvsBlockTimestamp
 
-  describe(TvsBlockTimestampRepository.prototype.insertMany.name, () => {
+  describe(TvsBlockTimestampRepository.prototype.upsertMany.name, () => {
     it('adds new rows', async () => {
       const records = [
         blockTimestamp('a', 'ethereum', UnixTime(100), 1000),
         blockTimestamp('b', 'arbitrum', UnixTime(200), 2000),
       ]
 
-      await repository.insertMany(records)
+      await repository.upsertMany(records)
 
       const result = await repository.getAll()
       expect(result).toEqualUnsorted(records)
     })
 
     it('handles empty array', async () => {
-      const inserted = await repository.insertMany([])
+      const inserted = await repository.upsertMany([])
       expect(inserted).toEqual(0)
     })
 
@@ -30,8 +30,28 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
         records.push(blockTimestamp('a', 'ethereum', UnixTime(i), i + 1000))
       }
 
-      const inserted = await repository.insertMany(records)
+      const inserted = await repository.upsertMany(records)
       expect(inserted).toEqual(1500)
+    })
+
+    it('updates existing records on conflict', async () => {
+      const initialRecords = [
+        blockTimestamp('a', 'ethereum', UnixTime(100), 1000),
+        blockTimestamp('b', 'arbitrum', UnixTime(200), 2000),
+      ]
+
+      await repository.upsertMany(initialRecords)
+
+      const updatedRecords = [
+        blockTimestamp('a', 'ethereum', UnixTime(100), 1500),
+        blockTimestamp('b', 'arbitrum', UnixTime(200), 2500),
+      ]
+
+      const inserted = await repository.upsertMany(updatedRecords)
+      expect(inserted).toEqual(2)
+
+      const result = await repository.getAll()
+      expect(result).toEqualUnsorted(updatedRecords)
     })
   })
 
@@ -40,7 +60,7 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
       .name,
     () => {
       it('finds block number for given chain and timestamp', async () => {
-        await repository.insertMany([
+        await repository.upsertMany([
           blockTimestamp('a', 'ethereum', UnixTime(100), 1000),
           blockTimestamp('b', 'arbitrum', UnixTime(100), 2000),
           blockTimestamp('a', 'ethereum', UnixTime(200), 3000),
@@ -55,7 +75,7 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
       })
 
       it('returns undefined when no matching record exists', async () => {
-        await repository.insertMany([
+        await repository.upsertMany([
           blockTimestamp('a', 'ethereum', UnixTime(100), 1000),
         ])
 
@@ -73,7 +93,7 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
     TvsBlockTimestampRepository.prototype.deleteByConfigInTimeRange.name,
     () => {
       it('deletes data in range for matching config', async () => {
-        await repository.insertMany([
+        await repository.upsertMany([
           blockTimestamp('b', 'ethereum', UnixTime(1), 1001),
           blockTimestamp('b', 'ethereum', UnixTime(2), 1002),
           blockTimestamp('b', 'ethereum', UnixTime(3), 1003),
@@ -96,7 +116,7 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
       })
 
       it('returns 0 if no matching config found', async () => {
-        await repository.insertMany([
+        await repository.upsertMany([
           blockTimestamp('b', 'ethereum', UnixTime(1), 1001),
         ])
 

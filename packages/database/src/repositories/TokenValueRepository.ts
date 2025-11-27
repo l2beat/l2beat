@@ -47,12 +47,24 @@ export function toRow(record: TokenValueRecord): Insertable<TokenValue> {
 }
 
 export class TokenValueRepository extends BaseRepository {
-  async insertMany(records: TokenValueRecord[]) {
+  async upsertMany(records: TokenValueRecord[]) {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
-      await this.db.insertInto('TokenValue').values(batch).execute()
+      await this.db
+        .insertInto('TokenValue')
+        .values(batch)
+        .onConflict((oc) =>
+          oc.columns(['timestamp', 'configurationId']).doUpdateSet((eb) => ({
+            value: eb.ref('excluded.value'),
+            valueForProject: eb.ref('excluded.valueForProject'),
+            valueForSummary: eb.ref('excluded.valueForSummary'),
+            priceUsd: eb.ref('excluded.priceUsd'),
+            amount: eb.ref('excluded.amount'),
+          })),
+        )
+        .execute()
     })
     return rows.length
   }
