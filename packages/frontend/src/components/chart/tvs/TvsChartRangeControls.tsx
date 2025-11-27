@@ -1,20 +1,17 @@
-import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import type { ChartRange } from '~/utils/range/range'
+import { ChartRangeControls } from '../../core/chart/ChartRangeControls'
 
 interface Props {
-  timeRange: ChartRange
-  setTimeRange: (timeRange: ChartRange) => void
+  range: ChartRange
+  setRange: (value: ChartRange) => void
 }
 
-export function LivenessChartTimeRangeControls({
-  timeRange,
-  setTimeRange,
-}: Props) {
+export function TvsChartRangeControls({ range, setRange }: Props) {
   return (
     <ChartRangeControls
-      name="liveness"
-      value={timeRange}
-      setValue={setTimeRange}
+      name="tvs"
+      value={range}
+      setValue={setRange}
       options={[
         { value: '7d', label: '7D' },
         { value: '30d', label: '30D' },

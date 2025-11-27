@@ -65,14 +65,14 @@ const chartMeta = {
 
 export function ScalingSummaryTvsChart({
   unit,
-  timeRange,
+  range,
 }: {
   unit: ChartUnit
-  timeRange: ChartRange
+  range: ChartRange
 }) {
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
   const { data, isLoading } = api.tvs.recategorisedChart.useQuery({
-    range: timeRange,
+    range,
     filter: { type: 'layer2' },
   })
 
@@ -96,7 +96,7 @@ export function ScalingSummaryTvsChart({
         total={stats?.total}
         change={stats?.change}
         unit={unit}
-        timeRange={timeRange}
+        range={range}
       />
       <ChartContainer
         meta={chartMeta}
@@ -238,10 +238,10 @@ interface Props {
   total: number | undefined
   change: number | undefined
   unit: ChartUnit
-  timeRange: ChartRange
+  range: ChartRange
 }
 
-function Header({ total, unit, change, timeRange }: Props) {
+function Header({ total, unit, change, range }: Props) {
   return (
     <div className="flex items-start justify-between">
       <div>
@@ -279,7 +279,7 @@ function Header({ total, unit, change, timeRange }: Props) {
             <PercentChange value={change} />
             <span className="text-secondary">
               {' '}
-              / {tvsRangeToReadable(timeRange)}
+              / {tvsRangeToReadable(range)}
             </span>
           </p>
         )}

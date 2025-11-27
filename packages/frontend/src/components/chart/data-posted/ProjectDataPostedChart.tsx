@@ -2,13 +2,13 @@ import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { DataPostedTimeRangeControls } from '~/pages/scaling/data-posted/DataPostedTimeRangeControls'
+import { DataPostedRangeControls } from '~/pages/scaling/data-posted/DataPostedRangeControls'
 import { rangeToResolution } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
-import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
+import { getChartTimeRangeFromData } from '../../core/chart/utils/getChartTimeRangeFromData'
 import { DataPostedChart } from './DataPostedChart'
 import { ProjectDataPostedChartStats } from './ProjectDataPostedChartStats'
 
@@ -23,10 +23,10 @@ export function ProjectDataPostedChart({
   defaultRange,
   milestones,
 }: Props) {
-  const [timeRange, setTimeRange] = useState<ChartRange>(defaultRange)
+  const [range, setRange] = useState<ChartRange>(defaultRange)
 
   const { data, isLoading } = api.da.scalingProjectChart.useQuery({
-    range: timeRange,
+    range,
     projectId: project.id,
   })
 
@@ -44,20 +44,17 @@ export function ProjectDataPostedChart({
     [data],
   )
 
-  const chartRange = getChartRange(chartData)
+  const timeRange = getChartTimeRangeFromData(chartData)
 
   return (
     <div className="flex flex-col">
       <ChartControlsWrapper>
-        <ProjectChartTimeRange range={chartRange} />
-        <DataPostedTimeRangeControls
-          timeRange={timeRange}
-          setTimeRange={setTimeRange}
-        />
+        <ProjectChartTimeRange timeRange={timeRange} />
+        <DataPostedRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
       <DataPostedChart
         milestones={milestones}
-        resolution={rangeToResolution(timeRange)}
+        resolution={rangeToResolution(range)}
         data={chartData}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}

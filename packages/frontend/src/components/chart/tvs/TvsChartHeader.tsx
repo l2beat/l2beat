@@ -35,7 +35,7 @@ export function TvsChartHeader({
           Total value secured
           <span className="max-md:hidden"> stacked by type</span>
         </h1>
-        <ChartTimeRange range={timeRange} />
+        <ChartTimeRange timeRange={timeRange} />
       </div>
       <div className="flex flex-col items-end">
         <div className="whitespace-nowrap text-right font-bold text-xl md:text-2xl">

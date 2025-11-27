@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
-import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
+import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import type { ProjectDaThroughputChartPoint } from '~/server/features/data-availability/throughput/getProjectDaThroughputChartData'
 import {
@@ -50,9 +50,9 @@ export function ThroughputSectionChart({
     rangeToResolution(range),
   )
 
-  const chartRange = useMemo(
+  const timeRange = useMemo(
     () =>
-      getChartRange(
+      getChartTimeRangeFromData(
         data?.totalChart.data.map(([timestamp]) => ({ timestamp })),
       ),
     [data],
@@ -72,7 +72,7 @@ export function ThroughputSectionChart({
           onCheckedChange={setIncludeScalingOnly}
         />
         <div className="flex justify-between gap-x-1">
-          <ProjectChartTimeRange range={chartRange} />
+          <ProjectChartTimeRange timeRange={timeRange} />
           <ChartRangeControls
             name="throughput"
             value={range}

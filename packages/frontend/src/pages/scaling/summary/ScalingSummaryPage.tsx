@@ -28,11 +28,11 @@ export function ScalingSummaryPage({ entries, queryState, ...props }: Props) {
   const tvsChart = (
     <ScalingSummaryTvsChart
       unit={SCALING_SUMMARY_UNIT}
-      timeRange={SCALING_SUMMARY_TIME_RANGE}
+      range={SCALING_SUMMARY_TIME_RANGE}
     />
   )
   const activityChart = (
-    <ScalingSummaryActivityChart timeRange={SCALING_SUMMARY_TIME_RANGE} />
+    <ScalingSummaryActivityChart range={SCALING_SUMMARY_TIME_RANGE} />
   )
 
   return (

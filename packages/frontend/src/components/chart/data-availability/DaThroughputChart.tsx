@@ -10,7 +10,7 @@ import { api } from '~/trpc/React'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { ChartRangeControls } from '../../core/chart/ChartRangeControls'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
-import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
+import { getChartTimeRangeFromData } from '../../core/chart/utils/getChartTimeRangeFromData'
 import { DaAbsoluteThroughputChart } from './DaAbsoluteThroughputChart'
 import { DaPercentageThroughputChart } from './DaPercentageThroughputChart'
 
@@ -24,8 +24,11 @@ export function DaThroughputChart() {
     includeScalingOnly,
   })
 
-  const chartRange = useMemo(
-    () => getChartRange(chartData?.data.map(([timestamp]) => ({ timestamp }))),
+  const timeRange = useMemo(
+    () =>
+      getChartTimeRangeFromData(
+        chartData?.data.map(([timestamp]) => ({ timestamp })),
+      ),
     [chartData],
   )
 
@@ -39,7 +42,7 @@ export function DaThroughputChart() {
             ? 'Share of total data posted'
             : 'Total data posted'}
         </h1>
-        <ChartTimeRange range={chartRange} />
+        <ChartTimeRange timeRange={timeRange} />
       </div>
       {metric === 'percentage' ? (
         <DaPercentageThroughputChart

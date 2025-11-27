@@ -6,7 +6,7 @@ import { ZkCatalogAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/z
 import { ZkCatalogBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/zk-catalog/ZkCatalogBridgeTypeTvsChart'
 import { TvsChartControls } from '~/components/chart/tvs/TvsChartControls'
 import type { ChartProject } from '~/components/core/chart/Chart'
-import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
+import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { IncludeRwaRestrictedTokensCheckbox } from '~/pages/scaling/components/IncludeRwaRestrictedTokensCheckbox'
 import {
@@ -94,13 +94,16 @@ function ChartControls({
     includeRwaRestrictedTokens,
   })
 
-  const chartRange = useMemo(
-    () => getChartRange(data?.chart.map(([timestamp]) => ({ timestamp }))),
+  const timeRange = useMemo(
+    () =>
+      getChartTimeRangeFromData(
+        data?.chart.map(([timestamp]) => ({ timestamp })),
+      ),
     [data?.chart],
   )
   return (
     <TvsChartControls
-      chartRange={chartRange}
+      timeRange={timeRange}
       range={{
         value: range,
         setValue: setRange,

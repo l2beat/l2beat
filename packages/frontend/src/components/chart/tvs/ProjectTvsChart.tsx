@@ -5,11 +5,11 @@ import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapp
 import { api } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
-import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
+import { getChartTimeRangeFromData } from '../../core/chart/utils/getChartTimeRangeFromData'
 import type { ChartUnit } from '../types'
 import type { TvsChartDataPoint } from './TvsChart'
 import { TvsChart } from './TvsChart'
-import { TvsChartTimeRangeControls } from './TvsChartTimeRangeControls'
+import { TvsChartRangeControls } from './TvsChartRangeControls'
 import { TvsChartUnitControls } from './TvsChartUnitControls'
 
 interface Props {
@@ -20,10 +20,10 @@ interface Props {
 
 export function ProjectTvsChart({ project, milestones, defaultRange }: Props) {
   const [unit, setUnit] = useState<ChartUnit>('usd')
-  const [timeRange, setTimeRange] = useState<ChartRange>(defaultRange)
+  const [range, setRange] = useState<ChartRange>(defaultRange)
 
   const { data, isLoading } = api.tvs.chart.useQuery({
-    range: timeRange,
+    range,
     filter: { type: 'projects', projectIds: [project.id] },
     excludeAssociatedTokens: false,
     includeRwaRestrictedTokens: false,
@@ -46,19 +46,18 @@ export function ProjectTvsChart({ project, milestones, defaultRange }: Props) {
     },
   )
 
-  const chartRange = useMemo(() => getChartRange(chartData), [chartData])
+  const timeRange = useMemo(
+    () => getChartTimeRangeFromData(chartData),
+    [chartData],
+  )
 
   return (
     <div className="flex flex-col gap-4">
       <ChartControlsWrapper>
-        <ProjectChartTimeRange range={chartRange} />
+        <ProjectChartTimeRange timeRange={timeRange} />
         <div className="flex items-center gap-1">
           <TvsChartUnitControls unit={unit} setUnit={setUnit} />
-
-          <TvsChartTimeRangeControls
-            timeRange={timeRange}
-            setTimeRange={setTimeRange}
-          />
+          <TvsChartRangeControls range={range} setRange={setRange} />
         </div>
       </ChartControlsWrapper>
       <TvsChart

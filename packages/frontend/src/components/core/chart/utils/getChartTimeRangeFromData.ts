@@ -1,4 +1,4 @@
-export function getChartRange<T extends { timestamp: number }>(
+export function getChartTimeRangeFromData<T extends { timestamp: number }>(
   data: T[] | undefined,
 ): [number, number] | undefined {
   if (!data) {

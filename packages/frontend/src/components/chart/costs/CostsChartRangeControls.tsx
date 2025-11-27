@@ -3,21 +3,17 @@ import type { ChartRange } from '~/utils/range/range'
 import { ChartRangeControls } from '../../core/chart/ChartRangeControls'
 
 interface Props {
-  timeRange: ChartRange
-  setTimeRange: (range: ChartRange) => void
+  range: ChartRange
+  setRange: (range: ChartRange) => void
   metric?: CostsMetric
 }
 
-export function CostsChartTimeRangeControls({
-  timeRange,
-  setTimeRange,
-  metric,
-}: Props) {
+export function CostsChartRangeControls({ range, setRange, metric }: Props) {
   return (
     <ChartRangeControls
       name="costs"
-      value={timeRange}
-      setValue={setTimeRange}
+      value={range}
+      setValue={setRange}
       options={[
         {
           value: '1d',

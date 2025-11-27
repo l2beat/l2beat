@@ -14,19 +14,19 @@ import {
 } from './ScalingRecategorizedActivityChart'
 
 interface Props {
-  timeRange: ChartRange
+  range: ChartRange
 }
 
 const hiddenDataKeys = ['others'] as const
 
-export function ScalingSummaryActivityChart({ timeRange }: Props) {
+export function ScalingSummaryActivityChart({ range }: Props) {
   const { dataKeys, toggleDataKey } = useChartDataKeys(
     RECATEGORISED_ACTIVITY_CHART_META,
     hiddenDataKeys,
   )
 
   const { data, isLoading } = api.activity.recategorisedChart.useQuery({
-    range: timeRange,
+    range,
     filter: { type: 'all' },
   })
 

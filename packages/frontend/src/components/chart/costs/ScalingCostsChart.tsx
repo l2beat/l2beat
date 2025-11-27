@@ -18,9 +18,9 @@ import { optionToRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
-import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
+import { getChartTimeRangeFromData } from '../../core/chart/utils/getChartTimeRangeFromData'
 import { CostsChart } from './CostsChart'
-import { CostsChartTimeRangeControls } from './CostsChartTimeRangeControls'
+import { CostsChartRangeControls } from './CostsChartRangeControls'
 
 interface Props {
   tab: Exclude<CostsProjectsFilter['type'], 'all' | 'projects'>
@@ -108,11 +108,14 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
     )
   }, [data, unit])
 
-  const chartRange = useMemo(() => getChartRange(chartData), [chartData])
+  const timeRange = useMemo(
+    () => getChartTimeRangeFromData(chartData),
+    [chartData],
+  )
 
   return (
     <div>
-      <Header chartRange={chartRange} />
+      <Header timeRange={timeRange} />
       <CostsChart
         data={chartData}
         syncedUntil={data?.syncedUntil}
@@ -128,9 +131,9 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
           <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
           <CostsMetricControls value={metric} onValueChange={onMetricChange} />
         </div>
-        <CostsChartTimeRangeControls
-          timeRange={range}
-          setTimeRange={setRange}
+        <CostsChartRangeControls
+          range={range}
+          setRange={setRange}
           metric={metric}
         />
       </ChartControlsWrapper>
@@ -138,14 +141,14 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
   )
 }
 
-function Header({ chartRange }: { chartRange: [number, number] | undefined }) {
+function Header({ timeRange }: { timeRange: [number, number] | undefined }) {
   return (
     <header>
       <h1 className="font-bold text-xl md:text-2xl">
         Onchain costs
         <span className="max-md:hidden"> stacked by type</span>
       </h1>
-      <ChartTimeRange range={chartRange} />
+      <ChartTimeRange timeRange={timeRange} />
     </header>
   )
 }

@@ -23,7 +23,7 @@ export type CostsTableData = Record<
 >
 
 export async function getCostsTable(
-  timeRange: ChartRange,
+  range: ChartRange,
 ): Promise<CostsTableData> {
   if (env.MOCK) {
     return getMockCostsTableData()
@@ -31,7 +31,7 @@ export async function getCostsTable(
 
   const projects = (await getCostsProjects()).filter((p) => !p.archivedAt)
 
-  const projectsCosts = await getCostsForProjects(projects, timeRange)
+  const projectsCosts = await getCostsForProjects(projects, range)
   const rangeByProject = Object.fromEntries(
     Object.entries(projectsCosts).map(([projectId, data]) => {
       return [projectId, data.range]
@@ -39,7 +39,7 @@ export async function getCostsTable(
   )
   const projectsActivity = await getSummedActivityForProjects(
     projects.map((p) => p.id),
-    timeRange,
+    range,
     rangeByProject,
   )
 

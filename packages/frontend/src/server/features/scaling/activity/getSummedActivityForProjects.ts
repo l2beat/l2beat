@@ -7,14 +7,14 @@ import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange
 
 export async function getSummedActivityForProjects(
   projectIds: string[],
-  timeRange: ChartRange,
+  range: ChartRange,
   rangeByProject: Record<string, [UnixTime, UnixTime]>,
 ) {
   const db = getDb()
-  const range = await getFullySyncedActivityRange(timeRange)
+  const fullySyncedRange = await getFullySyncedActivityRange(range)
   const records = await db.activity.getByProjectsAndTimeRange(
     projectIds.map(ProjectId),
-    range,
+    fullySyncedRange,
   )
 
   return sumByProject(records, rangeByProject)
