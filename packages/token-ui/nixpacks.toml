@@ -1,4 +1,5 @@
 [phases.install]
+# this is for caching install step
 onlyIncludeFiles = [
   "../../.nvmrc",
   "../../package.json",
