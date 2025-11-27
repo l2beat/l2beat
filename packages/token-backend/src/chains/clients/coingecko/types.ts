@@ -3,6 +3,7 @@ import { v } from '@l2beat/validate'
 export type Coin = v.infer<typeof CoinSchema>
 export const CoinSchema = v.object({
   id: v.string(),
+  symbol: v.string(),
   image: v.object({
     large: v.string(),
   }),
