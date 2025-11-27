@@ -1,6 +1,6 @@
 {
   "name": "megaeth",
-  "timestamp": 1764152153,
+  "timestamp": 1764165346,
   "configHash": "0x3630c6cfebaa5c6afbbd6092b54510b3f2da435e6172cd35a2bee5c1e6c96a0b",
   "entries": [
     {
@@ -46,6 +46,7 @@
       ],
       "proxyType": "immutable",
       "description": "Predeposit Escrow, not connected to an L2: Users can deposit USDC. The system uses off-chain permit signatures to ensure only KYC'd users can deposit. Withdrawals can only be made by eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719 to eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719.",
+      "ignoreInWatchMode": ["getTimeUntilEnd"],
       "sinceTimestamp": 1764062435,
       "sinceBlock": 23874891,
       "values": {
@@ -53,7 +54,7 @@
         "cap": 500000000000000,
         "endTime": 1766671200,
         "getDepositStatus": 3,
-        "getTimeUntilEnd": 2519053,
+        "getTimeUntilEnd": 2505865,
         "getTimeUntilStart": 0,
         "getUserCount": 4582,
         "isDepositActive": true,
@@ -265,8 +266,8 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "megaeth/MegaUSDmPreDeposit": "0x96d48c527a8a074a85050e40e14322abca0b46e60a9f00888789cd9185d68514"
+    "megaeth/MegaUSDmPreDeposit": "0x82f3a6c9df4071ce844f483283ed99e958983459bf7be96375811951f1d46150"
   },
-  "usedBlockNumbers": { "ethereum": 23882261 },
+  "usedBlockNumbers": { "ethereum": 23883351 },
   "permissionsConfigHash": "0x9032f0f17b489eb2d40f6e4f9937150fcaafba504f8134abddf0d09c2b4debb1"
 }

@@ -140,11 +140,8 @@ export interface ApiAddressReference extends AddressFieldValue {
 export interface Field {
   name: string
   value: FieldValue
-  ignoreInWatchMode?: boolean
-  ignoreRelatives?: boolean
   handler?: { type: string } & Record<string, unknown>
   description?: string
-  severity?: 'HIGH' | 'LOW'
 }
 
 export type FieldValue =

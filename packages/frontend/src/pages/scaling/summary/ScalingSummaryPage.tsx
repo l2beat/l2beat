@@ -11,11 +11,12 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { ScalingAssociatedTokensContextProvider } from '~/pages/scaling/components/ScalingAssociatedTokensContext'
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
+import { optionToRange } from '~/utils/range/range'
 import { ScalingRwaRestrictedTokensContextProvider } from '../components/ScalingRwaRestrictedTokensContext'
 import { ChartTabs } from './components/ChartTabs'
 import { ScalingSummaryTables } from './components/ScalingSummaryTables'
 
-export const SCALING_SUMMARY_TIME_RANGE = '1y'
+export const SCALING_SUMMARY_TIME_RANGE = optionToRange('1y')
 const SCALING_SUMMARY_UNIT = 'usd'
 
 interface Props extends AppLayoutProps {
@@ -27,11 +28,11 @@ export function ScalingSummaryPage({ entries, queryState, ...props }: Props) {
   const tvsChart = (
     <ScalingSummaryTvsChart
       unit={SCALING_SUMMARY_UNIT}
-      timeRange={SCALING_SUMMARY_TIME_RANGE}
+      range={SCALING_SUMMARY_TIME_RANGE}
     />
   )
   const activityChart = (
-    <ScalingSummaryActivityChart timeRange={SCALING_SUMMARY_TIME_RANGE} />
+    <ScalingSummaryActivityChart range={SCALING_SUMMARY_TIME_RANGE} />
   )
 
   return (

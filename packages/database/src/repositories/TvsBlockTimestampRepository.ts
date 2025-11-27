@@ -29,12 +29,20 @@ export function toRow(
 }
 
 export class TvsBlockTimestampRepository extends BaseRepository {
-  async insertMany(records: TvsBlockTimestampRecord[]): Promise<number> {
+  async upsertMany(records: TvsBlockTimestampRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
-      await this.db.insertInto('TvsBlockTimestamp').values(batch).execute()
+      await this.db
+        .insertInto('TvsBlockTimestamp')
+        .values(batch)
+        .onConflict((oc) =>
+          oc.columns(['timestamp', 'configurationId']).doUpdateSet((eb) => ({
+            blockNumber: eb.ref('excluded.blockNumber'),
+          })),
+        )
+        .execute()
     })
     return rows.length
   }

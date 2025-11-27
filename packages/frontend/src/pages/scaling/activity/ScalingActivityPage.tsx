@@ -7,8 +7,8 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/getScalingActivityEntries'
+import { ActivityChartRangeContextProvider } from './components/ActivityChartRangeContext'
 import { ActivityMetricContextProvider } from './components/ActivityMetricContext'
-import { ActivityTimeRangeContextProvider } from './components/ActivityTimeRangeContext'
 import { ScalingActivityCard } from './components/ScalingActivityCard'
 
 interface Props extends AppLayoutProps {
@@ -28,7 +28,7 @@ export function ScalingActivityPage({
       <HydrationBoundary state={queryState}>
         <SideNavLayout>
           <TableFilterContextProvider>
-            <ActivityTimeRangeContextProvider>
+            <ActivityChartRangeContextProvider>
               <ActivityMetricContextProvider>
                 <MainPageHeader>Activity</MainPageHeader>
                 <ScalingActivityCard
@@ -36,7 +36,7 @@ export function ScalingActivityPage({
                   milestones={milestones}
                 />
               </ActivityMetricContextProvider>
-            </ActivityTimeRangeContextProvider>
+            </ActivityChartRangeContextProvider>
           </TableFilterContextProvider>
         </SideNavLayout>
       </HydrationBoundary>

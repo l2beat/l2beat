@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { writeTemplateFile } from '../../../api/api'
 import { formatJson } from '../../../utils/formatJson'
 import { toggleInList } from '../../../utils/toggleInList'
-import { ContractConfigModel } from '../components/ConfigModel'
+import { ContractConfigModel } from '../models/ContractConfigModel'
 
 type Props = {
   templateId?: string
@@ -44,6 +44,25 @@ export function useTemplateModel({ templateId, files }: Props) {
     const current = templateModel.ignoreInWatchMode ?? []
     const updated = toggleInList(fieldName, current)
     const newModel = templateModel.setIgnoreInWatchMode(updated)
+    setTemplateModel(newModel)
+    saveModelContents(newModel)
+  }
+
+  const setFieldSeverity = (
+    fieldName: string,
+    severity: 'HIGH' | 'LOW' | undefined,
+  ) => {
+    const newModel = templateModel.setFieldSeverity(fieldName, severity)
+    setTemplateModel(newModel)
+    saveModelContents(newModel)
+  }
+
+  const getFieldSeverity = (fieldName: string) => {
+    return templateModel.getFieldSeverity(fieldName)
+  }
+
+  const setCategory = (category: string | undefined) => {
+    const newModel = templateModel.setCategory(category)
     setTemplateModel(newModel)
     saveModelContents(newModel)
   }
@@ -91,6 +110,10 @@ export function useTemplateModel({ templateId, files }: Props) {
     toggleIgnoreMethods,
     toggleIgnoreRelatives,
     toggleIgnoreInWatchMode,
+    setFieldSeverity,
+    getFieldSeverity,
+
+    setCategory,
 
     save: saveRaw,
 
@@ -105,5 +128,6 @@ export function useTemplateModel({ templateId, files }: Props) {
     ignoreMethods: templateModel.ignoreMethods,
     ignoreRelatives: templateModel.ignoreRelatives,
     ignoreInWatchMode: templateModel.ignoreInWatchMode,
+    category: templateModel.category,
   }
 }

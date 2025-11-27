@@ -2,6 +2,7 @@ import type { Project } from '@l2beat/config'
 import type { CostsSectionProps } from '~/components/projects/sections/costs/CostsSection'
 import { env } from '~/env'
 import type { SsrHelpers } from '~/trpc/server'
+import { optionToRange } from '~/utils/range/range'
 import { getTrackedTransactions } from '../tracked-txs/getTrackedTransactions'
 
 export async function getCostsSection(
@@ -23,7 +24,7 @@ export async function getCostsSection(
 
   if (!trackedTransactions) return undefined
 
-  const range = project.archivedAt ? 'max' : '1y'
+  const range = project.archivedAt ? optionToRange('max') : optionToRange('1y')
   const data = await helpers.costs.projectChart.fetch({
     range,
     projectId: project.id,
