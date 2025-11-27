@@ -98,11 +98,21 @@ export class DeBridgeDlnPlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     const logOrderCreated = parseCreatedOrder(input.log, null)
     if (logOrderCreated) {
+      const fromToken =
+        Address32.from(logOrderCreated.order.giveTokenAddress) ===
+        Address32.ZERO
+          ? Address32.NATIVE
+          : Address32.from(logOrderCreated.order.giveTokenAddress)
+      const toToken =
+        Address32.from(logOrderCreated.order.takeTokenAddress) ===
+        Address32.ZERO
+          ? Address32.NATIVE
+          : Address32.from(logOrderCreated.order.takeTokenAddress)
       return [
         LogCreatedOrder.create(input, {
           orderId: logOrderCreated.orderId,
-          fromToken: Address32.from(logOrderCreated.order.giveTokenAddress),
-          toToken: Address32.from(logOrderCreated.order.takeTokenAddress),
+          fromToken,
+          toToken,
           fromAmount: logOrderCreated.order.giveAmount,
           fillAmount: logOrderCreated.order.takeAmount,
           $dstChain: findChain(
@@ -116,11 +126,19 @@ export class DeBridgeDlnPlugin implements InteropPlugin {
 
     const logOrderFilled = parseFulfilledOrder(input.log, null)
     if (logOrderFilled) {
+      const fromToken =
+        Address32.from(logOrderFilled.order.giveTokenAddress) === Address32.ZERO
+          ? Address32.NATIVE
+          : Address32.from(logOrderFilled.order.giveTokenAddress)
+      const toToken =
+        Address32.from(logOrderFilled.order.takeTokenAddress) === Address32.ZERO
+          ? Address32.NATIVE
+          : Address32.from(logOrderFilled.order.takeTokenAddress)
       return [
         LogFulfilledOrder.create(input, {
           orderId: logOrderFilled.orderId,
-          fromToken: Address32.from(logOrderFilled.order.giveTokenAddress),
-          toToken: Address32.from(logOrderFilled.order.takeTokenAddress),
+          fromToken,
+          toToken,
           fromAmount: logOrderFilled.order.giveAmount,
           fillAmount: logOrderFilled.order.takeAmount,
           $srcChain: findChain(
