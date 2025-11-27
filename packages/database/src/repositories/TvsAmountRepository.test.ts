@@ -6,14 +6,14 @@ import { TvsAmountRepository } from './TvsAmountRepository'
 describeDatabase(TvsAmountRepository.name, (db) => {
   const repository = db.tvsAmount
 
-  describe(TvsAmountRepository.prototype.insertMany.name, () => {
+  describe(TvsAmountRepository.prototype.upsertMany.name, () => {
     it('adds new rows', async () => {
       const records = [
         tvsAmount('a', UnixTime(100), 1n),
         tvsAmount('b', UnixTime(100), 2n),
       ]
 
-      const inserted = await repository.insertMany(records)
+      const inserted = await repository.upsertMany(records)
       expect(inserted).toEqual(2)
 
       const result = await repository.getAll()
@@ -21,7 +21,7 @@ describeDatabase(TvsAmountRepository.name, (db) => {
     })
 
     it('handles empty array', async () => {
-      const inserted = await repository.insertMany([])
+      const inserted = await repository.upsertMany([])
       expect(inserted).toEqual(0)
     })
 
@@ -31,14 +31,34 @@ describeDatabase(TvsAmountRepository.name, (db) => {
         records.push(tvsAmount('a', UnixTime(i), BigInt(i)))
       }
 
-      const inserted = await repository.insertMany(records)
+      const inserted = await repository.upsertMany(records)
       expect(inserted).toEqual(1500)
+    })
+
+    it('updates existing records on conflict', async () => {
+      const initialRecords = [
+        tvsAmount('a', UnixTime(100), 1000n),
+        tvsAmount('b', UnixTime(200), 2000n),
+      ]
+
+      await repository.upsertMany(initialRecords)
+
+      const updatedRecords = [
+        tvsAmount('a', UnixTime(100), 1500n),
+        tvsAmount('b', UnixTime(200), 2500n),
+      ]
+
+      const inserted = await repository.upsertMany(updatedRecords)
+      expect(inserted).toEqual(2)
+
+      const result = await repository.getAll()
+      expect(result).toEqualUnsorted(updatedRecords)
     })
   })
 
   describe(TvsAmountRepository.prototype.getAmount.name, () => {
     it('returns amount for a configuration', async () => {
-      await repository.insertMany([
+      await repository.upsertMany([
         tvsAmount('a', UnixTime(100), 1n),
         tvsAmount('a', UnixTime(200), 2n),
         tvsAmount('a', UnixTime(50), 0n),
@@ -53,7 +73,7 @@ describeDatabase(TvsAmountRepository.name, (db) => {
 
   describe(TvsAmountRepository.prototype.getAmountsInRange.name, () => {
     it('gets amounts for given configIds in time range', async () => {
-      await repository.insertMany([
+      await repository.upsertMany([
         tvsAmount('a', UnixTime(50), 0n),
         tvsAmount('a', UnixTime(100), 1n),
         tvsAmount('b', UnixTime(100), 2n),
@@ -81,7 +101,7 @@ describeDatabase(TvsAmountRepository.name, (db) => {
     })
 
     it('returns empty array when no data in range', async () => {
-      await repository.insertMany([
+      await repository.upsertMany([
         tvsAmount('a', UnixTime(50), 0n),
         tvsAmount('a', UnixTime(300), 7n),
       ])
@@ -98,7 +118,7 @@ describeDatabase(TvsAmountRepository.name, (db) => {
     })
 
     it('returns empty array when no matching configIds', async () => {
-      await repository.insertMany([tvsAmount('a', UnixTime(100), 1n)])
+      await repository.upsertMany([tvsAmount('a', UnixTime(100), 1n)])
 
       const configIds = ['b'.repeat(12)]
 
@@ -114,7 +134,7 @@ describeDatabase(TvsAmountRepository.name, (db) => {
 
   describe(TvsAmountRepository.prototype.getLatestAmountBefore.name, () => {
     it('returns the latest amount for a configuration', async () => {
-      await repository.insertMany([
+      await repository.upsertMany([
         tvsAmount('a', UnixTime(100), 1n),
         tvsAmount('a', UnixTime(200), 2n),
         tvsAmount('a', UnixTime(50), 0n),
@@ -130,7 +150,7 @@ describeDatabase(TvsAmountRepository.name, (db) => {
     })
 
     it('returns undefined when no amounts exist for the configuration', async () => {
-      await repository.insertMany([tvsAmount('a', UnixTime(100), 1n)])
+      await repository.upsertMany([tvsAmount('a', UnixTime(100), 1n)])
 
       const result = await repository.getLatestAmountBefore(
         'b'.repeat(12),
@@ -143,7 +163,7 @@ describeDatabase(TvsAmountRepository.name, (db) => {
 
   describe(TvsAmountRepository.prototype.deleteByConfigInTimeRange.name, () => {
     it('deletes data in range for matching config', async () => {
-      await repository.insertMany([
+      await repository.upsertMany([
         tvsAmount('b', UnixTime(1), 1n),
         tvsAmount('b', UnixTime(2), 2n),
         tvsAmount('b', UnixTime(3), 3n),
@@ -166,7 +186,7 @@ describeDatabase(TvsAmountRepository.name, (db) => {
     })
 
     it('returns 0 if no matching config found', async () => {
-      await repository.insertMany([tvsAmount('b', UnixTime(1), 1n)])
+      await repository.upsertMany([tvsAmount('b', UnixTime(1), 1n)])
 
       const deleted = await repository.deleteByConfigInTimeRange(
         'c'.repeat(12),

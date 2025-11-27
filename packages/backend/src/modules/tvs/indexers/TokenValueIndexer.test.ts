@@ -46,7 +46,7 @@ describe(TokenValueIndexer.name, () => {
       })
 
       const tvsTokenValueRepository = mockObject<Database['tvsTokenValue']>({
-        insertMany: mockFn().returnsOnce(undefined),
+        upsertMany: mockFn().returnsOnce(undefined),
       })
 
       const syncMetadataRepository = mockObject<Database['syncMetadata']>({
@@ -98,7 +98,7 @@ describe(TokenValueIndexer.name, () => {
         record(timestamps[2], mockToken2, project, 280, 20),
       ]
 
-      expect(tvsTokenValueRepository.insertMany).toHaveBeenOnlyCalledWith(
+      expect(tvsTokenValueRepository.upsertMany).toHaveBeenOnlyCalledWith(
         expectedRecords,
       )
       expect(safeHeight).toEqual(timestamps[timestamps.length - 1])

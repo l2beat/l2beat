@@ -62,7 +62,7 @@ describe(OnchainAmountIndexer.name, () => {
         })
 
       const tvsAmountRepository = mockObject<Database['tvsAmount']>({
-        insertMany: mockFn().returnsOnce(undefined),
+        upsertMany: mockFn().returnsOnce(undefined),
       })
 
       const indexer = new OnchainAmountIndexer({
@@ -116,7 +116,7 @@ describe(OnchainAmountIndexer.name, () => {
         record('supply-config-2', timestamp, 6000),
       ]
 
-      expect(tvsAmountRepository.insertMany).toHaveBeenOnlyCalledWith(
+      expect(tvsAmountRepository.upsertMany).toHaveBeenOnlyCalledWith(
         expectedRecords,
       )
       expect(safeHeight).toEqual(timestamp)
@@ -169,7 +169,7 @@ describe(OnchainAmountIndexer.name, () => {
         })
 
       const tvsAmountRepository = mockObject<Database['tvsAmount']>({
-        insertMany: mockFn().returnsOnce(undefined),
+        upsertMany: mockFn().returnsOnce(undefined),
       })
 
       const indexer = new OnchainAmountIndexer({
@@ -210,7 +210,7 @@ describe(OnchainAmountIndexer.name, () => {
         record('starknet-supply-config-2', timestamp, 2000),
       ]
 
-      expect(tvsAmountRepository.insertMany).toHaveBeenOnlyCalledWith(
+      expect(tvsAmountRepository.upsertMany).toHaveBeenOnlyCalledWith(
         expectedRecords,
       )
       expect(safeHeight).toEqual(timestamp)
