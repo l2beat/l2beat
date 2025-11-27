@@ -12,6 +12,7 @@ import {
 import { selectTriggerClassnames } from '~/components/core/Select'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useIsClient } from '~/hooks/useIsClient'
+import { useTracking } from '~/hooks/useTracking'
 import { CalendarIcon } from '~/icons/Calendar'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
@@ -59,8 +60,10 @@ export function ChartTimeRangeControls({
     to: UnixTime.toDate(value[1]),
   })
 
+  const { track } = useTracking()
   const isClient = useIsClient()
   const breakpoint = useBreakpoint()
+
   const showSelect = breakpoint === 'xs' || breakpoint === 'sm'
 
   if (!isClient) {
@@ -87,7 +90,17 @@ export function ChartTimeRangeControls({
 
   if (showSelect) {
     return (
-      <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
+      <Drawer
+        open={drawerOpen}
+        onOpenChange={(open) => {
+          if (!open) {
+            track('chartRangeSelected', {
+              props: { name, value: selectedOption },
+            })
+          }
+          setDrawerOpen(open)
+        }}
+      >
         <DrawerTrigger
           className={cn(
             selectTriggerClassnames,
@@ -109,6 +122,7 @@ export function ChartTimeRangeControls({
             Predefined
           </p>
           <PredefinedOptions
+            name={name}
             options={options}
             offset={offset}
             setValue={(range) => {
@@ -136,6 +150,7 @@ export function ChartTimeRangeControls({
   return (
     <Popover>
       <PredefinedOptions
+        name={name}
         options={options}
         offset={offset}
         setValue={setValue}
@@ -163,7 +178,14 @@ export function ChartTimeRangeControls({
           value={value}
           internalValue={internalValue}
           offset={offset}
-          onDateRangeChange={onDateRangeChange}
+          onDateRangeChange={(dateRange) => {
+            onDateRangeChange(dateRange)
+            if (dateRange?.from && dateRange?.to) {
+              track('chartRangeSelected', {
+                props: { name, value: 'custom' },
+              })
+            }
+          }}
         />
       </PopoverContent>
     </Popover>
@@ -171,6 +193,7 @@ export function ChartTimeRangeControls({
 }
 
 function PredefinedOptions({
+  name,
   options,
   offset,
   setValue,
@@ -178,6 +201,7 @@ function PredefinedOptions({
   selectedOption,
   children,
 }: {
+  name: string
   options: ChartRangeOption[]
   offset: UnixTime
   setValue: (range: ChartRange) => void
@@ -185,13 +209,13 @@ function PredefinedOptions({
   selectedOption: ChartRangeOptionValue | 'custom'
   children?: React.ReactNode
 }) {
+  const { track } = useTracking()
   return (
     <div
       className={cn(
         'group/radio-group inline-flex h-8 w-max items-center gap-1 rounded-lg p-1 font-medium',
         'bg-surface-primary primary-card:bg-surface-secondary',
       )}
-      // name={name}
     >
       {options.map((option) => (
         <button
@@ -202,6 +226,9 @@ function PredefinedOptions({
             setInternalValue({
               from: UnixTime.toDate(range[0] ?? 0),
               to: UnixTime.toDate(range[1]),
+            })
+            track('chartRangeSelected', {
+              props: { name, value: option.value },
             })
           }}
           type="button"

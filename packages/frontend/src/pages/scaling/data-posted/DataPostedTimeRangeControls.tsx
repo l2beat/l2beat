@@ -12,7 +12,7 @@ export function DataPostedTimeRangeControls({
 }: Props) {
   return (
     <ChartTimeRangeControls
-      name="dataPostedTimeRange"
+      name="dataPosted"
       value={timeRange}
       setValue={setTimeRange}
       options={[

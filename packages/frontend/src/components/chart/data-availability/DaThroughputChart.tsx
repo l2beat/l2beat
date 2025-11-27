@@ -85,7 +85,7 @@ export function DaThroughputChart() {
           </Checkbox>
         </div>
         <ChartTimeRangeControls
-          name="Range"
+          name="da-throughput"
           value={range}
           setValue={setRange}
           options={Object.values(DaThroughputTimeRangeValues).map((v) => ({

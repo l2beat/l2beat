@@ -9,7 +9,7 @@ interface Props {
 export function TvsChartTimeRangeControls({ timeRange, setTimeRange }: Props) {
   return (
     <ChartTimeRangeControls
-      name="tvsTimeRange"
+      name="tvs"
       value={timeRange}
       setValue={setTimeRange}
       options={[

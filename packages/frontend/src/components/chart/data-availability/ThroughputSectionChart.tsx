@@ -74,7 +74,7 @@ export function ThroughputSectionChart({
         <div className="flex justify-between gap-x-1">
           <ProjectChartTimeRange range={chartRange} />
           <ChartTimeRangeControls
-            name="Range"
+            name="throughput"
             value={range}
             setValue={setRange}
             options={Object.values(DaThroughputTimeRangeValues).map((v) => ({

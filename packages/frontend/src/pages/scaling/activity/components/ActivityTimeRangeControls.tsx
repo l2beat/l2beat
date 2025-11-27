@@ -7,13 +7,10 @@ interface Props {
   setTimeRange: (timeRange: ChartRange) => void
 }
 
-export function ActivityTimeRangeControls({
-  timeRange,
-  setTimeRange,
-}: Props) {
+export function ActivityTimeRangeControls({ timeRange, setTimeRange }: Props) {
   return (
     <ChartTimeRangeControls
-      name="activityTimeRange"
+      name="activity"
       value={timeRange}
       setValue={setTimeRange}
       options={[

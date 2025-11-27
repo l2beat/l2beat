@@ -12,7 +12,7 @@ export function LivenessChartTimeRangeControls({
 }: Props) {
   return (
     <ChartTimeRangeControls
-      name="livenessChartTimeRange"
+      name="liveness"
       value={timeRange}
       setValue={setTimeRange}
       options={[

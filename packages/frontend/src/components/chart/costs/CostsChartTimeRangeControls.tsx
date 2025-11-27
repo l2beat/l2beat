@@ -15,7 +15,7 @@ export function CostsChartTimeRangeControls({
 }: Props) {
   return (
     <ChartTimeRangeControls
-      name="costsTimeRange"
+      name="costs"
       value={timeRange}
       setValue={setTimeRange}
       options={[
