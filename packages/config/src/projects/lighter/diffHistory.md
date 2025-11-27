@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x888694b61c43dac57facec0a3ccbf67994f68163
+
+# Diff at Wed, 26 Nov 2025 13:56:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@dd7c1c00cfe8eb7b4034082d8812fb8962098918 block: 1763984268
+- current timestamp: 1764165313
+
+## Description
+
+new markets.
+
+## Watched changes
+
+```diff
+    contract Lighter (eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7) {
+    +++ description: The main rollup contract. It processes L2 batches, manages USDC deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.
+      values.createdMarkets.42:
++        "HOOD"
+      values.createdMarkets.43:
++        "COIN"
+    }
+```
+
 Generated with discovered.json: 0xd4144abf0430598839817975f1204a8679bc4b20
 
 # Diff at Mon, 24 Nov 2025 11:39:03 GMT:

@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Central staking hub. Validators (attesters) deposit stake here to register. It manages delegation of voting power and tracks which rollup instance validators are securing.",
+  "description": "Central staking manager independent of Rollup implementations. Sequencers deposit stake here through their chosen Rollup contract. Their stake is then transfered to the Governance contract and activated for voting. The GSE tracks which rollup instance validators are securing, and gives them an option to automatically move to the latest Rollup version.",
   "ignoreMethods": ["getLatestRollupAt"],
   "ignoreInWatchMode": ["totalSupply"]
 }
