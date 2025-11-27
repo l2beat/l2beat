@@ -23,7 +23,11 @@ export const hibachi = {
       websites: ['https://hibachi.xyz/trade'],
       documentation: ['https://docs.hibachi.xyz/'],
       repositories: ['https://github.com/hibachi-xyz/hibachi_sdk'],
-      socialMedia: ['https://x.com/hibachi_xyz'],
+      socialMedia: [
+        'https://x.com/hibachi_xyz',
+        'https://t.me/HibachiPatrons',
+        'https://discord.com/invite/hibachi-xyz',
+      ],
     },
   },
   stage: getStage({
