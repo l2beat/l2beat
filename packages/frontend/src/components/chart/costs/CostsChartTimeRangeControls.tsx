@@ -6,19 +6,16 @@ interface Props {
   timeRange: ChartRange
   setTimeRange: (range: ChartRange) => void
   metric?: CostsMetric
-  projectSection?: boolean
 }
 
 export function CostsChartTimeRangeControls({
   timeRange,
   setTimeRange,
   metric,
-  projectSection,
 }: Props) {
   return (
     <ChartTimeRangeControls
       name="costsTimeRange"
-      projectSection={projectSection}
       value={timeRange}
       setValue={setTimeRange}
       options={[

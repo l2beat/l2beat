@@ -43,7 +43,6 @@ interface Props {
   value: ChartRange
   setValue: (range: ChartRange) => void
   options: ChartRangeOption[]
-  projectSection?: boolean
   offset?: UnixTime
 }
 

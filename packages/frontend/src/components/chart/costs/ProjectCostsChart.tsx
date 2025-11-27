@@ -95,7 +95,6 @@ export function ProjectCostsChart({
       <div className="mt-4 mb-3 flex justify-between gap-1">
         <ProjectChartTimeRange range={chartRange} />
         <CostsChartTimeRangeControls
-          projectSection
           timeRange={range}
           setTimeRange={setRange}
         />

@@ -5,13 +5,11 @@ import type { ChartRange } from '~/utils/range/range'
 interface Props {
   timeRange: ChartRange
   setTimeRange: (timeRange: ChartRange) => void
-  projectSection?: boolean
 }
 
 export function ActivityTimeRangeControls({
   timeRange,
   setTimeRange,
-  projectSection,
 }: Props) {
   return (
     <ChartTimeRangeControls
@@ -25,7 +23,6 @@ export function ActivityTimeRangeControls({
         { value: '1y', label: '1Y' },
         { value: 'max', label: 'MAX' },
       ]}
-      projectSection={projectSection}
       offset={-1 * UnixTime.DAY}
     />
   )

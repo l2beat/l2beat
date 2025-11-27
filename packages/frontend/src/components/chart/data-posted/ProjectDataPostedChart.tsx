@@ -53,7 +53,6 @@ export function ProjectDataPostedChart({
         <DataPostedTimeRangeControls
           timeRange={timeRange}
           setTimeRange={setTimeRange}
-          projectSection
         />
       </ChartControlsWrapper>
       <DataPostedChart

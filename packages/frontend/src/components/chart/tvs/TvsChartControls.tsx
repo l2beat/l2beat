@@ -31,7 +31,6 @@ export function TvsChartControls({
           <TvsChartUnitControls unit={unit.value} setUnit={unit.setValue} />
         )}
         <TvsChartTimeRangeControls
-          projectSection
           timeRange={range.value}
           setTimeRange={range.setValue}
         />

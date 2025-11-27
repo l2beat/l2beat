@@ -56,7 +56,6 @@ export function ProjectTvsChart({ project, milestones, defaultRange }: Props) {
           <TvsChartUnitControls unit={unit} setUnit={setUnit} />
 
           <TvsChartTimeRangeControls
-            projectSection
             timeRange={timeRange}
             setTimeRange={setTimeRange}
           />

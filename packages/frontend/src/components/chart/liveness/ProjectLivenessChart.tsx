@@ -96,7 +96,6 @@ export function ProjectLivenessChart({
           <LivenessChartTimeRangeControls
             timeRange={timeRange}
             setTimeRange={setTimeRange}
-            projectSection={true}
           />
         </ChartControlsWrapper>
       </div>

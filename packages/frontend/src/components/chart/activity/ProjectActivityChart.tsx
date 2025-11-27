@@ -87,7 +87,6 @@ export function ProjectActivityChart({
         <ActivityTimeRangeControls
           timeRange={timeRange}
           setTimeRange={setTimeRange}
-          projectSection
         />
       </ChartControlsWrapper>
       <ActivityChart

@@ -159,7 +159,6 @@ export function EcosystemsActivityChart({
         <ActivityTimeRangeControls
           timeRange={timeRange}
           setTimeRange={setTimeRange}
-          projectSection={true}
         />
       </div>
     </EcosystemWidget>

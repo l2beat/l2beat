@@ -4,18 +4,12 @@ import { ChartTimeRangeControls } from '../../core/chart/ChartTimeRangeControls'
 interface Props {
   timeRange: ChartRange
   setTimeRange: (value: ChartRange) => void
-  projectSection?: boolean
 }
 
-export function TvsChartTimeRangeControls({
-  timeRange,
-  setTimeRange,
-  projectSection,
-}: Props) {
+export function TvsChartTimeRangeControls({ timeRange, setTimeRange }: Props) {
   return (
     <ChartTimeRangeControls
       name="tvsTimeRange"
-      projectSection={projectSection}
       value={timeRange}
       setValue={setTimeRange}
       options={[

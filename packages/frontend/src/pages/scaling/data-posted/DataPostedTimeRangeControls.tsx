@@ -4,13 +4,11 @@ import type { ChartRange } from '~/utils/range/range'
 interface Props {
   timeRange: ChartRange
   setTimeRange: (timeRange: ChartRange) => void
-  projectSection?: boolean
 }
 
 export function DataPostedTimeRangeControls({
   timeRange,
   setTimeRange,
-  projectSection,
 }: Props) {
   return (
     <ChartTimeRangeControls
@@ -26,7 +24,6 @@ export function DataPostedTimeRangeControls({
         { value: '1y', label: '1Y' },
         { value: 'max', label: 'MAX' },
       ]}
-      projectSection={projectSection}
     />
   )
 }
