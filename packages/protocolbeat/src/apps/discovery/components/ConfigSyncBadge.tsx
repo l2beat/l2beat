@@ -184,7 +184,5 @@ function formatReason(reason: RefreshReason) {
           </ol>
         </p>
       )
-    case 'CUSTOM':
-      return reason.message
   }
 }
