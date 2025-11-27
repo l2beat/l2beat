@@ -56,8 +56,40 @@ export interface ApiConfigFileResponse {
   config: string
 }
 
+type RefreshReason =
+  | {
+      type: 'TEMPLATE_NO_LONGER_MATCHES'
+      contract: string
+      template: string
+    }
+  | {
+      type: 'TEMPLATE_MATCH_CHANGED'
+      contract: string
+      oldTemplate: string
+      newTemplates: string[]
+    }
+  | {
+      type: 'NEW_TEMPLATE_MATCH'
+      contract: string
+      newTemplates: string[]
+    }
+  | {
+      type: 'CONFIG_CHANGED'
+    }
+  | {
+      type: 'TEMPLATE_CONFIG_CHANGED'
+      templates: string[]
+    }
+
 export interface ApiConfigSyncStatusResponse {
-  isInSync: boolean
+  reasons: RefreshReason[]
+}
+
+export interface ApiGlobalConfigSyncStatusResponse {
+  reasons: {
+    project: string
+    reasons: RefreshReason[]
+  }[]
 }
 
 export type ApiCreateShapeResponse =

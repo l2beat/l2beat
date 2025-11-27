@@ -6,7 +6,6 @@ import { toggleInList } from '../../../utils/toggleInList'
 import { ContractConfigModel } from '../components/ConfigModel'
 
 type Props = {
-  project: string
   templateId?: string
   files: {
     template: string
@@ -58,7 +57,10 @@ export function useTemplateModel({ templateId, files }: Props) {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['template', templateId],
+        queryKey: ['templates', templateId],
+      })
+      await queryClient.invalidateQueries({
+        queryKey: ['config-sync-status'],
       })
     },
   })

@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom'
 import { Button } from '../../../components/Button'
 import { IS_READONLY } from '../../../config/readonly'
 import { IconPlus } from '../../../icons/IconPlus'
-import { ConfigSyncBadge } from '../components/ConfigSyncBadge'
+import {
+  ConfigSyncBadge,
+  GlobalConfigSyncBadge,
+} from '../components/ConfigSyncBadge'
 import { Search } from '../search/Search'
 import { SettingsDialog } from './SettingsDialog'
 import { useMultiViewStore } from './store'
@@ -22,7 +25,12 @@ export function TopBar(props: { project: string }) {
         </Link>
         <p>{props.project}</p>
 
-        {!IS_READONLY && <ConfigSyncBadge project={props.project} />}
+        {!IS_READONLY && (
+          <div className="flex items-center border-coffee-200/40 border-l pl-1">
+            <ConfigSyncBadge project={props.project} />
+            <GlobalConfigSyncBadge project={props.project} />
+          </div>
+        )}
       </div>
       <div className="-translate-x-1/2 absolute left-1/2 z-50">
         <Search />

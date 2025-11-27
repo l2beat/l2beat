@@ -60,6 +60,7 @@ export function BottomBar() {
 
         discover(project).then(() => {
           queryClient.invalidateQueries({ queryKey: ['projects', project] })
+          queryClient.invalidateQueries({ queryKey: ['config-sync-status'] })
         })
       }
     }

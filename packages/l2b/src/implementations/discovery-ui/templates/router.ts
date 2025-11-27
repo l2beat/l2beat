@@ -79,6 +79,7 @@ export function attachTemplateRouter(
 
     const { templateId, content } = data.data
     templateService.writeTemplateFile(templateId, content)
+    templateService.reload()
     res.status(200).json({ success: true })
   })
 }

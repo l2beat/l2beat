@@ -1,7 +1,6 @@
 import {
   ConfigReader,
   ConfigWriter,
-  generateStructureHash,
   getDiscoveryPaths,
   TemplateService,
 } from '@l2beat/discovery'
@@ -154,7 +153,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     })
   })
 
-  app.get('/api/config-files/:project/sync-status', (req, res) => {
+  app.get('/api/config/sync-status/:project', (req, res) => {
     const query = projectParamsSchema.safeParse(req.params)
     if (!query.success) {
       res.status(400).json({ errors: query.message })
@@ -162,12 +161,38 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     }
     const { project } = query.data
 
+    templateService.reload()
+
     const discovery = configReader.readDiscovery(project)
-    const registry = configReader.readConfig(project)
-    const hash = generateStructureHash(registry.structure)
+    const config = configReader.readConfig(project)
 
     res.json({
-      isInSync: discovery.configHash === hash,
+      reasons: templateService.discoveryNeedsRefresh(discovery, config),
+    })
+  })
+
+  app.get('/api/config/sync-status', (_, res) => {
+    templateService.reload()
+    const allProjects = configReader.readAllDiscoveredProjects()
+
+    const reasons = allProjects.flatMap((project) => {
+      const discovery = configReader.readDiscovery(project)
+      const config = configReader.readConfig(project)
+
+      const reasons = templateService.discoveryNeedsRefresh(discovery, config)
+
+      if (reasons.length === 0) {
+        return []
+      }
+
+      return {
+        project,
+        reasons,
+      }
+    })
+
+    res.json({
+      reasons,
     })
   })
 
@@ -192,7 +217,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
 
   if (!readonly) {
     attachTemplateRouter(app, templateService)
-    attachConfigRouter(app, configReader, configWriter)
+    attachConfigRouter(app, configReader, configWriter, templateService)
 
     app.get('/api/projects/:project/codeSearch', (req, res) => {
       const paramsValidation = projectSearchTermParamsSchema.safeParse({

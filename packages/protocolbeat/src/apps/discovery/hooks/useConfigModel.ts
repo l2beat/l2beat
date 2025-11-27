@@ -55,7 +55,10 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['projects', project, 'config'],
+        queryKey: ['configs', project],
+      })
+      await queryClient.invalidateQueries({
+        queryKey: ['config-sync-status', project],
       })
     },
   })
