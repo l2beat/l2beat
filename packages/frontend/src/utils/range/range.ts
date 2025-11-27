@@ -2,6 +2,8 @@ import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { rangeToDays } from './rangeToDays'
 
+export type ChartResolution = 'hourly' | 'sixHourly' | 'daily'
+
 export type ChartRange = v.infer<typeof ChartRange>
 export const ChartRange = v.tuple([v.union([v.number(), v.null()]), v.number()])
 

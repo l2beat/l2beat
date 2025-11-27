@@ -33,6 +33,7 @@ export type ChartRangeOptionValue =
   | '180d'
   | '1y'
   | 'max'
+
 interface ChartRangeOption {
   value: ChartRangeOptionValue
   disabled?: boolean
@@ -47,7 +48,7 @@ interface Props {
   offset?: UnixTime
 }
 
-export function ChartTimeRangeControls({
+export function ChartRangeControls({
   name,
   value,
   setValue,

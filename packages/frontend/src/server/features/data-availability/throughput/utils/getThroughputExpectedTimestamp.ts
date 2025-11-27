@@ -1,11 +1,12 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { ChartResolution } from '~/utils/range/range'
 
 export function getThroughputExpectedTimestamp({
   to,
   resolution,
 }: {
   to: UnixTime
-  resolution: 'hourly' | 'sixHourly' | 'daily'
+  resolution: ChartResolution
 }) {
   const unit: Record<typeof resolution, 'hour' | 'six hours' | 'day'> = {
     hourly: 'hour',

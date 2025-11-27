@@ -3,6 +3,7 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import type { ChartResolution } from '~/utils/range/range'
 import { ChartRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { getActivityForProjectAndRange } from '../../scaling/activity/getActivityForProjectAndRange'
@@ -155,7 +156,7 @@ export async function getScalingProjectDaThroughputChart({
 
 function groupByTimestamp(
   records: ProjectsSummedDataAvailabilityRecord[],
-  resolution: 'hourly' | 'sixHourly' | 'daily',
+  resolution: ChartResolution,
 ) {
   let minTimestamp = Number.POSITIVE_INFINITY
   let maxTimestamp = Number.NEGATIVE_INFINITY

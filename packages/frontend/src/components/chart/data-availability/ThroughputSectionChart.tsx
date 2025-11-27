@@ -2,8 +2,8 @@ import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
+import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
-import { ChartTimeRangeControls } from '~/components/core/chart/ChartTimeRangeControls'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import type { ProjectDaThroughputChartPoint } from '~/server/features/data-availability/throughput/getProjectDaThroughputChartData'
@@ -73,7 +73,7 @@ export function ThroughputSectionChart({
         />
         <div className="flex justify-between gap-x-1">
           <ProjectChartTimeRange range={chartRange} />
-          <ChartTimeRangeControls
+          <ChartRangeControls
             name="throughput"
             value={range}
             setValue={setRange}

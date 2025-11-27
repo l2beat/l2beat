@@ -1,5 +1,5 @@
 import type { ChartRange } from '~/utils/range/range'
-import { ChartTimeRangeControls } from '../../core/chart/ChartTimeRangeControls'
+import { ChartRangeControls } from '../../core/chart/ChartRangeControls'
 
 interface Props {
   timeRange: ChartRange
@@ -8,7 +8,7 @@ interface Props {
 
 export function TvsChartTimeRangeControls({ timeRange, setTimeRange }: Props) {
   return (
-    <ChartTimeRangeControls
+    <ChartRangeControls
       name="tvs"
       value={timeRange}
       setValue={setTimeRange}

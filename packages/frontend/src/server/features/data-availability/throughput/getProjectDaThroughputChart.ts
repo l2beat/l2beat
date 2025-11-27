@@ -4,7 +4,7 @@ import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
-import { ChartRange } from '~/utils/range/range'
+import { ChartRange, type ChartResolution } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { isThroughputSynced } from './isThroughputSynced'
@@ -116,7 +116,7 @@ export async function getProjectDaThroughputChartData({
 
 function groupByTimestampAndProjectId(
   records: ProjectsSummedDataAvailabilityRecord[],
-  resolution: 'hourly' | 'sixHourly' | 'daily',
+  resolution: ChartResolution,
 ) {
   let minTimestamp = Number.POSITIVE_INFINITY
   let maxTimestamp = Number.NEGATIVE_INFINITY

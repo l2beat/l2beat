@@ -1,13 +1,12 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { ChartResolution } from '~/utils/range/range'
 
-type Resolution = 'hourly' | 'sixHourly' | 'daily'
-
-const period: Record<Resolution, 'hour' | 'six hours' | 'day'> = {
+const period: Record<ChartResolution, 'hour' | 'six hours' | 'day'> = {
   hourly: 'hour',
   sixHourly: 'six hours',
   daily: 'day',
 }
-const offset: Record<Resolution, number> = {
+const offset: Record<ChartResolution, number> = {
   hourly: UnixTime.HOUR,
   sixHourly: UnixTime.SIX_HOURS,
   daily: UnixTime.DAY,
@@ -15,7 +14,7 @@ const offset: Record<Resolution, number> = {
 
 export function getCostsExpectedTimestamp(
   to: UnixTime,
-  resolution: Resolution,
+  resolution: ChartResolution,
 ) {
   return UnixTime.toStartOf(to, period[resolution]) - offset[resolution]
 }

@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { ChartTimeRangeControls } from '~/components/core/chart/ChartTimeRangeControls'
+import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import type { ChartRange } from '~/utils/range/range'
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 
 export function ActivityTimeRangeControls({ timeRange, setTimeRange }: Props) {
   return (
-    <ChartTimeRangeControls
+    <ChartRangeControls
       name="activity"
       value={timeRange}
       setValue={setTimeRange}

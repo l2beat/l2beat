@@ -1,6 +1,6 @@
 import type { CostsMetric } from '~/pages/scaling/costs/components/CostsMetricContext'
 import type { ChartRange } from '~/utils/range/range'
-import { ChartTimeRangeControls } from '../../core/chart/ChartTimeRangeControls'
+import { ChartRangeControls } from '../../core/chart/ChartRangeControls'
 
 interface Props {
   timeRange: ChartRange
@@ -14,7 +14,7 @@ export function CostsChartTimeRangeControls({
   metric,
 }: Props) {
   return (
-    <ChartTimeRangeControls
+    <ChartRangeControls
       name="costs"
       value={timeRange}
       setValue={setTimeRange}

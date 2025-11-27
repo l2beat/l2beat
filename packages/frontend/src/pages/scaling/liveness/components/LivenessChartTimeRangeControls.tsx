@@ -1,4 +1,4 @@
-import { ChartTimeRangeControls } from '~/components/core/chart/ChartTimeRangeControls'
+import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import type { ChartRange } from '~/utils/range/range'
 
 interface Props {
@@ -11,7 +11,7 @@ export function LivenessChartTimeRangeControls({
   setTimeRange,
 }: Props) {
   return (
-    <ChartTimeRangeControls
+    <ChartRangeControls
       name="liveness"
       value={timeRange}
       setValue={setTimeRange}

@@ -3,7 +3,7 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { ChartRange } from '~/utils/range/range'
+import { ChartRange, type ChartResolution } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { addIfDefined } from './utils/addIfDefined'
 import { getCostsExpectedTimestamp } from './utils/getCostsExpectedTimestamp'
@@ -166,7 +166,7 @@ function getMockCostsChartData({ range }: CostsChartParams): CostsChartData {
 
 function sumByTimestamp(
   records: AggregatedL2CostRecord[],
-  resolution: 'daily' | 'hourly' | 'sixHourly',
+  resolution: ChartResolution,
 ) {
   const result = new Map<
     number,

@@ -5,6 +5,7 @@ import partition from 'lodash/partition'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import type { ChartResolution } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import type { ProjectDaThroughputChartParams } from './getProjectDaThroughputChart'
@@ -128,7 +129,7 @@ export async function getDaThroughputChartByProjectData({
 function groupByTimestampAndProjectId(
   records: DataAvailabilityRecord[],
   allProjects: Project[],
-  resolution: 'hourly' | 'sixHourly' | 'daily',
+  resolution: ChartResolution,
   sovereignProjects: Map<ProjectId, string>,
   includeScalingOnly: boolean,
 ) {

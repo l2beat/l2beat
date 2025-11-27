@@ -8,8 +8,8 @@ import {
 } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
+import { ChartRangeControls } from '../../core/chart/ChartRangeControls'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
-import { ChartTimeRangeControls } from '../../core/chart/ChartTimeRangeControls'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
 import { DaAbsoluteThroughputChart } from './DaAbsoluteThroughputChart'
 import { DaPercentageThroughputChart } from './DaPercentageThroughputChart'
@@ -84,7 +84,7 @@ export function DaThroughputChart() {
             <span className="lg:hidden">Ethereum scaling projects only</span>
           </Checkbox>
         </div>
-        <ChartTimeRangeControls
+        <ChartRangeControls
           name="da-throughput"
           value={range}
           setValue={setRange}
