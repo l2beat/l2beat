@@ -7,15 +7,17 @@ export interface InteropEventRecord {
   plugin: string
   eventId: string
   type: string
-  direction: string | undefined
   expiresAt: UnixTime
   timestamp: UnixTime
+
   chain: string
   blockNumber: number
   args: unknown
   ctx: InteropEventContext
+
   matched: boolean
   unsupported: boolean
+  direction: string | undefined
 }
 
 export interface InteropEventContext {
@@ -52,8 +54,6 @@ export function toRow(record: InteropEventRecord): Insertable<InteropEvent> {
     timestamp: UnixTime.toDate(record.timestamp),
     chain: record.chain,
     blockNumber: record.blockNumber,
-    blockHash: '',
-    txHash: '',
     matched: record.matched,
     unsupported: record.unsupported,
     args: JSON.stringify(record.args, (_, value) =>
