@@ -35,14 +35,16 @@ function DrawerProvider({
 
 const Drawer = ({
   shouldScaleBackground = true,
+  open: openProp,
+  onOpenChange,
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Root>) => {
   const [open, setOpen] = React.useState(false)
   return (
-    <DrawerProvider open={open} setOpen={setOpen}>
+    <DrawerProvider open={openProp ?? open} setOpen={onOpenChange ?? setOpen}>
       <DrawerPrimitive.Root
-        open={open}
-        onOpenChange={setOpen}
+        open={openProp ?? open}
+        onOpenChange={onOpenChange ?? setOpen}
         shouldScaleBackground={shouldScaleBackground}
         {...props}
       />

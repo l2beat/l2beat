@@ -5,22 +5,15 @@ import { Calendar } from '~/components/core/Calendar'
 import {
   Drawer,
   DrawerContent,
-  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from '~/components/core/Drawer'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  selectTriggerClassnames,
-} from '~/components/core/Select'
+import { selectTriggerClassnames } from '~/components/core/Select'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useIsClient } from '~/hooks/useIsClient'
 import { CalendarIcon } from '~/icons/Calendar'
+import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import {
   type ChartRange,
@@ -54,9 +47,9 @@ export function ChartTimeRangeControls({
   value,
   setValue,
   options,
-  projectSection,
   offset = 0,
 }: Props) {
+  const [drawerOpen, setDrawerOpen] = useState(false)
   const [internalValue, setInternalValue] = useState<DateRange | undefined>({
     from: value[0] ? UnixTime.toDate(value[0]) : UnixTime.toDate(0),
     to: UnixTime.toDate(value[1]),
@@ -65,19 +58,10 @@ export function ChartTimeRangeControls({
   const [month, setMonth] = useState<Date>(UnixTime.toDate(value[1]))
   const isClient = useIsClient()
   const breakpoint = useBreakpoint()
-  const showSelect = projectSection
-    ? breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md'
-    : breakpoint === 'xs' || breakpoint === 'sm'
+  const showSelect = breakpoint === 'xs' || breakpoint === 'sm'
 
   if (!isClient) {
-    return (
-      <Skeleton
-        className={cn(
-          'h-8 w-20',
-          projectSection ? 'lg:w-[292px]' : 'md:w-[292px]',
-        )}
-      />
-    )
+    return <Skeleton className={cn('h-8 w-14 md:w-[320px]')} />
   }
   const selectedOption = rangeToOption(value, options, offset)
 
@@ -123,57 +107,67 @@ export function ChartTimeRangeControls({
 
   if (showSelect) {
     return (
-      <div className="flex items-center gap-1">
-        <Select
-          value={selectedOption}
-          onValueChange={(option) => {
-            const range = optionToRange(option as ChartRangeOption, {
-              offset,
-            })
-            setValue(range)
-          }}
+      <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
+        <DrawerTrigger
+          className={cn(
+            selectTriggerClassnames,
+            'z-0 h-8 bg-surface-secondary',
+          )}
         >
-          <SelectTrigger className="z-0 h-8 bg-surface-secondary">
-            <SelectValue>
-              {selectedOption === 'custom'
-                ? '-'
-                : options.find((option) => option.value === selectedOption)
-                    ?.label}
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent className="bg-surface-secondary">
+          {selectedOption === 'custom' ? (
+            <CalendarIcon className="size-4 shrink-0" />
+          ) : (
+            options.find((option) => option.value === selectedOption)?.label
+          )}
+          <ChevronIcon className="size-2.5 fill-current stroke-[1.8px] transition-transform group-data-[state=open]/trigger:rotate-180 md:size-3" />
+        </DrawerTrigger>
+        <DrawerHeader className="sr-only">
+          <DrawerTitle className="sr-only">Select time range</DrawerTitle>
+        </DrawerHeader>
+        <DrawerContent>
+          <p className="mb-2 font-medium text-label-value-12 text-secondary">
+            Predefined
+          </p>
+          <div
+            className={cn(
+              'group/radio-group inline-flex h-8 w-max items-center gap-1 rounded-lg p-1 font-medium',
+              'bg-surface-secondary',
+            )}
+            // name={name}
+          >
             {options.map((option) => (
-              <SelectItem
+              <button
                 key={option.value}
-                value={option.value}
+                onClick={() => {
+                  const range = optionToRange(option.value, { offset })
+                  setValue(range)
+                  setInternalValue({
+                    from: UnixTime.toDate(range[0] ?? 0),
+                    to: UnixTime.toDate(range[1]),
+                  })
+                  setDrawerOpen(false)
+                }}
+                type="button"
                 disabled={option.disabled}
-                className="focus:bg-surface-tertiary"
+                data-state={
+                  selectedOption === option.value ? 'checked' : 'unchecked'
+                }
+                className={cn(
+                  'h-full rounded-md px-2 text-xs disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 focus-visible:ring-offset-transparent',
+                  'data-[state=checked]:bg-pure-white dark:primary-card:data-[state=checked]:bg-black',
+                )}
               >
                 {option.label}
-              </SelectItem>
+              </button>
             ))}
-          </SelectContent>
-        </Select>
-        <Drawer>
-          <DrawerHeader className="sr-only">
-            <DrawerTitle>Select time range</DrawerTitle>
-            <DrawerDescription>
-              Select the time range for the chart.
-            </DrawerDescription>
-          </DrawerHeader>
-          <DrawerTrigger
-            className={cn(
-              '!bg-surface-secondary z-0 h-8',
-              selectTriggerClassnames,
-            )}
-          >
-            <CalendarIcon className="size-4 shrink-0" />
-          </DrawerTrigger>
-          <DrawerContent className="mx-auto">
-            <CalendarComponent className="mx-auto h-[286px]" />
-          </DrawerContent>
-        </Drawer>
-      </div>
+          </div>
+          <p className="mt-4 font-medium text-label-value-12 text-secondary">
+            Custom
+          </p>
+          <CalendarComponent className="mx-auto h-[286px]" />
+        </DrawerContent>
+      </Drawer>
     )
   }
 
