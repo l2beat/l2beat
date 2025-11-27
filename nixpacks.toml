@@ -1,7 +1,6 @@
 [phases.install]
 # this is for caching install step
 onlyIncludeFiles = [
-  ".npmrc",
   ".nvmrc",
   "package.json",
   "pnpm-lock.yaml",
