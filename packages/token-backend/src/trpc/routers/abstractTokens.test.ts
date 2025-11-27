@@ -246,6 +246,7 @@ describe('abstractTokensRouter', () => {
     it('returns coin data with listing timestamp', async () => {
       const coin = {
         id: 'bitcoin',
+        symbol: 'BTC',
         image: {
           large: 'https://example.com/bitcoin.png',
         },
@@ -271,8 +272,9 @@ describe('abstractTokensRouter', () => {
       const result = await caller.checks('bitcoin')
 
       expect(result?.error).toEqual(undefined)
-      expect(result?.data?.coinId).toEqual('bitcoin')
-      expect(result?.data?.coinUrl).toEqual('https://example.com/bitcoin.png')
+      expect(result?.data?.id).toEqual('bitcoin')
+      expect(result?.data?.iconUrl).toEqual('https://example.com/bitcoin.png')
+      expect(result?.data?.symbol).toEqual('BTC')
       expect(result?.data?.listingTimestamp).not.toEqual(undefined)
       expect(mockGetCoinDataById).toHaveBeenCalledWith('bitcoin')
     })
@@ -303,6 +305,7 @@ describe('abstractTokensRouter', () => {
     it('returns coin data without listing timestamp when market chart fails', async () => {
       const coin = {
         id: 'bitcoin',
+        symbol: 'BTC',
         image: {
           large: 'https://example.com/bitcoin.png',
         },
@@ -317,8 +320,9 @@ describe('abstractTokensRouter', () => {
       const result = await caller.checks('bitcoin')
 
       expect(result?.error).toEqual(undefined)
-      expect(result?.data?.coinId).toEqual('bitcoin')
-      expect(result?.data?.coinUrl).toEqual('https://example.com/bitcoin.png')
+      expect(result?.data?.id).toEqual('bitcoin')
+      expect(result?.data?.iconUrl).toEqual('https://example.com/bitcoin.png')
+      expect(result?.data?.symbol).toEqual('BTC')
       expect(result?.data?.listingTimestamp).toEqual(undefined)
     })
   })

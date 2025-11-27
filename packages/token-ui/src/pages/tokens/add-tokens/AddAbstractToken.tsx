@@ -76,11 +76,11 @@ export function AddAbstractToken({
       form.clearErrors('coingeckoId')
     }
 
-    if (checks.data?.coinId) {
-      form.setValue('coingeckoId', checks.data.coinId)
+    if (checks.data?.iconUrl) {
+      form.setValue('iconUrl', checks.data.iconUrl)
     }
-    if (checks.data?.coinUrl) {
-      form.setValue('iconUrl', checks.data.coinUrl)
+    if (checks.data?.symbol) {
+      form.setValue('symbol', checks.data.symbol)
     }
     if (checks.data?.listingTimestamp) {
       form.setValue(
