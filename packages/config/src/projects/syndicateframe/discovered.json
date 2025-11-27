@@ -1,6 +1,6 @@
 {
   "name": "syndicateframe",
-  "timestamp": 1758875704,
+  "timestamp": 1763728682,
   "configHash": "0xae0fdfe277f57c03af9a3d334b7bcd758da10ed4891e7e9138a8638d97ad6b15",
   "entries": [
     {
@@ -40,7 +40,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292625227",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292625241",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -110,10 +110,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 25752240,
-        "latestOutputIndex": 35766,
-        "nextBlockNumber": 25752960,
-        "nextOutputIndex": 35767,
+        "latestBlockNumber": 28179360,
+        "latestOutputIndex": 39137,
+        "nextBlockNumber": 28180080,
+        "nextOutputIndex": 39138,
         "PROPOSER": "base:0xADE1F8C181934052fD1958F06B63Ef0D875803C5",
         "startingBlockNumber": 0,
         "startingTimestamp": 1707367873,
@@ -165,7 +165,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 490798,
-          "prevBlockNum": 36041487
+          "prevBlockNum": 37662596
         },
         "paused": false,
         "SYSTEM_CONFIG": "base:0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4",
@@ -277,7 +277,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 20,
+        "nonce": 35,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -358,7 +358,7 @@
         "minimumGasLimit": 21000000,
         "opStackDA": {
           "isSequencerSendingBlobTx": false,
-          "isUsingCelestia": true,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "overhead": 2100,
@@ -786,6 +786,6 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "base": 36043178 },
+  "usedBlockNumbers": { "base": 38469667 },
   "permissionsConfigHash": "0x2f13db43f980022aede190239f15bfde446cbca675c11dd1e66565f9b77abb67"
 }

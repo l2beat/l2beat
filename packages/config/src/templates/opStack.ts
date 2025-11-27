@@ -266,7 +266,10 @@ function opStackCommon(
     ...(templateVars.nonTemplateOptimismPortalEscrowTokens ?? []),
   ]
 
-  const daProvider = getDAProvider(templateVars, hostChainDA)
+  const daProvider = getDAProvider(templateVars, {
+    hostChainDA,
+    projectType: type,
+  })
 
   const automaticBadges = templateVars.usingAltVm
     ? [BADGES.Stack.OPStack, daProvider.badge]
@@ -544,11 +547,12 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
   const baseChain = layer2s.find((l2) => l2.id === hostChain)
   assert(baseChain, `Could not find base chain ${hostChain} in layer2s`)
 
+  const hostChainDA = hostChainDAProvider(baseChain)
   const common = opStackCommon(
     'layer3',
     templateVars,
     baseChain.chainConfig?.explorerUrl,
-    hostChainDAProvider(baseChain),
+    hostChainDA,
   )
 
   const stackedRisk = {
@@ -1463,8 +1467,13 @@ function technologyDA(
 
 function getDAProvider(
   templateVars: OpStackConfigCommon,
-  hostChainDA?: DAProvider,
+  options?: {
+    hostChainDA?: DAProvider
+    projectType?: ScalingProject['type']
+  },
 ): DAProvider {
+  const hostChainDA = options?.hostChainDA
+  const projectType = options?.projectType ?? 'layer2'
   const postsToCelestia =
     templateVars.usesEthereumBlobs ??
     templateVars.discovery.getContractValue<{
@@ -1496,15 +1505,16 @@ function getDAProvider(
 
     return {
       layer:
-        (hostChainDA?.layer ?? usesBlobs)
-          ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
-          : DA_LAYERS.ETH_CALLDATA,
+        hostChainDA?.layer ??
+        (usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA),
       bridge: hostChainDA?.bridge ?? DA_BRIDGES.ENSHRINED,
       badge:
-        (hostChainDA?.badge ?? usesBlobs)
-          ? BADGES.DA.EthereumBlobs
-          : BADGES.DA.EthereumCalldata,
-      riskView: RISK_VIEW.DATA_ON_CHAIN,
+        hostChainDA?.badge ??
+        (usesBlobs ? BADGES.DA.EthereumBlobs : BADGES.DA.EthereumCalldata),
+      riskView:
+        projectType === 'layer3'
+          ? RISK_VIEW.DATA_ON_CHAIN_L3
+          : RISK_VIEW.DATA_ON_CHAIN,
       technology: usesBlobs
         ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
         : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,

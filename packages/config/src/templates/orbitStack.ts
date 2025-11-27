@@ -1066,8 +1066,8 @@ function getDAProviders(
           (hostChainDA?.layer ?? usesBlobs)
             ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
             : DA_LAYERS.ETH_CALLDATA,
-        bridge: hostChainDA?.layer ?? DA_BRIDGES.ENSHRINED,
-        mode: hostChainDA?.layer ?? DA_MODES.TRANSACTION_DATA_COMPRESSED,
+        bridge: hostChainDA?.bridge ?? DA_BRIDGES.ENSHRINED,
+        mode: hostChainDA?.mode ?? DA_MODES.TRANSACTION_DATA_COMPRESSED,
         badge:
           hostChainDA?.badge ??
           (usesBlobs ? BADGES.DA.EthereumBlobs : BADGES.DA.EthereumCalldata),
