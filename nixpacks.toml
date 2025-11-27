@@ -1,0 +1,28 @@
+[phases.install]
+# this is for caching install step
+onlyIncludeFiles = [
+  ".npmrc",
+  ".nvmrc",
+  "package.json",
+  "pnpm-lock.yaml",
+  "./packages/backend/package.json",
+  "./packages/backend-tools/package.json",
+  "./packages/config/package.json",
+  "./packages/dal/package.json",
+  "./packages/database/package.json",
+  "./packages/discovery/package.json",
+  "./packages/frontend/package.json",
+  "./packages/l2b/package.json",
+  "./packages/protocolbeat/package.json",
+  "./packages/public-api/package.json",
+  "./packages/shared/package.json",
+  "./packages/shared-pure/package.json",
+  "./packages/token-backend/package.json",
+  "./packages/token-ui/package.json",
+  "./packages/tools/package.json",
+  "./packages/tools-api/package.json",
+  "./packages/typescript-config/package.json",
+  "./packages/uif/package.json",
+  "./packages/uops-dashboard/package.json",
+  "./packages/validate/package.json",
+]
