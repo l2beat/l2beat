@@ -10,6 +10,7 @@ import type { ProjectsChangeReport } from '~/server/features/projects-change-rep
 import type { LivenessProject } from '~/server/features/scaling/liveness/types'
 import { getHasTrackedContractChanged } from '~/server/features/scaling/liveness/utils/getHasTrackedContractChanged'
 import type { SsrHelpers } from '~/trpc/server'
+import { optionToRange } from '~/utils/range/range'
 import { getTrackedTransactions } from '../tracked-txs/getTrackedTransactions'
 
 export async function getLivenessSection(
@@ -46,11 +47,13 @@ export async function getLivenessSection(
     ...Object.keys(configSubtypes),
     duplicatedData,
   ]) as TrackedTxsConfigSubtype[]
+  const range = optionToRange('max')
+  const subtype = getDefaultSubtype(configuredSubtypes)
 
   const data = await helpers.liveness.projectChart.fetch({
     projectId: project.id,
-    range: 'max',
-    subtype: getDefaultSubtype(configuredSubtypes),
+    range,
+    subtype,
   })
 
   if (data.data.length === 0) return undefined
@@ -67,7 +70,9 @@ export async function getLivenessSection(
     anomalies: liveness?.anomalies ?? [],
     hasTrackedContractsChanged,
     trackedTransactions,
-    defaultRange: project.archivedAt ? 'max' : '30d',
+    defaultRange: project.archivedAt
+      ? optionToRange('max')
+      : optionToRange('30d'),
     isArchived: project.archivedAt !== undefined,
     bigQueryOutage: env.CLIENT_SIDE_BIG_QUERY_OUTAGE,
   }

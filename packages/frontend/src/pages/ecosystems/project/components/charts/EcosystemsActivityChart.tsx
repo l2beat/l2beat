@@ -15,19 +15,20 @@ import {
   EthereumStrokeGradientDef,
 } from '~/components/core/chart/defs/EthereumGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
+import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { Skeleton } from '~/components/core/Skeleton'
-import { ActivityTimeRangeControls } from '~/pages/scaling/activity/components/ActivityTimeRangeControls'
+import { ActivityChartRangeControls } from '~/pages/scaling/activity/components/ActivityChartRangeControls'
 import type {
   EcosystemEntry,
   EcosystemMilestone,
 } from '~/server/features/ecosystems/getEcosystemEntry'
-import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
+import type { ChartRange } from '~/utils/range/range'
+import { optionToRange } from '~/utils/range/range'
 import { EcosystemWidget } from '../widgets/EcosystemWidget'
 import { EcosystemChartTimeRange } from './EcosystemsChartTimeRange'
 import { EcosystemsMarketShare } from './EcosystemsMarketShare'
@@ -71,10 +72,10 @@ export function EcosystemsActivityChart({
     chartMeta,
     hiddenDataKeys,
   )
-  const [timeRange, setTimeRange] = useState<ActivityTimeRange>('1y')
+  const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
 
   const { data, isLoading } = api.activity.chart.useQuery({
-    range: { type: timeRange },
+    range,
     filter: {
       type: 'projects',
       projectIds: entries.map((project) => project.id).toSorted(),
@@ -94,11 +95,15 @@ export function EcosystemsActivityChart({
   )
 
   const stats = getStats(chartData, allScalingProjectsUops)
-  const range = getChartRange(chartData)
+  const timeRange = getChartTimeRangeFromData(chartData)
 
   return (
     <EcosystemWidget className={className}>
-      <Header range={range} stats={stats} invert={id === 'superchain'} />
+      <Header
+        timeRange={timeRange}
+        stats={stats}
+        invert={id === 'superchain'}
+      />
       <ChartContainer
         data={chartData}
         meta={chartMeta}
@@ -155,22 +160,18 @@ export function EcosystemsActivityChart({
         </AreaChart>
       </ChartContainer>
       <div className="mt-2.5 ml-auto w-fit">
-        <ActivityTimeRangeControls
-          timeRange={timeRange}
-          setTimeRange={setTimeRange}
-          projectSection={true}
-        />
+        <ActivityChartRangeControls range={range} setRange={setRange} />
       </div>
     </EcosystemWidget>
   )
 }
 
 function Header({
-  range,
+  timeRange,
   stats,
   invert,
 }: {
-  range: [number, number] | undefined
+  timeRange: [number, number] | undefined
   stats: { latestUops: number; marketShare: number } | undefined
   invert?: boolean
 }) {
@@ -195,7 +196,7 @@ function Header({
         )}
       </div>
       <div className="flex justify-between gap-1">
-        <EcosystemChartTimeRange range={range} />
+        <EcosystemChartTimeRange timeRange={timeRange} />
         {invert ? (
           stats?.latestUops !== undefined ? (
             <div className="font-medium text-branding-primary text-xs">

@@ -1,21 +1,17 @@
 import type { Project } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { v } from '@l2beat/validate'
 import partition from 'lodash/partition'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import type { ChartResolution } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import type { ProjectDaThroughputChartParams } from './getProjectDaThroughputChart'
 import { isThroughputSynced } from './isThroughputSynced'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
-import {
-  DaThroughputTimeRange,
-  getThroughputRange,
-  rangeToResolution,
-} from './utils/range'
+import { rangeToResolution } from './utils/range'
 import { sumByResolutionAndProject } from './utils/sumByResolutionAndProject'
 
 export type DaThroughputChartDataPoint = [
@@ -28,15 +24,6 @@ export type DaThroughputChartDataByChart = {
   syncedUntil: number
   sovereignProjects: string[]
 }
-
-export const DaThroughputChartByProjectParams = v.object({
-  projectId: v.string(),
-  range: DaThroughputTimeRange,
-  includeScalingOnly: v.boolean(),
-})
-export type DaThroughputChartByProjectParams = v.infer<
-  typeof DaThroughputChartByProjectParams
->
 
 export async function getDaThroughputChartByProject(
   params: ProjectDaThroughputChartParams,
@@ -70,17 +57,18 @@ export async function getDaThroughputChartByProject(
   }
 }
 
-export async function getDaThroughputChartByProjectData(
-  params: ProjectDaThroughputChartParams,
-) {
+export async function getDaThroughputChartByProjectData({
+  range,
+  projectId,
+  includeScalingOnly,
+}: ProjectDaThroughputChartParams) {
   const db = getDb()
 
-  const resolution = rangeToResolution(params.range)
-  const range = getThroughputRange(params.range)
+  const resolution = rangeToResolution(range)
   const [allProjects, daLayer] = await Promise.all([
     ps.getProjects({}),
     ps.getProject({
-      id: ProjectId(params.projectId),
+      id: ProjectId(projectId),
       select: ['daLayer'],
     }),
   ])
@@ -89,9 +77,9 @@ export async function getDaThroughputChartByProjectData(
     daLayer?.daLayer.sovereignProjectsTrackingConfig?.map((p) => p.projectId)
 
   const throughput = await db.dataAvailability.getByDaLayersAndTimeRange(
-    [params.projectId],
+    [projectId],
     range,
-    params.includeScalingOnly ? sovereignProjectIds : undefined,
+    includeScalingOnly ? sovereignProjectIds : undefined,
   )
 
   if (throughput.length === 0) {
@@ -113,12 +101,19 @@ export async function getDaThroughputChartByProjectData(
     allProjects,
     resolution,
     sovereignProjects,
-    params.includeScalingOnly,
+    includeScalingOnly,
   )
 
-  const expectedTo = getThroughputExpectedTimestamp(resolution)
+  const expectedTo = getThroughputExpectedTimestamp({
+    to: range[1],
+    resolution,
+  })
 
-  const adjustedTo = isThroughputSynced(syncedUntil, false)
+  const adjustedTo = isThroughputSynced({
+    syncedUntil,
+    pastDaySynced: false,
+    to: range[1],
+  })
     ? maxTimestamp
     : expectedTo
 
@@ -134,7 +129,7 @@ export async function getDaThroughputChartByProjectData(
 function groupByTimestampAndProjectId(
   records: DataAvailabilityRecord[],
   allProjects: Project[],
-  resolution: 'hourly' | 'sixHourly' | 'daily',
+  resolution: ChartResolution,
   sovereignProjects: Map<ProjectId, string>,
   includeScalingOnly: boolean,
 ) {
@@ -231,7 +226,7 @@ async function getMockDaThroughputChartByProject({
 }: ProjectDaThroughputChartParams): Promise<DaThroughputChartDataByChart> {
   const days = rangeToDays(range) ?? 730
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
-  const from = to - days * UnixTime.DAY
+  const from = range[0] ?? to - days * UnixTime.DAY
 
   const timestamps = generateTimestamps([from, to], 'daily')
   const value = () => Math.random() * 900_000_000 + 90_000_000

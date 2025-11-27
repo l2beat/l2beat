@@ -4,6 +4,7 @@ import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
+import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { getActivitySyncState, type SyncState } from '../../utils/syncState'
 import { countPerSecond } from './utils/countPerSecond'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
@@ -20,7 +21,7 @@ export type ActivityLatestUopsData = Record<
 
 export async function getActivityLatestUops(
   projects: Project[],
-  range?: { type: 'custom'; from: UnixTime; to: UnixTime },
+  range?: ChartRange,
 ): Promise<ActivityLatestUopsData> {
   if (env.MOCK) {
     return getMockActivityLatestUopsData(projects)
@@ -29,7 +30,9 @@ export async function getActivityLatestUops(
   const db = getDb()
   // Range here is 1y because we want to match the range of the
   // activity chart on summary page to show relevant data
-  const timeRange = await getFullySyncedActivityRange(range ?? { type: '1y' })
+  const timeRange = await getFullySyncedActivityRange(
+    range ?? optionToRange('1y'),
+  )
   const [records, syncMetadataRecords] = await Promise.all([
     db.activity.getByProjectsAndTimeRange(
       projects.map((p) => p.id),

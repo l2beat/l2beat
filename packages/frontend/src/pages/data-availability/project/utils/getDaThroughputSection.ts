@@ -4,6 +4,7 @@ import { getThroughputSyncWarning } from '~/server/features/data-availability/th
 import { THROUGHPUT_ENABLED_DA_LAYERS } from '~/server/features/data-availability/throughput/utils/consts'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
+import { optionToRange } from '~/utils/range/range'
 
 export async function getDaThroughputSection(
   helpers: SsrHelpers,
@@ -19,7 +20,7 @@ export async function getDaThroughputSection(
 
   const [charts, projectsWithColors] = await Promise.all([
     helpers.da.projectCharts.fetch({
-      range: { type: '1y' },
+      range: optionToRange('1y'),
       projectId: project.id,
       includeScalingOnly: true,
     }),

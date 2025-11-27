@@ -15,6 +15,7 @@ export const PlausibleEvents = v.object({
     device: v.enum(['desktop', 'mobile']),
     action: v.enum(['open', 'close']),
   }),
+  chartRangeSelected: v.object({ name: v.string(), value: v.string() }),
 
   // Filters
   filtersOpened: v.undefined().optional(),
