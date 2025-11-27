@@ -1,6 +1,6 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { codeIsEOA } from './codeIsEOA'
+import { codeIsEOA } from './codeIsEOA.js'
 
 describe(codeIsEOA.name, () => {
   it('empty code is EOA', () => {

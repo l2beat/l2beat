@@ -1,7 +1,7 @@
 import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
 import type { BigNumber } from 'ethers'
-import type { IProvider } from '../../provider/IProvider'
-import type { ProxyDetails } from '../types'
+import type { IProvider } from '../../provider/IProvider.js'
+import type { ProxyDetails } from '../types.js'
 
 async function getProxyType(
   provider: IProvider,

@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { deepSortByKeys, hashJsonStable } from './hashJsonStable'
+import { deepSortByKeys, hashJsonStable } from './hashJsonStable.js'
 
 describe(hashJsonStable.name, () => {
   it('returns the same hash for objects with same content but different key order', () => {

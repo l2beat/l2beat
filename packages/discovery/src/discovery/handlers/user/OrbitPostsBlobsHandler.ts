@@ -2,9 +2,9 @@ import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { type providers, utils } from 'ethers'
 
-import type { IProvider } from '../../provider/IProvider'
-import { rpcWithRetries } from '../../provider/LowLevelProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import type { IProvider } from '../../provider/IProvider.js'
+import { rpcWithRetries } from '../../provider/LowLevelProvider.js'
+import type { Handler, HandlerResult } from '../Handler.js'
 
 export type OrbitPostsBlobsDefinition = v.infer<
   typeof OrbitPostsBlobsDefinition

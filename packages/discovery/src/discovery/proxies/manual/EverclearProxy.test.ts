@@ -6,9 +6,9 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { type providers, utils } from 'ethers'
-import type { IProvider } from '../../provider/IProvider'
-import { IMPLEMENTATION_SLOT } from '../auto/Eip1967Proxy'
-import { getEverclearProxy, modules } from './EverclearProxy'
+import type { IProvider } from '../../provider/IProvider.js'
+import { IMPLEMENTATION_SLOT } from '../auto/Eip1967Proxy.js'
+import { getEverclearProxy, modules } from './EverclearProxy.js'
 
 describe(getEverclearProxy.name, () => {
   const stringABI = [

@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { InMemoryCache } from './InMemoryCache'
+import { InMemoryCache } from './InMemoryCache.js'
 
 describe('InMemoryCache', () => {
   let cache: InMemoryCache

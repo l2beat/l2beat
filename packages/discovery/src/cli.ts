@@ -1,7 +1,7 @@
 import { run, subcommands } from 'cmd-ts'
-import { DiscoverCommand } from './cli/discoverCommand'
-import { GenerateSchemasCommand } from './cli/generateSchemas'
-import { SingleDiscoveryCommand } from './cli/singleDiscoveryCommand'
+import { DiscoverCommand } from './cli/discoverCommand.js'
+import { GenerateSchemasCommand } from './cli/generateSchemas.js'
+import { SingleDiscoveryCommand } from './cli/singleDiscoveryCommand.js'
 
 const targets = [
   SingleDiscoveryCommand,

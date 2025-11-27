@@ -4,12 +4,12 @@ import {
   type EthereumAddress,
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import type { IProvider } from '../../provider/IProvider.js'
+import type { Handler, HandlerResult } from '../Handler.js'
 import {
   AccessControlHandler,
   type AccessControlHandlerDefinition,
-} from './AccessControlHandler'
+} from './AccessControlHandler.js'
 
 export type YieldFiMintersDefinition = v.infer<typeof YieldFiMintersDefinition>
 export const YieldFiMintersDefinition = v.strictObject({

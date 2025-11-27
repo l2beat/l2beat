@@ -1,4 +1,4 @@
-import type { DiscoveryCache } from './provider/DiscoveryCache'
+import type { DiscoveryCache } from './provider/DiscoveryCache.js'
 
 export class OverwriteCacheWrapper implements DiscoveryCache {
   constructor(private readonly cache: DiscoveryCache) {}

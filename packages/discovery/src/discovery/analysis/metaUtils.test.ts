@@ -1,9 +1,9 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import type { ContractValue } from '../output/types'
-import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
-import type { AnalyzedContract, ExtendedTemplate } from './AddressAnalyzer'
-import { interpolateString } from './metaUtils'
+import type { ContractValue } from '../output/types.js'
+import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils.js'
+import type { AnalyzedContract, ExtendedTemplate } from './AddressAnalyzer.js'
+import { interpolateString } from './metaUtils.js'
 
 describe('metaUtils', () => {
   describe('interpolateDescription', () => {

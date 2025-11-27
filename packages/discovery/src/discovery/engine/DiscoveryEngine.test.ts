@@ -1,16 +1,16 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import type { AddressAnalyzer } from '../analysis/AddressAnalyzer'
-import { ConfigRegistry } from '../config/ConfigRegistry'
+import type { AddressAnalyzer } from '../analysis/AddressAnalyzer.js'
+import { ConfigRegistry } from '../config/ConfigRegistry.js'
 import {
   type StructureConfig,
   StructureContract,
-} from '../config/StructureConfig'
-import type { AllProviders } from '../provider/AllProviders'
-import type { IProvider } from '../provider/IProvider'
-import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
-import { DiscoveryEngine } from './DiscoveryEngine'
+} from '../config/StructureConfig.js'
+import type { AllProviders } from '../provider/AllProviders.js'
+import type { IProvider } from '../provider/IProvider.js'
+import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils.js'
+import { DiscoveryEngine } from './DiscoveryEngine.js'
 
 const base = {
   ...EMPTY_ANALYZED_CONTRACT,

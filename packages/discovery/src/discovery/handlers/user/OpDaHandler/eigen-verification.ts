@@ -1,13 +1,13 @@
-import { RLP } from 'ethers/lib/utils'
-import type { Transaction } from '../../../../utils/IEtherscanClient'
-import type { IProvider } from '../../../provider/IProvider'
+import { utils } from 'ethers'
+import type { Transaction } from '../../../../utils/IEtherscanClient.js'
+import type { IProvider } from '../../../provider/IProvider.js'
 import {
   EIGEN_DA_CONSTANTS,
   type EigenCommitment,
   EigenV1BlobInfo,
   EigenV2BlobInfo,
   EigenV3BlobInfo,
-} from './eigen-types'
+} from './eigen-types.js'
 
 export async function checkForEigenDA(
   provider: IProvider,
@@ -124,7 +124,7 @@ function verifyV3Commitments(v3Commitments: EigenCommitment[]) {
 
 function parseEigenV1(possibleCommitment: string): EigenV1BlobInfo | null {
   try {
-    const rlp = RLP.decode('0x' + possibleCommitment)
+    const rlp = utils.RLP.decode('0x' + possibleCommitment)
     return EigenV1BlobInfo.parse(rlp)
   } catch {
     return null
@@ -133,7 +133,7 @@ function parseEigenV1(possibleCommitment: string): EigenV1BlobInfo | null {
 
 function parseEigenV2(possibleCommitment: string): EigenV2BlobInfo | null {
   try {
-    const rlp = RLP.decode('0x' + possibleCommitment)
+    const rlp = utils.RLP.decode('0x' + possibleCommitment)
     return EigenV2BlobInfo.parse(rlp)
   } catch {
     return null
@@ -142,7 +142,7 @@ function parseEigenV2(possibleCommitment: string): EigenV2BlobInfo | null {
 
 function parseEigenV3(possibleCommitment: string): EigenV3BlobInfo | null {
   try {
-    const rlp = RLP.decode('0x' + possibleCommitment)
+    const rlp = utils.RLP.decode('0x' + possibleCommitment)
     return EigenV3BlobInfo.parse(rlp)
   } catch {
     return null

@@ -4,11 +4,11 @@ import {
   undefinedIfEmpty,
   withoutUndefinedKeys,
 } from '@l2beat/shared-pure'
-import { recalculateSourceHashes } from '../../flatten/utils'
-import type { Analysis } from '../analysis/AddressAnalyzer'
-import { hashJsonStable } from '../config/hashJsonStable'
-import type { StructureConfig } from '../config/StructureConfig'
-import type { EntryParameters, StructureOutput } from './types'
+import { recalculateSourceHashes } from '../../flatten/utils.js'
+import type { Analysis } from '../analysis/AddressAnalyzer.js'
+import { hashJsonStable } from '../config/hashJsonStable.js'
+import type { StructureConfig } from '../config/StructureConfig.js'
+import type { EntryParameters, StructureOutput } from './types.js'
 
 export function generateStructureHash(config: StructureConfig): Hash256 {
   // Exclude from configHash generation the following fields:

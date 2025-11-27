@@ -1,6 +1,6 @@
 import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
-import type { IProvider } from '../../provider/IProvider'
-import type { ProxyDetails } from '../types'
+import type { IProvider } from '../../provider/IProvider.js'
+import type { ProxyDetails } from '../types.js'
 
 export async function getCallImplementationProxy(
   provider: IProvider,

@@ -1,13 +1,13 @@
 import { assert, type ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { type providers, utils } from 'ethers'
-import type { ContractValue } from '../../output/types'
+import type { ContractValue } from '../../output/types.js'
 
-import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
-import { toContractValue } from '../utils/toContractValue'
-import { toEventFragment } from '../utils/toEventFragment'
-import { ConstructorArgsHandler } from './ConstructorArgsHandler'
+import type { IProvider } from '../../provider/IProvider.js'
+import type { Handler, HandlerResult } from '../Handler.js'
+import { toContractValue } from '../utils/toContractValue.js'
+import { toEventFragment } from '../utils/toEventFragment.js'
+import { ConstructorArgsHandler } from './ConstructorArgsHandler.js'
 
 export type LayerZeroMultisigHandlerDefinition = v.infer<
   typeof LayerZeroMultisigHandlerDefinition

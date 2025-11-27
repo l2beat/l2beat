@@ -1,8 +1,8 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 
-import { getErrorMessage } from '../../utils/getErrorMessage'
-import type { IProvider } from '../provider/IProvider'
-import type { Handler, HandlerResult } from './Handler'
+import { getErrorMessage } from '../../utils/getErrorMessage.js'
+import type { IProvider } from '../provider/IProvider.js'
+import type { Handler, HandlerResult } from './Handler.js'
 
 export async function executeHandlers(
   provider: IProvider,

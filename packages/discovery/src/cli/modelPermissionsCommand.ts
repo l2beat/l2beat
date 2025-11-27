@@ -1,18 +1,18 @@
 import { Logger } from '@l2beat/backend-tools'
-import { TemplateService } from '../discovery/analysis/TemplateService'
-import { ConfigReader } from '../discovery/config/ConfigReader'
+import { TemplateService } from '../discovery/analysis/TemplateService.js'
+import { ConfigReader } from '../discovery/config/ConfigReader.js'
 import {
   type DiscoveryPaths,
   getDiscoveryPaths,
-} from '../discovery/config/getDiscoveryPaths'
-import { combinePermissionsIntoDiscovery } from '../discovery/modelling/combinePermissionsIntoDiscovery'
+} from '../discovery/config/getDiscoveryPaths.js'
+import { combinePermissionsIntoDiscovery } from '../discovery/modelling/combinePermissionsIntoDiscovery.js'
 import {
   DiscoveryRegistry,
   modelPermissions,
-} from '../discovery/modelling/modelPermissions'
-import { saveDiscoveredJson } from '../discovery/output/saveDiscoveryResult'
-import { sortEntry } from '../discovery/output/toDiscoveryOutput'
-import type { PermissionsOutput } from '../discovery/output/types'
+} from '../discovery/modelling/modelPermissions.js'
+import { saveDiscoveredJson } from '../discovery/output/saveDiscoveryResult.js'
+import { sortEntry } from '../discovery/output/toDiscoveryOutput.js'
+import type { PermissionsOutput } from '../discovery/output/types.js'
 
 export async function modelPermissionsCommand(
   project: string,

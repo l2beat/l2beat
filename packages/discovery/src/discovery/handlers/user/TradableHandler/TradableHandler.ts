@@ -1,8 +1,8 @@
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { type providers, utils } from 'ethers'
-import type { IProvider } from '../../../provider/IProvider'
-import type { Handler, HandlerResult } from '../../Handler'
+import type { IProvider } from '../../../provider/IProvider.js'
+import type { Handler, HandlerResult } from '../../Handler.js'
 
 const abi = [
   'event DealDeployed(string indexed id, address indexed deal, address indexed manager)',

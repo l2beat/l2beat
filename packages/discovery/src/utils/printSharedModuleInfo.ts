@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import chalk from 'chalk'
-import type { StructureConfig } from '../discovery/config/StructureConfig'
+import type { StructureConfig } from '../discovery/config/StructureConfig.js'
 
 export function printSharedModuleInfo(
   logger: Logger,

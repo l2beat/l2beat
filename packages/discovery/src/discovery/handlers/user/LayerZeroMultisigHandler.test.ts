@@ -2,9 +2,9 @@ import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { type providers, utils } from 'ethers'
 
-import type { ContractSource } from '../../../utils/IEtherscanClient'
-import type { IProvider } from '../../provider/IProvider'
-import { LayerZeroMultisigHandler } from './LayerZeroMultisigHandler'
+import type { ContractSource } from '../../../utils/IEtherscanClient.js'
+import type { IProvider } from '../../provider/IProvider.js'
+import { LayerZeroMultisigHandler } from './LayerZeroMultisigHandler.js'
 
 // data from https://etherscan.io/tx/0x1b83d19d45aa517f56403a2fa5e4472668d612f0f65b524cc84cbf2071006b31
 

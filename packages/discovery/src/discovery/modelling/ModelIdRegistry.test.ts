@@ -1,7 +1,7 @@
 import { expect } from 'earl'
-import type { ClingoFact } from './clingoparser'
-import { KnowledgeBase } from './KnowledgeBase'
-import { ModelIdRegistry } from './ModelIdRegistry'
+import type { ClingoFact } from './clingoparser.js'
+import { KnowledgeBase } from './KnowledgeBase.js'
+import { ModelIdRegistry } from './ModelIdRegistry.js'
 
 describe(ModelIdRegistry.name, () => {
   let registry: ModelIdRegistry

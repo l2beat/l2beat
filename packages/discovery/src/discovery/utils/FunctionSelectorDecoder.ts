@@ -1,10 +1,10 @@
 import { assert, type ChainSpecificAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import type { ContractSource } from '../../utils/IEtherscanClient'
-import type { IProvider } from '../provider/IProvider'
-import { ProxyDetector } from '../proxies/ProxyDetector'
-import { get$Implementations } from './extractors'
+import type { ContractSource } from '../../utils/IEtherscanClient.js'
+import type { IProvider } from '../provider/IProvider.js'
+import { ProxyDetector } from '../proxies/ProxyDetector.js'
+import { get$Implementations } from './extractors.js'
 
 export class FunctionSelectorDecoder {
   readonly proxyDetector: ProxyDetector

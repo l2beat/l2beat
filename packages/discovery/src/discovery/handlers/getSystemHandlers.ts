@@ -1,9 +1,9 @@
 import { utils } from 'ethers'
 
-import type { StructureContractConfig } from '../config/structureUtils'
-import type { Handler } from './Handler'
-import { LimitedArrayHandler } from './system/LimitedArrayHandler'
-import { SimpleMethodHandler } from './system/SimpleMethodHandler'
+import type { StructureContractConfig } from '../config/structureUtils.js'
+import type { Handler } from './Handler.js'
+import { LimitedArrayHandler } from './system/LimitedArrayHandler.js'
+import { SimpleMethodHandler } from './system/SimpleMethodHandler.js'
 
 export function getSystemHandlers(
   abiEntries: string[],

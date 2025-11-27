@@ -1,8 +1,8 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
-import type { IProvider } from '../../provider/IProvider'
-import { get$Implementations } from '../../utils/extractors'
-import { detectPolygonProxy } from '../auto/PolygonProxy'
-import type { ProxyDetails } from '../types'
+import type { IProvider } from '../../provider/IProvider.js'
+import { get$Implementations } from '../../utils/extractors.js'
+import { detectPolygonProxy } from '../auto/PolygonProxy.js'
+import type { ProxyDetails } from '../types.js'
 
 export async function getPolygonExtensionProxy(
   provider: IProvider,

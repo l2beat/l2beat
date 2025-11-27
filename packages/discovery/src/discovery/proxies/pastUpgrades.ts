@@ -5,8 +5,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import type { LogDescription } from 'ethers/lib/utils'
-import type { IProvider } from '../provider/IProvider'
+import type { IProvider } from '../provider/IProvider.js'
 
 export type DateAddresses = [string, Hash256, ChainSpecificAddress[]]
 
@@ -14,7 +13,7 @@ export async function getPastUpgradesSingleEvent(
   provider: IProvider,
   address: ChainSpecificAddress,
   eventABI: string,
-  eventFiltering?: (log: LogDescription) => boolean,
+  eventFiltering?: (log: utils.LogDescription) => boolean,
 ): Promise<DateAddresses[]> {
   const abi = new utils.Interface([eventABI])
   const topics = Object.values(abi.events).map((e) => abi.getEventTopic(e.name))

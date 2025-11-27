@@ -1,6 +1,6 @@
 import { command } from 'cmd-ts'
 import { writeFileSync } from 'fs'
-import { generateAllSchemas } from '../schemas/generate'
+import { generateAllSchemas } from '../schemas/generate.js'
 
 export const GenerateSchemasCommand = command({
   name: 'generate-schemas',

@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { resolveReferenceFromValues } from './reference'
+import { resolveReferenceFromValues } from './reference.js'
 
 describe('references', () => {
   it('throws if not found', () => {

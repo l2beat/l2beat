@@ -1,5 +1,8 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import type { AnalyzedContract, AnalyzedEOA } from '../analysis/AddressAnalyzer'
+import type {
+  AnalyzedContract,
+  AnalyzedEOA,
+} from '../analysis/AddressAnalyzer.js'
 
 export const EMPTY_ANALYZED_CONTRACT: AnalyzedContract = {
   type: 'Contract',

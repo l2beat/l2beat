@@ -1,8 +1,8 @@
 import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import type { IProvider } from '../../provider/IProvider'
-import { DynamicArrayHandler } from './DynamicArrayHandler'
+import type { IProvider } from '../../provider/IProvider.js'
+import { DynamicArrayHandler } from './DynamicArrayHandler.js'
 
 describe(DynamicArrayHandler.name, () => {
   describe('integration', () => {

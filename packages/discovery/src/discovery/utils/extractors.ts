@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, type Hash256 } from '@l2beat/shared-pure'
-import type { ContractValue } from '../output/types'
+import type { ContractValue } from '../output/types.js'
 
 export function get$Implementations(
   values: Record<string, ContractValue | undefined> | undefined,

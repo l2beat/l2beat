@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 
-import type { FieldDiff } from '../output/diffContracts'
-import { sortBySeverity } from './sortDiffs'
+import type { FieldDiff } from '../output/diffContracts.js'
+import { sortBySeverity } from './sortDiffs.js'
 
 const DIFFS: FieldDiff[] = [
   { key: 'values.key6' },

@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { skipIgnoredFunctions } from './skipIgnoredFunctions'
+import { skipIgnoredFunctions } from './skipIgnoredFunctions.js'
 
 describe(skipIgnoredFunctions.name, () => {
   it('should return the same array if ignoreInWatchMode is undefined', () => {

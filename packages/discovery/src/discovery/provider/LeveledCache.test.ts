@@ -1,6 +1,6 @@
 import { expect, type MockObject, mockFn, mockObject } from 'earl'
-import type { DiscoveryCache } from './DiscoveryCache'
-import { LeveledCache } from './LeveledCache'
+import type { DiscoveryCache } from './DiscoveryCache.js'
+import { LeveledCache } from './LeveledCache.js'
 
 describe('LeveledCache', () => {
   let l1Mock: MockObject<DiscoveryCache>

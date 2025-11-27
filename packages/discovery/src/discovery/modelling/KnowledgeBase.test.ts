@@ -1,6 +1,6 @@
 import { expect } from 'earl'
-import type { ClingoFact } from './clingoparser'
-import { KnowledgeBase } from './KnowledgeBase'
+import type { ClingoFact } from './clingoparser.js'
+import { KnowledgeBase } from './KnowledgeBase.js'
 
 describe(KnowledgeBase.name, () => {
   it('should return facts', () => {

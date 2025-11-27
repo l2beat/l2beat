@@ -1,9 +1,9 @@
 import type { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
-import type { Analysis } from '../analysis/AddressAnalyzer'
-import type { ContractValueType } from '../config/ColorConfig'
-import type { Permission } from '../config/PermissionConfig'
-import type { ContractFieldSeverity } from '../config/StructureConfig'
-import type { DiscoveryTimestamps } from '../modelling/modelPermissions'
+import type { Analysis } from '../analysis/AddressAnalyzer.js'
+import type { ContractValueType } from '../config/ColorConfig.js'
+import type { Permission } from '../config/PermissionConfig.js'
+import type { ContractFieldSeverity } from '../config/StructureConfig.js'
+import type { DiscoveryTimestamps } from '../modelling/modelPermissions.js'
 
 export type ContractValue =
   | string

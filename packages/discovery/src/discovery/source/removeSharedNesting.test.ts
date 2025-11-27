@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { removeSharedNesting } from './removeSharedNesting'
+import { removeSharedNesting } from './removeSharedNesting.js'
 
 describe(removeSharedNesting.name, () => {
   it('removes multiple common directories', () => {

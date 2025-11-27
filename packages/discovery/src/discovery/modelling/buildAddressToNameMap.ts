@@ -1,4 +1,4 @@
-import type { EntryParameters } from '../output/types'
+import type { EntryParameters } from '../output/types.js'
 
 export function buildAddressToNameMap(
   entries: EntryParameters[],

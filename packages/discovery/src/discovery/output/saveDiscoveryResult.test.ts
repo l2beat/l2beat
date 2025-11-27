@@ -1,10 +1,10 @@
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import map from 'lodash/map'
+import map from 'lodash/map.js'
 
-import type { AnalyzedContract } from '../analysis/AddressAnalyzer'
-import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
-import { getSourceOutputPath } from './saveDiscoveryResult'
+import type { AnalyzedContract } from '../analysis/AddressAnalyzer.js'
+import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils.js'
+import { getSourceOutputPath } from './saveDiscoveryResult.js'
 
 describe(getSourceOutputPath.name, () => {
   const genAnalyzedContract = (name: string): AnalyzedContract => ({

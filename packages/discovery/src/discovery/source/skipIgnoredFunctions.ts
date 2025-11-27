@@ -1,4 +1,4 @@
-import { makeFragment } from './deduplicateAbi'
+import { makeFragment } from './deduplicateAbi.js'
 
 export function skipIgnoredFunctions(
   abi: string[],

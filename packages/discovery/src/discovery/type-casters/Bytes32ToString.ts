@@ -1,7 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import type { ContractValue } from '../output/types'
-import type { ArgType, BaseTypeCaster } from './BaseTypeCaster'
+import type { ContractValue } from '../output/types.js'
+import type { ArgType, BaseTypeCaster } from './BaseTypeCaster.js'
 
 export const Bytes32ToString: BaseTypeCaster = {
   cast: function (_arg: ArgType, incomingValue: ContractValue): ContractValue {

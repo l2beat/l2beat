@@ -2,8 +2,8 @@ import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { type providers, utils } from 'ethers'
 
-import type { IProvider } from '../../provider/IProvider'
-import { CrossChainAccessControlHandler } from './CrossChainAccessControlHandler'
+import type { IProvider } from '../../provider/IProvider.js'
+import { CrossChainAccessControlHandler } from './CrossChainAccessControlHandler.js'
 
 describe(CrossChainAccessControlHandler.name, () => {
   const abi = new utils.Interface([

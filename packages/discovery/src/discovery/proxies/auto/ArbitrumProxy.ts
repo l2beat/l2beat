@@ -7,11 +7,11 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { type providers, utils } from 'ethers'
-import type { ContractValue } from '../../output/types'
-import type { IProvider } from '../../provider/IProvider'
-import type { DateAddresses } from '../pastUpgrades'
-import type { ProxyDetails } from '../types'
-import { getAdmin, getImplementation } from './Eip1967Proxy'
+import type { ContractValue } from '../../output/types.js'
+import type { IProvider } from '../../provider/IProvider.js'
+import type { DateAddresses } from '../pastUpgrades.js'
+import type { ProxyDetails } from '../types.js'
+import { getAdmin, getImplementation } from './Eip1967Proxy.js'
 
 // keccak256('eip1967.proxy.implementation.secondary') - 1)
 const SECONDARY_IMPLEMENTATION_SLOT = Bytes.fromHex(

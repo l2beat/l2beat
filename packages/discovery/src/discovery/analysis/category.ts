@@ -1,4 +1,4 @@
-import type { ColorContract, DiscoveryCategory } from '../config/ColorConfig'
+import type { ColorContract, DiscoveryCategory } from '../config/ColorConfig.js'
 
 export function resolveCategory(
   config: ColorContract,

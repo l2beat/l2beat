@@ -1,6 +1,6 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { gatherReachableAddresses } from './gatherReachableAddresses'
+import { gatherReachableAddresses } from './gatherReachableAddresses.js'
 
 describe(gatherReachableAddresses.name, () => {
   it('returns reachable addresses', () => {

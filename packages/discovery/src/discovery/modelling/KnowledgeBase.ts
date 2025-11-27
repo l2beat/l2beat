@@ -1,4 +1,4 @@
-import type { ClingoFact } from './clingoparser'
+import type { ClingoFact } from './clingoparser.js'
 
 export class KnowledgeBase {
   constructor(public readonly facts: ClingoFact[]) {}

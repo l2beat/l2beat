@@ -6,11 +6,11 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import type { ContractValue } from '../../output/types'
-import type { IProvider } from '../../provider/IProvider'
-import { getImplementation } from '../auto/Eip1967Proxy'
-import type { DateAddresses } from '../pastUpgrades'
-import type { ProxyDetails } from '../types'
+import type { ContractValue } from '../../output/types.js'
+import type { IProvider } from '../../provider/IProvider.js'
+import { getImplementation } from '../auto/Eip1967Proxy.js'
+import type { DateAddresses } from '../pastUpgrades.js'
+import type { ProxyDetails } from '../types.js'
 
 async function getPastUpgrades(
   provider: IProvider,

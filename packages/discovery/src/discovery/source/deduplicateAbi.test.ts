@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { deduplicateAbi } from './deduplicateAbi'
+import { deduplicateAbi } from './deduplicateAbi.js'
 
 describe(deduplicateAbi.name, () => {
   it('returns deduplicated and sorted abi', () => {

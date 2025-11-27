@@ -1,9 +1,9 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import type { IProvider } from '../../provider/IProvider'
-import { toFunctionFragment } from '../utils/toFunctionFragment'
-import { ArrayHandler, getArrayFragment } from './ArrayHandler'
+import type { IProvider } from '../../provider/IProvider.js'
+import { toFunctionFragment } from '../utils/toFunctionFragment.js'
+import { ArrayHandler, getArrayFragment } from './ArrayHandler.js'
 
 describe(ArrayHandler.name, () => {
   describe('dependencies', () => {

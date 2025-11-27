@@ -2,8 +2,8 @@ import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
 
-import type { IProvider } from '../../provider/IProvider'
-import { StarkWareNamedStorageHandler } from './StarkWareNamedStorageHandler'
+import type { IProvider } from '../../provider/IProvider.js'
+import { StarkWareNamedStorageHandler } from './StarkWareNamedStorageHandler.js'
 
 describe(StarkWareNamedStorageHandler.name, () => {
   describe('return types', () => {

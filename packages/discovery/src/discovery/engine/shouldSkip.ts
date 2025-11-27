@@ -1,9 +1,9 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
-import type { StructureConfig } from '../config/StructureConfig'
+import type { StructureConfig } from '../config/StructureConfig.js'
 import {
   makeEntryStructureConfig,
   type SharedModuleIndexEntry,
-} from '../config/structureUtils'
+} from '../config/structureUtils.js'
 
 export function shouldSkip(
   address: ChainSpecificAddress,

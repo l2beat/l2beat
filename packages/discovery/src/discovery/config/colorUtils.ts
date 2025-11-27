@@ -1,6 +1,6 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
-import merge from 'lodash/merge'
-import { type ColorConfig, ColorContract } from './ColorConfig'
+import merge from 'lodash/merge.js'
+import { type ColorConfig, ColorContract } from './ColorConfig.js'
 
 export type ColorContractOverrides = ColorContract & {
   name?: string

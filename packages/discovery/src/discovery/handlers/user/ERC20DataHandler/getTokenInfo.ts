@@ -4,8 +4,8 @@ import {
   type CoingeckoId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { IProvider } from '../../../provider/IProvider'
-import { today } from './utils'
+import type { IProvider } from '../../../provider/IProvider.js'
+import { today } from './utils.js'
 
 export async function getTokenInfo(
   provider: IProvider,

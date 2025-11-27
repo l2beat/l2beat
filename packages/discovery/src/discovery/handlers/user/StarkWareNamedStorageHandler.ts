@@ -2,10 +2,10 @@ import { Bytes, type ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
 
-import { getErrorMessage } from '../../../utils/getErrorMessage'
-import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
-import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
+import { getErrorMessage } from '../../../utils/getErrorMessage.js'
+import type { IProvider } from '../../provider/IProvider.js'
+import type { Handler, HandlerResult } from '../Handler.js'
+import { bytes32ToContractValue } from '../utils/bytes32ToContractValue.js'
 
 export type StarkWareNamedStorageHandlerDefinition = v.infer<
   typeof StarkWareNamedStorageHandlerDefinition

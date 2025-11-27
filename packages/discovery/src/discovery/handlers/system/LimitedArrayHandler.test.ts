@@ -1,8 +1,8 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import type { IProvider } from '../../provider/IProvider'
-import { LimitedArrayHandler } from './LimitedArrayHandler'
+import type { IProvider } from '../../provider/IProvider.js'
+import { LimitedArrayHandler } from './LimitedArrayHandler.js'
 
 describe(LimitedArrayHandler.name, () => {
   const method = 'function owners(uint256 index) view returns (address)'

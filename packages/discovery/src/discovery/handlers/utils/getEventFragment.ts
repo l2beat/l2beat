@@ -1,6 +1,6 @@
 import type { utils } from 'ethers'
 
-import { toEventFragment } from './toEventFragment'
+import { toEventFragment } from './toEventFragment.js'
 
 export function getEventFragment(
   event: string,

@@ -1,9 +1,12 @@
 import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
-import type { IProvider } from '../../provider/IProvider'
-import type { HandlerResult } from '../Handler'
-import { StorageHandler, type StorageHandlerDefinition } from './StorageHandler'
+import type { IProvider } from '../../provider/IProvider.js'
+import type { HandlerResult } from '../Handler.js'
+import {
+  StorageHandler,
+  type StorageHandlerDefinition,
+} from './StorageHandler.js'
 
 describe(StorageHandler.name, () => {
   describe('return types', () => {

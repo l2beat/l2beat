@@ -1,10 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
 import type { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
-import { BlockscoutClient } from './BlockscoutClient'
-import { EtherscanClient } from './EtherscanClient'
-import { RoutescanClient } from './RoutescanClient'
-import { SourcifyClient } from './SourcifyClient'
+import { BlockscoutClient } from './BlockscoutClient.js'
+import { EtherscanClient } from './EtherscanClient.js'
+import { RoutescanClient } from './RoutescanClient.js'
+import { SourcifyClient } from './SourcifyClient.js'
 
 // If a given instance of Etherscan does not support some endpoint set a
 // corresponding variable to true, otherwise do not set to anything -

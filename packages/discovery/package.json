@@ -2,13 +2,24 @@
   "name": "@l2beat/discovery",
   "description": "L2Beat discovery - engine & tooling utilized for keeping an eye on L2s",
   "version": "0.48.0",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "bin": {
-    "discovery": "./cli.js"
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/node/src/index.js",
+  "types": "./dist/node/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/node/src/index.d.ts",
+      "require": "./dist/node/src/index.js"
+    },
+    "./web": {
+      "types": "./dist/web/index.web.d.mts",
+      "import": "./dist/web/index.web.mjs"
+    }
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "pnpm run clean && pnpm run build:web && pnpm run build:node",
+    "build:web": "tsdown",
+    "build:node": "tsc -p tsconfig.node.json && cp cjs.package.json dist/node/package.json",
     "build:dependencies": "cd ../.. && pnpm build:dependencies:discovery",
     "watch:dependencies": "cd ../.. && pnpm watch:dependencies:discovery",
     "clean": "rm -rf dist",
@@ -22,9 +33,9 @@
   },
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",
-    "@l2beat/validate": "workspace:*",
     "@l2beat/shared": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
+    "@l2beat/validate": "workspace:*",
     "@mradomski/fast-solidity-parser": "0.1.6",
     "bignumber.js": "^9.1.2",
     "chalk": "^4.1.2",
@@ -45,6 +56,7 @@
     "@types/lodash": "^4.14.198",
     "@types/mock-fs": "^4.13.4",
     "@types/node-fetch": "^2.6.4",
-    "mock-fs": "^5.2.0"
+    "mock-fs": "^5.2.0",
+    "tsdown": "^0.16.6"
   }
 }

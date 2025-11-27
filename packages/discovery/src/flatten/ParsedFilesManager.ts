@@ -2,8 +2,8 @@ import { assert } from '@l2beat/shared-pure'
 import type * as AST from '@mradomski/fast-solidity-parser'
 import { parse } from '@mradomski/fast-solidity-parser'
 import * as posix from 'path'
-import { getASTIdentifiers } from './getASTIdentifiers'
-import type { FlattenOptions } from './types'
+import { getASTIdentifiers } from './getASTIdentifiers.js'
+import type { FlattenOptions } from './types.js'
 
 type ParseResult = ReturnType<typeof parse>
 

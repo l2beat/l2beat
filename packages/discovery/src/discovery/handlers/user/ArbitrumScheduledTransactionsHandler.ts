@@ -1,11 +1,11 @@
 import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { ethers, utils } from 'ethers'
-import type { ContractValue } from '../../output/types'
+import type { ContractValue } from '../../output/types.js'
 
-import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
-import { toContractValue } from '../utils/toContractValue'
+import type { IProvider } from '../../provider/IProvider.js'
+import type { Handler, HandlerResult } from '../Handler.js'
+import { toContractValue } from '../utils/toContractValue.js'
 
 export type ArbitrumScheduledTransactionsHandlerDefinition = v.infer<
   typeof ArbitrumScheduledTransactionsHandlerDefinition

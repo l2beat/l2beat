@@ -1,8 +1,8 @@
 import { getEnv } from '@l2beat/backend-tools'
 
-import type { ExplorerConfig } from '../utils/IEtherscanClient'
-import { chains } from './chains'
-import type { DiscoveryChainConfig } from './types'
+import type { ExplorerConfig } from '../utils/IEtherscanClient.js'
+import { chains } from './chains.js'
+import type { DiscoveryChainConfig } from './types.js'
 
 export function getChainShortName(chain: string) {
   const chainConfig = chains.find((c) => c.name === chain)

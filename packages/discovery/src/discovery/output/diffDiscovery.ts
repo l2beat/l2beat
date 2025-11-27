@@ -1,7 +1,7 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 
-import { diffContracts, type FieldDiff } from './diffContracts'
-import type { EntryParameters, StructureEntry } from './types'
+import { diffContracts, type FieldDiff } from './diffContracts.js'
+import type { EntryParameters, StructureEntry } from './types.js'
 
 export interface DiscoveryDiff {
   name?: string

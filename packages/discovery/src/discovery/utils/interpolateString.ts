@@ -1,4 +1,4 @@
-import type { StructureEntry } from '../output/types'
+import type { StructureEntry } from '../output/types.js'
 
 export function interpolateString(
   description: string | undefined,

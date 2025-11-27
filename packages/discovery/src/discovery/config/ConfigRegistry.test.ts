@@ -1,8 +1,8 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { ConfigRegistry } from './ConfigRegistry'
-import { StructureContract } from './StructureConfig'
-import { makeEntryStructureConfig } from './structureUtils'
+import { ConfigRegistry } from './ConfigRegistry.js'
+import { StructureContract } from './StructureConfig.js'
+import { makeEntryStructureConfig } from './structureUtils.js'
 
 const ADDRESS_A = ChainSpecificAddress.random()
 const ADDRESS_B = ChainSpecificAddress.random()

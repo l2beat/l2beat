@@ -3,18 +3,18 @@ import {
   _ColorConfig,
   _ColorContract,
   _ColorContractField,
-} from '../discovery/config/ColorConfig'
+} from '../discovery/config/ColorConfig.js'
 import {
   _ContractPermission,
   _ContractPermissionField,
   _PermissionsConfig,
-} from '../discovery/config/PermissionConfig'
+} from '../discovery/config/PermissionConfig.js'
 import {
   _StructureConfig,
   _StructureContract,
   _StructureContractField,
   DiscoveryCustomType,
-} from '../discovery/config/StructureConfig'
+} from '../discovery/config/StructureConfig.js'
 
 export const FieldConfigSchema = v.object({
   ..._ContractPermissionField,

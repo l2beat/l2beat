@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { getBlockNumberSwitching } from './getBlockNumberSwitching'
+import { getBlockNumberSwitching } from './getBlockNumberSwitching.js'
 
 const linear =
   (slope: number, offset = 0) =>

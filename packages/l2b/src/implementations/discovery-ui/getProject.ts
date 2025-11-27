@@ -1,3 +1,4 @@
+import type { ColorContract } from '@l2beat/discovery'
 import {
   type ConfigReader,
   type ContractConfig,
@@ -10,7 +11,6 @@ import {
   makeEntryStructureConfig,
   type TemplateService,
 } from '@l2beat/discovery'
-import type { ColorContract } from '@l2beat/discovery/dist/discovery/config/ColorConfig'
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { getContractName } from './getContractName'

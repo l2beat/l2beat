@@ -7,8 +7,8 @@ import {
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
-import type { IProvider } from '../provider/IProvider'
-import { FunctionSelectorDecoder } from './FunctionSelectorDecoder'
+import type { IProvider } from '../provider/IProvider.js'
+import { FunctionSelectorDecoder } from './FunctionSelectorDecoder.js'
 
 describe(FunctionSelectorDecoder.name, () => {
   const EIP2535_METHOD =

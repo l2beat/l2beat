@@ -1,11 +1,11 @@
 import { assert } from '@l2beat/shared-pure'
 import type { utils } from 'ethers'
-import type { ContractValue } from '../output/types'
+import type { ContractValue } from '../output/types.js'
 import {
   type TupleType,
   type Type,
   toInternalType,
-} from '../utils/parseReturnType'
+} from '../utils/parseReturnType.js'
 
 export function asStructured(
   value: ContractValue,

@@ -6,9 +6,12 @@ import type {
   Analysis,
   AnalyzedContract,
   ExtendedTemplate,
-} from '../analysis/AddressAnalyzer'
-import { EMPTY_ANALYZED_CONTRACT, EMPTY_ANALYZED_EOA } from '../utils/testUtils'
-import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
+} from '../analysis/AddressAnalyzer.js'
+import {
+  EMPTY_ANALYZED_CONTRACT,
+  EMPTY_ANALYZED_EOA,
+} from '../utils/testUtils.js'
+import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed.js'
 
 describe(removeAlreadyAnalyzed.name, () => {
   const A = ChainSpecificAddress.random()

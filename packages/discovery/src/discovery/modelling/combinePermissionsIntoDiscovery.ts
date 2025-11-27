@@ -1,11 +1,11 @@
-import isEmpty from 'lodash/isEmpty'
+import isEmpty from 'lodash/isEmpty.js'
 import type {
   DiscoveryOutput,
   EntryParameters,
   PermissionsOutput,
   ReceivedPermission,
-} from '../output/types'
-import type { DiscoveryTimestamps } from './modelPermissions'
+} from '../output/types.js'
+import type { DiscoveryTimestamps } from './modelPermissions.js'
 
 // This function transforms permission modelling output such that
 // it matches the historical format of ReceivedPermission.

@@ -1,12 +1,12 @@
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import type { EntryParameters } from '../output/types'
+import type { EntryParameters } from '../output/types.js'
 import {
   contractValuesForInterpolation,
   interpolateModelTemplate,
   normalizeId,
   tryCastingToName,
-} from './interpolate'
+} from './interpolate.js'
 
 describe(normalizeId.name, () => {
   it('properly normalizes ids', () => {

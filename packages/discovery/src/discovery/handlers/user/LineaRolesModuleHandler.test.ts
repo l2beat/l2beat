@@ -7,11 +7,11 @@ import {
 import { expect, mockFn, mockObject } from 'earl'
 import { type providers, utils } from 'ethers'
 
-import type { IProvider } from '../../provider/IProvider'
+import type { IProvider } from '../../provider/IProvider.js'
 import {
   LineaRolesModuleHandler,
   type ScopeConfig,
-} from './LineaRolesModuleHandler'
+} from './LineaRolesModuleHandler.js'
 
 describe(LineaRolesModuleHandler.name, () => {
   const abi = new utils.Interface([

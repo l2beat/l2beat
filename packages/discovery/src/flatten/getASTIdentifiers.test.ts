@@ -1,7 +1,7 @@
 import { parse } from '@mradomski/fast-solidity-parser'
 import { expect } from 'earl'
 
-import { getASTIdentifiers } from './getASTIdentifiers'
+import { getASTIdentifiers } from './getASTIdentifiers.js'
 
 const soliditySource = `pragma solidity ^0.8.0;
 

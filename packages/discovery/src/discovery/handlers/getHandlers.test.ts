@@ -1,11 +1,11 @@
 import { expect, mockObject } from 'earl'
 
-import type { StructureContractConfig } from '../config/structureUtils'
-import { getHandlers } from './getHandlers'
-import { ErrorHandler } from './system/ErrorHandler'
-import { LimitedArrayHandler } from './system/LimitedArrayHandler'
-import { SimpleMethodHandler } from './system/SimpleMethodHandler'
-import { StorageHandler } from './user/StorageHandler'
+import type { StructureContractConfig } from '../config/structureUtils.js'
+import { getHandlers } from './getHandlers.js'
+import { ErrorHandler } from './system/ErrorHandler.js'
+import { LimitedArrayHandler } from './system/LimitedArrayHandler.js'
+import { SimpleMethodHandler } from './system/SimpleMethodHandler.js'
+import { StorageHandler } from './user/StorageHandler.js'
 
 describe(getHandlers.name, () => {
   const mockConfig = mockObject<StructureContractConfig>({

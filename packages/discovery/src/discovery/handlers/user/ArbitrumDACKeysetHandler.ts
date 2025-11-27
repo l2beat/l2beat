@@ -2,9 +2,8 @@ import { assert, Bytes, type ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { type providers, utils } from 'ethers'
 
-import { base64 } from 'ethers/lib/utils'
-import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import type { IProvider } from '../../provider/IProvider.js'
+import type { Handler, HandlerResult } from '../Handler.js'
 
 export type ArbitrumDACKeysetHandlerDefinition = v.infer<
   typeof ArbitrumDACKeysetHandlerDefinition
@@ -79,7 +78,7 @@ function decodeLastEvent(events: providers.Log[]): {
     head += 2
 
     blsSignatures.push(
-      base64.encode(keysetBytes.slice(head, head + size).toString()),
+      utils.base64.encode(keysetBytes.slice(head, head + size).toString()),
     )
     head += size
   }

@@ -1,5 +1,5 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import type { ContractSources } from './SourceCodeService'
+import type { ContractSources } from './SourceCodeService.js'
 
 export function getLibraries(
   chain: string,

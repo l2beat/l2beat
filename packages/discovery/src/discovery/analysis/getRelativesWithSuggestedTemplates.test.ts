@@ -1,7 +1,7 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
+import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates.js'
 
 describe(getRelativesWithSuggestedTemplates.name, () => {
   const ADDRESS_A = ChainSpecificAddress.random()

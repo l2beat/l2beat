@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 import mockFs from 'mock-fs'
-import { ConfigReader } from './ConfigReader'
+import { ConfigReader } from './ConfigReader.js'
 
 describe('resolveImports', () => {
   beforeEach(() => {

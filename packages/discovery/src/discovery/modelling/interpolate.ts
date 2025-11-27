@@ -1,5 +1,5 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import type { ContractValue, EntryParameters } from '../output/types'
+import type { ContractValue, EntryParameters } from '../output/types.js'
 
 export function interpolateModelTemplate(
   content: string,

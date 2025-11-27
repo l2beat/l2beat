@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { parseSemver } from './semver'
+import { parseSemver } from './semver.js'
 
 describe(parseSemver.name, () => {
   it('should parse a version', () => {

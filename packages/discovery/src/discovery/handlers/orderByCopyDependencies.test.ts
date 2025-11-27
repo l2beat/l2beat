@@ -1,6 +1,6 @@
 import { expect } from 'earl'
-import type { StructureContractField } from '../config/StructureConfig'
-import { orderByCopyDependencies } from './orderByCopyDependencies'
+import type { StructureContractField } from '../config/StructureConfig.js'
+import { orderByCopyDependencies } from './orderByCopyDependencies.js'
 
 // For testing, we'll use a partial type that matches StructureContract['fields']
 type TestFields = Record<string, Partial<StructureContractField>>

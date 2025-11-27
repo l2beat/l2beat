@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { normalizeDiffPath, removeArraySuffix } from './normalizeDiffPath'
+import { normalizeDiffPath, removeArraySuffix } from './normalizeDiffPath.js'
 
 describe(normalizeDiffPath.name, () => {
   it('should remove values. prefix', () => {

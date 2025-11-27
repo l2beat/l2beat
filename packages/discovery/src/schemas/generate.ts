@@ -1,6 +1,6 @@
 import { formatJson } from '@l2beat/shared-pure'
 import { toJsonSchema } from '@l2beat/validate'
-import { ContractConfigSchema, DiscoveryConfigSchema } from './schemas'
+import { ContractConfigSchema, DiscoveryConfigSchema } from './schemas.js'
 
 export interface Schema {
   filepath: string

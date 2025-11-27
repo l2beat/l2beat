@@ -2,9 +2,9 @@ import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { type providers, utils } from 'ethers'
 
-import type { ContractValue } from '../../output/types'
-import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import type { ContractValue } from '../../output/types.js'
+import type { IProvider } from '../../provider/IProvider.js'
+import type { Handler, HandlerResult } from '../Handler.js'
 
 export type AccessControlHandlerDefinition = v.infer<
   typeof AccessControlHandlerDefinition

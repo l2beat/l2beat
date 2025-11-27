@@ -1,6 +1,6 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 
-import type { IProvider } from '../provider/IProvider'
+import type { IProvider } from '../provider/IProvider.js'
 
 export async function getModules(
   provider: IProvider,

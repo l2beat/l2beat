@@ -1,12 +1,12 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
 import { Retries, type UnixTime } from '@l2beat/shared-pure'
-import { EtherscanClient } from './EtherscanClient'
-import { tryParseEtherscanResponse } from './EtherscanModels'
+import { EtherscanClient } from './EtherscanClient.js'
+import { tryParseEtherscanResponse } from './EtherscanModels.js'
 import type {
   EtherscanUnsupportedMethods,
   IEtherscanClient,
-} from './IEtherscanClient'
+} from './IEtherscanClient.js'
 
 class RoutescanError extends Error {}
 

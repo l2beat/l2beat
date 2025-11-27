@@ -1,9 +1,9 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
-import type { BlipSexp } from '../../blip/type'
-import { validateBlip } from '../../blip/validateBlip'
-import { UserHandlerDefinition } from '../handlers/user'
+import type { BlipSexp } from '../../blip/type.js'
+import { validateBlip } from '../../blip/validateBlip.js'
+import { UserHandlerDefinition } from '../handlers/user/index.js'
 
 export type ContractFieldSeverity = v.infer<typeof ContractFieldSeverity>
 export const ContractFieldSeverity = v.enum(['HIGH', 'LOW'])

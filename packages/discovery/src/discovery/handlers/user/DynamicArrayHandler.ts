@@ -2,18 +2,18 @@ import type { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
 
-import { getErrorMessage } from '../../../utils/getErrorMessage'
-import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import { getErrorMessage } from '../../../utils/getErrorMessage.js'
+import type { IProvider } from '../../provider/IProvider.js'
+import type { Handler, HandlerResult } from '../Handler.js'
 import {
   generateReferenceInput,
   getReferencedName,
   type ReferenceInput,
   resolveReference,
-} from '../reference'
-import { SingleSlot } from '../storageCommon'
-import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
-import { valueToBigInt } from '../utils/valueToBigInt'
+} from '../reference.js'
+import { SingleSlot } from '../storageCommon.js'
+import { bytes32ToContractValue } from '../utils/bytes32ToContractValue.js'
+import { valueToBigInt } from '../utils/valueToBigInt.js'
 
 // Solidity differentiates between two different array types:
 //  - static sized arrays   e.g. address[32]

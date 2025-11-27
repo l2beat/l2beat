@@ -4,7 +4,7 @@ import type {
   MulticallConfig,
   MulticallRequest,
   MulticallResponse,
-} from './types'
+} from './types.js'
 
 export interface CallProvider {
   call(

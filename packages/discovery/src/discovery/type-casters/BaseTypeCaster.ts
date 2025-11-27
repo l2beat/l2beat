@@ -1,4 +1,4 @@
-import type { ContractValue } from '../output/types'
+import type { ContractValue } from '../output/types.js'
 
 export type ArgType = { [key: string]: string | number | boolean }
 

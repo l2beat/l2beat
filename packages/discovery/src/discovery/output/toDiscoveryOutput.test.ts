@@ -1,10 +1,13 @@
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import type { AnalyzedContract } from '../analysis/AddressAnalyzer'
-import { EMPTY_ANALYZED_CONTRACT, EMPTY_ANALYZED_EOA } from '../utils/testUtils'
-import { processAnalysis } from './structureOutput'
-import { sortByKeys } from './toDiscoveryOutput'
+import type { AnalyzedContract } from '../analysis/AddressAnalyzer.js'
+import {
+  EMPTY_ANALYZED_CONTRACT,
+  EMPTY_ANALYZED_EOA,
+} from '../utils/testUtils.js'
+import { processAnalysis } from './structureOutput.js'
+import { sortByKeys } from './toDiscoveryOutput.js'
 
 const emptyOutputMeta = {
   type: 'EOA',
