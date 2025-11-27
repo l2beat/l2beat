@@ -1,0 +1,14 @@
+[phases.install]
+# this is for caching install step
+onlyIncludeFiles = [
+  "../../.nvmrc",
+  "../../package.json",
+  "../../pnpm-lock.yaml",
+  "./package.json",
+]
+cmds = ["pnpm install --frozen-lockfile"]
+
+[phases.build]
+cmds = ["pnpm build:dependencies && pnpm build"]
+
+
