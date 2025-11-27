@@ -66,11 +66,7 @@ export function ProjectDataPostedChart({
         project={project}
       />
       <HorizontalSeparator className="my-4" />
-      <ProjectDataPostedChartStats
-        data={data?.stats}
-        isLoading={isLoading}
-        range={timeRange}
-      />
+      <ProjectDataPostedChartStats data={data?.stats} isLoading={isLoading} />
     </div>
   )
 }

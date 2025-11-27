@@ -7,8 +7,6 @@ import { AnomalyIndicator } from '~/pages/scaling/liveness/components/AnomalyInd
 import { DurationCell } from '~/pages/scaling/liveness/components/table/DurationCell'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { cn } from '~/utils/cn'
-import { rangeToLabel } from '~/utils/project/rangeToLabel'
-import type { ChartRange } from '~/utils/range/range'
 
 export function LivenessChartStats({
   stats,
@@ -16,7 +14,6 @@ export function LivenessChartStats({
   hasTrackedContractsChanged,
   isLoading,
   configuredSubtypes,
-  timeRange,
   isArchived,
   bigQueryOutage,
 }: {
@@ -25,7 +22,6 @@ export function LivenessChartStats({
         Record<'stateUpdates' | 'batchSubmissions' | 'proofSubmissions', number>
       >
     | undefined
-  timeRange: ChartRange
   anomalies: LivenessAnomaly[]
   configuredSubtypes: TrackedTxsConfigSubtype[]
   hasTrackedContractsChanged: boolean
@@ -33,33 +29,23 @@ export function LivenessChartStats({
   isArchived: boolean
   bigQueryOutage: boolean
 }) {
-  const timeRangeLabel = rangeToLabel(timeRange).toUpperCase()
   const elements = compact([
     configuredSubtypes.includes('batchSubmissions') && (
-      <ChartStatsItem
-        isLoading={isLoading}
-        label={`${timeRangeLabel} avg. tx data subs. interval`}
-      >
+      <ChartStatsItem isLoading={isLoading} label="Avg. tx data subs. interval">
         {stats?.batchSubmissions && (
           <DurationCell durationInSeconds={stats?.batchSubmissions} />
         )}
       </ChartStatsItem>
     ),
     configuredSubtypes.includes('proofSubmissions') && (
-      <ChartStatsItem
-        isLoading={isLoading}
-        label={`${timeRangeLabel} avg. proof subs. interval`}
-      >
+      <ChartStatsItem isLoading={isLoading} label="Avg. proof subs. interval">
         {stats?.proofSubmissions && (
           <DurationCell durationInSeconds={stats?.proofSubmissions} />
         )}
       </ChartStatsItem>
     ),
     configuredSubtypes.includes('stateUpdates') && (
-      <ChartStatsItem
-        isLoading={isLoading}
-        label={`${timeRangeLabel} avg. state updates interval`}
-      >
+      <ChartStatsItem isLoading={isLoading} label="Avg. state updates interval">
         {stats?.stateUpdates && (
           <DurationCell durationInSeconds={stats?.stateUpdates} />
         )}

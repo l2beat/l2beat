@@ -3,29 +3,20 @@ import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
 import type { ProjectCostsChartResponse } from '~/server/features/scaling/costs/getProjectCostsChart'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
-import { rangeToLabel } from '~/utils/project/rangeToLabel'
-import type { ChartRange } from '~/utils/range/range'
 
 export function ProjectCostsChartStats({
-  range,
   unit,
   isLoading,
   data,
 }: {
-  range: ChartRange
   unit: CostsUnit
   isLoading: boolean
   data: ProjectCostsChartResponse | undefined
 }) {
-  const isMax = range[0] === null
   return (
     <ChartStats className="mt-4 lg:grid-cols-3">
       <ChartStatsItem
-        label={
-          isMax
-            ? `Total ${unitToLabel(unit)}`
-            : `${rangeToLabel(range)} total ${unitToLabel(unit)}`
-        }
+        label={`Total ${unitToLabel(unit)}`}
         className="max-md:h-7"
         tooltip="The total cost for the selected time period that the project paid to Ethereum. This includes the costs for calldata, computation, blobs, and overhead."
         isLoading={isLoading}

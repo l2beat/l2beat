@@ -112,7 +112,6 @@ export function ProjectLivenessChart({
         className="mt-4 mb-3"
       />
       <LivenessChartStats
-        timeRange={timeRange}
         isLoading={isLoading}
         stats={chart?.stats}
         anomalies={anomalies}

@@ -113,12 +113,7 @@ export function ProjectCostsChart({
       />
       <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
       <HorizontalSeparator className="my-4" />
-      <ProjectCostsChartStats
-        data={data}
-        isLoading={isLoading}
-        range={range}
-        unit={unit}
-      />
+      <ProjectCostsChartStats data={data} isLoading={isLoading} unit={unit} />
     </div>
   )
 }

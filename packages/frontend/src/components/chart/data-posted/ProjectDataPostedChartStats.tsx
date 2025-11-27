@@ -1,22 +1,18 @@
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import type { ScalingProjectDaThroughputChart } from '~/server/features/data-availability/throughput/getScalingProjectDaThroughtputChart'
 import { formatBytes } from '~/utils/number-format/formatBytes'
-import { rangeToLabel } from '~/utils/project/rangeToLabel'
-import type { ChartRange } from '~/utils/range/range'
 
 export function ProjectDataPostedChartStats({
-  range,
   isLoading,
   data,
 }: {
-  range: ChartRange
   isLoading: boolean
   data: ScalingProjectDaThroughputChart['stats'] | undefined
 }) {
   return (
     <ChartStats className="lg:grid-cols-3">
       <ChartStatsItem
-        label={`${rangeToLabel(range)} data posted`}
+        label="Data posted"
         tooltip="The total amount of data posted to project's respective Data Availability (DA) layer(s)."
         isLoading={isLoading}
         className="max-md:h-7"
