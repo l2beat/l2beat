@@ -25,12 +25,20 @@ export function toRow(record: TvsPriceRecord): Insertable<TvsPrice> {
 }
 
 export class TvsPriceRepository extends BaseRepository {
-  async insertMany(records: TvsPriceRecord[]): Promise<number> {
+  async upsertMany(records: TvsPriceRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
-      await this.db.insertInto('TvsPrice').values(batch).execute()
+      await this.db
+        .insertInto('TvsPrice')
+        .values(batch)
+        .onConflict((oc) =>
+          oc.columns(['timestamp', 'configurationId']).doUpdateSet((eb) => ({
+            priceUsd: eb.ref('excluded.priceUsd'),
+          })),
+        )
+        .execute()
     })
     return rows.length
   }
