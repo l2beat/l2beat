@@ -443,6 +443,14 @@
       {
         "chain": "arbitrum",
         "tx": "0xeaa266992432ee2f8981194320b1b1e4a034282e25c90c4711f8d239c3bbda0b"
+      },
+      {
+        "chain": "base",
+        "tx": "0x9d0a10d0575c16706ffe8bcf07b21f16e9ec2edd4b9eb521b216db3a0a4299de"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x9ebb98c036a2f0e71cdee320725ce19c310c4095af99e503d08f29db66cc1366"
       }
     ]
   },

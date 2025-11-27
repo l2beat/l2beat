@@ -90,11 +90,21 @@ export class SquidCoralPlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     const logOrderCreated = parseOrderCreated(input.log, null)
     if (logOrderCreated) {
+      const fromToken =
+        Address32.from(logOrderCreated.order.fromToken) ===
+        Address32.from('0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE')
+          ? Address32.NATIVE
+          : Address32.from(logOrderCreated.order.fromToken)
+      const toToken =
+        Address32.from(logOrderCreated.order.toToken) ===
+        Address32.from('0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE')
+          ? Address32.NATIVE
+          : Address32.from(logOrderCreated.order.toToken)
       return [
         LogOrderCreated.create(input, {
           orderHash: logOrderCreated.orderHash,
-          fromToken: Address32.from(logOrderCreated.order.fromToken),
-          toToken: Address32.from(logOrderCreated.order.toToken),
+          fromToken,
+          toToken,
           fromAmount: logOrderCreated.order.fromAmount,
           fillAmount: logOrderCreated.order.fillAmount,
           $dstChain: findChain(
@@ -108,11 +118,21 @@ export class SquidCoralPlugin implements InteropPlugin {
 
     const logOrderFilled = parseOrderFilled(input.log, null)
     if (logOrderFilled) {
+      const fromToken =
+        Address32.from(logOrderFilled.order.fromToken) ===
+        Address32.from('0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE')
+          ? Address32.NATIVE
+          : Address32.from(logOrderFilled.order.fromToken)
+      const toToken =
+        Address32.from(logOrderFilled.order.toToken) ===
+        Address32.from('0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE')
+          ? Address32.NATIVE
+          : Address32.from(logOrderFilled.order.toToken)
       return [
         LogOrderFilled.create(input, {
           orderHash: logOrderFilled.orderHash,
-          fromToken: Address32.from(logOrderFilled.order.fromToken),
-          toToken: Address32.from(logOrderFilled.order.toToken),
+          fromToken,
+          toToken,
           fromAmount: logOrderFilled.order.fromAmount,
           fillAmount: logOrderFilled.order.fillAmount,
           $srcChain: findChain(
