@@ -18,13 +18,12 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/getCommo
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
-import type { CostsResolution } from '~/server/features/scaling/costs/utils/range'
 import { rangeToResolution } from '~/server/features/scaling/costs/utils/range'
 import { formatRange } from '~/utils/dates'
 import { formatBytes } from '~/utils/number-format/formatBytes'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatNumber } from '~/utils/number-format/formatNumber'
-import type { ChartRange } from '~/utils/range/range'
+import type { ChartRange, ChartResolution } from '~/utils/range/range'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from '../../../server/features/data-availability/throughput/utils/consts'
 
 interface CostsChartDataPoint {
@@ -307,7 +306,7 @@ function CustomTooltip({
   chartMeta,
 }: TooltipProps<number, string> & {
   unit: CostsUnit
-  resolution: CostsResolution
+  resolution: ChartResolution
   chartMeta: ChartMeta
 }) {
   if (!active || !payload || typeof label !== 'number') return null

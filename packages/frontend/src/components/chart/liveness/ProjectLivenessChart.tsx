@@ -7,7 +7,7 @@ import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromCo
 import { LivenessChartSubtypeControls } from '~/pages/scaling/liveness/components/LivenessChartSubtypeControls'
 import { LivenessChartTimeRangeControls } from '~/pages/scaling/liveness/components/LivenessChartTimeRangeControls'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
-import { rangeToResolution } from '~/server/features/scaling/liveness/utils/chartRange'
+import { rangeToResolution } from '~/server/features/scaling/liveness/utils/range'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import type { ChartRange } from '~/utils/range/range'

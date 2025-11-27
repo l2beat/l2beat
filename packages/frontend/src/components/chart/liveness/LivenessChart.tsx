@@ -28,7 +28,7 @@ import {
 } from '~/components/core/chart/defs/PinkGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import type { LivenessChartResolution } from '~/server/features/scaling/liveness/utils/chartRange'
+import type { LivenessChartResolution } from '~/server/features/scaling/liveness/utils/range'
 import { formatRange } from '~/utils/dates'
 
 interface LivenessChartDataPoint {
