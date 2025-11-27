@@ -24,16 +24,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '../Popover'
 import { Skeleton } from '../Skeleton'
 import { VerticalSeparator } from '../VerticalSeparator'
 
-interface Props {
-  name: string
-  value: ChartRange
-  setValue: (range: ChartRange) => void
-  options: { value: ChartRangeOption; disabled?: boolean; label: string }[]
-  projectSection?: boolean
-  offset?: UnixTime
-}
-
-export type ChartRangeOption =
+export type ChartRangeOptionValue =
   | '1d'
   | '7d'
   | '30d'
@@ -41,6 +32,20 @@ export type ChartRangeOption =
   | '180d'
   | '1y'
   | 'max'
+interface ChartRangeOption {
+  value: ChartRangeOptionValue
+  disabled?: boolean
+  label: string
+}
+
+interface Props {
+  name: string
+  value: ChartRange
+  setValue: (range: ChartRange) => void
+  options: ChartRangeOption[]
+  projectSection?: boolean
+  offset?: UnixTime
+}
 
 export function ChartTimeRangeControls({
   name,
@@ -55,7 +60,6 @@ export function ChartTimeRangeControls({
     to: UnixTime.toDate(value[1]),
   })
 
-  const [month, setMonth] = useState<Date>(UnixTime.toDate(value[1]))
   const isClient = useIsClient()
   const breakpoint = useBreakpoint()
   const showSelect = breakpoint === 'xs' || breakpoint === 'sm'
@@ -82,29 +86,6 @@ export function ChartTimeRangeControls({
     }
   }
 
-  const CalendarComponent = ({ className }: { className?: string }) => (
-    <>
-      <Calendar
-        mode="range"
-        month={month}
-        onMonthChange={setMonth}
-        // 2020-01-01
-        startMonth={UnixTime.toDate(1577836800)}
-        endMonth={UnixTime.toDate(UnixTime.toStartOf(UnixTime.now(), 'day'))}
-        selected={internalValue}
-        min={1}
-        timeZone="UTC"
-        disabled={(date) =>
-          date.getTime() >
-          UnixTime.toStartOf(UnixTime.now() + offset, 'day') * 1000
-        }
-        onSelect={onDateRangeChange}
-        captionLayout="dropdown"
-        className={cn('rounded-lg pb-3', className)}
-      />
-    </>
-  )
-
   if (showSelect) {
     return (
       <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
@@ -115,7 +96,7 @@ export function ChartTimeRangeControls({
           )}
         >
           {selectedOption === 'custom' ? (
-            <CalendarIcon className="size-4 shrink-0" />
+            <CalendarIcon className="size-5 shrink-0" />
           ) : (
             options.find((option) => option.value === selectedOption)?.label
           )}
@@ -124,48 +105,30 @@ export function ChartTimeRangeControls({
         <DrawerHeader className="sr-only">
           <DrawerTitle className="sr-only">Select time range</DrawerTitle>
         </DrawerHeader>
-        <DrawerContent>
+        <DrawerContent className="primary-card">
           <p className="mb-2 font-medium text-label-value-12 text-secondary">
             Predefined
           </p>
-          <div
-            className={cn(
-              'group/radio-group inline-flex h-8 w-max items-center gap-1 rounded-lg p-1 font-medium',
-              'bg-surface-secondary',
-            )}
-            // name={name}
-          >
-            {options.map((option) => (
-              <button
-                key={option.value}
-                onClick={() => {
-                  const range = optionToRange(option.value, { offset })
-                  setValue(range)
-                  setInternalValue({
-                    from: UnixTime.toDate(range[0] ?? 0),
-                    to: UnixTime.toDate(range[1]),
-                  })
-                  setDrawerOpen(false)
-                }}
-                type="button"
-                disabled={option.disabled}
-                data-state={
-                  selectedOption === option.value ? 'checked' : 'unchecked'
-                }
-                className={cn(
-                  'h-full rounded-md px-2 text-xs disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 focus-visible:ring-offset-transparent',
-                  'data-[state=checked]:bg-pure-white dark:primary-card:data-[state=checked]:bg-black',
-                )}
-              >
-                {option.label}
-              </button>
-            ))}
-          </div>
+          <PredefinedOptions
+            options={options}
+            offset={offset}
+            setValue={(range) => {
+              setValue(range)
+              setDrawerOpen(false)
+            }}
+            setInternalValue={setInternalValue}
+            selectedOption={selectedOption}
+          />
           <p className="mt-4 font-medium text-label-value-12 text-secondary">
             Custom
           </p>
-          <CalendarComponent className="mx-auto h-[286px]" />
+          <CalendarComponent
+            className="mx-auto h-[286px]"
+            value={value}
+            internalValue={internalValue}
+            offset={offset}
+            onDateRangeChange={onDateRangeChange}
+          />
         </DrawerContent>
       </Drawer>
     )
@@ -173,38 +136,13 @@ export function ChartTimeRangeControls({
 
   return (
     <Popover>
-      <div
-        className={cn(
-          'group/radio-group inline-flex h-8 w-max items-center gap-1 rounded-lg p-1 font-medium',
-          'bg-surface-primary primary-card:bg-surface-secondary',
-        )}
-        // name={name}
+      <PredefinedOptions
+        options={options}
+        offset={offset}
+        setValue={setValue}
+        setInternalValue={setInternalValue}
+        selectedOption={selectedOption}
       >
-        {options.map((option) => (
-          <button
-            key={option.value}
-            onClick={() => {
-              const range = optionToRange(option.value, { offset })
-              setValue(range)
-              setInternalValue({
-                from: UnixTime.toDate(range[0] ?? 0),
-                to: UnixTime.toDate(range[1]),
-              })
-            }}
-            type="button"
-            disabled={option.disabled}
-            data-state={
-              selectedOption === option.value ? 'checked' : 'unchecked'
-            }
-            className={cn(
-              'h-full rounded-md px-2 text-xs disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 focus-visible:ring-offset-transparent',
-              'data-[state=checked]:bg-surface-tertiary primary-card:data-[state=checked]:bg-pure-white dark:primary-card:data-[state=checked]:bg-black',
-            )}
-          >
-            {option.label}
-          </button>
-        ))}
         <VerticalSeparator />
         <PopoverTrigger
           data-state={selectedOption === 'custom' ? 'checked' : 'unchecked'}
@@ -218,13 +156,105 @@ export function ChartTimeRangeControls({
             'data-[state=checked]:bg-surface-tertiary primary-card:data-[state=checked]:bg-pure-white dark:primary-card:data-[state=checked]:bg-black',
           )}
         >
-          <CalendarIcon className="size-4 shrink-0" />
+          <CalendarIcon className="size-5 shrink-0" />
         </PopoverTrigger>
-      </div>
-
+      </PredefinedOptions>
       <PopoverContent className="!p-0 !bg-surface-primary">
-        <CalendarComponent />
+        <CalendarComponent
+          value={value}
+          internalValue={internalValue}
+          offset={offset}
+          onDateRangeChange={onDateRangeChange}
+        />
       </PopoverContent>
     </Popover>
+  )
+}
+
+function PredefinedOptions({
+  options,
+  offset,
+  setValue,
+  setInternalValue,
+  selectedOption,
+  children,
+}: {
+  options: ChartRangeOption[]
+  offset: UnixTime
+  setValue: (range: ChartRange) => void
+  setInternalValue: (dateRange: DateRange | undefined) => void
+  selectedOption: ChartRangeOptionValue | 'custom'
+  children?: React.ReactNode
+}) {
+  return (
+    <div
+      className={cn(
+        'group/radio-group inline-flex h-8 w-max items-center gap-1 rounded-lg p-1 font-medium',
+        'bg-surface-primary primary-card:bg-surface-secondary',
+      )}
+      // name={name}
+    >
+      {options.map((option) => (
+        <button
+          key={option.value}
+          onClick={() => {
+            const range = optionToRange(option.value, { offset })
+            setValue(range)
+            setInternalValue({
+              from: UnixTime.toDate(range[0] ?? 0),
+              to: UnixTime.toDate(range[1]),
+            })
+          }}
+          type="button"
+          disabled={option.disabled}
+          data-state={selectedOption === option.value ? 'checked' : 'unchecked'}
+          className={cn(
+            'h-full rounded-md px-2 text-xs disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 focus-visible:ring-offset-transparent',
+            'data-[state=checked]:bg-surface-tertiary primary-card:data-[state=checked]:bg-pure-white dark:primary-card:data-[state=checked]:bg-black',
+          )}
+        >
+          {option.label}
+        </button>
+      ))}
+      {children}
+    </div>
+  )
+}
+
+function CalendarComponent({
+  className,
+  value,
+  internalValue,
+  offset,
+  onDateRangeChange,
+}: {
+  className?: string
+  value: ChartRange
+  internalValue: DateRange | undefined
+  offset: UnixTime
+  onDateRangeChange: (dateRange: DateRange | undefined) => void
+}) {
+  const [month, setMonth] = useState<Date>(UnixTime.toDate(value[1]))
+
+  return (
+    <Calendar
+      mode="range"
+      month={month}
+      onMonthChange={setMonth}
+      // 2020-01-01
+      startMonth={UnixTime.toDate(1577836800)}
+      endMonth={UnixTime.toDate(UnixTime.toStartOf(UnixTime.now(), 'day'))}
+      selected={internalValue}
+      min={1}
+      timeZone="UTC"
+      disabled={(date) =>
+        date.getTime() >
+        UnixTime.toStartOf(UnixTime.now() + offset, 'day') * 1000
+      }
+      onSelect={onDateRangeChange}
+      captionLayout="dropdown"
+      className={cn('rounded-lg pb-3', className)}
+    />
   )
 }
