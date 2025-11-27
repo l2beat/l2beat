@@ -54,7 +54,7 @@ export const celestia: BaseProject = {
 
       ![Blobs](/images/da-layer-technology/celestia/blobs.png#center)
 
-      All data posted in a Celestia blob is divided into chunks of fixed size, called shares, and each blob is arranged in a k * k matrix of shares. Currently k = 64, for a total of 4096 shares.\n
+      All data posted in a Celestia blob is divided into chunks of fixed size, called shares, and each blob is arranged in a k * k matrix of shares. The maximum square size is 512 (k = 256), for a total of 65536 shares.\n
 
       ![Blobs matrix](/images/da-layer-technology/celestia/blobs-matrix.png#center)
 
@@ -126,10 +126,11 @@ export const celestia: BaseProject = {
     },
     /*
       Node params sources:
-      - unbondingPeriod, finality (time_iota_ms): https://celestiaorg.github.io/celestia-app/specs/params.html
-      - pruningWindow: https://github.com/celestiaorg/CIPs/blob/main/cips/cip-004.md
+      - unbondingPeriod: CIP-37 https://cips.celestia.org/cip-037.html
+      - pruningWindow: CIP-36 https://cips.celestia.org/cip-036.html
+      - finality (time_iota_ms): https://celestiaorg.github.io/celestia-app/specs/params.html
       - block time: https://github.com/celestiaorg/celestia-app/blob/main/pkg/appconsts/consensus_consts.go
-      - max block size: (DefaultMaxBytes) https://github.com/celestiaorg/celestia-app/blob/main/pkg/appconsts/initial_consts.go
+      - max block size: CIP-38 https://cips.celestia.org/cip-038.html
     */
     consensusAlgorithm: {
       name: 'CometBFT',
@@ -138,13 +139,13 @@ export const celestia: BaseProject = {
       The consensus protocol is fork-free by construction under an honest majority of stake assumption.`,
       blockTime: 15, // goal block time, seconds
       consensusFinality: 1, // 1 second for tendermint, time_iota_ms
-      unbondingPeriod: UnixTime.DAY * 21, // staking.UnbondingTime
+      unbondingPeriod: UnixTime.DAY * 14 + UnixTime.HOUR, // ~14 days (CIP-37)
     },
     dataAvailabilitySampling: {
       erasureCodingScheme: '2D Reed-Solomon',
       erasureCodingProof: 'Fraud proofs',
     },
-    pruningWindow: 86400 * 30, // 30 days in seconds
+    pruningWindow: 86400 * 7 + 3600, // 7 days + 1 hour in seconds (CIP-36)
     throughput: [
       {
         size: 8388608, // 8 MiB
@@ -473,6 +474,14 @@ export const celestia: BaseProject = {
       date: '2025-01-28T00:00:00Z',
       description:
         'Celestia onchain governance votes to increase the block size from 2MB to 8MB.',
+      type: 'general',
+    },
+    {
+      title: 'Matcha upgrade',
+      url: 'https://blog.celestia.org/matcha/',
+      date: '2025-11-24T00:00:00Z',
+      description:
+        'Matcha upgrade enables 128MB blocks, reduces unbonding period to 14 days, and introduces high-throughput block propagation.',
       type: 'general',
     },
   ],
