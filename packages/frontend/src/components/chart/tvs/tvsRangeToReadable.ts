@@ -10,9 +10,9 @@ export function tvsRangeToReadable(range: ChartRange) {
   if (days === null) {
     return 'All time'
   }
-  if (days < 365) {
+  if (days < 365 || days % 365 !== 0) {
     return `${days} ${pluralize(days, 'day')}`
   }
-  const years = Math.round(days / 365)
+  const years = days / 365
   return `${years} ${pluralize(years, 'year')}`
 }
