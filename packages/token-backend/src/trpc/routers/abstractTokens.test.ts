@@ -246,6 +246,7 @@ describe('abstractTokensRouter', () => {
     it('returns coin data with listing timestamp', async () => {
       const coin = {
         id: 'bitcoin',
+        symbol: 'BTC',
         image: {
           large: 'https://example.com/bitcoin.png',
         },
@@ -304,6 +305,7 @@ describe('abstractTokensRouter', () => {
     it('returns coin data without listing timestamp when market chart fails', async () => {
       const coin = {
         id: 'bitcoin',
+        symbol: 'BTC',
         image: {
           large: 'https://example.com/bitcoin.png',
         },
