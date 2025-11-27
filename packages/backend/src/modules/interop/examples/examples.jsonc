@@ -162,6 +162,7 @@
     "messages": ["hyperlane.Message"]
   },
   "mayan-swift": {
+    "loadConfigs": ["wormhole"],
     "txs": [
       {
         "chain": "optimism",
@@ -170,6 +171,14 @@
       {
         "chain": "base",
         "tx": "0x71be50f2e73096510601186b1b69f2fc5da7ce1bb636e176297262b08c833ebf"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x5d69296b264cfbd2cc3443673c08d4c84798f37209b5b0f3618aae9a336c315f"
+      },
+      {
+        "chain": "base",
+        "tx": "0xd64ae2bb720ad35a5bcfcf40b4c138402f1ba32cb45f590ee32814cf55e8b05a"
       }
     ]
   },

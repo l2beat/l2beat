@@ -280,7 +280,7 @@ function decodeProtocolData(
       res.args[0].destChainId,
     )
     decoded.tokenIn = Address32.NATIVE
-    decoded.tokenOut = Address32.from(res.args[0].tokenOut)
+    decoded.tokenOut = Address32.from(res.args[0].tokenOut) === Address32.ZERO ? Address32.NATIVE : Address32.from(res.args[0].tokenOut)
     decoded.minAmountOut = res.args[0].minAmountOut
   } else if (res.functionName === 'createOrder') {
     if (res.args.length === 1) {

@@ -7,6 +7,7 @@ However on the destination there's only OrderFulfilled event with the order hash
 we would need to extract it from calldata (trace) - currently we don't do that.
 */
 
+import { Address32 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { logToProtocolData, MayanForwarded } from './mayan-forwarder'
 import {
@@ -30,10 +31,14 @@ const parseOrderFulfilled = createEventParser(
 export const OrderCreated = createInteropEventType<{
   key: string
   $dstChain: string
+  minAmountOut?: bigint,
+  srcTokenAddress?: Address32,
+  dstTokenAddress?: Address32,
 }>('mayan-swift.OrderCreated')
 
 export const OrderFulfilled = createInteropEventType<{
   key: string
+  dstAmount: bigint,
 }>('mayan-swift.OrderFulfilled')
 
 export class MayanSwiftPlugin implements InteropPlugin {
@@ -47,9 +52,12 @@ export class MayanSwiftPlugin implements InteropPlugin {
 
     const orderFulfilled = parseOrderFulfilled(input.log, null)
     if (orderFulfilled) {
+
+
       return [
         OrderFulfilled.create(input, {
           key: orderFulfilled.key,
+          dstAmount: orderFulfilled.netAmount,
         }),
       ]
     }
@@ -62,11 +70,16 @@ export class MayanSwiftPlugin implements InteropPlugin {
         (x) => x.logIndex === input.log.logIndex! + 1,
       )
       const parsed = nextLog && logToProtocolData(nextLog, wormholeNetworks)
+      console.log('MayanSwiftPlugin: parsed protocol data', parsed)
       const dstChain = parsed?.dstChain ?? 'unknown_missing_protocolData'
       return [
         OrderCreated.create(input, {
           key: orderCreated.key,
           $dstChain: dstChain,
+          // srcAmount is not in the parsed data
+          minAmountOut: parsed?.minAmountOut,
+          srcTokenAddress: parsed?.tokenIn,
+          dstTokenAddress: parsed?.tokenOut
         }),
       ]
     }
@@ -97,7 +110,11 @@ export class MayanSwiftPlugin implements InteropPlugin {
       // TODO: tokens
       Result.Transfer('mayan-swift.Transfer', {
         srcEvent: orderCreated,
+        srcAmount: orderCreated.args.minAmountOut,
+        srcTokenAddress: orderCreated.args.srcTokenAddress,
         dstEvent: orderFulfilled,
+        dstAmount: orderFulfilled.args.dstAmount,
+        dstTokenAddress: orderCreated.args.dstTokenAddress,
         extraEvents: [mayanForwarded],
       }),
     ]
