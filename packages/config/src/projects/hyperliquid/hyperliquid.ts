@@ -30,7 +30,7 @@ const lockerThreshold = discovery.getContractValue<number>(
   'lockerThreshold',
 )
 
-const lockerSetSize = discovery.getContractValue<EthereumAddress[]>(
+const lockerSetSize = discovery.getContractValue<ChainSpecificAddress[]>(
   'HyperliquidBridge',
   'lockers',
 ).length
