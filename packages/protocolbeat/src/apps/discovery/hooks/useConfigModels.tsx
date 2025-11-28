@@ -73,7 +73,6 @@ function _useConfigModels() {
     selectedAddress: selectedAddress ?? '',
   })
   const templateModel = useTemplateModel({
-    project,
     templateId,
     files: {
       template: templateFiles?.template ?? '{}',

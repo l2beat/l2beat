@@ -1,4 +1,8 @@
-import type { ConfigReader, ConfigWriter } from '@l2beat/discovery'
+import type {
+  ConfigReader,
+  ConfigWriter,
+  TemplateService,
+} from '@l2beat/discovery'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v as z } from '@l2beat/validate'
 import type { Express } from 'express'
@@ -24,6 +28,7 @@ export function attachConfigRouter(
   app: Express,
   configReader: ConfigReader,
   configWriter: ConfigWriter,
+  templateService: TemplateService,
 ) {
   app.put('/api/config-files/:project', (req, res) => {
     const query = projectParamsSchema.safeParse(req.params)
@@ -40,6 +45,7 @@ export function attachConfigRouter(
     }
 
     configWriter.updateRawConfigFile(query.data.project, data.data.content)
+    templateService.reload()
 
     res.json({ success: true })
   })
