@@ -305,6 +305,15 @@ function deployedToken(
     decimals: overrides.decimals ?? 18,
     deploymentTimestamp: 0,
     comment: overrides.comment ?? null,
+    metadata: overrides.metadata ?? {
+      tvs: {
+        includeInCalculations: true,
+        source: 'external',
+        supply: 'circulatingSupply',
+        bridgedUsing: [],
+        excludeFromTotal: false,
+      },
+    },
   }
 }
 

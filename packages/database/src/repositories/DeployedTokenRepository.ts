@@ -7,6 +7,7 @@ import {
   type AbstractTokenRecord,
   toAbstractTokenRecord,
 } from './AbstractTokenRepository'
+import type { TokenSource } from './TokenMetadataRepository'
 
 export type DeployedTokenRecord = {
   symbol: string
@@ -16,6 +17,19 @@ export type DeployedTokenRecord = {
   abstractTokenId: string | null
   decimals: number
   deploymentTimestamp: UnixTime
+  metadata: DeployedTokenMetadata | null
+}
+
+export type DeployedTokenMetadata = {
+  tvs?: TvsMetadata
+}
+
+type TvsMetadata = {
+  includeInCalculations: boolean
+  source: TokenSource
+  supply?: 'totalSupply' | 'circulatingSupply' | 'zero'
+  bridgedUsing: { name: string; slug?: string }[]
+  excludeFromTotal: boolean
 }
 
 export type DeployedTokenPrimaryKey = Pick<
@@ -31,6 +45,7 @@ export type DeployedTokenUpdateable = Omit<
 function toRecord(row: Selectable<DeployedToken>): DeployedTokenRecord {
   return {
     ...row,
+    metadata: row.metadata as DeployedTokenMetadata,
     deploymentTimestamp: UnixTime.fromDate(row.deploymentTimestamp),
   }
 }
@@ -122,6 +137,7 @@ export class DeployedTokenRepository extends BaseRepository {
         abstractTokenId: row.abstractTokenId,
         decimals: row.decimals,
         deploymentTimestamp: row.deploymentTimestamp,
+        metadata: row.metadata as DeployedTokenMetadata,
       }),
       abstractToken:
         row.AbstractToken_id === null ||
