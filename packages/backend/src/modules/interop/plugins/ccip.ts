@@ -132,8 +132,6 @@ export class CCIPPlugIn implements InteropPlugin {
 
     const ccipSendRequested = parseCCIPSendRequested(input.log, null)
     if (ccipSendRequested) {
-      console.log('CCIPSendRequested ', ccipSendRequested)
-      console.log('token amounts', ccipSendRequested.message.tokenAmounts)
       const outboundLane = EthereumAddress(input.log.address)
       return ccipSendRequested.message.tokenAmounts.map((ta) =>
         CCIPSendRequested.create(input, {
