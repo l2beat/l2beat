@@ -279,26 +279,6 @@ model TokenMetadata {
   @@index([projectId])
 }
 
-model ProjectValue {
-  timestamp     DateTime @db.Timestamp(6)
-  project       String   @db.VarChar(255)
-  type          String   @db.VarChar(255)
-  value         Float    @db.Real
-  canonical     Float    @db.Real
-  external      Float    @db.Real
-  native        Float    @db.Real
-  ether         Float    @db.Real
-  stablecoin    Float    @db.Real
-  other         Float    @db.Real
-  associated    Float    @db.Real
-  btc           Float    @default(0) @db.Real
-  rwaRestricted Float    @default(0) @db.Real
-  rwaPublic     Float    @default(0) @db.Real
-
-  @@id([timestamp, project, type])
-  @@index([type, project, timestamp])
-}
-
 model UpdateDiff {
   projectId         String   @db.VarChar(255)
   address           String   @db.VarChar(255)
