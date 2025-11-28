@@ -83,6 +83,7 @@ export const dataSourceToLabel: Record<DataSource, string> = {
 }
 
 const TvsMetadata = v.object({
+  includeInCalculations: v.boolean(),
   source: v.enum(['canonical', 'external', 'native']),
   supply: v.enum(['totalSupply', 'circulatingSupply', 'zero']).optional(),
   excludeFromTotal: v.boolean(),
@@ -573,6 +574,7 @@ export function DeployedTokenForm({
                 form.setValue(
                   'metadata.tvs',
                   {
+                    includeInCalculations: true,
                     source: 'canonical',
                     supply: undefined,
                     excludeFromTotal: false,
@@ -617,6 +619,26 @@ function TvsMetadataFields({
   })
   return (
     <>
+      <FormField
+        control={form.control}
+        name="metadata.tvs.includeInCalculations"
+        render={({ field }) => (
+          <FormItem className="flex flex-row items-center gap-2 space-y-0">
+            <FormControl>
+              <Checkbox
+                checked={field.value ?? false}
+                onCheckedChange={(checked) => {
+                  field.onChange(checked === true)
+                }}
+              />
+            </FormControl>
+            <FormLabel className="font-normal text-sm">
+              Include in calculations
+            </FormLabel>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
       <FormField
         control={form.control}
         name="metadata.tvs.source"
