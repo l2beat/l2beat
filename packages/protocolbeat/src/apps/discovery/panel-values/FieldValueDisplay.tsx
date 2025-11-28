@@ -3,6 +3,8 @@ import type { ReactNode } from 'react'
 import type { FieldValue } from '../../../api/types'
 import { AddressDisplay } from './AddressDisplay'
 
+const EM_DASH = '—'
+
 export interface FieldValueDisplayProps {
   name?: FieldValue
   topLevel?: boolean
@@ -100,6 +102,8 @@ export function FieldValueDisplay({
     inlineDisplay = value.value
   } else if (value.type === 'error') {
     inlineDisplay = `Error: ${value.error}`
+  } else if (value.type === 'empty') {
+    inlineDisplay = <span className="text-coffee-600">{EM_DASH}</span>
   }
 
   if (topLevel) {
