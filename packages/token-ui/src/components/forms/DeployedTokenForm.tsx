@@ -6,8 +6,10 @@ import {
   ChevronsUpDownIcon,
   PlusIcon,
   SettingsIcon,
+  XIcon,
 } from 'lucide-react'
 import type { SubmitHandler, UseFormReturn } from 'react-hook-form'
+import { useFieldArray } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { Button, buttonVariants } from '~/components/core/Button'
@@ -45,6 +47,16 @@ import type {
   ChainRecord,
 } from '../../../../database/dist/repositories/ChainRepository'
 import { AutoFillIndicator } from '../AutoFillIndicator'
+import { Card, CardContent } from '../core/Card'
+import { Checkbox } from '../core/Checkbox'
+import { Label } from '../core/Label'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../core/Select'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../core/Tooltip'
 import { ExplorerLinkButton } from '../ExplorerLink'
 
@@ -69,6 +81,22 @@ export const dataSourceToLabel: Record<DataSource, string> = {
   routescan: 'Routescan',
 }
 
+const TvsMetadata = v.object({
+  source: v.enum(['canonical', 'external', 'native']),
+  supply: v.enum(['totalSupply', 'circulatingSupply', 'zero']).optional(),
+  excludeFromTotal: v.boolean(),
+  bridgedUsing: v.array(
+    v.object({
+      name: v.string(),
+      slug: v.string().optional(),
+    }),
+  ),
+})
+
+const Metadata = v.object({
+  tvs: TvsMetadata.optional(),
+})
+
 export type DeployedTokenSchema = v.infer<typeof DeployedTokenSchema>
 export const DeployedTokenSchema = v.object({
   chain: v.string(),
@@ -78,6 +106,7 @@ export const DeployedTokenSchema = v.object({
   abstractTokenId: v.string().optional(),
   deploymentTimestamp: v.string(),
   comment: v.string().optional(),
+  metadata: Metadata.optional(),
 })
 
 interface Props {
@@ -125,6 +154,8 @@ export function DeployedTokenForm({
 
   const success =
     tokenDetails.data && tokenDetails.data?.error?.type !== 'already-exists'
+
+  const metadata = form.watch('metadata')
 
   return (
     <Form {...form}>
@@ -271,7 +302,6 @@ export function DeployedTokenForm({
               }}
             />
           </div>
-
           <FormField
             control={form.control}
             name="symbol"
@@ -331,7 +361,6 @@ export function DeployedTokenForm({
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="deploymentTimestamp"
@@ -513,6 +542,48 @@ export function DeployedTokenForm({
               </FormItem>
             )}
           />
+          {metadata?.tvs && (
+            <div className="grid gap-2">
+              <Label>TVS</Label>
+              <Card className="relative overflow-hidden">
+                <button
+                  type="button"
+                  className="absolute top-0 right-0 flex size-8 items-center justify-center rounded-bl-xl border-divider border-b border-l hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50"
+                  onClick={() => {
+                    form.setValue('metadata.tvs', undefined, {
+                      shouldDirty: true,
+                    })
+                  }}
+                >
+                  <XIcon className="size-4" />
+                </button>
+                <CardContent className="space-y-8">
+                  <TvsMetadataFields form={form} />
+                </CardContent>
+              </Card>
+            </div>
+          )}
+          {!metadata?.tvs && (
+            <Button
+              variant="outline"
+              type="button"
+              onClick={() => {
+                form.setValue(
+                  'metadata.tvs',
+                  {
+                    source: 'canonical',
+                    supply: undefined,
+                    excludeFromTotal: false,
+                    bridgedUsing: [],
+                  },
+                  { shouldDirty: true },
+                )
+              }}
+            >
+              <PlusIcon />
+              TVS
+            </Button>
+          )}
           {children}
         </fieldset>
       </form>
@@ -527,4 +598,159 @@ export function setDeployedTokenExistsError(
     type: 'custom',
     message: 'Deployed token with given address and chain already exists',
   })
+}
+
+function TvsMetadataFields({
+  form,
+}: {
+  form: UseFormReturn<DeployedTokenSchema>
+}) {
+  const {
+    fields: bridgedUsingFields,
+    append: appendBridgedUsing,
+    remove: removeBridgedUsing,
+  } = useFieldArray({
+    control: form.control,
+    name: 'metadata.tvs.bridgedUsing',
+  })
+  return (
+    <>
+      <FormField
+        control={form.control}
+        name="metadata.tvs.source"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Source</FormLabel>
+            <Select onValueChange={field.onChange} value={field.value}>
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select source" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                <SelectItem value="canonical">canonical</SelectItem>
+                <SelectItem value="external">external</SelectItem>
+                <SelectItem value="native">native</SelectItem>
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="metadata.tvs.supply"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Supply</FormLabel>
+            <Select
+              onValueChange={(value) => {
+                field.onChange(value === '' ? undefined : value)
+              }}
+              value={field.value ?? ''}
+            >
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select supply" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                <SelectItem value="totalSupply">totalSupply</SelectItem>
+                <SelectItem value="circulatingSupply">
+                  circulatingSupply
+                </SelectItem>
+                <SelectItem value="zero">zero</SelectItem>
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="metadata.tvs.excludeFromTotal"
+        render={({ field }) => (
+          <FormItem className="flex flex-row items-center gap-2 space-y-0">
+            <FormControl>
+              <Checkbox
+                checked={field.value ?? false}
+                onCheckedChange={(checked) => {
+                  field.onChange(checked === true)
+                }}
+              />
+            </FormControl>
+            <FormLabel className="font-normal text-sm">
+              Exclude from total
+            </FormLabel>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <FormLabel>Bridged Using</FormLabel>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() =>
+              appendBridgedUsing({
+                name: '',
+                slug: undefined,
+              })
+            }
+          >
+            <PlusIcon className="size-4" />
+          </Button>
+        </div>
+        {bridgedUsingFields.map((field, index) => (
+          <Card key={field.id} className="relative overflow-hidden">
+            <button
+              type="button"
+              className="absolute top-0 right-0 flex size-8 items-center justify-center rounded-bl-xl border-divider border-b border-l hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50"
+              onClick={() => removeBridgedUsing(index)}
+            >
+              <XIcon className="size-4" />
+            </button>
+            <CardContent className="space-y-4">
+              <FormField
+                control={form.control}
+                name={`metadata.tvs.bridgedUsing.${index}.name`}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="Bridge name" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name={`metadata.tvs.bridgedUsing.${index}.slug`}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Slug (optional)</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Bridge slug"
+                        value={field.value ?? ''}
+                        onChange={(e) => {
+                          const value = e.target.value
+                          field.onChange(value === '' ? undefined : value)
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </>
+  )
 }
