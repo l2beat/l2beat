@@ -8,7 +8,7 @@ Generated with discovered.json: 0x6c9a3cc053892e83e4cfdb7492b7ec99a36cebfd
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+EOA delegated to Calibur 7702 wallet.
 
 ## Watched changes
 
