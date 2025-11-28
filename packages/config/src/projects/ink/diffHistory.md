@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x45c9c2d8b732598b60397d8796c41f092a2f31e3
+Generated with discovered.json: 0x2a24e946cf2009c945146689dd75a86169e09977
 
-# Diff at Wed, 26 Nov 2025 09:09:36 GMT:
+# Diff at Fri, 28 Nov 2025 09:54:57 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b8083076d84f9bd5b95d368ca05ff85af8e7ba82 block: 1761310677
-- current timestamp: 1764144801
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@10f814ec1e4e08d34183a00c458ece2b8605dede block: 1761310677
+- current timestamp: 1764323600
 
 ## Description
 
@@ -61,14 +61,6 @@ Generated with discovered.json: 0x45c9c2d8b732598b60397d8796c41f092a2f31e3
 -   Status: DELETED
     contract PermissionedDisputeGame (eth:0x5562D33B68fa20572FC58fA36aB19CCFeDD6eE8f)
     +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
-```
-
-```diff
-    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
-    +++ description: None
-      receivedPermissions.7:
--        {"permission":"upgrade","from":"eth:0x6Cbd14DA021e39A7895Ae151Ac72eCc9023e87F6","role":"admin","via":[{"address":"eth:0xd56045E68956FCe2576E680c95a4750cf8241f79"}]}
-    }
 ```
 
 ```diff
@@ -187,12 +179,6 @@ Generated with discovered.json: 0x45c9c2d8b732598b60397d8796c41f092a2f31e3
 ```
 
 ```diff
--   Status: DELETED
-    contract DelayedWETH (eth:0x6Cbd14DA021e39A7895Ae151Ac72eCc9023e87F6)
-    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
-```
-
-```diff
     contract L1StandardBridge (eth:0x88FF1e5b602916615391F55854588EFcBB7663f0) {
     +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
       sourceHashes.1:
@@ -269,10 +255,17 @@ Generated with discovered.json: 0x45c9c2d8b732598b60397d8796c41f092a2f31e3
 ```
 
 ```diff
-    contract ProxyAdmin (eth:0xd56045E68956FCe2576E680c95a4750cf8241f79) {
+    EOA  (eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259) {
     +++ description: None
-      directlyReceivedPermissions.6:
--        {"permission":"upgrade","from":"eth:0x6Cbd14DA021e39A7895Ae151Ac72eCc9023e87F6","role":"admin"}
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0xb3eb47d8d57eba02013e5d347d05147f7ac072ef2e5e4e1f9a5c6fbced93f8b0"]
+      values:
++        {"$implementation":"eth:0x000000009B1D0aF20D8C6d0A44e162d11F9b8f00","CUSTOM_STORAGE_ROOT":"0x3b86514c5c56b21f08d8e56ab090292e07c2483b3e667a2a45849dcb71368600","domainBytes":"0xc7e4f5b2d381bdfacf8506a24542052ab4e951573cab4ce34bb1c9509c84cbbf06c015bd22b4c69690933c1058878ebdfef31f9aaae40bbe86d8a09fe1b2972c0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000b65540bba534e88eb4a5062d0e6519c07063b259000000000000000000000000000000009b1d0af20d8c6d0a44e162d11f9b8f00","domainSeparator":"0xae1ae59b43b99665a7d7de7c1ca92017a6e8c484587869daf07b2bd3a6aa0301","eip712Domain":{"fields":"0x1f","name":"Calibur","version":"1.0.0","chainId":1,"verifyingContract":"eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259","salt":"0x000000000000000000000000000000009b1d0af20d8c6d0a44e162d11f9b8f00","extensions":[]},"ENTRY_POINT":"eth:0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108","getSeq":[0,0,0,0,0],"keyAt":[],"keyCount":0,"keyHashes":0,"namespaceAndVersion":"Uniswap.Calibur.1.0.0","nonceSequenceNumber":[0,0,0,0,0]}
+      errors:
++        {"getSeq":"Processing error occurred.","nonceSequenceNumber":"Processing error occurred."}
     }
 ```
 
@@ -285,7 +278,7 @@ Generated with discovered.json: 0x45c9c2d8b732598b60397d8796c41f092a2f31e3
 ```diff
 +   Status: CREATED
     contract FaultDisputeGame (eth:0x4cBFBA0AfEb3a36878eb52fAE78335751076250C)
-    +++ description: None
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
 ```
 
 ```diff
@@ -297,22 +290,18 @@ Generated with discovered.json: 0x45c9c2d8b732598b60397d8796c41f092a2f31e3
 ## Source code changes
 
 ```diff
-.../DelayedWETH}/DelayedWETH.sol                   |    0
- .../DelayedWETH}/Proxy.p.sol                       |    0
- .../DelayedWETH.sol => /dev/null                   |  782 ----
- .../Proxy.p.sol => /dev/null                       |  200 -
- .../DisputeGameFactory/DisputeGameFactory.sol      |   47 +-
- .../FaultDisputeGame.sol => /dev/null              | 4107 --------------------
- .../L1CrossDomainMessenger.sol                     |   58 +-
- .../L1ERC721Bridge/L1ERC721Bridge.sol              |   14 +-
- .../L1StandardBridge/L1StandardBridge.sol          |   14 +-
- .../ink/{.flat@1761310677 => .flat}/MIPS.sol       |   33 +-
- .../OptimismMintableERC20Factory.sol               |    4 +-
- .../OptimismPortal2/OptimismPortal2.sol            |   64 +-
- .../PermissionedDisputeGame.sol                    |   40 +-
- .../SuperchainConfig/SuperchainConfig.sol          |   26 +-
- .../SystemConfig/SystemConfig.sol                  |  100 +-
- 15 files changed, 233 insertions(+), 5256 deletions(-)
+.../DisputeGameFactory/DisputeGameFactory.sol      |  47 +++++++---
+ .../FaultDisputeGame.sol                           |  80 ++++++++++++-----
+ .../L1CrossDomainMessenger.sol                     |  58 +++++++++---
+ .../L1ERC721Bridge/L1ERC721Bridge.sol              |  14 +--
+ .../L1StandardBridge/L1StandardBridge.sol          |  14 +--
+ .../ink/{.flat@1761310677 => .flat}/MIPS.sol       |  33 ++-----
+ .../OptimismMintableERC20Factory.sol               |   4 +-
+ .../OptimismPortal2/OptimismPortal2.sol            |  64 +++++++++----
+ .../PermissionedDisputeGame.sol                    |  40 ++++-----
+ .../SuperchainConfig/SuperchainConfig.sol          |  26 +-----
+ .../SystemConfig/SystemConfig.sol                  | 100 +++++++++++++++------
+ 11 files changed, 292 insertions(+), 188 deletions(-)
 ```
 
 Generated with discovered.json: 0x06c1bf9ade2222c09d2cc879b8190d2176315ee9

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xd14f8da66a22e9414bdbcbcd717cebaa1e7a9205
+Generated with discovered.json: 0xd20557c2da5fa1b7eb8731c5317d8e7c82d56310
 
-# Diff at Wed, 26 Nov 2025 09:09:14 GMT:
+# Diff at Fri, 28 Nov 2025 09:39:21 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b8083076d84f9bd5b95d368ca05ff85af8e7ba82 block: 1763379103
-- current timestamp: 1764146689
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@10f814ec1e4e08d34183a00c458ece2b8605dede block: 1763379103
+- current timestamp: 1764322695
 
 ## Description
 
@@ -16,6 +16,8 @@ Generated with discovered.json: 0xd14f8da66a22e9414bdbcbcd717cebaa1e7a9205
 
 [L1StandardBridge](https://disco.l2beat.com/diff/eth:0xe32B192fb1DcA88fCB1C56B3ACb429e32238aDCb/eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A), [SuperchainConfig](https://disco.l2beat.com/diff/eth:0xCe28685EB204186b557133766eCA00334EB441E4/eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957), [OptimismMintableERC20Factory](https://disco.l2beat.com/diff/eth:0x5493f4677A186f64805fe7317D6993ba4863988F/eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB), [DisputeGameFactory](https://disco.l2beat.com/diff/eth:0x33D1e8571a85a538ed3D5A4d88f46C112383439D/eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50), [L1ERC721Bridge](https://disco.l2beat.com/diff/eth:0x7f1d12fB2911EB095278085f721e644C1f675696/eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9),[L1CrossDomainMessenger](https://disco.l2beat.com/diff/eth:0x22D12E0FAebD62d429514A65EBAe32dd316c12D6/eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0), [MIPS](https://disco.l2beat.com/diff/eth:0x07BABE08EE4D07dBA236530183B24055535A7011/eth:0x6463dEE3828677F6270d83d45408044fc5eDB908), [PermissionedDisputeGame](https://disco.l2beat.com/diff/eth:0x5562D33B68fa20572FC58fA36aB19CCFeDD6eE8f/eth:0x467E6a8D6916E7394F9715b4DE9339ee36887382)
 - minimal diff
+
+[FaultDisputeGame] (https://disco.l2beat.com/diff/eth:0x22F2AfB837156246187Cd2652ad281eE08EBBB9d/eth:0x478c26109b169a840D61E95B19512FF0b5F19c87) : added MIN_BASE_FEE, DA_FOOTPRINT_GAS_SCALAR to update type, small diffs.
 
 ## Watched changes
 
@@ -89,22 +91,6 @@ Generated with discovered.json: 0xd14f8da66a22e9414bdbcbcd717cebaa1e7a9205
       receivedPermissions.0.from:
 -        "eth:0xbF2027A15e1a6ceE76257ED9bB623C8dC08D4EF7"
 +        "eth:0x8081faB7cc5D0e56122bB6651928e0bcF94b95bf"
-    }
-```
-
-```diff
-    contract SuperchainProxyAdmin (eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
-    +++ description: None
-      directlyReceivedPermissions.10:
--        {"permission":"upgrade","from":"eth:0xD061AB95069987868768818cc1248705351e2D0e","role":"admin"}
-    }
-```
-
-```diff
-    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
-    +++ description: None
-      receivedPermissions.10:
--        {"permission":"upgrade","from":"eth:0xD061AB95069987868768818cc1248705351e2D0e","role":"admin","via":[{"address":"eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
     }
 ```
 
@@ -239,12 +225,6 @@ Generated with discovered.json: 0xd14f8da66a22e9414bdbcbcd717cebaa1e7a9205
 ```
 
 ```diff
--   Status: DELETED
-    contract DelayedWETH (eth:0xD061AB95069987868768818cc1248705351e2D0e)
-    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
-```
-
-```diff
     contract DisputeGameFactory (eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
     +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
       sourceHashes.1:
@@ -278,8 +258,8 @@ Generated with discovered.json: 0xd14f8da66a22e9414bdbcbcd717cebaa1e7a9205
 
 ```diff
 +   Status: CREATED
-    contract  (eth:0x478c26109b169a840D61E95B19512FF0b5F19c87)
-    +++ description: None
+    contract FaultDisputeGame (eth:0x478c26109b169a840D61E95B19512FF0b5F19c87)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
 ```
 
 ```diff
@@ -297,22 +277,18 @@ Generated with discovered.json: 0xd14f8da66a22e9414bdbcbcd717cebaa1e7a9205
 ## Source code changes
 
 ```diff
-.../DelayedWETH}/DelayedWETH.sol                   |    0
- .../DelayedWETH}/Proxy.p.sol                       |    0
- .../DelayedWETH.sol => /dev/null                   |  782 ----
- .../Proxy.p.sol => /dev/null                       |  200 -
- .../DisputeGameFactory/DisputeGameFactory.sol      |   47 +-
- .../FaultDisputeGame.sol => /dev/null              | 4107 --------------------
- .../L1CrossDomainMessenger.sol                     |   58 +-
- .../L1ERC721Bridge/L1ERC721Bridge.sol              |   14 +-
- .../L1StandardBridge/L1StandardBridge.sol          |   14 +-
- .../optimism/{.flat@1763379103 => .flat}/MIPS.sol  |   33 +-
- .../OptimismMintableERC20Factory.sol               |    4 +-
- .../OptimismPortal2/OptimismPortal2.sol            |   64 +-
- .../PermissionedDisputeGame.sol                    |   40 +-
- .../SuperchainConfig/SuperchainConfig.sol          |   26 +-
- .../SystemConfig/SystemConfig.sol                  |  100 +-
- 15 files changed, 233 insertions(+), 5256 deletions(-)
+.../DisputeGameFactory/DisputeGameFactory.sol      |  47 +++++++---
+ .../FaultDisputeGame.sol                           |  80 ++++++++++++-----
+ .../L1CrossDomainMessenger.sol                     |  58 +++++++++---
+ .../L1ERC721Bridge/L1ERC721Bridge.sol              |  14 +--
+ .../L1StandardBridge/L1StandardBridge.sol          |  14 +--
+ .../optimism/{.flat@1763379103 => .flat}/MIPS.sol  |  33 ++-----
+ .../OptimismMintableERC20Factory.sol               |   4 +-
+ .../OptimismPortal2/OptimismPortal2.sol            |  64 +++++++++----
+ .../PermissionedDisputeGame.sol                    |  40 ++++-----
+ .../SuperchainConfig/SuperchainConfig.sol          |  26 +-----
+ .../SystemConfig/SystemConfig.sol                  | 100 +++++++++++++++------
+ 11 files changed, 292 insertions(+), 188 deletions(-)
 ```
 
 Generated with discovered.json: 0x735fe241cdaffdc322189bad0b0bd23355de8316

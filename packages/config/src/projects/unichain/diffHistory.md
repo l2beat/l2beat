@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xd0ce622c6bf8f1c2c934f76290457592f17b5a70
+Generated with discovered.json: 0x1c04ec7e1555302a69050f3612c25114ba51ae0f
 
-# Diff at Wed, 26 Nov 2025 09:23:37 GMT:
+# Diff at Fri, 28 Nov 2025 10:16:25 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b8083076d84f9bd5b95d368ca05ff85af8e7ba82 block: 1761588582
-- current timestamp: 1764148908
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@10f814ec1e4e08d34183a00c458ece2b8605dede block: 1761588582
+- current timestamp: 1764324881
 
 ## Description
 
@@ -50,12 +50,6 @@ Generated with discovered.json: 0xd0ce622c6bf8f1c2c934f76290457592f17b5a70
 ```
 
 ```diff
--   Status: DELETED
-    contract DelayedWETH (eth:0x0bdbEc6bd35571F97f96f3ed21822a4f2e071A3c)
-    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
-```
-
-```diff
     contract DisputeGameFactory (eth:0x2F12d621a16e2d3285929C9996f478508951dFe4) {
     +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
       sourceHashes.1:
@@ -88,14 +82,6 @@ Generated with discovered.json: 0xd0ce622c6bf8f1c2c934f76290457592f17b5a70
 ```
 
 ```diff
-    contract ProxyAdmin (eth:0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4) {
-    +++ description: None
-      directlyReceivedPermissions.3:
--        {"permission":"upgrade","from":"eth:0x0bdbEc6bd35571F97f96f3ed21822a4f2e071A3c","role":"admin"}
-    }
-```
-
-```diff
 -   Status: DELETED
     contract FaultDisputeGame (eth:0x42891199E6abD6A346E26B7d187EF5657FDfF603)
     +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
@@ -105,14 +91,6 @@ Generated with discovered.json: 0xd0ce622c6bf8f1c2c934f76290457592f17b5a70
 -   Status: DELETED
     contract PermissionedDisputeGame (eth:0x5581F65C63B8CCbBe4A06626C336531160E2D8B5)
     +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
-```
-
-```diff
-    contract UnichainProxyAdminOwner (eth:0x6d5B183F538ABB8572F5cD17109c617b994D5833) {
-    +++ description: None
-      receivedPermissions.3:
--        {"permission":"upgrade","from":"eth:0x0bdbEc6bd35571F97f96f3ed21822a4f2e071A3c","role":"admin","via":[{"address":"eth:0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4"}]}
-    }
 ```
 
 ```diff
@@ -284,8 +262,8 @@ Generated with discovered.json: 0xd0ce622c6bf8f1c2c934f76290457592f17b5a70
 
 ```diff
 +   Status: CREATED
-    contract  (eth:0x6D0462850F7B87403660CC9f4F89346483108512)
-    +++ description: None
+    contract FaultDisputeGame (eth:0x6D0462850F7B87403660CC9f4F89346483108512)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
 ```
 
 ```diff
@@ -297,22 +275,18 @@ Generated with discovered.json: 0xd0ce622c6bf8f1c2c934f76290457592f17b5a70
 ## Source code changes
 
 ```diff
-.../DelayedWETH}/DelayedWETH.sol                   |    0
- .../DelayedWETH}/Proxy.p.sol                       |    0
- .../DelayedWETH.sol => /dev/null                   |  782 ----
- .../Proxy.p.sol => /dev/null                       |  200 -
- .../DisputeGameFactory/DisputeGameFactory.sol      |   47 +-
- .../FaultDisputeGame.sol => /dev/null              | 4107 --------------------
- .../L1CrossDomainMessenger.sol                     |   58 +-
- .../L1ERC721Bridge/L1ERC721Bridge.sol              |   14 +-
- .../L1StandardBridge/L1StandardBridge.sol          |   14 +-
- .../unichain/{.flat@1761588582 => .flat}/MIPS.sol  |   33 +-
- .../OptimismMintableERC20Factory.sol               |    4 +-
- .../OptimismPortal2/OptimismPortal2.sol            |   64 +-
- .../PermissionedDisputeGame.sol                    |   40 +-
- .../SuperchainConfig/SuperchainConfig.sol          |   26 +-
- .../SystemConfig/SystemConfig.sol                  |  100 +-
- 15 files changed, 233 insertions(+), 5256 deletions(-)
+.../DisputeGameFactory/DisputeGameFactory.sol      |  47 +++++++---
+ .../FaultDisputeGame.sol                           |  80 ++++++++++++-----
+ .../L1CrossDomainMessenger.sol                     |  58 +++++++++---
+ .../L1ERC721Bridge/L1ERC721Bridge.sol              |  14 +--
+ .../L1StandardBridge/L1StandardBridge.sol          |  14 +--
+ .../unichain/{.flat@1761588582 => .flat}/MIPS.sol  |  33 ++-----
+ .../OptimismMintableERC20Factory.sol               |   4 +-
+ .../OptimismPortal2/OptimismPortal2.sol            |  64 +++++++++----
+ .../PermissionedDisputeGame.sol                    |  40 ++++-----
+ .../SuperchainConfig/SuperchainConfig.sol          |  26 +-----
+ .../SystemConfig/SystemConfig.sol                  | 100 +++++++++++++++------
+ 11 files changed, 292 insertions(+), 188 deletions(-)
 ```
 
 Generated with discovered.json: 0x373273df224b1b806c7c15295a1ef47baa56459c
