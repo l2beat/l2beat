@@ -9,8 +9,8 @@ import { LiveIndicator } from '~/components/LiveIndicator'
 import { AnomalyText } from '~/pages/scaling/liveness/components/AnomalyText'
 import { NoAnomaliesState } from '~/pages/scaling/liveness/components/NoRecentAnomaliesState'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
-import type { LivenessChartTimeRange } from '~/server/features/scaling/liveness/utils/chartRange'
 import type { TrackedTransactionsByType } from '~/utils/project/tracked-txs/getTrackedTransactions'
+import type { ChartRange } from '~/utils/range/range'
 import { TrackedTransactions } from './costs/TrackedTransactions'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
@@ -22,7 +22,7 @@ export interface LivenessSectionProps extends ProjectSectionProps {
   hasTrackedContractsChanged: boolean
   trackedTransactions: TrackedTransactionsByType
   milestones: Milestone[]
-  defaultRange: LivenessChartTimeRange
+  defaultRange: ChartRange
   isArchived: boolean
   hideSubtypeSwitch?: boolean
   bigQueryOutage: boolean
@@ -51,7 +51,7 @@ export function LivenessSection({
           ? 'This section shows how "live" the project\'s operators are by displaying how frequently they submit transactions of the selected type. It also highlights anomalies - significant deviations from their typical schedule.'
           : 'This section shows how frequently DA attestations are submitted. It also highlights anomalies - significant deviations from the typical schedule.'}
       </p>
-      {bigQueryOutage && <BigQueryOutageNotice />}
+      {bigQueryOutage && <BigQueryOutageNotice type="section" />}
       {!isArchived && <OngoingAnomalies anomalies={ongoingAnomalies} />}
 
       <HorizontalSeparator className="my-4" />

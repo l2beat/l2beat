@@ -1,6 +1,6 @@
 {
   "name": "omni",
-  "timestamp": 1762767834,
+  "timestamp": 1764164995,
   "configHash": "0x5060d6d06d4ab713122d3aa61197318a9d17c33a60bd939b91a979b79c4ed557",
   "entries": [
     {
@@ -50,12 +50,6 @@
     },
     {
       "address": "eth:0x329c54289Ff5D6B7b7daE13592C6B1EDA1543eD4",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "Gateway EOA 2",
-      "address": "eth:0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -155,7 +149,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "8 of 16 (50%)",
-        "nonce": 87,
+        "nonce": 88,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -256,10 +250,10 @@
         "hashiManager": "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
         "implementation": "eth:0x257bDD093Cab1Bd39eBF837dCB60f33d031d7d49",
         "isInitialized": true,
-        "maxAvailablePerTx": "9991012300000000000000000",
+        "maxAvailablePerTx": "9939383002013975244888781",
         "maxPerTx": "9999999000000000000000000",
         "minPerTx": 5000000000000000,
-        "nonce": 2933,
+        "nonce": 3175,
         "owner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "proxyOwner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "requiredBlockConfirmations": 20,
@@ -327,7 +321,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 25,
+        "nonce": 26,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -443,6 +437,11 @@
     },
     {
       "address": "eth:0x5b10cE4DDD27F57d4D432D409A5321219cbA7893",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -606,12 +605,6 @@
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "gno" } }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "name": "Gateway EOA 1",
-      "address": "eth:0x90776017057b84bc47D7e7383b65C463C80a6cdd",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "HashiManager_Omni",
@@ -875,7 +868,7 @@
         "$admin": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "$implementation": "eth:0x6943A218d58135793F1FE619414eD476C37ad65a",
         "$members": [
-          "eth:0x90776017057b84bc47D7e7383b65C463C80a6cdd",
+          "eth:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4",
           "eth:0xfA98B60E02A61B6590f073cAD56e68326652d094",
           "eth:0x97630E2aE609D4104aBdA91F3066C556403182dd",
           "eth:0x587C0d02B40822f15f05301d87c16f6a08AaDDde",
@@ -946,7 +939,7 @@
         "$admin": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "$implementation": "eth:0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218",
         "$members": [
-          "eth:0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6",
+          "eth:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4",
           "eth:0xfA98B60E02A61B6590f073cAD56e68326652d094",
           "eth:0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe",
           "eth:0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0",
@@ -1092,12 +1085,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Gateway EOA 2",
-      "address": "gno:0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Protofire EOA 2",
       "address": "gno:0x459A3bd49F1ff109bc90b76125533699AaAAf9A6",
       "type": "EOA",
@@ -1193,6 +1180,11 @@
     },
     {
       "address": "gno:0x5eD64f02588C8B75582f2f8eFd7A5521e3F897CC",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1479,7 +1471,7 @@
         "getChainId": 100,
         "GnosisSafe_modules": [],
         "multisigThreshold": "8 of 16 (50%)",
-        "nonce": 96,
+        "nonce": 97,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1585,7 +1577,7 @@
         "$admin": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
         "$implementation": "gno:0xb056BFEdc397D427697a75E3ff115a0954de4791",
         "$members": [
-          "gno:0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6",
+          "gno:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4",
           "gno:0xfA98B60E02A61B6590f073cAD56e68326652d094",
           "gno:0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe",
           "gno:0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0",
@@ -1838,7 +1830,7 @@
         "getChainId": 100,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 32,
+        "nonce": 33,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1915,7 +1907,7 @@
         "gasLimitManager": "gno:0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED",
         "getBridgeInterfacesVersion": { "major": 3, "minor": 3, "patch": 1 },
         "getBridgeMode": "0xb1516c26",
-        "getCurrentDay": 20402,
+        "getCurrentDay": 20418,
         "implementation": "gno:0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92",
         "isInitialized": true,
         "mediatorContractOnOtherSide": "gno:0x88ad09518695c6c3712AC10a214bE5109a655671",
@@ -3060,6 +3052,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23768043, "gnosis": 43071686 },
-  "permissionsConfigHash": "0x5e1db316d1473e7c712fafb8a396b733a20090a1d1dbca783ad499e657dab8fb"
+  "usedBlockNumbers": { "ethereum": 23883323, "gnosis": 43343127 },
+  "permissionsConfigHash": "0xc5349da57e2da8e7cba497cf5bab8cc57c1447f1287fc6eaae33e2d591e6fe44"
 }

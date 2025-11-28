@@ -28,7 +28,7 @@ describe(BlockTimestampIndexer.name, () => {
       const tvsBlockTimestampRepository = mockObject<
         Database['tvsBlockTimestamp']
       >({
-        insertMany: mockFn().returnsOnce(undefined),
+        upsertMany: mockFn().returnsOnce(undefined),
       })
 
       const indexer = new BlockTimestampIndexer({
@@ -52,7 +52,7 @@ describe(BlockTimestampIndexer.name, () => {
         blockTimestampProvider.getBlockNumberAtOrBefore,
       ).toHaveBeenOnlyCalledWith(timestampToSync, 'ethereum')
 
-      expect(tvsBlockTimestampRepository.insertMany).toHaveBeenOnlyCalledWith([
+      expect(tvsBlockTimestampRepository.upsertMany).toHaveBeenOnlyCalledWith([
         {
           configurationId: config('config-1', 'ethereum').id,
           chain: 'ethereum',

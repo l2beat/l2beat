@@ -106,8 +106,9 @@ export const abstractTokensRouter = (deps: AbstractTokensRouterDeps) => {
       return {
         error: undefined,
         data: {
-          coinId: coin.id,
-          coinUrl: coin.image.large,
+          id: coin.id,
+          iconUrl: coin.image.large,
+          symbol: coin.symbol,
           listingTimestamp,
         },
       }

@@ -1,6 +1,7 @@
 import type { Database, InteropEventRecord } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
 import type {
+  InteropApproximateQuery,
   InteropEvent,
   InteropEventDb,
   InteropEventQuery,
@@ -67,6 +68,14 @@ export class InteropEventStore implements InteropEventDb {
     query: InteropEventQuery<T>,
   ): InteropEvent<T> | undefined {
     return this.eventDb.find(type, query)
+  }
+
+  findApproximate<T>(
+    type: InteropEventType<T>,
+    query: InteropEventQuery<T>,
+    approximate: InteropApproximateQuery<T>,
+  ): InteropEvent<T> | undefined {
+    return this.eventDb.findApproximate(type, query, approximate)
   }
 
   findAll<T>(

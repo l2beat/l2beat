@@ -2,19 +2,19 @@ import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { DataPostedTimeRangeControls } from '~/pages/scaling/data-posted/DataPostedTimeRangeControls'
-import { rangeToResolution } from '~/server/features/scaling/costs/utils/range'
-import type { DataPostedTimeRange } from '~/server/features/scaling/data-posted/range'
+import { DataPostedRangeControls } from '~/pages/scaling/data-posted/DataPostedRangeControls'
+import { rangeToResolution } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
+import type { ChartRange } from '~/utils/range/range'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
-import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
+import { getChartTimeRangeFromData } from '../../core/chart/utils/getChartTimeRangeFromData'
 import { DataPostedChart } from './DataPostedChart'
 import { ProjectDataPostedChartStats } from './ProjectDataPostedChartStats'
 
 interface Props {
   project: ChartProject
-  defaultRange: DataPostedTimeRange
+  defaultRange: ChartRange
   milestones: Milestone[]
 }
 
@@ -23,10 +23,10 @@ export function ProjectDataPostedChart({
   defaultRange,
   milestones,
 }: Props) {
-  const [timeRange, setTimeRange] = useState<DataPostedTimeRange>(defaultRange)
+  const [range, setRange] = useState<ChartRange>(defaultRange)
 
   const { data, isLoading } = api.da.scalingProjectChart.useQuery({
-    range: timeRange,
+    range,
     projectId: project.id,
   })
 
@@ -44,21 +44,17 @@ export function ProjectDataPostedChart({
     [data],
   )
 
-  const chartRange = getChartRange(chartData)
+  const timeRange = getChartTimeRangeFromData(chartData)
 
   return (
     <div className="flex flex-col">
       <ChartControlsWrapper>
-        <ProjectChartTimeRange range={chartRange} />
-        <DataPostedTimeRangeControls
-          timeRange={timeRange}
-          setTimeRange={setTimeRange}
-          projectSection
-        />
+        <ProjectChartTimeRange timeRange={timeRange} />
+        <DataPostedRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
       <DataPostedChart
         milestones={milestones}
-        resolution={rangeToResolution({ type: timeRange })}
+        resolution={rangeToResolution(range)}
         data={chartData}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}
@@ -67,11 +63,7 @@ export function ProjectDataPostedChart({
         project={project}
       />
       <HorizontalSeparator className="my-4" />
-      <ProjectDataPostedChartStats
-        data={data?.stats}
-        isLoading={isLoading}
-        range={timeRange}
-      />
+      <ProjectDataPostedChartStats data={data?.stats} isLoading={isLoading} />
     </div>
   )
 }

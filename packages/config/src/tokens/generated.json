@@ -13121,6 +13121,20 @@
       }
     },
     {
+      "name": "RAIN",
+      "coingeckoId": "rain",
+      "address": "0x25118290e6A5f4139381D072181157035864099d",
+      "symbol": "RAIN",
+      "decimals": 18,
+      "deploymentTimestamp": 1756216201,
+      "coingeckoListingTimestamp": 1757548800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/69134/large/Rain_logo_1_.png?1762952191",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Renzo Restaked ETH",
       "coingeckoId": "renzo-restaked-eth",
       "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
@@ -14742,6 +14756,20 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/37375/large/image.png?1714884543",
       "chainId": 59144,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "name": "BOB",
+      "coingeckoId": "bob-build-on-bitcoin",
+      "address": "0xB0BD54846a92b214C04A63B26AD7Dc5e19A60808",
+      "symbol": "BOB",
+      "decimals": 18,
+      "deploymentTimestamp": 1739374645,
+      "coingeckoListingTimestamp": 1763596800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54720/large/BOB_symbol_colour.png?1741195397",
+      "chainId": 60808,
       "source": "native",
       "supply": "circulatingSupply"
     },

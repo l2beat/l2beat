@@ -11,6 +11,8 @@ jobs:
     env:
       HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
       HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
+      COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
+      COOLIFY_API_KEY: ${{ secrets.COOLIFY_RO_API_KEY }}
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -37,10 +39,18 @@ jobs:
       - name: Install Heroku CLI
         run: curl https://cli-assets.heroku.com/install.sh | sh
 
+      - name: Install and setup Coolify CLI
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/coollabsio/coolify-cli/main/scripts/install.sh | bash
+          coolify context add l2beat "$COOLIFY_SERVER" "$COOLIFY_API_KEY"
+          coolify context use l2beat
+
       # Backend
       - name: Pull staging backend configuration
-        run: heroku config -a l2beat-staging --shell > .env
+        run: coolify app env list "$COOLIFY_APP_ID" -s --format json | jq -r '.[]|(.key + "=" + .real_value)' > .env
         working-directory: packages/backend
+        env:
+          COOLIFY_APP_ID: ${{ secrets.COOLIFY_BACKEND_STAGING_ID }}
 
       # PORT variable is not present inside the dump and is assigned by Heroku at deployment time
       - name: Fill PORT variable
@@ -65,8 +75,10 @@ jobs:
 
       # Update Monitor
       - name: Pull staging update monitor configuration
-        run: heroku config -a l2beat-update-monitor-staging --shell > .env
+        run: coolify app env list "$COOLIFY_APP_ID" -s --format json | jq -r '.[]|(.key + "=" + .real_value)' > .env
         working-directory: packages/backend
+        env:
+          COOLIFY_APP_ID: ${{ secrets.COOLIFY_UM_STAGING_ID }}
 
       - name: Fill PORT variable
         run: echo "PORT=3000" >> .env
@@ -90,8 +102,10 @@ jobs:
 
       # L2BEAT TVS
       - name: Pull staging l2beat TVS configuration
-        run: heroku config -a l2beat-tvs-staging --shell > .env
+        run: coolify app env list "$COOLIFY_APP_ID" -s --format json | jq -r '.[]|(.key + "=" + .real_value)' > .env
         working-directory: packages/backend
+        env:
+          COOLIFY_APP_ID: ${{ secrets.COOLIFY_TVS_STAGING_ID }}
 
       - name: Fill PORT variable
         run: echo "PORT=3000" >> .env

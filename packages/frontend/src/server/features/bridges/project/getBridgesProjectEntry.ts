@@ -23,6 +23,7 @@ import { getBridgeOtherConsiderationsSection } from '~/utils/project/technology/
 import { getBridgeTechnologySection } from '~/utils/project/technology/getTechnologySection'
 import type { UnderReviewStatus } from '~/utils/project/underReview'
 import { getUnderReviewStatus } from '~/utils/project/underReview'
+import { optionToRange } from '~/utils/range/range'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
 import { checkIfTvsExist } from '../../scaling/tvs/utils/checkIfTvsExist'
@@ -176,7 +177,9 @@ export async function getBridgesProjectEntry(
         project: getChartProject(project),
         tokens: tokens,
         milestones: project.milestones ?? [],
-        defaultRange: project.archivedAt ? 'max' : '1y',
+        defaultRange: project.archivedAt
+          ? optionToRange('max')
+          : optionToRange('1y'),
       },
     })
   }

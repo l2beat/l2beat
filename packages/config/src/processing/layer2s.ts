@@ -84,6 +84,7 @@ import { immutablex } from '../projects/immutablex/immutablex'
 import { immutablezkevm } from '../projects/immutablezkevm/immutablezkevm'
 import { ink } from '../projects/ink/ink'
 import { iotex } from '../projects/iotex/iotex'
+import { janction } from '../projects/janction/janction'
 import { jovay } from '../projects/jovay/jovay'
 import { karak } from '../projects/karak/karak'
 import { katana } from '../projects/katana/katana'
@@ -111,6 +112,7 @@ import { lyra } from '../projects/lyra/lyra'
 import { mantapacific } from '../projects/mantapacific/mantapacific'
 import { mantle } from '../projects/mantle/mantle'
 import { mawari } from '../projects/mawari/mawari'
+import { megaeth } from '../projects/megaeth/megaeth'
 import { memento } from '../projects/memento/memento'
 import { metal } from '../projects/metal/metal'
 import { metis } from '../projects/metis/metis'
@@ -315,6 +317,7 @@ export const layer2s: ScalingProject[] = [
   immutablezkevm,
   ink,
   iotex,
+  janction,
   jovay,
   karak,
   katana,
@@ -342,6 +345,7 @@ export const layer2s: ScalingProject[] = [
   mantapacific,
   mantle,
   mawari,
+  megaeth,
   memento,
   metal,
   metis,

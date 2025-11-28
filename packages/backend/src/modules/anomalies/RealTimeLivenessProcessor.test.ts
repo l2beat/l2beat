@@ -15,7 +15,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import type { Config } from '../../config'
 import type { TrackedTxsConfig } from '../../config/Config'
 import { mockDatabase } from '../../test/database'
 import type { AnomalyNotifier } from './AnomalyNotifier'
@@ -24,9 +23,12 @@ import { RealTimeLivenessProcessor } from './RealTimeLivenessProcessor'
 describe(RealTimeLivenessProcessor.name, () => {
   describe(RealTimeLivenessProcessor.prototype.start.name, () => {
     it('should init processor', async () => {
-      const config = createMockConfig(ProjectId('project-id'), [])
+      const trackedTxsConfig = createMockTrackedTxsConfig(
+        ProjectId('project-id'),
+        [],
+      )
       const processor = new RealTimeLivenessProcessor(
-        config,
+        trackedTxsConfig,
         Logger.SILENT,
         mockDatabase(),
         mockObject<AnomalyNotifier>(),
@@ -49,7 +51,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         transactions: [],
       })
 
-      const config = createMockConfig(ProjectId('project-id'), [])
+      const config = createMockTrackedTxsConfig(ProjectId('project-id'), [])
       const processor = new RealTimeLivenessProcessor(
         config,
         Logger.SILENT,
@@ -155,7 +157,7 @@ describe(RealTimeLivenessProcessor.name, () => {
           },
         ]
 
-        const config = createMockConfig(projectId, configurations)
+        const config = createMockTrackedTxsConfig(projectId, configurations)
         const processor = new RealTimeLivenessProcessor(
           config,
           Logger.SILENT,
@@ -262,7 +264,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         },
       ]
 
-      const config = createMockConfig(projectId, configurations)
+      const config = createMockTrackedTxsConfig(projectId, configurations)
 
       const mockNotifier = mockObject<AnomalyNotifier>({
         anomalyDetected: mockFn().resolvesTo(undefined),
@@ -365,7 +367,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         },
       ]
 
-      const config = createMockConfig(projectId, configurations)
+      const config = createMockTrackedTxsConfig(projectId, configurations)
 
       const mockNotifier = mockObject<AnomalyNotifier>({
         anomalyOngoing: mockFn().resolvesTo(undefined),
@@ -493,7 +495,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         },
       ]
 
-      const config = createMockConfig(projectId, configurations)
+      const config = createMockTrackedTxsConfig(projectId, configurations)
 
       const mockNotifier = mockObject<AnomalyNotifier>({
         anomalyRecovered: mockFn().resolvesTo(undefined),
@@ -600,7 +602,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         },
       ]
 
-      const config = createMockConfig(projectId, configurations)
+      const config = createMockTrackedTxsConfig(projectId, configurations)
 
       const mockNotifier = mockObject<AnomalyNotifier>({
         anomalyDetected: mockFn().resolvesTo(undefined),
@@ -643,7 +645,11 @@ describe(RealTimeLivenessProcessor.name, () => {
     () => {
       it('deletes anomalies for archived projects', async () => {
         const projectId = 'project-id'
-        const config = createMockConfig(ProjectId(projectId), [], true)
+        const config = createMockTrackedTxsConfig(
+          ProjectId(projectId),
+          [],
+          true,
+        )
 
         const realTimeAnomaliesRepository = mockObject<
           Database['realTimeAnomalies']
@@ -673,20 +679,18 @@ describe(RealTimeLivenessProcessor.name, () => {
   )
 })
 
-function createMockConfig(
+function createMockTrackedTxsConfig(
   projectId: ProjectId,
   configurations: TrackedTxConfigEntry[],
   isArchived = false,
-): Config {
-  return mockObject<Config>({
-    trackedTxsConfig: mockObject<TrackedTxsConfig>({
-      projects: [
-        {
-          id: projectId,
-          isArchived,
-          configurations,
-        },
-      ],
-    }),
+): TrackedTxsConfig {
+  return mockObject<TrackedTxsConfig>({
+    projects: [
+      {
+        id: projectId,
+        isArchived,
+        configurations,
+      },
+    ],
   })
 }

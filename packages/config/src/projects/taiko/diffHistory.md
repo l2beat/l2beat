@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xda6103201bc85588c491ec36f614bcd3d5af4150
+
+# Diff at Wed, 26 Nov 2025 13:52:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@dd7c1c00cfe8eb7b4034082d8812fb8962098918 block: 1763978021
+- current timestamp: 1764165081
+
+## Description
+
+proposal to move TAIKO from the DAO to the Labs treasury: https://dao.taiko.xyz/plugins/community-proposals/#/proposals/21
+
+operator changes
+
+## Watched changes
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      values.proposalCount:
+-        21
++        22
+      values.proposalIds.21:
++        "600279957369763019115429650404480285099304157205"
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 2 operators registered.
+      description:
+-        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered."
++        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 2 operators registered."
+      values.operatorCount:
+-        4
++        3
+      values.registeredOperators.0:
+-        {"proposer":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990","sequencer":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"}
+      values.registeredOperators.2.sequencer:
+-        "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"
++        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+      values.registeredOperators.2.proposer:
+-        "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"
++        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+      values.registeredOperatorsCount:
+-        3
++        2
+    }
+```
+
 Generated with discovered.json: 0x8502867169e7ab04e91bb2855670f7d3c12974fe
 
 # Diff at Mon, 24 Nov 2025 09:55:12 GMT:

@@ -1,6 +1,6 @@
 {
   "name": "morph",
-  "timestamp": 1763984401,
+  "timestamp": 1764165395,
   "configHash": "0xb1738f8f5e824117d5ba7e4607dc46a3e611677183d8e3a84a16916cf026bdab",
   "entries": [
     {
@@ -306,9 +306,9 @@
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-        "nextCrossDomainMessageIndex": 25442,
+        "nextCrossDomainMessageIndex": 25464,
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 25435,
+        "pendingQueueIndex": 25437,
         "ROLLUP_CONTRACT": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
@@ -498,6 +498,18 @@
       ]
     },
     {
+      "address": "eth:0x731a89035F88Bde8fB7357AaAD6620F4716aC1be",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
+        }
+      ]
+    },
+    {
       "address": "eth:0x74204e3801E9394848AbDBAd6f378d0b11e9a091",
       "type": "EOA",
       "proxyType": "EOA",
@@ -568,7 +580,7 @@
       "values": {
         "__maxNumTxInChunk": 0,
         "$admin": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
-        "$implementation": "eth:0x9C79e8F5d0fE910d84a6a0d4A03E8136d036eBec",
+        "$implementation": "eth:0xDF0749e688AE74508D84699Ba2405ED610Aaf8c5",
         "$pastUpgrades": [
           [
             "2024-10-19T03:11:47.000Z",
@@ -599,10 +611,15 @@
             "2025-05-12T07:11:23.000Z",
             "0x1cd98e49b0d0c30a39c97683c374f5d3541d1ed02b14272a7113709fe01700d7",
             ["eth:0x9C79e8F5d0fE910d84a6a0d4A03E8136d036eBec"]
+          ],
+          [
+            "2025-11-25T08:51:35.000Z",
+            "0x27b0e1b46f9878a502c68e414bc6fea028c3a551760e5687c56bdd4eda4f31c9",
+            ["eth:0xDF0749e688AE74508D84699Ba2405ED610Aaf8c5"]
           ]
         ],
-        "$upgradeCount": 6,
-        "batchChallenged": 45883,
+        "$upgradeCount": 7,
+        "batchChallenged": 46026,
         "challengers": [
           "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
           "eth:0x77B29534738E3F0F297d36635d7884965C7c8cE1",
@@ -635,26 +652,27 @@
           "eth:0x234aCb24b1DeeA7f6c7530b8c29a6378bA21e1D0",
           "eth:0x5c6E1011cd3b5d7D2937c098b8F61d6B3d1aee7e",
           "eth:0x95C373754C66feF1Eb2dbb6934aF821C551D9738",
-          "eth:0xB2e53dcb84dc869E3bA61911a170B53eE1326184"
+          "eth:0xB2e53dcb84dc869E3bA61911a170B53eE1326184",
+          "eth:0x731a89035F88Bde8fB7357AaAD6620F4716aC1be"
         ],
         "finalizationPeriodSeconds": 172800,
         "inChallenge": false,
         "l1StakingContract": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-        "lastCommittedBatchIndex": 46049,
-        "lastFinalizedBatchIndex": 45850,
-        "LAYER_2_CHAIN_ID": 1,
+        "lastCommittedBatchIndex": 46130,
+        "lastFinalizedBatchIndex": 45886,
+        "LAYER_2_CHAIN_ID": 2818,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false,
         "proofRewardPercent": 70,
         "proofWindow": 259200,
-        "proveRemaining": "303000000000000000",
+        "proveRemaining": "603000000000000000",
         "revertReqIndex": 0,
         "verifier": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1"
       },
       "implementationNames": {
         "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60": "TransparentUpgradeableProxy",
-        "eth:0x9C79e8F5d0fE910d84a6a0d4A03E8136d036eBec": "Rollup"
+        "eth:0xDF0749e688AE74508D84699Ba2405ED610Aaf8c5": "Rollup"
       }
     },
     {
@@ -813,7 +831,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 48,
+        "nonce": 49,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1018,7 +1036,7 @@
         "counterpart": "eth:0x5300000000000000000000000000000000000007",
         "feeVault": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "maxReplayTimes": 3,
-        "messageNonce": 25442,
+        "messageNonce": 25464,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false,
@@ -1174,7 +1192,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 18,
+        "nonce": 19,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1486,74 +1504,6 @@
       "function router() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "eth:0x9C79e8F5d0fE910d84a6a0d4A03E8136d036eBec": [
-      "constructor(uint64 _chainID)",
-      "error ErrZeroAddress()",
-      "event ChallengeRes(uint256 indexed batchIndex, address indexed winner, string indexed res)",
-      "event ChallengeRewardClaim(address indexed receiver, uint256 amount)",
-      "event ChallengeState(uint64 indexed batchIndex, address indexed challenger, uint256 challengeDeposit)",
-      "event CommitBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
-      "event FinalizeBatch(uint256 indexed batchIndex, bytes32 indexed batchHash, bytes32 stateRoot, bytes32 withdrawRoot)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event ProveRemainingClaimed(address receiver, uint256 amount)",
-      "event RevertBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
-      "event Unpaused(address account)",
-      "event UpdateChallenger(address indexed account, bool status)",
-      "event UpdateFinalizationPeriodSeconds(uint256 oldPeriod, uint256 newPeriod)",
-      "event UpdateProofRewardPercent(uint256 oldPercent, uint256 newPercent)",
-      "event UpdateProofWindow(uint256 oldWindow, uint256 newWindow)",
-      "event UpdateVerifier(address indexed oldVerifier, address indexed newVerifier)",
-      "function LAYER_2_CHAIN_ID() view returns (uint64)",
-      "function __maxNumTxInChunk() view returns (uint256)",
-      "function addChallenger(address _account)",
-      "function batchChallengeReward(address owner) view returns (uint256 amount)",
-      "function batchChallenged() view returns (uint256)",
-      "function batchChallengedSuccess(uint256 batchIndex) view returns (bool)",
-      "function batchDataStore(uint256 batchIndex) view returns (uint256 originTimestamp, uint256 finalizeTimestamp, uint256 blockNumber, uint256 signedSequencersBitmap)",
-      "function batchExist(uint256 batchIndex) view returns (bool)",
-      "function batchInChallenge(uint256 batchIndex) view returns (bool)",
-      "function batchInsideChallengeWindow(uint256 batchIndex) view returns (bool)",
-      "function challengeState(uint64 batchIndex, bytes32 _batchHash) payable",
-      "function challenges(uint256 batchIndex) view returns (uint64 batchIndex, address challenger, uint256 challengeDeposit, uint256 startTime, bool challengeSuccess, bool finished)",
-      "function claimProveRemaining(address receiver)",
-      "function claimReward(address receiver)",
-      "function commitBatch(tuple(uint8 version, bytes parentBatchHeader, uint64 lastBlockNumber, uint16 numL1Messages, bytes32 prevStateRoot, bytes32 postStateRoot, bytes32 withdrawalRoot) batchDataInput, tuple(uint256 signedSequencersBitmap, bytes sequencerSets, bytes signature) batchSignatureInput) payable",
-      "function committedBatches(uint256 batchIndex) view returns (bytes32 batchHash)",
-      "function committedStateRoots(uint256 batchIndex) view returns (bytes32 stateRoot)",
-      "function finalizationPeriodSeconds() view returns (uint256)",
-      "function finalizeBatch(bytes _batchHeader)",
-      "function finalizedStateRoots(uint256 batchIndex) view returns (bytes32 stateRoot)",
-      "function importGenesisBatch(bytes _batchHeader)",
-      "function inChallenge() view returns (bool)",
-      "function initialize(address _l1StakingContract, address _messageQueue, address _verifier, uint256 _finalizationPeriodSeconds, uint256 _proofWindow, uint256 _proofRewardPercent)",
-      "function initialize2(bytes32 _prevStateRoot)",
-      "function isBatchFinalized(uint256 _batchIndex) view returns (bool)",
-      "function isChallenger(address challengerAddress) view returns (bool isChallenger)",
-      "function l1StakingContract() view returns (address)",
-      "function lastCommittedBatchIndex() view returns (uint256)",
-      "function lastFinalizedBatchIndex() view returns (uint256)",
-      "function messageQueue() view returns (address)",
-      "function owner() view returns (address)",
-      "function paused() view returns (bool)",
-      "function proofRewardPercent() view returns (uint256)",
-      "function proofWindow() view returns (uint256)",
-      "function proveRemaining() view returns (uint256)",
-      "function proveState(bytes _batchHeader, bytes _batchProof)",
-      "function removeChallenger(address _account)",
-      "function renounceOwnership()",
-      "function revertBatch(bytes _batchHeader, uint256 _count)",
-      "function revertReqIndex() view returns (uint256)",
-      "function setPause(bool _status)",
-      "function transferOwnership(address newOwner)",
-      "function updateFinalizePeriodSeconds(uint256 _newPeriod)",
-      "function updateProofWindow(uint256 _newWindow)",
-      "function updateRewardPercentage(uint256 _newProofRewardPercent)",
-      "function updateVerifier(address _newVerifier)",
-      "function verifier() view returns (address)",
-      "function withdrawalRoots(bytes32 withdrawalRoot) view returns (bool exist)"
-    ],
     "eth:0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA": [
       "constructor(address _messenger, address _rollup, address _enforcedTxGateway)",
       "error ErrZeroAddress()",
@@ -1692,6 +1642,74 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "eth:0xDF0749e688AE74508D84699Ba2405ED610Aaf8c5": [
+      "constructor(uint64 _chainID)",
+      "error ErrZeroAddress()",
+      "event ChallengeRes(uint256 indexed batchIndex, address indexed winner, string indexed res)",
+      "event ChallengeRewardClaim(address indexed receiver, uint256 amount)",
+      "event ChallengeState(uint64 indexed batchIndex, address indexed challenger, uint256 challengeDeposit)",
+      "event CommitBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
+      "event FinalizeBatch(uint256 indexed batchIndex, bytes32 indexed batchHash, bytes32 stateRoot, bytes32 withdrawRoot)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event ProveRemainingClaimed(address receiver, uint256 amount)",
+      "event RevertBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
+      "event Unpaused(address account)",
+      "event UpdateChallenger(address indexed account, bool status)",
+      "event UpdateFinalizationPeriodSeconds(uint256 oldPeriod, uint256 newPeriod)",
+      "event UpdateProofRewardPercent(uint256 oldPercent, uint256 newPercent)",
+      "event UpdateProofWindow(uint256 oldWindow, uint256 newWindow)",
+      "event UpdateVerifier(address indexed oldVerifier, address indexed newVerifier)",
+      "function LAYER_2_CHAIN_ID() view returns (uint64)",
+      "function __maxNumTxInChunk() view returns (uint256)",
+      "function addChallenger(address _account)",
+      "function batchChallengeReward(address owner) view returns (uint256 amount)",
+      "function batchChallenged() view returns (uint256)",
+      "function batchChallengedSuccess(uint256 batchIndex) view returns (bool)",
+      "function batchDataStore(uint256 batchIndex) view returns (uint256 originTimestamp, uint256 finalizeTimestamp, uint256 blockNumber, uint256 signedSequencersBitmap)",
+      "function batchExist(uint256 batchIndex) view returns (bool)",
+      "function batchInChallenge(uint256 batchIndex) view returns (bool)",
+      "function batchInsideChallengeWindow(uint256 batchIndex) view returns (bool)",
+      "function challengeState(uint64 batchIndex, bytes32 _batchHash) payable",
+      "function challenges(uint256 batchIndex) view returns (uint64 batchIndex, address challenger, uint256 challengeDeposit, uint256 startTime, bool challengeSuccess, bool finished)",
+      "function claimProveRemaining(address receiver)",
+      "function claimReward(address receiver)",
+      "function commitBatch(tuple(uint8 version, bytes parentBatchHeader, uint64 lastBlockNumber, uint16 numL1Messages, bytes32 prevStateRoot, bytes32 postStateRoot, bytes32 withdrawalRoot) batchDataInput, tuple(uint256 signedSequencersBitmap, bytes sequencerSets, bytes signature) batchSignatureInput) payable",
+      "function committedBatches(uint256 batchIndex) view returns (bytes32 batchHash)",
+      "function committedStateRoots(uint256 batchIndex) view returns (bytes32 stateRoot)",
+      "function finalizationPeriodSeconds() view returns (uint256)",
+      "function finalizeBatch(bytes _batchHeader)",
+      "function finalizedStateRoots(uint256 batchIndex) view returns (bytes32 stateRoot)",
+      "function importGenesisBatch(bytes _batchHeader)",
+      "function inChallenge() view returns (bool)",
+      "function initialize(address _l1StakingContract, address _messageQueue, address _verifier, uint256 _finalizationPeriodSeconds, uint256 _proofWindow, uint256 _proofRewardPercent)",
+      "function initialize2(bytes32 _prevStateRoot)",
+      "function isBatchFinalized(uint256 _batchIndex) view returns (bool)",
+      "function isChallenger(address challengerAddress) view returns (bool isChallenger)",
+      "function l1StakingContract() view returns (address)",
+      "function lastCommittedBatchIndex() view returns (uint256)",
+      "function lastFinalizedBatchIndex() view returns (uint256)",
+      "function messageQueue() view returns (address)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function proofRewardPercent() view returns (uint256)",
+      "function proofWindow() view returns (uint256)",
+      "function proveRemaining() view returns (uint256)",
+      "function proveState(bytes _batchHeader, bytes _batchProof)",
+      "function removeChallenger(address _account)",
+      "function renounceOwnership()",
+      "function revertBatch(bytes _batchHeader, uint256 _count)",
+      "function revertReqIndex() view returns (uint256)",
+      "function setPause(bool _status)",
+      "function transferOwnership(address newOwner)",
+      "function updateFinalizePeriodSeconds(uint256 _newPeriod)",
+      "function updateProofWindow(uint256 _newWindow)",
+      "function updateRewardPercentage(uint256 _newProofRewardPercent)",
+      "function updateVerifier(address _newVerifier)",
+      "function verifier() view returns (address)",
+      "function withdrawalRoots(bytes32 withdrawalRoot) view returns (bool exist)"
+    ],
     "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887": [
       "constructor(address _singleton)"
     ],
@@ -1710,6 +1728,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23868480 },
-  "permissionsConfigHash": "0xeff3ab5ffabedb775d86a8013e506f9969cecbffaf43182699144b576ad462d9"
+  "usedBlockNumbers": { "ethereum": 23883356 },
+  "permissionsConfigHash": "0x8bb6f986fa98eff36d495fc4555c33d383051e634b0d11f004c3a9aa7479b011"
 }

@@ -37,7 +37,7 @@ describe(TvsPriceIndexer.name, () => {
       })
 
       const tvsPriceRepository = mockObject<Database['tvsPrice']>({
-        insertMany: mockFn().returnsOnce(undefined),
+        upsertMany: mockFn().returnsOnce(undefined),
       })
 
       const indexer = new TvsPriceIndexer({
@@ -72,7 +72,7 @@ describe(TvsPriceIndexer.name, () => {
         record('config-2', 'bitcoin', 200),
       ]
 
-      expect(tvsPriceRepository.insertMany).toHaveBeenOnlyCalledWith(
+      expect(tvsPriceRepository.upsertMany).toHaveBeenOnlyCalledWith(
         expectedRecords,
       )
       expect(safeHeight).toEqual(adjustedTo)
@@ -99,7 +99,7 @@ describe(TvsPriceIndexer.name, () => {
       })
 
       const tvsPriceRepository = mockObject<Database['tvsPrice']>({
-        insertMany: mockFn().returnsOnce(undefined),
+        upsertMany: mockFn().returnsOnce(undefined),
       })
 
       const indexer = new TvsPriceIndexer({
@@ -121,7 +121,7 @@ describe(TvsPriceIndexer.name, () => {
         record('config-1', 'ethereum', 150),
       ]
 
-      expect(tvsPriceRepository.insertMany).toHaveBeenOnlyCalledWith(
+      expect(tvsPriceRepository.upsertMany).toHaveBeenOnlyCalledWith(
         expectedRecords,
       )
       expect(safeHeight).toEqual(adjustedTo)
@@ -181,7 +181,7 @@ describe(TvsPriceIndexer.name, () => {
       })
 
       const tvsPriceRepository = mockObject<Database['tvsPrice']>({
-        insertMany: mockFn().returnsOnce(undefined),
+        upsertMany: mockFn().returnsOnce(undefined),
       })
 
       const indexer = new TvsPriceIndexer({
@@ -205,7 +205,7 @@ describe(TvsPriceIndexer.name, () => {
         adjustedTo,
       )
 
-      expect(tvsPriceRepository.insertMany).toHaveBeenOnlyCalledWith([])
+      expect(tvsPriceRepository.upsertMany).toHaveBeenOnlyCalledWith([])
       expect(safeHeight).toEqual(adjustedTo)
     })
 

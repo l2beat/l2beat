@@ -32,11 +32,12 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { CustomLink } from '~/components/link/CustomLink'
 import { PercentChange } from '~/components/PercentChange'
 import { ChevronIcon } from '~/icons/Chevron'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import type { ChartRange } from '~/utils/range/range'
 import type { ChartUnit } from '../types'
+import { tvsRangeToReadable } from './tvsRangeToReadable'
 
 const chartMeta = {
   rollups: {
@@ -64,14 +65,14 @@ const chartMeta = {
 
 export function ScalingSummaryTvsChart({
   unit,
-  timeRange,
+  range,
 }: {
   unit: ChartUnit
-  timeRange: TvsChartRange
+  range: ChartRange
 }) {
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
   const { data, isLoading } = api.tvs.recategorisedChart.useQuery({
-    range: timeRange,
+    range,
     filter: { type: 'layer2' },
   })
 
@@ -95,7 +96,7 @@ export function ScalingSummaryTvsChart({
         total={stats?.total}
         change={stats?.change}
         unit={unit}
-        timeRange={timeRange}
+        range={range}
       />
       <ChartContainer
         meta={chartMeta}
@@ -237,10 +238,10 @@ interface Props {
   total: number | undefined
   change: number | undefined
   unit: ChartUnit
-  timeRange: TvsChartRange
+  range: ChartRange
 }
 
-function Header({ total, unit, change, timeRange }: Props) {
+function Header({ total, unit, change, range }: Props) {
   return (
     <div className="flex items-start justify-between">
       <div>
@@ -276,7 +277,10 @@ function Header({ total, unit, change, timeRange }: Props) {
         ) : (
           <p className="whitespace-nowrap text-right text-xs">
             <PercentChange value={change} />
-            <span className="text-secondary"> / {timeRange}</span>
+            <span className="text-secondary">
+              {' '}
+              / {tvsRangeToReadable(range)}
+            </span>
           </p>
         )}
       </div>

@@ -179,6 +179,13 @@ export type InteropEventQuery<T> = Partial<T> & {
   sameTxAfter?: InteropEvent
 }
 
+export interface InteropApproximateQuery<T> {
+  key: keyof T
+  valueBigInt: bigint
+  toleranceUp?: number
+  toleranceDown?: number
+}
+
 export interface InteropEventDb {
   find<T>(
     type: InteropEventType<T>,
@@ -188,6 +195,11 @@ export interface InteropEventDb {
     type: InteropEventType<T>,
     query: InteropEventQuery<T>,
   ): InteropEvent<T>[]
+  findApproximate<T>(
+    type: InteropEventType<T>,
+    query: InteropEventQuery<T>,
+    approximate: InteropApproximateQuery<T>,
+  ): InteropEvent<T> | undefined
 }
 
 export interface InteropPlugin {

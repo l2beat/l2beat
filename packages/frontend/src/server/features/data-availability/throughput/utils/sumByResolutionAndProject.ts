@@ -1,11 +1,12 @@
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
+import type { ChartResolution } from '~/utils/range/range'
 
 /** This function sums up totalSize for each day and project */
 export function sumByResolutionAndProject(
   records: DataAvailabilityRecord[],
-  resolution: 'hourly' | 'sixHourly' | 'daily',
+  resolution: ChartResolution,
 ) {
   const groupedByProjectId = groupBy(records, (r) => r.projectId)
   const result: Omit<DataAvailabilityRecord, 'configurationId'>[] = []
