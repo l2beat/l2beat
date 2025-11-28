@@ -35,7 +35,7 @@ export const xlayer: ScalingProject = {
     links: {
       websites: ['https://okx.com/xlayer'],
       documentation: [
-        'https://web3.okx.com/xlayer/docs/users/welcome/about-x-layer',
+        'https://web3.okx.com/ua/xlayer/docs/developer/build-on-xlayer/about-xlayer',
       ],
       explorers: ['https://okx.com/explorer/xlayer'],
       socialMedia: ['https://twitter.com/XLayerOfficial'],
