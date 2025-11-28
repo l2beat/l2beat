@@ -28,7 +28,7 @@ describe(EthRpcClient.name, () => {
     const http = new MockHttp()
     const client = new EthRpcClient(http, 'https://rpc.url', '', () => 1337)
     http.queueResponse(503, 'Oops, our server is down')
-    await expect(client.blockNumber()).toBeRejectedWith(
+    await expect(client.getBlockNumber()).toBeRejectedWith(
       'RPC call failed. HTTP status: 503, body: Oops, our server is down',
     )
   })
@@ -44,7 +44,7 @@ describe(EthRpcClient.name, () => {
         error: { code: -32000, message: 'Server error' },
       }),
     )
-    await expect(client.blockNumber()).toBeRejectedWith(
+    await expect(client.getBlockNumber()).toBeRejectedWith(
       'RPC call failed. RPC code: -32000, message: Server error',
     )
   })
@@ -118,18 +118,18 @@ for (const url of URLS) {
     )
     const client = new EthRpcClient(new Http(), url, '')
 
-    it(EthRpcClient.prototype.chainId.name, async () => {
-      const chainId = await client.chainId()
+    it(EthRpcClient.prototype.getChainId.name, async () => {
+      const chainId = await client.getChainId()
       expect(chainId > 0n).toEqual(true)
     })
 
-    it(EthRpcClient.prototype.blockNumber.name, async () => {
-      const blockNumber = await client.blockNumber()
+    it(EthRpcClient.prototype.getBlockNumber.name, async () => {
+      const blockNumber = await client.getBlockNumber()
       expect(blockNumber > 0n).toEqual(true)
     })
 
-    it(EthRpcClient.prototype.gasPrice.name, async () => {
-      const gasPrice = await client.blockNumber()
+    it(EthRpcClient.prototype.getGasPrice.name, async () => {
+      const gasPrice = await client.getGasPrice()
       expect(gasPrice >= 0n).toEqual(true)
     })
 
@@ -154,7 +154,7 @@ for (const url of URLS) {
     })
 
     it(EthRpcClient.prototype.call.name, async () => {
-      const chainId = await client.chainId()
+      const chainId = await client.getChainId()
       const result1 = await client.call(
         {
           to: MULTICALL3,
@@ -202,7 +202,7 @@ for (const url of URLS) {
 
     const interestingBlocks: bigint[] = [0n, 1000n]
     it('gets interesting blocks', async () => {
-      const latest = await client.blockNumber()
+      const latest = await client.getBlockNumber()
       interestingBlocks.push(
         latest / 5n,
         (latest / 5n) * 2n,
@@ -279,7 +279,7 @@ for (const url of URLS) {
     })
 
     it(EthRpcClient.prototype.getLogs.name, async () => {
-      const blockNumber = await client.blockNumber()
+      const blockNumber = await client.getBlockNumber()
       await client.getLogs({
         fromBlock: blockNumber - 10n,
         toBlock: blockNumber,

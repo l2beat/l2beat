@@ -35,17 +35,17 @@ export class EthRpcClient {
     private nextId: () => string | number = randomId,
   ) {}
 
-  async chainId(): Promise<bigint> {
+  async getChainId(): Promise<bigint> {
     const data = await this.rawCall('eth_chainId')
     return vQuantity.parse(data)
   }
 
-  async blockNumber(): Promise<bigint> {
+  async getBlockNumber(): Promise<bigint> {
     const data = await this.rawCall('eth_blockNumber')
     return vQuantity.parse(data)
   }
 
-  async gasPrice(): Promise<bigint> {
+  async getGasPrice(): Promise<bigint> {
     const data = await this.rawCall('eth_gasPrice')
     return vQuantity.parse(data)
   }

@@ -100,7 +100,7 @@ export class RpcClientCompat implements IRpcClient {
   }
 
   async getLatestBlockNumber(): Promise<number> {
-    return Number(await this.ethRpcClient.blockNumber())
+    return Number(await this.ethRpcClient.getBlockNumber())
   }
 
   async getBlockWithTransactions(
