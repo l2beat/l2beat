@@ -165,12 +165,12 @@
     "loadConfigs": ["wormhole"],
     "txs": [
       {
-        "chain": "optimism",
-        "tx": "0xd8715e004dcf338ca7c85d227b0c505fa54d806491e537b26fdfa0ca82d2afed"
+        "chain": "arbitrum",
+        "tx": "0x5194fc5cf08b23ac6abbda0da5eb7b8ed256ce85a7fc7bc300944d09bbbf6b4a"
       },
       {
         "chain": "base",
-        "tx": "0x71be50f2e73096510601186b1b69f2fc5da7ce1bb636e176297262b08c833ebf"
+        "tx": "0xd7b40edc52ff4661b5e565ce3a50abff914991ebe5488c107cc56f8594c1244b"
       },
       {
         "chain": "arbitrum",
@@ -179,6 +179,31 @@
       {
         "chain": "base",
         "tx": "0xd64ae2bb720ad35a5bcfcf40b4c138402f1ba32cb45f590ee32814cf55e8b05a"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x6aa3bcb8d22a616258b555d0d7540b4f0745864cf136497085a7fa64c3c5e61c"
+      },
+      {
+        "chain": "base",
+        "tx": "0x2a8c5f7b98be6440c31b0698a5a884b9c8d1e0a4506a76f471d483ccf63dbd27"
+      },
+      {
+        "chain": "base",
+        "tx": "0x2240b33dfb2ecbd6ac944c6c472ce5de6511d5de7c2e81344e8a49ca021a12fa"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0x94be959d85fca528b08ce1edff52e0731c91291adcd7d47213e3d0cb92c6a16c"
+      },
+      // 7702 eth (no tx.value)
+      {
+        "chain": "arbitrum",
+        "tx": "0x8f7fd2fc0d2b8ae8871d64136624b0cbdf36b31ce356949949ac85aea6447ce0"
+      },
+      {
+        "chain": "base",
+        "tx": "0xe8ac1d52bf580037bfd13b07373a4456c7fff2624c9b3dda2099788c16a5ba52"
       }
     ]
   },

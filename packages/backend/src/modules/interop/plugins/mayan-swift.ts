@@ -7,7 +7,7 @@ However on the destination there's only OrderFulfilled event with the order hash
 we would need to extract it from calldata (trace) - currently we don't do that.
 */
 
-import { Address32 } from '@l2beat/shared-pure'
+import type { Address32 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { logToProtocolData, MayanForwarded } from './mayan-forwarder'
 import {
@@ -31,14 +31,14 @@ const parseOrderFulfilled = createEventParser(
 export const OrderCreated = createInteropEventType<{
   key: string
   $dstChain: string
-  minAmountOut?: bigint,
-  srcTokenAddress?: Address32,
-  dstTokenAddress?: Address32,
+  amountIn?: bigint
+  srcTokenAddress?: Address32
+  dstTokenAddress?: Address32
 }>('mayan-swift.OrderCreated')
 
 export const OrderFulfilled = createInteropEventType<{
   key: string
-  dstAmount: bigint,
+  dstAmount: bigint
 }>('mayan-swift.OrderFulfilled')
 
 export class MayanSwiftPlugin implements InteropPlugin {
@@ -52,8 +52,6 @@ export class MayanSwiftPlugin implements InteropPlugin {
 
     const orderFulfilled = parseOrderFulfilled(input.log, null)
     if (orderFulfilled) {
-
-
       return [
         OrderFulfilled.create(input, {
           key: orderFulfilled.key,
@@ -77,9 +75,9 @@ export class MayanSwiftPlugin implements InteropPlugin {
           key: orderCreated.key,
           $dstChain: dstChain,
           // srcAmount is not in the parsed data
-          minAmountOut: parsed?.minAmountOut,
+          amountIn: parsed?.amountIn ?? input.tx.value, // for eth as srcToken there is no amountIn in protocoldata
           srcTokenAddress: parsed?.tokenIn,
-          dstTokenAddress: parsed?.tokenOut
+          dstTokenAddress: parsed?.tokenOut,
         }),
       ]
     }
@@ -107,10 +105,12 @@ export class MayanSwiftPlugin implements InteropPlugin {
         dstEvent: orderFulfilled,
       }),
       // TODO: implement properly. Handle optional wormhole core settlement event
-      // TODO: tokens
       Result.Transfer('mayan-swift.Transfer', {
         srcEvent: orderCreated,
-        srcAmount: orderCreated.args.minAmountOut,
+        srcAmount:
+          orderCreated.args.amountIn !== 0n
+            ? orderCreated.args.amountIn
+            : orderFulfilled.args.dstAmount, // dirty fallback for special cases like 7702 + eth at source with 0 tx.value (see examples)
         srcTokenAddress: orderCreated.args.srcTokenAddress,
         dstEvent: orderFulfilled,
         dstAmount: orderFulfilled.args.dstAmount,
