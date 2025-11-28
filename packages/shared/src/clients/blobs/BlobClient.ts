@@ -1,8 +1,8 @@
 import { assert, type json } from '@l2beat/shared-pure'
 import type { v as z } from '@l2beat/validate'
 import { utils } from 'ethers'
+import type { IRpcClient } from '../../clients2'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
-import type { RpcClient } from '../rpc/RpcClient'
 import {
   BeaconChainError,
   type Blob as BlobSchema,
@@ -17,7 +17,7 @@ export interface BlobsInBlock {
 
 interface Dependencies extends ClientCoreDependencies {
   beaconApiUrl: string
-  rpcClient: RpcClient
+  rpcClient: IRpcClient
   timeout?: number
   generateId?: () => string
 }

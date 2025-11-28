@@ -56,58 +56,60 @@ export class RetryHandler {
     }
   }
 
-  static create = (retryStrategy: RetryHandlerVariant, logger: Logger) => {
-    switch (retryStrategy) {
-      case 'RELIABLE':
-        return this.RELIABLE_API(logger)
-      case 'UNRELIABLE':
-        return this.UNRELIABLE_API(logger)
-      case 'SCRIPT':
-        return this.SCRIPT(logger)
-      case 'TEST':
-        return this.TEST(logger)
-      case 'RELIABLE_BIGGER_DELAY':
-        return this.RELIABLE_API_BIGGER_DELAY(logger)
-    }
-  }
+  static create = (retryStrategy: RetryHandlerVariant, logger: Logger) =>
+    new RetryHandler({ logger, ...toRetryOptions(retryStrategy) })
 
   static RELIABLE_API = (logger: Logger) =>
-    new RetryHandler({
-      logger,
-      initialRetryDelayMs: 1000,
-      maxRetries: 3, // 1 2 4
-      maxRetryDelayMs: Number.POSITIVE_INFINITY,
-    })
+    new RetryHandler({ logger, ...toRetryOptions('RELIABLE') })
 
   static RELIABLE_API_BIGGER_DELAY = (logger: Logger) =>
-    new RetryHandler({
-      logger,
-      initialRetryDelayMs: 5000,
-      maxRetries: 2, // 5 10
-      maxRetryDelayMs: Number.POSITIVE_INFINITY,
-    })
+    new RetryHandler({ logger, ...toRetryOptions('RELIABLE_BIGGER_DELAY') })
 
   static UNRELIABLE_API = (logger: Logger) =>
-    new RetryHandler({
-      logger,
-      initialRetryDelayMs: 5000,
-      maxRetries: 7, // 5 10 20 40 80 160 320
-      maxRetryDelayMs: Number.POSITIVE_INFINITY,
-    })
+    new RetryHandler({ logger, ...toRetryOptions('UNRELIABLE') })
 
   static SCRIPT = (logger: Logger) =>
-    new RetryHandler({
-      logger: logger,
-      initialRetryDelayMs: 1,
-      maxRetries: 3,
-      maxRetryDelayMs: Number.POSITIVE_INFINITY,
-    })
+    new RetryHandler({ logger, ...toRetryOptions('SCRIPT') })
 
   static TEST = (logger: Logger) =>
-    new RetryHandler({
-      logger: logger,
-      initialRetryDelayMs: 1,
-      maxRetries: 1,
-      maxRetryDelayMs: Number.POSITIVE_INFINITY,
-    })
+    new RetryHandler({ logger, ...toRetryOptions('TEST') })
+}
+
+export function toRetryOptions(variant: RetryHandlerVariant): {
+  initialRetryDelayMs: number
+  maxRetries: number
+  maxRetryDelayMs: number
+} {
+  switch (variant) {
+    case 'RELIABLE':
+      return {
+        initialRetryDelayMs: 1000,
+        maxRetries: 3, // 1 2 4
+        maxRetryDelayMs: Number.POSITIVE_INFINITY,
+      }
+    case 'UNRELIABLE':
+      return {
+        initialRetryDelayMs: 5000,
+        maxRetries: 7, // 5 10 20 40 80 160 320
+        maxRetryDelayMs: Number.POSITIVE_INFINITY,
+      }
+    case 'SCRIPT':
+      return {
+        initialRetryDelayMs: 1,
+        maxRetries: 3,
+        maxRetryDelayMs: Number.POSITIVE_INFINITY,
+      }
+    case 'TEST':
+      return {
+        initialRetryDelayMs: 1,
+        maxRetries: 1,
+        maxRetryDelayMs: Number.POSITIVE_INFINITY,
+      }
+    case 'RELIABLE_BIGGER_DELAY':
+      return {
+        initialRetryDelayMs: 5000,
+        maxRetries: 2, // 5 10
+        maxRetryDelayMs: Number.POSITIVE_INFINITY,
+      }
+  }
 }

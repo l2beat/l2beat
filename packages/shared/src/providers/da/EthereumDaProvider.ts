@@ -4,10 +4,10 @@ import type {
   BeaconChainBlob,
   BeaconChainClient,
   EVMLog,
-  RpcClient,
 } from '../../clients'
 import type { DaBlobProvider } from './DaProvider'
 import type { EthereumBlob } from './types'
+import { IRpcClient } from '../../clients2'
 
 // each blob is 128 KiB so 131,072 B
 export const ETHEREUM_BLOB_SIZE_BYTES = 131072n
@@ -15,7 +15,7 @@ export const ETHEREUM_BLOB_SIZE_BYTES = 131072n
 export class EthereumDaProvider implements DaBlobProvider {
   constructor(
     private readonly beaconChainClient: BeaconChainClient,
-    private readonly rpcClient: RpcClient,
+    private readonly rpcClient: IRpcClient,
     readonly daLayer: string,
   ) {}
 

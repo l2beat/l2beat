@@ -169,6 +169,26 @@ describe('validate', () => {
     })
   })
 
+  it('passthrough object', () => {
+    type Foo = v.infer<typeof Foo>
+    const Foo = v.passthroughObject({
+      key1: v.string(),
+      key2: v.string().optional(),
+    })
+
+    expect(Foo.safeValidate({ key1: 'bar', key3: 'foo' })).toEqual({
+      success: true,
+      data: { key1: 'bar', key3: 'foo' } as Foo,
+    })
+
+    expect(
+      Foo.safeValidate({ key1: 'bar', key2: undefined, key3: 'foo' }),
+    ).toEqual({
+      success: true,
+      data: { key1: 'bar', key2: undefined, key3: 'foo' } as Foo,
+    })
+  })
+
   it('default - basic use', () => {
     const Foo = v.union([v.number(), v.null(), v.undefined()]).default(2)
     expect(Foo.safeParse(3)).toEqual({ success: true, data: 3 })
