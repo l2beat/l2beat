@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { RpcClient } from '@l2beat/shared'
+import type { IRpcClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import {
   decodeFunctionResult,
@@ -100,7 +100,7 @@ export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
     private chains: { id: number; name: string }[],
     private store: InteropConfigStore,
     protected logger: Logger,
-    private rpcs: Map<string, RpcClient>,
+    private rpcs: Map<string, IRpcClient>,
   ) {
     super({ intervalMs: 20 * 60 * 1000 })
     this.logger = logger.for(this).tag({ tag: 'cctp' })

@@ -1,13 +1,17 @@
 import { MetricsAggregator } from '@l2beat/backend-tools'
-import {
-  type Block,
-  Bytes,
-  type EthereumAddress,
-  type Transaction,
-} from '@l2beat/shared-pure'
+import { Bytes, type EthereumAddress } from '@l2beat/shared-pure'
 import type { ClientCoreDependencies } from '../../clients/ClientCore'
-import type { MulticallV3Client } from '../../clients/rpc/multicall/MulticallV3Client'
-import type { CallParameters, EVMLog } from '../../clients/rpc/types'
+import type {
+  MulticallV3Client,
+  MulticallV3Response,
+} from '../../clients/rpc/multicall/MulticallV3Client'
+import type {
+  CallParameters,
+  EVMBlock,
+  EVMBlockWithTransactions,
+  EVMLog,
+  EVMTransaction,
+} from '../../clients/rpc/types'
 import type { BlockClient, LogsClient } from '../../clients/types'
 import { toRetryOptions } from '../../tools'
 import { EthRpcClient, type RpcTransaction } from '../EthRpcClient'
@@ -28,11 +32,46 @@ interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
   multicallClient?: MulticallV3Client
 }
 
-export class RpcClientCompat implements BlockClient, LogsClient {
+export interface IRpcClient extends BlockClient, LogsClient {
+  multicallClient?: MulticallV3Client
+  getLatestBlockNumber(): Promise<number>
+  getBlockWithTransactions(
+    blockNumber: number | 'latest',
+  ): Promise<EVMBlockWithTransactions>
+  getBlockParentBeaconRoot(blockNumber: number): Promise<string>
+  getBlock(blockNumber: 'latest' | number, includeTxs: false): Promise<EVMBlock>
+  getBlock(
+    blockNumber: 'latest' | number,
+    includeTxs: true,
+  ): Promise<EVMBlockWithTransactions>
+  getTransaction(txHash: string): Promise<EVMTransaction>
+  getTransactionReceipt(txHash: string): Promise<Receipt>
+  getBalance(
+    holder: EthereumAddress,
+    blockNumber: number | 'latest',
+  ): Promise<bigint>
+  getLogs(
+    from: number,
+    to: number,
+    addresses?: string[],
+    topics?: string[],
+  ): Promise<EVMLog[]>
+  call(
+    callParams: CallParameters,
+    blockNumber: number | 'latest',
+  ): Promise<Bytes>
+  isMulticallDeployed(blockNumber: number): boolean
+  multicall(
+    calls: CallParameters[],
+    blockNumber: number,
+  ): Promise<MulticallV3Response[]>
+}
+
+export class RpcClientCompat implements IRpcClient {
   constructor(
     private ethRpcClient: EthRpcClient,
     readonly chain: string,
-    private multicallClient?: MulticallV3Client,
+    public multicallClient?: MulticallV3Client,
   ) {}
 
   static create(deps: Dependencies) {
@@ -66,27 +105,56 @@ export class RpcClientCompat implements BlockClient, LogsClient {
 
   async getBlockWithTransactions(
     blockNumber: number | 'latest',
-  ): Promise<Block> {
-    const block = await this.ethRpcClient.getBlockByNumber(
-      blockNumber === 'latest' ? 'latest' : BigInt(blockNumber),
-      true,
-    )
+  ): Promise<EVMBlockWithTransactions> {
+    return await this.getBlock(blockNumber, true)
+  }
+
+  async getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
+    const block = await this.getBlock(blockNumber, false)
+    if (!block.parentBeaconBlockRoot) {
+      throw new Error(`Block ${block}: parentBeaconBlockRoot should be defined`)
+    }
+    return block.parentBeaconBlockRoot
+  }
+
+  getBlock(blockNumber: 'latest' | number, includeTxs: false): Promise<EVMBlock>
+  getBlock(
+    blockNumber: 'latest' | number,
+    includeTxs: true,
+  ): Promise<EVMBlockWithTransactions>
+  async getBlock(
+    blockNumber: number | 'latest',
+    includeTxs: boolean,
+  ): Promise<EVMBlock | EVMBlockWithTransactions> {
+    const bnParam = blockNumber === 'latest' ? 'latest' : BigInt(blockNumber)
+    const block = includeTxs
+      ? await this.ethRpcClient.getBlockByNumber(bnParam, true)
+      : await this.ethRpcClient.getBlockByNumber(bnParam, false)
     if (block === null) {
       throw new Error(`Block ${blockNumber} not found`)
     }
     if (block.hash === null || block.number === null) {
       throw new Error(`Block ${blockNumber} is pending`)
     }
-    return {
+    const base: EVMBlock = {
       hash: block.hash,
       number: Number(block.number),
       timestamp: Number(block.timestamp),
-      transactions: block.transactions.map(toTx),
       logsBloom: block.logsBloom,
+      parentBeaconBlockRoot: block.parentBeaconBlockRoot,
     }
+    if (includeTxs) {
+      return {
+        ...base,
+        transactions: block.transactions.map((tx) =>
+          toTx(tx as RpcTransaction),
+        ),
+      } satisfies EVMBlockWithTransactions
+    }
+    return base
   }
 
-  async getTransaction(txHash: string): Promise<Transaction> {
+  async getTransaction(txHash: string): Promise<EVMTransaction> {
     const tx = await this.ethRpcClient.getTransactionByHash(txHash)
     if (tx === null) {
       throw new Error(`Transaction ${txHash} not found`)
@@ -168,7 +236,7 @@ export class RpcClientCompat implements BlockClient, LogsClient {
     return Bytes.fromHex(result.data)
   }
 
-  isMulticallDeployed(blockNumber: number) {
+  isMulticallDeployed(blockNumber: number): boolean {
     return !!(
       this.multicallClient && this.multicallClient.sinceBlock <= blockNumber
     )
@@ -189,7 +257,7 @@ export class RpcClientCompat implements BlockClient, LogsClient {
   }
 }
 
-function toTx(tx: RpcTransaction): Transaction {
+function toTx(tx: RpcTransaction): EVMTransaction {
   return {
     from: tx.from,
     to: tx.to ?? undefined,
@@ -197,6 +265,8 @@ function toTx(tx: RpcTransaction): Transaction {
     hash: tx.hash,
     type: tx.type?.toString(),
     value: tx.value,
+    blobVersionedHashes: tx.blobVersionedHashes ?? undefined,
+    blockNumber: tx.blockNumber !== null ? Number(tx.blockNumber) : null,
   }
 }
 

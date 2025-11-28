@@ -1,8 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { assert, Bytes, type EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import type { CallParameters, RpcClient } from '../../clients'
+import type { CallParameters } from '../../clients'
 import type { MulticallV3Client } from '../../clients/rpc/multicall/MulticallV3Client'
+import { IRpcClient } from '../../clients2'
 
 interface BalanceQuery {
   token: EthereumAddress | 'native'
@@ -12,7 +13,7 @@ interface BalanceQuery {
 export class BalanceProvider {
   private logger: Logger
   constructor(
-    private readonly rpcs: RpcClient[],
+    private readonly rpcs: IRpcClient[],
     logger: Logger,
   ) {
     this.logger = logger.for(this)

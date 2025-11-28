@@ -10,9 +10,10 @@ import {
   CoingeckoClient,
   CoingeckoQueryService,
   HttpClient,
+  IRpcClient,
   MulticallV3Client,
   PriceProvider,
-  RpcClient,
+  RpcClientCompat,
   StarknetClient,
   StarknetTotalSupplyProvider,
   TotalSupplyProvider,
@@ -155,13 +156,13 @@ export class LocalExecutor {
       }
     }
 
-    const rpcs: RpcClient[] = []
+    const rpcs: IRpcClient[] = []
     const starknetClients: StarknetClient[] = []
     const blockProviders = new Map<string, BlockProvider>()
     const indexerClients: BlockIndexerClient[] = []
 
     for (const chainConfig of chainConfigs) {
-      let blockClient: StarknetClient | RpcClient
+      let blockClient: StarknetClient | IRpcClient
 
       const starknetApi = chainConfig.apis.find(
         (api) => api.type === 'starknet',
@@ -251,7 +252,7 @@ export class LocalExecutor {
     http: HttpClient,
     chainConfig: ChainConfig,
     rpcApi?: ChainBasicApi<'rpc'>,
-  ) {
+  ): IRpcClient {
     const url = this.env.string(
       `${chainConfig.name.toUpperCase()}_RPC_URL`,
       rpcApi?.url,
@@ -269,7 +270,7 @@ export class LocalExecutor {
       ? new MulticallV3Client(multicallV3.address, multicallV3.sinceBlock, 150)
       : undefined
 
-    return new RpcClient({
+    return RpcClientCompat.create({
       url,
       http,
       logger: this.logger,

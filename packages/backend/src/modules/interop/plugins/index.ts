@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { HttpClient, RpcClient } from '@l2beat/shared'
+import type { HttpClient, IRpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import type { InteropComparePlugin } from '../engine/compare/InteropCompareLoop'
 import type {
@@ -61,7 +61,7 @@ export interface InteropPlugins {
 export interface InteropPluginDependencies {
   chains: { name: string; id: number }[]
   httpClient: HttpClient
-  rpcClients: RpcClient[]
+  rpcClients: IRpcClient[]
   logger: Logger
   configs: InteropConfigStore
 }

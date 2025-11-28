@@ -11,7 +11,6 @@ import {
   ClientCore,
   type ClientCoreDependencies as ClientCoreDependencies,
 } from '../ClientCore'
-import type { BlockClient, LogsClient } from '../types'
 import type { MulticallV3Client } from './multicall/MulticallV3Client'
 import {
   type CallParameters,
@@ -29,6 +28,7 @@ import {
   RPCError,
   RpcResponse,
 } from './types'
+import { IRpcClient } from '../../clients2'
 
 interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
   url: string
@@ -43,7 +43,7 @@ type Param =
   | boolean
   | Record<string, string | string[] | string[][]>
 
-export class RpcClient extends ClientCore implements BlockClient, LogsClient {
+export class RpcClient extends ClientCore implements IRpcClient {
   multicallClient?: MulticallV3Client
 
   constructor(private readonly $: Dependencies) {
@@ -59,7 +59,7 @@ export class RpcClient extends ClientCore implements BlockClient, LogsClient {
   /** Calls eth_getBlockByNumber on RPC, includes full transactions bodies.*/
   async getBlockWithTransactions(
     blockNumber: number | 'latest',
-  ): Promise<Block> {
+  ): Promise<EVMBlockWithTransactions> {
     return await this.getBlock(blockNumber, true)
   }
 
