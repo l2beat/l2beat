@@ -74,7 +74,6 @@ export class MayanSwiftPlugin implements InteropPlugin {
         OrderCreated.create(input, {
           key: orderCreated.key,
           $dstChain: dstChain,
-          // srcAmount is not in the parsed data
           amountIn: parsed?.amountIn ?? input.tx.value, // for eth as srcToken there is no amountIn in protocoldata
           srcTokenAddress: parsed?.tokenIn,
           dstTokenAddress: parsed?.tokenOut,
