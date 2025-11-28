@@ -154,7 +154,7 @@ export class ArbitrumSequencerVersionHandler implements Handler {
     if (calldata.startsWith(addSequencerBatchEspressoSigHash)) {
       return abi.decodeFunctionData(addSequencerBatchEspresso, calldata)
     }
-    throw new Error(`Unexpected function signature ${calldata.slice(0, 10)}}`)
+    throw new Error(`Unexpected function signature ${calldata.slice(0, 10)}`)
   }
 
   async getLastEventWithTxInput(
