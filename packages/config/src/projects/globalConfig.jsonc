@@ -479,6 +479,9 @@
       "typeCaster": "Mapping",
       "arg": {
         // source: https://github.com/ethereum-optimism/superchain-registry/blob/main/validation/standard/standard-prestates.toml
+        // verification example: https://oplabs.notion.site/U17-2a1f153ee162804f94d0c10d0a1e1258
+        // TODO cannot add more due to refresh being broken
+        // "0x03caa1871bb9fe7f9b11217c245c16e4ded33367df5b3ccb2c6d0a847a217d1b": "v1.8.0-rc.4 (cannon64)",
         "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6": "v1.6.0 (cannon64)",
         "0x03ee2917da962ec266b091f4b62121dc9682bb0db534633707325339f99ee405": "v1.5.1-rc.1 (cannon64)",
         "0x0354eee87a1775d96afee8977ef6d5d6bd3612b256170952a01bf1051610ee01": "v1.5.1-rc.1",

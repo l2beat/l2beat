@@ -1,3 +1,48 @@
+Generated with discovered.json: 0xb699249896f106550ed1fdf38a4348c6eae61bca
+
+# Diff at Fri, 28 Nov 2025 10:01:51 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@10f814ec1e4e08d34183a00c458ece2b8605dede block: 1761223075
+- current timestamp: 1764324033
+
+## Description
+
+Jovian SuperchainConfig upgrade.
+
+## Watched changes
+
+```diff
+    contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      sourceHashes.1:
+-        "0x5a0e73c7d129cc83e1c387b55df0141890c02d2cb4111b8a1b6376d737d88f6b"
++        "0x53a6b3db7f270298025bbfef7f6c77b420a9808341212fa9cf54a5e157a18567"
+      values.$implementation:
+-        "eth:0xCe28685EB204186b557133766eCA00334EB441E4"
++        "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"
+      values.$pastUpgrades.5:
++        ["2025-11-25T17:46:35.000Z","0xf556934cb4de1ab40a4cfba17856cd601cbc8b875b96a9ccd8ee32bcd363abf5",["eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.version:
+-        "2.3.0"
++        "2.4.0"
+      implementationNames.eth:0xCe28685EB204186b557133766eCA00334EB441E4:
+-        "SuperchainConfig"
+      implementationNames.eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957:
++        "SuperchainConfig"
+    }
+```
+
+## Source code changes
+
+```diff
+.../SuperchainConfig/SuperchainConfig.sol          | 26 ++--------------------
+ 1 file changed, 2 insertions(+), 24 deletions(-)
+```
+
 Generated with discovered.json: 0xca4e4e42f3947b1589b948375f9af46d72fe345c
 
 # Diff at Tue, 04 Nov 2025 11:34:06 GMT:

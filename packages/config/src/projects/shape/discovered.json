@@ -1,6 +1,6 @@
 {
   "name": "shape",
-  "timestamp": 1761223131,
+  "timestamp": 1764324463,
   "configHash": "0x44423444c614c648ecaf1e0c236692dbe324d22e83eac68f1dd20918fd190b65",
   "entries": [
     {
@@ -259,7 +259,7 @@
         ],
         "$upgradeCount": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621227",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621242",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -309,7 +309,7 @@
         ],
         "$upgradeCount": 1,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 5131,
+        "gameCount": 5598,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x8090Ac33F4C9A1A220492487390dbe0c3b56a37A",
@@ -321,7 +321,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-        "permissionedGamesTotal": 5131,
+        "permissionedGamesTotal": 5598,
         "version": "1.0.0"
       },
       "fieldMeta": {
@@ -548,7 +548,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 28,
+        "nonce": 31,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -896,7 +896,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 43,
+        "nonce": 47,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -916,7 +916,7 @@
       "template": "opstack/SuperchainConfig_expiry",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x5a0e73c7d129cc83e1c387b55df0141890c02d2cb4111b8a1b6376d737d88f6b"
+        "0x53a6b3db7f270298025bbfef7f6c77b420a9808341212fa9cf54a5e157a18567"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.",
@@ -924,7 +924,7 @@
       "sinceBlock": 19064589,
       "values": {
         "$admin": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-        "$implementation": "eth:0xCe28685EB204186b557133766eCA00334EB441E4",
+        "$implementation": "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957",
         "$pastUpgrades": [
           [
             "2024-01-22T20:19:59.000Z",
@@ -950,9 +950,14 @@
             "2025-07-24T17:47:23.000Z",
             "0x46acdce174c8d83ebe2f208d8c76c867e75617483d64c3e407f69ae2f9868716",
             ["eth:0xCe28685EB204186b557133766eCA00334EB441E4"]
+          ],
+          [
+            "2025-11-25T17:46:35.000Z",
+            "0xf556934cb4de1ab40a4cfba17856cd601cbc8b875b96a9ccd8ee32bcd363abf5",
+            ["eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"]
           ]
         ],
-        "$upgradeCount": 5,
+        "$upgradeCount": 6,
         "guardian": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
         "initVersion": 2,
         "paused": false,
@@ -960,12 +965,12 @@
         "pauseExpiryFmt": "3mo 1d",
         "proxyAdmin": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "version": "2.3.0"
+        "version": "2.4.0"
       },
       "fieldMeta": { "paused": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C": "Proxy",
-        "eth:0xCe28685EB204186b557133766eCA00334EB441E4": "SuperchainConfig"
+        "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957": "SuperchainConfig"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
@@ -1144,7 +1149,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 35,
+        "nonce": 36,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1220,7 +1225,7 @@
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 46,
+        "nonce": 50,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1375,7 +1380,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 23636126
+          "prevBlockNum": 23891877
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2044,36 +2049,7 @@
       "function superchainConfig() view returns (address)",
       "function version() view returns (string)"
     ],
-    "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": [
-      "constructor(address _singleton)"
-    ],
-    "eth:0xc641A33cab81C559F2bd4b21EA34C290E2440C2B": [
-      "constructor()",
-      "error GameAlreadyExists(bytes32 uuid)",
-      "error IncorrectBondAmount()",
-      "error NoImplementation(uint32 gameType)",
-      "event DisputeGameCreated(address indexed disputeProxy, uint32 indexed gameType, bytes32 indexed rootClaim)",
-      "event ImplementationSet(address indexed impl, uint32 indexed gameType)",
-      "event InitBondUpdated(uint32 indexed gameType, uint256 indexed newBond)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)",
-      "function findLatestGames(uint32 _gameType, uint256 _start, uint256 _n) view returns (tuple(uint256 index, bytes32 metadata, uint64 timestamp, bytes32 rootClaim, bytes extraData)[] games_)",
-      "function gameAtIndex(uint256 _index) view returns (uint32 gameType_, uint64 timestamp_, address proxy_)",
-      "function gameCount() view returns (uint256 gameCount_)",
-      "function gameImpls(uint32) view returns (address)",
-      "function games(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) view returns (address proxy_, uint64 timestamp_)",
-      "function getGameUUID(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) pure returns (bytes32 uuid_)",
-      "function initBonds(uint32) view returns (uint256)",
-      "function initialize(address _owner)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function setImplementation(uint32 _gameType, address _impl)",
-      "function setInitBond(uint32 _gameType, uint256 _initBond)",
-      "function transferOwnership(address newOwner)",
-      "function version() view returns (string)"
-    ],
-    "eth:0xCe28685EB204186b557133766eCA00334EB441E4": [
+    "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957": [
       "constructor()",
       "error ProxyAdminOwnedBase_NotProxyAdmin()",
       "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
@@ -2103,7 +2079,35 @@
       "function proxyAdmin() view returns (address)",
       "function proxyAdminOwner() view returns (address)",
       "function unpause(address _identifier)",
-      "function upgrade()",
+      "function version() view returns (string)"
+    ],
+    "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xc641A33cab81C559F2bd4b21EA34C290E2440C2B": [
+      "constructor()",
+      "error GameAlreadyExists(bytes32 uuid)",
+      "error IncorrectBondAmount()",
+      "error NoImplementation(uint32 gameType)",
+      "event DisputeGameCreated(address indexed disputeProxy, uint32 indexed gameType, bytes32 indexed rootClaim)",
+      "event ImplementationSet(address indexed impl, uint32 indexed gameType)",
+      "event InitBondUpdated(uint32 indexed gameType, uint256 indexed newBond)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)",
+      "function findLatestGames(uint32 _gameType, uint256 _start, uint256 _n) view returns (tuple(uint256 index, bytes32 metadata, uint64 timestamp, bytes32 rootClaim, bytes extraData)[] games_)",
+      "function gameAtIndex(uint256 _index) view returns (uint32 gameType_, uint64 timestamp_, address proxy_)",
+      "function gameCount() view returns (uint256 gameCount_)",
+      "function gameImpls(uint32) view returns (address)",
+      "function games(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) view returns (address proxy_, uint64 timestamp_)",
+      "function getGameUUID(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) pure returns (bytes32 uuid_)",
+      "function initBonds(uint32) view returns (uint256)",
+      "function initialize(address _owner)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function setImplementation(uint32 _gameType, address _impl)",
+      "function setInitBond(uint32 _gameType, uint256 _initBond)",
+      "function transferOwnership(address newOwner)",
       "function version() view returns (string)"
     ],
     "eth:0xcee78437aE9e15cee9c78E63757E0153c0FD7479": [
@@ -2319,6 +2323,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23640252 },
+  "usedBlockNumbers": { "ethereum": 23896476 },
   "permissionsConfigHash": "0x8cfe5954eae4028d498f3fe13e3eb316cc7186ad824af984060489930b0b9ceb"
 }
