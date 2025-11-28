@@ -560,7 +560,7 @@ export function DeployedTokenForm({
                   </CardActionButton>
                 </CardActionButtons>
 
-                <CardContent className="space-y-8">
+                <CardContent className="space-y-6">
                   <TvsMetadataFields form={form} />
                 </CardContent>
               </Card>
