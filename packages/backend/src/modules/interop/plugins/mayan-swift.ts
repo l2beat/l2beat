@@ -68,7 +68,6 @@ export class MayanSwiftPlugin implements InteropPlugin {
         (x) => x.logIndex === input.log.logIndex! + 1,
       )
       const parsed = nextLog && logToProtocolData(nextLog, wormholeNetworks)
-      console.log('MayanSwiftPlugin: parsed protocol data', parsed)
       const dstChain = parsed?.dstChain ?? 'unknown_missing_protocolData'
       return [
         OrderCreated.create(input, {
