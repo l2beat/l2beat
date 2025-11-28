@@ -1,6 +1,6 @@
 {
   "name": "fluence",
-  "timestamp": 1764334955,
+  "timestamp": 1764335280,
   "configHash": "0x0a587a296c17937f594d4097e0136205279faee5ac66ddcf5607830d33dc8231",
   "entries": [
     {
@@ -633,6 +633,7 @@
     {
       "address": "eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259",
       "type": "EOA",
+      "template": "uniswap/calibur7702",
       "sourceHashes": [
         "0xb3eb47d8d57eba02013e5d347d05147f7ac072ef2e5e4e1f9a5c6fbced93f8b0"
       ],
@@ -652,16 +653,10 @@
           "extensions": []
         },
         "ENTRY_POINT": "eth:0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108",
-        "getSeq": [0, 0, 0, 0, 0],
         "keyAt": [],
         "keyCount": 0,
         "keyHashes": 0,
-        "namespaceAndVersion": "Uniswap.Calibur.1.0.0",
-        "nonceSequenceNumber": [0, 0, 0, 0, 0]
-      },
-      "errors": {
-        "getSeq": "Processing error occurred.",
-        "nonceSequenceNumber": "Processing error occurred."
+        "namespaceAndVersion": "Uniswap.Calibur.1.0.0"
       }
     },
     {
@@ -2039,8 +2034,9 @@
     "orbitstack/RollupProxy_fastConfirm": "0x44444b0ddf0730808af44c1a9ff9b9295a98d4ce2f5d1f6c550448dbd39a6c72",
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
-    "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "uniswap/calibur7702": "0x9f03ed41f4dd7794f1a7ad4d4e55fb891cce776ed8502eaa4e7d07f8c5861bbb"
   },
-  "usedBlockNumbers": { "ethereum": 23897341 },
+  "usedBlockNumbers": { "ethereum": 23897368 },
   "permissionsConfigHash": "0xcaac7131b1dedb00ad39865ee8f513bd9a9cb8e0e0e8c9816db767cc8dd96747"
 }

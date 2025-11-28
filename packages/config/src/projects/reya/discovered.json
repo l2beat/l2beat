@@ -1,6 +1,6 @@
 {
   "name": "reya",
-  "timestamp": 1764247270,
+  "timestamp": 1764335253,
   "configHash": "0x4d9b8f4e445f12c7260938f23d2e354807d1760f57e312776b698528a559fc79",
   "entries": [
     {
@@ -201,7 +201,7 @@
           "eth:0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
         ],
         "allowedOutboxList": ["eth:0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"],
-        "delayedMessageCount": 65475,
+        "delayedMessageCount": 65634,
         "inboxHistory": [
           "eth:0x672109752635177ebcb17F2C7e04575A709014BD",
           "eth:0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
@@ -209,8 +209,8 @@
         "outboxHistory": ["eth:0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"],
         "rollup": "eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerInbox": "eth:0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d",
-        "sequencerMessageCount": 63715,
-        "sequencerReportedSubMessageCount": 114517453
+        "sequencerMessageCount": 63873,
+        "sequencerReportedSubMessageCount": 114857278
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -330,13 +330,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 2599,
+        "firstUnresolvedNode": 2601,
         "inbox": "eth:0x672109752635177ebcb17F2C7e04575A709014BD",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21894997,
-        "latestConfirmed": 2598,
-        "latestNodeCreated": 2611,
+        "latestConfirmed": 2600,
+        "latestNodeCreated": 2613,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9",
@@ -520,7 +520,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 63715,
+        "batchCount": 63873,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": ["eth:0x29156F8dFfE8979F49E3a085dbb10477373a6051"],
         "bridge": "eth:0x383c03c4EfF819E73409DbC690755a9992393814",
@@ -551,7 +551,7 @@
         "rollup": "eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 65473,
+        "totalDelayedMessagesRead": 65632,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -704,6 +704,7 @@
     {
       "address": "eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259",
       "type": "EOA",
+      "template": "uniswap/calibur7702",
       "sourceHashes": [
         "0xb3eb47d8d57eba02013e5d347d05147f7ac072ef2e5e4e1f9a5c6fbced93f8b0"
       ],
@@ -723,16 +724,10 @@
           "extensions": []
         },
         "ENTRY_POINT": "eth:0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108",
-        "getSeq": [0, 0, 0, 0, 0],
         "keyAt": [],
         "keyCount": 0,
         "keyHashes": 0,
-        "namespaceAndVersion": "Uniswap.Calibur.1.0.0",
-        "nonceSequenceNumber": [0, 0, 0, 0, 0]
-      },
-      "errors": {
-        "getSeq": "Processing error occurred.",
-        "nonceSequenceNumber": "Processing error occurred."
+        "namespaceAndVersion": "Uniswap.Calibur.1.0.0"
       }
     },
     {
@@ -1690,8 +1685,9 @@
     "orbitstack/RollupProxy_fastConfirm": "0x44444b0ddf0730808af44c1a9ff9b9295a98d4ce2f5d1f6c550448dbd39a6c72",
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
-    "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "uniswap/calibur7702": "0x9f03ed41f4dd7794f1a7ad4d4e55fb891cce776ed8502eaa4e7d07f8c5861bbb"
   },
-  "usedBlockNumbers": { "ethereum": 23890110 },
+  "usedBlockNumbers": { "ethereum": 23897365 },
   "permissionsConfigHash": "0x0253b3d4b54f9a909464b402f5006f9101136b70b73e763ead654f5fbe80c61a"
 }
