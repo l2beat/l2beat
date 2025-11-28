@@ -1,6 +1,6 @@
 {
   "name": "ink",
-  "timestamp": 1764323600,
+  "timestamp": 1764329741,
   "configHash": "0x8b834afc2d7634f97b8230111eb489afe4c13855fc85ee36ede6aa3f10ac255e",
   "entries": [
     {
@@ -152,7 +152,7 @@
         ],
         "$upgradeCount": 5,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 1428,
+        "gameCount": 1429,
         "gameImpls": [
           "eth:0x4cBFBA0AfEb3a36878eb52fAE78335751076250C",
           "eth:0x467E6a8D6916E7394F9715b4DE9339ee36887382",
@@ -818,8 +818,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 514422,
-          "prevBlockNum": 23896294
+          "prevBoughtGas": 516470,
+          "prevBlockNum": 23896781
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1164,7 +1164,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292634722",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292634726",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1625,6 +1625,7 @@
     {
       "address": "eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259",
       "type": "EOA",
+      "template": "uniswap/calibur7702",
       "sourceHashes": [
         "0xb3eb47d8d57eba02013e5d347d05147f7ac072ef2e5e4e1f9a5c6fbced93f8b0"
       ],
@@ -1644,16 +1645,10 @@
           "extensions": []
         },
         "ENTRY_POINT": "eth:0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108",
-        "getSeq": [0, 0, 0, 0, 0],
         "keyAt": [],
         "keyCount": 0,
         "keyHashes": 0,
-        "namespaceAndVersion": "Uniswap.Calibur.1.0.0",
-        "nonceSequenceNumber": [0, 0, 0, 0, 0]
-      },
-      "errors": {
-        "getSeq": "Processing error occurred.",
-        "nonceSequenceNumber": "Processing error occurred."
+        "namespaceAndVersion": "Uniswap.Calibur.1.0.0"
       }
     },
     {
@@ -1953,12 +1948,12 @@
           ]
         ],
         "$upgradeCount": 2,
-        "anchorGame": "eth:0xf6844f5Ce144F55898Df4f6a02c79d605f6Cc9EF",
+        "anchorGame": "eth:0x4b25653B4523661613a4dd4ca146aCA09B0338fc",
         "disputeGameFactory": "eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x3bf391c4c179b676fc24face8a4b338b60508fef4eca32388e11677754131540",
-          30200858
+          "0x421f44672c5f19ac4cd72ecc403c083b50fe8b3a732a2526c7ad79d5822c0495",
+          30222552
         ],
         "initVersion": 1,
         "paused": false,
@@ -2066,7 +2061,7 @@
         "isEcotone": true,
         "isFjord": true,
         "isIsthmus": true,
-        "l1BaseFee": 43289121,
+        "l1BaseFee": 53582680,
         "version": "1.4.0"
       },
       "implementationNames": {
@@ -2253,7 +2248,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 43289121,
+        "basefee": 53582680,
         "baseFeeScalar": 4424,
         "batcherHash": "0x000000000000000000000000500d7ea63cf2e501dadaa5feec1fc19fe2aa72ac",
         "blobBaseFee": 1,
@@ -2265,15 +2260,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xadddd54c0543f7f3e913b390154ce885347b859d5bbec69331d489fccec0f71a",
+        "hash": "0xa37fc97883b7f0de00f32e10d0da7e00db59cd3f1fe618b31a86e3728f48cad3",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 23896399,
+        "number": 23896907,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 5,
-        "timestamp": 1764323531,
+        "sequenceNumber": 2,
+        "timestamp": 1764329675,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -4329,8 +4324,9 @@
     "opstack/PermissionedDisputeGame": "0xe39c1284ebcc867153d8d9bf8d32a6ab7daf95dde76ad7e13a040bb64d98b985",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
-    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
+    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
+    "uniswap/calibur7702": "0x9f03ed41f4dd7794f1a7ad4d4e55fb891cce776ed8502eaa4e7d07f8c5861bbb"
   },
-  "usedBlockNumbers": { "ethereum": 23896404, "ink": 30825189 },
+  "usedBlockNumbers": { "ethereum": 23896912, "ink": 30831330 },
   "permissionsConfigHash": "0x88eef07d387e08af5fcc6147995a4d8e1a0a3736a62ab69b435937062e8567dc"
 }
