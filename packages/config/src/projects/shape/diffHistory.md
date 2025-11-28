@@ -8,7 +8,7 @@ Generated with discovered.json: 0x3f54d1e3d4a6a755cbb6c1db30f1d816ef164e8d
 
 ## Description
 
-Jovay upgrade.
+Jovian upgrade.
 
 ## Watched changes
 

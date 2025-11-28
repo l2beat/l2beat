@@ -8,7 +8,7 @@ Generated with discovered.json: 0x9b3a51c7465635ee6071eade7df5bbdd98a56542
 
 ## Description
 
-Jovay SuperchainConfig upgrade.
+Jovian SuperchainConfig upgrade.
 
 ## Watched changes
 
