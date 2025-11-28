@@ -1,6 +1,9 @@
 import type { TokenDatabase } from '@l2beat/database'
 import type { AbstractTokenRepository } from '@l2beat/database/dist/repositories/AbstractTokenRepository'
-import type { DeployedTokenRepository } from '@l2beat/database/dist/repositories/DeployedTokenRepository'
+import type {
+  DeployedTokenRecord,
+  DeployedTokenRepository,
+} from '@l2beat/database/dist/repositories/DeployedTokenRepository'
 import { expect, mockFn, mockObject } from 'earl'
 import type { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
 import { createCallerFactory } from '../trpc'
@@ -87,6 +90,15 @@ describe('abstractTokensRouter', () => {
           comment: null,
           abstractTokenId: 'TK0001',
           deploymentTimestamp: 0,
+          metadata: {
+            tvs: {
+              includeInCalculations: true,
+              excludeFromTotal: false,
+              source: 'external',
+              supply: 'circulatingSupply',
+              bridgedUsing: [],
+            },
+          },
         },
         {
           chain: 'arbitrum',
@@ -96,6 +108,15 @@ describe('abstractTokensRouter', () => {
           comment: null,
           abstractTokenId: 'TK0001',
           deploymentTimestamp: 0,
+          metadata: {
+            tvs: {
+              includeInCalculations: false,
+              excludeFromTotal: true,
+              source: 'external',
+              supply: 'circulatingSupply',
+              bridgedUsing: [],
+            },
+          },
         },
         {
           chain: 'optimism',
@@ -105,8 +126,22 @@ describe('abstractTokensRouter', () => {
           comment: null,
           abstractTokenId: null,
           deploymentTimestamp: 0,
+          metadata: {
+            tvs: {
+              includeInCalculations: false,
+              excludeFromTotal: true,
+              source: 'external',
+              supply: 'zero',
+              bridgedUsing: [
+                {
+                  name: 'optimism',
+                  slug: 'optimism',
+                },
+              ],
+            },
+          },
         },
-      ]
+      ] satisfies DeployedTokenRecord[]
       const mockDb = mockObject<TokenDatabase>({
         abstractToken: mockObject<AbstractTokenRepository>({
           getAll: mockFn().resolvesTo(abstractTokens),
@@ -188,8 +223,22 @@ describe('abstractTokensRouter', () => {
           comment: null,
           abstractTokenId: 'TK0001',
           deploymentTimestamp: 0,
+          metadata: {
+            tvs: {
+              includeInCalculations: true,
+              source: 'external',
+              supply: 'circulatingSupply',
+              excludeFromTotal: false,
+              bridgedUsing: [
+                {
+                  name: 'arbitrum',
+                  slug: 'arbitrum',
+                },
+              ],
+            },
+          },
         },
-      ]
+      ] satisfies DeployedTokenRecord[]
       const mockDb = mockObject<TokenDatabase>({
         abstractToken: mockObject<AbstractTokenRepository>({
           findById: mockFn().resolvesTo(abstractToken),
