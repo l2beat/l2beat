@@ -142,6 +142,7 @@ export class EthRpcClient {
     const result = vQuantity.parse(data)
     return { reverted: false, gas: result }
   }
+
   async getBlockByNumber(
     block: BlockParameter,
     includeTransactions: false,
