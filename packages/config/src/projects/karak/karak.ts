@@ -1,9 +1,9 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { CELESTIA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
+import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('karak')
 
@@ -11,13 +11,12 @@ export const karak: ScalingProject = opStackL2({
   addedAt: UnixTime(1687459278), // 2023-06-22T18:41:18Z
   additionalBadges: [BADGES.RaaS.Caldera, BADGES.DA.EthereumCalldata],
   discovery,
-  reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.NO_PROOFS
-  ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'K2',
     slug: 'k2',
-    description: 'K2 is a general-purpose L2, which rebranded to the OpenGDP Network to soon become an asset tokenization-focused L1.',
+    description:
+      'K2 is a general-purpose L2, which rebranded to the OpenGDP Network to soon become an asset tokenization-focused L1.',
     links: {
       websites: ['https://karak.network/'],
       bridges: ['https://k2bridge.karak.network/'],
@@ -46,6 +45,13 @@ export const karak: ScalingProject = opStackL2({
   },
   isNodeAvailable: true,
   milestones: [
+    {
+      title: 'Karak rebrands to OpenGDP',
+      url: 'https://x.com/OpenGDP/status/1990437951529226293',
+      date: '2025-11-17T00:00:00Z',
+      description: 'Karak rebrands to OpenGDP.',
+      type: 'general',
+    },
     {
       title: 'K2 Network Early Access Launch',
       url: 'https://x.com/Karak_Network/status/1762561646999068899?s=20',
