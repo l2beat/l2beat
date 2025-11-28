@@ -6,7 +6,7 @@ import {
   ChevronsUpDownIcon,
   PlusIcon,
   SettingsIcon,
-  XIcon,
+  TrashIcon,
 } from 'lucide-react'
 import type { SubmitHandler, UseFormReturn } from 'react-hook-form'
 import { useFieldArray } from 'react-hook-form'
@@ -47,6 +47,7 @@ import type {
   ChainRecord,
 } from '../../../../database/dist/repositories/ChainRepository'
 import { AutoFillIndicator } from '../AutoFillIndicator'
+import { CardActionButton, CardActionButtons } from '../CardActionButtons'
 import { Card, CardContent } from '../core/Card'
 import { Checkbox } from '../core/Checkbox'
 import { Label } from '../core/Label'
@@ -546,17 +547,18 @@ export function DeployedTokenForm({
             <div className="grid gap-2">
               <Label>TVS</Label>
               <Card className="relative overflow-hidden">
-                <button
-                  type="button"
-                  className="absolute top-0 right-0 flex size-8 items-center justify-center rounded-bl-xl border-divider border-b border-l hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50"
-                  onClick={() => {
-                    form.setValue('metadata.tvs', undefined, {
-                      shouldDirty: true,
-                    })
-                  }}
-                >
-                  <XIcon className="size-4" />
-                </button>
+                <CardActionButtons>
+                  <CardActionButton
+                    onClick={() => {
+                      form.setValue('metadata.tvs', undefined, {
+                        shouldDirty: true,
+                      })
+                    }}
+                  >
+                    <TrashIcon className="size-4" />
+                  </CardActionButton>
+                </CardActionButtons>
+
                 <CardContent className="space-y-8">
                   <TvsMetadataFields form={form} />
                 </CardContent>
@@ -705,13 +707,11 @@ function TvsMetadataFields({
         </div>
         {bridgedUsingFields.map((field, index) => (
           <Card key={field.id} className="relative overflow-hidden">
-            <button
-              type="button"
-              className="absolute top-0 right-0 flex size-8 items-center justify-center rounded-bl-xl border-divider border-b border-l hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50"
-              onClick={() => removeBridgedUsing(index)}
-            >
-              <XIcon className="size-4" />
-            </button>
+            <CardActionButtons>
+              <CardActionButton onClick={() => removeBridgedUsing(index)}>
+                <TrashIcon className="size-4" />
+              </CardActionButton>
+            </CardActionButtons>
             <CardContent className="space-y-4">
               <FormField
                 control={form.control}
