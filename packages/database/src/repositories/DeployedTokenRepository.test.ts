@@ -687,6 +687,20 @@ function deployedToken(
     decimals: overrides.decimals ?? 18,
     deploymentTimestamp: overrides.deploymentTimestamp ?? 0,
     comment: overrides.comment ?? null,
+    metadata: overrides.metadata ?? {
+      tvs: {
+        includeInCalculations: true,
+        source: 'external',
+        supply: 'circulatingSupply',
+        bridgedUsing: [
+          {
+            name: 'arbitrum',
+            slug: 'arbitrum',
+          },
+        ],
+        excludeFromTotal: false,
+      },
+    },
   }
 }
 

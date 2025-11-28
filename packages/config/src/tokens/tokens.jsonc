@@ -2262,6 +2262,12 @@
   ],
   "arbitrum": [
     {
+      "symbol": "RAIN",
+      "address": "0x25118290e6A5f4139381D072181157035864099d",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "syrupUSDC",
       "address": "0x41CA7586cC1311807B4605fBB748a3B8862b42b5",
       "source": "external",
