@@ -129,7 +129,16 @@ export class DeployedTokenRepository extends BaseRepository {
       .execute()
 
     return result.map((row) => ({
-      deployedToken: toRecord(row),
+      deployedToken: toRecord({
+        symbol: row.symbol,
+        comment: row.comment,
+        chain: row.chain,
+        address: row.address,
+        abstractTokenId: row.abstractTokenId,
+        decimals: row.decimals,
+        deploymentTimestamp: row.deploymentTimestamp,
+        metadata: row.metadata as DeployedTokenMetadata,
+      }),
       abstractToken:
         row.AbstractToken_id === null ||
         row.AbstractToken_symbol === null ||
