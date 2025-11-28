@@ -62,6 +62,14 @@ const EVMTransactionReceipt = z.object({
       data: z.string(),
     }),
   ),
+  blobGasUsed: z
+    .unknown()
+    .transform((z) => BigInt(z as string))
+    .optional(),
+  blobGasPrice: z
+    .unknown()
+    .transform((z) => BigInt(z as string))
+    .optional(),
 })
 
 export const EVMTransactionReceiptResponse = z.object({

@@ -1,4 +1,5 @@
 import { CoingeckoQueryService } from '@l2beat/shared'
+import { assert } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import uniqBy from 'lodash/uniqBy'
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
@@ -32,7 +33,16 @@ export function createTrackedTxsModule(
     config.trackedTxsConfig.bigQuery,
   )
 
-  const trackedTxsClient = new TrackedTxsClient(bigQueryClient, logger)
+  const ethereumRpc = deps.providers.clients.rpcClients.find(
+    (c) => c.chain === 'ethereum',
+  )
+
+  assert(ethereumRpc, 'Missing Ethereum RPC config')
+  const trackedTxsClient = new TrackedTxsClient(
+    bigQueryClient,
+    ethereumRpc,
+    logger,
+  )
   const runtimeConfigurations = config.trackedTxsConfig.projects.flatMap(
     (project) => project.configurations,
   )
