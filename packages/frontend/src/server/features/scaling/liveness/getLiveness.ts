@@ -13,6 +13,7 @@ import range from 'lodash/range'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import type { ChartRange } from '~/utils/range/range'
 import { getConfigurationsSyncedUntil } from '../../utils/getConfigurationsSyncedUntil'
 import type { TrackedTxsProject } from '../../utils/getTrackedTxsProjects'
 import { getTrackedTxsProjects } from '../../utils/getTrackedTxsProjects'
@@ -210,27 +211,18 @@ function mapAggregatedLivenessRecords(
   const range90dStart = targetTimestamp - 90 * UnixTime.DAY
 
   return {
-    '30d': formatData(
-      last30Days,
-      maxAnomalyDuration,
-      livenessConfigs,
+    '30d': formatData(last30Days, maxAnomalyDuration, livenessConfigs, [
       range30dStart,
       targetTimestamp,
-    ),
-    '90d': formatData(
-      last90Days,
-      maxAnomalyDuration,
-      livenessConfigs,
+    ]),
+    '90d': formatData(last90Days, maxAnomalyDuration, livenessConfigs, [
       range90dStart,
       targetTimestamp,
-    ),
-    max: formatData(
-      max,
-      maxAnomalyDuration,
-      livenessConfigs,
+    ]),
+    max: formatData(max, maxAnomalyDuration, livenessConfigs, [
       null,
       targetTimestamp,
-    ),
+    ]),
     syncedUntil: syncedUntil,
   }
 }
@@ -241,9 +233,9 @@ function formatData(
     | undefined,
   maxAnomalyDuration: number,
   trackedTxsConfigs: TrackedTxConfigEntry[],
-  rangeStart: UnixTime | null,
-  rangeEnd: UnixTime,
+  range: ChartRange,
 ) {
+  const [rangeStart] = range
   if (!records) {
     const hasLiveConfigsInRange = trackedTxsConfigs.some((c) => {
       return (

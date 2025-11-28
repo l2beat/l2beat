@@ -1,18 +1,19 @@
 import { useMemo, useState } from 'react'
 import { INFINITY } from '~/consts/characters'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import type { ChartRange } from '~/utils/range/range'
+import { optionToRange } from '~/utils/range/range'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
-import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
+import { getChartTimeRangeFromData } from '../../core/chart/utils/getChartTimeRangeFromData'
 import { Skeleton } from '../../core/Skeleton'
 import { PercentChange } from '../../PercentChange'
 import type { ChartUnit } from '../types'
 import type { TvsChartDataPoint } from './TvsChart'
 import { TvsChart } from './TvsChart'
-import { TvsChartTimeRangeControls } from './TvsChartTimeRangeControls'
+import { TvsChartRangeControls } from './TvsChartRangeControls'
 import { TvsChartUnitControls } from './TvsChartUnitControls'
 import { tvsRangeToReadable } from './tvsRangeToReadable'
 
@@ -21,10 +22,10 @@ export function BridgesTvsChart() {
     'bridges-summary-unit',
     'usd',
   )
-  const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
+  const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
 
   const { data, isLoading } = api.tvs.chart.useQuery({
-    range: { type: timeRange },
+    range,
     filter: { type: 'bridge' },
     excludeAssociatedTokens: false,
     includeRwaRestrictedTokens: false,
@@ -46,7 +47,10 @@ export function BridgesTvsChart() {
       }
     },
   )
-  const chartRange = useMemo(() => getChartRange(chartData), [chartData])
+  const timeRange = useMemo(
+    () => getChartTimeRangeFromData(chartData),
+    [chartData],
+  )
   const stats = getStats(chartData)
 
   return (
@@ -55,8 +59,8 @@ export function BridgesTvsChart() {
         unit={unit}
         value={stats?.total}
         change={stats?.change}
-        range={timeRange}
-        timeRange={chartRange}
+        range={range}
+        timeRange={timeRange}
       />
       <TvsChart
         isLoading={isLoading}
@@ -67,10 +71,7 @@ export function BridgesTvsChart() {
       />
       <ChartControlsWrapper>
         <TvsChartUnitControls unit={unit} setUnit={setUnit} />
-        <TvsChartTimeRangeControls
-          timeRange={timeRange}
-          setTimeRange={setTimeRange}
-        />
+        <TvsChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
     </div>
   )
@@ -86,11 +87,11 @@ function BridgesChartHeader({
   unit: string
   value: number | undefined
   change: number | undefined
-  range: TvsChartRange
+  range: ChartRange
   timeRange: [number, number] | undefined
 }) {
   const changeOverTime =
-    range === 'max' ? (
+    range[0] === null ? (
       INFINITY
     ) : change ? (
       <PercentChange value={change} textClassName="lg:w-[63px] lg:text-base" />
@@ -100,7 +101,7 @@ function BridgesChartHeader({
     <header className="flex justify-between">
       <div>
         <h1 className="font-bold text-xl md:text-2xl">Value Secured</h1>
-        <ChartTimeRange range={timeRange} />
+        <ChartTimeRange timeRange={timeRange} />
       </div>
       <div className="flex flex-col items-end">
         <div className="whitespace-nowrap text-right font-bold text-xl md:text-2xl">

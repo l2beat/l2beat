@@ -1,26 +1,19 @@
 import type { CostsMetric } from '~/pages/scaling/costs/components/CostsMetricContext'
-import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
-import { ChartTimeRangeControls } from '../../core/chart/ChartTimeRangeControls'
+import type { ChartRange } from '~/utils/range/range'
+import { ChartRangeControls } from '../../core/chart/ChartRangeControls'
 
 interface Props {
-  timeRange: CostsTimeRange
-  setTimeRange: (range: CostsTimeRange) => void
+  range: ChartRange
+  setRange: (range: ChartRange) => void
   metric?: CostsMetric
-  projectSection?: boolean
 }
 
-export function CostsChartTimeRangeControls({
-  timeRange,
-  setTimeRange,
-  metric,
-  projectSection,
-}: Props) {
+export function CostsChartRangeControls({ range, setRange, metric }: Props) {
   return (
-    <ChartTimeRangeControls
-      name="costsTimeRange"
-      projectSection={projectSection}
-      value={timeRange}
-      setValue={setTimeRange}
+    <ChartRangeControls
+      name="costs"
+      value={range}
+      setValue={setRange}
       options={[
         {
           value: '1d',

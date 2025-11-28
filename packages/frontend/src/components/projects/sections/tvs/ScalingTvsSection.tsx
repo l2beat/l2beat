@@ -5,7 +5,7 @@ import { SelectedTokenContextProvider } from '~/components/chart/tvs/token/Selec
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ScalingRwaRestrictedTokensContextProvider } from '~/pages/scaling/components/ScalingRwaRestrictedTokensContext'
 import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import type { ChartRange } from '~/utils/range/range'
 import { TvsChartControlsContextProvider } from '../../../chart/tvs/TvsChartControlsContext'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
@@ -22,7 +22,7 @@ export interface ScalingTvsSectionProps extends ProjectSectionProps {
   milestones: Milestone[]
   tvsInfo: ProjectTvsInfo
   tvsBreakdownUrl?: string
-  defaultRange: TvsChartRange
+  defaultRange: ChartRange
 }
 
 export function ScalingTvsSection({

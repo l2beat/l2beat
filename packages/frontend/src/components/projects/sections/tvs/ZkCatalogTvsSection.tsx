@@ -6,7 +6,7 @@ import { ZkCatalogAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/z
 import { ZkCatalogBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/zk-catalog/ZkCatalogBridgeTypeTvsChart'
 import { TvsChartControls } from '~/components/chart/tvs/TvsChartControls'
 import type { ChartProject } from '~/components/core/chart/Chart'
-import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
+import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { IncludeRwaRestrictedTokensCheckbox } from '~/pages/scaling/components/IncludeRwaRestrictedTokensCheckbox'
 import {
@@ -18,9 +18,10 @@ import {
   type TvsData,
 } from '~/pages/scaling/project/tvs-breakdown/components/TvsBreakdownSummaryBox'
 import type { DetailedTvsChartWithProjectsRangesData } from '~/server/features/scaling/tvs/getDetailedTvsChartWithProjectsRanges'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
+import type { ChartRange } from '~/utils/range/range'
+import { optionToRange } from '~/utils/range/range'
 import {
   TvsChartControlsContextProvider,
   useTvsChartControlsContext,
@@ -33,7 +34,7 @@ export interface ZkCatalogTvsSectionProps extends ProjectSectionProps {
   project: ChartProject
   milestones: Milestone[]
   tvsInfo: ProjectTvsInfo | undefined
-  defaultRange: TvsChartRange
+  defaultRange: ChartRange
   projectsForTvs: {
     projectId: ProjectId
     sinceTimestamp: UnixTime
@@ -93,13 +94,16 @@ function ChartControls({
     includeRwaRestrictedTokens,
   })
 
-  const chartRange = useMemo(
-    () => getChartRange(data?.chart.map(([timestamp]) => ({ timestamp }))),
+  const timeRange = useMemo(
+    () =>
+      getChartTimeRangeFromData(
+        data?.chart.map(([timestamp]) => ({ timestamp })),
+      ),
     [data?.chart],
   )
   return (
     <TvsChartControls
-      chartRange={chartRange}
+      timeRange={timeRange}
       range={{
         value: range,
         setValue: setRange,
@@ -122,7 +126,7 @@ function TvsProjectStats({
   const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { data, isLoading } = api.tvs.detailedChartWithProjectsRanges.useQuery({
     projects: projectsForTvs,
-    range: '7d',
+    range: optionToRange('7d'),
     excludeAssociatedTokens: false,
     includeRwaRestrictedTokens,
   })

@@ -6,6 +6,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
+import { optionToRange } from '~/utils/range/range'
 import { getActivitySyncState, type SyncState } from '../../utils/syncState'
 import { countPerSecond } from './utils/countPerSecond'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
@@ -44,7 +45,8 @@ export async function getActivityTable(
   }
 
   const db = getDb()
-  const [from, to] = await getFullySyncedActivityRange({ type: '30d' })
+  const range = optionToRange('30d')
+  const [from, to] = await getFullySyncedActivityRange(range)
   assert(from !== null, 'its null')
   const [records, maxCounts, syncMetadataRecords] = await Promise.all([
     db.activity.getByProjectsAndTimeRange(
