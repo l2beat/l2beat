@@ -279,8 +279,8 @@ export function polygonCDKStack(
           ),
     technology: {
       dataAvailability:
-        (templateVars.nonTemplateTechnology?.dataAvailability ??
-        templateVars.daProvider !== undefined)
+        templateVars.nonTemplateTechnology?.dataAvailability ??
+        (templateVars.daProvider !== undefined
           ? technologyDA(daProvider)
           : {
               ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
@@ -291,7 +291,7 @@ export function polygonCDKStack(
                   url: `https://etherscan.io/address/${safeGetImplementation(templateVars.rollupModuleContract)}#code`,
                 },
               ],
-            },
+            }),
       operator: templateVars.nonTemplateTechnology?.operator ?? {
         name: 'The system has a centralized sequencer',
         description:
