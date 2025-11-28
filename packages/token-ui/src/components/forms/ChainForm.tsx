@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from '~/components/core/Select'
 import { minLengthCheck, urlCheck } from '~/utils/checks'
+import { CardActionButton, CardActionButtons } from '../CardActionButtons'
 import { Card, CardContent } from '../core/Card'
 import { TestApiButton } from './TestApiButton'
 
@@ -153,7 +154,6 @@ export function ChainForm({
                 }
               >
                 <PlusIcon className="size-4" />
-                Add API
               </Button>
             </div>
 
@@ -162,27 +162,25 @@ export function ChainForm({
               const url = form.watch(`apis.${index}.url`)
               const chainId = form.watch('chainId')
               return (
-                <Card key={field.id} className="relative">
-                  <div className="absolute top-6 right-6">
+                <Card key={field.id} className="relative overflow-hidden">
+                  <CardActionButtons>
                     {apiType &&
                       (apiType === 'rpc' ||
                         apiType === 'etherscan' ||
                         apiType === 'blockscout') && (
-                        <TestApiButton
-                          type={apiType}
-                          url={url || undefined}
-                          chainId={chainId || undefined}
-                        />
+                        <CardActionButton asChild>
+                          <TestApiButton
+                            type={apiType}
+                            url={url || undefined}
+                            chainId={chainId || undefined}
+                          />
+                        </CardActionButton>
                       )}
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => remove(index)}
-                    >
+                    <CardActionButton onClick={() => remove(index)}>
                       <TrashIcon className="size-4" />
-                    </Button>
-                  </div>
+                    </CardActionButton>
+                  </CardActionButtons>
+
                   <CardContent className="space-y-4">
                     <FormField
                       control={form.control}
