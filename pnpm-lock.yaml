@@ -867,6 +867,9 @@ importers:
       '@l2beat/backend-tools':
         specifier: workspace:*
         version: link:../backend-tools
+      '@l2beat/dal':
+        specifier: workspace:*
+        version: link:../dal
       '@l2beat/database':
         specifier: workspace:*
         version: link:../database

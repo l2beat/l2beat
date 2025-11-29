@@ -26,3 +26,4 @@ export {
   type ProjectWithRanges,
   type SummedByTimestampTvsValuesRecord,
 } from './queries/tvl/getSummedByTimestampTvsValuesQuery'
+export type { QueryExecutor }

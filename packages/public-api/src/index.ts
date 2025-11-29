@@ -1,5 +1,6 @@
 import { getEnv } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
+import { makeQueryExecutor } from '@l2beat/dal'
 import { createDatabase } from '@l2beat/database'
 import express from 'express'
 import swaggerUi from 'swagger-ui-express'
@@ -21,6 +22,13 @@ function main() {
   const logger = createLogger(env)
 
   const ps = new ProjectService()
+
+  const queryExecutor = makeQueryExecutor({
+    redisUrl: env.optionalString('REDIS_URL'),
+    db,
+    logger,
+    ci: process.env.CI === 'true',
+  })
 
   const app = express()
   const openapi = new OpenApi(app, {
@@ -90,7 +98,7 @@ function main() {
   app.use(loggerMiddleware(logger))
 
   addProjectsRoutes(openapi, ps)
-  addTvsRoutes(openapi, ps, db, cache)
+  addTvsRoutes(openapi, ps, queryExecutor, cache)
   addActivityRoutes(openapi, ps, db, cache)
 
   app.use(errorHandler(logger))
