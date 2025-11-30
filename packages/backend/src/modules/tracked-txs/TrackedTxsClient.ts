@@ -1,5 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type {
+  RpcClient,
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
   TrackedTxSharedBridgeConfig,
@@ -26,6 +27,7 @@ export class TrackedTxsClient {
 
   constructor(
     private readonly bigquery: BigQueryClient,
+    private readonly rpc: RpcClient,
     logger: Logger,
   ) {
     this.logger = logger.for(this)
@@ -112,7 +114,25 @@ export class TrackedTxsClient {
 
     const queryResult = await this.bigquery.query(query)
     const parsedResult = v.array(BigQueryTransferResult).parse(queryResult)
-    return transformTransfersQueryResult(transfersConfig, parsedResult)
+    const transformed = transformTransfersQueryResult(
+      transfersConfig,
+      parsedResult,
+    )
+
+    return await Promise.all(
+      transformed.map(async (t) => {
+        if (t.txType === 3) {
+          const txReceipt = await this.rpc.getTransactionReceipt(t.hash)
+          return {
+            ...t,
+            blobGasUsed: txReceipt.blobGasUsed ?? 0n,
+            blobGasPrice: txReceipt.blobGasPrice ?? 0n,
+          }
+        }
+
+        return { ...t, blobGasUsed: 0n, blobGasPrice: 0n }
+      }),
+    )
   }
 
   async getFunctionCalls(
@@ -153,11 +173,26 @@ export class TrackedTxsClient {
 
     // this will find matching configs based on different criteria for function calls and sharp submissions
     // hence this is the place where "unbatching" happens
-    return transformFunctionCallsQueryResult(
+    const transformed = transformFunctionCallsQueryResult(
       functionCallsConfig,
       sharpSubmissionsConfig,
       sharedBridgesConfig,
       parsedResult,
+    )
+
+    return await Promise.all(
+      transformed.map(async (t) => {
+        if (t.txType === 3) {
+          const txReceipt = await this.rpc.getTransactionReceipt(t.hash)
+          return {
+            ...t,
+            blobGasUsed: txReceipt.blobGasUsed ?? 0n,
+            blobGasPrice: txReceipt.blobGasPrice ?? 0n,
+          }
+        }
+
+        return { ...t, blobGasUsed: 0n, blobGasPrice: 0n }
+      }),
     )
   }
 }
