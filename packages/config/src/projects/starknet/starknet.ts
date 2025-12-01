@@ -220,7 +220,7 @@ export const starknet: ScalingProject = {
       explorers: ['https://voyager.online/', 'https://starkscan.co/'],
       repositories: ['https://github.com/starkware-libs'],
       socialMedia: [
-        'https://discord.com/invite/qypnmzkhbc',
+        'https://discord.com/invite/starknet-community',
         'https://twitter.com/StarkWareLtd',
         'https://medium.com/starkware',
         'https://starkware.co/',
